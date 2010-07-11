@@ -17,8 +17,8 @@ use Class::XSAccessor {
 		label         => 'label',
 		shortcut      => 'shortcut',
 		menu_event    => 'menu_event',
-		toolbar_event => 'toolbar_event',
 		menu_method   => 'menu_method',
+		toolbar_event => 'toolbar_event',
 		toolbar_icon  => 'toolbar',
 	}
 };
@@ -62,45 +62,37 @@ sub create {
 # Constructor
 
 sub new {
-	my $class = shift;
-	if ( @_ % 2 ) {
-		require Data::Dumper;
-		Carp::confess( Data::Dumper::Dumper(\@_) );
-	}
-	my $self = bless { @_ }, $class;
-	$self->{id} ||= -1;
-
-	if ( ( !defined( $self->{name} ) ) or ( $self->{name} eq '' ) ) {
-		warn join( ',', caller ) . " tried to create an action without name";
-		return;
-	}
-
-	# The menu prefix is dedicated to menus and must not be used by actions
-	if ( $self->{name} =~ /^menu\./ ) {
-		warn join( ',', caller ) . ' tried to create an action with name prefix menu';
-		return;
-	}
-
-	if ( defined( $self->{menu_event} ) ) {
-
-		# Menu events are handled by Padre::Action, the real events
-		# should go to {event}!
-		$self->add_event( $self->{menu_event} );
-		$self->{menu_event} =
-			eval ' return sub { ' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
-	}
-
-	$self->{queue_event} ||= $self->{menu_event};
-
+	my $class    = shift;
+	my $ide      = Padre->ide;
+	my $actions  = $ide->actions;
+	my $self     = bless { id => -1, @_ }, $class;
 	my $name     = $self->{name};
 	my $shortcut = $self->{shortcut};
 
-	my $actions = Padre->ide->actions;
+	# Check the name
+	unless ( defined $name and length $name ) {
+		die join( ',', caller ) . ' tried to create an action without name';
+	}
+	if ( $name =~ /^menu\./ ) {
+		# The menu prefix is dedicated to menus and must not be used by actions
+		die join( ',', caller ) . ' tried to create an action with name prefix menu';
+	}
 	if ( $actions->{$name} ) {
 		warn "Found a duplicate action '$name'\n";
 	}
 
-	if ($shortcut) {
+	# Menu events are handled by Padre::Action, the real events
+	# should go to {event}!
+	if ( defined $self->{menu_event} ) {
+		$self->add_event( $self->{menu_event} );
+		$self->{menu_event} = sub {
+			Padre->ide->actions->{$name}->_event(@_);
+		};
+	}
+	$self->{queue_event} ||= $self->{menu_event};
+
+	# Validate the shortcut
+	if ( $shortcut ) {
 		foreach my $n ( keys %$actions ) {
 			my $a = $actions->{$n};
 			next unless $a->shortcut;
@@ -109,7 +101,7 @@ sub new {
 			last;
 		}
 
-		my $shortcuts = Padre->ide->{shortcuts};
+		my $shortcuts = $ide->{shortcuts};
 		if ( defined( $shortcuts->{$shortcut} ) ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
 		} else {
@@ -117,7 +109,13 @@ sub new {
 		}
 	}
 
-	$actions->{ $self->{name} } = $self;
+	# Localise the label and comment
+	### NOTE: This is temporary, later we'll do this on the fly
+	$self->{label}   = Wx::gettext($self->{label});
+	$self->{comment} = Wx::gettext($self->{comment});
+
+	# Save the action
+	$actions->{$name} = $self;
 
 	return $self;
 }
@@ -190,8 +188,14 @@ sub _event {
 	return 1;
 }
 
-#####################################################################
-# Main Methods
+1;
+
+# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+__END__
 
 =pod
 
@@ -202,12 +206,12 @@ Padre::Action - Padre Action Object
 =head1 SYNOPSIS
 
   my $action = Padre::Action->new(
-    name       => 'file.save',
-    label      => 'Save',
-    comment    => 'Saves the current file to disk',
-    icon       => '...',
-    shortcut   => 'CTRL-S',
-    menu_event => sub { },
+      name       => 'file.save',
+      label      => 'Save',
+      comment    => 'Saves the current file to disk',
+      icon       => '...',
+      shortcut   => 'CTRL-S',
+      menu_event => sub { },
   );
 
 =head1 DESCRIPTION
@@ -232,7 +236,7 @@ Each action requires an unique name which is used to reference and call it.
 
 The name usually has the syntax
 
-	group.action
+  group.action
 
 Both group and action should only contain \w+ chars.
 
@@ -293,18 +297,18 @@ was no change which could be undone.)
 
 The CODE receives a list of objects which should help with the decision:
 
-	config		contains the current configuration object
-	editor		the current editor object
-	document	the current document object
-	main		the main Wx object
+  config      Contains the current configuration object
+  editor      The current editor object
+  document    The current document object
+  main        The main Wx object
 
 A typical sub for handling would look like this:
 
-	need => sub {
-			my %objects = @_;
-			return 0 if !defined( $objects{editor} );
-			return $objects{editor}->CanUndo;
-		},
+  need => sub {
+      my %objects = @_;
+      return 0 if !defined( $objects{editor} );
+      return $objects{editor}->CanUndo;
+  },
 
 Use this with caution! As this function is called very often there are few
 to no checks and if this isn't a CODE reference, Padre may crash at all or
@@ -349,10 +353,3 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
-1;
-
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.

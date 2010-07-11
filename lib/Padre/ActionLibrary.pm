@@ -9,11 +9,12 @@ use strict;
 use warnings;
 use File::Spec      ();
 use Params::Util    ();
-use Padre::Wx       ();
-use Padre::Wx::Menu ();
+use Padre::Util     ('_T');
 use Padre::Constant ();
 use Padre::Current  ();
 use Padre::Action   ();
+use Padre::Wx       ();
+use Padre::Wx::Menu ();
 use Padre::Logger;
 
 our $VERSION = '0.66';
@@ -34,8 +35,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'internal.dump_padre',
-		label      => Wx::gettext('Dump the Padre object to STDOUT'),
-		comment    => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
+		label      => _T('Dump the Padre object to STDOUT'),
+		comment    => _T('Dumps the complete Padre object to STDOUT for testing/debugging.'),
 		menu_event => sub {
 			require Data::Dumper;
 			open(
@@ -55,8 +56,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'internal.wait10',
-		label      => Wx::gettext('Delay the action queue for 10 seconds'),
-		comment    => Wx::gettext('Stops processing of other action queue items for 10 seconds'),
+		label      => _T('Delay the action queue for 10 seconds'),
+		comment    => _T('Stops processing of other action queue items for 10 seconds'),
 		menu_event => sub {
 			sleep 10;
 		},
@@ -64,8 +65,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'internal.wait30',
-		label      => Wx::gettext('Delay the action queue for 30 seconds'),
-		comment    => Wx::gettext('Stops processing of other action queue items for 30 seconds'),
+		label      => _T('Delay the action queue for 30 seconds'),
+		comment    => _T('Stops processing of other action queue items for 30 seconds'),
 		menu_event => sub {
 			sleep 30;
 		},
@@ -75,8 +76,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new',
-		label      => Wx::gettext('&New'),
-		comment    => Wx::gettext('Open a new empty document'),
+		label      => _T('&New'),
+		comment    => _T('Open a new empty document'),
 		shortcut   => 'Ctrl-N',
 		toolbar    => 'actions/document-new',
 		menu_event => sub {
@@ -86,8 +87,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new_p5_script',
-		label      => Wx::gettext('Perl 5 Script'),
-		comment    => Wx::gettext('Open a document with a skeleton Perl 5 script'),
+		label      => _T('Perl 5 Script'),
+		comment    => _T('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
 		},
@@ -95,8 +96,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new_p5_module',
-		label      => Wx::gettext('Perl 5 Module'),
-		comment    => Wx::gettext('Open a document with a skeleton Perl 5 module'),
+		label      => _T('Perl 5 Module'),
+		comment    => _T('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
 		},
@@ -104,8 +105,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new_p5_test',
-		label      => Wx::gettext('Perl 5 Test'),
-		comment    => Wx::gettext('Open a document with a skeleton Perl 5 test  script'),
+		label      => _T('Perl 5 Test'),
+		comment    => _T('Open a document with a skeleton Perl 5 test  script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('t');
 		},
@@ -115,8 +116,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new_p6_script',
-		label      => Wx::gettext('Perl 6 Script'),
-		comment    => Wx::gettext('Open a document with a skeleton Perl 6 script'),
+		label      => _T('Perl 6 Script'),
+		comment    => _T('Open a document with a skeleton Perl 6 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
 		},
@@ -126,8 +127,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.new_p5_distro',
-		label      => Wx::gettext('Perl Distribution...'),
-		comment    => Wx::gettext('Setup a skeleton Perl module distribution'),
+		label      => _T('Perl Distribution...'),
+		comment    => _T('Setup a skeleton Perl module distribution'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
 			Padre::Wx::Dialog::ModuleStart->start($_[0]);
@@ -141,8 +142,8 @@ sub init {
 	Padre::Action->new(
 		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
-		label      => Wx::gettext('&Open'),
-		comment    => Wx::gettext('Browse directory of the current document to open one or several files'),
+		label      => _T('&Open'),
+		comment    => _T('Browse directory of the current document to open one or several files'),
 		shortcut   => 'Ctrl-O',
 		toolbar    => 'actions/document-open',
 		menu_event => sub {
@@ -152,8 +153,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'file.openurl',
-		label   => Wx::gettext('Open &URL...'),
-		comment => Wx::gettext('Open a file from a remote location'),
+		label   => _T('Open &URL...'),
+		comment => _T('Open a file from a remote location'),
 
 		# Is shown as Ctrl-O and I don't know why
 		# shortcut => 'Ctrl-Shift-O',
@@ -166,8 +167,8 @@ sub init {
 		name        => 'file.open_in_file_browser',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Open in File Browser'),
-		comment     => Wx::gettext('Opens the current document using the file browser'),
+		label       => _T('Open in File Browser'),
+		comment     => _T('Opens the current document using the file browser'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$_[0]->on_open_in_file_browser( $document->filename );
@@ -176,10 +177,10 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'file.open_with_default_system_editor',
-		label       => Wx::gettext('Open with Default System Editor'),
+		label       => _T('Open with Default System Editor'),
 		need_editor => 1,
 		need_file   => 1,
-		comment     => Wx::gettext('Opens the file with the default system editor'),
+		comment     => _T('Opens the file with the default system editor'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$_[0]->on_open_with_default_system_editor( $document->filename );
@@ -190,8 +191,8 @@ sub init {
 		name        => 'file.open_in_command_line',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Open in Command Line'),
-		comment     => Wx::gettext('Opens a command line using the current document folder'),
+		label       => _T('Open in Command Line'),
+		comment     => _T('Opens a command line using the current document folder'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$_[0]->on_open_in_command_line( $document->filename );
@@ -200,8 +201,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.open_example',
-		label      => Wx::gettext('Open Example'),
-		comment    => Wx::gettext('Browse the directory of the installed examples to open one file'),
+		label      => _T('Open Example'),
+		comment    => _T('Browse the directory of the installed examples to open one file'),
 		toolbar    => 'stock/generic/stock_example',
 		menu_event => sub {
 			$_[0]->on_open_example;
@@ -212,8 +213,8 @@ sub init {
 		name        => 'file.close',
 		id          => Wx::wxID_CLOSE,
 		need_editor => 1,
-		label       => Wx::gettext('&Close'),
-		comment     => Wx::gettext('Close current document'),
+		label       => _T('&Close'),
+		comment     => _T('Close current document'),
 		shortcut    => 'Ctrl-W',
 		toolbar     => 'actions/x-document-close',
 		menu_event  => sub {
@@ -226,8 +227,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.close_current_project',
 		need_editor => 1,
-		label       => Wx::gettext('Close this Project'),
-		comment     => Wx::gettext('Close all the files belonging to the current project'),
+		label       => _T('Close this Project'),
+		comment     => _T('Close all the files belonging to the current project'),
 		shortcut    => 'Ctrl-Shift-W',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
@@ -248,8 +249,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.close_other_projects',
 		need_editor => 1,
-		label       => Wx::gettext('Close other Projects'),
-		comment     => Wx::gettext('Close all the files that do not belong to the current project'),
+		label       => _T('Close other Projects'),
+		comment     => _T('Close all the files that do not belong to the current project'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			my $dir      = $document->project_dir;
@@ -269,8 +270,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.close_all',
 		need_editor => 1,
-		label       => Wx::gettext('Close all Files'),
-		comment     => Wx::gettext('Close all the files open in the editor'),
+		label       => _T('Close all Files'),
+		comment     => _T('Close all the files open in the editor'),
 		menu_event  => sub {
 			$_[0]->close_all;
 		},
@@ -279,8 +280,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.close_all_but_current',
 		need_editor => 1,
-		label       => Wx::gettext('Close all other Files'),
-		comment     => Wx::gettext('Close all the files except the current one'),
+		label       => _T('Close all other Files'),
+		comment     => _T('Close all the files except the current one'),
 		menu_event  => sub {
 			$_[0]->close_all( $_[0]->notebook->GetSelection );
 		},
@@ -289,8 +290,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.close_some',
 		need_editor => 1,
-		label       => Wx::gettext('Close Files...'),
-		comment     => Wx::gettext('Select some open files for closing'),
+		label       => _T('Close Files...'),
+		comment     => _T('Select some open files for closing'),
 		menu_event  => sub {
 			$_[0]->on_close_some;
 		},
@@ -299,8 +300,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.reload_file',
 		need_editor => 1,
-		label       => Wx::gettext('Reload File'),
-		comment     => Wx::gettext('Reload current file from disk'),
+		label       => _T('Reload File'),
+		comment     => _T('Reload current file from disk'),
 		menu_event  => sub {
 			$_[0]->on_reload_file;
 		},
@@ -309,8 +310,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.reload_all',
 		need_editor => 1,
-		label       => Wx::gettext('Reload All'),
-		comment     => Wx::gettext('Reload all files currently open'),
+		label       => _T('Reload All'),
+		comment     => _T('Reload all files currently open'),
 		menu_event  => sub {
 			$_[0]->on_reload_all;
 		},
@@ -319,8 +320,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.reload_some',
 		need_editor => 1,
-		label       => Wx::gettext('Reload Some...'),
-		comment     => Wx::gettext('Select some open files for reload'),
+		label       => _T('Reload Some...'),
+		comment     => _T('Select some open files for reload'),
 		menu_event  => sub {
 			$_[0]->on_reload_some;
 		},
@@ -333,8 +334,8 @@ sub init {
 		id            => Wx::wxID_SAVE,
 		need_editor   => 1,
 		need_modified => 1,
-		label         => Wx::gettext('&Save'),
-		comment       => Wx::gettext('Save current document'),
+		label         => _T('&Save'),
+		comment       => _T('Save current document'),
 		shortcut      => 'Ctrl-S',
 		toolbar       => 'actions/document-save',
 		menu_event    => sub {
@@ -346,8 +347,8 @@ sub init {
 		name        => 'file.save_as',
 		id          => Wx::wxID_SAVEAS,
 		need_editor => 1,
-		label       => Wx::gettext('Save &As...'),
-		comment     => Wx::gettext('Allow the selection of another name to save the current document'),
+		label       => _T('Save &As...'),
+		comment     => _T('Allow the selection of another name to save the current document'),
 		shortcut    => 'F12',
 		toolbar     => 'actions/document-save-as',
 		menu_event  => sub {
@@ -359,9 +360,9 @@ sub init {
 		name        => 'file.save_intuition',
 		id          => -1,
 		need_editor => 1,
-		label       => Wx::gettext('Save Intuition'),
+		label       => _T('Save Intuition'),
 		comment =>
-			Wx::gettext('For new document try to guess the filename based on the file content and offer to save it.'),
+			_T('For new document try to guess the filename based on the file content and offer to save it.'),
 		shortcut   => 'Ctrl-Shift-S',
 		menu_event => sub {
 			$_[0]->on_save_intuition;
@@ -371,8 +372,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'file.save_all',
 		need_editor => 1,
-		label       => Wx::gettext('Save All'),
-		comment     => Wx::gettext('Save all the files'),
+		label       => _T('Save All'),
+		comment     => _T('Save all the files'),
 		toolbar     => 'actions/stock_data-save',
 		shortcut    => 'Alt-F12',
 		menu_event  => sub {
@@ -384,8 +385,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.open_selection',
-		label      => Wx::gettext('Open Selection'),
-		comment    => Wx::gettext('List the files that match the current selection and let the user pick one to open'),
+		label      => _T('Open Selection'),
+		comment    => _T('List the files that match the current selection and let the user pick one to open'),
 		shortcut   => 'Ctrl-Shift-O',
 		menu_event => sub {
 			$_[0]->on_open_selection;
@@ -394,9 +395,9 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'file.open_session',
-		label   => Wx::gettext('Open Session...'),
+		label   => _T('Open Session...'),
 		comment =>
-			Wx::gettext('Select a session. Close all the files currently open and open all the listed in the session'),
+			_T('Select a session. Close all the files currently open and open all the listed in the session'),
 		shortcut   => 'Ctrl-Alt-O',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionManager;
@@ -406,8 +407,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.save_session',
-		label      => Wx::gettext('Save Session...'),
-		comment    => Wx::gettext('Ask for a session name and save the list of files currently opened'),
+		label      => _T('Save Session...'),
+		comment    => _T('Ask for a session name and save the list of files currently opened'),
 		shortcut   => 'Ctrl-Alt-S',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionSave;
@@ -422,8 +423,8 @@ sub init {
 
 		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
 		id         => Wx::wxID_PRINT,
-		label      => Wx::gettext('&Print...'),
-		comment    => Wx::gettext('Print the current document'),
+		label      => _T('&Print...'),
+		comment    => _T('Print the current document'),
 		shortcut   => 'Ctrl-P',
 		menu_event => sub {
 			require Wx::Print;
@@ -442,8 +443,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.open_recent_files',
-		label      => Wx::gettext('Open All Recent Files'),
-		comment    => Wx::gettext('Open all the files listed in the recent files list'),
+		label      => _T('Open All Recent Files'),
+		comment    => _T('Open all the files listed in the recent files list'),
 		menu_event => sub {
 			$_[0]->on_open_all_recent_files;
 		},
@@ -451,8 +452,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.clean_recent_files',
-		label      => Wx::gettext('Clean Recent Files List'),
-		comment    => Wx::gettext('Remove the entries from the recent files list'),
+		label      => _T('Clean Recent Files List'),
+		comment    => _T('Remove the entries from the recent files list'),
 		menu_event => sub {
 			my $lock = Padre::Current->main->lock( 'UPDATE', 'DB', 'refresh_recent' );
 			Padre::DB::History->delete( 'where type = ?', 'files' );
@@ -463,8 +464,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'file.doc_stat',
-		label       => Wx::gettext('Document Statistics'),
-		comment     => Wx::gettext('Word count and other statistics of the current document'),
+		label       => _T('Document Statistics'),
+		comment     => _T('Word count and other statistics of the current document'),
 		need_editor => 1,
 		toolbar     => 'actions/document-properties',
 		menu_event  => sub {
@@ -476,8 +477,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'file.quit',
-		label      => Wx::gettext('&Quit'),
-		comment    => Wx::gettext('Ask if unsaved files should be saved and then exit Padre'),
+		label      => _T('&Quit'),
+		comment    => _T('Ask if unsaved files should be saved and then exit Padre'),
 		shortcut   => 'Ctrl-Q',
 		menu_event => sub {
 			$_[0]->Close;
@@ -496,8 +497,8 @@ sub init {
 		#			return 0 if !defined( $objects{editor} );
 		#			return $objects{editor}->CanUndo;
 		#		},
-		label      => Wx::gettext('&Undo'),
-		comment    => Wx::gettext('Undo last change in current file'),
+		label      => _T('&Undo'),
+		comment    => _T('Undo last change in current file'),
 		shortcut   => 'Ctrl-Z',
 		toolbar    => 'actions/edit-undo',
 		menu_event => sub {
@@ -516,8 +517,8 @@ sub init {
 		#			return 0 if !defined( $objects{editor} );
 		#			return $objects{editor}->CanRedo;
 		#		},
-		label      => Wx::gettext('&Redo'),
-		comment    => Wx::gettext('Redo last undo'),
+		label      => _T('&Redo'),
+		comment    => _T('Redo last undo'),
 		shortcut   => 'Ctrl-Y',
 		toolbar    => 'actions/edit-redo',
 		menu_event => sub {
@@ -530,8 +531,8 @@ sub init {
 		name        => 'edit.select_all',
 		id          => Wx::wxID_SELECTALL,
 		need_editor => 1,
-		label       => Wx::gettext('Select All'),
-		comment     => Wx::gettext('Select all the text in the current document'),
+		label       => _T('Select All'),
+		comment     => _T('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
 		menu_event  => sub {
@@ -543,8 +544,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
-		label       => Wx::gettext('Mark Selection Start'),
-		comment     => Wx::gettext('Mark the place where the selection should start'),
+		label       => _T('Mark Selection Start'),
+		comment     => _T('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -555,8 +556,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
-		label       => Wx::gettext('Mark Selection End'),
-		comment     => Wx::gettext('Mark the place where the selection should end'),
+		label       => _T('Mark Selection End'),
+		comment     => _T('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -567,8 +568,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
-		label       => Wx::gettext('Clear Selection Marks'),
-		comment     => Wx::gettext('Remove all the selection marks'),
+		label       => _T('Clear Selection Marks'),
+		comment     => _T('Remove all the selection marks'),
 		menu_event  => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_selection_clear_marks(@_);
@@ -582,8 +583,8 @@ sub init {
 		id             => Wx::wxID_CUT,
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('Cu&t'),
-		comment        => Wx::gettext('Remove the current selection and put it in the clipboard'),
+		label          => _T('Cu&t'),
+		comment        => _T('Remove the current selection and put it in the clipboard'),
 		shortcut       => 'Ctrl-X',
 		toolbar        => 'actions/edit-cut',
 		menu_event     => sub {
@@ -597,8 +598,8 @@ sub init {
 		id             => Wx::wxID_COPY,
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Copy'),
-		comment        => Wx::gettext('Put the current selection in the clipboard'),
+		label          => _T('&Copy'),
+		comment        => _T('Put the current selection in the clipboard'),
 		shortcut       => 'Ctrl-C',
 		toolbar        => 'actions/edit-copy',
 		menu_event     => sub {
@@ -613,8 +614,8 @@ sub init {
 		name        => 'edit.copy_filename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy Full Filename'),
-		comment     => Wx::gettext('Put the full path of the current file in the clipboard'),
+		label       => _T('Copy Full Filename'),
+		comment     => _T('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -627,8 +628,8 @@ sub init {
 		name        => 'edit.copy_basename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy Filename'),
-		comment     => Wx::gettext('Put the name of the current file in the clipboard'),
+		label       => _T('Copy Filename'),
+		comment     => _T('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -641,8 +642,8 @@ sub init {
 		name        => 'edit.copy_dirname',
 		need_file   => 1,
 		need_editor => 1,
-		label       => Wx::gettext('Copy Directory Name'),
-		comment     => Wx::gettext('Put the full path of the directory of the current file in the clipboard'),
+		label       => _T('Copy Directory Name'),
+		comment     => _T('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -654,8 +655,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.copy_content',
 		need_editor => 1,
-		label       => Wx::gettext('Copy Editor Content'),
-		comment     => Wx::gettext('Put the content of the current document in the clipboard'),
+		label       => _T('Copy Editor Content'),
+		comment     => _T('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -670,8 +671,8 @@ sub init {
 		name        => 'edit.paste',
 		need_editor => 1,
 		id          => Wx::wxID_PASTE,
-		label       => Wx::gettext('&Paste'),
-		comment     => Wx::gettext('Paste the clipboard to the current location'),
+		label       => _T('&Paste'),
+		comment     => _T('Paste the clipboard to the current location'),
 		shortcut    => 'Ctrl-V',
 		toolbar     => 'actions/edit-paste',
 		menu_event  => sub {
@@ -684,8 +685,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Go To...'),
-		comment    => Wx::gettext('Jump to a specific line number or character position'),
+		label      => _T('&Go To...'),
+		comment    => _T('Jump to a specific line number or character position'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			shift->on_goto(@_);
@@ -695,8 +696,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.next_problem',
 		need_editor => 1,
-		label       => Wx::gettext('&Next Problem'),
-		comment     => Wx::gettext('Jump to the code that triggered the next error'),
+		label       => _T('&Next Problem'),
+		comment     => _T('Jump to the code that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
 			$_[0]->{syntax}->select_next_problem if $_[0]->{syntax};
@@ -706,8 +707,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.quick_fix',
 		need_editor => 1,
-		label       => Wx::gettext('&Quick Fix'),
-		comment     => Wx::gettext('Apply one of the quick fixes for the current document'),
+		label       => _T('&Quick Fix'),
+		comment     => _T('Apply one of the quick fixes for the current document'),
 		shortcut    => 'Ctrl-2',
 		menu_event  => sub {
 			my $main     = shift;
@@ -762,8 +763,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.autocomp',
 		need_editor => 1,
-		label       => Wx::gettext('&Autocomplete'),
-		comment     => Wx::gettext('Offer completions to the current string. See Preferences'),
+		label       => _T('&Autocomplete'),
+		comment     => _T('Offer completions to the current string. See Preferences'),
 		shortcut    => 'Ctrl-Space',
 		menu_event  => sub {
 			shift->on_autocompletion(@_);
@@ -773,8 +774,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.brace_match',
 		need_editor => 1,
-		label       => Wx::gettext('&Brace Matching'),
-		comment     => Wx::gettext('Jump to the matching opening or closing brace: { }, ( ), [ ], < >'),
+		label       => _T('&Brace Matching'),
+		comment     => _T('Jump to the matching opening or closing brace: { }, ( ), [ ], < >'),
 		shortcut    => 'Ctrl-1',
 		menu_event  => sub {
 			shift->on_brace_matching(@_);
@@ -784,8 +785,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.brace_match_select',
 		need_editor => 1,
-		label       => Wx::gettext('&Select to Matching Brace'),
-		comment     => Wx::gettext('Select to the matching opening or closing brace'),
+		label       => _T('&Select to Matching Brace'),
+		comment     => _T('Select to the matching opening or closing brace'),
 		shortcut    => 'Ctrl-4',
 		menu_event  => sub {
 			shift->current->editor->select_to_matching_brace;
@@ -796,8 +797,8 @@ sub init {
 		name           => 'edit.join_lines',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Join Lines'),
-		comment        => Wx::gettext('Join the next line to the end of the current line.'),
+		label          => _T('&Join Lines'),
+		comment        => _T('Join the next line to the end of the current line.'),
 		shortcut       => 'Ctrl-J',
 		menu_event     => sub {
 			shift->on_join_lines(@_);
@@ -807,8 +808,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.insert.insert_special',
 		need_editor => 1,
-		label       => Wx::gettext('Special Value...'),
-		comment     => Wx::gettext('Select a date, filename or other value and insert at the current location'),
+		label       => _T('Special Value...'),
+		comment     => _T('Select a date, filename or other value and insert at the current location'),
 		shortcut    => 'Ctrl-Shift-I',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::SpecialValues;
@@ -820,8 +821,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.insert.snippets',
 		need_editor => 1,
-		label       => Wx::gettext('Snippets...'),
-		comment     => Wx::gettext('Select and insert a snippet at the current location'),
+		label       => _T('Snippets...'),
+		comment     => _T('Select and insert a snippet at the current location'),
 		shortcut    => 'Ctrl-Shift-A',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Snippets;
@@ -832,8 +833,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.insert.from_file',
 		need_editor => 1,
-		label       => Wx::gettext('File...'),
-		comment     => Wx::gettext('Select a file and insert its content at the current location'),
+		label       => _T('File...'),
+		comment     => _T('Select a file and insert its content at the current location'),
 		menu_event  => sub {
 			shift->on_insert_from_file(@_);
 		},
@@ -845,8 +846,8 @@ sub init {
 		name           => 'edit.comment_toggle',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Toggle Comment'),
-		comment        => Wx::gettext('Comment out or remove comment out of selected lines in the document'),
+		label          => _T('&Toggle Comment'),
+		comment        => _T('Comment out or remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
@@ -858,8 +859,8 @@ sub init {
 		name           => 'edit.comment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Comment Selected Lines'),
-		comment        => Wx::gettext('Comment out selected lines in the document'),
+		label          => _T('&Comment Selected Lines'),
+		comment        => _T('Comment out selected lines in the document'),
 		shortcut       => 'Ctrl-M',
 		menu_event     => sub {
 			shift->on_comment_block('COMMENT');
@@ -870,8 +871,8 @@ sub init {
 		name           => 'edit.uncomment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Uncomment Selected Lines'),
-		comment        => Wx::gettext('Remove comment out of selected lines in the document'),
+		label          => _T('&Uncomment Selected Lines'),
+		comment        => _T('Remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-M',
 		menu_event     => sub {
 			shift->on_comment_block('UNCOMMENT');
@@ -883,8 +884,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
-		label       => Wx::gettext('Encode Document to System Default'),
-		comment    => Wx::gettext('Change the encoding of the current document to the default of the operating system'),
+		label       => _T('Encode Document to System Default'),
+		comment    => _T('Change the encoding of the current document to the default of the operating system'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
@@ -894,8 +895,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
-		label       => Wx::gettext('Encode Document to utf-8'),
-		comment     => Wx::gettext('Change the encoding of the current document to utf-8'),
+		label       => _T('Encode Document to utf-8'),
+		comment     => _T('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);
@@ -905,8 +906,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_to',
 		need_editor => 1,
-		label       => Wx::gettext('Encode Document to...'),
-		comment     => Wx::gettext('Select an encoding and encode the document to that'),
+		label       => _T('Encode Document to...'),
+		comment     => _T('Select an encoding and encode the document to that'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to(@_);
@@ -916,8 +917,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Windows'),
-		comment     => Wx::gettext(
+		label       => _T('EOL to Windows'),
+		comment     => _T(
 			'Change the end of line character of the current document to those used in files on MS Windows'),
 		menu_event => sub {
 			$_[0]->convert_to('WIN');
@@ -927,8 +928,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Unix'),
-		comment     => Wx::gettext(
+		label       => _T('EOL to Unix'),
+		comment     => _T(
 			'Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
 		menu_event => sub {
 			$_[0]->convert_to('UNIX');
@@ -938,8 +939,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Mac Classic'),
-		comment => Wx::gettext('Change the end of line character of the current document to that used on Mac Classic'),
+		label       => _T('EOL to Mac Classic'),
+		comment => _T('Change the end of line character of the current document to that used on Mac Classic'),
 		menu_event => sub {
 			$_[0]->convert_to('MAC');
 		},
@@ -950,8 +951,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.tabs_to_spaces',
 		need_editor => 1,
-		label       => Wx::gettext('Tabs to Spaces...'),
-		comment     => Wx::gettext('Convert all tabs to spaces in the current document'),
+		label       => _T('Tabs to Spaces...'),
+		comment     => _T('Convert all tabs to spaces in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Tab_to_Space');
 		},
@@ -960,8 +961,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.spaces_to_tabs',
 		need_editor => 1,
-		label       => Wx::gettext('Spaces to Tabs...'),
-		comment     => Wx::gettext('Convert all the spaces to tabs in the current document'),
+		label       => _T('Spaces to Tabs...'),
+		comment     => _T('Convert all the spaces to tabs in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Space_to_Tab');
 		},
@@ -970,8 +971,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.delete_trailing',
 		need_editor => 1,
-		label       => Wx::gettext('Delete Trailing Spaces'),
-		comment     => Wx::gettext('Remove the spaces from the end of the selected lines'),
+		label       => _T('Delete Trailing Spaces'),
+		comment     => _T('Remove the spaces from the end of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_ending_space;
 		},
@@ -980,8 +981,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.delete_leading',
 		need_editor => 1,
-		label       => Wx::gettext('Delete Leading Spaces'),
-		comment     => Wx::gettext('Remove the spaces from the beginning of the selected lines'),
+		label       => _T('Delete Leading Spaces'),
+		comment     => _T('Remove the spaces from the beginning of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_leading_space;
 		},
@@ -992,8 +993,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.case_upper',
 		need_editor => 1,
-		label       => Wx::gettext('Upper All'),
-		comment     => Wx::gettext('Change the current selection to upper case'),
+		label       => _T('Upper All'),
+		comment     => _T('Change the current selection to upper case'),
 		shortcut    => 'Ctrl-Shift-U',
 		menu_event  => sub {
 			$_[0]->current->editor->UpperCase;
@@ -1003,8 +1004,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.case_lower',
 		need_editor => 1,
-		label       => Wx::gettext('Lower All'),
-		comment     => Wx::gettext('Change the current selection to lower case'),
+		label       => _T('Lower All'),
+		comment     => _T('Change the current selection to lower case'),
 		shortcut    => 'Ctrl-U',
 		menu_event  => sub {
 			$_[0]->current->editor->LowerCase;
@@ -1014,9 +1015,9 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.diff2saved',
 		need_editor => 1,
-		label       => Wx::gettext('Diff to Saved Version'),
+		label       => _T('Diff to Saved Version'),
 		comment =>
-			Wx::gettext('Compare the file in the editor to that on the disk and show the diff in the output window'),
+			_T('Compare the file in the editor to that on the disk and show the diff in the output window'),
 		menu_event => sub {
 			shift->on_diff(@_);
 		},
@@ -1025,8 +1026,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
-		label       => Wx::gettext('Apply Diff to File'),
-		comment     => Wx::gettext('Apply a patch file to the current document'),
+		label       => _T('Apply Diff to File'),
+		comment     => _T('Apply a patch file to the current document'),
 		menu_event  => sub {
 			shift->on_diff(@_);
 		},
@@ -1035,8 +1036,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
-		label       => Wx::gettext('Apply Diff to Project'),
-		comment     => Wx::gettext('Apply a patch file to the current project'),
+		label       => _T('Apply Diff to Project'),
+		comment     => _T('Apply a patch file to the current project'),
 		menu_event  => sub {
 			shift->on_diff(@_);
 		},
@@ -1047,8 +1048,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.filter_tool',
 		need_editor => 1,
-		label       => Wx::gettext('Filter through External Tool...'),
-		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
+		label       => _T('Filter through External Tool...'),
+		comment     => _T('Filters the selection (or the whole document) through any external command.'),
 		menu_event  => sub {
 			shift->on_filter_tool(@_);
 		},
@@ -1056,8 +1057,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'edit.regex',
-		label      => Wx::gettext('Regex Editor'),
-		comment    => Wx::gettext('Open the regular expression editing window'),
+		label      => _T('Regex Editor'),
+		comment    => _T('Open the regular expression editing window'),
 		menu_event => sub {
 			shift->open_regex_editor(@_);
 		},
@@ -1066,9 +1067,9 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
-		label       => Wx::gettext('Show as Hexadecimal'),
+		label       => _T('Show as Hexadecimal'),
 		comment     =>
-			Wx::gettext('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
+			_T('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
 		menu_event => sub {
 			shift->show_as_numbers( @_, 'hex' );
 		},
@@ -1077,8 +1078,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
-		label       => Wx::gettext('Show as Decimal'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in decimal numbers in the output window'),
+		label       => _T('Show as Decimal'),
+		comment     => _T('Show the ASCII values of the selected text in decimal numbers in the output window'),
 		menu_event  => sub {
 			shift->show_as_numbers( @_, 'decimal' );
 		},
@@ -1088,8 +1089,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'edit.preferences',
-		label      => Wx::gettext('Preferences'),
-		comment    => Wx::gettext('Edit the user preferences'),
+		label      => _T('Preferences'),
+		comment    => _T('Edit the user preferences'),
 		menu_event => sub {
 			shift->on_preferences(@_);
 		},
@@ -1101,8 +1102,8 @@ sub init {
 		name        => 'search.find',
 		id          => Wx::wxID_FIND,
 		need_editor => 1,
-		label       => Wx::gettext('&Find...'),
-		comment     => Wx::gettext('Find text or regular expressions using a traditional dialog'),
+		label       => _T('&Find...'),
+		comment     => _T('Find text or regular expressions using a traditional dialog'),
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
@@ -1112,9 +1113,9 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'search.find_next',
-		label       => Wx::gettext('Find Next'),
+		label       => _T('Find Next'),
 		need_editor => 1,
-		comment     => Wx::gettext('Repeat the last find to find the next match'),
+		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
@@ -1154,8 +1155,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'search.find_previous',
 		need_editor => 1,
-		label       => Wx::gettext('&Find Previous'),
-		comment     => Wx::gettext('Repeat the last find, but backwards to find the previous match'),
+		label       => _T('&Find Previous'),
+		comment     => _T('Repeat the last find, but backwards to find the previous match'),
 		shortcut    => 'Shift-F3',
 		menu_event  => sub {
 			$_[0]->search_previous;
@@ -1167,8 +1168,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'search.quick_find',
 		need_editor => 1,
-		label       => Wx::gettext('Quick Find'),
-		comment     => Wx::gettext('Incremental search seen at the bottom of the window'),
+		label       => _T('Quick Find'),
+		comment     => _T('Incremental search seen at the bottom of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->config->set(
@@ -1185,8 +1186,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'search.quick_find_next',
 		need_editor => 1,
-		label       => Wx::gettext('Find Next'),
-		comment     => Wx::gettext('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
+		label       => _T('Find Next'),
+		comment     => _T('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut    => 'F4',
 		menu_event  => sub {
 			$_[0]->fast_find->search('next');
@@ -1196,8 +1197,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'search.quick_find_previous',
 		need_editor => 1,
-		label       => Wx::gettext('Find Previous'),
-		comment  => Wx::gettext('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
+		label       => _T('Find Previous'),
+		comment  => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut => 'Shift-F4',
 		menu_event => sub {
 			$_[0]->fast_find->search('previous');
@@ -1209,8 +1210,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'search.replace',
 		need_editor => 1,
-		label       => Wx::gettext('Replace...'),
-		comment     => Wx::gettext('Find a text and replace it'),
+		label       => _T('Replace...'),
+		comment     => _T('Find a text and replace it'),
 		shortcut    => 'Ctrl-R',
 		toolbar     => 'actions/edit-find-replace',
 		menu_event  => sub {
@@ -1222,8 +1223,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'search.find_in_files',
-		label      => Wx::gettext('Find in Fi&les...'),
-		comment    => Wx::gettext('Search for a text in all files below a given directory'),
+		label      => _T('Find in Fi&les...'),
+		comment    => _T('Search for a text in all files below a given directory'),
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
 			require Padre::Wx::Ack;
@@ -1233,8 +1234,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'search.open_resource',
-		label      => Wx::gettext('Open Resource...'),
-		comment    => Wx::gettext('Type in a filter to select a file'),
+		label      => _T('Open Resource...'),
+		comment    => _T('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
@@ -1246,8 +1247,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'search.quick_menu_access',
-		label      => Wx::gettext('Quick Menu Access...'),
-		comment    => Wx::gettext('Quick access to all menu functions'),
+		label      => _T('Quick Menu Access...'),
+		comment    => _T('Quick access to all menu functions'),
 		shortcut   => 'Ctrl-3',
 		toolbar    => 'status/info',
 		menu_event => sub {
@@ -1261,8 +1262,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.lockinterface',
-		label       => Wx::gettext('Lock User Interface'),
-		comment     => Wx::gettext('If activated, do not allow moving around some of the windows'),
+		label       => _T('Lock User Interface'),
+		comment     => _T('If activated, do not allow moving around some of the windows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			shift->on_toggle_lockinterface(@_);
@@ -1273,9 +1274,9 @@ sub init {
 
 	Padre::Action->new(
 		name  => 'view.output',
-		label => Wx::gettext('Show Output'),
+		label => _T('Show Output'),
 		comment =>
-			Wx::gettext('Show the window displaying the standard output and standard error of the running scripts'),
+			_T('Show the window displaying the standard output and standard error of the running scripts'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
@@ -1284,8 +1285,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.functions',
-		label       => Wx::gettext('Show Functions'),
-		comment     => Wx::gettext('Show a window listing all the functions in the current document'),
+		label       => _T('Show Functions'),
+		comment     => _T('Show a window listing all the functions in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_functions( $_[1]->IsChecked );
@@ -1294,8 +1295,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.todo',
-		label       => Wx::gettext('Show To-do List'),
-		comment     => Wx::gettext('Show a window listing all todo items in the current document'),
+		label       => _T('Show To-do List'),
+		comment     => _T('Show a window listing all todo items in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_todo( $_[1]->IsChecked );
@@ -1304,8 +1305,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'view.outline',
-		label   => Wx::gettext('Show Outline'),
-		comment => Wx::gettext('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
+		label   => _T('Show Outline'),
+		comment => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
@@ -1314,8 +1315,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.directory',
-		label       => Wx::gettext('Show Directory Tree'),
-		comment     => Wx::gettext('Show a window with a directory browser of the current project'),
+		label       => _T('Show Directory Tree'),
+		comment     => _T('Show a window with a directory browser of the current project'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
@@ -1324,8 +1325,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.show_syntaxcheck',
-		label       => Wx::gettext('Show Syntax Check'),
-		comment     => Wx::gettext('Turn on syntax checking of the current document and show output in a window'),
+		label       => _T('Show Syntax Check'),
+		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_syntax( $_[1]->IsChecked );
@@ -1334,8 +1335,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.show_errorlist',
-		label       => Wx::gettext('Show Errors'),
-		comment     => Wx::gettext('Show the list of errors received during execution of a script'),
+		label       => _T('Show Errors'),
+		comment     => _T('Show the list of errors received during execution of a script'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_errorlist( $_[1]->IsChecked );
@@ -1344,8 +1345,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.statusbar',
-		label       => Wx::gettext('Show Status Bar'),
-		comment     => Wx::gettext('Show/hide the status bar at the bottom of the screen'),
+		label       => _T('Show Status Bar'),
+		comment     => _T('Show/hide the status bar at the bottom of the screen'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_statusbar( $_[1] );
@@ -1354,8 +1355,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.toolbar',
-		label       => Wx::gettext('Show Toolbar'),
-		comment     => Wx::gettext('Show/hide the toolbar at the top of the editor'),
+		label       => _T('Show Toolbar'),
+		comment     => _T('Show/hide the toolbar at the top of the editor'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_toolbar( $_[1] );
@@ -1366,8 +1367,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.lines',
-		label       => Wx::gettext('Show Line Numbers'),
-		comment     => Wx::gettext('Show/hide the line numbers of all the documents on the left side of the window'),
+		label       => _T('Show Line Numbers'),
+		comment     => _T('Show/hide the line numbers of all the documents on the left side of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_line_numbers( $_[1] );
@@ -1376,8 +1377,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'view.folding',
-		label   => Wx::gettext('Show Code Folding'),
-		comment => Wx::gettext('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+		label   => _T('Show Code Folding'),
+		comment => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
@@ -1386,8 +1387,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.fold_all',
-		label       => Wx::gettext('Fold all'),
-		comment     => Wx::gettext('Fold all the blocks that can be folded (need folding to be enabled)'),
+		label       => _T('Fold all'),
+		comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->current->editor->fold_all;
@@ -1396,8 +1397,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.unfold_all',
-		label       => Wx::gettext('Unfold all'),
-		comment     => Wx::gettext('Unfold all the blocks that can be folded (need folding to be enabled)'),
+		label       => _T('Unfold all'),
+		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->current->editor->unfold_all;
@@ -1406,8 +1407,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.show_calltips',
-		label       => Wx::gettext('Show Call Tips'),
-		comment     => Wx::gettext('When typing in functions allow showing short examples of the function'),
+		label       => _T('Show Call Tips'),
+		comment     => _T('When typing in functions allow showing short examples of the function'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->config->set(
@@ -1420,8 +1421,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.currentline',
-		label       => Wx::gettext('Show Current Line'),
-		comment     => Wx::gettext('Highlight the line where the cursor is'),
+		label       => _T('Show Current Line'),
+		comment     => _T('Highlight the line where the cursor is'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_currentline( $_[1] );
@@ -1430,8 +1431,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.rightmargin',
-		label       => Wx::gettext('Show Right Margin'),
-		comment     => Wx::gettext('Show a vertical line indicating the right margin'),
+		label       => _T('Show Right Margin'),
+		comment     => _T('Show a vertical line indicating the right margin'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_right_margin( $_[1] );
@@ -1442,8 +1443,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.eol',
-		label       => Wx::gettext('Show Newlines'),
-		comment     => Wx::gettext('Show/hide the newlines with special character'),
+		label       => _T('Show Newlines'),
+		comment     => _T('Show/hide the newlines with special character'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_eol( $_[1] );
@@ -1452,8 +1453,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.whitespaces',
-		label       => Wx::gettext('Show Whitespaces'),
-		comment     => Wx::gettext('Show/hide the tabs and the spaces with special characters'),
+		label       => _T('Show Whitespaces'),
+		comment     => _T('Show/hide the tabs and the spaces with special characters'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_whitespaces( $_[1] );
@@ -1462,8 +1463,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.indentation_guide',
-		label       => Wx::gettext('Show Indentation Guide'),
-		comment     => Wx::gettext('Show/hide vertical bars at every indentation position on the left of the rows'),
+		label       => _T('Show Indentation Guide'),
+		comment     => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_indentation_guide( $_[1] );
@@ -1472,8 +1473,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.word_wrap',
-		label       => Wx::gettext('Word-Wrap'),
-		comment     => Wx::gettext('Wrap long lines'),
+		label       => _T('Word-Wrap'),
+		comment     => _T('Wrap long lines'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_word_wrap( $_[1]->IsChecked );
@@ -1484,8 +1485,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.font_increase',
-		label      => Wx::gettext('Increase Font Size'),
-		comment    => Wx::gettext('Make the letters bigger in the editor window'),
+		label      => _T('Increase Font Size'),
+		comment    => _T('Make the letters bigger in the editor window'),
 		shortcut   => 'Ctrl-+',
 		menu_event => sub {
 			$_[0]->zoom(+1);
@@ -1494,8 +1495,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.font_decrease',
-		label      => Wx::gettext('Decrease Font Size'),
-		comment    => Wx::gettext('Make the letters smaller in the editor window'),
+		label      => _T('Decrease Font Size'),
+		comment    => _T('Make the letters smaller in the editor window'),
 		shortcut   => 'Ctrl--',
 		menu_event => sub {
 			$_[0]->zoom(-1);
@@ -1504,8 +1505,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.font_reset',
-		label      => Wx::gettext('Reset Font Size'),
-		comment    => Wx::gettext('Reset the size of the letters to the default in the editor window'),
+		label      => _T('Reset Font Size'),
+		comment    => _T('Reset the size of the letters to the default in the editor window'),
 		shortcut   => 'Ctrl-0',
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
@@ -1517,8 +1518,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.bookmark_set',
-		label      => Wx::gettext('Set Bookmark'),
-		comment    => Wx::gettext('Create a bookmark in the current file current row'),
+		label      => _T('Set Bookmark'),
+		comment    => _T('Create a bookmark in the current file current row'),
 		shortcut   => 'Ctrl-B',
 		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
@@ -1528,8 +1529,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.bookmark_goto',
-		label      => Wx::gettext('Go to Bookmark'),
-		comment    => Wx::gettext('Select a bookmark created earlier and jump to that position'),
+		label      => _T('Go to Bookmark'),
+		comment    => _T('Select a bookmark created earlier and jump to that position'),
 		shortcut   => 'Ctrl-Shift-B',
 		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
@@ -1541,8 +1542,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'view.full_screen',
-		label       => Wx::gettext('&Full Screen'),
-		comment     => Wx::gettext('Set Padre in full screen mode'),
+		label       => _T('&Full Screen'),
+		comment     => _T('Set Padre in full screen mode'),
 		shortcut    => 'F11',
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
@@ -1563,8 +1564,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.beginner_check',
 		need_editor => 1,
-		label       => Wx::gettext('Check for Common (Beginner) Errors'),
-		comment     => Wx::gettext('Check the current file for common beginner errors'),
+		label       => _T('Check for Common (Beginner) Errors'),
+		comment     => _T('Check the current file for common beginner errors'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1575,8 +1576,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.find_brace',
 		need_editor => 1,
-		label       => Wx::gettext('Find Unmatched Brace'),
-		comment    => Wx::gettext('Searches the source code for brackets with lack a matching (opening/closing) part.'),
+		label       => _T('Find Unmatched Brace'),
+		comment    => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1587,8 +1588,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.find_variable',
 		need_editor => 1,
-		label       => Wx::gettext('Find Variable Declaration'),
-		comment     => Wx::gettext('Find where the selected variable was declared using "my" and put the focus there.'),
+		label       => _T('Find Variable Declaration'),
+		comment     => _T('Find where the selected variable was declared using "my" and put the focus there.'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1599,8 +1600,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.find_method',
 		need_editor => 1,
-		label       => Wx::gettext('Find Method Declaration'),
-		comment     => Wx::gettext('Find where the selected function was defined and put the focus there.'),
+		label       => _T('Find Method Declaration'),
+		comment     => _T('Find where the selected function was defined and put the focus there.'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1612,8 +1613,8 @@ sub init {
 		name        => 'perl.vertically_align_selected',
 		need_editor => 1,
 		shortcut    => 'Ctrl-Shift-Space',
-		label       => Wx::gettext('Vertically Align Selected'),
-		comment     => Wx::gettext('Align a selection of text to the same left column.'),
+		label       => _T('Vertically Align Selected'),
+		comment     => _T('Align a selection of text to the same left column.'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1624,8 +1625,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
-		label       => Wx::gettext('Newline Same Column'),
-		comment     => Wx::gettext(
+		label       => _T('Newline Same Column'),
+		comment     => _T(
 			'Like pressing ENTER somewhere on a line, but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
@@ -1638,9 +1639,9 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
-		label       => Wx::gettext('Create Project Tagsfile'),
+		label       => _T('Create Project Tagsfile'),
 		comment =>
-			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+			_T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1651,8 +1652,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.autocomplete_brackets',
 		need_editor => 1,
-		label       => Wx::gettext('Automatic Bracket Completion'),
-		comment     => Wx::gettext('When typing { insert a closing } automatically'),
+		label       => _T('Automatic Bracket Completion'),
+		comment     => _T('When typing { insert a closing } automatically'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			# Update the saved config setting
@@ -1668,8 +1669,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.rename_variable',
 		need_editor => 1,
-		label       => Wx::gettext('Rename Variable...'),
-		comment => Wx::gettext('Prompt for a replacement variable name and replace all occurrences of this variable'),
+		label       => _T('Rename Variable...'),
+		comment => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('lexical_variable_replacement') or return;
@@ -1691,8 +1692,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.extract_subroutine',
 		need_editor => 1,
-		label       => Wx::gettext('Extract Subroutine...'),
-		comment     => Wx::gettext(
+		label       => _T('Extract Subroutine...'),
+		comment     => _T(
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
 		),
@@ -1717,8 +1718,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.introduce_temporary',
 		need_editor => 1,
-		label       => Wx::gettext('Introduce Temporary Variable...'),
-		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
+		label       => _T('Introduce Temporary Variable...'),
+		comment     => _T('Assign the selected expression to a newly declared variable'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('introduce_temporary_variable') or return;
@@ -1740,8 +1741,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.endify_pod',
 		need_editor => 1,
-		label       => Wx::gettext('Move POD to __END__'),
-		comment     => Wx::gettext('Combine scattered POD at the end of the document'),
+		label       => _T('Move POD to __END__'),
+		comment     => _T('Combine scattered POD at the end of the document'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
@@ -1756,8 +1757,8 @@ sub init {
 		name         => 'run.run_document',
 		need_editor  => 1,
 		need_runable => 1,
-		label        => Wx::gettext('Run Script'),
-		comment      => Wx::gettext('Runs the current document and shows its output in the output panel.'),
+		label        => _T('Run Script'),
+		comment      => _T('Runs the current document and shows its output in the output panel.'),
 		shortcut     => 'F5',
 		need_file    => 1,
 		toolbar      => 'actions/player_play',
@@ -1772,8 +1773,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run Script (Debug Info)'),
-		comment      => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
+		label        => _T('Run Script (Debug Info)'),
+		comment      => _T( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut     => 'Shift-F5',
 		menu_event   => sub {
 			# Enable debug info
@@ -1783,8 +1784,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'run.run_command',
-		label      => Wx::gettext('Run Command'),
-		comment    => Wx::gettext('Runs a shell command and shows the output.'),
+		label      => _T('Run Command'),
+		comment    => _T('Runs a shell command and shows the output.'),
 		shortcut   => 'Ctrl-F5',
 		menu_event => sub {
 			$_[0]->on_run_command;
@@ -1794,8 +1795,8 @@ sub init {
 		name        => 'run.run_tdd_tests',
 		need_file   => 1,
 		need_editor => 1,
-		label       => Wx::gettext('Run Build and Tests'),
-		comment     => Wx::gettext('Builds the current project, then run all tests.'),
+		label       => _T('Run Build and Tests'),
+		comment     => _T('Builds the current project, then run all tests.'),
 		shortcut    => 'Ctrl-Shift-F5',
 		menu_event  => sub {
 			$_[0]->on_run_tdd_tests;
@@ -1806,8 +1807,8 @@ sub init {
 		name        => 'run.run_tests',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Run Tests'),
-		comment     => Wx::gettext(
+		label       => _T('Run Tests'),
+		comment     => _T(
 			'Run all tests for the current project or document and show the results in ' . 'the output panel.'
 		),
 		need_editor => 1,
@@ -1827,8 +1828,8 @@ sub init {
 			return 0 unless defined $objects{document}->{file};
 			return $objects{document}->{file}->{filename} =~ /\.t$/;
 		},
-		label      => Wx::gettext('Run This Test'),
-		comment    => Wx::gettext('Run the current test if the current document is a test. (prove -bv)'),
+		label      => _T('Run This Test'),
+		comment    => _T('Run the current test if the current document is a test. (prove -bv)'),
 		menu_event => sub {
 			$_[0]->on_run_this_test;
 		},
@@ -1840,8 +1841,8 @@ sub init {
 			my %objects = @_;
 			return $main->{command} ? 1 : 0;
 		},
-		label      => Wx::gettext('Stop Execution'),
-		comment    => Wx::gettext('Stop a running task.'),
+		label      => _T('Stop Execution'),
+		comment    => _T('Stop a running task.'),
 		shortcut   => 'F6',
 		toolbar    => 'actions/stop',
 		menu_event => sub {
@@ -1866,8 +1867,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-command',
-		label        => Wx::gettext('Step In') . ' (&s) ',
-		comment      => Wx::gettext(
+		label        => _T('Step In') . ' (&s) ',
+		comment      => _T(
 			'Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)'),
 
 		#shortcut     => 'Shift-F5',
@@ -1883,8 +1884,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
-		label        => Wx::gettext('Step Over') . ' (&n) ',
-		comment      => Wx::gettext(
+		label        => _T('Step Over') . ' (&n) ',
+		comment      => _T(
 			'Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)'
 		),
 
@@ -1902,8 +1903,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-jump-back',
-		label        => Wx::gettext('Step Out') . ' (&r) ',
-		comment      => Wx::gettext('If within a subroutine, run till return is called and then stop.'),
+		label        => _T('Step Out') . ' (&r) ',
+		comment      => _T('If within a subroutine, run till return is called and then stop.'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1918,8 +1919,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_tools-macro',
-		label        => Wx::gettext('Run till Breakpoint') . ' (&c) ',
-		comment      => Wx::gettext('Start running and/or continue running till next breakpoint or watch'),
+		label        => _T('Run till Breakpoint') . ' (&c) ',
+		comment      => _T('Start running and/or continue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1933,8 +1934,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Jump to Current Execution Line'),
-		comment      => Wx::gettext('Set focus to the line where the current statement is in the debugging process'),
+		label        => _T('Jump to Current Execution Line'),
+		comment      => _T('Set focus to the line where the current statement is in the debugging process'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1949,8 +1950,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
-		label        => Wx::gettext('Set Breakpoint') . ' (&b) ',
-		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
+		label        => _T('Set Breakpoint') . ' (&b) ',
+		comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1964,8 +1965,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Remove Breakpoint'),
-		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
+		label        => _T('Remove Breakpoint'),
+		comment      => _T('Remove the breakpoint at the current location of the cursor'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1979,8 +1980,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('List All Breakpoints'),
-		comment      => Wx::gettext('List all the breakpoints on the console'),
+		label        => _T('List All Breakpoints'),
+		comment      => _T('List all the breakpoints on the console'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -1994,8 +1995,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run to Cursor'),
-		comment      => Wx::gettext('Set a breakpoint at the line where to cursor is and run till there'),
+		label        => _T('Run to Cursor'),
+		comment      => _T('Set a breakpoint at the line where to cursor is and run till there'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2010,8 +2011,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Stack Trace') . ' (&T) ',
-		comment      => Wx::gettext('When in a subroutine call show all the calls since the main of the program'),
+		label        => _T('Show Stack Trace') . ' (&T) ',
+		comment      => _T('When in a subroutine call show all the calls since the main of the program'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2026,8 +2027,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-watch-variable',
-		label        => Wx::gettext('Display Value'),
-		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
+		label        => _T('Display Value'),
+		comment      => _T('Display the current value of a variable in the right hand side debugger pane'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2041,8 +2042,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Value Now') . ' (&x) ',
-		comment      => Wx::gettext('Show the value of a variable now in a pop-up window.'),
+		label        => _T('Show Value Now') . ' (&x) ',
+		comment      => _T('Show the value of a variable now in a pop-up window.'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2056,8 +2057,8 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Evaluate Expression...'),
-		comment      => Wx::gettext('Type in any expression and evaluate it in the debugged process'),
+		label        => _T('Evaluate Expression...'),
+		comment      => _T('Type in any expression and evaluate it in the debugged process'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2072,8 +2073,8 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'actions/stop',
-		label        => Wx::gettext('Quit Debugger') . ' (&q) ',
-		comment      => Wx::gettext('Quit the process being debugged'),
+		label        => _T('Quit Debugger') . ' (&q) ',
+		comment      => _T('Quit the process being debugged'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -2086,8 +2087,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'tools.key_bindings',
-		label      => Wx::gettext('Key Bindings'),
-		comment    => Wx::gettext('Show the key bindings dialog to configure Padre shortcuts'),
+		label      => _T('Key Bindings'),
+		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
 		menu_event => sub {
 			$_[0]->on_key_bindings;
 		},
@@ -2097,8 +2098,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.plugin_manager',
-		label      => Wx::gettext('Plug-in Manager'),
-		comment    => Wx::gettext('Show the Padre plug-in manager to enable or disable plug-ins'),
+		label      => _T('Plug-in Manager'),
+		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
@@ -2113,8 +2114,8 @@ sub init {
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Padre::Action->new(
 		name       => 'plugins.plugin_list',
-		label      => Wx::gettext('Plug-in List (CPAN)'),
-		comment    => Wx::gettext('Open browser to a CPAN search showing the Padre::Plugin packages'),
+		label      => _T('Plug-in List (CPAN)'),
+		comment    => _T('Open browser to a CPAN search showing the Padre::Plugin packages'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
@@ -2122,8 +2123,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.edit_my_plugin',
-		label      => Wx::gettext('Edit My Plug-in'),
-		comment    => Wx::gettext('My Plug-in is a plug-in where developers could extend their Padre installation'),
+		label      => _T('Edit My Plug-in'),
+		comment    => _T('My Plug-in is a plug-in where developers could extend their Padre installation'),
 		menu_event => sub {
 			my $file = File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
@@ -2141,8 +2142,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_my_plugin',
-		label      => Wx::gettext('Reload My Plug-in'),
-		comment    => Wx::gettext('This function reloads the My plug-in without restarting Padre'),
+		label      => _T('Reload My Plug-in'),
+		comment    => _T('This function reloads the My plug-in without restarting Padre'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
 		},
@@ -2150,8 +2151,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.reset_my_plugin',
-		label      => Wx::gettext('Reset My plug-in'),
-		comment    => Wx::gettext('Reset the My plug-in to the default'),
+		label      => _T('Reset My plug-in'),
+		comment    => _T('Reset the My plug-in to the default'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("Reset My plug-in"),
@@ -2170,8 +2171,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_all_plugins',
-		label      => Wx::gettext('Reload All Plug-ins'),
-		comment    => Wx::gettext('Reload all plug-ins from disk'),
+		label      => _T('Reload All Plug-ins'),
+		comment    => _T('Reload all plug-ins from disk'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_plugins;
 		},
@@ -2179,8 +2180,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_current_plugin',
-		label      => Wx::gettext('(Re)load Current Plug-in'),
-		comment    => Wx::gettext('Reloads (or initially loads) the current plug-in'),
+		label      => _T('(Re)load Current Plug-in'),
+		comment    => _T('Reloads (or initially loads) the current plug-in'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_current_plugin;
 		},
@@ -2188,8 +2189,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.install_cpan',
-		label      => Wx::gettext("Install CPAN Module"),
-		comment    => Wx::gettext('Install a Perl module from CPAN'),
+		label      => _T("Install CPAN Module"),
+		comment    => _T('Install a Perl module from CPAN'),
 		menu_event => sub {
 			require Padre::CPAN;
 			require Padre::Wx::CPAN;
@@ -2201,8 +2202,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.install_local',
-		label      => Wx::gettext("Install Local Distribution"),
-		comment    => Wx::gettext('Using CPAN.pm to install a CPAN like package opened locally'),
+		label      => _T("Install Local Distribution"),
+		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),
 		menu_event => sub {
 			require Padre::CPAN;
 			Padre::CPAN->install_file($_[0]);
@@ -2211,8 +2212,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.install_remote',
-		label      => Wx::gettext("Install Remote Distribution"),
-		comment    => Wx::gettext('Using pip to download a tar.gz file and install it using CPAN.pm'),
+		label      => _T("Install Remote Distribution"),
+		comment    => _T('Using pip to download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			require Padre::CPAN;
 			Padre::CPAN->install_url($_[0]);
@@ -2221,8 +2222,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'plugins.cpan_config',
-		label      => Wx::gettext("Open CPAN Config File"),
-		comment    => Wx::gettext('Open CPAN::MyConfig.pm for manual editing by experts'),
+		label      => _T("Open CPAN Config File"),
+		comment    => _T('Open CPAN::MyConfig.pm for manual editing by experts'),
 		menu_event => sub {
 			require Padre::CPAN;
 			Padre::CPAN->cpan_config($_[0]);
@@ -2233,8 +2234,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'window.last_visited_file',
-		label       => Wx::gettext('Last Visited File'),
-		comment     => Wx::gettext('Switch to edit the file that was previously edited (can switch back and forth)'),
+		label       => _T('Last Visited File'),
+		comment     => _T('Switch to edit the file that was previously edited (can switch back and forth)'),
 		shortcut    => 'Ctrl-Tab',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2244,8 +2245,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'window.oldest_visited_file',
-		label       => Wx::gettext('Oldest Visited File'),
-		comment     => Wx::gettext('Put focus on tab visited the longest time ago.'),
+		label       => _T('Oldest Visited File'),
+		comment     => _T('Put focus on tab visited the longest time ago.'),
 		shortcut    => 'Ctrl-Shift-Tab',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2255,8 +2256,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'window.next_file',
-		label       => Wx::gettext('Next File'),
-		comment     => Wx::gettext('Put focus on the next tab to the right'),
+		label       => _T('Next File'),
+		comment     => _T('Put focus on the next tab to the right'),
 		shortcut    => 'Alt-Right',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2266,8 +2267,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'window.previous_file',
-		label       => Wx::gettext('Previous File'),
-		comment     => Wx::gettext('Put focus on the previous tab to the left'),
+		label       => _T('Previous File'),
+		comment     => _T('Put focus on the previous tab to the left'),
 		shortcut    => 'Alt-Left',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2279,8 +2280,8 @@ sub init {
 	#       as it's the same like Ctrl-Tab
 	Padre::Action->new(
 		name        => 'window.last_visited_file_old',
-		label       => Wx::gettext('Last Visited File'),
-		comment     => Wx::gettext('???'),
+		label       => _T('Last Visited File'),
+		comment     => _T('???'),
 		shortcut    => 'Ctrl-Shift-P',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2290,8 +2291,8 @@ sub init {
 
 	Padre::Action->new(
 		name        => 'window.right_click',
-		label       => Wx::gettext('Right Click'),
-		comment     => Wx::gettext('Imitate clicking on the right mouse button'),
+		label       => _T('Right Click'),
+		comment     => _T('Imitate clicking on the right mouse button'),
 		shortcut    => 'Alt-/',
 		need_editor => 1,
 		menu_event  => sub {
@@ -2304,8 +2305,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_functions_window',
-		label      => Wx::gettext('Go to Functions Window'),
-		comment    => Wx::gettext('Set the focus to the "Functions" window'),
+		label      => _T('Go to Functions Window'),
+		comment    => _T('Set the focus to the "Functions" window'),
 		shortcut   => 'Alt-N',
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
@@ -2318,8 +2319,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_todo_window',
-		label      => Wx::gettext('Go to Todo Window'),
-		comment    => Wx::gettext('Set the focus to the "Todo" window'),
+		label      => _T('Go to Todo Window'),
+		comment    => _T('Set the focus to the "Todo" window'),
 		shortcut   => 'Alt-T',
 		menu_event => sub {
 			$_[0]->refresh_todo( $_[0]->current );
@@ -2330,8 +2331,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_outline_window',
-		label      => Wx::gettext('Go to Outline Window'),
-		comment    => Wx::gettext('Set the focus to the "Outline" window'),
+		label      => _T('Go to Outline Window'),
+		comment    => _T('Set the focus to the "Outline" window'),
 		shortcut   => 'Alt-L',
 		menu_event => sub {
 			$_[0]->show_outline(1);
@@ -2341,8 +2342,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_output_window',
-		label      => Wx::gettext('Go to Output Window'),
-		comment    => Wx::gettext('Set the focus to the "Output" window'),
+		label      => _T('Go to Output Window'),
+		comment    => _T('Set the focus to the "Output" window'),
 		shortcut   => 'Alt-O',
 		menu_event => sub {
 			$_[0]->show_output(1);
@@ -2352,8 +2353,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_syntax_check_window',
-		label      => Wx::gettext('Go to Syntax Check Window'),
-		comment    => Wx::gettext('Set the focus to the "Syntax Check" window'),
+		label      => _T('Go to Syntax Check Window'),
+		comment    => _T('Set the focus to the "Syntax Check" window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
 			$_[0]->show_syntax(1);
@@ -2363,8 +2364,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'window.goto_main_window',
-		label      => Wx::gettext('Go to Main Window'),
-		comment    => Wx::gettext('Set the focus to the main editor window'),
+		label      => _T('Go to Main Window'),
+		comment    => _T('Set the focus to the main editor window'),
 		shortcut   => 'Alt-M',
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
@@ -2377,8 +2378,8 @@ sub init {
 	Padre::Action->new(
 		name       => 'help.help',
 		id         => Wx::wxID_HELP,
-		label      => Wx::gettext('Help'),
-		comment    => Wx::gettext('Show the Padre help'),
+		label      => _T('Help'),
+		comment    => _T('Show the Padre help'),
 		menu_event => sub {
 			$_[0]->help('Padre');
 		},
@@ -2386,8 +2387,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'help.context_help',
-		label      => Wx::gettext('Search Help'),
-		comment    => Wx::gettext('Search the Perl help pages (perldoc)'),
+		label      => _T('Search Help'),
+		comment    => _T('Search the Perl help pages (perldoc)'),
 		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
@@ -2403,8 +2404,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'help.search',
-		label      => Wx::gettext('Context Help'),
-		comment    => Wx::gettext('Show the help article for the current context'),
+		label      => _T('Context Help'),
+		comment    => _T('Show the help article for the current context'),
 		shortcut   => 'F2',
 		menu_event => sub {
 			# Show Help Search with no topic...
@@ -2415,8 +2416,8 @@ sub init {
 	Padre::Action->new(
 		name        => 'help.current',
 		need_editor => 1,
-		label       => Wx::gettext('Current Document'),
-		comment     => Wx::gettext('Show the POD (Perldoc) version of the current document'),
+		label       => _T('Current Document'),
+		comment     => _T('Show the POD (Perldoc) version of the current document'),
 		menu_event  => sub {
 			$_[0]->help( $_[0]->current->document );
 		},
@@ -2426,8 +2427,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'help.live_support',
-		label   => Wx::gettext('Padre Support (English)'),
-		comment => Wx::gettext(
+		label   => _T('Padre Support (English)'),
+		comment => _T(
 			'Open the Padre live support chat in your web browser '
 			. 'and talk to others who may help you with your problem'
 		),
@@ -2438,8 +2439,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'help.perl_help',
-		label   => Wx::gettext('Perl Help'),
-		comment => Wx::gettext(
+		label   => _T('Perl Help'),
+		comment => _T(
 			'Open the Perl live support chat in your web browser '
 			. 'and talk to others who may help you with your problem'
 		),
@@ -2450,8 +2451,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'help.win32_questions',
-		label   => Wx::gettext('Win32 Questions (English)'),
-		comment => Wx::gettext(
+		label   => _T('Win32 Questions (English)'),
+		comment => _T(
 			'Open the Perl/Win32 live support chat in your web browser '
 			. 'and talk to others who may help you with your problem'
 		),
@@ -2464,8 +2465,8 @@ sub init {
 
 	Padre::Action->new(
 		name    => 'help.visit_perlmonks',
-		label   => Wx::gettext('Visit the PerlMonks'),
-		comment => Wx::gettext(
+		label   => _T('Visit the PerlMonks'),
+		comment => _T(
 			'Open perlmonks.org, one of the biggest Perl community sites, '
 			. 'in your default web browser'
 		),
@@ -2478,16 +2479,16 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'help.report_a_bug',
-		label      => Wx::gettext('Report a New &Bug'),
-		comment    => Wx::gettext('Send a bug report to the Padre developer team'),
+		label      => _T('Report a New &Bug'),
+		comment    => _T('Send a bug report to the Padre developer team'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
 	Padre::Action->new(
 		name       => 'help.view_all_open_bugs',
-		label      => Wx::gettext('View All &Open Bugs'),
-		comment    => Wx::gettext('View all known and currently unsolved bugs in Padre'),
+		label      => _T('View All &Open Bugs'),
+		comment    => _T('View all known and currently unsolved bugs in Padre'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
@@ -2495,8 +2496,8 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'help.translate_padre',
-		label      => Wx::gettext('&Translate Padre...'),
-		comment    => Wx::gettext('Help by translating Padre to your local language'),
+		label      => _T('&Translate Padre...'),
+		comment    => _T('Help by translating Padre to your local language'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
 		},
@@ -2507,8 +2508,8 @@ sub init {
 	Padre::Action->new(
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
-		label      => Wx::gettext('&About'),
-		comment    => Wx::gettext('Show information about Padre'),
+		label      => _T('&About'),
+		comment    => _T('Show information about Padre'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;
 		},
