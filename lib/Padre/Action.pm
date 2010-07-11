@@ -12,10 +12,8 @@ our $VERSION = '0.66';
 use Class::XSAccessor {
 	getters => {
 		id            => 'id',
-		icon          => 'icon',
-		comment       => 'comment',
 		name          => 'name',
-		label         => 'label',
+		icon          => 'icon',
 		shortcut      => 'shortcut',
 		menu_event    => 'menu_event',
 		menu_method   => 'menu_method',
@@ -110,15 +108,15 @@ sub new {
 		}
 	}
 
-	# Localise the label and comment
-	### NOTE: This is temporary, later we'll do this on the fly
-	$self->{label}   = Wx::gettext($self->{label});
-	$self->{comment} = Wx::gettext($self->{comment});
-
 	# Save the action
 	$actions->{$name} = $self;
 
 	return $self;
+}
+
+# Translate on the fly when requested
+sub label {
+	Wx::gettext($_[0]->{label});
 }
 
 # A label textual data without any strange menu characters
@@ -127,6 +125,11 @@ sub label_text {
 	my $label = $self->label;
 	$label =~ s/\&//g;
 	return $label;
+}
+
+# Translate on the fly when requested
+sub comment {
+	Wx::gettext($_[0]->{comment});
 }
 
 # Label for use with menu (with shortcut)

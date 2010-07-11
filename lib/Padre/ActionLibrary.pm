@@ -7,14 +7,16 @@ package Padre::ActionLibrary;
 use 5.008005;
 use strict;
 use warnings;
-use File::Spec      ();
-use Params::Util    ();
-use Padre::Util     ('_T');
-use Padre::Constant ();
-use Padre::Current  ();
-use Padre::Action   ();
-use Padre::Wx       ();
-use Padre::Wx::Menu ();
+use File::Spec           ();
+use Params::Util         ();
+use Padre::Util          ('_T');
+use Padre::Config::Style ();
+use Padre::Current       ();
+use Padre::Constant      ();
+use Padre::MimeTypes     ();
+use Padre::Action        ();
+use Padre::Wx            ();
+use Padre::Wx::Menu      ();
 use Padre::Logger;
 
 our $VERSION = '0.66';
@@ -1178,7 +1180,6 @@ sub init {
 			);
 			return;
 		},
-		checked_default => $config->find_quick,
 	);
 
 	# We should be able to remove F4 and Shift+F4 and hook this functionality
@@ -1363,6 +1364,22 @@ sub init {
 		},
 	);
 
+	# MIME Type Actions
+	SCOPE: {
+		my %mime = Padre::MimeTypes::menu_view_mimes();
+
+		foreach my $name ( sort keys %mime ) {
+			Padre::Action->new(
+				name       => "view.mime.$name",
+				label      => $mime{$name},
+				comment    => _T('Switch document type'),
+				menu_event => sub {
+					$_[0]->set_mimetype($mime{$name});
+				},
+			);
+		}
+	}
+
 	# Editor Functionality
 
 	Padre::Action->new(
@@ -1537,6 +1554,66 @@ sub init {
 			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
 		},
 	);
+
+	# Style Actions
+
+	SCOPE: {
+		my %styles = Padre::Config::Style->core_styles;
+
+		foreach my $name ( sort keys %styles ) {
+			Padre::Action->new(
+				name       => "view.style.$name",
+				label      => $styles{$name},
+				comment    => _T('Switch highlighting colours'),
+				menu_event => sub {
+					$_[0]->change_style($name);
+				},
+			);
+		}
+	}
+
+	SCOPE: {
+		my @styles = Padre::Config::Style->user_styles;
+
+		foreach my $name ( @styles ) {
+			Padre::Action->new(
+				name    => "view.style.$name",
+				label   => $name,
+				comment => _T('Switch highlighting colours'),
+				menu_event => sub {
+					$_[0]->change_style($name, 1);
+				},
+			);
+		}
+	}
+
+	# Language Menu Actions
+
+	SCOPE: {
+		my %language = Padre::Locale::menu_view_languages();
+
+		Padre::Action->new(
+			name        => 'view.language.default',
+			label       => _T('System Default'),
+			comment     => _T('Switch language to system default'),
+			menu_method => 'AppendCheckItem',
+			menu_event  => sub {
+				$_[0]->change_locale;
+			},
+		);
+
+		foreach my $name ( sort keys %language ) {
+			Padre::Action->new(
+				name        => "view.language.$name",
+				label       => $language{$name},
+				comment     => _T('Switch menu to alternate language'),
+				menu_method => 'AppendRadioItem',
+				menu_event  => sub {
+					$_[0]->change_locale($name);
+				},
+			);
+		}
+	}
 
 	# Window Effects
 

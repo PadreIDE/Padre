@@ -12,8 +12,8 @@ Padre::Wx::Main - The main window for the Padre IDE
 =head1 DESCRIPTION
 
 C<Padre::Wx::Main> implements Padre's main window. It is the window
-containing the menus, the notebook with all opened tabs, the various sub-
-windows (outline, subs, output, errors, etc).
+containing the menus, the notebook with all opened tabs, the various
+sub-windows (outline, subs, output, errors, etc).
 
 It inherits from C<Wx::Frame>, so check Wx documentation to see all
 the available methods that can be applied to it besides the added ones
@@ -150,10 +150,6 @@ sub new {
 	# This prevents tons of ide->config
 	$self->{config} = $config;
 
-	# Create the lock manager before any gui operations,
-	# so that we can do locking operations during startup.
-	$self->{locker} = Padre::Locker->new($self);
-
 	# Remember where the editor started from,
 	# this could be handy later.
 	$self->{cwd} = Cwd::cwd();
@@ -170,6 +166,10 @@ sub new {
 		chdir( File::HomeDir->my_home );
 	}
 
+	# Create the lock manager before any gui operations,
+	# so that we can do locking operations during startup.
+	$self->{locker} = Padre::Locker->new($self);
+
 	# Bootstrap locale support before we start fiddling with the GUI.
 	$self->{locale} = Padre::Locale::object();
 
@@ -177,8 +177,11 @@ sub new {
 	# if it gets very small, or even mildly small.
 	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
 
-	# Drag and drop support
+	# Bootstrap drag and drop support
 	Padre::Wx::FileDropTarget->set($self);
+
+	# Bootstrap the action system
+	Padre::ActionLibrary->init($self);
 
 	# Temporary store for the notebook tab history
 	# TO DO: Storing this here (might) violate encapsulation.
@@ -190,9 +193,6 @@ sub new {
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
-
-	# Create the actions
-	Padre::ActionLibrary->init($self);
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
@@ -1621,14 +1621,6 @@ sub relocale {
 
 	# Relocale the plug-ins
 	$self->ide->plugin_manager->relocale;
-
-	# Empty actions to stop getting false warnings about duplicated
-	# actions and shortcuts
-	my %actions = ();
-	$self->ide->actions( \%actions );
-
-	# Create the actions (again)
-	Padre::ActionLibrary->init($self);
 
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};

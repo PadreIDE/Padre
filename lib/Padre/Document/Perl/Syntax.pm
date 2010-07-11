@@ -35,7 +35,7 @@ sub syntax {
 			my $hook = $1 . ".pm";
 			$hook =~ s/::/\//g;
 			$file->print("BEGIN {\n");
-			$file->print("\t\$INC{$hook} = '$file';\n");
+			$file->print("\t\$INC{'$hook'} = '$file';\n");
 			$file->print("}\n");
 			$file->print("#line 0\n");
 		}

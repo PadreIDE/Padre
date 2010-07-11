@@ -5,11 +5,47 @@ package Padre::Config::Style;
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
-use Params::Util ();
-use YAML::Tiny   ();
+use Carp            ();
+use File::Spec      ();
+use File::Glob      ();
+use File::Basename  ();
+use Params::Util    ();
+use Padre::Constant ();
+use Padre::Util     ('_T');
 
 our $VERSION = '0.66';
+
+
+
+
+
+######################################################################
+# Style Library
+
+# Define the core style library
+our %CORE_STYLES = (
+	default   => _T('Padre'),
+	evening   => _T('Evening'),
+	night     => _T('Night'),
+	ultraedit => _T('Ultraedit'),
+	notepad   => _T('Notepad++'),
+);
+
+# Locate any custom user styles
+our $USER_DIRECTORY = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
+our @USER_STYLES    = map {
+	substr( File::Basename::basename($_), 0, -4 )
+} File::Glob::glob(
+	File::Spec->catdir( $USER_DIRECTORY, '*.yml' )
+);
+
+sub core_styles {
+	return %CORE_STYLES;
+}
+
+sub user_styles {
+	return @USER_STYLES;
+}
 
 
 
@@ -20,7 +56,7 @@ our $VERSION = '0.66';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self = bless { @_ }, $class;
 	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}
@@ -39,7 +75,10 @@ sub load {
 	}
 
 	# Load the YAML file
-	my $data = eval { YAML::Tiny::LoadFile($file); };
+	my $data = eval {
+		require YAML::Tiny;
+		YAML::Tiny::LoadFile($file);
+	};
 	if ($@) {
 		warn $@;
 		return;

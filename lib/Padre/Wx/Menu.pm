@@ -22,7 +22,7 @@ use Class::XSAccessor {
 };
 
 # Default implementation of refresh
-sub refresh {1}
+sub refresh { 1 }
 
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys
@@ -47,49 +47,23 @@ sub Append {
 	return $item;
 }
 
-# Add a normal menu item to menu from a Padre action
-# not in use as all simple menu items should use the action system
-#sub add_menu_item {
-#	shift->_add_menu_item( 'Append', @_ );
-#}
-
-# Add a checked menu item to menu from a Padre action
-sub add_checked_menu_item {
-	shift->_add_menu_item( 'AppendCheckItem', @_ );
-}
-
-# Add a radio menu item to menu from a Padre action
-sub add_radio_menu_item {
-	shift->_add_menu_item( 'AppendRadioItem', @_ );
-}
-
 # Add a normal menu item to menu from a existing Padre action
 sub add_menu_action {
-	my $self        = shift;
-	my $menu        = shift;
-	my $action_name = shift;
-
+	my $self    = shift;
+	my $menu    = shift;
+	my $name    = shift;
 	my $actions = Padre->ide->actions;
-	if ( !defined( $actions->{$action_name} ) ) {
-		warn 'Action "' . $action_name . '" could not be found!';
-		return 0;
-	}
-	my $action   = $actions->{$action_name};
-	my $name     = $action->name;
-	my $shortcut = $action->shortcut;
-	my $method   = $action->menu_method || 'Append';
+	my $action  = $actions->{$name} or return 0;
+	my $method  = $action->menu_method || 'Append';
 
 	my $item = $menu->$method(
 		$action->id,
 		$action->label_menu,
 	);
-	$item->Check( $action->{checked_default} )
-		if $method eq 'AppendCheckItem';
 
-	if ( $action->comment ) {
-		$item->SetHelp( $action->comment );
-	} else {
-		warn $action->label;
+	my $comment = $action->comment;
+	if ( $comment ) {
+		$item->SetHelp($comment);
 	}
 
 	Wx::Event::EVT_MENU(
@@ -97,37 +71,6 @@ sub add_menu_action {
 		$item,
 		$action->menu_event,
 	);
-
-	return $item;
-}
-
-# (Private method)
-# Add a normal/checked/radio menu item to menu from a Padre action
-sub _add_menu_item {
-	my $self     = shift;
-	my $method   = shift;
-	my $menu     = shift;
-	my $action   = Padre::Action->new(@_);
-	my $name     = $action->name;
-	my $shortcut = $action->shortcut;
-
-	my $item = $menu->$method(
-		$action->id,
-		$action->label_menu,
-	);
-	if ( $action->comment ) {
-		$item->SetHelp( $action->comment );
-	} else {
-		warn "comment is missing from menu '$name'";
-	}
-	Wx::Event::EVT_MENU(
-		$self->{main},
-		$item,
-		$action->menu_event,
-	);
-
-	# Adding actions to the main action hash has been moved to
-	# Action.pm for compatibility.
 
 	return $item;
 }

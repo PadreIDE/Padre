@@ -4,10 +4,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 32;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
-use Padre::Config::Style;
+use t::lib::Padre;
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
@@ -18,6 +18,18 @@ my @styles = qw{
 	notepad
 	ultraedit
 };
+
+
+
+
+
+######################################################################
+# Check the new Padre::Style API
+
+use_ok( 'Padre::Config::Style' );
+my %hash = Padre::Config::Style->core_styles;
+is( scalar(keys %hash), 5, 'Found 5 core styles' );
+my @user = Padre::Config::Style->user_styles;
 
 
 
@@ -37,3 +49,10 @@ foreach my $name (@styles) {
 		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }
+
+
+
+
+
+
+1;
