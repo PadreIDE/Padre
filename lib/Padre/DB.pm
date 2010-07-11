@@ -231,53 +231,53 @@ above). Note that the modules automatically created provide both class
 methods and instance methods, where the object instances each represent
 a table record.
 
-=head2 C<dsn>
+=head2 dsn
 
-  my $string = Foo::Bar->dsn;
+  my $string = Padre::DB->dsn;
 
 The C<dsn> accessor returns the L<DBI> connection string used to connect
 to the SQLite database as a string.
 
-=head2 C<dbh>
+=head2 dbh
 
-  my $handle = Foo::Bar->dbh;
+  my $handle = Padre::DB->dbh;
 
-To reliably prevent potential SQLite deadlocks resulting from multiple
+To reliably prevent potential L<SQLite> deadlocks resulting from multiple
 connections in a single process, each ORLite package will only ever
 maintain a single connection to the database.
 
 During a transaction, this will be the same (cached) database handle.
 
-Although in most situations you should not need a direct L<DBI> connection
+Although in most situations you should not need a direct DBI connection
 handle, the C<dbh> method provides a method for getting a direct
-connection in a way that is compatible with ORLite's connection
-management.
+connection in a way that is compatible with connection management in
+L<ORLite>.
 
 Please note that these connections should be short-lived, you should
-never hold onto a connection beyond the immediate scope.
+never hold onto a connection beyond your immediate scope.
 
 The transaction system in ORLite is specifically designed so that code
 using the database should never have to know whether or not it is in a
-transaction.
+transation.
 
 Because of this, you should B<never> call the -E<gt>disconnect method
 on the database handles yourself, as the handle may be that of a
 currently running transaction.
 
 Further, you should do your own transaction management on a handle
-provided by the C<dbh> method.
+provided by the <dbh> method.
 
 In cases where there are extreme needs, and you B<absolutely> have to
 violate these connection handling rules, you should create your own
-completely manual C<< DBI->connect >> call to the database, using the connect
+completely manual DBI-E<gt>connect call to the database, using the connect
 string provided by the C<dsn> method.
 
 The C<dbh> method returns a L<DBI::db> object, or throws an exception on
 error.
 
-=head2 C<begin>
+=head2 begin
 
-  Foo::Bar->begin;
+  Padre::DB->begin;
 
 The C<begin> method indicates the start of a transaction.
 
@@ -290,9 +290,9 @@ or doesn't need to care.
 
 Returns true or throws an exception on error.
 
-=head2 C<commit>
+=head2 commit
 
-  Foo::Bar->commit;
+  Padre::DB->commit;
 
 The C<commit> method commits the current transaction. If called outside
 of a current transaction, it is accepted and treated as a null operation.
@@ -303,7 +303,7 @@ transaction, you will need to issue a separate -E<gt>begin call.
 
 Returns true or throws an exception on error.
 
-=head2 C<rollback>
+=head2 rollback
 
 The C<rollback> method rolls back the current transaction. If called outside
 of a current transaction, it is accepted and treated as a null operation.
@@ -317,11 +317,12 @@ automatically rolled back.
 
 Returns true or throws an exception on error.
 
-=head2 C<do>
+=head2 do
 
-  Foo::Bar->do('insert into table (foo, bar) values (?, ?)', {},
-      $foo_value,
-      $bar_value,
+  Padre::DB->do(
+      'insert into table ( foo, bar ) values ( ?, ? )', {},
+      \$foo_value,
+      \$bar_value,
   );
 
 The C<do> method is a direct wrapper around the equivalent L<DBI> method,
@@ -330,7 +331,7 @@ but applied to the appropriate locally-provided connection or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectall_arrayref>
+=head2 selectall_arrayref
 
 The C<selectall_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -339,7 +340,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectall_hashref>
+=head2 selectall_hashref
 
 The C<selectall_hashref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -348,7 +349,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectcol_arrayref>
+=head2 selectcol_arrayref
 
 The C<selectcol_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -357,7 +358,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectrow_array>
+=head2 selectrow_array
 
 The C<selectrow_array> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -366,7 +367,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectrow_arrayref>
+=head2 selectrow_arrayref
 
 The C<selectrow_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -375,7 +376,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<selectrow_hashref>
+=head2 selectrow_hashref
 
 The C<selectrow_hashref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -384,7 +385,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 C<prepare>
+=head2 prepare
 
 The C<prepare> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -397,22 +398,26 @@ In general though, you should try to avoid the use of your own prepared
 statements if possible, although this is only a recommendation and by
 no means prohibited.
 
-=head2 C<pragma>
+=head2 pragma
 
   # Get the user_version for the schema
-  my $version = Foo::Bar->pragma('user_version');
+  my $version = Padre::DB->pragma('user_version');
 
 The C<pragma> method provides a convenient method for fetching a pragma
-for a database. See the SQLite documentation for more details.
+for a database. See the L<SQLite> documentation for more details.
 
 =head1 SUPPORT
 
-Padre::DB is based on L<ORLite> 1.18.
+B<Padre::DB> is based on L<ORLite>.
 
-Documentation created by L<ORLite::Pod> 0.06.
+Documentation created by L<ORLite::Pod> 0.10.
 
 For general support please see the support section of the main
 project documentation.
+
+=head1 AUTHOR
+
+Adam Kennedy E<lt>adamk@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 

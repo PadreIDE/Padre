@@ -45,48 +45,50 @@ TO BE COMPLETED
 
 TO BE COMPLETED
 
-=head1 INTERFACE
+=head1 METHODS
 
-=head2 Methods
+=head2 base
 
-=head3 recent
+  # Returns 'Padre::DB'
+  my $namespace = Padre::DB::History->base;
 
-  # Get the values for a "Recent Files" menu
-  my @files = Padre::DB::History->recent('files', 10);
+Normally you will only need to work directly with a table class,
+and only with one ORLite package.
 
-The C<recent> method is non-L<ORLite> method that is used to retrieve the
-most recent distinct values for a particular history category.
+However, if for some reason you need to work with multiple ORLite packages
+at the same time without hardcoding the root namespace all the time, you
+can determine the root namespace from an object or table class with the
+C<base> method.
 
-It takes a compulsory parameter of the history type to retrieve, and an
-optional positive integer for the maximum number of distinct values to
-retrieve (10 by default).
+=head2 table
 
-Returns a list of zero or more 'name' values in array context.
+  # Returns 'history'
+  print Padre::DB::History->table;
 
-Returns a reference to an array of zero or more 'name' values in scalar context.
+While you should not need the name of table for any simple operations,
+from time to time you may need it programatically. If you do need it,
+you can use the C<table> method to get the table name.
 
-Throws an exception if the history query fails.
+=head2 load
 
-=head3 previous
+  my $object = Padre::DB::History->load( $id );
 
-  # Get the single most recent file
-  my $file = Padre::DB::History->previous('files');
+If your table has single column primary key, a C<load> method will be
+generated in the class. If there is no primary key, the method is not
+created.
 
-The C<previous> method is the single-value form of the C<recent> method.
+The C<load> method provides a shortcut mechanism for fetching a single
+object based on the value of the primary key. However it should only
+be used for cases where your code trusts the record to already exists.
 
-It takes a compulsory parameter of the history type to retrieve.
+It returns a C<Padre::DB::History> object, or throws an exception if the
+object does not exist.
 
-Returns the single most recent value as a string.
-
-Returns C<undef> if there are no values.
-
-Throws an exception if the history query fails.
-
-=head3 select
+=head2 select
 
   # Get all objects in list context
   my @list = Padre::DB::History->select;
-
+  
   # Get a subset of objects in scalar context
   my $array_ref = Padre::DB::History->select(
       'where id > ? order by id',
@@ -102,16 +104,62 @@ to be bound to the placeholders in the SQL phrase. Any SQL that is
 compatible with SQLite can be used in the parameter.
 
 Returns a list of B<Padre::DB::History> objects when called in list context, or a
-reference to an ARRAY of B<Padre::DB::History> objects when called in scalar context.
+reference to an C<ARRAY> of B<Padre::DB::History> objects when called in scalar
+context.
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
-=head3 count
+=head2 iterate
+
+  Padre::DB::History->iterate( sub {
+      print $_->id . "\n";
+  } );
+
+The C<iterate> method enables the processing of large tables one record at
+a time without loading having to them all into memory in advance.
+
+This plays well to the strength of SQLite, allowing it to do the work of
+loading arbitrarily large stream of records from disk while retaining the
+full power of Perl when processing the records.
+
+The last argument to C<iterate> must be a subroutine reference that will be
+called for each element in the list, with the object provided in the topic
+variable C<$_>.
+
+This makes the C<iterate> code fragment above functionally equivalent to the
+following, except with an O(1) memory cost instead of O(n).
+
+  foreach ( Padre::DB::History->select ) {
+      print $_->id . "\n";
+  }
+
+You can filter the list via SQL in the same way you can with C<select>.
+
+  Padre::DB::History->iterate(
+      'order by ?', 'id',
+      sub {
+          print $_->id . "\n";
+      }
+  );
+
+You can also use it in raw form from the root namespace for better control.
+Using this form also allows for the use of arbitrarily complex queries,
+including joins. Instead of being objects, rows are provided as C<ARRAY>
+references when used in this form.
+
+  Padre::DB->iterate(
+      'select name from history order by id',
+      sub {
+          print $_->[0] . "\n";
+      }
+  );
+
+=head2 count
 
   # How many objects are in the table
   my $rows = Padre::DB::History->count;
-
-  # How many objects
+  
+  # How many objects 
   my $small = Padre::DB::History->count(
       'where id > ?',
       1000,
@@ -129,16 +177,16 @@ Returns the number of objects that match the condition.
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
-=head3 new
+=head2 new
 
-TO BE COMPLETED
+  TO BE COMPLETED
 
 The C<new> constructor is used to create a new abstract object that
 is not (yet) written to the database.
 
 Returns a new L<Padre::DB::History> object.
 
-=head3 create
+=head2 create
 
   my $object = Padre::DB::History->create(
 
@@ -152,17 +200,17 @@ Returns a new L<Padre::DB::History> object.
 
 The C<create> constructor is a one-step combination of C<new> and
 C<insert> that takes the column parameters, creates a new
-L<Padre::DB::History> object, inserts the appropriate row into the L<history>
-table, and then returns the object.
+L<Padre::DB::History> object, inserts the appropriate row into the
+L<history> table, and then returns the object.
 
 If the primary key column C<id> is not provided to the
 constructor (or it is false) the object returned will have
 C<id> set to the new unique identifier.
+ 
+Returns a new L<history> object, or throws an exception on
+error, typically from the L<DBI> layer.
 
-Returns a new L<history> object, or throws an exception on error,
-typically from the L<DBI> layer.
-
-=head3 insert
+=head2 insert
 
   $object->insert;
 
@@ -176,11 +224,11 @@ C<id> set to the new unique identifier.
 Returns the object itself as a convenience, or throws an exception
 on error, typically from the L<DBI> layer.
 
-=head3 delete
+=head2 delete
 
   # Delete a single instantiated object
   $object->delete;
-
+  
   # Delete multiple rows from the history table
   Padre::DB::History->delete('where id > ?', 1000);
 
@@ -199,7 +247,7 @@ in the parameter.
 Returns true on success or throws an exception on error, or if you
 attempt to call delete without a SQL condition phrase.
 
-=head3 truncate
+=head2 truncate
 
   # Delete all records in the history table
   Padre::DB::History->truncate;
@@ -214,9 +262,9 @@ all records in a table with specific intent.
 
 Returns true, or throws an exception on error.
 
-=head2 Accessors
+=head1 ACCESSORS
 
-=head3 id
+=head2 id
 
   if ( $object->id ) {
       print "Object has been inserted\n";
@@ -226,15 +274,18 @@ Returns true, or throws an exception on error.
 
 Returns true, or throws an exception on error.
 
+REMAINING ACCESSORS TO BE COMPLETED
 
-  REMAINING ACCESSORS TO BE COMPLETED
-
-=head2 SQL
+=head1 SQL
 
 The history table was originally created with the
 following SQL command.
 
-  CREATE TABLE history (id INTEGER PRIMARY KEY, type VARCHAR(100), name VARCHAR(100))
+  CREATE TABLE history (
+      id INTEGER PRIMARY KEY,
+      type VARCHAR(255),
+      name VARCHAR(255)
+  )
 
 =head1 SUPPORT
 
@@ -244,7 +295,7 @@ See the documentation for L<Padre::DB> for more information.
 
 =head1 AUTHOR
 
-Adam Kennedy
+Adam Kennedy E<lt>adamk@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
