@@ -41,7 +41,7 @@ sub create {
 	if ( $ENV{PADRE_EXPORT_ACTIONS} ) {
 		require Data::Dumper;
 		require File::Spec;
-		$Data::Dumper::Purity = 1;
+		$Data::Dumper::Purity = $Data::Dumper::Purity = 1;
 		open(
 			my $action_export_fh,
 			'>',
