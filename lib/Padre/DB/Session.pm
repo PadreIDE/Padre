@@ -96,8 +96,6 @@ This is the primary table, you also need to check C<Padre::DB::SessionFiles>.
 Return a C<Padre::DB::Session> object pointing to last Padre session. If
 none exists, a new one will be created and returned.
 
-=back
-
 =head2 files
 
   my @files = $session->files
