@@ -26,6 +26,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       will remove the need to import ':everything', saving 50-100k (ADAMK)
     - Actions now only need to be declared once, and are all declared in one
       place in advance (ADAMK)
+    - Directory Tree sort order is now (advanced) configurable between
+      directory-first and directory-mixed (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

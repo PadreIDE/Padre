@@ -194,15 +194,18 @@ sub refresh {
 	# have a "current project". We should probably try to find a way
 	# to correct this in future.
 	my $current = $self->current;
+	my $config  = $current->config;
 	my $project = $current->project;
 	my $root    = '';
-	my @options = ();
+	my @options = (
+		order => $config->main_directory_order,
+	);
 	if ($project) {
 		$root = $project->root;
-		@options = ( project => $project );
+		push @options, ( project => $project );
 	} else {
-		$root = $current->config->default_projects_directory;
-		@options = ( root => $root );
+		$root = $config->default_projects_directory;
+		push @options, ( root => $root );
 	}
 
 	# Before we change anything, store the expansion state
