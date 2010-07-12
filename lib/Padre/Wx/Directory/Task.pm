@@ -76,7 +76,7 @@ sub run {
 	my $dev = ( stat($root) )[0];
 
 	# Recursively scan for files
-	while (@queue) {
+	while ( @queue ) {
 		my $parent = shift @queue;
 		my @path   = $parent->path;
 		my $dir    = File::Spec->catdir( $root, @path );
@@ -88,21 +88,24 @@ sub run {
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
-		foreach my $file (@list) {
-
-			my $skip = 0;
-
+		# Phase 1 - Map the files into path objects
+		my @objects = ();
+		foreach my $file ( @list ) {
 			next if $file =~ /^\.+\z/;
+
+			# Traverse symlinks
+			my $skip     = 0;
 			my $fullname = File::Spec->catdir( $dir, $file );
-
-			while (1) {
-
+			while ( 1 ) {
 				my $target;
 
 				# readlink may die if symlinks are not implemented
-				eval { $target = readlink($fullname); };
-				last if $@; # readlink failed
-				last unless defined($target); # not a link
+				local $@;
+				eval {
+					$target = readlink($fullname);
+				};
+				last if $@;                  # readlink failed
+				last unless defined $target; # not a link
 
 				# Target may be "/home/user/foo" or "../foo" or "bin/foo"
 				$fullname =
@@ -112,7 +115,9 @@ sub run {
 
 				# Get it from the cache in case of loops:
 				if ( exists $path_cache{$fullname} ) {
-					push @files, $path_cache{$fullname} if defined( $path_cache{$fullname} );
+					if ( defined $path_cache{$fullname} ) {
+						push @files, $path_cache{$fullname};
+					}
 					$skip = 1;
 					last;
 				}
@@ -122,10 +127,9 @@ sub run {
 			}
 			next if $skip;
 
-			my @fstat = stat($fullname);
-
 			# File doesn't exist, either a directory error, symlink to nowhere or something unexpected.
 			# Don't worry, just skip, because we can't show it in the dir browser anyway
+			my @fstat = stat($fullname);
 			next if $#fstat == -1;
 
 			if ( $dev != $fstat[0] ) {
@@ -134,30 +138,40 @@ sub run {
 				next;
 			}
 
+			# Convert to the path object and apply ignorance
 			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file( @path, $file );
 				next if $rule->skipped( $object->unix );
-				push @files, $object;
+				push @objects, [ $fullname, $object ];
 
 			} elsif ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
 				next if $rule->skipped( $object->unix );
-				push @files, $object;
-
-				# Continue down within it?
-				next unless $self->{recursive};
-				push @queue, $object;
-				$path_cache{$fullname} = $object;
-
+				push @objects, [ $fullname, $object ]
 			} else {
 				warn "Unknown or unsupported file type for $fullname" unless NO_WARN;
 			}
 		}
+
+		# Phase 2 - Apply the user's sort order
+		# NOTE@waxhead this is where your change needs to be
+		@objects = sort { $a->[1]->compare($b->[1]) } @objects;
+
+		# Phase 3 - Add to output and recurse
+		push @files, map { $_->[1] } @objects;
+		foreach my $object ( reverse @objects ) {
+			# NOTE: Selective expansion should be done here
+			next unless $self->{recursive};
+
+			# Because we now sort a directory at a time, we'll need to do it
+			# depth-first. So add the directories to the front of the queue.
+			unshift @queue, $object->[1];
+			$path_cache{$object->[0]} = $object->[1];
+		}
 	}
 
-	# Case insensitive Schwartzian sort so the caller doesn't have to
-	# do the sort while blocking.
-	$self->{model} = [ sort { $a->compare($b) } @files ];
+	# Save and return
+	$self->{model} = [ @files ];
 
 	return 1;
 }
