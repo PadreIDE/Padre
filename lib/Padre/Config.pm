@@ -493,6 +493,16 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'main_directory_order',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'first',
+	options => {
+		first => _T('Directories First'),
+		mixed => _T('Directories Mixed'),
+	},
+);
+setting(
 	name    => 'main_directory_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
