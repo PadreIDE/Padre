@@ -28,6 +28,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       place in advance (ADAMK)
     - Directory Tree sort order is now (advanced) configurable between
       directory-first and directory-mixed (ADAMK)
+    - Moved the Padre::Action* classes to Padre::Wx::Action* as they are now
+      much more tightly dependant on Wx (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

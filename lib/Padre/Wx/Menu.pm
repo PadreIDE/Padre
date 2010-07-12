@@ -5,7 +5,7 @@ package Padre::Wx::Menu;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Action ();
+use Padre::Wx::Action ();
 use Padre::Wx     ();
 
 use Class::Adapter::Builder

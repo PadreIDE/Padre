@@ -38,8 +38,8 @@ use List::MoreUtils               ();
 use Scalar::Util                  ();
 use Params::Util                  ();
 use Time::HiRes                   ();
-use Padre::Action                 ();
-use Padre::ActionLibrary          ();
+use Padre::Wx::Action                 ();
+use Padre::Wx::ActionLibrary          ();
 use Padre::Constant               ();
 use Padre::Util                   ('_T');
 use Padre::Perl                   ();
@@ -181,7 +181,7 @@ sub new {
 	Padre::Wx::FileDropTarget->set($self);
 
 	# Bootstrap the action system
-	Padre::ActionLibrary->init($self);
+	Padre::Wx::ActionLibrary->init($self);
 
 	# Temporary store for the notebook tab history
 	# TO DO: Storing this here (might) violate encapsulation.

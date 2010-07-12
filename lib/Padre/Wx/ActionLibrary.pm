@@ -1,4 +1,4 @@
-package Padre::ActionLibrary;
+package Padre::Wx::ActionLibrary;
 
 # Defines all the core actions for Padre.
 # It's a little on the bloaty side, but splitting it into different files
@@ -14,7 +14,7 @@ use Padre::Config::Style ();
 use Padre::Current       ();
 use Padre::Constant      ();
 use Padre::MimeTypes     ();
-use Padre::Action        ();
+use Padre::Wx::Action        ();
 use Padre::Wx            ();
 use Padre::Wx::Menu      ();
 use Padre::Logger;
@@ -35,7 +35,7 @@ sub init {
 
 	# Script Execution
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'internal.dump_padre',
 		label      => _T('Dump the Padre object to STDOUT'),
 		comment    => _T('Dumps the complete Padre object to STDOUT for testing/debugging.'),
@@ -56,7 +56,7 @@ sub init {
 
 	# Delay the action queue
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'internal.wait10',
 		label      => _T('Delay the action queue for 10 seconds'),
 		comment    => _T('Stops processing of other action queue items for 10 seconds'),
@@ -65,7 +65,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'internal.wait30',
 		label      => _T('Delay the action queue for 30 seconds'),
 		comment    => _T('Stops processing of other action queue items for 30 seconds'),
@@ -76,7 +76,7 @@ sub init {
 
 	# Create new things
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new',
 		label      => _T('&New'),
 		comment    => _T('Open a new empty document'),
@@ -87,7 +87,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new_p5_script',
 		label      => _T('Perl 5 Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
@@ -96,7 +96,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new_p5_module',
 		label      => _T('Perl 5 Module'),
 		comment    => _T('Open a document with a skeleton Perl 5 module'),
@@ -105,7 +105,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new_p5_test',
 		label      => _T('Perl 5 Test'),
 		comment    => _T('Open a document with a skeleton Perl 5 test  script'),
@@ -116,7 +116,7 @@ sub init {
 
 	# Split by language
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new_p6_script',
 		label      => _T('Perl 6 Script'),
 		comment    => _T('Open a document with a skeleton Perl 6 script'),
@@ -127,7 +127,7 @@ sub init {
 
 	# Split projects from files
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.new_p5_distro',
 		label      => _T('Perl Distribution...'),
 		comment    => _T('Setup a skeleton Perl module distribution'),
@@ -141,7 +141,7 @@ sub init {
 
 	# Open things
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
 		label      => _T('&Open'),
@@ -153,7 +153,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'file.openurl',
 		label   => _T('Open &URL...'),
 		comment => _T('Open a file from a remote location'),
@@ -165,7 +165,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.open_in_file_browser',
 		need_editor => 1,
 		need_file   => 1,
@@ -177,7 +177,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.open_with_default_system_editor',
 		label       => _T('Open with Default System Editor'),
 		need_editor => 1,
@@ -189,7 +189,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.open_in_command_line',
 		need_editor => 1,
 		need_file   => 1,
@@ -201,7 +201,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.open_example',
 		label      => _T('Open Example'),
 		comment    => _T('Browse the directory of the installed examples to open one file'),
@@ -211,7 +211,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close',
 		id          => Wx::wxID_CLOSE,
 		need_editor => 1,
@@ -226,7 +226,7 @@ sub init {
 
 	# Close things
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close_current_project',
 		need_editor => 1,
 		label       => _T('Close this Project'),
@@ -248,7 +248,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close_other_projects',
 		need_editor => 1,
 		label       => _T('Close other Projects'),
@@ -269,7 +269,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close_all',
 		need_editor => 1,
 		label       => _T('Close all Files'),
@@ -279,7 +279,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close_all_but_current',
 		need_editor => 1,
 		label       => _T('Close all other Files'),
@@ -289,7 +289,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.close_some',
 		need_editor => 1,
 		label       => _T('Close Files...'),
@@ -299,7 +299,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.reload_file',
 		need_editor => 1,
 		label       => _T('Reload File'),
@@ -309,7 +309,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.reload_all',
 		need_editor => 1,
 		label       => _T('Reload All'),
@@ -319,7 +319,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.reload_some',
 		need_editor => 1,
 		label       => _T('Reload Some...'),
@@ -331,7 +331,7 @@ sub init {
 
 	# Save files
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name          => 'file.save',
 		id            => Wx::wxID_SAVE,
 		need_editor   => 1,
@@ -345,7 +345,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.save_as',
 		id          => Wx::wxID_SAVEAS,
 		need_editor => 1,
@@ -358,7 +358,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.save_intuition',
 		id          => -1,
 		need_editor => 1,
@@ -371,7 +371,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.save_all',
 		need_editor => 1,
 		label       => _T('Save All'),
@@ -385,7 +385,7 @@ sub init {
 
 	# Specialised open and close functions
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.open_selection',
 		label      => _T('Open Selection'),
 		comment    => _T('List the files that match the current selection and let the user pick one to open'),
@@ -395,7 +395,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'file.open_session',
 		label   => _T('Open Session...'),
 		comment =>
@@ -407,7 +407,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.save_session',
 		label      => _T('Save Session...'),
 		comment    => _T('Ask for a session name and save the list of files currently opened'),
@@ -420,7 +420,7 @@ sub init {
 
 	# Print files
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name => 'file.print',
 
 		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
@@ -443,7 +443,7 @@ sub init {
 
 	# Recent things
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.open_recent_files',
 		label      => _T('Open All Recent Files'),
 		comment    => _T('Open all the files listed in the recent files list'),
@@ -452,7 +452,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.clean_recent_files',
 		label      => _T('Clean Recent Files List'),
 		comment    => _T('Remove the entries from the recent files list'),
@@ -464,7 +464,7 @@ sub init {
 
 	# Word Stats
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'file.doc_stat',
 		label       => _T('Document Statistics'),
 		comment     => _T('Word count and other statistics of the current document'),
@@ -477,7 +477,7 @@ sub init {
 
 	# Exiting
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'file.quit',
 		label      => _T('&Quit'),
 		comment    => _T('Ask if unsaved files should be saved and then exit Padre'),
@@ -489,7 +489,7 @@ sub init {
 
 	# Undo/Redo
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.undo',
 		id          => Wx::wxID_UNDO,
 		need_editor => 1,
@@ -509,7 +509,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.redo',
 		id          => Wx::wxID_REDO,
 		need_editor => 1,
@@ -529,7 +529,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.select_all',
 		id          => Wx::wxID_SELECTALL,
 		need_editor => 1,
@@ -543,7 +543,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
 		label       => _T('Mark Selection Start'),
@@ -555,7 +555,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
 		label       => _T('Mark Selection End'),
@@ -567,7 +567,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
 		label       => _T('Clear Selection Marks'),
@@ -580,7 +580,7 @@ sub init {
 
 	# Cut and Paste
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.cut',
 		id             => Wx::wxID_CUT,
 		need_editor    => 1,
@@ -595,7 +595,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.copy',
 		id             => Wx::wxID_COPY,
 		need_editor    => 1,
@@ -612,7 +612,7 @@ sub init {
 
 	# Special copy
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.copy_filename',
 		need_editor => 1,
 		need_file   => 1,
@@ -626,7 +626,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.copy_basename',
 		need_editor => 1,
 		need_file   => 1,
@@ -640,7 +640,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.copy_dirname',
 		need_file   => 1,
 		need_editor => 1,
@@ -654,7 +654,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.copy_content',
 		need_editor => 1,
 		label       => _T('Copy Editor Content'),
@@ -669,7 +669,7 @@ sub init {
 
 	# Paste
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.paste',
 		need_editor => 1,
 		id          => Wx::wxID_PASTE,
@@ -685,7 +685,7 @@ sub init {
 
 	# Miscellaneous Actions
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'edit.goto',
 		label      => _T('&Go To...'),
 		comment    => _T('Jump to a specific line number or character position'),
@@ -695,7 +695,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.next_problem',
 		need_editor => 1,
 		label       => _T('&Next Problem'),
@@ -706,7 +706,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.quick_fix',
 		need_editor => 1,
 		label       => _T('&Quick Fix'),
@@ -762,7 +762,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.autocomp',
 		need_editor => 1,
 		label       => _T('&Autocomplete'),
@@ -773,7 +773,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.brace_match',
 		need_editor => 1,
 		label       => _T('&Brace Matching'),
@@ -784,7 +784,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.brace_match_select',
 		need_editor => 1,
 		label       => _T('&Select to Matching Brace'),
@@ -795,7 +795,7 @@ sub init {
 		}
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.join_lines',
 		need_editor    => 1,
 		need_selection => 1,
@@ -807,7 +807,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.insert.insert_special',
 		need_editor => 1,
 		label       => _T('Special Value...'),
@@ -820,7 +820,7 @@ sub init {
 
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.insert.snippets',
 		need_editor => 1,
 		label       => _T('Snippets...'),
@@ -832,7 +832,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.insert.from_file',
 		need_editor => 1,
 		label       => _T('File...'),
@@ -844,7 +844,7 @@ sub init {
 
 	# Commenting
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.comment_toggle',
 		need_editor    => 1,
 		need_selection => 1,
@@ -857,7 +857,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.comment',
 		need_editor    => 1,
 		need_selection => 1,
@@ -869,7 +869,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name           => 'edit.uncomment',
 		need_editor    => 1,
 		need_selection => 1,
@@ -883,7 +883,7 @@ sub init {
 
 	# Conversions and Transforms
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
 		label       => _T('Encode Document to System Default'),
@@ -894,7 +894,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
 		label       => _T('Encode Document to utf-8'),
@@ -905,7 +905,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_to',
 		need_editor => 1,
 		label       => _T('Encode Document to...'),
@@ -916,7 +916,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
 		label       => _T('EOL to Windows'),
@@ -927,7 +927,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
 		label       => _T('EOL to Unix'),
@@ -938,7 +938,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
 		label       => _T('EOL to Mac Classic'),
@@ -950,7 +950,7 @@ sub init {
 
 	# Tabs And Spaces
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.tabs_to_spaces',
 		need_editor => 1,
 		label       => _T('Tabs to Spaces...'),
@@ -960,7 +960,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.spaces_to_tabs',
 		need_editor => 1,
 		label       => _T('Spaces to Tabs...'),
@@ -970,7 +970,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.delete_trailing',
 		need_editor => 1,
 		label       => _T('Delete Trailing Spaces'),
@@ -980,7 +980,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.delete_leading',
 		need_editor => 1,
 		label       => _T('Delete Leading Spaces'),
@@ -992,7 +992,7 @@ sub init {
 
 	# Upper and Lower Case
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.case_upper',
 		need_editor => 1,
 		label       => _T('Upper All'),
@@ -1003,7 +1003,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.case_lower',
 		need_editor => 1,
 		label       => _T('Lower All'),
@@ -1014,7 +1014,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.diff2saved',
 		need_editor => 1,
 		label       => _T('Diff to Saved Version'),
@@ -1025,7 +1025,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
 		label       => _T('Apply Diff to File'),
@@ -1035,7 +1035,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
 		label       => _T('Apply Diff to Project'),
@@ -1047,7 +1047,7 @@ sub init {
 
 	# End diff tools
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.filter_tool',
 		need_editor => 1,
 		label       => _T('Filter through External Tool...'),
@@ -1057,7 +1057,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'edit.regex',
 		label      => _T('Regex Editor'),
 		comment    => _T('Open the regular expression editing window'),
@@ -1066,7 +1066,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
 		label       => _T('Show as Hexadecimal'),
@@ -1077,7 +1077,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
 		label       => _T('Show as Decimal'),
@@ -1089,7 +1089,7 @@ sub init {
 
 	# User Preferences
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'edit.preferences',
 		label      => _T('Preferences'),
 		comment    => _T('Edit the user preferences'),
@@ -1100,7 +1100,7 @@ sub init {
 
 	# Search
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.find',
 		id          => Wx::wxID_FIND,
 		need_editor => 1,
@@ -1113,7 +1113,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.find_next',
 		label       => _T('Find Next'),
 		need_editor => 1,
@@ -1154,7 +1154,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.find_previous',
 		need_editor => 1,
 		label       => _T('&Find Previous'),
@@ -1167,7 +1167,7 @@ sub init {
 
 	# Quick Find: starts search with selected text
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.quick_find',
 		need_editor => 1,
 		label       => _T('Quick Find'),
@@ -1184,7 +1184,7 @@ sub init {
 
 	# We should be able to remove F4 and Shift+F4 and hook this functionality
 	# to F3 and Shift+F3 Incremental find (#60)
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.quick_find_next',
 		need_editor => 1,
 		label       => _T('Find Next'),
@@ -1195,7 +1195,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.quick_find_previous',
 		need_editor => 1,
 		label       => _T('Find Previous'),
@@ -1208,7 +1208,7 @@ sub init {
 
 	# Search and Replace
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'search.replace',
 		need_editor => 1,
 		label       => _T('Replace...'),
@@ -1222,7 +1222,7 @@ sub init {
 
 	# Recursive Search
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'search.find_in_files',
 		label      => _T('Find in Fi&les...'),
 		comment    => _T('Search for a text in all files below a given directory'),
@@ -1233,7 +1233,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'search.open_resource',
 		label      => _T('Open Resource...'),
 		comment    => _T('Type in a filter to select a file'),
@@ -1246,7 +1246,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'search.quick_menu_access',
 		label      => _T('Quick Menu Access...'),
 		comment    => _T('Quick access to all menu functions'),
@@ -1261,7 +1261,7 @@ sub init {
 
 	# Can the user move stuff around
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.lockinterface',
 		label       => _T('Lock User Interface'),
 		comment     => _T('If activated, do not allow moving around some of the windows'),
@@ -1273,7 +1273,7 @@ sub init {
 
 	# Visible GUI Elements
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name  => 'view.output',
 		label => _T('Show Output'),
 		comment =>
@@ -1284,7 +1284,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.functions',
 		label       => _T('Show Functions'),
 		comment     => _T('Show a window listing all the functions in the current document'),
@@ -1294,7 +1294,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.todo',
 		label       => _T('Show To-do List'),
 		comment     => _T('Show a window listing all todo items in the current document'),
@@ -1304,7 +1304,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'view.outline',
 		label   => _T('Show Outline'),
 		comment => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
@@ -1314,7 +1314,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.directory',
 		label       => _T('Show Directory Tree'),
 		comment     => _T('Show a window with a directory browser of the current project'),
@@ -1324,7 +1324,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.show_syntaxcheck',
 		label       => _T('Show Syntax Check'),
 		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
@@ -1334,7 +1334,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.show_errorlist',
 		label       => _T('Show Errors'),
 		comment     => _T('Show the list of errors received during execution of a script'),
@@ -1344,7 +1344,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.statusbar',
 		label       => _T('Show Status Bar'),
 		comment     => _T('Show/hide the status bar at the bottom of the screen'),
@@ -1354,7 +1354,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.toolbar',
 		label       => _T('Show Toolbar'),
 		comment     => _T('Show/hide the toolbar at the top of the editor'),
@@ -1369,7 +1369,7 @@ sub init {
 		my %mime = Padre::MimeTypes::menu_view_mimes();
 
 		foreach my $name ( sort keys %mime ) {
-			Padre::Action->new(
+			Padre::Wx::Action->new(
 				name       => "view.mime.$name",
 				label      => $mime{$name},
 				comment    => _T('Switch document type'),
@@ -1382,7 +1382,7 @@ sub init {
 
 	# Editor Functionality
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.lines',
 		label       => _T('Show Line Numbers'),
 		comment     => _T('Show/hide the line numbers of all the documents on the left side of the window'),
@@ -1392,7 +1392,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'view.folding',
 		label   => _T('Show Code Folding'),
 		comment => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
@@ -1402,7 +1402,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.fold_all',
 		label       => _T('Fold all'),
 		comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
@@ -1412,7 +1412,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.unfold_all',
 		label       => _T('Unfold all'),
 		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
@@ -1422,7 +1422,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.show_calltips',
 		label       => _T('Show Call Tips'),
 		comment     => _T('When typing in functions allow showing short examples of the function'),
@@ -1436,7 +1436,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.currentline',
 		label       => _T('Show Current Line'),
 		comment     => _T('Highlight the line where the cursor is'),
@@ -1446,7 +1446,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.rightmargin',
 		label       => _T('Show Right Margin'),
 		comment     => _T('Show a vertical line indicating the right margin'),
@@ -1458,7 +1458,7 @@ sub init {
 
 	# Editor Whitespace Layout
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.eol',
 		label       => _T('Show Newlines'),
 		comment     => _T('Show/hide the newlines with special character'),
@@ -1468,7 +1468,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.whitespaces',
 		label       => _T('Show Whitespaces'),
 		comment     => _T('Show/hide the tabs and the spaces with special characters'),
@@ -1478,7 +1478,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.indentation_guide',
 		label       => _T('Show Indentation Guide'),
 		comment     => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
@@ -1488,7 +1488,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.word_wrap',
 		label       => _T('Word-Wrap'),
 		comment     => _T('Wrap long lines'),
@@ -1500,7 +1500,7 @@ sub init {
 
 	# Font Size
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'view.font_increase',
 		label      => _T('Increase Font Size'),
 		comment    => _T('Make the letters bigger in the editor window'),
@@ -1510,7 +1510,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'view.font_decrease',
 		label      => _T('Decrease Font Size'),
 		comment    => _T('Make the letters smaller in the editor window'),
@@ -1520,7 +1520,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'view.font_reset',
 		label      => _T('Reset Font Size'),
 		comment    => _T('Reset the size of the letters to the default in the editor window'),
@@ -1533,7 +1533,7 @@ sub init {
 
 	# Bookmark Support
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'view.bookmark_set',
 		label      => _T('Set Bookmark'),
 		comment    => _T('Create a bookmark in the current file current row'),
@@ -1544,7 +1544,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'view.bookmark_goto',
 		label      => _T('Go to Bookmark'),
 		comment    => _T('Select a bookmark created earlier and jump to that position'),
@@ -1561,7 +1561,7 @@ sub init {
 		my %styles = Padre::Config::Style->core_styles;
 
 		foreach my $name ( sort keys %styles ) {
-			Padre::Action->new(
+			Padre::Wx::Action->new(
 				name       => "view.style.$name",
 				label      => $styles{$name},
 				comment    => _T('Switch highlighting colours'),
@@ -1576,7 +1576,7 @@ sub init {
 		my @styles = Padre::Config::Style->user_styles;
 
 		foreach my $name ( @styles ) {
-			Padre::Action->new(
+			Padre::Wx::Action->new(
 				name    => "view.style.$name",
 				label   => $name,
 				comment => _T('Switch highlighting colours'),
@@ -1592,7 +1592,7 @@ sub init {
 	SCOPE: {
 		my %language = Padre::Locale::menu_view_languages();
 
-		Padre::Action->new(
+		Padre::Wx::Action->new(
 			name        => 'view.language.default',
 			label       => _T('System Default'),
 			comment     => _T('Switch language to system default'),
@@ -1603,7 +1603,7 @@ sub init {
 		);
 
 		foreach my $name ( sort keys %language ) {
-			Padre::Action->new(
+			Padre::Wx::Action->new(
 				name        => "view.language.$name",
 				label       => $language{$name},
 				comment     => _T('Switch menu to alternate language'),
@@ -1617,7 +1617,7 @@ sub init {
 
 	# Window Effects
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'view.full_screen',
 		label       => _T('&Full Screen'),
 		comment     => _T('Set Padre in full screen mode'),
@@ -1638,7 +1638,7 @@ sub init {
 
 	# Perl-Specific Searches
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.beginner_check',
 		need_editor => 1,
 		label       => _T('Check for Common (Beginner) Errors'),
@@ -1650,7 +1650,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.find_brace',
 		need_editor => 1,
 		label       => _T('Find Unmatched Brace'),
@@ -1662,7 +1662,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.find_variable',
 		need_editor => 1,
 		label       => _T('Find Variable Declaration'),
@@ -1674,7 +1674,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.find_method',
 		need_editor => 1,
 		label       => _T('Find Method Declaration'),
@@ -1686,7 +1686,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.vertically_align_selected',
 		need_editor => 1,
 		shortcut    => 'Ctrl-Shift-Space',
@@ -1699,7 +1699,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
 		label       => _T('Newline Same Column'),
@@ -1713,7 +1713,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
 		label       => _T('Create Project Tagsfile'),
@@ -1726,7 +1726,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.autocomplete_brackets',
 		need_editor => 1,
 		label       => _T('Automatic Bracket Completion'),
@@ -1743,7 +1743,7 @@ sub init {
 
 	# Perl-Specific Refactoring
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.rename_variable',
 		need_editor => 1,
 		label       => _T('Rename Variable...'),
@@ -1766,7 +1766,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.extract_subroutine',
 		need_editor => 1,
 		label       => _T('Extract Subroutine...'),
@@ -1792,7 +1792,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.introduce_temporary',
 		need_editor => 1,
 		label       => _T('Introduce Temporary Variable...'),
@@ -1815,7 +1815,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'perl.endify_pod',
 		need_editor => 1,
 		label       => _T('Move POD to __END__'),
@@ -1830,7 +1830,7 @@ sub init {
 
 	# Script Execution
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'run.run_document',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1845,7 +1845,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'run.run_document_debug',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1859,7 +1859,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'run.run_command',
 		label      => _T('Run Command'),
 		comment    => _T('Runs a shell command and shows the output.'),
@@ -1868,7 +1868,7 @@ sub init {
 			$_[0]->on_run_command;
 		},
 	);
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'run.run_tdd_tests',
 		need_file   => 1,
 		need_editor => 1,
@@ -1880,7 +1880,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'run.run_tests',
 		need_editor => 1,
 		need_file   => 1,
@@ -1894,7 +1894,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'run.run_this_test',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1912,7 +1912,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name => 'run.stop',
 		need => sub {
 			my %objects = @_;
@@ -1938,7 +1938,7 @@ sub init {
 
 	# Debugging
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.step_in',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1955,7 +1955,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.step_over',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1974,7 +1974,7 @@ sub init {
 	);
 
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.step_out',
 		need_editor  => 1,
 		need_runable => 1,
@@ -1990,7 +1990,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.run',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2006,7 +2006,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.jump_to',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2021,7 +2021,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.set_breakpoint',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2037,7 +2037,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.remove_breakpoint',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2052,7 +2052,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.list_breakpoints',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2067,7 +2067,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.run_to_cursor',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2083,7 +2083,7 @@ sub init {
 	);
 
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.show_stack_trace',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2098,7 +2098,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.display_value',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2114,7 +2114,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.show_value',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2129,7 +2129,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.evaluate_expression',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2144,7 +2144,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name         => 'debug.quit',
 		need_editor  => 1,
 		need_runable => 1,
@@ -2162,7 +2162,7 @@ sub init {
 
 	# Key Bindings action
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'tools.key_bindings',
 		label      => _T('Key Bindings'),
 		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
@@ -2173,7 +2173,7 @@ sub init {
 
 	# Link to the Plugin Manager
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.plugin_manager',
 		label      => _T('Plug-in Manager'),
 		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
@@ -2189,7 +2189,7 @@ sub init {
 	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plug-ins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.plugin_list',
 		label      => _T('Plug-in List (CPAN)'),
 		comment    => _T('Open browser to a CPAN search showing the Padre::Plugin packages'),
@@ -2198,7 +2198,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.edit_my_plugin',
 		label      => _T('Edit My Plug-in'),
 		comment    => _T('My Plug-in is a plug-in where developers could extend their Padre installation'),
@@ -2217,7 +2217,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.reload_my_plugin',
 		label      => _T('Reload My Plug-in'),
 		comment    => _T('This function reloads the My plug-in without restarting Padre'),
@@ -2226,7 +2226,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.reset_my_plugin',
 		label      => _T('Reset My plug-in'),
 		comment    => _T('Reset the My plug-in to the default'),
@@ -2246,7 +2246,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.reload_all_plugins',
 		label      => _T('Reload All Plug-ins'),
 		comment    => _T('Reload all plug-ins from disk'),
@@ -2255,7 +2255,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.reload_current_plugin',
 		label      => _T('(Re)load Current Plug-in'),
 		comment    => _T('Reloads (or initially loads) the current plug-in'),
@@ -2264,7 +2264,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.install_cpan',
 		label      => _T("Install CPAN Module"),
 		comment    => _T('Install a Perl module from CPAN'),
@@ -2277,7 +2277,7 @@ sub init {
 		}
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.install_local',
 		label      => _T("Install Local Distribution"),
 		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),
@@ -2287,7 +2287,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.install_remote',
 		label      => _T("Install Remote Distribution"),
 		comment    => _T('Using pip to download a tar.gz file and install it using CPAN.pm'),
@@ -2297,7 +2297,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'plugins.cpan_config',
 		label      => _T("Open CPAN Config File"),
 		comment    => _T('Open CPAN::MyConfig.pm for manual editing by experts'),
@@ -2309,7 +2309,7 @@ sub init {
 
 	# File Navigation
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.last_visited_file',
 		label       => _T('Last Visited File'),
 		comment     => _T('Switch to edit the file that was previously edited (can switch back and forth)'),
@@ -2320,7 +2320,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.oldest_visited_file',
 		label       => _T('Oldest Visited File'),
 		comment     => _T('Put focus on tab visited the longest time ago.'),
@@ -2331,7 +2331,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.next_file',
 		label       => _T('Next File'),
 		comment     => _T('Put focus on the next tab to the right'),
@@ -2342,7 +2342,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.previous_file',
 		label       => _T('Previous File'),
 		comment     => _T('Put focus on the previous tab to the left'),
@@ -2355,7 +2355,7 @@ sub init {
 
 	# TODO: Remove this and the menu option as soon as #750 is fixed
 	#       as it's the same like Ctrl-Tab
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.last_visited_file_old',
 		label       => _T('Last Visited File'),
 		comment     => _T('???'),
@@ -2366,7 +2366,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'window.right_click',
 		label       => _T('Right Click'),
 		comment     => _T('Imitate clicking on the right mouse button'),
@@ -2380,7 +2380,7 @@ sub init {
 
 	# Window Navigation
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',
 		label      => _T('Go to Functions Window'),
 		comment    => _T('Set the focus to the "Functions" window'),
@@ -2394,7 +2394,7 @@ sub init {
 
 	# Window Navigation
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_todo_window',
 		label      => _T('Go to Todo Window'),
 		comment    => _T('Set the focus to the "Todo" window'),
@@ -2406,7 +2406,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_outline_window',
 		label      => _T('Go to Outline Window'),
 		comment    => _T('Set the focus to the "Outline" window'),
@@ -2417,7 +2417,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_output_window',
 		label      => _T('Go to Output Window'),
 		comment    => _T('Set the focus to the "Output" window'),
@@ -2428,7 +2428,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_syntax_check_window',
 		label      => _T('Go to Syntax Check Window'),
 		comment    => _T('Set the focus to the "Syntax Check" window'),
@@ -2439,7 +2439,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'window.goto_main_window',
 		label      => _T('Go to Main Window'),
 		comment    => _T('Set the focus to the main editor window'),
@@ -2452,7 +2452,7 @@ sub init {
 
 	# Add the POD-based help launchers
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.help',
 		id         => Wx::wxID_HELP,
 		label      => _T('Help'),
@@ -2462,7 +2462,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.context_help',
 		label      => _T('Search Help'),
 		comment    => _T('Search the Perl help pages (perldoc)'),
@@ -2479,7 +2479,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.search',
 		label      => _T('Context Help'),
 		comment    => _T('Show the help article for the current context'),
@@ -2490,7 +2490,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name        => 'help.current',
 		need_editor => 1,
 		label       => _T('Current Document'),
@@ -2502,7 +2502,7 @@ sub init {
 
 	# Live Support
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'help.live_support',
 		label   => _T('Padre Support (English)'),
 		comment => _T(
@@ -2514,7 +2514,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'help.perl_help',
 		label   => _T('Perl Help'),
 		comment => _T(
@@ -2526,7 +2526,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'help.win32_questions',
 		label   => _T('Win32 Questions (English)'),
 		comment => _T(
@@ -2540,7 +2540,7 @@ sub init {
 
 	# Add interesting and helpful websites
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name    => 'help.visit_perlmonks',
 		label   => _T('Visit the PerlMonks'),
 		comment => _T(
@@ -2554,7 +2554,7 @@ sub init {
 
 	# Add Padre website tools
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.report_a_bug',
 		label      => _T('Report a New &Bug'),
 		comment    => _T('Send a bug report to the Padre developer team'),
@@ -2562,7 +2562,7 @@ sub init {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.view_all_open_bugs',
 		label      => _T('View All &Open Bugs'),
 		comment    => _T('View all known and currently unsolved bugs in Padre'),
@@ -2571,7 +2571,7 @@ sub init {
 		},
 	);
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.translate_padre',
 		label      => _T('&Translate Padre...'),
 		comment    => _T('Help by translating Padre to your local language'),
@@ -2582,7 +2582,7 @@ sub init {
 
 	# Add the About
 
-	Padre::Action->new(
+	Padre::Wx::Action->new(
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
 		label      => _T('&About'),

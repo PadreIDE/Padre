@@ -53,8 +53,8 @@ is(
 
 # TODO: We need to pass the $main object to the create function
 # and certain other things need to be in place before running
-use Padre::Action;
-use Padre::ActionLibrary;
+use Padre::Wx::Action;
+use Padre::Wx::ActionLibrary;
 sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
 sub Padre::IDE::actions { return {} }
 sub Padre::IDE::config { return bless {}, 'Padre::Config' }
@@ -62,6 +62,6 @@ SKIP: {
 
 	# TODO check if every action has a comment as required
 	skip 'Fix this test!', 1;
-	Padre::ActionLibrary->init( bless {}, 'Padre::IDE' );
+	Padre::Wx::ActionLibrary->init( bless {}, 'Padre::IDE' );
 	ok(1);
 }

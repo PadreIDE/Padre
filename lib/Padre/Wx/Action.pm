@@ -1,4 +1,4 @@
-package Padre::Action;
+package Padre::Wx::Action;
 
 use 5.008;
 use strict;
@@ -80,7 +80,7 @@ sub new {
 		warn "Found a duplicate action '$name'\n";
 	}
 
-	# Menu events are handled by Padre::Action, the real events
+	# Menu events are handled by Padre::Wx::Action, the real events
 	# should go to {event}!
 	if ( defined $self->{menu_event} ) {
 		$self->add_event( $self->{menu_event} );
@@ -205,11 +205,11 @@ __END__
 
 =head1 NAME
 
-Padre::Action - Padre Action Object
+Padre::Wx::Action - Padre Action Object
 
 =head1 SYNOPSIS
 
-  my $action = Padre::Action->new(
+  my $action = Padre::Wx::Action->new(
       name       => 'file.save',
       label      => 'Save',
       comment    => 'Saves the current file to disk',

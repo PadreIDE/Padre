@@ -31,7 +31,7 @@ our $VERSION = '0.66';
 use Padre::Constant    ();
 use Padre::Config      ();
 use Padre::DB          ();
-use Padre::ActionQueue ();
+use Padre::Wx::ActionQueue ();
 
 # Generate faster accessors
 use Class::XSAccessor 1.05 {
@@ -158,7 +158,7 @@ sub new {
 	);
 
 	# Create the action queue
-	$self->{actionqueue} = Padre::ActionQueue->new;
+	$self->{actionqueue} = Padre::Wx::ActionQueue->new;
 
 	# Startup completed, let go of the database
 	Padre::DB->commit;
