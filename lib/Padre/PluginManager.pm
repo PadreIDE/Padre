@@ -553,11 +553,15 @@ sub _load_plugin {
 	}
 
 	# Is the plugin compatible with this Padre
-	unless ( $self->_compatible($module) ) {
+	my $compatible = $self->_compatible($module);
+	if ( $compatible ) {
 		$plugin->errstr(
-			Wx::gettext("%s - Not compatible with Padre version %s"),
-			$module,
-			$Padre::PluginManager::VERSION,
+			sprintf(
+				Wx::gettext("%s - Not compatible with Padre version %s - %s"),
+				$module,
+				$Padre::PluginManager::VERSION,
+				$compatible,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -631,17 +635,21 @@ sub _compatible {
 		# Make sure the subsystem is loaded
 		local $@;
 		eval "require $module;";
-		return 0 if $@;
+		return "$module no longer exists" if $@;
 
 		# Do we fall inside the version boundaries
 		no strict 'refs';
 		my $version = ${"${module}::VERSION"}    || 0;
 		my $compat  = ${"${module}::COMPATIBLE"} || 0;
-		return 0 unless $need <= $version;
-		return 0 unless $need >= $compat;
+		unless ( $need <= $version ) {
+			return "$module is needed at newer version $need";
+		}
+		unless ( $need >= $compat ) {
+			return "$module is not back-compatible with $need";
+		}
 	}
 
-	return 1;
+	return '';
 }
 
 =pod
