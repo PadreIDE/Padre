@@ -624,9 +624,14 @@ sub _load_plugin {
 }
 
 sub _compatible {
-	my $self    = shift;
-	my $plugin  = shift;
-	my @needs   = $plugin->padre_interfaces;
+	my $self   = shift;
+	my $plugin = shift;
+
+	# What interfaces does the plugin need
+	unless ( $plugin->can('padre_interfaces') ) {
+		return "$module does not declare an required interface list";
+	}
+	my @needs = $plugin->padre_interfaces;
 
 	while ( @needs ) {
 		my $module  = shift @needs;
