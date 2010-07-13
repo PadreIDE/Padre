@@ -30,6 +30,10 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       directory-first and directory-mixed (ADAMK)
     - Moved the Padre::Action* classes to Padre::Wx::Action* as they are now
       much more tightly dependant on Wx (ADAMK)
+    - Plugins will now do full compatibility testing, which means that when we
+      change an internal API we can just update $COMPATIBLE in that package
+      and any impacted plugins will be automatically disabled until they do a
+      new release. That is far better than "They just crash blindly" (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
