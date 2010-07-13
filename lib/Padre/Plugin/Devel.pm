@@ -20,7 +20,6 @@ our @ISA     = 'Padre::Plugin';
 sub padre_interfaces {
 	return (
 		'Padre::Plugin'                       => 0.66,
-		'Padre::Display'                      => 0.66,
 		'Padre::Wx'                           => 0.66,
 		'Padre::Wx::Main'                     => 0.66,
 		'Padre::Wx::History::TextEntryDialog' => 0.66,
