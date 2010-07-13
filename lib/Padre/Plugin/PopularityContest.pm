@@ -131,11 +131,7 @@ our %ACTION = ();
 ######################################################################
 # Padre::Plugin Methods
 
-sub plugin_name {
-	'Padre Popularity Contest';
-}
-
-sub plugin_interfaces {
+sub padre_interfaces {
 	return (
 		'Padre::Plugin'           => 0.66;
 		'Padre::Task'             => 0.66,
@@ -143,6 +139,10 @@ sub plugin_interfaces {
 		'Padre::Util::SVN'        => 0.66,
 		'Padre::Wx::Dialog::Text' => 0.66,
 	);
+}
+
+sub plugin_name {
+	'Padre Popularity Contest';
 }
 
 sub plugin_enable {

@@ -18,13 +18,13 @@ our @ISA     = 'Padre::Plugin';
 #####################################################################
 # Padre::Plugin Methods
 
-sub plugin_name {
-	'My Plugin';
-}
-
 sub padre_interfaces {
 	'Padre::Plugin'   => 0.66,
 	'Padre::Constant' => 0.66,
+}
+
+sub plugin_name {
+	'My Plugin';
 }
 
 sub menu_plugins_simple {
