@@ -23,7 +23,8 @@ sub plugin_name {
 }
 
 sub padre_interfaces {
-	'Padre::Plugin' => 0.43;
+	'Padre::Plugin'   => 0.66,
+	'Padre::Constant' => 0.66,
 }
 
 sub menu_plugins_simple {
