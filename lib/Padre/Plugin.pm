@@ -215,9 +215,11 @@ disabled unless the user has specifically allowed experimental plug-ins.
 
 =cut
 
-sub padre_interfaces {
-	return ();
-}
+# Disabled so that we can detect plugins created before the existance
+# of the compatibility mechanism.
+# sub padre_interfaces {
+#     return ();
+# }
 
 # Convenience integration with Class::Unload
 sub unload {
