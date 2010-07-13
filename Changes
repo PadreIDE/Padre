@@ -34,6 +34,10 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       change an internal API we can just update $COMPATIBLE in that package
       and any impacted plugins will be automatically disabled until they do a
       new release. That is far better than "They just crash blindly" (ADAMK)
+    - Create a new main_directory_root settting distinct from the existing
+      default_projects_directory one, specifically for setting the default
+      root of the directory tree. It will continue to be pointed to
+      my_documents by default (the original may change) (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

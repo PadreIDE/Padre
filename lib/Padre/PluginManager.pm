@@ -629,7 +629,7 @@ sub _compatible {
 
 	# What interfaces does the plugin need
 	unless ( $plugin->can('padre_interfaces') ) {
-		return "$module does not declare an required interface list";
+		return "$plugin does not declare Padre interface requirements";
 	}
 	my @needs = $plugin->padre_interfaces;
 

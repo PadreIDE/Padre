@@ -204,7 +204,7 @@ sub refresh {
 		$root = $project->root;
 		push @options, ( project => $project );
 	} else {
-		$root = $config->default_projects_directory;
+		$root = $config->main_directory_root;
 		push @options, ( root => $root );
 	}
 

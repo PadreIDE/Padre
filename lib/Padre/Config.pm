@@ -531,6 +531,12 @@ setting(
 	}
 );
 setting(
+	name    => 'main_directory_root',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => File::HomeDir->my_documents || '',
+);
+setting(
 	name    => 'main_output',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
@@ -623,9 +629,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name  => 'default_projects_directory',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
