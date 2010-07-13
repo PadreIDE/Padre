@@ -18,7 +18,13 @@ our @ISA     = 'Padre::Plugin';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	( 'Padre::Plugin' => 0.43, 'Padre::Wx::Main' => 0.43 );
+	return (
+		'Padre::Plugin'                       => 0.66,
+		'Padre::Display'                      => 0.66,
+		'Padre::Wx'                           => 0.66,
+		'Padre::Wx::Main'                     => 0.66,
+		'Padre::Wx::History::TextEntryDialog' => 0.66,
+	);
 }
 
 sub plugin_name {
