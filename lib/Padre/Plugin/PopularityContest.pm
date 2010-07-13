@@ -136,7 +136,13 @@ sub plugin_name {
 }
 
 sub plugin_interfaces {
-	'Padre::Plugin' => 0.43;
+	return (
+		'Padre::Plugin'           => 0.66;
+		'Padre::Task'             => 0.66,
+		'Padre::Task::LWP'        => 0.66,
+		'Padre::Util::SVN'        => 0.66,
+		'Padre::Wx::Dialog::Text' => 0.66,
+	);
 }
 
 sub plugin_enable {
