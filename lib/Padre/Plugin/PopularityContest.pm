@@ -133,7 +133,7 @@ our %ACTION = ();
 
 sub padre_interfaces {
 	return (
-		'Padre::Plugin'           => 0.66;
+		'Padre::Plugin'           => 0.66,
 		'Padre::Task'             => 0.66,
 		'Padre::Task::LWP'        => 0.66,
 		'Padre::Util::SVN'        => 0.66,
