@@ -32,6 +32,21 @@ our %license_id = ( # TODO: check for other module builders as well
 # even though it should be in http://module-build.sourceforge.net/META-spec.html
 # and we should fetch it from Module::Start or maybe Software::License
 
+our %license_name = (
+	'apache'       => Wx::gettext('Apache License'),
+	'artistic'     => Wx::gettext('Artistic License 1.0'),
+	'artistic_2'   => Wx::gettext('Artistic License 2.0'),
+	'bsd'          => Wx::gettext('Revised BSD License'),
+	'gpl'          => Wx::gettext('GPL 2 or later'),
+	'lgpl'         => Wx::gettext('LGPL 2.1 or later'),
+	'mit'          => Wx::gettext('MIT License'),
+	'mozilla'      => Wx::gettext('Mozilla Public License'),
+	'open_source'  => Wx::gettext('Open Source'),
+	'perl'         => Wx::gettext('Perl licensing terms'),
+	'restrictive'  => Wx::gettext('restrictive'),
+	'unrestricted' => Wx::gettext('unrestricted'),
+);
+
 
 sub get_layout {
 	my @builders = ( 'Module::Build', 'ExtUtils::MakeMaker', 'Module::Install' ); # TODO: what about Module::Starter?
@@ -95,7 +110,7 @@ sub dialog {
 		$dialog->{_widgets_}->{_builder_choice_}->SetValue('ExtUtils::MakeMaker');
 	}
 	if ( $config->license ) {
-		$dialog->{_widgets_}->{_license_choice_}->SetValue( $config->license );
+		$dialog->{_widgets_}->{_license_choice_}->SetValue( $license_name{ $config->license } );
 	} else {
 		$dialog->{_widgets_}->{_license_choice_}->SetValue( Wx::gettext('Perl licensing terms') );
 	}
@@ -142,7 +157,7 @@ sub ok_clicked {
 	$config->set( 'identity_name',          $data->{_author_name_} );
 	$config->set( 'identity_email',         $data->{_email_} );
 	$config->set( 'builder',                $data->{_builder_choice_} );
-	$config->set( 'license',                $data->{_license_choice_} );
+	$config->set( 'license',                $license_id{ $data->{_license_choice_} } );
 	$config->set( 'module_start_directory', $data->{_directory_} );
 
 	my $pwd = Cwd::cwd();
