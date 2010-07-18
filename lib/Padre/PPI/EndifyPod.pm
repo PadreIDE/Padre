@@ -35,27 +35,27 @@ sub document {
 	# Find all the POD fragments
 	my $pod = $document->find('PPI::Token::Pod');
 	unless ( defined $pod ) {
-		$document->current->error('Error while searching for POD');
+		Padre::Current->main->error('Error while searching for POD');
 		return undef;
 	}
-	unless ( $pod ) {
-		$document->current->error('This document does not contain any POD');
+	unless ($pod) {
+		Padre::Current->main->error('This document does not contain any POD');
 		return 0;
 	}
 	unless ( @$pod > 1 ) {
-		$document->current->error('Only one POD fragment, will not try to merge');
+		Padre::Current->main->error('Only one POD fragment, will not try to merge');
 		return 0;
 	}
 
 	# Create a single merged POD fragment
 	my $merged = PPI::Token::Pod->merge(@$pod);
-	unless ( $merged ) {
-		$document->current->error('Failed to merge the POD fragments');
+	unless ($merged) {
+		Padre::Current->main->error('Failed to merge the POD fragments');
 		return undef;
 	}
 
 	# Strip all the fragments out of the document
-	foreach my $element ( @$pod ) {
+	foreach my $element (@$pod) {
 		next if $element->delete;
 		$document->current->error('Failed to delete POD fragment');
 		return undef;
@@ -64,6 +64,7 @@ sub document {
 	# Does the document already have an __END__ block?
 	my $end = $document->child(-1);
 	if ( $end and $end->isa('PPI::Statement::End') ) {
+
 		# Make sure there's sufficient newlines at the end
 		$end->last_element->content =~ /(\n*)\z/;
 		my $newlines = length $1;
@@ -76,16 +77,17 @@ sub document {
 		$end->add_element($merged);
 
 	} else {
+
 		# Generate the end block
 		my $statement = PPI::Statement::End->new;
 		$statement->add_element( PPI::Token::Separator->new("__END__") );
 		$statement->add_element( PPI::Token::Whitespace->new("\n") );
 		$statement->add_element( PPI::Token::End->new("\n") );
-		$statement->add_element( $merged );
+		$statement->add_element($merged);
 
 		# Add it to the document
 		$document->add_element( PPI::Token::Whitespace->new("\n") );
-		$document->add_element( $statement );
+		$document->add_element($statement);
 	}
 
 	return 1;
