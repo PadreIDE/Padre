@@ -6,12 +6,21 @@
 
 use strict;
 use warnings;
-use Test::More tests => 41;
-use Test::NoWarnings;
+use Test::More;
 use Padre::TaskHandle     ();
 use Padre::Task::Addition ();
 use Padre::Logger;
 
+######################################################################
+# This test requires a DISPLAY to run
+BEGIN {
+        unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+                plan skip_all => 'Needs DISPLAY';
+                exit 0;
+        }
+}
+plan tests => 42;
+use_ok('Test::NoWarnings');
 
 
 

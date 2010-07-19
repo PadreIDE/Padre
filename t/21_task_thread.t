@@ -6,10 +6,21 @@
 
 use strict;
 use warnings;
-use Test::More tests => 19;
-use Test::NoWarnings;
+use Test::More;
 use Padre::TaskThread ();
 use Padre::Logger;
+
+######################################################################
+# This test requires a DISPLAY to run
+BEGIN {
+        unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+                plan skip_all => 'Needs DISPLAY';
+                done_testing;
+                exit 0;
+        }
+}
+plan tests => 20;
+use_ok('Test::NoWarnings');
 
 # Do we start with no threads as expected
 is( scalar( threads->list ), 0, 'One thread exists' );

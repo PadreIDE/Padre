@@ -4,14 +4,24 @@
 
 use strict;
 use warnings;
-use Test::More tests => 16;
-use Test::NoWarnings;
+use Test::More;
 use Time::HiRes ();
 use Padre::Logger;
 use Padre::TaskManager        ();
 use Padre::Task::Addition     ();
 use Padre::Wx::App            ();
 use t::lib::Padre::NullWindow ();
+
+######################################################################
+# This test requires a DISPLAY to run
+BEGIN {
+        unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+                plan skip_all => 'Needs DISPLAY';
+                exit 0;
+        }
+}
+plan tests => 17;
+use_ok('Test::NoWarnings');
 
 # Do we start with no threads as expected
 is( scalar( threads->list ), 0, 'No threads' );
