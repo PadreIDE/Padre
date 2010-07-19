@@ -53,6 +53,7 @@ sub _initialize {
 		ada   => 'text/x-adasrc',
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
+		bib   => 'application/x-bibtex',
 		bml   => 'text/x-bml',            # dreamwidth file format
 		c     => 'text/x-c',
 		cc    => 'text/x-c++src',
@@ -71,6 +72,7 @@ sub _initialize {
 		html  => 'text/html',
 		i     => 'text/x-c',              # C code that should not be preprocessed
 		ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
+		java  => 'text/x-java-source',
 		js    => 'application/javascript',
 		json  => 'application/json',
 		lsp   => 'application/x-lisp',
@@ -134,10 +136,12 @@ sub _initialize {
 			name  => 'ABC',
 			lexer => Wx::wxSTC_LEX_NULL,
 		},
+
 		'text/x-adasrc' => {
 			name  => 'ADA',
 			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
 		},
+
 		'text/x-asm' => {
 			name  => 'ASM',
 			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
@@ -147,6 +151,11 @@ sub _initialize {
 		'application/x-bat' => {
 			name  => 'BAT',
 			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
+		},
+
+		'application/x-bibtex' => {
+			name  => 'BibTeX',
+			lexer => Wx::wxSTC_LEX_NULL,
 		},
 
 		'application/x-bml' => {
@@ -163,95 +172,123 @@ sub _initialize {
 			name  => 'C++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
 		},
+
 		'text/css' => {
 			name  => 'CSS',
 			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
 		},
-		'text/x-patch' => {
-			name  => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,  # CONFIRMED
-		},
+
 		'text/x-eiffel' => {
 			name  => 'Eiffel',
 			lexer => Wx::wxSTC_LEX_EIFFEL, # CONFIRMED
 		},
+
 		'text/x-forth' => {
 			name  => 'Forth',
 			lexer => Wx::wxSTC_LEX_FORTH,  # CONFIRMED
 		},
+
 		'text/x-fortran' => {
 			name  => 'Fortran',
 			lexer => Wx::wxSTC_LEX_FORTRAN, # CONFIRMED
 		},
+
 		'text/html' => {
 			name  => 'HTML',
 			lexer => Wx::wxSTC_LEX_HTML,    # CONFIRMED
 		},
+
 		'application/javascript' => {
 			name  => 'JavaScript',
 			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
+
 		'application/json' => {
 			name  => 'JSON',
 			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
+
 		'application/x-latex' => {
 			name  => 'LaTeX',
 			lexer => Wx::wxSTC_LEX_LATEX,   # CONFIRMED
 		},
+
 		'application/x-lisp' => {
 			name  => 'LISP',
 			lexer => Wx::wxSTC_LEX_LISP,    # CONFIRMED
 		},
+
+		'text/x-patch' => {
+			name  => 'Patch',
+			lexer => Wx::wxSTC_LEX_DIFF,    # CONFIRMED
+		},
+
 		'application/x-shellscript' => {
 			name  => Wx::gettext('Shell Script'),
 			lexer => Wx::wxSTC_LEX_BASH,
 		},
+
+		'text/x-java-source' => {
+			name  => 'Java',
+			lexer => Wx::wxSTC_LEX_NULL,
+		},
+
 		'text/x-lua' => {
 			name  => 'Lua',
-			lexer => Wx::wxSTC_LEX_LUA,     # CONFIRMED
+			lexer => Wx::wxSTC_LEX_LUA, # CONFIRMED
 		},
+
 		'text/x-makefile' => {
 			name  => 'Makefile',
 			lexer => Wx::wxSTC_LEX_MAKEFILE, # CONFIRMED
 		},
+
 		'text/x-matlab' => {
 			name  => 'Matlab',
 			lexer => Wx::wxSTC_LEX_MATLAB,   # CONFIRMED
 		},
+
 		'text/x-pascal' => {
 			name  => 'Pascal',
 			lexer => Wx::wxSTC_LEX_PASCAL,   # CONFIRMED
 		},
+
 		'application/x-perl' => {
 			name  => 'Perl 5',
 			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 			class => 'Padre::Document::Perl',
 		},
+
 		'application/x-psgi' => {
 			name  => 'PSGI',
 			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 		},
+
 		'text/x-python' => {
 			name  => 'Python',
 			lexer => Wx::wxSTC_LEX_PYTHON,   # CONFIRMED
 		},
+
 		'application/x-php' => {
 			name  => 'PHP',
 			lexer => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
 		},
+
 		'application/x-ruby' => {
 			name  => 'Ruby',
 			lexer => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
 		},
+
 		'text/x-sql' => {
 			name  => 'SQL',
 			lexer => Wx::wxSTC_LEX_SQL,       # CONFIRMED
 		},
+
 		'application/x-tcl' => {
 			name  => 'Tcl',
 			lexer => Wx::wxSTC_LEX_TCL,       # CONFIRMED
 		},
+
 		'text/vbscript' => {
 			name  => 'VBScript',
 			lexer => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
@@ -274,18 +311,22 @@ sub _initialize {
 			name  => 'YAML',
 			lexer => Wx::wxSTC_LEX_YAML, # CONFIRMED
 		},
+
 		'application/x-pir' => {
 			name  => 'PIR',
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
+
 		'application/x-pasm' => {
 			name  => 'PASM',
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
+
 		'application/x-perl6' => {
 			name  => 'Perl 6',
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
+
 		'text/plain' => {
 			name  => Wx::gettext('Text'),
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
@@ -301,6 +342,11 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_HTML,
 		},
 	);
+
+	warn "In INIT method\n";
+	foreach my $type ( keys %MIME_TYPES ) {
+		warn "'$type'\n";
+	}
 
 	# TO DO:
 	# add some mime-type for pod files
