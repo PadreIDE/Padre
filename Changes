@@ -40,6 +40,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       my_documents by default (the original may change) (ADAMK)
     - made Padre::Wx::Dialog::ModuleStart configuration translation-safe (ZENOG)
     - Updated German translation (ZENOG)
+    - add Java and BibTeX to MIME types (ZENOG)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
