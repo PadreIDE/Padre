@@ -144,7 +144,7 @@ sub dialog {
 		parent => $main,
 		title  => Wx::gettext("Find in Files"),
 		layout => $layout,
-		width  => [ 190,410 ],
+		width  => [ 190, 410 ],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);
@@ -205,9 +205,10 @@ sub find_clicked {
 	return if not $search->{term};
 
 
-	
+
 	# really need to handle special characters.
 	my $term = quotemeta $search->{term};
+
 	# Ctrl+F $string - testing string to find
 	#print "Search term: " . $search->{term} .  " and after: $term\n";
 	my $main = Padre->ide->wx->main;
@@ -218,8 +219,8 @@ sub find_clicked {
 
 	# prepare \%opts
 	%opts = ();
-	
-	$opts{regex} = $term;
+
+	$opts{regex}       = $term;
 	$opts{search_term} = $search->{term};
 
 	# ignore_hidden_subdirs
@@ -264,7 +265,7 @@ sub find_clicked {
 		$main->error( "Find in Files: error in regex " . $opts{regex} );
 		return;
 	}
-	
+
 
 	my $what = App::Ack::get_starting_points( [ $search->{dir} ], \%opts );
 	$iter = App::Ack::get_iterator( $what, \%opts );
@@ -388,13 +389,17 @@ sub on_ack_result_selected {
 
 	# TODO: those appear to be very fragile regexps
 	# specially with i18n of the message
-	if ( $opts{l} ) {
-		($file) = ( $text =~ /'.+'[^']+'(.+)'$/ );
-		$line = 1 if $file;
+	if ( $opts{l} && $text =~ /'.+'[^']+'(.+)'$/ ) {
+		$file = $1;
+		$line = 1;
+	} elsif ( $text =~ /^(.*)\((\d+)\):/ ) { # File(line):
+		( $file, $line ) = ( $1, $2 );
+	} elsif ( $text =~ /'.*'.*'(.*)'.*:/ ) { # Found 'x' in 'file':
+		$file = $1;
+		$line = 1;
 	} else {
-		( $file, $line ) = ( $text =~ /^(.*?)\((\d+)\)\:/ );
+		return;
 	}
-	return unless $line;
 
 	my $main = Padre->ide->wx->main;
 	my $id   = $main->setup_editor($file);

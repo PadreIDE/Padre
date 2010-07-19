@@ -343,11 +343,6 @@ sub _initialize {
 		},
 	);
 
-	warn "In INIT method\n";
-	foreach my $type ( keys %MIME_TYPES ) {
-		warn "'$type'\n";
-	}
-
 	# TO DO:
 	# add some mime-type for pod files
 	# or remove the whole Padre::Document::POD class as it is not in use
