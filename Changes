@@ -43,6 +43,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - add Java and BibTeX to MIME types (ZENOG)
     - Ack ("find in files") output is now more 'clickable', but still not
       perfect (ZENOG)
+    - Fix File::Open3::open3() call to be IPC::Open3::open3() (BRICAS)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

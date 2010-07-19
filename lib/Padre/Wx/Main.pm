@@ -6098,7 +6098,7 @@ sub _filter_tool_run {
 	my $filter_out;
 	my $filter_err;
 
-	unless ( File::Open3::open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
+	unless ( IPC::Open3::open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
 		$self->error( sprintf( Wx::gettext("Error running filter tool:\n%s"), $! ) );
 		return;
 	}
