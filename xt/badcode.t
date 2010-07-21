@@ -112,7 +112,7 @@ foreach my $module ( sort keys %modules ) {
 		if ( $TODO{$module} ) {
 			$Test->todo_start("$module should not contain Wx but it still does");
 		}
-		ok( !$error, "$module does not use Wx" ) or diag $error;
+		ok( !$error, "'$module' does not use Wx" ) or diag $error;
 		if ( $TODO{$module} ) {
 			$Test->todo_end;
 		}
