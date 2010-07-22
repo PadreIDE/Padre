@@ -66,7 +66,7 @@ sub init_language_actions {
 		Padre::Wx::Action->new(
 			name        => "view.language.$name",
 			label       => $label,
-			comment     => _T('Switch Padre to alternate language'), # TODO param
+			comment     => sprintf( _T('Switch Padre interface language to %s'), $language{$name} ),
 			menu_method => 'AppendRadioItem',
 			menu_event  => sub {
 				$_[0]->change_locale($name);
