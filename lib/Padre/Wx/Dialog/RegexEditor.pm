@@ -158,7 +158,7 @@ sub _create_controls {
 	$self->{description_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Show Description?'),
+		Wx::gettext('Show &Description?'),
 	);
 
 	# Describe-the-regex text field
@@ -284,10 +284,10 @@ sub _create_controls {
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
-	$left->Add( $regex_label,              0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $combined,                 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$left->Add( $self->{description_checkbox},      0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{description_text}, 2, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $regex_label,                  0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $combined,                     0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $self->{description_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{description_text},     2, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{replace}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -341,8 +341,9 @@ sub _bind_events {
 		$self,
 		$self->{description_checkbox},
 		sub {
+
 			#Toggles the visibility of the description field
-			$self->{description_text}->Show($self->{description_checkbox}->IsChecked);
+			$self->{description_text}->Show( $self->{description_checkbox}->IsChecked );
 			$self->{sizer}->Layout;
 		},
 	);
