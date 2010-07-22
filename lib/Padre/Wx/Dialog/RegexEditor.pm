@@ -42,6 +42,7 @@ sub new {
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{sizer} = $sizer;
 
 	# Create the controls
 	$self->_create_controls($sizer);
@@ -153,12 +154,21 @@ sub _create_controls {
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	# Optionally toggle the visibility of the description field
+	$self->{description_checkbox} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Show Description?'),
+	);
+
 	# Describe-the-regex text field
-	my $description_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Description:') );
 	$self->{description_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
+
+	# Description is hidden by default
+	$self->{description_text}->Hide;
 
 	# Original input text field
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
@@ -276,7 +286,7 @@ sub _create_controls {
 	$left->AddSpacer(5);
 	$left->Add( $regex_label,              0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $combined,                 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$left->Add( $description_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{description_checkbox},      0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{description_text}, 2, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -325,6 +335,17 @@ sub _bind_events {
 			},
 		);
 	}
+
+	# Description checkbox
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{description_checkbox},
+		sub {
+			#Toggles the visibility of the description field
+			$self->{description_text}->Show($self->{description_checkbox}->IsChecked);
+			$self->{sizer}->Layout;
+		},
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
