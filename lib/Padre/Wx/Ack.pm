@@ -47,14 +47,17 @@ sub load {
 		return "$error (you have $App::Ack::VERSION installed)";
 	}
 
-	# redefine some app::ack subs to display results in padre's output
 	SCOPE: {
 		no warnings 'redefine', 'once';
+
+		# redefine some App::Ack subs to display results in Padre's output
 		*{App::Ack::print_first_filename} = sub { print_results("$_[0]\n"); };
 		*{App::Ack::print_separator}      = sub { print_results("--\n"); };
 		*{App::Ack::print}                = sub { print_results( $_[0] ); };
 		*{App::Ack::print_filename}       = sub { print_results("$_[0]$_[1]"); };
 		*{App::Ack::print_line_no}        = sub { print_results("$_[0]$_[1]"); };
+		# define gettext_label to avoid crash on switching interface language
+		*{Wx::ListCtrl::gettext_label} = sub { return Wx::gettext('Find in Files'); };
 	}
 
 	return;
