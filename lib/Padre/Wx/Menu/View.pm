@@ -5,13 +5,14 @@ package Padre::Wx::Menu::View;
 use 5.008;
 use strict;
 use warnings;
-use File::Glob           ();
-use Padre::Constant      ();
-use Padre::Current       ();
-use Padre::Config::Style ();
-use Padre::Wx            ();
-use Padre::Wx::Menu      ();
-use Padre::Locale        ();
+use File::Glob               ();
+use Padre::Constant          ();
+use Padre::Current           ();
+use Padre::Config::Style     ();
+use Padre::Wx                ();
+use Padre::Wx::ActionLibrary ();
+use Padre::Wx::Menu          ();
+use Padre::Locale            ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Padre::Wx::Menu';
@@ -193,13 +194,10 @@ sub new {
 
 	SCOPE: {
 		my %styles = Padre::Config::Style->core_styles;
-		my @order  = sort {
-			( $b eq 'default' ) <=> ( $a eq 'default' )
-			or
-			$styles{$a} cmp $styles{$b}
-		} keys %styles;
+		my @order =
+			sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
 
-		foreach my $name ( @order ) {
+		foreach my $name (@order) {
 			my $radio = $self->add_menu_action(
 				$self->{style},
 				"view.style.$name",
@@ -212,21 +210,23 @@ sub new {
 
 	SCOPE: {
 		my @styles = Padre::Config::Style->user_styles;
-		if ( @styles ) {
+		if (@styles) {
 			$self->{style}->AppendSeparator;
-			foreach my $name ( @styles ) {
+			foreach my $name (@styles) {
 				my $radio = $self->add_menu_action(
 					$self->{style},
 					"view.style.$name",
 				);
 				if ( $config->editor_style and $config->editor_style eq $name ) {
 					$radio->Check(1);
-				}				
+				}
 			}
 		}
 	}
 
 	# Language Support
+	Padre::Wx::ActionLibrary->init_language_actions;
+
 	# TO DO: God this is horrible, there has to be a better way
 	my $default  = Padre::Locale::system_rfc4646() || 'x-unknown';
 	my $current  = Padre::Locale::rfc4646();
@@ -236,7 +236,7 @@ sub new {
 	$self->{language} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext('Language'),
 		$self->{language}
 	);
 
@@ -252,28 +252,6 @@ sub new {
 	$self->{language}->AppendSeparator;
 
 	foreach my $name ( sort { $language{$a} cmp $language{$b} } keys %language ) {
-		my $label = $language{$name};
-
-		if ( $label eq 'English (United Kingdom)' ) {
-
-			# NOTE: A dose of fun in a mostly boring application.
-			# With more Padre developers, more countries, and more
-			# people in total British English instead of American
-			# English CLEARLY it is a FAR better default for us to
-			# use.
-			# Because it's something of an in-joke to English
-			# speakers, non-English localisations do NOT show this.
-			$label = "English (New Britstralian)";
-		}
-
-		# Append the language's description of itself.
-		# Skip the active language so we don't show the same string twice.
-		my $utf8txt = '';
-		if ( $current ne $name ) {
-			my $langobj = Padre::Locale::object($name);
-			$utf8txt = ' - ' . Padre::Locale::label($name);
-		}
-
 		my $radio = $self->add_menu_action(
 			$self->{language},
 			"view.language.$name",
@@ -352,7 +330,7 @@ sub refresh {
 		}
 
 		# By default 'Plain Text';
-		unless ( $has_checked ) {
+		unless ($has_checked) {
 			$self->{view_as_highlighting}->FindItemByPosition(0)->Check(1);
 		}
 	}
@@ -376,12 +354,12 @@ sub gui_element_add {
 	my $id   = $_[2];
 
 	# Don't add duplicates
-	foreach ( @GUI_ELEMENTS ) {
+	foreach (@GUI_ELEMENTS) {
 		next unless ref $_ eq 'ARRAY';
 		return 1 if $_->[2] =~ /^\Q$id\E$/;
 	}
 
-	push @GUI_ELEMENTS, [ @_ ];
+	push @GUI_ELEMENTS, [@_];
 
 	return 1;
 }

@@ -14,7 +14,7 @@ use Padre::Config::Style ();
 use Padre::Current       ();
 use Padre::Constant      ();
 use Padre::MimeTypes     ();
-use Padre::Wx::Action        ();
+use Padre::Wx::Action    ();
 use Padre::Wx            ();
 use Padre::Wx::Menu      ();
 use Padre::Logger;
@@ -27,6 +27,54 @@ our $VERSION = '0.66';
 
 ######################################################################
 # Action Database
+
+sub init_language_actions {
+
+	# Language Menu Actions
+
+	my %language = Padre::Locale::menu_view_languages();
+
+	Padre::Wx::Action->new(
+		name        => 'view.language.default',
+		label       => _T('System Default'),
+		comment     => _T('Switch language to system default'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->change_locale;
+		},
+	);
+
+	my $current = Padre::Locale::rfc4646();
+	foreach my $name ( sort keys %language ) {
+		my $label = $language{$name};
+		if ( $name ne $current ) {
+			$label .= ' - ' . Padre::Locale::label($name);
+		}
+
+		if ( $label eq 'English (United Kingdom)' ) {
+
+			# NOTE: A dose of fun in a mostly boring application.
+			# With more Padre developers, more countries, and more
+			# people in total British English instead of American
+			# English CLEARLY it is a FAR better default for us to
+			# use.
+			# Because it's something of an in-joke to English
+			# speakers, non-English localisations do NOT show this.
+			$label = "English (New Britstralian)";
+		}
+
+		Padre::Wx::Action->new(
+			name        => "view.language.$name",
+			label       => $label,
+			comment     => _T('Switch Padre to alternate language'), # TODO param
+			menu_method => 'AppendRadioItem',
+			menu_event  => sub {
+				$_[0]->change_locale($name);
+			},
+		);
+	}
+	return;
+}
 
 sub init {
 	my $class  = shift;
@@ -133,7 +181,7 @@ sub init {
 		comment    => _T('Setup a skeleton Perl module distribution'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
-			Padre::Wx::Dialog::ModuleStart->start($_[0]);
+			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
 		},
 	);
 
@@ -234,15 +282,14 @@ sub init {
 		shortcut    => 'Ctrl-Shift-W',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			my $dir      = $document->project_dir;
+			my $dir = $document->project_dir;
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
 			$_[0]->close_where(
 				sub {
 					defined $_[0]->project_dir
-					and
-					$_[0]->project_dir eq $dir;
+						and $_[0]->project_dir eq $dir;
 				}
 			);
 		},
@@ -255,15 +302,14 @@ sub init {
 		comment     => _T('Close all the files that do not belong to the current project'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			my $dir      = $document->project_dir;
+			my $dir = $document->project_dir;
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
 			$_[0]->close_where(
 				sub {
 					$_[0]->project_dir
-					and
-					$_[0]->project_dir ne $dir;
+						and $_[0]->project_dir ne $dir;
 				}
 			);
 		},
@@ -363,10 +409,9 @@ sub init {
 		id          => -1,
 		need_editor => 1,
 		label       => _T('Save Intuition'),
-		comment =>
-			_T('For new document try to guess the filename based on the file content and offer to save it.'),
-		shortcut   => 'Ctrl-Shift-S',
-		menu_event => sub {
+		comment     => _T('For new document try to guess the filename based on the file content and offer to save it.'),
+		shortcut    => 'Ctrl-Shift-S',
+		menu_event  => sub {
 			$_[0]->on_save_intuition;
 		},
 	);
@@ -396,14 +441,13 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name    => 'file.open_session',
-		label   => _T('Open Session...'),
-		comment =>
-			_T('Select a session. Close all the files currently open and open all the listed in the session'),
+		name       => 'file.open_session',
+		label      => _T('Open Session...'),
+		comment    => _T('Select a session. Close all the files currently open and open all the listed in the session'),
 		shortcut   => 'Ctrl-Alt-O',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new($_[0])->show;
+			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
 		},
 	);
 
@@ -414,7 +458,7 @@ sub init {
 		shortcut   => 'Ctrl-Alt-S',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionSave;
-			Padre::Wx::Dialog::SessionSave->new($_[0])->show;
+			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
 		},
 	);
 
@@ -726,7 +770,7 @@ sub init {
 				@items = $provider->quick_fix_list( $document, $editor );
 
 				# Add quick list items from document's quick fix provider
-				foreach my $item ( @items ) {
+				foreach my $item (@items) {
 					push @list, $item->{text};
 				}
 			};
@@ -738,8 +782,7 @@ sub init {
 			my $words = join( '|', @list );
 
 			Wx::Event::EVT_STC_USERLISTSELECTION(
-				$main,
-				$editor,
+				$main, $editor,
 				sub {
 					return if $empty_list;
 					my $text = $_[1]->GetText;
@@ -751,9 +794,7 @@ sub init {
 						}
 					}
 					if ($selection) {
-						eval {
-							&{ $selection->{listener} }();
-						};
+						eval { &{ $selection->{listener} }(); };
 						warn "Failed while calling Quick fix $selection->{text}\n" if $@;
 					}
 				},
@@ -887,8 +928,8 @@ sub init {
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
 		label       => _T('Encode Document to System Default'),
-		comment    => _T('Change the encoding of the current document to the default of the operating system'),
-		menu_event => sub {
+		comment     => _T('Change the encoding of the current document to the default of the operating system'),
+		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
 		},
@@ -920,8 +961,7 @@ sub init {
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
 		label       => _T('EOL to Windows'),
-		comment     => _T(
-			'Change the end of line character of the current document to those used in files on MS Windows'),
+		comment => _T('Change the end of line character of the current document to those used in files on MS Windows'),
 		menu_event => sub {
 			$_[0]->convert_to('WIN');
 		},
@@ -931,8 +971,7 @@ sub init {
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
 		label       => _T('EOL to Unix'),
-		comment     => _T(
-			'Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
+		comment => _T('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
 		menu_event => sub {
 			$_[0]->convert_to('UNIX');
 		},
@@ -942,8 +981,8 @@ sub init {
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
 		label       => _T('EOL to Mac Classic'),
-		comment => _T('Change the end of line character of the current document to that used on Mac Classic'),
-		menu_event => sub {
+		comment     => _T('Change the end of line character of the current document to that used on Mac Classic'),
+		menu_event  => sub {
 			$_[0]->convert_to('MAC');
 		},
 	);
@@ -1018,9 +1057,8 @@ sub init {
 		name        => 'edit.diff2saved',
 		need_editor => 1,
 		label       => _T('Diff to Saved Version'),
-		comment =>
-			_T('Compare the file in the editor to that on the disk and show the diff in the output window'),
-		menu_event => sub {
+		comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
+		menu_event  => sub {
 			shift->on_diff(@_);
 		},
 	);
@@ -1070,9 +1108,8 @@ sub init {
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
 		label       => _T('Show as Hexadecimal'),
-		comment     =>
-			_T('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
-		menu_event => sub {
+		comment     => _T('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
+		menu_event  => sub {
 			shift->show_as_numbers( @_, 'hex' );
 		},
 	);
@@ -1199,9 +1236,9 @@ sub init {
 		name        => 'search.quick_find_previous',
 		need_editor => 1,
 		label       => _T('Find Previous'),
-		comment  => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut => 'Shift-F4',
-		menu_event => sub {
+		comment     => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
+		shortcut    => 'Shift-F4',
+		menu_event  => sub {
 			$_[0]->fast_find->search('previous');
 		},
 	);
@@ -1240,6 +1277,7 @@ sub init {
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
+
 			#Create and show the dialog
 			my $open_resource_dialog = $_[0]->open_resource;
 			$open_resource_dialog->show;
@@ -1253,9 +1291,10 @@ sub init {
 		shortcut   => 'Ctrl-3',
 		toolbar    => 'status/info',
 		menu_event => sub {
+
 			#Create and show the dialog
 			require Padre::Wx::Dialog::QuickMenuAccess;
-			Padre::Wx::Dialog::QuickMenuAccess->new($_[0])->ShowModal;
+			Padre::Wx::Dialog::QuickMenuAccess->new( $_[0] )->ShowModal;
 		},
 	);
 
@@ -1274,10 +1313,9 @@ sub init {
 	# Visible GUI Elements
 
 	Padre::Wx::Action->new(
-		name  => 'view.output',
-		label => _T('Show Output'),
-		comment =>
-			_T('Show the window displaying the standard output and standard error of the running scripts'),
+		name        => 'view.output',
+		label       => _T('Show Output'),
+		comment     => _T('Show the window displaying the standard output and standard error of the running scripts'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
@@ -1305,9 +1343,9 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name    => 'view.outline',
-		label   => _T('Show Outline'),
-		comment => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
+		name        => 'view.outline',
+		label       => _T('Show Outline'),
+		comment     => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
@@ -1374,7 +1412,7 @@ sub init {
 				label      => $mime{$name},
 				comment    => _T('Switch document type'),
 				menu_event => sub {
-					$_[0]->set_mimetype($mime{$name});
+					$_[0]->set_mimetype( $mime{$name} );
 				},
 			);
 		}
@@ -1393,9 +1431,9 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name    => 'view.folding',
-		label   => _T('Show Code Folding'),
-		comment => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+		name        => 'view.folding',
+		label       => _T('Show Code Folding'),
+		comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
@@ -1575,45 +1613,19 @@ sub init {
 	SCOPE: {
 		my @styles = Padre::Config::Style->user_styles;
 
-		foreach my $name ( @styles ) {
+		foreach my $name (@styles) {
 			Padre::Wx::Action->new(
-				name    => "view.style.$name",
-				label   => $name,
-				comment => _T('Switch highlighting colours'),
+				name       => "view.style.$name",
+				label      => $name,
+				comment    => _T('Switch highlighting colours'),
 				menu_event => sub {
-					$_[0]->change_style($name, 1);
+					$_[0]->change_style( $name, 1 );
 				},
 			);
 		}
 	}
 
-	# Language Menu Actions
-
-	SCOPE: {
-		my %language = Padre::Locale::menu_view_languages();
-
-		Padre::Wx::Action->new(
-			name        => 'view.language.default',
-			label       => _T('System Default'),
-			comment     => _T('Switch language to system default'),
-			menu_method => 'AppendCheckItem',
-			menu_event  => sub {
-				$_[0]->change_locale;
-			},
-		);
-
-		foreach my $name ( sort keys %language ) {
-			Padre::Wx::Action->new(
-				name        => "view.language.$name",
-				label       => $language{$name},
-				comment     => _T('Switch menu to alternate language'),
-				menu_method => 'AppendRadioItem',
-				menu_event  => sub {
-					$_[0]->change_locale($name);
-				},
-			);
-		}
-	}
+	init_language_actions;
 
 	# Window Effects
 
@@ -1654,8 +1666,8 @@ sub init {
 		name        => 'perl.find_brace',
 		need_editor => 1,
 		label       => _T('Find Unmatched Brace'),
-		comment    => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
-		menu_event => sub {
+		comment     => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
+		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
 			$document->find_unmatched_brace;
@@ -1703,8 +1715,8 @@ sub init {
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
 		label       => _T('Newline Same Column'),
-		comment     => _T(
-			'Like pressing ENTER somewhere on a line, but use the current position as ident for the new line.'),
+		comment =>
+			_T('Like pressing ENTER somewhere on a line, but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
@@ -1717,9 +1729,8 @@ sub init {
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
 		label       => _T('Create Project Tagsfile'),
-		comment =>
-			_T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
-		menu_event => sub {
+		comment     => _T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->isa('Padre::Document::Perl') or return;
 			$document->project_create_tagsfile;
@@ -1733,6 +1744,7 @@ sub init {
 		comment     => _T('When typing { insert a closing } automatically'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
+
 			# Update the saved config setting
 			my $checked = $_[1]->IsChecked ? 1 : 0;
 			$_[0]->config->set(
@@ -1747,8 +1759,8 @@ sub init {
 		name        => 'perl.rename_variable',
 		need_editor => 1,
 		label       => _T('Rename Variable...'),
-		comment => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
-		menu_event => sub {
+		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
+		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('lexical_variable_replacement') or return;
 			require Padre::Wx::History::TextEntryDialog;
@@ -1854,6 +1866,7 @@ sub init {
 		comment      => _T( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut     => 'Shift-F5',
 		menu_event   => sub {
+
 			# Enable debug info
 			$_[0]->run_document(1);
 		},
@@ -1885,9 +1898,8 @@ sub init {
 		need_editor => 1,
 		need_file   => 1,
 		label       => _T('Run Tests'),
-		comment     => _T(
-			'Run all tests for the current project or document and show the results in ' . 'the output panel.'
-		),
+		comment =>
+			_T( 'Run all tests for the current project or document and show the results in ' . 'the output panel.' ),
 		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->on_run_tests;
@@ -1924,7 +1936,7 @@ sub init {
 		toolbar    => 'actions/stop',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
-				if ( Padre::Constant::WIN32 ) {
+				if (Padre::Constant::WIN32) {
 					$_[0]->{command}->KillProcess;
 				} else {
 					$_[0]->{command}->TerminateProcess;
@@ -2207,9 +2219,7 @@ sub init {
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $_[0]->error(
-				Wx::gettext("Could not find the Padre::Plugin::My plug-in")
-			) unless -e $file;
+			return $_[0]->error( Wx::gettext("Could not find the Padre::Plugin::My plug-in") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
@@ -2272,7 +2282,7 @@ sub init {
 			require Padre::CPAN;
 			require Padre::Wx::CPAN;
 			my $cpan = Padre::CPAN->new;
-			my $gui  = Padre::Wx::CPAN->new( $cpan, $_[0] );
+			my $gui = Padre::Wx::CPAN->new( $cpan, $_[0] );
 			$gui->show;
 		}
 	);
@@ -2283,7 +2293,7 @@ sub init {
 		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),
 		menu_event => sub {
 			require Padre::CPAN;
-			Padre::CPAN->install_file($_[0]);
+			Padre::CPAN->install_file( $_[0] );
 		},
 	);
 
@@ -2293,7 +2303,7 @@ sub init {
 		comment    => _T('Using pip to download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			require Padre::CPAN;
-			Padre::CPAN->install_url($_[0]);
+			Padre::CPAN->install_url( $_[0] );
 		},
 	);
 
@@ -2303,7 +2313,7 @@ sub init {
 		comment    => _T('Open CPAN::MyConfig.pm for manual editing by experts'),
 		menu_event => sub {
 			require Padre::CPAN;
-			Padre::CPAN->cpan_config($_[0]);
+			Padre::CPAN->cpan_config( $_[0] );
 		},
 	);
 
@@ -2469,9 +2479,10 @@ sub init {
 		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
-			if ( Params::Util::_INSTANCE($focus, 'Padre::Wx::ErrorList') ){
+			if ( Params::Util::_INSTANCE( $focus, 'Padre::Wx::ErrorList' ) ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
+
 				# Show help for selected text
 				$_[0]->help( $_[0]->current->text );
 				return;
@@ -2485,6 +2496,7 @@ sub init {
 		comment    => _T('Show the help article for the current context'),
 		shortcut   => 'F2',
 		menu_event => sub {
+
 			# Show Help Search with no topic...
 			$_[0]->help_search;
 		},
@@ -2506,8 +2518,8 @@ sub init {
 		name    => 'help.live_support',
 		label   => _T('Padre Support (English)'),
 		comment => _T(
-			'Open the Padre live support chat in your web browser '
-			. 'and talk to others who may help you with your problem'
+			      'Open the Padre live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('padre');
@@ -2518,8 +2530,8 @@ sub init {
 		name    => 'help.perl_help',
 		label   => _T('Perl Help'),
 		comment => _T(
-			'Open the Perl live support chat in your web browser '
-			. 'and talk to others who may help you with your problem'
+			      'Open the Perl live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('general');
@@ -2530,8 +2542,8 @@ sub init {
 		name    => 'help.win32_questions',
 		label   => _T('Win32 Questions (English)'),
 		comment => _T(
-			'Open the Perl/Win32 live support chat in your web browser '
-			. 'and talk to others who may help you with your problem'
+			      'Open the Perl/Win32 live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('win32');
@@ -2541,12 +2553,10 @@ sub init {
 	# Add interesting and helpful websites
 
 	Padre::Wx::Action->new(
-		name    => 'help.visit_perlmonks',
-		label   => _T('Visit the PerlMonks'),
-		comment => _T(
-			'Open perlmonks.org, one of the biggest Perl community sites, '
-			. 'in your default web browser'
-		),
+		name  => 'help.visit_perlmonks',
+		label => _T('Visit the PerlMonks'),
+		comment =>
+			_T( 'Open perlmonks.org, one of the biggest Perl community sites, ' . 'in your default web browser' ),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},

@@ -8,9 +8,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Removed half the usages of Wx::Perl::Dialog (ADAMK)
     - Use a hyphen to a separate the current vs native names of the languages
       in the View menu, as the bracing looked weird with the bracing of some
-      of the languages themselves (ADAMK)
+      of the languages themselves (ADAMK, ZENOG)
     - Don't show a additional translated string for the language that is
-      currently active (ADAMK)
+      currently active (ADAMK, ZENOG)
     - When the advanced setting "feature_fontsize" is disabled, Padre will
       remove the Font Size menu, disable Ctrl-+ and Ctrl--, and (most
       importantly) will not change the font size in an editor on
