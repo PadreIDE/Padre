@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Current                         ();
+use Padre::Util                            ('_T');
 use Padre::Wx                              ();
 use Padre::Wx::Dialog                      ();
 use Padre::Wx::Editor                      ();
@@ -14,8 +15,8 @@ our $VERSION = '0.66';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = (
-	'Padre::Wx::Dialog::Preferences::File'             => Wx::gettext('Local/Remote File Access'),
-	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => Wx::gettext('Perl Auto Complete')
+	'Padre::Wx::Dialog::Preferences::File'             => _T('Local/Remote File Access'),
+	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => _T('Perl Auto Complete'),
 );
 
 =pod
