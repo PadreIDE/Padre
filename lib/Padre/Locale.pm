@@ -521,12 +521,24 @@ sub object {
 	undef $langcode if ref($langcode);
 	my $id     = rfc4646($langcode);
 	my $lang   = $RFC4646{$id}->{wxid};
-	my $locale = Wx::Locale->new($lang);
+	
+	# TODO Remove this if this works and is accepted.
+	#my $locale = Wx::Locale->new($lang);
+	
+	# this prevents the warning; typically:
+	# 10:23:15: Error: Cannot set locale to 'de_DE'.
+	# from Wx that it can't load a language.
+	my $locale = Wx::Locale->new(undef);
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
-	unless ( $locale->IsLoaded($id) ) {
-		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
-		$locale->AddCatalog($id) if -f $file;
-	}
+	my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
+	$locale->AddCatalog($id) if -f $file;
+	
+	# TODO Remove this too.
+	# unless ( $locale->IsLoaded($id) ) {
+		# my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
+		# $locale->AddCatalog($id) if -f $file;
+	# }
+	
 	return $locale;
 }
 
