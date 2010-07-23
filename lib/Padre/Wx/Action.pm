@@ -73,10 +73,11 @@ sub new {
 		die join( ',', caller ) . ' tried to create an action without name';
 	}
 	if ( $name =~ /^menu\./ ) {
+
 		# The menu prefix is dedicated to menus and must not be used by actions
 		die join( ',', caller ) . ' tried to create an action with name prefix menu';
 	}
-	if ( $actions->{$name} ) {
+	if ( $actions->{$name} && $name !~ /^view\.language\./ ) {
 		warn "Found a duplicate action '$name'\n";
 	}
 
@@ -91,7 +92,7 @@ sub new {
 	$self->{queue_event} ||= $self->{menu_event};
 
 	# Validate the shortcut
-	if ( $shortcut ) {
+	if ($shortcut) {
 		foreach my $n ( keys %$actions ) {
 			my $a = $actions->{$n};
 			next unless $a->shortcut;
@@ -116,7 +117,7 @@ sub new {
 
 # Translate on the fly when requested
 sub label {
-	Wx::gettext($_[0]->{label});
+	Wx::gettext( $_[0]->{label} );
 }
 
 # A label textual data without any strange menu characters
@@ -129,7 +130,7 @@ sub label_text {
 
 # Translate on the fly when requested
 sub comment {
-	Wx::gettext($_[0]->{comment});
+	Wx::gettext( $_[0]->{comment} );
 }
 
 # Label for use with menu (with shortcut)
