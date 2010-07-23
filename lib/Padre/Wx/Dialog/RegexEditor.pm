@@ -158,7 +158,7 @@ sub _create_controls {
 	$self->{description_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Show &Description?'),
+		Wx::gettext('Show &Description'),
 	);
 
 	# Describe-the-regex text field
