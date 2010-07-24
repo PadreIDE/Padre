@@ -1,6 +1,6 @@
 package Padre::Task::Outline;
 
-# Function list refresh task, done mainly as a full-feature proof of concept.
+# Outline refresh task, done mainly as a full-feature proof of concept.
 
 use 5.008005;
 use strict;
