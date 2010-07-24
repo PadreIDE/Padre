@@ -150,7 +150,7 @@ sub on_close {
 	my $tool     = $self->GetPage($position);
 	unless ( $tool->can('view_close') ) {
 
-		# HACK: Crash in a controller manner for the moment.
+		# HACK: Crash in a controlled manner for the moment.
 		# Later just let this crash uncontrolably :)
 		# DOUBLE HACK: Just warn, and pass through for now.
 		my $class = ref $tool;

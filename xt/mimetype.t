@@ -39,7 +39,7 @@ my %test_files = (
 
 my %existing_test_files = (
 	'broken.bin'                     => undef,               # regression test for ticket #900
-	'lexical_replace_stress_test.pl' => 'application/x-perl',
+	'rename_variable_stress_test.pl' => 'application/x-perl',
 );
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');

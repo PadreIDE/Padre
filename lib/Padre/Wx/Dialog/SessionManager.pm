@@ -8,7 +8,7 @@ use warnings;
 use POSIX qw{ strftime };
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
-use Padre::Current ();
+use Padre::Current  ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Wx::Dialog';
@@ -327,11 +327,11 @@ sub _refresh_list {
 
 	my $config = Padre::Current->config;
 
-	if (defined($column) and defined($reverse)) {
-		$config->set('sessionmanager_sortorder',join(',',$column,$reverse));
+	if ( defined($column) and defined($reverse) ) {
+		$config->set( 'sessionmanager_sortorder', join( ',', $column, $reverse ) );
 		$config->write;
 	} else {
-		($column,$reverse) = split(/,/,$config->sessionmanager_sortorder);
+		( $column, $reverse ) = split( /,/, $config->sessionmanager_sortorder );
 	}
 
 	# default sorting

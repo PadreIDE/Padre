@@ -2,7 +2,7 @@
 # this is nonsensical code which is intended to
 # provide a base for manually stress-testing the
 # find-variable-declaration and
-# lexical-variable-replace
+# rename-variable
 # functions.
 # TODO: Proper unit-testification
 

@@ -1762,8 +1762,8 @@ sub init {
 		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$document->can('lexical_variable_replacement') or return;
-			$document->lexical_variable_replacement;
+			$document->can('rename_variable') or return;
+			$document->rename_variable;
 		},
 	);
 

@@ -54,7 +54,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Call relocale() for all elements of the Bottom panel (ZENOG)
     - Remember sorting order in session manager (SEWI) 
     - Nicer workflow for renaming variables: Now we check for some conditions
-      before prompting the user for a name (ZENOG)
+      before prompting the user for a name; renamed function
+      'lexical_variable_replacement' to 'rename_variable' (ZENOG)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

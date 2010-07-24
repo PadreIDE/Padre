@@ -813,7 +813,7 @@ sub get_sub_line_number {
 #####################################################################
 # Padre::Document Document Manipulation
 
-sub lexical_variable_replacement {
+sub rename_variable {
 	my $self = shift;
 
 	# Can we find something to replace?
@@ -844,13 +844,13 @@ sub lexical_variable_replacement {
 		document    => $self,
 		location    => $location,
 		replacement => $replacement,
-		callback    => 'lexical_variable_replacement_response',
+		callback    => 'rename_variable_response',
 	);
 
 	return;
 }
 
-sub lexical_variable_replacement_response {
+sub rename_variable_response {
 	my $self = shift;
 	my $task = shift;
 
@@ -1659,24 +1659,10 @@ sub event_on_right_down {
 		Wx::Event::EVT_MENU(
 			$editor, $lexRepl,
 			sub {
+				my $doc = $self;
 
-				# FIX ME near duplication of the code in Padre::Wx::Menu::Perl
-				my $editor = shift;
-				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
-				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
-				require Padre::Wx::History::TextEntryDialog;
-				my $dialog = Padre::Wx::History::TextEntryDialog->new(
-					$editor->main,
-					Wx::gettext("Replacement"),
-					Wx::gettext("Replacement"),
-					'$foo',
-				);
-				return if $dialog->ShowModal == Wx::wxID_CANCEL;
-				my $replacement = $dialog->GetValue;
-				$dialog->Destroy;
-				return unless defined $replacement;
-				my $lock = $editor->main->lock('BUSY');
-				$doc->lexical_variable_replacement($replacement);
+				#my $lock = $editor->main->lock('BUSY');
+				$doc->rename_variable;
 			},
 		);
 	} # end if it's a variable
