@@ -131,6 +131,10 @@ sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+		if( ! $self->GetPage($i)->can('relocale') ) {
+			warn "Panel cannot do relocale\n";
+			next;
+		}
 		$self->GetPage($i)->relocale;
 	}
 
