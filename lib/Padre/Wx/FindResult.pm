@@ -54,6 +54,7 @@ sub new {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
+	$self->set_column_widths;
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 1;
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
@@ -68,7 +69,6 @@ sub new {
 
 	$self->{line_count} = scalar(@$lines);
 	$self->populate_list($lines);
-	$self->set_column_widths;
 	Padre::Current->main->bottom->show($self);
 
 	return $self;
@@ -102,9 +102,7 @@ Works out the correct column widths for the list columns.
 sub set_column_widths {
 	my $self = shift;
 
-	my $width0_default = $self->GetCharWidth * length( Wx::gettext('Line No') ) + 16;
-
-	$self->SetColumnWidth( 0, $width0_default );
+	$self->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
 	$self->SetColumnWidth( 1, Wx::wxLIST_AUTOSIZE );
 
 	return;
@@ -176,13 +174,11 @@ Set the column headings to the list.
 
 =cut
 
-
-
 sub _get_title {
 	my $c = shift;
 
-	return Wx::gettext('Line No') if $c == 0;
-	return Wx::gettext('Line')    if $c == 1;
+	return Wx::gettext('Line')    if $c == 0;
+	return Wx::gettext('Content') if $c == 1;
 
 	die "invalid value '$c'";
 }
