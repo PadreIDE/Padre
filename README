@@ -1,6 +1,6 @@
 Padre - Perl Application Development and Refactoring Environment
 
-Currently a simple editor for Perl written in Perl using WxWidgets
+A Perl IDE and general-purpose editor using WxWidgets.
 
 Installation:
 
@@ -8,7 +8,7 @@ Alien::WxWidgets
 Wx
 Padre
 
-For detailed installation look at 
+For detailed installation instructions look at 
 
 http://padre.perlide.org/wiki/Download
 
