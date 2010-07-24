@@ -525,8 +525,15 @@ sub object {
 	# causes wxWidgets to throw a warning to the console that it can't find 
 	# the language.
 	# I've asked about this on the perl wx list.
-	my $locale = Wx::Locale->new($lang);
+	#Wx::Locale->AddCatalogLookupPathPrefix(Padre::Util::sharedir('locale'));
+	#my $locale = Wx::Locale->new($lang);
+	
+	# OK trying again.
+	# by instantiating with an known language, we avoid the warning from wxWidgets 
+	# saying that it can't find the language.
+	my $locale = Wx::Locale->new(Wx::wxLANGUAGE_DEFAULT); # Wx::wxLANGUAGE_UNKNOWN
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
+	$locale->AddCatalog($id);
 	unless ( $locale->IsLoaded($id) ) {
 		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
 		$locale->AddCatalog($id) if -f $file;
