@@ -392,11 +392,13 @@ setting(
 );
 
 # How many times has the user run Padre?
+# Default is 1 and the value is incremented at shutdown rather than
+# startup so that we don't have to write files in the startup sequence.
 setting(
 	name    => 'startup_count',
 	type    => Padre::Constant::POSINT,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 1,
 );
 
 
