@@ -73,21 +73,23 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# View as (Highlighting File Type)
-	$self->{view_as_highlighting} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext("View Document As..."),
-		$self->{view_as_highlighting}
-	);
+	SCOPE: {
 
-	my %mimes = Padre::MimeTypes::menu_view_mimes();
-
-	foreach my $name ( sort { lc($a) cmp lc($b) } keys %mimes ) {
-		$self->add_menu_action(
-			$self->{view_as_highlighting},
-			"view.mime.$name",
+		# View as (Highlighting File Type)
+		$self->{view_as_highlighting} = Wx::Menu->new;
+		$self->Append(
+			-1,
+			Wx::gettext("View Document As..."),
+			$self->{view_as_highlighting}
 		);
+
+		my %mimes = Padre::MimeTypes::menu_view_mimes();
+		foreach my $name ( sort { Wx::gettext( $mimes{$a} ) cmp Wx::gettext( $mimes{$b} ) } keys %mimes ) {
+			my $radio = $self->add_menu_action(
+				$self->{view_as_highlighting},
+				"view.mime.$name",
+			);
+		}
 	}
 
 	$self->AppendSeparator;

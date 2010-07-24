@@ -1406,13 +1406,13 @@ sub init {
 	SCOPE: {
 		my %mime = Padre::MimeTypes::menu_view_mimes();
 
-		foreach my $name ( sort keys %mime ) {
+		foreach my $mime_type ( keys %mime ) {
 			Padre::Wx::Action->new(
-				name       => "view.mime.$name",
-				label      => $mime{$name},
+				name       => "view.mime.$mime_type",
+				label      => $mime{$mime_type},
 				comment    => _T('Switch document type'),
 				menu_event => sub {
-					$_[0]->set_mimetype( $mime{$name} );
+					$_[0]->set_mimetype( $mime{$mime_type} );
 				},
 			);
 		}
