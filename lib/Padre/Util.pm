@@ -294,7 +294,7 @@ sub svn_directory_revision {
 
 If called without a parameter returns the share directory of Padre.
 If called with a parameter (e.g. C<Perl6>) returns the share directory
-of L<Padre::Plugin::Perl6>
+of L<Padre::Plugin::Perl6>. Uses File::ShareDir inside.
 
 =cut
 
