@@ -35,29 +35,29 @@ sub document {
 	# Find all the POD fragments
 	my $pod = $document->find('PPI::Token::Pod');
 	unless ( defined $pod ) {
-		Padre::Current->main->error('Error while searching for POD');
+		Padre::Current->main->error( Wx::gettext('Error while searching for POD') );
 		return undef;
 	}
 	unless ($pod) {
-		Padre::Current->main->error('This document does not contain any POD');
+		Padre::Current->main->error( Wx::gettext('This document does not contain any POD') );
 		return 0;
 	}
 	unless ( @$pod > 1 ) {
-		Padre::Current->main->error('Only one POD fragment, will not try to merge');
+		Padre::Current->main->error( Wx::gettext('Only one POD fragment, will not try to merge') );
 		return 0;
 	}
 
 	# Create a single merged POD fragment
 	my $merged = PPI::Token::Pod->merge(@$pod);
 	unless ($merged) {
-		Padre::Current->main->error('Failed to merge the POD fragments');
+		Padre::Current->main->error( Wx::gettext('Failed to merge the POD fragments') );
 		return undef;
 	}
 
 	# Strip all the fragments out of the document
 	foreach my $element (@$pod) {
 		next if $element->delete;
-		$document->current->error('Failed to delete POD fragment');
+		$document->current->error( Wx::gettext('Failed to delete POD fragment') );
 		return undef;
 	}
 
