@@ -47,6 +47,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Fix #969: crash when switching language after using Ack (ZENOG)
     - Remove unnecessary Wx::gettext calls from Padre::Wx::Dialog::Preferences
       that lead to missing translations (ZENOG)
+    - Description field is hidden by default in the regex editor dialog.
+      A checkbox now optionally toggles its visibility (AZAWAWI)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
