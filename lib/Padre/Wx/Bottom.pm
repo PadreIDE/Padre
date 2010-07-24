@@ -130,12 +130,14 @@ sub refresh {
 sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
-		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
-		if( ! $self->GetPage($i)->can('relocale') ) {
-			warn "Panel cannot do relocale\n";
-			next;
+		my $tool = $self->GetPage($i);
+		$self->SetPageText( $i, $tool->gettext_label );
+		if( $tool->can('relocale') ) {
+			$tool->relocale;
+		} else {
+			my $class = ref $tool;
+			warn "'$class' cannot do relocale";
 		}
-		$self->GetPage($i)->relocale;
 	}
 
 	return;
@@ -155,7 +157,10 @@ sub on_close {
 	unless ( $tool->can('view_close') ) {
 		my $class = ref $tool;
 		return $self->hide($tool) if $class eq 'Wx::ListCtrl';
-		die "Panel tool $class does not define 'view_close' method";
+		
+		warn "Panel tool $class does not define 'view_close' method";
+		$self->hide($tool);
+		return;
 	}
 	$tool->view_close;
 }
