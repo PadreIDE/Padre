@@ -300,6 +300,9 @@ sub populate_list {
 
 }
 
+sub view_close {
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

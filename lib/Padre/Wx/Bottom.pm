@@ -99,7 +99,7 @@ sub hide {
 	my $self     = shift;
 	my $page     = shift;
 	my $position = $self->GetPageIndex($page);
-	unless ( $position >= 0 ) {
+	if ( $position < 0 ) {
 
 		# Not showing this
 		return 1;
@@ -149,47 +149,12 @@ sub on_close {
 	my $position = $event->GetSelection;
 	my $tool     = $self->GetPage($position);
 	unless ( $tool->can('view_close') ) {
-
-		# HACK: Crash in a controlled manner for the moment.
-		# Later just let this crash uncontrolably :)
-		# DOUBLE HACK: Just warn, and pass through for now.
 		my $class = ref $tool;
-		warn "Panel tool $class does define 'view_close' method";
-		return $self->_on_close($event);
+		return $self->hide($tool) if $class eq 'Wx::ListCtrl';
+		die "Panel tool $class does not define 'view_close' method";
 	}
 	$tool->view_close;
 }
-
-sub _on_close {
-	my ( $self, $event ) = @_;
-
-	my $pos  = $event->GetSelection;
-	my $type = ref $self->GetPage($pos);
-	$self->RemovePage($pos);
-
-	# De-activate in the menu and in the configuration
-	my %menu_name = (
-		'Padre::Wx::ErrorList' => 'show_errorlist',
-	);
-	my %config_name = (
-		'Padre::Wx::ErrorList' => 'main_errorlist',
-	);
-	if ( exists $menu_name{$type} ) {
-		$self->main->menu->view->{ $menu_name{$type} }->Check(0);
-		$self->main->config->set( $config_name{$type}, 0 );
-	} else {
-		warn "Unknown page type: '$type'\n";
-	}
-
-	# Is this the last page?
-	if ( $self->GetPageCount == 0 ) {
-		$self->Hide;
-		$self->aui->GetPane($self)->Hide;
-	}
-
-	return;
-}
-
 
 1;
 
