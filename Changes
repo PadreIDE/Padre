@@ -52,6 +52,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Padre::Wx::FindResult: Get rid of global variable, shorter column
       titles, both columns now wxLIST_AUTOSIZE (ZENOG)
     - Call relocale() for all elements of the Bottom panel (ZENOG)
+    - Remember sorting order in session manager (SEWI)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

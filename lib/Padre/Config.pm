@@ -938,6 +938,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => "#\\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \\t]*[:-]?)(?:[ \\t]*)(.*?)\\s*\$",
 );
+setting(
+	name    => 'sessionmanager_sortorder',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => "0,0",
+);
 
 
 # By default use background threads unless profiling
