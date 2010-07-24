@@ -23,7 +23,12 @@ use Wx::Event qw( EVT_BUTTON );
 
 our $VERSION = '0.66';
 our @ISA     = 'Wx::ListView';
-my $LineCount; # Global fid count so it can be used in the label
+
+use Class::XSAccessor {
+	getters => {
+		line_count => 'line_count',
+	}
+};
 
 =pod
 
@@ -36,7 +41,6 @@ Create the new B<Find results> panel.
 
 sub new {
 	my ( $class, $main, $lines, $editor ) = @_;
-	$LineCount = scalar(@$lines);
 
 	#ensure the bottom aui is present.
 	$main->show_output(1);
@@ -62,12 +66,12 @@ sub new {
 		$self, \&on_right_down,
 	);
 
+	$self->{line_count} = scalar(@$lines);
 	$self->populate_list($lines);
 	$self->set_column_widths;
 	Padre::Current->main->bottom->show($self);
 
 	return $self;
-
 }
 
 =pod
@@ -79,7 +83,9 @@ Sets the label of the tab. Called automatically when the object is created.
 =cut
 
 sub gettext_label {
-	sprintf( Wx::gettext('Find Results (%s)'), $LineCount );
+	my $self = @_;
+
+	sprintf( Wx::gettext('Find Results (%s)'), $self->line_count );
 }
 
 
