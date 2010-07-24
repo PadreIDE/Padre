@@ -519,26 +519,17 @@ sub system_iso639 {
 sub object {
 	my $langcode = shift;
 	undef $langcode if ref($langcode);
-	my $id   = rfc4646($langcode);
-	my $lang = $RFC4646{$id}->{wxid};
-
-	# TODO Remove this if this works and is accepted.
-	#my $locale = Wx::Locale->new($lang);
-
-	# this prevents the warning; typically:
-	# 10:23:15: Error: Cannot set locale to 'de_DE'.
-	# from Wx that it can't load a language.
-	my $locale = Wx::Locale->new(undef);
+	my $id     = rfc4646($langcode);
+	my $lang   = $RFC4646{$id}->{wxid};
+	# Code is reverted back as tests are failing, however the following call
+	# causes wxWidgets to throw a warning to the console that it can't find 
+	# the language.
+	# I've asked about this on the perl wx list.
+	my $locale = Wx::Locale->new($lang);
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
-	my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
-	$locale->AddCatalog($id) if -f $file;
-
-	# TODO Remove this too.
-	# unless ( $locale->IsLoaded($id) ) {
-	# my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
-	# $locale->AddCatalog($id) if -f $file;
-	# }
-
+	unless ( $locale->IsLoaded($id) ) {
+		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
+	}
 	return $locale;
 }
 
