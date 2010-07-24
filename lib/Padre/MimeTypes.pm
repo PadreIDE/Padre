@@ -20,6 +20,7 @@ use warnings;
 use Carp           ();
 use Data::Dumper   ();
 use File::Basename ();
+use Padre::Util    ('_T');
 use Padre::Wx      ();
 use Padre::DB      ();
 
@@ -224,7 +225,7 @@ sub _initialize {
 		},
 
 		'application/x-shellscript' => {
-			name  => Wx::gettext('Shell Script'),
+			name  => _T('Shell Script'),
 			lexer => Wx::wxSTC_LEX_BASH,
 		},
 
@@ -328,7 +329,7 @@ sub _initialize {
 		},
 
 		'text/plain' => {
-			name  => Wx::gettext('Text'),
+			name  => _T('Text'),
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
 
@@ -351,7 +352,7 @@ sub _initialize {
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
 
-	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', Wx::gettext('Fast but might be out of date') );
+	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', _T('Fast but might be out of date') );
 
 	foreach my $mime ( keys %MIME_TYPES ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
@@ -360,13 +361,13 @@ sub _initialize {
 	# Perl 5 specific highlighters
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::Lexer',
-		Wx::gettext('PPI Experimental'),
-		Wx::gettext('Slow but accurate and we have full control so bugs can be fixed')
+		_T('PPI Experimental'),
+		_T('Slow but accurate and we have full control so bugs can be fixed')
 	);
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::PPILexer',
-		Wx::gettext('PPI Standard'),
-		Wx::gettext('Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.')
+		_T('PPI Standard'),
+		_T('Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.')
 	);
 
 	__PACKAGE__->add_highlighter_to_mime_type( 'application/x-perl', 'Padre::Document::Perl::Lexer' );
@@ -465,7 +466,7 @@ sub get_highlighter_explanation {
 		Carp::cluck("Could not find highlighter for '$name'\n");
 		return '';
 	}
-	return $AVAILABLE_HIGHLIGHTERS{$highlighter}{explanation};
+	return Wx::gettext( $AVAILABLE_HIGHLIGHTERS{$highlighter}{explanation} );
 }
 
 sub get_highlighter_name {
@@ -571,7 +572,7 @@ sub get_mime_types {
 # return the display-names of the mime-types ordered according to the display-names
 sub get_mime_type_names {
 	my $self = shift;
-	return [ map { $MIME_TYPES{$_}{name} } @{ $self->get_mime_types } ];
+	return [ map { Wx::gettext( $MIME_TYPES{$_}{name} ) } @{ $self->get_mime_types } ];
 }
 
 # given a mime-type
@@ -579,7 +580,7 @@ sub get_mime_type_names {
 sub get_mime_type_name {
 	my $self = shift;
 	my $mime_type = shift || '';
-	return $MIME_TYPES{$mime_type}{name};
+	return Wx::gettext( $MIME_TYPES{$mime_type}{name} );
 }
 
 # given a mime-type
@@ -830,7 +831,7 @@ sub menu_view_mimes {
 	foreach my $mime_type ( keys %MIME_TYPES ) {
 		my $mime_type_name = $MIME_TYPES{$mime_type}{name};
 		if ($mime_type_name) {
-			$menu_view_mimes{$mime_type_name} = $mime_type;
+			$menu_view_mimes{$mime_type} = $mime_type_name;
 		}
 	}
 	return %menu_view_mimes;

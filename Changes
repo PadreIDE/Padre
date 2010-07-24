@@ -59,6 +59,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Simplify the code for the Bottom pane a bit (-1 method), no warnings
       any more (ZENOG)
     - Fixed #970: Switching language removes plugin menus (ZENOG)
+    - Padre::MimeTypes: Fixed some Wx::gettext handling problems, switched
+      keys of menu_view_mimes() so that the names (not the MIME types) of
+      file types are shown in the View menu (ZENOG)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
