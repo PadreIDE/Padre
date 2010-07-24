@@ -1,6 +1,85 @@
 package Padre::Current;
 
-# A context object, for centralising the concept of what is "current"
+=pod
+
+=head1 NAME
+
+Padre::Current - A context object, for centralising the concept of what is "current"
+
+=head1 DESCRIPTION
+
+The C<Padre::Current> detectes and returns whatever is current. Use it whenever you
+need to do something with anything which might get a focus or be selectable otherwise
+
+All methods could be called as functions, methods or class methods.
+
+=head1 CLASS METHODS
+
+=head2 C<config>
+
+    my $config = Padre::Current->config;
+
+Returns a Padre::Config object for the current document.
+
+Padre has three types of configuration: User-specific, host-specific and project-specific,
+this method returnsa config object which includes the current values - ne need to for you
+to care about which config is active and which has priority.
+
+=head2 C<document>
+
+    my $document = Padre::Current->document;
+
+Returns a Padre::Document object for the current document.
+
+=head2 C<editor>
+
+    my $editor = Padre::Current->editor;
+
+Returns a Padre::Editor object for the current editor (containing the current document).
+
+=head2 C<filename>
+
+    my $filename = Padre::Current->filename;
+
+Returns the filename of the current document.
+
+=head2 C<ide>
+
+    my $ide = Padre::Current->ide;
+
+Returns a Padre::Wx object of the current ide.
+
+=head2 C<main>
+
+    my $main = Padre::Current->main;
+
+Returns a Padre::Wx::Main object of the current ide.
+
+=head2 C<notebook>
+
+    my $main = Padre::Current->notebook;
+
+Returns a Padre::Wx::Notebook object of the current notebook.
+
+=head2 C<project>
+
+    my $main = Padre::Current->project;
+
+Returns a Padre::Project object of the current project.
+
+=head2 C<text>
+
+    my $main = Padre::Current->text;
+
+Returns the current selection (selected text in the current document).
+
+=head2 C<title>
+
+    my $main = Padre::Current->title;
+
+Returns the title of the current editor window.
+
+=cut
 
 use 5.008;
 use strict;
