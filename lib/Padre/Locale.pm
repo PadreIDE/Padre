@@ -529,6 +529,7 @@ sub object {
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
 	unless ( $locale->IsLoaded($id) ) {
 		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
+		$locale->AddCatalog($id) if -f $file;
 	}
 	return $locale;
 }
