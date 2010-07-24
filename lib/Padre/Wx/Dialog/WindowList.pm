@@ -319,6 +319,9 @@ sub _refresh_list {
 
 		my $document = $page->{Document};
 
+		my $disk_state = $document->has_changed_on_disk;
+		next if $self->{no_fresh} and (!($document->is_modified or $disk_state));
+
 		my $filename;
 
 		my $documentfile = $document->file;
@@ -348,7 +351,6 @@ sub _refresh_list {
 		$list->SetItem( $idx, 1, $filename );
 		$list->SetItem( $idx, 2, $document->is_modified ? Wx::gettext('CHANGED') : Wx::gettext('fresh') );
 
-		my $disk_state = $document->has_changed_on_disk;
 		my $disk_text;
 		if ( $disk_state == 0 ) {
 			$disk_text = Wx::gettext('fresh');

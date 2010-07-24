@@ -64,6 +64,7 @@ use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Role::Conduit      ();
 use Padre::Wx::Role::Dialog       ();
+use Padre::Wx::Dialog::WindowList ();
 use Padre::Logger;
 
 our $VERSION = '0.66';
@@ -3796,7 +3797,6 @@ sub on_reload_some {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 
-	require Padre::Wx::Dialog::WindowList;
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Reload some files'),
@@ -4432,7 +4432,6 @@ sub on_close_some {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 
-	require Padre::Wx::Dialog::WindowList;
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Close some files'),
@@ -5642,7 +5641,15 @@ sub timer_check_overwrite {
 	#		$doc->{timestamp} = $doc->timestamp_now;
 	#	}
 
-	$self->on_reload_some; # Show dialog for file reload selection
+	# Show dialog for file reload selection
+	my $winlist = Padre::Wx::Dialog::WindowList->new(
+		$self,
+		title      => Wx::gettext('Close some files'),
+		list_title => Wx::gettext('Select files to close:'),
+		buttons    => [ [ 'Close selected', sub { $_[0]->main->close_some(@_); } ] ],
+	);
+	$winlist->{no_fresh} =1;
+	$winlist->show;
 
 	$doc->{_already_popup_file_changed} = 0;
 
