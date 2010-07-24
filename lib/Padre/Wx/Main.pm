@@ -1635,7 +1635,6 @@ sub relocale {
 	$self->left->relocale   if $self->has_left;
 	$self->right->relocale  if $self->has_right;
 	$self->bottom->relocale if $self->has_bottom;
-	$self->syntax->relocale if $self->has_syntax;
 
 	return;
 }
