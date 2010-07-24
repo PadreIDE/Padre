@@ -160,6 +160,11 @@ sub gettext_label {
 	Wx::gettext('Errors');
 }
 
+sub relocale {
+
+	# do nothing
+}
+
 sub clear {
 	my $self = shift;
 	$self->DeleteChildren( $self->root );

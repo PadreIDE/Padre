@@ -431,6 +431,11 @@ sub set_font {
 	return;
 }
 
+sub relocale {
+
+	# do nothing
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
