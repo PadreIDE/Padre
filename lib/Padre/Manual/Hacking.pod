@@ -213,7 +213,7 @@ Here's a rough how-to for Linux and similar OSs:
 =item *
 
 Get the perl sources from http://cpan.org/src/README.html or via git.
-As of this writing, perl 5.10.0 is the latest stable release.
+As of this writing, perl 5.12.1 is the latest stable release.
 
 =item *
 
@@ -247,7 +247,7 @@ If so, cd to the directory and run:
 
   perl -e 'for(@ARGV){$n=$_;s/5\.\d+\.\d+//; system("ln -s $n $_")}' *5.*
 
-Check that there's now also a F<perl> symlink to F<perl5.10.0> (or whatever
+Check that there's now also a F<perl> symlink to F<perl5.12.1> (or whatever
 version of perl you built).
 
 =item *
