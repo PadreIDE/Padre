@@ -521,19 +521,8 @@ sub object {
 	undef $langcode if ref($langcode);
 	my $id     = rfc4646($langcode);
 	my $lang   = $RFC4646{$id}->{wxid};
-	# Code is reverted back as tests are failing, however the following call
-	# causes wxWidgets to throw a warning to the console that it can't find 
-	# the language.
-	# I've asked about this on the perl wx list.
-	#Wx::Locale->AddCatalogLookupPathPrefix(Padre::Util::sharedir('locale'));
-	#my $locale = Wx::Locale->new($lang);
-	
-	# OK trying again.
-	# by instantiating with an known language, we avoid the warning from wxWidgets 
-	# saying that it can't find the language.
-	my $locale = Wx::Locale->new(Wx::wxLANGUAGE_DEFAULT); # Wx::wxLANGUAGE_UNKNOWN
+	my $locale = Wx::Locale->new($lang);
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
-	$locale->AddCatalog($id);
 	unless ( $locale->IsLoaded($id) ) {
 		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
 		$locale->AddCatalog($id) if -f $file;
