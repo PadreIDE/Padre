@@ -3149,6 +3149,9 @@ sub on_close_window {
 	$ide->plugin_manager->shutdown;
 	TRACE("After plugin manager shutdown") if DEBUG;
 
+	# Increment the startup counter now, so that it is higher next time
+	$config->set( startup_count => $config->startup_count + 1 );
+
 	# Write the configuration to disk
 	$ide->save_config;
 	$event->Skip;
