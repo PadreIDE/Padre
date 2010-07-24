@@ -65,7 +65,7 @@ control on the notebook label, if it has one.
 
 The method should generally initiate whatever is needed to close the
 tool via the highest level API. Note that while we aren't calling the
-equivalent menu handler directly, we are calling the high method method
+equivalent menu handler directly, we are calling the high-level method
 on the main window that the menu itself calls.
 
 =head1 COPYRIGHT & LICENSE
