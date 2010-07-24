@@ -6,6 +6,8 @@ Wall and others.  All rights reserved.
 ABOUT PERLOPREF
 ==========
 
+This project has been renamed and moved to http://github.com/cowens/perlopquick 
+
 The perlopref POD document is a quick reference for the various Perl operators.
 It is organized by operator, sorted by precedence groups (inside of a
 precedence group there is no sorting).
