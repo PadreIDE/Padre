@@ -132,7 +132,7 @@ sub relocale {
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		my $tool = $self->GetPage($i);
 		$self->SetPageText( $i, $tool->gettext_label );
-		if( $tool->can('relocale') ) {
+		if ( $tool->can('relocale') ) {
 			$tool->relocale;
 		} else {
 			my $class = ref $tool;
@@ -157,7 +157,7 @@ sub on_close {
 	unless ( $tool->can('view_close') ) {
 		my $class = ref $tool;
 		return $self->hide($tool) if $class eq 'Wx::ListCtrl';
-		
+
 		warn "Panel tool $class does not define 'view_close' method";
 		$self->hide($tool);
 		return;

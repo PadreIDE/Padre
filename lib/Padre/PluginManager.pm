@@ -908,7 +908,7 @@ sub get_menu {
 	my $self   = shift;
 	my $main   = shift;
 	my $module = shift;
-	
+
 	my $plugin = $self->_plugin($module);
 	return () unless $plugin and $plugin->{status} eq 'enabled';
 	return () unless $plugin->{object}->can('menu_plugins');
@@ -922,7 +922,7 @@ sub get_menu {
 		# crazy anyone trying to write a plug-in
 		return ();
 	}
-	return () unless defined $label and defined $menu;	
+	return () unless defined $label and defined $menu;
 	return ( $label, $menu );
 }
 
