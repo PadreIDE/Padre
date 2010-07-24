@@ -815,26 +815,35 @@ sub get_sub_line_number {
 
 sub lexical_variable_replacement {
 	my $self = shift;
-	my $name = shift;
 
-	# Can we find something to replace
+	# Can we find something to replace?
 	my ( $location, $token ) = $self->get_current_symbol;
 	if ( not defined $location ) {
 		Wx::MessageBox(
-			Wx::gettext("Current cursor does not seem to point at a variable"),
-			Wx::gettext("Check cancelled"),
+			Wx::gettext('Current cursor does not seem to point at a variable.'),
+			Wx::gettext('Rename variable'),
 			Wx::wxOK,
 			$self->current->main,
 		);
 		return;
 	}
 
+	my $dialog = Wx::TextEntryDialog->new(
+		$self->current->main,
+		Wx::gettext('New name'),
+		Wx::gettext('Rename variable'),
+		$token,
+	);
+	return if $dialog->ShowModal == Wx::wxID_CANCEL;
+	my $replacement = $dialog->GetValue;
+	$dialog->Destroy;
+
 	# Launch the background task
 	$self->task_request(
 		task        => 'Padre::Task::LexicalReplaceVariable',
 		document    => $self,
 		location    => $location,
-		replacement => $name,
+		replacement => $replacement,
 		callback    => 'lexical_variable_replacement_response',
 	);
 
@@ -858,11 +867,11 @@ sub lexical_variable_replacement_response {
 	my $text;
 	my $error = $self->{error} || '';
 	if ( $error =~ /no token/ ) {
-		$text = Wx::gettext("Current cursor does not seem to point at a variable");
+		$text = Wx::gettext("Current cursor does not seem to point at a variable.");
 	} elsif ( $error =~ /no declaration/ ) {
-		$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
+		$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable.");
 	} else {
-		$text = Wx::gettext("Unknown error");
+		$text = Wx::gettext("Unknown error") . "\n$error";
 	}
 	Wx::MessageBox(
 		$text,

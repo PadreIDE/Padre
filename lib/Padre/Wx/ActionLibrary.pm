@@ -1763,18 +1763,7 @@ sub init {
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('lexical_variable_replacement') or return;
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
-				$_[0],
-				Wx::gettext('New name'),
-				Wx::gettext('Rename variable'),
-				'$foo',
-			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
-			my $replacement = $dialog->GetValue;
-			$dialog->Destroy;
-			return unless defined $replacement;
-			$document->lexical_variable_replacement($replacement);
+			$document->lexical_variable_replacement;
 		},
 	);
 

@@ -38,7 +38,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       default_projects_directory one, specifically for setting the default
       root of the directory tree. It will continue to be pointed to
       my_documents by default (the original may change) (ADAMK)
-    - made Padre::Wx::Dialog::ModuleStart configuration translation-safe (ZENOG)
+    - Made Padre::Wx::Dialog::ModuleStart configuration translation-safe (ZENOG)
     - Updated German translation (ZENOG)
     - Add Java and BibTeX to MIME types (ZENOG)
     - Ack ("find in files") output is now more 'clickable', but still not
@@ -52,7 +52,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Padre::Wx::FindResult: Get rid of global variable, shorter column
       titles, both columns now wxLIST_AUTOSIZE (ZENOG)
     - Call relocale() for all elements of the Bottom panel (ZENOG)
-    - Remember sorting order in session manager (SEWI)
+    - Remember sorting order in session manager (SEWI) 
+    - Nicer workflow for renaming variables: Now we check for some conditions
+      before prompting the user for a name (ZENOG)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
