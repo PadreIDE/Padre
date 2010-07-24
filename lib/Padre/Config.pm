@@ -391,6 +391,14 @@ setting(
 	},
 );
 
+# How many times has the user run Padre?
+setting(
+	name    => 'startup_count',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 
 
 
