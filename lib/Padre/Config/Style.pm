@@ -33,11 +33,9 @@ our %CORE_STYLES = (
 
 # Locate any custom user styles
 our $USER_DIRECTORY = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
-our @USER_STYLES    = map {
-	substr( File::Basename::basename($_), 0, -4 )
-} File::Glob::glob(
-	File::Spec->catdir( $USER_DIRECTORY, '*.yml' )
-);
+our @USER_STYLES =
+	map { substr( File::Basename::basename($_), 0, -4 ) }
+	File::Glob::glob( File::Spec->catdir( $USER_DIRECTORY, '*.yml' ) );
 
 sub core_styles {
 	return %CORE_STYLES;
@@ -56,7 +54,7 @@ sub user_styles {
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}

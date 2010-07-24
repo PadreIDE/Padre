@@ -12,17 +12,14 @@ sub form {
 
 	# The list of fields to read
 	my @names = @_;
-	unless ( @names ) {
-		@names = grep {
-			$_->isa('Wx::Control')
-			and not
-			$_->isa('Wx::Button')
-		} sort keys %$self;
+	unless (@names) {
+		@names =
+			grep { $_->isa('Wx::Control') and not $_->isa('Wx::Button') } sort keys %$self;
 	}
 
 	# Read the values from the named controls
 	my %hash = ();
-	foreach my $name ( @names ) {
+	foreach my $name (@names) {
 		my $control = $self->{$name};
 		if ( $control->can('GetValue') ) {
 			$hash{$name} = $control->GetValue;
@@ -31,7 +28,7 @@ sub form {
 		} elsif ( $control->isa('Wx::Choice') ) {
 			$hash{$name} = $control->GetSelection;
 		} elsif ( $control->isa('Wx::ColourPickerControl') ) {
-			$hash{$name} = $control->GetColour->GetAsString( Wx::wxC2S_HTML_SYNTAX );
+			$hash{$name} = $control->GetColour->GetAsString(Wx::wxC2S_HTML_SYNTAX);
 		} elsif ( $control->isa('Wx::FontPickerControl') ) {
 			$hash{$name} = $control->GetSelectedFont->GetNativeFontInfoUserDesc;
 		} else {

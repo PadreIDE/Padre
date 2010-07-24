@@ -62,9 +62,7 @@ sub run {
 	}
 
 	# Compile the search regexp
-	my $regexp = eval {
-		$self->{find_case} ? qr/$term/m : qr/$term/mi
-	};
+	my $regexp = eval { $self->{find_case} ? qr/$term/m : qr/$term/mi };
 	return 1 if $@;
 
 	# Prepare the skip rules
@@ -88,13 +86,13 @@ sub run {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat    = stat($fullname);
+			my @fstat = stat($fullname);
 
 			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file( @path, $file );
 				next if $rule->skipped( $object->unix );
 				my $lines = $self->file( $regexp => $object );
-				my $now   = Time::HiRes::time();
+				my $now = Time::HiRes::time();
 				if ( @$lines or $now - $timer > 1 ) {
 					$self->message( found => $file->name, $lines );
 				}
@@ -129,7 +127,7 @@ sub file {
 
 sub found {
 	require Padre::Current;
-	Padre::Current->main->error($_[1]);
+	Padre::Current->main->error( $_[1] );
 }
 
 1;

@@ -56,6 +56,7 @@ sub load {
 		*{App::Ack::print}                = sub { print_results( $_[0] ); };
 		*{App::Ack::print_filename}       = sub { print_results("$_[0]$_[1]"); };
 		*{App::Ack::print_line_no}        = sub { print_results("$_[0]$_[1]"); };
+
 		# define gettext_label to avoid crash on switching interface language
 		*{Wx::ListCtrl::gettext_label} = sub { return Wx::gettext('Find in Files'); };
 	}

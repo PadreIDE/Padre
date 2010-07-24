@@ -286,7 +286,7 @@ sub title {
 }
 
 sub refresh {
-	my $self     = shift;
+	my $self = shift;
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);

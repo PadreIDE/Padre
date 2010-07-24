@@ -86,6 +86,7 @@ sub on_timer {
 	my $force = shift;
 
 	if ( $#{ $self->{Queue} } > -1 ) {
+
 		# Advoid another timer event during processing of this event
 		$self->{timer}->Stop;
 

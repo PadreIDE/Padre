@@ -14,21 +14,19 @@ our $VERSION = '0.66';
 
 
 ######################################################################
-# Integration with CPAN.pm 
+# Integration with CPAN.pm
 
 my $SINGLETON = undef;
 
 sub new {
 	my $class = shift;
-	unless ( $SINGLETON ) {
+	unless ($SINGLETON) {
 		require CPAN;
 		$SINGLETON = bless {}, $class;
 		CPAN::HandleConfig->load(
 			be_silent => 1,
 		);
-		$SINGLETON->{modules} = [
-			map { $_->id } CPAN::Shell->expand( 'Module', '/^/' )
-		];
+		$SINGLETON->{modules} = [ map { $_->id } CPAN::Shell->expand( 'Module', '/^/' ) ];
 	}
 	return $SINGLETON;
 }
@@ -53,7 +51,7 @@ sub get_modules {
 
 sub install {
 	require CPAN;
-	CPAN::Shell->install($_[1]);
+	CPAN::Shell->install( $_[1] );
 }
 
 sub cpan_config {
@@ -156,15 +154,10 @@ sub install_cpanm {
 	# Find 'cpanm', used to install modules
 	require Config;
 	my %seen = ();
-	my @where = grep {
-		defined $_
-		and
-		length $_
-		and not
-		$seen{$_}++
-	} map {
-		$Config::Config{$_}
-	} qw{
+	my @where =
+		grep { defined $_ and length $_ and not $seen{$_}++ }
+		map { $Config::Config{$_} }
+		qw{
 		sitescriptexp
 		sitebinexp
 		vendorscriptexp
@@ -174,14 +167,14 @@ sub install_cpanm {
 	};
 	my $cpanm = '';
 
-	foreach my $dir ( @where ) {
+	foreach my $dir (@where) {
 		my $path = File::Spec->catfile( $dir, 'cpanm' );
 		if ( -f $path ) {
 			$cpanm = $path;
 			last;
 		}
 	}
-	unless ( $cpanm ) {
+	unless ($cpanm) {
 		$main->error( Wx::gettext("cpanm is unexpectedly not installed") );
 		return;
 	}

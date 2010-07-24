@@ -28,8 +28,8 @@ object that can independently search and/or replace in an editor object.
 use 5.008;
 use strict;
 use warnings;
-use Encode     ();
-use List::Util ();
+use Encode       ();
+use List::Util   ();
 use Params::Util ();
 
 our $VERSION = '0.66';

@@ -225,7 +225,7 @@ disabled unless the user has specifically allowed experimental plug-ins.
 sub unload {
 	require Class::Unload;
 	my $either = shift;
-	foreach my $package ( @_ ) {
+	foreach my $package (@_) {
 		Class::Unload->unload($package);
 	}
 	return 1;

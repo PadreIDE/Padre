@@ -59,8 +59,8 @@ or throws an exception on error.
 =cut
 
 sub apply {
-	my $self     = shift;
-	my $document = Params::Util::_INSTANCE(shift, 'Padre::Document');
+	my $self = shift;
+	my $document = Params::Util::_INSTANCE( shift, 'Padre::Document' );
 	unless ($document) {
 		die 'Did not provide a Padre::Document object to apply';
 	}

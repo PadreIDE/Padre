@@ -28,9 +28,9 @@ our $VERSION = '0.66';
 
 # Since everything is used OO-style, we will be require'ing
 # everything other than the bare essentials
-use Padre::Constant    ();
-use Padre::Config      ();
-use Padre::DB          ();
+use Padre::Constant        ();
+use Padre::Config          ();
+use Padre::DB              ();
 use Padre::Wx::ActionQueue ();
 
 # Generate faster accessors

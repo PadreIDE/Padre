@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Wx::Action ();
-use Padre::Wx     ();
+use Padre::Wx         ();
 
 use Class::Adapter::Builder
 	ISA      => 'Wx::Menu',
@@ -22,7 +22,7 @@ use Class::XSAccessor {
 };
 
 # Default implementation of refresh
-sub refresh { 1 }
+sub refresh {1}
 
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys
@@ -62,7 +62,7 @@ sub add_menu_action {
 	);
 
 	my $comment = $action->comment;
-	if ( $comment ) {
+	if ($comment) {
 		$item->SetHelp($comment);
 	}
 

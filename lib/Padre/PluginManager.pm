@@ -554,7 +554,7 @@ sub _load_plugin {
 
 	# Is the plugin compatible with this Padre
 	my $compatible = $self->_compatible($module);
-	if ( $compatible ) {
+	if ($compatible) {
 		$plugin->errstr(
 			sprintf(
 				Wx::gettext("%s - Not compatible with Padre version %s - %s"),
@@ -568,9 +568,7 @@ sub _load_plugin {
 	}
 
 	# Attempt to instantiate the plug-in
-	my $object = eval {
-		$module->new( $self->{parent} );
-	};
+	my $object = eval { $module->new( $self->{parent} ); };
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
@@ -633,9 +631,9 @@ sub _compatible {
 	}
 	my @needs = $plugin->padre_interfaces;
 
-	while ( @needs ) {
-		my $module  = shift @needs;
-		my $need    = shift @needs;
+	while (@needs) {
+		my $module = shift @needs;
+		my $need   = shift @needs;
 
 		# Make sure the subsystem is loaded
 		local $@;

@@ -10,6 +10,4 @@ my $root = File::Spec->catdir( 't', 'collection', 'Config-Tiny' );
 ok( -d $root, 'Test project exists' );
 
 # Create the project object
-my $project = new_ok(
-	'Padre::Project::Perl' => [ root => $root ]
-);
+my $project = new_ok( 'Padre::Project::Perl' => [ root => $root ] );

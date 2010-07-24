@@ -45,8 +45,7 @@ is( Padre::Util::get_project_dir($current_dir),
 
 # the OS's root directory should not be a project
 # TODO: Improve this test
-is(
-	Padre::Util::get_project_dir( File::Spec->rootdir ),
+is( Padre::Util::get_project_dir( File::Spec->rootdir ),
 	undef,
 	'Searching for a non-existant project'
 );

@@ -110,7 +110,7 @@ sub refresh {
 	my $self    = shift;
 	my $current = Padre::Current::_CURRENT(@_);
 	my $config  = $current->config;
-	my $perl    = !! Params::Util::_INSTANCE(
+	my $perl    = !!Params::Util::_INSTANCE(
 		$current->document,
 		'Padre::Document::Perl',
 	);

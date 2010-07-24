@@ -27,10 +27,11 @@ my %modules = map {
 	$class => "lib/$_"
 } File::Find::Rule->relative->name('*.pm')->file->in('lib');
 my @t_files = glob "t/*.t";
-#map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
-plan( tests => scalar( keys %modules ) * 9 + scalar( @t_files ) );
 
-my %SKIP = map { ("t/$_" => 1) } qw(
+#map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
+plan( tests => scalar( keys %modules ) * 9 + scalar(@t_files) );
+
+my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	01-load.t
 	06-utils.t
 	07-version.t
@@ -52,10 +53,11 @@ my %SKIP = map { ("t/$_" => 1) } qw(
 	93-padre-filename-win.t
 	94-padre-file-remote.t
 );
+
 # A pathetic way to try to avod tests that would use the real ~/.padre of the user
 # that would be especially problematic if ran under root
 foreach my $t_file (@t_files) {
-	if ($SKIP{$t_file}) {
+	if ( $SKIP{$t_file} ) {
 		my $Test = Test::Builder->new;
 		$Test->skip($t_file);
 	} else {

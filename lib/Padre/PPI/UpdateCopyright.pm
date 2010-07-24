@@ -97,8 +97,8 @@ sub name {
 # Transform Methods
 
 sub document {
-	my $self     = shift;
-	my $document = Params::Util::_INSTANCE(shift, 'PPI::Document') or return;
+	my $self = shift;
+	my $document = Params::Util::_INSTANCE( shift, 'PPI::Document' ) or return;
 
 	# Find things to transform
 	my $name     = quotemeta $self->name;

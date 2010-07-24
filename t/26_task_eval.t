@@ -15,10 +15,10 @@ use Padre::Logger;
 ######################################################################
 # This test requires a DISPLAY to run
 BEGIN {
-        unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
-                plan skip_all => 'Needs DISPLAY';
-                exit 0;
-        }
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
 }
 plan tests => 24;
 use_ok('Test::NoWarnings');

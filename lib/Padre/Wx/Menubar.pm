@@ -112,10 +112,9 @@ sub refresh {
 	my $plugins = shift;
 	my $current = Padre::Current::_CURRENT(@_);
 	my $menu    = $self->wx->GetMenuCount ne $self->{default};
-	my $perl    = !! (
-		Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' )
-		or
-		Params::Util::_INSTANCE( $current->project, 'Padre::Project::Perl' )
+	my $perl    = !!(
+		   Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' )
+		or Params::Util::_INSTANCE( $current->project, 'Padre::Project::Perl' )
 	);
 
 	# Add/Remove the Perl menu

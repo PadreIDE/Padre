@@ -22,9 +22,10 @@ sub syntax {
 	my $stderr   = '';
 	my $filename = undef;
 	SCOPE: {
+
 		# Create a temporary file with the Perl text
 		require File::Temp;
-		my $file  = File::Temp->new( UNLINK => 1 );
+		my $file = File::Temp->new( UNLINK => 1 );
 		$filename = $file->filename;
 		binmode( $file, ":utf8" );
 
@@ -45,9 +46,7 @@ sub syntax {
 
 		# Run with console Perl to prevent unexpected results under wperl
 		require Padre::Perl;
-		my @cmd = (
-			Padre::Perl::cperl()
-		);
+		my @cmd = ( Padre::Perl::cperl() );
 
 		# Append Perl command line options
 		if ( $self->{project} ) {

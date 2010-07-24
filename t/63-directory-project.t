@@ -26,8 +26,8 @@ my $project = new_ok(
 
 SCOPE: {
 	my $task = new_ok(
-		'Padre::Wx::Directory::Task', [
-			project => $project,
+		'Padre::Wx::Directory::Task',
+		[   project => $project,
 			order   => 'first',
 		]
 	);
@@ -64,8 +64,8 @@ SCOPE: {
 
 SCOPE: {
 	my $task = new_ok(
-		'Padre::Wx::Directory::Task', [
-			project => $project,
+		'Padre::Wx::Directory::Task',
+		[   project => $project,
 			order   => 'mixed',
 		]
 	);

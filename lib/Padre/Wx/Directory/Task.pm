@@ -80,7 +80,7 @@ sub run {
 	my $dev = ( stat($root) )[0];
 
 	# Recursively scan for files
-	while ( @queue ) {
+	while (@queue) {
 		my $parent = shift @queue;
 		my @path   = $parent->path;
 		my $dir    = File::Spec->catdir( $root, @path );
@@ -94,21 +94,19 @@ sub run {
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
-		foreach my $file ( @list ) {
+		foreach my $file (@list) {
 			next if $file =~ /^\.+\z/;
 
 			# Traverse symlinks
-			my $skip     = 0;
+			my $skip = 0;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			while ( 1 ) {
+			while (1) {
 				my $target;
 
 				# readlink may die if symlinks are not implemented
 				local $@;
-				eval {
-					$target = readlink($fullname);
-				};
-				last if $@;                  # readlink failed
+				eval { $target = readlink($fullname); };
+				last if $@; # readlink failed
 				last unless defined $target; # not a link
 
 				# Target may be "/home/user/foo" or "../foo" or "bin/foo"
@@ -148,22 +146,24 @@ sub run {
 			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file( @path, $file );
 				next if $rule->skipped( $object->unix );
-				push @objects, [
+				push @objects,
+					[
 					$object,
 					$fullname,
 					$object->is_directory,
-					lc($object->name),
-				];
+					lc( $object->name ),
+					];
 
 			} elsif ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
 				next if $rule->skipped( $object->unix );
-				push @objects, [
+				push @objects,
+					[
 					$object,
 					$fullname,
 					$object->is_directory,
-					lc($object->name),
-				];
+					lc( $object->name ),
+					];
 			} else {
 				warn "Unknown or unsupported file type for $fullname" unless NO_WARN;
 			}
@@ -171,15 +171,10 @@ sub run {
 
 		# Step 2 - Apply the desired sort order
 		if ( $self->{order} eq 'first' ) {
-			@objects = sort {
-				$b->[2] <=> $a->[2]
-				or
-				$a->[3] cmp $b->[3]
-			} @objects;
+			@objects =
+				sort { $b->[2] <=> $a->[2] or $a->[3] cmp $b->[3] } @objects;
 		} else {
-			@objects = sort {
-				$a->[3] cmp $b->[3]
-			} @objects;
+			@objects = sort { $a->[3] cmp $b->[3] } @objects;
 		}
 
 		# Step 3 - Inject into the output list below our parent so
@@ -187,14 +182,14 @@ sub run {
 		my $i = 0;
 		my $p = Scalar::Util::refaddr($parent);
 		foreach ( 0 .. $#files ) {
-			next unless Scalar::Util::refaddr($files[$_]) == $p;
+			next unless Scalar::Util::refaddr( $files[$_] ) == $p;
 			$i = $_ + 1;
 			last;
 		}
 		splice @files, $i, 0, map { $_->[0] } @objects;
 
 		# Step 4 - Queue the directories to recurse into
-		foreach my $object ( @objects ) {
+		foreach my $object (@objects) {
 			next unless $object->[2];
 
 			# NOTE: Selective expansion should be done here
@@ -203,12 +198,12 @@ sub run {
 			# Because we now sort a directory at a time, we'll need to do it
 			# depth-first. So add the directories to the front of the queue.
 			push @queue, $object->[0];
-			$seen{$object->[1]} = $object->[0];
+			$seen{ $object->[1] } = $object->[0];
 		}
 	}
 
 	# Save and return
-	$self->{model} = [ @files ];
+	$self->{model} = [@files];
 
 	return 1;
 }

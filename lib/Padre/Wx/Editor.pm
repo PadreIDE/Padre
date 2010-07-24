@@ -1225,11 +1225,7 @@ sub on_mousewheel {
 	}
 
 	# Behave as if Ctrl wasn't down
-	$self->ScrollLines(
-		$event->GetLinesPerAction * int(
-			$event->GetWheelRotation / $event->GetWheelDelta * -1
-		)
-	);
+	$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
 
 	return;
 }

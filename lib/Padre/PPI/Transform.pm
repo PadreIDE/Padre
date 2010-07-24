@@ -37,7 +37,7 @@ __PACKAGE__->register_apply_handler(
 	sub {
 		my $padre = shift;
 		my $ppi   = shift;
-		$padre->ppi_set( $ppi );
+		$padre->ppi_set($ppi);
 		return 1;
 	},
 );

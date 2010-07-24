@@ -178,9 +178,7 @@ sub documents {
 	my $self = shift;
 	my $root = $self->root;
 	require Padre::Current;
-	return grep {
-		$_->project_dir eq $root
-	} Padre::Current->main->documents;
+	return grep { $_->project_dir eq $root } Padre::Current->main->documents;
 }
 
 
@@ -258,9 +256,7 @@ sub temp_sync {
 		my $tempfile = File::Spec->rel2abs( $relative, $root );
 		require File::Path;
 		require File::Basename;
-		File::Path::mkpath(
-			File::Basename::basedir($tempfile)
-		);
+		File::Path::mkpath( File::Basename::basedir($tempfile) );
 		my $file = Padre::File->new($tempfile);
 		$document->write($file) and $files++;
 	}

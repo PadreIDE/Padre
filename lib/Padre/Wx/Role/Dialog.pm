@@ -88,7 +88,7 @@ button. No return value.
 =cut
 
 sub error {
-	my $self    = shift;
+	my $self = shift;
 	my $message = shift || Wx::gettext('Unknown error from ') . caller;
 	Wx::MessageBox(
 		$message,
@@ -142,9 +142,9 @@ internal L<Wx::SingleChoiceDialog> class.
 =cut
 
 sub single_choice {
-	my $self    = shift;
-	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
-	my $result  = undef;
+	my $self   = shift;
+	my $dialog = Wx::SingleChoiceDialog->new( $self, @_ );
+	my $result = undef;
 	$dialog->CenterOnParent;
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		$result = $_[2]->[ $dialog->GetSelection ];
@@ -173,9 +173,9 @@ L<Wx::MultiChoiceDialog> class.
 =cut
 
 sub multi_choice {
-	my $self    = shift;
-	my $dialog  = Wx::MultiChoiceDialog->new( $self, @_ );
-	my @result  = ();
+	my $self   = shift;
+	my $dialog = Wx::MultiChoiceDialog->new( $self, @_ );
+	my @result = ();
 	$dialog->CenterOnParent;
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		@result = map { $_[2]->[$_] } $dialog->GetSelections;

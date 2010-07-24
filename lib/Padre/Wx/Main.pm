@@ -38,8 +38,8 @@ use List::MoreUtils               ();
 use Scalar::Util                  ();
 use Params::Util                  ();
 use Time::HiRes                   ();
-use Padre::Wx::Action                 ();
-use Padre::Wx::ActionLibrary          ();
+use Padre::Wx::Action             ();
+use Padre::Wx::ActionLibrary      ();
 use Padre::Constant               ();
 use Padre::Util                   ('_T');
 use Padre::Perl                   ();
@@ -3493,7 +3493,7 @@ sub on_open_selection {
 		);
 		$self->setup_editors($file) if defined $file;
 	} else {
-		$self->setup_editors($files[0]);
+		$self->setup_editors( $files[0] );
 	}
 
 	return;
