@@ -166,7 +166,7 @@ sub plugin_objects {
 #
 # $pluginmgr->relocale;
 #
-# update padre's locale object to handle new plug-in l10n.
+# update Padre's locale object to handle new plug-in l10n.
 #
 sub relocale {
 	my $self   = shift;
@@ -908,13 +908,11 @@ sub get_menu {
 	my $self   = shift;
 	my $main   = shift;
 	my $module = shift;
+	
 	my $plugin = $self->_plugin($module);
-	unless ( $plugin and $plugin->{status} eq 'enabled' ) {
-		return ();
-	}
-	unless ( $plugin->{object}->can('menu_plugins') ) {
-		return ();
-	}
+	return () unless $plugin and $plugin->{status} eq 'enabled';
+	return () unless $plugin->{object}->can('menu_plugins');
+
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
 		$plugin->errstr( Wx::gettext('Error when calling menu for plug-in ') . "'$module': $@" );
@@ -924,9 +922,7 @@ sub get_menu {
 		# crazy anyone trying to write a plug-in
 		return ();
 	}
-	unless ( defined $label and defined $menu ) {
-		return ();
-	}
+	return () unless defined $label and defined $menu;	
 	return ( $label, $menu );
 }
 

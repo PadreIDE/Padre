@@ -1627,6 +1627,9 @@ sub relocale {
 	$self->{menu} = Padre::Wx::Menubar->new($self);
 	$self->SetMenuBar( $self->menu->wx );
 
+	# Refresh the plugins' menu entries
+	$self->refresh_menu_plugins;
+
 	# The toolbar doesn't support relocale, replace it
 	$self->rebuild_toolbar;
 
