@@ -48,6 +48,8 @@ use constant {
 
 
 
+
+
 #####################################################################
 # Defines for object IDs
 
@@ -58,7 +60,10 @@ use constant {
 	ID_TIMER_OUTLINE     => 30004,
 	ID_TIMER_ACTIONQUEUE => 30005,
 	ID_TIMER_LASTRESORT  => 30006,
+	ID_TIMER_NTH         => 30007,
 };
+
+
 
 
 

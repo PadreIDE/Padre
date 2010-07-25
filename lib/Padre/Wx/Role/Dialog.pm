@@ -146,7 +146,7 @@ sub yes_no {
 		Wx::wxYES_NO | Wx::wxYES_DEFAULT | Wx::wxICON_QUESTION,
 	);
 	$dialog->CenterOnParent;
-	my $result = ($dialog->ShowModal == Wx::wxYES) ? 1 : 0;
+	my $result = ($dialog->ShowModal == Wx::wxID_YES) ? 1 : 0;
 	$dialog->Destroy;
 	return $result;
 }

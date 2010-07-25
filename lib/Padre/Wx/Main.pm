@@ -277,7 +277,7 @@ sub new {
 	# at the beginning and hide it in the timer, if it was not needed
 	# TO DO: there might be better ways to fix that issue...
 	#$statusbar->Show;
-	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT, );
+	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
 	Wx::Event::EVT_TIMER(
 		$self,
 		Padre::Wx::ID_TIMER_POSTINIT,
@@ -336,7 +336,7 @@ sub timer_start {
 				refresh
 				refresh_recent
 				refresh_windowlist
-				}
+			}
 		);
 
 		# Load all files and refresh the application so that it
@@ -367,7 +367,7 @@ sub timer_start {
 	}
 
 	# Start the change detection timer
-	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
+	my $timer1 = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
 	Wx::Event::EVT_TIMER(
 		$self,
 		Padre::Wx::ID_TIMER_FILECHECK,
@@ -375,12 +375,33 @@ sub timer_start {
 			$_[0]->timer_check_overwrite;
 		},
 	);
-	$timer->Start( $config->update_file_from_disk_interval * SECONDS, 0 );
+	$timer1->Start( $config->update_file_from_disk_interval * SECONDS, 0 );
 
 	# Start the second-generation task manager
 	$self->ide->task_manager->start;
 
+	# Give a chance for post-start code to run, then do the nth-start logic
+	my $timer2 = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_NTH );
+	Wx::Event::EVT_TIMER(
+		$self,
+		Padre::Wx::ID_TIMER_NTH,
+		sub {
+			$_[0]->timer_nth;
+		},
+	);
+	$timer2->Start( 1, 1 );
+
 	return;
+}
+
+sub timer_nth {
+	my $self = shift;
+
+	# Hand off to the nth start system
+	require Padre::Wx::Nth;
+	Padre::Wx::Nth->nth( $self, $self->config->startup_count );
+
+	return 1;
 }
 
 
@@ -5772,11 +5793,7 @@ sub on_new_from_template {
 	# Generate the full file content
 	require Template::Tiny;
 	my $output = '';
-	Template::Tiny->new->process(
-		$template,
-		$data,
-		\$output,
-	);
+	Template::Tiny->new->process( $template, $data, \$output );
 
 	# Create the file from the content
 	require Padre::MimeTypes;
