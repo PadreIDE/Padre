@@ -66,6 +66,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Include only changed files in changed-file-list (SEWI)
     - Added wxwidgets.pod which contains the method documentation of all Wx classes
       (AZAWAWI)
+    - Padre has wxWidgets method documentation in F2 help search (AZAWAWI)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
