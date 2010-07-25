@@ -88,7 +88,7 @@ button. No return value.
 =cut
 
 sub error {
-	my $self = shift;
+	my $self    = shift;
 	my $message = shift || Wx::gettext('Unknown error from ') . caller;
 	Wx::MessageBox(
 		$message,
@@ -118,6 +118,35 @@ sub password {
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		$result = $dialog->GetValue;
 	}
+	$dialog->Destroy;
+	return $result;
+}
+
+=pod
+
+=head3 C<yes_no>
+
+  my $boolean = $parent->yes_no(
+      $message,
+      $title,
+  );
+
+Generates a standard L<Wx> Yes/No dialog.
+
+=cut
+
+sub yes_no {
+	my $self    = shift;
+	my $message = shift;
+	my $title   = shift || Wx::gettext('Message');
+	my $dialog  = Wx::MessageDialog->new(
+		$self,
+		$message,
+		$title,
+		Wx::wxYES_NO | Wx::wxYES_DEFAULT | Wx::wxICON_QUESTION,
+	);
+	$dialog->CenterOnParent;
+	my $result = ($dialog->ShowModal == Wx::wxYES) ? 1 : 0;
 	$dialog->Destroy;
 	return $result;
 }
