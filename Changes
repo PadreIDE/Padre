@@ -64,6 +64,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       file types are shown in the View menu (ZENOG)
     - Documentation of Padre::Current (SEWI)
     - Include only changed files in changed-file-list (SEWI)
+    - Added wxwidgets.pod which contains the method documentation of all Wx classes
+      (AZAWAWI)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
