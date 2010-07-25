@@ -5790,6 +5790,29 @@ sub on_new_from_template {
 
 Various methods that did not fit exactly in above categories...
 
+=head2 C<action>
+
+  Padre::Current->main->action('help.about');
+
+Single execution of a named action.
+
+=cut
+
+sub action {
+	my $self = shift;
+	my $name = shift;
+
+	# Does the action exist
+	my $action = $self->ide->{actions}->{$name};
+	unless ( $action ) {
+		die "No such action '$name'";
+	}
+
+	# Execute the action
+	$action->menu_event->( $self );
+	return 1;
+}
+
 =head3 C<install_cpan>
 
     $main->install_cpan( $module );
