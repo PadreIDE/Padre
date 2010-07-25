@@ -68,6 +68,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       (AZAWAWI)
     - Padre has wxWidgets method documentation in F2 help search (AZAWAWI)
     - Added Padre::Wx::Nth to group first/nth-time startup magic (ADAMK)
+    - Fixed #781 : Unicode should not be used for accessing file system on Win32 (CHORNY)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

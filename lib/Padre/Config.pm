@@ -228,8 +228,17 @@ sub set {
 	if ( $type == Padre::Constant::INTEGER and not _INTEGER($value) ) {
 		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
-	if ( $type == Padre::Constant::PATH and not -e $value ) {
-		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
+	if ( $type == Padre::Constant::PATH ) {
+		if (Padre::Constant::WIN32 and utf8::is_utf8($value)) {
+			require Win32;
+			$value=Win32::GetLongPathName($value);
+			#Wx::DirPickerCtrl upgrades data to utf8.
+			#Perl on Windows cannot handle utf8 in file names, so this hack converts
+			#path back
+		}
+		if (not -e $value) {
+			Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
+		}
 	}
 
 	# Set the value into the appropriate backend
