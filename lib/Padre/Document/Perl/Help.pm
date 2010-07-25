@@ -254,6 +254,14 @@ sub help_render {
 			Padre::Pod2HTML->pod2html( $self->{perlopref}->{$topic} ),
 			$topic,
 		);
+	} elsif ( $self->{wxwidgets}->{$topic} ) {
+
+		# Yes, it is a Perl 5 Operator
+		require Padre::Pod2HTML;
+		return (
+			Padre::Pod2HTML->pod2html( $self->{wxwidgets}->{$topic} ),
+			$topic,
+		);
 	}
 
 	# Detect perlvar, perlfunc or simply nothing
