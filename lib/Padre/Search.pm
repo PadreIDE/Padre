@@ -49,7 +49,7 @@ sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
 	unless ( defined $self->find_term ) {
-		die("Did not provide 'find_term' search term");
+		die "Did not provide 'find_term' search term";
 	}
 	unless ( length $self->find_term ) {
 
@@ -158,7 +158,7 @@ sub search_down {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_search_down(@_);
 	}
-	die("Missing or invalid content object to search in");
+	die "Missing or invalid content object to search in";
 }
 
 sub search_up {
@@ -166,7 +166,7 @@ sub search_up {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_search_up(@_);
 	}
-	die("Missing or invalid content object to search in");
+	die "Missing or invalid content object to search in";
 }
 
 sub replace {
@@ -174,7 +174,7 @@ sub replace {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace(@_);
 	}
-	die("Missing or invalid content object to search in");
+	die "Missing or invalid content object to search in";
 }
 
 sub replace_all {
@@ -182,7 +182,7 @@ sub replace_all {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace_all(@_);
 	}
-	die("Missing or invalid content object to search in");
+	die "Missing or invalid content object to search in";
 }
 
 sub count_all {
@@ -190,7 +190,7 @@ sub count_all {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_count_all(@_);
 	}
-	die("Missing or invalid content object to search in");
+	die "Missing or invalid content object to search in";
 }
 
 
@@ -204,7 +204,7 @@ sub editor_search_down {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die("Failed to provide editor object to search in");
+		die "Failed to provide editor object to search in";
 	}
 
 	# Execute the search and move to the resulting location
@@ -224,7 +224,7 @@ sub editor_search_up {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die("Failed to provide editor object to search in");
+		die "Failed to provide editor object to search in";
 	}
 
 	# Execute the search and move to the resulting location
@@ -245,7 +245,7 @@ sub editor_replace {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die("Failed to provide editor object to replace in");
+		die "Failed to provide editor object to replace in";
 	}
 
 	# Execute the search
@@ -285,7 +285,7 @@ sub editor_replace_all {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die("Failed to provide editor object to replace in");
+		die 'Failed to provide editor object to replace in';
 	}
 
 	# Execute the search for all matches
@@ -315,7 +315,7 @@ sub editor_count_all {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die("Failed to provide editor object to replace in");
+		die "Failed to provide editor object to replace in";
 	}
 
 	# Execute the search for all matches
