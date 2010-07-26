@@ -72,6 +72,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       Win32 (CHORNY)
     - The New Installation Survey now only appears on the third time that
       Padre starts, so it doesn't confuse people with locale issues (ADAMK)
+    - Split Padre::Wx::Dialog::WhereFrom into main and FBP classes to try
+      out the designer-based approach experimentally (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
