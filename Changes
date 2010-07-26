@@ -64,11 +64,14 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       file types are shown in the View menu (ZENOG)
     - Documentation of Padre::Current (SEWI)
     - Include only changed files in changed-file-list (SEWI)
-    - Added wxwidgets.pod which contains the method documentation of all Wx classes
-      (AZAWAWI)
+    - Added wxwidgets.pod which contains the method documentation of all Wx
+      classes (AZAWAWI)
     - Padre has wxWidgets method documentation in F2 help search (AZAWAWI)
     - Added Padre::Wx::Nth to group first/nth-time startup magic (ADAMK)
-    - Fixed #781 : Unicode should not be used for accessing file system on Win32 (CHORNY)
+    - Fixed #781 : Unicode should not be used for accessing file system on
+      Win32 (CHORNY)
+    - The New Installation Survey now only appears on the third time that
+      Padre starts, so it doesn't confuse people with locale issues (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

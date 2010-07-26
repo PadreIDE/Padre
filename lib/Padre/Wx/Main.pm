@@ -361,11 +361,6 @@ sub timer_start {
 	# Check for new plug-ins and alert the user to them
 	$manager->alert_new;
 
-	unless ( $Padre::Test::VERSION or $config->feedback_done ) {
-		require Padre::Wx::Dialog::WhereFrom;
-		Padre::Wx::Dialog::WhereFrom->new($self);
-	}
-
 	# Start the change detection timer
 	my $timer1 = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
 	Wx::Event::EVT_TIMER(
@@ -389,7 +384,7 @@ sub timer_start {
 			$_[0]->timer_nth;
 		},
 	);
-	$timer2->Start( 1, 1 );
+	$timer2->Start( 1 * SECONDS, 1 );
 
 	return;
 }
@@ -398,8 +393,10 @@ sub timer_nth {
 	my $self = shift;
 
 	# Hand off to the nth start system
-	require Padre::Wx::Nth;
-	Padre::Wx::Nth->nth( $self, $self->config->startup_count );
+	unless ( $Padre::Test::VERSION ) {
+		require Padre::Wx::Nth;
+		Padre::Wx::Nth->nth( $self, $self->config->startup_count );
+	}
 
 	return 1;
 }

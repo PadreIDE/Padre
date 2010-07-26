@@ -10,9 +10,10 @@ our $VERSION = '0.66';
 
 # Even if more than one rule matches, only ever bother the user once.
 sub nth {
-	my $class = shift;
-	my $main  = shift;
-	my $nth   = shift;
+	my $class  = shift;
+	my $main   = shift;
+	my $nth    = shift;
+	my $config = $main->config;
 
 	# Is it Padre's birthday
 	my @t = localtime time;
@@ -23,6 +24,12 @@ sub nth {
 			"OMG!",
 		);
 		$main->action('help.live_support') if $rv;
+		return 1;
+	}
+
+	if ( $nth > 2 and not $config->feedback_done ) {
+		require Padre::Wx::Dialog::WhereFrom;
+		Padre::Wx::Dialog::WhereFrom->new($main);
 		return 1;
 	}
 
