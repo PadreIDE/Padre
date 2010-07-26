@@ -28,9 +28,8 @@ sub nth {
 	}
 
 	if ( $nth > 2 and not $config->feedback_done ) {
-		$DB::single = 1;
-		require Padre::Wx::Dialog::WhereFrom2;
-		my $dialog = Padre::Wx::Dialog::WhereFrom2->new($main);
+		require Padre::Wx::Dialog::WhereFrom;
+		my $dialog = Padre::Wx::Dialog::WhereFrom->new($main);
 		$dialog->run;
 		$dialog->Destroy;
 		return 1;

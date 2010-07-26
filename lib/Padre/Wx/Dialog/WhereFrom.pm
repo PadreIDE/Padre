@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::WhereFrom2;
+package Padre::Wx::Dialog::WhereFrom;
 
 use 5.008;
 use strict;
