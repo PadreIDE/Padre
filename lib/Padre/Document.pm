@@ -1231,28 +1231,28 @@ sub guess_indentation_style {
 	);
 
 	my $style;
+	my $config = Padre->ide->config;
 	if ( $indentation =~ /^t\d+/ ) { # we only do ONE tab
 		$style = {
 			use_tabs    => 1,
-			tabwidth    => 8,
+			tabwidth    => $config->editor_indent_tab_width || 8,
 			indentwidth => 8,
 		};
 	} elsif ( $indentation =~ /^s(\d+)/ ) {
 		$style = {
 			use_tabs    => 0,
-			tabwidth    => 8,
+			tabwidth    => $config->editor_indent_tab_width || 8,
 			indentwidth => $1,
 		};
 	} elsif ( $indentation =~ /^m(\d+)/ ) {
 		$style = {
 			use_tabs    => 1,
-			tabwidth    => 8,
+			tabwidth    => $config->editor_indent_tab_width || 8,
 			indentwidth => $1,
 		};
 	} else {
 
 		# fallback
-		my $config = Padre->ide->config;
 		$style = {
 			use_tabs    => $config->editor_indent_tab,
 			tabwidth    => $config->editor_indent_tab_width,

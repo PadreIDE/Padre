@@ -74,6 +74,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       Padre starts, so it doesn't confuse people with locale issues (ADAMK)
     - Split Padre::Wx::Dialog::WhereFrom into main and FBP classes to try
       out the designer-based approach experimentally (ADAMK)
+    - Tab width is configurable for opened file too (CHORNY)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
