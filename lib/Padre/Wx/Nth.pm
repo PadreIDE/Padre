@@ -3,6 +3,7 @@ package Padre::Wx::Nth;
 # Provides rules and functionality to be triggered on a particular
 # numbered startup of Padre.
 
+use 5.008;
 use strict;
 use warnings;
 
