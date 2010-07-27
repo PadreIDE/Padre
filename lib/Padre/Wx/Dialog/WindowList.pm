@@ -394,8 +394,8 @@ sub _select_first_item {
 	} else {
 
 		# remove current selection
-		$self->_currow(undef);
-		$self->_curname(undef);
+		$self->_currow(undef) if $self->can('_currow');
+		$self->_curname(undef) if $self->can('_curname');
 	}
 }
 
