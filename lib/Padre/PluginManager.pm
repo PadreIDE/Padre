@@ -644,6 +644,7 @@ sub _compatible {
 		no strict 'refs';
 		my $version = ${"${module}::VERSION"}    || 0;
 		my $compat  = ${"${module}::COMPATIBLE"} || 0;
+
 		unless ( $need <= $version ) {
 			return "$module is needed at newer version $need";
 		}

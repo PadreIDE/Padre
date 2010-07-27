@@ -20,8 +20,7 @@ sub nth {
 	my @t = localtime time;
 	if ( $t[4] == 6 and $t[3] == 20 ) {
 		my $rv = $main->yes_no(
-			"Today is Padre's Birthday!\n" .
-			"Would you like join the party and thank the developers?",
+			"Today is Padre's Birthday!\n" . "Would you like join the party and thank the developers?",
 			"OMG!",
 		);
 		$main->action('help.live_support') if $rv;

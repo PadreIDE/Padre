@@ -336,7 +336,7 @@ sub timer_start {
 				refresh
 				refresh_recent
 				refresh_windowlist
-			}
+				}
 		);
 
 		# Load all files and refresh the application so that it
@@ -393,7 +393,7 @@ sub timer_nth {
 	my $self = shift;
 
 	# Hand off to the nth start system
-	unless ( $Padre::Test::VERSION ) {
+	unless ($Padre::Test::VERSION) {
 		require Padre::Wx::Nth;
 		Padre::Wx::Nth->nth( $self, $self->config->startup_count );
 	}
@@ -5666,7 +5666,7 @@ sub timer_check_overwrite {
 		list_title => Wx::gettext('Select files to close:'),
 		buttons    => [ [ 'Close selected', sub { $_[0]->main->close_some(@_); } ] ],
 	);
-	$winlist->{no_fresh} =1;
+	$winlist->{no_fresh} = 1;
 	$winlist->show;
 
 	$doc->{_already_popup_file_changed} = 0;
@@ -5818,12 +5818,12 @@ sub action {
 
 	# Does the action exist
 	my $action = $self->ide->{actions}->{$name};
-	unless ( $action ) {
+	unless ($action) {
 		die "No such action '$name'";
 	}
 
 	# Execute the action
-	$action->menu_event->( $self );
+	$action->menu_event->($self);
 	return 1;
 }
 

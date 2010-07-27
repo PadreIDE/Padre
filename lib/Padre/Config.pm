@@ -229,14 +229,15 @@ sub set {
 		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
 	if ( $type == Padre::Constant::PATH ) {
-		if (Padre::Constant::WIN32 and utf8::is_utf8($value)) {
+		if ( Padre::Constant::WIN32 and utf8::is_utf8($value) ) {
 			require Win32;
-			$value=Win32::GetLongPathName($value);
+			$value = Win32::GetLongPathName($value);
+
 			#Wx::DirPickerCtrl upgrades data to utf8.
 			#Perl on Windows cannot handle utf8 in file names, so this hack converts
 			#path back
 		}
-		if (not -e $value) {
+		if ( not -e $value ) {
 			Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
 		}
 	}

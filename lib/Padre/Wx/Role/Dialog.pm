@@ -88,7 +88,7 @@ button. No return value.
 =cut
 
 sub error {
-	my $self    = shift;
+	my $self = shift;
 	my $message = shift || Wx::gettext('Unknown error from ') . caller;
 	Wx::MessageBox(
 		$message,
@@ -146,7 +146,7 @@ sub yes_no {
 		Wx::wxYES_NO | Wx::wxYES_DEFAULT | Wx::wxICON_QUESTION,
 	);
 	$dialog->CenterOnParent;
-	my $result = ($dialog->ShowModal == Wx::wxID_YES) ? 1 : 0;
+	my $result = ( $dialog->ShowModal == Wx::wxID_YES ) ? 1 : 0;
 	$dialog->Destroy;
 	return $result;
 }

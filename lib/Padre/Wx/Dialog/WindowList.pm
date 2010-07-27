@@ -320,7 +320,7 @@ sub _refresh_list {
 		my $document = $page->{Document};
 
 		my $disk_state = $document->has_changed_on_disk;
-		next if $self->{no_fresh} and (!($document->is_modified or $disk_state));
+		next if $self->{no_fresh} and ( !( $document->is_modified or $disk_state ) );
 
 		my $filename;
 
@@ -394,7 +394,7 @@ sub _select_first_item {
 	} else {
 
 		# remove current selection
-		$self->_currow(undef) if $self->can('_currow');
+		$self->_currow(undef)  if $self->can('_currow');
 		$self->_curname(undef) if $self->can('_curname');
 	}
 }

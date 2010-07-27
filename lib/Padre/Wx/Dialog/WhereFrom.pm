@@ -30,7 +30,7 @@ sub new {
 		Wx::gettext('Padre Developer'),
 		Wx::gettext('Other (Please fill in here)'),
 	];
-	$self->{from}->Append( $choices );
+	$self->{from}->Append($choices);
 
 	# Prepare to be shown
 	$self->CenterOnParent;
@@ -45,6 +45,7 @@ sub run {
 
 	# Show the dialog
 	if ( $self->ShowModal == Wx::wxID_OK ) {
+
 		# Fire and forget the HTTP request to the server
 		$self->task_request(
 			task  => 'Padre::Task::LWP',
