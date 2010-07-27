@@ -19,7 +19,10 @@ our @ISA     = 'Padre::Plugin';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin' => 0.66, 'Padre::Constant' => 0.66,;
+	return (
+		'Padre::Plugin' => 0.66,
+		'Padre::Constant' => 0.66,
+	);
 }
 
 sub plugin_name {
