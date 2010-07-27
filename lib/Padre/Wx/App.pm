@@ -74,8 +74,8 @@ sub create {
 	$self->{main} = Padre::Wx::Main->new( $self->{ide} );
 
 	# Create the action queue
-	require Padre::Queue;
-	$self->{queue} = Padre::Queue->new( $self );
+	require Padre::Wx::ActionQueue;
+	$self->{queue} = Padre::Wx::ActionQueue->new( $self );
 
 	return $self;
 }
@@ -123,7 +123,7 @@ sub config {
 
 =head2 C<queue>
 
-The C<queue> accessor returns the L<Padre::Queue> for the application.
+The C<queue> accessor returns the L<Padre::Wx::ActionQueue> for the application.
 
 =cut
 

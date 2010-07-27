@@ -31,7 +31,6 @@ our $VERSION = '0.66';
 use Padre::Constant ();
 use Padre::Config   ();
 use Padre::DB       ();
-use Padre::Queue    ();
 
 # Generate faster accessors
 use Class::XSAccessor 1.05 {
