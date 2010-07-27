@@ -51,7 +51,7 @@ SCOPE: {
 	# Start the worker inside the master
 	ok( $master->start($worker), '->add ok' );
 	TRACE("Pausing to allow worker thread startup...") if DEBUG;
-	sleep 0.1;
+	sleep 0.15; #0.1 was not enough
 	is( scalar( threads->list ), 2, 'Found 2 threads' );
 	ok( $master->is_running,   'Master is_running' );
 	ok( !$master->is_joinable, 'Master is not is_joinable' );
