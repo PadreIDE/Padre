@@ -23,7 +23,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 # This is a Padre::Util module where the subs should be called as functions,
 # but Template::Tiny requires us to use a blessed package and we could use

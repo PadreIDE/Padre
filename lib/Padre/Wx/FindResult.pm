@@ -21,7 +21,7 @@ use Padre::Wx;
 use Wx::Event qw( EVT_BUTTON );
 
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 our @ISA     = 'Wx::ListView';
 
 use Class::XSAccessor {

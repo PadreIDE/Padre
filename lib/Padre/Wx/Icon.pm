@@ -22,7 +22,7 @@ use Params::Util ();
 use Padre::Util  ();
 use Padre::Wx    ();
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 # For now apply a single common configuration
 use constant SIZE   => '16x16';

@@ -9,7 +9,7 @@ use Scalar::Util      ();
 use Padre::TaskThread ();
 use Padre::Logger;
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 our @ISA     = 'Padre::TaskThread';
 
 

@@ -6,7 +6,7 @@ use warnings;
 use File::Spec  ();
 use Time::HiRes ();
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 
 

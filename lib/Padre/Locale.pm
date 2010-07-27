@@ -50,7 +50,7 @@ use Padre::Logger;
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => Padre::Util::sharedir('locale');
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 # The RFC4646 table is the primary language data table and contains
 # mappings from a Padre-supported language to all the relevant data

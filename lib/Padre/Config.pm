@@ -23,7 +23,7 @@ use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
 use Padre::Logger;
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );
 

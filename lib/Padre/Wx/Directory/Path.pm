@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use File::Spec::Unix ();
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 
 use constant {
 	FILE      => 0,

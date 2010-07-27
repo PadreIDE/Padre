@@ -8,7 +8,7 @@ use warnings;
 use URI              ();
 use Padre::Task::LWP ();
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 our @ISA     = 'Padre::Task::LWP';
 
 sub new {

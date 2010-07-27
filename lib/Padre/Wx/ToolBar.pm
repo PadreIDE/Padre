@@ -9,7 +9,7 @@ use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
 use Padre::Constant   ();
 
-our $VERSION = '0.66';
+our $VERSION = '0.67';
 our @ISA     = 'Wx::ToolBar';
 
 # NOTE: Something is wrong with dockable toolbars on Windows
