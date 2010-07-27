@@ -50,8 +50,8 @@ my $SINGLETON = undef;
 sub new {
 
 	# TRACE($_[0]) if DEBUG;
-	$SINGLETON
-		or $SINGLETON = shift->SUPER::new;
+	$SINGLETON or
+	$SINGLETON = shift->SUPER::new;
 }
 
 
@@ -72,6 +72,10 @@ sub create {
 	# Immediately populate the main window
 	require Padre::Wx::Main;
 	$self->{main} = Padre::Wx::Main->new( $self->{ide} );
+
+	# Create the action queue
+	require Padre::Queue;
+	$self->{queue} = Padre::Queue->new( $self );
 
 	return $self;
 }
@@ -112,7 +116,19 @@ The C<config> accessor returns the L<Padre::Config> for the application.
 sub config {
 
 	# TRACE($_[0]) if DEBUG;
-	$_[0]->ide->config;
+	$_[0]->{ide}->config;
+}
+
+=pod
+
+=head2 C<queue>
+
+The C<queue> accessor returns the L<Padre::Queue> for the application.
+
+=cut
+
+sub queue {
+	$_[0]->{queue};
 }
 
 

@@ -14,19 +14,20 @@ scripting option for Padre, the Action Queue.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx      ();
-use Padre::Current ();
+use Padre::Wx ();
 
 our $VERSION = '0.66';
 
 sub new {
 	my $class = shift;
-	my $main  = Padre::Current->main;
+	my $wx    = shift;
+	my $main  = $wx->main;
 
 	# Create the empty queue
 	my $self = bless {
-		actions => Padre::Current->ide->actions,
-		Queue   => [],
+		wx      => $wx,
+		actions => $wx->ide->actions,
+		queue   => [],
 	}, $class;
 
 	# Create the Wx timer
@@ -48,7 +49,7 @@ sub new {
 
 sub add {
 	my $self = shift;
-	push @{ $self->{Queue} }, @_;
+	push @{ $self->{queue} }, @_;
 	return 1;
 }
 
@@ -60,7 +61,7 @@ sub set_timer_interval {
 	$interval = $self->{timer} if $self->{timer}->IsRunning;
 
 	my $new_interval;
-	if ( $#{ $self->{Queue} } == -1 ) {
+	if ( $#{ $self->{queue} } == -1 ) {
 
 		# No pending queue actions
 		$new_interval = 1000;
@@ -85,12 +86,12 @@ sub on_timer {
 	my $event = shift;
 	my $force = shift;
 
-	if ( $#{ $self->{Queue} } > -1 ) {
+	if ( $#{ $self->{queue} } > -1 ) {
 
 		# Advoid another timer event during processing of this event
 		$self->{timer}->Stop;
 
-		my $queue  = $self->{Queue};
+		my $queue  = $self->{queue};
 		my $action = shift @$queue;
 		if ( $self->{debug} ) {
 			my $now = scalar localtime time;
@@ -98,7 +99,7 @@ sub on_timer {
 		}
 
 		# Run the event handler
-		my $main = Padre::Current->main;
+		my $main = $self->{wx}->main;
 		&{ $self->{actions}->{$action}->{queue_event} }( $main, $event, $force );
 
 		# Reset not needed if timer wasn't stopped

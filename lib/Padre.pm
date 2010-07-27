@@ -157,9 +157,6 @@ sub new {
 		conduit => $self->{wx}->{main},
 	);
 
-	# Create the action queue
-	$self->{actionqueue} = Padre::Queue->new;
-
 	# Startup completed, let go of the database
 	Padre::DB->commit;
 
@@ -235,7 +232,7 @@ sub run {
 			}
 
 			# Add the action to the queue
-			$self->{actionqueue}->add($action);
+			$self->wx->queue->add($action);
 		}
 	}
 
