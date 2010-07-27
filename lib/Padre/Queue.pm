@@ -1,4 +1,4 @@
-package Padre::Wx::ActionQueue;
+package Padre::Queue;
 
 # Basic scripting for Padre
 
@@ -6,7 +6,7 @@ package Padre::Wx::ActionQueue;
 
 =head1 NAME
 
-Padre::Wx::ActionQueue doesn't create any actions itself but it provides a basic
+Padre::Queue doesn't create any actions itself but it provides a basic
 scripting option for Padre, the Action Queue.
 
 =cut
