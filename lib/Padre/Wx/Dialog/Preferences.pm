@@ -11,7 +11,7 @@ use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
 
-our $VERSION = '0.67';
+our $VERSION = '0.68';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = (

@@ -10,7 +10,7 @@ use Scalar::Util               ();
 use Padre::Task                ();
 use Padre::Wx::Directory::Path ();
 
-our $VERSION = '0.67';
+our $VERSION = '0.68';
 our @ISA     = 'Padre::Task';
 
 use constant NO_WARN => 1;

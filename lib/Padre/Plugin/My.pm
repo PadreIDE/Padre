@@ -8,7 +8,7 @@ use Padre::Constant ();
 use Padre::Plugin   ();
 use Padre::Wx       ();
 
-our $VERSION = '0.67';
+our $VERSION = '0.68';
 our @ISA     = 'Padre::Plugin';
 
 

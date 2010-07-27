@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.67';
+our $VERSION = '0.68';
 
 # Constructor.
 # No need to override this, just override help_init

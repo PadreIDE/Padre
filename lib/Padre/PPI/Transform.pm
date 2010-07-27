@@ -24,7 +24,7 @@ use strict;
 use warnings;
 use PPI::Transform ();
 
-our $VERSION = '0.67';
+our $VERSION = '0.68';
 our @ISA     = 'PPI::Transform';
 
 __PACKAGE__->register_apply_handler(
