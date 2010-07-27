@@ -1,7 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.67 to be released
+0.68 To be Released
+
+0.67 2010.07.27
     - Refactored the Action subsystem into a simpler model. The old layout
       artificially broke it up based on menu structure. The new layout
       also makes it simpler to do further refactorings (ADAMK)
