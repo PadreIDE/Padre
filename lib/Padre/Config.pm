@@ -1224,9 +1224,32 @@ setting(
 	default => 0,
 );
 
-# The "config_" namespace is for the paths of other non-Padre config files
-# for various external tools (usually so that projects can define the
+# The "config_" namespace is for the locations of configuration content
+# outside of the configuration API, and the paths to other non-Padre config
+# files for various external tools (usually so that projects can define the
 # the location of their project-specific policies).
+
+# The location of the server that will share config data between installs
+setting(
+	name    => 'config_sync_server',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'http://escher.ath.cx:3000',
+);
+
+setting(
+	name    => 'config_sync_username',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+
+setting(
+	name    => 'config_sync_password',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
 
 # Location of the Perl::Tidy RC file, if a project wants to set a custom one.
 # When set to false, allow Perl::Tidy to use its own default config location.
