@@ -32,18 +32,18 @@ plan( tests => 7 );
 
 	# Now we have a Padre::File object and a testfile to play with...
 
-	$file->{Filename} = 'T/Files/Padre-File-Test';
+	$file->{filename} = 'T/Files/Padre-File-Test';
 	$file->_reformat_filename;
-	is( $file->{Filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
 
-	$file->{Filename} = 'T\Files\Padre-File-Test';
+	$file->{filename} = 'T\Files\Padre-File-Test';
 	$file->_reformat_filename;
-	is( $file->{Filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
 
 	my $Crap = 'X:\foo\bar\padre-nonexistent\testfile';
-	$file->{Filename} = $Crap;
+	$file->{filename} = $Crap;
 	$file->_reformat_filename;
-	is( $file->{Filename}, $Crap, 'Keep the filename on nonexistent file' );
+	is( $file->{filename}, $Crap, 'Keep the filename on nonexistent file' );
 
 }
 
