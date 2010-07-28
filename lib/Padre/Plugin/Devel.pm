@@ -30,6 +30,12 @@ sub plugin_name {
 	Wx::gettext('Padre Developer Tools');
 }
 
+# Reuse the Padre icon
+sub plugin_icon {
+	require Padre::Wx::Icon;
+	Padre::Wx::Icon::find('logo');
+}
+
 sub plugin_enable {
 	my $self = shift;
 
