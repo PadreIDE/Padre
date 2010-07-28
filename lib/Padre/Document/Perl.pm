@@ -736,6 +736,10 @@ sub _find_method {
 					my $lines = do { local $/ = undef; <$fh> };
 					close $fh;
 					my @subs = $lines =~ /sub\s+(\w+)/g;
+					if ( $lines =~ /use MooseX::Declare;/ ) {
+						my @subs = $lines =~ /\bmethod\s+(\w+)/g;
+					}
+
 
 					#use Data::Dumper;
 					#print Dumper \@subs;
