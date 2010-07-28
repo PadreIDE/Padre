@@ -641,6 +641,8 @@ sub btn_cancel {
 	$_[0]->Destroy;
 }
 
+1;
+
 =pod
 
 =head1 COPYRIGHT & LICENSE
