@@ -23,7 +23,7 @@ our $sub_search_re=qr/
 		|
 		(?:^|$n)\s*sub\s+(\w+(?:::\w+)*)
 		)
-	/sox;
+	/sx;
 
 sub find {
 	return grep { defined $_ } $_[1] =~ /$sub_search_re/g;
