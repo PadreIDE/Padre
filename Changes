@@ -1,6 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
+0.69 To Be Released
+
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)
     - Refactored the Action subsystem into a simpler model. The old layout
