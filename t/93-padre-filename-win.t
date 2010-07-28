@@ -24,7 +24,7 @@ plan( tests => 7 );
 	ok( open( my $fh, '>', 't/files/padre-file-test' ), 'Create test file' );
 	print $fh "foo";
 	close $fh;
-	ok( -s 't/files/padre-file-test' == 3, 'Check test file size' );
+	is( -s 't/files/padre-file-test', 3, 'Check test file size' );
 
 	my $file = Padre::File->new('t/files/padre-file-test');
 	ok( defined($file), 'Create Padre::File object' );
@@ -34,16 +34,16 @@ plan( tests => 7 );
 
 	$file->{Filename} = 'T/Files/Padre-File-Test';
 	$file->_reformat_filename;
-	ok( $file->{Filename} eq 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{Filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
 
 	$file->{Filename} = 'T\Files\Padre-File-Test';
 	$file->_reformat_filename;
-	ok( $file->{Filename} eq 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{Filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
 
 	my $Crap = 'X:\foo\bar\padre-nonexistent\testfile';
 	$file->{Filename} = $Crap;
 	$file->_reformat_filename;
-	ok( $file->{Filename} eq $Crap, 'Keep the filename on nonexistent file' );
+	is( $file->{Filename}, $Crap, 'Keep the filename on nonexistent file' );
 
 }
 
