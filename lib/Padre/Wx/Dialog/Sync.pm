@@ -1,5 +1,18 @@
 package Padre::Wx::Dialog::Sync;
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Dialog::Sync - A Dialog for interacting with Sync
+
+=head1 DESCRIPTION
+
+This is an initial version generated partially by wxGlade. A rewrite is 
+in order to align with Padre.
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -14,16 +27,6 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-=pod
-
-=head1 NAME
-
-Padre::Wx::Dialog::Sync - A Dialog for interacting with Sync
-This is an initial version generated partially by wxGlade. A rewrite is 
-in order to align with Padre.
-
-=cut
-
 # things to note - certain elements interact with the $config_sync object
 # to update state. Ie user logged in / not logged in
 # certain messages are defined in the Padre::Sync class, this is most definitely
@@ -32,8 +35,8 @@ in order to align with Padre.
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = $main->config; 
-	my $sync   = $main->ide->config_sync;
+	my $ide    = $main->ide;
+	my $config = $main->config;
 
 	# Create the Wx dialog
 	my $self = $class->SUPER::new(
@@ -46,6 +49,16 @@ sub new {
 		| Wx::wxCLOSE_BOX
 		| Wx::wxSYSTEM_MENU
 	);
+	$self->SetTitle("Padre Sync");
+	$self->SetSize(
+		$self->ConvertDialogSizeToPixels(
+			Wx::Size->new(208, 184)
+		),
+	);
+
+	# Create the sync manager
+	require Padre::Sync;
+	$self->{sync} = Padre::Sync->new( $ide );
 
 	$self->{Notebook} = Wx::Notebook->new(
 		$self,
@@ -95,7 +108,7 @@ sub new {
 	$self->{lbl_status} = Wx::StaticText->new(
 		$self->{Login_Pane},
 		-1,
-		$sync->english_status,
+		$self->{sync}->english_status,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -277,11 +290,6 @@ sub new {
 		Wx::wxID_CANCEL,
 		"",
 	);
-	$self->SetTitle("Padre Sync");
-	$self->SetSize(
-		$self->ConvertDialogSizeToPixels(Wx::Size->new(208,
-		184)),
-	);
 	$self->{txt_login}->SetMinSize(
 		Wx::Size->new(160,
 		23),
@@ -314,7 +322,6 @@ sub new {
 		Wx::Size->new(160,
 			23),
 	);
-
 
 	my $sizer_1  = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizer_2  = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -390,7 +397,7 @@ sub new {
 	$sizer_1->Add($sizer_2, 0, Wx::wxALL | Wx::wxALIGN_RIGHT, 5);
 	$self->SetSizer($sizer_1);
 
-	# event handlers
+	# Event handlers
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{btn_login},
@@ -448,10 +455,9 @@ sub new {
 	);
 
 	$self->Show(1);
+
 	return $self;
 }
-
-1;
 
 sub btn_login { 
 	my $self     = shift;
@@ -494,7 +500,7 @@ sub btn_login {
 		return;
 	}
 
-	# attempt login
+	# Attempt login
 	my $rc = $sync->login(
 		{ 
 			username => $username,
@@ -509,7 +515,7 @@ sub btn_login {
 		$self->{btn_login}->SetLabel('Log out');
 	}
 
-	# print the return information
+	# Print the return information
 	Wx::MessageBox(
 		sprintf( '%s', $rc ), 
 		Wx::gettext('Error'),
@@ -528,7 +534,7 @@ sub btn_register {
 	my $email         = $self->{txt_email}->GetValue;
 	my $email_confirm = $self->{txt_email_confirm}->GetValue;
 
-	# validation of inputs 
+	# Validation of inputs 
 	if (not $username or
 		not $pw or
 		not $pw_confirm or
@@ -543,7 +549,7 @@ sub btn_register {
 		return;
 	}
 
-	# not sure if password quality rules should be enforced at this level?
+	# Not sure if password quality rules should be enforced at this level?
 	if ($pw ne $pw_confirm) { 
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Password and confirmation do not match.') ), 
@@ -564,7 +570,7 @@ sub btn_register {
 		return;
 	}
 
-	# attempt registration
+	# Attempt registration
 	my $rc = $sync->register(
 		{
 			username => $username,
@@ -573,7 +579,7 @@ sub btn_register {
 		}
 	);
 
-	# print the return information
+	# Print the return information
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),  
 		Wx::gettext('Error'),
@@ -623,7 +629,7 @@ sub btn_delete {
 
 }
 
-# save changes to dialog inputs to config
+# Save changes to dialog inputs to config
 sub btn_ok { 
 	my $self   = shift;
 	my $config = $self->current->config;
@@ -636,7 +642,7 @@ sub btn_ok {
 	$self->Destroy;
 }
 
-# discard all changes to config
+# Discard all changes to config
 sub btn_cancel { 
 	$_[0]->Destroy;
 }

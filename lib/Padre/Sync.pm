@@ -23,16 +23,19 @@ use lib                      ();
 use Carp                     ();
 use File::Spec               ();
 use Scalar::Util             ();
-use LWP::UserAgent;
-use HTTP::Cookies;
+use Params::Util             ();
+use JSON::XS                 ();
+use LWP::UserAgent           ();
+use HTTP::Cookies            ();
 use HTTP::Request::Common qw/GET POST PUT DELETE/;
-use JSON::Any;
 use Padre::Util              ();
 use Padre::Current           ();
 use Padre::Constant          ();
-use Params::Util             ();
 
 our $VERSION = '0.68';
+
+
+
 
 
 #####################################################################
@@ -53,16 +56,17 @@ First argument should be a Padre object.
 
 sub new {
 	my $class = shift;
-	my $ide  = Params::Util::_INSTANCE( shift, 'Padre' )
-		or Carp::croak("Creation of a Padre::Sync without a Padre not possible");
-	my $ua = LWP::UserAgent->new;
-	my $j = JSON::Any->new( allow_blessed => 1 );
+	my $ide   = Params::Util::_INSTANCE( shift, 'Padre' );
+	unless ( $ide ) {
+		Carp::croak("Creation of a Padre::Sync without a Padre not possible");
+	}
 
-	# We need this to handle login actions
-	push @{ $ua->requests_redirectable }, 'POST';
-
+	# Create the useragent.
+	# We need this to handle login actions.
 	# Save cookies for state management from Padre session to session
 	# is this even wanted? remove at padre close?
+	my $ua = LWP::UserAgent->new;
+	push @{ $ua->requests_redirectable }, 'POST';
 	$ua->timeout(2);
 	$ua->cookie_jar(
 		HTTP::Cookies->new(
@@ -78,12 +82,14 @@ sub new {
 		ide   => $ide,
 		state => 'not_logged_in',
 		ua    => $ua,
-		j     => $j,
+		json  => JSON::XS->new,
 		@_,
 	}, $class;
 
 	return $self;
 }
+
+=pod
 
 =head2 C<main>
 
@@ -95,6 +101,8 @@ sub main {
 	$_[0]->{ide}->wx->main;
 }
 
+=pod
+
 =head2 C<config>
 
 A convenience method to get to the config object
@@ -104,6 +112,8 @@ A convenience method to get to the config object
 sub config { 
 	$_[0]->{ide}->config;
 }
+
+=pod
 
 =head2 C<ua> 
 
@@ -115,15 +125,7 @@ sub ua {
 	$_[0]->{ua};
 }
 
-sub _objToJson {
-	my $self = shift;
-	$self->{j}->objToJson(@_);
-}
-
-sub _jsonToObj { 
-	my $self = shift;
-	$self->{j}->jsonToObj(@_);
-}
+=pod
 
 =head2 C<register>
 
@@ -137,33 +139,32 @@ Returns error string if user state is already logged in or serverside error occu
 sub register {
 	my $self    = shift;
 	my $params  = shift;
+	my $server  = $self->config->config_sync_server;
 
-	if (not %$params) {
-		return 'Registration Failure';   
-	} 
+	return 'Registration Failure'      unless %$params;
+	return 'Failure: no server found.' unless $server;
 
-	my $server = $self->config->config_sync_server;
-
-	return 'Failure: no server found.' if not $server;
-
-	if ($self->{state} ne 'not_logged_in') { 
+	if ( $self->{state} ne 'not_logged_in' ) { 
 		return 'Failure: cannot register account, user already logged in.';
 	}
 
 	# this crashes if server is unavailable. FIXME
-	my $resp = $self->ua->request( POST "$server/register", 'Content-Type' => 'application/json', 'Content' => $self->_objToJson($params) );
-
-	if ($resp->code == 200) {
+	my $resp = $self->ua->request(
+		POST "$server/register",
+		'Content-Type' => 'application/json',
+		'Content'      => $self->{json}->encode($params),
+	);
+	if ( $resp->code == 200 ) {
 		return 'Account registered successfully. Please log in.';
 	}
 
-	my $h = $self->_jsonToObj($resp->content);
-	if ($h->{error}) {
-		return "Registration Failure: $h->{error}";
-	} 
+	my $h = $self->{json}->decode( $resp->content );
 
-	return 'Registration failure.';
+	return "Registration Failure: $h->{error}" if $h->{error};
+	return "Registration failure.";
 }
+
+=pod
 
 =head2 C<login>
 
@@ -177,7 +178,7 @@ sub login {
 	my $params = [ @_ ];
 	my $server = $self->config->config_sync_server;
 
-	return 'Failure: no server found.' if not $server;
+	return 'Failure: no server found.' unless $server;
 
 	if ( $self->{state} ne 'not_logged_in' ) {
 		return 'Failure: cannot log in, user already logged in.';
@@ -185,7 +186,7 @@ sub login {
 
 	my $resp = $self->ua->request( POST "$server/login", $params );
 
-	if ($resp->content !~ /Wrong username or password/i && $resp->code == 200) { 
+	if ( $resp->content !~ /Wrong username or password/i and $resp->code == 200) { 
 		$self->{state} = 'logged_in';
 		return 'Logged in successfully.';
 	}
@@ -193,6 +194,7 @@ sub login {
 	return 'Login Failure.';
 }
 
+=pod
 
 =head2 C<logout>
 
@@ -220,6 +222,8 @@ sub logout {
 
 	return 'Failed to log out.';
 }
+
+=pod
 
 =head2 C<server_delete>
 
@@ -249,6 +253,8 @@ sub server_delete {
 	
 }
 
+=pod
+
 =head2 C<local_to_server>
 
 Given a logged in session, will attempt to place the current local config to 
@@ -277,7 +283,7 @@ sub local_to_server {
 	my $resp = $self->ua->request(
 		POST "$server/user/config",
 		'Content-Type' => 'application/json',
-		'Content'      => $self->_objToJson( \%h ),
+		'Content'      => $self->{json}->encode( \%h ),
 	);
 	if ($resp->code == 200) { 
 		return 'Configuration uploaded successfully.';
@@ -285,6 +291,8 @@ sub local_to_server {
 
 	return 'Failed to upload configuration file to server.';
 }
+
+=pod
 
 =head2 C<server_to_local>
 
@@ -309,7 +317,7 @@ sub server_to_local {
 
 	my $c;
 	eval { 
-		$c = $self->_jsonToObj($resp->content());
+		$c = $self->{json}->decode($resp->content );
 	};
 	if ($@) { 
 		return 'Failed to deserialize serverside configuration.';
@@ -330,6 +338,8 @@ sub server_to_local {
 
 	return 'Failed to download serverside configuration file to local Padre instance.';
 }
+
+=pod
 
 =head2 C<english_status>
 

@@ -110,6 +110,7 @@ requires 'IO::Socket'               => '1.30';
 requires 'IO::String'               => '1.08';
 requires 'IPC::Open2'               => 0;
 requires 'IPC::Open3'               => 0;
+requires 'JSON::XS'                 => '2.29';
 requires 'List::Util'               => '1.18';
 requires 'List::MoreUtils'          => '0.22';
 requires 'LWP'                      => '5.815';
