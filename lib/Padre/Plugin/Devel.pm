@@ -74,6 +74,7 @@ sub menu_plugins_simple {
 
 		Wx::gettext('Dump Expression...')    => 'dump_expression',
 		Wx::gettext('Dump Current Document') => 'dump_document',
+		Wx::gettext('Dump Task Manager')     => 'dump_taskmanager',
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
 		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
 		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
@@ -151,6 +152,11 @@ sub dump_document {
 		return;
 	}
 	return $self->_dump($document);
+}
+
+sub dump_taskmanager {
+	my $self = shift;
+	return $self->_dump(Padre::Current->ide->task_manager);
 }
 
 #
