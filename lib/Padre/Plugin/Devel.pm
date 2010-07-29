@@ -3,9 +3,8 @@ package Padre::Plugin::Devel;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx      ();
-use Padre::Plugin  ();
-use Padre::Current ();
+use Padre::Wx     ();
+use Padre::Plugin ();
 
 our $VERSION = '0.68';
 our @ISA     = 'Padre::Plugin';
@@ -156,7 +155,7 @@ sub dump_document {
 
 sub dump_taskmanager {
 	my $self = shift;
-	return $self->_dump(Padre::Current->ide->task_manager);
+	return $self->_dump( $self->current->ide->task_manager );
 }
 
 #
