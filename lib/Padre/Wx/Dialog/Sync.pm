@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::ConfigSync;
+package Padre::Wx::Dialog::Sync;
 
 use 5.008;
 use strict;
@@ -18,7 +18,7 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::ConfigSync - A Dialog for interacting with ConfigSync
+Padre::Wx::Dialog::Sync - A Dialog for interacting with Sync
 This is an initial version generated partially by wxGlade. A rewrite is 
 in order to align with Padre.
 
@@ -26,7 +26,7 @@ in order to align with Padre.
 
 # things to note - certain elements interact with the $config_sync object
 # to update state. Ie user logged in / not logged in
-# certain messages are defined in the Padre::ConfigSync class, this is most definitely
+# certain messages are defined in the Padre::Sync class, this is most definitely
 # not the proper location for such things
 
 sub new {
@@ -39,7 +39,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Padre ConfigSync'),
+		Wx::gettext('Padre Sync'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
@@ -136,7 +136,7 @@ sub new {
 	$self->{lbl_info} = Wx::StaticText->new(
 		$self->{Register_Pane},
 		-1,
-		"Enter information below to register with ConfigSync!",
+		"Enter information below to register with Sync!",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -277,7 +277,7 @@ sub new {
 		Wx::wxID_CANCEL,
 		"",
 	);
-	$self->SetTitle("Padre ConfigSync");
+	$self->SetTitle("Padre Sync");
 	$self->SetSize(
 		$self->ConvertDialogSizeToPixels(Wx::Size->new(208,
 		184)),

@@ -1,15 +1,15 @@
-package Padre::ConfigSync;
+package Padre::Sync;
 
 =pod
 
 =head1 NAME
 
-Padre::ConfigSync - Utility functions for handling remote Configuration Syncing
+Padre::Sync - Utility functions for handling remote Configuration Syncing
 
 =head1 DESCRIPTION
 
-The C<ConfigSync> class contains logic for communicating with a remote 
-ConfigSync server. This class interacts with the Padre::Wx::Dialog::ConfigSync 
+The C<Padre::Sync> class contains logic for communicating with a remote 
+L<Madre::Sync> server. This class interacts with the L<Padre::Wx::Dialog::Sync>
 class for user interface display.
 
 =head1 METHODS
@@ -42,7 +42,7 @@ our $VERSION = '0.68';
 
 =head2 C<new>
 
-The constructor returns a new C<Padre::ConfigSync> object, but
+The constructor returns a new C<Padre::Sync> object, but
 you should normally access it via the main Padre object:
 
   my $manager = Padre->ide->config_sync;
@@ -54,7 +54,7 @@ First argument should be a Padre object.
 sub new {
 	my $class = shift;
 	my $ide  = Params::Util::_INSTANCE( shift, 'Padre' )
-		or Carp::croak("Creation of a Padre::ConfigSync without a Padre not possible");
+		or Carp::croak("Creation of a Padre::Sync without a Padre not possible");
 	my $ua = LWP::UserAgent->new;
 	my $j = JSON::Any->new( allow_blessed => 1 );
 
@@ -128,7 +128,7 @@ sub _jsonToObj {
 =head2 C<register>
 
 Attempts to register a user account with the information provided on the
-ConfigSync server. 
+Sync server. 
 Parameters: a list of key value pairs to be interpreted as POST parameters
 Returns error string if user state is already logged in or serverside error occurs.
 
@@ -167,7 +167,7 @@ sub register {
 
 =head2 C<login>
 
-Will log in to remote ConfigSync server using given credentials. State will 
+Will log in to remote Sync server using given credentials. State will 
 be updated if login successful.
 
 =cut
@@ -196,7 +196,7 @@ sub login {
 
 =head2 C<logout>
 
-If currently logged in, will log the ConfigSync session out from the server.
+If currently logged in, will log the Sync session out from the server.
 State will be updated.
 
 =cut
@@ -224,7 +224,7 @@ sub logout {
 =head2 C<server_delete>
 
 Given a logged in session, will attempt to delete the config currently stored
-on the ConfigSync server (if one currently exists).
+on the Sync server (if one currently exists).
 Will fail if not logged in.
 
 =cut
@@ -252,7 +252,7 @@ sub server_delete {
 =head2 C<local_to_server>
 
 Given a logged in session, will attempt to place the current local config to 
-the ConfigSync server. 
+the Sync server. 
 
 =cut
 
@@ -333,7 +333,7 @@ sub server_to_local {
 
 =head2 C<english_status>
 
-Will return a string explaining current state of ConfigSync
+Will return a string explaining current state of Sync
 dependant on $self->{state}
 
 =cut
