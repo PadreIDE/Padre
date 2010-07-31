@@ -8,7 +8,7 @@ Padre::Wx::Dialog::Sync - A Dialog for interacting with Sync
 
 =head1 DESCRIPTION
 
-This is an initial version generated partially by wxGlade. A rewrite is 
+This is an initial version generated partially by wxGlade. A rewrite is
 in order to align with Padre.
 
 =cut
@@ -16,10 +16,10 @@ in order to align with Padre.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                  ();
-use Padre::Wx::Dialog          ();
-use Padre::Wx::Role::MainChild ();
-use Padre::Locale              ();
+use Padre::Wx             ();
+use Padre::Wx::Role::Main ();
+use Padre::Locale         ();
+use Padre::Sync           ();
 
 our $VERSION = '0.68';
 our @ISA     = qw{
@@ -27,15 +27,13 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-# things to note - certain elements interact with the $config_sync object
-# to update state. Ie user logged in / not logged in
-# certain messages are defined in the Padre::Sync class, this is most definitely
-# not the proper location for such things
-
+# Things to note - certain elements interact with the Padre::Sync object to
+# update state. Ie user logged in / not logged in certain messages are defined
+# in the Padre::Sync class, this is most definitely not the proper location
+# for such things.
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $ide    = $main->ide;
 	my $config = $main->config;
 
 	# Create the Wx dialog
@@ -57,8 +55,7 @@ sub new {
 	);
 
 	# Create the sync manager
-	require Padre::Sync;
-	$self->{sync} = Padre::Sync->new( $ide );
+	$self->{sync} = Padre::Sync->new( $main->ide );
 
 	$self->{Notebook} = Wx::Notebook->new(
 		$self,
@@ -122,7 +119,7 @@ sub new {
 	$self->{txt_login} = Wx::TextCtrl->new(
 		$self->{Login_Pane},
 		-1,
-		$config->config_sync_username ? $config->config_sync_username : '',
+		$config->config_sync_username || '',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -136,15 +133,15 @@ sub new {
 	$self->{txt_password} = Wx::TextCtrl->new(
 		$self->{Login_Pane},
 		-1,
-		$config->config_sync_password ? $config->config_sync_password : '',
+		$config->config_sync_password || '',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_PASSWORD 
+		Wx::wxTE_PASSWORD
 	);
 	$self->{btn_login} = Wx::Button->new(
 		$self->{Login_Pane},
 		-1,
-		$main->ide->config_sync->{state} eq 'logged_in' ? 'Log out' : 'Log in',
+		$self->{sync}->{state} eq 'logged_in' ? 'Log out' : 'Log in',
 	);
 	$self->{lbl_info} = Wx::StaticText->new(
 		$self->{Register_Pane},
@@ -240,7 +237,7 @@ sub new {
 	$self->{lbl_status_info} = Wx::StaticText->new(
 		$self->{Sync_Pane},
 		-1,
-		$sync->english_status,
+		$self->{sync}->english_status,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -269,7 +266,7 @@ sub new {
 	$self->{txt_remote} = Wx::TextCtrl->new(
 		$self->{Settings_Pane},
 		-1,
-		$config->config_sync_server ? $config->config_sync_server : '',
+		$config->config_sync_server || '',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -291,36 +288,28 @@ sub new {
 		"",
 	);
 	$self->{txt_login}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_password}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_username}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_pw}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_pw_confirm}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_email}->SetMinSize(
-		Wx::Size->new(160,
-		23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_email_confirm}->SetMinSize(
-		Wx::Size->new(160,
-			23),
+		Wx::Size->new(160,23)
 	);
 	$self->{txt_remote}->SetMinSize(
-		Wx::Size->new(160,
-			23),
+		Wx::Size->new(160,23)
 	);
 
 	my $sizer_1  = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -454,35 +443,39 @@ sub new {
 		},
 	);
 
-	$self->Show(1);
-
 	return $self;
 }
 
-sub btn_login { 
+
+
+
+
+######################################################################
+# Event Handlers
+
+sub btn_login {
 	my $self     = shift;
+	my $sync     = $self->{sync};
 	my $username = $self->{txt_login}->GetValue;
 	my $password = $self->{txt_password}->GetValue;
-	my $sync     = $self->current->ide->config_sync;
 
 	# Handle login / logout logic toggle
-	if ($sync->{state} eq 'logged_in') { 
-		if ($sync->logout =~ /success/) { 
+	if ( $sync->{state} eq 'logged_in' ) {
+		if ( $sync->logout =~ /success/ ) {
 			Wx::MessageBox(
-				sprintf( 'Successfully logged out.' ), 
+				sprintf( 'Successfully logged out.' ),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
-			); 
-			$self->{btn_login}->SetLabel('Log in'); 
-		}
-		else { 
+			);
+			$self->{btn_login}->SetLabel('Log in');
+		} else {
 			Wx::MessageBox(
-				sprintf( 'Failed to log out.' ), 
+				sprintf( 'Failed to log out.' ),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
-			); 
+			);
 		}
 
 		$self->{lbl_status}->SetLabel( $sync->english_status );
@@ -490,7 +483,7 @@ sub btn_login {
 		return;
 	}
 
-	if (not $username or not $password) { 
+	if ( not $username or not $password ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Please input a valid value for both username and password') ),
 			Wx::gettext('Error'),
@@ -502,7 +495,7 @@ sub btn_login {
 
 	# Attempt login
 	my $rc = $sync->login(
-		{ 
+		{
 			username => $username,
 			password => $password,
 		}
@@ -511,37 +504,36 @@ sub btn_login {
 	$self->{lbl_status}->SetLabel( $sync->english_status );
 	$self->{lbl_status_info}->SetLabel( $sync->english_status );
 
-	if ($sync->{state} eq 'logged_in') { 
+	if ( $sync->{state} eq 'logged_in' ) {
 		$self->{btn_login}->SetLabel('Log out');
 	}
 
 	# Print the return information
 	Wx::MessageBox(
-		sprintf( '%s', $rc ), 
+		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
 		Wx::wxOK,
 		$self,
-	);  
+	);
 
 }
 
-sub btn_register { 
+sub btn_register {
 	my $self          = shift;
-	my $sync          = $self->current->ide->config_sync;
 	my $username      = $self->{txt_username}->GetValue;
 	my $pw            = $self->{txt_pw}->GetValue;
 	my $pw_confirm    = $self->{txt_pw_confirm}->GetValue;
 	my $email         = $self->{txt_email}->GetValue;
 	my $email_confirm = $self->{txt_email_confirm}->GetValue;
 
-	# Validation of inputs 
+	# Validation of inputs
 	if (not $username or
 		not $pw or
 		not $pw_confirm or
-		not $email or 
-		not $email_confirm) { 
+		not $email or
+		not $email_confirm) {
 		Wx::MessageBox(
-			sprintf( Wx::gettext('Please ensure all inputs have appropriate values.') ), 
+			sprintf( Wx::gettext('Please ensure all inputs have appropriate values.') ),
 			Wx::gettext('Error'),
 			Wx::wxOK,
 			$self,
@@ -550,9 +542,9 @@ sub btn_register {
 	}
 
 	# Not sure if password quality rules should be enforced at this level?
-	if ($pw ne $pw_confirm) { 
+	if ($pw ne $pw_confirm) {
 		Wx::MessageBox(
-			sprintf( Wx::gettext('Password and confirmation do not match.') ), 
+			sprintf( Wx::gettext('Password and confirmation do not match.') ),
 			Wx::gettext('Error'),
 			Wx::wxOK,
 			$self,
@@ -560,9 +552,9 @@ sub btn_register {
 		return;
 	}
 
-	if ($email ne $email_confirm) { 
+	if ($email ne $email_confirm) {
 		Wx::MessageBox(
-			sprintf( Wx::gettext('Email and confirmation do not match.') ), 
+			sprintf( Wx::gettext('Email and confirmation do not match.') ),
 			Wx::gettext('Error'),
 			Wx::wxOK,
 			$self,
@@ -571,7 +563,7 @@ sub btn_register {
 	}
 
 	# Attempt registration
-	my $rc = $sync->register(
+	my $rc = $self->{sync}->register(
 		{
 			username => $username,
 			password => $pw,
@@ -581,56 +573,49 @@ sub btn_register {
 
 	# Print the return information
 	Wx::MessageBox(
-		sprintf( '%s', $rc ),  
+		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
 		Wx::wxOK,
 		$self,
-	);  
+	);
 }
 
-sub btn_local { 
+sub btn_local {
 	my $self = shift;
-	my $sync = $self->current->ide->config_sync;
-	my $rc   = $sync->local_to_server;
-
+	my $rc   = $self->{sync}->local_to_server;
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
 		Wx::wxOK,
 		$self,
-	);  
+	);
 }
 
-sub btn_remote { 
+sub btn_remote {
 	my $self = shift;
-	my $sync = $self->current->ide->config_sync;
-	my $rc   = $sync->server_to_local;
-
+	my $rc   = $self->{sync}->server_to_local;
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
 		Wx::wxOK,
 		$self,
-	);  
-
+	);
 }
 
-sub btn_delete { 
+sub btn_delete {
 	my $self = shift;
-	my $sync = $self->current->ide->config_sync;
-	my $rc   = $sync->server_delete;
-
+	my $rc   = $self->{sync}->server_delete;
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
 		Wx::wxOK,
 		$self,
-	);  
+	);
 
 }
 
 # Save changes to dialog inputs to config
-sub btn_ok { 
+sub btn_ok {
 	my $self   = shift;
 	my $config = $self->current->config;
 
@@ -643,7 +628,7 @@ sub btn_ok {
 }
 
 # Discard all changes to config
-sub btn_cancel { 
+sub btn_cancel {
 	$_[0]->Destroy;
 }
 

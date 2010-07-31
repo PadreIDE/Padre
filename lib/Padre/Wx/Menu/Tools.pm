@@ -35,19 +35,24 @@ sub new {
 	# User Preferences
 	$self->add_menu_action(
 		$self,
-		'edit.preferences',
+		'tools.preferences',
+	);
+
+	$self->add_menu_action(
+		$self,
+		'tools.sync',
 	);
 
 	# Key bindings
 	$self->add_menu_action(
 		$self,
-		'tools.key_bindings',
+		'tools.keys',
 	);
 
 	# Regex Editor
 	$self->add_menu_action(
 		$self,
-		'edit.regex',
+		'tools.regex',
 	);
 
 	$self->AppendSeparator;

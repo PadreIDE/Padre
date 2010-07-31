@@ -14,9 +14,9 @@ use Padre::Config::Style ();
 use Padre::Current       ();
 use Padre::Constant      ();
 use Padre::MimeTypes     ();
-use Padre::Wx::Action    ();
 use Padre::Wx            ();
 use Padre::Wx::Menu      ();
+use Padre::Wx::Action    ();
 use Padre::Logger;
 
 our $VERSION = '0.68';
@@ -73,6 +73,7 @@ sub init_language_actions {
 			},
 		);
 	}
+
 	return;
 }
 
@@ -1096,15 +1097,6 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name       => 'edit.regex',
-		label      => _T('Regex Editor'),
-		comment    => _T('Open the regular expression editing window'),
-		menu_event => sub {
-			shift->open_regex_editor(@_);
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
 		label       => _T('Show as Hexadecimal'),
@@ -1121,17 +1113,6 @@ sub init {
 		comment     => _T('Show the ASCII values of the selected text in decimal numbers in the output window'),
 		menu_event  => sub {
 			shift->show_as_numbers( @_, 'decimal' );
-		},
-	);
-
-	# User Preferences
-
-	Padre::Wx::Action->new(
-		name       => 'edit.preferences',
-		label      => _T('Preferences'),
-		comment    => _T('Edit the user preferences'),
-		menu_event => sub {
-			shift->on_preferences(@_);
 		},
 	);
 
@@ -2161,14 +2142,42 @@ sub init {
 		},
 	);
 
-	# Key Bindings action
+	# Tools and Preferences
 
 	Padre::Wx::Action->new(
-		name       => 'tools.key_bindings',
+		name       => 'tools.preferences',
+		label      => _T('Preferences'),
+		comment    => _T('Edit the user preferences'),
+		menu_event => sub {
+			shift->on_preferences(@_);
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name       => 'tools.sync',
+		label      => _T('Preferences Sync'),
+		comment    => _T('Share your proferences between multiple computers'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::Sync;
+			Padre::Wx::Dialog::Sync->new($_[0])->ShowModal;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name       => 'tools.keys',
 		label      => _T('Key Bindings'),
 		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
 		menu_event => sub {
 			$_[0]->on_key_bindings;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name       => 'tools.regex',
+		label      => _T('Regex Editor'),
+		comment    => _T('Open the regular expression editing window'),
+		menu_event => sub {
+			shift->open_regex_editor(@_);
 		},
 	);
 
