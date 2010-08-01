@@ -2158,8 +2158,8 @@ sub init {
 		label      => _T('Preferences Sync'),
 		comment    => _T('Share your proferences between multiple computers'),
 		menu_event => sub {
-			require Padre::Wx::Dialog::Sync;
-			Padre::Wx::Dialog::Sync->new($_[0])->ShowModal;
+			require Padre::Wx::Dialog::Sync2;
+			Padre::Wx::Dialog::Sync2->new($_[0])->ShowModal;
 		},
 	);
 

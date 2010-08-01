@@ -3,7 +3,7 @@ package Padre::Wx::Dialog::Sync2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Sync ();
+use Padre::Sync          ();
 use Padre::Wx::FBP::Sync ();
 
 our $VERSION = '0.68';
@@ -16,7 +16,8 @@ sub new {
 
 	# Fill form elements from configuration
 	$self->{txt_remote}->SetLabel( $config->config_sync_server );
-	$self->{txt_username}->SetLabel( $config->config_sync_username );
+	$self->{txt_login}->SetFocus;
+	$self->{txt_login}->SetLabel( $config->config_sync_username );
 	$self->{txt_password}->SetLabel( $config->config_sync_password );
 
 	# Create the sync manager
@@ -33,11 +34,11 @@ sub refresh {
 	my $sync = $self->{sync};
 
 	# Set up the form from the sync manager
-	$self->{txt_remote}->SetLabel( $self->{sync}->english_status );
+	$self->{lbl_status}->SetLabel( $self->{sync}->english_status );
 
 	# Are we logged in?
-	my $in = $self->{state} eq 'logged_in' ? 1 : 0;
-	$self->{lbl_login}->SetLabel( $in ? 'Logout' : 'Login' );
+	my $in = $sync->{state} eq 'logged_in' ? 1 : 0;
+	$self->{btn_login}->SetLabel( $in ? 'Logout' : 'Login' );
 	$self->{btn_local}->Enable($in);
 	$self->{btn_remote}->Enable($in);
 	$self->{btn_delete}->Enable($in);
@@ -100,12 +101,7 @@ sub btn_login {
 		}
 	);
 
-	$self->{lbl_status}->SetLabel( $sync->english_status );
-	$self->{lbl_status_info}->SetLabel( $sync->english_status );
-
-	if ( $sync->{state} eq 'logged_in' ) {
-		$self->{btn_login}->SetLabel('Log out');
-	}
+	$self->refresh;
 
 	# Print the return information
 	Wx::MessageBox(
