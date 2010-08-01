@@ -146,6 +146,23 @@ sub clear {
 
 =pod
 
+=head2 C<say>
+
+    $statusbar->say('Hello World!');
+
+Temporarily overwrite only the leftmost filename part of the status bar.
+
+It will return to it's normal value when the status bar is next refreshed
+for normal reasons (such as a keystroke or a file panel switch).
+
+=cut
+
+sub say {
+	$_[0]->SetStatusText( $_[1], FILENAME );
+}
+
+=pod
+
 =head2 C<refresh>
 
     $statusbar->refresh;

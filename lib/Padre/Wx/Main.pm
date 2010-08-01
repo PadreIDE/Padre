@@ -2712,6 +2712,22 @@ Various methods to help send information to user.
 
 Some methods are inherited from L<Padre::Wx::Role::Dialog>.
 
+=head2 C<status>
+
+    $main->status( $msg );
+
+Temporarily change the status bar leftmost block only to some message.
+
+This is a super-quick method intended for transient messages as short
+as a few tens of milliseconds (for example printing all directories
+read during a recursive file scan).
+
+=cut
+
+sub status {
+	$_[0]->GetStatusBar->say($_[1]);
+}
+
 =head3 C<info>
 
     $main->info( $msg );
