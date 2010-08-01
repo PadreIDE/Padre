@@ -147,9 +147,15 @@ sub on_message {
 	my $self   = shift;
 	my $method = shift;
 
+	# Special case for printing a simple message to the main window
+	# status bar, without needing to pollute the task classes.
+	if ( $method eq 'STATUS' ) {
+		Padre::Current->main->status(@_);
+		return;
+	}
+
 	# Does the method exist
 	unless ( $self->{task}->can($method) ) {
-
 		# A method name provided directly by the Task
 		# doesn't exist in the Task. Naughty Task!!!
 		# Lacking anything more sane to do, squelch it.
@@ -158,9 +164,10 @@ sub on_message {
 
 	# Pass the call down to the task and protect it from itself
 	local $@;
-	eval { $self->{task}->$method(@_); };
-	if ($@) {
-
+	eval {
+		$self->{task}->$method(@_);
+	};
+	if ( $@ ) {
 		# A method in the main thread blew up.
 		# Beyond catching it and preventing it killing
 		# Padre entirely, I'm not sure what else we can
