@@ -5676,7 +5676,7 @@ sub timer_check_overwrite {
 	#	}
 
 	# Show dialog for file reload selection
-	Padre::Wx::Dialog::WindowList->new(
+	my $winlist = Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Reload some files'),
 		list_title => Wx::gettext('&Select files to reload:'),
