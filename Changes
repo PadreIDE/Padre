@@ -8,6 +8,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Refactored, reskinned and polished ConfigSync functionality (ADAMK)
     - Added ->status to ::Main to allow rapid transient messages to be
       presented in the status bar, as fast as 100/sec (ADAMK)
+    - Fixed the file-changed-on-disk dialog: Show "Reload" button instead
+      of "Close" (SEWI)
 
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)
