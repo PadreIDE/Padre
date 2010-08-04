@@ -108,6 +108,7 @@ requires 'HTML::Entities'           => '3.57';
 requires 'HTML::Parser'             => '3.58';
 requires 'IO::Socket'               => '1.30';
 requires 'IO::String'               => '1.08';
+requires 'IPC::Run'                 => '0.83';
 requires 'IPC::Open2'               => 0;
 requires 'IPC::Open3'               => 0;
 requires 'JSON::XS'                 => '2.29';
