@@ -8,11 +8,13 @@ use strict;
 use warnings;
 use Params::Util ();
 use Padre::Task  ();
+use Padre::Logger;
 
 our $VERSION = '0.68';
 our @ISA     = 'Padre::Task';
 
 sub new {
+	TRACE($_[0]) if DEBUG;
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
@@ -26,6 +28,7 @@ sub new {
 }
 
 sub run {
+	TRACE($_[0]) if DEBUG;
 	my $self = shift;
 
 	# Set up for execution
@@ -36,6 +39,7 @@ sub run {
 	my $stderr  = '';
 
 	# Start the process and wait for output
+	TRACE("Running " . join(@{$self->{cmd}})) if DEBUG;
 	my $handle = IPC::Run::start(
 		$self->{cmd},
 		\$stdin,
@@ -56,12 +60,15 @@ sub run {
 		}
 	};
 	if ( $@ ) {
-		if ( $@ eq 'process ended prematurely' ) {
+		if ( $@ =~ /^process ended prematurely/ ) {
 			# Normal exit
+			TRACE("Process stopped normally") if DEBUG;
+			$handle->kill_kill; # Just in case
 			return 1;
 		}
 
 		# Otherwise, we probably hit the timeout
+		TRACE("Process crashed ($@)") if DEBUG;
 		$self->{errstr} = $@;
 		$handle->kill_kill;
 	}
@@ -73,6 +80,7 @@ sub run {
 # Any serious user of this task will want to do something different
 # with the stdout and will override this method.
 sub stdout {
+	TRACE($_[1]) if DEBUG;
 	my $self = shift;
 	my $line = shift;
 	if ( $self->running ) {
