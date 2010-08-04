@@ -47,7 +47,7 @@ SCOPE: {
 	# Run the startup process
 	ok( $manager->start, '->start ok' );
 	Time::HiRes::sleep(0.1);
-	is( scalar( threads->list ), 3, 'Three threads exists' );
+	is( scalar( threads->list ), 4, 'Three threads exists' );
 
 	# Create the sample task
 	my $addition = Padre::Task::Addition->new(
