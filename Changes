@@ -2,7 +2,11 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.69 to be released
-    - Landed ConfigSync branch, but not activating it for now (MATTP)
+    - Landed ConfigSync branch (MATTP)
+    - Task 2.0 restores support for having tasks send unlimited messages
+      back to the main application while they are running (ADAMK)
+    - Added Padre::Task::Run for background process execution with STDOUT
+      lines streaming as events back to the main window. (ADAMK)
     - Fixed test failure in t/93-padre-filename-win.t under win32 (SEWI)
     - Devel plugin now has the option to dump the Task Manager (GARU)
     - Refactored, reskinned and polished ConfigSync functionality (ADAMK)
@@ -10,8 +14,6 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       presented in the status bar, as fast as 100/sec (ADAMK)
     - Fixed the file-changed-on-disk dialog: Show "Reload" button instead
       of "Close" (SEWI)
-    - Added Padre::Task::Run for background process execution with STDOUT
-      lines streaming as events back to the main window. (ADAMK)
     - Adding a ton of additional $BACKCOMPATIBLE variables so that every
       class consumed by the current family of plugins has them (ADAMK)
     - Nudging up the default background thread count now that we will
