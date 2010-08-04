@@ -29,7 +29,7 @@ sub new {
 	my $self    = bless {
 		active  => 0, # Are we running at the moment
 		threads => 1, # Are threads enabled
-		minimum => 2, # Workers to launch at startup
+		minimum => 3, # Workers to launch at startup
 		%param,
 		workers => [], # List of all workers
 		handles => {}, # Handles for all active tasks
