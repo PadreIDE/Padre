@@ -21,7 +21,7 @@ the available methods that can be applied to it besides the added ones
 
 =cut
 
-use 5.008;
+use 5.008005;
 use strict;
 use warnings;
 use FindBin;
@@ -67,8 +67,9 @@ use Padre::Wx::Role::Dialog       ();
 use Padre::Wx::Dialog::WindowList ();
 use Padre::Logger;
 
-our $VERSION = '0.68';
-our @ISA     = qw{
+our $VERSION        = '0.68';
+our $BACKCOMPATIBLE = '0.58';
+our @ISA            = qw{
 	Padre::Wx::Role::Conduit
 	Padre::Wx::Role::Dialog
 	Wx::Frame
@@ -472,7 +473,7 @@ Accessors that may not belong to this class:
 use Class::XSAccessor {
 	predicates => {
 
-		# Needed for lazily-constructed gui elements
+		# Needed for lazily-constructed GUI elements
 		has_about     => 'about',
 		has_left      => 'left',
 		has_right     => 'right',
@@ -632,8 +633,8 @@ sub open_resource {
 }
 
 sub help_search {
-	my ( $self, $topic ) = @_;
-
+	my $self = shift;
+	my $topic = shift;
 	unless ( defined $self->{help_search} ) {
 		require Padre::Wx::Dialog::HelpSearch;
 		$self->{help_search} = Padre::Wx::Dialog::HelpSearch->new($self);

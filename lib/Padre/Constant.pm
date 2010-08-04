@@ -10,7 +10,8 @@ use File::Path    ();
 use File::Spec    ();
 use File::HomeDir ();
 
-our $VERSION = '0.68';
+our $VERSION        = '0.68';
+our $BACKCOMPATIBLE = '0.57';
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );

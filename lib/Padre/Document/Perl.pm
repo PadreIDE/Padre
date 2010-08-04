@@ -448,14 +448,14 @@ sub beginner_check {
 	# Ticket #534
 
 	require Padre::Document::Perl::Beginner;
-	my $Beginner = Padre::Document::Perl::Beginner->new(
+	my $beginner = Padre::Document::Perl::Beginner->new(
 		document => $self,
 		editor   => $self->editor
 	);
 
-	$Beginner->check( $self->text_get );
+	$beginner->check( $self->text_get );
 
-	my $error = $Beginner->error;
+	my $error = $beginner->error;
 
 	if ($error) {
 		Padre->ide->wx->main->error( Wx::gettext("Error: ") . $error );
