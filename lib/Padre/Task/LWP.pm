@@ -123,7 +123,7 @@ sub run {
 	if ( $method eq 'GET' and defined $query ) {
 		$url .= '?' . $query;
 	}
-	my $request = HTTP::Request->new( $self->{method}, $url );
+	my $request = HTTP::Request->new( $method, $url );
 	if ( $method eq 'POST' ) {
 		$request->content_type( $self->{content_type} || 'application/x-www-form-urlencoded' );
 		$request->content( $query || '' );
@@ -145,7 +145,17 @@ sub run {
 	# Execute the request.
 	# It's not up to us to judge success or failure at this point,
 	# we just do the heavy lifting of the request itself.
+	$self->handle->message(
+		STATUS => join ' ', $method, $url, '...',
+	) if $self->running;
+
 	$self->{response} = $useragent->request($request);
+
+	$self->handle->message(
+		STATUS => join ' ', $method, $url, '-->',
+			$self->{response}->code,
+			$self->{response}->message,
+	) if $self->running;
 
 	# Remove the CODE references from the response.
 	# They aren't needed any more, and they won't survive
