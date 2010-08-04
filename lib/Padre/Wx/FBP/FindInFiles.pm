@@ -24,11 +24,11 @@ sub new {
 		-1,
 		Wx::gettext("Find in Files"),
 		Wx::wxDefaultPosition,
-		[ -1, -1 ],
+		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
-	$self->{m_staticText2} = Wx::StaticText->new(
+	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Search Term:"),
@@ -43,7 +43,7 @@ sub new {
 		[ ],
 	);
 
-	$self->{m_staticText3} = Wx::StaticText->new(
+	my $m_staticText3 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Search Directory:"),
@@ -64,7 +64,15 @@ sub new {
 		Wx::gettext("..."),
 	);
 
-	$self->{m_staticText4} = Wx::StaticText->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{directory},
+		sub {
+			shift->directory(@_);
+		},
+	);
+
+	my $m_staticText4 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Search in Types:"),
@@ -132,11 +140,11 @@ sub new {
 	$fgSizer2->AddGrowableCol( 1 );
 	$fgSizer2->SetFlexibleDirection( Wx::wxBOTH );
 	$fgSizer2->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
-	$fgSizer2->Add( $self->{m_staticText2}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText2, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{search_term}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer2->Add( $self->{m_staticText3}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText3, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer2->Add( $bSizer4, 1, Wx::wxEXPAND, 5 );
-	$fgSizer2->Add( $self->{m_staticText4}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText4, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{search_types}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	my $buttons = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
@@ -160,6 +168,13 @@ sub new {
 	$hsizer->Fit($self);
 
 	return $self;
+}
+
+sub directory {
+	my $self  = shift;
+	my $event = shift;
+
+	die 'EVENT HANDLER NOT IMPLEMENTED';
 }
 
 1;

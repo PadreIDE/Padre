@@ -32,7 +32,7 @@
             <property name="minimum_size"></property>
             <property name="name">Padre::Wx::FBP::FindInFiles</property>
             <property name="pos"></property>
-            <property name="size">-1,-1</property>
+            <property name="size"></property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">Find in Files</property>
@@ -116,7 +116,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_staticText2</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -221,7 +221,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_staticText3</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -345,7 +345,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
-                                                <event name="OnButtonClick"></event>
+                                                <event name="OnButtonClick">directory</event>
                                                 <event name="OnChar"></event>
                                                 <event name="OnEnterWindow"></event>
                                                 <event name="OnEraseBackground"></event>
@@ -389,7 +389,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_staticText4</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -749,7 +749,7 @@
                                     <property name="proportion">1</property>
                                     <object class="spacer" expanded="1">
                                         <property name="height">0</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="width">20</property>
                                     </object>
                                 </object>
