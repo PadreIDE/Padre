@@ -17,6 +17,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Nudging up the default background thread count now that we will
       start to see long-running threads looking after background
       processes (ADAMK)
+    - Allow the opening of files exceeding the editor_file_size_limit of
+      500_000. The file is opened if the user answers Yes to the
+      dialog (MULANDER)
 
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)

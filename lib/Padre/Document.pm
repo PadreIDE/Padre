@@ -252,16 +252,21 @@ sub new {
 			# Test script must be able to pass an alternate config object:
 			my $config = $self->{config} || Padre->ide->config;
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
-				$self->error(
+				my $ret = Wx::MessageBox(
 					sprintf(
 						Wx::gettext(
-							"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
+							"The file %s you are trying to open is over the arbitrary file size limit of Padre which is currently %s. Opening this file may reduce performance. Do you still want to open the file?"
 						),
 						$self->{file}->{filename},
 						$config->editor_file_size_limit
-					)
+					),
+					Wx::gettext("Warning"),
+					Wx::wxYES_NO | Wx::wxCENTRE,
+					Padre->ide->wx->main,
 				);
-				return;
+				if ( $ret != Wx::wxYES ) {
+					return;
+				}
 			}
 		}
 		$self->load_file;
