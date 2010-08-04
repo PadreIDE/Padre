@@ -6,8 +6,11 @@ package Padre::Task::Run;
 use 5.008005;
 use strict;
 use warnings;
+use Params::Util ();
+use Padre::Task  ();
 
 our $VERSION = '0.68';
+our @ISA     = 'Padre::Task';
 
 sub new {
 	my $class = shift;
@@ -15,7 +18,7 @@ sub new {
 
 	# Params and defaults
 	$self->{timeout} ||= 10;
-	unless ( $self->{run} and $self->{run} eq 'ARRAY' ) {
+	unless ( Params::Util::_ARRAY($self->{cmd}) ) {
 		die "Failed to provide command to execute";
 	}
 
@@ -45,11 +48,11 @@ sub run {
 	local $@ = '';
 	eval {
 		while ( 1 ) {
-			if ( $stdout =~ /^(.*?)\n/ ) {
+			if ( $stdout =~ s/^(.*?)\n// ) {
 				$self->stdout("$1");
 				next;
 			}
-			
+			$handle->pump;
 		}
 	};
 	if ( $@ ) {
@@ -72,7 +75,7 @@ sub run {
 sub stdout {
 	my $self = shift;
 	my $line = shift;
-	if ( $self->is_running ) {
+	if ( $self->running ) {
 		$self->handle->message( STATUS => $line );
 	}
 	return 1;
