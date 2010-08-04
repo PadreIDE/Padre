@@ -14,7 +14,7 @@ our $COMPATIBLE = '0.65';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Check parameters for the object that owns the task
 	if ( exists $self->{owner} ) {
@@ -95,11 +95,13 @@ sub run {
 # has been completed.
 sub finish {
 	my $self = shift;
+
 	if ( $self->{owner} ) {
-		my $owner = $self->owner or return;
+		my $owner    = $self->owner or return;
 		my $callback = $self->callback;
 		$owner->$callback($self);
 	}
+
 	return 1;
 }
 
