@@ -25,6 +25,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - The Task Manager now records per-worker statistics on which tasks they
       have run in the past. This is needed to support various worker optimisation
       strategies to be implemented in the future (ADAMK)
+    - Added a simple initial Task Manager optimisation strategy to favour
+      workers which have run a task at least once before (ADAMK)
 
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)
