@@ -23,11 +23,10 @@ our $SEQUENCE = 0;
 
 sub new {
 	TRACE( $_[0] ) if DEBUG;
-	bless {
+	return bless {
 		hid  => ++$SEQUENCE,
 		task => $_[1],
-		},
-		$_[0];
+	}, $_[0];
 }
 
 sub hid {
@@ -38,6 +37,18 @@ sub hid {
 sub task {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->{task};
+}
+
+sub class {
+	TRACE( $_[0] ) if DEBUG;
+	Scalar::Util::blessed($_[0]->{task});
+}
+
+sub worker {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	$self->{worker} = shift if @_;
+	return $self->{worker};
 }
 
 

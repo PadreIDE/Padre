@@ -170,13 +170,11 @@ sub step {
 	# Register the handle for Wx event callbacks
 	$handles->{$hid} = $handle;
 
-	# Find a worker and register worker/thread relationship
+	# Find the next/best worker for the task
 	my $worker = $self->next_thread or return;
-	$worker->handle($hid);
-	$handle->{worker} = $worker->wid;
 
-	# Send the message into the worker to start the task
-	$worker->send( 'task', $handle->as_array );
+	# Send the task to the worker for execution
+	$worker->send_task( $handle );
 
 	# Continue to the next iteration
 	return $self->step;

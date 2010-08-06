@@ -16,8 +16,39 @@ our @ISA     = 'Padre::TaskThread';
 
 
 
-#######################################################################
+######################################################################
+# Constructor and Accessors
+
+sub new {
+	my $class = shift;
+	my $self  = $class->SUPER::new(@_);
+
+	# Initialise task execution tracking
+	$self->{seen} = { };
+
+	return $self;
+}
+
+
+
+
+
+######################################################################
 # Main Thread Methods
+
+sub send_task {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $handle = shift;
+
+	# Tracking for the relationship between the worker and task handle
+	$handle->worker($self->wid);
+	$self->{handle} = $handle->hid;
+	$self->{seen}->{ $handle->class } += 1;
+
+	# Send the message to the child
+	$self->send( 'task', $handle->as_array );
+}
 
 sub handle {
 	my $self = shift;
