@@ -113,6 +113,27 @@ sub next_thread {
 	return undef;
 }
 
+# Get the best available child for a particular task
+sub best_thread {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $handle = shift;
+	my @unused = grep { not $_->handle } @{ $self->{workers} };
+
+	# First try to find a specialist.
+	# Any of them will do at this point, no futher work needed.
+	foreach my $worker ( @unused ) {
+		next unless $worker->{seen}->{$handle->class};
+		return $worker;
+	}
+
+	# Bias towards maximum reuse of a smaller number of threads.
+	# This will (hopefully) allow the most stale threads to swap
+	# better, and will simplify decisions on when to clean up
+	# excessive threads.
+	return $unused[0];
+}
+
 
 
 
@@ -171,7 +192,7 @@ sub step {
 	$handles->{$hid} = $handle;
 
 	# Find the next/best worker for the task
-	my $worker = $self->next_thread or return;
+	my $worker = $self->best_thread($handle) or return;
 
 	# Send the task to the worker for execution
 	$worker->send_task( $handle );
