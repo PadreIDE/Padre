@@ -17,7 +17,7 @@ use warnings;
 
 
 #####################
-package Demo::Editor;
+package Demo::REPL;
 use strict;
 use warnings FATAL => 'all';
 
@@ -47,7 +47,6 @@ use base 'Wx::Frame';
 
 our $VERSION = '0.01';
 my $default_dir = "";
-my $editor;
 our $nb;
 my %nb;
 my $search_term = '';
@@ -56,22 +55,59 @@ my $search_term = '';
 sub new {
 	my ($class) = @_;
 
+	my ($height, $width) = (550, 500);
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
-		'Editor ',
+		'REPL - Read Evaluate Print Loop ',
 		[ -1,  -1 ],
-		[ 750, 700 ],
-	);
-	$nb = Wx::Notebook->new(
-		$self, -1, wxDefaultPosition, wxDefaultSize,
-		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN
+		[ $width, $height ],
 	);
 
 	$self->_create_menu_bar;
 
-	$self->setup_editor;
+	my $split = Wx::SplitterWindow->new
+		( $self, -1, wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN );
+	
+	my $output = Wx::TextCtrl->new
+      ( $split, -1, "", wxDefaultPosition, wxDefaultSize,
+        wxTE_READONLY|wxTE_MULTILINE|wxNO_FULL_REPAINT_ON_RESIZE );
+
+	my $input = Wx::TextCtrl->new
+      ( $split, -1, "", wxDefaultPosition, wxDefaultSize,
+        wxNO_FULL_REPAINT_ON_RESIZE|wxTE_PROCESS_ENTER );
+
+	EVT_TEXT_ENTER( $self, $input, \&text_entered );
+#	EVT_TEXT( $self, $input, sub { print "@_\n" } );
+
+	$split->SplitHorizontally( $output, $input, $height-100 );
+	$input->SetFocus;
+
+	$self->{_input_} = $input;
+	$self->{_output_} = $output;
+	
 	return $self;
+}
+
+sub text_entered {
+	my ($frame, $event) = @_;
+	my $text = $frame->{_input_}->GetRange(0, $frame->{_input_}->GetLastPosition);
+	$frame->{_input_}->Clear;
+	$frame->{_output_}->WriteText(">> $text\n");
+	# TODO catch stdout, stderr
+	my $out = eval $text;
+	my $error = $@;
+	if (defined $out) {
+		$frame->{_output_}->WriteText("$out\n");
+	}
+	if ($error) {
+		$frame->{_output_}->WriteText("$@\n");
+	}
+
+
+	#print "$frame->{_output_}\n";
+	#print "@_\n";
 }
 
 sub _create_menu_bar {
@@ -85,15 +121,10 @@ sub _create_menu_bar {
 	$file->Append( wxID_CLOSE,  "&Close" );
 	$file->Append( wxID_EXIT,   "E&xit" );
 
-	my $edit = Wx::Menu->new;
-	$edit->Append( wxID_FIND, "&Find" );
-	$edit->Append( 998,       "&Setup" );
-
 	my $help = Wx::Menu->new;
 	$help->Append( wxID_ABOUT, "&About..." );
 
 	$bar->Append( $file, "&File" );
-	$bar->Append( $edit, "&Edit" );
 	$bar->Append( $help, "&Help" );
 
 	$self->SetMenuBar($bar);
@@ -123,56 +154,12 @@ sub on_exit {
 	$self->Close;
 }
 
-sub setup_editor {
-	my ( $self, $file ) = @_;
-
-	my $editor = Demo::Panel->new($nb);
-
-	my $title   = "Unsaved Document 1";
-	my $content = '';
-	if ($file) {
-		if ( open my $in, '<', $file ) {
-			local $/ = undef;
-			$content = <$in>;
-		}
-		$title = basename($file);
-		$editor->SetText($content);
-	}
-	$nb->AddPage( $editor, $title, 1 );
-	$nb{ $nb->GetSelection } = {
-		filename => $file,
-		content  => $content,
-	};
-
-	return;
-}
 
 sub on_close_window {
 	my ( $self, $event ) = @_;
 	$event->Skip;
 }
 
-sub on_open {
-	my ($self) = @_;
-
-	#Wx::MessageBox( "Not implemented yet. Should open a file selector", wxOK|wxCENTRE, $self );
-	my $dialog = Wx::FileDialog->new( $self, "Open file", $default_dir, "", "*.*", wxFD_OPEN );
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
-
-		#print "Cancel\n";
-		return;
-	}
-	my $filename = $dialog->GetFilename;
-
-	#print "OK $filename\n";
-	$default_dir = $dialog->GetDirectory;
-
-	my $file = catfile( $default_dir, $filename );
-
-	$self->setup_editor($file);
-
-	return;
-}
 
 sub on_save_as {
 	my ($self) = @_;
@@ -277,64 +264,15 @@ sub on_about {
 	my ($self) = @_;
 
 	Wx::MessageBox(
-		"wxPerl editor, (c) 2008 Gabor Szabo\n" . "wxPerl editor $VERSION, " . wxVERSION_STRING,
-		"About wxPerl editor", wxOK | wxCENTRE, $self
+		"wxPerl REPL, (c) 2010 Gabor Szabo\n" . "wxPerl edotr $VERSION, " . wxVERSION_STRING,
+		"About wxPerl REPL", wxOK | wxCENTRE, $self
 	);
 }
 
-#####################
-package Demo::Panel;
-use strict;
-use warnings FATAL => 'all';
-
-our $VERSION = '0.01';
-use Wx::STC;
-use base 'Wx::StyledTextCtrl';
-
-use Wx ':everything';
-use Wx::Event ':everything';
-
-sub new {
-	my ( $class, $parent ) = @_;
-	my $self = $class->SUPER::new( $parent, -1, [ -1, -1 ], [ 750, 700 ] ); # TODO get the numbers from the frame?
-
-	my $font = Wx::Font->new( 10, wxTELETYPE, wxNORMAL, wxNORMAL );
-
-	$self->SetFont($font);
-
-	$self->StyleSetFont( wxSTC_STYLE_DEFAULT, $font );
-	$self->StyleClearAll();
-
-	$self->StyleSetForeground( 0,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 1,  Wx::Colour->new( 0xff, 0x00, 0x00 ) );
-	$self->StyleSetForeground( 2,  Wx::Colour->new( 0x00, 0x7f, 0x00 ) );
-	$self->StyleSetForeground( 3,  Wx::Colour->new( 0x7f, 0x7f, 0x7f ) );
-	$self->StyleSetForeground( 4,  Wx::Colour->new( 0x00, 0x7f, 0x7f ) );
-	$self->StyleSetForeground( 5,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 6,  Wx::Colour->new( 0xff, 0x7f, 0x00 ) );
-	$self->StyleSetForeground( 7,  Wx::Colour->new( 0x7f, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 8,  Wx::Colour->new( 0x00, 0x00, 0x00 ) );
-	$self->StyleSetForeground( 9,  Wx::Colour->new( 0x7f, 0x7f, 0x7f ) );
-	$self->StyleSetForeground( 10, Wx::Colour->new( 0x00, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 11, Wx::Colour->new( 0x00, 0x00, 0xff ) );
-	$self->StyleSetForeground( 12, Wx::Colour->new( 0x7f, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 13, Wx::Colour->new( 0x40, 0x80, 0xff ) );
-	$self->StyleSetForeground( 17, Wx::Colour->new( 0xff, 0x00, 0x7f ) );
-	$self->StyleSetForeground( 18, Wx::Colour->new( 0x7f, 0x7f, 0x00 ) );
-	$self->StyleSetBold( 12, 1 );
-	$self->StyleSetSpec( wxSTC_H_TAG, "fore:#0000ff" );
-
-	$self->SetLexer(wxSTC_LEX_PERL);
-
-	$self->SetLayoutDirection(wxLayout_LeftToRight)
-		if $self->can('SetLayoutDirection');
-
-	return $self;
-}
 
 #####################
 package main;
 
-my $app = Demo::Editor->new;
+my $app = Demo::REPL->new;
 $app->MainLoop;
 
