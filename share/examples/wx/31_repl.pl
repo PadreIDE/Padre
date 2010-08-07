@@ -41,7 +41,7 @@ use Wx::STC ();
 
 use File::Spec::Functions qw(catfile);
 use File::Basename qw(basename);
-
+use File::HomeDir;
 
 use base 'Wx::Frame';
 
@@ -51,6 +51,7 @@ our $nb;
 my %nb;
 my $search_term = '';
 
+my @languages = ("perl5", "perl6");
 
 sub new {
 	my ($class) = @_;
@@ -81,33 +82,98 @@ sub new {
 	EVT_TEXT_ENTER( $self, $input, \&text_entered );
 #	EVT_TEXT( $self, $input, sub { print "@_\n" } );
 
+	EVT_KEY_UP( $input, sub { $self->key_up(@_) } );
+
 	$split->SplitHorizontally( $output, $input, $height-100 );
 	$input->SetFocus;
 
 	$self->{_input_} = $input;
 	$self->{_output_} = $output;
 	
+	foreach my $lang (@languages) {
+		$self->{_history_}{$lang} = [];
+		my $history_file  = File::Spec->catdir(_confdir(), "repl_history_{$lang}.txt");
+		if (-e $history_file) {
+			open my $fh, '<', $history_file or die;
+			$self->{_history_}{$lang} = [<$fh>];
+			chomp @{ $self->{_history_}{$lang} };
+		}
+	}
 	return $self;
 }
 
+sub _confdir {
+	return File::Spec->catdir(
+		File::HomeDir->my_data,
+		File::Spec->isa('File::Spec::Win32') ? qw{ Perl Padre }
+		: qw{ .padre } );
+}
+
+sub _get_language {
+	my ($self) = @_;
+	foreach my $lang (@languages) {
+		return $lang if $self->{_language_}{$lang}->IsChecked;
+	}
+	return; # TODO die?
+}
+
+sub key_up {
+	my ($self, $input, $event) = @_;
+	#print $self;
+	#print $event;
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
+	#$self->outn($mod);
+	#$self->outn($code);
+	my $lang = $self->_get_language();
+	return if not @{ $self->{_history_}{$lang} };
+	if ($mod == 0 and $code == 317) { # Down
+		$self->{_history_pointer_}{$lang}++;
+		if ( $self->{_history_pointer_}{$lang} >= @{ $self->{_history_}{$lang} } ) {
+			$self->{_history_pointer_}{$lang} = 0;
+		}
+	} elsif ($mod == 0 and $code == 315) { # Up
+		$self->{_history_pointer_}{$lang}--;
+		if ( $self->{_history_pointer_}{$lang} < 0) {
+			$self->{_history_pointer_}{$lang} = @{ $self->{_history_}{$lang} } -1;
+		}
+	} else {
+		return;
+	}
+	
+	$self->{_input_}->Clear;
+	$self->{_input_}->WriteText( $self->{_history_}{$lang}[ $self->{_history_pointer_}{$lang} ] );
+}
+
 sub text_entered {
-	my ($frame, $event) = @_;
-	my $text = $frame->{_input_}->GetRange(0, $frame->{_input_}->GetLastPosition);
-	$frame->{_input_}->Clear;
-	$frame->{_output_}->WriteText(">> $text\n");
+	my ($self, $event) = @_;
+	my $lang = $self->_get_language;
+	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	push @{ $self->{_history_}{$lang} }, $text;
+	$self->{_history_pointer_}{$lang} = @{ $self->{_history_}{$lang} } - 1;
+	$self->{_input_}->Clear;
+	$self->out(">> $text\n");
+	
 	# TODO catch stdout, stderr
 	my $out = eval $text;
 	my $error = $@;
 	if (defined $out) {
-		$frame->{_output_}->WriteText("$out\n");
+		$self->out("$out\n");
 	}
 	if ($error) {
-		$frame->{_output_}->WriteText("$@\n");
+		$self->out("$@\n");
 	}
 
+}
 
-	#print "$frame->{_output_}\n";
-	#print "@_\n";
+
+sub out {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText($text);
+}
+sub outn {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText("$text\n");
 }
 
 sub _create_menu_bar {
@@ -117,8 +183,8 @@ sub _create_menu_bar {
 	my $file = Wx::Menu->new;
 	$file->Append( wxID_OPEN,   "&Open" );
 	$file->Append( wxID_SAVE,   "&Save" );
-	$file->Append( wxID_SAVEAS, "Save &As" );
-	$file->Append( wxID_CLOSE,  "&Close" );
+	$self->{_language_}{perl5} = $file->AppendRadioItem( 1000,   "Perl 5" );
+	$self->{_language_}{perl6} = $file->AppendRadioItem( 1001,   "Perl 6" );
 	$file->Append( wxID_EXIT,   "E&xit" );
 
 	my $help = Wx::Menu->new;
@@ -132,10 +198,6 @@ sub _create_menu_bar {
 	EVT_CLOSE( $self, \&on_close_window );
 	EVT_MENU( $self, wxID_OPEN, sub { on_open( $self, @_ ) } );
 	EVT_MENU( $self, wxID_SAVE, sub { on_save( $self, @_ ) } );
-	EVT_MENU( $self, wxID_SAVEAS, sub { on_save_as( $self, @_ ) } );
-	EVT_MENU( $self, wxID_CLOSE, sub { on_close( $self, @_ ) } );
-	EVT_MENU( $self, 998, sub { on_setup( $self, @_ ) } );
-	EVT_MENU( $self, wxID_FIND, sub { on_find( $self, @_ ) } );
 	EVT_MENU( $self, wxID_EXIT, \&on_exit );
 	EVT_MENU( $self, wxID_ABOUT, \&on_about );
 
@@ -144,12 +206,6 @@ sub _create_menu_bar {
 
 sub on_exit {
 	my ($self) = @_;
-	foreach my $id ( keys %nb ) {
-		if ( _buffer_changed($id) ) {
-			Wx::MessageBox( "One of the files is still not saved", "xx", wxOK | wxCENTRE, $self );
-			return;
-		}
-	}
 
 	$self->Close;
 }
@@ -157,6 +213,13 @@ sub on_exit {
 
 sub on_close_window {
 	my ( $self, $event ) = @_;
+
+	foreach my $lang (@languages) {
+		my $history_file  = File::Spec->catdir(_confdir(), "repl_history_{$lang}.txt");
+		open my $fh, '>', $history_file or die;
+		print $fh map { "$_\n" } @{ $self->{_history_}{$lang} };
+	}
+	
 	$event->Skip;
 }
 
