@@ -769,7 +769,10 @@ sub _find_sub_decl_line_number {
 	foreach my $i ( 0 .. @lines - 1 ) {
 
 		#print "L: $lines[$i]\n";
-		if ( $lines[$i] =~ /sub \s+ $name\b/x ) {
+		if ( $lines[$i] =~ /sub \s+ $name\b
+		 (?!;)
+		 (?! \([\$;\@\%\\]+ \);)
+		 /x ) {
 			return $i;
 		}
 	}
