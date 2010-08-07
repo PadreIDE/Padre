@@ -759,6 +759,23 @@ sub _find_method {
 	return;
 }
 
+#scan text for sub declaration
+sub _find_sub_decl_line_number {
+	my ($text) = @_;
+
+	my @lines = split /\n/, $text;
+
+	#print "Name '$name'\n";
+	foreach my $i ( 0 .. @lines - 1 ) {
+
+		#print "L: $lines[$i]\n";
+		if ( $lines[$i] =~ /sub \s+ $name\b/x ) {
+			return $i;
+		}
+	}
+	return -1;
+}
+
 # Go to the named subroutine
 # Uses the outline if there is one (if the user has opened the outline tree)
 # If not, falls back to a regex, which is pretty basic at the moment
@@ -772,17 +789,10 @@ sub goto_sub {
 	}
 
 	# Fall back to regexs if there's no outline
-	my $text = $self->text_get;
-	my @lines = split /\n/, $text;
-
-	#print "Name '$name'\n";
-	foreach my $i ( 0 .. @lines - 1 ) {
-
-		#print "L: $lines[$i]\n";
-		if ( $lines[$i] =~ /sub \s+ $name\b/x ) {
-			$self->editor->goto_line_centerize($i);
-			return 1;
-		}
+	my $line = _find_sub_decl_line_number($self->text_get);
+	if ( $line < -1) {
+		$self->editor->goto_line_centerize($i);
+		return 1;
 	}
 	return;
 }
