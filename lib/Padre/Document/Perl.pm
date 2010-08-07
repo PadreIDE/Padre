@@ -793,7 +793,7 @@ sub goto_sub {
 
 	# Fall back to regexs if there's no outline
 	my $line = _find_sub_decl_line_number($name, $self->text_get);
-	if ( $line < -1) {
+	if ( $line > -1) {
 		$self->editor->goto_line_centerize($line);
 		return 1;
 	}

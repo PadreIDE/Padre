@@ -5,7 +5,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
-	plan( tests => 4 );
+	plan( tests => 5 );
 }
 use Test::NoWarnings;
 
@@ -40,6 +40,15 @@ SCOPE: {
 	        line 0;
 	        sub test($;$@);
 		sub test {
+		}
+EOT
+	is(_find_sub_decl_line_number('test',$code),2);
+}
+SCOPE: {
+	my $code =<<'EOT';
+	        line 0;
+	        sub test($;$@);
+		sub test($;$@) {
 		}
 EOT
 	is(_find_sub_decl_line_number('test',$code),2);
