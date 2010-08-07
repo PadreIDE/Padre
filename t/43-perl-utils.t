@@ -5,7 +5,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
-	plan( tests => 2 );
+	plan( tests => 4 );
 }
 use Test::NoWarnings;
 
