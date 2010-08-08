@@ -29,8 +29,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       workers which have run a task at least once before (ADAMK)
     - "Find method declaration" will not find forward-declaration (CHORNY)
     - Task manager now has separate maximum and minimum thread counts (ADAMK)
-    - Minimum thread count set to zero. Padre starts up half a second
-      faster, at the cost of the directory tree appearing a tad slower (ADAMK)
+    - Minimum thread count set to zero. Padre starts up 600ms faster, at the
+      cost of the directory tree appearing 200ms slower if you use it (ADAMK)
 
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)
