@@ -245,7 +245,7 @@ sub refresh {
 	}
 
 	# Nothing to do if there is no content
-	unless ( $document->text_length ) {
+	if ( $document->is_unused ) {
 		return 1;
 	}
 

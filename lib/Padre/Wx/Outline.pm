@@ -335,12 +335,21 @@ sub refresh {
 	$self->{document} = $document;
 	$self->{length}   = $length;
 
-	# Fire the background task discarding old results
+	# Old task responses are useless now
 	$self->task_reset;
+
+	# Shortcut if the document is empty
+	if ( $document->is_unused ) {
+		return 1;
+	}
+
+	# Trigger the full task
 	$self->task_request(
 		task     => $document->task_outline,
 		document => $document,
 	);
+
+	return 1;
 }
 
 sub add_subtree {
