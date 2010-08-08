@@ -5,7 +5,7 @@ package Padre::Wx::Dialog::WindowList;
 use 5.008;
 use strict;
 use warnings;
-use POSIX qw{ strftime };
+# use POSIX           ('strftime');
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
@@ -40,7 +40,7 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	for ( keys(%args) ) {
+	foreach ( keys %args ) {
 		$self->{$_} = $args{$_};
 	}
 
@@ -53,12 +53,11 @@ sub new {
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	if ( !scalar( Padre->ide->wx->main->pages ) ) {
-		$self->{_empty} = 1;
-	} else {
-
-		# create dialog
+	if ( scalar Padre->ide->wx->main->pages ) {
+		# Create dialog
 		$self->_create;
+	} else {
+		$self->{_empty} = 1;
 	}
 
 	return $self;

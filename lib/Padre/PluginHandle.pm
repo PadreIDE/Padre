@@ -4,15 +4,15 @@ use 5.008;
 use strict;
 use warnings;
 use Carp           ();
+use Params::Util   ();
 use Padre::Current ();
 use Padre::Locale  ();
-use Params::Util qw{ _STRING _IDENTIFIER _CLASS _INSTANCE };
 
 our $VERSION = '0.68';
 
 use overload
-	'bool' => sub () {1},
-	'""' => 'plugin_name',
+	'bool'     => sub () {1},
+	'""'       => 'plugin_name',
 	'fallback' => 0;
 
 use Class::XSAccessor {
@@ -42,10 +42,10 @@ sub new {
 	if ( exists $self->{name} ) {
 		Carp::confess("PluginHandle->name should no longer be used (foo)");
 	}
-	unless ( _CLASS( $self->class ) ) {
+	unless ( Params::Util::_CLASS( $self->class ) ) {
 		Carp::croak("Missing or invalid class param for Padre::PluginHandle");
 	}
-	if ( defined $self->object and not _INSTANCE( $self->object, $self->class ) ) {
+	if ( defined $self->object and not Params::Util::_INSTANCE( $self->object, $self->class ) ) {
 		Carp::croak("Invalid object param for Padre::PluginHandle");
 	}
 	unless ( _STATUS( $self->status ) ) {
@@ -144,7 +144,7 @@ sub can_editor {
 sub plugin_icon {
 	my $self = shift;
 	my $icon = eval { $self->class->plugin_icon; };
-	if ( _INSTANCE( $icon, 'Wx::Bitmap' ) ) {
+	if ( Params::Util::_INSTANCE( $icon, 'Wx::Bitmap' ) ) {
 		return $icon;
 	} else {
 		return;
@@ -305,7 +305,7 @@ sub disable {
 # Support Methods
 
 sub _STATUS {
-	_STRING( $_[0] ) or return;
+	Params::Util::_STRING( $_[0] ) or return;
 	return {
 		error        => 1,
 		unloaded     => 1,

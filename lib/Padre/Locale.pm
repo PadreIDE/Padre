@@ -627,7 +627,7 @@ sub encoding_from_string {
 	push @guesses, 'latin1';
 	my $guess = Encode::Guess::guess_encoding( $content, @guesses );
 	unless ( defined $guess ) {
-		$guess = '';                 # to avoid warnings
+		$guess = ''; # To avoid warnings
 	}
 
 	TRACE("Encoding guess: ($guess)") if DEBUG;

@@ -174,14 +174,14 @@ sub get_matches {
 	my ( $text, $regex, $from, $to, $backward ) = @_;
 	die 'missing parameters' if @_ < 4;
 
-	use Encode;
+	require Encode;
 	$text  = Encode::encode( 'utf-8', $text );
 	$regex = Encode::encode( 'utf-8', $regex );
 
-	my @matches;
+	my @matches = ();
 	while ( $text =~ /$regex/mg ) {
 		my $e = pos($text);
-		if ( !defined($1) ) {
+		unless ( defined($1) ) {
 			print STDERR 'WARNING (' . join( ",", map { $_ || ''; } ( caller(0) ) ) . "): $regex has no \$1 match\n";
 			next;
 		}
@@ -309,7 +309,7 @@ sub share {
 				File::Spec->updir
 			)
 		);
-		if ( not $plugin ) {
+		unless ( $plugin ) {
 			return File::Spec->catdir( $root, 'Padre', 'share' );
 		}
 
