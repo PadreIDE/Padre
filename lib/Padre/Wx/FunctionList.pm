@@ -244,6 +244,11 @@ sub refresh {
 		$self->{document} = $id;
 	}
 
+	# Nothing to do if there is no content
+	unless ( $document->text_length ) {
+		return 1;
+	}
+
 	# Launch the background task
 	my $task = $document->task_functions or return;
 	$self->task_request(
