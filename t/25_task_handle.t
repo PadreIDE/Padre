@@ -7,9 +7,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Padre::TaskHandle     ();
-use Padre::Task::Addition ();
-use Padre::Logger;
+
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -18,8 +16,14 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 42;
 }
-plan tests => 42;
+
+use Padre::TaskHandle     ();
+use Padre::Task::Addition ();
+use Padre::Logger;
+
+
 use_ok('Test::NoWarnings');
 
 
