@@ -12,7 +12,7 @@ use Test::More;
 use File::Temp ();
 use File::Spec();
 
-plan skip_all => 'DISPLAY not set'
+plan skip_all => 'Needs DISPLAY'
 	unless $ENV{DISPLAY}
 		or ( $^O eq 'MSWin32' );
 
