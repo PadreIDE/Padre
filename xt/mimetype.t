@@ -3,12 +3,24 @@
 use strict;
 use warnings;
 use Test::More;
+
+BEGIN {
+	
+	# Don't run tests for installs
+	unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
+		plan( skip_all => "Author tests not required for installation" );
+	}
+	# check if we has a DISPLAY set
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}	
+
+
+}
+
 use File::Find::Rule;
 
-# Don't run tests for installs
-unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
-	plan( skip_all => "Author tests not required for installation" );
-}
 
 my %test_texts = (
 	".class { border: 1px solid; } a { text-decoration: none; }"              => 'text/css',
