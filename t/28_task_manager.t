@@ -5,14 +5,9 @@
 use strict;
 use warnings;
 use Test::More;
-use Padre::Logger ':ALL';
 use Storable                  ();
 use Time::HiRes               ();
-use Padre::Wx                 ();
-use Padre::Wx::App            ();
-use Padre::TaskManager        ();
-use Padre::Task::Addition     ();
-use t::lib::Padre::NullWindow ();
+
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -21,8 +16,18 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	
+	plan tests => 15;
 }
-plan tests => 15;
+
+use Padre::Logger ':ALL';
+use Padre::Wx                 ();
+use Padre::Wx::App            ();
+use Padre::TaskManager        ();
+use Padre::Task::Addition     ();
+use t::lib::Padre::NullWindow ();
+
+
 use_ok('Test::NoWarnings');
 
 
