@@ -54,7 +54,7 @@ my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	94-padre-file-remote.t
 );
 
-# A pathetic way to try to avod tests that would use the real ~/.padre of the user
+# A pathetic way to try to avoid tests that would use the real ~/.padre of the user
 # that would be especially problematic if ran under root
 foreach my $t_file (@t_files) {
 	if ( $SKIP{$t_file} ) {
@@ -121,7 +121,7 @@ foreach my $module ( sort keys %modules ) {
 	}
 
 	ok( $content !~ /\$DB\:\:single/,
-		$module . ' uses $DB::Single - please remove before release',
+		$module . ' uses $DB::single - please remove before release',
 	);
 
 	# Load the document
