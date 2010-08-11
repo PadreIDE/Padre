@@ -18,7 +18,7 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 }
 
 unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
-	plan skip_all => 'DISPLAY not set';
+	plan skip_all => 'Needs DISPLAY';
 }
 
 if ( $^O eq 'MSWin32' ) {
