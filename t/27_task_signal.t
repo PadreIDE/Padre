@@ -6,11 +6,7 @@ use strict;
 use warnings;
 use Test::More;
 use Time::HiRes ();
-use Padre::Logger;
-use Padre::TaskManager        ();
-use Padre::Task::Addition     ();
-use Padre::Wx::App            ();
-use t::lib::Padre::NullWindow ();
+
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -19,8 +15,16 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	
+	plan tests => 17;
 }
-plan tests => 17;
+
+use Padre::Logger;
+use Padre::TaskManager        ();
+use Padre::Task::Addition     ();
+use Padre::Wx::App            ();
+use t::lib::Padre::NullWindow ();
+
 use_ok('Test::NoWarnings');
 
 # Do we start with no threads as expected
