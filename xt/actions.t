@@ -64,6 +64,7 @@ $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=internal.dump_padre,file.quit';
 
+print "Command is: $cmd\n";
 system $cmd;
 
 my $dump_fn = File::Spec->catfile( $dir->dirname, 'padre.dump' );
@@ -82,7 +83,7 @@ foreach my $action ( sort( keys( %{ $VAR1->{actions} } ) ) ) {
 
 		# All run actions need a open editor window and a saved file
 		if ( $action !~ /^run\.(stop|run_command)/ ) {
-			ok( $VAR1->{actions}->{$action}->{need_editor}, $action . ' requires a editor' );
+			ok( $VAR1->{actions}->{$action}->{need_editor}, $action . ' requires an editor' );
 			ok( $VAR1->{actions}->{$action}->{need_file},   $action . ' requires a filename' );
 		}
 	}
