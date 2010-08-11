@@ -3,17 +3,23 @@
 use strict;
 use warnings;
 use Test::More;
+
+
+BEGIN {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+	
+	plan( tests => 5 );
+}
+use Test::NoWarnings;
+
 # badcode was complaining it was missing
 # in truth, this test doesn't appear to need padre
 # to run, but it's either add this to satisfy the xt/badcode.t
 # test or add it to the %SKIP, which makes even less sense.
 use t::lib::Padre;
-
-BEGIN {
-	plan( tests => 5 );
-}
-use Test::NoWarnings;
-
 require Padre::Document::Perl;
 
 # Create the object so that Padre->ide works
