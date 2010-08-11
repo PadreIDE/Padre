@@ -28,7 +28,7 @@ if ( $^O eq 'MSWin32' ) {
 my $devpl;
 
 # Search for dev.pl
-for ( '.', 'blib/lib', 'lib' ) {
+for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
 		next if !-e File::Spec->catfile( $_, 'dev.pl' );
 	} else {
