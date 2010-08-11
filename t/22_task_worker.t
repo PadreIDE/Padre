@@ -11,8 +11,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Padre::TaskThread ();
-use Padre::Logger;
+
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -22,6 +21,11 @@ BEGIN {
 		exit 0;
 	}
 }
+
+use Padre::TaskThread ();
+use Padre::Logger;
+
+
 plan tests => 20;
 use_ok('Test::NoWarnings');
 
