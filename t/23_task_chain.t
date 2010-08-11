@@ -10,10 +10,6 @@
 use strict;
 use warnings;
 use Test::More;
-use Time::HiRes 'sleep';
-use Padre::Logger;
-use Padre::TaskThread ();
-use Padre::TaskWorker ();
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -23,6 +19,12 @@ BEGIN {
 		exit 0;
 	}
 }
+use Time::HiRes 'sleep';
+use Padre::Logger;
+use Padre::TaskThread ();
+use Padre::TaskWorker ();
+
+
 plan tests => 21;
 use_ok('Test::NoWarnings');
 
