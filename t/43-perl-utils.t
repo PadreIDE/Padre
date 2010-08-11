@@ -3,6 +3,11 @@
 use strict;
 use warnings;
 use Test::More;
+# badcode was complaining it was missing
+# in truth, this test doesn't appear to need padre
+# to run, but it's either add this to satisfy the xt/badcode.t
+# test or add it to the %SKIP, which makes even less sense.
+use t::lib::Padre;
 
 BEGIN {
 	plan( tests => 5 );
