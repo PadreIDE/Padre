@@ -12,7 +12,7 @@ eval {
 if ($@) {
 	plan( skip_all => 'Win32::GuiTest is required for this test' );
 }
-plan( skip_all => 'test is currently broken' );
+#plan( skip_all => 'test is currently broken' );
 
 use t::lib::Padre;
 require t::lib::Padre::Win32;
@@ -45,7 +45,7 @@ my $submenu = GetSubMenu( $menu, 0 );
 my $subsubmenu = GetSubMenu( $submenu, 1 );
 {
 	my %h = GetMenuItemInfo( $subsubmenu, 4 );
-	is $h{text}, "Perl Distribution (Module::Starter)", "Module::Starter menu";
+	is $h{text}, "Perl 6 Script", "Perl 6 Script in submenu";
 }
 
 # test Edit
