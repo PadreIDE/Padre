@@ -485,7 +485,7 @@ grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
 # Find the rfc4646 to use by default
 sub rfc4646 {
 	my $config = Padre::Config->read;
-	my $locale = @_ >= 1 ? $_[0] : $config->locale;
+	my $locale = $_[0] || $config->locale;
 
 	if ( $locale and not $RFC4646{$locale} ) {
 
