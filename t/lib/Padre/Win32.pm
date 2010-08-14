@@ -33,8 +33,13 @@ sub setup {
 	die "Could not find a running version of Padre" if not $padre;
 
 	SetForegroundWindow($padre);
-	sleep 3; # crap, we have to wait for Padre to come to the foreground
-	my $fg = GetForegroundWindow();
+
+	my $fg;
+	foreach (1..2) {
+		sleep 3; # crap, we have to wait for Padre to come to the foreground
+		$fg = GetForegroundWindow();
+		last if $fg eq $padre;
+	}
 	if ( $fg ne $padre ) {
 		die "Padre is NOT in the foreground";
 	}
