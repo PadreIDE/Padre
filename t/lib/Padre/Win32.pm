@@ -16,7 +16,7 @@ sub setup {
 
 	# Find Perl (ideally the gui one)
 	my $perl = Padre::Perl::wxperl();
-	my $cmd  = "start $perl script\\padre";
+	my $cmd  = "start $perl script\\padre --locale=en";
 	#$t->diag($cmd);
 	system $cmd;
 	my $padre;
