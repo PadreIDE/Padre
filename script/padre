@@ -36,6 +36,7 @@ my $SESSION = undef;
 my $PRELOAD = undef;
 my $DESKTOP = undef;
 my $ACTIONS = undef;
+my $LOCALE  = undef;
 my $getopt  = Getopt::Long::GetOptions(
 	'help|usage'    => \$USAGE,
 	'version'       => \$VERSION,
@@ -44,6 +45,7 @@ my $getopt  = Getopt::Long::GetOptions(
 	'session=s'     => \$SESSION,
 	'desktop'       => \$DESKTOP,
 	'actionqueue=s' => \$ACTIONS,
+	'locale=s'      => \$LOCALE,
 	'preload'       => \$PRELOAD, # Keep this sekrit for now --ADAMK
 );
 
@@ -66,6 +68,7 @@ Usage: $0 [FILENAMES]
 --version           Prints Padre version and quits
 --desktop           Integrate Padre with your desktop
 --actionqueue=list  Run a list of comma-seperated actions after Padre startup
+--locale=name       Locale name to use
 
 END_USAGE
 	exit(1);
@@ -146,6 +149,7 @@ my $ide = Padre->new(
 	files       => \@ARGV,
 	session     => $SESSION,
 	actionqueue => $ACTIONS,
+	startup_locale => $LOCALE,
 ) or die "Failed to create Padre instance";
 
 # Start the application

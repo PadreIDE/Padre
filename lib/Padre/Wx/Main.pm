@@ -173,7 +173,8 @@ sub new {
 	$self->{locker} = Padre::Locker->new($self);
 
 	# Bootstrap locale support before we start fiddling with the GUI.
-	$self->{locale} = Padre::Locale::object();
+	my $startup_locale=$ide->opts->{startup_locale};
+	$self->{locale} = ($startup_locale?Padre::Locale::object($startup_locale):Padre::Locale::object());
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
