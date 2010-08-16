@@ -74,6 +74,7 @@ sub task {
 	my $handle = Padre::TaskHandle->from_array(shift);
 
 	# Execute the task (ignore the result) and signal as we go
+	local $@;
 	eval {
 		TRACE("Calling ->started") if DEBUG;
 		$handle->started;
@@ -88,6 +89,13 @@ sub task {
 
 	# Continue to the next task
 	return 1;
+}
+
+# Any messages that arrive when we are NOT actively running a task
+# should be discarded with no consequence.
+sub message {
+	TRACE( $_[0] ) if DEBUG;
+	TRACE( "Discarding message '$_[1]->[0]'" ) if DEBUG;
 }
 
 1;
