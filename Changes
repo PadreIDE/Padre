@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.69 to be released
+0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
     - Task 2.0 restores support for having tasks send unlimited messages
       back to the main application while they are running (ADAMK)
