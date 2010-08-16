@@ -3,6 +3,10 @@ package Padre::TaskThread;
 # Cleanly encapsulated object for a thread that does work based
 # on packaged method calls passed via a shared queue.
 
+# NOTE: The TRACE() calls in this class should be commented out unless
+# actively debugging, so that the Padre::Logger class will only be
+# loaded AFTER the threads spawn.
+
 use 5.008005;
 use strict;
 use warnings;
@@ -28,14 +32,14 @@ my %WID2TID : shared  = ();
 
 
 
+
 ######################################################################
 # Slave Master Support (main thread only)
 
 my $SINGLETON = undef;
 
 sub master {
-	$SINGLETON
-		or $SINGLETON = shift->new->spawn;
+	$SINGLETON or $SINGLETON = shift->new->spawn;
 }
 
 # Handle master initialisation
@@ -58,8 +62,7 @@ sub new {
 	bless {
 		wid   => ++$SEQUENCE,
 		queue => Thread::Queue->new,
-		},
-		$_[0];
+	}, $_[0];
 }
 
 sub wid {
@@ -196,7 +199,7 @@ sub run {
 	while ( my $message = $queue->dequeue ) {
 
 		# TRACE("Worker received message '$message->[0]'") if DEBUG;
-		unless ( _ARRAY($message) ) {
+		unless ( ref $message eq 'ARRAY' and @$message ) {
 
 			# warn("Message is not an ARRAY reference");
 			next;
@@ -256,10 +259,6 @@ sub task {
 
 ######################################################################
 # Support Methods
-
-sub _ARRAY {
-	( ref $_[0] eq 'ARRAY' and @{ $_[0] } ) ? $_[0] : undef;
-}
 
 sub _CAN {
 	( Scalar::Util::blessed( $_[0] ) and $_[0]->can( $_[1] ) ) ? $_[0] : undef;
