@@ -348,7 +348,9 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
-
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):') ],
+			[ 'Wx::TextCtrl', 'editor_cursor_blink', $config->editor_cursor_blink ]
+		],
 		# Will be moved to a own AutoComp-panel as soon as there are enough options for this (and I get the spare time to do it):
 		[   [   'Wx::CheckBox',
 				'autocomplete_multiclosebracket',
@@ -1009,6 +1011,8 @@ sub run {
 	);
 	my @default_line_ending_localized = map { Wx::gettext($_) } @default_line_ending_items;
 
+	
+	
 	$self->{dialog} = $self->dialog(
 		$win,
 		\@startup_files_localized,
@@ -1079,6 +1083,10 @@ sub run {
 	$config->set(
 		'editor_beginner',
 		$data->{editor_beginner} ? 1 : 0
+	);
+	$config->set(
+		'editor_cursor_blink',
+		$data->{editor_cursor_blink}
 	);
 	$config->set(
 		'default_projects_directory',
