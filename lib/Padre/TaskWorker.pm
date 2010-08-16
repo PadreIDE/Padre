@@ -79,11 +79,14 @@ sub task {
 		TRACE("Calling ->started") if DEBUG;
 		$handle->started;
 		TRACE("Calling ->run") if DEBUG;
+		$handle->{queue} = $self->queue;
 		$handle->run;
+		$handle->{queue} = undef;
 		TRACE("Calling ->stopped") if DEBUG;
 		$handle->stopped;
 	};
 	if ($@) {
+		$handle->{queue} = undef;
 		TRACE($@) if DEBUG;
 	}
 
