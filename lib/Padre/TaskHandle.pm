@@ -24,9 +24,8 @@ our $SEQUENCE = 0;
 sub new {
 	TRACE( $_[0] ) if DEBUG;
 	return bless {
-		hid   => ++$SEQUENCE,
-		task  => $_[1],
-		queue => undef,
+		hid  => ++$SEQUENCE,
+		task => $_[1],
 	}, $_[0];
 }
 
