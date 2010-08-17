@@ -173,8 +173,8 @@ sub new {
 	$self->{locker} = Padre::Locker->new($self);
 
 	# Bootstrap locale support before we start fiddling with the GUI.
-	my $startup_locale=$ide->opts->{startup_locale};
-	$self->{locale} = ($startup_locale?Padre::Locale::object($startup_locale):Padre::Locale::object());
+	my $startup_locale = $ide->opts->{startup_locale};
+	$self->{locale} = ( $startup_locale ? Padre::Locale::object($startup_locale) : Padre::Locale::object() );
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -634,7 +634,7 @@ sub open_resource {
 }
 
 sub help_search {
-	my $self = shift;
+	my $self  = shift;
 	my $topic = shift;
 	unless ( defined $self->{help_search} ) {
 		require Padre::Wx::Dialog::HelpSearch;
@@ -2727,7 +2727,7 @@ read during a recursive file scan).
 =cut
 
 sub status {
-	$_[0]->GetStatusBar->say($_[1]);
+	$_[0]->GetStatusBar->say( $_[1] );
 }
 
 =head3 C<info>

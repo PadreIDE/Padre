@@ -15,7 +15,7 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 my $n = "\\cM?\\cJ";
-our $sub_search_re=qr/
+our $sub_search_re = qr/
 		(?:
 		(?:$n)*__(?:DATA|END)__\b.*
 		|

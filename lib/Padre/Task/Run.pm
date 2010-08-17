@@ -14,13 +14,13 @@ our $VERSION = '0.68';
 our @ISA     = 'Padre::Task';
 
 sub new {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
 	# Params and defaults
 	$self->{timeout} ||= 10;
-	unless ( Params::Util::_ARRAY($self->{cmd}) ) {
+	unless ( Params::Util::_ARRAY( $self->{cmd} ) ) {
 		die "Failed to provide command to execute";
 	}
 
@@ -28,7 +28,7 @@ sub new {
 }
 
 sub run {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Set up for execution
@@ -39,7 +39,7 @@ sub run {
 	my $stderr  = '';
 
 	# Start the process and wait for output
-	TRACE("Running " . join(@{$self->{cmd}})) if DEBUG;
+	TRACE( "Running " . join( @{ $self->{cmd} } ) ) if DEBUG;
 	my $handle = IPC::Run::start(
 		$self->{cmd},
 		\$stdin,
@@ -51,7 +51,8 @@ sub run {
 	# Wait for output and send them to the handlers
 	local $@ = '';
 	eval {
-		while ( 1 ) {
+		while (1)
+		{
 			if ( $stdout =~ s/^(.*?)\n// ) {
 				$self->stdout("$1");
 				next;
@@ -59,8 +60,9 @@ sub run {
 			$handle->pump;
 		}
 	};
-	if ( $@ ) {
+	if ($@) {
 		if ( $@ =~ /^process ended prematurely/ ) {
+
 			# Normal exit
 			TRACE("Process stopped normally") if DEBUG;
 			$handle->kill_kill; # Just in case
@@ -80,7 +82,7 @@ sub run {
 # Any serious user of this task will want to do something different
 # with the stdout and will override this method.
 sub stdout {
-	TRACE($_[1]) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 	my $line = shift;
 	if ( $self->running ) {

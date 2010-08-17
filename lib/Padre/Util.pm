@@ -309,7 +309,7 @@ sub share {
 				File::Spec->updir
 			)
 		);
-		unless ( $plugin ) {
+		unless ($plugin) {
 			return File::Spec->catdir( $root, 'Padre', 'share' );
 		}
 

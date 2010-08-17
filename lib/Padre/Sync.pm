@@ -19,18 +19,18 @@ class for user interface display.
 use 5.008;
 use strict;
 use warnings;
-use lib                      ();
-use Carp                     ();
-use File::Spec               ();
-use Scalar::Util             ();
-use Params::Util             ();
-use JSON::XS                 ();
-use LWP::UserAgent           ();
-use HTTP::Cookies            ();
+use lib            ();
+use Carp           ();
+use File::Spec     ();
+use Scalar::Util   ();
+use Params::Util   ();
+use JSON::XS       ();
+use LWP::UserAgent ();
+use HTTP::Cookies  ();
 use HTTP::Request::Common qw/GET POST PUT DELETE/;
-use Padre::Util              ();
-use Padre::Current           ();
-use Padre::Constant          ();
+use Padre::Util     ();
+use Padre::Current  ();
+use Padre::Constant ();
 
 our $VERSION = '0.68';
 
@@ -56,8 +56,8 @@ First argument should be a Padre object.
 
 sub new {
 	my $class = shift;
-	my $ide   = Params::Util::_INSTANCE( shift, 'Padre' );
-	unless ( $ide ) {
+	my $ide = Params::Util::_INSTANCE( shift, 'Padre' );
+	unless ($ide) {
 		Carp::croak("Creation of a Padre::Sync without a Padre not possible");
 	}
 
@@ -109,7 +109,7 @@ A convenience method to get to the config object
 
 =cut
 
-sub config { 
+sub config {
 	$_[0]->{ide}->config;
 }
 
@@ -137,14 +137,14 @@ Returns error string if user state is already logged in or serverside error occu
 =cut
 
 sub register {
-	my $self    = shift;
-	my $params  = shift;
-	my $server  = $self->config->config_sync_server;
+	my $self   = shift;
+	my $params = shift;
+	my $server = $self->config->config_sync_server;
 
 	return 'Registration Failure'      unless %$params;
 	return 'Failure: no server found.' unless $server;
 
-	if ( $self->{state} ne 'not_logged_in' ) { 
+	if ( $self->{state} ne 'not_logged_in' ) {
 		return 'Failure: cannot register account, user already logged in.';
 	}
 
@@ -175,18 +175,18 @@ be updated if login successful.
 
 sub login {
 	my $self   = shift;
-	my $params = [ @_ ];
+	my $params = [@_];
 	my $server = $self->config->config_sync_server;
 
 	return 'Failure: no server found.' unless $server;
 
 	if ( $self->{state} ne 'not_logged_in' ) {
 		return 'Failure: cannot log in, user already logged in.';
-	}  
+	}
 
 	my $resp = $self->ua->request( POST "$server/login", $params );
 
-	if ( $resp->content !~ /Wrong username or password/i and $resp->code == 200) { 
+	if ( $resp->content !~ /Wrong username or password/i and $resp->code == 200 ) {
 		$self->{state} = 'logged_in';
 		return 'Logged in successfully.';
 	}
@@ -209,16 +209,16 @@ sub logout {
 
 	return 'Failure: no server found.' if not $server;
 
-	if ($self->{state} ne 'logged_in') {
+	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: cannot logout, user not logged in.';
-	} 
+	}
 
 	my $resp = $self->ua->request( GET "$server/logout" );
 
-	if ($resp->code == 200) { 
+	if ( $resp->code == 200 ) {
 		$self->{state} = 'not_logged_in';
 		return 'Logged out successfully.';
-	}   
+	}
 
 	return 'Failed to log out.';
 }
@@ -239,18 +239,18 @@ sub server_delete {
 
 	return 'Failure: no server found.' if not $server;
 
-	if ($self->{state} ne 'logged_in') {
+	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
 	my $resp = $self->ua->request( DELETE "$server/user/config" );
 
-	if ($resp->code == 200) { 
+	if ( $resp->code == 200 ) {
 		return 'Configuration deleted successfully.';
 	}
 
 	return 'Failed to delete serverside configuration file.';
-	
+
 }
 
 =pod
@@ -268,15 +268,15 @@ sub local_to_server {
 
 	return 'Failure: no server found.' if not $server;
 
-	if ($self->{state} ne 'logged_in') {
+	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
 	my $conf = $self->config->human;
-	
+
 	# theres gotta be a better way to do this
 	my %h;
-	for my $k (keys %$conf) { 
+	for my $k ( keys %$conf ) {
 		$h{$k} = $conf->{$k};
 	}
 
@@ -285,7 +285,7 @@ sub local_to_server {
 		'Content-Type' => 'application/json',
 		'Content'      => $self->{json}->encode( \%h ),
 	);
-	if ($resp->code == 200) { 
+	if ( $resp->code == 200 ) {
 		return 'Configuration uploaded successfully.';
 	}
 
@@ -309,30 +309,28 @@ sub server_to_local {
 
 	return 'Failure: no server found.' if not $server;
 
-	if ($self->{state} ne 'logged_in') {
+	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
 	my $resp = $self->ua->request( GET "$server/user/config", 'Accept' => 'application/json' );
 
 	my $c;
-	eval { 
-		$c = $self->{json}->decode($resp->content );
-	};
-	if ($@) { 
+	eval { $c = $self->{json}->decode( $resp->content ); };
+	if ($@) {
 		return 'Failed to deserialize serverside configuration.';
 	}
 
 	# apply each setting to the global config. should only be HUMAN settings
 	delete $c->{Version};
 	delete $c->{version};
-	for my $key (keys %$c) { 
-		$config->apply($key, $c->{$key});
+	for my $key ( keys %$c ) {
+		$config->apply( $key, $c->{$key} );
 	}
 	$config->apply( main_singleinstance => 1 );
 	$config->write;
 
-	if ($resp->code == 200) { 
+	if ( $resp->code == 200 ) {
 		return 'Configuration downloaded and applied successfully.';
 	}
 

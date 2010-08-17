@@ -62,7 +62,8 @@ sub new {
 	bless {
 		wid   => ++$SEQUENCE,
 		queue => Thread::Queue->new,
-	}, $_[0];
+		},
+		$_[0];
 }
 
 sub wid {

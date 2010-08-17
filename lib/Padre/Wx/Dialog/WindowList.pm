@@ -5,6 +5,7 @@ package Padre::Wx::Dialog::WindowList;
 use 5.008;
 use strict;
 use warnings;
+
 # use POSIX           ('strftime');
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
@@ -54,6 +55,7 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	if ( scalar Padre->ide->wx->main->pages ) {
+
 		# Create dialog
 		$self->_create;
 	} else {

@@ -11,7 +11,7 @@ use Padre::Wx                ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
 
-our $VERSION = '0.68';
+our $VERSION        = '0.68';
 our $BACKCOMPATIBLE = '0.66';
 
 # Set up the primary integration event
@@ -115,7 +115,7 @@ sub next_thread {
 	my $workers = $self->{workers};
 
 	# Find the first free worker of any kind
-	foreach my $worker ( @$workers ) {
+	foreach my $worker (@$workers) {
 		next if $worker->handle;
 		return $worker;
 	}
@@ -138,8 +138,8 @@ sub best_thread {
 
 	# First try to find a specialist.
 	# Any of them will do at this point, no futher work needed.
-	foreach my $worker ( @unused ) {
-		next unless $worker->{seen}->{$handle->class};
+	foreach my $worker (@unused) {
+		next unless $worker->{seen}->{ $handle->class };
 		return $worker;
 	}
 
@@ -220,7 +220,7 @@ sub step {
 	my $worker = $self->best_thread($handle) or return;
 
 	# Send the task to the worker for execution
-	$worker->send_task( $handle );
+	$worker->send_task($handle);
 
 	# Continue to the next iteration
 	return $self->step;

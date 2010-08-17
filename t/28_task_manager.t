@@ -5,8 +5,8 @@
 use strict;
 use warnings;
 use Test::More;
-use Storable                  ();
-use Time::HiRes               ();
+use Storable    ();
+use Time::HiRes ();
 
 
 ######################################################################
@@ -16,7 +16,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	
+
 	plan tests => 15;
 }
 

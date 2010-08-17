@@ -43,15 +43,11 @@ sub new {
 		Wx::gettext('Padre Sync'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 	$self->SetTitle("Padre Sync");
 	$self->SetSize(
-		$self->ConvertDialogSizeToPixels(
-			Wx::Size->new(208, 184)
-		),
+		$self->ConvertDialogSizeToPixels( Wx::Size->new( 208, 184 ) ),
 	);
 
 	# Create the sync manager
@@ -287,30 +283,14 @@ sub new {
 		Wx::wxID_CANCEL,
 		"",
 	);
-	$self->{txt_login}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_password}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_username}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_pw}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_pw_confirm}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_email}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_email_confirm}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
-	$self->{txt_remote}->SetMinSize(
-		Wx::Size->new(160,23)
-	);
+	$self->{txt_login}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_password}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_username}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_pw}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_pw_confirm}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_email}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_email_confirm}->SetMinSize( Wx::Size->new( 160, 23 ) );
+	$self->{txt_remote}->SetMinSize( Wx::Size->new( 160, 23 ) );
 
 	my $sizer_1  = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizer_2  = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -331,59 +311,59 @@ sub new {
 	my $sizer_20 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	my $sizer_21 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
-	$sizer_3->Add($self->{lbl_status_static}, 0, Wx::wxALL, 12);
-	$sizer_3->Add($self->{lbl_status}, 0, Wx::wxLEFT, 30);
-	$sizer_4->Add($self->{lbl_login}, 0, Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 12);
-	$sizer_4->Add($self->{txt_login}, 0, Wx::wxLEFT | Wx::wxTOP, 10);
-	$sizer_3->Add($sizer_4, 0, 0, 0);
-	$sizer_9->Add($self->{lbl_password}, 0, Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5);
-	$sizer_9->Add($self->{txt_password}, 0, 0, 0);
-	$sizer_8->Add($sizer_9, 0, Wx::wxLEFT | Wx::wxEXPAND, 0);
-	$sizer_10->Add(150, 20, 0, 0, 0);
-	$sizer_10->Add($self->{btn_login}, 0, Wx::wxLEFT | Wx::wxTOP, 5);
-	$sizer_8->Add($sizer_10, 1, 0, 0);
-	$sizer_7->Add($sizer_8, 1, Wx::wxEXPAND, 0);
-	$sizer_3->Add($sizer_7, 0, Wx::wxEXPAND, 0);
+	$sizer_3->Add( $self->{lbl_status_static}, 0, Wx::wxALL,                            12 );
+	$sizer_3->Add( $self->{lbl_status},        0, Wx::wxLEFT,                           30 );
+	$sizer_4->Add( $self->{lbl_login},         0, Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 12 );
+	$sizer_4->Add( $self->{txt_login},         0, Wx::wxLEFT | Wx::wxTOP,               10 );
+	$sizer_3->Add( $sizer_4,                   0, 0,                                    0 );
+	$sizer_9->Add( $self->{lbl_password},      0, Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
+	$sizer_9->Add( $self->{txt_password},      0, 0,                                    0 );
+	$sizer_8->Add( $sizer_9,                   0, Wx::wxLEFT | Wx::wxEXPAND,            0 );
+	$sizer_10->Add( 150, 20, 0, 0, 0 );
+	$sizer_10->Add( $self->{btn_login}, 0, Wx::wxLEFT | Wx::wxTOP, 5 );
+	$sizer_8->Add( $sizer_10, 1, 0,            0 );
+	$sizer_7->Add( $sizer_8,  1, Wx::wxEXPAND, 0 );
+	$sizer_3->Add( $sizer_7,  0, Wx::wxEXPAND, 0 );
 	$self->{Login_Pane}->SetSizer($sizer_3);
-	$sizer_5->Add($self->{lbl_info}, 0, Wx::wxALL, 15);
-	$sizer_6->Add($self->{lbl_username}, 0, 0, 0);
-	$sizer_6->Add($self->{txt_username}, 0, 0, 0);
-	$sizer_5->Add($sizer_6, 0, Wx::wxLEFT | Wx::wxEXPAND, 10);
-	$sizer_11->Add($self->{lbl_pw1}, 0, 0, 0);
-	$sizer_11->Add($self->{txt_pw}, 0, 0, 0);
-	$sizer_5->Add($sizer_11, 0, Wx::wxLEFT | Wx::wxEXPAND, 10);
-	$sizer_12->Add($self->{lbl_pw2}, 0, 0, 0);
-	$sizer_12->Add($self->{txt_pw_confirm}, 0, 0, 0);
-	$sizer_5->Add($sizer_12, 0, Wx::wxLEFT | Wx::wxEXPAND, 10);
-	$sizer_13->Add($self->{lbl_email1}, 0, 0, 0);
-	$sizer_13->Add($self->{txt_email}, 0, Wx::wxLEFT, 25);
-	$sizer_5->Add($sizer_13, 0, Wx::wxLEFT | Wx::wxEXPAND, 10);
-	$sizer_14->Add($self->{lbl_email2}, 0, 0, 0);
-	$sizer_14->Add($self->{txt_email_confirm}, 0, Wx::wxLEFT, 25);
-	$sizer_5->Add($sizer_14, 0, Wx::wxLEFT | Wx::wxBOTTOM | Wx::wxEXPAND, 10);
-	$sizer_5->Add($self->{btn_register}, 0, Wx::wxLEFT, 130);
+	$sizer_5->Add( $self->{lbl_info},     0, Wx::wxALL,                 15 );
+	$sizer_6->Add( $self->{lbl_username}, 0, 0,                         0 );
+	$sizer_6->Add( $self->{txt_username}, 0, 0,                         0 );
+	$sizer_5->Add( $sizer_6,              0, Wx::wxLEFT | Wx::wxEXPAND, 10 );
+	$sizer_11->Add( $self->{lbl_pw1}, 0, 0, 0 );
+	$sizer_11->Add( $self->{txt_pw},  0, 0, 0 );
+	$sizer_5->Add( $sizer_11, 0, Wx::wxLEFT | Wx::wxEXPAND, 10 );
+	$sizer_12->Add( $self->{lbl_pw2},        0, 0, 0 );
+	$sizer_12->Add( $self->{txt_pw_confirm}, 0, 0, 0 );
+	$sizer_5->Add( $sizer_12, 0, Wx::wxLEFT | Wx::wxEXPAND, 10 );
+	$sizer_13->Add( $self->{lbl_email1}, 0, 0,          0 );
+	$sizer_13->Add( $self->{txt_email},  0, Wx::wxLEFT, 25 );
+	$sizer_5->Add( $sizer_13, 0, Wx::wxLEFT | Wx::wxEXPAND, 10 );
+	$sizer_14->Add( $self->{lbl_email2},        0, 0,          0 );
+	$sizer_14->Add( $self->{txt_email_confirm}, 0, Wx::wxLEFT, 25 );
+	$sizer_5->Add( $sizer_14, 0, Wx::wxLEFT | Wx::wxBOTTOM | Wx::wxEXPAND, 10 );
+	$sizer_5->Add( $self->{btn_register}, 0, Wx::wxLEFT, 130 );
 	$self->{Register_Pane}->SetSizer($sizer_5);
-	$sizer_15->Add($self->{lbl_status_b}, 0, Wx::wxLEFT | Wx::wxTOP | Wx::wxBOTTOM, 10);
-	$sizer_15->Add($self->{lbl_status_info}, 0, Wx::wxLEFT | Wx::wxBOTTOM, 20);
-	$sizer_19->Add($self->{btn_local}, 0, Wx::wxEXPAND, 0);
-	$sizer_19->Add($self->{btn_remote}, 0, Wx::wxEXPAND, 0);
-	$sizer_19->Add($self->{btn_delete}, 0, Wx::wxEXPAND, 0);
-	$sizer_15->Add($sizer_19, 1, Wx::wxALIGN_CENTER_HORIZONTAL, 0);
+	$sizer_15->Add( $self->{lbl_status_b},    0, Wx::wxLEFT | Wx::wxTOP | Wx::wxBOTTOM, 10 );
+	$sizer_15->Add( $self->{lbl_status_info}, 0, Wx::wxLEFT | Wx::wxBOTTOM,             20 );
+	$sizer_19->Add( $self->{btn_local},       0, Wx::wxEXPAND,                          0 );
+	$sizer_19->Add( $self->{btn_remote},      0, Wx::wxEXPAND,                          0 );
+	$sizer_19->Add( $self->{btn_delete},      0, Wx::wxEXPAND,                          0 );
+	$sizer_15->Add( $sizer_19,                1, Wx::wxALIGN_CENTER_HORIZONTAL,         0 );
 	$self->{Sync_Pane}->SetSizer($sizer_15);
-	$sizer_20->Add($self->{lbl_remote_server}, 0, Wx::wxALL, 10);
-	$sizer_20->Add($self->{txt_remote}, 0, Wx::wxTOP, 5);
+	$sizer_20->Add( $self->{lbl_remote_server}, 0, Wx::wxALL, 10 );
+	$sizer_20->Add( $self->{txt_remote},        0, Wx::wxTOP, 5 );
 	$self->{Settings_Pane}->SetSizer($sizer_20);
-	$sizer_21->Add($self->{lbl_help}, 0, Wx::wxALL, 15);
+	$sizer_21->Add( $self->{lbl_help}, 0, Wx::wxALL, 15 );
 	$self->{Help_Pane}->SetSizer($sizer_21);
-	$self->{Notebook}->AddPage($self->{Login_Pane}, "Login");
-	$self->{Notebook}->AddPage($self->{Register_Pane}, "Register");
-	$self->{Notebook}->AddPage($self->{Sync_Pane}, "Sync");
-	$self->{Notebook}->AddPage($self->{Settings_Pane}, "Settings");
-	$self->{Notebook}->AddPage($self->{Help_Pane}, "Help");
-	$sizer_1->Add($self->{Notebook}, 1, Wx::wxEXPAND, 0);
-	$sizer_2->Add($self->{btn_ok}, 0, 0, 0);
-	$sizer_2->Add($self->{btn_cancel}, 0, Wx::wxLEFT, 10);
-	$sizer_1->Add($sizer_2, 0, Wx::wxALL | Wx::wxALIGN_RIGHT, 5);
+	$self->{Notebook}->AddPage( $self->{Login_Pane},    "Login" );
+	$self->{Notebook}->AddPage( $self->{Register_Pane}, "Register" );
+	$self->{Notebook}->AddPage( $self->{Sync_Pane},     "Sync" );
+	$self->{Notebook}->AddPage( $self->{Settings_Pane}, "Settings" );
+	$self->{Notebook}->AddPage( $self->{Help_Pane},     "Help" );
+	$sizer_1->Add( $self->{Notebook},   1, Wx::wxEXPAND,                  0 );
+	$sizer_2->Add( $self->{btn_ok},     0, 0,                             0 );
+	$sizer_2->Add( $self->{btn_cancel}, 0, Wx::wxLEFT,                    10 );
+	$sizer_1->Add( $sizer_2,            0, Wx::wxALL | Wx::wxALIGN_RIGHT, 5 );
 	$self->SetSizer($sizer_1);
 
 	# Event handlers
@@ -463,7 +443,7 @@ sub btn_login {
 	if ( $sync->{state} eq 'logged_in' ) {
 		if ( $sync->logout =~ /success/ ) {
 			Wx::MessageBox(
-				sprintf( 'Successfully logged out.' ),
+				sprintf('Successfully logged out.'),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
@@ -471,7 +451,7 @@ sub btn_login {
 			$self->{btn_login}->SetLabel('Log in');
 		} else {
 			Wx::MessageBox(
-				sprintf( 'Failed to log out.' ),
+				sprintf('Failed to log out.'),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
@@ -495,8 +475,7 @@ sub btn_login {
 
 	# Attempt login
 	my $rc = $sync->login(
-		{
-			username => $username,
+		{   username => $username,
 			password => $password,
 		}
 	);
@@ -527,11 +506,12 @@ sub btn_register {
 	my $email_confirm = $self->{txt_email_confirm}->GetValue;
 
 	# Validation of inputs
-	if (not $username or
-		not $pw or
-		not $pw_confirm or
-		not $email or
-		not $email_confirm) {
+	if (   not $username
+		or not $pw
+		or not $pw_confirm
+		or not $email
+		or not $email_confirm )
+	{
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Please ensure all inputs have appropriate values.') ),
 			Wx::gettext('Error'),
@@ -542,7 +522,7 @@ sub btn_register {
 	}
 
 	# Not sure if password quality rules should be enforced at this level?
-	if ($pw ne $pw_confirm) {
+	if ( $pw ne $pw_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Password and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -552,7 +532,7 @@ sub btn_register {
 		return;
 	}
 
-	if ($email ne $email_confirm) {
+	if ( $email ne $email_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Email and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -564,8 +544,7 @@ sub btn_register {
 
 	# Attempt registration
 	my $rc = $self->{sync}->register(
-		{
-			username => $username,
+		{   username => $username,
 			password => $pw,
 			email    => $email,
 		}
@@ -620,8 +599,8 @@ sub btn_ok {
 	my $config = $self->current->config;
 
 	# Save the server access defaults
-	$config->set( config_sync_server   => $self->{txt_remote}->GetValue   );
-	$config->set( config_sync_username => $self->{txt_login}->GetValue    );
+	$config->set( config_sync_server   => $self->{txt_remote}->GetValue );
+	$config->set( config_sync_username => $self->{txt_login}->GetValue );
 	$config->set( config_sync_password => $self->{txt_password}->GetValue );
 
 	$self->Destroy;

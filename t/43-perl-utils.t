@@ -10,7 +10,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	
+
 	plan( tests => 5 );
 }
 use Test::NoWarnings;
@@ -26,41 +26,41 @@ require Padre::Document::Perl;
 #my $app = Padre->new;
 #isa_ok( $app, 'Padre' );
 
-*_find_sub_decl_line_number=*Padre::Document::Perl::_find_sub_decl_line_number;
+*_find_sub_decl_line_number = *Padre::Document::Perl::_find_sub_decl_line_number;
 
 SCOPE: {
-	my $code =<<'EOT';
+	my $code = <<'EOT';
 	        line 0;
 		sub test {
 		}
 EOT
-	is(_find_sub_decl_line_number('test',$code),1);
+	is( _find_sub_decl_line_number( 'test', $code ), 1 );
 }
 
 SCOPE: {
-	my $code =<<'EOT';
+	my $code = <<'EOT';
 	        line 0;
 	        sub test;
 		sub test {
 		}
 EOT
-	is(_find_sub_decl_line_number('test',$code),2);
+	is( _find_sub_decl_line_number( 'test', $code ), 2 );
 }
 SCOPE: {
-	my $code =<<'EOT';
+	my $code = <<'EOT';
 	        line 0;
 	        sub test($;$@);
 		sub test {
 		}
 EOT
-	is(_find_sub_decl_line_number('test',$code),2);
+	is( _find_sub_decl_line_number( 'test', $code ), 2 );
 }
 SCOPE: {
-	my $code =<<'EOT';
+	my $code = <<'EOT';
 	        line 0;
 	        sub test($;$@);
 		sub test($;$@) {
 		}
 EOT
-	is(_find_sub_decl_line_number('test',$code),2);
+	is( _find_sub_decl_line_number( 'test', $code ), 2 );
 }

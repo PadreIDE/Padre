@@ -24,7 +24,7 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 
 	# Initialise task execution tracking
-	$self->{seen} = { };
+	$self->{seen} = {};
 
 	return $self;
 }
@@ -42,7 +42,7 @@ sub send_task {
 	my $handle = shift;
 
 	# Tracking for the relationship between the worker and task handle
-	$handle->worker($self->wid);
+	$handle->worker( $self->wid );
 	$self->{handle} = $handle->hid;
 	$self->{seen}->{ $handle->class } += 1;
 
@@ -98,7 +98,7 @@ sub task {
 # should be discarded with no consequence.
 sub message {
 	TRACE( $_[0] ) if DEBUG;
-	TRACE( "Discarding message '$_[1]->[0]'" ) if DEBUG;
+	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
 }
 
 1;

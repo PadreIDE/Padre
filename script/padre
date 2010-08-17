@@ -146,9 +146,9 @@ if ($PRELOAD) {
 
 # Build the application
 my $ide = Padre->new(
-	files       => \@ARGV,
-	session     => $SESSION,
-	actionqueue => $ACTIONS,
+	files          => \@ARGV,
+	session        => $SESSION,
+	actionqueue    => $ACTIONS,
 	startup_locale => $LOCALE,
 ) or die "Failed to create Padre instance";
 

@@ -12,7 +12,7 @@ our @ISA     = 'Padre::Task';
 sub dequeue {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
-	my $handle = $self->handle  or return 0;
+	my $handle = $self->handle or return 0;
 	my $queue  = $handle->queue or return 0;
 
 	# Check the message for valid structure
@@ -21,7 +21,7 @@ sub dequeue {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;
 	}
-	unless ( _IDENTIFIER($message->[0]) ) {
+	unless ( _IDENTIFIER( $message->[0] ) ) {
 		TRACE('Non-method message received by worker thread') if DEBUG;
 		return 0;
 	}

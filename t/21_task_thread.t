@@ -13,6 +13,7 @@ use Test::More;
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
+
 		#done_testing;
 		exit 0;
 	}

@@ -6,7 +6,7 @@ use constant CONFIG_OPTIONS => 123;
 
 # Move of Debug to Run Menu
 # TODO can someone who knows what *2 + 21 means explain it in a comment please.
-use Test::More tests => CONFIG_OPTIONS * 2 + 21;  
+use Test::More tests => CONFIG_OPTIONS * 2 + 21;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();

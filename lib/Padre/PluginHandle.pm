@@ -11,8 +11,8 @@ use Padre::Locale  ();
 our $VERSION = '0.68';
 
 use overload
-	'bool'     => sub () {1},
-	'""'       => 'plugin_name',
+	'bool' => sub () {1},
+	'""' => 'plugin_name',
 	'fallback' => 0;
 
 use Class::XSAccessor {

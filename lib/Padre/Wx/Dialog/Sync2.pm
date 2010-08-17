@@ -63,7 +63,7 @@ sub btn_login {
 	if ( $sync->{state} eq 'logged_in' ) {
 		if ( $sync->logout =~ /success/ ) {
 			Wx::MessageBox(
-				sprintf( 'Successfully logged out.' ),
+				sprintf('Successfully logged out.'),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
@@ -71,7 +71,7 @@ sub btn_login {
 			$self->{btn_login}->SetLabel('Log in');
 		} else {
 			Wx::MessageBox(
-				sprintf( 'Failed to log out.' ),
+				sprintf('Failed to log out.'),
 				Wx::gettext('Error'),
 				Wx::wxOK,
 				$self,
@@ -95,8 +95,7 @@ sub btn_login {
 
 	# Attempt login
 	my $rc = $sync->login(
-		{
-			username => $username,
+		{   username => $username,
 			password => $password,
 		}
 	);
@@ -122,11 +121,12 @@ sub btn_register {
 	my $email_confirm = $self->{txt_email_confirm}->GetValue;
 
 	# Validation of inputs
-	if (not $username or
-		not $pw or
-		not $pw_confirm or
-		not $email or
-		not $email_confirm) {
+	if (   not $username
+		or not $pw
+		or not $pw_confirm
+		or not $email
+		or not $email_confirm )
+	{
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Please ensure all inputs have appropriate values.') ),
 			Wx::gettext('Error'),
@@ -137,7 +137,7 @@ sub btn_register {
 	}
 
 	# Not sure if password quality rules should be enforced at this level?
-	if ($pw ne $pw_confirm) {
+	if ( $pw ne $pw_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Password and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -147,7 +147,7 @@ sub btn_register {
 		return;
 	}
 
-	if ($email ne $email_confirm) {
+	if ( $email ne $email_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Email and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -159,8 +159,7 @@ sub btn_register {
 
 	# Attempt registration
 	my $rc = $self->{sync}->register(
-		{
-			username => $username,
+		{   username => $username,
 			password => $pw,
 			email    => $email,
 		}
@@ -215,8 +214,8 @@ sub btn_ok {
 	my $config = $self->current->config;
 
 	# Save the server access defaults
-	$config->set( config_sync_server   => $self->{txt_remote}->GetValue   );
-	$config->set( config_sync_username => $self->{txt_login}->GetValue    );
+	$config->set( config_sync_server   => $self->{txt_remote}->GetValue );
+	$config->set( config_sync_username => $self->{txt_login}->GetValue );
 	$config->set( config_sync_password => $self->{txt_password}->GetValue );
 
 	$self->Destroy;

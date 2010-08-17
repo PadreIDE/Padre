@@ -761,7 +761,7 @@ sub _find_method {
 
 #scan text for sub declaration
 sub _find_sub_decl_line_number {
-	my ($name, $text) = @_;
+	my ( $name, $text ) = @_;
 
 	my @lines = split /\n/, $text;
 
@@ -769,10 +769,12 @@ sub _find_sub_decl_line_number {
 	foreach my $i ( 0 .. @lines - 1 ) {
 
 		#print "L: $lines[$i]\n";
-		if ( $lines[$i] =~ /sub \s+ $name\b
+		if ($lines[$i] =~ /sub \s+ $name\b
 		 (?!;)
 		 (?! \([\$;\@\%\\]+ \);)
-		 /x ) {
+		 /x
+			)
+		{
 			return $i;
 		}
 	}
@@ -792,8 +794,8 @@ sub goto_sub {
 	}
 
 	# Fall back to regexs if there's no outline
-	my $line = _find_sub_decl_line_number($name, $self->text_get);
-	if ( $line > -1) {
+	my $line = _find_sub_decl_line_number( $name, $self->text_get );
+	if ( $line > -1 ) {
 		$self->editor->goto_line_centerize($line);
 		return 1;
 	}

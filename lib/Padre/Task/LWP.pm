@@ -153,8 +153,8 @@ sub run {
 
 	$self->handle->message(
 		STATUS => join ' ', $method, $url, '-->',
-			$self->{response}->code,
-			$self->{response}->message,
+		$self->{response}->code,
+		$self->{response}->message,
 	) if $self->running;
 
 	# Remove the CODE references from the response.

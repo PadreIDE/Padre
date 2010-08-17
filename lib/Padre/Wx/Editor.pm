@@ -1563,9 +1563,9 @@ sub configure_editor {
 	$doc->{newline_type} = $newline_type;
 
 	# Set the cursor blink rate
-	$self->SetCaretPeriod($self->main->config->editor_cursor_blink);
-	
-	
+	$self->SetCaretPeriod( $self->main->config->editor_cursor_blink );
+
+
 	return;
 }
 

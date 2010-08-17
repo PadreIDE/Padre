@@ -51,49 +51,53 @@ our $nb;
 my %nb;
 my $search_term = '';
 
-my @languages = ("perl5", "perl6");
+my @languages = ( "perl5", "perl6" );
 
 sub new {
 	my ($class) = @_;
 
-	my ($height, $width) = (550, 500);
+	my ( $height, $width ) = ( 550, 500 );
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
 		'REPL - Read Evaluate Print Loop ',
-		[ -1,  -1 ],
+		[ -1,     -1 ],
 		[ $width, $height ],
 	);
 
 	$self->_create_menu_bar;
 
-	my $split = Wx::SplitterWindow->new
-		( $self, -1, wxDefaultPosition, wxDefaultSize,
-		wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN );
-	
-	my $output = Wx::TextCtrl->new
-      ( $split, -1, "", wxDefaultPosition, wxDefaultSize,
-        wxTE_READONLY|wxTE_MULTILINE|wxNO_FULL_REPAINT_ON_RESIZE );
+	my $split = Wx::SplitterWindow->new(
+		$self, -1, wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN
+	);
 
-	my $input = Wx::TextCtrl->new
-      ( $split, -1, "", wxDefaultPosition, wxDefaultSize,
-        wxNO_FULL_REPAINT_ON_RESIZE|wxTE_PROCESS_ENTER );
+	my $output = Wx::TextCtrl->new(
+		$split, -1, "", wxDefaultPosition, wxDefaultSize,
+		wxTE_READONLY | wxTE_MULTILINE | wxNO_FULL_REPAINT_ON_RESIZE
+	);
+
+	my $input = Wx::TextCtrl->new(
+		$split, -1, "", wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE | wxTE_PROCESS_ENTER
+	);
 
 	EVT_TEXT_ENTER( $self, $input, \&text_entered );
-#	EVT_TEXT( $self, $input, sub { print "@_\n" } );
+
+	#	EVT_TEXT( $self, $input, sub { print "@_\n" } );
 
 	EVT_KEY_UP( $input, sub { $self->key_up(@_) } );
 
-	$split->SplitHorizontally( $output, $input, $height-100 );
+	$split->SplitHorizontally( $output, $input, $height - 100 );
 	$input->SetFocus;
 
-	$self->{_input_} = $input;
+	$self->{_input_}  = $input;
 	$self->{_output_} = $output;
-	
+
 	foreach my $lang (@languages) {
 		$self->{_history_}{$lang} = [];
-		my $history_file  = File::Spec->catdir(_confdir(), "repl_history_{$lang}.txt");
-		if (-e $history_file) {
+		my $history_file = File::Spec->catdir( _confdir(), "repl_history_{$lang}.txt" );
+		if ( -e $history_file ) {
 			open my $fh, '<', $history_file or die;
 			$self->{_history_}{$lang} = [<$fh>];
 			chomp @{ $self->{_history_}{$lang} };
@@ -105,8 +109,10 @@ sub new {
 sub _confdir {
 	return File::Spec->catdir(
 		File::HomeDir->my_data,
-		File::Spec->isa('File::Spec::Win32') ? qw{ Perl Padre }
-		: qw{ .padre } );
+		File::Spec->isa('File::Spec::Win32')
+		? qw{ Perl Padre }
+		: qw{ .padre }
+	);
 }
 
 sub _get_language {
@@ -118,46 +124,48 @@ sub _get_language {
 }
 
 sub key_up {
-	my ($self, $input, $event) = @_;
+	my ( $self, $input, $event ) = @_;
+
 	#print $self;
 	#print $event;
 	my $mod = $event->GetModifiers || 0;
 	my $code = $event->GetKeyCode;
+
 	#$self->outn($mod);
 	#$self->outn($code);
 	my $lang = $self->_get_language();
 	return if not @{ $self->{_history_}{$lang} };
-	if ($mod == 0 and $code == 317) { # Down
+	if ( $mod == 0 and $code == 317 ) { # Down
 		$self->{_history_pointer_}{$lang}++;
 		if ( $self->{_history_pointer_}{$lang} >= @{ $self->{_history_}{$lang} } ) {
 			$self->{_history_pointer_}{$lang} = 0;
 		}
-	} elsif ($mod == 0 and $code == 315) { # Up
+	} elsif ( $mod == 0 and $code == 315 ) { # Up
 		$self->{_history_pointer_}{$lang}--;
-		if ( $self->{_history_pointer_}{$lang} < 0) {
-			$self->{_history_pointer_}{$lang} = @{ $self->{_history_}{$lang} } -1;
+		if ( $self->{_history_pointer_}{$lang} < 0 ) {
+			$self->{_history_pointer_}{$lang} = @{ $self->{_history_}{$lang} } - 1;
 		}
 	} else {
 		return;
 	}
-	
+
 	$self->{_input_}->Clear;
 	$self->{_input_}->WriteText( $self->{_history_}{$lang}[ $self->{_history_pointer_}{$lang} ] );
 }
 
 sub text_entered {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 	my $lang = $self->_get_language;
-	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	my $text = $self->{_input_}->GetRange( 0, $self->{_input_}->GetLastPosition );
 	push @{ $self->{_history_}{$lang} }, $text;
 	$self->{_history_pointer_}{$lang} = @{ $self->{_history_}{$lang} } - 1;
 	$self->{_input_}->Clear;
 	$self->out(">> $text\n");
-	
+
 	# TODO catch stdout, stderr
-	my $out = eval $text;
+	my $out   = eval $text;
 	my $error = $@;
-	if (defined $out) {
+	if ( defined $out ) {
 		$self->out("$out\n");
 	}
 	if ($error) {
@@ -168,11 +176,12 @@ sub text_entered {
 
 
 sub out {
-	my ($self, $text) = @_;
+	my ( $self, $text ) = @_;
 	$self->{_output_}->WriteText($text);
 }
+
 sub outn {
-	my ($self, $text) = @_;
+	my ( $self, $text ) = @_;
 	$self->{_output_}->WriteText("$text\n");
 }
 
@@ -181,11 +190,11 @@ sub _create_menu_bar {
 
 	my $bar  = Wx::MenuBar->new;
 	my $file = Wx::Menu->new;
-	$file->Append( wxID_OPEN,   "&Open" );
-	$file->Append( wxID_SAVE,   "&Save" );
-	$self->{_language_}{perl5} = $file->AppendRadioItem( 1000,   "Perl 5" );
-	$self->{_language_}{perl6} = $file->AppendRadioItem( 1001,   "Perl 6" );
-	$file->Append( wxID_EXIT,   "E&xit" );
+	$file->Append( wxID_OPEN, "&Open" );
+	$file->Append( wxID_SAVE, "&Save" );
+	$self->{_language_}{perl5} = $file->AppendRadioItem( 1000, "Perl 5" );
+	$self->{_language_}{perl6} = $file->AppendRadioItem( 1001, "Perl 6" );
+	$file->Append( wxID_EXIT, "E&xit" );
 
 	my $help = Wx::Menu->new;
 	$help->Append( wxID_ABOUT, "&About..." );
@@ -215,11 +224,11 @@ sub on_close_window {
 	my ( $self, $event ) = @_;
 
 	foreach my $lang (@languages) {
-		my $history_file  = File::Spec->catdir(_confdir(), "repl_history_{$lang}.txt");
+		my $history_file = File::Spec->catdir( _confdir(), "repl_history_{$lang}.txt" );
 		open my $fh, '>', $history_file or die;
-		print $fh map { "$_\n" } @{ $self->{_history_}{$lang} };
+		print $fh map {"$_\n"} @{ $self->{_history_}{$lang} };
 	}
-	
+
 	$event->Skip;
 }
 

@@ -86,7 +86,7 @@ sub run {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat    = stat($fullname);
+			my @fstat = stat($fullname);
 
 			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file( @path, $file );
@@ -100,7 +100,7 @@ sub run {
 						next unless $line =~ $regexp;
 						push @matched, $line;
 					}
-					close $fh;					
+					close $fh;
 				}
 
 				# Report the lines we matched
@@ -125,7 +125,7 @@ sub run {
 
 sub found {
 	require Padre::Current;
-	Padre::Current->main->status($_[1]);
+	Padre::Current->main->status( $_[1] );
 }
 
 1;

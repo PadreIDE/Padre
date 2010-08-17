@@ -26,7 +26,8 @@ sub new {
 	return bless {
 		hid  => ++$SEQUENCE,
 		task => $_[1],
-	}, $_[0];
+		},
+		$_[0];
 }
 
 sub hid {
@@ -46,7 +47,7 @@ sub queue {
 
 sub class {
 	TRACE( $_[0] ) if DEBUG;
-	Scalar::Util::blessed($_[0]->{task});
+	Scalar::Util::blessed( $_[0]->{task} );
 }
 
 sub worker {
@@ -172,6 +173,7 @@ sub on_message {
 
 	# Does the method exist
 	unless ( $self->{task}->can($method) ) {
+
 		# A method name provided directly by the Task
 		# doesn't exist in the Task. Naughty Task!!!
 		# Lacking anything more sane to do, squelch it.
@@ -180,10 +182,9 @@ sub on_message {
 
 	# Pass the call down to the task and protect it from itself
 	local $@;
-	eval {
-		$self->{task}->$method(@_);
-	};
-	if ( $@ ) {
+	eval { $self->{task}->$method(@_); };
+	if ($@) {
+
 		# A method in the main thread blew up.
 		# Beyond catching it and preventing it killing
 		# Padre entirely, I'm not sure what else we can
