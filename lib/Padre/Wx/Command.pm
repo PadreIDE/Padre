@@ -20,7 +20,7 @@ our $VERSION = '0.68';
 our @ISA     = qw{
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::TextCtrl
+	Wx::SplitterWindow
 };
 
 
@@ -32,26 +32,31 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
 
-	# Create the underlying object
 	my $self = $class->SUPER::new(
-		$panel,
-		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-			Wx::wxTE_DONTWRAP
-			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
-	);
+		$panel, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxCLIP_CHILDREN );
+	
+	my $output = Wx::TextCtrl->new
+      ( $self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+        Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE );
+
+	my $input = Wx::TextCtrl->new
+      ( $self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+        Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxTE_PROCESS_ENTER );
+
+	$self->{_output_} = $output;
+	$self->{_input_}  = $input;
 
 	# Do custom start-up stuff here
 	#$self->clear;
 	#$self->set_font;
 
-	Wx::Event::EVT_TEXT_ENTER( $self, $main, 
-		sub {
-			shift->text_entered(@_);
-		},
-	);
+	Wx::Event::EVT_TEXT_ENTER( $main, $input, sub {
+		$self->text_entered(@_)
+	});
+	my $height = $main->{bottom}->GetSize->GetHeight;
+	$self->SplitHorizontally( $output, $input, $height-120 ); ## TODO ???
+	$input->SetFocus;
 
 	return $self;
 }
@@ -78,24 +83,44 @@ sub view_close {
 # Event Handlers
 
 sub text_entered {
-	my ($self, $event) = @_;
+	my ($self, $main, $event) = @_;
 
-	my $text = $self->GetRange(0, $self->GetLastPosition);
-	#$self->Clear;
-	#$self->out(">> $text\n");
-	print STDERR "Text: $text\n";
-	
-	# TODO catch stdout, stderr
-	#my $out = eval $text;
-	#my $error = $@;
-	#if (defined $out) {
-		#$self->out("$out\n");
-	#}
-	#if ($error) {
-		#$self->out("$@\n");
-	#}
+	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	$self->{_input_}->Clear;
+	$self->out(">> $text\n");
+	my %commands = (
+		pwd => 'Print current workind directory',
+		ls  => 'List directory',
+	);
+
+	if ($text eq 'pwd') {
+		require Cwd;
+		$self->outn(Cwd::cwd);
+	} elsif ($text eq 'ls') {
+		require Cwd;
+		opendir my $dh, Cwd::cwd;
+		foreach my $thing (sort readdir $dh) {
+			$self->outn($thing);
+		}
+	} elsif ($text eq '?') {
+		foreach my $cmd (sort keys %commands) {
+			$self->outn("$cmd    - $commands{$cmd}");
+		}
+	} else {
+		$self->outn("Invalid command");
+	}
+
+	return;
 }
 
+sub out {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText($text);
+}
+sub outn {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText("$text\n");
+}
 
 
 #####################################################################
