@@ -170,15 +170,6 @@ sub text_entered {
 	return;
 }
 
-sub out {
-	my ($self, $text) = @_;
-	$self->{_output_}->WriteText($text);
-}
-sub outn {
-	my ($self, $text) = @_;
-	$self->{_output_}->WriteText("$text\n");
-}
-
 sub key_up {
 	my ($self, $input, $event) = @_;
 
@@ -233,6 +224,15 @@ sub key_up {
 		$self->{_input_}->WriteText($new_text);
 	}
 
+}
+
+sub out {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText($text);
+}
+sub outn {
+	my ($self, $text) = @_;
+	$self->{_output_}->WriteText("$text\n");
 }
 
 
