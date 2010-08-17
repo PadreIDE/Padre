@@ -96,7 +96,7 @@ sub task_response {
 sub task_message {
 	my $class = ref( $_[0] ) || $_[0];
 	my $task  = ref( $_[1] ) || $_[1];
-	die "Unhandled task_message for $class (recieved $task message $_[2]->[0]");
+	die "Unhandled task_message for $class (recieved $task message $_[2]->[0])";
 }
 
 1;
