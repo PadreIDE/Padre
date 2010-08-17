@@ -36,13 +36,13 @@ sub new {
 		$panel, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxCLIP_CHILDREN );
 	
-	my $output = Wx::TextCtrl->new
-      ( $self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
-        Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE );
+	my $output = Wx::TextCtrl->new(
+		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE );
 
-	my $input = Wx::TextCtrl->new
-      ( $self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
-        Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxTE_PROCESS_ENTER );
+	my $input = Wx::TextCtrl->new(
+		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxTE_PROCESS_ENTER );
 
 	$self->{_output_} = $output;
 	$self->{_input_}  = $input;
@@ -64,6 +64,9 @@ sub new {
 	#print $self->GetSize->GetHeight, "\n"; # gives 20 on startup?
 	$self->SplitHorizontally( $output, $input, $height-120 ); ## TODO ???
 	$input->SetFocus;
+
+	$self->{_history_} = Padre::DB::History->recent('commands') || [];
+	$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 
 	return $self;
 }
@@ -100,6 +103,13 @@ sub text_entered {
 		ls  => 'List directory',
 	);
 
+	push @{ $self->{_history_} }, $text;
+	Padre::DB::History->create(
+		type => 'commands',
+		name => $text,
+	);
+
+	$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 	if ($text eq 'pwd') {
 		require Cwd;
 		$self->outn(Cwd::cwd);
@@ -160,8 +170,6 @@ sub key_up {
 	my $code = $event->GetKeyCode;
 #	$self->outn($mod);
 #	$self->outn($code);
-	$self->{_history_} ||= [];
-	$self->{_history_pointer_} ||= 0;
 
 	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
 	my $new_text;

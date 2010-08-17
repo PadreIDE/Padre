@@ -9,7 +9,7 @@ use File::Temp ();
 use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 
-# Testing the stand-alone Padre::Utile::CommandLine
+# Testing the stand-alone Padre::Util::CommandLine
 
 use Padre::Util::CommandLine;
 use Cwd qw(abs_path);
