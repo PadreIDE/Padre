@@ -563,6 +563,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'main_command_line',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'main_output_ansi',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

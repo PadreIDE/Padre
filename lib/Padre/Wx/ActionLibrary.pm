@@ -1314,6 +1314,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'view.command_line',
+		label       => _T('Show Command Line window'),
+		comment     => _T('Show the command line window'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_command_line( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'view.todo',
 		label       => _T('Show To-do List'),
 		comment     => _T('Show a window listing all todo items in the current document'),
@@ -2444,6 +2454,17 @@ sub init {
 		menu_event => sub {
 			$_[0]->show_syntax(1);
 			$_[0]->syntax->SetFocus;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name       => 'window.goto_command_line_window',
+		label      => _T('Go to Command Line Window'),
+		comment    => _T('Set the focus to the "Command Line" window'),
+		shortcut   => 'Alt-Z',
+		menu_event => sub {
+			$_[0]->show_command_line(1);
+			$_[0]->command_line->SetFocus;
 		},
 	);
 

@@ -80,6 +80,11 @@ sub new {
 		'window.goto_syntax_check_window',
 	);
 
+	$self->{window_goto_command_line_window} = $self->add_menu_action(
+		$self,
+		'window.goto_command_line_window',
+	);
+
 	$self->{window_goto_main_window} = $self->add_menu_action(
 		$self,
 		'window.goto_main_window',
