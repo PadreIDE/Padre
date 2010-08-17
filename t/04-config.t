@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use constant CONFIG_OPTIONS => 123;
+use constant CONFIG_OPTIONS => 124;
 
 # Move of Debug to Run Menu
 # TODO can someone who knows what *2 + 21 means explain it in a comment please.
