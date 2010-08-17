@@ -66,7 +66,7 @@ sub new {
 	$input->SetFocus;
 
 	$self->{_history_} = Padre::DB::History->recent('commands') || [];
-	$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
+	#$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 
 	return $self;
 }
@@ -112,7 +112,7 @@ sub text_entered {
 		name => $text,
 	);
 
-	$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
+	#$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 	if ($text eq '?') {
 		foreach my $cmd (sort keys %commands) {
 			$self->outn("$cmd    - $commands{$cmd}");
@@ -187,6 +187,9 @@ sub key_up {
 #	$self->outn($code);
 
 	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	if (not defined $text or $text eq '') {
+		delete $self->{_history_pointer_};
+	}
 	my $new_text;
 	if ($mod == 0 and $code == 9) { # TAB
 		#print "Text: $text\n";
@@ -194,14 +197,22 @@ sub key_up {
 		$new_text = Padre::Util::CommandLine::tab($text);
 	} elsif ($mod == 0 and $code == 317) { # Down
 		return if not @{ $self->{_history_} };
-		$self->{_history_pointer_}++;
-		if ( $self->{_history_pointer_} >= @{ $self->{_history_} } ) {
+		if (not defined $self->{_history_pointer_}) {
 			$self->{_history_pointer_} = 0;
+		} else {
+			$self->{_history_pointer_}++;
+			if ( $self->{_history_pointer_} >= @{ $self->{_history_} } ) {
+				$self->{_history_pointer_} = 0;
+			}
 		}
 		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
 	} elsif ($mod == 0 and $code == 315) { # Up
 		return if not @{ $self->{_history_} };
-		$self->{_history_pointer_}--;
+		if (not defined $self->{_history_pointer_}) {
+			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
+		} else {
+			$self->{_history_pointer_}--;
+		}
 		if ( $self->{_history_pointer_} < 0) {
 			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
 		}
