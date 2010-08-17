@@ -30,7 +30,7 @@ sub tab {
 		$last_suggest = ":e $current_list[$current_index]";
 		return $last_suggest;
 		
-	} elsif ($text eq $last_suggest) {
+	} elsif (defined $last_suggest and $text eq $last_suggest) {
 		$current_index++;
 		$last_suggest = ":e $current_list[$current_index]";
 		return $last_suggest;

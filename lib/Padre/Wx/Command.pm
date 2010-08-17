@@ -54,6 +54,8 @@ sub new {
 	Wx::Event::EVT_TEXT_ENTER( $main, $input, sub {
 		$self->text_entered(@_)
 	});
+	Wx::Event::EVT_KEY_UP( $input, sub { $self->key_up(@_) } );
+
 	my $height = $main->{bottom}->GetSize->GetHeight;
 	$self->SplitHorizontally( $output, $input, $height-120 ); ## TODO ???
 	$input->SetFocus;
@@ -106,6 +108,15 @@ sub text_entered {
 		foreach my $cmd (sort keys %commands) {
 			$self->outn("$cmd    - $commands{$cmd}");
 		}
+	} elsif ($text =~ /^:e\s+(.*)$/) {
+		my $path = $1;
+		if (not -e $path) {
+			$self->outn("File ($path) does not exist");
+		} elsif (not -f $path) {
+			$self->outn("($path) is not a file");
+		} else {
+			$main->setup_editors($path);
+		}
 	} else {
 		$self->outn("Invalid command");
 	}
@@ -120,6 +131,50 @@ sub out {
 sub outn {
 	my ($self, $text) = @_;
 	$self->{_output_}->WriteText("$text\n");
+}
+
+sub key_up {
+	my ($self, $input, $event) = @_;
+
+	#print $self;
+	#print $event;
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
+#	$self->outn($mod);
+#	$self->outn($code);
+	$self->{_history_} ||= [];
+	$self->{_history_pointer_} ||= 0;
+
+	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	my $new_text;
+	if ($mod == 0 and $code == 9) { # TAB
+		#print "Text: $text\n";
+		require Padre::Util::CommandLine;
+		$new_text = Padre::Util::CommandLine::tab($text);
+	} elsif ($mod == 0 and $code == 317) { # Down
+		return if not @{ $self->{_history_} };
+		$self->{_history_pointer_}++;
+		if ( $self->{_history_pointer_} >= @{ $self->{_history_} } ) {
+			$self->{_history_pointer_} = 0;
+		}
+		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
+	} elsif ($mod == 0 and $code == 315) { # Up
+		return if not @{ $self->{_history_} };
+		$self->{_history_pointer_}--;
+		if ( $self->{_history_pointer_} < 0) {
+			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
+		}
+		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
+	} else {
+		return;
+	}
+
+	#print "New text: $new_text\n";
+	if (defined $new_text) {
+		$self->{_input_}->Clear;
+		$self->{_input_}->WriteText($new_text);
+	}
+
 }
 
 
