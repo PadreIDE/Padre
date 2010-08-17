@@ -1493,22 +1493,23 @@ WARNING: This method runs very often (on each keypress), keep it as efficient
 =cut
 
 sub event_on_char {
-	my ( $self, $editor, $event ) = @_;
+	my $self   = shift;
+	my $editor = shift;
+	my $event  = shift;
+	my $config = $editor->config;
+	my $main   = $editor->main;
 
-	my $config = Padre->ide->config;
-	my $main   = Padre->ide->wx->main;
-
-	$editor->Freeze;
-
-	$self->autocomplete_matching_char(
-		$editor, $event,
-		34  => 34,  # " "
-		39  => 39,  # ' '
-		40  => 41,  # ( )
-		60  => 62,  # < >
-		91  => 93,  # [ ]
-		123 => 125, # { }
-	);
+	if ( $config->autocomplete_brackets ) {
+		$self->autocomplete_matching_char(
+			$editor, $event,
+			34  => 34,  # " "
+			39  => 39,  # ' '
+			40  => 41,  # ( )
+			60  => 62,  # < >
+			91  => 93,  # [ ]
+			123 => 125, # { }
+		);
+	}
 
 	my $selection_exists = 0;
 	my $text             = $editor->GetSelectedText;
@@ -1516,8 +1517,7 @@ sub event_on_char {
 		$selection_exists = 1;
 	}
 
-	my $key = $event->GetUnicodeKey;
-
+	my $key   = $event->GetUnicodeKey;
 	my $pos   = $editor->GetCurrentPos;
 	my $line  = $editor->LineFromPosition($pos);
 	my $first = $editor->PositionFromLine($line);
@@ -1620,8 +1620,6 @@ sub event_on_char {
 
 		}
 	}
-
-	$editor->Thaw;
 
 	# Auto complete only when the user selected 'always'
 	# and no ALT key is pressed
