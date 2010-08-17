@@ -40,6 +40,11 @@ sub task {
 	$_[0]->{task};
 }
 
+sub child {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->{child};
+}
+
 sub queue {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->{queue};
@@ -62,69 +67,7 @@ sub worker {
 
 
 ######################################################################
-# Parent Methods
-
-sub prepare {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = $self->{task};
-	my $rv   = eval { $task->prepare; };
-	if ($@) {
-		TRACE("Exception in task during 'prepare': $@") if DEBUG;
-		return !1;
-	}
-	return !!$rv;
-}
-
-sub finish {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = $self->{task};
-	my $rv   = eval { $task->finish; };
-	if ($@) {
-		TRACE("Exception in task during 'finish': $@") if DEBUG;
-		return !1;
-	}
-	return !!$rv;
-}
-
-
-
-
-
-######################################################################
-# Worker Methods
-
-sub run {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = $self->task;
-
-	# Create a circular reference back from the task
-	$task->{handle} = $self;
-
-	# Call the task's run method
-	eval { $task->run(); };
-
-	# Clean up the circular
-	delete $task->{handle};
-
-	# Save the exception if thrown
-	if ($@) {
-		TRACE("Exception in task during 'run': $@") if DEBUG;
-		$self->{exception} = $@;
-		return !1;
-	}
-
-	return 1;
-}
-
-
-
-
-
-######################################################################
-# Message Passing
+# Serialisation
 
 sub as_array {
 	TRACE( $_[0] ) if DEBUG;
@@ -153,10 +96,25 @@ sub from_array {
 	}, $class;
 }
 
-# Serialize and pass-through to the Wx signal dispatch
+
+
+
+
+######################################################################
+# Biderectional Communication
+
+# Parent: Push into worker's thread queue
+# Child:  Serialize and pass-through to the Wx signal dispatch
 sub message {
 	TRACE( $_[0] ) if DEBUG;
-	Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid, @_ ] ) );
+	if ( $_[0]->child ) {
+		Padre::Wx::Role::Conduit->signal(
+			Storable::freeze( [ shift->hid, @_ ] )
+		);
+	} else {
+		shift->worker->send( 'message', @_ );
+	}
+	return 1;
 }
 
 sub on_message {
@@ -166,7 +124,8 @@ sub on_message {
 
 	# Special case for printing a simple message to the main window
 	# status bar, without needing to pollute the task classes.
-	if ( $method eq 'STATUS' ) {
+	if ( $method eq 'STATUS' and not $self->child ) {
+		require Padre::Current;
 		Padre::Current->main->status(@_);
 		return;
 	}
@@ -195,19 +154,23 @@ sub on_message {
 	return;
 }
 
-# Task startup handling
-sub started {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->message('STARTED');
-}
 
-# There is no on_stopped atm... not sure if it's needed.
-# sub on_started { ... }
 
-# Task shutdown handling
-sub stopped {
+
+
+######################################################################
+# Parent-Only Methods
+
+sub prepare {
 	TRACE( $_[0] ) if DEBUG;
-	$_[0]->message( 'STOPPED', $_[0]->{task} );
+	my $self = shift;
+	my $task = $self->{task};
+	my $rv   = eval { $task->prepare; };
+	if ($@) {
+		TRACE("Exception in task during 'prepare': $@") if DEBUG;
+		return !1;
+	}
+	return !!$rv;
 }
 
 sub on_stopped {
@@ -235,6 +198,61 @@ sub on_stopped {
 	}
 
 	return;
+}
+
+sub finish {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = $self->{task};
+	my $rv   = eval { $task->finish; };
+	if ($@) {
+		TRACE("Exception in task during 'finish': $@") if DEBUG;
+		return !1;
+	}
+	return !!$rv;
+}
+
+
+
+
+
+######################################################################
+# Worker-Only Methods
+
+sub run {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = $self->task;
+
+	# Create a circular reference back from the task
+	$task->{handle} = $self;
+
+	# Call the task's run method
+	eval { $task->run(); };
+
+	# Clean up the circular
+	delete $task->{handle};
+
+	# Save the exception if thrown
+	if ($@) {
+		TRACE("Exception in task during 'run': $@") if DEBUG;
+		$self->{exception} = $@;
+		return !1;
+	}
+
+	return 1;
+}
+
+# Signal the task has started
+sub started {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->message('STARTED');
+}
+
+# Signal the task has stopped
+sub stopped {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->message( 'STOPPED', $_[0]->{task} );
 }
 
 1;
