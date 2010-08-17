@@ -51,12 +51,17 @@ sub new {
 	#$self->clear;
 	#$self->set_font;
 
+	# Moves the focus the input window but does not allow selecting text in the output window
+	#Wx::Event::EVT_SET_FOCUS( $output, sub { $input->SetFocus; } );
+
 	Wx::Event::EVT_TEXT_ENTER( $main, $input, sub {
 		$self->text_entered(@_)
 	});
 	Wx::Event::EVT_KEY_UP( $input, sub { $self->key_up(@_) } );
 
 	my $height = $main->{bottom}->GetSize->GetHeight;
+	#print "Height: $height\n";
+	#print $self->GetSize->GetHeight, "\n"; # gives 20 on startup?
 	$self->SplitHorizontally( $output, $input, $height-120 ); ## TODO ???
 	$input->SetFocus;
 
@@ -108,7 +113,7 @@ sub text_entered {
 		foreach my $cmd (sort keys %commands) {
 			$self->outn("$cmd    - $commands{$cmd}");
 		}
-	} elsif ($text =~ /^:e\s+(.*)$/) {
+	} elsif ($text =~ /^:e\s+(.*?)\s*$/) {
 		my $path = $1;
 		if (not -e $path) {
 			$self->outn("File ($path) does not exist");
@@ -117,6 +122,19 @@ sub text_entered {
 		} else {
 			$main->setup_editors($path);
 		}
+	} elsif ($text =~ /^:!\s*(.*?)\s*$/) {
+		# TODO: what about long running commands?
+		my $cmd = $1;
+		# TODO: when reqire and import is used it blows up with
+		# Can't call method "capture_merged" without a package or object reference at 
+		# so we "use" it now
+		#require Capture::Tiny;
+		#import Capture::Tiny qw(capture_merged);
+		use Capture::Tiny qw(capture_merged);
+		my $out = capture_merged {
+			system($cmd);
+		};
+		$self->out($out);
 	} else {
 		$self->outn("Invalid command");
 	}
