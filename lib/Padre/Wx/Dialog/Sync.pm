@@ -21,7 +21,7 @@ use Padre::Wx::Role::Main ();
 use Padre::Locale         ();
 use Padre::Sync           ();
 
-our $VERSION = '0.68';
+our $VERSION = '0.69';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
