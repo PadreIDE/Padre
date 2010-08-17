@@ -214,6 +214,8 @@ sub key_up {
 			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
 		}
 		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
+	} elsif ($mod == 2 and $code == 85) { # Ctrl-u
+		$new_text = '';
 	} else {
 		return;
 	}
