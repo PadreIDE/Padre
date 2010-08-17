@@ -358,11 +358,13 @@ sub colourize {
 	my $lexer  = $self->lexer;
 	my $editor = $self->editor;
 	$editor->SetLexer($lexer);
+	TRACE("coloUrize called") if DEBUG;
 
 	$self->remove_color;
 	if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 		$self->colorize;
 	} else {
+		TRACE("Colourize is being called") if DEBUG;
 		$editor->Colourise( 0, $editor->GetLength );
 	}
 }
@@ -553,7 +555,7 @@ sub load_file {
 	my $file = $self->file;
 
 	if (DEBUG) {
-		my $name = $file->{file}->{filename} || '';
+		my $name = $file->{filename} || '';
 		TRACE("Loading file '$name'");
 	}
 
@@ -967,6 +969,7 @@ sub lexer {
 		warn "no highlighter\n";
 		$highlighter = 'stc';
 	}
+	TRACE( "The highlighter is '$highlighter'" ) if DEBUG;
 	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
 
