@@ -104,6 +104,7 @@ sub text_entered {
 		'?'           => 'This help',
 		':history'    => 'History of all the command',
 		':padre cmd'  => 'Execute cmd withing the current Padre process',
+		':keycatcher Number' => 'Turn on catching keyboard for a single event (defaults to 2)',
 	);
 
 	push @{ $self->{_history_} }, $text;
@@ -121,6 +122,8 @@ sub text_entered {
 		foreach my $cmd (@{ $self->{_history_} }) {
 			$self->outn($cmd);
 		}
+	} elsif ($text =~ m/^:keycatcher(\s+(\d+))?\s*$/) {
+		$self->{_keycatcher_} = $2 || 2;
 	} elsif ($text =~ /^:e\s+(.*?)\s*$/) {
 		my $path = $1;
 		if (not -e $path) {
@@ -183,8 +186,11 @@ sub key_up {
 	#print $event;
 	my $mod = $event->GetModifiers || 0;
 	my $code = $event->GetKeyCode;
-#	$self->outn($mod);
-#	$self->outn($code);
+	
+	if ($self->{_keycatcher_}) {
+		$self->{_keycatcher_}--;
+		$self->outn("Mode: $mod  Code: $code");
+	}
 
 	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
 	if (not defined $text or $text eq '') {
