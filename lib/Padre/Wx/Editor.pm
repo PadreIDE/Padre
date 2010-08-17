@@ -967,7 +967,6 @@ sub on_focus {
 	# or switching between tools in Padre.
 	# Don't do any refreshing here, it is an excessive waste of resources.
 	# Instead, put them in the events that ACTUALLY change application state.
-	my $lock = $main->lock('UPDATE');
 
 	# TO DO
 	# This is called even if the mouse is moved away from padre and back again
@@ -975,6 +974,7 @@ sub on_focus {
 	# another
 	if ( $self->needs_manual_colorize ) {
 		TRACE("needs_manual_colorize") if DEBUG;
+		my $lock  = $main->lock('UPDATE');
 		my $lexer = $self->GetLexer;
 		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 			$document->colorize;
@@ -987,7 +987,7 @@ sub on_focus {
 		TRACE("no need to colorize") if DEBUG;
 	}
 
-	# NIOTE: This is so the cursor will show up
+	# NOTE: This is so the cursor will show up
 	$event->Skip(1);
 
 	return;
