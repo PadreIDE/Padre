@@ -99,8 +99,10 @@ sub text_entered {
 	$self->{_input_}->Clear;
 	$self->out(">> $text\n");
 	my %commands = (
-		pwd => 'Print current workind directory',
-		ls  => 'List directory',
+		':e filename' => 'Open file',
+		':! cmd'      => 'Run command in shell',
+		'?'           => 'This help',
+		':history'    => 'history of all the command',
 	);
 
 	push @{ $self->{_history_} }, $text;
@@ -110,18 +112,13 @@ sub text_entered {
 	);
 
 	$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
-	if ($text eq 'pwd') {
-		require Cwd;
-		$self->outn(Cwd::cwd);
-	} elsif ($text eq 'ls') {
-		require Cwd;
-		opendir my $dh, Cwd::cwd;
-		foreach my $thing (sort readdir $dh) {
-			$self->outn($thing);
-		}
-	} elsif ($text eq '?') {
+	if ($text eq '?') {
 		foreach my $cmd (sort keys %commands) {
 			$self->outn("$cmd    - $commands{$cmd}");
+		}
+	} elsif ($text eq ':history') {
+		foreach my $cmd (@{ $self->{_history_} }) {
+			$self->outn($cmd);
 		}
 	} elsif ($text =~ /^:e\s+(.*?)\s*$/) {
 		my $path = $1;
