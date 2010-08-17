@@ -102,7 +102,8 @@ sub text_entered {
 		':e filename' => 'Open file',
 		':! cmd'      => 'Run command in shell',
 		'?'           => 'This help',
-		':history'    => 'history of all the command',
+		':history'    => 'History of all the command',
+		':padre cmd'  => 'Execute cmd withing the current Padre process',
 	);
 
 	push @{ $self->{_history_} }, $text;
@@ -141,7 +142,24 @@ sub text_entered {
 		my $out = capture_merged {
 			system($cmd);
 		};
-		$self->out($out);
+		if (defined $out) {
+			$self->out($out);
+		}
+	} elsif ($text =~ m/^:padre\s+(.*?)\s*$/) {
+		my $ret;
+		my $out = capture_merged {
+			$ret = eval $1;
+		};
+		my $err = $@;
+		if (defined $out and $out ne '') {
+			$self->outn($out);
+		}
+		if (defined $ret and $ret ne '') {
+			$self->outn($ret);
+		}
+		if ($err) {
+			$self->outn($err);
+		}
 	} else {
 		$self->outn("Invalid command");
 	}
