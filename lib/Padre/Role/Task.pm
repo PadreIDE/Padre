@@ -92,6 +92,13 @@ sub task_response {
 	die "Unhandled task_response for $class (recieved $task)";
 }
 
+# Pass task messages through to the owner
+sub task_message {
+	my $class = ref( $_[0] ) || $_[0];
+	my $task  = ref( $_[1] ) || $_[1];
+	die "Unhandled task_message for $class (recieved $task message $_[2]->[0]");
+}
+
 1;
 
 =pod
