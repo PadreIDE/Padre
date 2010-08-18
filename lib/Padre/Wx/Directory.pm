@@ -265,7 +265,7 @@ sub refresh {
 		# Trigger the refresh task to update the temporary state
 		$self->task_request(
 			task      => 'Padre::Wx::Directory::Task',
-			callback  => 'refresh_response',
+			on_finish => 'refresh_response',
 			recursive => 1,
 			@options,
 		);
