@@ -9,6 +9,7 @@ use Padre::Wx::Role::View          ();
 use Padre::Wx::Role::Main          ();
 use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Wx                      ();
+use Padre::Logger;
 
 our $VERSION = '0.69';
 our @ISA     = qw{
@@ -36,6 +37,7 @@ use Class::XSAccessor {
 # Creates the Directory Left Panel with a Search field
 # and the Directory Browser
 sub new {
+	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
 	my $main  = shift;
 
@@ -128,6 +130,7 @@ sub view_label {
 }
 
 sub view_close {
+	TRACE( $_[0] ) if DEBUG;
 	shift->main->show_directory(0);
 }
 
@@ -141,6 +144,7 @@ sub view_close {
 # If it is a project, caches search field content while it is typed and
 # searchs for files that matchs the type word.
 sub on_text {
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $search = $self->{search};
 
@@ -176,6 +180,7 @@ sub searching {
 # Updates the gui, so each compoment can update itself
 # according to the new state.
 sub clear {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $lock = $self->main->lock('UPDATE');
 	$self->{search}->SetValue('');
@@ -188,6 +193,7 @@ sub clear {
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# NOTE: Without a file open, Padre does not consider itself to
@@ -270,6 +276,7 @@ sub refresh {
 }
 
 sub refresh_response {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
 	$self->{files} = $task->{model};
@@ -278,6 +285,7 @@ sub refresh_response {
 
 # This is a primitive first attempt to get familiar with the tree API
 sub render {
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $tree   = $self->tree;
 	my $root   = $tree->GetRootItem;
@@ -352,6 +360,7 @@ sub render {
 # Filter the file list to remove all files that do not match a search term
 # TO DO: I believe that the two phases shown below can be merged into one.
 sub filter {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $term = shift;
 
@@ -405,6 +414,7 @@ sub side {
 # Come up with a saner approach to migrating views between arbitrary panels
 # that we can expand out so all views can potentially be moved around.
 sub move {
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $main   = $self->main;
 	my $config = $main->config;
