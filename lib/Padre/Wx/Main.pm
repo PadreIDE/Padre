@@ -5736,7 +5736,7 @@ sub timer_check_overwrite {
 		title      => Wx::gettext('Reload some files'),
 		list_title => Wx::gettext('&Select files to reload:'),
 		buttons    => [ [ Wx::gettext('&Reload selected'), sub { $_[0]->main->reload_some(@_); } ] ],
-	)->show;
+	);
 	$winlist->{no_fresh} = 1;
 	$winlist->show;
 
