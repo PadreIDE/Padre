@@ -255,15 +255,16 @@ sub refresh {
 		$self->{search}->SetValue('');
 		$self->{search}->ShowCancelButton(0);
 		$self->render;
-	}
 
-	# Trigger the refresh task to update the temporary state
-	$self->task_request(
-		task      => 'Padre::Wx::Directory::Task',
-		callback  => 'refresh_response',
-		recursive => 1,
-		@options,
-	);
+		# Trigger the refresh task to update the temporary state
+		$self->task_request(
+			task      => 'Padre::Wx::Directory::Task',
+			callback  => 'refresh_response',
+			recursive => 1,
+			@options,
+		);
+
+	}
 
 	return 1;
 }
@@ -333,7 +334,7 @@ sub render {
 	# Apply the same Expand logic above to any remaining stack elements
 	while (@stack) {
 		my $complete = pop @stack;
-		if ( $search or $expand->{ $tree->GetPlData($complete)->unix } ) {
+		if ( $search or $expand->{ $tree->GetPlData($complete)->unix || 0 } ) {
 			$tree->Expand($complete);
 		}
 	}
