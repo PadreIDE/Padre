@@ -105,7 +105,7 @@ sub new {
 	if ( exists $self->{owner} ) {
 		# Check parameters relevant to our optional owner
 		if ( exists $self->{on_message} ) {
-			my $method = Params::Util::IDENTIFIER($self->{on_message});
+			my $method = Params::Util::_IDENTIFIER($self->{on_message});
 			unless ( $method ) {
 				die "Task 'on_message' must be a method name";
 			}

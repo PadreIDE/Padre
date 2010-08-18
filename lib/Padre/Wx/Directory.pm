@@ -49,6 +49,9 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
+	# Modes
+	$self->{searching} = 0;
+
 	# Where is the current root directory of the tree
 	$self->{root} = '';
 
@@ -119,6 +122,30 @@ sub new {
 
 
 ######################################################################
+# Padre::Role::Task Methods
+
+sub task_request {
+	my $self    = shift;
+	my $current = $self->current;
+	my $project = $current->project;
+	if ( $project ) {
+		return $self->SUPER::task_request(
+			@_,
+			project => $project,
+		);
+	} else {
+		return $self->SUPER::task_request(
+			@_,
+			root => $current->config->main_directory_root,
+		);
+	}
+}
+
+
+
+
+
+######################################################################
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
@@ -148,8 +175,19 @@ sub on_text {
 	my $self   = shift;
 	my $search = $self->{search};
 
-	# Show or hide the cancel button
-	$search->ShowCancelButton( $search->IsEmpty ? 0 : 1 );
+	# Are we leaving search mode
+	if ( $self->{searching} and $search->IsEmpty ) {
+		# Enter directory mode
+		$self->{searching} = 0;
+		$search->ShowCancelButton(0);
+	}
+
+	if ( ! $self->{searching} and ! $search->IsEmpty ) {
+		# Entering search mode
+		$self->{searching} = 1;
+		$search->ShowCancelButton(1);
+		return $self->find;
+	}
 
 	# The changed search state requires a rerender
 	$self->render;
@@ -189,6 +227,13 @@ sub clear {
 	return;
 }
 
+
+
+
+
+######################################################################
+# Directory Tree Methods
+
 # Updates the gui if needed, calling Searcher and Browser respectives
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
@@ -202,17 +247,10 @@ sub refresh {
 	my $current = $self->current;
 	my $config  = $current->config;
 	my $project = $current->project;
-	my $root    = '';
+	my $root    = $project ? $project->root : $config->main_directory_root;
 	my @options = (
 		order => $config->main_directory_order,
 	);
-	if ($project) {
-		$root = $project->root;
-		push @options, ( project => $project );
-	} else {
-		$root = $config->main_directory_root;
-		push @options, ( root => $root );
-	}
 
 	# Before we change anything, store the expansion state
 	unless ( $self->searching ) {
@@ -265,7 +303,7 @@ sub refresh {
 		# Trigger the refresh task to update the temporary state
 		$self->task_request(
 			task      => 'Padre::Wx::Directory::Task',
-			on_finish => 'refresh_response',
+			on_finish => 'refresh_finish',
 			recursive => 1,
 			@options,
 		);
@@ -275,7 +313,7 @@ sub refresh {
 	return 1;
 }
 
-sub refresh_response {
+sub refresh_finish {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
@@ -385,6 +423,50 @@ sub filter {
 	}
 
 	return @match;
+}
+
+
+
+
+
+######################################################################
+# Directory Search Methods
+
+sub find {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	$self->searching or return;
+
+	# Switch tasks to the find task
+	$self->task_reset;
+	$self->task_request(
+		task       => 'Padre::Wx::Directory::Search',
+		on_message => 'find_message',
+		on_finish  => 'find_finish',
+		filter     => $self->term,
+	);
+
+	# Make sure no existing files are listed
+	$self->{tree}->DeleteChildren( $self->{tree}->GetRootItem );
+
+	return;
+}
+
+sub find_message {
+	TRACE( $_[0] ) if DEBUG;
+	my $self    = shift;
+	my $task    = shift;
+	my $message = shift;
+
+	# Add the matched file to the tree
+}
+
+sub find_finish {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+
+	# Done... but we don't need to do anything
 }
 
 
