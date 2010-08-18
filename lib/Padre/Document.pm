@@ -559,6 +559,9 @@ sub load_file {
 		TRACE("Loading file '$name'");
 	}
 
+	# Show the file-changed-dialog again after the file was (re)loaded:
+	delete $self->{_already_popup_file_changed};
+
 	# check if file exists
 	if ( !$file->exists ) {
 
@@ -735,6 +738,9 @@ sub autoclean {
 
 sub save_file {
 	my $self = shift;
+
+	# Show the file-changed-dialog again after the file was saved:
+	delete $self->{_already_popup_file_changed};
 
 	# If padre is run on files that have no project
 	# I.E Padre foo.pl &

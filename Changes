@@ -43,6 +43,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       down the worker thread's message queue, and they will be tunneled
       through to the task, which can retrieve them Erlang-style via a
       dequeue method (ADAMK)
+    - Don't re-scan a project dir while changing tabs within one
+      project (SEWI)
+    - Show the file-changed-dialog only once per file update (SEWI)
 
 0.68 2010.07.28 - Unstable - Post Birthday Hackathon Weekend
     - Fixed rare bug in t/23_task_chain.t (CHORNY)

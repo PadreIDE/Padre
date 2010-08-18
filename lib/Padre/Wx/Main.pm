@@ -5740,8 +5740,6 @@ sub timer_check_overwrite {
 	$winlist->{no_fresh} = 1;
 	$winlist->show;
 
-	$doc->{_already_popup_file_changed} = 0;
-
 	return;
 }
 
