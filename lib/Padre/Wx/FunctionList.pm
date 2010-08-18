@@ -261,7 +261,7 @@ sub refresh {
 }
 
 # Set an updated method list from the task
-sub task_response {
+sub task_finish {
 	my $self = shift;
 	my $task = shift;
 	my $list = $task->{list} or return;

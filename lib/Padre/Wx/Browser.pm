@@ -314,7 +314,7 @@ sub display {
 	}
 }
 
-sub task_response {
+sub task_finish {
 	my $self     = shift;
 	my $task     = shift;
 	my $then     = $task->{then};

@@ -97,7 +97,7 @@ sub view_close {
 ######################################################################
 # Padre::Role::Task Methods
 
-sub task_response {
+sub task_finish {
 	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;

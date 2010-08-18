@@ -21,6 +21,7 @@ use Scalar::Util ();
 use Padre::Logger;
 
 our $VERSION = '0.69';
+our $BACKCOMPATIBLE = '0.69';
 
 # Use a shared sequence for object revisioning greatly
 # simplifies the indexing process.
@@ -93,10 +94,10 @@ sub task_request {
 
 # By default explode to highlight task requesters that
 # have not implemented an appropriate response handler.
-sub task_response {
+sub task_finish {
 	my $class = ref( $_[0] ) || $_[0];
 	my $task  = ref( $_[1] ) || $_[1];
-	die "Unhandled task_response for $class (recieved $task)";
+	die "Unhandled task_finish for $class (recieved $task)";
 }
 
 # Pass task messages through to the owner

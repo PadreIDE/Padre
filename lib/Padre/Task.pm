@@ -111,7 +111,7 @@ sub new {
 		}
 		my $callback = $self->callback;
 		unless ( $self->{owner}->can($callback) ) {
-			die "Task callback '$callback' is not defined";
+			die "Task callback '$callback' is not implemented";
 		}
 		$self->{owner} = $self->{owner}->task_revision;
 	}
@@ -132,7 +132,7 @@ sub owner {
 }
 
 sub callback {
-	$_[0]->{callback} || 'task_response';
+	$_[0]->{callback} || 'task_finish';
 }
 
 

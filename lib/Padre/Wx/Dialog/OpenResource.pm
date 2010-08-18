@@ -505,7 +505,7 @@ sub search {
 	return;
 }
 
-sub task_response {
+sub task_finish {
 	my $self    = shift;
 	my $task    = shift;
 	my $matched = $task->{matched} or return;

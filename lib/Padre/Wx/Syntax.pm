@@ -344,7 +344,7 @@ sub refresh {
 	);
 }
 
-sub task_response {
+sub task_finish {
 	my $self = shift;
 	my $task = shift;
 	$self->{model} = $task->{model};
