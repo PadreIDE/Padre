@@ -476,9 +476,9 @@ sub find_unmatched_brace {
 
 	# Fire the task
 	$self->task_request(
-		task     => 'Padre::Task::FindUnmatchedBrace',
-		document => $self,
-		callback => 'find_unmatched_brace_response',
+		task      => 'Padre::Task::FindUnmatchedBrace',
+		document  => $self,
+		on_finish => 'find_unmatched_brace_response',
 	);
 
 	return;
@@ -579,10 +579,10 @@ sub find_variable_declaration {
 
 	# Create a new object of the task class and schedule it
 	$self->task_request(
-		task     => 'Padre::Task::FindVariableDeclaration',
-		document => $self,
-		location => $location,
-		callback => 'find_variable_declaration_response',
+		task      => 'Padre::Task::FindVariableDeclaration',
+		document  => $self,
+		location  => $location,
+		on_finish => 'find_variable_declaration_response',
 	);
 
 	return;
@@ -863,7 +863,7 @@ sub rename_variable {
 		document    => $self,
 		location    => $location,
 		replacement => $replacement,
-		callback    => 'rename_variable_response',
+		on_finish   => 'rename_variable_response',
 	);
 
 	return;
@@ -912,7 +912,7 @@ sub introduce_temporary_variable {
 		varname        => $name,
 		start_location => $editor->GetSelectionStart,
 		end_location   => $editor->GetSelectionEnd - 1,
-		callback       => 'introduce_temporary_variable_response',
+		on_finish      => 'introduce_temporary_variable_response',
 	);
 
 	return;

@@ -102,17 +102,28 @@ sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
 
-	# Check parameters for the object that owns the task
 	if ( exists $self->{owner} ) {
-		if ( exists $self->{callback} ) {
-			unless ( Params::Util::_IDENTIFIER( $self->{callback} ) ) {
-				die "Task 'callback' must be a method name";
+		# Check parameters relevant to our optional owner
+		if ( exists $self->{on_message} ) {
+			my $method = Params::Util::IDENTIFIER($self->{on_message});
+			unless ( $method ) {
+				die "Task 'on_message' must be a method name";
+			}
+			unless ( $self->{owner}->can($method) ) {
+				die "The on_message handler '$method' is not implemented";
 			}
 		}
-		my $callback = $self->callback;
-		unless ( $self->{owner}->can($callback) ) {
-			die "Task callback '$callback' is not implemented";
+		if ( exists $self->{on_finish} ) {
+			unless ( Params::Util::_IDENTIFIER( $self->{on_finish} ) ) {
+				die "Task 'on_finish' must be a method name";
+			}
 		}
+		my $method = $self->on_finish;
+		unless ( $self->{owner}->can($method) ) {
+			die "Task on_finish '$method' is not implemented";
+		}
+
+		# Save the numeric identifier of our owner
 		$self->{owner} = $self->{owner}->task_revision;
 	}
 
@@ -131,8 +142,12 @@ sub owner {
 	Padre::Role::Task->task_owner( $_[0]->{owner} );
 }
 
-sub callback {
-	$_[0]->{callback} || 'task_finish';
+sub on_message {
+	$_[0]->{on_message};
+}
+
+sub on_finish {
+	$_[0]->{on_finish} || 'task_finish';
 }
 
 
@@ -198,6 +213,26 @@ sub run {
 	return 1;
 }
 
+# Called in the parent thread in response to a message from the child
+# thread.
+# Variables change d in the C<run> method will NOT be available in the
+# C<message> method. The only information available are the variables
+# in the task before it was sent to the child, and the content of the
+# message.
+# Any changes made to the task object will be lost when the task
+# completes execution in the child thread.
+sub message {
+	my $self = shift;
+
+	if ( $self->{owner} ) {
+		my $owner  = $self->owner or return;
+		my $method = $self->on_message or return;
+		$owner->$method($self, @_);
+	}
+
+	return;
+}
+
 # Called in the parent thread immediately after the task has
 # completed and been passed back to the parent.
 # Variables saved to the object in the C<run> method will be
@@ -208,12 +243,12 @@ sub finish {
 	my $self = shift;
 
 	if ( $self->{owner} ) {
-		my $owner = $self->owner or return;
-		my $callback = $self->callback;
-		$owner->$callback($self);
+		my $owner  = $self->owner or return;
+		my $method = $self->on_finish;
+		$owner->$method($self);
 	}
 
-	return 1;
+	return;
 }
 
 1;
