@@ -49,6 +49,7 @@ my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	62-directory-task.t
 	63-directory-project.t
 	83-autosave.t
+	85-commandline.t
 	92-padre-file.t
 	93-padre-filename-win.t
 	94-padre-file-remote.t
@@ -62,7 +63,7 @@ foreach my $t_file (@t_files) {
 		$Test->skip($t_file);
 	} else {
 		my $content = read_file($t_file);
-		ok $content =~ qr/PADRE_HOME|use\s+t::lib::Padre/, $t_file;
+		ok $content =~ qr/PADRE_HOME|use\s+t::lib::Padre/, "Having PADRE_HOME or use t::lib::Padre $t_file";
 	}
 }
 
