@@ -190,7 +190,7 @@ sub on_text {
 	}
 
 	# The changed search state requires a rerender
-	$self->render;
+	$self->refresh_render;
 }
 
 
@@ -298,7 +298,7 @@ sub refresh {
 		# Flush the search box and rerender the tree
 		$self->{search}->SetValue('');
 		$self->{search}->ShowCancelButton(0);
-		$self->render;
+		$self->refresh_render;
 
 		# Trigger the refresh task to update the temporary state
 		$self->task_request(
@@ -318,20 +318,16 @@ sub refresh_finish {
 	my $self = shift;
 	my $task = shift;
 	$self->{files} = $task->{model};
-	$self->render;
+	$self->refresh_render;
 }
 
 # This is a primitive first attempt to get familiar with the tree API
-sub render {
+sub refresh_render {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $tree   = $self->tree;
 	my $root   = $tree->GetRootItem;
 	my $expand = $self->{expand};
-
-	# Prepare search mode if needed
-	my $search = $self->searching;
-	my @files = $search ? $self->filter( $self->term ) : @{ $self->{files} };
 
 	# Flush the old tree contents
 	# TO DO: This is inefficient, upgrade to something that does the
@@ -342,8 +338,9 @@ sub render {
 
 	# Fill the new tree
 	my @stack = ();
+	my @files = @{$self->{files}};
 	while (@files) {
-		my $path = shift @files;
+		my $path  = shift @files;
 		my $image = $path->type ? 'folder' : 'package';
 		while (@stack) {
 
@@ -354,7 +351,7 @@ sub render {
 			# We have finished filling the directory.
 			# Now it (maybe) has children, we can expand it.
 			my $complete = pop @stack;
-			if ( $search or $expand->{ $tree->GetPlData($complete)->unix } ) {
+			if ( $expand->{ $tree->GetPlData($complete)->unix } ) {
 				$tree->Expand($complete);
 			}
 		}
@@ -380,49 +377,12 @@ sub render {
 	# Apply the same Expand logic above to any remaining stack elements
 	while (@stack) {
 		my $complete = pop @stack;
-		if ( $search or $expand->{ $tree->GetPlData($complete)->unix || 0 } ) {
+		if ( $expand->{ $tree->GetPlData($complete)->unix || 0 } ) {
 			$tree->Expand($complete);
 		}
 	}
 
-	# When in search mode, force the scroll position to the top after
-	# every refresh. It tends to want to scroll to the bottom.
-	if ($search) {
-		my ( $first, $cookie ) = $tree->GetFirstChild($root);
-		$tree->ScrollTo($first) if $first;
-	}
-
 	return 1;
-}
-
-# Filter the file list to remove all files that do not match a search term
-# TO DO: I believe that the two phases shown below can be merged into one.
-sub filter {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $term = shift;
-
-	# Apply a simple substring match on the file name only
-	my $quote = quotemeta $term;
-	my $regex = qr/$quote/i;
-	my @match =
-		grep { $_->is_directory or $_->name =~ $regex } @{ $self->{files} };
-
-	# Prune empty directories
-	# NOTE: This is tricky and hard to make sense of, but damned fast :)
-	foreach my $i ( reverse 0 .. $#match ) {
-		my $path  = $match[$i];
-		my $after = $match[ $i + 1 ];
-		my $prune = (
-			$path->is_directory and not( defined $after
-				and $after->depth - $path->depth == 1 )
-		);
-		if ($prune) {
-			splice @match, $i, 1;
-		}
-	}
-
-	return @match;
 }
 
 
