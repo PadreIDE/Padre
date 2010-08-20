@@ -121,18 +121,29 @@ sub on_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $method = shift;
+	my $task   = $self->{task};
 
-	# Special case for printing a simple message to the main window
-	# status bar, without needing to pollute the task classes.
-	if ( $method eq 'STATUS' and not $self->child ) {
-		require Padre::Current;
-		Padre::Current->main->status(@_);
-		return;
+	unless ( $self->child ) {
+		# Special case for printing a simple message to the main window
+		# status bar, without needing to pollute the task classes.
+		if ( $method eq 'STATUS' ) {
+			require Padre::Current;
+			Padre::Current->main->status(@_);
+			return;
+		}
+
+		# Special case for routing messages to the owner of a task
+		# rather than to the task itself.
+		if ( $method eq 'OWNER' ) {
+			my $owner  = $task->owner or return;
+			my $method = $task->on_message or return;
+			$owner->$method( $task, @_ );
+			return;
+		}
 	}
 
 	# Does the method exist
 	unless ( $self->{task}->can($method) ) {
-
 		# A method name provided directly by the Task
 		# doesn't exist in the Task. Naughty Task!!!
 		# Lacking anything more sane to do, squelch it.

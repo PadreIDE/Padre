@@ -213,26 +213,6 @@ sub run {
 	return 1;
 }
 
-# Called in the parent thread in response to a message from the child
-# thread.
-# Variables change d in the C<run> method will NOT be available in the
-# C<message> method. The only information available are the variables
-# in the task before it was sent to the child, and the content of the
-# message.
-# Any changes made to the task object will be lost when the task
-# completes execution in the child thread.
-sub message {
-	my $self = shift;
-
-	if ( $self->{owner} ) {
-		my $owner  = $self->owner or return;
-		my $method = $self->on_message or return;
-		$owner->$method($self, @_);
-	}
-
-	return;
-}
-
 # Called in the parent thread immediately after the task has
 # completed and been passed back to the parent.
 # Variables saved to the object in the C<run> method will be

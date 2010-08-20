@@ -33,6 +33,9 @@ sub new {
 	}
 
 	# Check params
+	unless ( defined $self->{skip} ) {
+		$self->{skip} = [];
+	}
 	unless ( defined $self->{order} ) {
 		$self->{order} = 'first';
 	}
@@ -89,7 +92,7 @@ sub run {
 			# Does the file name match the filter?
 			if ( $object->name =~ $filter ) {
 				# Send the matching file to the parent thread
-				$self->handle->message( file => $object );
+				$self->handle->message( OWNER => $object );
 			}
 			next;
 		}
