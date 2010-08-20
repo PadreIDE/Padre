@@ -9,7 +9,7 @@ use Padre::Logger;
 our $VERSION = '0.69';
 our @ISA     = 'Padre::Task';
 
-sub dequeue {
+sub dequeue_nb {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $handle = $self->handle or return 0;
