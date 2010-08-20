@@ -87,11 +87,8 @@ sub run {
 
 	# Recursively scan for files
 	while ( @queue ) {
-		# Abort the task if we've been disowned
-		return 1 if $self->disowned;
-
-		# Is this a file?
 		my $object = shift @queue;
+
 		if ( $object->is_file ) {
 			# Does the file name match the filter?
 			if ( $object->name =~ $filter ) {

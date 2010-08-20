@@ -100,11 +100,7 @@ our $COMPATIBLE = '0.65';
 
 sub new {
 	my $class = shift;
-	my $self  = bless {
-		queue => undef,
-		@_,
-		inbox => [ ],
-	}, $class;
+	my $self = bless {@_}, $class;
 
 	if ( exists $self->{owner} ) {
 		# Check parameters relevant to our optional owner
@@ -142,14 +138,6 @@ sub running {
 	defined $_[0]->{handle};
 }
 
-sub disowned {
-	return !! (
-		defined $_[0]->{handle}
-		and
-		$_[0]->{handle}->disowned
-	);
-}
-
 sub owner {
 	Padre::Role::Task->task_owner( $_[0]->{owner} );
 }
@@ -171,13 +159,13 @@ sub on_finish {
 
 # my $string = $task->as_string;
 sub as_string {
-	Storable::nfreeze($_[0]);
+	Storable::nfreeze( $_[0] );
 }
 
 # my $task = Class::Name->from_string($string);
 sub from_string {
 	my $class = shift;
-	my $self  = Storable::thaw($_[0]);
+	my $self  = Storable::thaw( $_[0] );
 	unless ( Scalar::Util::blessed($self) eq $class ) {
 
 		# Because this is an internal API we can be brutally

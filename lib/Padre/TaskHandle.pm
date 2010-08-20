@@ -24,9 +24,10 @@ our $SEQUENCE = 0;
 sub new {
 	TRACE( $_[0] ) if DEBUG;
 	return bless {
-		hid   => ++$SEQUENCE,
-		task  => $_[1],
-	}, $_[0];
+		hid  => ++$SEQUENCE,
+		task => $_[1],
+		},
+		$_[0];
 }
 
 sub hid {
@@ -44,6 +45,11 @@ sub child {
 	$_[0]->{child};
 }
 
+sub queue {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->{queue};
+}
+
 sub class {
 	TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
@@ -54,21 +60,6 @@ sub worker {
 	my $self = shift;
 	$self->{worker} = shift if @_;
 	return $self->{worker};
-}
-
-sub queue {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->{queue};
-}
-
-sub disowned {
-	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $queue   = $self->{queue} or return;
-	my $message = $queue->peek   or return;
-	$message->[0] eq 'cancel'    or return;
-	$queue->dequeue_nb;
-	return 1;
 }
 
 

@@ -12,7 +12,7 @@ our @ISA     = 'Padre::Task';
 sub dequeue {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
-	my $handle = $self->handle  or return 0;
+	my $handle = $self->handle or return 0;
 	my $queue  = $handle->queue or return 0;
 
 	# Check the message for valid structure
