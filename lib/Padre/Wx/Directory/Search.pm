@@ -64,9 +64,10 @@ sub run {
 	my $rule = Module::Manifest->new;
 	$rule->parse( skip => $self->{skip} );
 
-	# Prepare the file name filter
+	# Prepare the file name filter.
+	# Doing this case insensitive probably makes more sense.
 	my $filter = quotemeta $self->{filter};
-	$filter = qr/$filter/;
+	$filter = qr/$filter/i;
 
 	# WARNING!!!
 	# what should really happen here?
