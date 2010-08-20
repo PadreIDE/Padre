@@ -3,6 +3,7 @@ package Padre::Wx::Directory;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util                   ();
 use Padre::Cache                   ();
 use Padre::Role::Task              ();
 use Padre::Wx::Role::View          ();
@@ -175,22 +176,31 @@ sub on_text {
 	my $self   = shift;
 	my $search = $self->{search};
 
-	# Are we leaving search mode
-	if ( $self->{searching} and $search->IsEmpty ) {
-		# Enter directory mode
-		$self->{searching} = 0;
-		$search->ShowCancelButton(0);
+	if ( $self->{searching} ) {
+		if ( $search->IsEmpty ) {
+			# Leaving search mode
+			$self->{searching} = 0;
+			$search->ShowCancelButton(0);
+			$self->task_reset;
+			$self->refresh_render;
+		} else {
+			# Changing search term
+			$self->find;
+		}
+	} else {
+		if ( $search->IsEmpty ) {
+			# Nothing to do
+			# NOTE: Why would this even fire?
+		} else {
+			# Entering search mode
+			$self->{expand}    = $self->tree->expanded;
+			$self->{searching} = 1;
+			$search->ShowCancelButton(1);
+			$self->find;
+		}
 	}
 
-	if ( ! $self->{searching} and ! $search->IsEmpty ) {
-		# Entering search mode
-		$self->{searching} = 1;
-		$search->ShowCancelButton(1);
-		return $self->find;
-	}
-
-	# The changed search state requires a rerender
-	$self->refresh_render;
+	return 1;
 }
 
 
@@ -390,12 +400,12 @@ sub refresh_render {
 
 
 ######################################################################
-# Directory Search Methods
+# Incremental Search Methods
 
 sub find {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	$self->searching or return;
+	return unless $self->searching;
 
 	# Switch tasks to the find task
 	$self->task_reset;
@@ -412,13 +422,74 @@ sub find {
 	return;
 }
 
+# Add any matching file to the tree
 sub find_message {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $task    = shift;
-	my $message = shift;
+	my $self = shift;
+	my $task = shift;
+	my $file = Params::Util::_INSTANCE(shift, 'Padre::Wx::Directory::Path') or return;
 
-	# Add the matched file to the tree
+	# Find where we need to start creating nodes from
+	my $tree   = $self->tree;
+	my $cursor = $tree->GetRootItem;
+	my @base   = ();
+	my @dirs   = $file->path;
+	pop @dirs;
+	while ( @dirs ) {
+		my $name  = shift @dirs;
+		my $child = $tree->GetLastChild($cursor);
+		if ( $child->IsOk and $tree->GetPlData($child)->name eq $name ) {
+			$cursor = $child;
+			push @base, $name;
+		} else {
+			unshift @dirs, $name;
+			last;
+		}
+	}
+
+	# Will we need to expand anything at the end?
+	my $expand = $cursor if @dirs;
+
+	# Because this should never be called from inside some larger
+	# update locker, lets risk the use of our own more targetted locking
+	# instead of using the official main->lock functionality.
+	# NOTE: It will HOPEFULLY be faster than the main one.
+	# NOTE: If we could avoid the scrollback snapping around on its own,
+	# we probably wouldn't need this lock at all.
+	my $scroll = $tree->GetScrollPos( Wx::wxVERTICAL );
+	my $lock   = Wx::WindowUpdateLocker->new( $tree );
+
+	# Create any new child directories
+	while ( @dirs  ) {
+		my $name = shift @dirs;
+		my $path = Padre::Wx::Directory::Path->directory( @base, $name );
+		my $item = $tree->AppendItem(
+			$cursor,                      # Parent node
+			$path->name,                  # Label
+			$tree->{images}->{folder},    # Icon
+			-1,                           # Wx identifier
+			Wx::TreeItemData->new($path), # Embedded data
+		);
+		$cursor = $item;
+		push @base, $name;
+	}
+
+	# Create the file itself
+	$tree->AppendItem(
+		$cursor,
+		$file->name,
+		$tree->{images}->{package},
+		-1,
+		Wx::TreeItemData->new($file),
+	);
+
+	# Expand anything we created.
+	$tree->ExpandAllChildren( $expand ) if $expand;
+
+	# Make sure the scroll position has not changed
+	$tree->SetScrollPos( Wx::wxVERTICAL, 0, 0 );
+
+	return 1;
 }
 
 sub find_finish {

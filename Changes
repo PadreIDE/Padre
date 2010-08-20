@@ -2,7 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.70 To be released
-
+    - Directory search now runs incrementally via background task (ADAMK)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
