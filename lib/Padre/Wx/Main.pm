@@ -1594,7 +1594,7 @@ sub change_locale {
 	my $self = shift;
 	my $name = shift;
 	unless ( defined $name ) {
-		$name = Padre::Locale::system_rfc4646();
+		$name = Padre::Locale::system_rfc4646 || Padre::Locale::last_resort_rfc4646;
 	}
 	TRACE("Changing locale to '$name'") if DEBUG;
 

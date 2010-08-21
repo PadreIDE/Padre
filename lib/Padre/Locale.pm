@@ -172,6 +172,16 @@ BEGIN {
 			supported => 1,
 		},
 
+		'da' => {
+			gettext   => _T('Danish'),
+			utf8text  => 'Dansk',
+			iso639    => 'da',
+			iso3166   => 'DA',
+			wxid      => Wx::wxLANGUAGE_DANISH,
+			fallback  => [ 'en-gb', 'en-us' ],
+			supported => 0,
+		},
+
 		'de' => {
 			gettext   => _T('German'),
 			utf8text  => 'Deutsch',
@@ -475,9 +485,11 @@ BEGIN {
 use constant WX => Wx::Locale::GetSystemLanguage();
 
 use constant system_rfc4646 => List::Util::first {
+	defined $RFC4646{$_}->{wxid} &&
 	$RFC4646{$_}->{wxid} == WX;
-}
-grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
+} sort keys %RFC4646;
+
+use constant last_resort_rfc4646 => 'en-gb';
 
 #####################################################################
 # Locale 2.0 Implementation
