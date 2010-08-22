@@ -737,7 +737,7 @@ sub _find_method {
 					close $fh;
 					my @subs = $lines =~ /sub\s+(\w+)/g;
 					if ( $lines =~ /use MooseX::Declare;/ ) {
-						my @subs = $lines =~ /\bmethod\s+(\w+)/g;
+						push @subs, ($lines =~ /\bmethod\s+(\w+)/g);
 					}
 
 
