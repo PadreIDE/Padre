@@ -12,11 +12,20 @@ our @ISA     = 'Padre::Task';
 sub dequeue {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
-	my $handle = $self->handle  or return 0;
-	my $queue  = $handle->queue or return 0;
+	my $handle = $self->handle or return 0;
+
+	# Pull from the inbox first
+	my $inbox  = $handle->inbox or return 0;
+	if ( @$inbox ) {
+		return shift @$inbox;
+	}
+
+	# Pull off the queue
+	my $queue = $handle->queue or return 0;
+	push @$inbox, $queue->dequeue;
+	my $message = shift @$inbox or return 0;
 
 	# Check the message for valid structure
-	my $message = $queue->dequeue or return 0;
 	unless ( Params::Util::_ARRAY($message) ) {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;
@@ -33,10 +42,19 @@ sub dequeue_nb {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $handle = $self->handle or return 0;
-	my $queue  = $handle->queue or return 0;
+
+	# Pull from the inbox first
+	my $inbox  = $handle->inbox or return 0;
+	if ( @$inbox ) {
+		return shift @$inbox;
+	}
+
+	# Pull off the queue, non-blocking
+	my $queue = $handle->queue or return 0;
+	push @$inbox, $queue->dequeue_nb;
+	my $message = shift @$inbox or return 0;
 
 	# Check the message for valid structure
-	my $message = $queue->dequeue_nb or return 0;
 	unless ( Params::Util::_ARRAY($message) ) {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;

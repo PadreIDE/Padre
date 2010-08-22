@@ -4,6 +4,10 @@
 # Done in similar style to the task master to help encourage
 # implementation similarity in the future.
 
+# BEGIN {
+# $Padre::Logger::DEBUG = 1;
+# }
+
 use strict;
 use warnings;
 use Test::More;
@@ -13,18 +17,13 @@ use Test::More;
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
-
-		#done_testing;
 		exit 0;
 	}
+	plan tests => 19;
 }
-
-
+use Test::NoWarnings;
 use Padre::TaskThread ();
 use Padre::Logger;
-
-plan tests => 20;
-use_ok('Test::NoWarnings');
 
 # Do we start with no threads as expected
 is( scalar( threads->list ), 0, 'One thread exists' );
@@ -42,7 +41,7 @@ SCOPE: {
 	my $thread = Padre::TaskThread->new->spawn;
 	isa_ok( $thread, 'Padre::TaskThread' );
 	is( $thread->wid, 1, '->wid ok' );
-	isa_ok( $thread->queue,  'Thread::Queue' );
+	isa_ok( $thread->queue,  'Padre::TaskQueue' );
 	isa_ok( $thread->thread, 'threads' );
 	ok( !$thread->is_thread, '->is_thread is false' );
 	my $tid = $thread->thread->tid;

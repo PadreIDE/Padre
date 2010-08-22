@@ -142,7 +142,6 @@ requires 'Text::Balanced'           => '2.01';
 requires 'Text::Diff'               => '0.35';
 requires 'Text::FindIndent'         => '0.06';
 requires 'Time::HiRes'              => '1.9718';
-requires 'Thread::Queue'            => '2.11';
 requires 'threads'                  => '1.71';
 requires 'threads::shared'          => '1.26';
 requires 'URI'                      => '0';

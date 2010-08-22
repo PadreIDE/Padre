@@ -9,6 +9,7 @@ use warnings;
 use Scalar::Util               ();
 use Padre::Task                ();
 use Padre::Wx::Directory::Path ();
+use Padre::Logger;
 
 our $VERSION = '0.69';
 our @ISA     = 'Padre::Task';
@@ -23,6 +24,7 @@ use constant NO_WARN => 1;
 # Constructor
 
 sub new {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift->SUPER::new(@_);
 
 	# Automatic project integration
@@ -54,6 +56,7 @@ sub new {
 # Padre::Task Methods
 
 sub run {
+	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
 	my $self  = shift;
 	my $root  = $self->{root};
@@ -88,7 +91,10 @@ sub run {
 	# Recursively scan for files
 	while ( @queue ) {
 		# Abort the task if we've been disowned
-		return 1 if $self->disowned;
+		if ( $self->disowned ) {
+			TRACE( 'Padre::Wx::Directory::Search task has been disowned' ) if DEBUG;
+			return 1;
+		}
 
 		# Is this a file?
 		my $object = shift @queue;

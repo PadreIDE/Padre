@@ -17,7 +17,8 @@ results fed back to them, if the answer is still relevant.
 use 5.008005;
 use strict;
 use warnings;
-use Scalar::Util ();
+use Scalar::Util   ();
+use Padre::Current ();
 use Padre::Logger;
 
 our $VERSION = '0.69';
@@ -62,6 +63,7 @@ sub task_reset {
 	my $self = shift;
 	if ( $self->{task_revision} ) {
 		delete $INDEX{ $self->{task_revision} };
+		Padre::Current->ide->task_manager->disown( $self->{task_revision} );
 	}
 	$self->{task_revision} = ++$SEQUENCE;
 }

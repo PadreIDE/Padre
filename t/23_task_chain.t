@@ -2,10 +2,11 @@
 
 # Start a worker thread from inside another thread
 
-#BEGIN {
-#$Padre::TaskThread::DEBUG = 1;
-#$Padre::TaskWorker::DEBUG = 1;
-#}
+# BEGIN {
+# $Padre::Logger::DEBUG = 1;
+# $Padre::TaskThread::DEBUG = 1;
+# $Padre::TaskWorker::DEBUG = 1;
+# }
 
 use strict;
 use warnings;

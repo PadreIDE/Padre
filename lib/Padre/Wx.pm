@@ -9,7 +9,6 @@ use warnings;
 # Threading must be loaded before Wx loads
 use threads;
 use threads::shared;
-use Thread::Queue 2.11;
 
 # Load every exportable constant into here, so that they come into
 # existence in the Wx:: packages, allowing everywhere else in the code to

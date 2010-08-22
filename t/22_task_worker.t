@@ -4,14 +4,13 @@
 # Done in similar style to the task master to help encourage
 # implementation similarity in the future.
 
-#BEGIN {
-#$Padre::TaskWorker::DEBUG = 1;
-#}
+# BEGIN {
+# $Padre::Logger::DEBUG = 1;
+# }
 
 use strict;
 use warnings;
 use Test::More;
-
 
 ######################################################################
 # This test requires a DISPLAY to run
@@ -20,14 +19,11 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 19;
 }
-
+use Test::NoWarnings;
 use Padre::TaskThread ();
 use Padre::Logger;
-
-
-plan tests => 20;
-use_ok('Test::NoWarnings');
 
 # Do we start with no threads as expected
 is( scalar( threads->list ), 0, 'One thread exists' );
@@ -45,7 +41,7 @@ SCOPE: {
 	my $thread = Padre::TaskThread->new->spawn;
 	isa_ok( $thread, 'Padre::TaskThread' );
 	is( $thread->wid, 1, '->wid ok' );
-	isa_ok( $thread->queue,  'Thread::Queue' );
+	isa_ok( $thread->queue,  'Padre::TaskQueue' );
 	isa_ok( $thread->thread, 'threads' );
 	ok( !$thread->is_thread, '->is_thread is false' );
 	my $tid = $thread->thread->tid;
@@ -57,16 +53,16 @@ SCOPE: {
 	is( $threads[0]->tid, $tid, 'Found the expected thread id' );
 
 	# Initially, the thread should be running
-	ok( $thread->is_running,   'Thread is_running' );
-	ok( !$thread->is_joinable, 'Thread is not is_joinable' );
-	ok( !$thread->is_detached, 'Thread is not is_detached' );
+	ok(   $thread->is_running,  'Thread is_running'         );
+	ok( ! $thread->is_joinable, 'Thread is not is_joinable' );
+	ok( ! $thread->is_detached, 'Thread is not is_detached' );
 
 	# It should stay running
 	TRACE("Pausing to allow clean thread startup...") if DEBUG;
 	sleep 0.1;
-	ok( $thread->is_running,   'Thread is_running' );
-	ok( !$thread->is_joinable, 'Thread is not is_joinable' );
-	ok( !$thread->is_detached, 'Thread is not is_detached' );
+	ok(   $thread->is_running,   'Thread is_running'        );
+	ok( ! $thread->is_joinable, 'Thread is not is_joinable' );
+	ok( ! $thread->is_detached, 'Thread is not is_detached' );
 
 	# Instruct the master to stop, and give it a brief time to do so.
 	ok( $thread->stop, '->stop ok' );

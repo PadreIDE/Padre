@@ -105,6 +105,13 @@ sub message {
 	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
 }
 
+# A cancel request that arrives when we are NOT active running a task
+# should be discarded with no consequence.
+sub cancel {
+	TRACE( $_[0] ) if DEBUG;
+	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

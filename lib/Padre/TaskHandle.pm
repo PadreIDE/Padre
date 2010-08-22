@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use threads;
 use threads::shared;
-use Thread::Queue 2.11;
 use Scalar::Util             ();
 use Storable                 ();
 use Padre::Wx::Role::Conduit ();
@@ -61,13 +60,19 @@ sub queue {
 	$_[0]->{queue};
 }
 
-sub disowned {
+sub inbox {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $queue   = $self->{queue} or return;
-	my $message = $queue->peek   or return;
-	$message->[0] eq 'cancel'    or return;
-	$queue->dequeue_nb;
+	$_[0]->{inbox};
+}
+
+sub disowned {
+	my $self  = shift;
+	my $inbox = $self->{inbox} or return;
+	my $queue = $self->{queue} or return;
+	push @$inbox, $queue->dequeue;
+	if ( $inbox->[0] and $inbox->[0]->[0] eq 'cancel' ) {
+		shift @$inbox;
+	}
 	return 1;
 }
 
@@ -243,6 +248,9 @@ sub run {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->task;
+
+	# Create the inbox for the handle
+	$self->{inbox} = [ ];
 
 	# Create a circular reference back from the task
 	$task->{handle} = $self;

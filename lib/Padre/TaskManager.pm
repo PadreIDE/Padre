@@ -226,6 +226,32 @@ sub step {
 	return $self->step;
 }
 
+sub disown {
+	TRACE( $_[0] ) if DEBUG;
+	my $self  = shift;
+	my $owner = shift;
+
+	# Remove any tasks from the pending queue
+	@{$self->{queue}} = grep {
+		! defined $_->{owner} or $_->{owner} != $owner
+	} @{$self->{queue}};
+
+	# Signal any active tasks to cooperatively abort themselves
+	foreach my $handle ( values %{$self->{handles}} ) {
+		my $task = $handle->{task} or next;
+		next unless $task->{owner};
+		next unless $task->{owner} == $owner;
+		foreach my $worker ( @{$self->{workers}} ) {
+			next unless $worker->{wid} == $handle->{wid};
+			TRACE("Sending 'cancel' message") if DEBUG;
+			$worker->send('cancel');
+			return 1;
+		}
+	}
+
+	return 1;
+}
+
 
 
 
