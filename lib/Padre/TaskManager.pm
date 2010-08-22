@@ -242,7 +242,9 @@ sub disown {
 		next unless $task->{owner};
 		next unless $task->{owner} == $owner;
 		foreach my $worker ( @{$self->{workers}} ) {
-			next unless $worker->{wid} == $handle->{wid};
+			TRACE("Worker wid = $worker->{wid}") if DEBUG;
+			TRACE("Handle wid = $handle->{wid}") if DEBUG;
+			next unless $worker->{wid} == $handle->{worker};
 			TRACE("Sending 'cancel' message") if DEBUG;
 			$worker->send('cancel');
 			return 1;
