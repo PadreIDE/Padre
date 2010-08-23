@@ -416,10 +416,29 @@ sub find {
 		filter     => $self->term,
 	);
 
+	# Create the find timer
+	$self->{find_timer} = Wx::Timer->new(
+		$self,
+		Padre::Wx::ID_TIMER_DIRECTORY
+	);
+	Wx::Event::EVT_TIMER(
+		$self,
+		Padre::Wx::ID_TIMER_ACTIONQUEUE,
+		sub {
+			$self->find_timer( $_[1], $_[2] );
+		},
+	);
+	$self->{find_timer}->Start(1000);
+
 	# Make sure no existing files are listed
 	$self->{tree}->DeleteChildren( $self->{tree}->GetRootItem );
 
 	return;
+}
+
+# We have hit a find_message render interval
+sub find_timer {
+	TRACE( $_[0] ) if DEBUG;
 }
 
 # Add any matching file to the tree
