@@ -142,14 +142,6 @@ sub running {
 	defined $_[0]->{handle};
 }
 
-sub cancel {
-	return !! (
-		defined $_[0]->{handle}
-		and
-		$_[0]->{handle}->cancel
-	);
-}
-
 sub owner {
 	Padre::Role::Task->task_owner( $_[0]->{owner} );
 }
@@ -241,6 +233,31 @@ sub finish {
 	}
 
 	return;
+}
+
+
+
+
+
+######################################################################
+# Birectional Communication
+
+sub cancel {
+	return !! (
+		defined $_[0]->{handle}
+		and
+		$_[0]->{handle}->cancel
+	);
+}
+
+sub dequeue {
+	return unless defined $_[0]->{handle};
+	return $_[0]->{handle}->dequeue;
+}
+
+sub dequeue_nb {
+	return unless defined $_[0]->{handle};
+	return $_[0]->{handle}->dequeue_nb;
 }
 
 1;

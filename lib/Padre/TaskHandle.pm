@@ -65,29 +65,6 @@ sub inbox {
 	$_[0]->{inbox};
 }
 
-sub cancel {
-	my $self = shift;
-
-	# Have we been cancelled but forgot to check till now?
-	return 1 if $self->{cancel};
-
-	# Without an inbox or queue we aren't running properly,
-	# so the question of whether we have been cancelled is moot.
-	my $inbox = $self->{inbox} or return;
-	my $queue = $self->{queue} or return;
-
-	# Fetch any new messages from the queue, scanning for cancel
-	foreach my $message ( $queue->dequeue_nb ) {
-		if ( $message->[0] eq 'cancel' ) {
-			$self->{cancel} = 1;
-			next;
-		}
-		push @$inbox, $message;
-	}
-
-	return !! $self->{cancel};
-}
-
 
 
 
@@ -293,6 +270,90 @@ sub started {
 sub stopped {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->message( 'STOPPED', $_[0]->{task} );
+}
+
+# Has this task been cancelled by the parent?
+sub cancel {
+	my $self = shift;
+
+	# Have we been cancelled but forgot to check till now?
+	return 1 if $self->{cancel};
+
+	# Without an inbox or queue we aren't running properly,
+	# so the question of whether we have been cancelled is moot.
+	my $inbox = $self->{inbox} or return;
+	my $queue = $self->{queue} or return;
+
+	# Fetch any new messages from the queue, scanning for cancel
+	foreach my $message ( $queue->dequeue_nb ) {
+		if ( $message->[0] eq 'cancel' ) {
+			$self->{cancel} = 1;
+			next;
+		}
+		push @$inbox, $message;
+	}
+
+	return !! $self->{cancel};
+}
+
+# Blocking check for inbound messages from the parent
+sub dequeue {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $handle = $self->handle or return 0;
+
+	# Pull from the inbox first
+	my $inbox  = $handle->inbox or return 0;
+	if ( @$inbox ) {
+		return shift @$inbox;
+	}
+
+	# Pull off the queue
+	my $queue = $handle->queue or return 0;
+	push @$inbox, $queue->dequeue;
+	my $message = shift @$inbox or return 0;
+
+	# Check the message for valid structure
+	unless ( Params::Util::_ARRAY($message) ) {
+		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
+		return 0;
+	}
+	unless ( _IDENTIFIER( $message->[0] ) ) {
+		TRACE('Non-method message received by worker thread') if DEBUG;
+		return 0;
+	}
+
+	return $message;
+}
+
+# Non-blocking check for inbound messages from our parent
+sub dequeue_nb {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $handle = $self->handle or return 0;
+
+	# Pull from the inbox first
+	my $inbox  = $handle->inbox or return 0;
+	if ( @$inbox ) {
+		return shift @$inbox;
+	}
+
+	# Pull off the queue, non-blocking
+	my $queue = $handle->queue or return 0;
+	push @$inbox, $queue->dequeue_nb;
+	my $message = shift @$inbox or return 0;
+
+	# Check the message for valid structure
+	unless ( Params::Util::_ARRAY($message) ) {
+		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
+		return 0;
+	}
+	unless ( _IDENTIFIER( $message->[0] ) ) {
+		TRACE('Non-method message received by worker thread') if DEBUG;
+		return 0;
+	}
+
+	return $message;
 }
 
 1;
