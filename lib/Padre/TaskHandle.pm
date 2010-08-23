@@ -29,22 +29,22 @@ sub new {
 }
 
 sub hid {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{hid};
 }
 
 sub task {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{task};
 }
 
 sub child {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{child};
 }
 
 sub class {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
 }
 
@@ -56,12 +56,12 @@ sub worker {
 }
 
 sub queue {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{queue};
 }
 
 sub inbox {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{inbox};
 }
 
@@ -69,9 +69,9 @@ sub disowned {
 	my $self  = shift;
 	my $inbox = $self->{inbox} or return;
 	my $queue = $self->{queue} or return;
-	TRACE("About to dequeue_nb") if DEBUG;
+	# TRACE("About to dequeue_nb") if DEBUG;
 	push @$inbox, $queue->dequeue_nb;
-	TRACE("Completed dequeue_nb") if DEBUG;
+	# TRACE("Completed dequeue_nb") if DEBUG;
 	if ( $inbox->[0] and $inbox->[0]->[0] eq 'cancel' ) {
 		shift @$inbox;
 		return 1;

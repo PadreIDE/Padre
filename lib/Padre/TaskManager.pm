@@ -48,22 +48,22 @@ sub new {
 }
 
 sub active {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{active};
 }
 
 sub threads {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{threads};
 }
 
 sub minimum {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{minimum};
 }
 
 sub maximum {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{maximum};
 }
 

@@ -51,18 +51,12 @@ sub conduit_init {
 sub signal {
 	TRACE( $_[0] ) if DEBUG;
 	$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) ) if $CONDUIT;
-	TRACE('->AddPendingEvent ok') if DEBUG;
 }
 
+# Pass the event through to the event handler
 sub on_signal {
-	TRACE( $_[0] ) if DEBUG;
 	TRACE( $_[1] ) if DEBUG;
-	my $self  = shift;
-	my $event = shift;
-
-	# Pass the event through to the event handler
-	$HANDLER->on_signal($event) if $HANDLER;
-
+	$HANDLER->on_signal($_[1]) if $HANDLER;
 	return 1;
 }
 
