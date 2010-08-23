@@ -6,6 +6,7 @@ use warnings;
 use threads;
 use threads::shared;
 use Scalar::Util             ();
+use Params::Util             ();
 use Storable                 ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
@@ -318,7 +319,7 @@ sub dequeue {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;
 	}
-	unless ( _IDENTIFIER( $message->[0] ) ) {
+	unless ( Params::Util::_IDENTIFIER( $message->[0] ) ) {
 		TRACE('Non-method message received by worker thread') if DEBUG;
 		return 0;
 	}
@@ -348,7 +349,7 @@ sub dequeue_nb {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;
 	}
-	unless ( _IDENTIFIER( $message->[0] ) ) {
+	unless ( Params::Util::_IDENTIFIER( $message->[0] ) ) {
 		TRACE('Non-method message received by worker thread') if DEBUG;
 		return 0;
 	}
