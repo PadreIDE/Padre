@@ -21,7 +21,7 @@ our $sub_search_re = qr/
 		|
 		$n$n=\w+.*?$n$n=cut\b(?=.*?$n$n)
 		|
-		(?:^|$n)\s*sub\s+(\w+(?:::\w+)*)
+		(?:^|$n)\s*(?:sub|func|method)\s+(\w+(?:::\w+)*)
 		)
 	/sx;
 

@@ -251,7 +251,7 @@ sub keywords {
 # triggering a "Variable length lookbehind not implemented" error.
 # return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
 sub get_function_regex {
-	qr/(?:^|[^# \t])[ \t]*(sub\s+$_[1])\b/;
+	qr/(?:^|[^# \t])[ \t]*((?:sub|func|method)\s+$_[1])\b/;
 }
 
 sub get_functions {
@@ -266,7 +266,7 @@ sub find_functions {
 		|
 		$n$n=\w+.*?$n$n=cut\b(?=.*?$n$n)
 		|
-		(?:^|$n)\s*sub\s+(\w+(?:::\w+)*)
+		(?:^|$n)\s*(?:sub|func|method)\s+(\w+(?:::\w+)*)
 		)
 	/sgx;
 }
@@ -738,6 +738,10 @@ sub _find_method {
 					my @subs = $lines =~ /sub\s+(\w+)/g;
 					if ( $lines =~ /use MooseX::Declare;/ ) {
 						push @subs, ($lines =~ /\bmethod\s+(\w+)/g);
+					}
+
+					if ( $lines =~ /use (?:MooseX::)?Method::Signatures;/ ) {
+						my @subs = $lines =~ /\b(?:method|func)\s+(\w+)/g;
 					}
 
 

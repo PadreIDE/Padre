@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 39 );
+	plan( tests => 42 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -221,6 +221,49 @@ SCOPE: {
 		],
 		'Found expected Perl functions',
 	);
+}
+
+# Regression test for get_functions on Method::Signatures-style method declarators
+SCOPE: {
+	my @test_files = (
+		{
+			'filename' => 'method_declarator_1.pm',
+			'methods'  => [qw/
+				_build__ca_state_holidays
+				is_holiday_or_weekend
+			/],
+		},
+		{
+			'filename' => 'method_declarator_2.pm',
+			'methods'  => [qw/
+				new
+				iso_date
+			/],
+		},
+		{
+			'filename' => 'method_declarator_3.pm',
+			'methods'  => [qw/
+				strip_ws
+			/],
+		},
+	);
+
+	foreach my $test_file ( @test_files ) {
+		my $editor = t::lib::Padre::Editor->new;
+		my $file   = catfile( $files, $test_file->{'filename'} );
+		my $doc    = Padre::Document->new(
+			filename => $file,
+		);
+		$doc->set_editor($editor);
+		$editor->configure_editor($doc);
+
+		my @functions = $doc->get_functions;
+		is_deeply(
+			\@functions,
+			$test_file->{'methods'},
+			'Found expected declarator-declared Perl functions',
+		);
+	}
 }
 
 # Tests for content intuition
