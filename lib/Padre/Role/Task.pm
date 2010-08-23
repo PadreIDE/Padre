@@ -63,7 +63,7 @@ sub task_reset {
 	my $self = shift;
 	if ( $self->{task_revision} ) {
 		delete $INDEX{ $self->{task_revision} };
-		Padre::Current->ide->task_manager->disown( $self->{task_revision} );
+		Padre::Current->ide->task_manager->cancel( $self->{task_revision} );
 	}
 	$self->{task_revision} = ++$SEQUENCE;
 }

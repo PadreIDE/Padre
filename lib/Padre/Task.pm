@@ -142,11 +142,11 @@ sub running {
 	defined $_[0]->{handle};
 }
 
-sub disowned {
+sub cancel {
 	return !! (
 		defined $_[0]->{handle}
 		and
-		$_[0]->{handle}->disowned
+		$_[0]->{handle}->cancel
 	);
 }
 

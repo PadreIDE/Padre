@@ -226,7 +226,7 @@ sub step {
 	return $self->step;
 }
 
-sub disown {
+sub cancel {
 	TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
 	my $owner = shift;

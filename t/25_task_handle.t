@@ -16,15 +16,13 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 42;
+	plan tests => 41;
 }
-
+use Test::NoWarnings;
 use Padre::TaskHandle     ();
 use Padre::Task::Addition ();
 use Padre::Logger;
 
-
-use_ok('Test::NoWarnings');
 
 
 

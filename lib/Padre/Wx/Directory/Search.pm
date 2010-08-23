@@ -90,9 +90,9 @@ sub run {
 
 	# Recursively scan for files
 	while ( @queue ) {
-		# Abort the task if we've been disowned
-		if ( $self->disowned ) {
-			TRACE( 'Padre::Wx::Directory::Search task has been disowned' ) if DEBUG;
+		# Abort the task if we've been cancelled
+		if ( $self->cancel ) {
+			TRACE( 'Padre::Wx::Directory::Search task has been cancelled' ) if DEBUG;
 			return 1;
 		}
 

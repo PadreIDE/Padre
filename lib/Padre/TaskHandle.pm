@@ -65,7 +65,7 @@ sub inbox {
 	$_[0]->{inbox};
 }
 
-sub disowned {
+sub cancel {
 	my $self  = shift;
 	my $inbox = $self->{inbox} or return;
 	my $queue = $self->{queue} or return;
