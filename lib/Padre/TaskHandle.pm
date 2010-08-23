@@ -66,17 +66,26 @@ sub inbox {
 }
 
 sub cancel {
-	my $self  = shift;
+	my $self = shift;
+
+	# Have we been cancelled but forgot to check till now?
+	return 1 if $self->{cancel};
+
+	# Without an inbox or queue we aren't running properly,
+	# so the question of whether we have been cancelled is moot.
 	my $inbox = $self->{inbox} or return;
 	my $queue = $self->{queue} or return;
-	# TRACE("About to dequeue_nb") if DEBUG;
-	push @$inbox, $queue->dequeue_nb;
-	# TRACE("Completed dequeue_nb") if DEBUG;
-	if ( $inbox->[0] and $inbox->[0]->[0] eq 'cancel' ) {
-		shift @$inbox;
-		return 1;
+
+	# Fetch any new messages from the queue, scanning for cancel
+	foreach my $message ( $queue->dequeue_nb ) {
+		if ( $message->[0] eq 'cancel' ) {
+			$self->{cancel} = 1;
+			next;
+		}
+		push @$inbox, $message;
 	}
-	return 0;
+
+	return !! $self->{cancel};
 }
 
 
