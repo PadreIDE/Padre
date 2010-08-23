@@ -3,7 +3,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.70 To be released
     - Directory search now runs incrementally via background task (ADAMK)
-    - The Task 2.0 API now supports full birectional communication (ADAMK)
+    - The Task 2.0 API now supports full birectional communication for all
+      task classes out the box. (ADAMK)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
