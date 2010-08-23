@@ -69,11 +69,14 @@ sub disowned {
 	my $self  = shift;
 	my $inbox = $self->{inbox} or return;
 	my $queue = $self->{queue} or return;
-	push @$inbox, $queue->dequeue;
+	TRACE("About to dequeue_nb") if DEBUG;
+	push @$inbox, $queue->dequeue_nb;
+	TRACE("Completed dequeue_nb") if DEBUG;
 	if ( $inbox->[0] and $inbox->[0]->[0] eq 'cancel' ) {
 		shift @$inbox;
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
 
