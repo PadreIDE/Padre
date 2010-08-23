@@ -10,6 +10,7 @@ our $VERSION = '0.20';
 # so this also happens in the script.
 use threads;
 use threads::shared;
+use Thread::Queue;
 
 require Padre;
 use Padre::Task;
