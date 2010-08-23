@@ -248,8 +248,9 @@ sub run {
 	# Call the task's run method
 	eval { $task->run(); };
 
-	# Clean up the circular
+	# Clean up the temps
 	delete $task->{handle};
+	delete $self->{inbox};
 
 	# Save the exception if thrown
 	if ($@) {

@@ -100,11 +100,7 @@ our $COMPATIBLE = '0.65';
 
 sub new {
 	my $class = shift;
-	my $self  = bless {
-		queue => undef,
-		@_,
-		inbox => [ ],
-	}, $class;
+	my $self  = bless { @_ }, $class;
 
 	if ( exists $self->{owner} ) {
 		# Check parameters relevant to our optional owner
