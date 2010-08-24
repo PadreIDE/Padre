@@ -9,6 +9,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       ("func", "method"), MooseX::Method::Signatures ("method"), and
       MooseX::Declare ("method") are now supported in the Outline and
       Functions view (DAPATRICK)
+    - Updated German translation (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
