@@ -8,6 +8,8 @@ use lib 'privinc';
 use inc::Module::Install 1.00;
 use POSIX qw(locale_h);
 
+# This is a test
+
 # Workaround for the fact that Module::Install loads the modules
 # into memory and when Test::NoWarnings is loaded it will hide
 # the warnings generated from that point.
