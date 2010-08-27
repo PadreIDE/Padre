@@ -10,6 +10,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       MooseX::Declare ("method") are now supported in the Outline and
       Functions view (DAPATRICK)
     - Updated German translation (ZENOG)
+    - Use Ctrl-PageUp/PageDown for cycling between documents - like in
+      Firefox and Google Chrome (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)

@@ -215,7 +215,7 @@ Padre::Wx::Action - Padre Action Object
       label      => 'Save',
       comment    => 'Saves the current file to disk',
       icon       => '...',
-      shortcut   => 'CTRL-S',
+      shortcut   => 'Ctrl-S',
       menu_event => sub { },
   );
 
