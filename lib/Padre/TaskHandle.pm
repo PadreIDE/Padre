@@ -312,10 +312,15 @@ sub dequeue {
 
 	# Pull off the queue
 	my $queue = $handle->queue or return 0;
-	push @$inbox, $queue->dequeue;
-	my $message = shift @$inbox or return 0;
+	foreach my $message ( $queue->dequeue ) {
+		if ( $message->[0] eq 'cancel' ) {
+			$self->{cancel} = 1;
+			next;
+		}
+	}
 
 	# Check the message for valid structure
+	my $message = shift @$inbox or return 0;
 	unless ( Params::Util::_ARRAY($message) ) {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;
@@ -335,17 +340,22 @@ sub dequeue_nb {
 	my $handle = $self->handle or return 0;
 
 	# Pull from the inbox first
-	my $inbox  = $handle->inbox or return 0;
+	my $inbox = $handle->inbox or return 0;
 	if ( @$inbox ) {
 		return shift @$inbox;
 	}
 
 	# Pull off the queue, non-blocking
 	my $queue = $handle->queue or return 0;
-	push @$inbox, $queue->dequeue_nb;
-	my $message = shift @$inbox or return 0;
+	foreach my $message ( $queue->dequeue ) {
+		if ( $message->[0] eq 'cancel' ) {
+			$self->{cancel} = 1;
+			next;
+		}
+	}
 
 	# Check the message for valid structure
+	my $message = shift @$inbox or return 0;
 	unless ( Params::Util::_ARRAY($message) ) {
 		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
 		return 0;

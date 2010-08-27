@@ -103,6 +103,19 @@ sub new {
 
 	# Create the tree control
 	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
+	$self->{tree}->SetPlData(
+		$self->{tree}->GetRootItem,
+		Wx::TreeItemData->new(
+			Padre::Wx::Directory::Path->directory,
+		),
+	);
+	Wx::Event::EVT_TREE_ITEM_EXPANDED(
+		$self,
+		$self->{tree},
+		sub {
+			shift->on_expand(@_);
+		}
+	);
 
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -182,7 +195,8 @@ sub on_text {
 			$self->{searching} = 0;
 			$search->ShowCancelButton(0);
 			$self->task_reset;
-			$self->refresh_render;
+			$self->clear;
+			$self->browse;
 		} else {
 			# Changing search term
 			$self->find;
@@ -201,6 +215,14 @@ sub on_text {
 	}
 
 	return 1;
+}
+
+sub on_expand {
+	my $self  = shift;
+	my $event = shift;
+	my $item  = $event->GetItem;
+	my $path  = $self->{tree}->GetPlData($item);
+	return $self->browse( $path );
 }
 
 
@@ -275,8 +297,7 @@ sub refresh {
 		# if we potentially need it again later.
 		if ( $ide->project_exists( $self->{root} ) ) {
 			my $stash = Padre::Cache::stash(
-				__PACKAGE__,
-				$ide->project( $self->{root} ),
+				__PACKAGE__ => $ide->project( $self->{root} ),
 			);
 			%$stash = (
 				root   => $self->{root},
@@ -294,8 +315,7 @@ sub refresh {
 		# If so, display it immediately and update it later.
 		if ($project) {
 			my $stash = Padre::Cache::stash(
-				__PACKAGE__,
-				$project,
+				__PACKAGE__ => $project,
 			);
 			if ( $stash->{root} ) {
 
@@ -305,19 +325,9 @@ sub refresh {
 			}
 		}
 
-		# Flush the search box and rerender the tree
-		$self->{search}->SetValue('');
-		$self->{search}->ShowCancelButton(0);
-		$self->refresh_render;
-
-		# Trigger the refresh task to update the temporary state
-		$self->task_request(
-			task      => 'Padre::Wx::Directory::Task',
-			on_finish => 'refresh_finish',
-			recursive => 1,
-			@options,
-		);
-
+		# Flush the search box and start the rerender
+		$self->clear;
+		$self->browse;
 	}
 
 	return 1;
@@ -393,6 +403,76 @@ sub refresh_render {
 	}
 
 	return 1;
+}
+
+
+
+
+
+######################################################################
+# Browse Methods
+
+sub browse {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $path = shift || Padre::Wx::Directory::Path->directory;
+	return if $self->searching;
+
+	# Switch tasks to the browse task
+	$self->task_reset;
+	$self->task_request(
+		task       => 'Padre::Wx::Directory::Browse',
+		on_message => 'browse_message',
+		on_finish  => 'browse_finish',
+		list       => [ $path ],
+	);
+
+	return;
+}
+
+sub browse_message {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $task   = shift;
+	my $parent = shift;
+
+	# Find the parent, discarding the message if we can't find it
+	my $tree   = $self->{tree};
+	my $cursor = $tree->GetRootItem;
+	foreach my $name ( $parent->path ) {
+		# Locate the child to descend to.
+		# Discard the entire message if the target child doesn't exist.
+		$cursor = $tree->GetChildByText( $cursor, $name ) or return 1;
+	}
+
+	# Temporarily skip if we've already filled this node.
+	# TODO: Upgrade this to make it update the list instead.
+	if ( $tree->GetChildrenCount($cursor) ) {
+		return;
+	}
+
+	# Add the files to the cursor
+	while ( @_ ) {
+		my $path  = shift;
+		my $image = $path->type ? 'folder' : 'package';
+
+		# Add the child to the parent
+		$tree->AppendItem(
+			$cursor,                      # Parent node
+			$path->name,                  # Label
+			$tree->{images}->{$image},    # Icon
+			-1,                           # Wx Identifier
+			Wx::TreeItemData->new($path), # Embedded data
+		);
+	}
+
+	return 1;
+}
+
+sub browse_finish {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
 }
 
 

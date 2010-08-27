@@ -32,7 +32,7 @@ sub directory {
 	my $class = shift;
 	return bless [
 		DIRECTORY,
-		File::Spec::Unix->catfile(@_),
+		File::Spec::Unix->catfile( @_ ? @_ : ('') ),
 		@_,
 	], $class;
 }

@@ -5,14 +5,14 @@ use strict;
 use warnings;
 use File::Spec                 ();
 use Padre::Constant            ();
-use Padre::Wx                  ();
+use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
 use Padre::Wx::Directory::Path ();
 
 our $VERSION = '0.69';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
-	Wx::TreeCtrl
+	Padre::Wx::TreeCtrl
 };
 
 

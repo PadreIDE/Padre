@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More tests => 25;
 use Test::NoWarnings;
 use Storable                   ();
 use File::Spec                 ();
@@ -60,4 +60,22 @@ SCOPE: {
 	ok( length $string, 'Got a string' );
 	my $round = Storable::thaw($string);
 	is_deeply( $file, $round, 'File round-trips ok' );
+}
+
+
+
+
+
+######################################################################
+# Test the null directory case
+
+SCOPE: {
+	my $directory = Padre::Wx::Directory::Path->directory;
+	isa_ok( $directory, 'Padre::Wx::Directory::Path' );
+	is( $directory->type, Padre::Wx::Directory::Path::DIRECTORY, '->type ok' );
+	is( $directory->name, '',                                    '->name ok' );
+	is( $directory->unix, '',                                    '->unix ok' );
+	is_deeply( [ $directory->path ], [ ], '->path ok' );
+	is( $directory->is_file,      0, '->is_file ok' );
+	is( $directory->is_directory, 1, '->is_directory ok' );
 }
