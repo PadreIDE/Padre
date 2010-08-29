@@ -2,8 +2,8 @@ package Padre::Config;
 
 # Configuration subsystem for Padre
 
-# To help force the break from the first-generate HASH based configuration
-# over to thdee second-generation method based configuration, initially we
+# To help force the break from the first-generation HASH based configuration
+# over to the second-generation method based configuration, initially we
 # will use an ARRAY-based object, so that all existing code is forcefully
 # broken.
 
