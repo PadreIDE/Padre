@@ -327,7 +327,6 @@ sub _on_set_button {
 		# TODO instead of a warning, offer to overwrite the old shortcut.
 	} else {
 		$shortcuts->{$shortcut} = Padre->ide->actions->{$name};
-		$self->{bindings}->{$name}->{shortcut} = $shortcut;
 		warn "Set shortcut '$shortcut' for action '$name'\n";
 
 		Padre->ide->actions->{$name}->shortcut($shortcut);
@@ -366,6 +365,7 @@ sub _on_close_button {
 	my $self = shift;
 	my $main = $self->GetParent;
 
+	# re-create menu to activate shortcuts
 	delete $main->{menu};
 	$main->{menu} = Padre::Wx::Menubar->new($main);
 	$main->SetMenuBar( $main->menu->wx );
@@ -375,7 +375,7 @@ sub _on_close_button {
 	return;
 }
 
-# Private method to update the key bindings list
+# Private method to update the key bindings list view
 sub _update_list {
 	my $self   = shift;
 	my $filter = quotemeta $self->{filter}->GetValue;
@@ -385,25 +385,24 @@ sub _update_list {
 	$list->DeleteAllItems;
 
 	my $index               = -1;
-	my $bindings            = $self->{bindings};
-	my $alternateColor      = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	my @sorted_binding_keys = sort { $a cmp $b } keys %$bindings;
-	foreach my $name (@sorted_binding_keys) {
-
-		# Fetch key binding and label
-		my $binding = $bindings->{$name};
-		my $label   = $binding->{label};
+	my $actions             = Padre->ide->actions;
+	my $alternate_color     = Wx::Colour->new( 0xED, 0xF5, 0xFF );
+	my @sorted_action_names = sort { $a cmp $b } keys %$actions;
+	for ( my $i = 0; $i < scalar @sorted_action_names; $i++ ) {
+		my $action_name = $sorted_action_names[$i];
+		my $action      = $actions->{$action_name};
+		my $shortcut    = defined $action->shortcut ? $action->shortcut : '';
 
 		# Ignore the key binding if it does not match the filter
-		next if $label !~ /$filter/i;
+		next if $action->label_text !~ /$filter/i;
 
 		# Add the key binding to the list control
-		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $binding->{label} );
-		$list->SetItem( $index, 2, $binding->{shortcut} );
+		$list->InsertStringItem( $i, $action_name );
+		$list->SetItem( $i, 1, $action->label_text );
+		$list->SetItem( $i, 2, $shortcut );
 
 		# Alternating table colors
-		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
+		$list->SetItemBackgroundColour( $i, $alternate_color ) unless $i % 2;
 	}
 
 	return;
@@ -424,26 +423,6 @@ sub _set_item_bold_font {
 	return;
 }
 
-# Private method to initialize a key bindings hash from Padre actions
-sub _init_key_bindings {
-	my $self = shift;
-
-	my $bindings = {};
-	my %actions  = %{ Padre::ide->actions };
-	foreach my $name ( keys %actions ) {
-		my $action = $actions{$name};
-		my $shortcut = $action->shortcut ? $action->shortcut : '';
-		warn "Duplicate action name: '" . $action->label_text . "'\n" if exists $bindings->{ $action->label_text };
-		$bindings->{$name} = {
-			label    => $action->label_text,
-			shortcut => $shortcut,
-		};
-	}
-	$self->{bindings} = $bindings;
-
-	return;
-}
-
 # Private method to resize list columns
 sub _resize_columns {
 	my $self = shift;
@@ -460,9 +439,6 @@ sub _resize_columns {
 
 sub show {
 	my $self = shift;
-
-	# Initialize Key Bindings
-	$self->_init_key_bindings;
 
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
