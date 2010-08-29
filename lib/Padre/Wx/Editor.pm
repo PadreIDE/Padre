@@ -261,7 +261,7 @@ sub padre_setup {
 	return;
 }
 
-# Called a key is released in the editor
+# Called when a key is released in the editor
 sub on_key_up {
 	my ( $self, $event ) = @_;
 
@@ -270,7 +270,7 @@ sub on_key_up {
 		my $line = $self->GetLine( $self->GetCurrentLine() );
 		if ( $line !~ /^\s*$/ ) {
 
-			# Only cut on non-black lines
+			# Only cut on non-blank lines
 			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
 		} else {
 
