@@ -69,7 +69,7 @@ sub new {
 	my $actions  = $ide->actions;
 	my $self     = bless { id => -1, @_ }, $class;
 	my $name     = $self->{name};
-	my $shortcut = $self->{shortcut};
+	my $shortcut = defined $self->{shortcut} ? $self->{shortcut} : '';
 
 	# Check the name
 	unless ( defined $name and length $name ) {
@@ -103,7 +103,7 @@ sub new {
 			name    => $setting,
 			type    => Padre::Constant::ASCII,
 			store   => Padre::Constant::HUMAN,
-			default => '',
+			default => $shortcut,
 		);
 	}
 

@@ -11,6 +11,7 @@ use Padre::Wx::Role::Main ();
 our $VERSION = '0.69';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::Dialog
 	Wx::Dialog
 };
 
@@ -106,11 +107,11 @@ sub _create_controls {
 	);
 	$self->{button_set}->Enable(1);
 
-	# Reset to default key binding button
-	$self->{button_reset} = Wx::Button->new(
-		$self, -1, Wx::gettext('&Reset'),
+	# Delete button
+	$self->{button_delete} = Wx::Button->new(
+		$self, -1, Wx::gettext('&Delete'),
 	);
-	$self->{button_reset}->Enable(0);
+	$self->{button_delete}->Enable(1);
 
 	# Close button
 	$self->{button_close} = Wx::Button->new(
@@ -146,8 +147,8 @@ sub _create_controls {
 	$value_sizer->AddSpacer(5);
 	$value_sizer->Add( $self->{key}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
-	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_set},    0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_delete}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -215,12 +216,12 @@ sub _bind_events {
 		}
 	);
 
-	# Reset button
+	# Delete button
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{button_reset},
+		$self->{button_delete},
 		sub {
-			shift->_on_reset_button;
+			shift->_on_delete_button;
 		}
 	);
 
@@ -306,9 +307,8 @@ sub _update_ui {
 sub _on_set_button {
 	my $self = shift;
 
-	my $list  = $self->{list};
-	my $index = $list->GetFirstSelected;
-	my $name  = $list->GetItemText($index);
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
 
 	my @key_list = ();
 	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
@@ -318,44 +318,62 @@ sub _on_set_button {
 	push @key_list, $regular_key if not $regular_key eq 'None';
 	my $shortcut = join '-', @key_list;
 
-	return if $shortcut eq '';
-
-	my $shortcuts = Padre->ide->shortcuts;
-	if ( exists $shortcuts->{$shortcut} ) {
-		warn "Found a duplicate shortcut: '$shortcut' for " . $shortcuts->{$shortcut}->name . "\n";
-
-		# TODO instead of a warning, offer to overwrite the old shortcut.
-	} else {
-		$shortcuts->{$shortcut} = Padre->ide->actions->{$name};
-		warn "Set shortcut '$shortcut' for action '$name'\n";
-
-		Padre->ide->actions->{$name}->shortcut($shortcut);
-
-		my $setting = "keyboard_shortcut_$name";
-		$setting =~ s/\W/_/g; # setting names must be valid subroutine names
-		$self->config->set( $setting, $shortcut );
-		$self->config->write;
-
-		$self->_update_list;
+	my $other_action = Padre->ide->shortcuts->{$shortcut};
+	if ( defined $other_action && $other_action->name ne $action_name ) {
+		my $answer = $self->yes_no(
+			sprintf(
+				Wx::gettext("The shortcut '%s' is already used by the action '%s'.\n"),
+				$shortcut, $other_action->label_text
+				)
+				. Wx::gettext('Do you want to override it with the selected action?'),
+			Wx::gettext('Override Shortcut')
+		);
+		if ($answer) {
+			$self->set_binding( $other_action->name, '' );
+		} else {
+			return;
+		}
 	}
+
+	$self->set_binding( $action_name, $shortcut );
+	$self->_update_list;
 
 	return;
 }
 
-# Private method to handle the pressing of the reset to default button
-sub _on_reset_button {
+sub set_binding {
+	my ( $self, $action_name, $shortcut ) = @_;
+
+	my $shortcuts = Padre->ide->shortcuts;
+	my $action    = Padre->ide->actions->{$action_name};
+
+	# modify shortcut registry
+	my $old_shortcut = $action->shortcut;
+	delete $shortcuts->{$old_shortcut};
+	$shortcuts->{$shortcut} = $action;
+
+	# set the action's shortcut
+	$action->shortcut( $shortcut eq '' ? undef : $shortcut );
+
+	# modify the configuration database
+	my $setting = "keyboard_shortcut_$action_name";
+	$setting =~ s/\W/_/g; # setting names must be valid subroutine names
+	$self->config->set( $setting, $shortcut );
+	$self->config->write;
+
+	return;
+}
+
+# Private method to handle the pressing of the delete button
+sub _on_delete_button {
 	my $self = shift;
 
 	# Prepare the key binding
-	my $list  = $self->{list};
-	my $index = $list->GetFirstSelected;
-	my $name  = $list->GetItemText($index);
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
 
-	my $action = Padre->ide->actions->{$name};
-
-	## TODO
-	# restore default or previous value?
-	# ensure that list contains right value ...
+	$self->set_binding( $action_name, '' );
+	$self->_update_list;
 
 	return;
 }
@@ -384,25 +402,26 @@ sub _update_list {
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
-	my $index               = -1;
-	my $actions             = Padre->ide->actions;
-	my $alternate_color     = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	my @sorted_action_names = sort { $a cmp $b } keys %$actions;
-	for ( my $i = 0; $i < scalar @sorted_action_names; $i++ ) {
-		my $action_name = $sorted_action_names[$i];
-		my $action      = $actions->{$action_name};
-		my $shortcut    = defined $action->shortcut ? $action->shortcut : '';
+	my $actions         = Padre->ide->actions;
+	my $alternate_color = Wx::Colour->new( 0xED, 0xF5, 0xFF );
+	my $index           = 0;
+	foreach my $action_name ( sort { $a cmp $b } keys %$actions ) {
+		my $action = $actions->{$action_name};
+		my $shortcut = defined $action->shortcut ? $action->shortcut : '';
 
-		# Ignore the key binding if it does not match the filter
-		next if $action->label_text !~ /$filter/i;
+		# Ignore key binding if it does not match the filter
+		next
+			if $action->label_text !~ /$filter/i
+				and $action_name !~ /$filter/i;
 
 		# Add the key binding to the list control
-		$list->InsertStringItem( $i, $action_name );
-		$list->SetItem( $i, 1, $action->label_text );
-		$list->SetItem( $i, 2, $shortcut );
+		$list->InsertStringItem( $index, $action_name );
+		$list->SetItem( $index, 1, $action->label_text );
+		$list->SetItem( $index, 2, $shortcut );
 
 		# Alternating table colors
-		$list->SetItemBackgroundColour( $i, $alternate_color ) unless $i % 2;
+		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
+		$index++;
 	}
 
 	return;
