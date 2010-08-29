@@ -170,7 +170,7 @@ import:
  exp: No built-in import function. It can be inherited from modules.
 index:
  cmd: '(STR, SUBSTR, INDEX)'
- exp: Return the offset of the next occurance of SUBSTR in STR starting from INDEX.
+ exp: Return the offset of the next occurrence of SUBSTR in STR starting from INDEX.
 int:
  cmd: (NUMBER)
  exp: Returns the integer portion of NUMBER.
@@ -245,7 +245,7 @@ next:
  exp: Like the "continue" in other languages, skip to the next iteration of the current loop.
 no:
  cmd: (MODULE)
- exp: The oposite of use().
+ exp: The opposite of use().
 oct:
  cmd: (STRING)
  exp: Interprets STRING as an octal and returns the corresponding decimal value.
@@ -317,7 +317,7 @@ redo:
  exp: Execute again the current iteration of a loop.
 ref:
  cmd: SCALAR_VARIABLE
- exp: Returns the name of the refernce type of SCALAR_VARIABLE or false if it is not a reference.
+ exp: Returns the name of the reference type of SCALAR_VARIABLE or false if it is not a reference.
 rename:
  cmd: (OLDNAME, NEWNAME)
  exp: Rename a file of directory on the same filesystem.
@@ -347,7 +347,7 @@ scalar:
  exp: Forces EXPR to be interpreted in scalar context and returns the value of EXPR.
 seek:
  cmd: (FILEHANDLE, POSITION, WHENCE)
- exp: Sets FILEHANDLEs position, just like the "fseek" call of "stdio".
+ exp: Sets FILEHANDLE's position, just like the "fseek" call of "stdio".
 seekdir:
  cmd: (DIRHANDLE,POS)
  exp: Sets the current position for the "readdir" routine on DIRHANDLE.
@@ -449,7 +449,7 @@ sysread:
  exp: Attempts to read LENGTH bytes of data into variable SCALAR from the specified FILEHANDLE, using the system call read(2).
 sysseek:
  cmd: FILEHANDLE,POSITION,WHENCE
- exp: Sets FILEHANDLEs system position in bytes using the system call lseek(2).
+ exp: Sets FILEHANDLE's system position in bytes using the system call lseek(2).
 system:
  cmd: PROGRAM LIST
  exp: Does exactly the same thing as "exec LIST", except that a fork is done first,
@@ -466,7 +466,7 @@ tie:
  cmd: VARIABLE,CLASSNAME,LIST
  exp: This function binds a variable to a package class that will provide the implementation for the variable.
 tied:
- cmd: VARIABLe
+ cmd: VARIABLE
  exp: Returns a reference to the object underlying VARIABLE.
 time:
  cmd: ()
@@ -479,7 +479,7 @@ truncate:
  exp: Truncates the file opened on FILEHANDLE  to the specified length.
 uc:
  cmd: STRING
- exp: Returns an uppercased version of STRING.
+ exp: Returns an uppercase version of STRING.
 ucfirst:
  cmd: STRING
  exp: Return the string with its first character turned to uppercase.

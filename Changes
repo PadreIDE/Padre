@@ -12,6 +12,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Updated German translation (ZENOG)
     - Use Ctrl-PageUp/PageDown for cycling between documents - like in
       Firefox and Google Chrome (ZENOG)
+    - Fixed typos in share/languages/perl5/perl5.yml (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
