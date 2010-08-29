@@ -96,8 +96,7 @@ sub new {
 
 	# Create shortcut setting for the action
 	my $config  = Padre->ide->config;
-	my $setting = "keyboard_shortcut_$name";
-	$setting =~ s/\W/_/g; # setting names must be valid subroutine names
+	my $setting = $self->shortcut_setting;
 	if ( not $config->can($setting) ) {
 		$config->setting(
 			name    => $setting,
@@ -176,6 +175,15 @@ sub label_menu {
 		$label .= "\t" . $shortcut;
 	}
 	return $label;
+}
+
+sub shortcut_setting {
+	my $self = shift;
+
+	my $setting = 'keyboard_shortcut_' . $self->name;
+	$setting =~ s/\W/_/g; # setting names must be valid subroutine names
+
+	return $setting;
 }
 
 # Add an event to an action:

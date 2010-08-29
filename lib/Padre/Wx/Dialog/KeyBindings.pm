@@ -113,6 +113,13 @@ sub _create_controls {
 	);
 	$self->{button_delete}->Enable(1);
 
+	# Reset button
+	$self->{button_reset} = Wx::Button->new(
+		$self, -1, Wx::gettext('&Reset'),
+	);
+	$self->{button_reset}->SetToolTip( Wx::gettext('Reset to default shortcut') );
+	$self->{button_reset}->Enable(1);
+
 	# Close button
 	$self->{button_close} = Wx::Button->new(
 		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
@@ -149,6 +156,7 @@ sub _create_controls {
 	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $self->{button_set},    0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->Add( $self->{button_delete}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_reset},  0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -225,6 +233,15 @@ sub _bind_events {
 		}
 	);
 
+	# Reset button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_reset},
+		sub {
+			shift->_on_reset_button;
+		}
+	);
+
 	# Close button
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -261,9 +278,14 @@ sub _on_list_item_selected {
 	my $list        = $self->{list};
 	my $index       = $list->GetFirstSelected;
 	my $action_name = $list->GetItemText($index);
+	my $action      = Padre->ide->actions->{$action_name};
 
 	my $shortcut = Padre->ide->actions->{$action_name}->shortcut;
 	$shortcut = '' if not defined $shortcut;
+
+	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
+
+	$self->{button_delete}->Enable( $shortcut ne '' );
 
 	# Get the regular (i.e. non-modifier) key in the shortcut
 	my @parts = split /-/, $shortcut;
@@ -281,24 +303,14 @@ sub _on_list_item_selected {
 
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue( $shortcut =~ /Ctrl/ ? 1 : 0 );
-	$self->{alt}->SetValue( $shortcut  =~ /Alt/  ? 1 : 0 );
-	$self->{shift}->SetValue( ( $shortcut =~ /Shift/ ) ? 1 : 0 );
+	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
+	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
 
 	# Make sure the value and info sizer are not hidden
 	$self->{vsizer}->Show( 2, 1 );
 	$self->{vsizer}->Show( 3, 1 );
 	$self->{vsizer}->Layout;
-
-	return;
-}
-
-# Private method to update the UI from the provided key binding
-sub _update_ui {
-	my ( $self, $pref ) = @_;
-
-	my $list  = $self->{list};
-	my $index = $list->GetFirstSelected;
 
 	return;
 }
@@ -318,6 +330,14 @@ sub _on_set_button {
 	push @key_list, $regular_key if not $regular_key eq 'None';
 	my $shortcut = join '-', @key_list;
 
+	$self->try_to_set_binding( $action_name, $shortcut );
+
+	return;
+}
+
+sub try_to_set_binding {
+	my ( $self, $action_name, $shortcut ) = @_;
+
 	my $other_action = Padre->ide->shortcuts->{$shortcut};
 	if ( defined $other_action && $other_action->name ne $action_name ) {
 		my $answer = $self->yes_no(
@@ -328,7 +348,7 @@ sub _on_set_button {
 				. Wx::gettext('Do you want to override it with the selected action?'),
 			Wx::gettext('Override Shortcut')
 		);
-		if ($answer) {
+		if ( !$answer ) {
 			$self->set_binding( $other_action->name, '' );
 		} else {
 			return;
@@ -349,16 +369,14 @@ sub set_binding {
 
 	# modify shortcut registry
 	my $old_shortcut = $action->shortcut;
-	delete $shortcuts->{$old_shortcut};
+	delete $shortcuts->{$old_shortcut} if defined $old_shortcut;
 	$shortcuts->{$shortcut} = $action;
 
 	# set the action's shortcut
 	$action->shortcut( $shortcut eq '' ? undef : $shortcut );
 
 	# modify the configuration database
-	my $setting = "keyboard_shortcut_$action_name";
-	$setting =~ s/\W/_/g; # setting names must be valid subroutine names
-	$self->config->set( $setting, $shortcut );
+	$self->config->set( $action->shortcut_setting, $shortcut );
 	$self->config->write;
 
 	return;
@@ -374,6 +392,19 @@ sub _on_delete_button {
 
 	$self->set_binding( $action_name, '' );
 	$self->_update_list;
+
+	return;
+}
+
+# Private method to handle the pressing of the reset button
+sub _on_reset_button {
+	my $self = shift;
+
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
+	my $action      = Padre->ide->actions($action_name);
+
+	$self->try_to_set_binding( $action_name, $self->config->default( $action->shortcut_setting ) );
 
 	return;
 }
@@ -412,7 +443,8 @@ sub _update_list {
 		# Ignore key binding if it does not match the filter
 		next
 			if $action->label_text !~ /$filter/i
-				and $action_name !~ /$filter/i;
+				and $action_name !~ /$filter/i
+				and $shortcut !~ /$filter/i;
 
 		# Add the key binding to the list control
 		$list->InsertStringItem( $index, $action_name );
