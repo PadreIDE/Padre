@@ -485,9 +485,10 @@ BEGIN {
 use constant WX => Wx::Locale::GetSystemLanguage();
 
 use constant system_rfc4646 => List::Util::first {
-	defined $RFC4646{$_}->{wxid} &&
-	$RFC4646{$_}->{wxid} == WX;
-} sort keys %RFC4646;
+	defined $RFC4646{$_}->{wxid}
+		&& $RFC4646{$_}->{wxid} == WX;
+}
+sort keys %RFC4646;
 
 use constant last_resort_rfc4646 => 'en-gb';
 
