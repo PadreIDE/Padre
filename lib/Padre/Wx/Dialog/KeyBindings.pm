@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Constant       ();
 use Padre::Config         ();
+use Padre::Util           ('_T');
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
@@ -87,17 +88,21 @@ sub _create_controls {
 	my $plus_label_2 = Wx::StaticText->new( $self, -1, '+' );
 
 	# key choice list
-	$self->{keys} = [
-		qw(None Backspace Tab Space Up Down Left Right Insert Delete Home
-			End PageUp PageDown Enter Escape F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
-			), 'A' .. 'Z', '0' .. '9', '~', '-', '=', '[', ']', ';', '\'', ',', '.', '/'
-	];
+	my @keys = (
+		_T('None'),   _T('Backspace'), _T('Tab'),    _T('Space'),  _T('Up'),   _T('Down'),
+		_T('Left'),   _T('Right'),     _T('Insert'), _T('Delete'), _T('Home'), _T('End'),
+		_T('PageUp'), _T('PageDown'),  _T('Enter'),  _T('Escape'),
+		'F1',       'F2',       'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12',
+		'A' .. 'Z', '0' .. '9', '~',  '-',  '=',  '[',  ']',  ';',  '\'', ',',   '.',   '/'
+	);
+	$self->{keys} = \@keys;
 
+	my @translated_keys = map { Wx::gettext($_) } @keys;
 	$self->{key} = Wx::Choice->new(
 		$self, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		$self->{keys}, # TODO translate
+		\@translated_keys,
 	);
 	$self->{key}->SetSelection(0);
 
@@ -270,6 +275,15 @@ sub _on_char {
 	return;
 }
 
+sub translate_shortcut {
+	my ($shortcut) = @_;
+
+	my @parts = split /-/, $shortcut;
+	my $regular_key = @parts ? $parts[-1] : '';
+
+	return join '-', map { Wx::gettext($_) } @parts;
+}
+
 # Private method to handle the selection of a key binding item
 sub _on_list_item_selected {
 	my $self  = shift;
@@ -287,7 +301,6 @@ sub _on_list_item_selected {
 
 	$self->{button_delete}->Enable( $shortcut ne '' );
 
-	# Get the regular (i.e. non-modifier) key in the shortcut
 	my @parts = split /-/, $shortcut;
 	my $regular_key = @parts ? $parts[-1] : '';
 
@@ -326,7 +339,8 @@ sub _on_set_button {
 	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
 		push @key_list, $regular_key if $self->{ lc $regular_key }->GetValue;
 	}
-	my $regular_key = $self->{keys}->[ $self->{key}->GetSelection ];
+	my $key_index   = $self->{key}->GetSelection;
+	my $regular_key = $self->{keys}->[$key_index];
 	push @key_list, $regular_key if not $regular_key eq 'None';
 	my $shortcut = join '-', @key_list;
 
@@ -402,9 +416,12 @@ sub _on_reset_button {
 
 	my $index       = $self->{list}->GetFirstSelected;
 	my $action_name = $self->{list}->GetItemText($index);
-	my $action      = Padre->ide->actions($action_name);
+	my $action      = Padre->ide->actions->{$action_name};
 
-	$self->try_to_set_binding( $action_name, $self->config->default( $action->shortcut_setting ) );
+	$self->try_to_set_binding(
+		$action_name,
+		$self->config->default( $action->shortcut_setting )
+	);
 
 	return;
 }
@@ -449,7 +466,7 @@ sub _update_list {
 		# Add the key binding to the list control
 		$list->InsertStringItem( $index, $action_name );
 		$list->SetItem( $index, 1, $action->label_text );
-		$list->SetItem( $index, 2, $shortcut );
+		$list->SetItem( $index, 2, translate_shortcut($shortcut) );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
