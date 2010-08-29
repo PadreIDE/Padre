@@ -320,9 +320,9 @@ sub _on_set_button {
 
 	return if $shortcut eq '';
 
-	my $shortcuts = Padre->ide->{shortcuts};
+	my $shortcuts = Padre->ide->shortcuts;
 	if ( exists $shortcuts->{$shortcut} ) {
-		warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
+		warn "Found a duplicate shortcut: '$shortcut' for " . $shortcuts->{$shortcut}->name . "\n";
 
 		# TODO instead of a warning, offer to overwrite the old shortcut.
 	} else {

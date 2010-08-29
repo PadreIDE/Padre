@@ -44,6 +44,7 @@ use Class::XSAccessor 1.05 {
 	},
 	accessors => {
 		actions     => 'actions',
+		shortcuts   => 'shortcuts',
 		instance_id => 'instance_id',
 	},
 };
@@ -133,9 +134,9 @@ sub new {
 	# Load (and sync if needed) the configuration
 	$self->{config} = Padre::Config->read;
 
-	# Actions registry
-	my %actions = ();
-	$self->actions( \%actions );
+	# Actions and keyboard shortcuts registries
+	$self->actions(   {} );
+	$self->shortcuts( {} );
 
 	# Load a few more bits and pieces now we know
 	# that we'll need them

@@ -54,7 +54,7 @@ is( Padre::Util::get_project_dir( File::Spec->rootdir ),
 # and certain other things need to be in place before running
 use Padre::Wx::Action;
 use Padre::Wx::ActionLibrary;
-sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
+sub Padre::ide { return bless {}, 'Padre::IDE'; }
 sub Padre::IDE::actions { return {} }
 sub Padre::IDE::config { return bless {}, 'Padre::Config' }
 SKIP: {

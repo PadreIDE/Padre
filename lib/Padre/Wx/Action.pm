@@ -124,8 +124,7 @@ sub new {
 			last;
 		}
 
-		$ide->{shortcuts} = {} if not exists $ide->{shortcuts};
-		my $shortcuts = $ide->{shortcuts};
+		my $shortcuts = $ide->shortcuts;
 		if ( exists $shortcuts->{$shortcut} ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
 		} else {
