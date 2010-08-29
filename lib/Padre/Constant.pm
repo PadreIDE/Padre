@@ -8,7 +8,7 @@ use warnings;
 use Carp          ();
 use File::Path    ();
 use File::Spec    ();
-use File::HomeDir ();
+use File::HomeDir 0.91 ();
 
 our $VERSION        = '0.69';
 our $BACKCOMPATIBLE = '0.57';
