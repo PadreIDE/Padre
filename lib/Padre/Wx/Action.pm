@@ -3,6 +3,7 @@ package Padre::Wx::Action;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Config   ();
 use Padre::Constant ();
 use Padre::Wx       ();
 
@@ -14,12 +15,14 @@ use Class::XSAccessor {
 		id            => 'id',
 		name          => 'name',
 		icon          => 'icon',
-		shortcut      => 'shortcut',
 		menu_event    => 'menu_event',
 		menu_method   => 'menu_method',
 		toolbar_event => 'toolbar_event',
 		toolbar_icon  => 'toolbar',
-	}
+	},
+	accessors => {
+		shortcut => 'shortcut',
+	},
 };
 
 
@@ -91,6 +94,26 @@ sub new {
 	}
 	$self->{queue_event} ||= $self->{menu_event};
 
+	# Create shortcut setting for the action
+	my $config  = Padre->ide->config;
+	my $setting = "keyboard_shortcut_$name";
+	$setting =~ s/\W/_/g; # setting names must be valid subroutine names
+	if ( not $config->can($setting) ) {
+		$config->setting(
+			name    => $setting,
+			type    => Padre::Constant::ASCII,
+			store   => Padre::Constant::HUMAN,
+			default => '',
+		);
+	}
+
+	my $config_shortcut = eval '$config->' . $setting;
+	warn "$@\n" if $@;
+	if ($config_shortcut) {
+		$shortcut = $config_shortcut;
+		$self->shortcut($shortcut);
+	}
+
 	# Validate the shortcut
 	if ($shortcut) {
 		foreach my $n ( keys %$actions ) {
@@ -101,8 +124,9 @@ sub new {
 			last;
 		}
 
+		$ide->{shortcuts} = {} if not exists $ide->{shortcuts};
 		my $shortcuts = $ide->{shortcuts};
-		if ( defined( $shortcuts->{$shortcut} ) ) {
+		if ( exists $shortcuts->{$shortcut} ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
 		} else {
 			$shortcuts->{$shortcut} = $self;
@@ -144,10 +168,13 @@ sub comment {
 sub label_menu {
 	my $self  = shift;
 	my $label = $self->label;
-	if ( $self->shortcut
-		and ( ( $self->shortcut eq 'F12' ) or ( $self->id == -1 or Padre::Constant::WIN32() ) ) )
+
+	my $shortcut = $self->shortcut;
+
+	if ( $shortcut
+		and ( ( $shortcut eq 'F12' ) or ( $self->id == -1 or Padre::Constant::WIN32() ) ) )
 	{
-		$label .= "\t" . $self->shortcut;
+		$label .= "\t" . $shortcut;
 	}
 	return $label;
 }

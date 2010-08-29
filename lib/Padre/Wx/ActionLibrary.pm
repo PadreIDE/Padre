@@ -1751,7 +1751,7 @@ sub init {
 		need_editor => 1,
 		label       => _T('Rename Variable...'),
 		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
-		shortcut     => 'Shift-Alt-R',
+		shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('rename_variable') or return;
@@ -1767,7 +1767,7 @@ sub init {
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
 		),
-		shortcut     => 'Shift-Alt-M',
+		shortcut   => 'Shift-Alt-M',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('extract_subroutine') or return;
@@ -1938,7 +1938,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-command',
-		label        => _T('Step In') . ' (&s) ',
+		label        => _T('Step In (&s)'),
 		comment      => _T(
 			'Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)'),
 
@@ -1955,7 +1955,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
-		label        => _T('Step Over') . ' (&n) ',
+		label        => _T('Step Over (&n)'),
 		comment      => _T(
 			'Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)'
 		),
@@ -1974,7 +1974,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-jump-back',
-		label        => _T('Step Out') . ' (&r) ',
+		label        => _T('Step Out (&r)'),
 		comment      => _T('If within a subroutine, run till return is called and then stop.'),
 
 		#shortcut     => 'Shift-F5',
@@ -1990,7 +1990,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_tools-macro',
-		label        => _T('Run till Breakpoint') . ' (&c) ',
+		label        => _T('Run till Breakpoint (&c)'),
 		comment      => _T('Start running and/or continue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
@@ -2021,7 +2021,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
-		label        => _T('Set Breakpoint') . ' (&b) ',
+		label        => _T('Set Breakpoint (&b)'),
 		comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',

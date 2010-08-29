@@ -14,26 +14,6 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-=pod
-
-=head1 NAME
-
-Padre::Wx::Dialog::KeyBindings - a dialog to show and configure key bindings
-
-=head1 DESCRIPTION
-
-This dialog lets the user search for a key binding and then configure a new
-shortcut if needed
-
-=head1 PUBLIC API
-
-=head2 C<new>
-
-  my $advanced = Padre::Wx::Dialog::KeyBindings->new($main);
-
-Returns a new C<Padre::Wx::Dialog::KeyBindings> instance
-
-=cut
 
 sub new {
 	my $class = shift;
@@ -43,14 +23,14 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Key Bindings') . ' (Work in progress... Not finished)',
+		Wx::gettext('Key Bindings'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 517, 550 ] );
+	$self->SetMinSize( [ 717, 550 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -87,116 +67,54 @@ sub _create_controls {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
-	$self->{list}->InsertColumn( 0, Wx::gettext('Key binding name') );
-	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
-	$self->{list}->InsertColumn( 2, Wx::gettext('Action') );
+	$self->{list}->InsertColumn( 0, Wx::gettext('Action') );
+	$self->{list}->InsertColumn( 1, Wx::gettext('Description') );
+	$self->{list}->InsertColumn( 2, Wx::gettext('Shortcut') );
+
+	# TODO add tooltip with the comments
 
 	# Shortcut label
 	my $shortcut_label = Wx::StaticText->new( $self, -1, Wx::gettext('Sh&ortcut:') );
 
 	# modifier radio button fields
-	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL' );
-	$self->{alt}   = Wx::CheckBox->new( $self, -1, 'ALT' );
-	$self->{shift} = Wx::CheckBox->new( $self, -1, 'Shift' );
+	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, Wx::gettext('Ctrl') );
+	$self->{alt}   = Wx::CheckBox->new( $self, -1, Wx::gettext('Alt') );
+	$self->{shift} = Wx::CheckBox->new( $self, -1, Wx::gettext('Shift') );
 
 	# + labels
 	my $plus_label_1 = Wx::StaticText->new( $self, -1, '+' );
 	my $plus_label_2 = Wx::StaticText->new( $self, -1, '+' );
 
 	# key choice list
-	my %keymap = (
-		'00None'      => -1,
-		'01Backspace' => Wx::WXK_BACK,
-		'02Tab'       => Wx::WXK_TAB,
-		'03Space'     => Wx::WXK_SPACE,
-		'04Up'        => Wx::WXK_UP,
-		'05Down'      => Wx::WXK_DOWN,
-		'06Left'      => Wx::WXK_LEFT,
-		'07Right'     => Wx::WXK_RIGHT,
-		'08Insert'    => Wx::WXK_INSERT,
-		'09Delete'    => Wx::WXK_DELETE,
-		'10Home'      => Wx::WXK_HOME,
-		'11End'       => Wx::WXK_END,
-		'12Page up'   => Wx::WXK_PAGEUP,
-		'13Page down' => Wx::WXK_PAGEDOWN,
-		'14Enter'     => Wx::WXK_RETURN,
-		'15Escape'    => Wx::WXK_ESCAPE,
-		'21Numpad 0'  => Wx::WXK_NUMPAD0,
-		'22Numpad 1'  => Wx::WXK_NUMPAD1,
-		'23Numpad 2'  => Wx::WXK_NUMPAD2,
-		'24Numpad 3'  => Wx::WXK_NUMPAD3,
-		'25Numpad 4'  => Wx::WXK_NUMPAD4,
-		'26Numpad 5'  => Wx::WXK_NUMPAD5,
-		'27Numpad 6'  => Wx::WXK_NUMPAD6,
-		'28Numpad 7'  => Wx::WXK_NUMPAD7,
-		'29Numpad 8'  => Wx::WXK_NUMPAD8,
-		'30Numpad 9'  => Wx::WXK_NUMPAD9,
-		'31Numpad *'  => Wx::WXK_MULTIPLY,
-		'32Numpad +'  => Wx::WXK_ADD,
-		'33Numpad -'  => Wx::WXK_SUBTRACT,
-		'34Numpad .'  => Wx::WXK_DECIMAL,
-		'35Numpad /'  => Wx::WXK_DIVIDE,
-		'36F1'        => Wx::WXK_F1,
-		'37F2'        => Wx::WXK_F2,
-		'38F3'        => Wx::WXK_F3,
-		'39F4'        => Wx::WXK_F4,
-		'40F5'        => Wx::WXK_F5,
-		'41F6'        => Wx::WXK_F6,
-		'42F7'        => Wx::WXK_F7,
-		'43F8'        => Wx::WXK_F8,
-		'44F9'        => Wx::WXK_F9,
-		'45F10'       => Wx::WXK_F10,
-		'46F11'       => Wx::WXK_F11,
-		'47F12'       => Wx::WXK_F12,
-	);
-
-	# Add alphanumerics
-	for my $alphanum ( 'A' .. 'Z', '0' .. '9' ) {
-		$keymap{ '20' . $alphanum } = ord($alphanum);
-	}
-
-	# Add symbols
-	for my $symbol ( '~', '-', '=', '[', ']', ';', '\'', ',', '.', '/' ) {
-		$keymap{ '50' . $symbol } = ord($symbol);
-	}
-
-	my @keys = sort keys %keymap;
-	for my $key (@keys) {
-		$key =~ s/^\d{2}//;
-	}
-
-	# Store it for later usage
-	$self->{keys} = \@keys;
+	$self->{keys} = [
+		qw(None Backspace Tab Space Up Down Left Right Insert Delete Home
+			End PageUp PageDown Enter Escape F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
+			), 'A' .. 'Z', '0' .. '9', '~', '-', '=', '[', ']', ';', '\'', ',', '.', '/'
+	];
 
 	$self->{key} = Wx::Choice->new(
 		$self, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		\@keys,
+		$self->{keys}, # TODO translate
 	);
 	$self->{key}->SetSelection(0);
 
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
-		$self, -1, Wx::gettext("&Set"),
+		$self, -1, Wx::gettext('&Set'),
 	);
-	$self->{button_set}->Enable(0);
+	$self->{button_set}->Enable(1);
 
 	# Reset to default key binding button
 	$self->{button_reset} = Wx::Button->new(
-		$self, -1, Wx::gettext("&Reset"),
+		$self, -1, Wx::gettext('&Reset'),
 	);
 	$self->{button_reset}->Enable(0);
 
-	# Save button
-	$self->{button_save} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext("S&ave"),
-	);
-	$self->{button_save}->SetDefault;
-
-	# Cancel button
-	$self->{button_cancel} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
+	# Close button
+	$self->{button_close} = Wx::Button->new(
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
 	);
 
 	#
@@ -208,7 +126,7 @@ sub _create_controls {
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# CTRL/ALT Modifier sizer
+	# Ctrl/Alt Modifier sizer
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$modifier_sizer->AddSpacer(3);
@@ -233,8 +151,7 @@ sub _create_controls {
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
-	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
+	$button_sizer->Add( $self->{button_close}, 1, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
@@ -307,21 +224,12 @@ sub _bind_events {
 		}
 	);
 
-	# Save button
+	# Close button
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{button_save},
+		$self->{button_close},
 		sub {
-			shift->_on_save_button;
-		}
-	);
-
-	# Cancel button
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_cancel},
-		sub {
-			shift->EndModal(Wx::wxID_CANCEL);
+			shift->_on_close_button;
 		}
 	);
 
@@ -348,36 +256,33 @@ sub _on_char {
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-	my $list  = $self->{list};
 
-	# Fetch action name
-	my $name = $list->GetItem( $list->GetFirstSelected, 2 )->GetText;
-	my $binding = $self->{bindings}->{$name};
+	my $list        = $self->{list};
+	my $index       = $list->GetFirstSelected;
+	my $action_name = $list->GetItemText($index);
 
-	# And get it shortcut
-	my $shortcut = lc( $binding->{shortcut} );
+	my $shortcut = Padre->ide->actions->{$action_name}->shortcut;
+	$shortcut = '' if not defined $shortcut;
 
 	# Get the regular (i.e. non-modifier) key in the shortcut
 	my @parts = split /-/, $shortcut;
-	my $regular = @parts ? $parts[-1] : '';
+	my $regular_key = @parts ? $parts[-1] : '';
 
 	# Find the regular key index in the choice box
 	my $regular_index = 0;
 	my @keys          = @{ $self->{keys} };
-	my $index         = 0;
-	foreach my $key (@keys) {
-		if ( $regular eq lc($key) ) {
-			$regular_index = $index;
+	for ( my $i = 0; $i < scalar @keys; $i++ ) {
+		if ( $regular_key eq $keys[$i] ) {
+			$regular_index = $i;
 			last;
 		}
-		$index++;
 	}
 
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue( $shortcut =~ /ctrl/ ? 1 : 0 );
-	$self->{alt}->SetValue( $shortcut  =~ /alt/  ? 1 : 0 );
-	$self->{shift}->SetValue( ( $shortcut =~ /shift/ ) ? 1 : 0 );
+	$self->{ctrl}->SetValue( $shortcut =~ /Ctrl/ ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut  =~ /Alt/  ? 1 : 0 );
+	$self->{shift}->SetValue( ( $shortcut =~ /Shift/ ) ? 1 : 0 );
 
 	# Make sure the value and info sizer are not hidden
 	$self->{vsizer}->Show( 2, 1 );
@@ -401,10 +306,39 @@ sub _update_ui {
 sub _on_set_button {
 	my $self = shift;
 
-	# Prepare the key binding
 	my $list  = $self->{list};
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
+
+	my @key_list = ();
+	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
+		push @key_list, $regular_key if $self->{ lc $regular_key }->GetValue;
+	}
+	my $regular_key = $self->{keys}->[ $self->{key}->GetSelection ];
+	push @key_list, $regular_key if not $regular_key eq 'None';
+	my $shortcut = join '-', @key_list;
+
+	return if $shortcut eq '';
+
+	my $shortcuts = Padre->ide->{shortcuts};
+	if ( exists $shortcuts->{$shortcut} ) {
+		warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
+
+		# TODO instead of a warning, offer to overwrite the old shortcut.
+	} else {
+		$shortcuts->{$shortcut} = Padre->ide->actions->{$name};
+		$self->{bindings}->{$name}->{shortcut} = $shortcut;
+		warn "Set shortcut '$shortcut' for action '$name'\n";
+
+		Padre->ide->actions->{$name}->shortcut($shortcut);
+
+		my $setting = "keyboard_shortcut_$name";
+		$setting =~ s/\W/_/g; # setting names must be valid subroutine names
+		$self->config->set( $setting, $shortcut );
+		$self->config->write;
+
+		$self->_update_list;
+	}
 
 	return;
 }
@@ -418,18 +352,26 @@ sub _on_reset_button {
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
 
+	my $action = Padre->ide->actions->{$name};
+
+	## TODO
+	# restore default or previous value?
+	# ensure that list contains right value ...
+
 	return;
 }
 
-# Private method to handle the save action
-sub _on_save_button {
+# Private method to handle the close action
+sub _on_close_button {
 	my $self = shift;
+	my $main = $self->GetParent;
 
-	#TODO Implement saving of *Changed* key bindings
+	delete $main->{menu};
+	$main->{menu} = Padre::Wx::Menubar->new($main);
+	$main->SetMenuBar( $main->menu->wx );
+	$main->refresh;
 
-	# Bye bye dialog
-	$self->EndModal(Wx::wxID_OK);
-
+	$self->EndModal(Wx::wxID_CLOSE);
 	return;
 }
 
@@ -445,7 +387,7 @@ sub _update_list {
 	my $index               = -1;
 	my $bindings            = $self->{bindings};
 	my $alternateColor      = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	my @sorted_binding_keys = sort { $bindings->{$a}->{label} cmp $bindings->{$b}->{label} } keys %$bindings;
+	my @sorted_binding_keys = sort { $a cmp $b } keys %$bindings;
 	foreach my $name (@sorted_binding_keys) {
 
 		# Fetch key binding and label
@@ -456,9 +398,9 @@ sub _update_list {
 		next if $label !~ /$filter/i;
 
 		# Add the key binding to the list control
-		$list->InsertStringItem( ++$index, $binding->{label} );
-		$list->SetItem( $index, 1, $binding->{shortcut} );
-		$list->SetItem( $index, 2, $name );
+		$list->InsertStringItem( ++$index, $name );
+		$list->SetItem( $index, 1, $binding->{label} );
+		$list->SetItem( $index, 2, $binding->{shortcut} );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
@@ -486,12 +428,12 @@ sub _set_item_bold_font {
 sub _init_key_bindings {
 	my $self = shift;
 
-
-	my $bindings = ();
+	my $bindings = {};
 	my %actions  = %{ Padre::ide->actions };
 	foreach my $name ( keys %actions ) {
 		my $action = $actions{$name};
 		my $shortcut = $action->shortcut ? $action->shortcut : '';
+		warn "Duplicate action name: '" . $action->label_text . "'\n" if exists $bindings->{ $action->label_text };
 		$bindings->{$name} = {
 			label    => $action->label_text,
 			shortcut => $shortcut,
@@ -515,15 +457,6 @@ sub _resize_columns {
 	return;
 }
 
-=pod
-
-=head2 C<show>
-
-  $advanced->show($main);
-
-Shows the dialog. Returns C<undef>.
-
-=cut
 
 sub show {
 	my $self = shift;
@@ -548,7 +481,33 @@ sub show {
 
 1;
 
+
+__END__
+
 =pod
+
+=head1 NAME
+
+Padre::Wx::Dialog::KeyBindings - a dialog to show and configure key bindings
+
+=head1 DESCRIPTION
+
+This dialog lets the user search for an action and then configure a new
+shortcut if needed
+
+=head1 PUBLIC API
+
+=head2 C<new>
+
+  my $advanced = Padre::Wx::Dialog::KeyBindings->new($main);
+
+Returns a new C<Padre::Wx::Dialog::KeyBindings> instance
+
+=head2 C<show>
+
+  $advanced->show($main);
+
+Shows the dialog. Returns C<undef>.
 
 =head1 COPYRIGHT & LICENSE
 
@@ -561,8 +520,3 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.

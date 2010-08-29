@@ -13,6 +13,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Fixed typos in share/languages/perl5/perl5.yml (ZENOG)
     - Added keyboard shortcuts to refactoring features "rename variable"
       and "extract subroutine" (ZENOG)
+    - Fixed small translation problem in ActionLibrary (ZENOG)
+    - Initial working version of the keyboard shortcut editor (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
