@@ -1751,6 +1751,7 @@ sub init {
 		need_editor => 1,
 		label       => _T('Rename Variable...'),
 		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
+		shortcut     => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('rename_variable') or return;
@@ -1766,6 +1767,7 @@ sub init {
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
 		),
+		shortcut     => 'Shift-Alt-M',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('extract_subroutine') or return;
