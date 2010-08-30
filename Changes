@@ -1,10 +1,13 @@
 Changes for Perl Application Development and Refactoring Environment
-NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
+NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.70 To be released
-    - Directory search now runs incrementally via background task (ADAMK)
     - The Task 2.0 API now supports full birectional communication for all
       task classes out the box. (ADAMK)
+    - Directory search now runs incrementally via background task (ADAMK)
+    - Directory browse no longer infinitely recurses (ADAMK)
+    - Directory tasks all support cancellation, preventing expensive tasks
+      building up and killing your Padre instance (ADAMK)
     - Subroutines declared using syntax provided by Method::Signatures
       ("func", "method"), MooseX::Method::Signatures ("method"), and
       MooseX::Declare ("method") are now supported in the Outline and
