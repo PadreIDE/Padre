@@ -68,6 +68,8 @@ sub new {
 	$self->{_history_} = Padre::DB::History->recent('commands') || [];
 	#$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 
+	$self->{_output_}->WriteText(Wx::gettext("Experimental feature. Type '?' at the bottom of the page to get list of commands. If it does not work, blame szabgab.\n\n"));
+
 	return $self;
 }
 
