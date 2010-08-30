@@ -1716,15 +1716,15 @@ msgstr "Fügt eine neue Zeile ein und rückt bis zur aktuellen Spalte ein."
 
 #: lib/Padre/Wx/ActionLibrary.pm:1722
 msgid "Create Project Tagsfile"
-msgstr "Eine Projekt-Tagsdatei erstellen"
+msgstr "Projekt-Tagsdatei erstellen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1723
 msgid ""
 "Creates a perltags - file for the current project supporting find_method and "
 "autocomplete."
 msgstr ""
-"Erstellt eine Perltags-Datei für das aktuelle Projekt zur Unterstützung von "
-"find_method und Autovervollständigen"
+"Perltags-Datei für das aktuelle Projekt zur Unterstützung von "
+"find_method und Autovervollständigung erstellen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1734
 msgid "Automatic Bracket Completion"
@@ -4208,7 +4208,7 @@ msgstr "&Löschen"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:125
 msgid "Reset to default shortcut"
-msgstr "Zum Standard-Tastenkombination zurücksetzen"
+msgstr "Zur Standard-Tastenkombination zurücksetzen"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:351
 #, perl-format
