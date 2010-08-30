@@ -13,6 +13,7 @@ our $VERSION = '0.69';
 my %DATA = ();
 
 sub stash {
+	my $class = shift;
 	my $owner = shift;
 	my $key   = shift;
 
@@ -28,11 +29,11 @@ sub stash {
 	}
 
 	$DATA{$key}->{$owner}
-		or $DATA{$key}->{$owner} = {};
+	or $DATA{$key}->{$owner} = {};
 }
 
 sub release {
-	delete $DATA{ $_[0] };
+	delete $DATA{ $_[1] };
 }
 
 1;

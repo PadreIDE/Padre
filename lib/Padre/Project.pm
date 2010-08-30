@@ -5,7 +5,8 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
+use File::Spec   ();
+use Padre::Cache ();
 
 our $VERSION = '0.69';
 
@@ -316,7 +317,7 @@ sub name {
 sub DESTROY {
 	if ( defined $_[0]->{root} ) {
 		require Padre::Cache;
-		Padre::Cache::release( $_[0]->{root} );
+		Padre::Cache->release( $_[0]->{root} );
 	}
 }
 

@@ -34,4 +34,55 @@ sub GetChildByText {
 	return undef;
 }
 
+# Fetch a list of all Perl data elements for all nodes
+# in depth-first top-to-bottom order.
+sub GetChildrenPlData {
+	my $self  = shift;
+	my @queue = $self->GetRootItem;
+	my @data  = ();
+	while ( @queue ) {
+		my $item = shift @queue;
+		push @data, $self->GetPlData($item)->GetData;
+
+		# Continue if we have no child nodes
+		next unless $self->GetChildrenCount( $item, 0 );
+
+		# Processing children last to first and unshifting onto the
+		# queue, lets us achieve depth-first top-down within the need
+		# for intermediate storage or grepping.
+		my ( $child, $cookie ) = $self->GetLastChild($item);
+		while ( $cookie ) {
+			unshift @queue, $child;
+			( $child, $cookie ) = $self->GetPreviousChild( $item, $cookie );
+		}
+	}
+
+	return \@data;
+}
+
+# Fetch a list of the Perl data elements for expanded nodes
+# in depth-first top to bottom order.
+sub GetExpandedPlData {
+	my $self  = shift;
+	my @queue = $self->GetRootItem;
+	my @data  = ();
+	while ( @queue ) {
+		my $item = shift @queue;
+		push @data, $self->GetPlData($item)->GetData;
+
+		# Processing children last to first and unshifting onto the
+		# queue, lets us achieve depth-first top-down within the need
+		# for intermediate storage or grepping.
+		my ( $child, $cookie ) = $self->GetLastChild($item);
+		while ( $cookie ) {
+			if ( $self->IsExpanded ) {
+				unshift @queue, $child;
+			}
+			( $child, $cookie ) = $self->GetPreviousChild( $item, $cookie );
+		}
+	}
+
+	return \@data;
+}
+
 1;

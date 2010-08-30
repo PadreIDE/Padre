@@ -342,7 +342,7 @@ sub current {
 
 sub DESTROY {
 	if ( defined $_[0]->{filename} ) {
-		Padre::Cache::release( $_[0]->{filename} );
+		Padre::Cache->release( $_[0]->{filename} );
 	}
 }
 
