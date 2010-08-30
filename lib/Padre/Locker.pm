@@ -13,6 +13,7 @@ use strict;
 use warnings;
 use Padre::Lock ();
 use Padre::DB   ();
+use Padre::Logger;
 
 our $VERSION = '0.69';
 
@@ -217,7 +218,12 @@ sub method_decrement {
 			# to retain the integrity of the locking subsystem
 			# as a whole.
 			local $@;
-			eval { $self->{owner}->$_(); };
+			eval {
+				$self->{owner}->$_();
+			};
+			if ( DEBUG and $@ ) {
+				TRACE("ERROR: '$@'");
+			}
 		}
 		$self->{method_pending} = {};
 	}
