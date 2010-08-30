@@ -260,9 +260,8 @@ sub refill {
 	my $expand = delete $self->{expand} or return;
 	my @stack  = ();
 	my $lock   = $self->main->lock('UPDATE');
-	foreach my $i ( 1 .. $#$files ) {
-		my $path  = $files->[$i];
-		my $image = $path->type ? 'folder' : 'package';
+	shift @$files;
+	foreach my $path ( @$files ) {
 		while (@stack) {
 
 			# If we are not the child of the deepest element in
@@ -282,11 +281,11 @@ sub refill {
 
 		# Add the next item to that parent
 		my $item = $tree->AppendItem(
-			$parent,                      # Parent node
-			$path->name,                  # Label
-			$tree->{images}->{$image},    # Icon
-			-1,                           # Wx Identifier
-			Wx::TreeItemData->new($path), # Embedded data
+			$parent,                           # Parent
+			$path->name,                       # Label
+			$tree->{images}->{ $path->image }, # Icon
+			-1,                                # Icon (Selected)
+			Wx::TreeItemData->new($path),      # Embedded data
 		);
 
 		# If it is a folder, it goes onto the stack
@@ -428,25 +427,50 @@ sub browse_message {
 		$cursor = $tree->GetChildByText( $cursor, $name ) or return 1;
 	}
 
-	# Temporarily skip if we've already filled this node.
-	# TODO: Upgrade this to make it update the list instead.
-	if ( $tree->GetChildrenCount($cursor) ) {
-		return;
-	}
-
-	# Add the files to the cursor
+	# Mix the returned files into the existing entries.
+	# If there aren't any existing entries, this shortcuts quite nicely.
+	my ($child, $cookie) = $tree->GetFirstChild($cursor);
+	my $position = 0;
 	while ( @_ ) {
-		my $path  = shift;
-		my $image = $path->type ? 'folder' : 'package';
+		if ( $child->IsOk ) {
 
-		# Add the child to the parent
-		$tree->AppendItem(
-			$cursor,                      # Parent node
-			$path->name,                  # Label
-			$tree->{images}->{$image},    # Icon
-			-1,                           # Wx Identifier
-			Wx::TreeItemData->new($path), # Embedded data
-		);
+			# We are not past the last entry
+			my $current = $tree->GetPlData($child);
+			if ( $current->name eq $_[0]->name ) {
+				# Already exists, discard the duplicate
+				shift;
+			} elsif (
+				$current->is_directory < $_[0]->is_directory
+				and
+				lc($current->name) gt lc($_[0]->name)
+			) {
+				my $path = shift;
+				$tree->InsertItem(
+					$cursor,                           # Parent
+					$position,                         # Before
+					$path->name,                       # Label
+					$tree->{images}->{ $path->image }, # Icon
+					-1,                                # Icon (Selected)
+					Wx::TreeItemData->new($path),      # Embedded data
+				);
+				$position += 1;
+			} else {
+				($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+				$position += 1;
+			}
+
+		} else {
+
+			# We are past the last entry
+			my $path = shift;
+			$tree->AppendItem(
+				$cursor,                           # Parent
+				$path->name,                       # Label
+				$tree->{images}->{ $path->image }, # Icon
+				-1,                                # Icon (Selected)
+				Wx::TreeItemData->new($path),      # Embedded data
+			);
+		}
 	}
 
 	return 1;
@@ -547,7 +571,7 @@ sub find_message {
 		my $name = shift @dirs;
 		my $path = Padre::Wx::Directory::Path->directory( @base, $name );
 		my $item = $tree->AppendItem(
-			$cursor,                      # Parent node
+			$cursor,                      # Parent
 			$path->name,                  # Label
 			$tree->{images}->{folder},    # Icon
 			-1,                           # Wx identifier

@@ -48,6 +48,10 @@ sub type {
 	$_[0]->[0];
 }
 
+sub image {
+	$_[0]->[0] ? 'folder' : 'package';
+}
+
 sub name {
 	$_[0]->[-1];
 }
