@@ -380,7 +380,7 @@ setting(
 	name    => 'startup_splash',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 1,
+	default => 0,
 	startup => 1,
 );
 

@@ -18,6 +18,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       and "extract subroutine" (ZENOG)
     - Fixed small translation problem in ActionLibrary (ZENOG)
     - Initial working version of the keyboard shortcut editor (ZENOG)
+    - The startup splash is now disabled by default. Padre starts up very
+      quickly these days, and delaying image loading should reduce the
+      per-thread memory cost more (ADAMK)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
