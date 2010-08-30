@@ -32,7 +32,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 717, 550 ] );
+	$self->SetMinSize( [ 770, 550 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -69,9 +69,11 @@ sub _create_controls {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
-	$self->{list}->InsertColumn( 0, Wx::gettext('Action') );
-	$self->{list}->InsertColumn( 1, Wx::gettext('Description') );
-	$self->{list}->InsertColumn( 2, Wx::gettext('Shortcut') );
+	my @titles = qw(Action Description Shortcut);
+	foreach my $i ( 0 .. 2 ) {
+		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
+		$self->{list}->SetColumnWidth( $i, Wx::wxLIST_AUTOSIZE );
+	}
 
 	# TODO add tooltip with the comments
 
@@ -105,6 +107,8 @@ sub _create_controls {
 		\@translated_keys,
 	);
 	$self->{key}->SetSelection(0);
+
+	# TODO tooltips for all buttons
 
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
@@ -147,7 +151,7 @@ sub _create_controls {
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $shortcut_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $shortcut_label, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $modifier_sizer, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
