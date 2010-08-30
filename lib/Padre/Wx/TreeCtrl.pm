@@ -42,18 +42,15 @@ sub GetChildrenPlData {
 	my @data  = ();
 	while ( @queue ) {
 		my $item = shift @queue;
-		push @data, $self->GetPlData($item)->GetData;
-
-		# Continue if we have no child nodes
-		next unless $self->GetChildrenCount( $item, 0 );
+		push @data, $self->GetPlData($item);
 
 		# Processing children last to first and unshifting onto the
 		# queue, lets us achieve depth-first top-down within the need
 		# for intermediate storage or grepping.
-		my ( $child, $cookie ) = $self->GetLastChild($item);
-		while ( $cookie ) {
+		my $child = $self->GetLastChild($item);
+		while ( $child->IsOk ) {
 			unshift @queue, $child;
-			( $child, $cookie ) = $self->GetPreviousChild( $item, $cookie );
+			$child = $self->GetPrevSibling($child);
 		}
 	}
 
@@ -68,17 +65,17 @@ sub GetExpandedPlData {
 	my @data  = ();
 	while ( @queue ) {
 		my $item = shift @queue;
-		push @data, $self->GetPlData($item)->GetData;
+		push @data, $self->GetPlData($item);
 
 		# Processing children last to first and unshifting onto the
 		# queue, lets us achieve depth-first top-down within the need
 		# for intermediate storage or grepping.
-		my ( $child, $cookie ) = $self->GetLastChild($item);
-		while ( $cookie ) {
-			if ( $self->IsExpanded ) {
+		my $child = $self->GetLastChild($item);
+		while ( $child->IsOk ) {
+			if ( $self->IsExpanded($child) ) {
 				unshift @queue, $child;
 			}
-			( $child, $cookie ) = $self->GetPreviousChild( $item, $cookie );
+			$child = $self->GetPrevSibling($child);
 		}
 	}
 

@@ -99,9 +99,7 @@ sub new {
 	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
 	$self->{tree}->SetPlData(
 		$self->{tree}->GetRootItem,
-		Wx::TreeItemData->new(
-			Padre::Wx::Directory::Path->directory,
-		),
+		Padre::Wx::Directory::Path->directory,
 	);
 	Wx::Event::EVT_TREE_ITEM_EXPANDED(
 		$self,
@@ -257,36 +255,61 @@ sub clear {
 sub refill {
 	my $self   = shift;
 	my $tree   = $self->{tree};
-	my $files  = delete $self->{files};
+	my $root   = $tree->GetRootItem;
+	my $files  = delete $self->{files}  or return;
 	my $expand = delete $self->{expand} or return;
-	my @stack  = $tree->GetRootItem;
-	foreach my $i ( 0 .. $#$files ) {
+	my @stack  = ();
+	my $lock   = $self->main->lock('UPDATE');
+	foreach my $i ( 1 .. $#$files ) {
 		my $path  = $files->[$i];
 		my $image = $path->type ? 'folder' : 'package';
-		unless ( $tree->GetPlData($stack[-1])->GetData->is_parent($path) ) {
-			if ( $files->[$i - 1]->is_parent($path) ) {
-				# Descending
-				push @stack, $tree->GetLastChild($stack[-1]);
-			} else {
-				# Ascending
-				while ( @stack ) {
-					pop @stack;
-					if ( $tree->GetPlData($stack[-1])->GetData->is_parent($path) ) {
-						last;
-					}
-				}
-			}					
+		while (@stack) {
+
+			# If we are not the child of the deepest element in
+			# the stack, move up a level and try again
+			last if $tree->GetPlData( $stack[-1] )->is_parent($path);
+
+			# We have finished filling the directory.
+			# Now it (maybe) has children, we can expand it.
+			my $complete = pop @stack;
+			if ( $expand->{ $tree->GetPlData($complete)->unix } ) {
+				$tree->Expand($complete);
+			}
 		}
-		$tree->AppendItem(
-			$stack[-1],                   # Parent node
+
+		# If there is anything left on the stack it is our parent
+		my $parent = $stack[-1] || $root;
+
+		# Add the next item to that parent
+		my $item = $tree->AppendItem(
+			$parent,                      # Parent node
 			$path->name,                  # Label
 			$tree->{images}->{$image},    # Icon
 			-1,                           # Wx Identifier
 			Wx::TreeItemData->new($path), # Embedded data
 		);
+
+		# If it is a folder, it goes onto the stack
+		if ( $path->type == 1 ) {
+			push @stack, $item;
+		}
 	}
+
+	# Apply the same Expand logic above to any remaining stack elements
+	while (@stack) {
+		my $complete = pop @stack;
+		if ( $expand->{ $tree->GetPlData($complete)->unix } ) {
+			$tree->Expand($complete);
+		}
+	}
+
+	# If we moved during the fill, move back
+	my $first = ($tree->GetFirstChild($root))[0];
+	$tree->ScrollTo($first) if $first->IsOk;
+
+	return 1;
 }
-		
+
 
 
 
@@ -334,7 +357,7 @@ sub refresh {
 				%$stash = (
 					root   => $self->{root},
 					files  => $self->tree->GetChildrenPlData,
-					expand => $self->tree->GetExpandedPlData,
+					expand => $self->tree->expanded,
 				);
 			}
 		}
@@ -353,16 +376,14 @@ sub refresh {
 			);
 			if ( $stash->{root} ) {
 				# We have a cached state
+				$self->{files}  = $stash->{files};
 				$self->{expand} = $stash->{expand};
+				$self->refill;
 			}
 		}
 
-		# Flush the search box and start the rerender
-		if ( $self->{expand} ) {
-			$self->browse( @{$self->{expand}} );
-		} else {
-			$self->browse;
-		}
+		# Flush the search box and restart
+		$self->browse;
 	}
 
 	return 1;
