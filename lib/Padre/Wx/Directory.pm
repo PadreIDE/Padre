@@ -258,8 +258,8 @@ sub refill {
 	my $root   = $tree->GetRootItem;
 	my $files  = delete $self->{files}  or return;
 	my $expand = delete $self->{expand} or return;
-	my @stack  = ();
 	my $lock   = $self->main->lock('UPDATE');
+	my @stack  = ();
 	shift @$files;
 	foreach my $path ( @$files ) {
 		while (@stack) {
@@ -433,17 +433,16 @@ sub browse_message {
 	my $position = 0;
 	while ( @_ ) {
 		if ( $child->IsOk ) {
+			# Are we before, after, or a duplicate
+			my $compare = $self->compare( $_[0], $tree->GetPlData($child) );
+			if ( $compare > 0 ) {
+				# Deleted entry, remove the current position
+				my $delete = $child;
+				($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+				$tree->Delete($delete);
 
-			# We are not past the last entry
-			my $current = $tree->GetPlData($child);
-			if ( $current->name eq $_[0]->name ) {
-				# Already exists, discard the duplicate
-				shift;
-			} elsif (
-				$current->is_directory < $_[0]->is_directory
-				and
-				lc($current->name) gt lc($_[0]->name)
-			) {
+			} elsif ( $compare < 0 ) {
+				# New entry, insert before the current position
 				my $path = shift;
 				$tree->InsertItem(
 					$cursor,                           # Parent
@@ -453,10 +452,13 @@ sub browse_message {
 					-1,                                # Icon (Selected)
 					Wx::TreeItemData->new($path),      # Embedded data
 				);
-				$position += 1;
+				$position++;
+
 			} else {
+				# Already exists, discard the duplicate
 				($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
-				$position += 1;
+				$position++;
+				shift @_;
 			}
 
 		} else {
@@ -649,6 +651,18 @@ sub move {
 	}
 	$main->show_directory(1);
 	return 1;
+}
+
+# Compare two paths to see which should be first
+sub compare {
+	my $self  = shift;
+	my $left  = shift;
+	my $right = shift;
+	return (
+		$right->is_directory <=> $left->is_directory
+		or
+		lc($left->name) cmp lc($right->name)
+	);
 }
 
 1;
