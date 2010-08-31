@@ -475,6 +475,14 @@ sub browse_message {
 		}
 	}
 
+	# Remove any deleted trailing entries
+	while ( $child->IsOk ) {
+		# Deleted entry, remove the current position
+		my $delete = $child;
+		($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+		$tree->Delete($delete);
+	}
+
 	return 1;
 }
 
