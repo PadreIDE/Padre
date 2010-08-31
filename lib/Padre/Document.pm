@@ -311,7 +311,7 @@ sub rebless {
 	if ($class) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
-			die("Failed to load $class: $@") if $@;
+			die "Failed to load $class: $@" if $@;
 		}
 		bless $self, $class;
 	}
@@ -321,9 +321,8 @@ sub rebless {
 	$filename = $self->{file}->filename
 		if defined( $self->{file} )
 			and defined( $self->{file}->{filename} );
-	warn("No module  mime_type='$mime_type' filename='$filename'\n") unless $module;
+	warn "No module  mime_type='$mime_type' filename='$filename'\n" unless $module;
 
-	#warn("Module '$module' mime_type='$mime_type' filename='$filename'\n") if $module;
 	$self->set_highlighter($module);
 
 	return;
@@ -975,7 +974,7 @@ sub lexer {
 		warn "no highlighter\n";
 		$highlighter = 'stc';
 	}
-	TRACE( "The highlighter is '$highlighter'" ) if DEBUG;
+	TRACE("The highlighter is '$highlighter'") if DEBUG;
 	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
 

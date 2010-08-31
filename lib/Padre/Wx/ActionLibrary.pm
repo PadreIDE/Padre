@@ -1403,7 +1403,7 @@ sub init {
 				label      => $mime{$mime_type},
 				comment    => _T('Switch document type'),
 				menu_event => sub {
-					$_[0]->set_mimetype( $mime{$mime_type} );
+					$_[0]->set_mimetype($mime_type);
 				},
 			);
 		}
