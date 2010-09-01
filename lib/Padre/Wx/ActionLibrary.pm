@@ -2082,7 +2082,7 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => _T('Show Stack Trace') . ' (&T) ',
+		label        => _T('Show Stack Trace (&t)'),
 		comment      => _T('When in a subroutine call show all the calls since the main of the program'),
 
 		#shortcut     => 'Shift-F5',
@@ -2113,7 +2113,7 @@ sub init {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => _T('Show Value Now') . ' (&x) ',
+		label        => _T('Show Value Now (&x)'),
 		comment      => _T('Show the value of a variable now in a pop-up window.'),
 
 		#shortcut     => 'Shift-F5',
@@ -2144,7 +2144,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'actions/stop',
-		label        => _T('Quit Debugger') . ' (&q) ',
+		label        => _T('Quit Debugger (&q)'),
 		comment      => _T('Quit the process being debugged'),
 
 		#shortcut     => 'Shift-F5',

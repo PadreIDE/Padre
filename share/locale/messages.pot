@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-30 00:01+0200\n"
+"POT-Creation-Date: 2010-09-01 19:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Padre/Project.pm:31
+#: lib/Padre/Project.pm:32
 #, perl-format
 msgid ""
 "Project directory %s does not exist (any longer). This is fatal and will "
@@ -182,7 +182,7 @@ msgid ""
 "Are you trying to load a binary file?"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:213
+#: lib/Padre/Document.pm:444 lib/Padre/Wx/Editor.pm:213
 #: lib/Padre/Wx/Syntax.pm:394 lib/Padre/Wx/Syntax.pm:420
 #: lib/Padre/Wx/Syntax.pm:423 lib/Padre/Wx/Main.pm:4322
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:356
@@ -203,23 +203,23 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: lib/Padre/Document.pm:768
+#: lib/Padre/Document.pm:767
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:772
+#: lib/Padre/Document.pm:771
 msgid "Save Warning"
 msgstr ""
 
-#: lib/Padre/Document.pm:992
+#: lib/Padre/Document.pm:991
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
 
-#: lib/Padre/Document.pm:1406 lib/Padre/Document.pm:1407
+#: lib/Padre/Document.pm:1405 lib/Padre/Document.pm:1406
 msgid "Skipped for large files"
 msgstr ""
 
@@ -581,7 +581,14 @@ msgstr ""
 msgid "Found '%s' in '%s':\n"
 msgstr ""
 
-#: lib/Padre/Wx/Command.pm:256
+#: lib/Padre/Wx/Command.pm:81
+msgid ""
+"Experimental feature. Type '?' at the bottom of the page to get list of "
+"commands. If it does not work, blame szabgab.\n"
+"\n"
+msgstr ""
+
+#: lib/Padre/Wx/Command.pm:262
 msgid "Command"
 msgstr ""
 
@@ -722,7 +729,7 @@ msgstr ""
 #: lib/Padre/Wx/Browser.pm:111 lib/Padre/Wx/Dialog/Find.pm:160
 #: lib/Padre/Wx/Dialog/DocStats.pm:58 lib/Padre/Wx/Dialog/Replace.pm:192
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:130
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:134
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:249
 msgid "&Close"
 msgstr ""
@@ -1861,7 +1868,7 @@ msgid "Set a breakpoint at the line where to cursor is and run till there"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2085
-msgid "Show Stack Trace"
+msgid "Show Stack Trace (&t)"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2086
@@ -1879,7 +1886,7 @@ msgid ""
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2116
-msgid "Show Value Now"
+msgid "Show Value Now (&x)"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2117
@@ -1895,7 +1902,7 @@ msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2147
-msgid "Quit Debugger"
+msgid "Quit Debugger (&q)"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2148
@@ -2296,16 +2303,16 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:74 lib/Padre/Wx/Dialog/Find.pm:332
+#: lib/Padre/Wx/Directory.pm:68 lib/Padre/Wx/Dialog/Find.pm:332
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:96
+#: lib/Padre/Wx/Directory.pm:90
 msgid "Move to other panel"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:241 lib/Padre/Wx/Dialog/WindowList.pm:226
+#: lib/Padre/Wx/Directory.pm:233 lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Project"
 msgstr ""
 
@@ -2377,7 +2384,6 @@ msgid "Type"
 msgstr ""
 
 #: lib/Padre/Wx/Syntax.pm:282 lib/Padre/Wx/Dialog/SessionManager.pm:227
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:73
 msgid "Description"
 msgstr ""
 
@@ -2820,7 +2826,7 @@ msgstr ""
 msgid "Copy Specials"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/KeyBindings.pm:93
+#: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/KeyBindings.pm:95
 msgid "Insert"
 msgstr ""
 
@@ -3033,7 +3039,7 @@ msgid "Open"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:291
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:93 lib/Padre/Wx/FBP/Sync.pm:233
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:95 lib/Padre/Wx/FBP/Sync.pm:233
 msgid "Delete"
 msgstr ""
 
@@ -3892,11 +3898,11 @@ msgstr ""
 msgid "Options:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:156 lib/Padre/Wx/Dialog/KeyBindings.pm:111
+#: lib/Padre/Wx/Dialog/Advanced.pm:156 lib/Padre/Wx/Dialog/KeyBindings.pm:115
 msgid "&Set"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:162 lib/Padre/Wx/Dialog/KeyBindings.pm:123
+#: lib/Padre/Wx/Dialog/Advanced.pm:162 lib/Padre/Wx/Dialog/KeyBindings.pm:127
 msgid "&Reset"
 msgstr ""
 
@@ -4015,104 +4021,96 @@ msgstr ""
 msgid "Found %s help topic(s)\n"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:72
-msgid "Action"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:74 lib/Padre/Wx/Dialog/Shortcut.pm:113
-msgid "Shortcut"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:79
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:81
 msgid "Sh&ortcut:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:82
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:84
 msgid "Ctrl"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:83
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:85
 msgid "Alt"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:84
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:86
 msgid "Shift"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "Backspace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "Tab"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "Space"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "Up"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:92
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
 msgid "Down"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:93
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
 msgid "Left"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:93
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
 msgid "Right"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:93
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:93
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
 msgid "End"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
 msgid "PageUp"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
 msgid "PageDown"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
 msgid "Enter"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:94
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
 msgid "Escape"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:117
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:121
 msgid "&Delete"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:125
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:129
 msgid "Reset to default shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:351
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:363
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:354
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:366
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:355
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:367
 msgid "Override Shortcut"
 msgstr ""
 
@@ -4221,6 +4219,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:82
 msgid "SHIFT"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:113
+msgid "Shortcut"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:70
