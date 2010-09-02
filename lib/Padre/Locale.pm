@@ -359,11 +359,11 @@ BEGIN {
 		'nl-be' => {
 			gettext   => _T('Dutch (Belgium)'),
 			utf8text  => 'Nederlands (België)',
-			iso639    => 'en',
+			iso639    => 'nl',
 			iso3166   => 'BE',
 			wxid      => Wx::wxLANGUAGE_DUTCH_BELGIAN,
 			fallback  => ['nl-nl'],
-			supported => 1,
+			supported => 0,
 		},
 
 		'no' => {
