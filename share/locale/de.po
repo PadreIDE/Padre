@@ -619,7 +619,10 @@ msgid ""
 "Experimental feature. Type '?' at the bottom of the page to get list of "
 "commands. If it does not work, blame szabgab.\n"
 "\n"
-msgstr ""
+msgstr
+"Experimentelles feature. Geben Sie '?' für eine Befehlsliste eine. "
+"Falls es nicht funktioniert, beschweren Sie sich bitte bei szabgab.\n"
+"\n"
 
 #: lib/Padre/Wx/Command.pm:262
 msgid "Command"
