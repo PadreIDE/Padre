@@ -24,6 +24,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       per-thread memory cost more (ADAMK)
     - Fix MIME type setting via menu (ZENOG)
     - mark nl_be as not supported (ZENOG)
+    - partial fix for #452: 'focus order in Replace dialog' (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
