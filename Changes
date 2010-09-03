@@ -25,6 +25,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix MIME type setting via menu (ZENOG)
     - mark nl_be as not supported (ZENOG)
     - partial fix for #452: 'focus order in Replace dialog' (ZENOG)
+    - Fix focus order in Find dialog (ZENOG)
+    - Close replace dialog on Escape key in all cases (ZENOG)    
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)

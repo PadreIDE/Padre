@@ -68,20 +68,6 @@ sub new {
 		'search',
 	);
 
-	# "Case Sensitive" option
-	$self->{find_case} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext('Case &sensitive'),
-	);
-	Wx::Event::EVT_CHECKBOX(
-		$self,
-		$self->{find_case},
-		sub {
-			$_[0]->{find_text}->SetFocus;
-		}
-	);
-
 	# "Find as Regex" option
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
@@ -91,20 +77,6 @@ sub new {
 	Wx::Event::EVT_CHECKBOX(
 		$self,
 		$self->{find_regex},
-		sub {
-			$_[0]->{find_text}->SetFocus;
-		}
-	);
-
-	# "Find First and Close" option
-	$self->{find_first} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext('Close Window on &Hit'),
-	);
-	Wx::Event::EVT_CHECKBOX(
-		$self,
-		$self->{find_first},
 		sub {
 			$_[0]->{find_text}->SetFocus;
 		}
@@ -124,11 +96,39 @@ sub new {
 		}
 	);
 
+	# "Case Sensitive" option
+	$self->{find_case} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Case &sensitive'),
+	);
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{find_case},
+		sub {
+			$_[0]->{find_text}->SetFocus;
+		}
+	);
+
+	# "Find First and Close" option
+	$self->{find_first} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Close Window on &Hit'),
+	);
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{find_first},
+		sub {
+			$_[0]->{find_text}->SetFocus;
+		}
+	);
+
 	# The "Find" button
 	$self->{button_find} = Wx::Button->new(
 		$self,
 		Wx::wxID_FIND,
-		Wx::gettext("&Find Next"),
+		Wx::gettext('&Find Next'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -143,7 +143,7 @@ sub new {
 	$self->{findall_button} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Find &All"),
+		Wx::gettext('Find &All'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -157,7 +157,7 @@ sub new {
 	$self->{button_close} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext("&Close"),
+		Wx::gettext('&Close'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -182,7 +182,7 @@ sub new {
 		Wx::StaticText->new(
 			$self,
 			Wx::wxID_STATIC,
-			Wx::gettext("Find &Text:"),
+			Wx::gettext('Find &Text:'),
 		),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
@@ -311,7 +311,7 @@ sub find_button {
 	# Generate the search object
 	my $search = $self->as_search;
 	unless ($search) {
-		$main->error("Not a valid search");
+		$main->error('Not a valid search');
 
 		# Move the focus back to the search text
 		# so they can tweak their search.
@@ -386,7 +386,7 @@ sub findall_button {
 	my $search = $self->as_search;
 
 	unless ($search) {
-		$main->error( Wx::gettext("Not a valid search") );
+		$main->error( Wx::gettext('Not a valid search') );
 		return;
 	}
 

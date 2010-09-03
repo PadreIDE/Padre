@@ -185,7 +185,7 @@ sub new {
 		$self,
 		$self->{close_button},
 		sub {
-			$_[0]->close_button;
+			$_[0]->close;
 		}
 	);
 
@@ -442,13 +442,13 @@ sub find_button {
 }
 
 =pod
-=head2 close_button
-  $self->close_button
-Hide dialog when pressed cancel button.
+=head2 close
+  $self->close
+Hide dialog.
 =cut
 
 
-sub close_button {
+sub close {
 	my $self = shift;
 	$self->Hide;
 
@@ -595,6 +595,10 @@ sub hotkey {
 
 		#$sender->Navigate( $key_event->ShiftDown ? 0 : 1 );
 	}
+	if ( $key_event->GetKeyCode == Wx::WXK_ESCAPE ) {
+		$self->close;
+	}
+
 	return;
 }
 
