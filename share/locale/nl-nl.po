@@ -467,7 +467,7 @@ msgstr "Aan het verbinden met FTP server %s..."
 #: lib/Padre/File/FTP.pm:121
 #, perl-format
 msgid "Error connecting to %s:%s: %s"
-msgstr "Fout bij het verbinden me '%s': %s"
+msgstr "Fout bij het verbinden me '%s:%s': %s"
 
 #: lib/Padre/File/FTP.pm:127
 msgid "FTP Password"
@@ -486,7 +486,7 @@ msgstr "Aan het inloggen op FTP server als %s..."
 #: lib/Padre/File/FTP.pm:137
 #, perl-format
 msgid "Error logging in on %s:%s: %s"
-msgstr "Fout bij het inloggen op '%s': %s"
+msgstr "Fout bij het inloggen op '%s:%s': %s"
 
 #: lib/Padre/File/FTP.pm:149
 msgid "Connection to FTP server successful."
@@ -2856,7 +2856,7 @@ msgstr ""
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
-msgstr "Fout teruggestuurd door filter tool:\n"
+msgstr "Fout teruggestuurd door filter tool:\n%s"
 
 #: lib/Padre/Wx/ErrorList.pm:95
 msgid "Errors"
@@ -3200,7 +3200,8 @@ msgstr "Selecteer Functie"
 msgid ""
 "Select which subroutine you want the new subroutine\n"
 "inserted before."
-msgstr "Selecteer voor welke subroutine de nieuwe subroutine dient ingevoegd te worden\n"
+msgstr "Selecteer voor welke subroutine de nieuwe subroutine dient\n"
+"ingevoegd te worden"
 
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:104
 msgid "Function"

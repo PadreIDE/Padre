@@ -2554,7 +2554,7 @@ msgstr "Bir yardım sağlayıcı bulunamadı: "
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:395
 #, perl-format
 msgid "Found %s help topic(s)\n"
-msgstr "%s yardım başlığı bulundu"
+msgstr "%s yardım başlığı bulundu\n"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:46
 #: lib/Padre/Action/Tools.pm:38
@@ -3143,7 +3143,7 @@ msgstr "Padre geliştiricileri tarafından kullanılan bazı alakasız araçlar 
 #: lib/Padre/Plugin/Devel.pm:285
 #, perl-format
 msgid "Found %s unloaded modules"
-msgstr "%s adet yüklenmemiş modül bulundu\n"
+msgstr "%s adet yüklenmemiş modül bulundu"
 
 #: lib/Padre/Plugin/Devel.pm:297
 #, perl-format

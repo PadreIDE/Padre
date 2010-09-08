@@ -4730,7 +4730,7 @@ msgstr "Имитация падения фоновой задачи"
 #: lib/Padre/Plugin/Devel.pm:91
 #, perl-format
 msgid "wxWidgets %s Reference"
-msgstr "wxWidgets % справка"
+msgstr "wxWidgets %s справка"
 
 #: lib/Padre/Plugin/Devel.pm:94
 msgid "STC Reference"

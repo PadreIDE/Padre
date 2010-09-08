@@ -2455,7 +2455,7 @@ msgstr "無空白字元: %s"
 #: lib/Padre/Wx/Main.pm:4977
 #, perl-format
 msgid "Chars with spaces: %d"
-msgstr "帶空白字元: %s"
+msgstr "帶空白字元: %d"
 
 #: lib/Padre/Wx/Main.pm:4978
 #, perl-format

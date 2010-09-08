@@ -222,7 +222,7 @@ msgstr ""
 msgid ""
 "\n"
 "Additionally, there are %s tasks pending execution.\n"
-msgstr "בנוסף, יש %s משימות שממתינות להתבצע.\n"
+msgstr "\nבנוסף, יש %s משימות שממתינות להתבצע.\n"
 
 #: lib/Padre/Document.pm:204
 msgid "Error while opening file: no file object"
@@ -2370,7 +2370,7 @@ msgstr "שורות: %d"
 #: lib/Padre/Wx/Main.pm:5042
 #, perl-format
 msgid "Chars without spaces: %s"
-msgstr "תווים שאינם רווחים: %d"
+msgstr "תווים שאינם רווחים: %s"
 
 #: lib/Padre/Wx/Main.pm:5043
 #, perl-format
@@ -2626,7 +2626,7 @@ msgstr "התעלם ממצב רישיות (%s)"
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:224
 #, perl-format
 msgid "Single-line (%s)"
-msgstr "שורה בודדת"
+msgstr "שורה בודדת (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:225
 #, perl-format
@@ -3692,7 +3692,7 @@ msgstr "העבר לחלון אחר"
 
 #: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:32
 msgid "Failed to execute process\n"
-msgstr "הרצת התהליך נכשלה\t"
+msgstr "הרצת התהליך נכשלה\n"
 
 #: lib/Padre/Plugin/Devel.pm:25
 msgid "Padre Developer Tools"
