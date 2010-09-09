@@ -95,16 +95,13 @@ sub find {
 		}
 	}
 
-	if ($check_alternate_sub_decls) {
+	if ( $check_alternate_sub_decls ) {
 		$ppi->find(
 			sub {
-				my $sib_content;
-				my $matched =
-					(      $_[1]->isa('PPI::Token::Word')
-						&& grep( $_[1]->content() eq $_, qw/func method/ )
-						&& $_[1]->next_sibling()->isa('PPI::Token::Whitespace')
-						&& ( $sib_content = $_[1]->next_sibling()->next_sibling->content() ) );
-				return 0 unless $matched;
+				$_[1]->isa('PPI::Token::Word')                               or return 0;
+				$_[1]->content =~ /^(?:func|method)\z/                       or return 0;
+				$_[1]->next_sibling->isa('PPI::Token::Whitespace')           or return 0;
+				my $sib_content = $_[1]->next_sibling->next_sibling->content or return 0;
 
 				$sib_content =~ m/^\b(\w+)\b/;
 				return 0 unless defined $1;
