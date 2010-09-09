@@ -81,10 +81,10 @@ sub show {
 		$page->gettext_label,
 		1,
 	);
-	if ( $page->can( 'view_icon' ) ) {
+	if ( $page->can('view_icon') ) {
 		my $pos = $self->GetPageIndex($page);
-		$self->SetPageBitmap($pos,$page->view_icon);
-        }
+		$self->SetPageBitmap( $pos, $page->view_icon );
+	}
 	$page->Show;
 	$self->Show;
 	$self->aui->GetPane($self)->Show;

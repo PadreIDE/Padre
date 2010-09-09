@@ -56,7 +56,7 @@ sub signal {
 # Pass the event through to the event handler
 sub on_signal {
 	TRACE( $_[1] ) if DEBUG;
-	$HANDLER->on_signal($_[1]) if $HANDLER;
+	$HANDLER->on_signal( $_[1] ) if $HANDLER;
 	return 1;
 }
 

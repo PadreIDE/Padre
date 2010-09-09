@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 2+1;
+use Test::More tests => 2 + 1;
 use FindBin qw($Bin);
 use File::Spec ();
 use File::Temp qw(tempdir);
@@ -21,9 +21,9 @@ use Padre::Util::CommandLine;
 use Cwd qw(abs_path);
 {
 	no warnings;
-	sub Cwd::cwd {	$files_dir }
+	sub Cwd::cwd {$files_dir}
 }
 
 
-is Padre::Util::CommandLine::tab(':e'), ':e Debugger.pm', 'TAB 1';
-is Padre::Util::CommandLine::tab(':e Debugger.pm'), ':e beginner/', 'TAB 2';
+is Padre::Util::CommandLine::tab(':e'),             ':e Debugger.pm', 'TAB 1';
+is Padre::Util::CommandLine::tab(':e Debugger.pm'), ':e beginner/',   'TAB 2';

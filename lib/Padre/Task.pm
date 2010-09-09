@@ -100,13 +100,14 @@ our $COMPATIBLE = '0.65';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	if ( exists $self->{owner} ) {
+
 		# Check parameters relevant to our optional owner
 		if ( exists $self->{on_message} ) {
-			my $method = Params::Util::_IDENTIFIER($self->{on_message});
-			unless ( $method ) {
+			my $method = Params::Util::_IDENTIFIER( $self->{on_message} );
+			unless ($method) {
 				die "Task 'on_message' must be a method name";
 			}
 			unless ( $self->{owner}->can($method) ) {
@@ -159,13 +160,13 @@ sub on_finish {
 
 # my $string = $task->as_string;
 sub as_string {
-	Storable::nfreeze($_[0]);
+	Storable::nfreeze( $_[0] );
 }
 
 # my $task = Class::Name->from_string($string);
 sub from_string {
 	my $class = shift;
-	my $self  = Storable::thaw($_[0]);
+	my $self  = Storable::thaw( $_[0] );
 	unless ( Scalar::Util::blessed($self) eq $class ) {
 
 		# Because this is an internal API we can be brutally
@@ -223,7 +224,7 @@ sub finish {
 	my $self = shift;
 
 	if ( $self->{owner} ) {
-		my $owner  = $self->owner or return;
+		my $owner = $self->owner or return;
 		my $method = $self->on_finish;
 		$owner->$method($self);
 	}
@@ -239,11 +240,7 @@ sub finish {
 # Birectional Communication
 
 sub cancel {
-	return !! (
-		defined $_[0]->{handle}
-		and
-		$_[0]->{handle}->cancel
-	);
+	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
 }
 
 sub dequeue {

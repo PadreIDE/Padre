@@ -63,12 +63,13 @@ sub find {
 				push @{ $cur_pkg->{pragmata} }, { name => $thing->pragma, line => $thing->location->[0] };
 			} elsif ( $thing->module ) {
 				push @{ $cur_pkg->{modules} }, { name => $thing->module, line => $thing->location->[0] };
-				unless ( $check_alternate_sub_decls ) {
+				unless ($check_alternate_sub_decls) {
 					$check_alternate_sub_decls = 1
-						if grep {$thing->module eq $_}
-							('Method::Signatures',
-							 'MooseX::Declare',
-							 'MooseX::Method::Signatures');
+						if grep { $thing->module eq $_ } (
+								'Method::Signatures',
+								'MooseX::Declare',
+								'MooseX::Method::Signatures'
+						);
 				}
 			}
 		} elsif ( ref $thing eq 'PPI::Statement::Sub' ) {
@@ -94,24 +95,25 @@ sub find {
 		}
 	}
 
-	if ( $check_alternate_sub_decls ) {
-		$ppi->find(sub {
-			my $sib_content;
-			my $matched = (
-				$_[1]->isa('PPI::Token::Word')
-				&& grep($_[1]->content() eq $_ , qw/func method/)
-				&& $_[1]->next_sibling()->isa('PPI::Token::Whitespace')
-				&& ($sib_content = $_[1]->next_sibling()->next_sibling->content())
-			);
-			return 0 unless $matched;
+	if ($check_alternate_sub_decls) {
+		$ppi->find(
+			sub {
+				my $sib_content;
+				my $matched =
+					(      $_[1]->isa('PPI::Token::Word')
+						&& grep( $_[1]->content() eq $_, qw/func method/ )
+						&& $_[1]->next_sibling()->isa('PPI::Token::Whitespace')
+						&& ( $sib_content = $_[1]->next_sibling()->next_sibling->content() ) );
+				return 0 unless $matched;
 
-			$sib_content =~ m/^\b(\w+)\b/;
-			return 0 unless defined $1;
+				$sib_content =~ m/^\b(\w+)\b/;
+				return 0 unless defined $1;
 
-			push @{ $cur_pkg->{methods} }, { name => $1, line => $_[1]->line_number };
+				push @{ $cur_pkg->{methods} }, { name => $1, line => $_[1]->line_number };
 
-			return 1;
-		});
+				return 1;
+			}
+		);
 	}
 
 	if ( not $cur_pkg->{name} ) {

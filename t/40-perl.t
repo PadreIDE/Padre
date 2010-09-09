@@ -226,29 +226,32 @@ SCOPE: {
 # Regression test for get_functions on Method::Signatures-style method declarators
 SCOPE: {
 	my @test_files = (
-		{
-			'filename' => 'method_declarator_1.pm',
-			'methods'  => [qw/
-				_build__ca_state_holidays
-				is_holiday_or_weekend
-			/],
+		{   'filename' => 'method_declarator_1.pm',
+			'methods'  => [
+				qw/
+					_build__ca_state_holidays
+					is_holiday_or_weekend
+					/
+			],
 		},
-		{
-			'filename' => 'method_declarator_2.pm',
-			'methods'  => [qw/
-				new
-				iso_date
-			/],
+		{   'filename' => 'method_declarator_2.pm',
+			'methods'  => [
+				qw/
+					new
+					iso_date
+					/
+			],
 		},
-		{
-			'filename' => 'method_declarator_3.pm',
-			'methods'  => [qw/
-				strip_ws
-			/],
+		{   'filename' => 'method_declarator_3.pm',
+			'methods'  => [
+				qw/
+					strip_ws
+					/
+			],
 		},
 	);
 
-	foreach my $test_file ( @test_files ) {
+	foreach my $test_file (@test_files) {
 		my $editor = t::lib::Padre::Editor->new;
 		my $file   = catfile( $files, $test_file->{'filename'} );
 		my $doc    = Padre::Document->new(

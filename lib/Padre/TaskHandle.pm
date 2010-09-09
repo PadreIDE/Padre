@@ -24,27 +24,32 @@ our $SEQUENCE = 0;
 sub new {
 	TRACE( $_[0] ) if DEBUG;
 	return bless {
-		hid   => ++$SEQUENCE,
-		task  => $_[1],
-	}, $_[0];
+		hid  => ++$SEQUENCE,
+		task => $_[1],
+		},
+		$_[0];
 }
 
 sub hid {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{hid};
 }
 
 sub task {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{task};
 }
 
 sub child {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{child};
 }
 
 sub class {
+
 	# TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
 }
@@ -57,11 +62,13 @@ sub worker {
 }
 
 sub queue {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{queue};
 }
 
 sub inbox {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{inbox};
 }
@@ -112,9 +119,7 @@ sub from_array {
 sub message {
 	TRACE( $_[0] ) if DEBUG;
 	if ( $_[0]->child ) {
-		Padre::Wx::Role::Conduit->signal(
-			Storable::freeze( [ shift->hid, @_ ] )
-		);
+		Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid, @_ ] ) );
 	} else {
 		shift->worker->send( 'message', @_ );
 	}
@@ -128,6 +133,7 @@ sub on_message {
 	my $task   = $self->{task};
 
 	unless ( $self->child ) {
+
 		# Special case for printing a simple message to the main window
 		# status bar, without needing to pollute the task classes.
 		if ( $method eq 'STATUS' ) {
@@ -139,7 +145,7 @@ sub on_message {
 		# Special case for routing messages to the owner of a task
 		# rather than to the task itself.
 		if ( $method eq 'OWNER' ) {
-			my $owner  = $task->owner or return;
+			my $owner  = $task->owner      or return;
 			my $method = $task->on_message or return;
 			$owner->$method( $task, @_ );
 			return;
@@ -148,6 +154,7 @@ sub on_message {
 
 	# Does the method exist
 	unless ( $self->{task}->can($method) ) {
+
 		# A method name provided directly by the Task
 		# doesn't exist in the Task. Naughty Task!!!
 		# Lacking anything more sane to do, squelch it.
@@ -240,7 +247,7 @@ sub run {
 	my $task = $self->task;
 
 	# Create the inbox for the handle
-	$self->{inbox} = [ ];
+	$self->{inbox} = [];
 
 	# Create a circular reference back from the task
 	$task->{handle} = $self;
@@ -295,18 +302,18 @@ sub cancel {
 		push @$inbox, $message;
 	}
 
-	return !! $self->{cancel};
+	return !!$self->{cancel};
 }
 
 # Blocking check for inbound messages from the parent
 sub dequeue {
 	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle or return 0;
 
 	# Pull from the inbox first
-	my $inbox  = $handle->inbox or return 0;
-	if ( @$inbox ) {
+	my $inbox = $handle->inbox or return 0;
+	if (@$inbox) {
 		return shift @$inbox;
 	}
 
@@ -336,12 +343,12 @@ sub dequeue {
 # Non-blocking check for inbound messages from our parent
 sub dequeue_nb {
 	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle or return 0;
 
 	# Pull from the inbox first
 	my $inbox = $handle->inbox or return 0;
-	if ( @$inbox ) {
+	if (@$inbox) {
 		return shift @$inbox;
 	}
 

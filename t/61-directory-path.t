@@ -75,7 +75,7 @@ SCOPE: {
 	is( $directory->type, Padre::Wx::Directory::Path::DIRECTORY, '->type ok' );
 	is( $directory->name, '',                                    '->name ok' );
 	is( $directory->unix, '',                                    '->unix ok' );
-	is_deeply( [ $directory->path ], [ ], '->path ok' );
+	is_deeply( [ $directory->path ], [], '->path ok' );
 	is( $directory->is_file,      0, '->is_file ok' );
 	is( $directory->is_directory, 1, '->is_directory ok' );
 }

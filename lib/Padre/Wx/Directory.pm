@@ -134,7 +134,7 @@ sub task_request {
 	my $self    = shift;
 	my $current = $self->current;
 	my $project = $current->project;
-	if ( $project ) {
+	if ($project) {
 		return $self->SUPER::task_request(
 			@_,
 			project => $project,
@@ -183,6 +183,7 @@ sub on_text {
 
 	if ( $self->{searching} ) {
 		if ( $search->IsEmpty ) {
+
 			# Leaving search mode
 			$self->{searching} = 0;
 			$self->task_reset;
@@ -190,14 +191,17 @@ sub on_text {
 			$self->refill;
 			$self->browse;
 		} else {
+
 			# Changing search term
 			$self->find;
 		}
 	} else {
 		if ( $search->IsEmpty ) {
+
 			# Nothing to do
 			# NOTE: Why would this even fire?
 		} else {
+
 			# Entering search mode
 			$self->{expand}    = $self->tree->GetExpandedPlData;
 			$self->{searching} = 1;
@@ -214,7 +218,7 @@ sub on_expand {
 	my $event = shift;
 	my $item  = $event->GetItem;
 	my $path  = $self->{tree}->GetPlData($item);
-	return $self->browse( $path );
+	return $self->browse($path);
 }
 
 
@@ -256,12 +260,13 @@ sub refill {
 	my $self   = shift;
 	my $tree   = $self->{tree};
 	my $root   = $tree->GetRootItem;
-	my $files  = delete $self->{files}  or return;
+	my $files  = delete $self->{files} or return;
 	my $expand = delete $self->{expand} or return;
 	my $lock   = $self->main->lock('UPDATE');
 	my @stack  = ();
 	shift @$files;
-	foreach my $path ( @$files ) {
+
+	foreach my $path (@$files) {
 		while (@stack) {
 
 			# If we are not the child of the deepest element in
@@ -303,7 +308,7 @@ sub refill {
 	}
 
 	# If we moved during the fill, move back
-	my $first = ($tree->GetFirstChild($root))[0];
+	my $first = ( $tree->GetFirstChild($root) )[0];
 	$tree->ScrollTo($first) if $first->IsOk;
 
 	return 1;
@@ -345,6 +350,7 @@ sub refresh {
 				__PACKAGE__ => $ide->project( $self->{root} ),
 			);
 			if ( $self->{searching} ) {
+
 				# Save the stored browse state
 				%$stash = (
 					root   => $self->{root},
@@ -352,6 +358,7 @@ sub refresh {
 					expand => $self->{expand},
 				);
 			} else {
+
 				# Capture the browse state fresh.
 				%$stash = (
 					root   => $self->{root},
@@ -369,11 +376,12 @@ sub refresh {
 
 		# Do we have an (out of date) cached state we can use?
 		# If so, display it immediately and update it later on.
-		if ( $project ) {
+		if ($project) {
 			my $stash = Padre::Cache->stash(
 				__PACKAGE__ => $project,
 			);
 			if ( $stash->{root} ) {
+
 				# We have a cached state
 				$self->{files}  = $stash->{files};
 				$self->{expand} = $stash->{expand};
@@ -422,6 +430,7 @@ sub browse_message {
 	my $tree   = $self->{tree};
 	my $cursor = $tree->GetRootItem;
 	foreach my $name ( $parent->path ) {
+
 		# Locate the child to descend to.
 		# Discard the entire message if the target child doesn't exist.
 		$cursor = $tree->GetChildByText( $cursor, $name ) or return 1;
@@ -429,19 +438,22 @@ sub browse_message {
 
 	# Mix the returned files into the existing entries.
 	# If there aren't any existing entries, this shortcuts quite nicely.
-	my ($child, $cookie) = $tree->GetFirstChild($cursor);
+	my ( $child, $cookie ) = $tree->GetFirstChild($cursor);
 	my $position = 0;
-	while ( @_ ) {
+	while (@_) {
 		if ( $child->IsOk ) {
+
 			# Are we before, after, or a duplicate
 			my $compare = $self->compare( $_[0], $tree->GetPlData($child) );
 			if ( $compare > 0 ) {
+
 				# Deleted entry, remove the current position
 				my $delete = $child;
-				($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+				( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
 				$tree->Delete($delete);
 
 			} elsif ( $compare < 0 ) {
+
 				# New entry, insert before the current position
 				my $path = shift;
 				$tree->InsertItem(
@@ -455,8 +467,9 @@ sub browse_message {
 				$position++;
 
 			} else {
+
 				# Already exists, discard the duplicate
-				($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+				( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
 				$position++;
 				shift @_;
 			}
@@ -477,9 +490,10 @@ sub browse_message {
 
 	# Remove any deleted trailing entries
 	while ( $child->IsOk ) {
+
 		# Deleted entry, remove the current position
 		my $delete = $child;
-		($child, $cookie) = $tree->GetNextChild($cursor, $cookie);
+		( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
 		$tree->Delete($delete);
 	}
 
@@ -491,7 +505,6 @@ sub browse_finish {
 	my $self = shift;
 	my $task = shift;
 }
-
 
 
 
@@ -544,7 +557,7 @@ sub find_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	my $file = Params::Util::_INSTANCE(shift, 'Padre::Wx::Directory::Path') or return;
+	my $file = Params::Util::_INSTANCE( shift, 'Padre::Wx::Directory::Path' ) or return;
 
 	# Find where we need to start creating nodes from
 	my $tree   = $self->tree;
@@ -552,7 +565,7 @@ sub find_message {
 	my @base   = ();
 	my @dirs   = $file->path;
 	pop @dirs;
-	while ( @dirs ) {
+	while (@dirs) {
 		my $name  = shift @dirs;
 		my $child = $tree->GetLastChild($cursor);
 		if ( $child->IsOk and $tree->GetPlData($child)->name eq $name ) {
@@ -573,11 +586,11 @@ sub find_message {
 	# NOTE: It will HOPEFULLY be faster than the main one.
 	# NOTE: If we could avoid the scrollback snapping around on its own,
 	# we probably wouldn't need this lock at all.
-	my $scroll = $tree->GetScrollPos( Wx::wxVERTICAL );
-	my $lock   = Wx::WindowUpdateLocker->new( $tree );
+	my $scroll = $tree->GetScrollPos(Wx::wxVERTICAL);
+	my $lock   = Wx::WindowUpdateLocker->new($tree);
 
 	# Create any new child directories
-	while ( @dirs  ) {
+	while (@dirs) {
 		my $name = shift @dirs;
 		my $path = Padre::Wx::Directory::Path->directory( @base, $name );
 		my $item = $tree->AppendItem(
@@ -601,7 +614,7 @@ sub find_message {
 	);
 
 	# Expand anything we created.
-	$tree->ExpandAllChildren( $expand ) if $expand;
+	$tree->ExpandAllChildren($expand) if $expand;
 
 	# Make sure the scroll position has not changed
 	$tree->SetScrollPos( Wx::wxVERTICAL, 0, 0 );
@@ -666,11 +679,7 @@ sub compare {
 	my $self  = shift;
 	my $left  = shift;
 	my $right = shift;
-	return (
-		$right->is_directory <=> $left->is_directory
-		or
-		lc($left->name) cmp lc($right->name)
-	);
+	return ( $right->is_directory <=> $left->is_directory or lc( $left->name ) cmp lc( $right->name ) );
 }
 
 1;

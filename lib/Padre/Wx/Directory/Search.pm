@@ -81,26 +81,27 @@ sub run {
 	# should it test and return maybe?
 	my $path = defined( $queue[0]->path ) ? $queue[0]->path : "";
 	my $name = defined( $queue[0]->name ) ? $queue[0]->name : "";
-	my %seen = (
-		File::Spec->catdir( $path, $name ) => $queue[0]
-	);
+	my %seen = ( File::Spec->catdir( $path, $name ) => $queue[0] );
 
 	# Get the device of the root path
 	my $dev = ( stat($root) )[0];
 
 	# Recursively scan for files
-	while ( @queue ) {
+	while (@queue) {
+
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
-			TRACE( 'Padre::Wx::Directory::Search task has been cancelled' ) if DEBUG;
+			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
 			return 1;
 		}
 
 		# Is this a file?
 		my $object = shift @queue;
 		if ( $object->is_file ) {
+
 			# Does the file name match the filter?
 			if ( $object->name =~ $filter ) {
+
 				# Send the matching file to the parent thread
 				$self->handle->message( OWNER => $object );
 			}
@@ -111,27 +112,25 @@ sub run {
 		# NOTE: Silently ignore any that fail. Anything we don't have
 		# permission to see inside of them will just be invisible.
 		my @path = $object->path;
-		my $dir  = File::Spec->catdir( $root, @path );
+		my $dir = File::Spec->catdir( $root, @path );
 		opendir DIRECTORY, $dir or next;
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
-		foreach my $file ( @list ) {
+		foreach my $file (@list) {
 			next if $file =~ /^\.+\z/;
 
 			# Traverse symlinks
-			my $skip     = 0;
+			my $skip = 0;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			while ( 1 ) {
+			while (1) {
 				my $target;
 
 				# readlink may die if symlinks are not implemented
 				local $@;
-				eval {
-					$target = readlink($fullname);
-				};
+				eval { $target = readlink($fullname); };
 				last if $@; # readlink failed
 				last unless defined $target; # not a link
 

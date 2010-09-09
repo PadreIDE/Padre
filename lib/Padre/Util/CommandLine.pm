@@ -18,19 +18,20 @@ my $last_suggest;
 
 sub tab {
 	my ($text) = @_;
-	if ($text =~ m/^:e\s*$/) {
+	if ( $text =~ m/^:e\s*$/ ) {
 		require Cwd;
 		my $cwd = Cwd::cwd();
 		opendir my $dh, $cwd or die "Could not open $cwd $!";
-		@current_list = map {-d "$cwd/$_" ? "$_/" : $_} grep {$_ ne '.' and $_ ne '..'} sort readdir $dh;
-		if (not @current_list) {
+		@current_list = map { -d "$cwd/$_" ? "$_/" : $_ } grep { $_ ne '.' and $_ ne '..' } sort readdir $dh;
+		if ( not @current_list ) {
+
 			# TODO how to handle empty dir?
 		}
 		$current_index = 0;
-		$last_suggest = ":e $current_list[$current_index]";
+		$last_suggest  = ":e $current_list[$current_index]";
 		return $last_suggest;
-		
-	} elsif (defined $last_suggest and $text eq $last_suggest) {
+
+	} elsif ( defined $last_suggest and $text eq $last_suggest ) {
 		$current_index++;
 		$last_suggest = ":e $current_list[$current_index]";
 		return $last_suggest;

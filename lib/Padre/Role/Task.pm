@@ -21,7 +21,7 @@ use Scalar::Util   ();
 use Padre::Current ();
 use Padre::Logger;
 
-our $VERSION = '0.69';
+our $VERSION        = '0.69';
 our $BACKCOMPATIBLE = '0.69';
 
 # Use a shared sequence for object revisioning greatly
@@ -53,7 +53,7 @@ sub task_revision {
 		Scalar::Util::weaken( $INDEX{ $self->{task_revision} } );
 	}
 
-	TRACE( "Owner revision is $self->{task_revision}" ) if DEBUG;
+	TRACE("Owner revision is $self->{task_revision}") if DEBUG;
 	return $self->{task_revision};
 }
 
@@ -83,14 +83,14 @@ sub task_request {
 	# Check and load the task
 	# Support a convenience shortcut where a false value
 	# for task means don't run a task at all.
-	my $task  = delete $param{task} or return;
+	my $task = delete $param{task} or return;
 	my $class = Params::Util::_DRIVER(
 		$task,
 		'Padre::Task',
 	) or die "Missing or invalid task class '$task'";
 
 	# Create and start the task with ourself as the owner
-	TRACE( "Creating and scheduling task $class" ) if DEBUG;
+	TRACE("Creating and scheduling task $class") if DEBUG;
 	$class->new( owner => $self, %param )->schedule;
 }
 

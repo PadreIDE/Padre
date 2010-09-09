@@ -18,16 +18,17 @@ sub GetChildByText {
 	my $text = shift;
 
 	# Start with the first child
-	my ($child, $cookie) = $self->GetFirstChild( $item );
+	my ( $child, $cookie ) = $self->GetFirstChild($item);
 
-	while ( $cookie ) {
+	while ($cookie) {
+
 		# Is the current child the one we want?
 		if ( $self->GetItemText($child) eq $text ) {
 			return $child;
 		}
 
 		# Get the next child if there is one
-		($child, $cookie) = $self->GetNextChild( $item, $cookie );
+		( $child, $cookie ) = $self->GetNextChild( $item, $cookie );
 	}
 
 	# Either no children, or no more children
@@ -40,7 +41,7 @@ sub GetChildrenPlData {
 	my $self  = shift;
 	my @queue = $self->GetRootItem;
 	my @data  = ();
-	while ( @queue ) {
+	while (@queue) {
 		my $item = shift @queue;
 		push @data, $self->GetPlData($item);
 
@@ -63,7 +64,7 @@ sub GetExpandedPlData {
 	my $self  = shift;
 	my @queue = $self->GetRootItem;
 	my @data  = ();
-	while ( @queue ) {
+	while (@queue) {
 		my $item = shift @queue;
 		push @data, $self->GetPlData($item);
 

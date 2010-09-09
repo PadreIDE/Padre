@@ -29,7 +29,7 @@ sub stash {
 	}
 
 	$DATA{$key}->{$owner}
-	or $DATA{$key}->{$owner} = {};
+		or $DATA{$key}->{$owner} = {};
 }
 
 sub release {

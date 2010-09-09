@@ -48,21 +48,25 @@ sub new {
 }
 
 sub active {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{active};
 }
 
 sub threads {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{threads};
 }
 
 sub minimum {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{minimum};
 }
 
 sub maximum {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{maximum};
 }
@@ -232,16 +236,14 @@ sub cancel {
 	my $owner = shift;
 
 	# Remove any tasks from the pending queue
-	@{$self->{queue}} = grep {
-		! defined $_->{owner} or $_->{owner} != $owner
-	} @{$self->{queue}};
+	@{ $self->{queue} } = grep { !defined $_->{owner} or $_->{owner} != $owner } @{ $self->{queue} };
 
 	# Signal any active tasks to cooperatively abort themselves
-	foreach my $handle ( values %{$self->{handles}} ) {
+	foreach my $handle ( values %{ $self->{handles} } ) {
 		my $task = $handle->{task} or next;
 		next unless $task->{owner};
 		next unless $task->{owner} == $owner;
-		foreach my $worker ( @{$self->{workers}} ) {
+		foreach my $worker ( @{ $self->{workers} } ) {
 			TRACE("Worker wid = $worker->{wid}")    if DEBUG;
 			TRACE("Handle wid = $handle->{worker}") if DEBUG;
 			next unless $worker->{wid} == $handle->{worker};

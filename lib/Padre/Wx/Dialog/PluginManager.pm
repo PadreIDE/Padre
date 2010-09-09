@@ -293,11 +293,9 @@ sub button_main {
 #
 sub button_preferences {
 	my $self = shift;
-	eval { 
-		$self->{plugin}->object->plugin_preferences;
-	};
-	if ($@) { 
-		$self->{plugin}->errstr( $@ );
+	eval { $self->{plugin}->object->plugin_preferences; };
+	if ($@) {
+		$self->{plugin}->errstr($@);
 		$self->show_error_message;
 	}
 }

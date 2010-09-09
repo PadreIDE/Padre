@@ -72,10 +72,11 @@ sub run {
 
 	# Recursively scan directories for their content
 	my $descend = scalar @$list;
-	while ( @queue ) {
+	while (@queue) {
+
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
-			TRACE( 'Padre::Wx::Directory::Search task has been cancelled' ) if DEBUG;
+			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
 			return 1;
 		}
 
@@ -93,20 +94,18 @@ sub run {
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
-		foreach my $file ( @list ) {
+		foreach my $file (@list) {
 			next if $file =~ /^\.+\z/;
 
 			# Traverse symlinks
-			my $skip     = 0;
+			my $skip = 0;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			while ( 1 ) {
+			while (1) {
 				my $target;
 
 				# readlink may die if symlinks are not implemented
 				local $@;
-				eval {
-					$target = readlink($fullname);
-				};
+				eval { $target = readlink($fullname); };
 				last if $@; # readlink failed
 				last unless defined $target; # not a link
 
@@ -171,7 +170,7 @@ sub run {
 
 		# Step 3 - Send the completed directory back to the parent process
 		#          Don't send a response if the directory is empty.
-		if ( @objects ) {
+		if (@objects) {
 			$self->handle->message( OWNER => $request, map { $_->[0] } @objects );
 		}
 	}

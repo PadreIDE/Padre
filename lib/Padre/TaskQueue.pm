@@ -8,31 +8,33 @@ use strict;
 use warnings;
 use threads;
 use threads::shared 1.33;
+
 # use Padre::Logger;
 # use constant DEBUG => 0;
 
 our $VERSION  = '2.11';
-our @CARP_NOT = ( "threads::shared" );
+our @CARP_NOT = ("threads::shared");
 
 sub new {
+
 	# TRACE( $_[0] ) if DEBUG;
-	my @queue :shared = ();
+	my @queue : shared = ();
 	return bless \@queue, $_[0];
 }
 
 sub enqueue {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);
 
-	push @$self, map {
-		shared_clone($_)
-	} @_;
+	push @$self, map { shared_clone($_) } @_;
 
 	return cond_signal(@$self);
 }
 
 sub pending {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);
@@ -41,6 +43,7 @@ sub pending {
 
 # Dequeue returns all queue elements, and blocks on an empty queue
 sub dequeue {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);
@@ -62,6 +65,7 @@ sub dequeue {
 
 # Pull a single queue element, and block on an empty queue
 sub dequeue1 {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);
@@ -78,6 +82,7 @@ sub dequeue1 {
 
 # Return items from the head of a queue with no blocking
 sub dequeue_nb {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);
@@ -90,6 +95,7 @@ sub dequeue_nb {
 
 # Return a single item from the head of the queue with no blocking
 sub dequeue1_nb {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	lock($self);

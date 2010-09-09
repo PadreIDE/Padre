@@ -34,15 +34,18 @@ sub new {
 
 	my $self = $class->SUPER::new(
 		$panel, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxCLIP_CHILDREN );
-	
+		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxCLIP_CHILDREN
+	);
+
 	my $output = Wx::TextCtrl->new(
 		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE );
+		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
 
 	my $input = Wx::TextCtrl->new(
 		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxNO_FULL_REPAINT_ON_RESIZE|Wx::wxTE_PROCESS_ENTER );
+		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxTE_PROCESS_ENTER
+	);
 
 	$self->{_output_} = $output;
 	$self->{_input_}  = $input;
@@ -54,21 +57,30 @@ sub new {
 	# Moves the focus the input window but does not allow selecting text in the output window
 	#Wx::Event::EVT_SET_FOCUS( $output, sub { $input->SetFocus; } );
 
-	Wx::Event::EVT_TEXT_ENTER( $main, $input, sub {
-		$self->text_entered(@_)
-	});
+	Wx::Event::EVT_TEXT_ENTER(
+		$main, $input,
+		sub {
+			$self->text_entered(@_);
+		}
+	);
 	Wx::Event::EVT_KEY_UP( $input, sub { $self->key_up(@_) } );
 
 	my $height = $main->{bottom}->GetSize->GetHeight;
+
 	#print "Height: $height\n";
 	#print $self->GetSize->GetHeight, "\n"; # gives 20 on startup?
-	$self->SplitHorizontally( $output, $input, $height-120 ); ## TODO ???
+	$self->SplitHorizontally( $output, $input, $height - 120 ); ## TODO ???
 	$input->SetFocus;
 
 	$self->{_history_} = Padre::DB::History->recent('commands') || [];
+
 	#$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 
-	$self->{_output_}->WriteText(Wx::gettext("Experimental feature. Type '?' at the bottom of the page to get list of commands. If it does not work, blame szabgab.\n\n"));
+	$self->{_output_}->WriteText(
+		Wx::gettext(
+			"Experimental feature. Type '?' at the bottom of the page to get list of commands. If it does not work, blame szabgab.\n\n"
+		)
+	);
 
 	return $self;
 }
@@ -95,17 +107,17 @@ sub view_close {
 # Event Handlers
 
 sub text_entered {
-	my ($self, $main, $event) = @_;
+	my ( $self, $main, $event ) = @_;
 
-	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
+	my $text = $self->{_input_}->GetRange( 0, $self->{_input_}->GetLastPosition );
 	$self->{_input_}->Clear;
 	$self->out(">> $text\n");
 	my %commands = (
-		':e filename' => 'Open file',
-		':! cmd'      => 'Run command in shell',
-		'?'           => 'This help',
-		':history'    => 'History of all the command',
-		':padre cmd'  => 'Execute cmd withing the current Padre process',
+		':e filename'        => 'Open file',
+		':! cmd'             => 'Run command in shell',
+		'?'                  => 'This help',
+		':history'           => 'History of all the command',
+		':padre cmd'         => 'Execute cmd withing the current Padre process',
 		':keycatcher Number' => 'Turn on catching keyboard for a single event (defaults to 2)',
 	);
 
@@ -116,30 +128,32 @@ sub text_entered {
 	);
 
 	#$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
-	if ($text eq '?') {
-		foreach my $cmd (sort keys %commands) {
+	if ( $text eq '?' ) {
+		foreach my $cmd ( sort keys %commands ) {
 			$self->outn("$cmd    - $commands{$cmd}");
 		}
-	} elsif ($text eq ':history') {
-		foreach my $cmd (@{ $self->{_history_} }) {
+	} elsif ( $text eq ':history' ) {
+		foreach my $cmd ( @{ $self->{_history_} } ) {
 			$self->outn($cmd);
 		}
-	} elsif ($text =~ m/^:keycatcher(\s+(\d+))?\s*$/) {
+	} elsif ( $text =~ m/^:keycatcher(\s+(\d+))?\s*$/ ) {
 		$self->{_keycatcher_} = $2 || 2;
-	} elsif ($text =~ /^:e\s+(.*?)\s*$/) {
+	} elsif ( $text =~ /^:e\s+(.*?)\s*$/ ) {
 		my $path = $1;
-		if (not -e $path) {
+		if ( not -e $path ) {
 			$self->outn("File ($path) does not exist");
-		} elsif (not -f $path) {
+		} elsif ( not -f $path ) {
 			$self->outn("($path) is not a file");
 		} else {
 			$main->setup_editors($path);
 		}
-	} elsif ($text =~ /^:!\s*(.*?)\s*$/) {
+	} elsif ( $text =~ /^:!\s*(.*?)\s*$/ ) {
+
 		# TODO: what about long running commands?
 		my $cmd = $1;
+
 		# TODO: when reqire and import is used it blows up with
-		# Can't call method "capture_merged" without a package or object reference at 
+		# Can't call method "capture_merged" without a package or object reference at
 		# so we "use" it now
 		#require Capture::Tiny;
 		#import Capture::Tiny qw(capture_merged);
@@ -147,19 +161,19 @@ sub text_entered {
 		my $out = capture_merged {
 			system($cmd);
 		};
-		if (defined $out) {
+		if ( defined $out ) {
 			$self->out($out);
 		}
-	} elsif ($text =~ m/^:padre\s+(.*?)\s*$/) {
+	} elsif ( $text =~ m/^:padre\s+(.*?)\s*$/ ) {
 		my $ret;
 		my $out = capture_merged {
 			$ret = eval $1;
 		};
 		my $err = $@;
-		if (defined $out and $out ne '') {
+		if ( defined $out and $out ne '' ) {
 			$self->outn($out);
 		}
-		if (defined $ret and $ret ne '') {
+		if ( defined $ret and $ret ne '' ) {
 			$self->outn($ret);
 		}
 		if ($err) {
@@ -173,30 +187,30 @@ sub text_entered {
 }
 
 sub key_up {
-	my ($self, $input, $event) = @_;
+	my ( $self, $input, $event ) = @_;
 
 	#print $self;
 	#print $event;
 	my $mod = $event->GetModifiers || 0;
 	my $code = $event->GetKeyCode;
-	
-	if ($self->{_keycatcher_}) {
+
+	if ( $self->{_keycatcher_} ) {
 		$self->{_keycatcher_}--;
 		$self->outn("Mode: $mod  Code: $code");
 	}
 
-	my $text = $self->{_input_}->GetRange(0, $self->{_input_}->GetLastPosition);
-	if (not defined $text or $text eq '') {
+	my $text = $self->{_input_}->GetRange( 0, $self->{_input_}->GetLastPosition );
+	if ( not defined $text or $text eq '' ) {
 		delete $self->{_history_pointer_};
 	}
 	my $new_text;
-	if ($mod == 0 and $code == 9) { # TAB
-		#print "Text: $text\n";
+	if ( $mod == 0 and $code == 9 ) { # TAB
+		                              #print "Text: $text\n";
 		require Padre::Util::CommandLine;
 		$new_text = Padre::Util::CommandLine::tab($text);
-	} elsif ($mod == 0 and $code == 317) { # Down
+	} elsif ( $mod == 0 and $code == 317 ) { # Down
 		return if not @{ $self->{_history_} };
-		if (not defined $self->{_history_pointer_}) {
+		if ( not defined $self->{_history_pointer_} ) {
 			$self->{_history_pointer_} = 0;
 		} else {
 			$self->{_history_pointer_}++;
@@ -205,25 +219,25 @@ sub key_up {
 			}
 		}
 		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
-	} elsif ($mod == 0 and $code == 315) { # Up
+	} elsif ( $mod == 0 and $code == 315 ) { # Up
 		return if not @{ $self->{_history_} };
-		if (not defined $self->{_history_pointer_}) {
-			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
+		if ( not defined $self->{_history_pointer_} ) {
+			$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 		} else {
 			$self->{_history_pointer_}--;
 		}
-		if ( $self->{_history_pointer_} < 0) {
-			$self->{_history_pointer_} = @{ $self->{_history_} } -1;
+		if ( $self->{_history_pointer_} < 0 ) {
+			$self->{_history_pointer_} = @{ $self->{_history_} } - 1;
 		}
 		$new_text = $self->{_history_}[ $self->{_history_pointer_} ];
-	} elsif ($mod == 2 and $code == 85) { # Ctrl-u
+	} elsif ( $mod == 2 and $code == 85 ) {  # Ctrl-u
 		$new_text = '';
 	} else {
 		return;
 	}
 
 	#print "New text: $new_text\n";
-	if (defined $new_text) {
+	if ( defined $new_text ) {
 		$self->{_input_}->Clear;
 		$self->{_input_}->WriteText($new_text);
 	}
@@ -231,11 +245,12 @@ sub key_up {
 }
 
 sub out {
-	my ($self, $text) = @_;
+	my ( $self, $text ) = @_;
 	$self->{_output_}->WriteText($text);
 }
+
 sub outn {
-	my ($self, $text) = @_;
+	my ( $self, $text ) = @_;
 	$self->{_output_}->WriteText("$text\n");
 }
 
@@ -257,6 +272,7 @@ sub select {
 
 sub clear {
 	my $self = shift;
+
 	#$self->SetBackgroundColour('#FFFFFF');
 	#$self->Remove( 0, $self->GetLastPosition );
 	#$self->Refresh;
@@ -265,6 +281,7 @@ sub clear {
 
 
 sub relocale {
+
 	# do nothing
 }
 

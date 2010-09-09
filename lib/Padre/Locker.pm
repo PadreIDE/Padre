@@ -218,9 +218,7 @@ sub method_decrement {
 			# to retain the integrity of the locking subsystem
 			# as a whole.
 			local $@;
-			eval {
-				$self->{owner}->$_();
-			};
+			eval { $self->{owner}->$_(); };
 			if ( DEBUG and $@ ) {
 				TRACE("ERROR: '$@'");
 			}
