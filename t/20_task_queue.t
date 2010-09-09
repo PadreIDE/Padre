@@ -2,10 +2,6 @@
 
 # Basic tests for Padre::TaskQueue
 
-BEGIN {
-	$Padre::Logger::DEBUG = 1;
-}
-
 use strict;
 use warnings;
 use Test::More;
