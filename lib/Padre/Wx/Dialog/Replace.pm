@@ -1,11 +1,17 @@
 package Padre::Wx::Dialog::Replace;
 
 =pod
+
 =head1 NAME
+
 Padre::Wx::Dialog::Replace - Find and Replace Widget
+
 =head1 DESCRIPTION
+
 C<Padre::Wx:Main> implements Padre's Find and Replace dialog box.
+
 =head1 METHODS
+
 =cut
 
 use 5.008;
@@ -24,9 +30,12 @@ our @ISA     = qw{
 };
 
 =pod
+
 =head2 new
+
   my $find = Padre::Wx::Dialog::Replace->new($main);
 Create and return a C<Padre::Wx::Dialog::Replace> search and replace widget.
+
 =cut
 
 
@@ -366,13 +375,18 @@ sub new {
 }
 
 =pod
+
 =head2 find
+
   $self->find
+
 Grab currently selected text, if any, and place it in find combo box.
 Bring up the dialog or perform search for string's next occurrence
 if dialog is already displayed.
+
 TO DO: if selection is more than one line then consider it as the limit
 of the search and not as the string to be used.
+
 =cut
 
 
@@ -409,10 +423,15 @@ sub find {
 # Button Events
 
 =pod
+
 =head2 find_button
+
   $self->find_button
+
 Executed when Find button is clicked.
+
 Performs search on the term specified in the dialog.
+
 =cut
 
 sub find_button {
@@ -442,9 +461,13 @@ sub find_button {
 }
 
 =pod
+
 =head2 close
+
   $self->close
+
 Hide dialog.
+
 =cut
 
 
@@ -465,12 +488,18 @@ sub close {
 }
 
 =pod
+
 =head2 replace_button
+
   $self->replace_button;
+
 Executed when the Replace button is clicked.
+
 Replaces one appearance of the Find Text with the Replace Text.
+
 If search window is still open, run C<search> on the whole text,
 again.
+
 =cut
 
 
@@ -517,10 +546,15 @@ sub replace_button {
 }
 
 =pod
+
 =head2 replace_all
+
   $self->replace_all;
+
 Executed when Replace All button is clicked.
+
 Replace all appearances of given string in the current document.
+
 =cut
 
 
@@ -563,11 +597,15 @@ sub replace_all {
 # Support Methods
 
 =pod
+
 =head2 as_search
+
 Integration with L<Padre::Search>. Generates a search instance for the
 currently configured information in the Find dialog.
+
 Returns a L<Padre::Search> object, or C<undef> if current state of the
 dialog does not result in a valid search.
+
 =cut
 
 sub as_search {
@@ -620,12 +658,15 @@ sub save {
 1;
 
 =pod
+
 =head1 COPYRIGHT & LICENSE
+
 Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
+
 =cut
 
 
