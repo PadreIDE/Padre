@@ -3,11 +3,12 @@ package Padre::Wx::Dialog::KeyBindings;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant       ();
-use Padre::Config         ();
-use Padre::Util           ('_T');
-use Padre::Wx             ();
-use Padre::Wx::Role::Main ();
+use Padre::Constant         ();
+use Padre::Config           ();
+use Padre::Util             ('_T');
+use Padre::Wx               ();
+use Padre::Wx::Role::Main   ();
+use Padre::Wx::Role::Dialog ();
 
 our $VERSION = '0.70';
 our @ISA     = qw{
@@ -15,7 +16,6 @@ our @ISA     = qw{
 	Padre::Wx::Role::Dialog
 	Wx::Dialog
 };
-
 
 sub new {
 	my $class = shift;
