@@ -296,9 +296,9 @@ sub _on_list_item_selected {
 	my $list        = $self->{list};
 	my $index       = $list->GetFirstSelected;
 	my $action_name = $list->GetItemText($index);
-	my $action      = Padre->ide->actions->{$action_name};
+	my $action      = $self->ide->actions->{$action_name};
 
-	my $shortcut = Padre->ide->actions->{$action_name}->shortcut;
+	my $shortcut = $self->ide->actions->{$action_name}->shortcut;
 	$shortcut = '' if not defined $shortcut;
 
 	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
@@ -356,7 +356,7 @@ sub _on_set_button {
 sub try_to_set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
-	my $other_action = Padre->ide->shortcuts->{$shortcut};
+	my $other_action = $self->ide->shortcuts->{$shortcut};
 	if ( defined $other_action && $other_action->name ne $action_name ) {
 		my $answer = $self->yes_no(
 			sprintf(
@@ -382,8 +382,8 @@ sub try_to_set_binding {
 sub set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
-	my $shortcuts = Padre->ide->shortcuts;
-	my $action    = Padre->ide->actions->{$action_name};
+	my $shortcuts = $self->ide->shortcuts;
+	my $action    = $self->ide->actions->{$action_name};
 
 	# modify shortcut registry
 	my $old_shortcut = $action->shortcut;
@@ -420,7 +420,7 @@ sub _on_reset_button {
 
 	my $index       = $self->{list}->GetFirstSelected;
 	my $action_name = $self->{list}->GetItemText($index);
-	my $action      = Padre->ide->actions->{$action_name};
+	my $action      = $self->ide->actions->{$action_name};
 
 	$self->try_to_set_binding(
 		$action_name,
@@ -454,7 +454,7 @@ sub _update_list {
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
-	my $actions         = Padre->ide->actions;
+	my $actions         = $self->ide->actions;
 	my $alternate_color = Wx::Colour->new( 0xED, 0xF5, 0xFF );
 	my $index           = 0;
 	foreach my $action_name ( sort { $a cmp $b } keys %$actions ) {
