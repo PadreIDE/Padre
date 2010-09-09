@@ -15,6 +15,7 @@ my $files_dir = tempdir( CLEANUP => 1 );
 mkdir File::Spec->catdir( $files_dir, 'beginner' );
 foreach my $file ('Debugger.pm') {
 	open my $fh, '>', File::Spec->catfile( $files_dir, $file );
+	close($fh);
 }
 
 use Padre::Util::CommandLine;
