@@ -74,7 +74,7 @@ sub _on_ok_button_clicked {
 
 			# Fetch the recently used actions from the database
 			require Padre::DB::RecentlyUsed;
-			my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ?", 'ACTION' ) || [];
+			my $recently_used = Padre::DB::RecentlyUsed->select( 'where type = ?', 'ACTION' ) || [];
 			my $found = 0;
 			foreach my $e (@$recently_used) {
 				if ( $action->{name} eq $e->name ) {
@@ -349,7 +349,7 @@ sub _show_recently_opened_actions {
 sub _search {
 	my $self = shift;
 
-	$self->_status_text->SetPage( Wx::gettext("Reading items. Please wait...") );
+	$self->_status_text->SetPage( Wx::gettext('Reading items. Please wait...') );
 	my @menu_actions = ();
 	my %actions      = %{ Padre::ide->actions };
 	foreach my $action_name ( keys %actions ) {
@@ -385,17 +385,17 @@ sub _update_list_box {
 
 	#TODO: think how to make actions and menus relate to each other
 	my %menu_name_by_prefix = (
-		"file"     => Wx::gettext('File'),
-		"edit"     => Wx::gettext('Edit'),
-		"search"   => Wx::gettext('Search'),
-		"view"     => Wx::gettext('View'),
-		"perl"     => Wx::gettext('Perl'),
-		"refactor" => Wx::gettext('Refactor'),
-		"run"      => Wx::gettext('Run'),
-		"debug"    => Wx::gettext('Debug'),
-		"plugins"  => Wx::gettext('Plugins'),
-		"window"   => Wx::gettext('Window'),
-		"help"     => Wx::gettext('Help'),
+		file     => Wx::gettext('File'),
+		edit     => Wx::gettext('Edit'),
+		search   => Wx::gettext('Search'),
+		view     => Wx::gettext('View'),
+		perl     => Wx::gettext('Perl'),
+		refactor => Wx::gettext('Refactor'),
+		run      => Wx::gettext('Run'),
+		debug    => Wx::gettext('Debug'),
+		plugins  => Wx::gettext('Plugins'),
+		window   => Wx::gettext('Window'),
+		help     => Wx::gettext('Help'),
 	);
 
 	my $first_label = undef;
@@ -439,7 +439,7 @@ sub _label {
 
 	my %actions     = %{ Padre::ide->actions };
 	my $menu_action = $actions{$action_name};
-	my $comment     = ( $menu_action and defined $menu_action->{comment} ) ? $menu_action->{comment} : '';
+	my $comment     = ( $menu_action and defined $menu_action->comment ) ? $menu_action->comment : '';
 
 	return '<b>' . $action_label . '</b> <i>' . $action_name . '</i><br>' . $comment;
 }
