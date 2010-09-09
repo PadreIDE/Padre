@@ -2,6 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.71 To be released
+    - 'Quick Menu Access' dialog now completely translated (ZENOG)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
@@ -29,7 +30,6 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - partial fix for #452: 'focus order in Replace dialog' (ZENOG)
     - Fix focus order in Find dialog (ZENOG)
     - Close replace dialog on Escape key in all cases (ZENOG)
-    - 'Quick Menu Access' dialog now completely translated (ZENOG)
 
 0.69 2010.08.17
     - Landed ConfigSync branch (MATTP)
