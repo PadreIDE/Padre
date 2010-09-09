@@ -578,7 +578,7 @@ sub find_message {
 	}
 
 	# Will we need to expand anything at the end?
-	my $expand = $cursor if @dirs;
+	my $expand = @dirs ? $cursor : undef;
 
 	# Because this should never be called from inside some larger
 	# update locker, lets risk the use of our own more targetted locking
