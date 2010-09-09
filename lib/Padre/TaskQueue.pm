@@ -12,7 +12,7 @@ use threads::shared 1.33;
 # use Padre::Logger;
 # use constant DEBUG => 0;
 
-our $VERSION  = '2.11';
+our $VERSION  = '0.70';
 our @CARP_NOT = ("threads::shared");
 
 sub new {

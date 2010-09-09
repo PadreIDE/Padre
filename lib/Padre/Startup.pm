@@ -32,7 +32,7 @@ use strict;
 use warnings;
 use Padre::Constant ();
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 
 my $SPLASH = undef;
 

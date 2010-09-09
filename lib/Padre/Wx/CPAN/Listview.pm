@@ -7,7 +7,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 our @ISA     = 'Wx::ListView';
 
 sub new {

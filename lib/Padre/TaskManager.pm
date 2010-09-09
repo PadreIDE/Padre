@@ -11,7 +11,7 @@ use Padre::Wx                ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
 
-our $VERSION        = '0.69';
+our $VERSION        = '0.70';
 our $BACKCOMPATIBLE = '0.66';
 
 # Set up the primary integration event

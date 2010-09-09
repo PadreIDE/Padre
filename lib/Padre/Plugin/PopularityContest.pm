@@ -118,7 +118,7 @@ use Scalar::Util    ();
 use Padre::Plugin   ();
 use Padre::Constant ();
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 our @ISA     = 'Padre::Plugin';
 
 # Track the number of times actions are used

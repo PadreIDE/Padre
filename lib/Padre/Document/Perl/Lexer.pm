@@ -8,7 +8,7 @@ use PPI::Dumper    ();
 use Text::Balanced ();
 use Padre::Logger;
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 
 sub class_to_color {
 	my $class  = shift;

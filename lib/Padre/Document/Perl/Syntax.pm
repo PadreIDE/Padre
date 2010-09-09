@@ -6,7 +6,7 @@ use warnings;
 use Padre::Constant     ();
 use Padre::Task::Syntax ();
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 our @ISA     = 'Padre::Task::Syntax';
 
 sub syntax {

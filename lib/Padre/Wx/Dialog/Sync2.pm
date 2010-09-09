@@ -6,7 +6,7 @@ use warnings;
 use Padre::Sync          ();
 use Padre::Wx::FBP::Sync ();
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 our @ISA     = 'Padre::Wx::FBP::Sync';
 
 sub new {
