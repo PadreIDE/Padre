@@ -16,6 +16,7 @@ BEGIN {
 	plan tests => 12;
 }
 use Test::NoWarnings;
+use t::lib::Padre;
 use Padre::TaskQueue ();
 use Padre::Logger;
 
