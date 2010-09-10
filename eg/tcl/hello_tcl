@@ -1,0 +1,4 @@
+#!/usr/local/bin/wish
+#Make a label "Hello World"
+label .hello -text "Hello World"
+pack .hello

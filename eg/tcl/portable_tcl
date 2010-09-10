@@ -1,0 +1,3 @@
+#!/bin/sh
+#The next line executes wish - wherever it is \
+exec wish "$0" "$@"

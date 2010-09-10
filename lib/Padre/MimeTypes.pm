@@ -674,13 +674,19 @@ sub guess_mimetype {
 			};
 
 			# Is this a script of some kind?
-			if ( $text =~ /\A#!/m ) {
-				if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-					return $self->perl_mime_type($text);
-				}
-				if ( $text =~ /\A#![^\n]*\b(?:z|k|ba)?sh\b/ ) {
-					return 'application/x-shellscript';
-				}
+			if ( $text =~ /\A#!/ ) {
+				return $self->perl_mime_type($text)
+					if $text =~ /\A#!.*\bperl6?\b/m;
+				return 'application/x-tcl'
+					if $text =~ /\A#!.*\bsh\b.*(?:\n.*)?\nexec wish/m;
+				return 'application/x-tcl'
+					if $text =~ /\A#!.*\bwish\b/m;
+				return 'application/x-shellscript'
+					if $text =~ /\A#!.*\b(?:z|k|ba|t?c|da)?sh\b/m;
+				return 'text/x-python'
+					if $text =~ /\A#!.*\bpython\b/m;
+				return 'application/x-ruby'
+					if $text =~ /\A#!.*\bruby\b/m;
 			}
 
 			# YAML will start with a ---
@@ -747,8 +753,12 @@ sub guess_mimetype {
 
 			# Try to detect plain CSS without HTML around it
 			return 'text/css'
-				if ( $text !~ /\<\w+\/?\>/ )
-				and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ );
+				if $text !~ /\<\w+\/?\>/
+					and $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/;
+
+			# Try to recognize XML
+			return 'text/xml'
+				if $text =~ /^<\?xml version="\d+\.\d+" encoding=".+"\?>/;
 
 			# LUA detection
 			my $lua_score = 0;

@@ -34,9 +34,15 @@ my %MIMES = (
 	'eg/perl5_with_perl6_example.pod' => 'application/x-perl',
 	'eg/perl6/perl6.pod'              => 'application/x-perl6',
 	'eg/perl6/Perl6Class.pm'          => 'application/x-perl6',
+	'eg/xml/xml_example'              => 'text/xml',
+	'eg/tcl/hello_tcl'                => 'application/x-tcl',
+	'eg/tcl/portable_tcl'             => 'application/x-tcl',
+	'eg/ruby/hello_world.rb'          => 'application/x-ruby',
+	'eg/ruby/hello_world_rb'          => 'application/x-ruby',
+	'eg/python/hello_py'              => 'text/x-python',
 );
 
-plan tests => 14;
+plan tests => 9 + scalar keys %MIMES;
 
 # This should only be used to skip dependencies out of the Document.pm - scope
 # which are not required for testing, like Padre->ide. Never skip larger blocks
@@ -77,7 +83,7 @@ isa_ok( $doc_3, 'Padre::Document' );
 isa_ok( $doc_3, 'Padre::Document::Perl' );
 is( $doc_3->filename, $file_3, 'filename' );
 
-foreach my $file ( keys %MIMES ) {
+foreach my $file ( sort keys %MIMES ) {
 	my $editor = t::lib::Padre::Editor->new;
 	my $doc    = Padre::Document->new(
 		filename => $file,

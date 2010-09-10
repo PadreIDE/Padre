@@ -1,0 +1,3 @@
+#!/usr/bin/env python -c
+
+print "Hello, World!" 
