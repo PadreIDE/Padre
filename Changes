@@ -3,6 +3,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.71 To be released
     - 'Quick Menu Access' dialog now completely translated (ZENOG)
+    - The directory tree search now prints each directory it is
+      searching in the status bar. This helps you see where the
+      search is up to, and identify when it is finished (ADAMK)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

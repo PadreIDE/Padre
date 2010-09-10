@@ -117,6 +117,9 @@ sub run {
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
+		# Notify our parent we are working on this directory
+		$self->handle->message( STATUS => "Searching... " . $object->unix );
+
 		# Step 1 - Map the files into path objects
 		my @objects = ();
 		foreach my $file (@list) {
@@ -205,6 +208,9 @@ sub run {
 		# Step 3 - Prepend to the queue so we will process depth-first
 		unshift @queue, map { $_->[0] } @objects;
 	}
+
+	# Notify our parent we are working on this directory
+	$self->handle->message( STATUS => '' );
 
 	return 1;
 }
