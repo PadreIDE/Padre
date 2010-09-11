@@ -164,9 +164,8 @@ sub dialog {
 
 	$dialog->{_widgets_}->{_find_}->SetDefault;
 
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},     \&find_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_pick_dir_}, \&on_pick_dir );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},   \&find_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_}, \&cancel_clicked );
 
 	Wx::Event::EVT_IDLE(
 		$dialog,
@@ -177,32 +176,6 @@ sub dialog {
 	);
 
 	return $dialog;
-}
-
-sub on_pick_dir {
-	my ( $dialog, $event ) = @_;
-
-	my $main = Padre->ide->wx->main;
-
-	my $default_dir = $dialog->{_widgets_}->{_ack_dir_}->GetValue;
-	unless ($default_dir) { # we use currect editor
-		my $filename = $main->current->filename;
-		if ($filename) {
-			$default_dir = File::Basename::dirname($filename);
-		}
-	}
-
-	my $dir_dialog = Wx::DirDialog->new(
-		$main,
-		Wx::gettext('Select directory'),
-		$default_dir
-	);
-	if ( $dir_dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return;
-	}
-	$dialog->{_widgets_}->{_ack_dir_}->SetValue( $dir_dialog->GetPath );
-
-	return;
 }
 
 sub cancel_clicked {
