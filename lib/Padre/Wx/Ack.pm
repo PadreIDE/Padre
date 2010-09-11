@@ -65,6 +65,8 @@ sub load {
 		*{Wx::ListCtrl::gettext_label} = sub { return Wx::gettext('Find in Files'); };
 	}
 
+	$loaded = 1;
+
 	return;
 }
 
@@ -80,7 +82,6 @@ sub on_ack {
 			$main->error($error);
 			return;
 		}
-		$loaded = 1;
 	}
 
 	my $project = $current->project;
@@ -501,9 +502,6 @@ sub print_results {
 		$text =~ s/(\d+)/\($1\)/;
 		$text .= ' ';
 	}
-
-	#my $end = $result->get_end_iter;
-	#$result->insert($end, $text);
 
 	# just print it when we have \n
 	if ( $text =~ /[\r\n]/ ) {

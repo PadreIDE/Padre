@@ -23,16 +23,15 @@ use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use Padre::Wx::Ack    ();
 
+use Data::Dumper;
+
 our $VERSION = '0.70';
 
 my $iter;
 my %opts;
-my %stats;
 my $panel_string_index = 9999999;
 
 my $DONE_EVENT : shared = Wx::NewEventType;
-
-my $loaded = 0;
 
 sub on_replace_in_files {
 	my $main    = shift;
@@ -46,7 +45,6 @@ sub on_replace_in_files {
 			$main->error($error);
 			return;
 		}
-		$loaded = 1;
 	}
 
 	my $project = $current->project;
@@ -274,111 +272,23 @@ sub ack_done {
 
 	$main = Padre->ide->wx->main;
 
-	## TODO do something ...
+	print Dumper($data);
 
 	return;
 }
 
 sub on_ack_thread {
 
-	# clear %stats; for every request
-	%stats = (
-		cnt_files   => 0,
-		cnt_matches => 0,
-	);
+	print Dumper($iter);
+	print "--\n";
+	print Dumper(\%opts);
+	print "--\n";
 
-	if ( $opts{l} ) {
-		App::Ack::print_files_with_matches( $iter, \%opts );
-
-		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-		_send_text( sprintf( Wx::gettext("Found %d files\n"), $stats{cnt_files} ) );
-	} else {
-		App::Ack::print_matches( $iter, \%opts );
-
-		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-		_send_text(
-			sprintf(
-				Wx::gettext("Found %d files and %d matches\n"),
-				$stats{cnt_files},
-				$stats{cnt_matches}
-			)
-		);
-	}
-
+	App::Ack::print_matches( $iter, \%opts );
 }
 
 sub print_results {
 	my ($text) = @_;
-
-	#print "$text\n";
-	# TODO: for some reason App::Ack::print_files_with_matches()
-	# is returning empty 1-length text. Any way to fix this will be
-	# greatly appreciated (and we'll be able to remove the line below)
-	return unless defined $text and $text !~ m{^\s*$}o;
-
-	# the first is filename, the second is line number, the third is matched line text
-	# while 'Binary file' and the 'files without matches' mode, there is ONLY filename
-	$stats{printed_lines}++;
-
-	# don't print filename again if it's just printed
-	return
-		if ($stats{printed_lines} % 3 == 1
-		and $stats{last_matched_filename}
-		and $stats{last_matched_filename} eq $text );
-	if ( $stats{printed_lines} % 3 == 1 ) {
-		if ( $text =~ /^Binary file/ or $opts{l} ) {
-			$stats{printed_lines} = $stats{printed_lines} + 2;
-		}
-
-		$stats{last_matched_filename} = $text;
-		$stats{cnt_files}++;
-
-		# list only file names
-		if ( $opts{l} ) {
-			$text = sprintf(
-				Wx::gettext("'%s' missing in file '%s'\n"),
-				$opts{search_term}, #$opts{regex},
-				$text
-			);
-		}
-
-		# list file names and context
-		else {
-
-			# chop last ':', add \n after $filename
-			chop($text);
-			$text = sprintf(
-				Wx::gettext("Found '%s' in '%s':\n"),
-				$opts{search_term}, #$opts{regex},
-				$text,
-			);
-		}
-
-		# new line between different files
-		_send_text( '-' x 39 . "\n" );
-	} elsif ( $stats{printed_lines} % 3 == 2 ) {
-		$stats{cnt_matches}++;
-
-		# use () to wrap the number, an extra space for line number
-		$text =~ s/(\d+)/\($1\)/;
-		$text .= ' ';
-	}
-
-	#my $end = $result->get_end_iter;
-	#$result->insert($end, $text);
-
-	# just print it when we have \n
-	if ( $text =~ /[\r\n]/ ) {
-		my $filename = $stats{last_matched_filename};
-		chop($filename);
-		$text = $filename . $stats{last_text} . $text if $stats{last_text};
-		delete $stats{last_text};
-	} else {
-		$stats{last_text} .= $text;
-		return;
-	}
-
-	_send_text($text);
 
 	return;
 }
