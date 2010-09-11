@@ -106,15 +106,14 @@ sub get_layout {
 	my @layout = (
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Term:') ],
 			[ 'Wx::ComboBox', '_ack_term_', $term, $search ],
-			[ 'Wx::Button',   '_find_',     Wx::wxID_FIND ],
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Directory:') ],
-			[ 'Wx::ComboBox', '_ack_dir_',  $dir, $in_dir ],
-			[ 'Wx::Button',   '_pick_dir_', Wx::gettext('Pick &directory') ],
+
+			#			[ 'Wx::ComboBox', '_ack_dir_',  $dir, $in_dir ],
+			[ 'Wx::DirPickerCtrl', '_ack_dir_', $in_dir, Wx::gettext('Pick parent directory') ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search in Files/Types:') ],
 			[ 'Wx::ComboBox', '_file_types_', '', $types ],
-			[ 'Wx::Button',   '_cancel_',     Wx::wxID_CANCEL ],
 		],
 		[   [],
 			[   'Wx::CheckBox',
@@ -137,6 +136,13 @@ sub get_layout {
 				$config->find_nomatch,
 			],
 		],
+		[   ['Wx::StaticLine'],
+			['Wx::StaticLine'],
+		],
+		[   [],
+			[ 'Wx::Button', '_find_',   Wx::wxID_FIND ],
+			[ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ],
+		],
 
 	);
 
@@ -151,7 +157,7 @@ sub dialog {
 		parent => $main,
 		title  => Wx::gettext('Find in Files'),
 		layout => $layout,
-		width  => [ 160, 410, 140 ],
+		width  => [ 160, 330 ],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);

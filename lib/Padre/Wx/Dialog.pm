@@ -468,7 +468,8 @@ sub _build_layout {
 				$widget = $class->new( $dialog, @args, Wx::wxDefaultPosition, $size );
 			} elsif ( $class eq 'Wx::DirPickerCtrl' ) {
 				my $title = shift(@params) || '';
-				$widget = $class->new( $dialog, -1, $arg, $title, Wx::wxDefaultPosition, $width );
+				$widget =
+					$class->new( $dialog, -1, $arg, $title, Wx::wxDefaultPosition, $width ); # TODO width is ignored?
 
 				# it seems we cannot set the default directory and
 				# we still have to set this directory in order to get anything back in
