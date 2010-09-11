@@ -1,14 +1,14 @@
-package Padre::Wx::Ack;
+package Padre::Wx::ReplaceInFiles;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::Ack - Find in files, using L<Ack>
+Padre::Wx::ReplaceInFiles - Replace in files, with the help of L<Ack>
 
 =head1 DESCRIPTION
 
-C<Padre::Wx::Ack> implements a search dialog used to find recursively in
+C<Padre::Wx::ReplaceInFiles> implements a search dialog used to replace recursively in
 files. It is using C<Ack> underneath, for lots of nifty features.
 
 =cut
@@ -21,6 +21,7 @@ use Padre::Current    ();
 use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
+use Padre::Wx::Ack    ();
 
 our $VERSION = '0.70';
 
@@ -33,49 +34,14 @@ my $DONE_EVENT : shared = Wx::NewEventType;
 
 my $loaded = 0;
 
-sub loaded {
-	return $loaded;
-}
-
-sub load {
-	my $minver = 1.86;
-	my $error  = "App::Ack $minver required for this feature";
-
-	# try to load app::ack - we don't require $minver in the eval to
-	# provide a meaningful error message if needed.
-	eval 'use App::Ack';
-	if ($@) {
-		return "$error (module not installed)";
-	}
-	if ( $App::Ack::VERSION < $minver ) {
-		return "$error (you have $App::Ack::VERSION installed)";
-	}
-
-	SCOPE: {
-		no warnings 'redefine', 'once';
-
-		# redefine some App::Ack subs to display results in Padre's output
-		*{App::Ack::print_first_filename} = sub { print_results("$_[0]\n"); };
-		*{App::Ack::print_separator}      = sub { print_results("--\n"); };
-		*{App::Ack::print}                = sub { print_results( $_[0] ); };
-		*{App::Ack::print_filename}       = sub { print_results("$_[0]$_[1]"); };
-		*{App::Ack::print_line_no}        = sub { print_results("$_[0]$_[1]"); };
-
-		# define gettext_label to avoid crash on switching interface language
-		*{Wx::ListCtrl::gettext_label} = sub { return Wx::gettext('Find in Files'); };
-	}
-
-	return;
-}
-
-sub on_ack {
+sub on_replace_in_files {
 	my $main    = shift;
 	my $current = $main->current;
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	unless (loaded) {
-		my $error = load();
+	unless ( Padre::Wx::Ack->loaded ) {
+		my $error = Padre::Wx::Ack->load;
 		if ($error) {
 			$main->error($error);
 			return;
@@ -111,9 +77,10 @@ sub get_layout {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Term:') ],
 			[ 'Wx::ComboBox', '_ack_term_', $term, $search ],
 		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Replace Text:') ],
+			[ 'Wx::ComboBox', '_replace_term_', $term, $search ], # TODO
+		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Directory:') ],
-
-			#			[ 'Wx::ComboBox', '_ack_dir_',  $dir, $in_dir ],
 			[ 'Wx::DirPickerCtrl', '_ack_dir_', $in_dir, Wx::gettext('Pick parent directory') ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Search in Files/Types:') ],
@@ -133,21 +100,13 @@ sub get_layout {
 				$config->find_nohidden,
 			],
 		],
-		[   [],
-			[   'Wx::CheckBox',
-				'files_without_match',
-				Wx::gettext("Show only files that don't match"),
-				$config->find_nomatch,
-			],
-		],
 		[   ['Wx::StaticLine'],
 			['Wx::StaticLine'],
 		],
 		[   [],
-			[ 'Wx::Button', '_find_',   Wx::wxID_FIND ],
-			[ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ],
+			[ 'Wx::Button', '_replace_', 'Replace All' ],
+			[ 'Wx::Button', '_cancel_',  Wx::wxID_CANCEL ],
 		],
-
 	);
 
 	return \@layout;
@@ -159,17 +118,17 @@ sub dialog {
 	my $layout = get_layout( $term, $directory );
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
-		title  => Wx::gettext('Find in Files'),
+		title  => Wx::gettext('Replace in Files'),
 		layout => $layout,
 		width  => [ 160, 330 ],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);
 
-	$dialog->{_widgets_}->{_find_}->SetDefault;
+	$dialog->{_widgets_}->{_replace_}->SetDefault;
 
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},   \&find_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_}, \&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_replace_}, \&replace_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},  \&cancel_clicked );
 
 	Wx::Event::EVT_IDLE(
 		$dialog,
@@ -186,7 +145,7 @@ sub cancel_clicked {
 	$_[0]->Destroy;
 }
 
-sub find_clicked {
+sub replace_clicked {
 	my ( $dialog, $event ) = @_;
 
 	my $search = _get_data_from($dialog);
@@ -238,11 +197,6 @@ sub find_clicked {
 	# case_insensitive
 	$opts{i} = $search->{case_insensitive} if $search->{case_insensitive};
 
-	# find only files that do not match
-	if ( $search->{files_without_match} ) {
-		$opts{l} = $opts{v} = 1;
-	}
-
 	# karl: borrowed this from ack hoping that will fix the ignore-case bug
 	my $file_matching = $opts{f} || $opts{lines};
 	if ( !$file_matching ) {
@@ -261,13 +215,6 @@ sub find_clicked {
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
 
-	unless ( $main->{ack} ) {
-		create_ack_pane($main);
-	}
-	$main->show_output(1);
-	show_ack_output( $main, 1 );
-	$main->{ack}->DeleteAllItems;
-
 	Wx::Event::EVT_COMMAND( $main, -1, $DONE_EVENT, \&ack_done );
 
 	my $worker = threads->create( \&on_ack_thread );
@@ -283,7 +230,6 @@ sub _get_data_from {
 	my $file_types            = $data->{_file_types_};
 	my $case_insensitive      = $data->{case_insensitive};
 	my $ignore_hidden_subdirs = $data->{ignore_hidden_subdirs};
-	my $files_without_match   = $data->{files_without_match};
 
 	$dialog->Destroy;
 
@@ -308,7 +254,6 @@ sub _get_data_from {
 
 	$config->set( find_case => $case_insensitive ? 0 : 1 );
 	$config->set( find_nohidden => $ignore_hidden_subdirs );
-	$config->set( find_nomatch  => $files_without_match );
 
 	return {
 		term                  => $term,
@@ -316,88 +261,7 @@ sub _get_data_from {
 		file_types            => $file_types,
 		case_insensitive      => $case_insensitive,
 		ignore_hidden_subdirs => $ignore_hidden_subdirs,
-		files_without_match   => $files_without_match,
 	};
-}
-
-################################
-# Ack pane related
-
-sub create_ack_pane {
-	my ($main) = @_;
-
-	$main->{ack} = Wx::ListCtrl->new(
-		$main->bottom,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
-	);
-
-	$main->{ack}->InsertColumn( 0, Wx::gettext('Find in Files') );
-	$main->{ack}->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
-
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$main,
-		$main->{ack},
-		\&on_ack_result_selected,
-	);
-}
-
-sub show_ack_output {
-	my $main   = shift;
-	my $on     = @_ ? $_[0] ? 1 : 0 : 1;
-	my $bottom = $main->bottom;
-	my $bp     = \$bottom;
-	my $op     = \$main->{ack};
-	my $idx    = ${$bp}->GetPageIndex( ${$op} );
-
-	if ( $idx >= 0 ) {
-		${$bp}->SetSelection($idx);
-	} else {
-		${$bp}->InsertPage(
-			0,
-			${$op},
-			Wx::gettext('Find in Files'),
-			1,
-		);
-		${$op}->Show;
-	}
-	$main->aui->GetPane('bottom')->Show;
-	$main->aui->Update;
-
-	return;
-}
-
-sub on_ack_result_selected {
-	my ( $self, $event ) = @_;
-
-	my $text = $event->GetItem->GetText;
-	return if not defined $text;
-
-	my ( $file, $line );
-
-	# TODO: those appear to be very fragile regexps
-	# specially with i18n of the message
-	if ( $opts{l} && $text =~ /'.+'[^']+'(.+)'$/ ) {
-		$file = $1;
-		$line = 1;
-	} elsif ( $text =~ /^(.*)\((\d+)\):/ ) { # File(line):
-		( $file, $line ) = ( $1, $2 );
-	} elsif ( $text =~ /'.*'.*'(.*)'.*:/ ) { # Found 'x' in 'file':
-		$file = $1;
-		$line = 1;
-	} else {
-		return;
-	}
-
-	my $main = Padre->ide->wx->main;
-	my $id   = $main->setup_editor($file);
-	$main->on_nth_pane($id) if $id;
-
-	my $page = $main->current->editor;
-	$line--;
-	$page->goto_line_centerize($line);
 }
 
 ######################################
@@ -409,8 +273,8 @@ sub ack_done {
 	my $data = $event->GetData;
 
 	$main = Padre->ide->wx->main;
-	$main->{ack}->InsertStringItem( $panel_string_index--, $data );
-	$main->{ack}->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
+
+	## TODO do something ...
 
 	return;
 }
@@ -426,13 +290,11 @@ sub on_ack_thread {
 	if ( $opts{l} ) {
 		App::Ack::print_files_with_matches( $iter, \%opts );
 
-		# summary
 		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
 		_send_text( sprintf( Wx::gettext("Found %d files\n"), $stats{cnt_files} ) );
 	} else {
 		App::Ack::print_matches( $iter, \%opts );
 
-		# summary
 		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
 		_send_text(
 			sprintf(

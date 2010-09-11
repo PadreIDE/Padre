@@ -82,6 +82,11 @@ sub new {
 		'search.find_in_files',
 	);
 
+	$self->add_menu_action(
+		$self,
+		'search.replace_in_files',
+	);
+
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
