@@ -457,11 +457,14 @@ sub _build_layout {
 			if ( $class eq 'Wx::StaticText' ) {
 				$widget = $class->new( $dialog, -1, $arg, Wx::wxDefaultPosition, $width );
 			} elsif ( $class eq 'Wx::Button' ) {
-				my $s = Wx::Button::GetDefaultSize;
-
-				#print $s->GetWidth, " ", $s->GetHeight, "\n";
-				my @args = $arg =~ /[a-zA-Z]/ ? ( -1, $arg ) : ( $arg, '' );
-				my $size = Wx::Button::GetDefaultSize();
+				my @args;
+				my $size = Wx::Button::GetDefaultSize;
+				if ( $arg =~ /[a-zA-Z]/ ) {
+					@args = ( -1, $arg );
+					$size = $width if length $arg > 12;
+				} else {
+					@args = ( $arg, '' );
+				}
 				$widget = $class->new( $dialog, @args, Wx::wxDefaultPosition, $size );
 			} elsif ( $class eq 'Wx::DirPickerCtrl' ) {
 				my $title = shift(@params) || '';

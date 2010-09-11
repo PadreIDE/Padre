@@ -39,7 +39,7 @@ sub load {
 
 	# try to load app::ack - we don't require $minver in the eval to
 	# provide a meaningful error message if needed.
-	eval "use App::Ack";
+	eval 'use App::Ack';
 	if ($@) {
 		return "$error (module not installed)";
 	}
@@ -126,7 +126,7 @@ sub get_layout {
 		[   [],
 			[   'Wx::CheckBox',
 				'ignore_hidden_subdirs',
-				Wx::gettext('I&gnore hidden Subdirectories'),
+				Wx::gettext('I&gnore hidden subdirectories'),
 				$config->find_nohidden,
 			],
 		],
@@ -149,9 +149,9 @@ sub dialog {
 	my $layout = get_layout( $term, $directory );
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
-		title  => Wx::gettext("Find in Files"),
+		title  => Wx::gettext('Find in Files'),
 		layout => $layout,
-		width  => [ 190, 410, 250 ],
+		width  => [ 160, 410, 140 ],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);
@@ -188,7 +188,7 @@ sub on_pick_dir {
 
 	my $dir_dialog = Wx::DirDialog->new(
 		$main,
-		Wx::gettext("Select directory"),
+		Wx::gettext('Select directory'),
 		$default_dir
 	);
 	if ( $dir_dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -269,7 +269,7 @@ sub find_clicked {
 	# check that all regexes do compile fine
 	eval { App::Ack::check_regex( $opts{regex} ) };
 	if ($@) {
-		$main->error( "Find in Files: error in regex " . $opts{regex} );
+		$main->error( 'Find in Files: error in regex ' . $opts{regex} );
 		return;
 	}
 
