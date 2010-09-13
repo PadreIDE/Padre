@@ -2475,7 +2475,13 @@ sub run_command {
 				$_[1]->Skip(1);
 				my $outpanel = $_[0]->output;
 				$outpanel->style_neutral;
-				$outpanel->AppendText( $_[1]->GetLine . "\n" );
+
+				# NOTE: ticket 1007 happens if we do
+				# $outpanel->AppendText( $_[1]->GetLine . "\n" );
+				# if, however, we do the following, we empty the
+				# entire buffer and the bug completely goes away.
+				my $out = join "\n", @{ $_[1]->GetProcess->GetStdOutBuffer };
+				$outpanel->AppendText( $out . "\n" );
 				return;
 			},
 		);
@@ -2485,9 +2491,15 @@ sub run_command {
 				$_[1]->Skip(1);
 				my $outpanel = $_[0]->output;
 				$outpanel->style_bad;
-				$outpanel->AppendText( $_[1]->GetLine . "\n" );
 
-				$_[0]->errorlist->collect_data( $_[1]->GetLine );
+				# NOTE: ticket 1007 happens if we do
+				# $outpanel->AppendText( $_[1]->GetLine . "\n" );
+				# if, however, we do the following, we empty the
+				# entire buffer and the bug completely goes away.
+				my $errors = join "\n", @{ $_[1]->GetProcess->GetStdErrBuffer };
+				$outpanel->AppendText( $errors );
+
+				$_[0]->errorlist->collect_data( $errors );
 
 				return;
 			},

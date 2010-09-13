@@ -10,6 +10,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       extension (ZENOG)
     - Fix #749: Recognize shell/Python/Ruby/Tcl scripts from shebang (ZENOG)
     - Fix #898: Find in Files" dialog: buttons too small (ZENOG)
+    - Fix #1007: Output window buffering issues (GARU)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
