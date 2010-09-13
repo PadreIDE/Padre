@@ -2481,7 +2481,14 @@ sub run_command {
 				# if, however, we do the following, we empty the
 				# entire buffer and the bug completely goes away.
 				my $out = join "\n", @{ $_[1]->GetProcess->GetStdOutBuffer };
-				$outpanel->AppendText( $out . "\n" );
+				
+				# NOTE: also, ProcessStream seems to call this sub on every
+				# "\n", but since the buffer is already empty, it just prints
+				# our own linebreak. This means if a text has lots of "\n",
+				# we'll get tons of empty lines at the end of the panel.
+				# Please fix this if you can, but make sure ticket 1007 doesn't
+				# happen again. Also remember to repeat the fix for STDERR below
+				$outpanel->AppendText( $out . "\n" ) if $out;
 				return;
 			},
 		);
@@ -2497,7 +2504,7 @@ sub run_command {
 				# if, however, we do the following, we empty the
 				# entire buffer and the bug completely goes away.
 				my $errors = join "\n", @{ $_[1]->GetProcess->GetStdErrBuffer };
-				$outpanel->AppendText( $errors );
+				$outpanel->AppendText( $errors . "\n" ) if $errors;
 
 				$_[0]->errorlist->collect_data( $errors );
 
