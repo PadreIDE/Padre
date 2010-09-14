@@ -35,7 +35,7 @@ use Padre::Wx ();
 
 # use Padre::Logger;
 
-our $VERSION = '0.70';
+our $VERSION = '0.71';
 our @ISA     = 'Wx::App';
 
 

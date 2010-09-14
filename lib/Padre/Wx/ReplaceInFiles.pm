@@ -25,7 +25,7 @@ use Padre::Wx::Ack    ();
 
 use Data::Dumper;
 
-our $VERSION = '0.70';
+our $VERSION = '0.71';
 
 my $iter;
 my %opts;

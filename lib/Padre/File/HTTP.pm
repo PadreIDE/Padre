@@ -7,7 +7,7 @@ use warnings;
 use Padre::File;
 use Padre::Logger;
 
-our $VERSION = '0.70';
+our $VERSION = '0.71';
 our @ISA     = 'Padre::File';
 
 sub new {
