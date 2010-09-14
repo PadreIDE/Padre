@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
-0.71 To be released
+0.72 To be released
     - 'Quick Menu Access' dialog now completely translated (ZENOG)
     - The directory tree search now prints each directory it is
       searching in the status bar. This helps you see where the
