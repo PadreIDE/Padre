@@ -1424,7 +1424,9 @@ sub get_text_from_clipboard {
 sub comment_toggle_lines {
 	my ( $self, $begin, $end, $str ) = @_;
 
-	if ( _get_line_by_number( $self, $begin ) =~ /^\s*\Q$str\E/ ) {
+	my $comment_start = ref $str eq 'ARRAY' ? $str->[0] : $str;
+
+	if ( _get_line_by_number( $self, $begin ) =~ /^\s*\Q$comment_start\E/ ) {
 		uncomment_lines(@_);
 	} else {
 		comment_lines(@_);
