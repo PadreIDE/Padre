@@ -1113,6 +1113,10 @@ Ahmad Zawawi أحمد محمد زواوي (AZAWAWI)
 
 Adam Kennedy (ADAMK) E<lt>adamk@cpan.orgE<gt>
 
+Alexandr Ciornii (CHORNY)
+
+Blake Willmarth (BLAKEW)
+
 Breno G. de Oliveira (GARU)
 
 Brian Cassidy (BRICAS)

@@ -143,9 +143,13 @@ sub _content_developers {
           <p>
             <br>
             <br>
+            Aaron Trevena<br>
+            <br>
             Adam Kennedy<br>
             <br>
             Ahmad Zawawi - أحمد محمد زواوي<br>
+            <br>
+            Alexandr Ciornii<br>
             <br>
             Blake Willmarth<br>
             <br>
@@ -158,13 +162,13 @@ sub _content_developers {
             Chris Dolan<br>
             <br>
             Claudio Ramirez<br>
-            <br>
-            code4pay (pseudonym only)<br>            
           </p>
         </td>
         <td valign="top">
           <p>
             <br>
+            <br>
+            code4pay (pseudonym only)<br>
             <br>
             Fayland Lam<br>
             <br>
@@ -200,6 +204,8 @@ sub _content_developers {
             Petar Shangov<br>
             <br>
             Peter Lavender<br>
+            <br>
+            Ryan Niebur<br>
             <br>
             Sebastian Willing<br>
             <br>
