@@ -30,8 +30,9 @@ sub new {
 	# Remove the document entirely as we do this,
 	# as it won't be able to survive serialisation.
 	my $document = delete $self->{document};
-	$self->{text}    = $document->text_get;
-	$self->{project} = $document->project->root;
+	$self->{text}     = $document->text_get;
+	$self->{project}  = $document->project->root;
+	$self->{filename} = $document->filename;
 
 	return $self;
 }
