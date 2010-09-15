@@ -27,7 +27,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		'',
+		Wx::gettext('Open Resource'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
