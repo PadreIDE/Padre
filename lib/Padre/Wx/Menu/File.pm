@@ -330,8 +330,12 @@ sub refresh_recent {
 		}
 	}
 
+	my %is_open_document = map { defined $_->filename ? ( $_->filename => 1 ) : () } $self->{main}->documents;
+
 	my $idx = 0;
-	foreach my $file ( Padre::DB::History->recent('files') ) {
+	foreach my $file ( Padre::DB::History->recent( 'files', 10 + scalar keys %is_open_document ) ) {
+		next if exists $is_open_document{$file};
+
 		if (Padre::Constant::WIN32) {
 			next unless -f $file;
 		} else {

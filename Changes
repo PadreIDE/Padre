@@ -15,6 +15,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #579: (Un)commenting comments the last unselected line (ZENOG)
     - Fix: deactivate menu entry "File->Save as" when there are not open
       files (ZENOG)
+    - Fix #988: Recent files menu contains currently opened files (ZENOG)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
