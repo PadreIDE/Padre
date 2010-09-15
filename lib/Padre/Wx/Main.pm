@@ -2481,7 +2481,7 @@ sub run_command {
 				# if, however, we do the following, we empty the
 				# entire buffer and the bug completely goes away.
 				my $out = join "\n", @{ $_[1]->GetProcess->GetStdOutBuffer };
-				
+
 				# NOTE: also, ProcessStream seems to call this sub on every
 				# "\n", but since the buffer is already empty, it just prints
 				# our own linebreak. This means if a text has lots of "\n",
@@ -2506,7 +2506,7 @@ sub run_command {
 				my $errors = join "\n", @{ $_[1]->GetProcess->GetStdErrBuffer };
 				$outpanel->AppendText( $errors . "\n" ) if $errors;
 
-				$_[0]->errorlist->collect_data( $errors );
+				$_[0]->errorlist->collect_data($errors);
 
 				return;
 			},
@@ -3034,14 +3034,16 @@ sub on_comment_block {
 	my $document        = $current->document;
 	my $selection_start = $editor->GetSelectionStart;
 	my $selection_end   = $editor->GetSelectionEnd;
-	my $length          = length $document->text_get;
-	my $begin           = $editor->LineFromPosition($selection_start);
-	my $end             = $editor->LineFromPosition($selection_end);
-	my $string          = $document->comment_lines_str;
-	if ( not defined $string ) {
+	my $length_before   = length $document->text_get;
+	my $begin_line      = $editor->LineFromPosition($selection_start);
+	my $end_line =
+		$editor->LineFromPosition( $selection_start == $selection_end ? $selection_end : $selection_end - 1 );
+	my $comment = $document->comment_lines_str;
+
+	if ( not defined $comment ) {
 		$self->error(
 			sprintf(
-				Wx::gettext("Could not determine the comment character for %s document type"),
+				Wx::gettext('Could not determine the comment character for %s document type'),
 				Padre::MimeTypes->get_mime_type_name( $document->mimetype )
 			)
 		);
@@ -3049,11 +3051,11 @@ sub on_comment_block {
 	}
 
 	if ( $operation eq 'TOGGLE' ) {
-		$editor->comment_toggle_lines( $begin, $end, $string );
+		$editor->comment_toggle_lines( $begin_line, $end_line, $comment );
 	} elsif ( $operation eq 'COMMENT' ) {
-		$editor->comment_lines( $begin, $end, $string );
+		$editor->comment_lines( $begin_line, $end_line, $comment );
 	} elsif ( $operation eq 'UNCOMMENT' ) {
-		$editor->uncomment_lines( $begin, $end, $string );
+		$editor->uncomment_lines( $begin_line, $end_line, $comment );
 	} else {
 		TRACE("Invalid comment operation '$operation'") if DEBUG;
 	}
@@ -3061,7 +3063,7 @@ sub on_comment_block {
 	if ( $selection_end > $selection_start ) {
 		$editor->SetSelection(
 			$selection_start,
-			$selection_end + ( length $document->text_get ) - $length
+			$selection_end + ( length $document->text_get ) - $length_before
 		);
 	}
 	return;
