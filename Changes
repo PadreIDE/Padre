@@ -13,6 +13,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #1007: Output window buffering issues (GARU)
     - Fix #947: Toggling comments does not work for XML (ZENOG)
     - Fix #579: (Un)commenting comments the last unselected line (ZENOG)
+    - Fix: deactivate menu entry "File->Save as" when there are not open
+      files (ZENOG)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

@@ -202,7 +202,7 @@ sub new {
 		'file.save_as',
 	);
 
-	$self->{save_as} = $self->add_menu_action(
+	$self->{save_intuition} = $self->add_menu_action(
 		$self,
 		'file.save_intuition',
 	);
@@ -243,7 +243,7 @@ sub new {
 	$self->{recentfiles} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("&Recent Files"),
+		Wx::gettext('&Recent Files'),
 		$self->{recentfiles}
 	);
 	$self->add_menu_action(
@@ -309,6 +309,7 @@ sub refresh {
 	$self->{reload_all}->Enable($document);
 	$self->{save}->Enable($document);
 	$self->{save_as}->Enable($document);
+	$self->{save_intuition}->Enable($document);
 	$self->{save_all}->Enable($document);
 	$self->{print}->Enable($document);
 	defined( $self->{open_session} ) and $self->{open_selection}->Enable($document);
@@ -364,8 +365,8 @@ sub refresh_recent {
 						$file, 'files',
 					);
 					Wx::MessageBox(
-						sprintf( Wx::gettext("File %s not found."), $file ),
-						Wx::gettext("Open cancelled"),
+						sprintf( Wx::gettext('File %s not found.'), $file ),
+						Wx::gettext('Open cancelled'),
 						Wx::wxOK,
 						$self->{main},
 					);
