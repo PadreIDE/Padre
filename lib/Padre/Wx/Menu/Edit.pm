@@ -46,7 +46,7 @@ sub new {
 	my $edit_select = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Select"),
+		Wx::gettext('Select'),
 		$edit_select
 	);
 
@@ -87,7 +87,7 @@ sub new {
 	my $edit_copy = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Copy Specials"),
+		Wx::gettext('Copy Specials'),
 		$edit_copy
 	);
 
@@ -197,7 +197,7 @@ sub new {
 	$self->{convert_encoding} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Convert Encoding"),
+		Wx::gettext('Convert Encoding'),
 		$self->{convert_encoding}
 	);
 
@@ -219,7 +219,7 @@ sub new {
 	$self->{convert_nl} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Convert Line Endings"),
+		Wx::gettext('Convert Line Endings'),
 		$self->{convert_nl}
 	);
 
@@ -242,7 +242,7 @@ sub new {
 	$self->{tabs} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Tabs and Spaces"),
+		Wx::gettext('Tabs and Spaces'),
 		$self->{tabs},
 	);
 
@@ -272,7 +272,7 @@ sub new {
 	$self->{case} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Upper/Lower Case"),
+		Wx::gettext('Upper/Lower Case'),
 		$self->{case},
 	);
 
@@ -292,7 +292,7 @@ sub new {
 	$self->{diff} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Diff Tools"),
+		Wx::gettext('Diff Tools'),
 		$self->{diff},
 	);
 
@@ -351,6 +351,7 @@ sub refresh {
 	my $text     = $current->text;
 	my $document = $current->document;
 	my $hasdoc   = $document ? 1 : 0;
+	my $comment  = $hasdoc ? ( $document->comment_lines_str ? 1 : 0 ) : 0;
 	my $newline  = $hasdoc ? $document->newline_type : '';
 
 	# Handle the simple cases
@@ -364,9 +365,9 @@ sub refresh {
 
 	$self->{insert_special}->Enable($hasdoc);
 	$self->{snippets}->Enable($hasdoc);
-	$self->{comment_toggle}->Enable($hasdoc);
-	$self->{comment}->Enable($hasdoc);
-	$self->{uncomment}->Enable($hasdoc);
+	$self->{comment_toggle}->Enable($comment);
+	$self->{comment}->Enable($comment);
+	$self->{uncomment}->Enable($comment);
 	$self->{convert_encoding_system}->Enable($hasdoc);
 	$self->{convert_encoding_utf8}->Enable($hasdoc);
 	$self->{convert_encoding_to}->Enable($hasdoc);

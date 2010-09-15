@@ -1503,8 +1503,7 @@ the C<force =E<gt> 1> parameter to override this.
 # order for padre not to crash if user wants to un/comment lines with
 # a document type that did not define those methods.
 #
-# TO DO Remove this base method, and compensate by disabling the menu entries
-# if the document class does not define this method.
+# TO DO Remove this base method
 sub comment_lines_str { }
 
 
