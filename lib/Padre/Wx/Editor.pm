@@ -1452,12 +1452,6 @@ sub comment_lines {
 		$pos = $self->GetLineEndPosition($end);
 		$self->InsertText( $pos, $str->[1] );
 	} else {
-		## it is not enough, only current position to check :(
-		# my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
-		# if ( $is_first_column && $end > $begin ) {
-		# $end--;
-		# }
-
 		foreach my $line ( $begin .. $end ) {
 			my $text = _get_line_by_number( $self, $line );
 
@@ -1501,11 +1495,6 @@ sub uncomment_lines {
 			$self->ReplaceSelection('');
 		}
 	} else {
-
-		# my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
-		# if ( $is_first_column && $end > $begin ) {
-		# $end--;
-		# }
 		foreach my $line ( $begin .. $end ) {
 			my $text = _get_line_by_number( $self, $line );
 
