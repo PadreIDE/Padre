@@ -1,4 +1,5 @@
 package Padre::Wx::Main;
+
 use utf8;
 
 =encoding UTF-8
@@ -492,6 +493,7 @@ use Class::XSAccessor {
 		has_outline      => 'outline',
 		has_directory    => 'directory',
 		has_errorlist    => 'errorlist',
+		has_findinfiles  => 'findinfiles',
 	},
 	getters => {
 
@@ -627,6 +629,15 @@ sub errorlist {
 		$self->{errorlist} = Padre::Wx::ErrorList->new($self);
 	}
 	return $self->{errorlist};
+}
+
+sub findinfiles {
+	my $self = shift;
+	unless ( defined $self->{findinfiles} ) {
+		require Padre::Wx::FindInFiles;
+		$self->{findinfiles} = Padre::Wx::FindInFiles->new($self);
+	}
+	return $self->{findinfiles};
 }
 
 sub directory_panel {
