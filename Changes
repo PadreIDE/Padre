@@ -2,7 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.72 To be released
-    - 'Quick Menu Access' dialog now completely translated (ZENOG)
+    - 'Quick Menu Access' and 'Advanced Preferences' dialogs now completely
+      translated (ZENOG)
     - The directory tree search now prints each directory it is
       searching in the status bar. This helps you see where the
       search is up to, and identify when it is finished (ADAMK)
@@ -21,6 +22,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Bumped Format::Human::Bytes to 0.07 removing 8 dependencies (ADAMK)
     - Fix #926: Escape key does not always work in the regex editor (ZENOG)
     - Fixed keyboard (tab) navigation in the regex editor (ZENOG)
+    - Fix #452: focus order in Replace dialog (ZENOG)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

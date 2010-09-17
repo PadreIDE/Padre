@@ -623,18 +623,24 @@ sub as_search {
 sub hotkey {
 	my ( $self, $key_event, $sender ) = @_;
 
-	if ( $key_event->GetKeyCode == ord 'F' ) {
-		$self->find_button;
-	}
-	if ( $key_event->GetKeyCode == ord 'R' ) {
-		$self->replace_button;
-	}
-	if ( $key_event->GetKeyCode == Wx::WXK_TAB ) {
+	$self->find_button    if $key_event->GetKeyCode == ord 'F';
+	$self->replace_button if $key_event->GetKeyCode == ord 'R';
+	$self->close          if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 
-		#$sender->Navigate( $key_event->ShiftDown ? 0 : 1 );
-	}
-	if ( $key_event->GetKeyCode == Wx::WXK_ESCAPE ) {
-		$self->close;
+	if ( $key_event->GetKeyCode == Wx::WXK_TAB ) {
+		my $index;
+		$index = 1 if $sender->GetId == $self->{find_button}->GetId;
+		$index = 2 if $sender->GetId == $self->{replace_button}->GetId;
+		$index = 3 if $sender->GetId == $self->{close_button}->GetId;
+
+		if ( $key_event->ShiftDown ) {
+			$index--;
+		} else {
+			$index++;
+		}
+
+		my @elements = qw(replace_all find_button replace_button close_button find_regex);
+		$self->{ $elements[$index] }->SetFocus;
 	}
 
 	return;
