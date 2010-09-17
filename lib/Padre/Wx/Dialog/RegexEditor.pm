@@ -138,68 +138,14 @@ sub _regex_groups {
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
-	# Dialog Controls
+	# Dialog Controls, created in keyboard navigation order
 
 	# Regex text field
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
-	$self->{regex} = Wx::RichTextCtrl->new(
+	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
-
-	# Replace regex text field
-	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
-	$self->{replace} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
-	);
-
-	# Optionally toggle the visibility of the description field
-	$self->{description_checkbox} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext('Show &Description'),
-	);
-
-	# Describe-the-regex text field
-	$self->{description_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
-	);
-
-	# Description is hidden by default
-	$self->{description_text}->Hide;
-
-	# Original input text field
-	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
-	$self->{original_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
-	);
-
-	# Matched readonly text field
-	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
-	$self->{matched_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
-	);
-
-	# Result from replace text field
-	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
-	$self->{result_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
-	);
-
-	# Modifiers
-	my %m = $self->_modifiers();
-	foreach my $name ( keys %m ) {
-		$self->{$name} = Wx::CheckBox->new(
-			$self,
-			-1,
-			$m{$name}{name},
-		);
-	}
 
 	my %regex_groups = $self->_regex_groups;
 	foreach my $code ( sort keys %regex_groups ) {
@@ -238,6 +184,48 @@ sub _create_controls {
 		}
 	}
 
+	# Optionally toggle the visibility of the description field
+	$self->{description_checkbox} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Show &Description'),
+	);
+
+	# Describe-the-regex text field
+	$self->{description_text} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
+	# Description is hidden by default
+	$self->{description_text}->Hide;
+
+	# Replace regex text field
+	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
+	$self->{replace} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
+
+	# Original input text field
+	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
+	$self->{original_text} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
+
+	# Matched readonly text field
+	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
+	$self->{matched_text} = Wx::RichTextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+	);
+
+	# Result from replace text field
+	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
+	$self->{result_text} = Wx::RichTextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+	);
 
 	# Insert regex into current document button_name
 	$self->{insert_button} = Wx::Button->new(
@@ -254,6 +242,16 @@ sub _create_controls {
 	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
 	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
+
+	# Modifiers
+	my %m = $self->_modifiers();
+	foreach my $name ( $self->_modifier_keys() ) {
+		$self->{$name} = Wx::CheckBox->new(
+			$self,
+			-1,
+			$m{$name}{name},
+		);
+	}
 
 	# Dialog Layout
 
@@ -313,6 +311,16 @@ sub _bind_events {
 		$self->{regex},
 		sub { $_[0]->run; },
 	);
+	Wx::Event::EVT_KEY_DOWN(
+		$self,
+		sub {
+			my ($key_event) = $_[1];
+			if ( $key_event->GetKeyCode == Wx::WXK_ESCAPE ) {
+				$self->Hide;
+			}
+			return;
+		}
+	);
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{replace},
@@ -325,8 +333,7 @@ sub _bind_events {
 	);
 
 	# Modifiers
-	my %modifiers = $self->_modifiers();
-	foreach my $name ( keys %modifiers ) {
+	foreach my $name ( $self->_modifier_keys ) {
 		Wx::Event::EVT_CHECKBOX(
 			$self,
 			$self->{$name},
@@ -364,7 +371,6 @@ sub _bind_events {
 # A private method that returns a hash of regex modifiers
 #
 sub _modifiers {
-	my $self = shift;
 	return (
 		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('&Ignore case (%s)'), 'i' ) },
 		single_line => { mod => 's', name => sprintf( Wx::gettext('&Single-line (%s)'), 's' ) },
@@ -372,6 +378,13 @@ sub _modifiers {
 		extended    => { mod => 'x', name => sprintf( Wx::gettext('&Extended (%s)'),    'x' ) },
 		global      => { mod => 'g', name => sprintf( Wx::gettext('&Global (%s)'),      'g' ) },
 	);
+}
+
+#
+# returns the regex modifier keys in the order they appear in the GUI
+#
+sub _modifier_keys {
+	return qw{ ignore_case single_line multi_line extended	global};
 }
 
 
