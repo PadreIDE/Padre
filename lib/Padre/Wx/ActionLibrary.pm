@@ -1251,15 +1251,15 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name       => 'search.replace_in_files',
-		label      => _T('Replace in Files...'),
-		comment    => _T('Search and replace  in all files below a given directory'),
-		menu_event => sub {
-			require Padre::Wx::ReplaceInFiles;
-			Padre::Wx::ReplaceInFiles::on_replace_in_files(@_);
-		},
-	);
+	# Padre::Wx::Action->new(
+	# name       => 'search.replace_in_files',
+	# label      => _T('Replace in Files...'),
+	# comment    => _T('Search and replace  in all files below a given directory'),
+	# menu_event => sub {
+	# require Padre::Wx::ReplaceInFiles;
+	# Padre::Wx::ReplaceInFiles::on_replace_in_files(@_);
+	# },
+	# );
 
 	#
 
