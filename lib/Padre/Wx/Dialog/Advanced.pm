@@ -110,12 +110,12 @@ sub _create_controls {
 
 	# Popup right-click menu
 	$self->{popup}      = Wx::Menu->new;
-	$self->{copy}       = $self->{popup}->Append( -1, Wx::gettext("Copy") );
-	$self->{copy_name}  = $self->{popup}->Append( -1, Wx::gettext("Copy Name") );
-	$self->{copy_value} = $self->{popup}->Append( -1, Wx::gettext("Copy Value") );
+	$self->{copy}       = $self->{popup}->Append( -1, Wx::gettext('Copy') );
+	$self->{copy_name}  = $self->{popup}->Append( -1, Wx::gettext('Copy Name') );
+	$self->{copy_value} = $self->{popup}->Append( -1, Wx::gettext('Copy Value') );
 
 	# Preference value label
-	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
+	my $value_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Value:') );
 
 	# Preference value text field
 	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
@@ -153,25 +153,25 @@ sub _create_controls {
 
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
-		$self, -1, Wx::gettext("&Set"),
+		$self, -1, Wx::gettext('&Set'),
 	);
 	$self->{button_set}->Enable(0);
 
 	# Reset to default preference value button
 	$self->{button_reset} = Wx::Button->new(
-		$self, -1, Wx::gettext("&Reset"),
+		$self, -1, Wx::gettext('&Reset'),
 	);
 	$self->{button_reset}->Enable(0);
 
 	# Save button
 	$self->{button_save} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext("S&ave"),
+		$self, Wx::wxID_OK, Wx::gettext('S&ave'),
 	);
 	$self->{button_save}->SetDefault;
 
 	# Cancel button
 	$self->{button_cancel} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
 	#
@@ -378,7 +378,7 @@ sub _on_copy_to_clipboard {
 
 	my $text;
 	if ( $action == COPY_ALL ) {
-		$text = $name . ";" . $self->_status_name($pref) . ";" . $pref->{type_name} . ";" . $pref->{value};
+		$text = $name . ';' . $self->_status_name($pref) . ';' . $pref->{type_name} . ';' . $pref->{value};
 	} elsif ( $action == COPY_NAME ) {
 		$text = $name;
 	} elsif ( $action == COPY_VALUE ) {
