@@ -104,7 +104,7 @@ requires 'File::Temp'               => '0.20';
 requires 'File::Which'              => '1.08';
 requires 'File::pushd'              => '1.00';
 requires 'FindBin'                  => 0;
-requires 'Format::Human::Bytes'     => '0.04';
+requires 'Format::Human::Bytes'     => '0.06';
 requires 'Getopt::Long'             => 0;
 requires 'HTML::Entities'           => '3.57';
 requires 'HTML::Parser'             => '3.58';
@@ -136,7 +136,7 @@ requires 'POD2::Base'               => '0.043';
 requires 'POSIX'                    => 0;
 requires 'PPI'                      => '1.213';
 requires 'PPIx::EditorTools'        => '0.09';
-requires 'PPIx::Regexp'             => '0.005';
+requires 'PPIx::Regexp'             => '0.011';
 requires 'Storable'                 => '2.15';
 requires 'Template::Tiny'           => '0.11';
 requires 'Term::ReadLine'           => 0;
@@ -175,9 +175,6 @@ requires 'IO::Scalar' => '2.110';
 
 # Add later, once we native support portability
 # requires 'Portable' => '0.12' if win32;
-
-# For PPIx::Regexp Readonly dependency
-requires 'Readonly::XS' => '1.05';
 
 # PAR support disabled for now
 # requires 'File::ShareDir::PAR' => '0.04';

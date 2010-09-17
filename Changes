@@ -17,6 +17,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       files (ZENOG)
     - Fix #988: Recent files menu contains currently opened files (ZENOG)
     - Fix #1010: Grey out comment toggling in menu if necessary (ZENOG)
+    - Bumped PPIx::Regexp to 0.011 removing 2 dependencies (ADAMK)
+    - Bumped Format::Human::Bytes to 0.07 removing 8 dependencies (ADAMK)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
