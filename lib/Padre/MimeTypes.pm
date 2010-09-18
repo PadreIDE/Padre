@@ -65,6 +65,7 @@ sub _initialize {
 		hpp   => 'text/x-c++src',
 		hxx   => 'text/x-c++src',
 		'h++' => 'text/x-c++src',
+		cs    => 'text/x-csharp',
 		css   => 'text/css',
 		diff  => 'text/x-patch',
 		e     => 'text/x-eiffel',
@@ -342,6 +343,12 @@ sub _initialize {
 			name  => 'Template Toolkit',
 			lexer => Wx::wxSTC_LEX_HTML,
 		},
+
+		'text/x-csharp' => {
+			name  => 'C#',
+			lexer => Wx::wxSTC_LEX_CPP, # better than nothing
+		},
+
 	);
 
 	# TO DO:
