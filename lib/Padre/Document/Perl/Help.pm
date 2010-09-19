@@ -13,7 +13,7 @@ our $VERSION = '0.71';
 our @ISA     = 'Padre::Help';
 
 # for caching help list (for faster access)
-my ( $cached_help_list, $cached_perlopref, $cached_wxwidgets );
+my ( $cached_help_list, $cached_perlopquick, $cached_wxwidgets );
 
 # Initialize help
 sub help_init {
@@ -22,7 +22,7 @@ sub help_init {
 	# serve the cached copy if it is already built
 	if ($cached_help_list) {
 		$self->{help_list} = $cached_help_list;
-		$self->{perlopref} = $cached_perlopref;
+		$self->{perlopquick} = $cached_perlopquick;
 		$self->{wxwidgets} = $cached_wxwidgets;
 		return;
 	}
@@ -133,8 +133,8 @@ sub help_init {
 	push @index, $self->_find_installed_modules;
 
 	# Add Perl Operators Reference
-	$self->{perlopref} = $self->_parse_perlopref;
-	push @index, keys %{ $self->{perlopref} };
+	$self->{perlopquick} = $self->_parse_perlopquick;
+	push @index, keys %{ $self->{perlopquick} };
 
 	# Add wxWidgets documentation
 	$self->{wxwidgets} = $self->_parse_wxwidgets;
@@ -147,7 +147,7 @@ sub help_init {
 
 	# Store the cached help list for faster access
 	$cached_help_list = $self->{help_list};
-	$cached_perlopref = $self->{perlopref};
+	$cached_perlopquick = $self->{perlopquick};
 	$cached_wxwidgets = $self->{wxwidgets};
 }
 
@@ -172,15 +172,15 @@ sub _find_installed_modules {
 	return keys %seen;
 }
 
-# Parses perlopref.pod (Perl Operator Reference)
-# http://github.com/cowens/perlopref/tree/master
-sub _parse_perlopref {
+# Parses perlopquick.pod (Perl Operator Reference)
+# http://github.com/cowens/perlopquick/tree/master
+sub _parse_perlopquick {
 	my $self  = shift;
 	my %index = ();
 
-	# Open perlopref.pod for reading
-	my $perlopref = File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref', 'perlopref.pod' );
-	if ( open my $fh, '<', $perlopref ) { #-# no critic (RequireBriefOpen)
+	# Open perlopquick.pod for reading
+	my $perlopquick = File::Spec->join( Padre::Util::sharedir('doc'), 'perlopquick', 'perlopquick.pod' );
+	if ( open my $fh, '<', $perlopquick ) { #-# no critic (RequireBriefOpen)
 		                                  # Add PRECEDENCE to index
 		until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }
 
@@ -204,7 +204,7 @@ sub _parse_perlopref {
 		# and we're done
 		close $fh;
 	} else {
-		TRACE("Cannot open perlopref.pod\n") if DEBUG;
+		TRACE("Cannot open perlopquick.pod\n") if DEBUG;
 	}
 
 	return \%index;
@@ -246,12 +246,12 @@ sub help_render {
 	my $self  = shift;
 	my $topic = shift;
 
-	if ( $self->{perlopref}->{$topic} ) {
+	if ( $self->{perlopquick}->{$topic} ) {
 
 		# Yes, it is a Perl 5 Operator
 		require Padre::Pod2HTML;
 		return (
-			Padre::Pod2HTML->pod2html( $self->{perlopref}->{$topic} ),
+			Padre::Pod2HTML->pod2html( $self->{perlopquick}->{$topic} ),
 			$topic,
 		);
 	} elsif ( $self->{wxwidgets}->{$topic} ) {
