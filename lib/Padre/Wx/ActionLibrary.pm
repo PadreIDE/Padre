@@ -1761,13 +1761,65 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'perl.rename_variable',
 		need_editor => 1,
-		label       => _T('Rename Variable...'),
+		label       => _T('Rename Variable'),
 		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('rename_variable') or return;
 			$document->rename_variable;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name        => 'perl.variable_to_camel_case',
+		need_editor => 1,
+		label       => _T('Change variable to camelCase'),
+		comment     => _T('Change variable casing from camel_case to camelCase'),
+		#shortcut    => 'Shift-Alt-R',
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('change_variable_casing') or return;
+			$document->change_variable_casing(to_camel_case => 1);
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name        => 'perl.variable_to_camel_case_ucfirst',
+		need_editor => 1,
+		label       => _T('Change variable to CamelCase.'),
+		comment     => _T('Change variable casing from camel_case to CamelCase'),
+		#shortcut    => 'Shift-Alt-R',
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('change_variable_casing') or return;
+			$document->change_variable_casing(to_camel_case => 1, 'ucfirst' => 1);
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name        => 'perl.variable_from_camel_case',
+		need_editor => 1,
+		label       => _T('Change variable style to using_underscores'),
+		comment     => _T('Change variable casing from camelCase to camel_case'),
+		#shortcut    => 'Shift-Alt-R',
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('change_variable_casing') or return;
+			$document->change_variable_casing(from_camel_case => 1);
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name        => 'perl.variable_from_camel_case_ucfirst',
+		need_editor => 1,
+		label       => _T('Change variable style to Using_Underscores'),
+		comment     => _T('Change variable casing from camelCase to Camel_Case'),
+		#shortcut    => 'Shift-Alt-R',
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('change_variable_casing') or return;
+			$document->change_variable_casing(from_camel_case => 1, 'ucfirst' => 1);
 		},
 	);
 

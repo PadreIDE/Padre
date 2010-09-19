@@ -873,6 +873,43 @@ sub rename_variable {
 	return;
 }
 
+sub change_variable_casing {
+	my $self = shift;
+	my %opt = @_;
+	if (0 == grep {defined $_} @opt{qw(to_camel_case from_camel_case)})  {
+		warn "Need either 'to_camel_case' or 'from_camel_case' options";
+		return;
+	}
+	elsif (2 == grep {defined $_} @opt{qw(to_camel_case from_camel_case)})  {
+		warn "Need either 'to_camel_case' or 'from_camel_case' options, not both";
+		return;
+	}
+
+	# Can we find something to replace?
+	my ( $location, $token ) = $self->get_current_symbol;
+	if ( not defined $location ) {
+		Wx::MessageBox(
+			Wx::gettext('Current cursor does not seem to point at a variable.'),
+			Wx::gettext('Varable case change'),
+			Wx::wxOK,
+			$self->current->main,
+		);
+		return;
+	}
+
+	# Launch the background task
+	$self->task_request(
+		%opt, # should contain only keys to_camel_case or from_camel_case and optionally ucfirst
+		task          => 'Padre::Task::LexicalReplaceVariable',
+		document      => $self,
+		location      => $location,
+		on_finish     => 'rename_variable_response',
+	);
+
+	return;
+}
+
+
 sub rename_variable_response {
 	my $self = shift;
 	my $task = shift;
@@ -1681,11 +1718,55 @@ sub event_on_right_down {
 			$editor, $lexRepl,
 			sub {
 				my $doc = $self;
-
 				#my $lock = $editor->main->lock('BUSY');
 				$doc->rename_variable;
 			},
 		);
+
+		# Start variable casing sub-menu
+		my $casing = Wx::Menu->new;
+		my $casing_menu = $menu->Append(
+			-1,
+			Wx::gettext('Change variable style'),
+			$casing,
+		);
+
+		my $toCC = $casing->Append( -1, Wx::gettext('Change variable to camelCase') );
+		Wx::Event::EVT_MENU(
+			$editor, $toCC,
+			sub {
+				my $doc = $self;
+				$doc->change_variable_casing(to_camel_case => 1);
+			},
+		);
+
+		my $toCC_ucfirst = $casing->Append( -1, Wx::gettext('Change variable to CamelCase') );
+		Wx::Event::EVT_MENU(
+			$editor, $toCC_ucfirst,
+			sub {
+				my $doc = $self;
+				$doc->change_variable_casing(to_camel_case => 1, 'ucfirst' => 1);
+			},
+		);
+
+		my $fromCC = $casing->Append( -1, Wx::gettext('Change variable style to using_underscores') );
+		Wx::Event::EVT_MENU(
+			$editor, $fromCC,
+			sub {
+				my $doc = $self;
+				$doc->change_variable_casing(from_camel_case => 1);
+			},
+		);
+
+		my $fromCC_ucfirst = $casing->Append( -1, Wx::gettext('Change variable style to Using_Underscores') );
+		Wx::Event::EVT_MENU(
+			$editor, $fromCC_ucfirst,
+			sub {
+				my $doc = $self;
+				$doc->change_variable_casing(from_camel_case => 1, 'ucfirst' => 1);
+			},
+		);
+		# End variable casing sub-menu
 	} # end if it's a variable
 
 	# TO DO connect this to the action of menu item in the Perl menu!

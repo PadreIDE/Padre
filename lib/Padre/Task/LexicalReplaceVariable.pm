@@ -29,6 +29,12 @@ Given a location in the document (line/column), determines the name of the
 variable at this position, finds where the variable was defined,
 and B<lexically> replaces all occurrences with another variable.
 
+The replacement can either be provided explicitly by the user (using the
+C<replacement> option) or the user may set the C<to_camel_case> or
+C<from_camel_case> options. In that case the variable will be converted
+to/from camel case. With the latter options, C<ucfirst> will force the
+upper-casing of the first letter (as is typical with global variables).
+
 =cut
 
 sub process {
@@ -36,13 +42,18 @@ sub process {
 	my $ppi      = shift or return;
 	my $location = $self->{location};
 
+	my %opt;
+	$opt{replacement}     = $self->{replacement} if defined $self->{replacement};
+	$opt{to_camel_case}   = $self->{to_camel_case} if defined $self->{to_camel_case};
+	$opt{from_camel_case} = $self->{from_camel_case} if defined $self->{from_camel_case};
+	$opt{'ucfirst'}       = $self->{'ucfirst'};
 	my $munged = eval {
 		require PPIx::EditorTools::RenameVariable;
 		PPIx::EditorTools::RenameVariable->new->rename(
 			ppi         => $ppi,
 			line        => $location->[0],
 			column      => $location->[1],
-			replacement => $self->{replacement},
+			%opt,
 		);
 	};
 	if ($@) {

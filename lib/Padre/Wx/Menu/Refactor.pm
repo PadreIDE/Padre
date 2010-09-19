@@ -42,6 +42,34 @@ sub new {
 		'perl.rename_variable',
 	);
 
+	# Create the variable-casing submenu
+	my $casing = Wx::Menu->new;
+	$self->{variable_casing_menu} = $self->Append(
+		-1,
+		Wx::gettext('Change variable casing'),
+		$casing,
+	);
+
+	$self->add_menu_action(
+		$casing,
+		'perl.variable_to_camel_case',
+	);
+
+	$self->add_menu_action(
+		$casing,
+		'perl.variable_to_camel_case_ucfirst',
+	);
+
+	$self->add_menu_action(
+		$casing,
+		'perl.variable_from_camel_case',
+	);
+
+	$self->add_menu_action(
+		$casing,
+		'perl.variable_from_camel_case_ucfirst',
+	);
+
 	$self->{extract_subroutine} = $self->add_menu_action(
 		$self,
 		'perl.extract_subroutine',
@@ -75,6 +103,7 @@ sub refresh {
 	$self->{introduce_temporary}->Enable( $document->can('introduce_temporary_variable') ? 1 : 0 );
 	$self->{extract_subroutine}->Enable( $document->can('extract_subroutine')            ? 1 : 0 );
 	$self->{endify_pod}->Enable( $document->isa('Padre::Document::Perl')                 ? 1 : 0 );
+	$self->{variable_casing_menu}->Enable( $document->isa('Padre::Document::Perl')       ? 1 : 0 );
 
 	return;
 }
