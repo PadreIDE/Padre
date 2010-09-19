@@ -21,9 +21,9 @@ sub help_init {
 
 	# serve the cached copy if it is already built
 	if ($cached_help_list) {
-		$self->{help_list} = $cached_help_list;
+		$self->{help_list}   = $cached_help_list;
 		$self->{perlopquick} = $cached_perlopquick;
-		$self->{wxwidgets} = $cached_wxwidgets;
+		$self->{wxwidgets}   = $cached_wxwidgets;
 		return;
 	}
 
@@ -146,9 +146,9 @@ sub help_init {
 	$self->{help_list} = \@unique_sorted_index;
 
 	# Store the cached help list for faster access
-	$cached_help_list = $self->{help_list};
+	$cached_help_list   = $self->{help_list};
 	$cached_perlopquick = $self->{perlopquick};
-	$cached_wxwidgets = $self->{wxwidgets};
+	$cached_wxwidgets   = $self->{wxwidgets};
 }
 
 # Finds installed CPAN modules via @INC
@@ -181,7 +181,7 @@ sub _parse_perlopquick {
 	# Open perlopquick.pod for reading
 	my $perlopquick = File::Spec->join( Padre::Util::sharedir('doc'), 'perlopquick', 'perlopquick.pod' );
 	if ( open my $fh, '<', $perlopquick ) { #-# no critic (RequireBriefOpen)
-		                                  # Add PRECEDENCE to index
+		                                    # Add PRECEDENCE to index
 		until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }
 
 		my $line;
