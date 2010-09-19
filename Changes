@@ -25,6 +25,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #452: focus order in Replace dialog (ZENOG)
     - Updated German translation (ZENOG)
     - Mime type for C# added (CHORNY)
+    - The help search dialog now uses the latest perlopquick.pod instead
+      of the old perlopref.pod (AZAWAWI)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
