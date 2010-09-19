@@ -29,6 +29,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       of the old perlopref.pod (AZAWAWI)
     - Additional refactoring shortcut: Change the style of a given variable
       lexically from/to CamelCase with two clicks. (SMUELLER)
+    - Fixed crash when closing the debugger panel (AZAWAWI)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

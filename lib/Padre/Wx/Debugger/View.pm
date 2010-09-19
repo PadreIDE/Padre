@@ -118,6 +118,10 @@ sub relocale {
 	return;
 }
 
+sub view_close {
+	shift->main->show_debugger(0);
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
