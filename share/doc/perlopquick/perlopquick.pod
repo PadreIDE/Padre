@@ -1,4 +1,4 @@
-# vi: ts=4 sw=4 ht=4 et textwidth=76 :
+# Vi: ts=4 sw=4 ht=4 et textwidth=76 :
 
 =head1 PRECEDENCE
 
@@ -34,19 +34,19 @@
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
 
-This is the double quote operator (aka the interpolating string operator).
+This is the double quote operator (AKA the interpolating string operator).
 It creates a string literal out of X.  If a scalar, array, or an index into
-a array or hash is in X, the value of that variable is inserted into the
-string in place if the variable.  Arrays are formated using C<$">:
+an array or hash is in X, then the value of that variable is inserted into
+the string in place of the variable.  Arrays are formatted using C<$">:
 
     my $interpolated_value = join $", @array;
 
-To place a C<"> inside the string, you must escape it with C<\>:
+To place a C<"> character inside the string, you must escape it with C<\>:
 
     my $quote = "He said \"I like quotes.\"";
 
@@ -58,33 +58,33 @@ as well as a generalized form of escape that uses Unicode ordinal numbers:
 Here C<\x{e9}> creates the character associated with the ordinal number 233
 (0xe9 in hexadecimal) in Unicode: LATIN SMALL LETTER E WITH ACUTE.
 
-For a full discussion of how strings work, see 
-L<perlop/Quote and Quote-like Operators>. 
+For a full discussion of how strings work, see
+L<perlop/Quote and Quote-like Operators>.
 
 =head3 Example
 
     my $name   = "World";
-    my $string = "Hello, $name!\n"; #$string is now "Hello World!\n";
+    my $string = "Hello, $name!\n"; # $string is now "Hello World!\n";
 
 =head3 See also
 
-L</qq(X)>, L</'X'>, L</q(X)>, L<perlvar/$">, 
+L</qq(X)>, L</'X'>, L</q(X)>, L<perlvar/$">,
 and L<perlop/Quote and Quote-like Operators>
 
 =head2 qq(X)
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
 
-This is the generalized double quote operator (aka the generalized
+This is the generalized double quote operator (AKA the generalized
 interpolating string operator).  It creates a string literal out of X.  If a
-scalar, array, or an index into a array or hash is in X, the value of that
-variable is inserted into the string in place if the variable.  Arrays are
-formated using C<$">:
+scalar, array, or an index into an array or hash is in X, then the value of
+that variable is inserted into the string in place of the variable.  Arrays
+are formated using C<$">:
 
     my $interpolated_value = join $", @array;
 
@@ -114,60 +114,67 @@ as well as a generalized form of escape that uses Unicode ordinal numbers:
 Here C<\x{e9}> creates the character associated with the ordinal number 233
 (0xe9 in hexadecimal) in Unicode: LATIN SMALL LETTER E WITH ACUTE.
 
-For a full discussion of how strings work, see 
-L<perlop/Quote and Quote-like Operators>. 
+For a full discussion of how strings work, see
+L<perlop/Quote and Quote-like Operators>.
 
 =head3 Example
 
     my $name   = "World";
-    my $string = qq/Hello, $name!\n/; #$string is now "Hello World!\n";
+    my $string = qq/Hello, $name!\n/; # $string is now "Hello World!\n";
 
 =head3 See also
 
-L</q(X)>, L</'X'> L</"X">, L<perlvar/$">, 
+L</q(X)>, L</'X'> L<E<quot>XE<quot>>, L<perlvar/$">,
 and L<perlop/Quote and Quote-like Operators>
 
 =head2 'X'
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
 
-This is the single quote operator (aka the non-interpolating string operator).
+This is the single quote operator (AKA the non-interpolating string operator).
 It creates a string literal out of X.
 
-To place a C<'> inside the string, you must escape it with C<\>:
+To place a C<'> character inside the string, you must escape it with C<\>:
 
     my $quote = 'He said \'I like quotes.\'';
 
-Unlike double quoted strings, that is the only escape sequence.
+To place a C<\> character inside the string, you may escape it with another
+C<\>:
 
-For a full discussion of how strings work, see 
-L<perlop/Quote and Quote-like Operators>. 
+    my $quote = 'This is a backslash: \\';
+
+but this is only necessary when the C<\> is followed by the closing single
+quote.  Unlike double quoted strings, single quoted strings only recognize
+those two escape sequences
+
+For a full discussion of how strings work, see
+L<perlop/Quote and Quote-like Operators>.
 
 =head3 Example
 
     my $name   = 'World';
-    my $string = 'Hello, $name!\n'; #$string is now "Hello \$name!\n";
+    my $string = 'Hello, $name!\n'; # $string is now "Hello \$name!\\n";
 
 =head3 See also
 
-L</"X">, L</qq(X)>, L</q(X)>, L<perlvar/$">, 
+L<E<quot>XE<quot>>, L</qq(X)>, L</q(X)>, L<perlvar/$">,
 and L<perlop/Quote and Quote-like Operators>
 
 =head2 q(X)
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
 
-This is the generalized single quote operator (aka the generalized
+This is the generalized single quote operator (AKA the generalized
 non-interpolating string operator).  It creates a string literal out of X.
 
 The delimiters C<()> are chosen by the user and may consist of either
@@ -181,34 +188,44 @@ If the delimiter is not a bracketing pair, or if the brackets are
 unbalanced, you will need to escape the delimiter with C<\> if you wish to
 have that character in the string:
 
-    my $quote = q{I have too many \} characters};
+    my $okay = q{I have too many \} characters};
 
 But it is often better to just choose a delimiter that does not conflict
 with the string:
 
     my $better = q/I have too many } characters/;
 
-Unlike double quoted strings, the escaping of the delimiter is the only
-escape.
+To place a C<\> character inside the string, you may escape it with another
+C<\>:
 
-For a full discussion of how strings work, see 
-L<perlop/Quote and Quote-like Operators>. 
+    my $quote = q/This, \\, is a backslash./;
+
+but this is only necessary when the C<\> is followed by the closing delimiter:
+
+    my $fine     = q/This, \, is a backslash./;
+    my $required = q/This is a backslash:\\/;
+
+Unlike double quoted strings, the escaping of the delimiter and C<\> are the
+only escapes.
+
+For a full discussion of how strings work, see
+L<perlop/Quote and Quote-like Operators>.
 
 =head3 Example
 
     my $name   = "World";
-    my $string = q/Hello, $name!\n/; #$string is now "Hello \$name!\n";
+    my $string = q/Hello, $name!\n/; # $string is now "Hello \$name!\\n";
 
 =head3 See also
 
-L</"X">, L</'X'>, L</qq(X)>, L<perlvar/$">, 
+L<E<quot>XE<quot>>, L</'X'>, L</qq(X)>, L<perlvar/$">,
 and L<perlop/Quote and Quote-like Operators>
 
 =head2 qw(X)
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
@@ -221,15 +238,15 @@ bracketing characters (C<< qw<> >>, C<qw()>, C<qw{}>, and C<qw[]>) or
 matching characters (C<qw##>, C<qwaa>, etc.).  It is generally used to allow
 the user to avoid having to escape characters:
 
-     my @list = qw/'a' 'b' 'c'/; #@list is now ("'a'", "'b'", "'c'")
+     my @list = qw/'a' 'b' 'c'/; # @list is now ("'a'", "'b'", "'c'")
 
 If the delimiter is not a bracketing pair, or if the brackets are
 unbalanced, you will need to escape the delimiter with C<\> if you wish to
 have that character in the string:
 
-    my @broken   = qw{I have too many } characters};        #broken
-    my @works    = qw{I have too many \} characters};       #works
-    my @balanced = qw{this works {} because it is balanced} #works
+    my @broken   = qw{I have too many } characters};        # broken
+    my @works    = qw{I have too many \} characters};       # works
+    my @balanced = qw{this works {} because it is balanced} # works
 
 But it is often better to just choose a delimiter that does not conflict
 with the string:
@@ -241,8 +258,8 @@ escape.
 
 =head3 Example
 
-    my @a = qw/ a b c /;     #@a is now ("a", "b", "c", "d")
-    my @b = qw/ $foo $bar /; #@b is now ('$foo', '$bar')
+    my @a = qw/ a b c /;     # @a is now ("a", "b", "c")
+    my @b = qw/ $foo $bar /; # @b is now ('$foo', '$bar')
 
 =head3 See Also
 
@@ -252,7 +269,7 @@ L</'X'>, L</q(X)>, and L<perlop/Quote and Quote-like Operators>
 
 =head3 Class
 
-This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+This belongs to L<perlop/Terms and List Operators (Leftward)> and
 L<perlop/Quote and Quote-like Operators>.
 
 =head3 Description
@@ -262,14 +279,14 @@ been set to a non-zero value).  Negative indexes count backwards from the
 end of the list or array.
 
 If X's sigil is C<$>, then the expression Y is placed in scalar context when
-it is evaluated and then treated as a number, so, it is converted to a
+it is evaluated and then treated as a number; hence it is converted to a
 number before it is used.  If it cannot be converted then it is turned
 into C<0> (and a warning is thrown if L<warnings> are turned on).  It
 returns the Yth item from X.
 
 If X's sigil is C<@> instead, then the expression Y is placed in list
 context when it is evaluated and each item in the resulting list is then
-treated as a number, so, they are converted to a number before it is used.
+treated as a number; hence they are converted to a number before it is used.
 Each one will be turned into C<0> if it cannot be converted (and a warning
 is thrown if L<warnings> are turned on).  It returns a list of items from
 the array X at the indexes in the list generated by Y.
@@ -277,16 +294,16 @@ the array X at the indexes in the list generated by Y.
 =head3 Example
 
     my @a = ("a", "b", "c", "d");
-    my $x = $a[2];    #$x is now equal to "c"
-    my $y = $a[-3];   #$y is now equal to "b"
-    my @b = @a[1, 2]; #@b is now ("b", "c")
+    my $x = $a[2];    # $x is now equal to "c"
+    my $y = $a[-3];   # $y is now equal to "b"
+    my @b = @a[1, 2]; # @b is now ("b", "c")
 
-    $a[2]    = 'e';      #@a is now ('a', 'b', 'e', 'd')
-    @b[0, 1] = @b[1, 0]; #swap values @b is now ('c', 'b')
+    $a[2]    = 'e';      # @a is now ('a', 'b', 'e', 'd')
+    @b[0, 1] = @b[1, 0]; # swap values @b is now ('c', 'b')
 
 =head3 See also
 
-L</(X)[Y]> and L<</X->[Y]>>
+L</(X)[Y]> and L</X-E<gt>[Y]>
 
 =head2 (X)[Y]
 
@@ -298,7 +315,7 @@ This belongs to L<perlop/Terms and List Operators (Leftward)>.
 
 This is the list index operator.  The expression Y is placed in list context
 when it is evaluated and each item in the resulting list is then treated as
-a number, so, they are converted to a number before it is used.  Each one
+a number; hence they are converted to a number before it is used.  Each one
 will be turned into C<0> if it cannot be converted (and a warning is thrown
 if L<warnings> are turned on).  It returns a list of items from the list X
 at the indexes in the list generated by Y.
@@ -306,14 +323,14 @@ at the indexes in the list generated by Y.
 =head3 Example
 
      my $i = 4;
-     my $x = ("a" .. "z")[$i];      #$x is now "e"
-     my $y = ("a" .. "z")[-$i];     #$y is now "w"
-     my @a = ("a" .. "z")[0 .. $i]; #@a is now ("a", "b", "c", "d", "e")
-     my @b = ("a" .. "z")[1, 0, 3]; #@b is now ("b", "a", "d")
+     my $x = ("a" .. "z")[$i];      # $x is now "e"
+     my $y = ("a" .. "z")[-$i];     # $y is now "w"
+     my @a = ("a" .. "z")[0 .. $i]; # @a is now ("a", "b", "c", "d", "e")
+     my @b = ("a" .. "z")[1, 0, 3]; # @b is now ("b", "a", "d")
 
 =head3 See also
 
-L</(X)[Y]> 
+L</(X)[Y]>
 
 =head2 X{Y}
 
@@ -330,15 +347,15 @@ L<perldata> for information about slices).
 =head3 Example
 
     my %h = (a => 1, b => 2, c => 3);
-    my $x = $h{c};        #$x is now 3
-    my @a = @h{"a", "b"}; #@a is now (1, 2)
+    my $x = $h{c};        # $x is now 3
+    my @a = @h{"a", "b"}; # @a is now (1, 2)
 
-    $h{d}       = 4;      #%h is now (a => 1, b => 2, c => 3, d => 4)
-    @h{qw/a d/} = (0, 1); #%h is now (a => 0, b => 1, c => 3, d => 4)
+    $h{d}       = 4;      # %h is now (a => 1, b => 2, c => 3, d => 4)
+    @h{qw/a d/} = (0, 4); # %h is now (a => 0, b => 1, c => 3, d => 4)
 
 =head3 See also
 
-L</(X){Y}> and L<</X->{Y}>>
+L</(X){Y}> and L</X-E<gt>{Y}>
 
 =head2 X->[Y]
 
@@ -360,19 +377,20 @@ If X does not evaluate to an array reference, then a runtime error occurs.
 
     my @a         = ("a", "b", "c");
     my $aref      = \@a;
-    my $x         = $aref->[1]; #$x is now "b"
-    $aref->[4]    = "d";        #@a is now ("a", "b", "c", "d")
+
+    my $x         = $aref->[1]; # $x is now "b"
+    $aref->[3]    = "d";        # @a is now ("a", "b", "c", "d")
 
     my $aoa = [
         [0,   1,   2  ],
         ["a", "b", "c"],
     ];
 
-    my $y = $aoa->[1][1];       #$y is now "b"
+    my $y = $aoa->[1][1];       # $y is now "b"
 
 =head3 See also
 
-L</\X>, L</@{X}>, L</$X[Y]>, L<perlreftut>, and L<perlref>
+L</\X>, L</@{X}>, L</${X}[Y]>, L<perlreftut>, and L<perlref>
 
 =head2 X->{Y}
 
@@ -383,7 +401,7 @@ This belongs to L<perlop/The Arrow Operator>.
 =head3 Description
 
 This is the infix hash dereferencing operator (AKA The Arrow Operator).  It
-fetches the value associated with the key Y in a hash reference returned 
+fetches the value associated with the key Y in a hash reference returned
 by the expression X.  When dealing with multiple levels of dereferencing
 (such as with a reference to a hash of hashes) only the first level requires
 the arrow operator.
@@ -394,19 +412,19 @@ If X does not evaluate to a hash reference, then a runtime error occurs.
 
     my %h      = (a => 1, b => 2, c => 3);
     my $href   = \%h;
-    my $x      = $href->{b}; #$x is now 2
-    $href->{d} = 4;          #%h is now (a => 1, b => 2, c => 3, d => 4)
+    my $x      = $href->{b}; # $x is now 2
+    $href->{d} = 4;          # %h is now (a => 1, b => 2, c => 3, d => 4)
 
     my $hoh    = {
-        a => { a => 1, b => 2, c => 3 }
+        a => { a => 1, b => 2, c => 3 },
         b => { a => 4, b => 5, c => 6 }
     };
 
-    my $y = $hoh->{a}{b};    #$y is now 2
+    my $y = $hoh->{a}{b};    # $y is now 2
 
 =head3 See also
 
-L</\X>, L</%{X}>, L</$X{Y}>, L<perlreftut>, and L<perlref>
+L</\X>, L</%{X}>, L</${X}{Y}>, L<perlreftut>, and L<perlref>
 
 =head2 X->(Y)
 
@@ -435,8 +453,8 @@ If X does not evaluate to a code reference, then a runtime error occurs.
         func => $sub,
     };
 
-    $sub->("a", "b", "c");  #prints "a = b + c\n"
-    $href->{func}(1, 2, 3); #prints "1 = 2 + 3\n"
+    $sub->("a", "b", "c");  # prints "a = b + c\n"
+    $href->{func}(1, 2, 3); # prints "1 = 2 + 3\n"
 
 =head3 See also
 
@@ -454,11 +472,11 @@ If X is the name of a scalar variable, then this is just another way of
 saying C<$X>.  This form is handy during interpolation when the name of a
 variable would be ambiguous:
 
-    my $base = "foo"; 
-    my $s    = "${base}bar"; #$s is now "foobar"
+    my $base = "foo";
+    my $s    = "${base}bar"; # $s is now "foobar"
 
 When X is an expression, this is the scalar dereferencing operator.  If X
-evaluates to a scalar reference then the value of the referenced item it
+evaluates to a scalar reference then the value of the referenced item is
 returned.  If X does not evaluate to a scalar reference a runtime error
 occurs.  If X is a simple scalar variable the braces are unnecessary.
 
@@ -471,13 +489,14 @@ then C<${X}> returns a scalar variable whose name is the same as the string.
     my $sref = \$x;
     my @a    = ($sref);
 
-    $$sref   = 6; #$x is now 6
-    ${$a[0]} = 7; #$x is now 7
+    $$sref   = 6; # $x is now 6
+    ${$a[0]} = 7; # $x is now 7
 
     no strict "refs";
+    our $y = $x;  #$y is now 7
 
-    my $bad = "x";
-    $$bad = 8;     #$x is now 8
+    my $bad = "y";
+    $$bad = 8;     # $y is now 8
 
 =head3 See also
 
@@ -495,11 +514,11 @@ If X is the name of an array variable, then this is just another way of
 saying C<$X[Y]>.
 
 When X is an expression, this is the indexing array dereferencing operator.
-If X evaluates to an array reference then it returns value of the Yth item
+If X evaluates to an array reference then it returns the value of the Yth item
 of the referenced array.  If X does not evaluate to an array reference a
 runtime error occurs.  If X is a simple scalar variable the braces are
-unnecessary.  The use of this operator is discouraged, see the 
-L<< /X->[Y] >> operator for a better solution.
+unnecessary.  The use of this operator is discouraged, see the
+L</X-E<gt>[Y]> operator for a better solution.
 
 If strict is turned off, and it shouldn't be, and X evaluates to a string
 then C<${X}[Y]> returns the Yth item from the array whose name is the same
@@ -509,17 +528,17 @@ as the string.
 
     my @a    = qw(a b c);
     my $aref = \@a;
-    
-    ${$aref}[0] = 1; #@a is now (1, "b", "c");
+    ${$aref}[0] = 1;  # @a is now (1, "b", "c")
 
     no strict "refs";
+    our @b = @a;      # @b is now (1, "b", "c")
 
-    my $bad = "a";
-    ${$bad}[5] = "d"; #@a is now (1, "b", "c", undef, undef, "d")
+    my $bad    = "b";
+    ${$bad}[5] = "d"; # @b is now (1, "b", "c", undef, undef, "d")
 
 =head3 See also
 
-L</\X>, L<< /X->[Y] >>, L<perlreftut>, and L<perlref>
+L</\X>, L</X-E<gt>[Y]>, L<perlreftut>, and L<perlref>
 
 =head2 ${X}{Y}
 
@@ -533,11 +552,11 @@ If X is the name of a hash variable, then this is just another way of saying
 C<$X{Y}>.
 
 When X is an expression, this is the indexing hash dereferencing operator.
-If X evaluates to an hash reference then it returns value associated with
+If X evaluates to an hash reference then it returns the value associated with
 the key Y of the referenced hash.  If X does not evaluate to an hash
 reference a runtime error occurs.  If X is a simple scalar variable the
 braces are unnecessary.  The use of this operator is discouraged, see the
-L<< /X->{Y} >> operator for a better solution.
+L</X-E<gt>{Y}> operator for a better solution.
 
 If strict is turned off, and it shouldn't be, and X evaluates to a string
 then C<${X}{Y}> returns the value associated with the key Y from the hash
@@ -547,17 +566,17 @@ whose name is the same as the string.
 
     my %h    = (a => 1, b => 2, c => 3);
     my $href = \%h;
-    
-    ${$href}{a} = 4; #%h is now (a => 4, b => 2, c => 3);
+    ${$href}{a} = 4; # %h is now (a => 4, b => 2, c => 3)
 
     no strict "refs";
+    our %newh = %h;  # %newh is now (a => 4, b => 2, c => 3)
 
-    my $bad = "h";
-    ${$bad}{d} = 4;  #%h is now (a => 4, b => 2, c => 3, d => 4);
+    my $bad = "newh";
+    ${$bad}{d} = 4;  # %newh is now (a => 4, b => 2, c => 3, d => 4)
 
 =head3 See also
 
-L</\X>, L<< /X->{Y} >>, L<perlreftut>, and L<perlref>
+L</\X>, L</X-E<gt>{Y}>, L<perlreftut>, and L<perlref>
 
 =head2 @{X}
 
@@ -572,11 +591,11 @@ saying @X.  This form is handy during interpolation when the name of a
 variable would be ambiguous:
 
     my @a = (1 .. 5);
-    my $x = "@{a}bar"; #$x is now "1 2 3bar"
+    my $x = "@{a}bar"; # $x is now "1 2 3bar"
 
 When X is an expression, this is the array dereferencing operator.  If X
-evaluates to a array reference then the value of the referenced item is
-returned.  If X does not evaluate to a array reference a runtime error
+evaluates to an array reference then the value of the referenced item is
+returned.  If X does not evaluate to an array reference a runtime error
 occurs.  If X is a simple scalar variable the braces are unnecessary.
 
 If strict is turned off, and it shouldn't be, and X evaluates to a string
@@ -588,13 +607,14 @@ then @{X} returns an array variable whose name is the same as the string.
     my $aref = \@a;
     my @b    = ($aref);
 
-    @$aref      = (1, 2, 3); #@a is now (1, 2, 3)
-    @{$b[0]}    = (4, 5, 6); #@a is now (4, 5, 6)
+    @$aref      = (1, 2, 3); # @a is now (1, 2, 3)
+    @{$b[0]}    = (4, 5, 6); # @a is now (4, 5, 6)
 
     no strict "refs";
+    our @c = @a;             # @c is now (4, 5, 6)
 
-    my $bad = "a";
-    @{$bad}[0,1] = 8;     #$x is now 8
+    my $bad    = "c";
+    @{$bad}[0] = 8;          # @c is now (8, 5, 6)
 
 =head3 See also
 
@@ -608,7 +628,7 @@ This belongs to L<perlop/Terms and List Operators (Leftward)>.
 
 =head3 Description
 
-If X is the name of an array variable then this is just another way of
+If X is the name of a hash variable then this is just another way of
 saying %X.
 
 When X is an expression, this is the hash dereferencing operator.  If X
@@ -625,12 +645,12 @@ then @{X} returns an array variable whose name is the same as the string.
     my $href = \%h;
     my @a    = ($href);
 
-    %$href   = (a => 1); #%h is now (a => 1)
+    %$href   = (a => 1); # %h is now (a => 1)
 
     no strict "refs";
-
-    my $bad = "h";
-    @{$bad}{"c", "d"} = (3, 4); #%h is now (a => 1, c => 3, d => 4)
+    our %newh         = %h;     # %newh is now (a => 1)
+    my $bad           = "newh";
+    @{$bad}{"c", "d"} = (3, 4); #%newh is now (a => 1, c => 3, d => 4)
 
 =head3 See also
 
@@ -658,18 +678,24 @@ done as a string, preserving each character within its range, with carry:
     print ++($foo = "zz");      # prints "aaa"
 
 C<undef> is always treated as numeric, and in particular is changed to C<0>
-before incrementing (so that a post-increment of an undef value will return
-C<0> rather than C<undef>).
+before incrementing (so that a pre-increment of an undef value will return
+C<1> rather than C<undef>).
 
 The incrementing occurs before the use of the value.
 
 =head3 Example
 
     my $x = 4;
-    my $y = ++$x; #$x and $y are now 5
+    my $y = ++$x; # $x and $y are now 5
+
+    my $q = "200 Quatloos for the newcomer";
+    my $r = ++$q;  # $q and $r are both now 201
 
     my $s = "a";
-    my $t = ++$s; #$s and $t are now "b"
+    my $t = ++$s; # $s and $t are now "b"
+
+    my $m;
+    my $n = ++$m; # $n is now 1
 
 =head3 See also
 
@@ -685,17 +711,27 @@ This belongs to L<perlop/Auto-increment and Auto-decrement>.
 
 This is the postfix auto-increment operator.  It behaves the same way as the
 prefix auto-increment operator C<++X>, including the magic, but the value is
-taken before the incrementing is done. So, the after the following code
+taken before the incrementing is done.  So, the after the following code
 C<$x> will be C<5> and C<$y> will be 4.  Whereas with the prefix
 auto-increment operator, both values would be C<5>.
+
+C<undef> is always treated as numeric, and in particular is changed to C<0>
+before incrementing (so that a post-increment of an undef value will return
+C<0> rather than C<undef>).
 
 =head3 Example
 
     my $x = 4;
-    my $y = $x++; #$x is now 5 and $y is now 4
+    my $y = $x++; # $x is now 5 and $y is now 4
+
+    my $q = "200 Quatloos for the newcomer";
+    my $r = $q++;  # $q is now 201 and $r is "200 Quatloos for the newcomer"
 
     my $s = "a";
-    my $t = $s++; #$s is now "b" and $t is now "a"
+    my $t = $s++; # $s is now "b" and $t is now "a"
+
+    my $m;
+    my $n = $m++; # $n is now 0
 
 =head3 See also
 
@@ -709,7 +745,7 @@ This belongs to L<perlop/Auto-increment and Auto-decrement>.
 
 =head3 Description
 
-This is the prefix auto-decrement operator.  It is equivalent to 
+This is the prefix auto-decrement operator.  It is equivalent to
 C<X = X - 1>.  The value returned is reflects the decrementing, so after the
 following code runs, C<$x> and C<$y> will be C<4>.
 
@@ -720,10 +756,16 @@ are turned on).
 =head3 Example
 
     my $x = 5;
-    my $y = --$x;  #$x and $y are now 4
+    my $y = --$x;  # $x and $y are now 4
+
+    my $q = "200 Quatloos for the newcomer";
+    my $r = --$q;  # $q and $r are both now 199
 
     my $s = "foo";
-    my $t = --$s;  #$s and $t are now -1
+    my $t = --$s;  # $s and $t are now -1
+
+    my $m;
+    my $n = --$m;  # $n is now -1
 
 =head3 See also
 
@@ -737,7 +779,7 @@ This belongs to L<perlop/Auto-increment and Auto-decrement>.
 
 =head3 Description
 
-This is the postfix auto-decrement operator.  It is equivalent to 
+This is the postfix auto-decrement operator.  It is equivalent to
 C<X = X - 1>.  The value returned is the value before decrementing, so after
 the following code runs, C<$x> will be 4 and C<$y> will be C<5>.
 
@@ -748,13 +790,16 @@ are turned on).
 =head3 Example
 
     my $x = 5;
-    my $y = $x--;  #$x is now 4 and $y is now 5
+    my $y = $x--;  # $x is now 4 and $y is now 5
 
     my $q = "200 Quatloos for the newcomer";
-    my $r = $q--;  #$q is now 199 and $r is "200 Quatloos for the newcomer"
+    my $r = $q--;  # $q is now 199 and $r is "200 Quatloos for the newcomer"
 
     my $s = "foo";
-    my $t = $s--;  #$s is now -1 and $t is "foo"
+    my $t = $s--;  # $s is now -1 and $t is "foo"
+
+    my $m;
+    my $n = $m--;  # $n is now 0
 
 =head3 See also
 
@@ -770,7 +815,7 @@ This belongs to L<perlop/Exponentiation>
 
 This is the exponentiation operator.  It raises X to the Yth power.
 Warning: it binds more tightly than unary minus, so C<-2**4> is C<-(2**4)>,
-not C<(-2)**4>. 
+not C<(-2)**4>.
 
 Both X and Y will be converted to numbers before the operation; if they
 cannot be converted they will turned into C<0> (and a warning is thrown if
@@ -778,11 +823,11 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 2 ** 8;             #$x is now 256
-    my $y = log(2 ** 8)/log(2); #$y is now 8;
+    my $x = 2 ** 8;             # $x is now 256
+    my $y = log(2 ** 8)/log(2); # $y is now 8;
 
-    my $s = 2 ** "foo";         #$s is now 1 (2 ** 0 is 1)
-    my $t = 2 ** "4ever";       #$t is now 16
+    my $s = 2 ** "foo";         # $s is now 1 (2 ** 0 is 1)
+    my $t = 2 ** "4ever";       # $t is now 16
 
 =head3 See also
 
@@ -800,20 +845,20 @@ This is the high-precedence logical negation operator.  It performs logical
 negation, i.e., "not".  If X is a true value it returns an empty string,
 otherwise it returns 1.  There is a low-precedence version: C<not>.
 
-It is occasionally used in pairs (C<!!>) to convert any false value to 
-C<""> and any true value to C<1>.  
+It is occasionally used in pairs (C<!!>) to convert any false value to
+C<""> and any true value to C<1>.
 
 =head3 Example
 
-    my $m = !5;      #$m is now the empty string ("")
-    my $n = !0;      #$n is now 1
-    my $o = !"";     #$o is now 1
-    my $p = !undef;  #$p is now 1
+    my $m = !5;      # $m is now the empty string ("")
+    my $n = !0;      # $n is now 1
+    my $o = !"";     # $o is now 1
+    my $p = !undef;  # $p is now 1
 
-    my $q = !!5;     #$q is now 1
-    my $r = !!0;     #$r is now ""
-    my $s = !!"";    #$s is now ""
-    my $t = !!undef; #$t is now ""
+    my $q = !!5;     # $q is now 1
+    my $r = !!0;     # $r is now ""
+    my $s = !!"";    # $s is now ""
+    my $t = !!undef; # $t is now ""
 
 =head3 See also
 
@@ -839,11 +884,11 @@ are turned on).
 
 =head3 Example
 
-    my $x = ~0x00_00_00_00 #$x is now 0xFF_FF_FF_FF on 32-bit machines
+    my $x = ~0x00_00_00_00; # $x is now 0xFF_FF_FF_FF on 32-bit machines
 
 =head3 See also
 
-L<perlop/Bitwise String Operators> and L<perlop/Integer Arithmetic> 
+L<perlop/Bitwise String Operators> and L<perlop/Integer Arithmetic>
 
 =head2 \X
 
@@ -860,35 +905,36 @@ list.
 
 =head3 Example
 
-    my $c       = \1024; #$c is now a reference to the literal 1024
+    my $c       = \1024;     # $c is now a reference to the literal 1024
 
     my $s       = 5;
-    my $sref    = \$s; #$sref is now a reference to $s
-    $$sref      = 6;   #$s is now 6
+    my $sref    = \$s;       # $sref is now a reference to $s
+    $$sref      = 6;         # $s is now 6
 
     my @a       = (1, 2, 3);
-    my $aref    = \@a; #$aref is now a reference to @a
-    $aref->[0]  = 5;   #@a is now (5, 2, 3)
-    push @$aref, 6;   #@a is now (5, 2, 3, 6)
+    my $aref    = \@a;       # $aref is now a reference to @a
+    $aref->[0]  = 5;         # @a is now (5, 2, 3)
+    push @$aref, 6;          # @a is now (5, 2, 3, 6)
 
     my %h       = (a => 1, b => 2, c => 3);
-    my $href    = \%h;         #$href is now a reference to %h
-    $href->{b}  = 5;           #%h is now (a => 1, b => 5, c => 3)
-    my @keys    = keys %$href; #@keys is now ("a", "b", "c")
+    my $href    = \%h;              # $href is now a reference to %h
+    $href->{b}  = 5;                # %h is now (a => 1, b => 5, c => 3)
+    my @keys    = sort keys %$href; # @keys is now ("a", "b", "c")
 
     sub foo {
         return join "|", @_;
     }
     my $coderef = \&foo;
-    my $x       = $coderef->(1, 2, 3); #$x is now "1|2|3";
-    my $y       = &$coderef(4, 5, 6);  #$y is now "4|5|6";
+    my $x       = $coderef->(1, 2, 3); # $x is now "1|2|3";
+    my $y       = &$coderef(4, 5, 6);  # $y is now "4|5|6";
 
-    #@refs now holds references to $s, @a, and %h
+    # @refs now holds references to $s, @a, and %h
     my @refs    = \($s, @a, %h);
 
 =head3 See also
 
-L<< /X -> Y >> in L<perlopref>, L<perlreftut>, and L<perlref>
+L</X-E<gt>[Y]>, L</X-E<gt>{Y}>, L<X-E<gt>(Y)>, L<perlreftut>, and
+L<perlref>
 
 =head2 +X
 
@@ -905,8 +951,8 @@ list of function arguments.
 
 =head3 Example
 
-    print (split ",", "a,b,c,d")[2], "\n";  #syntax error
-    print +(split ",", "a,b,c,d")[2], "\n"; #prints "c\n"
+    print (split ",", "a,b,c,d")[2], "\n";  # syntax error
+    print +(split ",", "a,b,c,d")[2], "\n"; # prints "c\n"
 
 =head3 See also
 
@@ -937,16 +983,16 @@ thrown if L<warnings> are turned on).
 =head3 Example
 
     my $x = 10;
-    $x    = -$x;     #$x is now -10
-    $x    = -$x;     #$x is now 10 again
-    my $y = -option; #$y is now "-option"
-    my $z = -"foo":  #$z is now "-foo"
-    $z = -$z;        #$z is now "+foo"
-    $z = -$z;        #$z is now "-foo"
-    $z = -"*foo"     #$z is now -0
-    
-    $x = "\x{e9}";   #$x is now e acute
-    $x = -$x;        #$x is now -0 because e acute is not in [_a-zA-Z]
+    $x    = -$x;     # $x is now -10
+    $x    = -$x;     # $x is now 10 again
+    my $y = -option; # $y is now "-option"
+    my $z = -"foo":  # $z is now "-foo"
+    $z = -$z;        # $z is now "+foo"
+    $z = -$z;        # $z is now "-foo"
+    $z = -"*foo";    # $z is now -0
+
+    $x = "\x{e9}";   # $x is now e acute
+    $x = -$x;        # $x is now -0 because e acute is not in [_a-zA-Z]
 
 =head3 See also
 
@@ -968,7 +1014,7 @@ particular operator.  See L<perlop/"Regexp Quote-Like Operators"> for
 details and L<perlretut> for examples using these operators.
 
 If Y is an expression rather than a search pattern, substitution, or
-transliteration, it is interpreted as a search pattern at run time. Note
+transliteration, it is interpreted as a search pattern at run time.  Note
 that this means that its contents will be interpolated twice, so
 
   "\\" =~ "\\";
@@ -980,7 +1026,7 @@ C<\>, which it will consider a syntax error.
 
     my $x = "foo bar baz";
 
-    #prints "matched\n"
+    # Prints "matched\n"
     if ($x =~ /foo/) {
         print "matched\n";
     }
@@ -1002,7 +1048,7 @@ but the return is logically negated.
 
 =head3 Example
 
-    #prints "matched\n"
+    # Prints "matched\n"
     if ("foo bar baz" !~ /foo/) {
         print "didn't match\n";
     } else {
@@ -1029,9 +1075,9 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 2 * 21;      #$x is now 42
-    my $y = 2 * "five";  #$y is now 0 (2 * 0)
-    my $z = 2 * "80s";   #$z is now 160
+    my $x = 2 * 21;      # $x is now 42
+    my $y = 2 * "five";  # $y is now 0 (2 * 0)
+    my $z = 2 * "80s";   # $z is now 160
 
 =head3 See also
 
@@ -1056,9 +1102,10 @@ like C<Illegal division by zero>.
 
 =head3 Example
 
-    my $x = 84/2;     #$x is now 42
-    my $y = 84/"2";   #$y is now 42
-    my $z = "five"/2  #$z is now 0 (0/2)
+    my $x = 84/2;     # $x is now 42
+    my $y = 84/"2";   # $y is now 42
+    my $z = "five"/2; # $z is now 0 (0/2)
+    my $d = 2/"five"; # dies (2/0)
 
 =head3 See Also
 
@@ -1076,7 +1123,7 @@ This is the modulo operator.  It computes the remainder of X divided by Y.
 The remainder is determined differently depending on the whether the numbers
 are integers or floating point and whether they are positive or negative.
 
-Given integer operands X and Y: If Y is positive, then "X % Y" is X minus 
+Given integer operands X and Y: If Y is positive, then "X % Y" is X minus
 the largest multiple of Y less than or equal to X.  If Y is negative, then
 "X % Y" is X minus the smallest multiple of Y that is not less than X (i.e.
 the result will be less than or equal to zero).  To illustrate this, here
@@ -1088,18 +1135,18 @@ are the results of modding C<-9> through C<9> with C<4>:
 And here is C<-9> through C<9> modded with C<-4>:
 
     when X is  -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
-    result is  -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 
+    result is  -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3
 
-From this we can see a positive Y constrains X to a range from C<0> to 
+From this we can see a positive Y constrains X to a range from C<0> to
 C<(Y - 1)> that wraps around and a negative Y constrains X to a range from
 C<(Y + 1)> to C<0>.
 
 When Y is a floating point number whose absolute value is in the range of
-C<0> to C<(UV_MAX + 1)> (where UV_MAX is the maximum of the unsigned 
+C<0> to C<(UV_MAX + 1)> (where UV_MAX is the maximum of the unsigned
 integer type) X and Y are truncated to integers.  If the absolute value of
 Y is larger than C<(UV_MAX + 1)> then the formula C<(X - I * Y)> (where I
 is a certain integer that makes the result have the same sign as Y).  For
-example, on 32-bit systems C<4.5 % (2 ** 32 - 1)> is C<4>, but 
+example, on 32-bit systems C<4.5 % (2 ** 32 - 1)> is C<4>, but
 C<4.5 % 2 ** 32> is C<4.5>.
 
 Note: when the L<integer> pragma is in scope C<%> gives you direct access to
@@ -1115,12 +1162,12 @@ like C<Illegal modulus zero>.
 
 =head3 Example
 
-    my $odd = $x % 2; #$odd is 1 when $x is odd and 0 when $x is even
+    my $odd = $x % 2; # $odd is 1 when $x is odd and 0 when $x is even
 
-    my $hour = ($hour + 1) % 24; # 23 (11pm) plus 1 hour is 0 (12am). 
+    my $hour = ($hour + 1) % 24; # 23 (11pm) plus 1 hour is 0 (12am).
 
-    my $x = "foo" % 3;           #$x is now 0 (0 % 3)
-    my $y = "5" % 4;             #$y is now 1
+    my $x = "foo" % 3;           # $x is now 0 (0 % 3)
+    my $y = "5" % 4;             # $y is now 1
 
 =head3 See also
 
@@ -1145,11 +1192,11 @@ are turned on).
 
 =head3 Example
 
-    my $x = "abc" x 3;    #$x is now the string "abcabcabc"
-    my @a = ("abc") x 3;  #@a is now ("abc", "abc", "abc")
+    my $x = "abc" x 3;    # $x is now the string "abcabcabc"
+    my @a = ("abc") x 3;  # @a is now ("abc", "abc", "abc")
 
-    my $s = "abcd" x "a"; #$s is now "" ("abcd" x 0)
-    my $t = "abcd" x "2"; #$t is now "abddabcd"
+    my $s = "abcd" x "a"; # $s is now "" ("abcd" x 0)
+    my $t = "abcd" x "2"; # $t is now "abcdabcd"
 
 =head2 X + Y
 
@@ -1167,9 +1214,9 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 40 + 2;   #$x is now 42
-    my $y = 40 + "a"; #$y is now 40 (40 + 0)
-    my $y = 40 + "2"; #$y is now 42
+    my $x = 40 + 2;   # $x is now 42
+    my $y = 40 + "a"; # $y is now 40 (40 + 0)
+    my $y = 40 + "2"; # $y is now 42
 
 =head3 See also
 
@@ -1191,9 +1238,9 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 100 - 58;     #$x is now 42
-    my $y = 100 - "five"; #$y is now 100 (100 - 0)
-    my $z = 100 - "58";   #$z is now 42
+    my $x = 100 - 58;     # $x is now 42
+    my $y = 100 - "five"; # $y is now 100 (100 - 0)
+    my $z = 100 - "58";   # $z is now 42
 
 =head3 See also
 
@@ -1213,9 +1260,10 @@ scalar context on X and Y.
 
 =head3 Example
 
-    my @a = (1 .. 10);
     my $x = "foo" . "bar"; #$x is now "foobar"
-    my $y = "the number of elements in \@a is" . @a;
+
+    my @a = (1 .. 10);
+    my $y = "the number of elements in \@a is " . @a;
 
 =head3 See also
 
@@ -1230,8 +1278,8 @@ This belongs to L<perlop/Shift Operators>.
 =head3 Description
 
 This is the left bit-shift operator.  It shift bits that make up the integer
-X Y places to the left.  If X is not an integer it will be converted into 
-one before the operation begins.  
+X Y places to the left.  If X is not an integer it will be converted into
+one before the operation begins.
 
 New bits added to the right side are all C<0>.  Overflowing the integer type
 on you platform (i.e. creating a number too large to store in your
@@ -1246,20 +1294,19 @@ Shifting 1 bit to the left is the same as multiplying the number by 2.
 Both X and Y will be converted to numbers before the operation; if they
 cannot be converted they will turned into C<0> (and a warning is thrown if
 L<warnings> are turned on).
-
 =head3 Example
 
-    #on 32-bit machines
-    my $x = 0xFF_00_FF_00 << 8; #$x is now not well defined
+    # On 32-bit machines
+    my $x = 0xFF_00_FF_00 << 8; # $x is now not well defined
 
-    #on 64-bit machines
-    my $y = 0xFF_00_FF_00 << 8; #$y is now 0xFF_00_FF_00_00
+    # On 64-bit machines
+    my $y = 0xFF_00_FF_00 << 8; # $y is now 0xFF_00_FF_00_00
 
-    my $z = 6 << 1; #$z is now 12
+    my $z = 6 << 1; # $z is now 12
 
 =head3 See also
 
-L<<</X <<= Y>>>
+L</X E<lt>E<lt>= Y>
 
 =head2 X >> Y
 
@@ -1286,174 +1333,966 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 0x00_FF_00_FF >> 8; #$x is now 0x00_00_FF_00
-    my $y = 12 >> 1;            #$y is now 6
+    my $x = 0x00_FF_00_FF >> 8; # $x is now 0x00_00_FF_00
+    my $y = 12 >> 1;            # $y is now 6
 
 =head3 See also
 
-L<<</X >>= Y>>>
+L</X E<gt>E<gt>= Y>
 
-=head2 -r
-
-=head3 Class
-
-This belongs to L<perlop/Named Unary Operators>.
-
-=head2 -w
+=head2 -r FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -x
+=head3 Description
+
+This is the effective uid/gid readable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+readable by the effective uid/gid, C<""> if it exists but if it not
+readable, or C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -r "/etc/passwd") {
+        if (-r _) {
+            print "/etc/passwd is readable\n";
+        } else {
+            print "/etc/passwd is not readable\n";
+        }
+    } else {
+        print "/etc/passwd doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<gt>>, L<perlvar/$)>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -w FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -o
+=head3 Description
+
+This is the effective uid/gid writable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+writable by the effective uid/gid, C<""> if it exists but if it not
+writable, or C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -w "/etc/passwd") {
+        if (-w _) {
+            print "/etc/passwd is writable\n";
+        } else {
+            print "/etc/passwd is not writable\n";
+        }
+    } else {
+        print "/etc/passwd doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<gt>>, L<perlvar/$)>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -x FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -R
+=head3 Description
+
+This is the effective uid/gid executable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+executable by the effective uid/gid, C<""> if it exists but if it not
+executable, or C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -x $0) {
+        if (-x _) {
+            print "this script is executable\n";
+        } else {
+            print "this script is not executable\n";
+        }
+    } else {
+        print "this script doesn't exist on the filesystem\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<gt>>, L<perlvar/$)>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -o FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -W
+=head3 Description
+
+This is the effective owner filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file or directory exists and is owned by the
+effective uid, C<""> if it exists but if it not owned by the effective uid,
+or C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -o $0) {
+        if (-o _) {
+            print "this script is owned by $>\n";
+        } else {
+            print "this script is not owned by $>\n";
+        }
+    } else {
+        print "this script doesn't exist on the filesystem\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<gt>>, L<perlvar/$)>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -R FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -X
+=head3 Description
+
+This is the real uid/gid readable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+readable by the real uid/gid, C<""> if it exists but if it not readable, or
+C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+
+    if (defined -R "/etc/passwd") {
+        if (-R _) {
+            print "/etc/passwd is readable\n";
+        } else {
+            print "/etc/passwd is not readable\n";
+        }
+    } else {
+        print "/etc/passwd doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<lt>>, L<perlvar/$(>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -W FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -O
+=head3 Description
+
+This is the real uid/gid writable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+writable by the real uid/gid, C<""> if it exists but if it not writable, or
+C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+
+    if (defined -W "/etc/passwd") {
+        if (-W _) {
+            print "/etc/passwd is writable\n";
+        } else {
+            print "/etc/passwd is not writable\n";
+        }
+    } else {
+        print "/etc/passwd doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<lt>>, L<perlvar/$(>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -X FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -e
+=head3 Description
+
+This is the real uid/gid executable filetest operator.  FILE must be a
+filename, filehandle, dirhandle, or an expression that returns one of the
+preceding values.  It returns C<1> if the file or directory exists and is
+executable by the real uid/gid, C<""> if it exists but if it not executable,
+or C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+
+    if (defined -X $0) {
+        if (-X _) {
+            print "this script is executable\n";
+        } else {
+            print "this script is not executable\n";
+        }
+    } else {
+        print "this script doesn't exist on the filesystem\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<lt>>, L<perlvar/$(>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -O FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -z
+=head3 Description
+
+This is the real owner filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file or directory exists and is owned by the
+real uid, C<""> if it exists but if it not owned by the effective uid, or
+C<undef> if the file does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -O $0) {
+        if (-O _) {
+            print "this script is owned by $>\n";
+        } else {
+            print "this script is not owned by $>\n";
+        }
+    } else {
+        print "this script doesn't exist on the filesystem\n";
+    }
+
+=head3 See also
+
+L<perlvar/$E<lt>>, L<perlvar/$(>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -e FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -s
+=head3 Description
+
+This is the existence filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file or directory exists or
+C<undef> if the file or directory does not exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (-e $0) {
+        print "this script exists\n";
+    } else {
+        print "this script doesn't exist on the filesystem\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -z FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -f
+=head3 Description
+
+This is the empty filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file or directory exists and has zero size, C<""> if the
+file or directory exists, but has zero size, or C<undef> if the file or
+directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -z "/tmp/somefile") {
+        if (-z _) {
+            print "somefile is empty\n";
+        } else {
+            print "somefile has data in it\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -s FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -d
+=head3 Description
+
+This is the size filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns the size of the file in bytes if the file or directory exists or
+C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -s "/tmp/somefile") {
+        print "somefile is ", -s _, " byte(s) long\n";
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -f FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -l
+=head3 Description
+
+This is the regular file filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file exists and is a regular file, C<""> if
+the file or directory exists, but isn't a regular file, or C<undef> if the
+file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -f "/tmp/somefile") {
+        if (-f _) {
+            print "somefile is a regular file\n";
+        } else {
+            print "somefile is not a regular file\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -d FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -p
+=head3 Description
+
+This is the directory filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the directory exists , C<""> if the file exists,
+but isn't a directory file, or C<undef> if the file or directory doesn't
+exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -d "/tmp/somefile") {
+        if (-d _) {
+            print "somefile is a directory\n";
+        } else {
+            print "somefile is not a directory\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -l FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -S
+=head3 Description
+
+This is the symbolic link filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file or directory exists and is a symbolic
+link, C<""> if the file or directory exists, but isn't a symbolic link, or
+C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -l "/tmp/somefile") {
+        if (-l _) {
+            print "somefile is a symbolic link\n";
+        } else {
+            print "somefile is not a symbolic link\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -p FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -b
+=head3 Description
+
+This is the pipe filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file exists and is a pipe, C<""> if the file or
+directory exists, but isn't a pipe, or C<undef> if the file or directory
+doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -p "/tmp/somefile") {
+        if (-p _) {
+            print "somefile is a pipe\n";
+        } else {
+            print "somefile is not a pipe\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+    if (-p STDOUT) {
+        print "we are piping to another program\n";
+    } else {
+        print "we are not piping to another program\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -S FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -c
+=head3 Description
+
+This is the socket filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file exists and is a socket, C<""> if the file or
+directory exists, but isn't a socket, or C<undef> if the file or directory
+doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -S "/tmp/somefile") {
+        if (-S _) {
+            print "somefile is a socket\n";
+        } else {
+            print "somefile is not a socket\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -b FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -t
+=head3 Description
+
+This is the block special filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file exists and is a block special file,
+C<""> if the file or directory exists, but isn't a block special file, or
+C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -b "/tmp/somefile") {
+        if (-b _) {
+            print "somefile is a block special file\n";
+        } else {
+            print "somefile is not a block special file\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -c FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -u
+=head3 Description
+
+This is the character special filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file exists and is a character special file,
+C<""> if the file or directory exists, but isn't a character special file,
+or C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -c "/tmp/somefile") {
+        if (-c _) {
+            print "somefile is a character special file\n";
+        } else {
+            print "somefile is not a character special file\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -t FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -g
+=head3 Description
+
+This is the socket filetest operator.  FILE must be a filehandle or an
+expression that returns one.  It returns C<1> if the filehandle is opened to
+a tty or C<undef> if it is not.
+
+If given no arguments, it will operate on C<$_>.
+
+=head3 Example
+
+    if (-t STDOUT) {
+        print "output is going to a console\n";
+    } else {
+        print "output is being redirected\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -u FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -k
+=head3 Description
+
+This is the setuid filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file exists and has its setuid set, C<""> if the file or
+directory exists, but its setuid isn't set, or C<undef> if the file or
+directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -u "/tmp/somefile") {
+        if (-u _) {
+            print "somefile has setuid set\n";
+        } else {
+            print "somefile dosn't have setuid set\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -g FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -T
+=head3 Description
+
+This is the setgid filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file exists and has its setgid set, C<""> if the file or
+directory exists, but its setgid isn't set, or C<undef> if the file or
+directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -g "/tmp/somefile") {
+        if (-g _) {
+            print "somefile has setgid set\n";
+        } else {
+            print "somefile dosn't have setgid set\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -k FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -B
+=head3 Description
+
+This is the sticky bit filetest operator.  FILE must be a filename,
+filehandle, dirhandle, or an expression that returns one of the preceding
+values.  It returns C<1> if the file exists and has its sticky bit set,
+C<""> if the file or directory exists, but its sticky bit isn't set, or
+C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -k "/tmp/somefile") {
+        if (-k _) {
+            print "somefile has sticky bit set\n";
+        } else {
+            print "somefile dosn't have sticky bit set\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -T FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -M
+=head3 Description
+
+This is the ASCII text filetest operator.  FILE must be a filename,
+filehandle, or an expression that returns one of the preceding values.  It
+returns C<1> if the file exists and appears to be a text file, C<""> if the
+file or directory exists, but doesn't appear to be a text file, or C<undef>
+if the file or directory doesn't exist.
+
+If X is a filename, it guesses the type of the file by reading the first
+block from the file.  If the first block doesn't contain any nul characters
+(i.e. C<\0>) and it contains fewer than thirty percent control characters or
+characters that have their high bits set, then it is considered an ASCII
+text file.
+
+If X is a filehandle it guess the type the same way, but uses the current IO
+buffer instead of the first block.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -T "/tmp/somefile") {
+        if (-T _) {
+            print "somefile looks like a text file\n";
+        } else {
+            print "somefile looks like a data file\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L</-B>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -B FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -A
+=head3 Description
+
+This is the binary filetest operator.  FILE must be a filename, filehandle,
+or an expression that returns one of the preceding values.  It returns C<1>
+if the file exists and appears to be a binary file, C<""> if the file or
+directory exists, but doesn't appear to be a binary file, or C<undef> if the
+file or directory doesn't exist.
+
+If X is a filename, it guesses the type of the file by reading the first
+block from the file.  If the first block contains any nul characters (i.e.
+C<\0>) or it contains more than thirty percent control characters or
+characters that have their high bits set, then it is considered a binary
+file.
+
+If X is a filehandle it guess the type the same way, but uses the current IO
+buffer instead of the first block.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+=head3 Example
+
+    if (defined -B "/tmp/somefile") {
+        if (-B _) {
+            print "somefile looks like a data file\n";
+        } else {
+            print "somefile looks like a text file\n";
+        }
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L</-T>, L<perlfunc/-X> and L<perlfunc/stat>
+
+=head2 -M FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
 
-=head2 -C
+=head3 Description
+
+This is the mtime filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns the script start time minus file modification time, in days, if the
+file or directory exists or C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+The script start time is stored in C<$^T>, so modifying this variable will
+have an affect on the results of calling C<-M> on a file.
+
+=head3 Example
+
+    if (-M "somefile") {
+        print "it has been ", -M _, " days since somefile was modified\n";
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$^T>, L<perlfunc/-X>, and L<perlfunc/stat>
+
+=head2 -A FILE
 
 =head3 Class
 
 This belongs to L<perlop/Named Unary Operators>.
+
+=head3 Description
+
+This is the atime filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns the script start time minus file access time, in days, if the file
+or directory exists or C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+The script start time is stored in C<$^T>, so modifying this variable will
+have an affect on the results of calling C<-A> on a file.
+
+Warning: many filesystems now turn off atime updating.
+
+=head3 Example
+
+    if (-A "somefile") {
+        print "it has been ", -A _, " days since somefile was accessed\n";
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$^T>, L<perlfunc/-X>, and L<perlfunc/stat>
+
+=head2 -C FILE
+
+=head3 Class
+
+This belongs to L<perlop/Named Unary Operators>.
+
+=head3 Description
+
+This is the ctime filetest operator.  FILE must be a filename, filehandle,
+dirhandle, or an expression that returns one of the preceding values.  It
+returns the script start time minus the ctime of the file, in days, if the
+file or directory exists or C<undef> if the file or directory doesn't exist.
+
+If given no arguments, it will operate on C<$_>.
+
+If given the C<_> special filehandle as an argument, it will use cached
+information from the previous call to C<stat> or a filetest operator.
+
+The script start time is stored in C<$^T>, so modifying this variable will
+have an affect on the results of calling C<-A> on a file.
+
+Warning, different filesystems have different ideas about what the ctime is.
+In Unix, the ctime is the inode change time.  The ctime is updated when a
+change occurs to the file's inode (permissions change, ownership change,
+etc.).
+
+=head3 Example
+
+    if (-C "somefile") {
+        print "it has been ", -C _, " days since somefile was accessed\n";
+    } else {
+        print "somefile doesn't exist\n";
+    }
+
+=head3 See also
+
+L<perlvar/$^T>, L<perlfunc/-X>, and L<perlfunc/stat>
 
 =head2 X < Y
 
@@ -1485,7 +2324,7 @@ L<warnings> are turned on).
 
 =head3 See also
 
-L<</X <= Y>>, L</X lt Y>, and L</X le Y>
+L</X E<lt>= Y>, L</X lt Y>, and L</X le Y>
 
 =head2 X > Y
 
@@ -1517,7 +2356,7 @@ L<warnings> are turned on).
 
 =head3 See also
 
-L<</X >= Y>> L</X gt Y>, and L</X ge Y>
+L</X E<gt>= Y> L</X gt Y>, and L</X ge Y>
 
 =head2 X <= Y
 
@@ -1527,8 +2366,8 @@ This belongs to L<perlop/Relational Operators>
 
 =head3 Description
 
-This is the numeric less than or equal to operator.  It returns a true 
-value if X is numerically less than or equal to Y or a false value if 
+This is the numeric less than or equal to operator.  It returns a true
+value if X is numerically less than or equal to Y or a false value if
 X is greater than to Y.
 
 Both X and Y will be converted to numbers before the operation; if they
@@ -1549,7 +2388,7 @@ L<warnings> are turned on).
 
 =head3 See also
 
-L<</X < Y>>, L</X lt Y>, and L</X le Y>
+L</X E<lt> Y>, L</X lt Y>, and L</X le Y>
 
 =head2 X >= Y
 
@@ -1559,9 +2398,9 @@ This belongs to L<perlop/Relational Operators>
 
 =head3 Description
 
-This is the numeric less than or equal to operator.  It returns a true 
-value if X is numerically less than or equal to Y or a false value if 
-X is greater than to Y.
+This is the numeric greater than or equal to operator.  It returns a true
+value if X is numerically greater than or equal to Y or a false value if
+X is less than Y.
 
 Both X and Y will be converted to numbers before the operation; if they
 cannot be converted they will turned into C<0> (and a warning is thrown if
@@ -1581,7 +2420,7 @@ L<warnings> are turned on).
 
 =head3 See also
 
-L<</X > Y>>, L</X gt Y>, and L</X ge Y>
+L</X E<gt> Y>, L</X gt Y>, and L</X ge Y>
 
 =head2 X lt Y
 
@@ -1605,14 +2444,14 @@ C<127> characters, this order is the same as the ASCII order).
     }
 
     if ("z" lt "a") {
-        print "this should never be true (unless the local is weird)\n";
+        print "this should never be true (unless the locale is weird)\n";
     } else {
-        print "it should always be false (unless the local is weird)\n";
+        print "it should always be false (unless the locale is weird)\n";
     }
 
 =head3 See also
 
-L<</X < Y>>, L<</X <= Y>>, and L</X le Y>
+L</X E<lt> Y>, L</X E<lt>= Y>, and L</X le Y>
 L</X cmp Y>
 
 =head2 X gt Y
@@ -1637,14 +2476,14 @@ C<127> characters, this order is the same as the ASCII order).
     }
 
     if ("a" gt "z") {
-        print "this should never be true (unless the local is weird)\n";
+        print "this should never be true (unless the locale is weird)\n";
     } else {
-        print "it should always be false (unless the local is weird)\n";
+        print "it should always be false (unless the locale is weird)\n";
     }
 
 =head3 See also
 
-L<</X > Y>>, L</X >= Y>, and L</X ge Y>
+L</X E<gt> Y>, L</X >= Y>, and L</X ge Y>
 
 =head2 X le Y
 
@@ -1669,14 +2508,14 @@ same as the ASCII order).
     }
 
     if ("z" le "a") {
-        print "this should never be true (unless the local is weird)\n";
+        print "this should never be true (unless the locale is weird)\n";
     } else {
-        print "it should always be false (unless the local is weird)\n";
+        print "it should always be false (unless the locale is weird)\n";
     }
 
 =head3 See also
 
-L<</X < Y>>, L<</X <= Y>>, and L</X lt Y>
+L</X E<lt> Y>, L</X E<lt>= Y>, and L</X lt Y>
 
 =head2 X ge Y
 
@@ -1701,15 +2540,14 @@ order is the same as the ASCII order).
     }
 
     if ("a" ge "z") {
-        print "this should never be true (unless the local is weird)\n";
+        print "this should never be true (unless the locale is weird)\n";
     } else {
-        print "it should always be false (unless the local is weird)\n";
+        print "it should always be false (unless the locale is weird)\n";
     }
 
 =head3 See also
 
-L<</X > Y>>, L<</X >= Y>>, and </X gt Y>
-L</X cmp Y>
+L</X E<gt> Y>, L</X E<gt>= Y>, L</X gt Y>, and L</X cmp Y>
 
 =head2 X == Y
 
@@ -1732,18 +2570,18 @@ number to not be exactly what you are comparing against.  Always use the
 less than and greater than operators with a small delta:
 
     my $x = 0;
-    
+
     for (1 .. 10) {
         $x += .1;
     }
-    
+
     if ($x == 1) {
         print "$x is one\n";
     } else {
         print "oops, darn floating point numbers\n";
     }
-    
-    my $delta = 1e-15; #0.000000000000001
+
+    my $delta = 1e-15; # 0.000000000000001
     if (
         $x < 1 + $delta and
         $x > 1 - $delta
@@ -1770,7 +2608,7 @@ This belongs to L<perlop/Equality Operators>.
 =head3 Description
 
 This is the numeric not equals operator.  It returns true if X does not
-evaluate to the same numeric value as Y.  
+evaluate to the same numeric value as Y.
 
 Both X and Y will be converted to numbers before the operation; if they
 cannot be converted they will turned into C<0> (and a warning is thrown if
@@ -1782,16 +2620,16 @@ number to not be exactly what you are comparing against.  Always use the
 less than and greater than operators with a small delta:
 
     my $x = 0;
-    
+
     for (1 .. 10) {
         $x += .1;
     }
-    
+
     if ($x != 1) {
         print "oops, darn floating point numbers\n";
     }
-    
-    my $delta = 1e-15; #0.000000000000001
+
+    my $delta = 1e-15; # 0.000000000000001
     if (
         $x > 1 + $delta and
         $x < 1 - $delta
@@ -1832,9 +2670,9 @@ L<warnings> are turned on).
 
 =head3 Example
 
-    my $x = 4 <=> 5; #x is now negative
-    my $y = 5 <=> 5; #y is now 0
-    my $z = 6 <=> 5; #z is now positive
+    my $x = 4 <=> 5; # x is now negative
+    my $y = 5 <=> 5; # y is now 0
+    my $z = 6 <=> 5; # z is now positive
 
 =head3 See also
 
@@ -1848,7 +2686,7 @@ This belongs to L<perlop/Equality Operators>.
 
 =head3 Description
 
-This is the lexical equality operator (aka the string equality operator or
+This is the lexical equality operator (AKA the string equality operator or
 the stringwise equality operator).  It returns true if X and Y evaluate as
 the same string.
 
@@ -1876,7 +2714,7 @@ This belongs to L<perlop/Equality Operators>.
 
 =head3 Description
 
-This is the lexical not equals operator. (aka the string not equals operator
+This is the lexical not equals operator (AKA the string not equals operator
 or the stringwise not equals operator).  It returns false if X and Y
 evaluate as the same string.
 
@@ -1917,13 +2755,13 @@ commonly seen used with the C<sort> function:
 
 =head3 Example
 
-    my $x = "a" <=> "b"; #$x is now negative
-    my $y = "b" <=> "b"; #$x is now 0
-    my $z = "c" <=> "b"; #$x is now positive
+    my $x = "a" cmp "b"; #$x is now negative
+    my $y = "b" cmp "b"; #$x is now 0
+    my $z = "c" cmp "b"; #$x is now positive
 
 =head3 See also
 
-L<</X <=> Y>>
+L</X E<lt>=E<gt> Y>
 
 =head2 X ~~ Y
 
@@ -1968,7 +2806,7 @@ and Y.  The truth table for and is:
 
 That is, it sets the result bit to 1 if both the X and Y bits are 1,
 otherwise it sets the result bit to 0.  This operation is done for every bit
-in X and Y.  
+in X and Y.
 
 If both operands are strings, they are considered character by character.
 The result is determined by anding the ordinal value of the characters, so
@@ -1978,20 +2816,20 @@ shorter string.
 
 =head3 Example
 
-    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
-    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
-    #0x4545 & 0x00FF is 0b0000_0000_0000_0000_0000_0100_0000_0101 or 0x0045
-    my $z = 0x4545 & 0x00FF; #$z is now 0x0045
+    # 0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    # 0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    # 0x4545 & 0x00FF is 0b0000_0000_0000_0000_0000_0100_0000_0101 or 0x0045
+    my $z = 0x4545 & 0x00FF; # $z is now 0x0045
 
-    #In ASCII (and UTF-8)
-    #"a"       is 0b0110_0001
-    #"b"       is 0b0110_0010
-    #"a" & "b" is 0b0110_0000 or "`" 
-    my $x = "a" & "b"; #$x is now "`"
+    # In ASCII (and UTF-8)
+    # "a"       is 0b0110_0001
+    # "b"       is 0b0110_0010
+    # "a" & "b" is 0b0110_0000 or "`"
+    my $x = "a" & "b"; # $x is now "`"
 
 =head3 See also
 
-L</X and Y>, L</X && Y>, L<perlop/Integer Arithmetic> and 
+L</X and Y>, L</X && Y>, L<perlop/Integer Arithmetic> and
 L<perlop/Bitwise String Operators>.
 
 =head2 X | Y
@@ -2014,7 +2852,7 @@ and Y.  The truth table for or is:
 
 That is, it sets the result bit to 0 if both the X and Y bits are 0,
 otherwise it sets the result bit to 1.  This operation is done for every bit
-in X and Y.  
+in X and Y.
 
 If both operands are strings, they are considered character by character.
 The result is determined by oring the ordinal value of the characters, so
@@ -2024,21 +2862,21 @@ bits that are set to 0.
 
 =head3 Example
 
-    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
-    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
-    #0x4545 | 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1111 or 0x45FF
-    my $y = 0x4545 | 0x00FF; #$y is now 0x45FF
+    # 0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    # 0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    # 0x4545 | 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1111 or 0x45FF
+    my $y = 0x4545 | 0x00FF; # $y is now 0x45FF
 
-    #In ASCII (and UTF-8)
-    #"a"       is 0b0110_0001
-    #"b"       is 0b0110_0010
-    #"a" | "b" is 0b0110_0011 or "c" 
-    my $x = "a" | "b"; #$x is now "c"
+    # In ASCII (and UTF-8)
+    # "a"       is 0b0110_0001
+    # "b"       is 0b0110_0010
+    # "a" | "b" is 0b0110_0011 or "c"
+    my $x = "a" | "b"; # $x is now "c"
 
 =head3 See also
 
-L</X or Y>, L</X xor Y>, L<</X E<verbar>E<verbar> Y>>, L</X E<sol>E<sol> Y>,
-L</X ^ Y>, L<perlop/Integer Arithmetic>, and 
+L</X or Y>, L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>,
+L</X ^ Y>, L<perlop/Integer Arithmetic>, and
 L<perlop/Bitwise String Operators>.
 
 =head2 X ^ Y
@@ -2060,7 +2898,7 @@ individual bits of X and Y.  The truth table for exclusive-or is:
      1 1 | 0
 
 That is, it sets the result bit to 1 if X or Y is set, or 0 if both or
-neither is set.  This operation is done for every bit in X and Y.  
+neither is set.  This operation is done for every bit in X and Y.
 
 If both operands are strings, they are considered character by character.
 The result is determined by exclusive-oring the ordinal value of the
@@ -2070,21 +2908,21 @@ had additional bits that are set to 0.
 
 =head3 Example
 
-    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
-    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
-    #0x4545 ^ 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1010 or 0x45BA
-    my $y = 0x4545 ^ 0x00FF; #$y is now 0x45BA
+    # 0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    # 0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    # 0x4545 ^ 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1010 or 0x45BA
+    my $y = 0x4545 ^ 0x00FF; # $y is now 0x45BA
 
-    #In ASCII (and UTF-8)
-    #"a"       is 0b0110_0001
-    #"b"       is 0b0110_0010
-    #"a" ^ "b" is 0b0000_0011 or "\x{03}" 
-    my $x = "a" ^ "b"; #$x is now "\x{03}"
+    # In ASCII (and UTF-8)
+    # "a"       is 0b0110_0001
+    # "b"       is 0b0110_0010
+    # "a" ^ "b" is 0b0000_0011 or "\x{03}"
+    my $x = "a" ^ "b"; # $x is now "\x{03}"
 
 =head3 See also
 
 L</X or Y>, L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>,
-L</X E<verbar> Y>, L<perlop/Integer Arithmetic> and 
+L</X E<verbar> Y>, L<perlop/Integer Arithmetic> and
 L<perlop/Bitwise String Operators>.
 
 =head2 X && Y
@@ -2104,7 +2942,7 @@ It binds more tightly than the low-precedence logical and operator:
 
 whereas:
 
-    my $y = 5 and 4; # is equivalent to (my $x = 5) and 4;
+    my $y = 5 and 4; # is equivalent to (my $y = 5) and 4;
 
 It is most commonly used in conditional statements such as C<if>, C<unless>,
 C<while>.
@@ -2116,10 +2954,10 @@ C<while>.
     my $y = 1;
     my $z = "foo";
 
-    print $w && $y, "\n"; #prints "\n"
-    print $x && $y, "\n"; #prints "0\n"
-    print $y && $z, "\n"; #prints "foo\n"
-    print $z && $y, "\n"; #prints "1\n"
+    print $w && $y, "\n"; # prints "\n"
+    print $x && $y, "\n"; # prints "0\n"
+    print $y && $z, "\n"; # prints "foo\n"
+    print $z && $y, "\n"; # prints "1\n"
 
 =head3 See also
 
@@ -2142,13 +2980,13 @@ It binds more tightly than the low-precedence logical or operator:
 
 whereas:
 
-    my $y = 5 or 4; # is equivalent to (my $x = 5) or 4;
+    my $y = 5 or 4; # is equivalent to (my $y = 5) or 4;
 
 It is most commonly used in conditional statements such as C<if>, C<unless>,
 C<while>.  It was used in the recent past to create default values:
 
     my %config = get_config();
-    #set $x to $config{x} unless it is false, in which case set it to 5
+    # Set $x to $config{x} unless it is false, in which case set it to 5
     my $x = $config{x} || 5;
 
 but this use has the drawback of not respecting a value of 0 or 0.0, since
@@ -2162,16 +3000,16 @@ purpose since it tests if X is defined, not if it is true.
     my $y = 1;
     my $z = "foo";
 
-    print $w || $x, "\n"; #prints "0\n";
-    print $x || $w, "\n"; #prints "\n";
-    print $w || $y, "\n"; #prints "1\n"
-    print $x || $y, "\n"; #prints "1\n"
-    print $y || $z, "\n"; #prints "1\n"
-    print $z || $y, "\n"; #prints "foo\n"
+    print $w || $x, "\n"; # prints "0\n";
+    print $x || $w, "\n"; # prints "\n";
+    print $w || $y, "\n"; # prints "1\n"
+    print $x || $y, "\n"; # prints "1\n"
+    print $y || $z, "\n"; # prints "1\n"
+    print $z || $y, "\n"; # prints "foo\n"
 
 =head3 See also
 
-L</X or Y>, L</X xor Y>, L</X E<verbar> Y>, L</X E<sol>E<sol> Y>, and 
+L</X or Y>, L</X xor Y>, L</X E<verbar> Y>, L</X E<sol>E<sol> Y>, and
 L</X ^ Y>
 
 =head2 X // Y
@@ -2184,12 +3022,12 @@ This belongs to L<perlop/C-style Logical Defined-Or>.
 
 This is the high-precedence logical defined-or.  It returns X if X is
 defined, otherwise it returns Y.  This operator is only available if you
-have enabled 5.10 features (using the L<feature> pragma or C<use 5.10>).
+have enabled 5.10 features (using the L<feature> pragma or C<use 5.010>).
 
 It is most commonly used to create default values:
 
     my %config = get_config();
-    #set $x to $config{x} if it is defined, otherwise set it to 5
+    # Set $x to $config{x} if it is defined, otherwise set it to 5
     my $x = $config{x} // 5;
 
 =head3 Example
@@ -2198,13 +3036,13 @@ It is most commonly used to create default values:
     my $y = 0;
     my $z = 5;
 
-    print $x // $y, "\n"; #prints 0
-    print $y // $z, "\n"; #prints 0
-    print $z // $y, "\n"; #prints 5
+    print $x // $y, "\n"; # prints 0
+    print $y // $z, "\n"; # prints 0
+    print $z // $y, "\n"; # prints 5
 
 =head3 See also
 
-L</X or Y>, L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<verbar> Y>, 
+L</X or Y>, L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<verbar> Y>,
 and L</X ^ Y>
 
 =head2 X .. Y
@@ -2233,21 +3071,21 @@ in which case it will return true and then false on the next test.
 
 =head3 Example
 
-    my @list = 0 .. 5;     #@list is now (0, 1, 2, 3, 4, 5)
-    my @az   = "a" .. "z"; #@az is now the lowercase ASCII alphabet
+    my @list = 0 .. 5;     # @list is now (0, 1, 2, 3, 4, 5)
+    my @az   = "a" .. "z"; # @az is now the lowercase ASCII alphabet
 
-    prints "4\n", "5\n", "6\n", "7\n", and "8\n"
+    #prints "4\n", "5\n", "6\n", "7\n", and "8\n"
     for my $i (0 .. 10) {
-        #start printing when $i is 4 and stop after $i is 8
+        # Start printing when $i is 4 and stop after $i is 8
         if ($i == 4 .. $i == 8) {
             print "$i\n";
         }
     }
 
-    #prints "4\n"
+    # Prints "4\n"
     for my $i (0 .. 10) {
-        #start printing when $i is 4 and stop after $i is 4
-        if ($i == 4 .. $i == 8) {
+        # Start printing when $i is 4 and stop after $i is 4
+        if ($i == 4 .. $i == 4) {
             print "$i\n";
         }
     }
@@ -2281,21 +3119,21 @@ called.
 
 =head3 Example
 
-    my @list = 0 ... 5;     #@list is now (0, 1, 2, 3, 4, 5)
-    my @az   = "a" ... "z"; #@az is now the lowercase ASCII alphabet
+    my @list = 0 ... 5;     # @list is now (0, 1, 2, 3, 4, 5)
+    my @az   = "a" ... "z"; # @az is now the lowercase ASCII alphabet
 
-    prints "4\n", "5\n", "6\n", "7\n", and "8\n"
+    #prints "4\n", "5\n", "6\n", "7\n", and "8\n"
     for my $i (0 ... 10) {
-        #start printing when $i is 4 and stop after $i is 8
+        # Start printing when $i is 4 and stop after $i is 8
         if ($i == 4 ... $i == 8) {
             print "$i\n";
         }
     }
 
-    #prints "4\n", "5\n", "6\n", "7\n", "8\n", "9\n", and "10\n"
+    # Prints "4\n", "5\n", "6\n", "7\n", "8\n", "9\n", and "10\n"
     for my $i (0 ... 10) {
-        #start printing when $i is 4 and stop after $i is 4 a second time
-        if ($i == 4 ... $i == 8) {
+        # Start printing when $i is 4 and stop after $i is 4 a second time
+        if ($i == 4 ... $i == 4) {
             print "$i\n";
         }
     }
@@ -2326,20 +3164,20 @@ apply.
 
 =head3 Example
 
-    #simple implementation of max
+    # Simple implementation of max
     sub max {
         my ($m, $n) = @_;
         return $m >= $n ? $m : $n;
     }
 
-    my $x = max 5, 4; #$x is now 5
-    my $y = max 4, 5; #$y is now 5
+    my $x = max 5, 4; # $x is now 5
+    my $y = max 4, 5; # $y is now 5
 
-    my @a = $x == $y ? (1, 2, 3) : (4, 5, 6); #@a is now (1, 2, 3)
-    my @b = $x != $y ? (1, 2, 3) : (4, 5, 6); #@b is now (4, 5, 6)
+    my @a = $x == $y ? (1, 2, 3) : (4, 5, 6); # @a is now (1, 2, 3)
+    my @b = $x != $y ? (1, 2, 3) : (4, 5, 6); # @b is now (4, 5, 6)
 
-    ($x == $y ? $x : $y) = 15; #$x is now 15
-    ($x == $y ? $x : $y) = 15; #$y is now 15
+    ($x == $y ? $x : $y) = 15; # $x is now 15
+    ($x == $y ? $x : $y) = 15; # $y is now 15
 
 =head3 See also
 
@@ -2358,7 +3196,8 @@ The act of assigning creates an lvalue, that is the result of an assignment
 can be used in places where you would normally use a plain variable:
 
     my $str = "foobar";
-    (my $modified = $str) =~ s/foo/bar/; #the substitution affects $modified
+    (my $modified = $str) =~ s/foo/bar/; # $modified is now "barbar"
+                                         # $str is still "foobar"
 
 If X is a list, then this is the list assignment operator and it provides
 list context to Y.  The first item in the list Y is assigned to the first
@@ -2369,14 +3208,14 @@ assignment has taken place).
 
 =head3 Example
 
-    my $x = 5; #$x is now 5
-    my $y = 6; #$y is now 6
+    my $x = 5; # $x is now 5
+    my $y = 6; # $y is now 6
 
-    ($x, $y) = ($y, $x); #$x is now 6 and $y is now 5
+    ($x, $y) = ($y, $x); # $x is now 6 and $y is now 5
 
-    my $i = my $j = my $k = 10; #$i, $j, and $k are now all 10
+    my $i = my $j = my $k = 10; # $i, $j, and $k are now all 10
 
-    my $m = my ($n, $o) = ("a", "b", "c") #$m is now 3
+    my $m = my ($n, $o) = ("a", "b", "c"); # $m is now 3
 
 =head2 X **= Y
 
@@ -2386,7 +3225,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the exponentiation assignment operator.  It is equivalent to 
+This is the exponentiation assignment operator.  It is equivalent to
 
     X = X ** Y
 
@@ -2399,7 +3238,7 @@ that can be assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x **= $y; #$x is now 2 ** 8 or 256
+    $x **= $y; # $x is now 2 ** 8 or 256
 
 =head3 See also
 
@@ -2413,7 +3252,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the addition assignment operator.  It is equivalent to 
+This is the addition assignment operator.  It is equivalent to
 
     X = X + Y
 
@@ -2426,7 +3265,7 @@ assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x += $y; #$x is now 2 + 8 or 10
+    $x += $y; # $x is now 2 + 8 or 10
 
 =head3 See also
 
@@ -2440,7 +3279,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the subtraction assignment operator.  It is equivalent to 
+This is the subtraction assignment operator.  It is equivalent to
 
     X = X - Y
 
@@ -2453,7 +3292,7 @@ assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x -= $y; #$x is now 2 - 8 or -6
+    $x -= $y; # $x is now 2 - 8 or -6
 
 =head3 See also
 
@@ -2467,7 +3306,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the concatenation assignment operator.  It is equivalent to 
+This is the concatenation assignment operator.  It is equivalent to
 
     X = X . Y
 
@@ -2477,10 +3316,16 @@ that can be assigned to).
 
 =head3 Example
 
+    my $x = "foo";
+    my $y = "bar";
+
+    $x .= $y; #$x is now "foobar"
+
+
     my $x = 2;
     my $y = 8;
 
-    $x .= $y; #$x is now 2 . 8 or "28"
+    $x .= $y; # $x is now 2 . 8 or "28"
 
 =head3 See also
 
@@ -2494,7 +3339,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the multiplication assignment operator.  It is equivalent to 
+This is the multiplication assignment operator.  It is equivalent to
 
     X = X * Y
 
@@ -2507,7 +3352,7 @@ assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x *= $y; #$x is now 2 * 8 or 16
+    $x *= $y; # $x is now 2 * 8 or 16
 
 =head3 See also
 
@@ -2521,7 +3366,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the division assignment operator.  It is equivalent to 
+This is the division assignment operator.  It is equivalent to
 
     X = X / Y
 
@@ -2537,7 +3382,7 @@ like C<Illegal division by zero>.
     my $x = 2;
     my $y = 8;
 
-    $x /= $y; #$x is now 2 / 8 or 0.25
+    $x /= $y; # $x is now 2 / 8 or 0.25
 
 =head3 See also
 
@@ -2551,7 +3396,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the modulo assignment operator.  It is equivalent to 
+This is the modulo assignment operator.  It is equivalent to
 
     X = X % Y
 
@@ -2567,7 +3412,7 @@ like C<Illegal modulus zero>.
     my $x = 2;
     my $y = 8;
 
-    $x %= $y; #$x is now 2 % 8 or 2
+    $x %= $y; # $x is now 2 % 8 or 2
 
 =head3 See also
 
@@ -2581,7 +3426,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the scalar repetition assignment operator.  It is equivalent to 
+This is the scalar repetition assignment operator.  It is equivalent to
 
     X = X x Y
 
@@ -2597,7 +3442,7 @@ repetition operator (L</(X) x Y>) will not work in this context.
     my $x = 2;
     my $y = 8;
 
-    $x x= $y; #$x is now 2 x 8 or "22222222"
+    $x x= $y; # $x is now 2 x 8 or "22222222"
 
 =head3 See also
 
@@ -2611,7 +3456,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the bitwise and assignment operator.  It is equivalent to 
+This is the bitwise and assignment operator.  It is equivalent to
 
     X = X & Y
 
@@ -2624,7 +3469,7 @@ assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x &= $y; #$x is now 2 & 8 or 0
+    $x &= $y; # $x is now 2 & 8 or 0
 
 =head3 See also
 
@@ -2638,7 +3483,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the bitwise or assignment operator.  It is equivalent to 
+This is the bitwise or assignment operator.  It is equivalent to
 
     X = X | Y
 
@@ -2651,11 +3496,11 @@ assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x |= $y; #$x is now 2 & 8 or 10
+    $x |= $y; #$x is now 2 | 8 or 10
 
 =head3 See also
 
-L</X = Y> and L</X | Y>
+L</X = Y> and L</X E<verbar> Y>
 
 =head2 X ^= Y
 
@@ -2665,7 +3510,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the bitwise xor assignment operator.  It is equivalent to 
+This is the bitwise xor assignment operator.  It is equivalent to
 
     X = X ^ Y
 
@@ -2677,8 +3522,10 @@ assigned to).
 
     my $x = 2;
     my $y = 8;
+    my $z = 7;
 
-    $x ^= $y; #$x is now 2 & 8 or 10
+    $x ^= $y; # $x is now 0b0010 ^ 0b1000 or 0b1010 or 10
+    $x ^= $z; # $x is now 0b1010 ^ 0b0111 or 0b1101 or 13
 
 =head3 See also
 
@@ -2692,7 +3539,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the left bit-shift assignment operator.  It is equivalent to 
+This is the left bit-shift assignment operator.  It is equivalent to
 
     X = X << Y
 
@@ -2705,13 +3552,13 @@ can be assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x <<= $y; #$x is now 2 << 8 or 512
+    $x <<= $y; # $x is now 2 << 8 or 512
 
 =head3 See also
 
-L</X = Y> and L<<< /X << Y >>>
+L</X = Y> and L</X E<lt>E<lt> Y>
 
-=head2 X >>= Y 
+=head2 X >>= Y
 
 =head3 Class
 
@@ -2719,7 +3566,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the right bit-shift assignment operator.  It is equivalent to 
+This is the right bit-shift assignment operator.  It is equivalent to
 
     X = X >> Y
 
@@ -2732,11 +3579,11 @@ can be assigned to).
     my $x = 8;
     my $y = 2;
 
-    $x &= $y; #$x is now 8 & 2 or 2
+    $x >>= $y; # $x is now 8 >> 2 or 2
 
 =head3 See also
 
-L</X = Y> and L<<< /X >> Y >>>
+L</X = Y> and L</X E<gt>E<gt> Y>
 
 =head2 X &&= Y
 
@@ -2746,11 +3593,11 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the logical and assignment operator.  It is equivalent to 
+This is the logical and assignment operator.  It is equivalent to
 
     X = X && Y
 
-That is it assigns X to itself if X evaluates to true, otherwise it assigns
+That is it assigns X to itself if X evaluates to false, otherwise it assigns
 Y to X.  This means that X must be a valid lvalue (i.e. it must be something
 that can be assigned to).
 
@@ -2759,9 +3606,9 @@ that can be assigned to).
     my $x = 2;
     my $y = 8;
 
-    $x &&= $y; #$x is now 2 && 8 or 8
-    $x &&= 0;  #$x is now 8 && 0 or 0
-    $x &&= 8;  #$x is now 0 && 8 or 0
+    $x &&= $y; # $x is now 2 && 8 or 8
+    $x &&= 0;  # $x is now 8 && 0 or 0
+    $x &&= 8;  # $x is now 0 && 8 or 0
 
 =head3 See also
 
@@ -2775,7 +3622,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the logical or assignment operator.  It is equivalent to 
+This is the logical or assignment operator.  It is equivalent to
 
     X = X || Y
 
@@ -2786,9 +3633,9 @@ variable did not already have a value:
 
     my $x;
 
-    #intervening code that might set $x or might leave it undefined
+    # Intervening code that might set $x or might leave it undefined
 
-    $x ||= 10; #make sure $x gets set to a default value
+    $x ||= 10; # make sure $x gets set to a default value
 
 This has a problem though: if C<$x> is C<0> or C<""> then it will get
 overwritten with C<10>.  The defined-or assignment operator (L</X //= Y>)
@@ -2802,10 +3649,9 @@ is the right operator to use.
     my $y = 8;
     my $z;
 
-    $x ||= $y; #$x is now 2 || 8 or 2
-    $y ||= $x; #$y is now 8 || 2 or 8
-
-    my $z ||= $x + $y; #$z is now undef || (2 + 8) or 10
+    $x ||= $y;      # $x is now 2 || 8 or 2
+    $y ||= $x;      # $y is now 8 || 2 or 8
+    $z ||= $x + $y; # $z is now undef || (2 + 8) or 10
 
 =head3 See also
 
@@ -2819,7 +3665,7 @@ This belongs to L<perlop/Assignment Operators>.
 
 =head3 Description
 
-This is the defined-or assignment operator.  It is equivalent to 
+This is the defined-or assignment operator.  It is equivalent to
 
     X = X // Y
 
@@ -2830,9 +3676,9 @@ It is commonly used to ensure that a variable has a value:
 
     my $x;
 
-    #intervening code that might set $x or might leave it undefined
+    # Intervening code that might set $x or might leave it undefined
 
-    $x //= 10; #make sure $x gets set to a default value
+    $x //= 10; # make sure $x gets set to a default value
 
 
 =head3 Example
@@ -2841,8 +3687,8 @@ It is commonly used to ensure that a variable has a value:
     my $y = 8;
     my $z;
 
-    $x //= $y; #$x is now 2 // 8 or 2
-    $z //= $x; #$z is now undef // 2 or 2
+    $x //= $y; # $x is now 2 // 8 or 2
+    $z //= $x; # $z is now undef // 2 or 2
 
 =head3 See also
 
@@ -2882,13 +3728,13 @@ C<(1,2,3)> and C<(1,2,3,)>) are identical.
 
 =head3 Example
 
-    my @a = (1, 2, 3);          #@a is now (1, 2, 3)
-    my $x = ("a", "b", "c");    #$x is now "c"
-    my $y = (++$x, ++$x, ++$x); #$y is now "f"
+    my @a = (1, 2, 3);          # @a is now (1, 2, 3)
+    my $x = ("a", "b", "c");    # $x is now "c"
+    my $y = (++$x, ++$x, ++$x); # $y is now "f"
 
 =head3 See also
 
-L<</X => Y>>
+L</X =E<gt> Y>
 
 =head2 X => Y
 
@@ -2915,21 +3761,21 @@ look cleaner:
 That statement is functionally identical to
 
     my %hash = (
-        "key1", "value1", 
-        "key2", "value2", 
-        "key3", "value3", 
+        "key1", "value1",
+        "key2", "value2",
+        "key3", "value3",
     );
 
 =head3 Example
 
-    #%x will contain the list ("a", 1, "b", 2, "c", 3)
+    # %x will contain the list ("a", 1, "b", 2, "c", 3)
     my %x = (
         a => 1,
         b => 2,
         c => 3,
     );
 
-    #%y will contain the list ("key with spaces", 1, "b", 1, "c", 1)
+    # %y will contain the list ("key with spaces", 1, "b", 1, "c", 1)
     my %y = (
         "key with spaces" => 1,
         b                 => 1,
@@ -2938,7 +3784,7 @@ That statement is functionally identical to
 
 =head3 See also
 
-L<</X, Y>>
+L</X, Y>
 
 =head2 not X
 
@@ -2954,10 +3800,10 @@ it returns C<1>.  There is a high-precedence version: C<!>.
 
 =head3 Example
 
-    my $m = not 5;      #$m is now the empty string ("")
-    my $n = not 0;      #$n is now 1
-    my $o = not "";     #$o is now 1
-    my $p = not undef;  #$p is now 1
+    my $m = not 5;      # $m is now the empty string ("")
+    my $n = not 0;      # $n is now 1
+    my $o = not "";     # $o is now 1
+    my $p = not undef;  # $p is now 1
 
 =head3 See also
 
@@ -2977,11 +3823,11 @@ and returns its value.
 
 It binds less tightly than the high-precedence logical and operator:
 
-    my $y = 5 and 4; # is equivalent to (my $x = 5) and 4;
+    my $x = 5 and 4; # is equivalent to (my $x = 5) and 4;
 
 whereas:
 
-    my $x = 5 && 4; # is equivalent to my $x = (5 && 4);
+    my $y = 5 && 4;  # is equivalent to my $y = (5 && 4);
 
 It is most commonly used in conditional statements such as C<if>, C<unless>,
 C<while>.  But it is also occasionally used for its short-circuiting affect:
@@ -3003,11 +3849,11 @@ is functionally the same as
     my $y = 1;
     my $z = "foo";
 
-    #not the use of parentheses vs this example in &&
-    print(($w and $y), "\n"); #prints "\n"
-    print(($x and $y), "\n"); #prints "0\n"
-    print(($y and $z), "\n"); #prints "foo\n"
-    print(($z and $y), "\n"); #prints "1\n"
+    # Not the use of parentheses vs this example in &&
+    print(($w and $y), "\n"); # prints "\n"
+    print(($x and $y), "\n"); # prints "0\n"
+    print(($y and $z), "\n"); # prints "foo\n"
+    print(($z and $y), "\n"); # prints "1\n"
 
 =head3 See also
 
@@ -3027,11 +3873,11 @@ and returns its value.
 
 It binds less tightly than the high-precedence logical or operator:
 
-    my $y = 5 or 4; # is equivalent to (my $x = 5) or 4;
+    my $x = 5 or 4; # is equivalent to (my $x = 5) or 4;
 
 whereas:
 
-    my $x = 5 && 4; # is equivalent to my $x = (5 || 4);
+    my $y = 5 || 4; # is equivalent to my $y = (5 || 4);
 
 It is most commonly used in conditional statements such as C<if>, C<unless>,
 C<while>.  It is also often used for its short-circuiting behavior:
@@ -3049,7 +3895,7 @@ value).
     my $y = 1;
     my $z = "foo";
 
-    #not the use of parentheses vs this example in ||
+    # Note the use of parentheses vs this example in ||
     print(($w or $x), "\n"); #prints "0\n";
     print(($x or $w), "\n"); #prints "\n";
     print(($w or $y), "\n"); #prints "1\n"
@@ -3059,8 +3905,8 @@ value).
 
 =head3 See also
 
-L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>, 
-L</X E<sol> Y>
+L</X xor Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>,
+L</X E<verbar> Y>, and L</X ^ Y>
 
 =head2 X xor Y
 
@@ -3077,31 +3923,31 @@ an empty string.
 
 =head3 Example
 
-    my $m = (0 xor 0); #$m is now ""
-    my $n = (1 xor 0); #$n is now 1
-    my $o = (0 xor 1); #$o is now 1
-    my $p = (1 xor 1); #$p is now ""
+    my $m = (0 xor 0); # $m is now ""
+    my $n = (1 xor 0); # $n is now 1
+    my $o = (0 xor 1); # $o is now 1
+    my $p = (1 xor 1); # $p is now ""
 
 =head3 See also
 
-L</X or Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>, 
-L</X E<sol> Y>
+L</X or Y>, L</X E<verbar>E<verbar> Y>, L</X E<sol>E<sol> Y>,
+L</X E<verbar> Y>, and L</X ^ Y>
 
-=head1 Pseudo-operators
+=head1 Secret Operators
 
 There are idioms in Perl 5 that appear to be operators, but are really a
-combination of several operators or pieces of syntax. These pseudo-operators
-have the precedence of the constituent parts.
+combination of several operators or pieces of syntax.  These Secret
+Operators have the precedence of the constituent parts.
 
 N.B. There are often better ways of doing all of these things and those ways
 will be easier to understand for the people who will maintain your code
-after you. 
+after you.
 
 =head2 !!X
 
 =head3 Description
 
-This pseudo-operator is the boolean conversion operator.  It is made up of
+This secret operator is the boolean conversion operator.  It is made up of
 two logical negation operators.  It returns C<1> if X evaluates to a true
 value or C<""> if X evaluates to a false value.  It is useful when you want
 to convert a value to specific true or false values rather than one of the
@@ -3109,8 +3955,8 @@ numerous true and false values in Perl.
 
 =head3 Example
 
-    my $x = !!"this is a true value"; #$x is now true
-    my $y = !!0;                      #$y is now "" 
+    my $x = !!"this is a true value"; # $x is now true
+    my $y = !!0;                      # $y is now ""
 
 =head3 See also
 
@@ -3120,7 +3966,7 @@ L</!X>
 
 =head3 Description
 
-This pseudo-operator is the list assignment operator (aka the countof
+This secret operator is the list assignment operator (AKA the countof
 operator).  It is made up of two items C<()>, and C<=>.  In scalar context
 it returns the number of items in the list X.  In list context it returns an
 empty list.  It is useful when you have something that returns a list and
@@ -3136,20 +3982,20 @@ list C<($x, $y, $z)>, so C<$count> is assigned C<5>.
 
     my $count = my ($x, $y, $z) = qw/a b c d e/;
 
-The empty list (the C<()> part of the pseudo-operator) triggers this
+The empty list (the C<()> part of the secret operator) triggers this
 behavior.
 
 =head3 Example
-    
+
     sub f { return qw/a b c d e/ }
 
-    my $count = ()= f();              #$count is now 5
+    my $count = ()= f();              # $count is now 5
 
     my $string = "cat cat dog cat";
 
-    my $cats = ()= $string =~ /cat/g; #$cats is now 3
+    my $cats = ()= $string =~ /cat/g; # $cats is now 3
 
-    print scalar( ()= f() ), "\n";    #prints "5\n"
+    print scalar( ()= f() ), "\n";    # prints "5\n"
 
 =head3 See also
 
@@ -3159,14 +4005,14 @@ L</X = Y>
 
 =head3 Description
 
-This pseudo-operator is named the scalar context operator.  It is made up of
+This secret operator is named the scalar context operator.  It is made up of
 two bitwise negation operators.  It provides scalar context to the
 expression X.  It works because the first bitwise negation operator provides
 scalar context to X and performs a bitwise negation of the result; since the
 result of two bitwise negations is the original item, the value of the
 original expression is preserved.
 
-With the addition of the Smart match operator, this pseudo-operator is even
+With the addition of the Smart match operator, this secret operator is even
 more confusing.  The C<scalar> function is much easier to understand and you
 are encouraged to use it instead.
 
@@ -3174,7 +4020,7 @@ are encouraged to use it instead.
 
     my @a = qw/a b c d/;
 
-    print ~~@a, "\n"; #prints 4
+    print ~~@a, "\n"; # prints 4
 
 =head3 See also
 
@@ -3184,7 +4030,7 @@ L</~X>, L</X ~~ Y>, and L<perlfunc/scalar>
 
 =head3 Description
 
-This pseudo-operator is called the Eskimo-kiss operator because it looks
+This secret operator is called the Eskimo-kiss operator because it looks
 like two faces touching noses.  It is made up of an closing brace and an
 opening brace.  It is used when using C<perl> as a command-line program with
 the C<-n> or C<-p> options.  It has the effect of running X inside of the
@@ -3214,10 +4060,10 @@ that was originally intended to close the C<while> loop.
 
 =head3 Example
 
-    # count unique lines in the file FOO
+    # Count unique lines in the file FOO
     perl -nle '$seen{$_}++ }{ print "$_ => $seen{$_}" for keys %seen' FOO
 
-    # sum all of the lines until the user types control-d
+    # Sum all of the lines until the user types control-d
     perl -nle '$sum += $_ }{ print $sum'
 
 =head3 See also
