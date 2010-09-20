@@ -31,6 +31,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       lexically from/to CamelCase with two clicks. (SMUELLER)
     - Fixed crash when closing the debugger panel (AZAWAWI)
     - Fixed crash of "Join Lines" feature on an empty document (AZAWAWI)
+    - Fixed #1002: "Quick fix" feature on plain text document leads to error
+      output on console (AZAWAWI)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
