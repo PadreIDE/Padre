@@ -91,7 +91,7 @@ sub bottom {
 }
 
 sub gettext_label {
-	Wx::gettext('FindInFiles');
+	Wx::gettext('Find in Files');
 }
 
 sub select {
