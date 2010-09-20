@@ -115,14 +115,6 @@ sub new {
 
 	# Validate the shortcut
 	if ($shortcut) {
-		foreach my $n ( keys %$actions ) {
-			my $a = $actions->{$n};
-			next unless $a->shortcut;
-			next unless $a->shortcut eq $shortcut;
-			warn "Found a duplicate shortcut '$shortcut' with " . $a->name . " for '$name'\n";
-			last;
-		}
-
 		my $shortcuts = $ide->shortcuts;
 		if ( exists $shortcuts->{$shortcut} ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
