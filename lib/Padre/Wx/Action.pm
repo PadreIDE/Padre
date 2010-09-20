@@ -106,12 +106,11 @@ sub new {
 		);
 	}
 
+	# Load the shortcut from its configuration setting
 	my $config_shortcut = eval '$config->' . $setting;
 	warn "$@\n" if $@;
-	if ($config_shortcut) {
-		$shortcut = $config_shortcut;
-		$self->shortcut($shortcut);
-	}
+	$shortcut = $config_shortcut;
+	$self->shortcut($shortcut);
 
 	# Validate the shortcut
 	if ($shortcut) {
