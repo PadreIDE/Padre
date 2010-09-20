@@ -6,6 +6,7 @@ package Padre::Wx::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util          ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
@@ -64,6 +65,37 @@ sub new {
 
 
 ######################################################################
+# Search Methods
+
+sub search {
+	my $self = shift;
+
+	# Kick off the search task
+	$self->task_reset;
+	$self->clear;
+	$self->task_request(
+		task       => 'Padre::Task::FindInFiles',
+		on_message => 'search_message',
+		on_finish  => 'search_finish',
+		@_,
+	);
+
+	return 1;
+}
+
+sub search_message {
+	
+}
+
+sub search_finish {
+	
+}
+
+
+
+
+
+######################################################################
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
@@ -76,6 +108,30 @@ sub view_label {
 
 sub view_close {
 	shift->main->show_output(0);
+}
+
+
+
+
+
+######################################################################
+# Padre::Role::Task Methods
+
+sub task_request {
+	my $self    = shift;
+	my $current = $self->current;
+	my $project = $current->project;
+	if ($project) {
+		return $self->SUPER::task_request(
+			@_,
+			project => $project,
+		);
+	} else {
+		return $self->SUPER::task_request(
+			@_,
+			root => $current->config->main_directory_root,
+		);
+	}
 }
 
 
