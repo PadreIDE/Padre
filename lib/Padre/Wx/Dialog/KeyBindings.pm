@@ -472,6 +472,10 @@ sub _update_list {
 		$list->SetItem( $index, 1, $action->label_text );
 		$list->SetItem( $index, 2, translate_shortcut($shortcut) );
 
+		# Non-default (i.e. overriden) shortcuts should have a bold font
+		my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
+		$self->_set_item_bold_font( $index, $non_default );
+
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
