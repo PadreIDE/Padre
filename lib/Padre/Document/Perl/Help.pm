@@ -123,6 +123,9 @@ sub help_init {
 		'$ENV{expr}',       '%SIG', '$SIG{expr}'
 		);
 
+	# Support given keyword
+	push @index, ('given');
+
 	# Add Perl functions (perlfunc)
 	$Type{say}   = 1;
 	$Type{state} = 1;
@@ -277,7 +280,11 @@ sub help_render {
 		# it is Perl function, handle q/.../, m//, y///, tr///
 		$hints->{perlfunc} = 1;
 		$topic =~ s/\/.*?\/$//;
-	} else {
+	} elsif( $topic eq 'given' ) {
+
+		# Redirect to 'use feature'
+		$topic = 'feature';
+	}else {
 
 		# Append the module's release date to the topic
 		require Module::CoreList;
