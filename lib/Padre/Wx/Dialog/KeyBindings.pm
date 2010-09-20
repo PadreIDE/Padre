@@ -411,7 +411,7 @@ sub _set_binding {
 
 	# Update the action's UI
 	my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
-	$self->_update_action_ui( $shortcut, $non_default );
+	$self->_update_action_ui( $action_name, $shortcut, $non_default );
 
 	return;
 }
@@ -419,10 +419,10 @@ sub _set_binding {
 # Private method to update the UI from the provided preference
 sub _update_action_ui {
 	
-	my ( $self, $shortcut, $non_default ) = @_;
+	my ( $self, $action_name, $shortcut, $non_default ) = @_;
 
 	my $list       = $self->{list};
-	my $index      = $list->GetFirstSelected;
+	my $index      = $list->FindItem(-1, $action_name);
 
 	$self->{button_reset}->Enable( $non_default );
 	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
