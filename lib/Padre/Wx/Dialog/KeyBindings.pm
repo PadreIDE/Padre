@@ -378,8 +378,8 @@ sub _try_to_set_binding {
 				. Wx::gettext('Do you want to override it with the selected action?'),
 			Wx::gettext('Override Shortcut')
 		);
-		if ( !$answer ) {
-			$self->set_binding( $other_action->name, '' );
+		if ( $answer ) {
+			$self->_set_binding( $other_action->name, '' );
 		} else {
 			return;
 		}
