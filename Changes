@@ -34,6 +34,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fixed #1002: "Quick fix" feature on plain text document leads to error
       output on console (AZAWAWI)
     - Fixed #1006: F2 help does not know about 'given' (AZAWAWI)
+    - Fixed key bindings dialog to remember cursor position when setting,
+      deleting or resetting a shortcut (AZAWAWI)
+    - Fixed key bindings dialog to highlight overriden shortcuts with a bold
+      font (AZAWAWI)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
