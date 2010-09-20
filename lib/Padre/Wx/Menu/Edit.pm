@@ -353,11 +353,12 @@ sub refresh {
 	my $hasdoc   = $document ? 1 : 0;
 	my $comment  = $hasdoc ? ( $document->comment_lines_str ? 1 : 0 ) : 0;
 	my $newline  = $hasdoc ? $document->newline_type : '';
+	my $has_quick_fix = $hasdoc && $document->can('get_quick_fix_provider');
 
 	# Handle the simple cases
 	$self->{goto}->Enable($hasdoc);
 	$self->{next_problem}->Enable($hasdoc);
-	$self->{quick_fix}->Enable($hasdoc);
+	$self->{quick_fix}->Enable($has_quick_fix);
 	$self->{autocomp}->Enable($hasdoc);
 	$self->{brace_match}->Enable($hasdoc);
 	$self->{brace_match_select}->Enable($hasdoc);

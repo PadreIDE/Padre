@@ -761,6 +761,8 @@ sub init {
 			my $main     = shift;
 			my $document = $main->current->document or return;
 			my $editor   = $document->editor;
+			return unless $document->can('get_quick_fix_provider');
+
 			$editor->AutoCompSetSeparator( ord '|' );
 			my @list  = ();
 			my @items = ();
@@ -775,7 +777,7 @@ sub init {
 					push @list, $item->{text};
 				}
 			};
-			warn "Error while calling get_quick_fix_provider: $@\n" if $@;
+			TRACE("Error while calling get_quick_fix_provider: $@\n") if $@;
 			my $empty_list = ( scalar @list == 0 );
 			if ($empty_list) {
 				@list = ( Wx::gettext('No suggestions') );
