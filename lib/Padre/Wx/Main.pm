@@ -1998,6 +1998,38 @@ sub _show_output {
 	}
 }
 
+=pod
+
+=head3 C<show_findinfiles>
+
+    $main->show_findinfiles( $visible );
+
+Show the Find in Files panel at the bottom if C<$visible> is true.
+Hide it otherwise. If C<$visible> is not provided, the method defaults
+to show the panel.
+
+=cut
+
+sub show_findinfiles {
+	my $self = shift;
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock('UPDATE');
+	$self->_show_findinfiles($on);
+	$self->aui->Update;
+
+	return;
+}
+
+sub _show_findinfiles {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->bottom->show( $self->findinfiles );
+	} elsif ( $self->has_findinfiles ) {
+		$self->bottom->hide( $self->findinfiles );
+		delete $self->{findinfiles};
+	}
+}
 
 =pod
 
