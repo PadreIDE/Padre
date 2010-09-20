@@ -281,7 +281,7 @@ sub _on_char {
 }
 
 # Translates the shortcut to its native language
-sub translate_shortcut {
+sub _translate_shortcut {
 	my ($shortcut) = @_;
 
 	my @parts = split /-/, $shortcut;
@@ -359,13 +359,13 @@ sub _on_set_button {
 	push @key_list, $regular_key if not $regular_key eq 'None';
 	my $shortcut = join '-', @key_list;
 
-	$self->try_to_set_binding( $action_name, $shortcut );
+	$self->_try_to_set_binding( $action_name, $shortcut );
 
 	return;
 }
 
 # Tries to set the binding and asks the user if he want to set the shortcut if has already be used elsewhere
-sub try_to_set_binding {
+sub _try_to_set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
 	my $other_action = $self->ide->shortcuts->{$shortcut};
@@ -385,13 +385,13 @@ sub try_to_set_binding {
 		}
 	}
 
-	$self->set_binding( $action_name, $shortcut );
+	$self->_set_binding( $action_name, $shortcut );
 
 	return;
 }
 
 # Sets the key binding in Padre's configuration
-sub set_binding {
+sub _set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
 	my $shortcuts = $self->ide->shortcuts;
@@ -425,7 +425,7 @@ sub _update_action_ui {
 	my $index      = $list->GetFirstSelected;
 
 	$self->{button_reset}->Enable( $non_default );
-	$list->SetItem( $index, 2, translate_shortcut($shortcut) );
+	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
 	$self->_set_item_bold_font( $index, $non_default );
 	
 	$self->_update_shortcut_ui( $shortcut );
@@ -441,7 +441,7 @@ sub _on_delete_button {
 	my $index       = $self->{list}->GetFirstSelected;
 	my $action_name = $self->{list}->GetItemText($index);
 
-	$self->set_binding( $action_name, '' );
+	$self->_set_binding( $action_name, '' );
 
 	return;
 }
@@ -454,7 +454,7 @@ sub _on_reset_button {
 	my $action_name = $self->{list}->GetItemText($index);
 	my $action      = $self->ide->actions->{$action_name};
 
-	$self->try_to_set_binding(
+	$self->_try_to_set_binding(
 		$action_name,
 		$self->config->default( $action->shortcut_setting )
 	);
@@ -502,7 +502,7 @@ sub _update_list {
 		# Add the key binding to the list control
 		$list->InsertStringItem( $index, $action_name );
 		$list->SetItem( $index, 1, $action->label_text );
-		$list->SetItem( $index, 2, translate_shortcut($shortcut) );
+		$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
 
 		# Non-default (i.e. overriden) shortcuts should have a bold font
 		my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
