@@ -17,6 +17,7 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
+# Creates the key bindings dialog and returns the instance
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -279,6 +280,7 @@ sub _on_char {
 	return;
 }
 
+# Translates the shortcut to its native language
 sub translate_shortcut {
 	my ($shortcut) = @_;
 
@@ -304,6 +306,15 @@ sub _on_list_item_selected {
 	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
 
 	$self->{button_delete}->Enable( $shortcut ne '' );
+
+	$self->_update_shortcut_ui( $shortcut );
+
+	return;
+}
+
+# Updates the shortcut UI
+sub _update_shortcut_ui {
+	my ($self, $shortcut) = @_;
 
 	my @parts = split /-/, $shortcut;
 	my $regular_key = @parts ? $parts[-1] : '';
@@ -353,6 +364,7 @@ sub _on_set_button {
 	return;
 }
 
+# Tries to set the binding and asks the user if he want to set the shortcut if has already be used elsewhere
 sub try_to_set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
@@ -374,11 +386,11 @@ sub try_to_set_binding {
 	}
 
 	$self->set_binding( $action_name, $shortcut );
-	$self->_update_list;
 
 	return;
 }
 
+# Sets the key binding in Padre's configuration
 sub set_binding {
 	my ( $self, $action_name, $shortcut ) = @_;
 
@@ -397,6 +409,27 @@ sub set_binding {
 	$self->config->set( $action->shortcut_setting, $shortcut );
 	$self->config->write;
 
+	# Update the action's UI
+	my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
+	$self->_update_action_ui( $shortcut, $non_default );
+
+	return;
+}
+
+# Private method to update the UI from the provided preference
+sub _update_action_ui {
+	
+	my ( $self, $shortcut, $non_default ) = @_;
+
+	my $list       = $self->{list};
+	my $index      = $list->GetFirstSelected;
+
+	$self->{button_reset}->Enable( $non_default );
+	$list->SetItem( $index, 2, translate_shortcut($shortcut) );
+	$self->_set_item_bold_font( $index, $non_default );
+	
+	$self->_update_shortcut_ui( $shortcut );
+
 	return;
 }
 
@@ -409,7 +442,6 @@ sub _on_delete_button {
 	my $action_name = $self->{list}->GetItemText($index);
 
 	$self->set_binding( $action_name, '' );
-	$self->_update_list;
 
 	return;
 }
@@ -512,7 +544,7 @@ sub _resize_columns {
 	return;
 }
 
-
+# Shows the key binding dialog
 sub show {
 	my $self = shift;
 
