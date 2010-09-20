@@ -84,11 +84,30 @@ sub search {
 }
 
 sub search_message {
-	
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+	my $path = shift;
+	my $unix = $path->unix;
+
+	# Generate the text all at once in advance and add to the control
+	$self->AppendText(
+		join(
+			'',
+			"----------------------------------------\n",
+			"Find '$task->{find_term}' in '$unix':\n",
+			( map { "$unix($_->[0]): $_->[1]\n" } @_ ),
+			"Found '$task->{find_term}' " . scalar(@_) . " time(s).\n",
+		)
+	);
+
+	return 1;
 }
 
 sub search_finish {
-	
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
 }
 
 
