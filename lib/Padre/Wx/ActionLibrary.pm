@@ -1784,12 +1784,12 @@ sub init {
 		name        => 'perl.variable_to_camel_case',
 		need_editor => 1,
 		label       => _T('Change variable to camelCase'),
-		comment     => _T('Change variable casing from camel_case to camelCase'),
+		comment     => _T('Change variable style from camel_case to camelCase'),
 		#shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$document->can('change_variable_casing') or return;
-			$document->change_variable_casing(to_camel_case => 1);
+			$document->can('change_variable_style') or return;
+			$document->change_variable_style(to_camel_case => 1);
 		},
 	);
 
@@ -1797,12 +1797,12 @@ sub init {
 		name        => 'perl.variable_to_camel_case_ucfirst',
 		need_editor => 1,
 		label       => _T('Change variable to CamelCase.'),
-		comment     => _T('Change variable casing from camel_case to CamelCase'),
+		comment     => _T('Change variable style from camel_case to CamelCase'),
 		#shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$document->can('change_variable_casing') or return;
-			$document->change_variable_casing(to_camel_case => 1, 'ucfirst' => 1);
+			$document->can('change_variable_style') or return;
+			$document->change_variable_style(to_camel_case => 1, 'ucfirst' => 1);
 		},
 	);
 
@@ -1810,12 +1810,12 @@ sub init {
 		name        => 'perl.variable_from_camel_case',
 		need_editor => 1,
 		label       => _T('Change variable style to using_underscores'),
-		comment     => _T('Change variable casing from camelCase to camel_case'),
+		comment     => _T('Change variable style from camelCase to camel_case'),
 		#shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$document->can('change_variable_casing') or return;
-			$document->change_variable_casing(from_camel_case => 1);
+			$document->can('change_variable_style') or return;
+			$document->change_variable_style(from_camel_case => 1);
 		},
 	);
 
@@ -1823,12 +1823,12 @@ sub init {
 		name        => 'perl.variable_from_camel_case_ucfirst',
 		need_editor => 1,
 		label       => _T('Change variable style to Using_Underscores'),
-		comment     => _T('Change variable casing from camelCase to Camel_Case'),
+		comment     => _T('Change variable style from camelCase to Camel_Case'),
 		#shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$document->can('change_variable_casing') or return;
-			$document->change_variable_casing(from_camel_case => 1, 'ucfirst' => 1);
+			$document->can('change_variable_style') or return;
+			$document->change_variable_style(from_camel_case => 1, 'ucfirst' => 1);
 		},
 	);
 

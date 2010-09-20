@@ -873,7 +873,7 @@ sub rename_variable {
 	return;
 }
 
-sub change_variable_casing {
+sub change_variable_style {
 	my $self = shift;
 	my %opt = @_;
 	if (0 == grep {defined $_} @opt{qw(to_camel_case from_camel_case)})  {
@@ -1723,50 +1723,50 @@ sub event_on_right_down {
 			},
 		);
 
-		# Start variable casing sub-menu
-		my $casing = Wx::Menu->new;
-		my $casing_menu = $menu->Append(
+		# Start variable style sub-menu
+		my $style = Wx::Menu->new;
+		my $style_menu = $menu->Append(
 			-1,
 			Wx::gettext('Change variable style'),
-			$casing,
+			$style,
 		);
 
-		my $toCC = $casing->Append( -1, Wx::gettext('Change variable to camelCase') );
+		my $toCC = $style->Append( -1, Wx::gettext('Change variable to camelCase') );
 		Wx::Event::EVT_MENU(
 			$editor, $toCC,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_casing(to_camel_case => 1);
+				$doc->change_variable_style(to_camel_case => 1);
 			},
 		);
 
-		my $toCC_ucfirst = $casing->Append( -1, Wx::gettext('Change variable to CamelCase') );
+		my $toCC_ucfirst = $style->Append( -1, Wx::gettext('Change variable to CamelCase') );
 		Wx::Event::EVT_MENU(
 			$editor, $toCC_ucfirst,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_casing(to_camel_case => 1, 'ucfirst' => 1);
+				$doc->change_variable_style(to_camel_case => 1, 'ucfirst' => 1);
 			},
 		);
 
-		my $fromCC = $casing->Append( -1, Wx::gettext('Change variable style to using_underscores') );
+		my $fromCC = $style->Append( -1, Wx::gettext('Change variable style to using_underscores') );
 		Wx::Event::EVT_MENU(
 			$editor, $fromCC,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_casing(from_camel_case => 1);
+				$doc->change_variable_style(from_camel_case => 1);
 			},
 		);
 
-		my $fromCC_ucfirst = $casing->Append( -1, Wx::gettext('Change variable style to Using_Underscores') );
+		my $fromCC_ucfirst = $style->Append( -1, Wx::gettext('Change variable style to Using_Underscores') );
 		Wx::Event::EVT_MENU(
 			$editor, $fromCC_ucfirst,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_casing(from_camel_case => 1, 'ucfirst' => 1);
+				$doc->change_variable_style(from_camel_case => 1, 'ucfirst' => 1);
 			},
 		);
-		# End variable casing sub-menu
+		# End variable style sub-menu
 	} # end if it's a variable
 
 	# TO DO connect this to the action of menu item in the Perl menu!
