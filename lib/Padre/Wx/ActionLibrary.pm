@@ -1248,8 +1248,11 @@ sub init {
 		comment    => _T('Search for a text in all files below a given directory'),
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
-			require Padre::Wx::Ack;
-			Padre::Wx::Ack::on_ack(@_);
+			require Padre::Wx::Dialog::FindInFiles;
+			my $dialog = Padre::Wx::Dialog::FindInFiles->new($_[0]);
+			$dialog->run;
+			$dialog->Destroy;
+			return;
 		},
 	);
 

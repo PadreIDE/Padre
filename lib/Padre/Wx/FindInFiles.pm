@@ -7,6 +7,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util          ();
+use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
@@ -14,6 +15,7 @@ use Padre::Logger;
 
 our $VERSION = '0.69';
 our @ISA     = qw{
+	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
 	Wx::TextCtrl
@@ -127,30 +129,6 @@ sub view_label {
 
 sub view_close {
 	shift->main->show_output(0);
-}
-
-
-
-
-
-######################################################################
-# Padre::Role::Task Methods
-
-sub task_request {
-	my $self    = shift;
-	my $current = $self->current;
-	my $project = $current->project;
-	if ($project) {
-		return $self->SUPER::task_request(
-			@_,
-			project => $project,
-		);
-	} else {
-		return $self->SUPER::task_request(
-			@_,
-			root => $current->config->main_directory_root,
-		);
-	}
 }
 
 

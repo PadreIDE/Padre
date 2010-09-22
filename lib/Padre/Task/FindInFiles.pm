@@ -6,8 +6,10 @@ use warnings;
 use File::Spec    ();
 use Time::HiRes   ();
 use Padre::Search ();
+use Padre::Task   ();
 
 our $VERSION = '0.71';
+our @ISA     = 'Padre::Task';
 
 
 
@@ -34,8 +36,8 @@ sub new {
 	# Create the embedded search object
 	unless ( $self->{search} ) {
 		$self->{search} = Padre::Search->new(
-			find_term => $self->{find_term},
-			find_case => $self->{find_case},
+			find_term  => $self->{find_term},
+			find_case  => $self->{find_case},
 			find_regex => $self->{find_regex},
 		) or return;
 	}
@@ -56,24 +58,6 @@ sub run {
 	my $self  = shift;
 	my $root  = $self->{root};
 	my @queue = Padre::Wx::Directory::Path->directory;
-	my $timer = 0;
-	my @files = ();
-
-	# Prepare the search regex
-	my $term = $self->{find_term};
-	if ( $self->{find_regex} ) {
-
-		# Escape non-trailing $ so they won't interpolate
-		$term =~ s/\$(?!\z)/\\\$/g;
-	} else {
-
-		# Escape everything
-		$term = quotemeta $term;
-	}
-
-	# Compile the search regexp
-	my $regexp = eval { $self->{find_case} ? qr/$term/m : qr/$term/mi };
-	return 1 if $@;
 
 	# Prepare the skip rules
 	my $rule = Module::Manifest->new;
@@ -93,7 +77,7 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->handle->message( STATUS => "Searching... " . $object->unix );
+		$self->handle->message( STATUS => "Searching... " . $parent->unix );
 
 		foreach my $file (@list) {
 			my $skip = 0;
@@ -118,12 +102,15 @@ sub run {
 			next if $rule->skipped( $object->unix );
 
 			# Read the entire file
-			open( my $fh, '<', $file->name ) or next;
+			open( my $fh, '<', $fullname ) or next;
 			my $buffer = do { local $/; <$fh> };
 			close $fh;
 
 			# Hand off to the compiled search object
-			my @lines = $self->{search}->match_lines($buffer);
+			my @lines = $self->{search}->match_lines(
+				$buffer,
+				$self->{search}->search_regex,
+			);
 			next unless @lines;
 
 			# Found results, inform our owner
