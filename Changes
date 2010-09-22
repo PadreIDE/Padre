@@ -31,19 +31,26 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       lexically from/to CamelCase with two clicks. (SMUELLER)
     - Fixed crash when closing the debugger panel (AZAWAWI)
     - Fixed crash of "Join Lines" feature on an empty document (AZAWAWI)
-    - Fixed #1002: "Quick fix" feature on plain text document leads to error
-      output on console (AZAWAWI)
+    - Fixed #1002: "Quick fix" feature on plain text document leads to
+      error output on console (AZAWAWI)
     - Fixed #1006: F2 help does not know about 'given' (AZAWAWI)
     - Fixed key bindings dialog to remember cursor position when setting,
       deleting or resetting a shortcut (AZAWAWI)
-    - Fixed key bindings dialog to highlight overriden shortcuts with a bold
-      font (AZAWAWI)
+    - Fixed key bindings dialog to highlight overriden shortcuts with a
+      bold font (AZAWAWI)
     - Always load the shortcut from its configuration setting otherwise we
       will have false duplicate shortcut warnings (AZAWAWI)
     - Reflect both changed key shortcuts when overridden (AZAWAWI)
-    - Removed the extra warning about duplicate keyboard shortcuts for a Padre
-      action (AZAWAWI)
-    - Fixed the shortcut overriding logic to actually work as expected (AZAWAWI)
+    - Removed the extra warning about duplicate keyboard shortcuts for a
+      Padre action (AZAWAWI)
+    - Fixed the shortcut overriding logic to actually work as
+      expected (AZAWAWI)
+    - Upgraded Find in Files to use Task 2.0, replacing the original
+      ack-based implementation (ADAMK)
+    - Removed ack dependency, and related File::Next dependency (ADAMK)
+    - Purged all code and mention of ack from the Padre codebase. Thanks
+      a ton for getting us through our first couple of years Andy, but
+      we've outgrown ack now (ADAMK)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

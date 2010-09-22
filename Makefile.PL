@@ -73,7 +73,6 @@ all_from 'lib/Padre.pm';
 requires 'perl' => '5.008005';
 
 # General dependencies
-requires 'App::Ack'                 => '1.86';
 requires 'App::cpanminus'           => '0.9923';
 requires 'Class::Adapter'           => '1.05';
 requires 'Class::Unload'            => '0.03';
@@ -163,9 +162,6 @@ test_requires 'Test::Exception'     => '0.27';
 test_requires 'Test::NoWarnings'    => '0.084';
 
 # Special dependencies
-
-# Force-bump ack dep, removed once we remove Ack
-requires 'File::Next' => '1.06';
 
 # In the Padre.ppd file we need to list IO-stringy instead
 requires 'IO::Scalar' => '2.110';

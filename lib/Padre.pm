@@ -966,12 +966,6 @@ know about Wx, but currently it still does.
 
 =item L<Padre::Wx>
 
-=item L<Padre::Wx::Ack>
-
-Implementation of the L<ack> integration in C<Edit/Ack> menu item.
-It probably should be either under Dialog or moved out to be a
-plug-in.
-
 =item L<Padre::Wx::App>
 
 is the L<Wx::App> subclass. Does not really do much.
