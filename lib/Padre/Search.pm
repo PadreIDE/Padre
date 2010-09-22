@@ -34,17 +34,6 @@ use Params::Util ();
 
 our $VERSION = '0.71';
 
-use Class::XSAccessor {
-	getters => {
-		find_term    => 'find_term',
-		find_case    => 'find_case',
-		find_regex   => 'find_regex',
-		find_reverse => 'find_reverse',
-		replace_term => 'replace_term',
-		search_regex => 'search_regex',
-	}
-};
-
 sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
@@ -83,6 +72,30 @@ sub new {
 	return if $@;
 
 	return $self;
+}
+
+sub find_term {
+	$_[0]->{find_term};
+}
+
+sub find_case {
+	$_[0]->{find_case};
+}
+
+sub find_regex {
+	$_[0]->{find_regex};
+}
+
+sub find_reverse {
+	$_[0]->{find_reverse};
+}
+
+sub replace_term {
+	$_[0]->{replace_term};
+}
+
+sub search_regex {
+	$_[0]->{search_regex};
 }
 
 sub config {
