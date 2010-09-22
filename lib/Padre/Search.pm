@@ -354,6 +354,10 @@ sub editor_count_all {
 
 =head2 matches
 
+  my ($first_char, $last_char, @all) = $search->matches(
+      $search_text,
+      $search_regexp,
+      $
 Parameters:
 
 * The text in which we need to search
@@ -416,7 +420,7 @@ sub match_lines {
 	my @matches;
 	foreach my $i ( 0 .. ( scalar(@lines) - 1 ) ) {
 		if ( $lines[$i] =~ /$regex/ ) {
-			push @matches, ( { lineNumber => ( $i + 1 ), line => $lines[$i] } );
+			push @matches, [ $i + 1, $lines[$i] ];
 		}
 	}
 	return @matches;
