@@ -3,8 +3,9 @@ package Padre::Task::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec  ();
-use Time::HiRes ();
+use File::Spec    ();
+use Time::HiRes   ();
+use Padre::Search ();
 
 our $VERSION = '0.71';
 
@@ -28,6 +29,15 @@ sub new {
 	# Property defaults
 	unless ( defined $self->{skip} ) {
 		$self->{skip} = [];
+	}
+
+	# Create the embedded search object
+	unless ( $self->{search} ) {
+		$self->{search} = Padre::Search->new(
+			find_term => $self->{find_term},
+			find_case => $self->{find_case},
+			find_regex => $self->{find_regex},
+		) or return;
 	}
 
 	return $self;
@@ -82,50 +92,49 @@ sub run {
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
+		# Notify our parent we are working on this directory
+		$self->handle->message( STATUS => "Searching... " . $object->unix );
+
 		foreach my $file (@list) {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 			my @fstat = stat($fullname);
 
-			if ( -f _ ) {
-				my $object = Padre::Wx::Directory::Path->file( @path, $file );
-				next if $rule->skipped( $object->unix );
-
-				# Parse the file
-				my $line    = undef;
-				my @matched = ();
-				if ( open( my $fh, '<', $file->name ) ) {
-					while ( defined( my $line = <$fh> ) ) {
-						next unless $line =~ $regexp;
-						push @matched, $line;
-					}
-					close $fh;
-				}
-
-				# Report the lines we matched
-				if ( @matched or Time::HiRes::time() - $timer > 1 ) {
-					$self->message( found => $file->name, \@matched );
-				}
-
-			} elsif ( -d _ ) {
+			# Handle non-files
+			if ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
 				next if $rule->skipped( $object->unix );
 				unshift @queue, $object;
-
-			} else {
+				next;
+			}
+			unless ( -f _ ) {
 				warn "Unknown or unsupported file type for $fullname";
+				next;
 			}
 
+			# This is a file
+			my $object = Padre::Wx::Directory::Path->file( @path, $file );
+			next if $rule->skipped( $object->unix );
+
+			# Read the entire file
+			open( my $fh, '<', $file->name ) or next;
+			my $buffer = do { local $/; <$fh> };
+			close $fh;
+
+			# Hand off to the compiled search object
+			my @lines = $self->{search}->match_lines($buffer);
+			next unless @lines;
+
+			# Found results, inform our owner
+			$self->handle->message( OWNER => $object, @lines );
 		}
 	}
 
-	return 1;
-}
+	# Notify our parent we are finished searching
+	$self->handle->message( STATUS => '' );
 
-sub found {
-	require Padre::Current;
-	Padre::Current->main->status( $_[1] );
+	return 1;
 }
 
 1;

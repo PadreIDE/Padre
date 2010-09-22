@@ -209,7 +209,7 @@ sub run {
 		unshift @queue, map { $_->[0] } @objects;
 	}
 
-	# Notify our parent we are working on this directory
+	# Notify our parent we are finished searching
 	$self->handle->message( STATUS => '' );
 
 	return 1;

@@ -410,6 +410,7 @@ sub matches {
 	return ( @$pair, @matches );
 }
 
+# NOTE: This current fails to work with multi-line searche expressions
 sub match_lines {
 	my ( $self, $selected_text, $regex ) = @_;
 
@@ -417,11 +418,10 @@ sub match_lines {
 	my $text  = Encode::encode( 'utf-8', $selected_text );
 	my @lines = split( /\n/, $text );
 
-	my @matches;
-	foreach my $i ( 0 .. ( scalar(@lines) - 1 ) ) {
-		if ( $lines[$i] =~ /$regex/ ) {
-			push @matches, [ $i + 1, $lines[$i] ];
-		}
+	my @matches = ();
+	foreach my $i ( 0 .. $#lines ) {
+		next unless $lines[$i] =~ /$regex/;
+		push @matches, [ $i + 1, $lines[$i] ];
 	}
 	return @matches;
 }
