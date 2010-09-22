@@ -18,7 +18,7 @@ Padre::Search - The Padre Search API
 
 =head2 DESCRIPTION
 
-This is the Padre Search API. It allows the creation of abstract objects
+This is the Padre Search API. It allows the creation of abstract search
 object that can independently search and/or replace in an editor object.
 
 =head2 METHODS
@@ -36,7 +36,7 @@ our $VERSION = '0.71';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 	unless ( defined $self->find_term ) {
 		die "Did not provide 'find_term' search term";
 	}
@@ -68,7 +68,9 @@ sub new {
 	}
 
 	# Compile the regex
-	$self->{search_regex} = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
+	$self->{search_regex} = eval {
+		$self->find_case ? qr/$term/m : qr/$term/mi
+	};
 	return if $@;
 
 	return $self;
@@ -408,7 +410,7 @@ sub match_lines {
 	my ( $self, $selected_text, $regex ) = @_;
 
 	# Searches run in unicode
-	my $text = Encode::encode( 'utf-8', $selected_text );
+	my $text  = Encode::encode( 'utf-8', $selected_text );
 	my @lines = split( /\n/, $text );
 
 	my @matches;
@@ -419,7 +421,6 @@ sub match_lines {
 		}
 	}
 	return @matches;
-
 }
 
 1;
