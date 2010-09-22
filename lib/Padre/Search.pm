@@ -414,10 +414,9 @@ sub match_lines {
 	my @lines = split( /\n/, $text );
 
 	my @matches;
-	foreach my $lineNumber ( 0 .. ( scalar(@lines) - 1 ) ) {
-
-		if ( $lines[$lineNumber] =~ /$regex/ ) {
-			push( @matches, ( { lineNumber => ( $lineNumber + 1 ), line => $lines[$lineNumber] } ) );
+	foreach my $i ( 0 .. ( scalar(@lines) - 1 ) ) {
+		if ( $lines[$i] =~ /$regex/ ) {
+			push @matches, ( { lineNumber => ( $i + 1 ), line => $lines[$i] } );
 		}
 	}
 	return @matches;
