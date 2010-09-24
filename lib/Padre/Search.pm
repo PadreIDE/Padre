@@ -61,23 +61,10 @@ sub new {
 		$self->{find_reverse} = $config->find_reverse;
 	}
 
-	# Escape the raw search term
-	my $term = $self->find_term;
-	if ( $self->find_regex ) {
-
-		# Escape non-trailing $ so they won't interpolate
-		$term =~ s/\$(?!\z)/\\\$/g;
-	} else {
-
-		# Escape everything
-		$term = quotemeta $term;
+	# Pre-compile the search
+	unless ( defined $self->search_regexp ) {
+		return;
 	}
-
-	# Compile the regex
-	$self->{search_regex} = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
-	return if $@;
 
 	return $self;
 }
@@ -103,7 +90,27 @@ sub replace_term {
 }
 
 sub search_regex {
-	$_[0]->{search_regex};
+	my $self = shift;
+
+	# Escape the raw search term
+	my $term = $self->find_term;
+	if ( $self->find_regex ) {
+
+		# Escape non-trailing $ so they won't interpolate
+		$term =~ s/\$(?!\z)/\\\$/g;
+	} else {
+
+		# Escape everything
+		$term = quotemeta $term;
+	}
+
+	# Compile the regex
+	my $search_regex = eval {
+		$self->find_case ? qr/$term/m : qr/$term/mi
+	};
+	return if $@;
+
+	return $search_regex;
 }
 
 
