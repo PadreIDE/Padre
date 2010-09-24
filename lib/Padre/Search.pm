@@ -37,6 +37,12 @@ our $VERSION = '0.71';
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
+
+	# Check params
+	my $config = delete $self->{config};
+	unless ( $config ) {
+		$config = Padre::Current->config;
+	}
 	unless ( defined $self->find_term ) {
 		die "Did not provide 'find_term' search term";
 	}
@@ -46,13 +52,13 @@ sub new {
 		return;
 	}
 	unless ( defined $self->find_case ) {
-		$self->{find_case} = $self->config->find_case;
+		$self->{find_case} = $config->find_case;
 	}
 	unless ( defined $self->find_regex ) {
-		$self->{find_regex} = $self->config->find_regex;
+		$self->{find_regex} = $config->find_regex;
 	}
 	unless ( defined $self->find_reverse ) {
-		$self->{find_reverse} = $self->config->find_reverse;
+		$self->{find_reverse} = $config->find_reverse;
 	}
 
 	# Escape the raw search term
@@ -98,14 +104,6 @@ sub replace_term {
 
 sub search_regex {
 	$_[0]->{search_regex};
-}
-
-sub config {
-	my $self = shift;
-	unless ( defined $self->{config} ) {
-		$self->{config} = Padre::Current->config;
-	}
-	return $self->{config};
 }
 
 
