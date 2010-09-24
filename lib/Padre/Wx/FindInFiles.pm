@@ -59,6 +59,10 @@ sub new {
 	$style->SetFont($font);
 	$self->SetDefaultStyle($style);
 
+	# Inialise statistics
+	$self->{files}   = 0;
+	$self->{matches} = 0;
+
 	return $self;
 }
 
@@ -71,7 +75,7 @@ sub new {
 
 sub search {
 	my $self = shift;
-
+	
 	# Kick off the search task
 	$self->task_reset;
 	$self->clear;
@@ -91,17 +95,22 @@ sub search_message {
 	my $task = shift;
 	my $path = shift;
 	my $unix = $path->unix;
+	my $term = $task->{search}->find_term;
 
 	# Generate the text all at once in advance and add to the control
 	$self->AppendText(
 		join(
 			'',
 			"----------------------------------------\n",
-			"Find '$task->{find_term}' in '$unix':\n",
+			"Find '$term' in '$unix':\n",
 			( map { "$unix($_->[0]): $_->[1]\n" } @_ ),
-			"Found '$task->{find_term}' " . scalar(@_) . " time(s).\n",
+			"Found '$term' " . scalar(@_) . " time(s).\n",
 		)
 	);
+
+	# Update statistics
+	$self->{files}   += 1;
+	$self->{matches} += scalar @_;
 
 	return 1;
 }
@@ -110,6 +119,16 @@ sub search_finish {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
+	my $term = $task->{search}->find_term;
+
+	# Display the summary
+	$self->AppendText(
+		"Search complete, " .
+		"found '$term' $self->{matches} time(s) " .
+		"in $self->{files} file(s)"
+	);
+
+	return 1;
 }
 
 
@@ -156,6 +175,8 @@ sub select {
 
 sub clear {
 	my $self = shift;
+	$self->{files}   = 0;
+	$self->{matches} = 0;
 	$self->Remove( 0, $self->GetLastPosition );
 	return 1;
 }

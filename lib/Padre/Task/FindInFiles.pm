@@ -7,6 +7,7 @@ use File::Spec    ();
 use Time::HiRes   ();
 use Padre::Search ();
 use Padre::Task   ();
+use Padre::Logger;
 
 our $VERSION = '0.71';
 our @ISA     = 'Padre::Task';
@@ -111,6 +112,7 @@ sub run {
 				$buffer,
 				$self->{search}->search_regex,
 			);
+			TRACE("Found " . scalar(@lines) . " matches in " . $fullname) if DEBUG;
 			next unless @lines;
 
 			# Found results, inform our owner
