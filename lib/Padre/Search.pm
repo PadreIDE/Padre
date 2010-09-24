@@ -62,7 +62,7 @@ sub new {
 	}
 
 	# Pre-compile the search
-	unless ( defined $self->search_regexp ) {
+	unless ( defined $self->search_regex ) {
 		return;
 	}
 
