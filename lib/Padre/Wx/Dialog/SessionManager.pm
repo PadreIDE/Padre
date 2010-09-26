@@ -56,6 +56,7 @@ sub show {
 
 	$self->_refresh_list;
 	$self->_select_first_item;
+	$self->_update_buttons_state;
 	$self->Show;
 }
 
