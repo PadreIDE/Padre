@@ -75,7 +75,7 @@ sub new {
 
 sub search {
 	my $self = shift;
-	
+
 	# Kick off the search task
 	$self->task_reset;
 	$self->clear;
