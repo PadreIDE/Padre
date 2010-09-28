@@ -2616,7 +2616,10 @@ sub run_document {
 	}
 
 	unless ( $document->can('get_command') ) {
-		return $self->error( Wx::gettext("No execution mode was defined for this document") );
+		return $self->error(
+			Wx::gettext("No execution mode was defined for this document")
+			. ': ' . $document->mimetype
+		);
 	}
 
 	my $cmd = eval { $document->get_command($debug) };
