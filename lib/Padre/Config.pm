@@ -1060,7 +1060,7 @@ setting(
 	name    => 'run_use_external_window',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
-	default => 0,
+	default => 1,
 );
 setting(
 	name    => 'external_diff_tool',
