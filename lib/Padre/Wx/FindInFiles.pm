@@ -94,6 +94,7 @@ sub search_message {
 	my $self = shift;
 	my $task = shift;
 	my $path = shift;
+	require Padre::Wx::Directory::Path; # added to avoid crash in next line
 	my $unix = $path->unix;
 	my $term = $task->{search}->find_term;
 
