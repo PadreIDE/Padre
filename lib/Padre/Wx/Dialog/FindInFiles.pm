@@ -14,6 +14,12 @@ sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
+	# Default the search directory to the root of the current project
+	my $project = $self->current->project;
+	if ( $project ) {
+		$self->{find_directory}->SetValue( $project->root );
+	}
+
 	# Prepare to be shown
 	$self->CenterOnParent;
 

@@ -1,6 +1,41 @@
 package Padre::Wx::History::ComboBox;
 
-# A history-enabled version of a Wx::ComboBox
+=pod
+
+=head1 NAME
+
+Padre::Wx::History::ComboBox - A history-enabled Wx combobox
+
+=head1 SYNOPSIS
+
+  $dialog->{search_text} = Padre::Wx::History::ComboBox->new(
+      $self,
+      -1,
+      '', # Use the last history value
+      Wx::wxDefaultPosition,
+      Wx::wxDefaultSize,
+      [ 'search' ], # The history queue to read from
+  );
+
+=head1 DESCRIPTION
+
+Padre::Wx::History::ComboBox is a normal Wx ComboBox widget, but enhanced
+with the ability to remember previously entered values and present the
+previous values as options the next time it is used.
+
+This type of input memory is fairly common in dialog boxes and other task
+inputs. The parameters are provided to the history box in a form compatible
+with an ordinary Wx::ComboBox to simplify integration with GUI generators
+such as L<Padre::Plugin::FormBuilder>.
+
+The "options" hash should contain exactly one value, which should be the
+key string for the history table. This can be a simple name, allowing the
+sharing of remembered history across several different dialogs.
+
+The "value" can be defined literally, or will be pulled from the most
+recent history entry if it set to the null string.
+
+=cut
 
 use 5.008;
 use strict;
@@ -15,13 +50,21 @@ our @ISA     = 'Wx::ComboBox';
 sub new {
 	my $class  = shift;
 	my @params = @_;
-	my $type   = $params[5];
 
-	$params[5] = [ Padre::DB::History->recent($type) ];
-	$params[2] ||= $params[5][0] || ''; # Initial text set to first history item by default
+	# First key in the value list to overwrite with the history values.
+	my $type = $params[5]->[0];
+	if ( $type ) {
+		$params[5] = [ Padre::DB::History->recent($type) ];
+
+		# Initial text defaults to first history item
+		$params[2] ||= $params[5]->[0] || '';
+	}
 
 	my $self = $class->SUPER::new(@params);
+
+	# Save the type, we'll need it later.
 	$self->{type} = $type;
+
 	$self;
 }
 

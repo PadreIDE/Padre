@@ -65,7 +65,7 @@ sub new {
 		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		'search',
+		[ 'search' ],
 	);
 
 	# "Find as Regex" option
