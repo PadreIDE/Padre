@@ -53,6 +53,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       we've outgrown it now (ADAMK)
     - Fixed an "Open Session" crash when there is not any session (AZAWAWI)
     - Make the use of external window for running scripts the default. (SZABGAB)
+    - Save Intuition now understands that modules named t::Foo are for
+      testing, and will save them into your t/ directory (ADAMK)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

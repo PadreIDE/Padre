@@ -231,6 +231,12 @@ sub guess_subpath {
 		my @dirs = split /::/, $name;
 		pop @dirs;
 
+		# The use of a module name beginning with t:: is a common
+		# pattern for declaring test-only classes.
+		if ( $dirs[0] and $dirs[0] eq 't' ) {
+			return @dirs;
+		}
+
 		return ( 'lib', @dirs );
 	}
 
