@@ -6,8 +6,9 @@ package Padre::Wx::FBP::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx             ();
+use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::History::ComboBox ();
 
 our $VERSION = '0.01';
 our @ISA     = qw{
@@ -34,13 +35,15 @@ sub new {
 		Wx::gettext("Search Term:"),
 	);
 
-	$self->{find_term} = Wx::ComboBox->new(
+	$self->{find_term} = Padre::Wx::History::ComboBox->new(
 		$self,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[
+			"search",
+		],
 	);
 
 	my $m_staticText3 = Wx::StaticText->new(
@@ -49,13 +52,15 @@ sub new {
 		Wx::gettext("Search Directory:"),
 	);
 
-	$self->{find_directory} = Wx::ComboBox->new(
+	$self->{find_directory} = Padre::Wx::History::ComboBox->new(
 		$self,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
 		[ 150, -1 ],
-		[ ],
+		[
+			"find_directory",
+		],
 	);
 
 	$self->{directory} = Wx::Button->new(
