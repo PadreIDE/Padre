@@ -97,6 +97,10 @@ sub run {
 				unshift @queue, $object;
 				next;
 			}
+			unless ( -e _ ) {
+				# The file dissapeared mid-search?
+				next;
+			}
 			unless ( -f _ ) {
 				warn "Unknown or unsupported file type for $fullname";
 				next;
