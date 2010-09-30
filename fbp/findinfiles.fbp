@@ -283,7 +283,7 @@
                                                 <property name="name">find_directory</property>
                                                 <property name="permission">protected</property>
                                                 <property name="pos"></property>
-                                                <property name="size">150,-1</property>
+                                                <property name="size">250,-1</property>
                                                 <property name="style"></property>
                                                 <property name="subclass">Padre::Wx::History::ComboBox; </property>
                                                 <property name="tooltip"></property>
@@ -332,7 +332,7 @@
                                                 <property name="font"></property>
                                                 <property name="hidden">0</property>
                                                 <property name="id">wxID_ANY</property>
-                                                <property name="label">...</property>
+                                                <property name="label">Browse</property>
                                                 <property name="maximum_size"></property>
                                                 <property name="minimum_size"></property>
                                                 <property name="name">directory</property>

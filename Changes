@@ -55,6 +55,11 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Make the use of external window for running scripts the default. (SZABGAB)
     - Save Intuition now understands that modules named t::Foo are for
       testing, and will save them into your t/ directory (ADAMK)
+    - Find in Files now integrates with Project Intuition. The same
+      manifest/ignore/skip logic used to generate the directory tree is
+      also used to prevent Find in Files searching into your version
+      control, build/make/blib files, and anywhere else your project
+      doesn't like. (ADAMK)
 
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all

@@ -57,7 +57,7 @@ sub new {
 		-1,
 		"",
 		Wx::wxDefaultPosition,
-		[ 150, -1 ],
+		[ 250, -1 ],
 		[
 			"find_directory",
 		],
@@ -66,7 +66,7 @@ sub new {
 	$self->{directory} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("..."),
+		Wx::gettext("Browse"),
 	);
 
 	Wx::Event::EVT_BUTTON(

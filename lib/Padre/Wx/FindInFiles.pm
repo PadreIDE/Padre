@@ -74,7 +74,16 @@ sub new {
 # Search Methods
 
 sub search {
-	my $self = shift;
+	my $self  = shift;
+	my %param = @_;
+
+	# If we are given a root and no project, and the root path
+	# is precisely the root of a project, switch so that the search
+	# will automatically pick up the manifest/skip rules for it.
+	if ( defined $param{root} and not exists $param{project} ) {
+		my $project = $self->ide->project($param{root});
+		$param{project} = $project if $project;
+	}
 
 	# Kick off the search task
 	$self->task_reset;
@@ -83,7 +92,7 @@ sub search {
 		task       => 'Padre::Task::FindInFiles',
 		on_message => 'search_message',
 		on_finish  => 'search_finish',
-		@_,
+		%param,
 	);
 
 	return 1;

@@ -12,7 +12,7 @@ Padre::Search - The Padre Search API
   my $search = Padre::Search->new(
       find_term => 'foo',
   );
-
+  
   # Execute the search on the current editor
   $search->search_next(Padre::Current->editor);
 
