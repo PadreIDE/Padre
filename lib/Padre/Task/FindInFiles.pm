@@ -89,16 +89,16 @@ sub run {
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 			my @fstat    = stat($fullname);
+			unless ( -e _ ) {
+				# The file dissapeared mid-search?
+				next;
+			}
 
 			# Handle non-files
 			if ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
 				next if $rule->skipped( $object->unix );
 				unshift @queue, $object;
-				next;
-			}
-			unless ( -e _ ) {
-				# The file dissapeared mid-search?
 				next;
 			}
 			unless ( -f _ ) {
