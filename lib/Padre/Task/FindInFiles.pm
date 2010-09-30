@@ -33,6 +33,10 @@ sub new {
 	unless ( defined $self->{skip} ) {
 		$self->{skip} = [];
 	}
+	unless ( defined $self->{maxsize} ) {
+		require Padre::Current;
+		$self->{maxsize} = Padre::Current->config->editor_file_size_limit;
+	}
 
 	# Create the embedded search object
 	unless ( $self->{search} ) {
@@ -84,7 +88,7 @@ sub run {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat = stat($fullname);
+			my @fstat    = stat($fullname);
 
 			# Handle non-files
 			if ( -d _ ) {
@@ -101,6 +105,12 @@ sub run {
 			# This is a file
 			my $object = Padre::Wx::Directory::Path->file( @path, $file );
 			next if $rule->skipped( $object->unix );
+
+			# Skip if the file is too big
+			if ( $fstat[7] > $self->{maxsize} ) {
+				TRACE("Skipped $fullname: File size $fstat[7] exceeds maximum of $self->{maxsize}") if DEBUG;
+				next;
+			}
 
 			# Read the entire file
 			open( my $fh, '<', $fullname ) or next;
