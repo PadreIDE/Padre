@@ -148,7 +148,7 @@ sub view_label {
 }
 
 sub view_close {
-	shift->main->show_output(0);
+	shift->main->show_findinfiles(0);
 }
 
 
