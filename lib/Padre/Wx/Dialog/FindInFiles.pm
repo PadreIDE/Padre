@@ -10,13 +10,20 @@ our @ISA     = qw{
 	Padre::Wx::FBP::FindInFiles
 };
 
+
+
+
+
+######################################################################
+# Constructor
+
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
 	# Default the search directory to the root of the current project
 	my $project = $self->current->project;
-	if ( $project ) {
+	if ( defined $project ) {
 		$self->{find_directory}->SetValue( $project->root );
 	}
 
@@ -25,6 +32,44 @@ sub new {
 
 	return $self;
 }
+
+
+
+
+
+######################################################################
+# Event Handlers
+
+sub directory {
+	my $self    = shift;
+	my $default = $self->{find_directory}->GetValue;
+	unless ( $default ) {
+		$default = $self->config->default_projects_directory;
+	};
+
+	# Ask the user for a directory
+	my $dialog = Wx::DirDialog->new(
+		$self,
+		Wx::gettext("Select Directory"),
+		$default,
+	);
+	my $result = $dialog->ShowModal;
+	$dialog->Destroy;
+
+	# Update the dialog
+	unless ( $result == Wx::wxID_CANCEL ) {
+		$self->{find_directory}->SetValue( $dialog->GetPath );
+	}
+
+	return;
+}
+
+
+
+
+
+######################################################################
+# Main Methods
 
 sub run {
 	my $self   = shift;
