@@ -229,7 +229,7 @@ sub finish {
 		$owner->$method($self);
 	}
 
-	return;
+	return 1;
 }
 
 
