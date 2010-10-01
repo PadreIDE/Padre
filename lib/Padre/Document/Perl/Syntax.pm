@@ -15,7 +15,7 @@ sub syntax {
 
 	# Localise newlines using Adam's magic "Universal Newline"
 	# regex conveniently stolen from File::LocalizeNewlines.
-	# (i.e. conveniently avoiding a bunch of dependencies for one regex)
+	# (i.e. "conveniently" avoiding a bunch of dependencies)
 	$text =~ s/(?:\015{1,2}\012|\015|\012)/\n/sg;
 
 	# Execute the syntax check
