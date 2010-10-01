@@ -71,7 +71,7 @@ perl:
   wxSTC_STYLE_BRACEBAD:
    foreground: ff0000
   wxSTC_PL_DEFAULT:
-   foreground: 000000
+   foreground: 7f7f7f
   wxSTC_PL_ERROR:
    foreground: ff0000
   wxSTC_PL_COMMENTLINE:
