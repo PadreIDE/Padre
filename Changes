@@ -61,6 +61,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       control, build/make/blib files, and anywhere else your project
       doesn't like. (ADAMK)
 
+0.71 not released
+    - No incompatible API changes during the 0.72 release cycle
+
 0.70 2010.09.09
     - The Task 2.0 API now supports full birectional communication for all
       task classes out the box. (ADAMK)
