@@ -60,6 +60,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       also used to prevent Find in Files searching into your version
       control, build/make/blib files, and anywhere else your project
       doesn't like. (ADAMK)
+    - Add "Create directory" and "remove file" to the directory browser. (SZABGAB) 
 
 0.71 not released
     - No incompatible API changes during the 0.72 release cycle

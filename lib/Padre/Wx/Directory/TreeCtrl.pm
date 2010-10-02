@@ -76,6 +76,8 @@ sub new {
 		},
 	);
 
+	Wx::Event::EVT_KEY_UP( $self, \&key_up );
+
 	# Set up the root
 	$self->AddRoot( Wx::gettext('Directory'), -1, -1 );
 
@@ -113,6 +115,76 @@ sub on_tree_item_activated {
 	my $file    = File::Spec->catfile( $project->root, $data->path );
 	$main->setup_editor($file);
 	return;
+}
+
+sub key_up {
+	my $self  = shift;
+	my $event = shift;
+
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
+	# see Padre::Wx::Main::key_up
+	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
+#	print "Mod: $mod Code: $code\n";
+
+	my $current = $self->current;
+	my $main    = $current->main;
+	my $project = $current->project;
+	#my $tree    = $main->directory->{tree};
+
+	my $item_id = $self->GetSelection;
+	my $data    = $self->GetPlData($item_id);
+
+#print "$self, $tree\n";
+
+	return if not $data;
+
+	my $file    = File::Spec->catfile( $project->root, $data->path );
+
+	if ( $code == Wx::WXK_DELETE ) {
+		$self->_delete_file($file);
+	}
+
+	$event->Skip;
+	return;
+
+}
+
+sub _create_directory {
+	my $self = shift;
+	my $file = shift;
+
+	my $main = $self->main;
+	my $dir_name = $main->prompt('Please type in the name of the new directory', 'Create Directory', 'CREATE_DIRECTORY');
+	return if $dir_name =~ /^\s*$/;
+#print "$file  + '$dir_name'\n";
+	# TODO: create directory 
+	require File::Spec;
+	require File::Basename;
+	my $path = File::Basename::dirname($file);
+	if (mkdir File::Spec->catdir($path, $dir_name)) {
+		# TODO: refresh
+	} else {
+		$main->error(sprintf(Wx::gettext(q(Could not create: '%s': %s)), $path, $!));
+	}
+	return;
+}
+
+sub _delete_file {
+	my $self = shift;
+	my $file = shift;
+
+	my $main = $self->main;
+
+	return if not 
+		$main->yes_no(sprintf(Wx::gettext('Really delete the file "%s"'), $file));
+		
+	if (unlink $file) {
+		# TODO: fix the following does not refresh the listing
+		$self->GetParent->refresh;
+	} else {
+		$main->error(sprintf(Wx::gettext(q(Could not delete: '%s': %s)), $file, $!));
+	}
 }
 
 # Shows up a context menu above an item with its controls
@@ -153,6 +225,26 @@ sub on_tree_item_menu {
 		}
 	);
 
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append( -1, Wx::gettext('Delete File') ),
+		sub {
+			my $self = shift;
+			$self->_delete_file($file);
+		}
+	);
+
+	$menu->AppendSeparator;
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append( -1, Wx::gettext('Create subdirectory') ),
+		sub {
+			my $self = shift;
+			$self->_create_directory($file);
+		}
+	);
+
 	$menu->AppendSeparator;
 
 	# Updates the directory listing
@@ -162,7 +254,7 @@ sub on_tree_item_menu {
 		sub {
 			shift->GetParent->refresh;
 		}
-	);
+	); 
 
 	# Pops up the context menu
 	$self->PopupMenu(
@@ -173,8 +265,6 @@ sub on_tree_item_menu {
 
 	return;
 }
-
-
 
 
 
