@@ -31,7 +31,7 @@ sub new {
 	# as it won't be able to survive serialisation.
 	my $document = delete $self->{document};
 	$self->{text}     = $document->text_get;
-	$self->{project}  = $document->project->root;
+	$self->{project}  = $document->project_dir;
 	$self->{filename} = $document->filename;
 
 	return $self;
