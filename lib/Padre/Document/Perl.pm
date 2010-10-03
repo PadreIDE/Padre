@@ -2039,10 +2039,9 @@ sub guess_filename_to_open {
 	if ( -e $filename ) {
 		push @files, $filename;
 	} else {
-
 		# relative to the project lib dir
 		# relative to the project dir
-		foreach my $dirs (['lib'], []) {
+		foreach my $dirs (['lib'], [], ['inc']) {
 			my $filename = File::Spec->catfile(
 				$self->project_dir,
 				@$dirs, $module,
