@@ -2041,21 +2041,15 @@ sub guess_filename_to_open {
 	} else {
 
 		# relative to the project lib dir
-		my $filename = File::Spec->catfile(
-			$self->project_dir,
-			'lib', $module,
-		);
-		if ( -e $filename ) {
-			push @files, $filename;
-		}
-
 		# relative to the project dir
-		my $filename2 = File::Spec->catfile(
-			$self->project_dir,
-			$module,
-		);
-		if ( -e $filename2 ) {
-			push @files, $filename2;
+		foreach my $dirs (['lib'], []) {
+			my $filename = File::Spec->catfile(
+				$self->project_dir,
+				@$dirs, $module,
+			);
+			if ( -e $filename ) {
+				push @files, $filename;
+			}
 		}
 
 		# TO DO: it should not be our @INC but the @INC of the perl used for
