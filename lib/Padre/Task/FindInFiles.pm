@@ -24,7 +24,7 @@ sub new {
 
 	# Automatic project integration
 	if ( exists $self->{project} ) {
-		$self->{root} = $self->{project}->root;
+		$self->{root} ||= $self->{project}->root;
 		$self->{skip} = $self->{project}->ignore_skip;
 		delete $self->{project};
 	}
