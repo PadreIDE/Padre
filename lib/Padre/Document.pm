@@ -975,7 +975,7 @@ sub lexer {
 
 	my $highlighter = $self->highlighter;
 	if ( not $highlighter ) {
-		Padre::Current->main->error(
+		$self->current->main->error(
 			sprintf(Wx::gettext("no highlighter for mime-type '%s' using stc"),
 				$self->mimetype));
 		$highlighter = 'stc';
