@@ -322,7 +322,7 @@ sub rebless {
 		if defined( $self->{file} )
 			and defined( $self->{file}->{filename} );
 	if (not $module) {
-		Padre::Current->main->error(
+		$self->current->main->error(
 			sprintf(
 				Wx::gettext("No module  mime_type='%s' filename='%s'"), 
 				$mime_type, $filename));
