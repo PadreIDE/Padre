@@ -5864,19 +5864,19 @@ Put focus on tab visited the longest time ago. No return value.
 sub on_oldest_visited_pane {
 	my ( $self, $event ) = @_;
 
-	my $history = $self->{page_history};
+	my $page_history = $self->{page_history};
 
-	if ( @$history >= 2 ) {
+	if ( @$page_history >= 2 ) {
 
 		# This works, but isn't perfect, improve if you want!
 		$self->{oldest_visited_pane_depth} = 0
 			if ( !defined( $self->{oldest_visited_pane_time} ) )
 			or $self->{oldest_visited_pane_time} < ( Time::HiRes::time() - 1 );
 
-		@$history[ -1, -2 ] = @$history[ -2, -1 ];
+		@$page_history[ -1, -2 ] = @$page_history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
 			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq $history->[ $self->{oldest_visited_pane_depth} ] ) {
+			if ( Scalar::Util::refaddr($editor) eq $page_history->[ $self->{oldest_visited_pane_depth} ] ) {
 				$self->notebook->SetSelection($i);
 
 				++$self->{last_visited_pane_depth};
