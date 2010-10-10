@@ -57,6 +57,11 @@ sub new {
 		'window.last_visited_file_old',
 	);
 
+	$self->add_menu_action(
+		$self,
+		'window.goto_previous_position',
+	);
+
 	$self->{window_right_click} = $self->add_menu_action(
 		$self,
 		'window.right_click',

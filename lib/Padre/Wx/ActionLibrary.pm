@@ -2444,13 +2444,26 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'window.last_visited_file_old',
 		label       => _T('Last Visited File'),
-		comment     => _T('???'),
+		comment     => _T('Jump between the two last visited files back and force'),
 		shortcut    => 'Ctrl-Shift-P',
 		need_editor => 1,
 		menu_event  => sub {
 			shift->on_last_visited_pane(@_);
 		},
 	);
+
+	Padre::Wx::Action->new(
+		name        => 'window.goto_previous_position',
+		label       => _T('Goto previous position'),
+		comment     => _T('Jump to the last position saved in memory'),
+		#shortcut    => '',
+		need_editor => 1,
+		menu_event  => sub {
+			require Padre::Wx::Dialog::Positions;
+			Padre::Wx::Dialog::Positions->goto_prev_position( $_[0] );
+		},
+	);
+
 
 	Padre::Wx::Action->new(
 		name        => 'window.right_click',
