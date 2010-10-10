@@ -14,7 +14,7 @@ use Padre::Wx::ActionLibrary ();
 use Padre::Wx::Menu          ();
 use Padre::Locale            ();
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 our @ISA     = 'Padre::Wx::Menu';
 
 my @GUI_ELEMENTS = qw{

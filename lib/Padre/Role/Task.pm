@@ -21,7 +21,7 @@ use Scalar::Util   ();
 use Padre::Current ();
 use Padre::Logger;
 
-our $VERSION        = '0.72';
+our $VERSION        = '0.73';
 our $BACKCOMPATIBLE = '0.69';
 
 # Use a shared sequence for object revisioning greatly

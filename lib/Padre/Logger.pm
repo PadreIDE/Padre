@@ -39,7 +39,7 @@ use threads;
 use threads::shared;
 use Padre::Constant ();
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 
 # Handle the PADRE_DEBUG environment variable
 BEGIN {

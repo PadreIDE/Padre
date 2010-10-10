@@ -68,7 +68,7 @@ use Padre::Wx::Role::Dialog       ();
 use Padre::Wx::Dialog::WindowList ();
 use Padre::Logger;
 
-our $VERSION        = '0.72';
+our $VERSION        = '0.73';
 our $BACKCOMPATIBLE = '0.58';
 our @ISA            = qw{
 	Padre::Wx::Role::Conduit

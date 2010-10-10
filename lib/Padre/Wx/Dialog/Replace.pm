@@ -23,7 +23,7 @@ use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::Main        ();
 use Padre::Wx::History::ComboBox ();
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

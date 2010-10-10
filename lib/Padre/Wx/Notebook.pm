@@ -7,7 +7,7 @@ use Params::Util          ();
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::AuiNotebook

@@ -7,7 +7,7 @@ use Padre::Config   ();
 use Padre::Constant ();
 use Padre::Wx       ();
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 
 # Generate faster accessors
 use Class::XSAccessor {

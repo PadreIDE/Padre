@@ -7,7 +7,7 @@ use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 
 my @positions;
 
