@@ -34,7 +34,7 @@ use List::Util      ();
 use POSIX           ();
 use Padre::Constant ();
 
-our $VERSION   = '0.71';
+our $VERSION   = '0.72';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
 

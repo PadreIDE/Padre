@@ -26,7 +26,7 @@ use Padre::Wx::Role::Main        ();
 use Padre::Wx::History::ComboBox ();
 use Padre::Wx::FindResult        ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

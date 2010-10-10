@@ -32,7 +32,7 @@ use Encode       ();
 use List::Util   ();
 use Params::Util ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 sub new {
 	my $class = shift;

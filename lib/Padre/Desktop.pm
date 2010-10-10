@@ -25,7 +25,7 @@ use warnings;
 use File::Spec      ();
 use Padre::Constant ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 =pod
 

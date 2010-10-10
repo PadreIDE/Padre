@@ -33,7 +33,7 @@ use Params::Util          ();
 use Padre::Current        ();
 use Padre::PPI::Transform ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 our @ISA     = 'Padre::PPI::Transform';
 
 

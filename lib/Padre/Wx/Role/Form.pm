@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 sub form {
 	my $self = shift;

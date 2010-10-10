@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Task::FunctionList ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 our @ISA     = 'Padre::Task::FunctionList';
 
 

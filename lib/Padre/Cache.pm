@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 my %DATA = ();
 

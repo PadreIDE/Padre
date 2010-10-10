@@ -8,7 +8,7 @@ use warnings;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 our @ISA     = 'Wx::Frame';
 
 sub new {
