@@ -66,9 +66,9 @@ sub find {
 				unless ($check_alternate_sub_decls) {
 					$check_alternate_sub_decls = 1
 						if grep { $thing->module eq $_ } (
-								'Method::Signatures',
-								'MooseX::Declare',
-								'MooseX::Method::Signatures'
+						'Method::Signatures',
+						'MooseX::Declare',
+						'MooseX::Method::Signatures'
 						);
 				}
 			}
@@ -95,12 +95,12 @@ sub find {
 		}
 	}
 
-	if ( $check_alternate_sub_decls ) {
+	if ($check_alternate_sub_decls) {
 		$ppi->find(
 			sub {
-				$_[1]->isa('PPI::Token::Word')                               or return 0;
-				$_[1]->content =~ /^(?:func|method)\z/                       or return 0;
-				$_[1]->next_sibling->isa('PPI::Token::Whitespace')           or return 0;
+				$_[1]->isa('PPI::Token::Word') or return 0;
+				$_[1]->content =~ /^(?:func|method)\z/ or return 0;
+				$_[1]->next_sibling->isa('PPI::Token::Whitespace') or return 0;
 				my $sib_content = $_[1]->next_sibling->next_sibling->content or return 0;
 
 				$sib_content =~ m/^\b(\w+)\b/;

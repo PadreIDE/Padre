@@ -345,14 +345,14 @@ sub title {
 }
 
 sub refresh {
-	my $self     = shift;
-	my $current  = Padre::Current::_CURRENT(@_);
-	my $editor   = $current->editor || 0;
-	my $text     = $current->text;
-	my $document = $current->document;
-	my $hasdoc   = $document ? 1 : 0;
-	my $comment  = $hasdoc ? ( $document->comment_lines_str ? 1 : 0 ) : 0;
-	my $newline  = $hasdoc ? $document->newline_type : '';
+	my $self          = shift;
+	my $current       = Padre::Current::_CURRENT(@_);
+	my $editor        = $current->editor || 0;
+	my $text          = $current->text;
+	my $document      = $current->document;
+	my $hasdoc        = $document ? 1 : 0;
+	my $comment       = $hasdoc ? ( $document->comment_lines_str ? 1 : 0 ) : 0;
+	my $newline       = $hasdoc ? $document->newline_type : '';
 	my $has_quick_fix = $hasdoc && $document->can('get_quick_fix_provider');
 
 	# Handle the simple cases

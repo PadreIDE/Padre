@@ -59,13 +59,14 @@ before/after goto search result
 
 # a lot copied from Padre::Wx::Dialog::Bookmarks::set_position
 sub set_position {
-	my $class    = shift;
+	my $class = shift;
 
 	my $main    = Padre::Current->main;
 	my $current = $main->current;
 	my $editor  = $current->editor or return;
 	my $path    = $current->filename;
 	return unless defined $path;
+
 	# TO DO Cannot (yet) set position in unsaved document
 
 	my $line   = $editor->GetCurrentLine;
@@ -73,11 +74,13 @@ sub set_position {
 	my ($name) = $editor->GetLine($line);
 	$name =~ s/\r?\n?$//;
 
-	push @positions, {
+	push @positions,
+		{
 		name => $name,
 		file => $path,
 		line => $line,
-	};
+		};
+
 	#print Data::Dumper::Dumper \@positions;
 	return;
 }
@@ -87,12 +90,12 @@ sub goto_prev_position {
 	my $main  = shift;
 
 	return if not @positions;
-	$class->goto_position($main, scalar(@positions)-1 );
+	$class->goto_position( $main, scalar(@positions) - 1 );
 	return;
 }
 
 sub goto_position {
-	my $class  = shift;
+	my $class = shift;
 	my $main  = shift;
 	my $pos   = shift;
 

@@ -88,8 +88,9 @@ sub run {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat    = stat($fullname);
+			my @fstat = stat($fullname);
 			unless ( -e _ ) {
+
 				# The file dissapeared mid-search?
 				next;
 			}
@@ -126,7 +127,7 @@ sub run {
 				$buffer,
 				$self->{search}->search_regex,
 			);
-			TRACE("Found " . scalar(@lines) . " matches in " . $fullname) if DEBUG;
+			TRACE( "Found " . scalar(@lines) . " matches in " . $fullname ) if DEBUG;
 			next unless @lines;
 
 			# Found results, inform our owner

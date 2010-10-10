@@ -307,14 +307,14 @@ sub _on_list_item_selected {
 
 	$self->{button_delete}->Enable( $shortcut ne '' );
 
-	$self->_update_shortcut_ui( $shortcut );
+	$self->_update_shortcut_ui($shortcut);
 
 	return;
 }
 
 # Updates the shortcut UI
 sub _update_shortcut_ui {
-	my ($self, $shortcut) = @_;
+	my ( $self, $shortcut ) = @_;
 
 	my @parts = split /-/, $shortcut;
 	my $regular_key = @parts ? $parts[-1] : '';
@@ -378,7 +378,7 @@ sub _try_to_set_binding {
 				. Wx::gettext('Do you want to override it with the selected action?'),
 			Wx::gettext('Override Shortcut')
 		);
-		if ( $answer ) {
+		if ($answer) {
 			$self->_set_binding( $other_action->name, '' );
 		} else {
 			return;
@@ -418,17 +418,17 @@ sub _set_binding {
 
 # Private method to update the UI from the provided preference
 sub _update_action_ui {
-	
+
 	my ( $self, $action_name, $shortcut, $non_default ) = @_;
 
-	my $list       = $self->{list};
-	my $index      = $list->FindItem(-1, $action_name);
+	my $list = $self->{list};
+	my $index = $list->FindItem( -1, $action_name );
 
-	$self->{button_reset}->Enable( $non_default );
+	$self->{button_reset}->Enable($non_default);
 	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
 	$self->_set_item_bold_font( $index, $non_default );
-	
-	$self->_update_shortcut_ui( $shortcut );
+
+	$self->_update_shortcut_ui($shortcut);
 
 	return;
 }

@@ -60,7 +60,7 @@ sub new {
 		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ 'search' ],
+		['search'],
 	);
 
 	# The text to replace with
@@ -70,7 +70,7 @@ sub new {
 		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ 'replace' ],
+		['replace'],
 	);
 
 	# "Case Sensitive" option

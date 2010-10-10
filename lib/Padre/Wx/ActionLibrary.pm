@@ -1249,7 +1249,7 @@ sub init {
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
 			require Padre::Wx::Dialog::FindInFiles;
-			my $dialog = Padre::Wx::Dialog::FindInFiles->new($_[0]);
+			my $dialog = Padre::Wx::Dialog::FindInFiles->new( $_[0] );
 			$dialog->run;
 			$dialog->Destroy;
 			return;
@@ -1379,11 +1379,11 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.show_findinfiles',
-		label       => _T('Hide Find in Files'),
-		comment     => _T('Hide the list of matches for a Find in Files search'),
-		menu_event  => sub {
-			$_[0]->show_findinfiles( 0 );
+		name       => 'view.show_findinfiles',
+		label      => _T('Hide Find in Files'),
+		comment    => _T('Hide the list of matches for a Find in Files search'),
+		menu_event => sub {
+			$_[0]->show_findinfiles(0);
 		},
 	);
 
@@ -1778,11 +1778,12 @@ sub init {
 		need_editor => 1,
 		label       => _T('Change variable to camelCase'),
 		comment     => _T('Change variable style from camel_case to camelCase'),
+
 		#shortcut    => 'Shift-Alt-R',
-		menu_event  => sub {
+		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('change_variable_style') or return;
-			$document->change_variable_style(to_camel_case => 1);
+			$document->change_variable_style( to_camel_case => 1 );
 		},
 	);
 
@@ -1791,11 +1792,12 @@ sub init {
 		need_editor => 1,
 		label       => _T('Change variable to CamelCase.'),
 		comment     => _T('Change variable style from camel_case to CamelCase'),
+
 		#shortcut    => 'Shift-Alt-R',
-		menu_event  => sub {
+		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('change_variable_style') or return;
-			$document->change_variable_style(to_camel_case => 1, 'ucfirst' => 1);
+			$document->change_variable_style( to_camel_case => 1, 'ucfirst' => 1 );
 		},
 	);
 
@@ -1804,11 +1806,12 @@ sub init {
 		need_editor => 1,
 		label       => _T('Change variable style to using_underscores'),
 		comment     => _T('Change variable style from camelCase to camel_case'),
+
 		#shortcut    => 'Shift-Alt-R',
-		menu_event  => sub {
+		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('change_variable_style') or return;
-			$document->change_variable_style(from_camel_case => 1);
+			$document->change_variable_style( from_camel_case => 1 );
 		},
 	);
 
@@ -1817,11 +1820,12 @@ sub init {
 		need_editor => 1,
 		label       => _T('Change variable style to Using_Underscores'),
 		comment     => _T('Change variable style from camelCase to Camel_Case'),
+
 		#shortcut    => 'Shift-Alt-R',
-		menu_event  => sub {
+		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('change_variable_style') or return;
-			$document->change_variable_style(from_camel_case => 1, 'ucfirst' => 1);
+			$document->change_variable_style( from_camel_case => 1, 'ucfirst' => 1 );
 		},
 	);
 
@@ -2453,9 +2457,10 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'window.goto_previous_position',
-		label       => _T('Goto previous position'),
-		comment     => _T('Jump to the last position saved in memory'),
+		name    => 'window.goto_previous_position',
+		label   => _T('Goto previous position'),
+		comment => _T('Jump to the last position saved in memory'),
+
 		#shortcut    => '',
 		need_editor => 1,
 		menu_event  => sub {

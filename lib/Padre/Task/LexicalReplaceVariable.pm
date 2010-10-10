@@ -43,16 +43,16 @@ sub process {
 	my $location = $self->{location};
 
 	my %opt;
-	$opt{replacement}     = $self->{replacement} if defined $self->{replacement};
-	$opt{to_camel_case}   = $self->{to_camel_case} if defined $self->{to_camel_case};
+	$opt{replacement}     = $self->{replacement}     if defined $self->{replacement};
+	$opt{to_camel_case}   = $self->{to_camel_case}   if defined $self->{to_camel_case};
 	$opt{from_camel_case} = $self->{from_camel_case} if defined $self->{from_camel_case};
 	$opt{'ucfirst'}       = $self->{'ucfirst'};
 	my $munged = eval {
 		require PPIx::EditorTools::RenameVariable;
 		PPIx::EditorTools::RenameVariable->new->rename(
-			ppi         => $ppi,
-			line        => $location->[0],
-			column      => $location->[1],
+			ppi    => $ppi,
+			line   => $location->[0],
+			column => $location->[1],
 			%opt,
 		);
 	};

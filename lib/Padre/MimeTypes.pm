@@ -55,7 +55,7 @@ sub _initialize {
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
 		bib   => 'application/x-bibtex',
-		bml   => 'application/x-bml',    # dreamwidth file format
+		bml   => 'application/x-bml',     # dreamwidth file format
 		c     => 'text/x-c',
 		cc    => 'text/x-c++src',
 		cpp   => 'text/x-c++src',
@@ -348,7 +348,7 @@ sub _initialize {
 
 		'text/x-csharp' => {
 			name  => 'C#',
-			lexer => Wx::wxSTC_LEX_CPP, # better than nothing
+			lexer => Wx::wxSTC_LEX_CPP,  # better than nothing
 		},
 
 	);
@@ -402,16 +402,20 @@ sub add_mime_class {
 	if ( not $MIME_TYPES{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"), 
-				'add_mime_class', $mime));
+				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				'add_mime_class', $mime
+			)
+		);
 		return;
 	}
 
 	if ( $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type already has a class '%s' when %s(%s) was called"), 
-				$MIME_TYPES{$mime}{class}, 'add_mime_class', $mime));
+				Wx::gettext("Mime type already has a class '%s' when %s(%s) was called"),
+				$MIME_TYPES{$mime}{class}, 'add_mime_class', $mime
+			)
+		);
 		return;
 	}
 	$MIME_TYPES{$mime}{class} = $class;
@@ -424,16 +428,20 @@ sub remove_mime_class {
 	if ( not $MIME_TYPES{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"), 
-				'remove_mime_class', $mime));
+				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				'remove_mime_class', $mime
+			)
+		);
 		return;
 	}
 
 	if ( not $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is does not have a class entry when %s(%s) was called"), 
-				'remove_mime_class', $mime));
+				Wx::gettext("Mime type is does not have a class entry when %s(%s) was called"),
+				'remove_mime_class', $mime
+			)
+		);
 		return;
 	}
 	delete $MIME_TYPES{$mime}{class};
@@ -446,8 +454,10 @@ sub get_mime_class {
 	if ( not $MIME_TYPES{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"), 
-				'get_mime_class', $mime));
+				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				'get_mime_class', $mime
+			)
+		);
 		return;
 	}
 
@@ -594,9 +604,10 @@ sub get_mime_type_names {
 sub get_mime_type_name {
 	my $self = shift;
 	my $mime_type = shift || '';
-	return Wx::gettext('UNKNOWN') if $mime_type eq '' 
-		or not $MIME_TYPES{$mime_type}
-		or not $MIME_TYPES{$mime_type}{name};
+	return Wx::gettext('UNKNOWN')
+		if $mime_type eq ''
+			or not $MIME_TYPES{$mime_type}
+			or not $MIME_TYPES{$mime_type}{name};
 	return Wx::gettext( $MIME_TYPES{$mime_type}{name} );
 }
 

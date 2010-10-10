@@ -881,12 +881,16 @@ sub rename_variable {
 
 sub change_variable_style {
 	my $self = shift;
-	my %opt = @_;
-	if (0 == grep {defined $_} @opt{qw(to_camel_case from_camel_case)})  {
+	my %opt  = @_;
+	if ( 0 == grep { defined $_ } @opt{qw(to_camel_case from_camel_case)} ) {
 		warn "Need either 'to_camel_case' or 'from_camel_case' options";
 		return;
-	}
-	elsif (2 == grep {defined $_} @opt{qw(to_camel_case from_camel_case)})  {
+	} elsif (
+		2 == grep {
+			defined $_
+		} @opt{qw(to_camel_case from_camel_case)}
+		)
+	{
 		warn "Need either 'to_camel_case' or 'from_camel_case' options, not both";
 		return;
 	}
@@ -906,10 +910,10 @@ sub change_variable_style {
 	# Launch the background task
 	$self->task_request(
 		%opt, # should contain only keys to_camel_case or from_camel_case and optionally ucfirst
-		task          => 'Padre::Task::LexicalReplaceVariable',
-		document      => $self,
-		location      => $location,
-		on_finish     => 'rename_variable_response',
+		task      => 'Padre::Task::LexicalReplaceVariable',
+		document  => $self,
+		location  => $location,
+		on_finish => 'rename_variable_response',
 	);
 
 	return;
@@ -1724,13 +1728,14 @@ sub event_on_right_down {
 			$editor, $lexRepl,
 			sub {
 				my $doc = $self;
+
 				#my $lock = $editor->main->lock('BUSY');
 				$doc->rename_variable;
 			},
 		);
 
 		# Start variable style sub-menu
-		my $style = Wx::Menu->new;
+		my $style      = Wx::Menu->new;
 		my $style_menu = $menu->Append(
 			-1,
 			Wx::gettext('Change variable style'),
@@ -1742,16 +1747,17 @@ sub event_on_right_down {
 			$editor, $toCC,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_style(to_camel_case => 1);
+				$doc->change_variable_style( to_camel_case => 1 );
 			},
 		);
 
 		my $toCC_ucfirst = $style->Append( -1, Wx::gettext('Change variable to CamelCase') );
 		Wx::Event::EVT_MENU(
-			$editor, $toCC_ucfirst,
+			$editor,
+			$toCC_ucfirst,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_style(to_camel_case => 1, 'ucfirst' => 1);
+				$doc->change_variable_style( to_camel_case => 1, 'ucfirst' => 1 );
 			},
 		);
 
@@ -1760,18 +1766,20 @@ sub event_on_right_down {
 			$editor, $fromCC,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_style(from_camel_case => 1);
+				$doc->change_variable_style( from_camel_case => 1 );
 			},
 		);
 
 		my $fromCC_ucfirst = $style->Append( -1, Wx::gettext('Change variable style to Using_Underscores') );
 		Wx::Event::EVT_MENU(
-			$editor, $fromCC_ucfirst,
+			$editor,
+			$fromCC_ucfirst,
 			sub {
 				my $doc = $self;
-				$doc->change_variable_style(from_camel_case => 1, 'ucfirst' => 1);
+				$doc->change_variable_style( from_camel_case => 1, 'ucfirst' => 1 );
 			},
 		);
+
 		# End variable style sub-menu
 	} # end if it's a variable
 
@@ -2039,9 +2047,10 @@ sub guess_filename_to_open {
 	if ( -e $filename ) {
 		push @files, $filename;
 	} else {
+
 		# relative to the project lib dir
 		# relative to the project dir
-		foreach my $dirs (['lib'], [], ['inc']) {
+		foreach my $dirs ( ['lib'], [], ['inc'] ) {
 			my $filename = File::Spec->catfile(
 				$self->project_dir,
 				@$dirs, $module,

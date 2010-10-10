@@ -289,7 +289,7 @@ Populate the list with the line number and text.
 sub populate_list {
 	my $self  = shift;
 	my $lines = shift;
-	foreach my $line ( @$lines ) {
+	foreach my $line (@$lines) {
 		my $item = $self->InsertStringItem( 0, $line->[0] );
 		$self->SetItem( $item, 1, $line->[1] );
 	}

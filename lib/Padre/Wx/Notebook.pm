@@ -111,7 +111,7 @@ sub on_auinotebook_page_changed {
 
 	if ($editor) {
 		my $page_history = $main->{page_history};
-		my $current = Scalar::Util::refaddr($editor);
+		my $current      = Scalar::Util::refaddr($editor);
 		@$page_history = grep { $_ != $current } @$page_history;
 		push @$page_history, $current;
 

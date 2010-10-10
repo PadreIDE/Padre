@@ -280,11 +280,11 @@ sub help_render {
 		# it is Perl function, handle q/.../, m//, y///, tr///
 		$hints->{perlfunc} = 1;
 		$topic =~ s/\/.*?\/$//;
-	} elsif( $topic eq 'given' ) {
+	} elsif ( $topic eq 'given' ) {
 
 		# Redirect to 'use feature'
 		$topic = 'feature';
-	}else {
+	} else {
 
 		# Append the module's release date to the topic
 		require Module::CoreList;

@@ -196,6 +196,7 @@ sub _create_controls {
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
+
 	# Description is hidden by default
 	$self->{description_text}->Hide;
 

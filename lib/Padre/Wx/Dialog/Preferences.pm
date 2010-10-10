@@ -357,8 +357,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'autocomplete_brackets',
 				( $config->autocomplete_brackets ? 1 : 0 ),
-				Wx::gettext(
-					"Autocomplete brackets")
+				Wx::gettext("Autocomplete brackets")
 			],
 			[]
 		],
@@ -366,7 +365,8 @@ sub _behaviour_panel {
 				'autocomplete_multiclosebracket',
 				( $config->autocomplete_multiclosebracket ? 1 : 0 ),
 				Wx::gettext(
-					"Add another closing bracket if there is already one (and the 'Autocomplete brackets' above is enabled)")
+					"Add another closing bracket if there is already one (and the 'Autocomplete brackets' above is enabled)"
+				)
 			],
 			[]
 		],

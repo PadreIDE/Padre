@@ -36,11 +36,11 @@ our $VERSION = '0.71';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check params
 	my $config = delete $self->{config};
-	unless ( $config ) {
+	unless ($config) {
 		$config = Padre::Current->config;
 	}
 	unless ( defined $self->find_term ) {
@@ -105,9 +105,7 @@ sub search_regex {
 	}
 
 	# Compile the regex
-	my $search_regex = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
+	my $search_regex = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
 	return if $@;
 
 	return $search_regex;
@@ -420,7 +418,7 @@ sub match_lines {
 	my ( $self, $selected_text, $regex ) = @_;
 
 	# Searches run in unicode
-	my $text  = Encode::encode( 'utf-8', $selected_text );
+	my $text = Encode::encode( 'utf-8', $selected_text );
 	my @lines = split( /\n/, $text );
 
 	my @matches = ();

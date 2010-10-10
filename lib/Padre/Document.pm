@@ -321,11 +321,13 @@ sub rebless {
 	$filename = $self->{file}->filename
 		if defined( $self->{file} )
 			and defined( $self->{file}->{filename} );
-	if (not $module) {
+	if ( not $module ) {
 		$self->current->main->error(
 			sprintf(
-				Wx::gettext("No module  mime_type='%s' filename='%s'"), 
-				$mime_type, $filename));
+				Wx::gettext("No module  mime_type='%s' filename='%s'"),
+				$mime_type, $filename
+			)
+		);
 	}
 	$self->set_highlighter($module);
 
@@ -976,8 +978,11 @@ sub lexer {
 	my $highlighter = $self->highlighter;
 	if ( not $highlighter ) {
 		$self->current->main->error(
-			sprintf(Wx::gettext("no highlighter for mime-type '%s' using stc"),
-				$self->mimetype));
+			sprintf(
+				Wx::gettext("no highlighter for mime-type '%s' using stc"),
+				$self->mimetype
+			)
+		);
 		$highlighter = 'stc';
 	}
 	TRACE("The highlighter is '$highlighter'") if DEBUG;

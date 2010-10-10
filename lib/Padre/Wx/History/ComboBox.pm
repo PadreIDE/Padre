@@ -53,7 +53,7 @@ sub new {
 
 	# First key in the value list to overwrite with the history values.
 	my $type = $params[5]->[0];
-	if ( $type ) {
+	if ($type) {
 		$params[5] = [ Padre::DB::History->recent($type) ];
 
 		# Initial text defaults to first history item

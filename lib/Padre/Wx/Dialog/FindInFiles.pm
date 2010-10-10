@@ -43,9 +43,9 @@ sub new {
 sub directory {
 	my $self    = shift;
 	my $default = $self->{find_directory}->GetValue;
-	unless ( $default ) {
+	unless ($default) {
 		$default = $self->config->default_projects_directory;
-	};
+	}
 
 	# Ask the user for a directory
 	my $dialog = Wx::DirDialog->new(
@@ -82,6 +82,7 @@ sub run {
 	$self->save;
 
 	if ( $result == Wx::wxID_CANCEL ) {
+
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
 		my $editor = $self->current->editor;

@@ -47,9 +47,7 @@ sub new {
 	);
 
 	# Set the font and colours
-	$self->SetBackgroundColour(
-		Wx::Colour->new('#FFFFFF')
-	);
+	$self->SetBackgroundColour( Wx::Colour->new('#FFFFFF') );
 	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
 	my $name = $self->config->editor_font;
 	if ( defined $name and length $name ) {
@@ -81,7 +79,7 @@ sub search {
 	# is precisely the root of a project, switch so that the search
 	# will automatically pick up the manifest/skip rules for it.
 	if ( defined $param{root} and not exists $param{project} ) {
-		my $project = $self->ide->project($param{root});
+		my $project = $self->ide->project( $param{root} );
 		$param{project} = $project if $project;
 	}
 
@@ -113,7 +111,7 @@ sub search_message {
 			'',
 			"----------------------------------------\n",
 			"Find '$term' in '$unix':\n",
-			( map { "$unix($_->[0]): $_->[1]\n" } @_ ),
+			( map {"$unix($_->[0]): $_->[1]\n"} @_ ),
 			"Found '$term' " . scalar(@_) . " time(s).\n",
 		)
 	);
@@ -132,11 +130,7 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	$self->AppendText(
-		"Search complete, " .
-		"found '$term' $self->{matches} time(s) " .
-		"in $self->{files} file(s)"
-	);
+	$self->AppendText( "Search complete, " . "found '$term' $self->{matches} time(s) " . "in $self->{files} file(s)" );
 
 	return 1;
 }
