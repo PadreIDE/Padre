@@ -671,10 +671,15 @@ sub find_method_declaration {
 		);
 		return;
 	}
+
+	require Padre::Wx::Dialog::Positions;
+	Padre::Wx::Dialog::Positions->set_position();
+
 	if ( not $filename ) {
 
 		#print "No filename\n";
 		# goto $line in current file
+
 		$self->goto_sub($token);
 	} else {
 		my $main = Padre->ide->wx->main;
@@ -1729,23 +1734,23 @@ sub event_on_right_down {
 			$style,
 		);
 
-		$style_menu->add_menu_action(
-			$style_menu,
+		$menu->add_menu_action(
+			$style,
 			'perl.variable_to_camel_case',
 		);
 
-		$style_menu->add_menu_action(
-			$style_menu,
+		$menu->add_menu_action(
+			$style,
 			'perl.variable_to_camel_case_ucfirst',
 		);
 
-		$style_menu->add_menu_action(
-			$style_menu,
+		$menu->add_menu_action(
+			$style,
 			'perl.variable_from_camel_case',
 		);
 
-		$style_menu->add_menu_action(
-			$style_menu,
+		$menu->add_menu_action(
+			$style,
 			'perl.variable_from_camel_case_ucfirst',
 		);
 
