@@ -2,7 +2,7 @@ package Padre::Wx::Icon;
 
 # It turns out that icon management needs to be more complex than just
 # a few utility functions in Padre::Wx, and that it needs an entire
-# library of it's own.
+# library of its own.
 
 # This library attempts to integrate padre with the freedesktop.org
 # icon specifications using a highly limited and mostly
