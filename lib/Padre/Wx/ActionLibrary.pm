@@ -2469,6 +2469,18 @@ sub init {
 		},
 	);
 
+	Padre::Wx::Action->new(
+		name    => 'window.show_previous_positions',
+		label   => _T('Show previous positions'),
+		comment => _T('Show the list of positions recently visited'),
+		#shortcut    => '',
+		need_editor => 1,
+		menu_event  => sub {
+			require Padre::Wx::Dialog::Positions;
+			Padre::Wx::Dialog::Positions->show_positions( $_[0] );
+		},
+	);
+
 
 	Padre::Wx::Action->new(
 		name        => 'window.right_click',

@@ -62,6 +62,11 @@ sub new {
 		'window.goto_previous_position',
 	);
 
+	$self->add_menu_action(
+		$self,
+		'window.show_previous_positions',
+	);
+
 	$self->{window_right_click} = $self->add_menu_action(
 		$self,
 		'window.right_click',

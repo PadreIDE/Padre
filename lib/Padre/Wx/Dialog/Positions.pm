@@ -15,6 +15,14 @@ my @positions;
 
 Go to previous (or earlier) position
 
+=head1 SYNOPSIS
+
+In the places of the code before jumping to some
+other location add:
+
+  require Padre::Wx::Dialog::Positions;
+  Padre::Wx::Dialog::Positions->set_position
+
 =head1 DESCRIPTION
 
 Remember position before certain movements 
@@ -52,7 +60,6 @@ before/after goto search result
 
 # TO DO add keyboard short-cut ?
 # TO DO add item next to buttons under the menues
-# TO DO allow the display of all the items and jumping to any of the items
 # TO DO reset the rest of the history when someone moves forward from the middle
 #    A, B, C,  -> goto(B), D  then the history should be A, B, D   I think.
 
@@ -89,8 +96,40 @@ sub goto_prev_position {
 	my $class = shift;
 	my $main  = shift;
 
-	return if not @positions;
+	return _no_positions_yet($main) if not @positions;
 	$class->goto_position( $main, scalar(@positions) - 1 );
+	return;
+}
+
+sub _no_positions_yet {
+	my $main = shift;
+	$main->message(
+		Wx::gettext("There are no positions saved yet"),
+		Wx::gettext("Show previous positions")
+	);
+	return;
+}
+sub show_positions {
+	my $class = shift;
+	my $main  = shift;
+
+	return _no_positions_yet($main) if not @positions;
+
+	my $position = $main->single_choice(
+		Wx::gettext('Choose File'),
+		'',
+		[reverse map {
+			sprintf(Wx::gettext("%s. Line: %s File: %s - %s"),
+				$_, 
+				$positions[$_-1]{line}, 
+				$positions[$_-1]{file}, 
+				$positions[$_-1]{name})
+		} 1..@positions ],
+	);
+	return if not defined $position;
+	if ($position =~ /^(\d+)\./) {
+		$class->goto_position($main, $1-1);
+	}
 	return;
 }
 
