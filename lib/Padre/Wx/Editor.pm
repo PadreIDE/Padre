@@ -1561,8 +1561,6 @@ sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;
 
-	require Padre::Wx::Dialog::Positions;
-	Padre::Wx::Dialog::Positions->set_position();
 	$self->goto_pos_centerize( $self->PositionFromLine($line) );
 }
 
