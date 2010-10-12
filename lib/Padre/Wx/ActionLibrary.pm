@@ -1790,7 +1790,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'perl.variable_to_camel_case_ucfirst',
 		need_editor => 1,
-		label       => _T('Change variable to CamelCase.'),
+		label       => _T('Change variable to CamelCase'),
 		comment     => _T('Change variable style from camel_case to CamelCase'),
 
 		#shortcut    => 'Shift-Alt-R',
@@ -2473,6 +2473,7 @@ sub init {
 		name    => 'window.show_previous_positions',
 		label   => _T('Show previous positions'),
 		comment => _T('Show the list of positions recently visited'),
+
 		#shortcut    => '',
 		need_editor => 1,
 		menu_event  => sub {
