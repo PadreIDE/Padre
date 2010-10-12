@@ -316,9 +316,7 @@ sub _bind_events {
 		$self,
 		sub {
 			my ($key_event) = $_[1];
-			if ( $key_event->GetKeyCode == Wx::WXK_ESCAPE ) {
-				$self->Hide;
-			}
+			$self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 			return;
 		}
 	);
@@ -350,11 +348,30 @@ sub _bind_events {
 		$self->{description_checkbox},
 		sub {
 
-			#Toggles the visibility of the description field
+			# toggles the visibility of the description field
 			$self->{description_text}->Show( $self->{description_checkbox}->IsChecked );
 			$self->{sizer}->Layout;
 		},
 	);
+
+	Wx::Event::EVT_KEY_DOWN(
+		$self->{matched_text},
+		sub {
+			my ($key_event) = $_[1];
+			$self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+			return;
+		}
+	);
+
+	Wx::Event::EVT_KEY_DOWN(
+		$self->{result_text},
+		sub {
+			my ($key_event) = $_[1];
+			$self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+			return;
+		}
+	);
+
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -366,7 +383,6 @@ sub _bind_events {
 		},
 	);
 }
-
 
 #
 # A private method that returns a hash of regex modifiers
@@ -410,8 +426,8 @@ sub show {
 			$self->{regex}->ChangeValue('\w+');
 		}
 
-		$self->{replace}->ChangeValue("Baz");
-		$self->{original_text}->SetValue("Foo Bar");
+		$self->{replace}->ChangeValue('Baz');
+		$self->{original_text}->SetValue('Foo Bar');
 
 		$self->Show;
 	}
@@ -434,7 +450,7 @@ sub _dump_regex {
 		next if $child->content eq '';
 		my $class_name = $child->class;
 		$class_name =~ s/PPIx::Regexp:://;
-		$str .= ( " " x ( $level * 4 ) ) . $class_name . "     (" . $child->content . ")\n";
+		$str .= ( ' ' x ( $level * 4 ) ) . $class_name . '     (' . $child->content . ")\n";
 		$str = $self->_dump_regex( $child, $str, $level + 1 );
 	}
 	return $str;
@@ -512,14 +528,14 @@ sub run {
 	};
 	if ($@) {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
-		$self->{matched_text}->SetValue( sprintf( Wx::gettext("Match failure in %s:  %s"), $regex, $@ ) );
+		$self->{matched_text}->SetValue( sprintf( Wx::gettext('Match failure in %s:  %s'), $regex, $@ ) );
 		$self->{matched_text}->EndTextColour;
 		return;
 	}
 
 	if ($warning) {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
-		$self->{matched_text}->SetValue( sprintf( Wx::gettext("Match warning in %s:  %s"), $regex, $warning ) );
+		$self->{matched_text}->SetValue( sprintf( Wx::gettext('Match warning in %s:  %s'), $regex, $warning ) );
 		$self->{matched_text}->EndTextColour;
 		return;
 	}
