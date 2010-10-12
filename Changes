@@ -3,6 +3,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.74 To Be Released
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
+    - automagic MIME type detection: check first for XHTML, then XML, then
+      HTML; more flexible XML detection (ZENOG)
 
 0.72 2010.10.10
     - 'Quick Menu Access' and 'Advanced Preferences' dialogs now completely
