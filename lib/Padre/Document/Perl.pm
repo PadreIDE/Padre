@@ -1776,18 +1776,10 @@ sub event_on_right_down {
 			'perl.introduce_temporary',
 		);
 
-		my $edit_regex = $menu->Append( -1, Wx::gettext("Edit with Regex Editor") );
-		Wx::Event::EVT_MENU(
-			$editor,
-			$edit_regex,
-			sub {
-				my $editor = shift;
-				my $doc    = $self;
-				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
-				$editor->main->open_regex_editor;
-			},
+		$menu->add_menu_action(
+			$menu,
+			'perl.edit_with_regex_editor',
 		);
-
 	} # end if something's selected
 }
 
