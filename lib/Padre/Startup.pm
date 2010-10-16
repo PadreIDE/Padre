@@ -4,7 +4,7 @@ package Padre::Startup;
 
 =head1 NAME
 
-Padre::Startup::Config - Padre start-up related configuration settings
+Padre::Startup - Padre start-up related configuration settings
 
 =head1 DESCRIPTION
 
