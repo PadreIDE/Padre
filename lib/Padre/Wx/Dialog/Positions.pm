@@ -13,7 +13,7 @@ my @positions;
 
 =head1 NAME
 
-Go to previous (or earlier) position
+Padre::Wx::Dialog::Positions - Go to previous (or earlier) position
 
 =head1 SYNOPSIS
 
