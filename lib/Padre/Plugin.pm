@@ -143,7 +143,8 @@ know where to look for your plug-in l10n catalog.
 It defaults to F<$sharedir/locale> (with C<$sharedir> as defined by
 C<File::ShareDir> and thus should work as is for your plug-in if you're
 using the C<install_share> command of L<Module::Install>. If you are
-using L<Module::Build> 0.36 and later, please use C<share_dir> argument.
+using L<Module::Build> version 0.36 and later, please use the C<share_dir>
+new() argument.
 
 Your plug-in catalogs should be named F<$plugin-$locale.po> (or F<.mo>
 for the compiled form) where C<$plugin> is the class name of your plug-in with
