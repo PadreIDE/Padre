@@ -125,7 +125,9 @@ sub task_finish {
 				}
 			)
 		);
-		foreach my $type (qw(pragmata modules attributes methods events)) {
+		my @types = qw(classes grammars packages pragmata modules
+			attributes methods events roles regexes);
+		foreach my $type (@types) {
 			$self->add_subtree( $pkg, $type, $branch );
 		}
 		$self->Expand($branch);
