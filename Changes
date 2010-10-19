@@ -6,6 +6,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - automagic MIME type detection: check first for XHTML, then XML, then
       HTML; more flexible XML detection (ZENOG)
     - Fix #1023: Outline view creates multiple "main" on Windows (AZAWAWI)
+    - Added Perl 6 Outline support (AZAWAWI)
 
 0.72 2010.10.10
     - 'Quick Menu Access' and 'Advanced Preferences' dialogs now completely
