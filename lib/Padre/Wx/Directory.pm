@@ -444,7 +444,14 @@ sub browse_message {
 		if ( $child->IsOk ) {
 
 			# Are we before, after, or a duplicate
-			my $compare = $self->compare( $_[0], $tree->GetPlData($child) );
+			my $chd = $tree->GetPlData($child);
+			if (not defined $_[0] or not defined $chd) {
+				# TODO: this should never happen, but it does and it crashes padre in the compare method
+				# when calling is_directory on the object.
+				warn "Something is wrong as one of the directory objects is undef";
+				next;
+			}
+			my $compare = $self->compare( $_[0], $chd );
 			if ( $compare > 0 ) {
 
 				# Deleted entry, remove the current position
