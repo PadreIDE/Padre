@@ -71,7 +71,7 @@ file content to MIME type or if we should just tell them to
 patch Padre. What if they need it for some internal project?
 
 A plug-in is able to add new supported MIME types. Padre should
-either check for collisions if a plug-in already wants to provide
+either check for collisions if a plug-in wants to provide
 an already supported MIME type or should allow multiple support
 modules with a way to select the current one. (Again I think we
 probably don't need this. People can just come and add the
