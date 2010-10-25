@@ -401,7 +401,7 @@ sub add_mime_class {
 	if ( not $MIME_TYPES{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				Wx::gettext("Mime type was not supported when %s(%s) was called"),
 				'add_mime_class', $mime
 			)
 		);
@@ -411,7 +411,7 @@ sub add_mime_class {
 	if ( $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type already has a class '%s' when %s(%s) was called"),
+				Wx::gettext("Mime type already had a class '%s' when %s(%s) was called"),
 				$MIME_TYPES{$mime}{class}, 'add_mime_class', $mime
 			)
 		);
@@ -437,7 +437,7 @@ sub remove_mime_class {
 	if ( not $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is does not have a class entry when %s(%s) was called"),
+				Wx::gettext("Mime type did not have a class entry when %s(%s) was called"),
 				'remove_mime_class', $mime
 			)
 		);

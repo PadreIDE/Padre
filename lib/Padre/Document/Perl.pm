@@ -905,7 +905,7 @@ sub change_variable_style {
 	if ( not defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext('Current cursor does not seem to point at a variable.'),
-			Wx::gettext('Varable case change'),
+			Wx::gettext('Variable case change'),
 			Wx::wxOK,
 			$self->current->main,
 		);

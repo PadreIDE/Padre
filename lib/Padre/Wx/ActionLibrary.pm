@@ -2459,7 +2459,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'window.last_visited_file_old',
 		label       => _T('Last Visited File'),
-		comment     => _T('Jump between the two last visited files back and force'),
+		comment     => _T('Jump between the two last visited files back and forth'),
 		shortcut    => 'Ctrl-Shift-P',
 		need_editor => 1,
 		menu_event  => sub {
