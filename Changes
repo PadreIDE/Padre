@@ -7,6 +7,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       HTML; more flexible XML detection (ZENOG)
     - Fix #1023: Outline view creates multiple "main" on Windows (AZAWAWI)
     - Added Perl 6 Outline support (AZAWAWI)
+    - Directory tree right-click refresh now triggers a "rebrowse" task to
+      synchronise all filesystem changes from disk to the tree (ADAMK)
 
 0.72 2010.10.10
     - 'Quick Menu Access' and 'Advanced Preferences' dialogs now completely

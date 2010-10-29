@@ -244,7 +244,7 @@ sub on_tree_item_menu {
 
 	Wx::Event::EVT_MENU(
 		$self,
-		$menu->Append( -1, Wx::gettext('Create subdirectory') ),
+		$menu->Append( -1, Wx::gettext('Create Directory') ),
 		sub {
 			my $self = shift;
 			$self->_create_directory($file);
@@ -254,11 +254,11 @@ sub on_tree_item_menu {
 	$menu->AppendSeparator;
 
 	# Updates the directory listing
-	my $refresh = $menu->Append( -1, Wx::gettext('Refresh') );
 	Wx::Event::EVT_MENU(
-		$self, $refresh,
+		$self,
+		$menu->Append( -1, Wx::gettext('Refresh') ),
 		sub {
-			shift->GetParent->refresh;
+			shift->GetParent->rebrowse;
 		}
 	);
 

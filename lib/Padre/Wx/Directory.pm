@@ -403,6 +403,16 @@ sub refresh {
 ######################################################################
 # Browse Methods
 
+# Rebrowse issues a browse task for ALL currently expanded nodes in the
+# browse tree. This will cause all changes on disk to be reflected in the
+# visible browse tree.
+sub rebrowse {
+	TRACE( $_[0] ) if DEBUG;
+	my $self     = shift;
+	my $expanded = $self->{tree}->GetExpandedPlData;
+	$self->browse( @$expanded );
+}
+
 sub browse {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
