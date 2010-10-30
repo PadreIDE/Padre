@@ -73,7 +73,7 @@ sub new {
 		'file.new_p5_distro',
 	);
 
-	if($main->config->feature_file_wizard) {
+	if ( $main->config->feature_file_wizard ) {
 		$file_new->AppendSeparator;
 		$self->add_menu_action(
 			$file_new,

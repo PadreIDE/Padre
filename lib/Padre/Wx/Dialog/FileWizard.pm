@@ -44,7 +44,7 @@ sub new {
 	$self->_bind_events;
 
 	# Wrap everything in a vbox to add some padding
-	$self->SetSizer($self->{sizer});
+	$self->SetSizer( $self->{sizer} );
 	$self->Fit;
 	$self->CentreOnParent;
 
@@ -53,7 +53,7 @@ sub new {
 
 # Create dialog controls
 sub _create_controls {
-	my ( $self ) = @_;
+	my ($self) = @_;
 
 	# Filter label
 	my $filter_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Filter:') );

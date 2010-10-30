@@ -187,7 +187,7 @@ sub init {
 	);
 
 	# The new file wizard feature
-	if($config->feature_file_wizard) {
+	if ( $config->feature_file_wizard ) {
 		Padre::Wx::Action->new(
 			name       => 'file.new_file_wizard',
 			label      => _T('New File Wizard...'),
