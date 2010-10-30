@@ -1275,10 +1275,7 @@ sub init {
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
-
-			#Create and show the dialog
-			my $open_resource_dialog = $_[0]->open_resource;
-			$open_resource_dialog->show;
+			$_[0]->open_resource->show;
 		},
 	);
 
