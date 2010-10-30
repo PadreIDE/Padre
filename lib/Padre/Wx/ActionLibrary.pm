@@ -186,6 +186,18 @@ sub init {
 		},
 	);
 
+	# The new file wizard feature
+	if($config->feature_file_wizard) {
+		Padre::Wx::Action->new(
+			name       => 'file.new_file_wizard',
+			label      => _T('New File Wizard...'),
+			comment    => _T('Create a new document from wizard...'),
+			menu_event => sub {
+				print "The file wizard commands you... :)\n";
+			},
+		);
+	}
+
 	### NOTE: Add support for plugins here
 
 	# Open things
