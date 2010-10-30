@@ -143,6 +143,7 @@ sub refresh {
 		$self->debug->refresh($current);
 	}
 
+	$self->plugins->refresh($current);
 	$self->window->refresh($current);
 	$self->help->refresh($current);
 

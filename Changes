@@ -9,6 +9,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Added Perl 6 Outline support (AZAWAWI)
     - Directory tree right-click refresh now triggers a "rebrowse" task to
       synchronise all filesystem changes from disk to the tree (ADAMK)
+    - The plug-in menu is properly refreshed after closing the key bindings
+      dialog (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
