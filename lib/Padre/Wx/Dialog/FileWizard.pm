@@ -32,19 +32,19 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 450, 250 ] );
+	$self->SetMinSize( [ 360, 340 ] );
 
 	# Create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{sizer} = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	# Create the controls
-	$self->_create_controls($sizer);
+	# Create the controls and buttons
+	$self->_create_controls;
 
 	# Bind the control events
 	$self->_bind_events;
 
 	# Wrap everything in a vbox to add some padding
-	$self->SetSizer($sizer);
+	$self->SetSizer($self->{sizer});
 	$self->Fit;
 	$self->CentreOnParent;
 
@@ -53,7 +53,7 @@ sub new {
 
 # Create dialog controls
 sub _create_controls {
-	my ( $self, $sizer ) = @_;
+	my ( $self ) = @_;
 
 	# Filter label
 	my $filter_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Filter:') );
@@ -62,22 +62,12 @@ sub _create_controls {
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
 
 	# Filtered list
-	$self->{list} = Wx::ListView->new(
+	$self->{list} = Wx::ListBox->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
-	);
-	my @titles = qw(Action Description Shortcut);
-	foreach my $i ( 0 .. 2 ) {
-		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
-		$self->{list}->SetColumnWidth( $i, Wx::wxLIST_AUTOSIZE );
-	}
-
-	# Close button
-	$self->{button_close} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
+		[],
 	);
 
 	#
@@ -89,23 +79,29 @@ sub _create_controls {
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# Button sizer
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $self->{button_close}, 1, Wx::wxLEFT, 5 );
-	$button_sizer->AddSpacer(5);
+	$self->{ok_button} = Wx::Button->new(
+		$self,
+		Wx::wxID_OK,
+		Wx::gettext('&OK'),
+	);
+	$self->{ok_button}->SetDefault;
+	$self->{cancel_button} = Wx::Button->new(
+		$self,
+		Wx::wxID_CANCEL,
+		Wx::gettext('&Cancel'),
+	);
+
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->AddStretchSpacer;
+	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# Main vertical sizer
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->AddSpacer(5);
-	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
-	$vsizer->AddSpacer(5);
-
-	# Store vertical sizer reference for later usage
-	$self->{vsizer} = $vsizer;
-
-	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$self->{sizer}->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$self->{sizer}->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$self->{sizer}->AddSpacer(5);
+	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	$self->{sizer}->AddSpacer(5);
 
 	return;
 }
@@ -132,13 +128,7 @@ sub _bind_events {
 	);
 
 	# Close button
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_close},
-		sub {
-			shift->_on_close_button;
-		}
-	);
+	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button );
 
 	return;
 }
@@ -160,21 +150,12 @@ sub _on_char {
 }
 
 # Private method to handle the selection of an item
-sub _on_list_item_selected {
+sub _on_ok_button {
 	my $self  = shift;
 	my $event = shift;
 
 ##TODO implement
 
-	return;
-}
-
-# Private method to handle the close action
-sub _on_close_button {
-	my $self = shift;
-	my $main = $self->GetParent;
-
-	$self->EndModal(Wx::wxID_CLOSE);
 	return;
 }
 
@@ -185,20 +166,7 @@ sub _update_list {
 
 	# Clear list
 	my $list = $self->{list};
-	$list->DeleteAllItems;
-
-	return;
-}
-
-# Private method to resize list columns
-sub _resize_columns {
-	my $self = shift;
-
-	# Resize all columns but the last to their biggest item width
-	my $list = $self->{list};
-	for ( 0 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
-	}
+	$list->Clear;
 
 	return;
 }
@@ -212,9 +180,6 @@ sub show {
 
 	# Update the preferences list
 	$self->_update_list;
-
-	# resize columns
-	$self->_resize_columns;
 
 	# If it is not shown, show the dialog
 	$self->ShowModal;
