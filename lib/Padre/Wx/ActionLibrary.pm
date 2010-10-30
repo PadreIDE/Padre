@@ -190,8 +190,8 @@ sub init {
 	if ( $config->feature_file_wizard ) {
 		Padre::Wx::Action->new(
 			name       => 'file.new_file_wizard',
-			label      => _T('New File Wizard...'),
-			comment    => _T('Create a new document from wizard...'),
+			label      => _T('File Wizard...'),
+			comment    => _T('Create a new document from the file wizard'),
 			menu_event => sub {
 				$_[0]->file_wizard->show;
 			},
