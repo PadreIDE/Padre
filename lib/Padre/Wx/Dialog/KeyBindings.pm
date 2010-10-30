@@ -583,13 +583,13 @@ shortcut if needed
 
 =head2 C<new>
 
-  my $advanced = Padre::Wx::Dialog::KeyBindings->new($main);
+  my $key_bindings = Padre::Wx::Dialog::KeyBindings->new($main);
 
 Returns a new C<Padre::Wx::Dialog::KeyBindings> instance
 
 =head2 C<show>
 
-  $advanced->show($main);
+  $key_bindings->show($main);
 
 Shows the dialog. Returns C<undef>.
 

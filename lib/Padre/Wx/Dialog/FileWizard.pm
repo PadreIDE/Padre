@@ -241,13 +241,13 @@ This dialog lets the user search for an file wizard and the open it if needed
 
 =head2 C<new>
 
-  my $advanced = Padre::Wx::Dialog::FileWizard->new($main);
+  my $file_wizard = Padre::Wx::Dialog::FileWizard->new($main);
 
 Returns a new C<Padre::Wx::Dialog::FileWizard> instance
 
 =head2 C<show>
 
-  $advanced->show($main);
+  $file_wizard->show($main);
 
 Shows the dialog. Returns C<undef>.
 
