@@ -655,6 +655,15 @@ sub open_resource {
 	return $self->{open_resource};
 }
 
+sub file_wizard {
+	my $self = shift;
+	unless ( defined $self->{file_wizard} ) {
+		require Padre::Wx::Dialog::FileWizard;
+		$self->{file_wizard} = Padre::Wx::Dialog::FileWizard->new($self);
+	}
+	return $self->{file_wizard};
+}
+
 sub help_search {
 	my $self  = shift;
 	my $topic = shift;

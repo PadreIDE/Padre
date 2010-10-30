@@ -193,7 +193,7 @@ sub init {
 			label      => _T('New File Wizard...'),
 			comment    => _T('Create a new document from wizard...'),
 			menu_event => sub {
-				print "The file wizard commands you... :)\n";
+				$_[0]->file_wizard->show;
 			},
 		);
 	}
