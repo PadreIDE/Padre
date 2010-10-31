@@ -657,7 +657,7 @@ sub open_resource {
 
 sub file_wizard {
 	require Padre::Wx::Dialog::FileWizard;
-	return Padre::Wx::Dialog::FileWizard->new($_[0]);
+	return Padre::Wx::Dialog::FileWizard->new( $_[0] );
 }
 
 sub help_search {
@@ -5699,7 +5699,12 @@ sub on_delete_ending_space {
 		my $editor = $current->editor;
 		$editor->ReplaceSelection($code);
 	} else {
+		my $editor      = $current->editor;
+		my $line_number = $editor->GetCurrentLine;
+
 		$document->text_set($code);
+
+		$editor->GotoLine($line_number);
 	}
 }
 
