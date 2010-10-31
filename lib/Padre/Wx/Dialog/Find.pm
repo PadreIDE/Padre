@@ -17,7 +17,6 @@ C<Padre::Wx::Dialog::Find> implements Padre's Find dialogs.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_STRING};
 use Padre::Current               ();
 use Padre::Search                ();
 use Padre::DB                    ();
