@@ -15,6 +15,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       the 'feature_file_wizard' configuration parameter (AZAWAWI)
     - Fix #1029: '"delete trailing spaces" puts the cursor to the start of
       the document' (ZENOG)
+    - Find in Files sets the default search text properly (ADAMK)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
