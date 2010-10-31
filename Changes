@@ -11,7 +11,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       synchronise all filesystem changes from disk to the tree (ADAMK)
     - The plug-in menu is properly refreshed after closing the key bindings
       dialog (AZAWAWI)
-    - Landed file wizard dialog (AZAWAWI)
+    - Added the experimental file wizard dialog which is enabled by
+      the 'feature_file_wizard' configuration parameter (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
