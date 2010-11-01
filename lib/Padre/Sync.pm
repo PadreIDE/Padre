@@ -342,7 +342,7 @@ sub server_to_local {
 =head2 C<english_status>
 
 Will return a string explaining current state of Sync
-dependant on $self->{state}
+dependent on $self->{state}
 
 =cut
 
