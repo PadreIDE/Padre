@@ -2274,6 +2274,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'perl.edit_with_regex_editor',
+		need_editor => 1,
 		label      => _T('Edit with Regex Editor'),
 		comment    => _T('Open the selected text in the Regex Editor'),
 		menu_event => sub {
