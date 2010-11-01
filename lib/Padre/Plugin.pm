@@ -844,10 +844,11 @@ L<Padre::Wx::Main> (main window) object.
 =cut
 
 sub main {
+	my $self = shift;
 	# TODO sometimes Padre crashes here claiming that thing is undef:
 	if (not defined $IDE{ Scalar::Util::refaddr( $_[0] ) }) {
 		Carp::cluck( "UNDEF !!! $_[0]" );
-		return Padre::Current->main;
+		return $self->main; # fixes warning from badcode tests
 	}
 	$IDE{ Scalar::Util::refaddr( $_[0] ) }->wx->main;
 }
