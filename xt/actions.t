@@ -91,7 +91,7 @@ foreach my $action ( sort( keys( %{ $VAR1->{actions} } ) ) ) {
 	if ( $action =~ /^perl\./ ) {
 
 		# All perl actions need a open editor window
-		ok( $VAR1->{actions}->{$action}->{need_editor}, $action . ' requires a editor' );
+		ok( $VAR1->{actions}->{$action}->{need_editor}, $action . ' requires an editor' );
 	}
 
 }
