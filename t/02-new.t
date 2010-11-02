@@ -28,18 +28,28 @@ SCOPE: {
 	my $config = $app->config;
 	isa_ok( $config, 'Padre::Config' );
 
-	is( $config->startup_files            => 'new' );
-	is( $config->main_lockinterface       => 1 );
-	is( $config->main_functions           => 0 );
-	is( $config->main_functions_order     => 'alphabetical' );
-	is( $config->main_outline             => 0 );
-	is( $config->main_directory           => 0 );
-	is( $config->main_output              => 0 );
-	is( $config->main_output_ansi         => 1 );
-	is( $config->main_syntaxcheck         => 0 );
-	is( $config->main_errorlist           => 0 );
-	is( $config->main_statusbar           => 1 );
-	is( $config->editor_font              => '' );
+	is( $config->startup_files        => 'new' );
+	is( $config->main_lockinterface   => 1 );
+	is( $config->main_functions       => 0 );
+	is( $config->main_functions_order => 'alphabetical' );
+	is( $config->main_outline         => 0 );
+	is( $config->main_directory       => 0 );
+	is( $config->main_output          => 0 );
+	is( $config->main_output_ansi     => 1 );
+	is( $config->main_syntaxcheck     => 0 );
+	is( $config->main_errorlist       => 0 );
+	is( $config->main_statusbar       => 1 );
+
+	my $editor_font = $config->editor_font;
+	if ( $^O eq 'MSWin32' ) {
+		ok(
+			($editor_font eq '') || ($editor_font eq 'Consolas 10'), 
+			'editor_font is either empty or Consolas 10 on win32'
+		);
+	} else {
+		is( $editor_font => '' );
+	}
+
 	is( $config->editor_linenumbers       => 1 );
 	is( $config->editor_eol               => 0 );
 	is( $config->editor_indentationguides => 0 );

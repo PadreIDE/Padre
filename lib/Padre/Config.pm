@@ -663,7 +663,8 @@ setting(
 
 # Editor Settings
 my $default_editor_font = '';
-if(Padre::Constant::WIN32) {
+if (Padre::Constant::WIN32) {
+
 	# The default editor font should be Consolas 10pt on Vista and Windows 7
 	require Win32;
 	my $os = Win32::GetOSName;
@@ -1121,6 +1122,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
