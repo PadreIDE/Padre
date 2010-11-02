@@ -816,7 +816,7 @@ sub init {
 			);
 			$editor->UserListShow( 1, $words );
 		},
-	);
+	) if $config->feature_quick_fix;
 
 	Padre::Wx::Action->new(
 		name        => 'edit.autocomp',

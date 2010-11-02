@@ -16,6 +16,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #1029: '"delete trailing spaces" puts the cursor to the start of
       the document' (ZENOG)
     - Find in Files sets the default search text properly (ADAMK)
+    - Quick fix feature is now disabled until it is stable again. You can
+      enable it again by using the 'feature_quick_fix' in the
+      Tools/Preferences/Advanced dialog and then restart Padre (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle

@@ -1108,7 +1108,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
-
+setting(
+	name    => 'feature_quick_fix',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
