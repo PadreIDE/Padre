@@ -662,11 +662,18 @@ setting(
 );
 
 # Editor Settings
+my $default_editor_font = '';
+if(Padre::Constant::WIN32) {
+	# The default editor font should be Consolas 10pt on Vista and Windows 7
+	require Win32;
+	my $os = Win32::GetOSName;
+	$default_editor_font = 'Consolas 10' if $os eq 'WinVista' or $os eq 'Win7';
+}
 setting(
 	name    => 'editor_font',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => '',
+	default => $default_editor_font,
 );
 setting(
 	name    => 'editor_linenumbers',

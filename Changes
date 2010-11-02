@@ -19,6 +19,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Quick fix feature is now disabled until it is stable again. You can
       enable it again by using the 'feature_quick_fix' configuration setting
       in the Tools/Preferences/Advanced dialog and then restart Padre (AZAWAWI)
+    - The default editor font should be Consolas 10pt on Vista and Windows 7
+      (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
