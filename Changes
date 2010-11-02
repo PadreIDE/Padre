@@ -12,13 +12,13 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - The plug-in menu is properly refreshed after closing the key bindings
       dialog (AZAWAWI)
     - Added the experimental file wizard dialog which is enabled by
-      the 'feature_file_wizard' configuration parameter (AZAWAWI)
+      the 'feature_file_wizard' configuration setting (AZAWAWI)
     - Fix #1029: '"delete trailing spaces" puts the cursor to the start of
       the document' (ZENOG)
     - Find in Files sets the default search text properly (ADAMK)
     - Quick fix feature is now disabled until it is stable again. You can
-      enable it again by using the 'feature_quick_fix' in the
-      Tools/Preferences/Advanced dialog and then restart Padre (AZAWAWI)
+      enable it again by using the 'feature_quick_fix' configuration setting
+      in the Tools/Preferences/Advanced dialog and then restart Padre (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
