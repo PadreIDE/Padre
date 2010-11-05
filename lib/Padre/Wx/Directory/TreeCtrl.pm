@@ -159,8 +159,7 @@ sub _create_directory {
 	require File::Basename;
 	my $path = File::Basename::dirname($file);
 	if ( mkdir File::Spec->catdir( $path, $dir_name ) ) {
-
-		# TODO: refresh
+		$self->GetParent->rebrowse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not create: '%s': %s)), $path, $! ) );
 	}
@@ -176,9 +175,7 @@ sub _delete_file {
 	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
 
 	if ( unlink $file ) {
-
-		# TODO: fix the following does not refresh the listing
-		$self->GetParent->refresh;
+		$self->GetParent->rebrowse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not delete: '%s': %s)), $file, $! ) );
 	}
