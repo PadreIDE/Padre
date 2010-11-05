@@ -88,9 +88,6 @@ sub new {
 }
 
 
-
-
-
 ######################################################################
 # Event Handlers
 
@@ -111,8 +108,8 @@ sub on_tree_item_activated {
 	# Open the selected file
 	my $current = $self->current;
 	my $main    = $current->main;
-	my $project = $current->project;
-	my $file    = File::Spec->catfile( $project->root, $data->path );
+	my $file    = File::Spec->catfile( $parent->root, $data->path );
+
 	$main->setup_editor($file);
 	return;
 }
@@ -127,18 +124,12 @@ sub key_up {
 	# see Padre::Wx::Main::key_up
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
 
-	#	print "Mod: $mod Code: $code\n";
-
 	my $current = $self->current;
 	my $main    = $current->main;
 	my $project = $current->project;
 
-	#my $tree    = $main->directory->{tree};
-
 	my $item_id = $self->GetSelection;
 	my $data    = $self->GetPlData($item_id);
-
-	#print "$self, $tree\n";
 
 	return if not $data;
 
@@ -182,7 +173,7 @@ sub _delete_file {
 
 	my $main = $self->main;
 
-	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"'), $file ) );
+	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
 
 	if ( unlink $file ) {
 
