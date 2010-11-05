@@ -722,11 +722,11 @@ msgstr "Eine Datei auf einem entfernten Server öffnen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:233 lib/Padre/Wx/Directory/TreeCtrl.pm:228
 msgid "Open in File Browser"
-msgstr "Im Dateibrowser öffnen"
+msgstr "Im Dateimanager öffnen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:234
 msgid "Opens the current document using the file browser"
-msgstr "Aktuelles Dokument im Datei-Browser öffnen"
+msgstr "Aktuelles Dokument im Dateimanager des Systems öffnen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:243
 msgid "Open with Default System Editor"
@@ -2934,7 +2934,7 @@ msgstr "Konnte '%s' nicht erstellen: %s"
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:185
 #, perl-format
 msgid "Really delete the file \"%s\""
-msgstr "Datei \"%s\" wirklich speichern"
+msgstr "Datei \"%s\" wirklich löschen"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:192
 #, perl-format
