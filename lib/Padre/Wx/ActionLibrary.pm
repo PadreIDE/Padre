@@ -186,14 +186,14 @@ sub init {
 		},
 	);
 
-	# The new file wizard feature
-	if ( $config->feature_file_wizard ) {
+	# The new wizard selector feature
+	if ( $config->feature_wizard_selector ) {
 		Padre::Wx::Action->new(
-			name       => 'file.new_file_wizard',
-			label      => _T('File Wizard...'),
-			comment    => _T('Create a new document from the file wizard'),
+			name       => 'file.wizard_selector',
+			label      => _T('Wizard Selector...'),
+			comment    => _T('Selects and opens a wizard'),
 			menu_event => sub {
-				$_[0]->file_wizard->show;
+				$_[0]->wizard_selector->show;
 			},
 		);
 	}

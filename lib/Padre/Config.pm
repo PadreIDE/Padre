@@ -1111,7 +1111,7 @@ setting(
 	default => 1,
 );
 setting(
-	name    => 'feature_file_wizard',
+	name    => 'feature_wizard_selector',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,

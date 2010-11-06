@@ -655,9 +655,9 @@ sub open_resource {
 	return $self->{open_resource};
 }
 
-sub file_wizard {
-	require Padre::Wx::Dialog::FileWizard;
-	return Padre::Wx::Dialog::FileWizard->new( $_[0] );
+sub wizard_selector {
+	require Padre::Wx::Dialog::WizardSelector;
+	return Padre::Wx::Dialog::WizardSelector->new( $_[0] );
 }
 
 sub help_search {

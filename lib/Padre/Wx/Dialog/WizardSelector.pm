@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::FileWizard;
+package Padre::Wx::Dialog::WizardSelector;
 
 use 5.008;
 use strict;
@@ -25,7 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('File Wizard'),
+		Wx::gettext('Wizard Selector'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
@@ -196,23 +196,23 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::FileWizard - a dialog to filter and open file wizards
+Padre::Wx::Dialog::WizardSelector - a dialog to filter and open wizards
 
 =head1 DESCRIPTION
 
-This dialog lets the user search for an file wizard and the open it if needed
+This dialog lets the user search for a wizard and the open it if needed
 
 =head1 PUBLIC API
 
 =head2 C<new>
 
-  my $file_wizard = Padre::Wx::Dialog::FileWizard->new($main);
+  my $wizard_selector = Padre::Wx::Dialog::WizardSelector->new($main);
 
-Returns a new C<Padre::Wx::Dialog::FileWizard> instance
+Returns a new C<Padre::Wx::Dialog::WizardSelector> instance
 
 =head2 C<show>
 
-  $file_wizard->show($main);
+  $wizard_selector->show($main);
 
 Shows the dialog. Returns C<undef>.
 
