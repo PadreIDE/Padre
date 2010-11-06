@@ -24,6 +24,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #982: '"open file" from directory window has no effect' (ZENOG)
     - Directory tree: "rebrowse" after creating directories and deleting files
       (ZENOG)
+    - Updated the Spanish translation (ENELL)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
