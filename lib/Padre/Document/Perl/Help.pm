@@ -214,31 +214,37 @@ sub _parse_perlopquick {
 }
 
 # Parses wxwidgets.pod (Perl Operator Reference)
+# This feature is enabled only when Padre::Plugin::WxWidgets is installed
 sub _parse_wxwidgets {
 	my $self  = shift;
 	my %index = ();
 
-	# Open wxwidgets.pod for reading
-	my $wxwidgets = File::Spec->join( Padre::Util::sharedir('doc'), 'wxwidgets', 'wxwidgets.pod' );
-	if ( open my $fh, '<', $wxwidgets ) { #-# no critic (RequireBriefOpen)
-		                                  # Add PRECEDENCE to index
-		my $line;
+	eval("require Padre::Plugin::WxWidgets;");
+	if($@) {
+		# Open wxwidgets.pod for reading
+		my $wxwidgets = File::Spec->join( Padre::Util::share('WxWidgets'), 'doc', 'wxwidgets.pod' );
+		if ( open my $fh, '<', $wxwidgets ) { #-# no critic (RequireBriefOpen)
+							  # Add PRECEDENCE to index
+			my $line;
 
-		# Add methods to index
-		my $method;
-		while ( $line = <$fh> ) {
-			if ( $line =~ /=head2\s+(.+)$/ ) {
-				$method = $1;
-				$index{$method} = $line;
-			} elsif ($method) {
-				$index{$method} .= $line;
+			# Add methods to index
+			my $method;
+			while ( $line = <$fh> ) {
+				if ( $line =~ /=head2\s+(.+)$/ ) {
+					$method = $1;
+					$index{$method} = $line;
+				} elsif ($method) {
+					$index{$method} .= $line;
+				}
 			}
-		}
 
-		# and we're done
-		close $fh;
+			# and we're done
+			close $fh;
+		} else {
+			TRACE("Cannot open wxwidgets.pod\n") if DEBUG;
+		}
 	} else {
-		TRACE("Cannot open wxwidgets.pod\n") if DEBUG;
+		TRACE("Padre::Plugin::WxWidgets is not installed\n") if DEBUG;
 	}
 
 	return \%index;
