@@ -214,37 +214,39 @@ sub _parse_perlopquick {
 }
 
 # Parses wxwidgets.pod (Perl Operator Reference)
-# This feature is enabled only when Padre::Plugin::WxWidgets is installed
+# This feature is enabled only when Padre::Plugin::WxWidgets is installed and enabled
 sub _parse_wxwidgets {
 	my $self  = shift;
 	my %index = ();
 
-	eval("require Padre::Plugin::WxWidgets;");
-	if($@) {
-		# Open wxwidgets.pod for reading
-		my $wxwidgets = File::Spec->join( Padre::Util::share('WxWidgets'), 'doc', 'wxwidgets.pod' );
-		if ( open my $fh, '<', $wxwidgets ) { #-# no critic (RequireBriefOpen)
-							  # Add PRECEDENCE to index
-			my $line;
+	
+	# Make sure that the wxWidgets plugin is installed and is enabled
+	my $wxwidgets_plugin = Padre::Current->ide->plugin_manager->plugins->{'Padre::Plugin::WxWidgets'};
+	unless(defined($wxwidgets_plugin) && $wxwidgets_plugin->{status} eq 'enabled') {
+		TRACE("Padre::Plugin::WxWidgets is not installed or enabled\n") if DEBUG;
+		return;
+	}
 
-			# Add methods to index
-			my $method;
-			while ( $line = <$fh> ) {
-				if ( $line =~ /=head2\s+(.+)$/ ) {
-					$method = $1;
-					$index{$method} = $line;
-				} elsif ($method) {
-					$index{$method} .= $line;
-				}
+	# Open {Padre::Plugin::WxWidgets share directory}/doc/wxwidgets.pod for reading
+	my $wxwidgets = File::Spec->join( Padre::Util::share('WxWidgets'), 'doc', 'wxwidgets.pod' );
+	if ( open my $fh, '<', $wxwidgets ) { #-# no critic (RequireBriefOpen)
+						  # Add PRECEDENCE to index
+		
+		# Add methods to index
+		my ($method, $line);
+		while ( $line = <$fh> ) {
+			if ( $line =~ /=head2\s+(.+)$/ ) {
+				$method = $1;
+				$index{$method} = $line;
+			} elsif ($method) {
+				$index{$method} .= $line;
 			}
-
-			# and we're done
-			close $fh;
-		} else {
-			TRACE("Cannot open wxwidgets.pod\n") if DEBUG;
 		}
+
+		# and we're done
+		close $fh;
 	} else {
-		TRACE("Padre::Plugin::WxWidgets is not installed\n") if DEBUG;
+		TRACE("Cannot open $wxwidgets\n") if DEBUG;
 	}
 
 	return \%index;
