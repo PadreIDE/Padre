@@ -54,7 +54,7 @@ $ENV{PADRE_HOME} = $FindBin::Bin;
 use lib $FindBin::Bin, "$FindBin::Bin/lib";
 use privlib::Tools;
 use File::Basename ();
-use Locale::Msgfmt 0.12;
+use Locale::Msgfmt 0.15;
 use Padre::Perl ();
 
 # Due to share functionality, we must have run make

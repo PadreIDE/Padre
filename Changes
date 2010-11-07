@@ -26,6 +26,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       (ZENOG)
     - Updated wxwidgets.pod to include a copyright and license section for
       Debian compatibility (AZAWAWI)
+    - Bumped Locale::Msgfmt dependency to 0.15 (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
