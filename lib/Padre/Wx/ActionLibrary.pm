@@ -1359,8 +1359,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.directory',
-		label       => _T('Show Directory Tree'),
-		comment     => _T('Show a window with a directory browser of the current project'),
+		label       => _T('Show Project Browser/Tree'),
+		comment     => _T('Project Browser - Was known as the Directory Tree.'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
