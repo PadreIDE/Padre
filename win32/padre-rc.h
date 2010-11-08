@@ -6,10 +6,12 @@
 */
 /**
  * @author Olivier Mengué <dolmen@cpan.org>
+ * @author Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
  */
 
 #include <windef.h>
 #include <winuser.h>
+#include <winver.h>
 
 #define IDI_APP           101
 

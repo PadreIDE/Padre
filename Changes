@@ -29,6 +29,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Bumped Locale::Msgfmt dependency to 0.15 (AZAWAWI)
     - Moved wxwidgets.pod to Padre::Plugin::WxWidgets. Please install it if you
       need such support (AZAWAWI)
+    - Added win32 version information to padre.exe. This enables the task manager
+      to display a better descriptive name of the padre.exe process. (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle

@@ -6,6 +6,7 @@
 */
 /**
  * @author Olivier Mengué <dolmen@cpan.org>
+ * @author Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
  */
 
 #include "padre-rc.h"
@@ -38,5 +39,30 @@ BEGIN
    IDS_ERR_RUN,    "Failed to run 'padre' using 'WPerl.exe'"
 END
 
-
-
+VS_VERSION_INFO VERSIONINFO 
+ FILEVERSION 0,72,0,0
+ PRODUCTVERSION 0,72,0,0
+ FILEFLAGSMASK  VS_FFI_FILEFLAGSMASK
+ FILEFLAGS      0L                     //Final version
+ FILEOS         VOS__WINDOWS32
+ FILETYPE       VFT_APP
+ FILESUBTYPE    VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo" 
+    BEGIN
+        BLOCK "040904E4" 
+        BEGIN
+            VALUE "Comments", "Perl Application Development and Refactoring Environment\0" 
+            VALUE "FileDescription", "Perl Application Development and Refactoring Environment\0" 
+            VALUE "FileVersion", "0.72\0" 
+            VALUE "LegalCopyright", "Copyright 2008-2010\0" 
+            VALUE "OriginalFilename", "padre.exe\0" 
+            VALUE "ProductName", "Padre IDE\0" 
+            VALUE "ProductVersion", "0.72\0" 
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
