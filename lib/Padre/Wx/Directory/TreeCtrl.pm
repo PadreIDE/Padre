@@ -151,7 +151,7 @@ sub _create_directory {
 	my $main = $self->main;
 	my $dir_name =
 		$main->prompt( 'Please type in the name of the new directory', 'Create Directory', 'CREATE_DIRECTORY' );
-	return if $dir_name =~ /^\s*$/;
+	return if (!defined($dir_name) || $dir_name =~ /^\s*$/);
 
 	#print "$file  + '$dir_name'\n";
 	# TODO: create directory
