@@ -151,15 +151,13 @@ sub _create_directory {
 	my $main = $self->main;
 	my $dir_name =
 		$main->prompt( 'Please type in the name of the new directory', 'Create Directory', 'CREATE_DIRECTORY' );
-	return if (!defined($dir_name) || $dir_name =~ /^\s*$/);
+	return if ( !defined($dir_name) || $dir_name =~ /^\s*$/ );
 
-	#print "$file  + '$dir_name'\n";
-	# TODO: create directory
 	require File::Spec;
 	require File::Basename;
 	my $path = File::Basename::dirname($file);
 	if ( mkdir File::Spec->catdir( $path, $dir_name ) ) {
-		$self->GetParent->rebrowse;
+		$self->GetParent->browse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not create: '%s': %s)), $path, $! ) );
 	}
@@ -175,7 +173,7 @@ sub _delete_file {
 	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
 
 	if ( unlink $file ) {
-		$self->GetParent->rebrowse;
+		$self->GetParent->browse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not delete: '%s': %s)), $file, $! ) );
 	}

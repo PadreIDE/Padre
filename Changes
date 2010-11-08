@@ -22,7 +22,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - The default editor font should be Consolas 10pt on Vista and Windows 7
       (AZAWAWI)
     - Fix #982: '"open file" from directory window has no effect' (ZENOG)
-    - Directory tree: "rebrowse" after creating directories and deleting files
+    - Directory tree: "browse" after creating directories and deleting files
       (ZENOG)
     - Updated wxwidgets.pod to include a copyright and license section for
       Debian compatibility (AZAWAWI)
