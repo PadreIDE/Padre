@@ -281,27 +281,25 @@ sub build_padre_exe {
 	# Create the blib/bin folder
 	system $^X , qw[-MExtUtils::Command -e mkpath --], $bin;
 
-	# Patch the Padre version number in the win32 executable's manifest
+	# Step 1: Make sure we do not have old files
+	my @temp_files = map {"$src/$_"} qw[ padre.exe.manifest padre-rc.rc padre-rc.res perlxsi.c ];
+	map { unlink } (grep { -f } @temp_files);
+
+	# Step 2: Patch the Padre version number in the win32 executable's manifest
 	# and resource version info
 	$self->_patch_version('win32/padre.exe.manifest');
 	$self->_patch_version('win32/padre-rc.rc');
 
-	# TODO update the version number in win32/padre.exe.manifest
-
-	# Step 1: Make sure we do not have old files
-	my @temp_files = map {"$src/$_"} qw[ padre-rc.res perlxsi.c ];
-	map { unlink } (grep { -f } @temp_files);
-
-	# Step 2: Build Padre's win32 resource using windres
+	# Step 3: Build Padre's win32 resource using windres
 	system qq[cd $src && windres --input padre-rc.rc --output padre-rc.res --output-format=coff];
 
-	# Step 3: Generate xs_init() function for static libraries
+	# Step 4: Generate xs_init() function for static libraries
 	xsinit("$src/perlxsi.c", 0);
 
-	# Step 4: Build padre.exe using $Config{cc}
+	# Step 5: Build padre.exe using $Config{cc}
 	system "cd $src && $Config{cc} -mwin32 -mwindows -Wl,-s padre.c perlxsi.c padre-rc.res -o ../$bin/padre.exe ".ccopts.ldopts;
 
-	# Step 5: Remove temporary files
+	# Step 6: Remove temporary files
 	map { unlink } (grep { -f } @temp_files);
 }
 
