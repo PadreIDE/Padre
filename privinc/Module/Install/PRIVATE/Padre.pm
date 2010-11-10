@@ -12,7 +12,7 @@ use File::Find ();
 use Config;
 use ExtUtils::Embed;
 
-our $VERSION = '0.26';
+our $VERSION = '0.73';
 use base qw{ Module::Install::Base };
 
 sub setup_padre {
@@ -238,11 +238,40 @@ END_MAKEFILE
 
 }
 
+sub _slurp {
+	my $file = shift;
+	open my $fh, '<', $file or die "Could not slurp $file\n";
+	binmode $fh;
+	local $/ = undef;
+	my $content = <$fh>;
+	close $fh;
+	return $content;
+}
+
+sub _patch_version {
+	my ($self, $file) = @_;
+
+	# Patch the Padre version and the win32-comma-separated version
+	if(open my $fh, '>', $file) {
+		my $output = _slurp("$file.in");
+		my $version = $self->version;
+		my $win32_version = $version;
+		$win32_version =~ s/\./,/;
+		$output =~ s/__PADRE_WIN32_VERSION__/$win32_version,0,0/g;
+		$output =~ s/__PADRE_VERSION__/$version/g;
+		print $fh $output;
+		close $fh;
+	} else {
+		die "Could not open $file for writing\n";
+	}
+}
+
 #
 # Builds Padre.exe using gcc
 #
 sub build_padre_exe {
-	
+	my $self = shift;
+
 	print "Building padre.exe\n";
 
 	# source folder
@@ -251,6 +280,11 @@ sub build_padre_exe {
 
 	# Create the blib/bin folder
 	system $^X , qw[-MExtUtils::Command -e mkpath --], $bin;
+
+	# Patch the Padre version number in the win32 executable's manifest
+	# and resource version info
+	$self->_patch_version('win32/padre.exe.manifest');
+	$self->_patch_version('win32/padre-rc.rc');
 
 	# TODO update the version number in win32/padre.exe.manifest
 
