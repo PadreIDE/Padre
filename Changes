@@ -31,6 +31,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       need such support (AZAWAWI)
     - Added win32 version information to padre.exe. This enables the task manager
       to display a better descriptive name of the padre.exe process. (AZAWAWI)
+    - Padre version is now patched into the win32 executable's manifest and
+      resource files during build time (AZAWAWI)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
