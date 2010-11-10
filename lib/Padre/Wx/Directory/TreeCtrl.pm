@@ -3,6 +3,7 @@ package Padre::Wx::Directory::TreeCtrl;
 use 5.008;
 use strict;
 use warnings;
+use File::Path                 ();
 use File::Spec                 ();
 use Padre::Constant            ();
 use Padre::Wx::TreeCtrl        ();
@@ -172,10 +173,13 @@ sub _delete_file {
 
 	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
 
-	if ( unlink $file ) {
+	my $error_ref;
+	File::Path::remove_tree( $file, { error => \$error_ref } );
+
+	if ( scalar @$error_ref == 0 ) {
 		$self->GetParent->browse;
 	} else {
-		$main->error( sprintf( Wx::gettext(q(Could not delete: '%s': %s)), $file, $! ) );
+		$main->error( sprintf Wx::gettext(q(Could not delete: '%s': %s)), $file, ( join ' ', @$error_ref ) );
 	}
 }
 

@@ -33,6 +33,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       to display a better descriptive name of the padre.exe process. (AZAWAWI)
     - Padre version is now patched into the win32 executable's manifest and
       resource files during build time (AZAWAWI)
+    - Directory tree: support deletion of directories (ZENOG)
 
 0.73 not released
     - No incompatible API changes during the 0.74 release cycle
