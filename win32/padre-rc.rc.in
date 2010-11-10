@@ -40,8 +40,8 @@ BEGIN
 END
 
 VS_VERSION_INFO VERSIONINFO 
- FILEVERSION 0,72,0,0
- PRODUCTVERSION 0,72,0,0
+ FILEVERSION [% PADRE_WIN32_VERSION %]
+ PRODUCTVERSION [% PADRE_WIN32_VERSION %]
  FILEFLAGSMASK  VS_FFI_FILEFLAGSMASK
  FILEFLAGS      0L                     //Final version
  FILEOS         VOS__WINDOWS32
@@ -54,11 +54,11 @@ BEGIN
         BEGIN
             VALUE "Comments", "Perl Application Development and Refactoring Environment\0" 
             VALUE "FileDescription", "Perl Application Development and Refactoring Environment\0" 
-            VALUE "FileVersion", "0.72\0" 
+            VALUE "FileVersion", "[% PADRE_VERSION %]\0" 
             VALUE "LegalCopyright", "Copyright 2008-2010\0" 
             VALUE "OriginalFilename", "padre.exe\0" 
             VALUE "ProductName", "Padre IDE\0" 
-            VALUE "ProductVersion", "0.72\0" 
+            VALUE "ProductVersion", "[% PADRE_VERSION %]\0" 
         END
     END
     BLOCK "VarFileInfo"

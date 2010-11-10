@@ -2,7 +2,7 @@
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
 
 	<assemblyIdentity
-		version="0.58.0.0"
+		version="[% PADRE_VERSION %]"
 		processorArchitecture="x86"
 		name="Padre"
 		type="win32"
