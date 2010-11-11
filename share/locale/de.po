@@ -1466,11 +1466,11 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1362
 msgid "Show Project Browser/Tree"
-msgstr "Projektmappe anzeigen"
+msgstr "Projektansicht anzeigen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1363
 msgid "Project Browser - Was known as the Directory Tree."
-msgstr "Projektmappe - war früher der 'Verzeichnisbaum'"
+msgstr "Projektansicht - war früher der 'Verzeichnisbaum'"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1372
 msgid "Show Syntax Check"
