@@ -324,7 +324,7 @@ sub rebless {
 	if ( not $module ) {
 		$self->current->main->error(
 			sprintf(
-				Wx::gettext("No module  mime_type='%s' filename='%s'"),
+				Wx::gettext("No module mime_type='%s' filename='%s'"),
 				$mime_type, $filename
 			)
 		);

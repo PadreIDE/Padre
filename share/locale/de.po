@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-02 14:29+0100\n"
+"POT-Creation-Date: 2010-11-11 15:06+0100\n"
 "PO-Revision-Date: 2010-07-18 16:32+0100\n"
 "Last-Translator: Zeno Gantner\n"
 "Language-Team: German\n"
@@ -194,8 +194,8 @@ msgstr ""
 
 #: lib/Padre/Document.pm:327
 #, perl-format
-msgid "No module  mime_type='%s' filename='%s'"
-msgstr ""
+msgid "No module mime_type='%s' filename='%s'"
+msgstr "Kein Modul mime_type='%s' filename='%s'"
 
 #: lib/Padre/Document.pm:450 lib/Padre/Wx/Editor.pm:213
 #: lib/Padre/Wx/Syntax.pm:394 lib/Padre/Wx/Syntax.pm:420
@@ -234,7 +234,7 @@ msgstr "Warnung: Datei speichern"
 #: lib/Padre/Document.pm:982
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
-msgstr ""
+msgstr "kein stc-Highlighter für den MIME-Type '%s'"
 
 #: lib/Padre/Document.pm:1002
 #, perl-format
@@ -495,26 +495,26 @@ msgstr ""
 #: lib/Padre/MimeTypes.pm:404
 #, perl-format
 msgid "Mime type was not supported when %s(%s) was called"
-msgstr ""
+msgstr "MIME-Typ nicht unterstützt beim Aufruf von %s(%s)"
 
 #: lib/Padre/MimeTypes.pm:414
 #, perl-format
 msgid "Mime type already had a class '%s' when %s(%s) was called"
-msgstr ""
+msgstr "MIME-Typ hat bereits Klasse '%s' beim Aufruf von %s(%s)"
 
 #: lib/Padre/MimeTypes.pm:430 lib/Padre/MimeTypes.pm:456
 #, perl-format
 msgid "Mime type is not supported when %s(%s) was called"
-msgstr ""
+msgstr "MIME-Typ nicht unterstützt beim Aufruf von %s(%s)"
 
 #: lib/Padre/MimeTypes.pm:440
 #, perl-format
 msgid "Mime type did not have a class entry when %s(%s) was called"
-msgstr ""
+msgstr "MIME-Typ hat keine Klasse beim Aufruf von %s(%s)"
 
 #: lib/Padre/MimeTypes.pm:606
 msgid "UNKNOWN"
-msgstr ""
+msgstr "UNBEKANNT"
 
 #: lib/Padre/Wx/Debugger.pm:55
 msgid "Debugger is already running"
@@ -697,12 +697,12 @@ msgid "Setup a skeleton Perl module distribution"
 msgstr "Perl-Distributionsgerüst erstellen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:193
-msgid "File Wizard..."
-msgstr "Datei-Assistent"
+msgid "Wizard Selector..."
+msgstr "Assistenten-Auswahl..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:194
-msgid "Create a new document from the file wizard"
-msgstr "Neues Dokument mit Hilfe des Datei-Assistenten erstellen"
+msgid "Selects and opens a wizard"
+msgstr "Wähle und öffne einen Assistenten"
 
 #: lib/Padre/Wx/ActionLibrary.pm:208
 msgid "&Open"
@@ -720,7 +720,7 @@ msgstr "&URL öffnen..."
 msgid "Open a file from a remote location"
 msgstr "Eine Datei auf einem entfernten Server öffnen"
 
-#: lib/Padre/Wx/ActionLibrary.pm:233 lib/Padre/Wx/Directory/TreeCtrl.pm:228
+#: lib/Padre/Wx/ActionLibrary.pm:233 lib/Padre/Wx/Directory/TreeCtrl.pm:218
 msgid "Open in File Browser"
 msgstr "Im Dateimanager öffnen"
 
@@ -1465,12 +1465,12 @@ msgstr ""
 "Die Struktur (Funktionen, Pragmas, Module) des aktuellen Dokuments anzeigen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1362
-msgid "Show Directory Tree"
-msgstr "Verzeichnis-Baum zeigen"
+msgid "Show Project Browser/Tree"
+msgstr "Projektmappe anzeigen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1363
-msgid "Show a window with a directory browser of the current project"
-msgstr "Den Verzeichnisbaum (komplett oder für das aktuelle Projekt) anzeigen"
+msgid "Project Browser - Was known as the Directory Tree."
+msgstr "Projektmappe - war früher der 'Verzeichnisbaum'"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1372
 msgid "Show Syntax Check"
@@ -1750,35 +1750,35 @@ msgstr "Neuen Variablennamen eingeben und alle Vorkommen umbenennen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1788
 msgid "Change variable to camelCase"
-msgstr ""
+msgstr "Variablenname zu camelCase umschalten"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1789
 msgid "Change variable style from camel_case to camelCase"
-msgstr ""
+msgstr "Ändere den Stil des Variablennamen von camel_case zu camelCase"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1802
 msgid "Change variable to CamelCase"
-msgstr ""
+msgstr "Variablenname zu CamelCase umschalten"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1803
 msgid "Change variable style from camel_case to CamelCase"
-msgstr ""
+msgstr "Ändere den Stil des Variablennamen von camel_case zu CamelCase"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1816
 msgid "Change variable style to using_underscores"
-msgstr ""
+msgstr "Variablenname zu using_underscores umschalten"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1817
 msgid "Change variable style from camelCase to camel_case"
-msgstr ""
+msgstr "Ändere den Stil des Variablennamen von camelCase zu camel_case"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1830
 msgid "Change variable style to Using_Underscores"
-msgstr ""
+msgstr "Variablenname zu Using_Underscores umschalten"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1831
 msgid "Change variable style from camelCase to Camel_Case"
-msgstr ""
+msgstr "Ändere den Stil des Variablennamen von camelCase zu Camel_Case"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1844
 msgid "Extract Subroutine..."
@@ -2747,7 +2747,7 @@ msgstr "Skript-Dateien"
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: lib/Padre/Wx/Main.pm:3786 lib/Padre/Wx/Directory/TreeCtrl.pm:220
+#: lib/Padre/Wx/Main.pm:3786 lib/Padre/Wx/Directory/TreeCtrl.pm:210
 msgid "Open File"
 msgstr "Datei öffnen"
 
@@ -2922,34 +2922,34 @@ msgstr "Bitte warten..."
 msgid "Files"
 msgstr "Dateien"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:82
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
 msgid "Directory"
 msgstr "Verzeichnis"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:163
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr "Konnte '%s' nicht erstellen: %s"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:185
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
 #, perl-format
-msgid "Really delete the file \"%s\""
-msgstr "Datei \"%s\" wirklich löschen"
+msgid "Really delete the file \"%s\"?"
+msgstr "Datei \"%s\" wirklich löschen?"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:192
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:182
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr "Konnte '%s' nicht löschen; %s"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:236
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:226
 msgid "Delete File"
 msgstr "Datei löschen"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:247
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:237
 msgid "Create Directory"
 msgstr "Verzeichnis erstellen"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:259
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
 msgid "Refresh"
 msgstr "Aktualisieren"
 
@@ -3362,16 +3362,16 @@ msgid "Error while trying to perform Padre action: %s"
 msgstr "Fehler beim Ausführen der Aktion %s"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
-#: lib/Padre/Wx/Dialog/FileWizard.pm:85
 #: lib/Padre/Wx/Dialog/OpenResource.pm:176 lib/Padre/Wx/Dialog/OpenURL.pm:62
-#: lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/Goto.pm:93 lib/Padre/Wx/Dialog/WizardSelector.pm:85
 msgid "&OK"
 msgstr "&OK"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
-#: lib/Padre/Wx/Dialog/Preferences.pm:939 lib/Padre/Wx/Dialog/FileWizard.pm:91
+#: lib/Padre/Wx/Dialog/Preferences.pm:939
 #: lib/Padre/Wx/Dialog/OpenResource.pm:182 lib/Padre/Wx/Dialog/Advanced.pm:175
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/Goto.pm:100
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:91
 msgid "&Cancel"
 msgstr "&Abbrechen"
 
@@ -3985,15 +3985,6 @@ msgstr "%d Ersetzung durchgeführt."
 msgid "Replaced %d matches"
 msgstr "%d Ersetzungen durchgeführt."
 
-#: lib/Padre/Wx/Dialog/FileWizard.pm:28
-msgid "File Wizard"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/FileWizard.pm:59 lib/Padre/Wx/Dialog/Advanced.pm:94
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:60
-msgid "&Filter:"
-msgstr "&Filter:"
-
 #: lib/Padre/Wx/Dialog/Warning.pm:41
 msgid "See http://padre.perlide.org/ for update information"
 msgstr "Update-Informationen: http://padre.perlide.org/"
@@ -4064,6 +4055,11 @@ msgstr "Datei/Verzeichnis"
 #: lib/Padre/Wx/Dialog/Advanced.pm:63
 msgid "Advanced Settings"
 msgstr "Experten-Einstellungen"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:94 lib/Padre/Wx/Dialog/KeyBindings.pm:60
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:59
+msgid "&Filter:"
+msgstr "&Filter:"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:107
 msgid "Preference Name"
@@ -4163,10 +4159,11 @@ msgstr "GELÖSCHT"
 
 #: lib/Padre/Wx/Dialog/Positions.pm:107
 msgid "There are no positions saved yet"
-msgstr ""
+msgstr "Es wurden noch keine Positionen gespeichert"
 
-#: lib/Padre/Wx/Dialog/Positions.pm:124
 # perl-format
+#: lib/Padre/Wx/Dialog/Positions.pm:124
+#, perl-format
 msgid "%s. Line: %s File: %s - %s"
 msgstr "%s. Zeile: %s Datei: %s - %s"
 
@@ -4694,6 +4691,10 @@ msgstr "Nichts gefunden"
 msgid "Replace failure in %s:  %s"
 msgstr "Ersetzung fehlgeschlagen in %s: %s"
 
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:28
+msgid "Wizard Selector"
+msgstr "Assistenten-Auswahl"
+
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:31
 msgid "Existing bookmarks:"
 msgstr "Vorhandene Lesezeichen:"
@@ -5099,12 +5100,12 @@ msgstr ""
 msgid "Selection not part of a Perl statement?"
 msgstr "Ist die Auswahl vielleicht kein Teil eines Perl-Befehls?"
 
-#: lib/Padre/Document/Perl/Help.pm:293
+#: lib/Padre/Document/Perl/Help.pm:301
 #, perl-format
 msgid "(Since Perl v%s)"
 msgstr "(seit Perl v%s)"
 
-#: lib/Padre/Document/Perl/Help.pm:296
+#: lib/Padre/Document/Perl/Help.pm:304
 msgid "- DEPRECATED!"
 msgstr "- VERALTET"
 
@@ -5164,6 +5165,16 @@ msgstr "Lade Datei vom FTP-Server..."
 #: lib/Padre/File/FTP.pm:312
 msgid "Writing file to FTP server..."
 msgstr "Sende Datei zum FTP-Server..."
+
+#~ msgid "File Wizard..."
+#~ msgstr "Datei-Assistent"
+
+#~ msgid "Create a new document from the file wizard"
+#~ msgstr "Neues Dokument mit Hilfe des Datei-Assistenten erstellen"
+
+#~ msgid "Show a window with a directory browser of the current project"
+#~ msgstr ""
+#~ "Den Verzeichnisbaum (komplett oder für das aktuelle Projekt) anzeigen"
 
 #~ msgid "Search in Files/Types:"
 #~ msgstr "Suche in Dateien/Typen:"
