@@ -7,7 +7,7 @@ use Carp                ();
 use Scalar::Util        ();
 use Padre::Browser::POD ();
 
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 
 use Class::XSAccessor {
 	getters => {

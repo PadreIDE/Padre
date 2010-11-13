@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Document ();
 
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 our @ISA     = 'Padre::Document';
 
 sub comment_lines_str {

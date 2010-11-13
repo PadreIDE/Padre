@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use utf8;
 
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 
 my $current_dir;
 my @current_list;

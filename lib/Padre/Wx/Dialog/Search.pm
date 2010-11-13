@@ -8,7 +8,7 @@ use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 
 ######################################################################
 # Constructor
