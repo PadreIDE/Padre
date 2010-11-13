@@ -191,15 +191,15 @@ sub _update_list {
 	#TODO no hard-coding
 	my %wizard_data = (
 		'Perl 5' => {
-			'Script' => sub { print 'Perl 5 Script'; },
-			'Test' => sub { print 'Perl 5 Test'; },
-			'Module' => sub { print 'Perl 5 Module'; },
+			'00Script' => sub { print 'Perl 5 Script'; },
+			'01Test' => sub { print 'Perl 5 Test'; },
+			'02Module' => sub { print 'Perl 5 Module'; },
 		},
 		'Perl 6' => {
-			'Script' => sub { print 'Perl 6 Script'; },
-			'Class' => sub { print 'Perl 6 Class'; },
-			'Grammar' => sub { print 'Perl 6 Grammar'; },
-			'Package' => sub { print 'Perl 6 Package'; },
+			'00Script' => sub { print 'Perl 6 Script'; },
+			'01Class' => sub { print 'Perl 6 Class'; },
+			'02Grammar' => sub { print 'Perl 6 Grammar'; },
+			'03Package' => sub { print 'Perl 6 Package'; },
 		},
 	);
 
@@ -212,15 +212,23 @@ sub _update_list {
 		my $category_item;
 		my $unmatched_category = $category !~ /$filter/i;
 		for my $name (sort keys %{$wizard_data{$category}}) {
-			# Ignore the wizard if it does not match the filter
+			#Remove the first 2-digits sorting numbers from the name
+			$name =~ s/^\d\d//;
+
+			# Ignore adding the wizard if it has an unmatched category and 
+			# does not match the filter regex
 			next if $unmatched_category and $name !~ /$filter/i;
+
+			# Add a category if it doesnt exist and append the wizard to the end of it
 			$category_item = $tree->AppendItem($root, $category) unless $category_item;
 			$tree->AppendItem($category_item, $name);
 		}
 
-		if($category eq 'Perl 5' or $filter_not_empty && defined($category_item) && $tree->ItemHasChildren($category_item)) {
-			$tree->Expand($category_item);
-		}
+		# Expand the category only if the 'Perl 5' category 
+		# OR if it has children and the filter is not empty
+		$tree->Expand($category_item) if 
+			 $category eq 'Perl 5' or 
+			($filter_not_empty &&  defined($category_item) && $tree->ItemHasChildren($category_item));
 	}
 
 	return;
