@@ -7,64 +7,51 @@ use Padre::Constant         ();
 use Padre::Config           ();
 use Padre::Wx               ();
 use Padre::Wx::Role::Main   ();
-use Padre::Wx::Role::Dialog ();
 use Padre::Wx::TreeCtrl     ();
 
 our $VERSION = '0.73';
 our @ISA     = qw{
-	Padre::Wx::Role::Main
-	Padre::Wx::Role::Dialog
-	Wx::Dialog
+	Wx::Wizard
 };
 
-# Creates the dialog and returns the instance
+# Creates the wizard dialog and returns the instance
 sub new {
-	my $class = shift;
-	my $main  = shift;
+	my ($class, $parent) = @_;
 
-	# Create the Wx dialog
-	my $self = $class->SUPER::new(
-		$main,
-		-1,
-		Wx::gettext('Wizard Selector'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
-	);
+	# Create the Wx wizard dialog
+	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector (WARNING: Experimental)') );
 
 	# Minimum dialog size
 	$self->SetMinSize( [ 360, 340 ] );
 
-	# Create sizer that will host all controls
-	$self->{sizer} = Wx::BoxSizer->new(Wx::wxVERTICAL);
-
-	# Create the controls and buttons
+	# Create the controls
 	$self->_create_controls;
 
 	# Bind the control events
 	$self->_bind_events;
-
-	# Wrap everything in a vbox to add some padding
-	$self->SetSizer( $self->{sizer} );
-	$self->Fit;
-	$self->CentreOnParent;
 
 	return $self;
 }
 
 # Create dialog controls
 sub _create_controls {
-	my ($self) = @_;
+	my $self = shift;
+
+	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+
+	# first page
+	my $page1 = Wx::WizardPageSimple->new( $self );
+	$self->{page1} = $page1;
 
 	# Filter label
-	my $filter_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Filter:') );
+	my $filter_label = Wx::StaticText->new( $page1, -1, Wx::gettext('&Filter:') );
 
 	# Filter text field
-	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
+	$self->{filter} = Wx::TextCtrl->new( $page1, -1, '' );
 
 	# Filtered list
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
-		$self,
+		$page1,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -82,29 +69,20 @@ sub _create_controls {
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	$self->{ok_button} = Wx::Button->new(
-		$self,
-		Wx::wxID_OK,
-		Wx::gettext('&OK'),
-	);
-	$self->{ok_button}->SetDefault;
-	$self->{cancel_button} = Wx::Button->new(
-		$self,
-		Wx::wxID_CANCEL,
-		Wx::gettext('&Cancel'),
-	);
-
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-
 	# Main vertical sizer
-	$self->{sizer}->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$self->{sizer}->Add( $self->{tree}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$self->{sizer}->AddSpacer(5);
-	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
-	$self->{sizer}->AddSpacer(5);
+	$sizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $self->{tree}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$sizer->AddSpacer(5);
+
+	$page1->SetSizer($sizer);
+	$page1->Fit;
+	
+	# Second dummy page
+	my $page2 = Wx::WizardPageSimple->new( $self );
+	Wx::TextCtrl->new( $page2, -1, "Second page 2" );
+
+	$self->{page1} = $page1;
+	$self->{page2} = $page2;
 
 	return;
 }
@@ -138,9 +116,6 @@ sub _bind_events {
 		}
 	);
 
-	# Close button
-	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button );
-
 	return;
 }
 
@@ -165,16 +140,6 @@ sub _on_tree_item_activated {
 	my ($self, $event) = @_;
 
 	print "_on_tree_item_activated\n";
-
-	return;
-}
-
-# Private method to handle the selection of an item
-sub _on_ok_button {
-	my $self  = shift;
-	my $event = shift;
-
-##TODO implement
 
 	return;
 }
@@ -234,6 +199,9 @@ sub _update_list {
 	return;
 }
 
+sub add_to_tags { qw(managed) }
+sub title { 'wxWizard' }
+
 # Shows the key binding dialog
 sub show {
 	my $self = shift;
@@ -244,8 +212,10 @@ sub show {
 	# Update the preferences list
 	$self->_update_list;
 
-	# If it is not shown, show the dialog
-	$self->ShowModal;
+	Wx::WizardPageSimple::Chain( $self->{page1}, $self->{page2} );
+
+	# Run the wizard selector now :)
+	$self->RunWizard($self->{page1});
 
 	return;
 }
@@ -259,7 +229,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::WizardSelector - a dialog to filter and open wizards
+Padre::Wx::Dialog::WizardSelector - a dialog to filter, select and open wizards
 
 =head1 DESCRIPTION
 
