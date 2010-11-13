@@ -8,6 +8,7 @@ use Padre::Config           ();
 use Padre::Wx               ();
 use Padre::Wx::Role::Main   ();
 use Padre::Wx::Role::Dialog ();
+use Padre::Wx::TreeCtrl     ();
 
 our $VERSION = '0.73';
 our @ISA     = qw{
@@ -62,12 +63,14 @@ sub _create_controls {
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
 
 	# Filtered list
-	$self->{list} = Wx::ListBox->new(
+	$self->{tree} = Padre::Wx::TreeCtrl->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[],
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | 
+		Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS | 
+		Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
 	);
 
 	#
@@ -98,7 +101,7 @@ sub _create_controls {
 
 	# Main vertical sizer
 	$self->{sizer}->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$self->{sizer}->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$self->{sizer}->Add( $self->{tree}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$self->{sizer}->AddSpacer(5);
 	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
 	$self->{sizer}->AddSpacer(5);
@@ -127,6 +130,14 @@ sub _bind_events {
 		}
 	);
 
+	# Open a wizard when a wizard is selected
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self, $self->{tree},
+		sub {
+			shift->_on_tree_item_activated(@_);
+		}
+	);
+
 	# Close button
 	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button );
 
@@ -139,12 +150,21 @@ sub _on_char {
 	my $event = shift;
 	my $code  = $event->GetKeyCode;
 
-	$self->{list}->SetFocus
+	$self->{tree}->SetFocus
 		if ( $code == Wx::WXK_DOWN )
 		or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
 		or ( $code == Wx::WXK_PAGEDOWN );
 
 	$event->Skip(1);
+
+	return;
+}
+
+# Private method to handle tree item activation (i.e. selection)
+sub _on_tree_item_activated {
+	my ($self, $event) = @_;
+
+	print "_on_tree_item_activated\n";
 
 	return;
 }
@@ -165,8 +185,43 @@ sub _update_list {
 	my $filter = quotemeta $self->{filter}->GetValue;
 
 	# Clear list
-	my $list = $self->{list};
-	$list->Clear;
+	my $tree = $self->{tree};
+	$tree->DeleteAllItems;
+
+	#TODO no hard-coding
+	my %wizard_data = (
+		'Perl 5' => {
+			'Script' => sub { print 'Perl 5 Script'; },
+			'Test' => sub { print 'Perl 5 Test'; },
+			'Module' => sub { print 'Perl 5 Module'; },
+		},
+		'Perl 6' => {
+			'Script' => sub { print 'Perl 6 Script'; },
+			'Class' => sub { print 'Perl 6 Class'; },
+			'Grammar' => sub { print 'Perl 6 Grammar'; },
+			'Package' => sub { print 'Perl 6 Package'; },
+		},
+	);
+
+	# Add items to the wizard selection tree
+	my $filter_not_empty = $filter ne '';
+	my $root = $tree->AddRoot('Root');
+	my $perl_5_category_item;
+	for my $category (sort keys %wizard_data) {
+		
+		my $category_item;
+		my $unmatched_category = $category !~ /$filter/i;
+		for my $name (sort keys %{$wizard_data{$category}}) {
+			# Ignore the wizard if it does not match the filter
+			next if $unmatched_category and $name !~ /$filter/i;
+			$category_item = $tree->AppendItem($root, $category) unless $category_item;
+			$tree->AppendItem($category_item, $name);
+		}
+
+		if($category eq 'Perl 5' or $filter_not_empty && defined($category_item) && $tree->ItemHasChildren($category_item)) {
+			$tree->Expand($category_item);
+		}
+	}
 
 	return;
 }
