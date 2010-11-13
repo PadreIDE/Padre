@@ -3,11 +3,11 @@ package Padre::Wx::Dialog::WizardSelector;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant         ();
-use Padre::Config           ();
-use Padre::Wx               ();
-use Padre::Wx::Role::Main   ();
-use Padre::Wx::TreeCtrl     ();
+use Padre::Constant       ();
+use Padre::Config         ();
+use Padre::Wx             ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx::TreeCtrl   ();
 
 our $VERSION = '0.73';
 our @ISA     = qw{
@@ -16,7 +16,7 @@ our @ISA     = qw{
 
 # Creates the wizard dialog and returns the instance
 sub new {
-	my ($class, $parent) = @_;
+	my ( $class, $parent ) = @_;
 
 	# Create the Wx wizard dialog
 	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector (WARNING: Experimental)') );
@@ -40,7 +40,7 @@ sub _create_controls {
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
 	# first page
-	my $page1 = Wx::WizardPageSimple->new( $self );
+	my $page1 = Wx::WizardPageSimple->new($self);
 	$self->{page1} = $page1;
 
 	# Filter label
@@ -55,9 +55,9 @@ sub _create_controls {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | 
-		Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS | 
-		Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE |
+			Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
+			Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
 	);
 
 	#
@@ -76,9 +76,9 @@ sub _create_controls {
 
 	$page1->SetSizer($sizer);
 	$page1->Fit;
-	
+
 	# Second dummy page
-	my $page2 = Wx::WizardPageSimple->new( $self );
+	my $page2 = Wx::WizardPageSimple->new($self);
 	Wx::TextCtrl->new( $page2, -1, "Second page 2" );
 
 	$self->{page1} = $page1;
@@ -110,7 +110,8 @@ sub _bind_events {
 
 	# Open a wizard when a wizard is selected
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self->{tree},
+		$self,
+		$self->{tree},
 		sub {
 			shift->_on_tree_item_activated(@_);
 		}
@@ -137,7 +138,7 @@ sub _on_char {
 
 # Private method to handle tree item activation (i.e. selection)
 sub _on_tree_item_activated {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 
 	print "_on_tree_item_activated\n";
 
@@ -157,12 +158,12 @@ sub _update_list {
 	my %wizard_data = (
 		'Perl 5' => {
 			'00Script' => sub { print 'Perl 5 Script'; },
-			'01Test' => sub { print 'Perl 5 Test'; },
+			'01Test'   => sub { print 'Perl 5 Test'; },
 			'02Module' => sub { print 'Perl 5 Module'; },
 		},
 		'Perl 6' => {
-			'00Script' => sub { print 'Perl 6 Script'; },
-			'01Class' => sub { print 'Perl 6 Class'; },
+			'00Script'  => sub { print 'Perl 6 Script'; },
+			'01Class'   => sub { print 'Perl 6 Class'; },
 			'02Grammar' => sub { print 'Perl 6 Grammar'; },
 			'03Package' => sub { print 'Perl 6 Package'; },
 		},
@@ -172,29 +173,30 @@ sub _update_list {
 	my $filter_not_empty = $filter ne '';
 	my $root = $tree->AddRoot('Root');
 	my $perl_5_category_item;
-	for my $category (sort keys %wizard_data) {
-		
+	for my $category ( sort keys %wizard_data ) {
+
 		my $category_item;
 		my $unmatched_category = $category !~ /$filter/i;
-		for my $name (sort keys %{$wizard_data{$category}}) {
+		for my $name ( sort keys %{ $wizard_data{$category} } ) {
+
 			#Remove the first 2-digits sorting numbers from the name
 			$name =~ s/^\d\d//;
 
-			# Ignore adding the wizard if it has an unmatched category and 
+			# Ignore adding the wizard if it has an unmatched category and
 			# does not match the filter regex
 			next if $unmatched_category and $name !~ /$filter/i;
 
 			# Add a category if it doesnt exist and append the wizard to the end of it
-			$category_item = $tree->AppendItem($root, $category) unless $category_item;
-			$tree->AppendItem($category_item, $name);
+			$category_item = $tree->AppendItem( $root, $category ) unless $category_item;
+			$tree->AppendItem( $category_item, $name );
 		}
 
-		# Expand the defined category only if it the 'Perl 5' category 
+		# Expand the defined category only if it the 'Perl 5' category
 		# OR if it has children and the filter is not empty
-		$tree->Expand($category_item) if
-			defined($category_item) and (
-			 $category eq 'Perl 5' or 
-			($filter_not_empty && $tree->ItemHasChildren($category_item)));
+		$tree->Expand($category_item)
+			if defined($category_item)
+				and ( $category eq 'Perl 5'
+					or ( $filter_not_empty && $tree->ItemHasChildren($category_item) ) );
 	}
 
 	return;
@@ -213,7 +215,7 @@ sub show {
 	Wx::WizardPageSimple::Chain( $self->{page1}, $self->{page2} );
 
 	# Run the wizard selector now :)
-	$self->RunWizard($self->{page1});
+	$self->RunWizard( $self->{page1} );
 
 	return;
 }
