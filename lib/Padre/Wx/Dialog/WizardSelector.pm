@@ -189,18 +189,16 @@ sub _update_list {
 			$tree->AppendItem($category_item, $name);
 		}
 
-		# Expand the category only if the 'Perl 5' category 
+		# Expand the defined category only if it the 'Perl 5' category 
 		# OR if it has children and the filter is not empty
-		$tree->Expand($category_item) if 
+		$tree->Expand($category_item) if
+			defined($category_item) and (
 			 $category eq 'Perl 5' or 
-			($filter_not_empty &&  defined($category_item) && $tree->ItemHasChildren($category_item));
+			($filter_not_empty && $tree->ItemHasChildren($category_item)));
 	}
 
 	return;
 }
-
-sub add_to_tags { qw(managed) }
-sub title { 'wxWizard' }
 
 # Shows the key binding dialog
 sub show {
