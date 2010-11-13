@@ -410,7 +410,7 @@ sub rebrowse {
 	TRACE( $_[0] ) if DEBUG;
 	my $self     = shift;
 	my $expanded = $self->{tree}->GetExpandedPlData;
-	$self->browse( @$expanded );
+	$self->browse(@$expanded);
 }
 
 sub browse {
@@ -455,7 +455,8 @@ sub browse_message {
 
 			# Are we before, after, or a duplicate
 			my $chd = $tree->GetPlData($child);
-			if (not defined $_[0] or not defined $chd) {
+			if ( not defined $_[0] or not defined $chd ) {
+
 				# TODO: this should never happen, but it does and it crashes padre in the compare method
 				# when calling is_directory on the object.
 				warn "Something is wrong as one of the directory objects is undef";

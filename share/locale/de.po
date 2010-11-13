@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-11 15:06+0100\n"
+"POT-Creation-Date: 2010-11-13 10:50+0100\n"
 "PO-Revision-Date: 2010-07-18 16:32+0100\n"
 "Last-Translator: Zeno Gantner\n"
 "Language-Team: German\n"
@@ -597,7 +597,7 @@ msgid ""
 "commands. If it does not work, blame szabgab.\n"
 "\n"
 msgstr ""
-"Experimentelles feature. Geben Sie '?' für eine Befehlsliste eine. Falls es "
+"Experimentelles Feature. Geben Sie '?' für eine Befehlsliste eine. Falls es "
 "nicht funktioniert, beschweren Sie sich bitte bei szabgab.\n"
 "\n"
 
@@ -3363,7 +3363,7 @@ msgstr "Fehler beim Ausführen der Aktion %s"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
 #: lib/Padre/Wx/Dialog/OpenResource.pm:176 lib/Padre/Wx/Dialog/OpenURL.pm:62
-#: lib/Padre/Wx/Dialog/Goto.pm:93 lib/Padre/Wx/Dialog/WizardSelector.pm:85
+#: lib/Padre/Wx/Dialog/Goto.pm:93
 msgid "&OK"
 msgstr "&OK"
 
@@ -3371,7 +3371,6 @@ msgstr "&OK"
 #: lib/Padre/Wx/Dialog/Preferences.pm:939
 #: lib/Padre/Wx/Dialog/OpenResource.pm:182 lib/Padre/Wx/Dialog/Advanced.pm:175
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/Goto.pm:100
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:91
 msgid "&Cancel"
 msgstr "&Abbrechen"
 
@@ -3715,7 +3714,8 @@ msgstr "Auto-Vervollständigung für Klammern"
 msgid ""
 "Add another closing bracket if there is already one (and the 'Autocomplete "
 "brackets' above is enabled)"
-msgstr ""
+msgstr "Weitere schließende Klammer hinzufügen falls bereits eine vorhanden ist "
+"(und 'Auto-Vervollständigung für Klammern' weiter oben aktiviert ist)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:376
 msgid "Enable Smart highlighting while typing"
@@ -4057,7 +4057,7 @@ msgid "Advanced Settings"
 msgstr "Experten-Einstellungen"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:94 lib/Padre/Wx/Dialog/KeyBindings.pm:60
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:59
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
 msgid "&Filter:"
 msgstr "&Filter:"
 
@@ -4691,9 +4691,9 @@ msgstr "Nichts gefunden"
 msgid "Replace failure in %s:  %s"
 msgstr "Ersetzung fehlgeschlagen in %s: %s"
 
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:28
-msgid "Wizard Selector"
-msgstr "Assistenten-Auswahl"
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:22
+msgid "Wizard Selector (WARNING: Experimental)"
+msgstr ""
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:31
 msgid "Existing bookmarks:"
@@ -5165,6 +5165,9 @@ msgstr "Lade Datei vom FTP-Server..."
 #: lib/Padre/File/FTP.pm:312
 msgid "Writing file to FTP server..."
 msgstr "Sende Datei zum FTP-Server..."
+
+#~ msgid "Wizard Selector"
+#~ msgstr "Assistenten-Auswahl"
 
 #~ msgid "File Wizard..."
 #~ msgstr "Datei-Assistent"

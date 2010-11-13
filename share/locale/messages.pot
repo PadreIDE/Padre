@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-11 15:06+0100\n"
+"POT-Creation-Date: 2010-11-13 10:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3266,7 +3266,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
 #: lib/Padre/Wx/Dialog/OpenResource.pm:176 lib/Padre/Wx/Dialog/OpenURL.pm:62
-#: lib/Padre/Wx/Dialog/Goto.pm:93 lib/Padre/Wx/Dialog/WizardSelector.pm:85
+#: lib/Padre/Wx/Dialog/Goto.pm:93
 msgid "&OK"
 msgstr ""
 
@@ -3274,7 +3274,6 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Preferences.pm:939
 #: lib/Padre/Wx/Dialog/OpenResource.pm:182 lib/Padre/Wx/Dialog/Advanced.pm:175
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/Goto.pm:100
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:91
 msgid "&Cancel"
 msgstr ""
 
@@ -3948,7 +3947,7 @@ msgid "Advanced Settings"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:94 lib/Padre/Wx/Dialog/KeyBindings.pm:60
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:59
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
 msgid "&Filter:"
 msgstr ""
 
@@ -4580,8 +4579,8 @@ msgstr ""
 msgid "Replace failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:28
-msgid "Wizard Selector"
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:22
+msgid "Wizard Selector (WARNING: Experimental)"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:31

@@ -109,6 +109,7 @@ sub _no_positions_yet {
 	);
 	return;
 }
+
 sub show_positions {
 	my $class = shift;
 	my $main  = shift;
@@ -118,17 +119,20 @@ sub show_positions {
 	my $position = $main->single_choice(
 		Wx::gettext('Choose File'),
 		'',
-		[reverse map {
-			sprintf(Wx::gettext("%s. Line: %s File: %s - %s"),
-				$_, 
-				$positions[$_-1]{line}, 
-				$positions[$_-1]{file}, 
-				$positions[$_-1]{name})
-		} 1..@positions ],
+		[   reverse map {
+				sprintf(
+					Wx::gettext("%s. Line: %s File: %s - %s"),
+					$_,
+					$positions[ $_ - 1 ]{line},
+					$positions[ $_ - 1 ]{file},
+					$positions[ $_ - 1 ]{name}
+					)
+				} 1 .. @positions
+		],
 	);
 	return if not defined $position;
-	if ($position =~ /^(\d+)\./) {
-		$class->goto_position($main, $1-1);
+	if ( $position =~ /^(\d+)\./ ) {
+		$class->goto_position( $main, $1 - 1 );
 	}
 	return;
 }

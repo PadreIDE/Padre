@@ -2273,11 +2273,11 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name       => 'perl.edit_with_regex_editor',
+		name        => 'perl.edit_with_regex_editor',
 		need_editor => 1,
-		label      => _T('Edit with Regex Editor'),
-		comment    => _T('Open the selected text in the Regex Editor'),
-		menu_event => sub {
+		label       => _T('Edit with Regex Editor'),
+		comment     => _T('Open the selected text in the Regex Editor'),
+		menu_event  => sub {
 			my $document = Padre::Current->document or return;
 			return unless Params::Util::_INSTANCE( $document, 'Padre::Document::Perl' );
 			Padre::Current->main->open_regex_editor;

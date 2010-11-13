@@ -90,6 +90,7 @@ sub run {
 	$self->save;
 
 	if ( $result == Wx::wxID_CANCEL ) {
+
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
 		my $editor = $self->current->editor;

@@ -219,10 +219,10 @@ sub _parse_wxwidgets {
 	my $self  = shift;
 	my %index = ();
 
-	
+
 	# Make sure that the wxWidgets plugin is installed and is enabled
 	my $wxwidgets_plugin = Padre::Current->ide->plugin_manager->plugins->{'Padre::Plugin::WxWidgets'};
-	unless(defined($wxwidgets_plugin) && $wxwidgets_plugin->{status} eq 'enabled') {
+	unless ( defined($wxwidgets_plugin) && $wxwidgets_plugin->{status} eq 'enabled' ) {
 		TRACE("Padre::Plugin::WxWidgets is not installed or enabled\n") if DEBUG;
 		return;
 	}
@@ -230,10 +230,10 @@ sub _parse_wxwidgets {
 	# Open {Padre::Plugin::WxWidgets share directory}/doc/wxwidgets.pod for reading
 	my $wxwidgets = File::Spec->join( Padre::Util::share('WxWidgets'), 'doc', 'wxwidgets.pod' );
 	if ( open my $fh, '<', $wxwidgets ) { #-# no critic (RequireBriefOpen)
-						  # Add PRECEDENCE to index
-		
+		                                  # Add PRECEDENCE to index
+
 		# Add methods to index
-		my ($method, $line);
+		my ( $method, $line );
 		while ( $line = <$fh> ) {
 			if ( $line =~ /=head2\s+(.+)$/ ) {
 				$method = $1;
