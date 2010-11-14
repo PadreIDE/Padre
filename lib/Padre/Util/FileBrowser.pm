@@ -18,7 +18,7 @@ use strict;
 use warnings;
 
 # package exports and version
-our $VERSION = '0.74';
+our $VERSION = '0.75';
 
 use Padre::Constant ();
 

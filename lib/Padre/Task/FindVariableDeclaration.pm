@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Task::PPI ();
 
-our $VERSION = '0.74';
+our $VERSION = '0.75';
 our @ISA     = 'Padre::Task::PPI';
 
 =pod

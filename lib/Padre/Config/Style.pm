@@ -13,7 +13,7 @@ use Params::Util    ();
 use Padre::Constant ();
 use Padre::Util     ('_T');
 
-our $VERSION = '0.74';
+our $VERSION = '0.75';
 
 
 
