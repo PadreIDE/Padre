@@ -52,7 +52,6 @@ sub add_controls {
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$sizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$sizer->Add( $self->{tree}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$sizer->AddSpacer(5);
 
 	$self->SetSizer($sizer);
 	$self->Fit;
