@@ -12,10 +12,13 @@ our @ISA     = qw{
 };
 
 sub new {
-	my ( $class, $parent ) = @_;
+	my ( $class, $wizard ) = @_;
 
 	# Creates the panel
-	my $self = $class->SUPER::new( $parent );
+	my $self = $class->SUPER::new( $wizard );
+
+	# Store the wizard for later usage
+	$self->{wizard} = $wizard;
 
 	# Add the controls
 	$self->add_controls;
@@ -50,8 +53,20 @@ sub add_controls { }
 =cut
 sub add_events { }
 
-1;
+=pod
+	Called when the wizard page is going to be shown
+=cut
+sub show { }
 
+=pod
+	Convenience method to display status on the wizard's header
+=cut
+sub update_status {
+	$_[0]->{wizard}->{status}->SetLabel($_[1]);
+}
+
+
+1;
 
 __END__
 

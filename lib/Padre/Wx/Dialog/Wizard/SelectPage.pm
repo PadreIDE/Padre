@@ -77,7 +77,7 @@ sub add_events {
 		}
 	);
 
-	# Open a wizard when a wizard is selected
+	# Open a wizard when a wizard is activated (i.e. clicked)
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self,
 		$self->{tree},
@@ -85,6 +85,16 @@ sub add_events {
 			shift->_on_tree_item_activated(@_);
 		}
 	);
+	
+	# Update status text when a wizard is selected
+	Wx::Event::EVT_TREE_SEL_CHANGED (
+		$self,
+		$self->{tree},
+		sub {
+			shift->_on_tree_selection_changed(@_);
+		}
+	);
+	
 }
 
 # Private method to handle on character pressed event
@@ -103,11 +113,24 @@ sub _on_char {
 	return;
 }
 
-# Private method to handle tree item activation (i.e. selection)
+# Private method to handle tree item activation (i.e. clicking)
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	print "_on_tree_item_activated\n";
+	my $tree_item_id = $event->GetItem;
+	my $item_text = $self->{tree}->GetItemText($tree_item_id);
+	$self->update_status($item_text);
+
+	return;
+}
+
+# Private method to handle tree selection change
+sub _on_tree_selection_changed {
+	my ( $self, $event ) = @_;
+
+	my $tree_item_id = $event->GetItem;
+	my $item_text = $self->{tree}->GetItemText($tree_item_id);
+	$self->update_status($item_text);
 
 	return;
 }

@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 
 our $VERSION = '0.75';
 our @ISA     = qw{
@@ -17,6 +18,9 @@ sub new {
 
 	# Create the Wx wizard dialog
 	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector (Experimental)') );
+
+	# Dialog's icon as is the same as Padre
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Minimum dialog size
 	$self->SetMinSize( [ 360, 340 ] );
@@ -121,11 +125,21 @@ sub button_cancel {
 	$_[0]->Destroy;
 }
 
+sub show_page {
+	my ($self, $page) = @_;
+	
+	$self->SetLabel($page->get_title);
+	$self->{title}->SetLabel($page->get_name);
+	$self->{status}->SetLabel('');
+
+	$page->show;
+}
+
 # Shows the wizard dialog
 sub show {
 	my $self = shift;
 
-	$self->{select_page}->show;
+	$self->show_page($self->{select_page});
 
 	$self->ShowModal;
 
