@@ -34,6 +34,9 @@ sub new {
 sub _create_controls {
 	my $self = shift;
 
+	require Padre::Wx::Dialog::Wizard::SelectPage;
+	$self->{select_page} = Padre::Wx::Dialog::Wizard::SelectPage->new($self);
+
 	return;
 }
 
@@ -48,6 +51,8 @@ sub _bind_events {
 # Shows the wizard dialog
 sub show {
 	my $self = shift;
+
+	$self->{select_page}->show;
 
 	$self->ShowModal;
 

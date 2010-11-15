@@ -6,11 +6,10 @@ use warnings;
 
 use Padre::Wx             ();
 use Padre::Wx::TreeCtrl   ();
+use Padre::Wx::Dialog::WizardPage ();
 
 our $VERSION = '0.75';
-our @ISA     = qw{
-	Padre::Wx::Dialog::WizardPage;
-};
+our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
 sub get_name {
 	return "Select a Wizard"
@@ -172,6 +171,8 @@ sub _update_list {
 }
 
 sub show {
+	my $self = shift;
+
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
 
