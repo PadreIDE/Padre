@@ -61,7 +61,7 @@ sub clear {
 sub set_column_widths {
 	my $self = shift;
 
-	my $width0 = $self->GetCharWidth * length( Wx::gettext("Status") ) + 16;
+	my $width0 = $self->GetCharWidth * length( Wx::gettext('Status') ) + 16;
 	my $width1 = $self->GetSize->GetWidth - $width0;
 
 	#my $width1 = $self->GetCharWidth * ( length("blabla") + 2 );

@@ -41,7 +41,7 @@ sub get_modules {
 	my $i           = 0;
 	my @modules;
 	foreach my $module ( @{ $self->{modules} } ) {
-		next if $module !~ /$regex/;
+		next if $module !~ /$regex/i;
 		$i++;
 		last if $i > $MAX_DISPLAY;
 		push @modules, $module;
@@ -85,7 +85,7 @@ sub cpan_config {
 		return;
 	}
 
-	$main->error( Wx::gettext("Failed to find your CPAN configuration") );
+	$main->error( Wx::gettext('Failed to find your CPAN configuration') );
 }
 
 
@@ -102,7 +102,7 @@ sub install_file {
 	# Ask what we should install
 	my $dialog = Wx::FileDialog->new(
 		$main,
-		Wx::gettext("Select distribution to install"),
+		Wx::gettext('Select distribution to install'),
 		'',                                  # Default directory
 		'',                                  # Default file
 		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
@@ -115,7 +115,7 @@ sub install_file {
 	my $string = $dialog->GetPath;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error( Wx::gettext("Did not provide a distribution") );
+		$main->error( Wx::gettext('Did not provide a distribution') );
 		return;
 	}
 
@@ -129,8 +129,8 @@ sub install_url {
 	# Ask what we should install
 	my $dialog = Wx::TextEntryDialog->new(
 		$main,
-		Wx::gettext("Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"),
-		"pip",
+		Wx::gettext('Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz'),
+		Wx::gettext('Install Local Distribution'),
 		'',
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -139,7 +139,7 @@ sub install_url {
 	my $string = $dialog->GetValue;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error( Wx::gettext("Did not provide a distribution") );
+		$main->error( Wx::gettext('Did not provide a distribution') );
 		return;
 	}
 
@@ -175,7 +175,7 @@ sub install_cpanm {
 		}
 	}
 	unless ($cpanm) {
-		$main->error( Wx::gettext("cpanm is unexpectedly not installed") );
+		$main->error( Wx::gettext('cpanm is unexpectedly not installed') );
 		return;
 	}
 
