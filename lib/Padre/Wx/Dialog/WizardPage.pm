@@ -3,12 +3,28 @@ package Padre::Wx::Dialog::WizardPage;
 use 5.008;
 use strict;
 use warnings;
+
 use Padre::Wx             ();
 
 our $VERSION = '0.75';
 our @ISA     = qw{
 	Wx::Panel
 };
+
+sub new {
+	my ( $class, $parent ) = @_;
+
+	# Creates the panel
+	my $self = $class->SUPER::new( $parent );
+
+	# Add the controls
+	$self->add_controls;
+
+	# Add the events
+	$self->add_events;
+
+	return $self;
+}
 
 =pod
 	Returns the wizard page name
@@ -23,6 +39,16 @@ sub get_name {
 sub get_title {
 	return "Wizard Title";
 }
+
+=pod
+	Adds the controls
+=cut
+sub add_controls { }
+
+=pod
+	Adds the control events
+=cut
+sub add_events { }
 
 1;
 
