@@ -3,10 +3,7 @@ package Padre::Wx::Dialog::WizardSelector;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant       ();
-use Padre::Config         ();
 use Padre::Wx             ();
-use Padre::Wx::Role::Main ();
 use Padre::Wx::TreeCtrl   ();
 
 our $VERSION = '0.75';
