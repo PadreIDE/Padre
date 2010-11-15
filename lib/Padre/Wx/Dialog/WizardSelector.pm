@@ -63,10 +63,10 @@ sub _add_controls {
 	$button_sizer->Add( $self->{button_cancel}, 0, 0, 0 );
 
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $top_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$sizer->Add( $self->{select_page}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$sizer->AddSpacer(5);
-	$sizer->Add( $button_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $top_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $self->{select_page}, 1, Wx::wxALL | Wx::wxEXPAND,  2 );
+	$sizer->AddSpacer(2);
+	$sizer->Add( $button_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	
 	$self->SetSizer($sizer);
 	$self->Fit;
