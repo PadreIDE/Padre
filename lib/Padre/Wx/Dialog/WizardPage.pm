@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Wx             ();
+use Padre::Wx ();
 
 our $VERSION = '0.75';
 our @ISA     = qw{
@@ -15,7 +15,7 @@ sub new {
 	my ( $class, $wizard ) = @_;
 
 	# Creates the panel
-	my $self = $class->SUPER::new( $wizard );
+	my $self = $class->SUPER::new($wizard);
 
 	# Store the wizard for later usage
 	$self->{wizard} = $wizard;
@@ -32,13 +32,15 @@ sub new {
 =pod
 	Returns the wizard page name
 =cut
+
 sub get_name {
-	return "Wizard Name"
+	return "Wizard Name";
 }
 
 =pod
 	Returns the wizard page title
 =cut
+
 sub get_title {
 	return "Wizard Title";
 }
@@ -46,23 +48,27 @@ sub get_title {
 =pod
 	Adds the controls
 =cut
+
 sub add_controls { }
 
 =pod
 	Adds the control events
 =cut
+
 sub add_events { }
 
 =pod
 	Called when the wizard page is going to be shown
 =cut
+
 sub show { }
 
 =pod
 	Convenience method to display status on the wizard's header
 =cut
+
 sub update_status {
-	$_[0]->{wizard}->{status}->SetLabel($_[1]);
+	$_[0]->{wizard}->{status}->SetLabel( $_[1] );
 }
 
 

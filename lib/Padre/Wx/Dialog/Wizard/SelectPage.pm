@@ -4,19 +4,19 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Wx             ();
-use Padre::Wx::TreeCtrl   ();
+use Padre::Wx                     ();
+use Padre::Wx::TreeCtrl           ();
 use Padre::Wx::Dialog::WizardPage ();
 
 our $VERSION = '0.75';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
 sub get_name {
-	return "Select a Wizard"
+	return Wx::gettext("Select a Wizard");
 }
 
 sub get_title {
-	return "Wizard Selector";
+	return Wx::gettext("Wizard Selector");
 }
 
 sub add_controls {
@@ -85,16 +85,16 @@ sub add_events {
 			shift->_on_tree_item_activated(@_);
 		}
 	);
-	
+
 	# Update status text when a wizard is selected
-	Wx::Event::EVT_TREE_SEL_CHANGED (
+	Wx::Event::EVT_TREE_SEL_CHANGED(
 		$self,
 		$self->{tree},
 		sub {
 			shift->_on_tree_selection_changed(@_);
 		}
 	);
-	
+
 }
 
 # Private method to handle on character pressed event
@@ -118,7 +118,7 @@ sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
 	my $tree_item_id = $event->GetItem;
-	my $item_text = $self->{tree}->GetItemText($tree_item_id);
+	my $item_text    = $self->{tree}->GetItemText($tree_item_id);
 	$self->update_status($item_text);
 
 	return;
@@ -129,7 +129,7 @@ sub _on_tree_selection_changed {
 	my ( $self, $event ) = @_;
 
 	my $tree_item_id = $event->GetItem;
-	my $item_text = $self->{tree}->GetItemText($tree_item_id);
+	my $item_text    = $self->{tree}->GetItemText($tree_item_id);
 	$self->update_status($item_text);
 
 	return;

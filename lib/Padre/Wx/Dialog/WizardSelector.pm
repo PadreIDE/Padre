@@ -4,8 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Wx             ();
-use Padre::Wx::Icon       ();
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
 
 our $VERSION = '0.75';
 our @ISA     = qw{
@@ -36,9 +36,9 @@ sub new {
 sub _add_controls {
 	my $self = shift;
 
-	$self->{title} = Wx::StaticText->new($self, -1, 'Name');
-	$self->{status} = Wx::StaticText->new($self, -1, 'Status');
-	my $banner = Wx::StaticBitmap->new($self,-1,Padre::Wx::Icon::find("places/stock_folder"));
+	$self->{title}  = Wx::StaticText->new( $self, -1, 'Name' );
+	$self->{status} = Wx::StaticText->new( $self, -1, 'Status' );
+	my $banner = Wx::StaticBitmap->new( $self, -1, Padre::Wx::Icon::find("places/stock_folder") );
 
 	my $title_font = $self->{title}->GetFont;
 	$title_font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
@@ -46,19 +46,19 @@ sub _add_controls {
 	$self->{title}->SetFont($title_font);
 
 	my $header_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$header_sizer->Add( $self->{title}, 0, 0, 0 );
+	$header_sizer->Add( $self->{title},  0, 0, 0 );
 	$header_sizer->Add( $self->{status}, 0, 0, 0 );
-	
+
 	my $top_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$top_sizer->Add( $header_sizer, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$top_sizer->Add( $banner, 0, Wx::wxALIGN_RIGHT, 0 );
-	
+	$top_sizer->Add( $banner,       0, Wx::wxALIGN_RIGHT,        0 );
+
 	require Padre::Wx::Dialog::Wizard::SelectPage;
 	$self->{select_page} = Padre::Wx::Dialog::Wizard::SelectPage->new($self);
 
-	$self->{button_back} = Wx::Button->new($self, -1, Wx::gettext('&Back'));
-	$self->{button_next} = Wx::Button->new($self, -1, Wx::gettext('&Next'));
-	$self->{button_cancel} = Wx::Button->new($self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'));
+	$self->{button_back}   = Wx::Button->new( $self, -1,              Wx::gettext('&Back') );
+	$self->{button_next}   = Wx::Button->new( $self, -1,              Wx::gettext('&Next') );
+	$self->{button_cancel} = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Cancel') );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_back}, 0, 0, 0 );
@@ -67,11 +67,11 @@ sub _add_controls {
 	$button_sizer->Add( $self->{button_cancel}, 0, 0, 0 );
 
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $top_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$sizer->Add( $self->{select_page}, 1, Wx::wxALL | Wx::wxEXPAND,  2 );
+	$sizer->Add( $top_sizer,           0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $self->{select_page}, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$sizer->AddSpacer(2);
 	$sizer->Add( $button_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	
+
 	$self->SetSizer($sizer);
 	$self->Fit;
 
@@ -109,7 +109,7 @@ sub _add_events {
 
 sub button_back {
 	my $self = shift;
-	
+
 	# Workaround: BACK button does not receive focus automatically... (on win32)
 	$self->{button_back}->SetFocus;
 }
@@ -126,10 +126,10 @@ sub button_cancel {
 }
 
 sub show_page {
-	my ($self, $page) = @_;
-	
-	$self->SetLabel($page->get_title);
-	$self->{title}->SetLabel($page->get_name);
+	my ( $self, $page ) = @_;
+
+	$self->SetLabel( $page->get_title );
+	$self->{title}->SetLabel( $page->get_name );
 	$self->{status}->SetLabel('');
 
 	$page->show;
@@ -139,7 +139,7 @@ sub show_page {
 sub show {
 	my $self = shift;
 
-	$self->show_page($self->{select_page});
+	$self->show_page( $self->{select_page} );
 
 	$self->ShowModal;
 
