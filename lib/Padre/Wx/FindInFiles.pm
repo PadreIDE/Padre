@@ -6,6 +6,8 @@ package Padre::Wx::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
+use File::Basename        ();
+use File::Spec            ();
 use Params::Util          ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
@@ -43,8 +45,8 @@ sub new {
 	);
 
 	# Add the columns
-	my @titles = $self->titles;
-	foreach ( 0 .. 2 ) {
+	my @titles = $self->_titles;
+	foreach ( 0 .. scalar(@titles) - 1 ) {
 		$self->InsertColumn( $_, $titles[$_] );
 	}
 
@@ -97,12 +99,16 @@ sub search {
 
 # Helper method to append item to the table
 sub append_item {
-	my ( $self, $file, $line, $msg ) = @_;
+	my ( $self, $dir, $file, $line, $msg ) = @_;
 
-	my $item = $self->InsertStringItem( $self->GetItemCount + 1, $file );
-	$self->SetItemData( $item, ( $line ne '' ) ? $line : 0 );
-	$self->SetItem( $item, 1, $line );
-	$self->SetItem( $item, 2, $msg );
+	require File::Basename;
+	my $item = $self->InsertStringItem( $self->GetItemCount + 1, $dir );
+	$self->SetItem( $item, 1, $file );
+	$self->SetItem( $item, 2, $line );
+	$self->SetItem( $item, 3, $msg );
+
+	# and resize them!
+	$self->_resize_columns;
 }
 
 sub search_message {
@@ -117,10 +123,14 @@ sub search_message {
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
 	for my $result (@results) {
-		$self->append_item( $unix, $result->[0], $result->[1] );
+		$self->append_item( 
+			File::Basename::dirname($unix), 
+			File::Basename::basename($unix), 
+			$result->[0], 
+			$result->[1] );
 	}
 	my $num_results = scalar(@results);
-	$self->append_item( '', '', "Found '$term' " . $num_results . " time(s).\n" );
+	$self->append_item( '', '', '', "Found '$term' " . $num_results . " time(s).\n" );
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -136,14 +146,9 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	$self->append_item(
-		'',
-		'',
+	$self->append_item( '', '', '',
 		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
 	);
-
-	# and resize them!
-	$self->_resize_columns;
 
 	return 1;
 }
@@ -154,7 +159,17 @@ sub _resize_columns {
 
 	# Resize all columns but the last to their biggest item width
 	for ( 0 .. $self->GetColumnCount - 1 ) {
-		$self->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		my $col_width;
+		if($_ == 0) {
+			#Directory
+			$col_width = 200;
+		} elsif($_ == 2) {
+			#Line
+			$col_width = 30;
+		} else {
+			$col_width = Wx::wxLIST_AUTOSIZE;
+		}
+		$self->SetColumnWidth( $_,  $col_width);
 	}
 
 	return;
@@ -166,11 +181,12 @@ sub _on_find_result_clicked {
 
 	my $selection = $self->GetFirstSelected;
 
-	my $file = $self->GetItem( $selection, 0 )->GetText or return;
-	my $line = $self->GetItem( $selection, 1 )->GetText or return;
-	my $msg = $self->GetItem( $selection, 2 )->GetText || '';
+	my $path = $self->GetItem( $selection, 0 )->GetText or return;
+	my $file = $self->GetItem( $selection, 1 )->GetText or return;
+	my $line = $self->GetItem( $selection, 2 )->GetText or return;
+	my $msg = $self->GetItem( $selection, 3 )->GetText || '';
 
-	$self->open_file_at_line( $file, $line - 1 );
+	$self->open_file_at_line( File::Spec->catfile($path, $file), $line - 1 );
 
 	return;
 }
@@ -245,8 +261,9 @@ sub clear {
 	return 1;
 }
 
-sub titles {
+sub _titles {
 	return (
+		Wx::gettext('Directory'),
 		Wx::gettext('File'),
 		Wx::gettext('Line'),
 		Wx::gettext('Description'),
