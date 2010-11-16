@@ -178,6 +178,8 @@ sub _on_find_result_clicked {
 # Opens the file at the correct line position
 sub open_file_at_line {
 	my ($self, $file, $line)   = @_;
+
+	return unless -f $file;
 	my $editor = $self->current->editor or return;
 	my $main = $self->main;
 
