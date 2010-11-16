@@ -166,11 +166,11 @@ sub _on_find_result_clicked {
 
 	my $selection    = $self->GetFirstSelected;
 	
-	my $file = $self->GetItem( $selection, 0 )->GetText || '';
-	my $line = $self->GetItem( $selection, 1 )->GetText || '';
+	my $file = $self->GetItem( $selection, 0 )->GetText or return;
+	my $line = $self->GetItem( $selection, 1 )->GetText or return;
 	my $msg  = $self->GetItem( $selection, 2 )->GetText || '';
-	
-	$self->open_file_at_line($file, $line);
+
+	$self->open_file_at_line($file, $line-1);
 
 	return;
 }
@@ -180,17 +180,21 @@ sub open_file_at_line {
 	my ($self, $file, $line)   = @_;
 
 	return unless -f $file;
-	my $editor = $self->current->editor or return;
 	my $main = $self->main;
 
 	# Try to open the file now
-	if ( my $editor = $main->find_editor_of_file($file) ) {
-		my $page = $main->notebook->GetPage($editor);
+	if ( my $page_id = $main->find_editor_of_file($file) ) {
+		my $editor = $main->notebook->GetPage($page_id);
 		$editor->EnsureVisible($line);
 		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 		$editor->SetFocus;
 	} else {
-		$main->setup_editors($file);
+		my $page_id = $main->setup_editor($file);
+		if(my $editor = $main->notebook->GetPage($page_id)) {
+			$editor->EnsureVisible($line);
+			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+			$editor->SetFocus;
+		}
 	}
 }
 
