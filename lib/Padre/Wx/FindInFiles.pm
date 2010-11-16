@@ -50,8 +50,7 @@ sub new {
 
 	# When a find result is clicked, open it
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->_on_find_result_clicked(@_);
 		}
@@ -98,10 +97,10 @@ sub search {
 
 # Helper method to append item to the table
 sub append_item {
-	my ($self, $file, $line, $msg) = @_;
-	
-	my $item = $self->InsertStringItem( $self->GetItemCount+1, $file );
-	$self->SetItemData($item, ($line ne '') ? $line : 0 );
+	my ( $self, $file, $line, $msg ) = @_;
+
+	my $item = $self->InsertStringItem( $self->GetItemCount + 1, $file );
+	$self->SetItemData( $item, ( $line ne '' ) ? $line : 0 );
 	$self->SetItem( $item, 1, $line );
 	$self->SetItem( $item, 2, $msg );
 }
@@ -118,10 +117,10 @@ sub search_message {
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
 	for my $result (@results) {
-		$self->append_item($unix, $result->[0], $result->[1] );
+		$self->append_item( $unix, $result->[0], $result->[1] );
 	}
 	my $num_results = scalar(@results);
-	$self->append_item('', '', "Found '$term' " .  $num_results . " time(s).\n" );
+	$self->append_item( '', '', "Found '$term' " . $num_results . " time(s).\n" );
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -138,9 +137,10 @@ sub search_finish {
 
 	# Display the summary
 	$self->append_item(
-		'', 
-		'', 
-		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)" );
+		'',
+		'',
+		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
+	);
 
 	# and resize them!
 	$self->_resize_columns;
@@ -162,22 +162,22 @@ sub _resize_columns {
 
 # Private method to handle the clicking of a find result
 sub _on_find_result_clicked {
-	my ($self, $event)  = @_;
+	my ( $self, $event ) = @_;
 
-	my $selection    = $self->GetFirstSelected;
-	
+	my $selection = $self->GetFirstSelected;
+
 	my $file = $self->GetItem( $selection, 0 )->GetText or return;
 	my $line = $self->GetItem( $selection, 1 )->GetText or return;
-	my $msg  = $self->GetItem( $selection, 2 )->GetText || '';
+	my $msg = $self->GetItem( $selection, 2 )->GetText || '';
 
-	$self->open_file_at_line($file, $line-1);
+	$self->open_file_at_line( $file, $line - 1 );
 
 	return;
 }
 
 # Opens the file at the correct line position
 sub open_file_at_line {
-	my ($self, $file, $line)   = @_;
+	my ( $self, $file, $line ) = @_;
 
 	return unless -f $file;
 	my $main = $self->main;
@@ -190,7 +190,7 @@ sub open_file_at_line {
 		$editor->SetFocus;
 	} else {
 		$main->setup_editor($file);
-		if(my $page_id = $main->find_editor_of_file($file) ) {
+		if ( my $page_id = $main->find_editor_of_file($file) ) {
 			my $editor = $main->notebook->GetPage($page_id);
 			$editor->EnsureVisible($line);
 			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
