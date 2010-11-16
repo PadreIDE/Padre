@@ -189,8 +189,9 @@ sub open_file_at_line {
 		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 		$editor->SetFocus;
 	} else {
-		my $page_id = $main->setup_editor($file);
-		if(my $editor = $main->notebook->GetPage($page_id)) {
+		$main->setup_editor($file);
+		if(my $page_id = $main->find_editor_of_file($file) ) {
+			my $editor = $main->notebook->GetPage($page_id);
 			$editor->EnsureVisible($line);
 			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 			$editor->SetFocus;
