@@ -2446,7 +2446,7 @@ sub init {
 		name        => 'window.next_file',
 		label       => _T('Next File'),
 		comment     => _T('Put focus on the next tab to the right'),
-		shortcut    => Padre::Constant::WIN32 ? 'Ctrl-PageDown' : 'Alt-Right',
+		shortcut    => 'Ctrl-PageDown',
 		need_editor => 1,
 		menu_event  => sub {
 			shift->on_next_pane(@_);
@@ -2457,7 +2457,7 @@ sub init {
 		name        => 'window.previous_file',
 		label       => _T('Previous File'),
 		comment     => _T('Put focus on the previous tab to the left'),
-		shortcut    => Padre::Constant::WIN32 ? 'Ctrl-PageUp' : 'Alt-Left',
+		shortcut    => 'Ctrl-PageUp',
 		need_editor => 1,
 		menu_event  => sub {
 			shift->on_prev_pane(@_);

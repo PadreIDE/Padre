@@ -5,8 +5,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
     - Fix #1032: Regex Editor: Escape sequences don't work in
       "Result from replace" (ZENOG)
-    - On win32, next/previous file now use Ctrl-Page Down/Up instead
-      of Alt-Right/Left (AZAWAWI)
+    - Next/previous file now use Ctrl-Page Down/Up instead of Alt-Right/Left
+      (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
