@@ -123,11 +123,12 @@ sub search_message {
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
 	for my $result (@results) {
-		$self->append_item( 
-			File::Basename::dirname($unix), 
-			File::Basename::basename($unix), 
-			$result->[0], 
-			$result->[1] );
+		$self->append_item(
+			File::Basename::dirname($unix),
+			File::Basename::basename($unix),
+			$result->[0],
+			$result->[1]
+		);
 	}
 	my $num_results = scalar(@results);
 	$self->append_item( '', '', '', "Found '$term' " . $num_results . " time(s).\n" );
@@ -146,7 +147,8 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	$self->append_item( '', '', '',
+	$self->append_item(
+		'', '', '',
 		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
 	);
 
@@ -160,16 +162,18 @@ sub _resize_columns {
 	# Resize all columns but the last to their biggest item width
 	for ( 0 .. $self->GetColumnCount - 1 ) {
 		my $col_width;
-		if($_ == 0) {
+		if ( $_ == 0 ) {
+
 			#Directory
 			$col_width = 200;
-		} elsif($_ == 2) {
+		} elsif ( $_ == 2 ) {
+
 			#Line
 			$col_width = 30;
 		} else {
 			$col_width = Wx::wxLIST_AUTOSIZE;
 		}
-		$self->SetColumnWidth( $_,  $col_width);
+		$self->SetColumnWidth( $_, $col_width );
 	}
 
 	return;
@@ -186,7 +190,7 @@ sub _on_find_result_clicked {
 	my $line = $self->GetItem( $selection, 2 )->GetText or return;
 	my $msg = $self->GetItem( $selection, 3 )->GetText || '';
 
-	$self->open_file_at_line( File::Spec->catfile($path, $file), $line - 1 );
+	$self->open_file_at_line( File::Spec->catfile( $path, $file ), $line - 1 );
 
 	return;
 }
