@@ -87,6 +87,16 @@ sub search {
 	return 1;
 }
 
+# Helper method to append item to the table
+sub append_item {
+	my ($self, $file, $line, $msg) = @_;
+	
+	my $item = $self->InsertStringItem( $self->GetItemCount+1, $file );
+	$self->SetItemData($item, ($line ne '') ? $line : 0 );
+	$self->SetItem( $item, 1, $line );
+	$self->SetItem( $item, 2, $msg );
+}
+
 sub search_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
@@ -97,18 +107,11 @@ sub search_message {
 	my $term = $task->{search}->find_term;
 
 	# Generate the text all at once in advance and add to the control
-	my $text =
-		join(
-			'',
-			"----------------------------------------\n",
-			"Find '$term' in '$unix':\n",
-			( map {"$unix($_->[0]): $_->[1]\n"} @_ ),
-			"Found '$term' " . scalar(@_) . " time(s).\n",
-		);
-
-	my $item = $self->InsertItem( $self->GetItemCount+1, $unix );
-	$self->SetItem( $item, 1, '1' );
-	$self->SetItem( $item, 2, $text );
+	my @results = @_;
+	for my $result (@results) {
+		$self->append_item($unix, $result->[0], $result->[1] );
+	}
+	$self->append_item('', '', "Found '$term' " . scalar(@results) . " time(s).\n" );
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -124,13 +127,28 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	#$self->AppendText( "Search complete, " . "found '$term' $self->{matches} time(s) " . "in $self->{files} file(s)" );
+	$self->append_item(
+		'', 
+		'', 
+		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)" );
+
+	# and resize them!
+	$self->_resize_columns;
 
 	return 1;
 }
 
+# Private method to resize list columns
+sub _resize_columns {
+	my $self = shift;
 
+	# Resize all columns but the last to their biggest item width
+	for ( 0 .. $self->GetColumnCount - 1 ) {
+		$self->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+	}
 
+	return;
+}
 
 
 ######################################################################
