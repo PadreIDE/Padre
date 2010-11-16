@@ -18,7 +18,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::TextCtrl
+	Wx::ListView
 };
 
 
@@ -37,25 +37,16 @@ sub new {
 	my $self = $class->SUPER::new(
 		$panel,
 		-1,
-		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_READONLY
-			| Wx::wxTE_MULTILINE
-			| Wx::wxTE_DONTWRAP
-			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
-	# Set the font and colours
-	$self->SetBackgroundColour( Wx::Colour->new('#FFFFFF') );
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	my $name = $self->config->editor_font;
-	if ( defined $name and length $name ) {
-		$font->SetNativeFontInfoUserDesc($name);
+	# Add the columns
+	my @titles = $self->titles;
+	foreach ( 0 .. 2 ) {
+		$self->InsertColumn( $_, $titles[$_] );
 	}
-	my $style = $self->GetDefaultStyle;
-	$style->SetFont($font);
-	$self->SetDefaultStyle($style);
 
 	# Inialise statistics
 	$self->{files}   = 0;
@@ -106,15 +97,18 @@ sub search_message {
 	my $term = $task->{search}->find_term;
 
 	# Generate the text all at once in advance and add to the control
-	$self->AppendText(
+	my $text =
 		join(
 			'',
 			"----------------------------------------\n",
 			"Find '$term' in '$unix':\n",
 			( map {"$unix($_->[0]): $_->[1]\n"} @_ ),
 			"Found '$term' " . scalar(@_) . " time(s).\n",
-		)
-	);
+		);
+
+	my $item = $self->InsertItem( $self->GetItemCount+1, $unix );
+	$self->SetItem( $item, 1, '1' );
+	$self->SetItem( $item, 2, $text );
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -130,7 +124,7 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	$self->AppendText( "Search complete, " . "found '$term' $self->{matches} time(s) " . "in $self->{files} file(s)" );
+	#$self->AppendText( "Search complete, " . "found '$term' $self->{matches} time(s) " . "in $self->{files} file(s)" );
 
 	return 1;
 }
@@ -181,8 +175,16 @@ sub clear {
 	my $self = shift;
 	$self->{files}   = 0;
 	$self->{matches} = 0;
-	$self->Remove( 0, $self->GetLastPosition );
+	$self->DeleteAllItems;
 	return 1;
+}
+
+sub titles {
+	return (
+		Wx::gettext('File'),
+		Wx::gettext('Line'),
+		Wx::gettext('Description'),
+	);
 }
 
 1;
