@@ -558,14 +558,11 @@ sub run {
 		$self->{matched_text}->EndTextColour;
 	}
 
-	eval {
-		if ( $self->{global}->IsChecked )
-		{
-			$result_text =~ s{(?$xism:$regex)}{$replace}g;
-		} else {
-			$result_text =~ s{(?$xism:$regex)}{$replace};
-		}
-	};
+	if ( $self->{global}->IsChecked ) {
+		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}g";
+	} else {
+		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}";
+	}
 	if ($@) {
 		$self->{result_text}->BeginTextColour(Wx::wxRED);
 		$self->{result_text}->AppendText( sprintf( Wx::gettext('Replace failure in %s:  %s'), $regex, $@ ) );

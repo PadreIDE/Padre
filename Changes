@@ -3,6 +3,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.76 TBA
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
+    - Fix #1032: Regex Editor: Escape sequences don't work in
+      "Result from replace" (ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
