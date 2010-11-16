@@ -48,6 +48,15 @@ sub new {
 		$self->InsertColumn( $_, $titles[$_] );
 	}
 
+	# When a find result is clicked, open it
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self,
+		sub {
+			shift->_on_find_result_clicked(@_);
+		}
+	);
+
 	# Inialise statistics
 	$self->{files}   = 0;
 	$self->{matches} = 0;
@@ -111,11 +120,12 @@ sub search_message {
 	for my $result (@results) {
 		$self->append_item($unix, $result->[0], $result->[1] );
 	}
-	$self->append_item('', '', "Found '$term' " . scalar(@results) . " time(s).\n" );
+	my $num_results = scalar(@results);
+	$self->append_item('', '', "Found '$term' " .  $num_results . " time(s).\n" );
 
 	# Update statistics
 	$self->{files}   += 1;
-	$self->{matches} += scalar @_;
+	$self->{matches} += $num_results;
 
 	return 1;
 }
@@ -150,6 +160,37 @@ sub _resize_columns {
 	return;
 }
 
+# Private method to handle the clicking of a find result
+sub _on_find_result_clicked {
+	my ($self, $event)  = @_;
+
+	my $selection    = $self->GetFirstSelected;
+	
+	my $file = $self->GetItem( $selection, 0 )->GetText || '';
+	my $line = $self->GetItem( $selection, 1 )->GetText || '';
+	my $msg  = $self->GetItem( $selection, 2 )->GetText || '';
+	
+	$self->open_file_at_line($file, $line);
+
+	return;
+}
+
+# Opens the file at the correct line position
+sub open_file_at_line {
+	my ($self, $file, $line)   = @_;
+	my $editor = $self->current->editor or return;
+	my $main = $self->main;
+
+	# Try to open the file now
+	if ( my $editor = $main->find_editor_of_file($file) ) {
+		my $page = $main->notebook->GetPage($editor);
+		$editor->EnsureVisible($line);
+		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+		$editor->SetFocus;
+	} else {
+		$main->setup_editors($file);
+	}
+}
 
 ######################################################################
 # Padre::Wx::Role::View Methods
