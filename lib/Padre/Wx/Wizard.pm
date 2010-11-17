@@ -19,20 +19,6 @@ use Class::XSAccessor {
 	},
 };
 
-
-
-
-
-#####################################################################
-# Functions
-
-# This sub calls all the other files which actually create the actions
-sub create {
-	my $main = shift;
-}
-
-
-
 #####################################################################
 # Constructor
 
@@ -60,7 +46,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Wizard - Padre Action Object
+Padre::Wx::Wizard - Padre Wizard Object
 
 =head1 SYNOPSIS
 
