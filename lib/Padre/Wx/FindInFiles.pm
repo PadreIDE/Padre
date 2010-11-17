@@ -190,11 +190,11 @@ sub open_file_at_line {
 
 	# Try to open the file now
 	my $editor;
-	if ( my $page_id = $main->find_editor_of_file($file) ) {
+	if ( defined(my $page_id = $main->find_editor_of_file($file)) ) {
 		$editor = $main->notebook->GetPage($page_id);
 	} else {
 		$main->setup_editor($file);
-		if ( my $page_id = $main->find_editor_of_file($file) ) {
+		if ( defined(my $page_id = $main->find_editor_of_file($file)) ) {
 			$editor = $main->notebook->GetPage($page_id);
 		}
 	}
