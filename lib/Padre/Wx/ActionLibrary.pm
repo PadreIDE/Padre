@@ -186,17 +186,15 @@ sub init {
 		},
 	);
 
-	# The new wizard selector feature
-	if ( $config->feature_wizard_selector ) {
-		Padre::Wx::Action->new(
-			name       => 'file.wizard_selector',
-			label      => _T('Wizard Selector...'),
-			comment    => _T('Selects and opens a wizard'),
-			menu_event => sub {
-				$_[0]->wizard_selector->show;
-			},
-		);
-	}
+	# The wizard selector feature
+	Padre::Wx::Action->new(
+		name       => 'file.wizard_selector',
+		label      => _T('Wizard Selector...'),
+		comment    => _T('Selects and opens a wizard'),
+		menu_event => sub {
+			$_[0]->wizard_selector->show;
+		},
+	) if $config->feature_wizard_selector;
 
 	### NOTE: Add support for plugins here
 

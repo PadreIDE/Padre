@@ -1114,7 +1114,7 @@ setting(
 	name    => 'feature_wizard_selector',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 1,
 );
 setting(
 	name    => 'feature_quick_fix',

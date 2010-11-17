@@ -17,7 +17,7 @@ sub new {
 	my ( $class, $parent ) = @_;
 
 	# Create the Wx wizard dialog
-	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector (Experimental)') );
+	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector') );
 
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
