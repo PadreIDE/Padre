@@ -7,8 +7,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       "Result from replace" (ZENOG)
     - Next/previous file now use Ctrl-Page Down/Up instead of Alt-Right/Left
       (AZAWAWI)
-    - Find in Files now uses a table instead of a text control and clicking
-      on a result opens the file at the specified line number as expected (AZAWAWI)
+    - Find in Files results panel now uses a tree instead of a text area and
+      clicking n a result opens the file at the specified line number
+      as expected (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

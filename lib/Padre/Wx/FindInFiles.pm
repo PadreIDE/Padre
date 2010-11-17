@@ -13,7 +13,7 @@ use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
-use Padre::Wx::TreeCtrl           ();
+use Padre::Wx::TreeCtrl   ();
 use Padre::Logger;
 
 our $VERSION = '0.75';
@@ -104,30 +104,32 @@ sub search_message {
 
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
-	my $root = $self->GetRootItem;
-	my ($dir_item, $file_item);
+	my $root    = $self->GetRootItem;
+	my ( $dir_item, $file_item );
 	for my $result (@results) {
-		my $dir = File::Basename::dirname($unix);
+		my $dir  = File::Basename::dirname($unix);
 		my $file = File::Basename::basename($unix);
 
 		# Add a directory tree item if it doesnt exist and insert the files inside it
-		$dir_item = $self->AppendItem( $root, $dir ) unless $dir_item;
+		$dir_item  = $self->AppendItem( $root,     $dir )  unless $dir_item;
 		$file_item = $self->AppendItem( $dir_item, $file ) unless $file_item;
 		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1] );
-		$self->SetPlData( $item, {
-			dir => $dir,
-			file => $file,
-			line => $result->[0],
-			msg => $result->[1], 
-		});
+		$self->SetPlData(
+			$item,
+			{   dir  => $dir,
+				file => $file,
+				line => $result->[0],
+				msg  => $result->[1],
+			}
+		);
 	}
 	my $num_results = scalar(@results);
 
 	# Add number of results inside each file if it is more than one
-	if($file_item && $num_results > 1) {
+	if ( $file_item && $num_results > 1 ) {
 		$self->SetItemText(
-			$file_item, 
-			sprintf(Wx::gettext('%s (%s results)'), $self->GetItemText($file_item), $num_results) 
+			$file_item,
+			sprintf( Wx::gettext('%s (%s results)'), $self->GetItemText($file_item), $num_results )
 		);
 	}
 
@@ -146,22 +148,22 @@ sub search_finish {
 
 	# Display the summary
 	my $root = $self->GetRootItem;
-	if($self->{files}) {
+	if ( $self->{files} ) {
 		$self->SetItemText(
 			$root,
 			sprintf(
-				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s)}), 
-				$term, 
-				$self->{matches}, 
+				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s)}),
+				$term,
+				$self->{matches},
 				$self->{files}
 			)
 		);
 	} else {
-		$self->SetItemText( $root, sprintf(Wx::gettext('No results found for %s'), $term) );
+		$self->SetItemText( $root, sprintf( Wx::gettext('No results found for %s'), $term ) );
 	}
 
 	$self->ExpandAllChildren($root);
-	$self->EnsureVisible( $root );
+	$self->EnsureVisible($root);
 
 	return 1;
 }
@@ -170,10 +172,10 @@ sub search_finish {
 sub _on_find_result_clicked {
 	my ( $self, $event ) = @_;
 
-	my $item_data    = $self->GetPlData($event->GetItem) or return;
-	my $dir = $item_data->{dir} or return;
-	my $file = $item_data->{file} or return;
-	my $line = $item_data->{line} or return;
+	my $item_data = $self->GetPlData( $event->GetItem ) or return;
+	my $dir       = $item_data->{dir}                   or return;
+	my $file      = $item_data->{file}                  or return;
+	my $line      = $item_data->{line}                  or return;
 	my $msg = $item_data->{msg} || '';
 
 	$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
@@ -190,17 +192,18 @@ sub open_file_at_line {
 
 	# Try to open the file now
 	my $editor;
-	if ( defined(my $page_id = $main->find_editor_of_file($file)) ) {
+	if ( defined( my $page_id = $main->find_editor_of_file($file) ) ) {
 		$editor = $main->notebook->GetPage($page_id);
 	} else {
 		$main->setup_editor($file);
-		if ( defined(my $page_id = $main->find_editor_of_file($file)) ) {
+		if ( defined( my $page_id = $main->find_editor_of_file($file) ) ) {
 			$editor = $main->notebook->GetPage($page_id);
 		}
 	}
 
-	if($editor) {
-		Wx::Event::EVT_IDLE( $self,
+	if ($editor) {
+		Wx::Event::EVT_IDLE(
+			$self,
 			sub {
 				$editor->EnsureVisible($line);
 				$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
