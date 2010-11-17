@@ -44,6 +44,7 @@ use Class::XSAccessor 1.05 {
 	},
 	accessors => {
 		actions     => 'actions',
+		wizards     => 'wizards',
 		shortcuts   => 'shortcuts',
 		instance_id => 'instance_id',
 	},
@@ -137,6 +138,9 @@ sub new {
 	# Actions and keyboard shortcuts registries
 	$self->actions(   {} );
 	$self->shortcuts( {} );
+
+	# Wizard registry
+	$self->wizards( {} );
 
 	# Load a few more bits and pieces now we know
 	# that we'll need them
