@@ -16,10 +16,31 @@ our $VERSION = '0.75';
 sub init {
 
 	Padre::Wx::Wizard->new(
-		name     => 'perl5.script',
+		name     => 'perl5.module',
 		label    => Wx::gettext('Script'),
 		category => Wx::gettext('Perl 5'),
-		comment  => Wx::gettext('Opens the Perl 5 script wizard'),
+		comment  => Wx::gettext('Opens the Perl 5 module wizard'),
+	);
+
+	Padre::Wx::Wizard->new(
+		name     => 'perl5.module',
+		label    => Wx::gettext('Test'),
+		category => Wx::gettext('Perl 5'),
+		comment  => Wx::gettext('Opens the Perl 5 test wizard'),
+	);
+
+	Padre::Wx::Wizard->new(
+		name     => 'perl6.class',
+		label    => Wx::gettext('Class'),
+		category => Wx::gettext('Perl 5'),
+		comment  => Wx::gettext('Opens the Perl 5 class wizard'),
+	);
+
+	Padre::Wx::Wizard->new(
+		name     => 'perl6.grammar',
+		label    => Wx::gettext('Grammar'),
+		category => Wx::gettext('Perl 5'),
+		comment  => Wx::gettext('Opens the Perl 5 grammar wizard'),
 	);
 
 	return 1;

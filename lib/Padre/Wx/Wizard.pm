@@ -38,13 +38,11 @@ sub create {
 
 sub new {
 	my $class   = shift;
-	my $ide     = Padre->ide;
-	my $wizards = $ide->wizards;
+	my $wizards = Padre->ide->wizards;
 	my $self    = bless { id => -1, @_ }, $class;
-	my $name    = $self->{name};
 
 	# Save the wizard
-	$wizards->{$name} = $self;
+	$wizards->{$self->{name}} = $self;
 
 	return $self;
 }
