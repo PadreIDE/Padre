@@ -39,8 +39,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE |
-			Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
+		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
 			Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
 	);		
 
@@ -88,6 +87,9 @@ sub search {
 		%param,
 	);
 
+	my $root = $self->AddRoot('Root');
+	$self->SetItemText( $root, Wx::gettext('Searching...') );
+
 	return 1;
 }
 
@@ -103,7 +105,7 @@ sub search_message {
 
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
-	my $root = $self->AddRoot('Root');
+	my $root = $self->GetRootItem;
 	my ($dir_item, $file_item);
 	for my $result (@results) {
 		my $dir = File::Basename::dirname($unix);
@@ -119,11 +121,16 @@ sub search_message {
 			line => $result->[0],
 			msg => $result->[1], 
 		});
-		
-
 	}
 	my $num_results = scalar(@results);
-	#$self->append_item( '', '', '', "Found '$term' " . $num_results . " time(s).\n" );
+
+	# Add number of results inside each file if it is more than one
+	if($file_item && $num_results > 1) {
+		$self->SetItemText(
+			$file_item, 
+			sprintf(Wx::gettext('%s (%s results)'), $self->GetItemText($file_item), $num_results) 
+		);
+	}
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -139,12 +146,22 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	#$self->append_item(
-	#	'', '', '',
-	#	"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
-	#);
+	my $root = $self->GetRootItem;
+	if($self->{files}) {
+		$self->SetItemText(
+			$root,
+			sprintf(
+				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s)}), 
+				$term, 
+				$self->{matches}, 
+				$self->{files}
+			)
+		);
+	} else {
+		$self->SetItemText( $root, sprintf(Wx::gettext('No results found for %s'), $term) );
+	}
 
-	self->ExpandAllChildren($self->GetRootItem);
+	$self->ExpandAllChildren($root);
 
 	return 1;
 }
@@ -183,10 +200,15 @@ sub open_file_at_line {
 	}
 
 	if($editor) {
-		$editor->MarkerAdd( $line, Padre::Wx::MarkFindResult );
-		$editor->EnsureVisible($line);
-		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-		$editor->SetFocus;
+		Wx::Event::EVT_IDLE( $self,
+			sub {
+				$editor->MarkerAdd( $line, Padre::Wx::MarkFindResult );
+				$editor->EnsureVisible($line);
+				$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+				$editor->SetFocus;
+				Wx::Event::EVT_IDLE( $self, undef );
+			},
+		);
 	}
 }
 
