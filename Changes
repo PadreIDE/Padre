@@ -11,6 +11,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       clicking n a result opens the file at the specified line number
       as expected (AZAWAWI)
     - Enabled the Padre Wizard API and Wizard selector dialog (AZAWAWI)
+    - Fix the bug of lost user selection when searching a big project directory
+      and typing fast in "Open Resource" dialog (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
