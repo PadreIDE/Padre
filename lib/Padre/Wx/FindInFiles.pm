@@ -201,7 +201,7 @@ sub open_file_at_line {
 		}
 	}
 
-	# Center the current position on the found result's line if an editor is found. 
+	# Center the current position on the found result's line if an editor is found.
 	# NOTE: we are EVT_IDLE event to make sure we can do that after a file is opened.
 	if ($editor) {
 		Wx::Event::EVT_IDLE(

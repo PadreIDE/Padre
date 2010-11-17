@@ -5,8 +5,8 @@ package Padre::Wx::WizardLibrary;
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Wx            ();
-use Padre::Wx::Wizard    ();
+use Padre::Wx         ();
+use Padre::Wx::Wizard ();
 
 our $VERSION = '0.75';
 
@@ -16,10 +16,10 @@ our $VERSION = '0.75';
 sub init {
 
 	Padre::Wx::Wizard->new(
-		name        => 'perl5.script',
-		label       => Wx::gettext('Script'),
-		category    => Wx::gettext('Perl 5'),
-		comment     => Wx::gettext('Opens the Perl 5 script wizard'),
+		name     => 'perl5.script',
+		label    => Wx::gettext('Script'),
+		category => Wx::gettext('Perl 5'),
+		comment  => Wx::gettext('Opens the Perl 5 script wizard'),
 	);
 
 	return 1;

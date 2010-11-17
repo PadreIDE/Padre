@@ -12,10 +12,10 @@ our $VERSION = '0.75';
 # Generate faster accessors
 use Class::XSAccessor {
 	getters => {
-		name          => 'name',
-		label         => 'label',
-		category      => 'category',
-		comment       => 'comment',
+		name     => 'name',
+		label    => 'label',
+		category => 'category',
+		comment  => 'comment',
 	},
 };
 
@@ -37,11 +37,11 @@ sub create {
 # Constructor
 
 sub new {
-	my $class    = shift;
-	my $ide      = Padre->ide;
-	my $wizards  = $ide->wizards;
-	my $self     = bless { id => -1, @_ }, $class;
-	my $name = $self->{name};
+	my $class   = shift;
+	my $ide     = Padre->ide;
+	my $wizards = $ide->wizards;
+	my $self    = bless { id => -1, @_ }, $class;
+	my $name    = $self->{name};
 
 	# Save the wizard
 	$wizards->{$name} = $self;
