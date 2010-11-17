@@ -17,7 +17,7 @@ sub init {
 
 	Padre::Wx::Wizard->new(
 		name     => 'perl5.module',
-		label    => Wx::gettext('Script'),
+		label    => Wx::gettext('Module'),
 		category => Wx::gettext('Perl 5'),
 		comment  => Wx::gettext('Opens the Perl 5 module wizard'),
 		class    => 'Padre::Wx::Dialog::Wizard::Perl5Module',
