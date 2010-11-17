@@ -121,7 +121,7 @@ sub _on_tree_item_activated {
 	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
 	if($wizard) {
 		$self->next_wizard($wizard);
-		$self->wizard_status($wizard ? $wizard->label : '');
+		$self->wizard_status($wizard ? $wizard->comment : '');
 		$self->refresh();
 	}
 
@@ -136,7 +136,7 @@ sub _on_tree_selection_changed {
 	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
 	if($wizard) {
 		$self->next_wizard($wizard);
-		$self->status($wizard ? $wizard->label : '');
+		$self->status($wizard ? $wizard->comment : '');
 		$self->refresh;
 	}
 
