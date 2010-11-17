@@ -144,30 +144,17 @@ sub _update_list {
 	my $tree = $self->{tree};
 	$tree->DeleteAllItems;
 
-	#TODO no hard-coding
-	my %wizard_data = (
-		'Perl 5' => {
-			'00Script' => sub { print 'Perl 5 Script'; },
-			'01Test'   => sub { print 'Perl 5 Test'; },
-			'02Module' => sub { print 'Perl 5 Module'; },
-		},
-		'Perl 6' => {
-			'00Script'  => sub { print 'Perl 6 Script'; },
-			'01Class'   => sub { print 'Perl 6 Class'; },
-			'02Grammar' => sub { print 'Perl 6 Grammar'; },
-			'03Package' => sub { print 'Perl 6 Package'; },
-		},
-	);
+	my $wizards = $self->ide->wizards;
 
 	# Add items to the wizard selection tree
 	my $filter_not_empty = $filter ne '';
 	my $root = $tree->AddRoot('Root');
 	my $perl_5_category_item;
-	for my $category ( sort keys %wizard_data ) {
+	for my $category ( sort keys %$wizards ) {
 
 		my $category_item;
 		my $unmatched_category = $category !~ /$filter/i;
-		for my $name ( sort keys %{ $wizard_data{$category} } ) {
+		for my $name ( sort keys %{ $wizards->{$category} } ) {
 
 			#Remove the first 2-digits sorting numbers from the name
 			$name =~ s/^\d\d//;

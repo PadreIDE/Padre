@@ -8,6 +8,7 @@ use Padre::Wx ();
 
 our $VERSION = '0.75';
 our @ISA     = qw{
+	Padre::Wx::Role::Main
 	Wx::Panel
 };
 
