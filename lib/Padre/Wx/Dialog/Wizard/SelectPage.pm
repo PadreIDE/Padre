@@ -144,28 +144,35 @@ sub _update_list {
 	my $tree = $self->{tree};
 	$tree->DeleteAllItems;
 
-	my $wizards = $self->ide->wizards;
+	# Collect available wizard categories
+	my $wizards_by_category = {};
+	for my $wizard (values %{$self->ide->wizards}) {
+		my $category = $wizard->category;
+		my $wizards = $wizards_by_category->{$category} || [];
+		push @$wizards, $wizard;
+		$wizards_by_category->{$category} = $wizards;
+	}
 
 	# Add items to the wizard selection tree
 	my $filter_not_empty = $filter ne '';
 	my $root = $tree->AddRoot('Root');
 	my $perl_5_category_item;
-	for my $category ( sort keys %$wizards ) {
-
+	for my $category ( sort keys %$wizards_by_category ) {
 		my $category_item;
 		my $unmatched_category = $category !~ /$filter/i;
-		for my $name ( sort keys %{ $wizards->{$category} } ) {
+		for my $wizard ( @{$wizards_by_category->{$category}} ) {
+			my $label = $wizard->label;
 
 			#Remove the first 2-digits sorting numbers from the name
-			$name =~ s/^\d\d//;
+			$label =~ s/^\d\d//;
 
 			# Ignore adding the wizard if it has an unmatched category and
 			# does not match the filter regex
-			next if $unmatched_category and $name !~ /$filter/i;
+			next if $unmatched_category and $label !~ /$filter/i;
 
 			# Add a category if it doesnt exist and append the wizard to the end of it
 			$category_item = $tree->AppendItem( $root, $category ) unless $category_item;
-			$tree->AppendItem( $category_item, $name );
+			$tree->AppendItem( $category_item, $label );
 		}
 
 		# Expand the defined category only if it the 'Perl 5' category
