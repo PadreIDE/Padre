@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::Wizard::SelectPage;
+package Padre::Wx::Dialog::Wizard::Select;
 
 use 5.008;
 use strict;
@@ -214,7 +214,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::Wizard::SelectPage - the wizard selection page
+Padre::Wx::Dialog::Wizard::Select - the wizard selection page
 
 =head1 DESCRIPTION
 

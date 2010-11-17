@@ -55,8 +55,8 @@ sub _add_controls {
 	$top_sizer->Add( $header_sizer, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$top_sizer->Add( $banner,       0, Wx::wxALIGN_RIGHT,        0 );
 
-	require Padre::Wx::Dialog::Wizard::SelectPage;
-	$self->{select_page} = Padre::Wx::Dialog::Wizard::SelectPage->new($self);
+	require Padre::Wx::Dialog::Wizard::Select;
+	$self->{select_page} = Padre::Wx::Dialog::Wizard::Select->new($self);
 
 	$self->{button_back}   = Wx::Button->new( $self, -1,              Wx::gettext('&Back') );
 	$self->{button_next}   = Wx::Button->new( $self, -1,              Wx::gettext('&Next') );
