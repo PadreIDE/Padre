@@ -39,9 +39,8 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
-			Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
-	);		
+		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
+	);
 
 	# When a find result is clicked, open it
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
@@ -162,6 +161,7 @@ sub search_finish {
 	}
 
 	$self->ExpandAllChildren($root);
+	$self->EnsureVisible( $root );
 
 	return 1;
 }
