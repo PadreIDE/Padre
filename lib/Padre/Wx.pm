@@ -44,7 +44,6 @@ use constant {
 	MarkWarn       => 2,
 	MarkLocation   => 3, # current location of the debugger
 	MarkBreakpoint => 4, # location of the debugger breakpoint
-	MarkFindResult => 5, # location of a found result
 };
 
 

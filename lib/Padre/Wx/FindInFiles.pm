@@ -202,7 +202,6 @@ sub open_file_at_line {
 	if($editor) {
 		Wx::Event::EVT_IDLE( $self,
 			sub {
-				$editor->MarkerAdd( $line, Padre::Wx::MarkFindResult );
 				$editor->EnsureVisible($line);
 				$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 				$editor->SetFocus;
@@ -254,11 +253,6 @@ sub clear {
 	my $self = shift;
 	$self->{files}   = 0;
 	$self->{matches} = 0;
-
-	# Remove the margins for the syntax markers
-	foreach my $editor ( $self->main->editors ) {
-		$editor->MarkerDeleteAll(Padre::Wx::MarkFindResult);
-	}
 
 	$self->DeleteAllItems;
 	return 1;
