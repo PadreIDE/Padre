@@ -248,10 +248,6 @@ Padre::Wx::Action - Padre Action Object
 
 This is the base class for the Padre Action API.
 
-To be documented...
-
--- Ahmad M. Zawawi
-
 =head1 KEYS
 
 Each module is constructed using a number of keys. While only the name is
