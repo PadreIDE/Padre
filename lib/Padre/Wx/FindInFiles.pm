@@ -13,6 +13,7 @@ use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
+use Padre::Wx::TreeCtrl           ();
 use Padre::Logger;
 
 our $VERSION = '0.75';
@@ -20,11 +21,8 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::ListView
+	Padre::Wx::TreeCtrl
 };
-
-
-
 
 
 ######################################################################
@@ -41,17 +39,13 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
-	);
-
-	# Add the columns
-	my @titles = $self->_titles;
-	foreach ( 0 .. scalar(@titles) - 1 ) {
-		$self->InsertColumn( $_, $titles[$_] );
-	}
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE |
+			Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
+			Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE,
+	);		
 
 	# When a find result is clicked, open it
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self, $self,
 		sub {
 			shift->_on_find_result_clicked(@_);
@@ -97,20 +91,6 @@ sub search {
 	return 1;
 }
 
-# Helper method to append item to the table
-sub append_item {
-	my ( $self, $dir, $file, $line, $msg ) = @_;
-
-	require File::Basename;
-	my $item = $self->InsertStringItem( $self->GetItemCount + 1, $dir );
-	$self->SetItem( $item, 1, $file );
-	$self->SetItem( $item, 2, $line );
-	$self->SetItem( $item, 3, $msg );
-
-	# and resize them!
-	$self->_resize_columns;
-}
-
 sub search_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
@@ -120,18 +100,30 @@ sub search_message {
 	my $unix = $path->unix;
 	my $term = $task->{search}->find_term;
 
+
 	# Generate the text all at once in advance and add to the control
 	my @results = @_;
+	my $root = $self->AddRoot('Root');
+	my ($dir_item, $file_item);
 	for my $result (@results) {
-		$self->append_item(
-			File::Basename::dirname($unix),
-			File::Basename::basename($unix),
-			$result->[0],
-			$result->[1]
-		);
+		my $dir = File::Basename::dirname($unix);
+		my $file = File::Basename::basename($unix);
+
+		# Add a directory tree item if it doesnt exist and insert the files inside it
+		$dir_item = $self->AppendItem( $root, $dir ) unless $dir_item;
+		$file_item = $self->AppendItem( $dir_item, $file ) unless $file_item;
+		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1] );
+		$self->SetPlData( $item, {
+			dir => $dir,
+			file => $file,
+			line => $result->[0],
+			msg => $result->[1], 
+		});
+		
+
 	}
 	my $num_results = scalar(@results);
-	$self->append_item( '', '', '', "Found '$term' " . $num_results . " time(s).\n" );
+	#$self->append_item( '', '', '', "Found '$term' " . $num_results . " time(s).\n" );
 
 	# Update statistics
 	$self->{files}   += 1;
@@ -147,50 +139,27 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 
 	# Display the summary
-	$self->append_item(
-		'', '', '',
-		"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
-	);
+	#$self->append_item(
+	#	'', '', '',
+	#	"Search complete, found '$term' $self->{matches} time(s) in $self->{files} file(s)"
+	#);
+
+	self->ExpandAllChildren($self->GetRootItem);
 
 	return 1;
-}
-
-# Private method to resize list columns
-sub _resize_columns {
-	my $self = shift;
-
-	# Resize all columns but the last to their biggest item width
-	for ( 0 .. $self->GetColumnCount - 1 ) {
-		my $col_width;
-		if ( $_ == 0 ) {
-
-			#Directory
-			$col_width = 200;
-		} elsif ( $_ == 2 ) {
-
-			#Line
-			$col_width = 30;
-		} else {
-			$col_width = Wx::wxLIST_AUTOSIZE;
-		}
-		$self->SetColumnWidth( $_, $col_width );
-	}
-
-	return;
 }
 
 # Private method to handle the clicking of a find result
 sub _on_find_result_clicked {
 	my ( $self, $event ) = @_;
 
-	my $selection = $self->GetFirstSelected;
+	my $item_data    = $self->GetPlData($event->GetItem) or return;
+	my $dir = $item_data->{dir} or return;
+	my $file = $item_data->{file} or return;
+	my $line = $item_data->{line} or return;
+	my $msg = $item_data->{msg} || '';
 
-	my $path = $self->GetItem( $selection, 0 )->GetText or return;
-	my $file = $self->GetItem( $selection, 1 )->GetText or return;
-	my $line = $self->GetItem( $selection, 2 )->GetText or return;
-	my $msg = $self->GetItem( $selection, 3 )->GetText || '';
-
-	$self->open_file_at_line( File::Spec->catfile( $path, $file ), $line - 1 );
+	$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
 
 	return;
 }
@@ -203,19 +172,21 @@ sub open_file_at_line {
 	my $main = $self->main;
 
 	# Try to open the file now
+	my $editor;
 	if ( my $page_id = $main->find_editor_of_file($file) ) {
-		my $editor = $main->notebook->GetPage($page_id);
-		$editor->EnsureVisible($line);
-		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-		$editor->SetFocus;
+		$editor = $main->notebook->GetPage($page_id);
 	} else {
 		$main->setup_editor($file);
 		if ( my $page_id = $main->find_editor_of_file($file) ) {
-			my $editor = $main->notebook->GetPage($page_id);
-			$editor->EnsureVisible($line);
-			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-			$editor->SetFocus;
+			$editor = $main->notebook->GetPage($page_id);
 		}
+	}
+
+	if($editor) {
+		$editor->MarkerAdd( $line, Padre::Wx::MarkFindResult );
+		$editor->EnsureVisible($line);
+		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+		$editor->SetFocus;
 	}
 }
 
@@ -261,17 +232,14 @@ sub clear {
 	my $self = shift;
 	$self->{files}   = 0;
 	$self->{matches} = 0;
+
+	# Remove the margins for the syntax markers
+	foreach my $editor ( $self->main->editors ) {
+		$editor->MarkerDeleteAll(Padre::Wx::MarkFindResult);
+	}
+
 	$self->DeleteAllItems;
 	return 1;
-}
-
-sub _titles {
-	return (
-		Wx::gettext('Directory'),
-		Wx::gettext('File'),
-		Wx::gettext('Line'),
-		Wx::gettext('Description'),
-	);
 }
 
 1;
