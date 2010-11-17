@@ -19,6 +19,8 @@ sub new {
 	# Create the Wx wizard dialog
 	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector') );
 
+	$self->{current_page} = undef;
+
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
@@ -128,9 +130,9 @@ sub button_cancel {
 sub show_page {
 	my ( $self, $page ) = @_;
 
-	$self->SetLabel( $page->get_title );
-	$self->{title}->SetLabel( $page->get_name );
-	$self->{status}->SetLabel('');
+	$self->{current_page} = $page;
+
+	$self->refresh;
 
 	$page->show;
 }
@@ -140,10 +142,20 @@ sub show {
 	my $self = shift;
 
 	$self->show_page( $self->{select_page} );
-
 	$self->ShowModal;
 
 	return;
+}
+
+sub refresh {
+	my $self = shift;
+
+	my $current = $self->{current_page} or return;
+	$self->SetLabel( $current->get_title );
+	$self->{title}->SetLabel( $current->get_name );
+	$self->{status}->SetLabel( $current->{status} );
+	$self->{button_back}->Enable( defined($current->{back_wizard}) ? 1 : 0 );
+	$self->{button_next}->Enable( defined($current->{next_wizard}) ? 1 : 0 );
 }
 
 1;

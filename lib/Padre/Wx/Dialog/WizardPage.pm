@@ -21,6 +21,13 @@ sub new {
 	# Store the wizard for later usage
 	$self->{wizard} = $wizard;
 
+	# The back and next wizards
+	$self->{back_wizard} = undef;
+	$self->{next_wizard} = undef;
+
+	# status text starts empty
+	$self->{status} = '';
+
 	# Add the controls
 	$self->add_controls;
 
@@ -65,13 +72,26 @@ sub add_events { }
 sub show { }
 
 =pod
-	Convenience method to display status on the wizard's header
+	Convenience method to set status on the wizard's header
+	Called C<refresh> to do the actual update
 =cut
 
-sub update_status {
-	$_[0]->{wizard}->{status}->SetLabel( $_[1] );
+sub status {
+	$_[0]->{status} = $_[1];
 }
 
+
+sub back_wizard {
+	$_[0]->{back_wizard} = $_[1];
+}
+
+sub next_wizard {
+	$_[0]->{next_wizard} = $_[1];
+}
+
+sub refresh {
+	$_[0]->{wizard}->refresh;
+}
 
 1;
 

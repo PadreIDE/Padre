@@ -118,8 +118,12 @@ sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
 	my $tree_item_id = $event->GetItem;
-	my $item_text    = $self->{tree}->GetItemText($tree_item_id);
-	$self->update_status($item_text);
+	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
+	if($wizard) {
+		$self->next_wizard($wizard);
+		$self->wizard_status($wizard ? $wizard->label : '');
+		$self->refresh();
+	}
 
 	return;
 }
@@ -129,8 +133,12 @@ sub _on_tree_selection_changed {
 	my ( $self, $event ) = @_;
 
 	my $tree_item_id = $event->GetItem;
-	my $item_text    = $self->{tree}->GetItemText($tree_item_id);
-	$self->update_status($item_text);
+	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
+	if($wizard) {
+		$self->next_wizard($wizard);
+		$self->status($wizard ? $wizard->label : '');
+		$self->refresh;
+	}
 
 	return;
 }
@@ -172,7 +180,8 @@ sub _update_list {
 
 			# Add a category if it doesnt exist and append the wizard to the end of it
 			$category_item = $tree->AppendItem( $root, $category ) unless $category_item;
-			$tree->AppendItem( $category_item, $label );
+			my $item = $tree->AppendItem( $category_item, $label );
+			$tree->SetPlData( $item, $wizard );
 		}
 
 		# Expand the defined category only if it the 'Perl 5' category
