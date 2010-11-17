@@ -16,6 +16,7 @@ use Class::XSAccessor {
 		label    => 'label',
 		category => 'category',
 		comment  => 'comment',
+		class    => 'class',
 	},
 };
 
@@ -55,6 +56,7 @@ Padre::Wx::Wizard - Padre Wizard Object
 	label       => Wx::gettext('Script'),
 	category    => Wx::gettext('Perl 5'),
 	comment     => Wx::gettext('Opens the Perl 5 script wizard'),
+	class       => 'Padre::Wx::Dialog::Wizard::Perl5Script',
   );
 
 =head1 DESCRIPTION
