@@ -41,6 +41,7 @@ use Params::Util                  ();
 use Time::HiRes                   ();
 use Padre::Wx::Action             ();
 use Padre::Wx::ActionLibrary      ();
+use Padre::Wx::WizardLibrary      ();
 use Padre::Constant               ();
 use Padre::Util                   ('_T');
 use Padre::Perl                   ();
@@ -186,6 +187,9 @@ sub new {
 
 	# Bootstrap the action system
 	Padre::Wx::ActionLibrary->init($self);
+
+	# Bootstrap the wizard system
+	Padre::Wx::WizardLibrary->init($self);
 
 	# Temporary store for the notebook tab history
 	# TO DO: Storing this here (might) violate encapsulation.

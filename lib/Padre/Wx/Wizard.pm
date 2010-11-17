@@ -12,14 +12,10 @@ our $VERSION = '0.75';
 # Generate faster accessors
 use Class::XSAccessor {
 	getters => {
-		id            => 'id',
 		name          => 'name',
 		label         => 'label',
 		category      => 'category',
 		comment       => 'comment',
-	},
-	accessors => {
-		shortcut => 'shortcut',
 	},
 };
 
@@ -45,16 +41,12 @@ sub new {
 	my $ide      = Padre->ide;
 	my $wizards  = $ide->wizards;
 	my $self     = bless { id => -1, @_ }, $class;
+	my $name = $self->{name};
 
-	# Save the action
-	$actions->{$name} = $self;
+	# Save the wizard
+	$wizards->{$name} = $self;
 
 	return $self;
-}
-
-# Translate on the fly when requested
-sub label {
-	Wx::gettext( $_[0]->{label} );
 }
 
 1;

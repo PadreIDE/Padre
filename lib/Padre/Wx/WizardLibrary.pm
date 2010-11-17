@@ -13,7 +13,7 @@ our $VERSION = '0.75';
 ######################################################################
 # Wizard Database
 
-sub init_wizards {
+sub init {
 
 	Padre::Wx::Wizard->new(
 		name        => 'perl5.script',
