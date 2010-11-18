@@ -157,11 +157,11 @@ sub refresh {
 	my $self = shift;
 
 	my $current = $self->{current_page} or return;
-	$self->SetLabel( $current->get_title );
-	$self->{title}->SetLabel( $current->get_name );
-	$self->{status}->SetLabel( $current->{status} );
-	$self->{button_back}->Enable( defined( $current->{back_wizard} ) ? 1 : 0 );
-	$self->{button_next}->Enable( defined( $current->{next_wizard} ) ? 1 : 0 );
+	$self->SetLabel( $current->title );
+	$self->{title}->SetLabel( $current->name );
+	$self->{status}->SetLabel( $current->status );
+	$self->{button_back}->Enable( defined( $current->back_wizard ) ? 1 : 0 );
+	$self->{button_next}->Enable( defined( $current->next_wizard ) ? 1 : 0 );
 }
 
 1;

@@ -11,6 +11,20 @@ our @ISA     = qw{
 	Wx::Panel
 };
 
+# Generate faster accessors
+use Class::XSAccessor {
+	getters => {
+		wizard     => 'wizard',
+	},
+	accessors => {
+		name       => 'name',
+		title      => 'title',
+		back_wizard => 'back_wizard',
+		next_wizard => 'next_wizard',
+		status      => 'status',
+	},
+};
+
 sub new {
 	my ( $class, $wizard ) = @_;
 
@@ -20,12 +34,15 @@ sub new {
 	# Store the wizard for later usage
 	$self->{wizard} = $wizard;
 
-	# The back and next wizards
-	$self->{back_wizard} = undef;
-	$self->{next_wizard} = undef;
+	# The dummy wizard page name and title 
+	$self->name('Dummy Wizard Name');
+	$self->title('Dummy Wizard Title');
 
 	# status text starts empty
-	$self->{status} = '';
+	$self->status('');
+
+	# Initialize
+	$self->init;
 
 	# Add the controls
 	$self->add_controls;
@@ -37,78 +54,39 @@ sub new {
 }
 
 =pod
-	Returns the wizard page name
-	Note: You need to override this method
+	Initializes the page
+	Note: You may need to override this method
 =cut
 
-sub get_name {
-	return 'Dummy Wizard Name';
-}
-
-=pod
-	Returns the wizard page title
-	Note: You need to override this method
-=cut
-
-sub get_title {
-	return 'Dummy Wizard Title';
-}
+sub init { }
 
 =pod
 	Adds the controls
-	Note: You need to override this method
+	Note: You may need to override this method
 =cut
 
 sub add_controls { }
 
 =pod
 	Adds the control events
-	Note: You need to override this method
+	Note: You may need to override this method
 =cut
 
 sub add_events { }
 
 =pod
 	Called when the wizard page is going to be shown
-	Note: You need to override this method
+	Note: You may need to override this method
 =cut
 
 sub show { }
-
-=pod
-	Convenience method to set status on the wizard's header
-	Called C<refresh> to do the actual update
-=cut
-
-sub status {
-	$_[0]->{status} = $_[1];
-}
-
-
-=pod
-	Convenience method to set the wizard for the back button
-	Called C<refresh> to do the actual update
-=cut
-
-sub back_wizard {
-	$_[0]->{back_wizard} = $_[1];
-}
-
-=pod
-	Convenience method to set the wizard for the next button
-	Called C<refresh> to do the actual update
-=cut
-
-sub next_wizard {
-	$_[0]->{next_wizard} = $_[1];
-}
 
 =pod
 	Convenience method to set refresh the wizard
 =cut
 
 sub refresh {
-	$_[0]->{wizard}->refresh;
+	$_[0]->wizard->refresh;
 }
 
 1;

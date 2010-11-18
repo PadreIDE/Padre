@@ -10,12 +10,12 @@ use Padre::Wx::Dialog::WizardPage ();
 our $VERSION = '0.75';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
-sub get_name {
-	return Wx::gettext("Select a Wizard");
-}
+# Initialize the page
+sub init {
+	my $self = shift;
 
-sub get_title {
-	return Wx::gettext("Wizard Selector");
+	$self->name(Wx::gettext("Select a Wizard"));
+	$self->title(Wx::gettext("Wizard Selector"));
 }
 
 # Add controls to page
@@ -52,6 +52,7 @@ sub add_controls {
 	$self->Fit;
 }
 
+# Adds the events
 sub add_events {
 	my $self = shift;
 
@@ -186,6 +187,7 @@ sub _update_tree {
 	}
 }
 
+# Shows the page
 sub show {
 	my $self = shift;
 
