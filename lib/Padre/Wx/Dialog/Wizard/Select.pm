@@ -113,14 +113,6 @@ sub _on_char {
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $tree_item_id = $event->GetItem;
-	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
-	if($wizard) {
-		$self->next_wizard($wizard);
-		$self->wizard_status($wizard ? $wizard->comment : '');
-		$self->refresh();
-	}
-
 	return;
 }
 
@@ -131,9 +123,16 @@ sub _on_tree_selection_changed {
 	my $tree_item_id = $event->GetItem;
 	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
 	if($wizard) {
-		$self->next_wizard($wizard);
-		$self->status($wizard ? $wizard->comment : '');
-		$self->refresh;
+		my $class = $wizard->class;
+		eval "require $class";
+		if($@) {
+			$self->next_wizard(undef);
+			$self->status(sprintf(Wx::gettext("Error while loading %s"), $class));
+		} else {
+			$self->next_wizard($wizard);
+			$self->status($wizard ? $wizard->comment : '');
+		}
+		$self->refresh();
 	}
 
 	return;
