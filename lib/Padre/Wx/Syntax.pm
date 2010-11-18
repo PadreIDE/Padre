@@ -366,7 +366,6 @@ sub render {
 	# If there are no errors clear the synax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
 		my $i = $self->InsertStringImageItem( 0, '', 2 );
-		$self->SetItemData( $i, 0 );
 		$self->SetItem( $i, 1, Wx::gettext('Info') );
 
 		# Relative-to-the-project filename.
@@ -399,7 +398,6 @@ sub render {
 		my $severity = $hint->{severity};
 		$editor->MarkerAdd( $line, $MARKER[$severity] );
 		my $item = $self->InsertStringImageItem( $i++, $line + 1, $severity );
-		$self->SetItemData( $item, 0 );
 		$self->SetItem( $item, 1, $LABEL[$severity] );
 		$self->SetItem( $item, 2, $hint->{msg} );
 	}
