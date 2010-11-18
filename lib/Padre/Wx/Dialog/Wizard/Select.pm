@@ -127,10 +127,11 @@ sub _on_tree_selection_changed {
 			$self->next_wizard($wizard);
 			$self->status( $wizard ? $wizard->comment : '' );
 		}
-		$self->refresh();
+	} else {
+		$self->next_wizard(undef);
+		$self->status('');
 	}
-
-	return;
+	$self->refresh();
 }
 
 # Private method to update the tree by using the filter
