@@ -3,7 +3,6 @@ package Padre::Wx::Dialog::WizardPage;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Wx ();
 
 our $VERSION = '0.75';

@@ -3,7 +3,6 @@ package Padre::Wx::Dialog::Wizard::Select;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Wx                     ();
 use Padre::Wx::TreeCtrl           ();
 use Padre::Wx::Dialog::WizardPage ();
@@ -19,6 +18,7 @@ sub get_title {
 	return Wx::gettext("Wizard Selector");
 }
 
+# Add controls to page
 sub add_controls {
 	my $self = shift;
 
@@ -38,10 +38,6 @@ sub add_controls {
 			Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
 			Wx::wxTR_LINES_AT_ROOT
 	);
-
-	#
-	#----- Dialog Layout -------
-	#
 
 	# Filter sizer
 	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -143,8 +139,8 @@ sub _on_tree_selection_changed {
 	return;
 }
 
-# Private method to update the tree
-sub _update_list {
+# Private method to update the tree by using the filter
+sub _update_tree {
 	my $self   = shift;
 	my $filter = quotemeta $self->{filter}->GetValue;
 
@@ -156,6 +152,8 @@ sub _update_list {
 	my $wizards_by_category = {};
 	for my $wizard (values %{$self->ide->wizards}) {
 		my $category = $wizard->category;
+		
+		# Add the wizard the list of wizards in that category
 		my $wizards = $wizards_by_category->{$category} || [];
 		push @$wizards, $wizard;
 		$wizards_by_category->{$category} = $wizards;
@@ -191,8 +189,6 @@ sub _update_list {
 				and ( $category eq 'Perl 5'
 					or ( $filter_not_empty && $tree->ItemHasChildren($category_item) ) );
 	}
-
-	return;
 }
 
 sub show {
@@ -201,8 +197,8 @@ sub show {
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
 
-	# Update the preferences list
-	$self->_update_list;
+	# Update the tree
+	$self->_update_tree;
 }
 
 1;
