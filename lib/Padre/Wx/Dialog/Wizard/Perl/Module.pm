@@ -10,17 +10,23 @@ use Padre::Wx::Dialog::WizardPage ();
 our $VERSION = '0.75';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
-sub get_name {
-	return Wx::gettext("Creates a Perl 5 module or script");
-}
+# Initialize the page
+sub init {
+	my $self = shift;
 
-sub get_title {
-	return Wx::gettext("Perl 5 Module Wizard");
+	$self->name(Wx::gettext('Creates a Perl 5 module or script'));
+	$self->title(Wx::gettext('Perl 5 Module Wizard'));
 }
 
 # Add controls to page
 sub add_controls {
 	my $self = shift;
+
+	#my $module_name = Wx::TextCtrl->new('');
+	#my $extends_class;
+	#my $perl_min_version;
+	#my $getopt_support;
+	#my $generate_boilerplate;
 
 	# Main vertical sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -29,11 +35,13 @@ sub add_controls {
 	$self->Fit;
 }
 
+# Add events to page
 sub add_events {
 	my $self = shift;
 
 }
 
+# Show the page
 sub show {
 	my $self = shift;
 
