@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::Logger;
 
 our $VERSION = '0.75';
 our @ISA     = qw{ Wx::Dialog };
@@ -121,11 +122,7 @@ sub _on_button_back {
 	# Show the back wizard page if it is valid
 	my $wizard = $self->{current}->back_wizard;
 	if($wizard) {
-		my $class = $wizard->class;
-		eval "require $class";
-		unless($@) {
-			$self->_show_page($class->new($self));
-		}
+		$self->_try_to_show_page($wizard->class);
 	} else {
 		$self->_show_page($self->{select_page});
 	}
@@ -140,10 +137,20 @@ sub _on_button_next {
 
 	# Show the next wizard page if it is valid
 	my $wizard = $self->{current}->next_wizard or return;
-	my $class = $wizard->class;
+	$self->_try_to_show_page($wizard->class);
+}
+
+# Tries to show a wizard page
+sub _try_to_show_page {
+	my ($self, $class) = @_;
+
 	eval "require $class";
 	unless($@) {
-		$self->_show_page($class->new($self));
+		if($class->can('new')) {
+			$self->_show_page($class->new($self));
+		} else {
+			$self->main->error(sprintf(Wx::gettext('%s has no constructor'), $class));
+		}
 	}
 }
 

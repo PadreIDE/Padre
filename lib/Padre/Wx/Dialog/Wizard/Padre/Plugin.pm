@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::Wizard::Perl::Plugin;
+package Padre::Wx::Dialog::Wizard::Padre::Plugin;
 
 use 5.008;
 use strict;
@@ -9,12 +9,14 @@ use Padre::Wx::Dialog::WizardPage ();
 our $VERSION = '0.75';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
-sub get_name {
-	return Wx::gettext("Creates a Padre Plugin");
-}
+sub init {
+	my $self = shift;
 
-sub get_title {
-	return Wx::gettext("Padre Plugin Wizard");
+	$self->name(Wx::gettext('Creates a Padre Plugin'));
+	$self->title(Wx::gettext('Padre Plugin Wizard'));
+
+	# Back to select page
+	$self->back_wizard(0);
 }
 
 # Add controls to page
@@ -47,7 +49,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::Wizard::Perl::Plugin - a Padre Plugin Wizard
+Padre::Wx::Dialog::Wizard::Padre::Plugin - a Padre Plugin Wizard
 
 =head1 DESCRIPTION
 
