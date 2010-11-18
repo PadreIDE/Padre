@@ -69,7 +69,7 @@ sub add_events {
 		$self,
 		$self->{filter},
 		sub {
-			shift->_update_list;
+			shift->_update_tree;
 		}
 	);
 
