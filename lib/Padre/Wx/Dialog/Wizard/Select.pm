@@ -214,8 +214,8 @@ Padre::Wx::Dialog::Wizard::Select - the wizard selection page
 
 =head1 DESCRIPTION
 
-This prepares the required page UI that the wizard will include in its UI and has the page
-flow information for the next and previous pages.
+This prepares the required page UI that the wizard will include in its UI and 
+has the page flow information for the next and previous pages.
 
 =head1 COPYRIGHT & LICENSE
 

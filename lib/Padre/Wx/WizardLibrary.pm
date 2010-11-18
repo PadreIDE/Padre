@@ -20,7 +20,7 @@ sub init {
 		label    => Wx::gettext('Module'),
 		category => Wx::gettext('Perl 5'),
 		comment  => Wx::gettext('Opens the Perl 5 module wizard'),
-		class    => 'Padre::Wx::Dialog::Wizard::Perl5Module',
+		class    => 'Padre::Wx::Dialog::Wizard::Perl::Module',
 	);
 
 	Padre::Wx::Wizard->new(
@@ -28,7 +28,7 @@ sub init {
 		label    => Wx::gettext('Plugin'),
 		category => Wx::gettext('Padre'),
 		comment  => Wx::gettext('Opens the Padre plugin wizard'),
-		class    => 'Padre::Wx::Dialog::Wizard::PadrePlugin',
+		class    => 'Padre::Wx::Dialog::Wizard::Padre::Plugin',
 	);
 
 	Padre::Wx::Wizard->new(
@@ -36,7 +36,7 @@ sub init {
 		label    => Wx::gettext('Document'),
 		category => Wx::gettext('Padre'),
 		comment  => Wx::gettext('Opens the Padre document wizard'),
-		class    => 'Padre::Wx::Dialog::Wizard::PadreDocument',
+		class    => 'Padre::Wx::Dialog::Wizard::Padre::Document',
 	);
 
 	return 1;

@@ -1,21 +1,20 @@
-package Padre::Wx::Dialog::Wizard::Perl::Module;
+package Padre::Wx::Dialog::Wizard::Perl::Plugin;
 
 use 5.008;
 use strict;
 use warnings;
 use Padre::Wx                     ();
-use Padre::Wx::TreeCtrl           ();
 use Padre::Wx::Dialog::WizardPage ();
 
 our $VERSION = '0.75';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
 sub get_name {
-	return Wx::gettext("Creates a Perl 5 module or script");
+	return Wx::gettext("Creates a Padre Plugin");
 }
 
 sub get_title {
-	return Wx::gettext("Perl 5 Module Wizard");
+	return Wx::gettext("Padre Plugin Wizard");
 }
 
 # Add controls to page
@@ -48,7 +47,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::Wizard::Perl::Module - a Perl 5 Module Wizard
+Padre::Wx::Dialog::Wizard::Perl::Plugin - a Padre Plugin Wizard
 
 =head1 DESCRIPTION
 
