@@ -7,9 +7,7 @@ use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 our $VERSION = '0.75';
-our @ISA     = qw{
-	Wx::Dialog
-};
+our @ISA     = qw{ Wx::Dialog };
 
 # Creates the wizard dialog and returns the instance
 sub new {
@@ -87,46 +85,50 @@ sub _add_events {
 		$self,
 		$self->{button_back},
 		sub {
-			$_[0]->button_back;
+			$_[0]->_on_button_back;
 		},
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{button_next},
 		sub {
-			$_[0]->button_next;
+			$_[0]->_on_button_next;
 		},
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{button_cancel},
 		sub {
-			$_[0]->button_cancel;
+			$_[0]->_on_button_cancel;
 		},
 	);
 
 	return;
 }
 
-sub button_back {
+# Called when the back button is clicked
+sub _on_button_back {
 	my $self = shift;
 
 	# Workaround: BACK button does not receive focus automatically... (on win32)
 	$self->{button_back}->SetFocus;
 }
 
-sub button_next {
+# Called when the next button is clicked
+sub _on_button_next {
 	my $self = shift;
 
 	# Workaround: NEXT button does not receive focus automatically... (on win32)
 	$self->{button_next}->SetFocus;
 }
 
-sub button_cancel {
+# Called when the cancel button is clicked
+sub _on_button_cancel {
 	$_[0]->Destroy;
 }
 
-sub show_page {
+# Shows a given page and make it is the currently displayed page
+sub _show_page {
 	my ( $self, $page ) = @_;
 
 	$self->{current_page} = $page;
@@ -140,11 +142,16 @@ sub show_page {
 sub show {
 	my $self = shift;
 
-	$self->show_page( $self->{select_page} );
+	$self->_show_page( $self->{select_page} );
 	$self->ShowModal;
 
 	return;
 }
+
+=pod
+	Refreshes the wizard selector dialog title's, status labels, and back/
+	next button enabled status
+=cut
 
 sub refresh {
 	my $self = shift;
