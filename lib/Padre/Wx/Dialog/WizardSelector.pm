@@ -9,14 +9,19 @@ use Padre::Wx::Icon ();
 our $VERSION = '0.75';
 our @ISA     = qw{ Wx::Dialog };
 
+# Generate faster accessors
+use Class::XSAccessor {
+	accessors => {
+		current    => 'current',
+	},
+};
+
 # Creates the wizard dialog and returns the instance
 sub new {
 	my ( $class, $parent ) = @_;
 
 	# Create the Wx wizard dialog
 	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector') );
-
-	$self->{current_page} = undef;
 
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -120,6 +125,14 @@ sub _on_button_next {
 
 	# Workaround: NEXT button does not receive focus automatically... (on win32)
 	$self->{button_next}->SetFocus;
+
+	# Show the next wizard page if it is valid
+	my $wizard = $self->{current}->next_wizard or return;
+	my $class = $wizard->class;
+	eval "require $class";
+	unless($@) {
+		$self->_show_page($class->new($self));
+	}
 }
 
 # Called when the cancel button is clicked
@@ -131,7 +144,10 @@ sub _on_button_cancel {
 sub _show_page {
 	my ( $self, $page ) = @_;
 
-	$self->{current_page} = $page;
+	# Hide the old one and then show the new one
+	$self->current->Hide if $self->current;
+	$self->current( $page );
+	$page->Show;
 
 	$self->refresh;
 
@@ -156,7 +172,7 @@ sub show {
 sub refresh {
 	my $self = shift;
 
-	my $current = $self->{current_page} or return;
+	my $current = $self->current or return;
 	$self->SetLabel( $current->title );
 	$self->{title}->SetLabel( $current->name );
 	$self->{status}->SetLabel( $current->status );
