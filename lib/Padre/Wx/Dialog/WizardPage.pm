@@ -38,34 +38,39 @@ sub new {
 
 =pod
 	Returns the wizard page name
+	Note: You need to override this method
 =cut
 
 sub get_name {
-	return "Wizard Name";
+	return 'Dummy Wizard Name';
 }
 
 =pod
 	Returns the wizard page title
+	Note: You need to override this method
 =cut
 
 sub get_title {
-	return "Wizard Title";
+	return 'Dummy Wizard Title';
 }
 
 =pod
 	Adds the controls
+	Note: You need to override this method
 =cut
 
 sub add_controls { }
 
 =pod
 	Adds the control events
+	Note: You need to override this method
 =cut
 
 sub add_events { }
 
 =pod
 	Called when the wizard page is going to be shown
+	Note: You need to override this method
 =cut
 
 sub show { }
@@ -80,13 +85,26 @@ sub status {
 }
 
 
+=pod
+	Convenience method to set the wizard for the back button
+	Called C<refresh> to do the actual update
+=cut
 sub back_wizard {
 	$_[0]->{back_wizard} = $_[1];
 }
 
+=pod
+	Convenience method to set the wizard for the next button
+	Called C<refresh> to do the actual update
+=cut
+
 sub next_wizard {
 	$_[0]->{next_wizard} = $_[1];
 }
+
+=pod
+	Convenience method to set refresh the wizard
+=cut
 
 sub refresh {
 	$_[0]->{wizard}->refresh;
@@ -104,8 +122,8 @@ Padre::Wx::Dialog::WizardPage - a wizard page
 
 =head1 DESCRIPTION
 
-This prepares the required page UI that the wizard will include in its UI and has the page
-flow information for the next and previous pages.
+This prepares the required page UI that the wizard will include in its UI and
+has the page flow information for the next and previous pages.
 
 =head1 COPYRIGHT & LICENSE
 
