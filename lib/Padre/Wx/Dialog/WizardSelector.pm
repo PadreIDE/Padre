@@ -153,8 +153,8 @@ sub refresh {
 	$self->SetLabel( $current->get_title );
 	$self->{title}->SetLabel( $current->get_name );
 	$self->{status}->SetLabel( $current->{status} );
-	$self->{button_back}->Enable( defined($current->{back_wizard}) ? 1 : 0 );
-	$self->{button_next}->Enable( defined($current->{next_wizard}) ? 1 : 0 );
+	$self->{button_back}->Enable( defined( $current->{back_wizard} ) ? 1 : 0 );
+	$self->{button_next}->Enable( defined( $current->{next_wizard} ) ? 1 : 0 );
 }
 
 1;

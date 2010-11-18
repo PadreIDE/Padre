@@ -89,6 +89,7 @@ sub status {
 	Convenience method to set the wizard for the back button
 	Called C<refresh> to do the actual update
 =cut
+
 sub back_wizard {
 	$_[0]->{back_wizard} = $_[1];
 }

@@ -29,7 +29,7 @@ sub new {
 	my $self    = bless { id => -1, @_ }, $class;
 
 	# Save the wizard
-	$wizards->{$self->{name}} = $self;
+	$wizards->{ $self->{name} } = $self;
 
 	return $self;
 }

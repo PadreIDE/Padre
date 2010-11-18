@@ -34,9 +34,8 @@ sub add_controls {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE |
-			Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS |
-			Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
+			| Wx::wxTR_LINES_AT_ROOT
 	);
 
 	# Filter sizer
@@ -105,15 +104,11 @@ sub _on_char {
 		or ( $code == Wx::WXK_PAGEDOWN );
 
 	$event->Skip(1);
-
-	return;
 }
 
 # Private method to handle tree item activation (i.e. clicking)
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
-
-	return;
 }
 
 # Private method to handle tree selection change
@@ -121,16 +116,16 @@ sub _on_tree_selection_changed {
 	my ( $self, $event ) = @_;
 
 	my $tree_item_id = $event->GetItem;
-	my $wizard    = $self->{tree}->GetPlData($tree_item_id);
-	if($wizard) {
+	my $wizard       = $self->{tree}->GetPlData($tree_item_id);
+	if ($wizard) {
 		my $class = $wizard->class;
 		eval "require $class";
-		if($@) {
+		if ($@) {
 			$self->next_wizard(undef);
-			$self->status(sprintf(Wx::gettext("Error while loading %s"), $class));
+			$self->status( sprintf( Wx::gettext("Error while loading %s"), $class ) );
 		} else {
 			$self->next_wizard($wizard);
-			$self->status($wizard ? $wizard->comment : '');
+			$self->status( $wizard ? $wizard->comment : '' );
 		}
 		$self->refresh();
 	}
@@ -149,9 +144,9 @@ sub _update_tree {
 
 	# Collect available wizard categories
 	my $wizards_by_category = {};
-	for my $wizard (values %{$self->ide->wizards}) {
+	for my $wizard ( values %{ $self->ide->wizards } ) {
 		my $category = $wizard->category;
-		
+
 		# Add the wizard the list of wizards in that category
 		my $wizards = $wizards_by_category->{$category} || [];
 		push @$wizards, $wizard;
@@ -165,7 +160,7 @@ sub _update_tree {
 	for my $category ( sort keys %$wizards_by_category ) {
 		my $category_item;
 		my $unmatched_category = $category !~ /$filter/i;
-		for my $wizard ( @{$wizards_by_category->{$category}} ) {
+		for my $wizard ( @{ $wizards_by_category->{$category} } ) {
 			my $label = $wizard->label;
 
 			#Remove the first 2-digits sorting numbers from the name

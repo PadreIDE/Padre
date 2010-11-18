@@ -553,8 +553,9 @@ sub render {
 		}
 	}
 	if ( $pos > 0 ) {
+
 		#Keep the old user selection if it is possible
-		$self->{matches_list}->Select(scalar @matches > 0 ? $matches[0] : 0);
+		$self->{matches_list}->Select( scalar @matches > 0 ? $matches[0] : 0 );
 		$self->{status_text}->ChangeValue( $self->_path( $self->{matches_list}->GetClientData(0) ) );
 		$self->{status_text}->Enable(1);
 		$self->{copy_button}->Enable(1);
