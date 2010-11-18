@@ -16,6 +16,9 @@ sub init {
 
 	$self->name(Wx::gettext('Creates a Perl 5 module or script'));
 	$self->title(Wx::gettext('Perl 5 Module Wizard'));
+
+	# Back to select page
+	$self->back_wizard(0);
 }
 
 # Add controls to page

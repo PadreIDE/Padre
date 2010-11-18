@@ -117,6 +117,18 @@ sub _on_button_back {
 
 	# Workaround: BACK button does not receive focus automatically... (on win32)
 	$self->{button_back}->SetFocus;
+
+	# Show the back wizard page if it is valid
+	my $wizard = $self->{current}->back_wizard;
+	if($wizard) {
+		my $class = $wizard->class;
+		eval "require $class";
+		unless($@) {
+			$self->_show_page($class->new($self));
+		}
+	} else {
+		$self->_show_page($self->{select_page});
+	}
 }
 
 # Called when the next button is clicked
@@ -147,7 +159,7 @@ sub _show_page {
 	# Hide the old one and then show the new one
 	$self->current->Hide if $self->current;
 	$self->current( $page );
-	$page->Show;
+	$page->Show(1);
 
 	$self->refresh;
 
