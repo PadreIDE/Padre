@@ -471,12 +471,11 @@ sub _show_recently_opened_resources {
 
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
-	my $recently_used = Padre::DB::RecentlyUsed->select( 'where type = ?', 'RESOURCE' ) || [];
+	my $recently_used = Padre::DB::RecentlyUsed->select( 'where type = ? order by last_used desc', 'RESOURCE' ) || [];
 	my @recent_files = ();
 	foreach my $e (@$recently_used) {
 		push @recent_files, $self->_path( $e->value );
 	}
-	@recent_files = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recent_files;
 
 	# Show results in matching items list
 	$self->{matched_files} = \@recent_files;

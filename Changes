@@ -13,6 +13,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Enabled the Padre Wizard API and Wizard selector dialog (AZAWAWI)
     - Fix the bug of lost user selection when searching a big project directory
       and typing fast in "Open Resource" dialog (AZAWAWI)
+    - Fixed "Open Resource" dialog so that recently used resources are to be
+      sorted by last usage instead by filename (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
