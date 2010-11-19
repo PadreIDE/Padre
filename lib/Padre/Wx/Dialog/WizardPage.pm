@@ -25,6 +25,29 @@ use Class::XSAccessor {
 	},
 };
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Dialog::WizardPage - a wizard page base class
+
+=head1 DESCRIPTION
+
+This prepares the required page UI that the wizard will include in its UI and
+has the page flow information for the next and previous pages.
+
+=pod
+
+=head1 PUBLIC API
+
+=head2 METHODS
+
+=head2 C<new>
+
+Constructs a wizard page and calls C<init>, C<add_controls>, and C<add_events>
+Note: Please do NOT override this. use C<init> instead
+
+=cut
 sub new {
 	my ( $class, $wizard ) = @_;
 
@@ -54,13 +77,19 @@ sub new {
 }
 
 =pod
-	Initializes the page
+
+=head2 C<init>
+
+	Initializes the page. All initialization code should reside here.
 	Note: You may need to override this method
 =cut
 
 sub init { }
 
 =pod
+
+=head2 C<add_controls>
+
 	Adds the controls
 	Note: You may need to override this method
 =cut
@@ -68,6 +97,9 @@ sub init { }
 sub add_controls { }
 
 =pod
+
+=head2 C<add_events>
+
 	Adds the control events
 	Note: You may need to override this method
 =cut
@@ -75,14 +107,22 @@ sub add_controls { }
 sub add_events { }
 
 =pod
+
+=head2 C<show>
+
 	Called when the wizard page is going to be shown
 	Note: You may need to override this method
+
 =cut
 
 sub show { }
 
 =pod
+
+=head2 C<refresh>
+
 	Convenience method to set refresh the wizard
+
 =cut
 
 sub refresh {
@@ -94,15 +134,6 @@ sub refresh {
 __END__
 
 =pod
-
-=head1 NAME
-
-Padre::Wx::Dialog::WizardPage - a wizard page
-
-=head1 DESCRIPTION
-
-This prepares the required page UI that the wizard will include in its UI and
-has the page flow information for the next and previous pages.
 
 =head1 COPYRIGHT & LICENSE
 
