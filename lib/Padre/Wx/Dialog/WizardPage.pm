@@ -135,6 +135,10 @@ __END__
 
 =pod
 
+=head1 AUTHOR
+
+Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
+
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2010 The Padre development team as listed in Padre.pm.

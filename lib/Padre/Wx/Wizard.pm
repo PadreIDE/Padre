@@ -20,8 +20,35 @@ use Class::XSAccessor {
 	},
 };
 
-#####################################################################
-# Constructor
+=pod
+
+=head1 NAME
+
+Padre::Wx::Wizard - Padre Wizard Object
+
+=head1 SYNOPSIS
+
+  my $wizard = Padre::Wx::Wizard->new(
+	name        => 'perl5.script',
+	label       => Wx::gettext('Script'),
+	category    => Wx::gettext('Perl 5'),
+	comment     => Wx::gettext('Opens the Perl 5 script wizard'),
+	class       => 'Padre::Wx::Dialog::Wizard::Perl5Script',
+  );
+
+=head1 DESCRIPTION
+
+This is the base class for the Padre Wizard API.
+
+=head1 PUBLIC API
+
+=head2 METHODS
+
+=head3 C<new>
+
+A default constructor for wizard objects.
+
+=cut
 
 sub new {
 	my $class   = shift;
@@ -45,29 +72,9 @@ __END__
 
 =pod
 
-=head1 NAME
+=head1 AUTHOR
 
-Padre::Wx::Wizard - Padre Wizard Object
-
-=head1 SYNOPSIS
-
-  my $wizard = Padre::Wx::Wizard->new(
-	name        => 'perl5.script',
-	label       => Wx::gettext('Script'),
-	category    => Wx::gettext('Perl 5'),
-	comment     => Wx::gettext('Opens the Perl 5 script wizard'),
-	class       => 'Padre::Wx::Dialog::Wizard::Perl5Script',
-  );
-
-=head1 DESCRIPTION
-
-This is the base class for the Padre Wizard API.
-
-=head1 METHODS
-
-=head2 new
-
-A default constructor for wizard objects.
+Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
 
 =head1 COPYRIGHT & LICENSE
 

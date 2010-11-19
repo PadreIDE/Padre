@@ -56,6 +56,10 @@ Padre::Wx::Dialog::Wizard::Padre::Document - a Padre document wizard
 This prepares the required page UI that the wizard will include in its UI and 
 has the page flow information for the next and previous pages.
 
+=head1 AUTHOR
+
+Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
+
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2010 The Padre development team as listed in Padre.pm.
