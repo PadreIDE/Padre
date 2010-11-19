@@ -17,6 +17,28 @@ use Class::XSAccessor {
 	},
 };
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Dialog::WizardSelector - a dialog to filter, select and open wizards
+
+=head1 DESCRIPTION
+
+This dialog lets the user search for a wizard and the open it if needed
+
+=head1 PUBLIC API
+
+=head2 METHODS
+
+=head3 C<new>
+
+  my $wizard_selector = Padre::Wx::Dialog::WizardSelector->new($main);
+
+Returns a new C<Padre::Wx::Dialog::WizardSelector> instance
+
+=cut
+
 # Creates the wizard dialog and returns the instance
 sub new {
 	my ( $class, $parent ) = @_;
@@ -173,7 +195,16 @@ sub _show_page {
 	$page->show;
 }
 
-# Shows the wizard dialog
+=pod
+
+=head3 C<show>
+
+  $wizard_selector->show($main);
+
+Shows the wizard dialog. Returns C<undef>.
+
+=cut
+
 sub show {
 	my $self = shift;
 
@@ -184,8 +215,12 @@ sub show {
 }
 
 =pod
+
+=head3 C<refresh>
+
 	Refreshes the wizard selector dialog title's, status labels, and back/
 	next button enabled status
+
 =cut
 
 sub refresh {
@@ -205,28 +240,6 @@ sub refresh {
 __END__
 
 =pod
-
-=head1 NAME
-
-Padre::Wx::Dialog::WizardSelector - a dialog to filter, select and open wizards
-
-=head1 DESCRIPTION
-
-This dialog lets the user search for a wizard and the open it if needed
-
-=head1 PUBLIC API
-
-=head2 C<new>
-
-  my $wizard_selector = Padre::Wx::Dialog::WizardSelector->new($main);
-
-Returns a new C<Padre::Wx::Dialog::WizardSelector> instance
-
-=head2 C<show>
-
-  $wizard_selector->show($main);
-
-Shows the dialog. Returns C<undef>.
 
 =head1 COPYRIGHT & LICENSE
 

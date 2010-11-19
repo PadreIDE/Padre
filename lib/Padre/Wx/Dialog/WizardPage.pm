@@ -42,7 +42,7 @@ has the page flow information for the next and previous pages.
 
 =head2 METHODS
 
-=head2 C<new>
+=head3 C<new>
 
 Constructs a wizard page and calls C<init>, C<add_controls>, and C<add_events>
 Note: Please do NOT override this. use C<init> instead
@@ -78,7 +78,7 @@ sub new {
 
 =pod
 
-=head2 C<init>
+=head3 C<init>
 
 	Initializes the page. All initialization code should reside here.
 	Note: You may need to override this method
@@ -88,7 +88,7 @@ sub init { }
 
 =pod
 
-=head2 C<add_controls>
+=head3 C<add_controls>
 
 	Adds the controls
 	Note: You may need to override this method
@@ -98,7 +98,7 @@ sub add_controls { }
 
 =pod
 
-=head2 C<add_events>
+=head3 C<add_events>
 
 	Adds the control events
 	Note: You may need to override this method
@@ -108,7 +108,7 @@ sub add_events { }
 
 =pod
 
-=head2 C<show>
+=head3 C<show>
 
 	Called when the wizard page is going to be shown
 	Note: You may need to override this method
@@ -119,7 +119,7 @@ sub show { }
 
 =pod
 
-=head2 C<refresh>
+=head3 C<refresh>
 
 	Convenience method to set refresh the wizard
 
