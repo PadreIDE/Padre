@@ -30,6 +30,16 @@ sub new {
 	# Prepare to be shown
 	$self->CenterOnParent;
 
+	# As the user types the search term, make sure the find button
+	# enabled status is correct
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{find_term},
+		sub {
+			shift->_refresh;
+		}
+	);
+
 	return $self;
 }
 
@@ -71,6 +81,14 @@ sub directory {
 ######################################################################
 # Main Methods
 
+# Makes sure the find button is only enabled when the field
+# values are valid
+sub _refresh {
+	my $self = shift;
+
+	$self->{find}->Enable( $self->{find_term}->GetValue ne '' );
+}
+
 sub run {
 	my $self = shift;
 
@@ -82,6 +100,9 @@ sub run {
 	$self->{find_term}->refresh;
 	$self->{find_term}->SetValue($text) if length $text;
 	$self->{find_term}->SetFocus;
+
+	# refresh
+	$self->_refresh;
 
 	# Show the dialog
 	my $result = $self->ShowModal;
