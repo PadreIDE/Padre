@@ -24,6 +24,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       get_command(1) need to change this call to get_command({ trace => 1})
       (ZENOG)
     - remove configuration option 'find_quick' (not used any more) (ZENOG)
+    - Fixed #881 "Find In Files" results window should be prettier 
+      (AZAWAWI, ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
