@@ -295,7 +295,7 @@ sub get_command {
 	my $arg_ref = shift || {};
 
 	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
-	my $trace = exists $arg_ref->{debug} ? $arg_ref->{trace} : 0;
+	my $trace = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
 
 	my $current = Padre::Current->new( document => $self );
 	my $config = $current->config;
