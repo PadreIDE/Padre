@@ -69,7 +69,6 @@ SCOPE: {
 	is( $config->find_reverse             => 0 );
 	is( $config->find_first               => 0 );
 	is( $config->find_nohidden            => 1 );
-	is( $config->find_quick               => 0 );
 	is( $config->run_save                 => 'same' );
 	is( $config->threads                  => 1 );
 	is( $config->locale                   => '' );
