@@ -42,6 +42,40 @@ sub new {
 		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
 	);
 
+	# Create the image list
+	my $images = Wx::ImageList->new( 16, 16 );
+	$self->{images} = {
+		folder => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_FOLDER',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		file => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		result => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_FORWARD',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		root => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_HELP_FOLDER',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+	};
+	$self->AssignImageList($images);
+
 	# When a find result is clicked, open it
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self, $self,
@@ -87,7 +121,8 @@ sub search {
 	);
 
 	my $root = $self->AddRoot('Root');
-	$self->SetItemText( $root, Wx::gettext('Searching...') );
+	$self->SetItemText( $root, sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{project}->{root} ) );
+	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	return 1;
 }
@@ -111,9 +146,9 @@ sub search_message {
 		my $file = File::Basename::basename($unix);
 
 		# Add a directory tree item if it doesnt exist and insert the files inside it
-		$dir_item = $self->AppendItem( $root, $dir ) unless $dir_item;
+		$dir_item = $self->AppendItem( $root, $dir, $self->{images}->{folder} ) unless $dir_item;
 		unless ($file_item) {
-			$file_item = $self->AppendItem( $dir_item, $file );
+			$file_item = $self->AppendItem( $dir_item, $file, $self->{images}->{file} );
 			$self->SetPlData(
 				$file_item,
 				{   dir  => $dir,
@@ -121,7 +156,7 @@ sub search_message {
 				}
 			);
 		}
-		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1] );
+		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1], $self->{images}->{result} );
 		$self->SetPlData(
 			$item,
 			{   dir  => $dir,
@@ -167,7 +202,7 @@ sub search_finish {
 			)
 		);
 	} else {
-		$self->SetItemText( $root, sprintf( Wx::gettext('No results found for %s'), $term ) );
+		$self->SetItemText( $root, sprintf( Wx::gettext(q{No results found for '%s'}), $term ) );
 	}
 
 	$self->ExpandAllChildren($root);
