@@ -121,7 +121,8 @@ sub search {
 	);
 
 	my $root = $self->AddRoot('Root');
-	$self->SetItemText( $root, sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{project}->{root} ) );
+	$self->SetItemText( $root,
+		sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{project}->{root} ) );
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	return 1;
