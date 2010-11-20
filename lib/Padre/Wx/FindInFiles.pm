@@ -121,8 +121,10 @@ sub search {
 	);
 
 	my $root = $self->AddRoot('Root');
-	$self->SetItemText( $root,
-		sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{project}->{root} ) );
+	$self->SetItemText(
+		$root,
+		sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{project}->{root} )
+	);
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	return 1;
@@ -232,7 +234,8 @@ sub _on_find_result_clicked {
 }
 
 # Opens the file at the correct line position
-# If no line is given, the function just opens the file.
+# If no line is given, the function just opens the file
+# and sets the focus to it.
 sub open_file_at_line {
 	my ( $self, $file, $line ) = @_;
 
@@ -252,12 +255,14 @@ sub open_file_at_line {
 
 	# Center the current position on the found result's line if an editor is found.
 	# NOTE: we are EVT_IDLE event to make sure we can do that after a file is opened.
-	if ( $editor && defined $line ) {
+	if ($editor) {
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
-				$editor->EnsureVisible($line);
-				$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+				if ( defined($line) ) {
+					$editor->EnsureVisible($line);
+					$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+				}
 				$editor->SetFocus;
 				Wx::Event::EVT_IDLE( $self, undef );
 			},
