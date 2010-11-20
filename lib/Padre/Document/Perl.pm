@@ -284,15 +284,21 @@ sub find_functions {
 Returns the full command (interpreter, file name (maybe temporary) and arguments
 for both of them) for running the current document.
 
-Accepts one optional argument: a debug flag.
+Optionally accepts a hash reference with the following boolean arguments:
+  'debug' - return a command where the debugger is started
+  'trace' - activates diagnostic output
 
 =cut
 
 sub get_command {
-	my $self    = shift;
-	my $debug   = shift;
+	my $self = shift;
+	my $arg_ref = shift || {};
+
+	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
+	my $trace = exists $arg_ref->{debug} ? $arg_ref->{trace} : 0;
+
 	my $current = Padre::Current->new( document => $self );
-	my $config  = $current->config;
+	my $config = $current->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename =
@@ -300,7 +306,7 @@ sub get_command {
 		? $self->store_in_tempfile
 		: $self->filename;
 
-	# Run with console Perl to prevent unexpected results under wperl
+	# Run with console Perl to prevent unexpected results under wxperl
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
 	my $perl = $config->run_perl_cmd;
@@ -347,9 +353,13 @@ sub get_command {
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
 
-	return $debug
-		? qq{"$perl" -Mdiagnostics(-traceonly) $run_args{interpreter} "$filename"$script_args}
-		: qq{"$perl" $run_args{interpreter} "$filename"$script_args};
+	my @commands = (qq{"$perl"});
+	push @commands, '-d'                        if $debug;
+	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
+	push @commands, "$run_args{interpreter}";
+	push @commands, qq{"$filename"$script_args};
+
+	return join ' ', @commands;
 }
 
 sub pre_process {

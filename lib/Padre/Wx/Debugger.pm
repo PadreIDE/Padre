@@ -84,31 +84,10 @@ sub debug_perl {
 	my $host = 'localhost';
 	my $port = 12345 + int rand(1000); # TODO make this configurable?
 
-
-	# TODO should use $document->get_command
-
-	# Set default arguments
-	my %run_args = (
-		interpreter => $config->run_interpreter_args_default,
-		script      => $config->run_script_args_default,
-	);
-
-	# Overwrite default arguments with the ones preferred for given document
-	foreach my $arg ( keys %run_args ) {
-		my $type = "run_${arg}_args_" . File::Basename::fileparse($filename);
-		$run_args{$arg} = Padre::DB::History->previous($type) if Padre::DB::History->previous($type);
-	}
-
-	# (Ticket #530) Pack args here, because adding the space later confuses the called Perls @ARGV
-	my $script_args = '';
-	$script_args = ' ' . $run_args{script} if defined( $run_args{script} ) and ( $run_args{script} ne '' );
-
 	{
 		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
 
-		# Run with console Perl to prevent unexpected results under wperl
-		my $perl = Padre::Perl::cperl();
-		$main->run_command(qq["$perl" -d "$filename"$script_args]);
+		$main->run_command( $document->get_command( { debug => 1 } ) );
 	}
 
 	require Debug::Client;

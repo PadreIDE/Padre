@@ -19,6 +19,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       (ZENOG)
     - fix #814: Find-in-files result window, clicking on filename does not do
       anything (ZENOG)
+    - Document::get_command now has two named arguments: 'trace' for diagnostic
+      output, and 'debug' for enabling a debugger. Plug-ins that use
+      get_command(1) need to change this call to get_command({ trace => 1})
+      (ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
