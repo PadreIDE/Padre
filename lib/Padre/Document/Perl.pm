@@ -309,30 +309,7 @@ sub get_command {
 	# Run with console Perl to prevent unexpected results under wxperl
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
-	my $perl = $config->run_perl_cmd;
-
-	# Warn if the Perl interpreter is not executable:
-	if ( defined $perl and $perl ne '' ) {
-		if ( !-x $perl ) {
-			my $ret = Wx::MessageBox(
-				Wx::gettext(
-					sprintf(
-						'%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl
-					)
-				),
-				Wx::gettext('Run'),
-				Wx::wxYES_NO | Wx::wxCENTRE,
-				$current->main,
-			);
-			if ( $ret == Wx::wxYES ) {
-				$perl = Padre::Perl::cperl();
-			} else {
-				return;
-			}
-		}
-	} else {
-		$perl = Padre::Perl::cperl();
-	}
+	my $perl = $self->get_interpreter;
 
 	# Set default arguments
 	my %run_args = (
@@ -360,6 +337,45 @@ sub get_command {
 	push @commands, qq{"$filename"$script_args};
 
 	return join ' ', @commands;
+}
+
+=head2 get_interpreter
+
+Returns the Perl interpreter for running the current document.
+
+=cut
+
+sub get_interpreter {
+	my $self = shift;
+	my $arg_ref = shift || {};
+
+	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
+	my $trace = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
+
+	my $current = Padre::Current->new( document => $self );
+	my $config = $current->config;
+
+	# The configuration value is cheaper to get compared to cperl(),
+	# try it first.
+	my $perl = $config->run_perl_cmd;
+
+	# warn if the Perl interpreter is not executable
+	if ( defined $perl and $perl ne '' ) {
+		if ( !-x $perl ) {
+			Padre->ide->wx->main->message(
+				Wx::gettext(
+					sprintf(
+						'%s seems to be no executable Perl interpreter, using the system default perl instead.', $perl
+					)
+				),
+			);
+			$perl = Padre::Perl::cperl();
+		}
+	} else {
+		$perl = Padre::Perl::cperl();
+	}
+
+	return $perl;
 }
 
 sub pre_process {
@@ -474,7 +490,7 @@ sub beginner_check {
 	my $error = $beginner->error;
 
 	if ($error) {
-		Padre->ide->wx->main->error( Wx::gettext("Error: ") . $error );
+		Padre->ide->wx->main->error( Wx::gettext('Error: ') . $error );
 	} else {
 		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
 	}
