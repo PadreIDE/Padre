@@ -1195,23 +1195,6 @@ sub init {
 		},
 	);
 
-	# Quick Find: starts search with selected text
-
-	Padre::Wx::Action->new(
-		name        => 'search.quick_find',
-		need_editor => 1,
-		label       => _T('Quick Find'),
-		comment     => _T('Incremental search seen at the bottom of the window'),
-		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
-			$_[0]->config->set(
-				'find_quick',
-				$_[1]->IsChecked ? 1 : 0,
-			);
-			return;
-		},
-	);
-
 	# We should be able to remove F4 and Shift+F4 and hook this functionality
 	# to F3 and Shift+F3 Incremental find (#60)
 	Padre::Wx::Action->new(

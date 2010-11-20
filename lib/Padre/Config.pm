@@ -834,12 +834,6 @@ setting(
 	default => 0,
 );
 setting(
-	name    => 'find_quick',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-setting(
 	name    => 'default_line_ending',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
