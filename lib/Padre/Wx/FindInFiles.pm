@@ -111,8 +111,16 @@ sub search_message {
 		my $file = File::Basename::basename($unix);
 
 		# Add a directory tree item if it doesnt exist and insert the files inside it
-		$dir_item  = $self->AppendItem( $root,     $dir )  unless $dir_item;
-		$file_item = $self->AppendItem( $dir_item, $file ) unless $file_item;
+		$dir_item = $self->AppendItem( $root, $dir ) unless $dir_item;
+		unless ($file_item) {
+			$file_item = $self->AppendItem( $dir_item, $file );
+			$self->SetPlData(
+				$file_item,
+				{   dir  => $dir,
+					file => $file,
+				}
+			);
+		}
 		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1] );
 		$self->SetPlData(
 			$item,
@@ -175,15 +183,20 @@ sub _on_find_result_clicked {
 	my $item_data = $self->GetPlData( $event->GetItem ) or return;
 	my $dir       = $item_data->{dir}                   or return;
 	my $file      = $item_data->{file}                  or return;
-	my $line      = $item_data->{line}                  or return;
+	my $line      = $item_data->{line};
 	my $msg = $item_data->{msg} || '';
 
-	$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
+	if ( defined $line ) {
+		$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
+	} else {
+		$self->open_file_at_line( File::Spec->catfile( $dir, $file ) );
+	}
 
 	return;
 }
 
 # Opens the file at the correct line position
+# If no line is given, the function just opens the file.
 sub open_file_at_line {
 	my ( $self, $file, $line ) = @_;
 
@@ -203,7 +216,7 @@ sub open_file_at_line {
 
 	# Center the current position on the found result's line if an editor is found.
 	# NOTE: we are EVT_IDLE event to make sure we can do that after a file is opened.
-	if ($editor) {
+	if ($editor && defined $line) {
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
@@ -214,6 +227,8 @@ sub open_file_at_line {
 			},
 		);
 	}
+
+	return;
 }
 
 ######################################################################

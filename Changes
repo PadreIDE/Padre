@@ -15,6 +15,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       and typing fast in "Open Resource" dialog (AZAWAWI)
     - Fixed "Open Resource" and "Quick Menu Access" dialogs to display recently-
       used resources by last usage being first instead by filename (AZAWAWI)
+    - consider script and interpreter parameters when debugging Perl scripts
+      (ZENOG)
+    - fix #814: Find-in-files result window, clicking on filename does not do
+      anything (ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
