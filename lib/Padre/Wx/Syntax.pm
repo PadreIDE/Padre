@@ -9,6 +9,7 @@ use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
+use Padre::Wx::TreeCtrl   ();
 use Padre::Logger;
 
 our $VERSION = '0.75';
@@ -16,7 +17,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::ListView
+	Padre::Wx::TreeCtrl
 };
 
 # perldiag error message classification
@@ -77,7 +78,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
+		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
 	);
 
 	# Additional properties
@@ -86,17 +87,11 @@ sub new {
 	$self->{length}   = -1;
 
 	# Prepare the available images
-	my $list = Wx::ImageList->new( 16, 16 );
-	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
-	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
-	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
-	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
-
-	# Flesh out the columns
-	my @titles = $self->titles;
-	foreach ( 0 .. 2 ) {
-		$self->InsertColumn( $_, $titles[$_] );
-	}
+	my $images = Wx::ImageList->new( 16, 16 );
+	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
+	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
+	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
+	$self->AssignImageList( $images );
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self, $self,
@@ -156,9 +151,6 @@ sub start {
 		# Set margin 1 16 px wide
 		$editor->SetMarginWidth( 1, 16 );
 	}
-
-	# List appearance: Initialize column widths
-	$self->set_column_widths;
 
 	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->on_timer( undef, 1 );
@@ -322,14 +314,6 @@ sub gettext_label {
 	Wx::gettext('Syntax Check');
 }
 
-sub titles {
-	return (
-		Wx::gettext('Line'),
-		Wx::gettext('Type'),
-		Wx::gettext('Description'),
-	);
-}
-
 # Remove all markers and empty the list
 sub clear {
 	my $self = shift;
@@ -408,12 +392,14 @@ sub render {
 	my $lock     = $self->main->lock('UPDATE');
 
 	# Flush old results
-	$self->clear;
+	$self->DeleteAllItems;
+
+	my $root = $self->AddRoot('Root');
 
 	# If there are no errors clear the synax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
-		my $i = $self->InsertStringImageItem( 0, '', 2 );
-		$self->SetItem( $i, 1, Wx::gettext('Info') );
+		#my $i = $self->InsertStringImageItem( 0, '', 2 );
+		#$self->SetItem( $i, 1, Wx::gettext('Info') );
 
 		# Relative-to-the-project filename.
 		# Check that the document has been saved.
@@ -423,9 +409,9 @@ sub render {
 				$project_dir = quotemeta $project_dir;
 				$filename =~ s/^$project_dir[\\\/]?//;
 			}
-			$self->SetItem( $i, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
+			#$self->SetItem( $i, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
 		} else {
-			$self->SetItem( $i, 2, Wx::gettext('No errors or warnings found.') );
+			#$self->SetItem( $i, 2, Wx::gettext('No errors or warnings found.') );
 		}
 		return;
 	}
@@ -438,38 +424,27 @@ sub render {
 		my $line = $issue->{line} - 1;
 		my $type = $issue->{type};
 		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
-		my $item = $self->InsertStringImageItem( $i++, $line + 1, 0 );
-		$self->SetItem( $item, 1, $MESSAGE{$type}{label} );
-		$self->SetItem( $item, 2, $issue->{message} );
+
+		my $dir_item = $self->AppendItem( $root, 
+			sprintf(Wx::gettext('Line %d:   (%s)\n   %s'), 
+				$line + 1, 
+				$MESSAGE{$type}{label}, 
+				$issue->{message}), 
+		0 );
+		$self->SetPlData( $dir_item, $issue );
+
+		if(defined $issue->{diagnostics}) {
+			my @diags = split /\n/, $issue->{diagnostics};
+			for my $diag (@diags) {
+				$self->AppendItem( $dir_item, $diag, 0 );
+			}
+		}
 	}
 
-	$self->set_column_widths( $model->[-1] );
+	$self->ExpandAllChildren($root);
+	$self->EnsureVisible($root);
 
 	return 1;
-}
-
-sub set_column_widths {
-	my $self = shift;
-	my $item = shift || { line => ' ' };
-
-	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 16;
-	my $width0         = $self->GetCharWidth * length( $item->{line} x 2 ) + 14;
-
-	my $ref_str = '';
-	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
-		$ref_str = Wx::gettext('Warning');
-	} else {
-		$ref_str = Wx::gettext('Error');
-	}
-
-	my $width1 = $self->GetCharWidth * ( length($ref_str) + 2 );
-	my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
-
-	$self->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
-	$self->SetColumnWidth( 1, $width1 );
-	$self->SetColumnWidth( 2, $width2 );
-
-	return;
 }
 
 # Selects the problemistic line :)
