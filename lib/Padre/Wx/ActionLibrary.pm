@@ -1359,16 +1359,6 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.show_errorlist',
-		label       => _T('Show Errors'),
-		comment     => _T('Show the list of errors received during execution of a script'),
-		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
-			$_[0]->show_errorlist( $_[1]->IsChecked );
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name       => 'view.show_findinfiles',
 		label      => _T('Hide Find in Files'),
 		comment    => _T('Hide the list of matches for a Find in Files search'),

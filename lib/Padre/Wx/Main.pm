@@ -271,7 +271,6 @@ sub new {
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
 	$self->_show_syntax( $config->main_syntaxcheck );
-	$self->_show_errorlist( $config->main_errorlist );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -2123,33 +2122,6 @@ sub _show_syntax {
 		$self->bottom->hide($syntax);
 		$syntax->stop if $syntax->running;
 		delete $self->{syntax};
-	}
-}
-
-sub show_errorlist {
-	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
-	unless ( $on == $self->menu->view->{show_errorlist}->IsChecked ) {
-		$self->menu->view->{show_errorlist}->Check($on);
-	}
-
-	$self->config->set( main_errorlist => $on );
-	$self->_show_errorlist($on);
-	$self->aui->Update;
-	$self->ide->save_config;
-
-	return;
-}
-
-sub _show_errorlist {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->errorlist );
-	} elsif ( $self->has_errorlist ) {
-		$self->bottom->hide( $self->errorlist );
-		delete $self->{errorlist};
 	}
 }
 

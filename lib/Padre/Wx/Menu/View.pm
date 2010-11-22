@@ -25,7 +25,6 @@ my @GUI_ELEMENTS = qw{
 	output
 	show_syntaxcheck
 	command_line
-	show_errorlist
 	statusbar
 	toolbar
 };
@@ -305,7 +304,6 @@ sub refresh {
 	$self->{show_calltips}->Check( $config->editor_calltips );
 	$self->{command_line}->Check( $config->main_command_line );
 	$self->{show_syntaxcheck}->Check( $config->main_syntaxcheck );
-	$self->{show_errorlist}->Check( $config->main_errorlist );
 	$self->{toolbar}->Check( $config->main_toolbar );
 
 	# Check state for word wrap is document-specific
