@@ -184,18 +184,7 @@ SCOPE: {
 	$editor->configure_editor($doc);
 
 	my $msgs = $doc->check_syntax;
-	my $end  = $msgs->[-1];
-	my $msg  = 'Useless use of a constant in void context';
-	if ( $] > 5.011 ) {
-		$msg = 'Useless use of a constant (c) in void context';
-	}
-	is_deeply(
-		$end,
-		{   'msg'      => $msg,
-			'severity' => 1,
-			'line'     => '1',
-		}
-	);
+	is_deeply( $msgs, [], 'Syntax check is ok' );
 }
 
 # Regression test for get_functions
