@@ -3,8 +3,8 @@ package Padre::Document::Perl::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant     ();
-use Padre::Task::Syntax ();
+use Padre::Constant          ();
+use Padre::Task::Syntax      ();
 use Parse::ErrorString::Perl ();
 
 our $VERSION = '0.75';
@@ -102,7 +102,7 @@ sub syntax {
 		return [];
 	}
 
-	# Since we're not going to use -Mdiagnostics, 
+	# Since we're not going to use -Mdiagnostics,
 	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
 	my @issues = Parse::ErrorString::Perl->new->parse_string($stderr);
 
