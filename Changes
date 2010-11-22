@@ -39,6 +39,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       "Syntax Check" window (AZAWAWI)
     - In "Open Resource" and "Quick Menu Access" UP arrow shifts focus to
       the results list when the focus is on the filter field (AZAWAWI)
+    - Moved from the simple 0 and 1 age of error 'severity' to the actual way
+      Perl classifies errors as in perldiag. The syntax task now passes upon
+      completion a reference an array of Parse::ErrorString::Perl::ErrorItem
+      objects (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
