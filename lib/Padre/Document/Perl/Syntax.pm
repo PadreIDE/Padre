@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Constant     ();
 use Padre::Task::Syntax ();
+use Parse::ErrorString::Perl ();
 
 our $VERSION = '0.75';
 our @ISA     = 'Padre::Task::Syntax';
@@ -96,58 +97,26 @@ sub syntax {
 		File::Remove::remove( $err->filename );
 	}
 
-	# Don't really know where that comes from...
-	my $i = index( $stderr, 'Uncaught exception from user code' );
-	if ( $i > 0 ) {
-		$stderr = substr( $stderr, 0, $i );
-	}
-
 	# Handle the "no errors or warnings" case
 	if ( $stderr =~ /^\s+syntax OK\s+$/s ) {
 		return [];
 	}
 
-	# Split into message paragraphs
-	$stderr =~ s/\n\n/\n/go;
-	$stderr =~ s/\n\s/\x1F /go;
-	my @messages = split( /\n/, $stderr );
-
+	# Since we're not going to use -Mdiagnostics, 
+	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
 	my @issues = ();
-	foreach my $message (@messages) {
-		last if index( $message, 'has too many errors' ) > 0;
-		last if index( $message, 'had compilation errors' ) > 0;
-		last if index( $message, 'syntax OK' ) > 0;
-
-		my $error = {};
-		my $tmp   = '';
-
-		if ( $message =~ m/\)\s*\Z/o ) {
-			my $pos = rindex( $message, '(' );
-			$tmp = substr( $message, $pos, length($message) - $pos, '' );
-		}
-
-		if ( $message =~ s/\sat(?:\s|\x1F)+(.+?)(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
-			next if $1 ne $filename;
-			$error->{line} = $2;
-			$error->{msg}  = $message;
-		}
-
-		if ($tmp) {
-			$error->{msg} .= "\n" . $tmp;
-		}
-
-		if ( defined $error->{msg} ) {
-			$error->{msg} =~ s/\x1F/\n/go;
-		}
-
-		# Since we're not using -Mdiagnostics, we cannot distinguish
-		# between errors and warnings
-		# TODO find another way to determine that (AZAWAWI)
-
-		# 1 for error, 0 for warning
-		$error->{severity} = 0;  
-
-		push @issues, $error;
+	my @errors = Parse::ErrorString::Perl->new->parse_string($stderr);
+	for my $error (@errors) {
+		my %error = %$error;
+		my $type = $error{type};
+		push @issues, {
+			msg => $error{message},
+			line    => $error{line},
+			# 0 for error, 1 for warning for now
+			# TODO support the same Perl error type and name it 'type' instead of 'severity'
+			severity => ($type eq 'W' or $type eq 'D') ? 1 : 0,
+			diagnostics => $error{diagnostics},
+		};
 	}
 
 	return \@issues;

@@ -32,6 +32,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       (AZAWAWI)
     - By removing -Mdiagnostics (which enabled 'use warnings') from syntax
       checker, we now get a more correct syntax checking behavior (AZAWAWI)
+    - Removed custom parsing of Perl's standard error in syntax checker and
+      reused Parse::ErrorString::Perl to get better error parsing and diagnostic
+      information via perldiag (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
