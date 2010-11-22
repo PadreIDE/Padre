@@ -12,8 +12,8 @@ our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 sub init {
 	my $self = shift;
 
-	$self->name(Wx::gettext('Creates a Padre Plugin'));
-	$self->title(Wx::gettext('Padre Plugin Wizard'));
+	$self->name( Wx::gettext('Creates a Padre Plugin') );
+	$self->title( Wx::gettext('Padre Plugin Wizard') );
 
 	# Back to select page
 	$self->back_wizard(0);

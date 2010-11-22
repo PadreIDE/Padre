@@ -14,8 +14,8 @@ our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 sub init {
 	my $self = shift;
 
-	$self->name(Wx::gettext("Select a Wizard"));
-	$self->title(Wx::gettext("Wizard Selector"));
+	$self->name( Wx::gettext("Select a Wizard") );
+	$self->title( Wx::gettext("Wizard Selector") );
 }
 
 # Add controls to page

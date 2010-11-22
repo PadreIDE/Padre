@@ -14,11 +14,11 @@ our @ISA     = qw{
 # Generate faster accessors
 use Class::XSAccessor {
 	getters => {
-		wizard     => 'wizard',
+		wizard => 'wizard',
 	},
 	accessors => {
-		name       => 'name',
-		title      => 'title',
+		name        => 'name',
+		title       => 'title',
 		back_wizard => 'back_wizard',
 		next_wizard => 'next_wizard',
 		status      => 'status',
@@ -48,6 +48,7 @@ Constructs a wizard page and calls C<init>, C<add_controls>, and C<add_events>
 Note: Please do NOT override this. use C<init> instead
 
 =cut
+
 sub new {
 	my ( $class, $wizard ) = @_;
 
@@ -57,7 +58,7 @@ sub new {
 	# Store the wizard for later usage
 	$self->{wizard} = $wizard;
 
-	# The dummy wizard page name and title 
+	# The dummy wizard page name and title
 	$self->name('Dummy Wizard Name');
 	$self->title('Dummy Wizard Title');
 

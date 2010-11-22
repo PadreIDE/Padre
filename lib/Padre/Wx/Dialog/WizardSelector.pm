@@ -13,7 +13,7 @@ our @ISA     = qw{ Wx::Dialog };
 # Generate faster accessors
 use Class::XSAccessor {
 	accessors => {
-		current    => 'current',
+		current => 'current',
 	},
 };
 
@@ -143,10 +143,10 @@ sub _on_button_back {
 
 	# Show the back wizard page if it is valid
 	my $wizard = $self->{current}->back_wizard;
-	if($wizard) {
-		$self->_try_to_show_page($wizard->class);
+	if ($wizard) {
+		$self->_try_to_show_page( $wizard->class );
 	} else {
-		$self->_show_page($self->{select_page});
+		$self->_show_page( $self->{select_page} );
 	}
 }
 
@@ -159,19 +159,19 @@ sub _on_button_next {
 
 	# Show the next wizard page if it is valid
 	my $wizard = $self->{current}->next_wizard or return;
-	$self->_try_to_show_page($wizard->class);
+	$self->_try_to_show_page( $wizard->class );
 }
 
 # Tries to show a wizard page
 sub _try_to_show_page {
-	my ($self, $class) = @_;
+	my ( $self, $class ) = @_;
 
 	eval "require $class";
-	unless($@) {
-		if($class->can('new')) {
-			$self->_show_page($class->new($self));
+	unless ($@) {
+		if ( $class->can('new') ) {
+			$self->_show_page( $class->new($self) );
 		} else {
-			$self->main->error(sprintf(Wx::gettext('%s has no constructor'), $class));
+			$self->main->error( sprintf( Wx::gettext('%s has no constructor'), $class ) );
 		}
 	}
 }
@@ -187,7 +187,7 @@ sub _show_page {
 
 	# Hide the old one and then show the new one
 	$self->current->Hide if $self->current;
-	$self->current( $page );
+	$self->current($page);
 	$page->Show(1);
 
 	$self->refresh;
