@@ -37,6 +37,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       information via perldiag (AZAWAWI)
     - "Error List" window has been removed since it is redundant to
       "Syntax Check" window (AZAWAWI)
+    - In "Open Resource" and "Quick Menu Access" UP arrow shifts focus to
+      the results list when the focus is on the filter field (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

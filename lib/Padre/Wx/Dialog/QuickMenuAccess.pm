@@ -228,6 +228,7 @@ sub _setup_events {
 
 			$self->_list->SetFocus
 				if ( $code == Wx::WXK_DOWN )
+				or ( $code == Wx::WXK_UP )
 				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
 				or ( $code == Wx::WXK_PAGEDOWN );
 
