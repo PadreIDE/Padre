@@ -30,6 +30,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       sure the find button enabled status is correct (AZAWAWI)
     - Fix #1051: Syntax checker does not return the correct error message 
       (AZAWAWI)
+    - By removing -Mdiagnostics (which enabled 'use warnings') from syntax
+      checker, we now get a more correct syntax checking behavior (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
