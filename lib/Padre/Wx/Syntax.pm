@@ -390,7 +390,7 @@ sub render {
 	}
 
 	my @MARKER = ( Padre::Wx::MarkError(), Padre::Wx::MarkWarn() );
-	my @LABEL = ( Wx::gettext('Warning'), Wx::gettext('Error') );
+	my @LABEL = ( Wx::gettext('Error'), Wx::gettext('Warning')  );
 
 	my $i = 0;
 	foreach my $hint ( sort { $a->{line} <=> $b->{line} } @$model ) {
