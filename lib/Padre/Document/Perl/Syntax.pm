@@ -104,20 +104,7 @@ sub syntax {
 
 	# Since we're not going to use -Mdiagnostics, 
 	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
-	my @issues = ();
-	my @errors = Parse::ErrorString::Perl->new->parse_string($stderr);
-	for my $error (@errors) {
-		my %error = %$error;
-		my $type = $error{type};
-		push @issues, {
-			msg => $error{message},
-			line    => $error{line},
-			# 0 for error, 1 for warning for now
-			# TODO support the same Perl error type and name it 'type' instead of 'severity'
-			severity => ($type eq 'W' or $type eq 'D') ? 1 : 0,
-			diagnostics => $error{diagnostics},
-		};
-	}
+	my @issues = Parse::ErrorString::Perl->new->parse_string($stderr);
 
 	return \@issues;
 }
