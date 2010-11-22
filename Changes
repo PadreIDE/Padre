@@ -35,6 +35,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Removed custom parsing of Perl's standard error in syntax checker and
       reused Parse::ErrorString::Perl to get better error parsing and diagnostic
       information via perldiag (AZAWAWI)
+    - "Error List" window has been removed since it is redundant to
+      "Syntax Check" window (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
