@@ -97,7 +97,7 @@ sub syntax {
 		File::Remove::remove( $err->filename );
 	}
 
-	# Handle the "no errors or warnings" case
+	# Shortcut: Handle the "no errors or warnings" case
 	if ( $stderr =~ /^\s+syntax OK\s+$/s ) {
 		return [];
 	}
