@@ -59,7 +59,8 @@ sub syntax {
 
 		# Redirect perl's output to temporary file
 		# NOTE: Please DO NOT use -Mdiagnostics since it will wrap
-		# error messages and that would complicate parsing (azawawi)
+		# error messages on multiple lines and that would
+		# complicate parsing (azawawi)
 		push @cmd,
 			(
 			'-c',
