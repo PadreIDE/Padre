@@ -88,23 +88,39 @@ sub new {
 
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
-	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
-	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
-	$images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
+	$self->{images} = {
+		error      => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') ),
+		warning    => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') ),
+		ok         => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') ),
+		diagnostics => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_FORWARD',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		root => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_HELP_FOLDER',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+	};
 	$self->AssignImageList( $images );
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self, $self,
-		sub {
-			shift->on_list_item_activated(@_);
-		},
-	);
-	Wx::Event::EVT_RIGHT_DOWN(
-		$self,
-		sub {
-			shift->on_right_down(@_);
-		},
-	);
+	# Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		# $self, $self,
+		# sub {
+			# shift->on_list_item_activated(@_);
+		# },
+	# );
+	# Wx::Event::EVT_RIGHT_DOWN(
+		# $self,
+		# sub {
+			# shift->on_right_down(@_);
+		# },
+	# );
 
 	$self->Hide;
 
@@ -332,13 +348,7 @@ sub clear {
 }
 
 sub relocale {
-	my $self   = shift;
-	my @titles = $self->titles;
-	foreach my $i ( 0 .. 2 ) {
-		my $col = $self->GetColumn($i);
-		$col->SetText( $titles[$i] );
-		$self->SetColumn( $i, $col );
-	}
+	# Nothing to implement here
 	return;
 }
 
@@ -356,14 +366,9 @@ sub refresh {
 		# Shortcut if nothing has changed.
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
-		if ( $length eq $self->{length} ) {
-			return;
-		}
-	} else {
+		return if ( $length eq $self->{length} );
+	} 
 
-		# New file, don't keep the current list visible
-		$self->clear;
-	}
 	$self->{document} = $filename;
 	$self->{length}   = $length;
 
@@ -392,15 +397,12 @@ sub render {
 	my $lock     = $self->main->lock('UPDATE');
 
 	# Flush old results
-	$self->DeleteAllItems;
+	$self->clear;
 
 	my $root = $self->AddRoot('Root');
 
 	# If there are no errors clear the synax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
-		#my $i = $self->InsertStringImageItem( 0, '', 2 );
-		#$self->SetItem( $i, 1, Wx::gettext('Info') );
-
 		# Relative-to-the-project filename.
 		# Check that the document has been saved.
 		if ( defined $filename ) {
@@ -409,12 +411,22 @@ sub render {
 				$project_dir = quotemeta $project_dir;
 				$filename =~ s/^$project_dir[\\\/]?//;
 			}
-			#$self->SetItem( $i, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
+			$self->SetItemText(
+				$root,
+				sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename )
+			);
 		} else {
-			#$self->SetItem( $i, 2, Wx::gettext('No errors or warnings found.') );
+			$self->SetItemText( $root, Wx::gettext('No errors or warnings found.') );
 		}
+		$self->SetItemImage( $root, $self->{images}->{ok} );
 		return;
 	}
+
+	$self->SetItemText(
+		$root,
+		sprintf( Wx::gettext('Found %d message(s)'), scalar @$model )
+	);
+	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	my $i = 0;
 	foreach my $issue (@$model) {
@@ -425,23 +437,23 @@ sub render {
 		my $type = $issue->{type};
 		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
 
-		my $dir_item = $self->AppendItem( $root, 
-			sprintf(Wx::gettext('Line %d:   (%s)\n   %s'), 
+		my $item = $self->AppendItem( $root, 
+			sprintf(Wx::gettext('Line %d:   (%s)   %s'), 
 				$line + 1, 
 				$MESSAGE{$type}{label}, 
 				$issue->{message}), 
-		0 );
-		$self->SetPlData( $dir_item, $issue );
+			$MESSAGE{$type}{marker} == Padre::Wx::MarkWarn() ? $self->{images}{warning} : $self->{images}{error} );
+		$self->SetPlData( $item, $issue );
 
 		if(defined $issue->{diagnostics}) {
 			my @diags = split /\n/, $issue->{diagnostics};
 			for my $diag (@diags) {
-				$self->AppendItem( $dir_item, $diag, 0 );
+				$self->AppendItem( $item, $diag, $self->{images}{diagnostics} );
 			}
 		}
 	}
 
-	$self->ExpandAllChildren($root);
+	$self->Expand($root);
 	$self->EnsureVisible($root);
 
 	return 1;
@@ -460,6 +472,7 @@ sub select_problem {
 # Selects the next problem in the editor.
 # Wraps to the first one when at the end.
 sub select_next_problem {
+	return; #TODO implement for tree form
 	my $self   = shift;
 	my $editor = $self->current->editor or return;
 	my $line   = $editor->LineFromPosition( $editor->GetCurrentPos );

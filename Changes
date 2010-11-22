@@ -43,6 +43,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       Perl classifies errors as in perldiag. The syntax task now passes upon
       completion a reference an array of Parse::ErrorString::Perl::ErrorItem
       objects (AZAWAWI)
+    - "Syntax Check" window is now a tree instead of a list. First-level nodes
+      represent the error/warning messages and the second-level nodes are the
+      perldiag diagnostics for them (if available) (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
