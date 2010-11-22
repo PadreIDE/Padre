@@ -140,14 +140,12 @@ sub syntax {
 			$error->{msg} =~ s/\x1F/\n/go;
 		}
 
-		if ( defined( $error->{desc} )
-			&& $error->{desc} =~ /^\s*\([WD]/o )
-		{
-			$error->{severity} = 1;
-		} else {
-			$error->{severity} = 0;
-		}
-		delete $error->{desc};
+		# Since we're not using -Mdiagnostics, we cannot distinguish
+		# between errors and warnings
+		# TODO find another way to determine that (AZAWAWI)
+
+		# 1 for error, 0 for warning
+		$error->{severity} = 0;  
 
 		push @issues, $error;
 	}
