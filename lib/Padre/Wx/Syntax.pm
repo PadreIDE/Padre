@@ -424,14 +424,14 @@ sub render {
 
 	$self->SetItemText(
 		$root,
-		sprintf( Wx::gettext('Found %d message(s)'), scalar @$model )
+		defined $filename ?
+		sprintf( Wx::gettext('Found %d message(s) in %s'), scalar @$model, $filename ) :
+		sprintf( Wx::gettext('Found %d message(s)'), scalar @$model)
 	);
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	my $i = 0;
-	foreach my $issue (@$model) {
-		# ignore if line or message is not defined
-		next unless defined $issue->{line} and defined $issue->{message};
+	foreach my $issue (sort { $a->{line} <=> $b->{line} } @$model) {
 
 		my $line = $issue->{line} - 1;
 		my $type = $issue->{type};
