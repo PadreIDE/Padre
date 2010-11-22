@@ -17,7 +17,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       used resources by last usage being first instead by filename (AZAWAWI)
     - consider script and interpreter parameters when debugging Perl scripts
       (ZENOG)
-    - fix #814: Find-in-files result window, clicking on filename does not do
+    - Fix #814: Find-in-files result window, clicking on filename does not do
       anything (ZENOG)
     - Document::get_command now has two named arguments: 'trace' for diagnostic
       output, and 'debug' for enabling a debugger. Plug-ins that use
@@ -28,6 +28,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       (AZAWAWI, ZENOG)
     - As the user types the search term in the "Find in Files" dialog, make
       sure the find button enabled status is correct (AZAWAWI)
+    - Fix #1051: Syntax checker does not return the correct error message 
+      (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

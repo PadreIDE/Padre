@@ -58,9 +58,10 @@ sub syntax {
 		$err->close;
 
 		# Redirect perl's output to temporary file
+		# NOTE: Please DO NOT use -Mdiagnostics since it will wrap
+		# error messages and that would complicate parsing (azawawi)
 		push @cmd,
 			(
-			'-Mdiagnostics',
 			'-c',
 			$file->filename,
 			'2>' . $err->filename,
@@ -111,7 +112,6 @@ sub syntax {
 	my @messages = split( /\n/, $stderr );
 
 	my @issues = ();
-	my @diag   = ();
 	foreach my $message (@messages) {
 		last if index( $message, 'has too many errors' ) > 0;
 		last if index( $message, 'had compilation errors' ) > 0;
@@ -120,20 +120,9 @@ sub syntax {
 		my $error = {};
 		my $tmp   = '';
 
-		if ( $message =~ s/\s\(\#(\d+)\)\s*\Z//o ) {
-			$error->{diag} = $1 - 1;
-		}
-
 		if ( $message =~ m/\)\s*\Z/o ) {
 			my $pos = rindex( $message, '(' );
 			$tmp = substr( $message, $pos, length($message) - $pos, '' );
-		}
-
-		if ( $message =~ s/\s\(\#(\d+)\)(.+)//o ) {
-			$error->{diag} = $1 - 1;
-			my $diagtext = $2;
-			$diagtext =~ s/\x1F//go;
-			push @diag, join( ' ', split( ' ', $diagtext ) );
 		}
 
 		if ( $message =~ s/\sat(?:\s|\x1F)+(.+?)(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
@@ -150,10 +139,6 @@ sub syntax {
 			$error->{msg} =~ s/\x1F/\n/go;
 		}
 
-		if ( defined $error->{diag} ) {
-			$error->{desc} = $diag[ $error->{diag} ];
-			delete $error->{diag};
-		}
 		if ( defined( $error->{desc} )
 			&& $error->{desc} =~ /^\s*\([WD]/o )
 		{
