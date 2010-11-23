@@ -3495,7 +3495,6 @@ sub setup_editor {
 
 	# no need to call this here as set_preferences already calls padre_setup.
 	# $editor->padre_setup;
-	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
 	if ( $config->feature_cursormemory ) {
 		$document->restore_cursor_position;

@@ -1173,41 +1173,6 @@ sub on_right_down {
 	}
 }
 
-sub on_mouse_motion {
-	my $self   = shift;
-	my $event  = shift;
-	my $config = $self->main->ide->config;
-
-	$event->Skip;
-	return unless $config->main_syntaxcheck;
-
-	my $mousePos         = $event->GetPosition;
-	my $line             = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
-	my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
-
-	my ( $offset1, $offset2 ) = ( 0, 18 );
-	if ( $config->editor_folding ) {
-		$offset1 += 18;
-		$offset2 += 18;
-	}
-
-	if (    $mousePos->x < ( $firstPointInLine->x - $offset1 )
-		and $mousePos->x > ( $firstPointInLine->x - $offset2 ) )
-	{
-		unless ( $self->MarkerGet($line) ) {
-			$self->CallTipCancel;
-			return;
-		}
-		$self->CallTipShow(
-			$self->PositionFromLine($line),
-			$self->{synchk_calltips}->{$line}
-		);
-	} else {
-		$self->CallTipCancel;
-	}
-
-	return;
-}
 
 # Convert the Ctrl-Scroll behaviour of changing the font size
 # to the non-Ctrl behaviour of scrolling.
