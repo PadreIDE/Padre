@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 62 );
+	plan( tests => 61 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -37,7 +37,6 @@ SCOPE: {
 	is( $config->main_output          => 0 );
 	is( $config->main_output_ansi     => 1 );
 	is( $config->main_syntaxcheck     => 0 );
-	is( $config->main_errorlist       => 0 );
 	is( $config->main_statusbar       => 1 );
 
 	my $editor_font = $config->editor_font;
