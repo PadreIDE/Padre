@@ -10,6 +10,17 @@ use Parse::ErrorString::Perl ();
 our $VERSION = '0.75';
 our @ISA     = 'Padre::Task::Syntax';
 
+sub new {
+	my $class = shift;
+	
+	my %args = @_;	
+	$args{perl} = $args{document}->get_interpreter;
+
+	my $self = $class->SUPER::new(%args);
+	
+	return $self;
+}
+
 sub syntax {
 	my $self = shift;
 	my $text = shift;
@@ -28,16 +39,16 @@ sub syntax {
 		require File::Temp;
 		my $file = File::Temp->new( UNLINK => 1 );
 		$filename = $file->filename;
-		binmode( $file, ":utf8" );
+		binmode( $file, ':utf8' );
 
-		# If this is a module, we will need to hook %INC to avoid the module
+		# If this is a module, we will need to overwrite %INC to avoid the module
 		# loading another module, which loads the system installed equivalent
 		# of the package we are currently compile-testing.
 		if ( $text =~ /^\s*package ([\w:]+)/ ) {
-			my $hook = $1 . ".pm";
-			$hook =~ s/::/\//g;
+			my $module_file = $1 . '.pm';
+			$module_file =~ s/::/\//g;
 			$file->print("BEGIN {\n");
-			$file->print("\t\$INC{'$hook'} = '$file';\n");
+			$file->print("\t\$INC{'$module_file'} = '$file';\n");
 			$file->print("}\n");
 			$file->print("#line 0\n");
 		}
@@ -45,9 +56,7 @@ sub syntax {
 		$file->print($text);
 		$file->close;
 
-		# Run with console Perl to prevent unexpected results under wperl
-		require Padre::Perl;
-		my @cmd = ( Padre::Perl::cperl() );
+		my @cmd = ( $self->{perl} );
 
 		# Append Perl command line options
 		if ( $self->{project} ) {
