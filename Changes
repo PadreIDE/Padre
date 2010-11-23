@@ -46,6 +46,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - "Syntax Check" window is now a tree instead of a list. First-level nodes
       represent the error/warning messages and the second-level nodes are the
       perldiag diagnostics for them (if available) (AZAWAWI)
+    - "Select Next Problem" is now working again after it was broken since Padre
+      0.57. Removed Copy Selected/All features until requested again (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
