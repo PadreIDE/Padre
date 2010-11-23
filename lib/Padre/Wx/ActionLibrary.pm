@@ -2588,15 +2588,8 @@ sub init {
 		comment    => _T('Search the Perl help pages (perldoc)'),
 		shortcut   => 'F1',
 		menu_event => sub {
-			my $focus = Wx::Window::FindFocus();
-			if ( Params::Util::_INSTANCE( $focus, 'Padre::Wx::ErrorList' ) ) {
-				$_[0]->errorlist->on_menu_help_context_help;
-			} else {
-
-				# Show help for selected text
-				$_[0]->help( $_[0]->current->text );
-				return;
-			}
+			# Show help for selected text
+			$_[0]->help( $_[0]->current->text );
 		},
 	);
 

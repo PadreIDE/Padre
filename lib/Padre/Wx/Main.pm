@@ -454,8 +454,6 @@ Accessors to GUI elements:
 
 =item * C<syntax>
 
-=item * C<errorlist>
-
 =back
 
 Accessors to operating data:
@@ -495,7 +493,6 @@ use Class::XSAccessor {
 		has_replace      => 'replace',
 		has_outline      => 'outline',
 		has_directory    => 'directory',
-		has_errorlist    => 'errorlist',
 		has_findinfiles  => 'findinfiles',
 	},
 	getters => {
@@ -623,15 +620,6 @@ sub directory {
 		$self->{directory} = Padre::Wx::Directory->new($self);
 	}
 	return $self->{directory};
-}
-
-sub errorlist {
-	my $self = shift;
-	unless ( defined $self->{errorlist} ) {
-		require Padre::Wx::ErrorList;
-		$self->{errorlist} = Padre::Wx::ErrorList->new($self);
-	}
-	return $self->{errorlist};
 }
 
 sub findinfiles {
@@ -2459,9 +2447,6 @@ sub run_command {
 	# Disable access to the run menus
 	$self->menu->run->disable;
 
-	# Clear the error list
-	$self->errorlist->clear;
-
 	# Prepare the output window for the output
 	$self->show_output(1);
 	$self->output->Remove( 0, $self->output->GetLastPosition );
@@ -2530,8 +2515,6 @@ sub run_command {
 				my $errors = join "\n", @{ $_[1]->GetProcess->GetStdErrBuffer };
 				$outpanel->AppendText( $errors . "\n" ) if $errors;
 
-				$_[0]->errorlist->collect_data($errors);
-
 				return;
 			},
 		);
@@ -2542,7 +2525,6 @@ sub run_command {
 				$_[1]->GetProcess->Destroy;
 				delete $self->{command};
 				$self->menu->run->enable;
-				$_[0]->errorlist->populate;
 			},
 		);
 	}
@@ -6080,7 +6062,6 @@ sub key_up {
 		#			# TO DO get the list of panels at the bottom from some other place
 		#			if (my $editor = $self->current->editor) {
 		#				if ($current_focus->isa('Padre::Wx::Output') or
-		#					$current_focus->isa('Padre::Wx::ErrorList') or
 		#					$current_focus->isa('Padre::Wx::Syntax')
 		#				) {
 		#					$editor->SetFocus;
