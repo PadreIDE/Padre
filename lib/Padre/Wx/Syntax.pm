@@ -109,27 +109,17 @@ sub new {
 	};
 	$self->AssignImageList( $images );
 
-	# Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		# $self, $self,
-		# sub {
-			# shift->on_list_item_activated(@_);
-		# },
-	# );
-	# Wx::Event::EVT_RIGHT_DOWN(
-		# $self,
-		# sub {
-			# shift->on_right_down(@_);
-		# },
-	# );
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self, $self,
+		sub {
+			$_[0]->on_tree_item_activated( $_[1] );
+		},
+	);
 
 	$self->Hide;
 
 	return $self;
 }
-
-
-
-
 
 ######################################################################
 # Padre::Wx::Role::View Methods
@@ -221,90 +211,25 @@ sub running {
 #####################################################################
 # Event Handlers
 
-sub on_list_item_activated {
-	my $self   = shift;
-	my $event  = shift;
+sub on_tree_item_activated {
+	my ($self, $event)  = @_;
+	my $item  = $event->GetItem or return;
+	my $error = $self->GetPlData($item) or return;
 	my $editor = $self->current->editor or return;
-	my $line   = $event->GetItem->GetText;
+	my $line = $error->{line};
 
-	if (   not defined($line)
+	return if not defined($line)
 		or $line !~ /^\d+$/o
-		or $editor->GetLineCount < $line )
-	{
-		return;
-	}
+		or $editor->GetLineCount < $line;
 
-	$self->select_problem( $line - 1 );
-
-	return;
-}
-
-# Called when the user presses a right click or a context menu key (on win32)
-sub on_right_down {
-	my $self  = shift;
-	my $event = shift;
-
-	return if $self->GetItemCount == 0;
-
-	# Create the popup menu
-	my $menu = Wx::Menu->new;
-
-	if ( $self->GetFirstSelected != -1 ) {
-
-		# Copy selected
-		Wx::Event::EVT_MENU(
-			$self,
-			$menu->Append( -1, Wx::gettext("Copy &Selected") ),
-			sub {
-
-				# Get selected message
-				my $msg       = '';
-				my $selection = $self->GetFirstSelected;
-				if ( $selection != -1 ) {
-					my $line = $self->GetItem( $selection, 0 )->GetText || '';
-					my $type = $self->GetItem( $selection, 1 )->GetText || '';
-					my $desc = $self->GetItem( $selection, 2 )->GetText || '';
-					$msg = "$line, $type, $desc\n";
-
-					# And copy it to clipboard
-					if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
-						Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-						Wx::wxTheClipboard->Close();
-					}
-				}
-			}
-		);
-	}
-
-	# Copy all
-	Wx::Event::EVT_MENU(
+	# Select the problem after the event has finished
+	Wx::Event::EVT_IDLE(
 		$self,
-		$menu->Append( -1, Wx::gettext("Copy &All") ),
 		sub {
-
-			# Append messages in one string
-			my $msg = '';
-			foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
-
-				my $line = $self->GetItem( $i, 0 )->GetText || '';
-				my $type = $self->GetItem( $i, 1 )->GetText || '';
-				my $desc = $self->GetItem( $i, 2 )->GetText || '';
-				$msg .= "$line, $type, $desc\n";
-			}
-
-			# And copy it to clipboard
-			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
-				Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-				Wx::wxTheClipboard->Close;
-			}
-		}
+			$self->select_problem( $line - 1  );				
+			Wx::Event::EVT_IDLE( $self, undef );
+		},
 	);
-
-	if ( $event->isa('Wx::MouseEvent') ) {
-		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
-	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
-	}
 }
 
 sub on_timer {
@@ -472,20 +397,27 @@ sub select_problem {
 # Selects the next problem in the editor.
 # Wraps to the first one when at the end.
 sub select_next_problem {
-	return; #TODO implement for tree form
 	my $self   = shift;
 	my $editor = $self->current->editor or return;
-	my $line   = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 
+	# Start with the first child
+	my $root = $self->GetRootItem;
+	my ( $child, $cookie ) = $self->GetFirstChild($root);
 	my $first_line = undef;
-	foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
+	while ($cookie) {
 
 		# Get the line and check that it is a valid line number
-		my $line = $self->GetItem($i)->GetText;
-		next
-			if ( not defined($line) )
+		my $issue = $self->GetPlData($child) or return;
+		my $line = $issue->{line};
+		
+		if ( not defined($line)
 			or ( $line !~ /^\d+$/o )
-			or ( $line > $editor->GetLineCount );
+			or ( $line > $editor->GetLineCount )  )
+		{
+			( $child, $cookie ) = $self->GetNextChild( $root, $cookie );
+			next;
+		}
 		$line--;
 
 		if ( not $first_line ) {
@@ -494,7 +426,7 @@ sub select_next_problem {
 			$first_line = $line;
 		}
 
-		if ( $line > $line ) {
+		if ( $line > $current_line ) {
 
 			# select the next problem
 			$self->select_problem($line);
@@ -505,6 +437,9 @@ sub select_next_problem {
 			# and we're done here...
 			last;
 		}
+
+		# Get the next child if there is one
+		( $child, $cookie ) = $self->GetNextChild( $root, $cookie );
 	}
 
 	# The next problem is simply the first (wrap around)
