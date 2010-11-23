@@ -350,13 +350,19 @@ sub render {
 	$self->SetItemText(
 		$root,
 		defined $filename ?
-		sprintf( Wx::gettext('Found %d message(s) in %s'), scalar @$model, $filename ) :
-		sprintf( Wx::gettext('Found %d message(s)'), scalar @$model)
+		sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @$model, $filename ) :
+		sprintf( Wx::gettext('Found %d issue(s)'), scalar @$model)
 	);
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	my $i = 0;
+	ISSUE:
 	foreach my $issue (sort { $a->{line} <=> $b->{line} } @$model) {
+
+		if (not exists $issue->{type}) {
+			warn "Cannot handle issue:\n" . Data::Dumper::Dumper($issue) . "\n";
+			next ISSUE;
+		}
 
 		my $line = $issue->{line} - 1;
 		my $type = $issue->{type};
