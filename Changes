@@ -49,7 +49,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - "Select Next Problem" is now working again after it was broken since Padre
       0.57. Removed Copy Selected/All features until requested again (AZAWAWI)
     - Removed "Errors" window and moved its only useful feature: Perl
-      diagnostics help to "Syntax Check" window.
+      diagnostics help to "Syntax Check" window (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
