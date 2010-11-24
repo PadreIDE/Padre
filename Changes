@@ -52,8 +52,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       diagnostics help to "Syntax Check" window (AZAWAWI)
     - Removed tooltip from margin error markers as it was broken since Padre
       0.65+ (AZAWAWI)
-    - Fix #957: Syntax Check should use perl interpreter given in Preferences
-      (ZENOG)
+    - Fix #957: Syntax Check should use perl given in Preferences (ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
