@@ -52,8 +52,6 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       diagnostics help to "Syntax Check" window (AZAWAWI)
     - Removed tooltip from margin error markers as it was broken since Padre
       0.65+ (AZAWAWI)
-    - Removed non-functional --desktop command line option since it is a
-      packaging issue and is not really needed to be inside Padre (AZAWAWI)
     - Fix #957: Syntax Check should use perl interpreter given in Preferences
       (ZENOG)
     - Fix #381: Syntax check chokes on "use Foo::Bar" defined in the same project
