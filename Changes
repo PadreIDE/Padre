@@ -54,8 +54,6 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       0.65+ (AZAWAWI)
     - Fix #957: Syntax Check should use perl interpreter given in Preferences
       (ZENOG)
-    - Fix #381: Syntax check chokes on "use Foo::Bar" defined in the same project
-      (ZENOG)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
