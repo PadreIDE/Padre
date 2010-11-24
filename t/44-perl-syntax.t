@@ -21,6 +21,9 @@ use File::HomeDir                 ();
 use Padre::Document::Perl::Syntax ();
 
 
+# This should only be used to skip dependencies on Padre classes
+# while testing Padre::Document::Perl::Syntax
+$ENV{PADRE_IS_TEST} = 1;
 
 
 
