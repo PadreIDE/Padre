@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-02 14:29+0100\n"
+"POT-Creation-Date: 2010-11-13 10:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simone Blandino <simone.blandino@gmail.com>\n"
 "Language-Team:  <simone.blandino@gmail.com>\n"
@@ -184,8 +184,8 @@ msgstr ""
 
 #: lib/Padre/Document.pm:327
 #, perl-format
-msgid "No module  mime_type='%s' filename='%s'"
-msgstr "Nessun modulo con tipo mime='%s' e nome file='%s'"
+msgid "No module mime_type='%s' filename='%s'"
+msgstr "Nessun modulo con tipo mime='%s'  nome file='%s'"
 
 #: lib/Padre/Document.pm:450
 #: lib/Padre/Wx/Editor.pm:213
@@ -695,12 +695,12 @@ msgid "Setup a skeleton Perl module distribution"
 msgstr "Imposta lo scheletro di una distribuzione Perl"
 
 #: lib/Padre/Wx/ActionLibrary.pm:193
-msgid "File Wizard..."
-msgstr "File Wizard..."
+msgid "Wizard Selector..."
+msgstr "Selettore wizard..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:194
-msgid "Create a new document from the file wizard"
-msgstr "Crea un nuovo documento dal file wizard"
+msgid "Selects and opens a wizard"
+msgstr "Sceglie ed apre un wizard"
 
 #: lib/Padre/Wx/ActionLibrary.pm:208
 msgid "&Open"
@@ -719,7 +719,7 @@ msgid "Open a file from a remote location"
 msgstr "Apri un file da una posizione remota"
 
 #: lib/Padre/Wx/ActionLibrary.pm:233
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:228
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:218
 msgid "Open in File Browser"
 msgstr "Apri in esplorazione file"
 
@@ -1422,12 +1422,12 @@ msgid "Show a window listing all the parts of the current file (functions, pragm
 msgstr "Mostra una finestra che elenca tutte le parti del file corrente (funzioni, pragma, moduli)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1362
-msgid "Show Directory Tree"
-msgstr "Mostra la gerarchia delle cartelle"
+msgid "Show Project Browser/Tree"
+msgstr "Mostra il browser/albero di progetto"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1363
-msgid "Show a window with a directory browser of the current project"
-msgstr "Mostra una finestra per esplorare la struttura della directory del progetto corrente"
+msgid "Project Browser - Was known as the Directory Tree."
+msgstr "Browser di progetto - era noto come Albero delle Cartelle"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1372
 msgid "Show Syntax Check"
@@ -2665,7 +2665,7 @@ msgid "All Files"
 msgstr "Tutti i file"
 
 #: lib/Padre/Wx/Main.pm:3786
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:220
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:210
 msgid "Open File"
 msgstr "Apri file"
 
@@ -2842,34 +2842,34 @@ msgstr "Attendere prego..."
 msgid "Files"
 msgstr "File"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:82
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
 msgid "Directory"
 msgstr "Cartella"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:163
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr "Impossibile creare: '%s':  '%s'"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:185
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
 #, perl-format
-msgid "Really delete the file \"%s\""
-msgstr "Cancellare davvero il file \"%s\""
+msgid "Really delete the file \"%s\"?"
+msgstr "Cancellare davvero il file \"%s\"?"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:192
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:182
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr "Impossibile cancellare: '%s': %s"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:236
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:226
 msgid "Delete File"
 msgstr "Cancella file"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:247
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:237
 msgid "Create Directory"
 msgstr "Crea cartella"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:259
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
 msgid "Refresh"
 msgstr "Aggiorna"
 
@@ -3302,7 +3302,6 @@ msgid "Error while trying to perform Padre action: %s"
 msgstr "Errore nell'esecuzione di un'azione di Padre: %s"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
-#: lib/Padre/Wx/Dialog/FileWizard.pm:85
 #: lib/Padre/Wx/Dialog/OpenResource.pm:176
 #: lib/Padre/Wx/Dialog/OpenURL.pm:62
 #: lib/Padre/Wx/Dialog/Goto.pm:93
@@ -3311,7 +3310,6 @@ msgstr "&OK"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
 #: lib/Padre/Wx/Dialog/Preferences.pm:939
-#: lib/Padre/Wx/Dialog/FileWizard.pm:91
 #: lib/Padre/Wx/Dialog/OpenResource.pm:182
 #: lib/Padre/Wx/Dialog/Advanced.pm:175
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70
@@ -3943,16 +3941,6 @@ msgstr "Sostituite %d corrispondenze"
 msgid "Replaced %d matches"
 msgstr "Sostituite %d corrispondenze:"
 
-#: lib/Padre/Wx/Dialog/FileWizard.pm:28
-msgid "File Wizard"
-msgstr "File Wizard"
-
-#: lib/Padre/Wx/Dialog/FileWizard.pm:59
-#: lib/Padre/Wx/Dialog/Advanced.pm:94
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:60
-msgid "&Filter:"
-msgstr "&Filtro"
-
 #: lib/Padre/Wx/Dialog/Warning.pm:41
 msgid "See http://padre.perlide.org/ for update information"
 msgstr "Visitare http://padre.perlide.org/ per informazioni aggiornate"
@@ -4021,6 +4009,12 @@ msgstr "File/Cartella"
 #: lib/Padre/Wx/Dialog/Advanced.pm:63
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:94
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:60
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
+msgid "&Filter:"
+msgstr "&Filtro"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:107
 msgid "Preference Name"
@@ -4669,6 +4663,10 @@ msgstr "Nessuna corrispondenza"
 msgid "Replace failure in %s:  %s"
 msgstr "Errore nella sostituzione %s: %s"
 
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:22
+msgid "Wizard Selector (WARNING: Experimental)"
+msgstr "Selettore wizard (ATTENZIONE: sperimentale)"
+
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:31
 msgid "Existing bookmarks:"
 msgstr "Segnalibri esistenti:"
@@ -5083,12 +5081,12 @@ msgstr "Il primo carattere della selezione non sembra puntare ad un token."
 msgid "Selection not part of a Perl statement?"
 msgstr "La selezione non è parte di un'istruzione Perl?"
 
-#: lib/Padre/Document/Perl/Help.pm:293
+#: lib/Padre/Document/Perl/Help.pm:301
 #, perl-format
 msgid "(Since Perl v%s)"
 msgstr "(Dalla versione Perl %s)"
 
-#: lib/Padre/Document/Perl/Help.pm:296
+#: lib/Padre/Document/Perl/Help.pm:304
 msgid "- DEPRECATED!"
 msgstr "- DEPRECATO!"
 
@@ -5146,6 +5144,20 @@ msgstr "Lettura dei file dal server FTP  in corso..."
 #: lib/Padre/File/FTP.pm:312
 msgid "Writing file to FTP server..."
 msgstr "Scrittura del file sul server FTP..."
+
+#~ msgid "File Wizard..."
+#~ msgstr "File Wizard..."
+
+#~ msgid "Create a new document from the file wizard"
+#~ msgstr "Crea un nuovo documento dal file wizard"
+
+#~ msgid "Show a window with a directory browser of the current project"
+#~ msgstr ""
+#~ "Mostra una finestra per esplorare la struttura della directory del "
+#~ "progetto corrente"
+
+#~ msgid "File Wizard"
+#~ msgstr "File Wizard"
 
 #~ msgid "Search in Files/Types:"
 #~ msgstr "Ricerca nei file/tipi:"
