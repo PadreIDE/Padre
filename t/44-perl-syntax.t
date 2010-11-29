@@ -78,7 +78,9 @@ END_PERL
 ######################################################################
 # Trivially broken package statement, and variants
 
-SCOPE: {
+SKIP: {
+	skip 'Perl 5.8.9- do not generate a syntax error', 4 if $] <= 5.008009;
+
 	my $module = execute('package');
 	is_model_ok(
 		model     => $module->{model},
@@ -89,7 +91,9 @@ SCOPE: {
 	);
 }
 
-SCOPE: {
+SKIP: {
+	skip 'Perl 5.8.9- do not generate a syntax error', 4 if $] <= 5.008009;
+
 	my $module = execute("package;\n");
 	is_model_ok(
 		model     => $module->{model},
