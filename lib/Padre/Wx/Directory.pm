@@ -65,7 +65,10 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$search->SetDescriptiveText( Wx::gettext('Search') );
+	# This line is causing an error on Ubuntu due to some Wx problems.
+	# see https://bugs.launchpad.net/ubuntu/+source/padre/+bug/485012
+	# Supporting Ubuntu seems to be more important than having this text:
+#	$search->SetDescriptiveText( Wx::gettext('Search') );
 
 	Wx::Event::EVT_TEXT(
 		$self, $search,
