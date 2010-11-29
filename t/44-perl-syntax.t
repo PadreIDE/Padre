@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 73 );
+	plan( tests => $] <= 5.008009 ? 63 : 73 );
 }
 
 use t::lib::Padre;
@@ -79,7 +79,8 @@ END_PERL
 # Trivially broken package statement, and variants
 
 SKIP: {
-	skip 'Perl 5.8.9- do not generate a syntax error', 4 if $] <= 5.008009;
+	skip 'Trivially broken package statement is perfectly valid on Perl <= 5.8.9', 4
+		if $] <= 5.008009;
 
 	my $module = execute('package');
 	is_model_ok(
@@ -92,7 +93,8 @@ SKIP: {
 }
 
 SKIP: {
-	skip 'Perl 5.8.9- do not generate a syntax error', 4 if $] <= 5.008009;
+	skip 'Trivially broken package statement is perfectly valid on Perl <= 5.8.9', 4
+		if $] <= 5.008009;
 
 	my $module = execute("package;\n");
 	is_model_ok(
