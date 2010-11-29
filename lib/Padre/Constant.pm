@@ -13,6 +13,8 @@ use File::HomeDir 0.91 ();
 our $VERSION        = '0.75';
 our $BACKCOMPATIBLE = '0.57';
 
+our $DISTRO;
+
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
 use constant MAC => !!( $^O eq 'darwin' );
@@ -126,6 +128,31 @@ BEGIN {
 	init();
 }
 
+sub DISTRO {
+	return $DISTRO if defined($DISTRO);
+	
+	if (WIN32) {
+		$DISTRO = 'WIN';
+	}
+	elsif (MAC) {
+		$DISTRO = 'MAC';
+	} else {
+		# Try to identify the distro
+		if (open my $lsb_file,'<','/etc/lsb-release') {
+			while (<$lsb_file>) {
+				next unless /^DISTRIB_ID\=(.+?)[\r\n]/;
+				if ($1 eq 'Ubuntu') {
+					$DISTRO = 'UBUNTU';
+				}
+				last;
+			}
+		}
+	}
+	
+	$DISTRO ||= 'UNKNOWN';
+
+	return $DISTRO if defined($DISTRO);
+}
 
 
 

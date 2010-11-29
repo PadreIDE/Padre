@@ -68,7 +68,7 @@ sub new {
 	# This line is causing an error on Ubuntu due to some Wx problems.
 	# see https://bugs.launchpad.net/ubuntu/+source/padre/+bug/485012
 	# Supporting Ubuntu seems to be more important than having this text:
-#	$search->SetDescriptiveText( Wx::gettext('Search') );
+	$search->SetDescriptiveText( Wx::gettext('Search') ) if Padre::Constant::DISTRO ne 'UBUNTU';
 
 	Wx::Event::EVT_TEXT(
 		$self, $search,
