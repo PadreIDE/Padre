@@ -57,6 +57,7 @@ sub find_padre_exe {
 
 sub desktop {
 	if (Padre::Constant::WXWIN32) {
+
 		#TODO Support Vista/Win7 UAC (User Account Control)
 
 		# Find Padre's executable

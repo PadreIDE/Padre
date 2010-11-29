@@ -2588,6 +2588,7 @@ sub init {
 		comment    => _T('Search the Perl help pages (perldoc)'),
 		shortcut   => 'F1',
 		menu_event => sub {
+
 			# Show help for selected text
 			$_[0]->help( $_[0]->current->text );
 		},

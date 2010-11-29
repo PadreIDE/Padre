@@ -89,9 +89,9 @@ sub new {
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
-		error      => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') ),
-		warning    => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') ),
-		ok         => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') ),
+		error       => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') ),
+		warning     => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') ),
+		ok          => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') ),
 		diagnostics => $images->Add(
 			Wx::ArtProvider::GetBitmap(
 				'wxART_GO_FORWARD',
@@ -107,7 +107,7 @@ sub new {
 			),
 		),
 	};
-	$self->AssignImageList( $images );
+	$self->AssignImageList($images);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self, $self,
@@ -212,21 +212,22 @@ sub running {
 # Event Handlers
 
 sub on_tree_item_activated {
-	my ($self, $event)  = @_;
-	my $item  = $event->GetItem or return;
-	my $error = $self->GetPlData($item) or return;
-	my $editor = $self->current->editor or return;
-	my $line = $error->{line};
+	my ( $self, $event ) = @_;
+	my $item   = $event->GetItem         or return;
+	my $error  = $self->GetPlData($item) or return;
+	my $editor = $self->current->editor  or return;
+	my $line   = $error->{line};
 
-	return if not defined($line)
-		or $line !~ /^\d+$/o
-		or $editor->GetLineCount < $line;
+	return
+		if not defined($line)
+			or $line !~ /^\d+$/o
+			or $editor->GetLineCount < $line;
 
 	# Select the problem after the event has finished
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {
-			$self->select_problem( $line - 1  );				
+			$self->select_problem( $line - 1 );
 			Wx::Event::EVT_IDLE( $self, undef );
 		},
 	);
@@ -273,6 +274,7 @@ sub clear {
 }
 
 sub relocale {
+
 	# Nothing to implement here
 	return;
 }
@@ -292,7 +294,7 @@ sub refresh {
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
 		return if ( $length eq $self->{length} );
-	} 
+	}
 
 	$self->{document} = $filename;
 	$self->{length}   = $length;
@@ -328,6 +330,7 @@ sub render {
 
 	# If there are no errors clear the synax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
+
 		# Relative-to-the-project filename.
 		# Check that the document has been saved.
 		if ( defined $filename ) {
@@ -349,17 +352,17 @@ sub render {
 
 	$self->SetItemText(
 		$root,
-		defined $filename ?
-		sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @$model, $filename ) :
-		sprintf( Wx::gettext('Found %d issue(s)'), scalar @$model)
+		defined $filename
+		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @$model, $filename )
+		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @$model )
 	);
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
 	my $i = 0;
 	ISSUE:
-	foreach my $issue (sort { $a->{line} <=> $b->{line} } @$model) {
+	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @$model ) {
 
-		if (not exists $issue->{type}) {
+		if ( not exists $issue->{type} ) {
 			warn "Cannot handle issue:\n" . Data::Dumper::Dumper($issue) . "\n";
 			next ISSUE;
 		}
@@ -368,15 +371,19 @@ sub render {
 		my $type = $issue->{type};
 		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
 
-		my $item = $self->AppendItem( $root, 
-			sprintf(Wx::gettext('Line %d:   (%s)   %s'), 
-				$line + 1, 
-				$MESSAGE{$type}{label}, 
-				$issue->{message}), 
-			$MESSAGE{$type}{marker} == Padre::Wx::MarkWarn() ? $self->{images}{warning} : $self->{images}{error} );
+		my $item = $self->AppendItem(
+			$root,
+			sprintf(
+				Wx::gettext('Line %d:   (%s)   %s'),
+				$line + 1,
+				$MESSAGE{$type}{label},
+				$issue->{message}
+			),
+			$MESSAGE{$type}{marker} == Padre::Wx::MarkWarn() ? $self->{images}{warning} : $self->{images}{error}
+		);
 		$self->SetPlData( $item, $issue );
 
-		if(defined $issue->{diagnostics}) {
+		if ( defined $issue->{diagnostics} ) {
 			my @diags = split /\n/, $issue->{diagnostics};
 			for my $diag (@diags) {
 				$self->AppendItem( $item, $diag, $self->{images}{diagnostics} );
@@ -403,9 +410,9 @@ sub select_problem {
 # Selects the next problem in the editor.
 # Wraps to the first one when at the end.
 sub select_next_problem {
-	my $self   = shift;
-	my $editor = $self->current->editor or return;
-	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $self         = shift;
+	my $editor       = $self->current->editor or return;
+	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 
 	# Start with the first child
 	my $root = $self->GetRootItem;
@@ -416,10 +423,10 @@ sub select_next_problem {
 		# Get the line and check that it is a valid line number
 		my $issue = $self->GetPlData($child) or return;
 		my $line = $issue->{line};
-		
-		if ( not defined($line)
+
+		if (   not defined($line)
 			or ( $line !~ /^\d+$/o )
-			or ( $line > $editor->GetLineCount )  )
+			or ( $line > $editor->GetLineCount ) )
 		{
 			( $child, $cookie ) = $self->GetNextChild( $root, $cookie );
 			next;

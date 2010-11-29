@@ -65,7 +65,7 @@ sub get_layout {
 			[ 'Wx::ComboBox', '_builder_choice_', '', \@builders, Wx::wxCB_READONLY ],
 		],
 		[   [ 'Wx::StaticText', undef,              Wx::gettext('License:') ],
-			[ 'Wx::ComboBox',   '_license_choice_', '', [ sort keys %license_id ], Wx::wxCB_READONLY ], 
+			[ 'Wx::ComboBox',   '_license_choice_', '', [ sort keys %license_id ], Wx::wxCB_READONLY ],
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Parent Directory:') ],
 			[ 'Wx::DirPickerCtrl', '_directory_', '', Wx::gettext('Pick parent directory') ],

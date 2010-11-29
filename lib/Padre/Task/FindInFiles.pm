@@ -88,7 +88,7 @@ sub run {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			next if $file =~ /^\.svn$/;
-			next if $file =~ /^\.git$/;			
+			next if $file =~ /^\.git$/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 			my @fstat = stat($fullname);
 			unless ( -e _ ) {

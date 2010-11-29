@@ -187,13 +187,13 @@ sub execute {
 }
 
 sub is_model_ok {
-	my %arg = @_;
+	my %arg   = @_;
 	my $model = $arg{model};
 
-	like( $model->[0]->{message}, $arg{message}, "message regex match in '$arg{test_name}'"        );
-	is( scalar @$model,           1,             "model has only one message in '$arg{test_name}'" );
-	is( $model->[0]->{line},      $arg{line},    "line match in '$arg{test_name}'"                 );
-	is( $model->[0]->{type},      $arg{type},    "type match in '$arg{test_name}'"                 );
+	like( $model->[0]->{message}, $arg{message}, "message regex match in '$arg{test_name}'" );
+	is( scalar @$model,      1,          "model has only one message in '$arg{test_name}'" );
+	is( $model->[0]->{line}, $arg{line}, "line match in '$arg{test_name}'" );
+	is( $model->[0]->{type}, $arg{type}, "type match in '$arg{test_name}'" );
 }
 
 CLASS: {

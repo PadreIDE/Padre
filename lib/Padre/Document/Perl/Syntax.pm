@@ -12,21 +12,23 @@ our @ISA     = 'Padre::Task::Syntax';
 
 sub new {
 	my $class = shift;
-	
+
 	my %args = @_;
 
-	if(defined $ENV{PADRE_IS_TEST}) {
+	if ( defined $ENV{PADRE_IS_TEST} ) {
+
 		# Note: $ENV{PADRE_IS_TEST} is defined in t/44-perl-syntax.t
 		# Run with console Perl to prevent failures while testing
 		require Padre::Perl;
 		$args{perl} = Padre::Perl::cperl();
 	} else {
+
 		#Otherwise run with user-preferred interpreter
 		$args{perl} = $args{document}->get_interpreter;
 	}
 
 	my $self = $class->SUPER::new(%args);
-	
+
 	return $self;
 }
 
