@@ -126,6 +126,16 @@ sub syntax {
 	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
 	my @issues = Parse::ErrorString::Perl->new->parse_string($stderr);
 
+	# We need the 'at' or 'near' clauses appended to the issue because
+	# it is more meaningful
+	for my $issue (@issues) {
+		if ( defined( $issue->{at} ) ) {
+			$issue->{message} .= ', at ' . $issue->{at};
+		} elsif ( defined( $issue->{near} ) ) {
+			$issue->{message} .= ', near ' . $issue->{near};
+		}
+	}
+
 	return \@issues;
 }
 
