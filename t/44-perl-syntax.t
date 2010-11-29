@@ -65,7 +65,7 @@ END_PERL
 	is_model_ok(
 		model     => $script->{model},
 		line      => 3,
-		message   => qr/syntax error(?:, at EOF)?/,
+		message   => 'syntax error, at EOF',
 		type      => 'F',
 		test_name => 'Trivially broken three line script',
 	);
@@ -83,18 +83,19 @@ SCOPE: {
 	is_model_ok(
 		model     => $module->{model},
 		line      => 1,
-		message   => qr/syntax error(?:, at EOF)?/,
+		message   => 'syntax error, at EOF',
 		type      => 'F',
 		test_name => 'Trivially broken package statement',
 	);
 }
 
-SCOPE: {
+TODO: {
+	local $TODO = 'Fix Parse::ErrorString::Perl';
 	my $module = execute("package;\n");
 	is_model_ok(
 		model     => $module->{model},
 		line      => 1,
-		message   => qr/syntax error(?:, near "package;")?/,
+		message   => 'syntax error, near "package;"',
 		type      => 'F',
 		test_name => 'Trivially broken package statement',
 	);
@@ -117,7 +118,7 @@ END_PERL
 	is_model_ok(
 		model     => $module->{model},
 		line      => 3,
-		message   => qr/syntax error(?:, at EOF)?/,
+		message   => 'syntax error, at EOF',
 		type      => 'F',
 		test_name => 'Error at the nth line of a module',
 	);
@@ -130,7 +131,7 @@ SCOPE: {
 	is_model_ok(
 		model     => $module->{model},
 		line      => 3,
-		message   => qr/syntax error(?:, at EOF)?/,
+		message   => 'syntax error, at EOF',
 		type      => 'F',
 		test_name => 'Error at the nth line of a module',
 	);
@@ -144,7 +145,7 @@ SCOPE: {
 	is_model_ok(
 		model     => $module->{model},
 		line      => 3,
-		message   => qr/syntax error(?:, at EOF)?/,
+		message   => 'syntax error, at EOF',
 		type      => 'F',
 		test_name => 'Error at the nth line of a module',
 	);
@@ -190,7 +191,7 @@ sub is_model_ok {
 	my %arg   = @_;
 	my $model = $arg{model};
 
-	like( $model->[0]->{message}, $arg{message}, "message regex match in '$arg{test_name}'" );
+	is( $model->[0]->{message}, $arg{message}, "message match in '$arg{test_name}'" );
 	is( scalar @$model,      1,          "model has only one message in '$arg{test_name}'" );
 	is( $model->[0]->{line}, $arg{line}, "line match in '$arg{test_name}'" );
 	is( $model->[0]->{type}, $arg{type}, "type match in '$arg{test_name}'" );
