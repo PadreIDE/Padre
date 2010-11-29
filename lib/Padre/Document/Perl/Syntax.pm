@@ -132,7 +132,7 @@ sub syntax {
 		if ( defined( $issue->{at} ) ) {
 			$issue->{message} .= ', at ' . $issue->{at};
 		} elsif ( defined( $issue->{near} ) ) {
-			$issue->{message} .= ', near ' . $issue->{near};
+			$issue->{message} .= ', near "' . $issue->{near} . '"';
 		}
 	}
 

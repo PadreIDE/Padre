@@ -89,8 +89,7 @@ SCOPE: {
 	);
 }
 
-TODO: {
-	local $TODO = 'Fix Parse::ErrorString::Perl';
+SCOPE: {
 	my $module = execute("package;\n");
 	is_model_ok(
 		model     => $module->{model},
