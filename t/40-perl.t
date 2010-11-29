@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 42 );
+	plan( tests => 48 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -38,18 +38,30 @@ SCOPE: {
 	$doc->set_editor($editor);
 	$editor->configure_editor($doc);
 
-	my $msgs = $doc->check_syntax;
-	is_deeply(
-		$msgs,
-		[   {   'msg'      => 'Missing right curly or square bracket, at end of line',
-				'severity' => 0,
-				'line'     => '17'
-			},
-			{   'msg'      => 'syntax error, at EOF',
-				'severity' => 0,
-				'line'     => '17'
-			}
-		]
+	my $issues = $doc->check_syntax;
+
+	sub is_row_ok {
+		my %arg = @_;
+		my $row = $arg{row};
+		like( $row->{message}, $arg{message}, "message regex match in '$arg{test_name}'" );
+		is( $row->{line}, $arg{line}, "line match in '$arg{test_name}'" );
+		is( $row->{type}, $arg{type}, "type match in '$arg{test_name}'" );
+	}
+
+	is( scalar @$issues, 2, 'has only two lines' );
+	is_row_ok(
+		row       => $issues->[0],
+		message   => qr/Missing right curly or square bracket(?:, at end of line)?/,
+		line      => 17,
+		type      => 'F',
+		test_name => 'check_syntax issue 1',
+	);
+	is_row_ok(
+		row       => $issues->[1],
+		message   => qr/syntax error(?:, at EOF)?/,
+		line      => 17,
+		type      => 'F',
+		test_name => 'check_syntax issue 2',
 	);
 
 	isa_ok( $doc, 'Padre::Document' );
@@ -183,8 +195,7 @@ SCOPE: {
 	$doc->set_editor($editor);
 	$editor->configure_editor($doc);
 
-	my $msgs = $doc->check_syntax;
-	is_deeply( $msgs, [], 'Syntax check is ok' );
+	is_deeply( $doc->check_syntax, [], 'Syntax check is ok' );
 }
 
 # Regression test for get_functions
