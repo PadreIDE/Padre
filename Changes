@@ -53,6 +53,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Removed tooltip from margin error markers as it was broken since Padre
       0.65+ (AZAWAWI)
     - Fix #957: Syntax Check should use perl given in Preferences (ZENOG)
+    - Fix #1059: Padre 0.74 build failure on 5.8.9 (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
