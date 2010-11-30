@@ -305,7 +305,7 @@ sub on_signal {
 	# Handle the special shutdown message
 	if ( $method eq 'STOPPED' ) {
 
-		# Remove from the running list to guarentee no more events
+		# Remove from the running list to guarantee no more events
 		# will be sent to the handle (and thus to the task)
 		delete $self->{running}->{$hid};
 
