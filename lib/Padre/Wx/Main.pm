@@ -1687,11 +1687,11 @@ sub relocale {
 		$self->{regex_editor}->show if $was_visible;
 		$self->{regex_editor}->set_data($data_ref);
 	}
-	
+
 	# Replace the about box if it exists
 	if ( exists $self->{about} ) {
 		$self->{about} = Padre::Wx::About->new($self);
-	}	
+	}
 
 	return;
 }

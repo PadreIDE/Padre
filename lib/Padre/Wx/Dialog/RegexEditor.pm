@@ -252,6 +252,8 @@ sub _create_controls {
 			-1,
 			$m{$name}{name},
 		);
+
+		$self->{$name}->SetToolTip( new Wx::ToolTip( $m{$name}{tooltip} ) );
 	}
 
 	# Dialog Layout
@@ -402,11 +404,27 @@ sub _insert_regex {
 #
 sub _modifiers {
 	return (
-		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('&Ignore case (%s)'), 'i' ) },
-		single_line => { mod => 's', name => sprintf( Wx::gettext('&Single-line (%s)'), 's' ) },
-		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('&Multi-line (%s)'),  'm' ) },
-		extended    => { mod => 'x', name => sprintf( Wx::gettext('&Extended (%s)'),    'x' ) },
-		global      => { mod => 'g', name => sprintf( Wx::gettext('&Global (%s)'),      'g' ) },
+		ignore_case => {
+			mod     => 'i', name => Wx::gettext('Ignore case (&i)'),
+			tooltip => Wx::gettext('Case-insensitive matching')
+		},
+		single_line => {
+			mod     => 's', name => Wx::gettext('Single-line (&s)'),
+			tooltip => Wx::gettext('"." also matches newline')
+		},
+		multi_line => {
+			mod => 'm', name => Wx::gettext('Multi-line (&m)'),
+			tooltip => Wx::gettext('"^" and "$" match the start and end of any line inside the string')
+		},
+		extended => {
+			mod => 'x', name => Wx::gettext('Extended (&x)'),
+			tooltip =>
+				Wx::gettext('Extended regular expressions allow free formatting (whitespace is ignored) and comments')
+		},
+		global => {
+			mod     => 'g', name => Wx::gettext('Global (&g)'),
+			tooltip => Wx::gettext('Replace all occurrences of the pattern')
+		},
 	);
 }
 
