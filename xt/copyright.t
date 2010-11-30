@@ -23,7 +23,7 @@ $copyright = qr{$copyright# modify it under the same terms as Perl 5 itself.};
 my $cp = qr{=head1 COPYRIGHT(?: & LICENSE)?\s*};
 $cp = qr{${cp}Copyright 2008-2010 The Padre development team as listed in Padre.pm\.\s*};
 $cp = qr{${cp}This program is free software; you can redistribute\s*};
-$cp = qr{${cp}it and/or modify it under the same terms as Perl 5 itself.};
+$cp = qr{${cp}it and/or modify it\s*under the same terms as Perl 5 itself.};
 
 
 foreach my $file (@files) {
