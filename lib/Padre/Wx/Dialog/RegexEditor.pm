@@ -388,19 +388,10 @@ sub _insert_regex {
 	my $match_part   = $self->{regex}->GetValue;
 	my $replace_part = $self->{replace}->GetValue;
 
-	my $match_modifier   = '';
-	my $replace_modifier = '';
-	my %modifiers        = $self->_modifiers();
-	foreach my $name ( keys %modifiers ) {
-		if ( $modifiers{$name}{mod} eq 'g' ) {
-			$replace_modifier .= $modifiers{$name}{mod} if $self->{$name}->IsChecked;
-		} else {
-			$match_modifier .= $modifiers{$name}{mod} if $self->{$name}->IsChecked;
-		}
-	}
+	my $modifiers = $self->_get_modifier_settings;
 
 	my $editor = $self->current->editor or return;
-	$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$match_modifier$replace_modifier" );
+	$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$modifiers" );
 
 	return;
 }
@@ -460,8 +451,7 @@ sub show {
 }
 
 #
-# Private method to dump the regular expression
-# description as text
+# Private method to dump the regular expression description as text
 #
 sub _dump_regex {
 	my ( $self, $parent, $str, $level ) = @_;
@@ -502,17 +492,64 @@ sub _parse_regex_elements {
 	return @array;
 }
 
+#
+# Returns the user input data of the dialog as a hashref
+#
 sub get_data {
 	my $self = shift;
-	
+
 	my %data = (
-		regex   => $self->{regex}->GetValue,
-		replace => $self->{replace}->GetValue,
+		text => {
+			regex         => $self->{regex}->GetValue,
+			replace       => $self->{replace}->GetValue,
+			original_text => $self->{original_text}->GetValue,
+		},
+		modifiers => [ $self->_get_modifier_settings ],
 	);
-	
+
 	return \%data;
 }
 
+#
+# Sets the user input data of the dialog given a hashref containing the results of get_data
+#
+sub set_data {
+	my ( $self, $data_ref ) = @_;
+
+	foreach my $text_field ( keys %{ $data_ref->{text} } ) {
+		$self->{$text_field}->SetValue( $data_ref->{text}->{$text_field} );
+	}
+
+	my $modifier_string = $data_ref->{modifiers}->[0];
+	my %modifiers       = $self->_modifiers();
+	foreach my $name ( keys %modifiers ) {
+		$self->{$name}->SetValue(1) if $modifier_string =~ s/$modifiers{$name}{mod}//;
+	}
+
+	return;
+}
+
+#
+# Private method to get the modifier settings as two strings
+# the first strings returns the active modifiers, the second the
+# inactive ones
+#
+sub _get_modifier_settings {
+	my $self = shift;
+
+	my $active_modifiers   = '';
+	my $inactive_modifiers = '';
+	my %modifiers          = $self->_modifiers();
+	foreach my $name ( keys %modifiers ) {
+		if ( $self->{$name}->IsChecked ) {
+			$active_modifiers .= $modifiers{$name}{mod};
+		} else {
+			$inactive_modifiers .= $modifiers{$name}{mod};
+		}
+	}
+
+	return ( $active_modifiers, $inactive_modifiers );
+}
 
 sub run {
 	my $self = shift;
@@ -520,20 +557,10 @@ sub run {
 	my $regex         = $self->{regex}->GetValue;
 	my $original_text = $self->{original_text}->GetValue;
 	my $replace       = $self->{replace}->GetValue;
-	my $result_text = $original_text;
+	my $result_text   = $original_text;
 
-
-	my $start     = '';
-	my $end       = '';
-	my %modifiers = $self->_modifiers();
-	foreach my $name ( keys %modifiers ) {
-		if ( $self->{$name}->IsChecked ) {
-			$start .= $modifiers{$name}{mod};
-		} else {
-			$end .= $modifiers{$name}{mod};
-		}
-	}
-	my $xism = "$start-$end";
+	my ( $active, $inactive ) = $self->_get_modifier_settings;
+	my $xism = "$active-$inactive";
 
 	$self->{matched_text}->Clear;
 	$self->{result_text}->Clear;
@@ -580,7 +607,7 @@ sub run {
 		foreach my $char (@chars) {
 			if ( $pos == $match_start ) {
 				$self->{matched_text}->BeginTextColour(Wx::wxRED);
-				$self->{matched_text}->BeginUnderline;				
+				$self->{matched_text}->BeginUnderline;
 			} elsif ( $pos == $match_end ) {
 				$self->{matched_text}->EndTextColour;
 				$self->{matched_text}->EndUnderline;

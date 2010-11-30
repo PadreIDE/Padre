@@ -57,6 +57,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Regex editor: insert complete substitution operator, including modifiers;
       underline match results so that matching whitespaces are also highlighted
       (ZENOG)
+    - Fix #922: Regex editor keeps first language after language change (ZENOG)
     
 
 

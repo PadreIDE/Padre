@@ -1678,6 +1678,21 @@ sub relocale {
 	$self->right->relocale  if $self->has_right;
 	$self->bottom->relocale if $self->has_bottom;
 
+	# Replace the regex editor, keep the data (if it exists)
+	if ( exists $self->{regex_editor} ) {
+		my $data_ref    = $self->{regex_editor}->get_data;
+		my $was_visible = $self->{regex_editor}->Hide;
+
+		$self->{regex_editor} = Padre::Wx::Dialog::RegexEditor->new($self);
+		$self->{regex_editor}->show if $was_visible;
+		$self->{regex_editor}->set_data($data_ref);
+	}
+	
+	# Replace the about box if it exists
+	if ( exists $self->{about} ) {
+		$self->{about} = Padre::Wx::About->new($self);
+	}	
+
 	return;
 }
 
