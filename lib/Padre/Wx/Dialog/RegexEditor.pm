@@ -502,12 +502,24 @@ sub _parse_regex_elements {
 	return @array;
 }
 
+sub get_data {
+	my $self = shift;
+	
+	my %data = (
+		regex   => $self->{regex}->GetValue,
+		replace => $self->{replace}->GetValue,
+	);
+	
+	return \%data;
+}
+
+
 sub run {
 	my $self = shift;
 
-	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
-	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
-	my $replace = $self->{replace}->GetRange( 0, $self->{replace}->GetLastPosition );
+	my $regex         = $self->{regex}->GetValue;
+	my $original_text = $self->{original_text}->GetValue;
+	my $replace       = $self->{replace}->GetValue;
 	my $result_text = $original_text;
 
 
@@ -568,8 +580,10 @@ sub run {
 		foreach my $char (@chars) {
 			if ( $pos == $match_start ) {
 				$self->{matched_text}->BeginTextColour(Wx::wxRED);
+				$self->{matched_text}->BeginUnderline;				
 			} elsif ( $pos == $match_end ) {
 				$self->{matched_text}->EndTextColour;
+				$self->{matched_text}->EndUnderline;
 			}
 			$self->{matched_text}->AppendText($char);
 			$pos++;

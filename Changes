@@ -54,8 +54,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       0.65+ (AZAWAWI)
     - Fix #957: Syntax Check should use perl given in Preferences (ZENOG)
     - Fix #1059: Padre 0.74 build failure on 5.8.9 (AZAWAWI)
-    - Regex editor: insert complete substitution operator, including modifiers
+    - Regex editor: insert complete substitution operator, including modifiers;
+      underline match results so that matching whitespaces are also highlighted
       (ZENOG)
+    
 
 
 0.74 2010.11.14
