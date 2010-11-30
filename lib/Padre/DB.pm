@@ -27,7 +27,7 @@ use Padre::DB::Migrate {
 
 	# Acceleration options (remove these if they cause trouble)
 	array      => 1,
-	xsaccessor => 1,
+	xsaccessor => 0, # TODO see t/62-migrate.t for explanation
 }; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults

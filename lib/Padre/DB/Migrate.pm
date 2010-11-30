@@ -131,12 +131,14 @@ sub import {
 			if ($DEBUG) {
 				print STDERR "Applying schema patch $patch...\n";
 			}
-			my $exit = system( $perl, "-I$include", $patch, $file );
-			if ( $exit == -1 ) {
-				Carp::croak("Migration patch $patch failed, database in unknown state");
-			} elsif ( $? & 127 ) {
-				Carp::croak( sprintf( "Child died with signal %d", ( $? & 127 ) ) );
-			}
+			local @ARGV = $file;
+			do $patch;
+			#my $exit = system( $perl, "-I$include", $patch, $file );
+			# if ( $exit == -1 ) {
+				# Carp::croak("Migration patch $patch failed, database in unknown state");
+			# } elsif ( $? & 127 ) {
+				# Carp::croak( sprintf( "Child died with signal %d", ( $? & 127 ) ) );
+			# }
 		}
 
 		# Migration complete, set user_version to new state
