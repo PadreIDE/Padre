@@ -372,17 +372,39 @@ sub _bind_events {
 		}
 	);
 
-
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{insert_button},
-		sub {
-			my $self = shift;
-			my $editor = $self->current->editor or return;
-			$editor->InsertText( $editor->GetCurrentPos, $self->{regex}->GetValue );
-		},
+		sub { shift->_insert_regex; },
 	);
 }
+
+#
+# A private method that inserts the current regex into the current document
+#
+sub _insert_regex {
+	my $self = shift;
+
+	my $match_part   = $self->{regex}->GetValue;
+	my $replace_part = $self->{replace}->GetValue;
+
+	my $match_modifier   = '';
+	my $replace_modifier = '';
+	my %modifiers        = $self->_modifiers();
+	foreach my $name ( keys %modifiers ) {
+		if ( $modifiers{$name}{mod} eq 'g' ) {
+			$replace_modifier .= $modifiers{$name}{mod} if $self->{$name}->IsChecked;
+		} else {
+			$match_modifier .= $modifiers{$name}{mod} if $self->{$name}->IsChecked;
+		}
+	}
+
+	my $editor = $self->current->editor or return;
+	$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$match_modifier$replace_modifier" );
+
+	return;
+}
+
 
 #
 # A private method that returns a hash of regex modifiers
@@ -670,8 +692,3 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl 5 itself.
 
 =cut
-
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.
