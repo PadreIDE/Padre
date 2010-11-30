@@ -58,6 +58,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       underline match results so that matching whitespaces are also highlighted
       (ZENOG)
     - Fix #922: Regex editor keeps first language after language change (ZENOG)
+    - Update German translation (ZENOG)
     
 
 
