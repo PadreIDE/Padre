@@ -191,6 +191,7 @@ sub search_finish {
 	my $self = shift;
 	my $task = shift;
 	my $term = $task->{search}->find_term;
+	my $dir = $task->{root};
 
 	# Display the summary
 	my $root = $self->GetRootItem;
@@ -198,14 +199,15 @@ sub search_finish {
 		$self->SetItemText(
 			$root,
 			sprintf(
-				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s)}),
+				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
 				$term,
 				$self->{matches},
-				$self->{files}
+				$self->{files},
+				$dir,
 			)
 		);
 	} else {
-		$self->SetItemText( $root, sprintf( Wx::gettext(q{No results found for '%s'}), $term ) );
+		$self->SetItemText( $root, sprintf( Wx::gettext(q{No results found for '%s' inside '%s'}), $term, $dir ) );
 	}
 
 	$self->ExpandAllChildren($root);
