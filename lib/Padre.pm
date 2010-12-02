@@ -173,6 +173,8 @@ sub run {
 	# Allow scripts to detect that they are being executed within Padre
 	local $ENV{PADRE_VERSION} = $VERSION;
 
+	TRACE("Padre->run was called version $VERSION") if DEBUG;
+
 	# Clean arguments (with a bad patch for saving URLs)
 	if (Padre::Constant::WIN32) {
 
@@ -200,6 +202,8 @@ sub run {
 		$self->plugin_manager->load_plugins;
 	}
 
+	TRACE("Plugins loaded") if DEBUG;
+
 	# Move our current dir to the user's documents directory by default
 	if (Padre::Constant::WIN32) {
 
@@ -215,12 +219,12 @@ sub run {
 	#       that are throw silent exceptions.
 	# local $SIG{__DIE__} = sub { print @_; die $_[0] };
 
-	# Kill the splash screen
+	TRACE("Kill the splash screen") if DEBUG;
 	if ($Padre::Startup::VERSION) {
 		Padre::Startup->destroy_splash;
 	}
 
-	# Process the action queue
+	TRACE("Process the action queue") if DEBUG;
 	if ( defined $self->opts->{actionqueue} ) {
 		foreach my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
 			next if $action eq ''; # Skip empty action names
@@ -234,7 +238,7 @@ sub run {
 		}
 	}
 
-	# Switch into runtime mode
+	TRACE("Switch into runtime mode") if DEBUG;
 	$self->wx->MainLoop;
 
 	# All shutdown procedures complete.
