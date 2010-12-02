@@ -253,7 +253,7 @@ sub _create_controls {
 			$m{$name}{name},
 		);
 
-		$self->{$name}->SetToolTip( new Wx::ToolTip( $m{$name}{tooltip} ) );
+		$self->{$name}->SetToolTip( Wx::ToolTip->new( $m{$name}{tooltip} ) );
 	}
 
 	# Dialog Layout
