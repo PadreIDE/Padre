@@ -50,6 +50,10 @@ use Class::XSAccessor 1.05 {
 	},
 };
 
+
+# DEBUG BAREWORD IS MISSING FROM THIS SCOPE. PLEASE FIX THIS. 
+sub DEBUG { 0 }
+
 sub import {
 	unless ( $_[1] and $_[1] eq ':everything' ) {
 		return;
