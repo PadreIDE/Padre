@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 16:36+0100\n"
+"POT-Creation-Date: 2010-12-03 11:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2344,17 +2344,17 @@ msgstr ""
 msgid "%s (%s results)"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:201
+#: lib/Padre/Wx/FindInFiles.pm:202
 #, perl-format
-msgid "Search complete, found '%s' %d time(s) in %d file(s)"
+msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:208
+#: lib/Padre/Wx/FindInFiles.pm:210
 #, perl-format
-msgid "No results found for '%s'"
+msgid "No results found for '%s' inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:303 lib/Padre/Wx/FBP/FindInFiles.pm:26
+#: lib/Padre/Wx/FindInFiles.pm:305 lib/Padre/Wx/FBP/FindInFiles.pm:26
 msgid "Find in Files"
 msgstr ""
 
@@ -4585,46 +4585,63 @@ msgstr ""
 msgid "&Result from replace:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:405
-#, perl-format
-msgid "&Ignore case (%s)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:406
-#, perl-format
-msgid "&Single-line (%s)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:407
-#, perl-format
-msgid "&Multi-line (%s)"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:408
-#, perl-format
-msgid "&Extended (%s)"
+msgid "Ignore case (&i)"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:409
-#, perl-format
-msgid "&Global (%s)"
+msgid "Case-insensitive matching"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:592
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:412
+msgid "Single-line (&s)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:413
+msgid "\".\" also matches newline"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:416
+msgid "Multi-line (&m)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:417
+msgid "\"^\" and \"$\" match the start and end of any line inside the string"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:420
+msgid "Extended (&x)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:422
+msgid ""
+"Extended regular expressions allow free formatting (whitespace is ignored) "
+"and comments"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:425
+msgid "Global (&g)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:426
+msgid "Replace all occurrences of the pattern"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:617
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:599
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:624
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:620
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:645
 msgid "No match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:631
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:656
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""

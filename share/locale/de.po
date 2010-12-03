@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 16:36+0100\n"
+"POT-Creation-Date: 2010-12-03 11:22+0100\n"
 "PO-Revision-Date: 2010-07-18 16:32+0100\n"
 "Last-Translator: Zeno Gantner\n"
 "Language-Team: German\n"
@@ -2433,17 +2433,17 @@ msgstr "Suche nach '%s' in '%s' fehlgeschlagen..."
 msgid "%s (%s results)"
 msgstr "%s (%s Treffer)"
 
-#: lib/Padre/Wx/FindInFiles.pm:201
+#: lib/Padre/Wx/FindInFiles.pm:202
 #, perl-format
-msgid "Search complete, found '%s' %d time(s) in %d file(s)"
-msgstr "Suche abgeschlossen, '%s' wurde %d Mal in %d Datei(en) gefunden"
+msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
+msgstr "Suche abgeschlossen, '%s' wurde %d Mal in %d Datei(en) in '%s' gefunden"
 
-#: lib/Padre/Wx/FindInFiles.pm:208
+#: lib/Padre/Wx/FindInFiles.pm:210
 #, perl-format
-msgid "No results found for '%s'"
-msgstr "'%s' nicht gefunden"
+msgid "No results found for '%s' inside '%s'"
+msgstr "'%s' in '%s' nicht gefunden"
 
-#: lib/Padre/Wx/FindInFiles.pm:303 lib/Padre/Wx/FBP/FindInFiles.pm:26
+#: lib/Padre/Wx/FindInFiles.pm:305 lib/Padre/Wx/FBP/FindInFiles.pm:26
 msgid "Find in Files"
 msgstr "In Dateien suchen"
 
@@ -2543,7 +2543,7 @@ msgstr "%d Problem(e) gefunden"
 
 #: lib/Padre/Wx/Syntax.pm:377
 #, perl-format
-msgid  "Line %d:   (%s)   %s"
+msgid "Line %d:   (%s)   %s"
 msgstr "Zeile %d:  (%s)   %s"
 
 #: lib/Padre/Wx/Left.pm:52
@@ -4495,7 +4495,7 @@ msgstr "&Zeichenklassen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any character except a newline"
-msgstr "Jedes Zeichen außer Newline"
+msgstr "Jedes Zeichen außer Zeilenumbruch"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:73
 msgid "Any decimal digit"
@@ -4697,47 +4697,64 @@ msgstr "&Gefundener Text:"
 msgid "&Result from replace:"
 msgstr "&Ergebnis der Ersetzung:"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:405
-#, perl-format
-msgid "&Ignore case (%s)"
-msgstr "Groß-/Kleinschreibung &ignorieren (%s)"
-
-# perl-format
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:406
-#, perl-format
-msgid "&Single-line (%s)"
-msgstr "Ein&zeilig (%s)"
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:407
-#, perl-format
-msgid "&Multi-line (%s)"
-msgstr "&Mehrzeilig (%s)"
-
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:408
-#, perl-format
-msgid "&Extended (%s)"
-msgstr "&Erweitert (%s)"
+msgid "Ignore case (&i)"
+msgstr "Groß-/Kleinschreibung ignorieren (&i)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:409
-#, perl-format
-msgid "&Global (%s)"
-msgstr "&Global (%s)"
+msgid "Case-insensitive matching"
+msgstr "Ignoriere Groß-/Kleinschreibung bei der Mustersuche"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:592
+# perl-format
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:412
+msgid "Single-line (&s)"
+msgstr "Einzeilig (&s)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:413
+msgid "\".\" also matches newline"
+msgstr "\".\" steht auch für Zeilenumbrüche"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:416
+msgid "Multi-line (&m)"
+msgstr "Mehrzeilig (&m)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:417
+msgid "\"^\" and \"$\" match the start and end of any line inside the string"
+msgstr "\"^\" und \"$\" finden den Anfang und das Ende jeder Zeile innerhalb der Zeichenkette"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:420
+msgid "Extended (&x)"
+msgstr "Erweitert (&x)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:422
+msgid ""
+"Extended regular expressions allow free formatting (whitespace is ignored) "
+"and comments"
+msgstr "Erweiterte reguläre Ausdrücke unterstützen freie Formatierung (Leerzeichen und Zeilenumbrüche werden ignoriert) sowie Kommentare"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:425
+msgid "Global (&g)"
+msgstr "Global (&g)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:426
+msgid "Replace all occurrences of the pattern"
+msgstr "Ersetze alle Vorkommen des Musters"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:617
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr "Keine Übereinstimmung in %s: %s"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:599
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:624
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr "Warnung in %s: %s"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:620
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:645
 msgid "No match"
 msgstr "Nichts gefunden"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:631
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:656
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr "Ersetzung fehlgeschlagen in %s: %s"
