@@ -31,6 +31,7 @@ our $VERSION = '0.75';
 use Padre::Constant ();
 use Padre::Config   ();
 use Padre::DB       ();
+use Padre::Logger;
 
 # Generate faster accessors
 use Class::XSAccessor 1.05 {
@@ -50,9 +51,6 @@ use Class::XSAccessor 1.05 {
 	},
 };
 
-
-# DEBUG BAREWORD IS MISSING FROM THIS SCOPE. PLEASE FIX THIS. 
-sub DEBUG { 0 }
 
 sub import {
 	unless ( $_[1] and $_[1] eq ':everything' ) {
