@@ -152,7 +152,7 @@ requires 'Win32::API'               => '0.58' if win32;
 requires 'Win32::Shortcut'          => '0.07' if win32;
 requires 'Win32::TieRegistry'       => '0.26' if win32;
 requires 'Wx'                       => ( win32 and $] >= 5.01 ) ? '0.94' : '0.91';
-requires 'Wx::Perl::ProcessStream'  => '0.25';
+requires 'Wx::Perl::ProcessStream'  => '0.29';
 requires 'YAML::Tiny'               => '1.32';
 test_requires 'Capture::Tiny'       => '0.06';
 test_requires 'Test::More'          => '0.88';
