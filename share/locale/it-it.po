@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 16:36+0100\n"
+"POT-Creation-Date: 2010-12-03 11:22+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simone Blandino <simone.blandino@gmail.com>\n"
 "Language-Team:  <simone.blandino@gmail.com>\n"
@@ -2335,17 +2335,17 @@ msgstr "Ricerca di '%s' in '%s'..."
 msgid "%s (%s results)"
 msgstr "%s (risultati %s)"
 
-#: lib/Padre/Wx/FindInFiles.pm:201
+#: lib/Padre/Wx/FindInFiles.pm:202
 #, perl-format
-msgid "Search complete, found '%s' %d time(s) in %d file(s)"
-msgstr "Ricerca completata, '%s' trovato %d volta(e) in %d file"
+msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
+msgstr "Ricerca completata, '%s' trovato %d volta(e) in %d file in '%s'"
 
-#: lib/Padre/Wx/FindInFiles.pm:208
+#: lib/Padre/Wx/FindInFiles.pm:210
 #, perl-format
-msgid "No results found for '%s'"
-msgstr "Nessun risultato trovato per '%s'"
+msgid "No results found for '%s' inside '%s'"
+msgstr "Nessun risultato trovato per '%s' in '%s'"
 
-#: lib/Padre/Wx/FindInFiles.pm:303
+#: lib/Padre/Wx/FindInFiles.pm:305
 #: lib/Padre/Wx/FBP/FindInFiles.pm:26
 msgid "Find in Files"
 msgstr "Trova nei file"
@@ -4664,46 +4664,61 @@ msgstr "&Testo corrispondente"
 msgid "&Result from replace:"
 msgstr "&risultato della sostituzione"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:405
-#, perl-format
-msgid "&Ignore case (%s)"
-msgstr "Ignora maiuscole/minuscole (%s)"
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:406
-#, perl-format
-msgid "&Single-line (%s)"
-msgstr "Riga singola (%s)"
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:407
-#, perl-format
-msgid "&Multi-line (%s)"
-msgstr "Multi-riga (%s)"
-
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:408
-#, perl-format
-msgid "&Extended (%s)"
-msgstr "&Esteso (%s)"
+msgid "Ignore case (&i)"
+msgstr "Ignora maiuscole/minuscole (&i)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:409
-#, perl-format
-msgid "&Global (%s)"
-msgstr "&Globale (%s)"
+msgid "Case-insensitive matching"
+msgstr "Corrispondenza non sensibile alla capitalizzazione"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:592
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:412
+msgid "Single-line (&s)"
+msgstr "Riga singola (&s)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:413
+msgid "\".\" also matches newline"
+msgstr "\".\" corrisponde anche col fine riga"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:416
+msgid "Multi-line (&m)"
+msgstr "Multi-riga (&m)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:417
+msgid "\"^\" and \"$\" match the start and end of any line inside the string"
+msgstr "\"^\" e \"$\" corrispondono all'inizio e alla fine di qualsiasi riga nella stringa"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:420
+msgid "Extended (&x)"
+msgstr "&Esteso (&x)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:422
+msgid "Extended regular expressions allow free formatting (whitespace is ignored) and comments"
+msgstr "Le espressioni regolari consentono la formattazione libera (gli spazi vuoti vengono ignorati) e i commenti"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:425
+msgid "Global (&g)"
+msgstr "Globale (&g)"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:426
+msgid "Replace all occurrences of the pattern"
+msgstr "Sostituisci tutte le occorrenze dell'espressione"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:617
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr "Errore nella corrispondenza %s: %s"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:599
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:624
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr "Warning nella corrispondenza %s: %s"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:620
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:645
 msgid "No match"
 msgstr "Nessuna corrispondenza"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:631
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:656
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr "Errore nella sostituzione %s: %s"
@@ -6133,9 +6148,6 @@ msgstr "Scrittura del file sul server FTP..."
 
 #~ msgid "Use PPI for Perl5 syntax highlighting"
 #~ msgstr "Usa PPI per l'evidenziazione sintassi Perl5"
-
-#~ msgid "Case insensitive"
-#~ msgstr "Ignora maiuscole/minuscole"
 
 #~ msgid "Use regex"
 #~ msgstr "Usa espressioni regolari"
