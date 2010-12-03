@@ -147,6 +147,7 @@ sub import {
 		$dbh->disconnect;
 	}
 
+	local $SIG{__WARN__} = sub { return if $_[0] =~ /Subroutine \w+ redefined at/; warn $_[0] };
 	# Hand off to the regular constructor
 	$class->SUPER::import(
 		\%params,
