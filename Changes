@@ -60,8 +60,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       require if not necessary) (ZENOG)
     - Fix #922: Regex editor keeps first language after language change (ZENOG)
     - Update German translation (ZENOG)
-    
-
+    - Fix #1064: Build failures on Padre 0.74 Perl 5.8.9 (AZAWAWI, ADAMK, MDOOTSON)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
