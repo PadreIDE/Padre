@@ -63,6 +63,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #922: Regex editor keeps first language after language change (ZENOG)
     - Update German translation (ZENOG)
     - Fix #1064: Build failures on Padre 0.74 Perl 5.8.9 (AZAWAWI, ADAMK, MDOOTSON)
+    - Added feature_restart_hung_task_manager configuration setting to enable
+      automatic restart of the currently hung task manager. This is enabled by
+      default (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

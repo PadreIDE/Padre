@@ -27,9 +27,9 @@ sub new {
 	my %param   = @_;
 	my $conduit = delete $param{conduit};
 	my $self    = bless {
-		active  => 0, # Are we running at the moment
-		threads => 1, # Are threads enabled
-		minimum => 0, # Workers to launch at startup
+		active  => 0,  # Are we running at the moment
+		threads => 1,  # Are threads enabled
+		minimum => 0,  # Workers to launch at startup
 		maximum => 10, # The most workers we should use
 		%param,
 		workers => [], # List of all workers
@@ -203,14 +203,16 @@ sub step {
 	# Shortcut if there is nowhere to run the task
 	if ( $self->{threads} ) {
 		if ( scalar keys %$handles >= $self->{maximum} ) {
-			if($self->main->config->feature_restart_hung_task_manager) {
+			if ( $self->main->config->feature_restart_hung_task_manager ) {
+
 				# Restart hung task manager!
 				TRACE('PANIC: Restarting task manager') if DEBUG;
 				$self->stop;
 				$self->start;
 			} else {
+
 				# Ignore the problem and hope the user does not notice :)
-				TRACE('No more task handles available. Sorry' if DEBUG;
+				TRACE('No more task handles available. Sorry') if DEBUG;
 				return 1;
 			}
 		}
