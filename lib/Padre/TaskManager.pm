@@ -93,6 +93,11 @@ sub stop {
 		}
 		Padre::TaskThread->master->stop;
 	}
+
+	# Empty task handles
+	# TODO: is this the right way of doing it?
+	$self->{handles} = {};
+
 	return 1;
 }
 
@@ -198,6 +203,10 @@ sub step {
 	# Shortcut if there is nowhere to run the task
 	if ( $self->{threads} ) {
 		if ( scalar keys %$handles >= $self->{maximum} ) {
+			# PANIC: Restart task manager!
+			TRACE('PANIC: Restarting task manager') if DEBUG;
+			$self->stop;
+			$self->start;
 			return 1;
 		}
 	}
