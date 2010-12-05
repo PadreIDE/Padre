@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: he\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-04 10:17+0200\n"
-"PO-Revision-Date: 2010-12-04 12:17+0200\n"
+"PO-Revision-Date: 2010-12-05 09:33+0200\n"
 "Last-Translator: Uri Bruck <>\n"
 "Language-Team: American English <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -3636,7 +3636,6 @@ msgid "Use Tabs"
 msgstr "השתמש בטאבים"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:267
-#, fuzzy
 msgid "Tab display size (in spaces):"
 msgstr "רוחב תצוגת טאב (ברווחים)"
 
@@ -3713,17 +3712,15 @@ msgid "Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:360
-#, fuzzy
 msgid "Autocomplete brackets"
-msgstr "השלמה אוטומטית\tCtrl-P"
+msgstr "השלמת סוגרים אוטומטית\tCtrl-P"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:368
-#, fuzzy
 msgid ""
 "Add another closing bracket if there is already one (and the 'Autocomplete "
 "brackets' above is enabled)"
 msgstr ""
-"יש להוסיף עוד סוגר אם כבר יש אחד (והאפשרות auto-bracket-function מופעלת)"
+"יש להוסיף עוד סוגר אם כבר יש אחד (והאפשרות השלמת סוגרים אוטומטית מופעלת)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:376
 msgid "Enable Smart highlighting while typing"
@@ -4115,9 +4112,8 @@ msgid "none"
 msgstr "אין"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:16 lib/Padre/Wx/Dialog/ModuleStart.pm:36
-#, fuzzy
 msgid "Apache License"
-msgstr "רישיון:"
+msgstr "רישיון Apache"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:17 lib/Padre/Wx/Dialog/ModuleStart.pm:37
 msgid "Artistic License 1.0"
@@ -4140,18 +4136,16 @@ msgid "LGPL 2.1 or later"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
-#, fuzzy
 msgid "MIT License"
-msgstr "רישיון:"
+msgstr "רישיון MIT"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:23 lib/Padre/Wx/Dialog/ModuleStart.pm:43
 msgid "Mozilla Public License"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:24 lib/Padre/Wx/Dialog/ModuleStart.pm:44
-#, fuzzy
 msgid "Open Source"
-msgstr "לפתוח משאב"
+msgstr "קוד פתוח"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:25 lib/Padre/Wx/Dialog/ModuleStart.pm:45
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:113
@@ -4176,7 +4170,6 @@ msgid "Author:"
 msgstr "מאת:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:61
-#, fuzzy
 msgid "Email Address:"
 msgstr "דואר אלקטרוני:"
 
@@ -4279,19 +4272,16 @@ msgid "Shortcut"
 msgstr "קיצור דרך"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:35
-#, fuzzy
 msgid "Window list"
-msgstr "כותרת החלון:"
+msgstr "רשימת חלונות"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:211
-#, fuzzy
 msgid "List of open files"
-msgstr "אין קבצים פתוחים:"
+msgstr "רשימת קבצים פתוחים"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:225
-#, fuzzy
 msgid "Editor"
-msgstr "ערוך"
+msgstr "עורך"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Disk"
@@ -4496,9 +4486,8 @@ msgid "Beginning of line"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
-#, fuzzy
 msgid "End of line"
-msgstr "שורת הפקודה"
+msgstr "סוף שורה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:118
 msgid "A word boundary"
@@ -4509,9 +4498,8 @@ msgid "Not a word boundary"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:120
-#, fuzzy
 msgid "A comment"
-msgstr "אין מסמך "
+msgstr "הערה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:124
 msgid "&Grouping constructs"
@@ -4546,17 +4534,14 @@ msgid "Backreference to the nth group"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:144
-#, fuzzy
 msgid "&Regular expression:"
 msgstr "ביטוי רגולרי"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:191
-#, fuzzy
 msgid "Show &Description"
-msgstr "תיאור"
+msgstr "הצג תיאור"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:204
-#, fuzzy
 msgid "&Replace text with:"
 msgstr "החלף ב:"
 
@@ -4580,37 +4565,32 @@ msgid "&Insert"
 msgstr "הכנס"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:408
-#, fuzzy
 msgid "Ignore case (&i)"
-msgstr "התעלם ממצב רישיות (%s)"
+msgstr "התעלם ממצב רישיות "
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:409
-#, fuzzy
 msgid "Case-insensitive matching"
-msgstr "לא תלוי רישיות"
+msgstr "התאמה לא תלויה ברישיות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:412
-#, fuzzy
 msgid "Single-line (&s)"
-msgstr "שורה בודדת (%s)"
+msgstr "שורה בודדת "
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:413
 msgid "\".\" also matches newline"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:416
-#, fuzzy
 msgid "Multi-line (&m)"
-msgstr "שורות מרובות(%s)"
+msgstr "שורות מרובות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:417
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:420
-#, fuzzy
 msgid "Extended (&x)"
-msgstr "מורחב (%s)"
+msgstr "מורחב"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:422
 msgid ""
@@ -4637,7 +4617,6 @@ msgid "Match warning in %s:  %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:645
-#, fuzzy
 msgid "No match"
 msgstr "לא נמצאו התאמות"
 
@@ -4647,9 +4626,8 @@ msgid "Replace failure in %s:  %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Sync.pm:43 lib/Padre/Wx/FBP/Sync.pm:25
-#, fuzzy
 msgid "Padre Sync"
-msgstr "Padre"
+msgstr " סינכרון Padre"
 
 #: lib/Padre/Wx/Dialog/Sync.pm:468 lib/Padre/Wx/Dialog/Sync2.pm:88
 msgid "Please input a valid value for both username and password"
@@ -4680,23 +4658,20 @@ msgid "Today"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:18
-#, fuzzy
 msgid "Year"
-msgstr "חפש"
+msgstr "שנה"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:19
 msgid "Epoch"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:22
-#, fuzzy
 msgid "Size"
-msgstr "גודל גופן"
+msgstr "גודל "
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:30
-#, fuzzy
 msgid "Number of lines"
-msgstr "מספר מינימלי של מודולים"
+msgstr "מספר שורות"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
 msgid "Class:"
@@ -4785,23 +4760,22 @@ msgstr "סוג תוכן: %s"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
 #: lib/Padre/Wx/Dialog/Goto.pm:226 lib/Padre/Wx/Dialog/Goto.pm:245
-#, fuzzy
 msgid "Line number"
-msgstr "הצג מספרי שורות"
+msgstr "מספר שורה"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:230
 msgid "Character position"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Goto.pm:228
-#, fuzzy, perl-format
+#, perl-format
 msgid "&Enter a line number between 1 and %s:"
-msgstr "מספר שורה בין (1-%s):"
+msgstr "הכנס מספר שורה בין (1-%s):"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:229
-#, fuzzy, perl-format
+#, perl-format
 msgid "Current line number: %s"
-msgstr "מסמך נוכחי: %s"
+msgstr "מספר שורה נוכחית: %s"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:232
 #, perl-format
@@ -4809,14 +4783,13 @@ msgid "&Enter a position between 1 and %s:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Goto.pm:233
-#, fuzzy, perl-format
+#, perl-format
 msgid "Current position: %s"
-msgstr "מסמך נוכחי: %s"
+msgstr "מיקום נוכחי: %s"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:257
-#, fuzzy
 msgid "Not a positive number!"
-msgstr "לך אל שורה מספר "
+msgstr "לא מספר חיובי! "
 
 #: lib/Padre/Wx/Dialog/Goto.pm:266
 msgid "Out of range!"
@@ -4884,14 +4857,13 @@ msgid "Whatever"
 msgstr "כלשהו"
 
 #: lib/Padre/Wx/Dialog/Wizard/Select.pm:17
-#, fuzzy
 msgid "Select a Wizard"
-msgstr "בחר הכול"
+msgstr "בחר אשף"
 
 #: lib/Padre/Wx/Dialog/Wizard/Select.pm:126
-#, fuzzy, perl-format
+#, perl-format
 msgid "Error while loading %s"
-msgstr "שגיאה בקריאה ל- %s"
+msgstr "שגיאה בעת טעינת ל- %s"
 
 #: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:15
 msgid "Creates a Padre Plugin"
@@ -4902,9 +4874,8 @@ msgid "Padre Plugin Wizard"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:15
-#, fuzzy
 msgid "Creates a Padre document"
-msgstr "לא מסמך Perl"
+msgstr "יוצר מסמך Padre"
 
 #: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:16
 msgid "Padre Document Wizard"
@@ -4915,9 +4886,8 @@ msgid "Creates a Perl 5 module or script"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:18
-#, fuzzy
 msgid "Perl 5 Module Wizard"
-msgstr "מודול Perl 5"
+msgstr "אשף מודול Perl 5"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
 msgid "Autocomplete always while typing"
@@ -4965,7 +4935,6 @@ msgid "Where did you hear about Padre?"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/WhereFrom.pm:54
-#, fuzzy
 msgid "OK"
 msgstr "אישור"
 
@@ -4974,9 +4943,8 @@ msgid "Skip question without giving feedback"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:34
-#, fuzzy
 msgid "Server"
-msgstr "שמור"
+msgstr "שרת"
 
 #: lib/Padre/Wx/FBP/Sync.pm:54
 msgid "Logged out"
@@ -4996,14 +4964,12 @@ msgid "Login"
 msgstr "שורה:"
 
 #: lib/Padre/Wx/FBP/Sync.pm:139 lib/Padre/Wx/FBP/Sync.pm:167
-#, fuzzy
 msgid "Confirm"
-msgstr "תיקיית הגדרות:"
+msgstr "אישור"
 
 #: lib/Padre/Wx/FBP/Sync.pm:153
-#, fuzzy
 msgid "Email"
-msgstr "דואר אלקטרוני:"
+msgstr "דואר אלקטרוני"
 
 #: lib/Padre/Wx/FBP/Sync.pm:181
 #, fuzzy
@@ -5050,12 +5016,10 @@ msgid "Search in Types:"
 msgstr "חיפוש והחלפה"
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:100
-#, fuzzy
 msgid "Regular Expression"
 msgstr "ביטוי רגולרי"
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:108
-#, fuzzy
 msgid "Case Sensitive"
 msgstr " תלוי רישיות"
 
@@ -5064,9 +5028,8 @@ msgid "Message"
 msgstr "מסר"
 
 #: lib/Padre/Wx/Role/Dialog.pm:92
-#, fuzzy
 msgid "Unknown error from "
-msgstr "שגיאה לא ידועה"
+msgstr "שגיאה לא ידועה מ-"
 
 #: lib/Padre/Wx/Debugger/View.pm:59
 msgid "Debugger"
@@ -5093,9 +5056,8 @@ msgid "Notepad++"
 msgstr "Notepad++"
 
 #: lib/Padre/Document/Perl.pm:493
-#, fuzzy
 msgid "Error: "
-msgstr "שגיאה: %s"
+msgstr "שגיאה:"
 
 #: lib/Padre/Document/Perl.pm:495
 msgid "No errors found."
@@ -5137,19 +5099,16 @@ msgstr "ה-'%s' הנוכחי לא נמצא"
 
 #: lib/Padre/Document/Perl.pm:883 lib/Padre/Document/Perl.pm:933
 #: lib/Padre/Document/Perl.pm:971
-#, fuzzy
 msgid "Current cursor does not seem to point at a variable."
 msgstr "לא נראה שהסמן מצביע על משתנה"
 
 #: lib/Padre/Document/Perl.pm:884 lib/Padre/Document/Perl.pm:894
-#, fuzzy
 msgid "Rename variable"
-msgstr "החלף משתנה באופן תחבירי"
+msgstr "החלף שם משתנה"
 
 #: lib/Padre/Document/Perl.pm:893
-#, fuzzy
 msgid "New name"
-msgstr "שם"
+msgstr "שם חדש"
 
 #: lib/Padre/Document/Perl.pm:934
 #, fuzzy
@@ -5157,9 +5116,8 @@ msgid "Variable case change"
 msgstr "שם משתנה"
 
 #: lib/Padre/Document/Perl.pm:973
-#, fuzzy
 msgid "No declaration could be found for the specified (lexical?) variable."
-msgstr "לא מצאתי הצהרה למשתנה (הלקסיקלי?) שבוקש"
+msgstr "לא נמצאה הצהרה למשתנה (הלקסיקלי?) שבוקש"
 
 #: lib/Padre/Document/Perl.pm:979 lib/Padre/Document/Perl.pm:1028
 msgid "Replace Operation Canceled"
