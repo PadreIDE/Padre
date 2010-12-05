@@ -1102,7 +1102,7 @@ setting(
 	name    => 'feature_wizard_selector',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 1,
+	default => 0,
 );
 setting(
 	name    => 'feature_quick_fix',

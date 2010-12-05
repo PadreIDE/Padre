@@ -10,7 +10,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Find in Files results panel now uses a tree instead of a text area and
       clicking n a result opens the file at the specified line number
       as expected (AZAWAWI)
-    - Enabled the Padre Wizard API and Wizard selector dialog (AZAWAWI)
+    - Updated the experimental Padre wizard API and integrated it with the
+      wizard selector dialog. This is still disabled by default and can be
+      enabled by the 'feature_wizard_selector' configuration setting (AZAWAWI)
     - Fix the bug of lost user selection when searching a big project directory
       and typing fast in "Open Resource" dialog (AZAWAWI)
     - Fixed "Open Resource" and "Quick Menu Access" dialogs to display recently-
