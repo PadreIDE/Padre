@@ -66,6 +66,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Added feature_restart_hung_task_manager configuration setting to enable
       automatic restart of the currently hung task manager. This is enabled by
       default (AZAWAWI)
+    - Fix #1068: Padre Task manager fails to run tasks after stress testing it
+      (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

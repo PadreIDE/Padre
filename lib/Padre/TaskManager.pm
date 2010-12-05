@@ -27,9 +27,9 @@ sub new {
 	my %param   = @_;
 	my $conduit = delete $param{conduit};
 	my $self    = bless {
-		active  => 0,  # Are we running at the moment
-		threads => 1,  # Are threads enabled
-		minimum => 0,  # Workers to launch at startup
+		active  => 0, # Are we running at the moment
+		threads => 1, # Are threads enabled
+		minimum => 0, # Workers to launch at startup
 		maximum => 5, # The most workers we should use
 		%param,
 		workers => [], # List of all workers
