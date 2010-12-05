@@ -30,7 +30,7 @@ sub new {
 		active  => 0, # Are we running at the moment
 		threads => 1, # Are threads enabled
 		minimum => 0, # Workers to launch at startup
-		maximum => 3, # The most workers we should use
+		maximum => 10, # The most workers we should use
 		%param,
 		workers => [], # List of all workers
 		handles => {}, # Handles for all active tasks
