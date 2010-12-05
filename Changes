@@ -62,6 +62,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       require if not necessary) (ZENOG)
     - Fix #922: Regex editor keeps first language after language change (ZENOG)
     - Update German translation (ZENOG)
+    - Update Italian translation (SBLANDIN)
     - Fix #1064: Build failures on Padre 0.74 Perl 5.8.9 (AZAWAWI, ADAMK, MDOOTSON)
     - Added feature_restart_hung_task_manager configuration setting to enable
       automatic restart of the currently hung task manager. This is enabled by
