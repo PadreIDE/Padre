@@ -53,13 +53,13 @@ sub DESTROY {
 	my $locker = shift @{ $_[0] } or return;
 	foreach ( @{ $_[0] } ) {
 		if ( $_ eq 'UPDATE' ) {
-			$locker->update_decrement;
+			$locker->update_decrement if $locker->can('update_decrement');
 		} elsif ( $_ eq 'DB' ) {
 			$locker->db_decrement;
 		} elsif ( $_ eq 'BUSY' ) {
 			$locker->busy_decrement;
 		} else {
-			$locker->method_decrement($_);
+			$locker->method_decrement($_) if $locker->can('method_decrement');
 		}
 	}
 }
