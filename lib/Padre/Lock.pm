@@ -55,9 +55,9 @@ sub DESTROY {
 		if ( $_ eq 'UPDATE' ) {
 			$locker->update_decrement if $locker->can('update_decrement');
 		} elsif ( $_ eq 'DB' ) {
-			$locker->db_decrement;
+			$locker->db_decrement if $locker->can('db_decrement');
 		} elsif ( $_ eq 'BUSY' ) {
-			$locker->busy_decrement;
+			$locker->busy_decrement if $locker->can('busy_decrement');
 		} else {
 			$locker->method_decrement($_) if $locker->can('method_decrement');
 		}
