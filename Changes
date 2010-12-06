@@ -73,6 +73,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       (AZAWAWI)
     - No more redirecting words under the cursor that are Perl symbols to
       perldata help topic (AZAWAWI)
+    - Changes or Changelog files are now detected as text instead of CSS files
+      (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)

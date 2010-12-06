@@ -681,6 +681,7 @@ sub guess_mimetype {
 		my $basename = File::Basename::basename($filename);
 		if ($basename) {
 			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+			return 'text/plain' if $basename =~ /^(changes|changelog)/i;
 		}
 	}
 
