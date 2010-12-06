@@ -1167,7 +1167,7 @@ Sebastian Willing (SEWI)
 
 Steffen Müller (TSEE) E<lt>smueller@cpan.orgE<gt>
 
-Zeno Gantner
+Zeno Gantner (ZENOG)
 
 =head2 Translators
 
@@ -1205,7 +1205,7 @@ Heiko Jansen (HJANSEN)
 
 Sebastian Willing (SEWI)
 
-Zeno Gantner
+Zeno Gantner (ZENOG)
 
 =head3 Hebrew
 
