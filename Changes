@@ -75,6 +75,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       perldata help topic (AZAWAWI)
     - Changes or Changelog files are now detected as text instead of CSS files
       (AZAWAWI)
+    - In F2 help search, core module since-Perl-version string is now a v-string
+      (e.g. v5.8.9 instead of v5.008009) (AZAWAWI)
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
