@@ -235,7 +235,7 @@ sub _setup_events {
 	Wx::Event::EVT_HTML_LINK_CLICKED(
 		$self,
 		$self->_help_viewer,
-		\&on_link_clicked,
+		\&_on_link_clicked,
 	);
 
 
@@ -258,7 +258,7 @@ sub show {
 
 	if ( not $self->IsShown ) {
 		if ( not $topic ) {
-			$topic = $self->find_help_topic || '';
+			$topic = $self->_find_help_topic || '';
 		}
 		$self->_topic($topic);
 		$self->_search_text->ChangeValue( $self->_topic );
@@ -332,7 +332,7 @@ sub _search {
 #
 # Returns the selected or under the cursor help topic
 #
-sub find_help_topic {
+sub _find_help_topic {
 	my $self = shift;
 
 	my $doc = Padre::Current->document;
@@ -402,13 +402,13 @@ sub _update_list_box {
 # Called when the user clicks a link in the
 # help viewer HTML window
 #
-sub on_link_clicked {
+sub _on_link_clicked {
 	my $self = shift;
 	require URI;
 	my $uri      = URI->new( $_[0]->GetLinkInfo->GetHref );
 	my $linkinfo = $_[0]->GetLinkInfo;
 	my $scheme   = $uri->scheme;
-	if ( $scheme eq 'perldoc' ) {
+	if ( defined($scheme) and $scheme eq 'perldoc' ) {
 
 		# handle 'perldoc' links
 		my $topic = $uri->path;
