@@ -123,8 +123,6 @@ sub new {
 	# the previous size is completely suspect.
 	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
-		$size     = [ -1, -1 ];
-		$position = [ -1, -1 ];
 	}
 
 	# Generate a smarter default size than Wx does
@@ -3260,8 +3258,6 @@ sub on_close_window {
 	# Save the window geometry
 	#$config->set( main_auilayout => $self->aui->SavePerspective );
 	$config->set( main_maximized => $self->IsMaximized ? 1 : 0 );
-
-	# Don't save the maximized window size
 	unless ( $self->IsMaximized ) {
 		my ( $main_width, $main_height ) = $self->GetSizeWH;
 		my ( $main_left,  $main_top )    = $self->GetPositionXY;
