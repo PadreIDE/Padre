@@ -363,7 +363,8 @@ sub render {
 	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @$model ) {
 
 		if ( not exists $issue->{type} ) {
-			warn "Cannot handle issue:\n" . Data::Dumper::Dumper($issue) . "\n";
+			require Data::Dumper;
+			TRACE( "Cannot handle issue:\n" . Data::Dumper::Dumper($issue) ) if DEBUG;
 			next ISSUE;
 		}
 
