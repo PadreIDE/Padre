@@ -7,7 +7,7 @@ use Padre::Wx                     ();
 use Padre::Wx::TreeCtrl           ();
 use Padre::Wx::Dialog::WizardPage ();
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
 # Initialize the page

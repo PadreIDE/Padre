@@ -32,7 +32,7 @@ use Padre::Util     ();
 use Padre::Current  ();
 use Padre::Constant ();
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 
 
 

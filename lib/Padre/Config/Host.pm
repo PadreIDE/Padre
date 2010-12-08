@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Current ();
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 
 # -- constructors
 

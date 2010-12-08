@@ -13,7 +13,7 @@ use Class::Adapter::Builder
 	NEW      => 'Wx::Menu',
 	AUTOLOAD => 'PUBLIC';
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 
 use Class::XSAccessor {
 	getters => {

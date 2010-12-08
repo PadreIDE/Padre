@@ -53,7 +53,7 @@ use Class::XSAccessor {
 	}
 };
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::StatusBar

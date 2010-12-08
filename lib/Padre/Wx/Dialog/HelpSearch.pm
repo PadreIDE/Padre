@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # package exports and version
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 our @ISA     = 'Wx::Dialog';
 
 # module imports

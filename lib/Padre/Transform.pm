@@ -23,7 +23,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION = '0.76';
+our $VERSION = '0.77';
 
 #####################################################################
 # Constructor
