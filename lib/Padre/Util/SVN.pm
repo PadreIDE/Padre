@@ -8,7 +8,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = '0.75';
+our $VERSION = '0.76';
 
 my $PADRE = undef;
 

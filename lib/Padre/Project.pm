@@ -8,7 +8,7 @@ use warnings;
 use File::Spec   ();
 use Padre::Cache ();
 
-our $VERSION = '0.75';
+our $VERSION = '0.76';
 
 
 
