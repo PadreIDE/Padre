@@ -130,25 +130,25 @@ BEGIN {
 
 sub DISTRO {
 	return $DISTRO if defined($DISTRO);
-	
+
 	if (WIN32) {
 		$DISTRO = 'WIN';
-	}
-	elsif (MAC) {
+	} elsif (MAC) {
 		$DISTRO = 'MAC';
 	} else {
+
 		# Try to identify the distro
-		if (open my $lsb_file,'<','/etc/lsb-release') {
+		if ( open my $lsb_file, '<', '/etc/lsb-release' ) {
 			while (<$lsb_file>) {
 				next unless /^DISTRIB_ID\=(.+?)[\r\n]/;
-				if ($1 eq 'Ubuntu') {
+				if ( $1 eq 'Ubuntu' ) {
 					$DISTRO = 'UBUNTU';
 				}
 				last;
 			}
 		}
 	}
-	
+
 	$DISTRO ||= 'UNKNOWN';
 
 	return $DISTRO if defined($DISTRO);

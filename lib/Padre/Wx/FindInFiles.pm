@@ -191,7 +191,7 @@ sub search_finish {
 	my $self = shift;
 	my $task = shift;
 	my $term = $task->{search}->find_term;
-	my $dir = $task->{root};
+	my $dir  = $task->{root};
 
 	# Display the summary
 	my $root = $self->GetRootItem;

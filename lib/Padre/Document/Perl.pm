@@ -1987,20 +1987,20 @@ sub find_help_topic {
 
 	return $token->content if defined($token);
 
-#TODO enable once we figure out what we actually need to accomplish here :)
-#	if ($token) {
-#
-#		#print $token->class . "\n";
-#		if ( $token->isa('PPI::Token::Symbol') ) {
-#			if ( $token->content =~ /^[\$\@\%].+?$/ ) {
-#				return 'perldata';
-#			}
-#		} elsif ( $token->isa('PPI::Token::Operator') ) {
-#			return $token->content;
-#		}
-#	}
-# 
-# 	return;
+	#TODO enable once we figure out what we actually need to accomplish here :)
+	#	if ($token) {
+	#
+	#		#print $token->class . "\n";
+	#		if ( $token->isa('PPI::Token::Symbol') ) {
+	#			if ( $token->content =~ /^[\$\@\%].+?$/ ) {
+	#				return 'perldata';
+	#			}
+	#		} elsif ( $token->isa('PPI::Token::Operator') ) {
+	#			return $token->content;
+	#		}
+	#	}
+	#
+	# 	return;
 }
 
 

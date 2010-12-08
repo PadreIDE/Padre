@@ -297,8 +297,9 @@ sub help_render {
 		# Append the module's release date to the topic
 		require Module::CoreList;
 		my $version = Module::CoreList->first_release_by_date($topic);
-		my $since_version = $version
-			? sprintf( Wx::gettext('(Since Perl %s)'), $self->_format_perl_version($version) ) 
+		my $since_version =
+			$version
+			? sprintf( Wx::gettext('(Since Perl %s)'), $self->_format_perl_version($version) )
 			: '';
 		my $deprecated =
 			( Module::CoreList->can('is_deprecated') && Module::CoreList::is_deprecated($topic) )
@@ -334,7 +335,7 @@ sub help_render {
 # a bit for clarity.
 # Returns Perl v-string from an old-style numerical Perl version
 sub _format_perl_version {
-	my ($self, $version) = @_;
+	my ( $self, $version ) = @_;
 	return $version if $version < 5.006;
 	return version->new($version)->normal;
 }

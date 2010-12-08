@@ -37,7 +37,7 @@ use strict;
 use warnings;
 use threads;
 use threads::shared;
-use Carp ();
+use Carp            ();
 use Padre::Constant ();
 
 our $VERSION = '0.75';
@@ -102,7 +102,7 @@ sub TRACE {
 			string($_),
 		);
 	}
-	if ($ENV{PADRE_DEBUG_STACK}) {
+	if ( $ENV{PADRE_DEBUG_STACK} ) {
 		print Carp::longmess(), "\n";
 		print '-' x 50, "\n";
 	}

@@ -133,11 +133,12 @@ sub import {
 			}
 			local @ARGV = $file;
 			do $patch;
+
 			#my $exit = system( $perl, "-I$include", $patch, $file );
 			# if ( $exit == -1 ) {
-				# Carp::croak("Migration patch $patch failed, database in unknown state");
+			# Carp::croak("Migration patch $patch failed, database in unknown state");
 			# } elsif ( $? & 127 ) {
-				# Carp::croak( sprintf( "Child died with signal %d", ( $? & 127 ) ) );
+			# Carp::croak( sprintf( "Child died with signal %d", ( $? & 127 ) ) );
 			# }
 		}
 
@@ -148,6 +149,7 @@ sub import {
 	}
 
 	local $SIG{__WARN__} = sub { return if $_[0] =~ /Subroutine \w+ redefined at/; warn $_[0] };
+
 	# Hand off to the regular constructor
 	$class->SUPER::import(
 		\%params,

@@ -472,14 +472,14 @@ sub show {
 # Private method to dump the regular expression description as text
 #
 sub _dump_regex {
-	if (scalar @_ == 2) {
-		my ($self, $regex) = @_;
+	if ( scalar @_ == 2 ) {
+		my ( $self, $regex ) = @_;
 		require PPIx::Regexp;
 		return $self->_dump_regex( PPIx::Regexp->new("/$regex/"), '', 0 );
 	}
-	
+
 	my ( $self, $parent, $str, $level ) = @_;
-	
+
 	$str   = '' unless $str;
 	$level = 0  unless $level;
 	my @children = $parent->isa('PPIx::Regexp::Node') ? $parent->children : ();
