@@ -216,9 +216,6 @@ sub init {
 		name    => 'file.openurl',
 		label   => _T('Open &URL...'),
 		comment => _T('Open a file from a remote location'),
-
-		# Is shown as Ctrl-O and I don't know why
-		# shortcut => 'Ctrl-Shift-O',
 		menu_event => sub {
 			$_[0]->on_open_url;
 		},
