@@ -915,7 +915,7 @@ sub text_like {
 
 sub text_with_one_nl {
 	my $self   = shift;
-	my $text   = $self->text_get;
+	my $text   = $self->text_get or return;
 	my $nlchar = "\n";
 	if ( $self->newline_type eq 'WIN' ) {
 		$nlchar = "\r\n";
