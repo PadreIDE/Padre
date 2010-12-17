@@ -13,7 +13,7 @@ if ($@) {
 	plan( skip_all => 'Win32::GuiTest is required for this test' );
 }
 
-plan( skip_all => 'test is currently broken' );
+#plan( skip_all => 'test is currently broken' );
 
 use t::lib::Padre;
 require t::lib::Padre::Win32;

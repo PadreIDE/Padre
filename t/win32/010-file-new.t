@@ -13,7 +13,7 @@ eval {
 if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
-plan( skip_all => 'test is currently broken' );
+#plan( skip_all => 'test is currently broken' );
 
 use t::lib::Padre;
 require t::lib::Padre::Win32;
@@ -29,19 +29,21 @@ $text .= "we might consider this test succesful. ";
 $text .= "Please wait.......";
 
 my $dir      = Win32::GetLongPathName( $ENV{PADRE_HOME} );
+diag "PADRE_HOME long path: '$dir'";
 my $save_to  = "$dir/$$.txt";
 my $save_tox = "$dir/x$$.txt";
 
 # Stupid Save box don't accpect '/' in the input
-$save_to  =~ s/\//\\/g;
-$save_tox =~ s/\//\\/g;
+$save_to  =~ s{/}{\\}g;
+$save_tox =~ s{/}{\\}g;
 
-# diag "Save to '$save_to'";
+diag "Save to '$save_to'";
 
 SCOPE: {
 	MenuSelect("&File|&New");
 	sleep 1;
 
+	unlink $save_to;
 	#my @tabs = GetTabItems($padre);
 	#my @children = FindWindowLike($padre, 'Unsaved');
 	#my @children = GetChildWindows($padre);

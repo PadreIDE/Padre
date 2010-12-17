@@ -22,7 +22,7 @@ sub setup {
 	my $padre;
 
 	# allow some time to launch Padre
-	foreach ( 1 .. 10 ) {
+	foreach ( 1 .. 30 ) {
 		sleep(1);
 		my @current_windows = FindWindowLike(0, "^Padre");
 		my @wins = grep { ! $existing_windows{$_} } @current_windows;
