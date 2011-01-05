@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.78 TBA
+    - The nytprof.out and nytprof HTML report directories are added to the
+      default ignore logic for Perl project (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
