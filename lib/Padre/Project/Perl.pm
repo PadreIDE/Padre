@@ -90,6 +90,9 @@ sub ignore_rule {
 		# In a distribution, we can ignore more things
 		return 0 if $_->{name} =~ /^(?:blib|_build|inc|Makefile|pm_to_blib)\z/;
 
+		# It is fairly common to get bogged down in NYTProf output
+		return 0 if $_->{name} =~ /^nytprof(?:\.out)\z/;
+
 		# Everything left, so we show it
 		return 1;
 	};
@@ -99,6 +102,7 @@ sub ignore_skip {
 	return [
 		'(?:^|\\/)\\.',
 		'(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z',
+		'(?:^|\\/)nytprof(?:\.out)\z',
 	];
 }
 
