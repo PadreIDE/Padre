@@ -114,7 +114,7 @@ sub new {
 	$self->{button_main} = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
-		Wx::gettext('Enable'),
+		Wx::gettext('&Enable'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -128,7 +128,7 @@ sub new {
 	$self->{button_preferences} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext('Preferences'),
+		Wx::gettext('&Preferences'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -142,7 +142,7 @@ sub new {
 	$self->{button_close} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext('Close'),
+		Wx::gettext('&Close'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -482,7 +482,7 @@ sub _update_plugin_state {
 
 		# Plug-in is in error state
 		$self->{action} = 'show_error_message';
-		$button_main->SetLabel( Wx::gettext('Show error message') );
+		$button_main->SetLabel( Wx::gettext('&Show error message') );
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('error'), 3 );
 
@@ -494,7 +494,7 @@ sub _update_plugin_state {
 
 		# Plugin is incompatible
 		$self->{action} = 'show_error_message';
-		$button_main->SetLabel( Wx::gettext('Show error message') );
+		$button_main->SetLabel( Wx::gettext('&Show error message') );
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('incompatible'), 5 );
 
@@ -509,7 +509,7 @@ sub _update_plugin_state {
 
 			# ...and enabled
 			$self->{action} = '_plugin_disable';
-			$button_main->SetLabel( Wx::gettext('Disable') );
+			$button_main->SetLabel( Wx::gettext('&Disable') );
 			$button_main->Enable;
 			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('enabled'), 1 );
 
@@ -521,7 +521,7 @@ sub _update_plugin_state {
 
 			# ...and disabled
 			$self->{action} = '_plugin_enable';
-			$button_main->SetLabel( Wx::gettext('Enable') );
+			$button_main->SetLabel( Wx::gettext('&Enable') );
 			$button_main->Enable;
 			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('disabled'), 2 );
 
