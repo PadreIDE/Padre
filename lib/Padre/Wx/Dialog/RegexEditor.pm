@@ -67,7 +67,7 @@ sub _regex_groups {
 
 	return (
 		'00' => {
-			label => Wx::gettext('&Character classes'),
+			label => Wx::gettext('Character classes'),
 			value => {
 				'00.'  => Wx::gettext('Any character except a newline'),
 				'01\d' => Wx::gettext('Any decimal digit'),
@@ -109,7 +109,7 @@ sub _regex_groups {
 			}
 		},
 		'03' => {
-			label => Wx::gettext('&Miscellaneous'),
+			label => Wx::gettext('Miscellaneous'),
 			value => {
 				'00|'     => Wx::gettext('Alternation'),
 				'01[ ]'   => Wx::gettext('Character set'),
@@ -121,7 +121,7 @@ sub _regex_groups {
 			}
 		},
 		'04' => {
-			label => Wx::gettext('&Grouping constructs'),
+			label => Wx::gettext('Grouping constructs'),
 			value => {
 				'00( )'    => Wx::gettext('A group'),
 				'01(?: )'  => Wx::gettext('Non-capturing group'),
@@ -215,7 +215,7 @@ sub _create_controls {
 	);
 
 	# Matched readonly text field
-	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
+	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
@@ -230,7 +230,7 @@ sub _create_controls {
 
 	# Insert regex into current document button_name
 	$self->{insert_button} = Wx::Button->new(
-		$self, -1, Wx::gettext('&Insert'),
+		$self, -1, Wx::gettext('Insert'),
 	);
 
 	# Close button
