@@ -66,6 +66,10 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
+	# Set some internal parameters
+	$self->{sortcolumn}  = 0;
+	$self->{sortreverse} = 0;
+
 	# Minimum dialog size
 	$self->SetMinSize( [ 750, 550 ] );
 
@@ -258,6 +262,15 @@ sub _bind_events {
 		sub {
 			shift->_update_list;
 		}
+	);
+
+	# When the title is clicked, sort the items
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->list_col_click(@_);
+		},
 	);
 
 	# When an item is selected, its values must be populated below
@@ -665,7 +678,29 @@ sub _update_list {
 	my $index          = -1;
 	my $preferences    = $self->{preferences};
 	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	foreach my $name ( sort keys %$preferences ) {
+
+	my @preference_names = sort { $a cmp $b } keys %$preferences;
+	if ( $self->{sortcolumn} == 1 ) {
+		# Sort by Status
+		@preference_names = sort {$self->_status_name($preferences->{$a}) cmp $self->_status_name($preferences->{$b})} @preference_names;
+	}
+	if ( $self->{sortcolumn} == 2 ) {
+		# Sort by Type
+		@preference_names = sort {$preferences->{$a}{type_name} cmp $preferences->{$b}{type_name}} @preference_names;
+	}
+	if ( $self->{sortcolumn} == 3 ) {
+		# Sort by Value
+		@preference_names = sort {
+			$self->_displayed_value( $preferences->{$a}{type}, $preferences->{$a}{value} ) 
+			cmp 
+			$self->_displayed_value( $preferences->{$b}{type}, $preferences->{$b}{value} )
+		   } @preference_names;
+	}
+	if ( $self->{sortreverse} ) {
+		@preference_names = reverse @preference_names;
+	}
+
+	foreach my $name ( @preference_names ) {
 
 		# Ignore setting if it does not match the filter
 		next if $name !~ /$filter/i;
@@ -765,6 +800,19 @@ sub _resize_columns {
 	# i.e. we do not want to be too long
 	$list->SetColumnWidth( 3, 600 );
 
+	return;
+}
+
+sub list_col_click {
+	my $self     = shift;
+	my $event    = shift;
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sortcolumn};
+	my $reversed = $self->{sortreverse};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sortcolumn}  = $column;
+	$self->{sortreverse} = $reversed;
+	$self->_update_list;
 	return;
 }
 
