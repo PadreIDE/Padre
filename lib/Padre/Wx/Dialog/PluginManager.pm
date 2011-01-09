@@ -200,7 +200,7 @@ sub new {
 sub show {
 	my $self = shift;
 
-	$self->_refresh_list;
+	$self->_update_list;
 
 	# select first item in the list. we don't need to test if
 	# there's at least a plug-in, since there will always be
@@ -268,7 +268,7 @@ sub list_col_click {
 	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->{sortcolumn}  = $column;
 	$self->{sortreverse} = $reversed;
-	$self->_refresh_list;
+	$self->_update_list;
 }
 
 #
@@ -362,12 +362,12 @@ sub show_error_message {
 }
 
 #
-# $dialog->_refresh_list;
+# $dialog->_update_list;
 #
 # refresh list of plug-ins and their associated state. list is sorted
 # according to current sort criterion.
 #
-sub _refresh_list {
+sub _update_list {
 	my $self = shift;
 
 	# Clear image list & fill it again
@@ -400,9 +400,10 @@ sub _refresh_list {
 	my $plugins = $self->{manager}->plugins;
 	my @plugins = map { $plugins->{$_} } $self->{manager}->plugin_order;
 	if ( $self->{sortcolumn} == 1 ) {
-		no warnings;
+#		no warnings;
+		# We see ??? in the version field for modules that don't have a version number or were not loaded
 		@plugins =
-			map { $_->[0] } sort { $a->[1] <=> $b->[1] } map { [ $_, version->new( $_->version || 0 ) ] } @plugins;
+			map { $_->[0] } sort { $a->[1] <=> $b->[1] } map { [ $_, version->new( ($_->version && $_->version ne '???') || 0 ) ] } @plugins;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
 		@plugins = sort { $a->status cmp $b->status } @plugins;
@@ -544,7 +545,7 @@ sub _update_plugin_state {
 	}
 
 	# Update the list item
-	# $self->_refresh_list;
+	# $self->_update_list;
 
 	# Force window to recompute layout. indeed, changes are that plug-in
 	# name has a different length, and thus should be recentered.
