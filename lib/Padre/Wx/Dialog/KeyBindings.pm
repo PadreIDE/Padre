@@ -32,6 +32,10 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
+	# Set some internal parameters
+	$self->{sortcolumn}  = 0;
+	$self->{sortreverse} = 0;
+
 	# Minimum dialog size
 	$self->SetMinSize( [ 770, 550 ] );
 
@@ -223,6 +227,15 @@ sub _bind_events {
 		sub {
 			shift->_on_list_item_selected(@_);
 		}
+	);
+
+	# When the title is clicked, sort the items
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->list_col_click(@_);
+		},
 	);
 
 	# Set button
@@ -489,7 +502,21 @@ sub _update_list {
 	my $actions         = $self->ide->actions;
 	my $alternate_color = Wx::Colour->new( 0xED, 0xF5, 0xFF );
 	my $index           = 0;
-	foreach my $action_name ( sort { $a cmp $b } keys %$actions ) {
+
+	my @action_names = sort { $a cmp $b } keys %$actions;
+	if ( $self->{sortcolumn} == 1 ) {
+		# Sort by Descreption
+		@action_names = sort {$actions->{$a}->label_text cmp $actions->{$b}->label_text} keys %$actions;
+	}
+	if ( $self->{sortcolumn} == 2 ) {
+		# Sort by Shortcut
+		@action_names = sort {_translate_shortcut($actions->{$a}->shortcut || '') cmp _translate_shortcut($actions->{$b}->shortcut || '')} keys %$actions;
+	}
+	if ( $self->{sortreverse} ) {
+		@action_names = reverse @action_names;
+	}
+
+	foreach my $action_name ( @action_names ) {
 		my $action = $actions->{$action_name};
 		my $shortcut = defined $action->shortcut ? $action->shortcut : '';
 
@@ -541,6 +568,19 @@ sub _resize_columns {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
 
+	return;
+}
+
+sub list_col_click {
+	my $self     = shift;
+	my $event    = shift;
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sortcolumn};
+	my $reversed = $self->{sortreverse};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sortcolumn}  = $column;
+	$self->{sortreverse} = $reversed;
+	$self->_update_list;
 	return;
 }
 
