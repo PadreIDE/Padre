@@ -252,10 +252,11 @@ sub new {
 				my $ret = Wx::MessageBox(
 					sprintf(
 						Wx::gettext(
-							"The file %s you are trying to open is over the arbitrary file size limit of Padre which is currently %s. Opening this file may reduce performance. Do you still want to open the file?"
+							"The file %s you are trying to open is %s bytes large. It is over the arbitrary file size limit of Padre which is currently %s. Opening this file may reduce performance. Do you still want to open the file?"
 						),
 						$self->{file}->{filename},
-						$config->editor_file_size_limit
+						_commafy(-s $self->{file}->{filename}),
+						_commafy($config->editor_file_size_limit)
 					),
 					Wx::gettext("Warning"),
 					Wx::wxYES_NO | Wx::wxCENTRE,
@@ -1577,6 +1578,12 @@ sub find_help_topic {
 # see L<Padre::Help>
 sub get_help_provider {
 	return;
+}
+
+sub _commafy {
+	my $number = reverse shift;
+	$number =~ s/(\d{3})(?=\d)/$1,/g;
+	return scalar reverse $number;
 }
 
 1;
