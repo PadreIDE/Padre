@@ -114,8 +114,8 @@ sub debug_perl {
 		}
 	}
 
-	unless($self->_set_debugger) {
-		$main->error(Wx::gettext('Debugging failed. Did you check your program for syntax errors?'));
+	unless ( $self->_set_debugger ) {
+		$main->error( Wx::gettext('Debugging failed. Did you check your program for syntax errors?') );
 		$self->debug_perl_quit;
 		return;
 	}
@@ -129,8 +129,8 @@ sub _set_debugger {
 	my $main = Padre->ide->wx->main;
 
 	my $file   = $self->{_debugger_}{filename} or return;
-	my $row    = $self->{_debugger_}{row} or return;
-	my $editor = $main->current->editor or return;
+	my $row    = $self->{_debugger_}{row}      or return;
+	my $editor = $main->current->editor        or return;
 	if ( $editor->{Document}->filename ne $file ) {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
