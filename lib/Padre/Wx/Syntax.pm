@@ -445,9 +445,10 @@ sub _update_help_page {
 	# if the text is undefined
 	my $help = $self->{help};
 	if ( defined $text ) {
-		$text =~ s/\n/<br>/g;
 		require CGI;
-		$help->SetPage(CGI::escapeHTML($text));
+		$text = CGI::escapeHTML($text);
+		$text =~ s/\n/<br>/g;
+		$help->SetPage($text);
 		$help->Show;
 	} else {
 		$help->SetPage('');
