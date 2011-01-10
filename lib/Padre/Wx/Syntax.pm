@@ -244,18 +244,12 @@ sub on_tree_item_selection_changed {
 	my $item = $event->GetItem or return;
 	my $issue = $self->{tree}->GetPlData($item);
 
-	if ($issue) {
-		if ( $issue->{diagnostics} ) {
-			my $diag = $issue->{diagnostics};
-			$diag =~ s/\n/<br>/g;
-			$self->{help}->SetPage($diag);
-			$self->{help}->Show;
-		}
+	if ( $issue && $issue->{diagnostics} ) {
+		my $diag = $issue->{diagnostics};
+		$self->_update_help_page($diag);
 	} else {
-		$self->{help}->SetPage('');
-		$self->{help}->Hide;
+		$self->_update_help_page;
 	}
-	$self->Layout;
 }
 
 sub on_tree_item_activated {
@@ -317,6 +311,9 @@ sub clear {
 
 	# Remove all items from the tool
 	$self->{tree}->DeleteAllItems;
+
+	# Clear the help page
+	$self->_update_help_page;
 
 	return;
 }
@@ -436,12 +433,30 @@ sub render {
 	$self->{tree}->Expand($root);
 	$self->{tree}->EnsureVisible($root);
 
-	# Clear the help page
-	$self->{help}->SetPage('');
-	$self->{help}->Hide;
-	$self->Layout;
-
 	return 1;
+}
+
+# Updates the help page. It shows the text if it is defined otherwise clears and hides it
+sub _update_help_page {
+	my $self = shift;
+	my $text = shift;
+
+	my $help = $self->{help};
+	if ( defined $text ) {
+		$text =~ s/\n/<br>/g;
+		$help->Show;
+	} else {
+		$text = '';
+		$help->Hide;
+	}
+
+	$help->SetPage($text);
+
+	#Sticky note light-yellow background
+	$self->{help}->SetBackgroundColour( Wx::Colour->new( 0xFD, 0xFC, 0xBB ) );
+
+	# Relayout to actually hide/show the help page
+	$self->Layout;
 }
 
 # Selects the problemistic line :)
