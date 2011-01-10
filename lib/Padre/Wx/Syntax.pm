@@ -441,13 +441,24 @@ sub _update_help_page {
 	my $self = shift;
 	my $text = shift;
 
-	# load the escaped HTML string into the shown page otherwise hide 
+	# load the escaped HTML string into the shown page otherwise hide
 	# if the text is undefined
 	my $help = $self->{help};
 	if ( defined $text ) {
 		require CGI;
 		$text = CGI::escapeHTML($text);
 		$text =~ s/\n/<br>/g;
+		my $WARN_TEXT = $MESSAGE{'W'}{label};
+		if ( $text =~ /^\((W\s+(\w+)|D|S|F|P|X|A)\)/ ) {
+			my ( $category, $warning_category ) = ( $1, $2 );
+			my $category_label = ( $category =~ /^W/ ) ? $MESSAGE{'W'}{label} : $MESSAGE{$1}{label};
+			my $notes =
+				defined($warning_category)
+				? "<code>no warnings '$warning_category';    # disable</code><br>"
+				. "<code>use warnings '$warning_category';   # enable</code><br><br>"
+				: '';
+			$text =~ s{^\((W\s+(\w+)|D|S|F|P|X|A)\)}{<h3>$category_label</h3>$notes};
+		}
 		$help->SetPage($text);
 		$help->Show;
 	} else {
