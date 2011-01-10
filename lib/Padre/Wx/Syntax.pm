@@ -441,16 +441,18 @@ sub _update_help_page {
 	my $self = shift;
 	my $text = shift;
 
-	# Hide/Show and then load the html into the page
+	# load the escaped HTML string into the shown page otherwise hide 
+	# if the text is undefined
 	my $help = $self->{help};
 	if ( defined $text ) {
 		$text =~ s/\n/<br>/g;
+		require CGI;
+		$help->SetPage(CGI::escapeHTML($text));
 		$help->Show;
 	} else {
-		$text = '';
+		$help->SetPage('');
 		$help->Hide;
 	}
-	$help->load_html($text);
 
 	#Sticky note light-yellow background
 	$self->{help}->SetBackgroundColour( Wx::Colour->new( 0xFD, 0xFC, 0xBB ) );

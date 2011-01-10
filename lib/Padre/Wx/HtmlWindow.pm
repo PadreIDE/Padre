@@ -84,23 +84,6 @@ sub load_pod {
 	return 1;
 }
 
-=head2 load_html
-
-	$html_window->load_html( '<br>Hello</br>' );
-
-The C<load_html> method takes an HTML string and loads the escaped
-HTML into the window.
-
-=cut
-
-sub load_html {
-	my $self = shift;
-	my $html = shift;
-
-	require CGI;
-	$self->SetPage( CGI::escapeHTML($html) );
-}
-
 1;
 
 __END__
