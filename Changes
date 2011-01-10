@@ -5,7 +5,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - The nytprof.out and nytprof HTML report directories are added to the
       default ignore logic for Perl project (ADAMK)
     - Fix a rare crash condition when TaskHandle had no task (SEWI)
-	- Fix #833: Syntax error crash padre when trying to debug (AZAWAWI)
+    - Fix #833: Syntax error crash padre when trying to debug (AZAWAWI)
+    - Perl error diagnostics is properly shown in a help panel instead
+      of being a child of an issue (AZAWAWI)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
