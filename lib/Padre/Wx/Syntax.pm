@@ -10,6 +10,7 @@ use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::TreeCtrl   ();
+use Padre::Wx::HtmlWindow ();
 use Padre::Logger;
 
 our $VERSION = '0.77';
@@ -17,7 +18,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Padre::Wx::TreeCtrl
+	Wx::Panel
 };
 
 # perldiag error message classification
@@ -72,14 +73,31 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
 
+	# Create the parent panel which will contain the search and tree
+	my $self = $class->SUPER::new($panel);
+
 	# Create the underlying object
-	my $self = $class->SUPER::new(
-		$panel,
+	$self->{tree} = Padre::Wx::TreeCtrl->new(
+		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
 	);
+
+	$self->{help} = Padre::Wx::HtmlWindow->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxBORDER_STATIC,
+	);
+	$self->{help}->Hide;
+
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$sizer->Add( $self->{tree}, 2, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $self->{help}, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->SetSizer($sizer);
 
 	# Additional properties
 	$self->{model}    = [];
@@ -107,12 +125,21 @@ sub new {
 			),
 		),
 	};
-	$self->AssignImageList($images);
+	$self->{tree}->AssignImageList($images);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
+		$self,
+		$self->{tree},
 		sub {
 			$_[0]->on_tree_item_activated( $_[1] );
+		},
+	);
+
+	Wx::Event::EVT_TREE_SEL_CHANGED(
+		$self,
+		$self->{tree},
+		sub {
+			$_[0]->on_tree_item_selection_changed( $_[1] );
 		},
 	);
 
@@ -211,12 +238,33 @@ sub running {
 #####################################################################
 # Event Handlers
 
+sub on_tree_item_selection_changed {
+	my ( $self, $event ) = @_;
+
+	my $item = $event->GetItem or return;
+	my $issue = $self->{tree}->GetPlData($item);
+
+	if ($issue) {
+		if ( $issue->{diagnostics} ) {
+			my $diag = $issue->{diagnostics};
+			$diag =~ s/\n/<br>/g;
+			$self->{help}->SetPage($diag);
+			$self->{help}->Show;
+		}
+	} else {
+		$self->{help}->SetPage('');
+		$self->{help}->Hide;
+	}
+	$self->Layout;
+}
+
 sub on_tree_item_activated {
 	my ( $self, $event ) = @_;
-	my $item   = $event->GetItem         or return;
-	my $error  = $self->GetPlData($item) or return;
-	my $editor = $self->current->editor  or return;
-	my $line   = $error->{line};
+
+	my $item   = $event->GetItem                 or return;
+	my $issue  = $self->{tree}->GetPlData($item) or return;
+	my $editor = $self->current->editor          or return;
+	my $line   = $issue->{line};
 
 	return
 		if not defined($line)
@@ -268,7 +316,7 @@ sub clear {
 	}
 
 	# Remove all items from the tool
-	$self->DeleteAllItems;
+	$self->{tree}->DeleteAllItems;
 
 	return;
 }
@@ -326,7 +374,7 @@ sub render {
 	# Flush old results
 	$self->clear;
 
-	my $root = $self->AddRoot('Root');
+	my $root = $self->{tree}->AddRoot('Root');
 
 	# If there are no errors clear the synax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
@@ -339,24 +387,24 @@ sub render {
 				$project_dir = quotemeta $project_dir;
 				$filename =~ s/^$project_dir[\\\/]?//;
 			}
-			$self->SetItemText(
+			$self->{tree}->SetItemText(
 				$root,
 				sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename )
 			);
 		} else {
-			$self->SetItemText( $root, Wx::gettext('No errors or warnings found.') );
+			$self->{tree}->SetItemText( $root, Wx::gettext('No errors or warnings found.') );
 		}
-		$self->SetItemImage( $root, $self->{images}->{ok} );
+		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
 		return;
 	}
 
-	$self->SetItemText(
+	$self->{tree}->SetItemText(
 		$root,
 		defined $filename
 		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @$model, $filename )
 		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @$model )
 	);
-	$self->SetItemImage( $root, $self->{images}->{root} );
+	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
 	my $i = 0;
 	ISSUE:
@@ -372,7 +420,7 @@ sub render {
 		my $type = $issue->{type};
 		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
 
-		my $item = $self->AppendItem(
+		my $item = $self->{tree}->AppendItem(
 			$root,
 			sprintf(
 				Wx::gettext('Line %d:   (%s)   %s'),
@@ -382,18 +430,16 @@ sub render {
 			),
 			$MESSAGE{$type}{marker} == Padre::Wx::MarkWarn() ? $self->{images}{warning} : $self->{images}{error}
 		);
-		$self->SetPlData( $item, $issue );
-
-		if ( defined $issue->{diagnostics} ) {
-			my @diags = split /\n/, $issue->{diagnostics};
-			for my $diag (@diags) {
-				$self->AppendItem( $item, $diag, $self->{images}{diagnostics} );
-			}
-		}
+		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	$self->Expand($root);
-	$self->EnsureVisible($root);
+	$self->{tree}->Expand($root);
+	$self->{tree}->EnsureVisible($root);
+
+	# Clear the help page
+	$self->{help}->SetPage('');
+	$self->{help}->Hide;
+	$self->Layout;
 
 	return 1;
 }
@@ -416,20 +462,20 @@ sub select_next_problem {
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 
 	# Start with the first child
-	my $root = $self->GetRootItem;
-	my ( $child, $cookie ) = $self->GetFirstChild($root);
+	my $root = $self->{tree}->GetRootItem;
+	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
 	my $first_line = undef;
 	while ($cookie) {
 
 		# Get the line and check that it is a valid line number
-		my $issue = $self->GetPlData($child) or return;
+		my $issue = $self->{tree}->GetPlData($child) or return;
 		my $line = $issue->{line};
 
 		if (   not defined($line)
 			or ( $line !~ /^\d+$/o )
 			or ( $line > $editor->GetLineCount ) )
 		{
-			( $child, $cookie ) = $self->GetNextChild( $root, $cookie );
+			( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
 			next;
 		}
 		$line--;
@@ -453,7 +499,7 @@ sub select_next_problem {
 		}
 
 		# Get the next child if there is one
-		( $child, $cookie ) = $self->GetNextChild( $root, $cookie );
+		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
 	}
 
 	# The next problem is simply the first (wrap around)
