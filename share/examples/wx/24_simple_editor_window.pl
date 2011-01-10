@@ -49,12 +49,13 @@ sub new {
 		[ 750, 700 ],
 	);
 
-	my $box = Wx::BoxSizer->new( wxVERTICAL );
+	my $box = Wx::BoxSizer->new(wxVERTICAL);
 
 	my $editor = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		wxTE_MULTILINE | wxNO_FULL_REPAINT_ON_RESIZE | wxTE_READONLY
 	);
+
 	# http://docs.wxwidgets.org/2.8.10/wx_wxtextctrl.html
 
 	my $content = '';
@@ -65,14 +66,15 @@ sub new {
 	$editor->SetValue($content);
 
 
-	$box->Add($editor , 1, wxGROW);
+	$box->Add( $editor, 1, wxGROW );
 
-	my $close = Wx::Button->new( $self, -1, '&Close');
-	$box->Add($close, 0, wxALIGN_CENTER_HORIZONTAL); # http://docs.wxwidgets.org/2.8.10/wx_sizeroverview.html
-	EVT_BUTTON($self, $close, \&on_exit);
-	
-	$self->SetAutoLayout( 1 );
-	$self->SetSizer( $box );
+	my $close = Wx::Button->new( $self, -1, '&Close' );
+	$box->Add( $close, 0, wxALIGN_CENTER_HORIZONTAL ); # http://docs.wxwidgets.org/2.8.10/wx_sizeroverview.html
+	EVT_BUTTON( $self, $close, \&on_exit );
+
+	$self->SetAutoLayout(1);
+	$self->SetSizer($box);
+
 	# $box->Fit( $self );
 	# $box->SetSizeHints( $self );
 

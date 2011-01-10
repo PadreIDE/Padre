@@ -188,12 +188,12 @@ sub prepare {
 	my $self = shift;
 	my $task = $self->{task};
 
-	if (!defined($task)) {
+	if ( !defined($task) ) {
 		TRACE("Exception: task not defined") if DEBUG;
 		return !1;
 	}
 
-	my $rv   = eval { $task->prepare; };
+	my $rv = eval { $task->prepare; };
 	if ($@) {
 		TRACE("Exception in task during 'prepare': $@") if DEBUG;
 		return !1;

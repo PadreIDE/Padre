@@ -13,6 +13,7 @@ eval {
 if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
+
 #plan( skip_all => 'test is currently broken' );
 
 use t::lib::Padre;
@@ -28,7 +29,7 @@ my $text = "If you're reading this inside Padre, ";
 $text .= "we might consider this test succesful. ";
 $text .= "Please wait.......";
 
-my $dir      = Win32::GetLongPathName( $ENV{PADRE_HOME} );
+my $dir = Win32::GetLongPathName( $ENV{PADRE_HOME} );
 diag "PADRE_HOME long path: '$dir'";
 my $save_to  = "$dir/$$.txt";
 my $save_tox = "$dir/x$$.txt";
@@ -44,6 +45,7 @@ SCOPE: {
 	sleep 1;
 
 	unlink $save_to;
+
 	#my @tabs = GetTabItems($padre);
 	#my @children = FindWindowLike($padre, 'Unsaved');
 	#my @children = GetChildWindows($padre);

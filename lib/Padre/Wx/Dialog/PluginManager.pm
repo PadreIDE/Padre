@@ -400,10 +400,13 @@ sub _update_list {
 	my $plugins = $self->{manager}->plugins;
 	my @plugins = map { $plugins->{$_} } $self->{manager}->plugin_order;
 	if ( $self->{sortcolumn} == 1 ) {
-#		no warnings;
+
+		#		no warnings;
 		# We see ??? in the version field for modules that don't have a version number or were not loaded
 		@plugins =
-			map { $_->[0] } sort { $a->[1] <=> $b->[1] } map { [ $_, version->new( ($_->version && $_->version ne '???') || 0 ) ] } @plugins;
+			map  { $_->[0] }
+			sort { $a->[1] <=> $b->[1] }
+			map  { [ $_, version->new( ( $_->version && $_->version ne '???' ) || 0 ) ] } @plugins;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
 		@plugins = sort { $a->status cmp $b->status } @plugins;

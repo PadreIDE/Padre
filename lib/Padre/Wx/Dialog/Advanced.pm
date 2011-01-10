@@ -681,26 +681,30 @@ sub _update_list {
 
 	my @preference_names = sort { $a cmp $b } keys %$preferences;
 	if ( $self->{sortcolumn} == 1 ) {
+
 		# Sort by Status
-		@preference_names = sort {$self->_status_name($preferences->{$a}) cmp $self->_status_name($preferences->{$b})} @preference_names;
+		@preference_names =
+			sort { $self->_status_name( $preferences->{$a} ) cmp $self->_status_name( $preferences->{$b} ) }
+			@preference_names;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
+
 		# Sort by Type
-		@preference_names = sort {$preferences->{$a}{type_name} cmp $preferences->{$b}{type_name}} @preference_names;
+		@preference_names = sort { $preferences->{$a}{type_name} cmp $preferences->{$b}{type_name} } @preference_names;
 	}
 	if ( $self->{sortcolumn} == 3 ) {
+
 		# Sort by Value
 		@preference_names = sort {
-			$self->_displayed_value( $preferences->{$a}{type}, $preferences->{$a}{value} ) 
-			cmp 
-			$self->_displayed_value( $preferences->{$b}{type}, $preferences->{$b}{value} )
-		   } @preference_names;
+			$self->_displayed_value( $preferences->{$a}{type}, $preferences->{$a}{value} )
+				cmp $self->_displayed_value( $preferences->{$b}{type}, $preferences->{$b}{value} )
+		} @preference_names;
 	}
 	if ( $self->{sortreverse} ) {
 		@preference_names = reverse @preference_names;
 	}
 
-	foreach my $name ( @preference_names ) {
+	foreach my $name (@preference_names) {
 
 		# Ignore setting if it does not match the filter
 		next if $name !~ /$filter/i;

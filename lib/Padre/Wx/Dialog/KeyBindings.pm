@@ -505,18 +505,23 @@ sub _update_list {
 
 	my @action_names = sort { $a cmp $b } keys %$actions;
 	if ( $self->{sortcolumn} == 1 ) {
+
 		# Sort by Descreption
-		@action_names = sort {$actions->{$a}->label_text cmp $actions->{$b}->label_text} keys %$actions;
+		@action_names = sort { $actions->{$a}->label_text cmp $actions->{$b}->label_text } keys %$actions;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
+
 		# Sort by Shortcut
-		@action_names = sort {_translate_shortcut($actions->{$a}->shortcut || '') cmp _translate_shortcut($actions->{$b}->shortcut || '')} keys %$actions;
+		@action_names = sort {
+			_translate_shortcut( $actions->{$a}->shortcut || '' )
+				cmp _translate_shortcut( $actions->{$b}->shortcut || '' )
+		} keys %$actions;
 	}
 	if ( $self->{sortreverse} ) {
 		@action_names = reverse @action_names;
 	}
 
-	foreach my $action_name ( @action_names ) {
+	foreach my $action_name (@action_names) {
 		my $action = $actions->{$action_name};
 		my $shortcut = defined $action->shortcut ? $action->shortcut : '';
 

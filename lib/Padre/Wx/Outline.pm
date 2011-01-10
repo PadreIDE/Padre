@@ -353,10 +353,10 @@ sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
 
 	my %type_caption = (
-		pragmata    => Wx::gettext('Pragmata'),
-		modules     => Wx::gettext('Modules'),
-		methods     => Wx::gettext('Methods'),
-		attributes  => Wx::gettext('Attributes'),
+		pragmata   => Wx::gettext('Pragmata'),
+		modules    => Wx::gettext('Modules'),
+		methods    => Wx::gettext('Methods'),
+		attributes => Wx::gettext('Attributes'),
 	);
 
 	my $type_elem = undef;

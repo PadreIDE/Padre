@@ -213,9 +213,9 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name    => 'file.openurl',
-		label   => _T('Open &URL...'),
-		comment => _T('Open a file from a remote location'),
+		name       => 'file.openurl',
+		label      => _T('Open &URL...'),
+		comment    => _T('Open a file from a remote location'),
 		menu_event => sub {
 			$_[0]->on_open_url;
 		},
