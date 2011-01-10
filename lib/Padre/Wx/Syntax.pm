@@ -95,8 +95,8 @@ sub new {
 	$self->{help}->Hide;
 
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer->Add( $self->{tree}, 2, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$sizer->Add( $self->{help}, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $self->{tree}, 3, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $self->{help}, 2, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->SetSizer($sizer);
 
 	# Additional properties
@@ -441,6 +441,7 @@ sub _update_help_page {
 	my $self = shift;
 	my $text = shift;
 
+	# Hide/Show and then load the html into the page
 	my $help = $self->{help};
 	if ( defined $text ) {
 		$text =~ s/\n/<br>/g;
@@ -449,8 +450,7 @@ sub _update_help_page {
 		$text = '';
 		$help->Hide;
 	}
-
-	$help->SetPage($text);
+	$help->load_html($text);
 
 	#Sticky note light-yellow background
 	$self->{help}->SetBackgroundColour( Wx::Colour->new( 0xFD, 0xFC, 0xBB ) );
