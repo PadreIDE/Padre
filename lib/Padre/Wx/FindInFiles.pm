@@ -147,7 +147,7 @@ sub search_message {
 	my $full  = File::Spec->catfile( $task->root, $path->path );
 	my $lines = scalar @_;
 	my $label = $lines > 1
-	          ? Wx::gettext( '%s (%s results)', $full, $lines )
+	          ? sprintf(Wx::gettext( '%s (%s results)' ), $full, $lines )
 	          : $full;
 	my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
 	$self->SetPlData( $file, {
