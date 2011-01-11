@@ -8,6 +8,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #833: Syntax error crash padre when trying to debug (AZAWAWI)
     - Perl error diagnostics is properly shown in a help panel instead
       of being a child of an issue (AZAWAWI)
+    - On a slow filesystem where the directory browser is slow to fill
+      directory expansion controls, the fill will no longer be aborted if
+      you quickly expand a subdirectory. Both will occur in parallel (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)

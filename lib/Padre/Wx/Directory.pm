@@ -394,6 +394,7 @@ sub refresh {
 		}
 
 		# Flush the search box and restart
+		$self->task_reset;
 		$self->browse;
 	}
 
@@ -414,6 +415,7 @@ sub rebrowse {
 	TRACE( $_[0] ) if DEBUG;
 	my $self     = shift;
 	my $expanded = $self->{tree}->GetExpandedPlData;
+	$self->task_reset;
 	$self->browse(@$expanded);
 }
 
@@ -423,7 +425,6 @@ sub browse {
 	return if $self->searching;
 
 	# Switch tasks to the browse task
-	$self->task_reset;
 	$self->task_request(
 		task       => 'Padre::Wx::Directory::Browse',
 		on_message => 'browse_message',
