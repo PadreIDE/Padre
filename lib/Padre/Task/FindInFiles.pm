@@ -50,6 +50,10 @@ sub new {
 	return $self;
 }
 
+sub root {
+	$_[0]->{root};
+}
+
 
 
 
@@ -110,7 +114,7 @@ sub run {
 			}
 
 			# This is a file
-			my $object = Padre::Wx::Directory::Path->file($fullname);
+			my $object = Padre::Wx::Directory::Path->file( @path, $file );
 			next if $rule->skipped( $object->unix );
 
 			# Skip if the file is too big

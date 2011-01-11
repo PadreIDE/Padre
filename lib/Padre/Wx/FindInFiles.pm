@@ -25,6 +25,9 @@ our @ISA     = qw{
 };
 
 
+
+
+
 ######################################################################
 # Constructor
 
@@ -132,56 +135,42 @@ sub search {
 
 sub search_message {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = shift;
-	my $path = shift;
+	my $self  = shift;
+	my $task  = shift;
+	my $path  = shift;
+	my $root  = $self->GetRootItem;
+
+	# Add the file node to the tree
 	require Padre::Wx::Directory::Path; # added to avoid crash in next line
-	my $unix = $path->unix;
-	my $term = $task->{search}->find_term;
+	my $name  = $path->name;
+	my $dir   = File::Spec->catfile( $task->root, $path->dirs );
+	my $full  = File::Spec->catfile( $task->root, $path->path );
+	my $lines = scalar @_;
+	my $label = $lines ? $full : Wx::gettext( '%s (%s results)', $full, $lines );
+	my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+	$self->SetPlData( $file, {
+		dir  => $dir,
+		file => $name,
+	} );
 
-
-	# Generate the text all at once in advance and add to the control
-	my @results = @_;
-	my $root    = $self->GetRootItem;
-	my ( $dir_item, $file_item );
-	for my $result (@results) {
-		my $dir  = File::Basename::dirname($unix);
-		my $file = File::Basename::basename($unix);
-
-		# Add a directory tree item if it doesnt exist and insert the files inside it
-		$dir_item = $self->AppendItem( $root, $dir, $self->{images}->{folder} ) unless $dir_item;
-		unless ($file_item) {
-			$file_item = $self->AppendItem( $dir_item, $file, $self->{images}->{file} );
-			$self->SetPlData(
-				$file_item,
-				{   dir  => $dir,
-					file => $file,
-				}
-			);
-		}
-		my $item = $self->AppendItem( $file_item, $result->[0] . ": " . $result->[1], $self->{images}->{result} );
-		$self->SetPlData(
-			$item,
-			{   dir  => $dir,
-				file => $file,
-				line => $result->[0],
-				msg  => $result->[1],
-			}
+	# Add the lines nodes to the tree
+	foreach my $row ( @_ ) {
+		my $line = $self->AppendItem(
+			$file,
+			$row->[0] . ': ' . $row->[1],
+			$self->{images}->{result},
 		);
-	}
-	my $num_results = scalar(@results);
-
-	# Add number of results inside each file if it is more than one
-	if ( $file_item && $num_results > 1 ) {
-		$self->SetItemText(
-			$file_item,
-			sprintf( Wx::gettext('%s (%s results)'), $self->GetItemText($file_item), $num_results )
-		);
+		$self->SetPlData( $line, {
+			dir  => $dir,
+			file => $name,
+			line => $row->[0],
+			msg  => $row->[1],
+		} );
 	}
 
 	# Update statistics
+	$self->{matches} += $lines;
 	$self->{files}   += 1;
-	$self->{matches} += $num_results;
 
 	return 1;
 }
@@ -207,7 +196,14 @@ sub search_finish {
 			)
 		);
 	} else {
-		$self->SetItemText( $root, sprintf( Wx::gettext(q{No results found for '%s' inside '%s'}), $term, $dir ) );
+		$self->SetItemText(
+			$root,
+			sprintf(
+				Wx::gettext(q{No results found for '%s' inside '%s'}),
+				$term,
+				$dir,
+			)
+		);
 	}
 
 	$self->ExpandAllChildren($root);
