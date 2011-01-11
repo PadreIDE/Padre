@@ -135,10 +135,10 @@ sub search {
 
 sub search_message {
 	TRACE( $_[0] ) if DEBUG;
-	my $self  = shift;
-	my $task  = shift;
-	my $path  = shift;
-	my $root  = $self->GetRootItem;
+	my $self = shift;
+	my $task = shift;
+	my $path = shift;
+	my $root = $self->GetRootItem;
 
 	# Add the file node to the tree
 	require Padre::Wx::Directory::Path; # added to avoid crash in next line
@@ -147,8 +147,12 @@ sub search_message {
 	my $full  = File::Spec->catfile( $task->root, $path->path );
 	my $lines = scalar @_;
 	my $label = $lines > 1
-	          ? sprintf(Wx::gettext( '%s (%s results)' ), $full, $lines )
-	          : $full;
+		? sprintf(
+			Wx::gettext('%s (%s results)'),
+			$full,
+			$lines,
+		)
+		: $full;
 	my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
 	$self->SetPlData( $file, {
 		dir  => $dir,
