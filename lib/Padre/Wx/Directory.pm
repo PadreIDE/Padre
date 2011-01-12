@@ -606,11 +606,8 @@ sub find_message {
 	# Because this should never be called from inside some larger
 	# update locker, lets risk the use of our own more targetted locking
 	# instead of using the official main->lock functionality.
-	# NOTE: It will HOPEFULLY be faster than the main one.
-	# NOTE: If we could avoid the scrollback snapping around on its own,
-	# we probably wouldn't need this lock at all.
-	my $scroll = $tree->GetScrollPos(Wx::wxVERTICAL);
-	my $lock   = Wx::WindowUpdateLocker->new($tree);
+	# Allow the lock to release naturally at the end of the method.
+	my $lock = $tree->scroll_lock;
 
 	# Create any new child directories
 	while (@dirs) {
@@ -638,9 +635,6 @@ sub find_message {
 
 	# Expand anything we created.
 	$tree->ExpandAllChildren($expand) if $expand;
-
-	# Make sure the scroll position has not changed
-	$tree->SetScrollPos( Wx::wxVERTICAL, 0, 0 );
 
 	return 1;
 }

@@ -5,10 +5,29 @@ package Padre::Wx::TreeCtrl;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx                       ();
+use Padre::Wx::TreeCtrl::ScrollLock ();
 
 our $VERSION = '0.77';
 our @ISA     = 'Wx::TreeCtrl';
+
+
+
+
+
+######################################################################
+# ScrollLock Integration
+
+sub scroll_lock {
+	Padre::Wx::TreeCtrl::ScrollLock->new($_[0]);
+}
+
+
+
+
+
+######################################################################
+# Expanded Wx-like Methods
 
 # Iterate through the children to find one with specific text.
 # Return undef if no child with that text exists.
@@ -84,7 +103,6 @@ sub GetExpandedPlData {
 }
 
 1;
-
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE

@@ -140,6 +140,9 @@ sub search_message {
 	my $path = shift;
 	my $root = $self->GetRootItem;
 
+	# Lock the tree to reduce flicker and prevent auto-scrolling
+	my $lock = $self->scroll_lock;
+
 	# Add the file node to the tree
 	require Padre::Wx::Directory::Path; # added to avoid crash in next line
 	my $name  = $path->name;
@@ -153,7 +156,7 @@ sub search_message {
 			$lines,
 		)
 		: $full;
-	my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+	my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
 	$self->SetPlData( $file, {
 		dir  => $dir,
 		file => $name,
@@ -177,6 +180,10 @@ sub search_message {
 	# Update statistics
 	$self->{matches} += $lines;
 	$self->{files}   += 1;
+
+	# Ensure both the root and the new file are expanded
+	$self->Expand($root);
+	$self->Expand($file);
 
 	return 1;
 }
@@ -211,9 +218,6 @@ sub search_finish {
 			)
 		);
 	}
-
-	$self->ExpandAllChildren($root);
-	$self->EnsureVisible($root);
 
 	return 1;
 }

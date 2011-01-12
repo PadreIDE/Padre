@@ -15,6 +15,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - FindInFiles was trying to use a directory node, but wasn't merging the
       file nodes together under it. Removed directory nodes until a better
       implementation is written (ADAMK)
+    - Created Padre::Wx::TreeCtrl::ScrollLock to abstract the workaround
+      you need to use to update trees without them snapping to nodes
+      that you ->Expand, and applied it to the directory tree and
+      the Find in Files result tree (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
