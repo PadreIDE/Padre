@@ -108,8 +108,14 @@ sub message {
 # A cancel request that arrives when we are NOT active running a task
 # should be discarded with no consequence.
 sub cancel {
-	TRACE( $_[0] ) if DEBUG;
-	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
+	if ( DEBUG ) {
+		TRACE( $_[0] );
+		if ( defined $_[1]->[0] ) {
+			TRACE("Discarding message '$_[1]->[0]'");
+		} else {
+			TRACE("Discarding undefined message");
+		}
+	}
 }
 
 1;
