@@ -11,7 +11,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - On a slow filesystem where the directory browser is slow to fill
       directory expansion controls, the fill will no longer be aborted if
       you quickly expand a subdirectory. Both will occur in parallel (ADAMK)
-    - FindInFiles was using path objects incorrectly (ADAMK)
+    - FindInFiles was using path objects incorrectly when communicating
+      between the task and the parent (ADAMK)
     - FindInFiles was trying to use a directory node, but wasn't merging the
       file nodes together under it. Removed directory nodes until a better
       implementation is written (ADAMK)
