@@ -168,7 +168,8 @@ sub view_label {
 
 sub view_close {
 	TRACE( $_[0] ) if DEBUG;
-	shift->main->show_directory(0);
+	$_[0]->task_reset;
+	$_[0]->main->show_directory(0);
 }
 
 

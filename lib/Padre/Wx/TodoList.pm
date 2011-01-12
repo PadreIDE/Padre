@@ -164,7 +164,8 @@ sub view_label {
 }
 
 sub view_close {
-	shift->main->show_todo(0);
+	$_[0]->task_reset;
+	$_[0]->main->show_todo(0);
 }
 
 

@@ -160,7 +160,8 @@ sub view_label {
 }
 
 sub view_close {
-	shift->main->show_functions(0);
+	$_[0]->task_reset;
+	$_[0]->main->show_functions(0);
 }
 
 
