@@ -74,6 +74,13 @@ sub run {
 
 	# Recursively scan for files
 	while (@queue) {
+
+		# Abort the task if we've been cancelled
+		if ( $self->cancel ) {
+			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
+			last;
+		}
+
 		my $parent = shift @queue;
 		my @path   = $parent->path;
 		my $dir    = File::Spec->catdir( $root, @path );

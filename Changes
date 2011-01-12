@@ -21,6 +21,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       the Find in Files result tree (ADAMK)
     - When closing panels that do background tasks, do a last-minute task
       reset operation to cancel any active background tasks (ADAMK)
+    - The Find in Files background task now supports cancel messages (ADAMK)
+    - The directory tree background search now correctly clears the status
+      bar when it is cancelled (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)

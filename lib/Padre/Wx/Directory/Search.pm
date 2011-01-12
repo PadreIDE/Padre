@@ -92,7 +92,7 @@ sub run {
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			return 1;
+			last;
 		}
 
 		# Is this a file?
