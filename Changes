@@ -28,6 +28,15 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       bar when it is cancelled (ADAMK)
     - Additional fixes for maximise-at-startup issues on Windows, which
       now should FINALLY work properly everywhere (ADAMK)
+    - When shutting down the task manager, force-empty the queue early and
+      send a 'cancel' message to any workers still actively running before
+      we send the final 'stop' message (ADAMK)
+    - Fixed a massive performance bug in directory tree ->refill method,
+      which was triggering one background thread for every expanded tree
+      node. This was leading to thread storms, major leakage, and hanging
+      of the editor when changing between projects (ADAMK)
+    - When exiting directory tree search mode, we now restore the tree
+      correctly from the stashed results instead of scanning again (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)

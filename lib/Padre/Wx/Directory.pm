@@ -50,11 +50,15 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	# Modes
-	$self->{searching} = 0;
-
 	# Where is the current root directory of the tree
 	$self->{root} = '';
+
+	# Modes (browse or search)
+	$self->{searching} = 0;
+
+	# Flag to ignore tree events when an automated process is
+	# making large numbers of automated changes.
+	$self->{ignore} = 0;
 
 	# Create the search control
 	my $search = $self->{search} = Wx::SearchCtrl->new(
@@ -74,6 +78,7 @@ sub new {
 	Wx::Event::EVT_TEXT(
 		$self, $search,
 		sub {
+			return if $_[0]->{ignore};
 			shift->on_text(@_);
 		},
 	);
@@ -81,6 +86,7 @@ sub new {
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
 		$self, $search,
 		sub {
+			return if $_[0]->{ignore};
 			shift->{search}->SetValue('');
 		},
 	);
@@ -109,6 +115,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
+			return if $_[0]->{ignore};
 			shift->on_expand(@_);
 		}
 	);
@@ -186,18 +193,24 @@ sub on_text {
 	my $self   = shift;
 	my $search = $self->{search};
 
+	# Operations in here often trigger secondary event triggers that
+	# we definitely don't want to fire. Temporarily suppress them.
+	$self->{ignore}++;
+
 	if ( $self->{searching} ) {
 		if ( $search->IsEmpty ) {
 
 			# Leaving search mode
+			TRACE("Leaving search mode") if DEBUG;
 			$self->{searching} = 0;
 			$self->task_reset;
 			$self->clear;
 			$self->refill;
-			$self->browse;
+			$self->rebrowse;
 		} else {
 
 			# Changing search term
+			TRACE("Changing search term") if DEBUG;
 			$self->find;
 		}
 	} else {
@@ -205,15 +218,21 @@ sub on_text {
 
 			# Nothing to do
 			# NOTE: Why would this even fire?
+			TRACE("WARNING: This should never fire") if DEBUG;
 		} else {
 
 			# Entering search mode
-			$self->{expand}    = $self->tree->GetExpandedPlData;
+			TRACE("Entering search mode") if DEBUG;
+			$self->{files}     = $self->tree->GetChildrenPlData;
+			$self->{expand}    = $self->tree->expanded;
 			$self->{searching} = 1;
 			$search->ShowCancelButton(1);
 			$self->find;
 		}
 	}
+
+	# Stop ignoring user events
+	$self->{ignore}--;
 
 	return 1;
 }
@@ -265,11 +284,14 @@ sub refill {
 	my $self   = shift;
 	my $tree   = $self->{tree};
 	my $root   = $tree->GetRootItem;
-	my $files  = delete $self->{files} or return;
+	my $files  = delete $self->{files}  or return;
 	my $expand = delete $self->{expand} or return;
 	my $lock   = $self->main->lock('UPDATE');
 	my @stack  = ();
 	shift @$files;
+
+	# Suppress events while rebuilding the tree
+	$self->{ignore}++;
 
 	foreach my $path (@$files) {
 		while (@stack) {
@@ -315,6 +337,9 @@ sub refill {
 	# If we moved during the fill, move back
 	my $first = ( $tree->GetFirstChild($root) )[0];
 	$tree->ScrollTo($first) if $first->IsOk;
+
+	# End suppressing events
+	$self->{ignore}--;
 
 	return 1;
 }
@@ -391,12 +416,16 @@ sub refresh {
 				$self->{files}  = $stash->{files};
 				$self->{expand} = $stash->{expand};
 				$self->refill;
+				$self->rebrowse;
+			} else {
+				$self->task_reset;
+				$self->browse;
 			}
-		}
 
-		# Flush the search box and restart
-		$self->task_reset;
-		$self->browse;
+		} else {
+			$self->task_reset;
+			$self->browse;
+		}
 	}
 
 	return 1;

@@ -86,7 +86,13 @@ sub start {
 sub stop {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
+
+	# Flag as disabled
 	$self->{active} = 0;
+
+	# Clear out the pending queue
+	@{ $self->{queue} } = ();
+
 	if ( $self->{threads} ) {
 		foreach ( 0 .. $#{ $self->{workers} } ) {
 			$self->stop_thread($_);
@@ -112,8 +118,14 @@ sub start_thread {
 
 sub stop_thread {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	delete( $self->{workers}->[ $_[0] ] )->stop;
+	my $self   = shift;
+	my $worker = delete $self->{workers}->[ $_[0] ];
+	if ( $worker->handle ) {
+		# Tell the worker to abandon what it is doing if it can
+		TRACE("Sending 'cancel' message before stopping") if DEBUG;
+		$worker->send('cancel');
+	}
+	$worker->stop;
 	return 1;
 }
 

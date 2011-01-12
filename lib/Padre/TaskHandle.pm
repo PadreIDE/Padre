@@ -188,7 +188,7 @@ sub prepare {
 	my $self = shift;
 	my $task = $self->{task};
 
-	if ( !defined($task) ) {
+	unless ( defined $task ) {
 		TRACE("Exception: task not defined") if DEBUG;
 		return !1;
 	}
