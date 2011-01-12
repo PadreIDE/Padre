@@ -297,21 +297,19 @@ sub on_signal {
 	my $event = shift;
 
 	# Deserialize and squelch bad messages
-	my $frozen = $event->GetData;
+	my $frozen  = $event->GetData;
 	my $message = eval { Storable::thaw($frozen); };
 	if ($@) {
-
-		# warn("Exception deserialising message from thread ('$frozen')");
+		TRACE("Exception deserialising message '$frozen'");
 		return;
 	}
 	unless ( ref $message eq 'ARRAY' ) {
-
-		# warn("Unrecognised non-ARRAY message received by a thread");
+		TRACE("Unrecognised non-ARRAY message recieved from thread");
 		return;
 	}
 
 	# Fine the task handle for the task
-	my $hid = shift @$message;
+	my $hid    = shift @$message;
 	my $handle = $self->{handles}->{$hid} or return;
 
 	# Handle the special startup message
