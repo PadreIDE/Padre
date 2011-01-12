@@ -78,7 +78,9 @@ sub run {
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			last;
+			$self->handle->status;
+			return 1;
+
 		}
 
 		my $parent = shift @queue;
@@ -93,17 +95,25 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->handle->message( STATUS => "Searching... " . $parent->unix );
+		$self->handle->status( "Searching... " . $parent->unix );
 
 		foreach my $file (@list) {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			next if $file =~ /^\.svn$/;
 			next if $file =~ /^\.git$/;
+
+			# Abort the task if we've been cancelled
+			if ( $self->cancel ) {
+				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
+				$self->handle->status;
+				return 1;
+			}
+
+			# Confirm the file still exists and get stat details
 			my $fullname = File::Spec->catdir( $dir, $file );
 			my @fstat = stat($fullname);
 			unless ( -e _ ) {
-
 				# The file dissapeared mid-search?
 				next;
 			}
@@ -149,7 +159,7 @@ sub run {
 	}
 
 	# Notify our parent we are finished searching
-	$self->handle->message( STATUS => '' );
+	$self->handle->status;
 
 	return 1;
 }

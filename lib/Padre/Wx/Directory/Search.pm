@@ -88,11 +88,11 @@ sub run {
 
 	# Recursively scan for files
 	while (@queue) {
-
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			last;
+			$self->handle->status;
+			return 1;
 		}
 
 		# Is this a file?
@@ -118,12 +118,19 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->handle->message( STATUS => "Searching... " . $object->unix );
+		$self->handle->status( "Searching... " . $object->unix );
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
 		foreach my $file (@list) {
 			next if $file =~ /^\.+\z/;
+
+			# Abort the task if we've been cancelled
+			if ( $self->cancel ) {
+				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
+				$self->handle->status;
+				return 1;
+			}
 
 			# Traverse symlinks
 			my $skip = 0;
@@ -210,7 +217,7 @@ sub run {
 	}
 
 	# Notify our parent we are finished searching
-	$self->handle->message( STATUS => '' );
+	$self->handle->status;
 
 	return 1;
 }

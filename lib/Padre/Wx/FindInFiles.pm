@@ -42,7 +42,11 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
+		Wx::wxTR_SINGLE
+		| Wx::wxTR_FULL_ROW_HIGHLIGHT
+		| Wx::wxTR_HAS_BUTTONS
+		| Wx::wxCLIP_CHILDREN
+		| Wx::wxVSCROLL
 	);
 
 	# Create the image list
