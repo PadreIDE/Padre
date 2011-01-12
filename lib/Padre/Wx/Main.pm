@@ -121,7 +121,9 @@ sub new {
 
 	# If we closed while maximized on the previous run,
 	# the previous size is completely suspect.
-	if ( $config->main_maximized ) {
+	# This doesn't work on Windows,
+	# so we use a different mechanism for it.
+	if ( not Padre::Constant::WXWIN32 and $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
 	}
 
@@ -141,6 +143,15 @@ sub new {
 		$size,
 		$style,
 	);
+
+	# On Windows you need to create the window and maximise it
+	# as two separate steps. Doing this makes the window layout look
+	# wrong, but at least it has the correct proportions. To fix the
+	# buggy layout we will unmaximize and remaximize it again later
+	# just before we ->Show the window.
+	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+		$self->Maximize(1);
+	}
 
 	# Start with a simple placeholder title
 	$self->SetTitle('Padre');
@@ -312,11 +323,21 @@ sub timer_start {
 	my $manager = $self->ide->plugin_manager;
 
 	# Do an initial Show/paint of the complete-looking main window
-	# without any files loaded. We'll then immediately start an Update lock
-	# so that loading of the files is done in a single render pass.
+	# without any files loaded. We'll then immediately start an
+	# update lock so that loading of the files is done in a single
+	# render pass.
 	# This gives us an optimum compromise between being PERCEIVED
 	# to start-up quickly, and ACTUALLY starting up quickly.
-	$self->Show(1);
+	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+		# This is a hacky workaround for buggy maximise-at-startup
+		# layout generation on windows.
+		my $lock = $self->lock('UPDATE');
+		$self->Maximize(0);
+		$self->Show(1);
+		$self->Maximize(1);
+	} else {
+		$self->Show(1);
+	}
 
 	# If the position mandated by the configuration is now
 	# off the screen (typically because we've changed the screen

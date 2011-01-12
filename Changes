@@ -25,6 +25,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       cancel messages properly, both per-directory and per-file (ADAMK)
     - The directory tree background search now correctly clears the status
       bar when it is cancelled (ADAMK)
+    - Additional fixes for maximise-at-startup issues on Windows, which
+      now should FINALLY work properly everywhere (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)

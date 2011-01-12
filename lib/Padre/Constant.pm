@@ -5,9 +5,9 @@ package Padre::Constant;
 use 5.008005;
 use strict;
 use warnings;
-use Carp       ();
-use File::Path ();
-use File::Spec ();
+use Carp               ();
+use File::Path         ();
+use File::Spec         ();
 use File::HomeDir 0.91 ();
 
 our $VERSION        = '0.77';
