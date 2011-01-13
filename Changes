@@ -39,6 +39,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       correctly from the stashed results instead of scanning again (ADAMK)
     - Open selection can now find executable programs in the current PATH
       (AZAWAWI)
+    - Update German translation (ZENOG)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
