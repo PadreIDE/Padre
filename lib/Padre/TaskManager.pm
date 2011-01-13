@@ -122,7 +122,10 @@ sub stop_thread {
 	my $worker = delete $self->{workers}->[ $_[0] ];
 	if ( $worker->handle ) {
 		# Tell the worker to abandon what it is doing if it can
-		TRACE("Sending 'cancel' message before stopping") if DEBUG;
+		if ( DEBUG ) {
+			my $tid = $worker->tid;
+			TRACE("Sending 'cancel' message to thread '$tid' before stopping");
+		}
 		$worker->send('cancel');
 	}
 	$worker->stop;
