@@ -2040,6 +2040,13 @@ sub guess_filename_to_open {
 		}
 	}
 
+	# Find executable programs in the current PATH
+	unless (@files) {
+		require File::Which;
+		my $filename = File::Which::which($text);
+		push @files, $filename if defined($filename);
+	}
+
 	return @files;
 }
 

@@ -37,6 +37,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       of the editor when changing between projects (ADAMK)
     - When exiting directory tree search mode, we now restore the tree
       correctly from the stashed results instead of scanning again (ADAMK)
+    - Open selection can now find executable programs in the current PATH
+      (AZAWAWI)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
