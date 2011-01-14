@@ -40,6 +40,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Open selection can now find executable programs in the current PATH
       (AZAWAWI)
     - Update German translation (ZENOG)
+    - If open selection finds a Module/Name.pm in the lib of your current
+      project, it stops looking for other possibilities since the version
+      in your project is almost certainly the one you want. (ADAMK)
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
