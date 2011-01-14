@@ -24,7 +24,7 @@ use warnings;
 use Params::Util   ();
 use Padre::Current ();
 
-our $VERSION = '0.78';
+our $VERSION = '0.79';
 
 =pod
 

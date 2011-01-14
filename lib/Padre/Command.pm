@@ -10,7 +10,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = '0.78';
+our $VERSION = '0.79';
 
 use Class::XSAccessor {
 	getters => {

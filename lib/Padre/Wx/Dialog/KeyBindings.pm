@@ -10,7 +10,7 @@ use Padre::Wx               ();
 use Padre::Wx::Role::Main   ();
 use Padre::Wx::Role::Dialog ();
 
-our $VERSION = '0.78';
+our $VERSION = '0.79';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Padre::Wx::Role::Dialog

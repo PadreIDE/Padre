@@ -16,7 +16,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.78';
+our $VERSION = '0.79';
 
 sub new {
 	my $class = shift;
