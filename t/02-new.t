@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 61 );
+	plan( tests => 63 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -20,6 +20,12 @@ isa_ok( $app, 'Padre' );
 
 SCOPE: {
 	my $ide = Padre->ide;
+	isa_ok( $ide, 'Padre' );
+	refis( $ide, $app, '->ide matches ->new' );
+}
+
+SCOPE: {
+	my $ide = Padre::Current->ide;
 	isa_ok( $ide, 'Padre' );
 	refis( $ide, $app, '->ide matches ->new' );
 }
