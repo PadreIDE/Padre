@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
-0.78 TBA
+0.78 2011.01.14
     - The nytprof.out and nytprof HTML report directories are added to the
       default ignore logic for Perl project (ADAMK)
     - Fix a rare crash condition when TaskHandle had no task (SEWI)
@@ -43,6 +43,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - If open selection finds a Module/Name.pm in the lib of your current
       project, it stops looking for other possibilities since the version
       in your project is almost certainly the one you want. (ADAMK)
+    - Updated the Copyright notice to reflect the new year. (PLAVEN)
+    - Added additional test to copyright.t to check all copyright notices
+      have the current year.
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
