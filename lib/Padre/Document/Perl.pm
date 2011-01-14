@@ -2003,53 +2003,49 @@ sub find_help_topic {
 	# 	return;
 }
 
-
 sub guess_filename_to_open {
-	my ( $self, $text ) = @_;
+	my $self = shift;
+	my $text = shift;
 
+	# Convert a module name to a file name
 	my $module = $text;
 	$module =~ s{::}{/}g;
 	$module .= ".pm";
-	my @files;
-	my $filename = File::Spec->catfile( Padre->ide->{original_cwd}, $module, );
-	if ( -e $filename ) {
-		push @files, $filename;
-	} else {
 
-		# relative to the project lib dir
-		# relative to the project dir
-		foreach my $dirs ( ['lib'], [], ['inc'] ) {
-			my $filename = File::Spec->catfile(
-				$self->project_dir,
-				@$dirs, $module,
-			);
-			if ( -e $filename ) {
-				push @files, $filename;
-			}
-		}
-
-		# TO DO: it should not be our @INC but the @INC of the perl used for
-		# script execution
-		foreach my $path (@INC) {
-			my $filename = File::Spec->catfile( $path, $module );
-			if ( -e $filename ) {
-				push @files, $filename;
-
-				#last;
-			}
-		}
+	# Check within our original startup directory
+	SCOPE: {
+		my $file = File::Spec->catfile(
+			Padre->ide->{original_cwd},
+			$module,
+		);
+		return $file if -e $file;
 	}
 
-	# Find executable programs in the current PATH
-	unless (@files) {
-		require File::Which;
-		my $filename = File::Which::which($text);
-		push @files, $filename if defined($filename);
+	# If the file exists somewhere within our project, shortcut to it
+	foreach my $dirs ( ['lib'], [] ) {
+		my $file = File::Spec->catfile(
+			$self->project_dir,
+			@$dirs, $module,
+		);
+		return $file if -e $file;
 	}
 
-	return @files;
+	# Search for a list of possible module locations in the @INC path
+	# TO DO: It should not be our @INC but the @INC of the perl used
+	# for script execution
+	my @files = grep { -e $_ } map {
+		File::Spec->catfile( $_, $module )
+	} (
+		File::Spec->catdir( $self->project_dir, 'inc' ),
+		@INC,
+	);
+	return @files if @files;
+
+	# Is this an executable in the current PATH
+	require File::Which;
+	my $filename = File::Which::which($text);
+	return $filename if defined $filename;
 }
-
 
 1;
 
