@@ -18,6 +18,7 @@ use Padre::Wx::Menu::Tools    ();
 use Padre::Wx::Menu::Window   ();
 use Padre::Wx::Menu::Help     ();
 
+
 our $VERSION = '0.77';
 
 
@@ -67,13 +68,13 @@ sub new {
 	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
-	if ( $debug ) {
+	if ($debug) {
 		require Padre::Wx::Menu::Debug;
 		$self->{debug} = Padre::Wx::Menu::Debug->new($main);
 	}
-	$self->{plugins}  = Padre::Wx::Menu::Tools->new($main);
-	$self->{window}   = Padre::Wx::Menu::Window->new($main);
-	$self->{help}     = Padre::Wx::Menu::Help->new($main);
+	$self->{plugins} = Padre::Wx::Menu::Tools->new($main);
+	$self->{window}  = Padre::Wx::Menu::Window->new($main);
+	$self->{help}    = Padre::Wx::Menu::Help->new($main);
 
 	# Add the mimetype agnostic menus to the menu bar
 	$self->append( $self->{file} );
@@ -156,7 +157,7 @@ sub refresh {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

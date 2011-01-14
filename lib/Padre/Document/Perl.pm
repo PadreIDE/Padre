@@ -2033,9 +2033,7 @@ sub guess_filename_to_open {
 	# Search for a list of possible module locations in the @INC path
 	# TO DO: It should not be our @INC but the @INC of the perl used
 	# for script execution
-	my @files = grep { -e $_ } map {
-		File::Spec->catfile( $_, $module )
-	} (
+	my @files = grep { -e $_ } map { File::Spec->catfile( $_, $module ) } (
 		File::Spec->catdir( $self->project_dir, 'inc' ),
 		@INC,
 	);
@@ -2049,7 +2047,7 @@ sub guess_filename_to_open {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

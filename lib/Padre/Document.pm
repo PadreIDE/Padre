@@ -255,8 +255,8 @@ sub new {
 							"The file %s you are trying to open is %s bytes large. It is over the arbitrary file size limit of Padre which is currently %s. Opening this file may reduce performance. Do you still want to open the file?"
 						),
 						$self->{file}->{filename},
-						_commafy(-s $self->{file}->{filename}),
-						_commafy($config->editor_file_size_limit)
+						_commafy( -s $self->{file}->{filename} ),
+						_commafy( $config->editor_file_size_limit )
 					),
 					Wx::gettext("Warning"),
 					Wx::wxYES_NO | Wx::wxCENTRE,
@@ -1588,7 +1588,7 @@ sub _commafy {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

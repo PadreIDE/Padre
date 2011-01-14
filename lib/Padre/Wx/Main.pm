@@ -329,6 +329,7 @@ sub timer_start {
 	# This gives us an optimum compromise between being PERCEIVED
 	# to start-up quickly, and ACTUALLY starting up quickly.
 	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+
 		# This is a hacky workaround for buggy maximise-at-startup
 		# layout generation on windows.
 		my $lock = $self->lock('UPDATE');
@@ -6313,7 +6314,7 @@ sub _filter_tool_run {
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
@@ -6323,7 +6324,7 @@ LICENSE file included with this module.
 
 =cut
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

@@ -88,6 +88,7 @@ sub run {
 
 	# Recursively scan for files
 	while (@queue) {
+
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
@@ -224,7 +225,7 @@ sub run {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

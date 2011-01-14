@@ -5,9 +5,9 @@ package Padre::Constant;
 use 5.008005;
 use strict;
 use warnings;
-use Carp               ();
-use File::Path         ();
-use File::Spec         ();
+use Carp       ();
+use File::Path ();
+use File::Spec ();
 use File::HomeDir 0.91 ();
 
 our $VERSION        = '0.77';
@@ -272,7 +272,7 @@ same terms as Perl 5 itself.
 
 =cut
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

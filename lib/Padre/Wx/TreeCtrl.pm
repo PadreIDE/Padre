@@ -19,7 +19,7 @@ our @ISA     = 'Wx::TreeCtrl';
 # ScrollLock Integration
 
 sub scroll_lock {
-	Padre::Wx::TreeCtrl::ScrollLock->new($_[0]);
+	Padre::Wx::TreeCtrl::ScrollLock->new( $_[0] );
 }
 
 
@@ -104,7 +104,7 @@ sub GetExpandedPlData {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

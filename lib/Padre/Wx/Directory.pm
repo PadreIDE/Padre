@@ -284,7 +284,7 @@ sub refill {
 	my $self   = shift;
 	my $tree   = $self->{tree};
 	my $root   = $tree->GetRootItem;
-	my $files  = delete $self->{files}  or return;
+	my $files  = delete $self->{files} or return;
 	my $expand = delete $self->{expand} or return;
 	my $lock   = $self->main->lock('UPDATE');
 	my @stack  = ();
@@ -731,7 +731,7 @@ sub compare {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

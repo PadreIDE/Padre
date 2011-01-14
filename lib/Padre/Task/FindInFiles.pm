@@ -114,6 +114,7 @@ sub run {
 			my $fullname = File::Spec->catdir( $dir, $file );
 			my @fstat = stat($fullname);
 			unless ( -e _ ) {
+
 				# The file dissapeared mid-search?
 				next;
 			}
@@ -166,7 +167,7 @@ sub run {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

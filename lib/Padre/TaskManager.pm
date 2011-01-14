@@ -121,8 +121,9 @@ sub stop_thread {
 	my $self   = shift;
 	my $worker = delete $self->{workers}->[ $_[0] ];
 	if ( $worker->handle ) {
+
 		# Tell the worker to abandon what it is doing if it can
-		if ( DEBUG ) {
+		if (DEBUG) {
 			my $tid = $worker->tid;
 			TRACE("Sending 'cancel' message to thread '$tid' before stopping");
 		}
@@ -300,7 +301,7 @@ sub on_signal {
 	my $event = shift;
 
 	# Deserialize and squelch bad messages
-	my $frozen  = $event->GetData;
+	my $frozen = $event->GetData;
 	my $message = eval { Storable::thaw($frozen); };
 	if ($@) {
 		TRACE("Exception deserialising message '$frozen'");
@@ -312,7 +313,7 @@ sub on_signal {
 	}
 
 	# Fine the task handle for the task
-	my $hid    = shift @$message;
+	my $hid = shift @$message;
 	my $handle = $self->{handles}->{$hid} or return;
 
 	# Handle the special startup message
@@ -364,7 +365,7 @@ sub on_signal {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

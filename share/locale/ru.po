@@ -1,5 +1,5 @@
 # Padre Russian translation.
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm."
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm."
 # This file is distributed under the same license as the Padre package.
 # Andrew Shitov <andy@shitov.ru>, 4 December 2008
 # Anatoly Sharifulin <sharifulin@gmail.com>, 12 May 2009

@@ -42,11 +42,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_SINGLE
-		| Wx::wxTR_FULL_ROW_HIGHLIGHT
-		| Wx::wxTR_HAS_BUTTONS
-		| Wx::wxCLIP_CHILDREN
-		| Wx::wxVSCROLL
+		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS | Wx::wxCLIP_CHILDREN | Wx::wxVSCROLL
 	);
 
 	# Create the image list
@@ -153,32 +149,37 @@ sub search_message {
 	my $dir   = File::Spec->catfile( $task->root, $path->dirs );
 	my $full  = File::Spec->catfile( $task->root, $path->path );
 	my $lines = scalar @_;
-	my $label = $lines > 1
+	my $label =
+		$lines > 1
 		? sprintf(
-			Wx::gettext('%s (%s results)'),
-			$full,
-			$lines,
+		Wx::gettext('%s (%s results)'),
+		$full,
+		$lines,
 		)
 		: $full;
 	my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
-	$self->SetPlData( $file, {
-		dir  => $dir,
-		file => $name,
-	} );
+	$self->SetPlData(
+		$file,
+		{   dir  => $dir,
+			file => $name,
+		}
+	);
 
 	# Add the lines nodes to the tree
-	foreach my $row ( @_ ) {
+	foreach my $row (@_) {
 		my $line = $self->AppendItem(
 			$file,
 			$row->[0] . ': ' . $row->[1],
 			$self->{images}->{result},
 		);
-		$self->SetPlData( $line, {
-			dir  => $dir,
-			file => $name,
-			line => $row->[0],
-			msg  => $row->[1],
-		} );
+		$self->SetPlData(
+			$line,
+			{   dir  => $dir,
+				file => $name,
+				line => $row->[0],
+				msg  => $row->[1],
+			}
+		);
 	}
 
 	# Update statistics
@@ -334,7 +335,7 @@ sub clear {
 
 1;
 
-# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
