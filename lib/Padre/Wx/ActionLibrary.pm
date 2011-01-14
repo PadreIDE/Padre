@@ -1979,227 +1979,229 @@ sub init {
 
 	# Debugging
 
-	Padre::Wx::Action->new(
-		name         => 'debug.step_in',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_macro-stop-after-command',
-		label        => _T('Step In (&s)'),
-		comment      => _T(
-			'Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)'),
+	if ( $config->feature_debugger ) {
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_step_in;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.step_in',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_macro-stop-after-command',
+			label        => _T('Step In (&s)'),
+			comment      => _T(
+				'Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.step_over',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
-		label        => _T('Step Over (&n)'),
-		comment      => _T(
-			'Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)'
-		),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_step_in;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_step_over;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.step_over',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_macro-stop-after-procedure',
+			label        => _T('Step Over (&n)'),
+			comment      => _T(
+				'Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)'
+			),
 
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_step_over;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.step_out',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_macro-jump-back',
-		label        => _T('Step Out (&r)'),
-		comment      => _T('If within a subroutine, run till return is called and then stop.'),
+		Padre::Wx::Action->new(
+			name         => 'debug.step_out',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_macro-jump-back',
+			label        => _T('Step Out (&r)'),
+			comment      => _T('If within a subroutine, run till return is called and then stop.'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_step_out;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_step_out;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.run',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_tools-macro',
-		label        => _T('Run till Breakpoint (&c)'),
-		comment      => _T('Start running and/or continue running till next breakpoint or watch'),
+		Padre::Wx::Action->new(
+			name         => 'debug.run',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_tools-macro',
+			label        => _T('Run till Breakpoint (&c)'),
+			comment      => _T('Start running and/or continue running till next breakpoint or watch'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_run;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_run;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.jump_to',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Jump to Current Execution Line'),
-		comment      => _T('Set focus to the line where the current statement is in the debugging process'),
+		Padre::Wx::Action->new(
+			name         => 'debug.jump_to',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Jump to Current Execution Line'),
+			comment      => _T('Set focus to the line where the current statement is in the debugging process'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_jumpt_to;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_jumpt_to;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.set_breakpoint',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
-		label        => _T('Set Breakpoint (&b)'),
-		comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
+		Padre::Wx::Action->new(
+			name         => 'debug.set_breakpoint',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_macro-insert-breakpoint',
+			label        => _T('Set Breakpoint (&b)'),
+			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_set_breakpoint;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_set_breakpoint;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.remove_breakpoint',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Remove Breakpoint'),
-		comment      => _T('Remove the breakpoint at the current location of the cursor'),
+		Padre::Wx::Action->new(
+			name         => 'debug.remove_breakpoint',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Remove Breakpoint'),
+			comment      => _T('Remove the breakpoint at the current location of the cursor'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.list_breakpoints',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('List All Breakpoints'),
-		comment      => _T('List all the breakpoints on the console'),
+		Padre::Wx::Action->new(
+			name         => 'debug.list_breakpoints',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('List All Breakpoints'),
+			comment      => _T('List all the breakpoints on the console'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_list_breakpoints;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_list_breakpoints;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name         => 'debug.run_to_cursor',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Run to Cursor'),
-		comment      => _T('Set a breakpoint at the line where to cursor is and run till there'),
+		Padre::Wx::Action->new(
+			name         => 'debug.run_to_cursor',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Run to Cursor'),
+			comment      => _T('Set a breakpoint at the line where to cursor is and run till there'),
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_run_to_cursor;
-		},
-	);
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_run_to_cursor;
+			},
+		);
 
+		Padre::Wx::Action->new(
+			name         => 'debug.show_stack_trace',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Show Stack Trace (&t)'),
+			comment      => _T('When in a subroutine call show all the calls since the main of the program'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.show_stack_trace',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Show Stack Trace (&t)'),
-		comment      => _T('When in a subroutine call show all the calls since the main of the program'),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_show_stack_trace;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_show_stack_trace;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.display_value',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'stock/code/stock_macro-watch-variable',
+			label        => _T('Display Value'),
+			comment      => _T('Display the current value of a variable in the right hand side debugger pane'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.display_value',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'stock/code/stock_macro-watch-variable',
-		label        => _T('Display Value'),
-		comment      => _T('Display the current value of a variable in the right hand side debugger pane'),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_display_value;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_display_value;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.show_value',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Show Value Now (&x)'),
+			comment      => _T('Show the value of a variable now in a pop-up window.'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.show_value',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Show Value Now (&x)'),
-		comment      => _T('Show the value of a variable now in a pop-up window.'),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_show_value;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_show_value;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.evaluate_expression',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			label        => _T('Evaluate Expression...'),
+			comment      => _T('Type in any expression and evaluate it in the debugged process'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.evaluate_expression',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => _T('Evaluate Expression...'),
-		comment      => _T('Type in any expression and evaluate it in the debugged process'),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_evaluate_expression;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_evaluate_expression;
-		},
-	);
+		Padre::Wx::Action->new(
+			name         => 'debug.quit',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'actions/stop',
+			label        => _T('Quit Debugger (&q)'),
+			comment      => _T('Quit the process being debugged'),
 
-	Padre::Wx::Action->new(
-		name         => 'debug.quit',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		toolbar      => 'actions/stop',
-		label        => _T('Quit Debugger (&q)'),
-		comment      => _T('Quit the process being debugged'),
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+				$_[0]->{_debugger_} or return;
+				$_[0]->{_debugger_}->debug_perl_quit;
+			},
+		);
 
-		#shortcut     => 'Shift-F5',
-		menu_event => sub {
-			$_[0]->{_debugger_} or return;
-			$_[0]->{_debugger_}->debug_perl_quit;
-		},
-	);
+	}
 
 	# Tools and Preferences
 

@@ -93,7 +93,7 @@ sub add_tool_item {
 
 	my $action = $actions->{ $args{action} };
 	unless ($action) {
-		warn("No action called $args{action}\n");
+		# warn("No action called $args{action}\n");
 		return;
 	}
 	my $icon = $action->toolbar_icon;
