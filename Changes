@@ -1,6 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
+0.80 TBA
+
+
 0.78 2011.01.14
     - The nytprof.out and nytprof HTML report directories are added to the
       default ignore logic for Perl project (ADAMK)
