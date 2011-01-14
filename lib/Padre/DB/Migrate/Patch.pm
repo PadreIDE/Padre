@@ -11,7 +11,7 @@ use DBD::SQLite ();
 
 use vars qw{@ISA @EXPORT $FILE};
 
-our $VERSION = '0.77';
+our $VERSION = '0.78';
 
 BEGIN {
 
