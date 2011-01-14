@@ -1111,6 +1111,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'feature_debugger',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
 	name    => 'feature_restart_hung_task_manager',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
