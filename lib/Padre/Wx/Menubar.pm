@@ -67,7 +67,10 @@ sub new {
 	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
-	$self->{debug}    = Padre::Wx::Menu::Debug->new($main) if $debug;
+	if ( $debug ) {
+		require Padre::Wx::Menu::Debug;
+		$self->{debug} = Padre::Wx::Menu::Debug->new($main);
+	}
 	$self->{plugins}  = Padre::Wx::Menu::Tools->new($main);
 	$self->{window}   = Padre::Wx::Menu::Window->new($main);
 	$self->{help}     = Padre::Wx::Menu::Help->new($main);
