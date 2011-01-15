@@ -2,6 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.80 TBA
+    - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)
 
 
 0.78 2011.01.14
