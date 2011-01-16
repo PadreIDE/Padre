@@ -1920,13 +1920,13 @@ sub _show_outline {
 
 =pod
 
-=head3 C<show_debugger>
+=head3 C<show_debug>
 
-    $main->show_debugger( $visible );
+    $main->show_debug($visible);
 
 =cut
 
-sub show_debugger {
+sub show_debug {
 	my $self = shift;
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 

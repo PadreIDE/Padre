@@ -75,7 +75,7 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->main->show_debugger(0);
+	$_[0]->main->show_debug(0);
 }
 
 

@@ -72,7 +72,7 @@ sub debug_perl {
 	my $document = $current->document;
 	my $editor   = $current->editor;
 
-	$main->show_debugger(1);
+	$main->show_debug(1);
 
 	if ( $self->{client} ) {
 		$main->error( Wx::gettext('Debugger is already running') );
@@ -260,8 +260,8 @@ sub debug_perl_quit {
 
 	# Clean up the GUI artifacts
 	my $current = Padre::Current->new;
+	$current->main->show_debug(0);
 	$current->editor->MarkerDeleteAll( Padre::Wx::MarkLocation );
-	$current->main->show_debugger(0);
 
 	# Detach the debugger
 	$self->{client}->quit;
