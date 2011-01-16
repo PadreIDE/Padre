@@ -1993,8 +1993,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_step_in;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_step_in;
 			},
 		);
 
@@ -2011,8 +2011,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_step_over;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_step_over;
 			},
 		);
 
@@ -2027,8 +2027,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_step_out;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_step_out;
 			},
 		);
 
@@ -2043,8 +2043,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_run;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_run;
 			},
 		);
 
@@ -2058,8 +2058,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_jumpt_to;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_jumpt_to;
 			},
 		);
 
@@ -2074,8 +2074,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_set_breakpoint;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_set_breakpoint;
 			},
 		);
 
@@ -2089,8 +2089,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_remove_breakpoint;
 			},
 		);
 
@@ -2104,8 +2104,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_list_breakpoints;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_list_breakpoints;
 			},
 		);
 
@@ -2119,8 +2119,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_run_to_cursor;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_run_to_cursor;
 			},
 		);
 
@@ -2134,8 +2134,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_show_stack_trace;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_show_stack_trace;
 			},
 		);
 
@@ -2150,8 +2150,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_display_value;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_display_value;
 			},
 		);
 
@@ -2165,8 +2165,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_show_value;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_show_value;
 			},
 		);
 
@@ -2180,8 +2180,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_evaluate_expression;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_evaluate_expression;
 			},
 		);
 
@@ -2196,8 +2196,8 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->{_debugger_} or return;
-				$_[0]->{_debugger_}->debug_perl_quit;
+				$_[0]->{debugger} or return;
+				$_[0]->{debugger}->debug_perl_quit;
 			},
 		);
 

@@ -284,7 +284,7 @@ sub new {
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
 
-	$self->{_debugger_} = Padre::Wx::Debugger->new;
+	$self->{debugger} = Padre::Wx::Debugger->new;
 
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did
@@ -617,11 +617,11 @@ sub syntax {
 
 sub debugger {
 	my $self = shift;
-	unless ( defined $self->{debugger} ) {
-		require Padre::Wx::Debugger::View;
-		$self->{debugger} = Padre::Wx::Debugger::View->new($self);
+	unless ( defined $self->{debug} ) {
+		require Padre::Wx::Debug;
+		$self->{debug} = Padre::Wx::Debug->new($self);
 	}
-	return $self->{debugger};
+	return $self->{debug};
 }
 
 sub outline {
@@ -1930,8 +1930,8 @@ sub show_debugger {
 	my $self = shift;
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 
-	#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
-	#		$self->menu->view->{debugger}->Check($on);
+	#	unless ( $on == $self->menu->view->{debug}->IsChecked ) {
+	#		$self->menu->view->{debug}->Check($on);
 	#	}
 	#	$self->config->set( main_debugger => $on );
 	#	$self->config->write;
@@ -3218,7 +3218,7 @@ sub on_close_window {
 	# part of the shutdown which will mess it up.
 	$self->update_last_session;
 
-	$self->{_debugger_}->quit;
+	$self->{debugger}->quit;
 
 	TRACE("went over list of files") if DEBUG;
 
