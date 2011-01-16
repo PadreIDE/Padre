@@ -240,8 +240,9 @@ sub debug_perl_list_breakpoints {
 	$self->running or return;
 
 	# LIST context crashes in Debug::Client 0.10
-	my $msg = $self->{client}->list_break_watch_action;
-	$self->message($msg);
+	$self->message(
+		scalar $self->{client}->list_break_watch_action
+	);
 
 	return;
 }

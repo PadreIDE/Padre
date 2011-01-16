@@ -81,7 +81,7 @@ sub set_column_widths {
 sub on_list_item_activated {
 	my $self   = shift;
 	my $event  = shift;
-	my $editor = Padre::Current->main($self)->current->editor;
+	my $editor = $self->main->current->editor;
 	my $line   = $event->GetItem->GetText;
 
 	if (   not defined($line)
@@ -98,13 +98,10 @@ sub on_list_item_activated {
 
 sub _get_title {
 	my $c = shift;
-
 	return Wx::gettext('Variable') if $c == 0;
 	return Wx::gettext('Value')    if $c == 1;
-
 	die "invalid value '$c'";
 }
-
 
 sub relocale {
 	my $self = shift;
