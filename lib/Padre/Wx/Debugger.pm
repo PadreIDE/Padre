@@ -1,23 +1,34 @@
 package Padre::Wx::Debugger;
 
-use 5.008;
-use strict;
-use warnings;
-
-our $VERSION = '0.79';
-
-use Padre::Wx ();
-use Padre::Logger;
+=pod
 
 =head1 NAME
 
-Padre::Wx::Debugger - interface to L<Debug::Client>
+Padre::Wx::Debugger - Interface to the Perl debugger.
 
 =head1 DESCRIPTION
 
+Padre::Wx::Debugger provides a wrapper for the generalised L<Debug::Client>.
+
+It should really live at Padre::Debugger, but does not currently have
+sufficient abstraction from L<Wx>.
+
+=head1 METHODS
+
 =cut
 
-=head3 C<new>
+use 5.008;
+use strict;
+use warnings;
+use Padre::Current ();
+use Padre::Wx      ();
+use Padre::Logger;
+
+our $VERSION = '0.79';
+
+=pod
+
+=head2 new
 
 Simple constructor.
 
@@ -25,15 +36,27 @@ Simple constructor.
 
 sub new {
 	my $class = shift;
-	my $self = bless {}, $class;
+	my $self  = bless {
+		client => undef,
+		file   => undef,
+		save   => { },
+	}, $class;
 	return $self;
+}
+
+sub message {
+	Padre::Current->main->message($_[1]);
+}
+
+sub error {
+	Padre::Current->main->error($_[1]);
 }
 
 =pod
 
-=head3 C<debug_perl>
+=head2 debug_perl
 
-    $main->debug_perl;
+  $main->debug_perl;
 
 Run current document under Perl debugger. An error is reported if
 current is not a Perl document.
@@ -43,24 +66,22 @@ Returns true if debugger successfully started.
 =cut
 
 sub debug_perl {
-	my $self = shift;
+	my $self     = shift;
+	my $current  = Padre::Current->new;
+	my $main     = $current->main;
+	my $document = $current->document;
+	my $editor   = $current->editor;
 
-	my $main     = Padre->ide->wx->main;
-	my $document = $main->current->document;
-
-	my $editor = $main->current->editor;
 	$main->show_debugger(1);
 
-	if ( $self->{_debugger_} ) {
+	if ( $self->{client} ) {
 		$main->error( Wx::gettext('Debugger is already running') );
 		return;
 	}
-
 	unless ( $document->isa('Padre::Document::Perl') ) {
 		$main->error( Wx::gettext('Not a Perl document') );
 		return;
 	}
-
 
 	# Apply the user's save-on-run policy
 	# TO DO: Make this code suck less
@@ -74,7 +95,7 @@ sub debug_perl {
 	}
 
 	# Get the filename
-	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+	my $filename = defined($document->{file}) ? $document->{file}->filename : undef;
 
 	# TODO: improve the message displayed to the user
 	# If the document is not saved, simply return for now
@@ -83,33 +104,30 @@ sub debug_perl {
 	# Set up the debugger
 	my $host = 'localhost';
 	my $port = 12345 + int rand(1000); # TODO make this configurable?
-
-	{
+	SCOPE: {
 		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
-
 		$main->run_command( $document->get_command( { debug => 1 } ) );
 	}
 
+	# Bootstrap the debugger
 	require Debug::Client;
-	my $debugger = Debug::Client->new( host => $host, port => $port );
-	$debugger->listen;
-	$self->{_debugger_} = $debugger;
+	$self->{client} = Debug::Client->new(
+		host => $host,
+		port => $port,
+	);
+	$self->{client}->listen;
 
-	$self->{running_file} = $filename;
+	$self->{file} = $filename;
 
-	my ( $module, $file, $row, $content ) = $debugger->get;
+	my ( $module, $file, $row, $content ) = $self->{client}->get;
 
-	if ( not $self->{save}{$filename} ) {
-		$self->{save}{$filename} = {};
-	}
-	if ( $self->{save}{$filename}{breakpoints} ) {
-		foreach my $file ( keys %{ $self->{save}{$filename}{breakpoints} } ) {
-			foreach my $row ( keys %{ $self->{save}{$filename}{breakpoints}{$file} } ) {
-
-				#$self->{save}{$filename}{breakpoints}{$file}{$row};
-				$self->{_debugger_}->set_breakpoint( $file, $row ); # TODO what if this fails?
-				                                                    # TODO find the editor of that $file first!
-				  #$editor->MarkerAdd( $row-1, Padre::Wx::MarkBreakpoint() );
+	my $save = ( $self->{save}->{$filename} ||= {} );
+	if ( $save->{breakpoints} ) {
+		foreach my $file ( keys %{ $save->{breakpoints} } ) {
+			foreach my $row ( keys %{ $save->{breakpoints}->{$file} } ) {
+				# TODO what if this fails?
+				# TODO find the editor of that $file first!
+				$self->{client}->set_breakpoint( $file, $row ); 
 			}
 		}
 	}
@@ -124,13 +142,14 @@ sub debug_perl {
 }
 
 sub _set_debugger {
-	my ($self) = @_;
+	my $self    = shift;
+	my $current = Padre::Current->new;
+	my $main    = $current->main;
+	my $editor  = $current->editor            or return;
+	my $file    = $self->{client}->{filename} or return;
+	my $row     = $self->{client}->{row}      or return;
 
-	my $main = Padre->ide->wx->main;
-
-	my $file   = $self->{_debugger_}{filename} or return;
-	my $row    = $self->{_debugger_}{row}      or return;
-	my $editor = $main->current->editor        or return;
+	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
@@ -142,21 +161,16 @@ sub _set_debugger {
 	# They should be reunited soon !!!! (or not)
 	$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
 	$editor->SetMarginWidth( 1, 16 );
-
-	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
-	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkLocation() );
-
-	#print("File: $file row: $row\n");
-
+	$editor->MarkerDeleteAll( Padre::Wx::MarkLocation );
+	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkLocation );
 
 	my $debugger = $main->debugger;
 	my $count    = $debugger->GetItemCount;
 	foreach my $c ( 0 .. $count - 1 ) {
 		my $variable = $debugger->GetItemText($c);
-
-		#print $debugger->GetItem($c, 0)->GetText, "\n";
-
-		my $value = eval { $self->{_debugger_}->get_value($variable) };
+		my $value    = eval {
+			$self->{client}->get_value($variable);
+		};
 		if ($@) {
 
 			#$main->error(sprintf(Wx::gettext("Could not evaluate '%s'"), $text));
@@ -169,13 +183,11 @@ sub _set_debugger {
 	return 1;
 }
 
-sub debugger_is_running {
+sub running {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		$main->message(
+	unless ( $self->{client} ) {
+		Padre::Current->main->message(
 			Wx::gettext(
 				"The debugger is not running.\nYou can start the debugger using one of the commands 'Step In', 'Step Over', or 'Run till Breakpoint' in the Debug menu."
 			),
@@ -183,71 +195,52 @@ sub debugger_is_running {
 		);
 		return;
 	}
-	my $editor = $main->current->editor;
-	return unless $editor;
 
-	return 1;
+	return !! Padre::Current->editor;
 }
 
 sub debug_perl_remove_breakpoint {
 	my $self = shift;
-
-	return if not $self->debugger_is_running;
+	$self->running or return;
 
 	my $editor = Padre::Current->editor;
 	my $file   = $editor->{Document}->filename;
 	my $row    = $editor->GetCurrentLine + 1;
-	$self->{_debugger_}->remove_breakpoint( $file, $row );
-	delete $self->{save}{ $self->{running_file} }{breakpoints}{$file}{$row};
+	$self->{client}->remove_breakpoint( $file, $row );
+	delete $self->{save}->{ $self->{file} }->{breakpoints}->{$file}->{$row};
 
 	return;
 }
 
-sub error {
-	my $self = shift;
-	my $msg  = shift;
-
-	return Padre->ide->wx->main->error($msg);
-}
-
-sub message {
-	my $self = shift;
-	my $msg  = shift;
-
-	return Padre->ide->wx->main->message($msg);
-}
-
-
 sub debug_perl_set_breakpoint {
 	my $self = shift;
-
-	return if not $self->debugger_is_running;
+	$self->running or return;
 
 	my $editor = Padre::Current->editor;
-
-	my $file = $editor->{Document}->filename;
-	my $row  = $editor->GetCurrentLine + 1;
+	my $file   = $editor->{Document}->filename;
+	my $row    = $editor->GetCurrentLine + 1;
 
 	# TODO ask for a condition
-
 	# TODO allow setting breakpoints even before the script and the debugger runs
 	# (by saving it in the debugger configuration file?)
-	if ( not $self->{_debugger_}->set_breakpoint( $file, $row ) ) {
+	if ( not $self->{client}->set_breakpoint( $file, $row ) ) {
 		$self->error( sprintf( Wx::gettext("Could not set breakpoint on file '%s' row '%s'"), $file, $row ) );
 		return;
 	}
 	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkBreakpoint() );
-	$self->{save}{ $self->{running_file} }{breakpoints}{$file}{$row} = 1; # TODO that should be the condition I guess
+
+	# TODO: This should be the condition I guess
+	$self->{save}->{ $self->{file} }->{breakpoints}->{$file}->{$row} = 1;
 
 	return;
 }
 
 sub debug_perl_list_breakpoints {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
-
-	my $msg = $self->{_debugger_}->list_break_watch_action();             # LIST context crashes in Debug::Client 0.10
+	# LIST context crashes in Debug::Client 0.10
+	my $msg = $self->{client}->list_break_watch_action;
 	$self->message($msg);
 
 	return;
@@ -255,25 +248,23 @@ sub debug_perl_list_breakpoints {
 
 sub debug_perl_jumpt_to {
 	my $self = shift;
-
-	return if not $self->debugger_is_running;
-
-	$self->_set_debugger();
+	$self->running or return;
+	$self->_set_debugger;
 	return;
 }
 
 sub debug_perl_quit {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
+	# Clean up the GUI artifacts
+	my $current = Padre::Current->new;
+	$current->editor->MarkerDeleteAll( Padre::Wx::MarkLocation );
+	$current->main->show_debugger(0);
 
-	my $editor = Padre::Current->editor;
-	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
-
-	Padre->ide->wx->main->show_debugger(0);
-
-	$self->{_debugger_}->quit;
-	delete $self->{_debugger_};
+	# Detach the debugger
+	$self->{client}->quit;
+	delete $self->{client};
 
 	return;
 }
@@ -281,25 +272,23 @@ sub debug_perl_quit {
 sub debug_perl_step_in {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		if ( not $self->debug_perl ) {
-			$main->error( Wx::gettext('Debugger not running') );
+	unless ( $self->{client} ) {
+		unless ( $self->debug_perl ) {
+			Padre::Current->main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 
-		# no need to make first step
+		# No need to make first step
 		return;
 	}
 
-	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_in;
+	my ( $module, $file, $row, $content ) = $self->{client}->step_in;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger();
+	$self->_set_debugger;
 
 	return;
 }
@@ -307,95 +296,82 @@ sub debug_perl_step_in {
 sub debug_perl_step_over {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		if ( not $self->debug_perl ) {
-			$main->error( Wx::gettext('Debugger not running') );
+	unless ( $self->{client} ) {
+		unless ( $self->debug_perl ) {
+			Padre::Current->main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 	}
 
-	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
+	my ( $module, $file, $row, $content ) = $self->{client}->step_over;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger();
+	$self->_set_debugger;
 
 	return;
 }
 
 sub debug_perl_run_to_cursor {
 	my $self = shift;
-
-	my $main = Padre->ide->wx->main;
-
-	my $current = $main->current;
-	return $main->error("Not implemented");
+	Padre::Current->main->error("Not implemented");
 
 	# Commented our for critic:
 	#	my $file = $current->filename;
 	#	my $row  = '';
 	#
 	#	# put a breakpoint to the cursor and then run till there
-	#	$self->debug_perl_run();
+	#	$self->debug_perl_run;
 }
 
 sub debug_perl_run {
 	my $self  = shift;
 	my $param = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		if ( not $self->debug_perl ) {
-			$main->error( Wx::gettext('Debugger not running') );
+	unless ( $self->{client} ) {
+		unless ( $self->debug_perl ) {
+			Padre::Current->main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 	}
 
-	my ( $module, $file, $row, $content ) = $self->{_debugger_}->run($param);
+	my ( $module, $file, $row, $content ) = $self->{client}->run($param);
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger();
+	$self->_set_debugger;
 
 	return;
 }
-
 
 sub debug_perl_step_out {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		$main->error( Wx::gettext('Debugger not running') );
+	unless ( $self->{client} ) {
+		Padre::Current->main->error( Wx::gettext('Debugger not running') );
 		return;
 	}
 
-	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_out;
+	my ( $module, $file, $row, $content ) = $self->{client}->step_out;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger();
+	$self->_set_debugger;
 
 	return;
 }
 
-
 sub debug_perl_show_stack_trace {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
-
-	my $trace = $self->{_debugger_}->get_stack_trace;
+	my $trace = $self->{client}->get_stack_trace;
 	my $str   = $trace;
 	if ( ref($trace) and ref($trace) eq 'ARRAY' ) {
 		$str = join "\n", @$trace;
@@ -405,15 +381,14 @@ sub debug_perl_show_stack_trace {
 	return;
 }
 
-
 sub debug_perl_show_value {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
-
-	my $text = $self->_debug_get_variable() or return;
-
-	my $value = eval { $self->{_debugger_}->get_value($text) };
+	my $text  = $self->_debug_get_variable or return;
+	my $value = eval {
+		$self->{client}->get_value($text)
+	};
 	if ($@) {
 		$self->error( sprintf( Wx::gettext("Could not evaluate '%s'"), $text ) );
 		return;
@@ -424,16 +399,13 @@ sub debug_perl_show_value {
 }
 
 sub _debug_get_variable {
-	my $self = shift;
-
-	my $main     = Padre->ide->wx->main;
-	my $document = $main->current->document;
-	return unless $document;
+	my $self     = shift;
+	my $document = Padre::Current->document or return;
 
 	#my $text = $current->text;
-	my ( $location, $text ) = $document->get_current_symbol();
+	my ( $location, $text ) = $document->get_current_symbol;
 	if ( not $text or $text !~ /^[\$@%\\]/ ) {
-		$main->error(
+		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext(
 					"'%s' does not look like a variable. First select a variable in the code and then try again."),
@@ -447,17 +419,14 @@ sub _debug_get_variable {
 
 sub debug_perl_display_value {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
+	my $text     = $self->_debug_get_variable or return;
+	my $debugger = Padre::Current->main->debugger;
+	my $count    = $debugger->GetItemCount;
+	my $idx      = $debugger->InsertStringItem( $count + 1, $text );
 
-	my $main     = Padre->ide->wx->main;
-	my $text     = $self->_debug_get_variable() or return;
-	my $debugger = $main->debugger;
-
-	my $count = $debugger->GetItemCount;
-	my $idx = $debugger->InsertStringItem( $count + 1, $text );
-
-	#	my $value = eval { $self->{_debugger_}->get_value($text) };
+	#	my $value = eval { $self->{client}->get_value($text) };
 	#	if ($@) {
 	#		$main->error(sprintf(Wx::gettext("Could not evaluate '%s'"), $text));
 	#		return;
@@ -468,23 +437,21 @@ sub debug_perl_display_value {
 
 sub debug_perl_evaluate_expression {
 	my $self = shift;
+	$self->running or return;
 
-	return if not $self->debugger_is_running;
-
-	my $main       = Padre->ide->wx->main;
-	my $expression = $main->prompt(
+	my $expression = Padre::Current->main->prompt(
 		Wx::gettext("Expression:"),
 		Wx::gettext("Expr"),
 		"EVAL_EXPRESSION"
 	);
-	$self->{_debugger_}->execute_code($expression);
+	$self->{client}->execute_code($expression);
 
 	return;
 }
 
 sub quit {
 	my $self = shift;
-	if ( $self->{_debugger_} ) {
+	if ( $self->{client} ) {
 		$self->debug_perl_quit;
 	}
 	return;
@@ -494,7 +461,6 @@ sub quit {
 
 # TODO:
 # Keep the debugger window open even after ending the script
-#
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
