@@ -60,20 +60,16 @@ sub gettext_label {
 }
 
 sub clear {
-	my $self = shift;
-
-	# Remove all items from the tool
-	$self->DeleteAllItems;
-
-	return;
+	$_[0]->DeleteAllItems;
 }
 
 sub set_column_widths {
-	my $self      = shift;
-	my $ref_entry = shift;
-
 	return;
 }
+
+
+
+
 
 #####################################################################
 # Event Handlers
