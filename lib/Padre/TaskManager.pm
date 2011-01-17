@@ -199,7 +199,7 @@ sub step {
 	# Shortcut if there is nowhere to run the task
 	if ( $self->{threads} ) {
 		if ( scalar keys %$handles >= $self->{maximum} ) {
-			if ( Padre::Current->main->config->feature_restart_hung_task_manager ) {
+			if ( Padre::Current->config->feature_restart_hung_task_manager ) {
 
 				# Restart hung task manager!
 				TRACE('PANIC: Restarting task manager') if DEBUG;
@@ -234,6 +234,9 @@ sub step {
 
 	# Find the next/best worker for the task
 	my $worker = $self->best_thread($handle) or return;
+
+	# Prepare handle timing
+	$handle->start_time(time);
 
 	# Send the task to the worker for execution
 	$worker->send_task($handle);
@@ -293,8 +296,11 @@ sub on_signal {
 	}
 
 	# Fine the task handle for the task
-	my $hid = shift @$message;
+	my $hid    = shift @$message;
 	my $handle = $self->{handles}->{$hid} or return;
+
+	# Update idle thread tracking so we don't force-kill this thread
+	$handle->idle_time(time);
 
 	# Handle the special startup message
 	my $method = shift @$message;
