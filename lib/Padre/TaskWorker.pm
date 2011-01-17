@@ -23,7 +23,7 @@ sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
-	# Initialise task execution tracking
+	# Initialise task statistics
 	$self->{seen} = {};
 
 	return $self;
@@ -43,7 +43,7 @@ sub send_task {
 
 	# Tracking for the relationship between the worker and task handle
 	$handle->worker( $self->wid );
-	$self->{handle} = $handle->hid;
+	$self->{handle}  = $handle->hid;
 	$self->{seen}->{ $handle->class } += 1;
 
 	# Send the message to the child
