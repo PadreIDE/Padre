@@ -133,26 +133,6 @@ sub stop_thread {
 	return 1;
 }
 
-# Get the next available free child
-sub next_thread {
-	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $workers = $self->{workers};
-
-	# Find the first free worker of any kind
-	foreach my $worker (@$workers) {
-		next if $worker->handle;
-		return $worker;
-	}
-
-	# Create a new worker if we can
-	if ( @$workers < $self->maximum ) {
-		return $self->start_thread( scalar @$workers );
-	}
-
-	return undef;
-}
-
 # Get the best available child for a particular task
 sub best_thread {
 	TRACE( $_[0] ) if DEBUG;
