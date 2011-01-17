@@ -1928,28 +1928,25 @@ sub _show_outline {
 
 sub show_debug {
 	my $self = shift;
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock('UPDATE');
+	$self->_show_debug($on);
+	$self->aui->Update;
+	return;
+}
 
-	#	unless ( $on == $self->menu->view->{debug}->IsChecked ) {
-	#		$self->menu->view->{debug}->Check($on);
-	#	}
-	#	$self->config->set( main_debugger => $on );
-	#	$self->config->write;
-
-	if ($on) {
+sub _show_debug {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
 		my $debugger = $self->debugger;
 		$self->right->show($debugger);
 	} elsif ( $self->has_debugger ) {
 		my $debugger = $self->debugger;
 		$self->right->hide($debugger);
 	}
-
-	$self->aui->Update;
-	$self->ide->save_config;
-
-	return;
+	return 1;
 }
-
 
 =pod
 
