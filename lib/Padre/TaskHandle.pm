@@ -76,7 +76,7 @@ sub inbox {
 sub start_time {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	$self->{start_time} = shift if @_;
+	$self->{start_time} = $self->{idle_time} = shift if @_;
 	$self->{start_time};
 }
 

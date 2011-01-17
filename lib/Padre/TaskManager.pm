@@ -14,9 +14,12 @@ use Padre::Logger;
 our $VERSION        = '0.79';
 our $BACKCOMPATIBLE = '0.66';
 
+# Timeout values
+use constant MAX_START_TIMEOUT => 10;
+use constant MAX_IDLE_TIMEOUT  => 30;
+
 # Set up the primary integration event
 our $THREAD_SIGNAL : shared;
-
 BEGIN {
 	$THREAD_SIGNAL = Wx::NewEventType();
 }
