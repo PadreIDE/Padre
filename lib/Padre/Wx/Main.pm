@@ -694,8 +694,8 @@ Returns the find dialog, creating a new one if needed.
 sub find {
 	my $self = shift;
 	unless ( defined $self->{find} ) {
-		require Padre::Wx::Dialog::Find;
-		$self->{find} = Padre::Wx::Dialog::Find->new($self);
+		require Padre::Wx::Dialog::Find2;
+		$self->{find} = Padre::Wx::Dialog::Find2->new($self);
 	}
 	return $self->{find};
 }

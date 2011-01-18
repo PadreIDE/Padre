@@ -1136,7 +1136,11 @@ sub init {
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
-			$_[0]->find->find;
+			require Padre::Wx::Dialog::Find2;
+			my $dialog = Padre::Wx::Dialog::Find2->new( $_[0] );
+			$dialog->run;
+			$dialog->Destroy;
+			return;
 		},
 	);
 
