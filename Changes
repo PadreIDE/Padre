@@ -4,6 +4,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 0.80 TBA
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)
     - Update German translation (ZENOG)
+    - Added a dwell timer via Padre::Wx::Role::Dwell (ADAMK)
+    - The directory tree search box now has a 1/3rd second dwell (ADAMK)
 
 0.79 not released
     - No incompatible API changes during the 0.80 release cycle

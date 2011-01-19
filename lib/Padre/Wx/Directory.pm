@@ -6,6 +6,7 @@ use warnings;
 use Params::Util                   ();
 use Padre::Cache                   ();
 use Padre::Role::Task              ();
+use Padre::Wx::Role::Dwell         ();
 use Padre::Wx::Role::View          ();
 use Padre::Wx::Role::Main          ();
 use Padre::Wx::Directory::TreeCtrl ();
@@ -15,6 +16,7 @@ use Padre::Logger;
 our $VERSION = '0.79';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::Dwell
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
 	Wx::Panel
@@ -73,21 +75,31 @@ sub new {
 	# This line is causing an error on Ubuntu due to some Wx problems.
 	# see https://bugs.launchpad.net/ubuntu/+source/padre/+bug/485012
 	# Supporting Ubuntu seems to be more important than having this text:
-	$search->SetDescriptiveText( Wx::gettext('Search') ) if Padre::Constant::DISTRO ne 'UBUNTU';
+	if ( Padre::Constant::DISTRO ne 'UBUNTU' ) {
+		$search->SetDescriptiveText( Wx::gettext('Search') );
+	}
 
+	# Use a long and obvious 3 second dwell timer for text events
 	Wx::Event::EVT_TEXT(
-		$self, $search,
+		$self,
+		$search,
 		sub {
 			return if $_[0]->{ignore};
-			shift->on_text(@_);
+			$_[0]->dwell_start( 'on_text', 333 );
 		},
 	);
 
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self, $search,
+		$self,
+		$search,
 		sub {
 			return if $_[0]->{ignore};
-			shift->{search}->SetValue('');
+			$_[0]->{search}->SetValue('');
+
+			# Don't wait for dwell in this case,
+			# shortcut and trigger immediately.
+			$_[0]->dwell_stop('on_text');
+			$_[0]->on_text;
 		},
 	);
 
@@ -176,6 +188,7 @@ sub view_label {
 sub view_close {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->task_reset;
+	$_[0]->dwell_stop('on_text'); # Just in case
 	$_[0]->main->show_directory(0);
 }
 
