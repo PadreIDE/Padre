@@ -30,6 +30,9 @@ sub new {
 	}
 
 	# Property defaults
+	unless ( defined $self->{binary} ) {
+		$self->{binary} = 0;
+	}
 	unless ( defined $self->{skip} ) {
 		$self->{skip} = [];
 	}
@@ -138,6 +141,11 @@ sub run {
 			# Skip if the file is too big
 			if ( $fstat[7] > $self->{maxsize} ) {
 				TRACE("Skipped $fullname: File size $fstat[7] exceeds maximum of $self->{maxsize}") if DEBUG;
+				next;
+			}
+
+			# Unless specifically told otherwise, only read text files
+			unless ( $self->{binary} or -T _ ) {
 				next;
 			}
 
