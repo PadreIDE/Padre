@@ -6,6 +6,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Update German translation (ZENOG)
     - Added a dwell timer via Padre::Wx::Role::Dwell (ADAMK)
     - The directory tree search box now has a 1/3rd second dwell (ADAMK)
+    - Find in Files results convert tabs to 4 spaces to avoid the ugly
+      squares in the results (ADAMK)
 
 0.79 not released
     - No incompatible API changes during the 0.80 release cycle
