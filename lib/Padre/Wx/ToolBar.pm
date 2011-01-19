@@ -17,9 +17,8 @@ our @ISA     = 'Wx::ToolBar';
 use constant DOCKABLE => !Padre::Constant::WXWIN32;
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
-
+	my $class  = shift;
+	my $main   = shift;
 	my $config = $main->config;
 
 	# Prepare the style
