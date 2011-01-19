@@ -5,6 +5,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)
     - Update German translation (ZENOG)
 
+0.79 not released
+    - No incompatible API changes during the 0.80 release cycle
 
 0.78 2011.01.14
     - The nytprof.out and nytprof HTML report directories are added to the
@@ -51,6 +53,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Updated the Copyright notice to reflect the new year. (PLAVEN)
     - Added additional test to copyright.t to check all copyright notices
       have the current year.
+
+0.75 not released
+    - No incompatible API changes during the 0.78 release cycle
 
 0.76 2010.12.08
     - Fix #636: Filter too strict (Padre CPAN module installer) (ZENOG)
@@ -129,6 +134,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - In F2 help search, core module since-Perl-version string is now a v-string
       (e.g. v5.8.9 instead of v5.008009) (AZAWAWI)
     - Correctly start up maximized if we were closed maximized (ADAMK)
+
+0.73 not released
+    - No incompatible API changes during the 0.76 release cycle
 
 0.74 2010.11.14
     - Fix #926 completely: Esc key does not always work in regex editor (ZENOG)
