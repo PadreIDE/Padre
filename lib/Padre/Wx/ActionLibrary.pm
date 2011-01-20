@@ -546,11 +546,11 @@ sub init {
 		id          => Wx::wxID_UNDO,
 		need_editor => 1,
 
-		#		need        => sub {
-		#			my %objects = @_;
-		#			return 0 if !defined( $objects{editor} );
-		#			return $objects{editor}->CanUndo;
-		#		},
+		# need => sub {
+		#     my $current = shift;
+		#     my $editor  = $current->editor or return 0;
+		#     return $editor->CanUndo;
+		# },
 		label      => _T('&Undo'),
 		comment    => _T('Undo last change in current file'),
 		shortcut   => 'Ctrl-Z',
@@ -566,11 +566,11 @@ sub init {
 		id          => Wx::wxID_REDO,
 		need_editor => 1,
 
-		#		need        => sub {
-		#			my %objects = @_;
-		#			return 0 if !defined( $objects{editor} );
-		#			return $objects{editor}->CanRedo;
-		#		},
+		# need => sub {
+		#     my $current = shift;
+		#     my $editor  = $current->editor or return 0;
+		#     return $editor->CanRedo;
+		# },
 		label      => _T('&Redo'),
 		comment    => _T('Redo last undo'),
 		shortcut   => 'Ctrl-Y',
@@ -1945,10 +1945,9 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		need         => sub {
-			my %objects = @_;
-			return 0 unless defined $objects{document};
-			return 0 unless defined $objects{document}->{file};
-			return $objects{document}->{file}->{filename} =~ /\.t$/;
+			my $current  = shift;
+			my $filename = $current->filename or return 0;
+			return $filename =~ /\.t$/;
 		},
 		label      => _T('Run This Test'),
 		comment    => _T('Run the current test if the current document is a test. (prove -bv)'),
@@ -1959,9 +1958,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name => 'run.stop',
-		need => sub {
-			my %objects = @_;
-			return $main->{command} ? 1 : 0;
+		need => sub { 
+			$_[0]->main->{command}
 		},
 		label      => _T('Stop Execution'),
 		comment    => _T('Stop a running task.'),

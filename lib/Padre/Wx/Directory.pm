@@ -4,7 +4,6 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util                   ();
-use Padre::Cache                   ();
 use Padre::Role::Task              ();
 use Padre::Wx::Role::Dwell         ();
 use Padre::Wx::Role::View          ();
@@ -389,6 +388,7 @@ sub refresh {
 		# Save the current model data to the cache
 		# if we potentially need it again later.
 		if ( $ide->project_exists( $self->{root} ) ) {
+			require Padre::Cache;
 			my $stash = Padre::Cache->stash(
 				__PACKAGE__ => $ide->project( $self->{root} ),
 			);
@@ -420,6 +420,7 @@ sub refresh {
 		# Do we have an (out of date) cached state we can use?
 		# If so, display it immediately and update it later on.
 		if ($project) {
+			require Padre::Cache;
 			my $stash = Padre::Cache->stash(
 				__PACKAGE__ => $project,
 			);

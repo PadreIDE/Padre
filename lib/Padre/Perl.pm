@@ -78,8 +78,6 @@ sub perl {
 
 	# Find the exact Perl used to launch Padre
 	return $perl if defined $perl;
-	require Probe::Perl;
-	require File::Which;
 
 	# Use the most correct method first
 	require Probe::Perl;

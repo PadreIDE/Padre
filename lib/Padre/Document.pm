@@ -127,7 +127,6 @@ use warnings;
 use Carp             ();
 use File::Spec       ();
 use File::Temp       ();
-use Padre::Cache     ();
 use Padre::Constant  ();
 use Padre::Current   ();
 use Padre::Util      ();
@@ -343,8 +342,10 @@ sub current {
 ######################################################################
 # Padre::Cache Integration
 
+# The detection of VERSION allows us to make this call without having
+# to load modules at document destruction time if it isn't needed.
 sub DESTROY {
-	if ( defined $_[0]->{filename} ) {
+	if ( defined $_[0]->{filename} and $Padre::Cache::VERSION ) {
 		Padre::Cache->release( $_[0]->{filename} );
 	}
 }
@@ -1245,15 +1246,22 @@ to C<set_indendentation_style>.
 
 sub guess_indentation_style {
 	my $self = shift;
+	my $text = $self->text_get;
 
-	require Text::FindIndent;
-	my $indentation = Text::FindIndent->parse(
-		$self->text_get,
-		skip_pod => $self->isa('Padre::Document::Perl'),
-	);
+	# Hand off to the standalone module
+	my $indentation = 'u'; # Unknown
+	if ( length $text ) {
+		# Allow for the delayed loading of Text::FindIndent if we startup
+		# with no file or a completely empty file.
+		require Text::FindIndent;
+		$indentation = Text::FindIndent->parse(
+			\$text,
+			skip_pod => $self->isa('Padre::Document::Perl'),
+		);
+	}
 
 	my $style;
-	my $config = Padre->ide->config;
+	my $config = $self->current->config;
 	if ( $indentation =~ /^t\d+/ ) { # we only do ONE tab
 		$style = {
 			use_tabs    => 1,

@@ -11,7 +11,6 @@ padre-client - client for Padre
 use 5.008005;
 use strict;
 use warnings;
-use File::Which     ();
 use Getopt::Long    ();
 use Carp            ();
 use Padre::Constant ();
@@ -61,8 +60,8 @@ sub connect_to_server {
 			if ( defined $read and $read == 10 ) {
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
-				require Win32::API;
 				if ( Padre::Constant::WIN32 ) {
+					require Win32::API;
 					Win32::API->new(
 						user32 => $Padre::Startup::AllowSetForeground,
 					)->Call($pid);
@@ -71,7 +70,7 @@ sub connect_to_server {
 			binmode $socket;
 			return $socket
 		} else {
-			# main Padre instance unreachable or does not exist
+			# Main Padre instance unreachable or does not exist
 		}
 	}
 

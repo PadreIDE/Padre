@@ -7,7 +7,6 @@ use strict;
 use warnings;
 use Carp            ();
 use File::Spec      ();
-use File::Glob      ();
 use File::Basename  ();
 use Params::Util    ();
 use Padre::Constant ();
@@ -22,20 +21,34 @@ our $VERSION = '0.79';
 ######################################################################
 # Style Library
 
-# Define the core style library
-our %CORE_STYLES = (
-	default   => _T('Padre'),
-	evening   => _T('Evening'),
-	night     => _T('Night'),
-	ultraedit => _T('Ultraedit'),
-	notepad   => _T('Notepad++'),
-);
+use vars qw{ %CORE_STYLES $USER_DIRECTORY @USER_STYLES };
+BEGIN {
+	# Define the core style library
+	%CORE_STYLES = (
+		default   => _T('Padre'),
+		evening   => _T('Evening'),
+		night     => _T('Night'),
+		ultraedit => _T('Ultraedit'),
+		notepad   => _T('Notepad++'),
+	);
 
-# Locate any custom user styles
-our $USER_DIRECTORY = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
-our @USER_STYLES =
-	map { substr( File::Basename::basename($_), 0, -4 ) }
-	File::Glob::glob( File::Spec->catdir( $USER_DIRECTORY, '*.yml' ) );
+	# Locate any custom user styles
+	@USER_STYLES    = ();
+	$USER_DIRECTORY = File::Spec->catdir(
+		Padre::Constant::CONFIG_DIR,
+		'styles',
+	);
+	if ( -d $USER_DIRECTORY ) {
+		local *STYLEDIR;
+		opendir( STYLEDIR, $USER_DIRECTORY ) or die "Failed to read '$USER_DIRECTORY'";
+		@USER_STYLES = sort map {
+			substr( File::Basename::basename($_), 0, -4 )
+		} grep {
+			/\.yml/
+		} readdir STYLEDIR;
+		closedir STYLEDIR;
+	}
+}
 
 sub core_styles {
 	return %CORE_STYLES;
@@ -54,7 +67,7 @@ sub user_styles {
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}

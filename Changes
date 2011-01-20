@@ -8,6 +8,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - The directory tree search box now has a 1/3rd second dwell (ADAMK)
     - Find in Files results convert tabs to 4 spaces to avoid the ugly
       squares in the results (ADAMK)
+    - Delay loading some modules and removed some other entirely, reducing
+      startup memory cost and IO by 10-15% when few features are on (ADAMK)
 
 0.79 not released
     - No incompatible API changes during the 0.80 release cycle

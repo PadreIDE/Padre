@@ -5,7 +5,6 @@ package Padre::Wx::Menu::Search;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Search   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ();
@@ -102,7 +101,7 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $doc = Padre::Current->editor ? 1 : 0;
+	my $doc  = Padre::Current->editor ? 1 : 0;
 
 	$self->{find}->Enable($doc);
 	$self->{find_next}->Enable($doc);
@@ -110,6 +109,7 @@ sub refresh {
 	$self->{replace}->Enable($doc);
 	$self->{quick_find_next}->Enable($doc);
 	$self->{quick_find_previous}->Enable($doc);
+
 	return;
 }
 

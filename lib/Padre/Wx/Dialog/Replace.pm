@@ -610,6 +610,7 @@ dialog does not result in a valid search.
 
 sub as_search {
 	my $self = shift;
+	require Padre::Search;
 	Padre::Search->new(
 		find_term    => $self->{find_text}->GetValue,
 		find_case    => $self->{find_case}->GetValue,

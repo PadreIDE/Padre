@@ -1,8 +1,13 @@
 package Padre::Wx::ToolBar;
 
+# Implements a toolbar with a small amount of extra intelligence.
+# Please note that currently this toolbar class is ONLY suitable for
+# use as the toolbar for the main window and is not reusable.
+
 use 5.008;
 use strict;
 use warnings;
+use Params::Util      ();
 use Padre::Current    ();
 use Padre::Wx         ();
 use Padre::Wx::Icon   ();
@@ -10,11 +15,21 @@ use Padre::Wx::Editor ();
 use Padre::Constant   ();
 
 our $VERSION = '0.79';
-our @ISA     = 'Wx::ToolBar';
+our @ISA     = qw{
+	Padre::Wx::Role::Main
+	Wx::ToolBar
+};
 
 # NOTE: Something is wrong with dockable toolbars on Windows
 #       so disable them for now.
 use constant DOCKABLE => !Padre::Constant::WXWIN32;
+
+
+
+
+
+######################################################################
+# Construction
 
 sub new {
 	my $class  = shift;
@@ -23,106 +38,105 @@ sub new {
 
 	# Prepare the style
 	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
-	if ( DOCKABLE and not $main->config->main_lockinterface ) {
+	if ( DOCKABLE and not $config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
 
 	# Create the parent Wx object
 	my $self = $class->SUPER::new(
-		$main, -1,
+		$main,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		$style,
 		5050,
 	);
 
-	$self->{main} = $main;
-
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
 	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
-
-	# toolbar id sequence generator
-	# Toolbar likes only unique values. Do otherwise on your own risk.
-	$self->{next_id} = 10000;
 
 	# This is a very first step to create a customizable toolbar.
 	# Actually there is no dialog for editing this parameter, if
 	# anyone wants to change the toolbar, it needs to be done manuelly
 	# within config.yml.
+	my @tools = split /\;/, $config->main_toolbar_items;
 
-	foreach my $item ( split( /\;/, $config->main_toolbar_items ) ) {
-
+	foreach my $item ( @tools ) {
 		if ( $item eq '|' ) {
-			$self->AddSeparator;
-			next;
-		}
+			$self->add_separator;
 
-		if ( $item =~ /^(.+?)\((.*)\)$/ ) {
-			my $action = $1;
+		} elsif ( $item =~ /^(.+?)\((.*)\)$/ ) {
 			$self->add_tool_item(
-				action => $action,
+				action => "$1",
 				args   => split( /\,/, $2 ),
 			);
-			next;
-		}
 
-		if ( $item =~ /^(.+?)$/ ) {
-			my $action = $1;
+		} elsif ( $item =~ /^(.+?)$/ ) {
 			$self->add_tool_item(
-				action => $action,
+				action => "$1",
 			);
-			next;
+
+		} else {
+			# Silently ignore bad toolbar elements (for now)
+			# warn( 'Unknown toolbar item: ' . $item );
 		}
-
-		warn( 'Unknown toolbar item: ' . $item );
-
 	}
 
 	return $self;
 }
 
-#
+
+
+
+
+######################################################################
+# Main Methods
+
+# Because some tools may not work, we only want to draw the separator
+# for real once we are absolutely sure there is a real tool after it.
+sub add_separator {
+	$_[0]->{separator} = 1;
+}
+
 # Add a tool item to the toolbar re-using Padre menu action name
-#
 sub add_tool_item {
-	my ( $self, %args ) = @_;
+	my $self    = shift;
+	my %args    = @_;
 
-	my $actions = Padre::ide->actions;
+	# Find the action, silently aborting if it is unusable
+	my $actions = $self->ide->actions;
+	my $action  = $actions->{ $args{action} } or return;
+	my $icon    = $action->toolbar_icon       or return;
 
-	my $action = $actions->{ $args{action} };
-	unless ($action) {
-
-		# warn("No action called $args{action}\n");
-		return;
-	}
-	my $icon = $action->toolbar_icon;
-	unless ($icon) {
-		warn("Action $args{action} does not have an icon defined\n");
-		return;
+	# Make sure the item list if initialised
+	unless ( Params::Util::_HASH0($self->{item_list}) ) {
+		$self->{item_list} = {};
 	}
 
-	# the ID code should be unique otherwise it can break the event system.
-	# If set to -1 such as in the default call below, it will override
-	# any previous item with that id.
-	my $id = $self->{next_id}++;
-
-	# Store ID on item list
-	$self->{item_list} = {}
-		if ( !defined( $self->{item_list} ) )
-		or ( ref( $self->{item_list} ) ne 'HASH' );
+	# The ID code should be unique otherwise it can break the event
+	# system. If set to -1 such as in the default call below,
+	# it will override any previous item with that id.
+	my $id = Wx::NewId();
 	$self->{item_list}->{$id} = $action;
+
+	# If there is a delayed separator, add it now
+	if ( $self->{separator} ) {
+		$self->AddSeparator;
+		$self->{separator} = 0;
+	}
 
 	# Create the tool
 	$self->AddTool(
-		$id, '',
+		$id,
+		'',
 		Padre::Wx::Icon::find($icon),
 		$action->label_text,
 	);
 
 	# Add the optional event hook
 	Wx::Event::EVT_TOOL(
-		$self->GetParent,
+		$self->main,
 		$id,
 		$action->menu_event,
 	);
@@ -135,46 +149,36 @@ sub refresh {
 	my $current   = Padre::Current::_CURRENT(@_);
 	my $editor    = $current->editor;
 	my $document  = $current->document;
-	my $text      = $current->text;
-	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
+	my $modified  = ( defined $document and $document->is_modified );
+	my $text      = defined Params::Util::_STRING($current->text);
+	my $file      = (
+		defined $document
+		and
+		defined $document->{file}
+		and
+		defined $document->file->{filename}
+	);
 
 	foreach my $item ( keys( %{ $self->{item_list} } ) ) {
-
 		my $action = $self->{item_list}->{$item};
+		if ( $action->{need_editor} and not $editor ) {
+			$self->EnableTool( $item, 0 );
 
-		my $enabled = 1; # Set default
+		} elsif ( $action->{need_file} and not $file ) {
+			$self->EnableTool( $item, 0 );
 
-		$enabled = 0
-			if $action->{need_editor} and ( !$editor );
+		} elsif ( $action->{need_modified} and not $modified ) {
+			$self->EnableTool( $item, 0 );
 
-		$enabled = 0
-			if $action->{need_file}
-				and (  ( !defined($document) )
-					or ( !defined( $document->{file} ) )
-					or ( !defined( $document->file->filename ) ) );
+		} elsif ( $action->{need_selection} and not $text ) {
+			$self->EnableTool( $item, 0 );
 
-		$enabled = 0
-			if $action->{need_modified}
-				and defined($document)
-				and ( !$document->is_modified );
+		} elsif ( $action->{need} and not $action->{need}->($current) ) {
+			$self->EnableTool( $item, 0 );
 
-		$enabled = 0
-			if $action->{need_selection} and ( !$selection );
-
-		$enabled = 0
-			if defined( $action->{need} )
-				and ( ref( $action->{need} ) eq 'CODE' )
-				and (
-					!&{ $action->{need} }(
-						editor   => $editor,
-						document => $document,
-						main     => $self->{main},
-						config   => $self->{main}->config,
-					)
-				);
-
-		$self->EnableTool( $item, $enabled );
-
+		} else {
+			$self->EnableTool( $item, 1 );
+		}
 	}
 
 	return;

@@ -6,10 +6,10 @@ use warnings;
 use Carp              ();
 use Encode            ();
 use File::Spec        ();
-use File::Temp        ();
-use File::Find::Rule  ();
+use File::Basename    ();
 use Params::Util      ();
 use YAML::Tiny        ();
+use Padre::Current    ();
 use Padre::Util       ();
 use Padre::Perl       ();
 use Padre::Document   ();
@@ -767,6 +767,7 @@ sub _find_method {
 		$self->{_methods_}{$_} = $filename for $self->get_functions;
 		my $project_dir = Padre::Util::get_project_dir($filename);
 		if ($project_dir) {
+			require File::Find::Rule;
 			my @files = File::Find::Rule->file->name('*.pm')->in( File::Spec->catfile( $project_dir, 'lib' ) );
 			foreach my $f (@files) {
 				if ( open my $fh, '<', $f ) {
@@ -1208,6 +1209,7 @@ sub perltags_parser {
 			if ( $tagsfile->{protocol} ne 'local' ) {
 
 				# Create temporary local file
+				require File::Temp;
 				$self->{_perltags_temp} = File::Temp->new( UNLINK => 1 );
 
 				# Flush tagsfile content to temporary file

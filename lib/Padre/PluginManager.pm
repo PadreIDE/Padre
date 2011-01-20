@@ -27,8 +27,6 @@ use strict;
 use warnings;
 use lib                    ();
 use Carp                   ();
-use File::Copy             ();
-use File::Glob             ();
 use File::Path             ();
 use File::Spec             ();
 use File::Basename         ();
@@ -222,8 +220,9 @@ sub reset_my_plugin {
 		Carp::croak("Could not find the original My plug-in");
 	}
 
-	# copy the My Plug-in
+	# Copy the My Plug-in
 	unlink $dst;
+	require File::Copy;
 	unless ( File::Copy::copy( $src, $dst ) ) {
 		Carp::croak("Could not copy the My plug-in ($src) to $dst: $!");
 	}

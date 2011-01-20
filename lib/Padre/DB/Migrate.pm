@@ -5,21 +5,18 @@ package Padre::DB::Migrate;
 use 5.008005;
 use strict;
 use warnings;
-use Carp ();
+use Carp              ();
 use File::Spec 3.2701 ();
 use File::Path 2.04   ();
-use File::Basename ();
+use File::Basename    ();
 use Params::Util 0.37 ();
 use DBI 1.58          ();
 use DBD::SQLite 1.21  ();
 use ORLite 1.28       ();
 
-use Padre::DB::Migrate::Patch ();
-
 use vars qw{@ISA};
 
 our $VERSION = '0.79';
-
 
 BEGIN {
 

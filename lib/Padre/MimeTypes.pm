@@ -18,7 +18,6 @@ use 5.008;
 use strict;
 use warnings;
 use Carp           ();
-use Data::Dumper   ();
 use File::Basename ();
 use Padre::Util    ('_T');
 use Padre::Wx      ();
@@ -483,7 +482,8 @@ sub get_highlighter_explanation {
 	my $self = shift;
 	my $name = shift;
 
-	#print Data::Dumper::Dumper \%AVAILABLE_HIGHLIGHTERS;
+	# require Data::Dumper;
+	# print Data::Dumper::Dumper \%AVAILABLE_HIGHLIGHTERS;
 	my ($highlighter) = grep { $AVAILABLE_HIGHLIGHTERS{$_}{name} eq $name } keys %AVAILABLE_HIGHLIGHTERS;
 	if ( not $highlighter ) {
 		Carp::cluck("Could not find highlighter for '$name'\n");
@@ -527,7 +527,7 @@ sub read_current_highlighters_from_db {
 
 	my $current_highlighters = Padre::DB::SyntaxHighlight->select || [];
 
-	# set defaults
+	# Set defaults
 	foreach my $mime_type ( keys %MIME_TYPES ) {
 		$MIME_TYPES{$mime_type}{current_highlighter} = 'stc';
 	}
@@ -536,11 +536,11 @@ sub read_current_highlighters_from_db {
 	foreach my $e (@$current_highlighters) {
 		$MIME_TYPES{ $e->mime_type }{current_highlighter} = $e->value;
 
-		#printf("%s   %s\n", $e->mime_type, $e->value);
+		# printf("%s   %s\n", $e->mime_type, $e->value);
 	}
 
-	#use Data::Dumper;
-	#print Data::Dumper::Dumper \%MIME_TYPES;
+	# require Data::Dumper;
+	# print Data::Dumper::Dumper \%MIME_TYPES;
 }
 
 # returns hash of mime_type => highlighter

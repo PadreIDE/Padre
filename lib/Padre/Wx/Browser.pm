@@ -24,8 +24,7 @@ use warnings;
 use URI                   ();
 use Encode                ();
 use Scalar::Util          ();
-use List::MoreUtils       ();
-use Params::Util          (qw{ _INSTANCE _INVOCANT _HASH _STRING });
+use Params::Util          ();
 use Padre::Util           ('_T');
 use Padre::Browser        ();
 use Padre::Task::Browser  ();
@@ -71,7 +70,7 @@ sub new {
 	$self->{provider} = Padre::Browser->new;
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon(Padre::Wx::Icon::PADRE);
+	$self->SetIcon( Padre::Wx::Icon::PADRE );
 
 	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -91,7 +90,9 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$self->{search}->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
+	$self->{search}->SetToolTip(
+		Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') )
+	);
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self,
@@ -106,7 +107,9 @@ sub new {
 		Wx::wxDefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
-	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
+	$label->SetToolTip(
+		Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') )
+	);
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 
@@ -209,16 +212,16 @@ sub help {
 	my $document = shift;
 	my $hint     = shift;
 
-	if ( _INSTANCE( $document, 'Padre::Document' ) ) {
+	if ( Params::Util::_INSTANCE( $document, 'Padre::Document' ) ) {
 		$document = $self->padre2docbrowser($document);
 	}
 
 	my %hints = (
 		$self->_hints,
-		_HASH($hint) ? %$hint : (),
+		Params::Util::_HASH($hint) ? %$hint : (),
 	);
 
-	if ( _INVOCANT($document) and $document->isa('Padre::Browser::Document') ) {
+	if ( Params::Util::_INVOCANT($document) and $document->isa('Padre::Browser::Document') ) {
 		if ( $self->viewer_for( $document->guess_mimetype ) ) {
 			return $self->display($document);
 		}
@@ -292,7 +295,7 @@ sub display {
 	my $docs  = shift;
 	my $query = shift;
 
-	if ( _INSTANCE( $docs, 'Padre::Browser::Document' ) ) {
+	if ( Params::Util::_INSTANCE( $docs, 'Padre::Browser::Document' ) ) {
 
 		# if doc is html just display it
 		# TO DO, a means to register other wx display windows such as ?!
@@ -335,7 +338,7 @@ sub show_page {
 	my $docs  = shift;
 	my $query = shift;
 
-	unless ( _INSTANCE( $docs, 'Padre::Browser::Document' ) ) {
+	unless ( Params::Util::_INSTANCE( $docs, 'Padre::Browser::Document' ) ) {
 		return $self->not_found($query);
 	}
 
@@ -344,11 +347,11 @@ sub show_page {
 
 	# Best effort to title the tab ANYTHING more useful
 	# than 'Untitled'
-	if ( _INSTANCE( $query, 'Padre::Browser::Document' ) ) {
+	if ( Params::Util::_INSTANCE( $query, 'Padre::Browser::Document' ) ) {
 		$title = $query->title;
 	} elsif ( $docs->title ) {
 		$title = $docs->title;
-	} elsif ( _STRING($query) ) {
+	} elsif ( Params::Util::_STRING($query) ) {
 		$title = $query;
 	}
 

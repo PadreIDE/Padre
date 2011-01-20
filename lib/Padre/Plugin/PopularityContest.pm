@@ -299,6 +299,7 @@ sub report_show {
 	my $yaml = YAML::Tiny::Dump($report);
 
 	# Show the result in a text box
+	require Padre::Wx::Dialog::Text;
 	Padre::Wx::Dialog::Text->show(
 		$self->main,
 		Wx::gettext('Popularity Contest Report'),

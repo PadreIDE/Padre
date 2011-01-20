@@ -26,47 +26,39 @@ use 5.008005;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                           ();
-use Carp                          ();
-use Config                        ();
-use IPC::Open3                    ();
-use File::Spec                    ();
-use File::HomeDir                 ();
-use File::Basename                ();
-use File::Temp                    ();
-use List::Util                    ();
-use List::MoreUtils               ();
-use Scalar::Util                  ();
-use Params::Util                  ();
-use Time::HiRes                   ();
-use Padre::Wx::Action             ();
-use Padre::Wx::ActionLibrary      ();
-use Padre::Wx::WizardLibrary      ();
-use Padre::Constant               ();
-use Padre::Util                   ('_T');
-use Padre::Perl                   ();
-use Padre::Locale                 ();
-use Padre::Current                ();
-use Padre::Document               ();
-use Padre::DB                     ();
-use Padre::Locker                 ();
-use Padre::Util::Template         ();
-use Padre::Wx                     ();
-use Padre::Wx::Icon               ();
-use Padre::Wx::Debugger           ();
-use Padre::Wx::Display            ();
-use Padre::Wx::Editor             ();
-use Padre::Wx::Menubar            ();
-use Padre::Wx::ToolBar            ();
-use Padre::Wx::Notebook           ();
-use Padre::Wx::StatusBar          ();
-use Padre::Wx::AuiManager         ();
-use Padre::Wx::FileDropTarget     ();
-use Padre::Wx::Dialog::Text       ();
-use Padre::Wx::Dialog::FilterTool ();
-use Padre::Wx::Role::Conduit      ();
-use Padre::Wx::Role::Dialog       ();
-use Padre::Wx::Dialog::WindowList ();
+use Cwd                       ();
+use Carp                      ();
+use Config                    ();
+use File::Spec                ();
+use File::HomeDir             ();
+use File::Basename            ();
+use File::Temp                ();
+use List::Util                ();
+use Scalar::Util              ();
+use Params::Util              ();
+use Time::HiRes               ();
+use Padre::Wx::Action         ();
+use Padre::Wx::ActionLibrary  ();
+use Padre::Wx::WizardLibrary  ();
+use Padre::Constant           ();
+use Padre::Util               ('_T');
+use Padre::Perl               ();
+use Padre::Locale             ();
+use Padre::Current            ();
+use Padre::Document           ();
+use Padre::DB                 ();
+use Padre::Locker             ();
+use Padre::Wx                 ();
+use Padre::Wx::Icon           ();
+use Padre::Wx::Display        ();
+use Padre::Wx::Editor         ();
+use Padre::Wx::Menubar        ();
+use Padre::Wx::Notebook       ();
+use Padre::Wx::StatusBar      ();
+use Padre::Wx::AuiManager     ();
+use Padre::Wx::FileDropTarget ();
+use Padre::Wx::Role::Conduit  ();
+use Padre::Wx::Role::Dialog   ();
 use Padre::Logger;
 
 our $VERSION        = '0.79';
@@ -217,6 +209,7 @@ sub new {
 
 	# Create the tool bar
 	if ( $config->main_toolbar ) {
+		require Padre::Wx::ToolBar;
 		$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
 		$self->GetToolBar->Realize;
 	}
@@ -284,9 +277,12 @@ sub new {
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
 
+	# This require is only here so it can follow this constructor
+	# when it moves to being created on demand.
+	require Padre::Wx::Debugger;
 	$self->{debugger} = Padre::Wx::Debugger->new;
 
-	# we need an event immediately after the window opened
+	# We need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did
 	# not show the status bar which is ok, but then when we selected the menu
 	# to show it, it showed at the top) so now we always turn the status bar on
@@ -1776,14 +1772,15 @@ recreate it from scratch.
 =cut
 
 sub rebuild_toolbar {
-	my $self = shift;
-
+	my $self    = shift;
 	my $toolbar = $self->GetToolBar;
 	$toolbar->Destroy if $toolbar;
 
+	require Padre::Wx::Toolbar;
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
 	$self->GetToolBar->refresh;
 	$self->GetToolBar->Realize;
+
 	return 1;
 }
 
@@ -3636,12 +3633,13 @@ sub on_open_selection {
 	}
 
 	# Pick a file
-	@files = List::MoreUtils::uniq @files;
+	require List::MoreUtils;
+	@files = List::MoreUtils::uniq(@files);
 	if ( @files > 1 ) {
 		my $file = $self->single_choice(
 			Wx::gettext('Choose File'),
 			'',
-			[ List::MoreUtils::uniq @files ],
+			[ @files ],
 		);
 		$self->setup_editors($file) if defined $file;
 	} else {
@@ -3681,9 +3679,7 @@ Prompt user for a command to filter the selection/document.
 
 sub on_filter_tool {
 	require Padre::Wx::Dialog::FilterTool;
-	my $self   = shift;
-	my $filter = Padre::Wx::Dialog::FilterTool->new($self);
-	$filter->show;
+	Padre::Wx::Dialog::FilterTool->new($_[0])->show;
 }
 
 =head3 C<on_open_url>
@@ -3943,6 +3939,7 @@ sub on_reload_some {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 
+	require Padre::Wx::Dialog::WindowList;
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Reload some files'),
@@ -4578,6 +4575,7 @@ sub on_close_some {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 
+	require Padre::Wx::Dialog::WindowList;
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Close some files'),
@@ -5793,6 +5791,7 @@ sub timer_check_overwrite {
 	#	}
 
 	# Show dialog for file reload selection
+	require Padre::Wx::Dialog::WindowList;
 	my $winlist = Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Reload some files'),
@@ -5913,15 +5912,18 @@ sub on_new_from_template {
 		$self->error("Failed to find template '$file'");
 	}
 
-	my $data = {
-		config => $self->{config},
-		util   => Padre::Util::Template->new,
-	};
-
 	# Generate the full file content
 	require Template::Tiny;
+	require Padre::Util::Template;
 	my $output = '';
-	Template::Tiny->new->process( $template, $data, \$output );
+	Template::Tiny->new->process(
+		$template,
+		{
+			config => $self->{config},
+			util   => Padre::Util::Template->new,
+		},
+		\$output,
+	);
 
 	# Create the file from the content
 	require Padre::MimeTypes;
@@ -6277,6 +6279,7 @@ sub _filter_tool_run {
 	my $filter_out;
 	my $filter_err;
 
+	require IPC::Open3;
 	unless ( IPC::Open3::open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
 		$self->error( sprintf( Wx::gettext("Error running filter tool:\n%s"), $! ) );
 		return;

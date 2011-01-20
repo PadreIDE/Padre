@@ -38,9 +38,6 @@ sub plugin_icon {
 sub plugin_enable {
 	my $self = shift;
 
-	# Load our non-core dependencies
-	require Devel::Dumpvar;
-
 	# Load our configuration
 	# (Used for testing purposes)
 	$self->{config} = $self->config_read;
@@ -158,9 +155,7 @@ sub dump_taskmanager {
 	return $self->_dump( $self->current->ide->task_manager );
 }
 
-#
 # Dumps the current Perl 5 PPI document to the current output window
-#
 sub dump_ppi {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -187,12 +182,13 @@ sub dump_ppi {
 }
 
 sub dump_padre {
-	my $self = shift;
-	return $self->_dump( $self->current->ide );
+	$_[0]->_dump( $_[0]->current->ide );
 }
 
+# Copy %INC and @INC before passing them to _dump,
+# so changes during the _dump process aren't in the output.
 sub dump_inc {
-	$_[0]->_dump( \%INC, \@INC );
+	$_[0]->_dump( { %INC }, [ @INC ] );
 }
 
 sub dump_display {
@@ -333,6 +329,7 @@ sub _dump {
 	my $main = $self->current->main;
 
 	# Generate the dump string and set into the output window
+	require Devel::Dumpvar;
 	$main->output->SetValue( Devel::Dumpvar->new( to => 'return' )->dump(@_) );
 	$main->output->SetSelection( 0, 0 );
 	$main->show_output(1);

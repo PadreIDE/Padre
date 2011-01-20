@@ -3,6 +3,7 @@ package Padre::Wx::Action;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util    ();
 use Padre::Config   ();
 use Padre::Constant ();
 use Padre::Wx       ();
@@ -66,22 +67,30 @@ sub create {
 sub new {
 	my $class    = shift;
 	my $ide      = Padre->ide;
+	my $config   = $ide->config;
 	my $actions  = $ide->actions;
-	my $self     = bless { id => -1, @_ }, $class;
-	my $name     = $self->{name};
-	my $shortcut = defined $self->{shortcut} ? $self->{shortcut} : '';
 
-	# Check the name
+	# Create the raw object
+	my $self = bless {
+		id       => -1,
+		shortcut => '',
+		@_,
+	}, $class;
+
+	# Check params
+	my $name = $self->{name};
 	unless ( defined $name and length $name ) {
 		die join( ',', caller ) . ' tried to create an action without name';
 	}
 	if ( $name =~ /^menu\./ ) {
-
 		# The menu prefix is dedicated to menus and must not be used by actions
 		die join( ',', caller ) . ' tried to create an action with name prefix menu';
 	}
-	if ( $actions->{$name} && $name !~ /^view\.language\./ ) {
+	if ( $actions->{$name} and $name !~ /^view\.language\./ ) {
 		warn "Found a duplicate action '$name'\n";
+	}
+	if ( defined $self->{need} and not Params::Util::_CODE($self->{need}) ) {
+		die "Custom action 'need' param must be a CODE reference";
 	}
 
 	# Menu events are handled by Padre::Wx::Action, the real events
@@ -95,9 +104,9 @@ sub new {
 	$self->{queue_event} ||= $self->{menu_event};
 
 	# Create shortcut setting for the action
-	my $config  = Padre->ide->config;
-	my $setting = $self->shortcut_setting;
-	if ( not $config->can($setting) ) {
+	my $shortcut = $self->shortcut;
+	my $setting  = $self->shortcut_setting;
+	unless ( $config->can($setting) ) {
 		$config->setting(
 			name    => $setting,
 			type    => Padre::Constant::ASCII,
@@ -331,9 +340,9 @@ The CODE receives a list of objects which should help with the decision:
 A typical sub for handling would look like this:
 
   need => sub {
-      my %objects = @_;
-      return 0 if !defined( $objects{editor} );
-      return $objects{editor}->CanUndo;
+      my $current = shift;
+      my $editor  = $current->editor or return 0;
+      return $editor->CanUndo;
   },
 
 Use this with caution! As this function is called very often there are few

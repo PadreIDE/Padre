@@ -6,7 +6,6 @@ use 5.008;
 use strict;
 use warnings;
 use File::Spec   ();
-use Padre::Cache ();
 
 our $VERSION = '0.79';
 
@@ -314,9 +313,10 @@ sub name {
 ######################################################################
 # Padre::Cache Integration
 
+# The detection of VERSION allows us to make this call without having
+# to load modules at project destruction time if it isn't needed.
 sub DESTROY {
-	if ( defined $_[0]->{root} ) {
-		require Padre::Cache;
+	if ( defined $_[0]->{root} and $Padre::Cache::VERSION ) {
 		Padre::Cache->release( $_[0]->{root} );
 	}
 }
