@@ -111,8 +111,9 @@ sub import {
 		}
 
 		# Load the modules needed for the migration
-		require Padre::Perl;
 		require File::pushd;
+		require Padre::Perl;
+		require Padre::DB::Migrate::Patch;
 
 		# Locate the include path we need for Padre::DB::Migrate::Patch,
 		# so we can force-include it and be sure they find the right one.
