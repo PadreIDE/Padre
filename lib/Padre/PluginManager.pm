@@ -31,6 +31,7 @@ use File::Spec             ();
 use File::Basename         ();
 use Scalar::Util           ();
 use Params::Util           ();
+use Class::Inspector       ();
 use Padre::Constant        ();
 use Padre::Current         ();
 use Padre::Util            ();
@@ -551,7 +552,7 @@ sub _load_plugin {
 	}
 
 	# Is the plugin compatible with this Padre
-	my $compatible = $self->_compatible($module);
+	my $compatible = $self->compatible($module);
 	if ($compatible) {
 		$plugin->errstr(
 			sprintf(
@@ -619,7 +620,7 @@ sub _load_plugin {
 	return 1;
 }
 
-sub _compatible {
+sub compatible {
 	my $self   = shift;
 	my $plugin = shift;
 
@@ -633,16 +634,32 @@ sub _compatible {
 		my $module = shift @needs;
 		my $need   = shift @needs;
 
-		# Make sure the subsystem is loaded
-		local $@;
-		eval "require $module;";
-		return "$module no longer exists" if $@;
+		# We take two different approaches to the capture of the
+		# version and compatibility values depending on whether
+		# the module has been loaded or not.
+		my $version;
+		my $compat;
+		if ( Class::Inspector->loaded($module) ) {
+			no strict 'refs';
+			$version = ${"${module}::VERSION"}    || 0;
+			$compat  = ${"${module}::COMPATIBLE"} || 0;
 
-		# Do we fall inside the version boundaries
-		no strict 'refs';
-		my $version = ${"${module}::VERSION"}    || 0;
-		my $compat  = ${"${module}::COMPATIBLE"} || 0;
+		} else {
+			# Find the unloaded file
+			my $file = Class::Inspector->resolved_filename($module);
+			unless ( defined $file ) {
+				return "$module is not installed or undetectable";
+			}
 
+			# Scan the unloaded file ala EU:MakeMaker
+			$version = Padre::Util::parse_variable($file, 'VERSION');
+			$compat  = Padre::Util::parse_variable($file, 'COMPATIBLE');
+
+		}
+
+		# Does the dependency meet the criteria?
+		$version = 0 if $version eq 'undef';
+		$compat  = 0 if $compat  eq 'undef';
 		unless ( $need <= $version ) {
 			return "$module is needed at newer version $need";
 		}

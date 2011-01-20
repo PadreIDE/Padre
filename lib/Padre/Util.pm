@@ -34,11 +34,18 @@ use List::Util      ();
 use POSIX           ();
 use Padre::Constant ();
 
-our $VERSION   = '0.79';
+# If we make $VERSION an 'our' variable the parse_variable() function breaks
+use vars qw($VERSION);
+BEGIN {
+	$VERSION = '6.56';
+}
+
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
 
 my %project_dir_cache;
+
+
 
 
 
@@ -469,27 +476,30 @@ sub get_project_dir {
 
 =pod
 
-=head2 C<parse_version>
+=head2 C<parse_variable>
 
-B<This is a clone of L<ExtUtils::MakeMaker> C<parse_version> to prevent loading
+B<This is a clone of L<ExtUtils::MakeMaker> C<parse_variable> to prevent loading
 a bunch of other modules>
 
-    my $version = Padre::Util::parse_version($file);
+    my $version = Padre::Util::parse_variable($file, 'VERSION');
 
-Parse a C<$file> and return what C<$VERSION> is set to by the first assignment.
+Parse a C<$file> and return what C<$VERSION> (or some other variable) is set to
+by the first assignment.
+
 It will return the string C<"undef"> if it can't figure out what C<$VERSION>
-is. C<$VERSION> should be for all to see, so C<our $VERSION> or plain C<$VERSION>
-are okay, but C<my $VERSION> is not.
+is. C<$VERSION> should be for all to see, so C<our $VERSION> or plain
+C<$VERSION> are okay, but C<my $VERSION> is not.
 
-C<parse_version()> will try to C<use version> before checking for
+C<parse_variable()> will try to C<use version> before checking for
 C<$VERSION> so the following will work.
 
     $VERSION = qv(1.2.3);
 
 =cut
 
-sub parse_version {
+sub parse_variable {
 	my $parsefile = shift;
+	my $variable  = shift || 'VERSION';
 	my $result;
 	local $/ = "\n";
 	local $_;
@@ -501,31 +511,42 @@ sub parse_version {
 		next if $inpod || /^\s*#/;
 		chop;
 		next if /^\s*(if|unless)/;
-		next unless m{(?<!\\) ([\$*]) (([\w\:\']*) \bVERSION)\b .* =}x;
-		my $eval = qq{
-			package Padre::Util::_version;
-			no strict;
-			BEGIN { eval {
-				# Ensure any version() routine which might have leaked
-				# into this package has been deleted.  Interferes with
-				# version->import()
-				undef *version;
-				require version;
-				"version"->import;
-			} }
-			local $1$2;
-			\$$2=undef;
-			do {
-				$_
+		if ( $variable eq 'VERSION' and m{^ \s* package \s+ \w[\w\:\']* \s+ (v?[0-9._]+) \s* ;  }x ) {
+			local $^W = 0;
+			$result = $1;
+		}
+		elsif ( m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x ) {
+			my $eval = qq{
+				package ExtUtils::MakeMaker::_version;
+				no strict;
+				BEGIN { eval {
+					# Ensure any version() routine which might have leaked
+					# into this package has been deleted.  Interferes with
+					# version->import()
+					undef *version;
+					require version;
+					"version"->import;
+				} }
+
+				local $1$2;
+				\$$2=undef;
+				do {
+					$_
+				};
+				\$$2;
 			};
-			\$$2;
-		};
-		local $^W = 0;
-		$result = eval($eval);
-		warn "Could not eval '$eval' in $parsefile: $@" if $@;
+			local $^W = 0;
+			$result = eval($eval);  ## no critic
+			warn "Could not eval '$eval' in $parsefile: $@" if $@;
+		}
+		else {
+			next;
+		}
 		last if defined $result;
 	}
 	close $fh;
+
+	$result = "undef" unless defined $result;
 	return $result;
 }
 

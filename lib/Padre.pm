@@ -63,11 +63,11 @@ sub import {
 	# Find everything under Padre:: with a matching version,
 	# which almost certainly means it is part of the main Padre release.
 	require File::Find::Rule;
-	require ExtUtils::MakeMaker;
+	require Padre::Util;
 	my @children = grep { not $INC{$_} }
 		map {"Padre/$_->[0]"}
 		grep { defined( $_->[1] ) and $_->[1] eq $VERSION }
-		map { [ $_, ExtUtils::MM_Unix->parse_version( File::Spec->catfile( $parent, $_ ) ) ] }
+		map { [ $_, Padre::Util::parse_variable( File::Spec->catfile( $parent, $_ ) ) ] }
 		File::Find::Rule->name('*.pm')->file->relative->in($parent);
 
 	# Load all of them (ignoring errors)

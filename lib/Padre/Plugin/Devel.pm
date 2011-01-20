@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Wx     ();
+use Padre::Util   ();
 use Padre::Plugin ();
 
 our $VERSION = '0.79';
@@ -288,11 +289,10 @@ sub load_everything {
 
 	# Find everything under Padre:: with a matching version
 	require File::Find::Rule;
-	require ExtUtils::MakeMaker;
 	my @children = grep { not $INC{$_} }
 		map {"Padre/$_->[0]"}
 		grep { defined( $_->[1] ) and $_->[1] eq $VERSION }
-		map { [ $_, ExtUtils::MM_Unix->parse_version( File::Spec->catfile( $parent, $_ ) ) ] }
+		map { [ $_, Padre::Util::parse_variable( File::Spec->catfile( $parent, $_ ) ) ] }
 		File::Find::Rule->name('*.pm')->file->relative->in($parent);
 	$main->message( sprintf( Wx::gettext('Found %s unloaded modules'), scalar @children ) );
 	return unless @children;
