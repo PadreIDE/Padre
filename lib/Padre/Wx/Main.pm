@@ -1776,7 +1776,7 @@ sub rebuild_toolbar {
 	my $toolbar = $self->GetToolBar;
 	$toolbar->Destroy if $toolbar;
 
-	require Padre::Wx::Toolbar;
+	require Padre::Wx::ToolBar;
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
 	$self->GetToolBar->refresh;
 	$self->GetToolBar->Realize;

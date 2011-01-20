@@ -470,7 +470,7 @@ setting(
 
 		# (Ticket #668)
 
-		if ($Padre::Wx::Toolbar::DOCKABLE) {
+		if ($Padre::Wx::ToolBar::DOCKABLE) {
 			$main->rebuild_toolbar;
 		}
 

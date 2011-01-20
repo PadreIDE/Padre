@@ -4,6 +4,9 @@ package Padre::Wx::ToolBar;
 # Please note that currently this toolbar class is ONLY suitable for
 # use as the toolbar for the main window and is not reusable.
 
+$DB::single = 1;
+$DB::single = 1;
+
 use 5.008;
 use strict;
 use warnings;
