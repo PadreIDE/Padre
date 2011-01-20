@@ -7,6 +7,7 @@ package Padre::Util::SVN;
 use 5.008005;
 use strict;
 use warnings;
+use File::Spec ();
 
 our $VERSION = '0.79';
 
@@ -37,7 +38,7 @@ sub directory_revision {
 
 	# Find the headline revision
 	local $/ = undef;
-	open( my $fh, "<", $entries ) or return;
+	open( my $fh, '<', $entries ) or return;
 	my $buffer = <$fh>;
 	close $fh;
 

@@ -15,7 +15,6 @@ use File::Spec    ();
 use File::HomeDir ();
 use List::Util    ();
 use Scalar::Util  ();
-use Getopt::Long  ();
 use YAML::Tiny    ();
 use DBI           ();
 use DBD::SQLite   ();
@@ -138,15 +137,11 @@ sub new {
 	$self->{config} = Padre::Config->read;
 
 	# Actions and keyboard shortcuts registries
-	$self->actions(   {} );
+	$self->actions( {} );
 	$self->shortcuts( {} );
 
 	# Wizard registry
 	$self->wizards( {} );
-
-	# Load a few more bits and pieces now we know
-	# that we'll need them
-	require Padre::Project;
 
 	# Create the plugin manager
 	require Padre::PluginManager;
@@ -266,8 +261,10 @@ sub project {
 	my $self = shift;
 	my $root = shift;
 	unless ( $self->{project}->{$root} ) {
-		my $nofile = File::Spec->catfile( $root, 'a' );
-		$self->{project}->{$root} = Padre::Project->from_file($nofile);
+		require Padre::Project;
+		$self->{project}->{$root} = Padre::Project->from_file(
+			File::Spec->catfile( $root, 'a' ),
+		);
 	}
 	return $self->{project}->{$root};
 }

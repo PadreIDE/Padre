@@ -25,7 +25,6 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 use 5.008;
 use strict;
 use warnings;
-use lib                    ();
 use Carp                   ();
 use File::Path             ();
 use File::Spec             ();

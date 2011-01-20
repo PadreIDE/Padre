@@ -141,6 +141,7 @@ sub from_file {
 		# Fall back to looking for null projects
 		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
 		if ( -f $padre_yml ) {
+			require Padre::Project;
 			return Padre::Project->new(
 				root      => File::Spec->catpath( $v, $dir, '' ),
 				padre_yml => $padre_yml,
