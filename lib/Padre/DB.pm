@@ -25,6 +25,9 @@ use Padre::DB::Migrate {
 		'timeline',
 	),
 
+	# Allow overlay classes to override methods fully
+	shim => 1,
+
 	# Acceleration options (remove these if they cause trouble)
 	array      => 1,
 	xsaccessor => 0, # TODO see t/62-migrate.t for explanation
