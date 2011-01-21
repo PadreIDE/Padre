@@ -9,6 +9,8 @@ package Padre::DB::RecentlyUsed;
 use 5.008;
 use strict;
 use warnings;
+use File::Spec      ();
+use Padre::Constant ();
 
 our $VERSION = '0.79';
 

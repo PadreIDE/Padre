@@ -9,8 +9,57 @@ package Padre::DB::SessionFile;
 use 5.008;
 use strict;
 use warnings;
+use File::Spec      ();
+use Padre::Constant ();
 
 our $VERSION = '0.79';
+
+
+
+
+
+######################################################################
+# Portability Support
+
+if ( Padre::Constant::PORTABLE ) {
+
+	*new = sub {
+		my $class = shift;
+		my %param = @_;
+		if ( $param{file} ) {
+			$param{file} = File::Spec->abs2rel(
+				$param{file},
+				Padre::Constant::PORTABLE,
+			);
+			$param{file} = '.' unless length $param{file};
+		}
+		$class->SUPER::new(%param);
+	} if __PACKAGE__->can('new');
+
+	*file = sub {
+		my $self = shift;
+		my $file = $self->SUPER::file(@_);
+		unless ( defined $file and length $file ) {
+			return $file;
+		}
+		File::Spec->rel2abs( $file, Padre::Constant::PORTABLE );
+	} if __PACKAGE__->can('file');
+
+	*set = sub {
+		my $self  = shift;
+		my $name  = shift;
+		my $value = shift;
+		if ( $name and $name eq 'file' ) {
+			$value = File::Spec->abs2rel(
+				$value,
+				Padre::Constant::PORTABLE,
+			);
+			$value = '.' if $value = '';
+		}
+		$self->SUPER::set( $name => $value );
+	} if __PACKAGE__->can('nset');
+
+}
 
 1;
 
