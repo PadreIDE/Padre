@@ -14,6 +14,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       dependencies and read from the files instead. Saves 2-3meg of RAM (ADAMK)
     - Fixed Padre::Util::parse_variable so we no longer need to make use
       of ExtUtils::MakeMaker and ExtUtils::MM_Unix->parse_version (ADAMK)
+    - Add basic Portable Perl support to Padre::Config (ADAMK)
 
 0.79 not released
     - No incompatible API changes during the 0.80 release cycle

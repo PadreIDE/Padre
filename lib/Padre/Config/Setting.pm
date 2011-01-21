@@ -27,9 +27,16 @@ use Class::XSAccessor {
 	],
 };
 
+
+
+
+
+######################################################################
+# Constructor
+
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Param checking
 	unless ( $self->name ) {
@@ -75,22 +82,8 @@ sub $name {
 }
 END_PERL
 
-	# Literal paths for HOST values
-	# NOTE: This will need to change if we want to support Portable.pm
-	return <<"END_PERL" unless $store == Padre::Constant::PROJECT;
-package Padre::Config;
-
-sub $name {
-	my \$config = \$_[0]->[$store];
-	if ( exists \$config->{$name} and -e \$config->{$name} ) {
-		return \$config->{$name};
-	}
-	return \$DEFAULT{$name};
-}
-END_PERL
-
 	# Relative paths for project-specific paths
-	return <<"END_PERL";
+	return <<"END_PERL" if $store == Padre::Constant::PROJECT;
 package Padre::Config;
 
 sub $name {
@@ -106,6 +99,32 @@ sub $name {
 		}
 	}
 	return \$DEFAULT{$name};
+}
+END_PERL
+
+	# Literal paths for HOST values unless Portable mode is enabled
+	return <<"END_PERL" unless Padre::Constant::PORTABLE;
+package Padre::Config;
+
+sub $name {
+	my \$config = \$_[0]->[$store];
+	if ( exists \$config->{$name} and -e \$config->{$name} ) {
+		return \$config->{$name};
+	}
+	return \$DEFAULT{$name};
+}
+END_PERL
+
+	# Auto-translating accessors for Portable mode
+	return <<"END_PERL";
+package Padre::Config;
+
+sub $name {
+	my \$config = \$_[0]->[$store];
+	my \$path   = ( exists \$config->{$name} and -e \$config->{$name} )
+		? \$config->{$name}
+		: \$DEFAULT{$name};
+	return File::Spec->rel2abs( \$path, Padre::Constant::PORTABLE );
 }
 END_PERL
 }

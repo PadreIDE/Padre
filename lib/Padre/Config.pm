@@ -11,6 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                   ();
+use File::Spec        3.21 (); # 3.21 needed for volume-safe abs2rel call
 use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
@@ -215,7 +216,8 @@ sub set {
 	}
 
 	# We don't need to do additional checks on Padre::Constant::ASCII
-	my $type = $setting->type;
+	my $type  = $setting->type;
+	my $store = $setting->store;
 	if ( $type == Padre::Constant::BOOLEAN ) {
 		$value = 0 if $value eq '';
 		if ( $value ne '1' and $value ne '0' ) {
@@ -240,10 +242,15 @@ sub set {
 		if ( not -e $value ) {
 			Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
 		}
+
+		# If we are in Portable mode convert the path to dist relative if
+		# the setting is going into the host backend.
+		if ( Padre::Constant::PORTABLE and $store == Padre::Constant::HOST ) {
+			$value = File::Spec->abs2rel( $value, Padre::Constant::PORTABLE );
+		}
 	}
 
-	# Set the value into the appropriate backend
-	my $store = $SETTING{$name}->store;
+	# Now we can stash the variable
 	$self->[$store]->{$name} = $value;
 
 	return 1;

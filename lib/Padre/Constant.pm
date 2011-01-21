@@ -5,9 +5,9 @@ package Padre::Constant;
 use 5.008005;
 use strict;
 use warnings;
-use Carp       ();
-use File::Path ();
-use File::Spec ();
+use Carp               ();
+use File::Path         ();
+use File::Spec         ();
 use File::HomeDir 0.91 ();
 
 our $VERSION        = '0.79';
@@ -89,6 +89,13 @@ use constant {
 	PADRE_CRIMSON  => 7,
 	PADRE_BROWN    => 8,
 };
+
+# Portable Perl Support
+use constant PORTABLE => (
+	$Portable::ENABLED
+	and
+	Portable->default->dist_root
+);
 
 # Padre's home dir
 use constant PADRE_HOME => $ENV{PADRE_HOME};
