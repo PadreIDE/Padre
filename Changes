@@ -15,6 +15,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fixed Padre::Util::parse_variable so we no longer need to make use
       of ExtUtils::MakeMaker and ExtUtils::MM_Unix->parse_version (ADAMK)
     - Add basic Portable Perl support to Padre::Config (ADAMK)
+    - Support for more extensive Padre::DB customisation via ORLite 1.48
+      and its new shim => 1 option (ADAMK)
 
 0.79 not released
     - No incompatible API changes during the 0.80 release cycle

@@ -63,7 +63,7 @@ sub get_last_pos {
 	# Find the position in the file
 	Padre::DB->selectcol_arrayref(
 		"select position from last_position_in_file where name = ?",
-		{}, $name,
+		{}, $file,
 	)->[0];
 }
 

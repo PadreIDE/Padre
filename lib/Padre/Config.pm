@@ -247,6 +247,7 @@ sub set {
 		# the setting is going into the host backend.
 		if ( Padre::Constant::PORTABLE and $store == Padre::Constant::HOST ) {
 			$value = File::Spec->abs2rel( $value, Padre::Constant::PORTABLE );
+			$value = '.' if $value eq '';
 		}
 	}
 
