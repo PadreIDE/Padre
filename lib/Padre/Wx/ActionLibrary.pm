@@ -1168,6 +1168,7 @@ sub init {
 
 			# Special case. Make and save a non-regex
 			# case-insensitive search and advance to the next hit.
+			require Padre::Search;
 			my $search = Padre::Search->new(
 				find_case    => 0,
 				find_regex   => 0,
