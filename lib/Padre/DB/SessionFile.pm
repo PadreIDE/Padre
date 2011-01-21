@@ -54,7 +54,7 @@ if ( Padre::Constant::PORTABLE ) {
 				$value,
 				Padre::Constant::PORTABLE,
 			);
-			$value = '.' if $value = '';
+			$value = '.' if $value == '';
 		}
 		$self->SUPER::set( $name => $value );
 	} if __PACKAGE__->can('nset');
