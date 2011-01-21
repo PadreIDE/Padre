@@ -30,11 +30,11 @@ my $devpl;
 # Search for dev.pl
 for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
-		next if !-e File::Spec->catfile( $_, 'dev.pl' );
+		next if !-e File::Spec->catfile( $_, 'dev' );
 	} else {
-		next if !-x File::Spec->catfile( $_, 'dev.pl' );
+		next if !-x File::Spec->catfile( $_, 'dev' );
 	}
-	$devpl = File::Spec->catfile( $_, 'dev.pl' );
+	$devpl = File::Spec->catfile( $_, 'dev' );
 	last;
 }
 
