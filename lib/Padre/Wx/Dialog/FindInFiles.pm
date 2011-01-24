@@ -127,7 +127,7 @@ sub run {
 	# Run the search in the Find in Files tool
 	$self->main->show_findinfiles;
 	$self->main->findinfiles->search(
-		root   => $self->{find_directory}->GetValue,
+		root   => $self->{find_directory}->SaveValue,
 		search => $self->as_search,
 	);
 
@@ -158,7 +158,7 @@ sub as_search {
 	my $self = shift;
 	require Padre::Search;
 	Padre::Search->new(
-		find_term  => $self->{find_term}->GetValue,
+		find_term  => $self->{find_term}->SaveValue,
 		find_case  => $self->{find_case}->GetValue,
 		find_regex => $self->{find_regex}->GetValue,
 	);

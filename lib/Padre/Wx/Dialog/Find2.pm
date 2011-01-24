@@ -38,7 +38,7 @@ sub new {
 		$self,
 		$self->{find_term},
 		sub {
-			shift->refresh;
+			$_[0]->refresh;
 		}
 	);
 
@@ -137,13 +137,6 @@ sub run {
 		return;
 	}
 
-	# Run the search in the Find in Files tool
-	$self->main->show_findinfiles;
-	$self->main->findinfiles->search(
-		root   => $self->{find_directory}->GetValue,
-		search => $self->as_search,
-	);
-
 	return;
 }
 
@@ -170,7 +163,7 @@ sub save {
 sub as_search {
 	my $self = shift;
 	Padre::Search->new(
-		find_term    => $self->{find_term}->GetValue,
+		find_term    => $self->{find_term}->SaveValue,
 		find_case    => $self->{find_case}->GetValue,
 		find_regex   => $self->{find_regex}->GetValue,
 		find_reverse => $self->{find_reverse}->GetValue

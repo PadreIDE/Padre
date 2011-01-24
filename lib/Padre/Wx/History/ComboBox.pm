@@ -83,11 +83,12 @@ sub refresh {
 	return 1;
 }
 
-sub GetValue {
+# Save the current value of the combobox and return it as per GetValue
+sub SaveValue {
 	my $self  = shift;
-	my $value = $self->SUPER::GetValue();
+	my $value = $self->GetValue;
 
-	# If this is a value is not in our recent list, save it.
+	# If this is a value is not in our existing recent list, save it
 	if ( defined $value and length $value ) {
 		if ( $self->FindString($value) == Wx::wxNOT_FOUND ) {
 			Padre::DB::History->create(
