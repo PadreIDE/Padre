@@ -3664,7 +3664,9 @@ sub on_open_all_recent_files {
 
 	# debatable: "reverse" keeps order in "recent files" submenu
 	# but editor tab ordering may "feel" wrong
-	$_[0]->setup_editors( reverse @$files );
+	$_[0]->setup_editors(
+		reverse grep { -e $_ } @$files 
+	);
 }
 
 =pod
