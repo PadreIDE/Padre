@@ -45,6 +45,9 @@ BEGIN {
 
 	# Storage for the default config object
 	$SINGLETON = undef;
+
+	# Load Portable Perl support if needed
+	require Padre::Portable if Padre::Constant::PORTABLE;
 }
 
 # Accessor generation
@@ -246,8 +249,8 @@ sub set {
 		# If we are in Portable mode convert the path to dist relative if
 		# the setting is going into the host backend.
 		if ( Padre::Constant::PORTABLE and $store == Padre::Constant::HOST ) {
-			$value = File::Spec->abs2rel( $value, Padre::Constant::PORTABLE );
-			$value = '.' if $value eq '';
+			# NOTE: Even though this says "directory" it is safe for files too
+			$value = Padre::Portable::freeze_directory($value);
 		}
 	}
 

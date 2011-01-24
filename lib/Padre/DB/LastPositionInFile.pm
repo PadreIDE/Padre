@@ -32,9 +32,11 @@ applied if you use the C<set_last_pos> and C<get_last_pos> methods.
 use 5.008;
 use strict;
 use warnings;
-use File::Spec      ();
 use Padre::Constant ();
 use Padre::Current  ();
+BEGIN {
+	require Padre::Portable if Padre::Constant::PORTABLE;
+}
 
 our $VERSION = '0.79';
 
@@ -52,13 +54,7 @@ Applies appropriate path translation if we are running in Portable Perl.
 
 sub get_last_pos {
 	my $class = shift;
-	my $file  = shift;
-
-	# Portable Perl support
-	$file = File::Spec->abs2rel(
-		$file,
-		Padre::Constant::PORTABLE,
-	) if Padre::Constant::PORTABLE;
+	my $file  = Padre::Constant::PORTABLE ? Padre::Portable::freeze(shift) : shift;
 
 	# Find the position in the file
 	Padre::DB->selectcol_arrayref(
@@ -82,14 +78,8 @@ Applies appropriate path translation if we are running in Portable Perl.
 
 sub set_last_pos {
 	my $class    = shift;
-	my $file     = shift;
+	my $file     = Padre::Constant::PORTABLE ? Padre::Portable::freeze(shift) : shift;
 	my $position = shift;
-
-	# Portable Perl support
-	$file = File::Spec->abs2rel(
-		$file,
-		Padre::Constant::PORTABLE,
-	) if Padre::Constant::PORTABLE;
 
 	my $transaction = Padre::Current->main->lock('DB');
 	$class->delete( 'where name = ?', $file );

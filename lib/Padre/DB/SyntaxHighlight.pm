@@ -10,7 +10,6 @@ package Padre::DB::SyntaxHighlight;
 use 5.008;
 use strict;
 use warnings;
-use Padre::DB      ();
 use Padre::Current ();
 
 our $VERSION = '0.79';

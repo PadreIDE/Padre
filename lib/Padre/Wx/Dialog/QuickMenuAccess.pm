@@ -30,9 +30,10 @@ use Class::XSAccessor {
 
 # -- constructor
 sub new {
-	my ( $class, $main ) = @_;
+	my $class = shift;
+	my $main  = shift;
 
-	# create object
+	# Create object
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
@@ -45,7 +46,7 @@ sub new {
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	# create dialog
+	# Create dialog
 	$self->_create;
 
 	return $self;
@@ -58,8 +59,7 @@ sub new {
 # handler called when the ok button has been clicked.
 #
 sub _on_ok_button_clicked {
-	my ($self) = @_;
-
+	my $self = shift;
 	my $main = $self->main;
 
 	# Open the selected menu item if the user pressed OK
@@ -121,7 +121,7 @@ sub _on_ok_button_clicked {
 # create the dialog itself.
 #
 sub _create {
-	my ($self) = @_;
+	my $self = shift;
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -144,7 +144,7 @@ sub _create {
 # create the buttons pane.
 #
 sub _create_buttons {
-	my ($self) = @_;
+	my $self  = shift;
 	my $sizer = $self->_sizer;
 
 	$self->{ok_button} = Wx::Button->new(
@@ -168,7 +168,7 @@ sub _create_buttons {
 # create controls in the dialog
 #
 sub _create_controls {
-	my ($self) = @_;
+	my $self = shift;
 
 	# search textbox
 	my $search_label = Wx::StaticText->new(

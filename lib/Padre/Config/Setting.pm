@@ -119,13 +119,14 @@ END_PERL
 	return <<"END_PERL";
 package Padre::Config;
 
+use Padre::Portable ();
+
 sub $name {
 	my \$config = \$_[0]->[$store];
 	my \$path   = ( exists \$config->{$name} and -e \$config->{$name} )
 		? \$config->{$name}
 		: \$DEFAULT{$name};
-	return \$path unless Params::Util::_STRING(\$path);
-	return File::Spec->rel2abs( \$path, Padre::Constant::PORTABLE );
+	return Padre::Portable::thaw(\$path);
 }
 END_PERL
 }
