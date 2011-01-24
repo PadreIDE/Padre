@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::Find2;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Search        ();
 use Padre::Wx::FBP::Find ();
 
 our $VERSION = '0.78';
@@ -42,6 +43,51 @@ sub new {
 	);
 
 	return $self;
+}
+
+
+
+
+
+######################################################################
+# Event Handlers
+
+sub find_next {
+	my $self   = shift;
+	my $main   = $self->main;
+	my $config = $self->save;
+
+	# Generate the search object
+	my $search = $self->as_search;
+	unless ($search) {
+		$main->error('Not a valid search');
+
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_term}->SetFocus;
+
+		return;
+	}
+
+	# Apply the search to the current editor
+	my $result = $main->search_next($search);
+
+	# If we're only searching once, we won't need the dialog any more
+	if ( $self->{find_first}->GetValue ) {
+		$self->Hide;
+
+	} elsif ( not $result ) {
+		$main->info(
+			Wx::gettext('No matches found'),
+			Wx::gettext('Search')
+		);
+
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_term}->SetFocus;
+	}
+
+	return;
 }
 
 
