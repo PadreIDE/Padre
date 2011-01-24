@@ -1,0 +1,36 @@
+package Padre::Portable;
+
+# Provides common functionality needed for Portable Perl support
+
+use 5.008;
+use strict;
+use File::Spec      ();
+use Params::Util    ();
+use Padre::Constant ();
+
+our $VERSION = '0.79';
+
+sub freeze {
+	return shift unless defined Params::Util::_STRING($_[0]);
+	File::Spec->abs2rel( shift, Padre::Constant::PORTABLE );
+}	
+
+sub thaw {
+	return shift unless defined Params::Util::_STRING($_[0]);
+	File::Spec->rel2abs( shift, Padre::Constant::PORTABLE );
+}
+
+# Special case for situations where the value might be a directory
+# and MIGHT be the same as the portable root directory.
+sub freeze_directory {
+	return shift unless defined Params::Util::_STRING($_[0]);
+	my $rel = File::Spec->abs2rel( shift, Padre::Constant::PORTABLE );
+	return length($rel) ? $rel : File::Spec->curdir;
+}
+
+1;
+
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
