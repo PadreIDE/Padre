@@ -35,9 +35,10 @@ use POSIX           ();
 use Padre::Constant ();
 
 # If we make $VERSION an 'our' variable the parse_variable() function breaks
-use vars qw($VERSION);
+use vars qw{ $VERSION $COMPATIBLE };
 BEGIN {
-	$VERSION = '6.56';
+	$VERSION    = '0.79';
+	$COMPATIBLE = '0.79';
 }
 
 our @ISA       = 'Exporter';
