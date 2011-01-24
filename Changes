@@ -18,9 +18,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Support for more extensive Padre::DB customisation via ORLite 1.48
       and its new shim => 1 option (ADAMK)
     - Completed first-generation Portable Perl support for Padre (ADAMK)
+    - Add support in Padre::Project for intuiting project versions (ADAMK)
 
 0.79 not released
-    - No incompatible API changes during the 0.80 release cycle
+    - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
 
 0.78 2011.01.14
     - The nytprof.out and nytprof HTML report directories are added to the

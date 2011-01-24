@@ -224,6 +224,11 @@ sub headline {
 	return undef;
 }
 
+# Intuit the distribution version if possible
+sub version {
+	return undef;
+}
+
 
 
 
