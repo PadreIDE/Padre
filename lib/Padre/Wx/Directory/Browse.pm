@@ -55,6 +55,16 @@ sub new {
 ######################################################################
 # Padre::Task Methods
 
+# If somehow we tried to run with a non-existint root, skip
+sub prepare {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	return 0 unless defined $self->{root};
+	return 0 unless length  $self->{root};
+	return 0 unless -d      $self->{root};
+	return 1;
+}
+
 sub run {
 	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
@@ -122,7 +132,7 @@ sub run {
 			my @fstat = stat($fullname);
 			next if $#fstat == -1;
 
-			unless ( defined $dev and defined $fstat[0] and $dev == $fstat[0] ) {
+			unless ( $dev == $fstat[0] ) {
 				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)"
 					unless NO_WARN;
 				next;

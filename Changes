@@ -22,6 +22,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Prevent history boxes writing a history entry for every character
       instead of every search in Find/FindInFiles dialogs (ADAMK)
     - Port the Find Dialog as is to wxFormBuilder (ADAMK)
+    - Prevent directory tasks running on bad or missing paths (ADAMK)
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)

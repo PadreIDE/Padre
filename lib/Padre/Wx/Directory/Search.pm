@@ -55,6 +55,16 @@ sub new {
 ######################################################################
 # Padre::Task Methods
 
+# If somehow we tried to run with a non-existint root, skip
+sub prepare {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	return 0 unless defined $self->{root};
+	return 0 unless length  $self->{root};
+	return 0 unless -d      $self->{root};
+	return 1;
+}
+
 sub run {
 	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
