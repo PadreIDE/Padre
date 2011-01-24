@@ -122,7 +122,7 @@ sub run {
 			my @fstat = stat($fullname);
 			next if $#fstat == -1;
 
-			if ( $dev != $fstat[0] ) {
+			unless ( defined $dev and defined $fstat[0] and $dev == $fstat[0] ) {
 				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)"
 					unless NO_WARN;
 				next;
