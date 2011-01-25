@@ -82,7 +82,7 @@ sub menu_plugins_simple {
 
 		Wx::gettext('Load All Padre Modules')    => 'load_everything',
 		Wx::gettext('Simulate Crash')            => 'simulate_crash',
-		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_crash',
+		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_exception',
 
 		'---' => undef,
 
@@ -265,9 +265,12 @@ sub simulate_crash {
 	POSIX::_exit();
 }
 
-sub simulate_task_crash {
-	require Padre::Plugin::Devel::Crash;
-	Padre::Plugin::Devel::Crash->new->schedule;
+sub simulate_task_exception {
+	require Padre::Task::Eval;
+	Padre::Task::Eval->new(
+		run    => 'sleep 5; die "This is a debugging task that simply crashes after running for 5 seconds!";',
+		finish => 'warn "This should never be reached";',
+	)->schedule;
 }
 
 sub show_about {
