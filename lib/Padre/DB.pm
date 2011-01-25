@@ -11,6 +11,14 @@ use Padre::Constant ();
 use Padre::Current  ();
 use Padre::Logger;
 
+BEGIN {
+	# Trap and warn in any situations where the database API is
+	# loaded in a background thread. This should never happen.
+	if ( $threads::threads and threads->tid ) {
+		warn "Padre::DB illegally loaded in background thread";
+	}
+}
+
 # Need truncate
 use ORLite 1.36 ();
 
