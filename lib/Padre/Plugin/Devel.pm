@@ -80,9 +80,10 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		Wx::gettext('Load All Padre Modules')    => 'load_everything',
-		Wx::gettext('Simulate Crash')            => 'simulate_crash',
-		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_exception',
+		Wx::gettext('Load All Padre Modules')        => 'load_everything',
+		Wx::gettext('Simulate Crash')                => 'simulate_crash',
+		Wx::gettext('Simulate Background Exception') => 'simulate_task_exception',
+		Wx::gettext('Simulate Background Crash')     => 'simulate_task_crash',
 
 		'---' => undef,
 
@@ -265,10 +266,20 @@ sub simulate_crash {
 	POSIX::_exit();
 }
 
+# Simulate a background thread that does an uncaught exception/die
 sub simulate_task_exception {
 	require Padre::Task::Eval;
 	Padre::Task::Eval->new(
 		run    => 'sleep 5; die "This is a debugging task that simply crashes after running for 5 seconds!";',
+		finish => 'warn "This should never be reached";',
+	)->schedule;
+}
+
+# Simulate a background thread that does a hard exit/segfault
+sub simulate_task_crash {
+	require Padre::Task::Eval;
+	Padre::Task::Eval->new(
+		run    => 'sleep 5; exit(1);',
 		finish => 'warn "This should never be reached";',
 	)->schedule;
 }
