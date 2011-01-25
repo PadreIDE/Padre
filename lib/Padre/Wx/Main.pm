@@ -1052,6 +1052,8 @@ $file> and C<focus>.
 
 =cut
 
+my $single_instance_raised = 0;
+
 sub single_instance_command {
 	my $self   = shift;
 	my $line   = shift;
@@ -1065,19 +1067,29 @@ sub single_instance_command {
 
 	if ( $1 eq 'focus' ) {
 
-		# try to give focus to padre ide. it might not work,
+		# Try to give focus to Padre IDE. It might not work,
 		# since some window manager implement some kind of focus-
 		# stealing prevention.
 
-		# first, let's deiconize padre if needed
+		# First, let's deiconize Padre if needed
 		$self->Iconize(0) if $self->IsIconized;
 
-		# now, let's raise padre
-
+		# Now let's raise Padre
 		# We have to do both or (on Win32 at least)
 		# the Raise call only works the first time.
-		$self->Lower;
-		$self->Raise;
+		if ( Padre::Constant::WIN32 ) {
+			if ( $single_instance_raised++ ) {
+				# After the first time, this seems to work
+				$self->Lower;
+				$self->Raise;
+			} else {
+				# The first time this behaves weirdly
+				$self->Raise;
+			}
+		} else {
+			# We trust non-Windows to behave sanely
+			$self->Raise;
+		}
 
 	} elsif ( $1 eq 'open' ) {
 		if ( -f $line ) {

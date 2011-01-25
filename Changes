@@ -23,6 +23,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       instead of every search in Find/FindInFiles dialogs (ADAMK)
     - Port the Find Dialog as is to wxFormBuilder (ADAMK)
     - Prevent directory tasks running on bad or missing paths (ADAMK)
+    - Found a workaround to weird Win32 window Raise/Lower bugs, so now
+      Padre always raises to the foreground correctly when using the
+      single instance server (ADAMK)
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
