@@ -260,7 +260,7 @@ sub save_config {
 sub project {
 	my $self = shift;
 	my $root = shift;
-	unless ( $self->{project}->{$root} ) {
+	unless ( ref $self->{project}->{$root} ) {
 		require Padre::Project;
 		$self->{project}->{$root} = Padre::Project->from_file(
 			File::Spec->catfile( $root, 'a' ),
