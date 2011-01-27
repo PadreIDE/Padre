@@ -1217,17 +1217,22 @@ sub refresh {
 	my $lock    = $self->lock('UPDATE');
 	my $current = $self->current;
 
-	# Refresh the highest and quickest things first,
-	# and work downwards and slower from there.
-	# Humans tend to look at the top of the screen first.
+	# Refresh elements that generate background tasks first,
+	# so those tasks will run while we do the other things.
+	# Tasks that run more often go before those that don't,
+	# which has a slightly positive effect on specialisation
+	# of background workers.
+	$self->refresh_directory($current);
+	$self->refresh_syntaxcheck($current);
+	$self->refresh_functions($current);
+	$self->refresh_outline($current);
+
+	# Refresh the remaining elements while the background tasks
+	# are running for the other elements.
 	$self->refresh_title($current);
 	$self->refresh_menu($current);
 	$self->refresh_toolbar($current);
-	$self->refresh_functions($current);
-	$self->refresh_directory($current);
 	$self->refresh_status($current);
-	$self->refresh_outline($current);
-	$self->refresh_syntaxcheck($current);
 
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
@@ -1563,7 +1568,7 @@ sub refresh_directory {
 	my $self = shift;
 	return unless $self->has_directory;
 	return if $self->locked('REFRESH');
-	$self->directory->refresh(@_);
+	$self->directory->refresh( $_[0] or $self->current );
 	return;
 }
 
