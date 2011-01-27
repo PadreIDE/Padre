@@ -110,6 +110,80 @@ sub data {
 	$_[0]->{data};
 }
 
+
+
+
+
+######################################################################
+# Optimisation
+
+# Compile a merged style hash down to a set of methods and values
+sub compile {
+	my $self  = shift;
+	my $style = shift;
+	my @set   = ();
+
+	# The selection background (if applicable)
+	# (The Scintilla official selection background colour is cc0000)
+	if ( defined $style->{selection_background} ) {
+		push @set, SetSelBackground => 1, COLOR($style->{selection_background});
+	}
+	if ( defined $style->{selection_foreground} ) {
+		push @set, SetSelForeground => 1, COLOR($style->{selection_foreground});
+	}
+
+	# Set the styles
+	foreach my $name ( keys %{$style->{colors}} ) {
+		my $color = $style->{colors}->{$name};
+		if ( $name =~ /^PADRE_/ ) {
+			$name = "Padre::Constant::$name";
+		} elsif ( /^wx/ ) {
+			$name = "Wx::$name";
+		} else {
+			warn "Invalid style '$name'";
+			next;
+		}
+
+		# Get the id of the style
+		my $id = eval { $name->() };
+		if ( $@ ) {
+			warn "Invalid style '$name'";
+			next;
+		}
+
+		# Apply the style elements
+		if ( defined $color->{foreground} ) {
+			push @set, StyleSetForeground => $id, COLOR($color->{foreground});
+		}
+		if ( defined $color->{background} ) {
+			push @set, StyleSetBackground => $id, COLOR($color->{background});
+		}
+		if ( defined $color->{bold} ) {
+			push @set, StyleSetBold => $id, $color->{bold};
+		}
+		if ( defined $color->{italics} ) {
+			push @set, StyleSetItalic => $id, $color->{italic};
+		}
+		if ( defined $color->{eolfilled} ) {
+			push @set, StyleSetEOLFilled => $id, $color->{eolfilled};
+		}
+		if ( defined $color->{underlined} ) {
+			push @set, StyleSetUnderline => $id, $color->{underline};
+		}		
+	}
+
+	return \@set;
+}
+
+sub COLOR {
+	my $str = shift;
+	my @rgb    = ( 0xFF, 0xFF, 0xFF );
+	if ( defined $str and $str =~ /^(..)(..)(..)$/ ) {
+		@rgb = map { hex($_) } ( $1, $2, $3 );
+	}
+	Wx::Colour->new(@rgb);
+}
+
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
