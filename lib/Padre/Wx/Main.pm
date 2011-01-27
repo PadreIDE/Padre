@@ -4235,8 +4235,9 @@ Only do this for new documents, otherwise behave like a regular save.
 =cut
 
 sub on_save_intuition {
-	my $self = shift;
-	my $document = $self->current->document or return;
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document or return;
 
 	# We only use Save Intuition for new files
 	unless ( $document->is_new ) {
@@ -4256,6 +4257,12 @@ sub on_save_intuition {
 		return $self->on_save_as(@_);
 	}
 
+	# Don't use Save Intuition in null projects
+	my $project = $current->project;
+	unless ( $project ) {
+		return $self->on_save_as(@_);
+	}
+
 	# We need both a guessed path and file name to do anything
 	my @subpath  = $document->guess_subpath;
 	my $filename = $document->guess_filename;
@@ -4266,7 +4273,7 @@ sub on_save_intuition {
 	}
 
 	# Convert the guesses to full paths
-	my $dir = File::Spec->catdir( $document->project_dir, @subpath );
+	my $dir  = File::Spec->catdir( $document->project_dir, @subpath );
 	my $path = File::Spec->catfile( $dir, $filename );
 	if ( -f $path ) {
 
