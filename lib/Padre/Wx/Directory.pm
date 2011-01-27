@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util                   ();
+use Padre::Current                 ();
 use Padre::Role::Task              ();
 use Padre::Wx::Role::Dwell         ();
 use Padre::Wx::Role::View          ();
@@ -370,12 +371,12 @@ sub refill {
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
+	my $self    = shift;
+	my $current = Padre::Current::_CURRENT(@_);
 
 	# NOTE: Without a file open, Padre does not consider itself to
 	# have a "current project". We should probably try to find a way
 	# to correct this in future.
-	my $current = $self->current;
 	my $config  = $current->config;
 	my $project = $current->project;
 	my $root    = $project ? $project->root : $config->main_directory_root;
