@@ -50,8 +50,7 @@ my $SINGLETON = undef;
 sub new {
 
 	# TRACE($_[0]) if DEBUG;
-	$SINGLETON
-		or $SINGLETON = shift->SUPER::new;
+	$SINGLETON or $SINGLETON = shift->SUPER::new;
 }
 
 
