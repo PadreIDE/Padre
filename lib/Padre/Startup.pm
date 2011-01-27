@@ -79,13 +79,12 @@ sub startup {
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
 		if ($socket) {
-			my $pid = '';
-			my $read = $socket->sysread( $pid, 10 );
-			if ( defined $read and $read == 10 ) {
-
-				# Got the single instance PID
-				$pid =~ s/\s+\s//;
-				if (Padre::Constant::WIN32) {
+			if (Padre::Constant::WIN32) {
+				my $pid  = '';
+				my $read = $socket->sysread( $pid, 10 );
+				if ( defined $read and $read == 10 ) {
+					# Got the single instance PID
+					$pid =~ s/\s+\s//;
 					require Win32::API;
 					Win32::API->new(
 						user32 => AllowSetForeground,
