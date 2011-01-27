@@ -31,8 +31,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - The Task Manager will now attempt to maximise background worker
       specialisation so we need to load less total modules, hopefully
       reducing memory consumption (ADAMK)
-    - Closing files is faster as we no longer accidentally do a full
-      refresh twice when closing documents other than the last one (ADAMK)
+    - Closing files is faster (and the task manager is stressed less) as
+      we no longer accidentally do a full refresh twice when closing
+      documents other than the last one (ADAMK)
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
