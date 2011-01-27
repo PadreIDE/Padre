@@ -229,8 +229,10 @@ sub on_text {
 		if ( $search->IsEmpty ) {
 
 			# Nothing to do
-			# NOTE: Why would this even fire?
-			TRACE("WARNING: This should never fire") if DEBUG;
+			# NOTE: I don't understand why this should ever fire,
+			# but it does seem to fire very late when the directory
+			# browser changes projects directories.
+			# TRACE("WARNING: This should never fire") if DEBUG;
 		} else {
 
 			# Entering search mode
