@@ -75,6 +75,7 @@ requires 'perl' => '5.008005';
 # General dependencies
 requires 'App::cpanminus'           => '0.9923';
 requires 'Class::Adapter'           => '1.05';
+requires 'Class::Inspector'         => '1.22';
 requires 'Class::Unload'            => '0.03';
 requires 'Class::XSAccessor'        => '1.05';
 requires 'Cwd'                      => '3.2701';
