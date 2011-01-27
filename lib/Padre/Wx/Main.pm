@@ -3618,7 +3618,7 @@ sub on_open_selection {
 		# Try relative to the dir we started in?
 		SCOPE: {
 			my $filename = File::Spec->catfile( $self->ide->{original_cwd}, $text, );
-			if ( -e $filename ) {
+			if ( -f $filename ) {
 				push @files, $filename;
 			}
 		}
@@ -3626,7 +3626,7 @@ sub on_open_selection {
 		# Try relative to the current file
 		if ( $current->filename ) {
 			my $filename = File::Spec->catfile( File::Basename::dirname( $current->filename ), $text, );
-			if ( -e $filename ) {
+			if ( -f $filename ) {
 				push @files, $filename;
 			}
 		}
