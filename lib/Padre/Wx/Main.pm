@@ -1210,6 +1210,7 @@ individual refresh methods)
 =cut
 
 sub refresh {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	return if $self->locked('REFRESH');
 
@@ -4435,9 +4436,13 @@ sub on_close {
 	}
 	$self->close;
 
-	# Transaction-wrap the session saving, and trigger a full refresh
-	# once we are finished the current action.
-	my $lock = $self->lock( 'DB', 'update_last_session', 'refresh' );
+	# Transaction-wrap the session saving.
+	# If we are closing the last document we need to trigger a full
+	# refresh. If not, closing this file results in a focus event
+	# on the next remaining document, which does the refresh for us.
+	my @methods = ( 'update_last_session' );
+	push @methods, 'refresh' unless $self->editors;
+	my $lock = $self->lock( 'DB', @methods );
 
 	if ( $self->ide->{session_autosave} ) {
 		$self->save_current_session;
