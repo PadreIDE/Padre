@@ -984,8 +984,6 @@ sub on_focus {
 			$self->Colourise( 0, $self->GetLength );
 		}
 		$self->needs_manual_colorize(0);
-	} else {
-		TRACE("no need to colorize") if DEBUG;
 	}
 
 	# NOTE: This is so the cursor will show up
