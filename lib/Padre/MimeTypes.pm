@@ -835,6 +835,26 @@ sub mime_type_by_extension {
 	$EXT_MIME{ $_[1] };
 }
 
+sub get_extensions_by_mime_type {
+	# %EXT_MIME holds a mapping of extenions to their mimetypes
+	# We may want to know what extensions belong to a mimetype:
+	my $self = shift;
+	my $mimetype = shift;
+	
+	my @extensions;
+	while( my($key, $value) = each( %EXT_MIME ) ) {
+		# this is just so bad, but to be honest I have no idea
+		# how else to do this :(
+		$value = 'application/x-perl' if( ref($value) eq 'CODE'); # assume the hash holds a code ref for all perl extensions.
+		if( $value eq $mimetype ) {
+			push @extensions, $key;
+		}
+		
+	}
+	return @extensions;
+	
+}
+
 # naive sub to decide if a piece of code is Perl 6 or Perl 5.
 # Perl 6:   use v6; class ..., module ...
 # maybe also grammar ...

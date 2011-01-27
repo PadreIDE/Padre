@@ -4175,6 +4175,44 @@ sub on_save_as {
 		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
 		my $saveto = $dialog->GetPath;
+		
+		
+		# feature request: http://padre.perlide.org/trac/ticket/1027
+		# work out if we have an extension to the file name
+		#print "The file name is: " . $dialog->GetFilename . "\n";
+		#print "The mimetype is: " . $document->mimetype . "\n";
+		
+		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type($document->mimetype);
+		
+		my $ext_string = "'" . join( "', '", @file_extensions ) . "'";
+		#print "file extensions: $ext_string\n"; # .  join( "\n", @file_extensions ) . "\n";
+		
+		# now lets check if we have a file extension that suits the current mimetype:
+		my $fileName = $dialog->GetFilename;
+		my $ext = "";
+		$fileName =~ m/\.([^\.]+)$/;
+		$ext = $1;
+		#print "File Extension is: $ext\n";
+		
+		if( !defined($ext) || $ext eq '' ) {
+			#show dialog that the file extension is missing for the mimetype
+			my $ret = Wx::MessageBox(
+				sprintf(
+					Wx::gettext("You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"),
+					$ext_string
+				),
+				Wx::gettext("File extension missing warning"),
+				Wx::wxYES_NO | Wx::wxCENTRE,
+				$self,
+			);
+			# bit blunt really as this will return them back to the editor
+			# it would probably be nicer to return the dialog back
+			#return 0  if $ret == Wx::wxNO;
+			# this works better:
+			next; # because we are in a while(1) loop
+			
+		}
+		
 
 		#my $path = File::Spec->catfile( $self->cwd, $filename );
 		my $path = File::Spec->catfile($saveto);
