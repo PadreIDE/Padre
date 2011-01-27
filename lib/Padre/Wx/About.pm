@@ -120,7 +120,7 @@ sub _content_about {
     </p>
     <p><small>"$splash_name" - $splash_description Jerry Charlotte (blackbutterfly)</small></p>
     <p>
-      Copyright 2008 - 2010 $padre_dev_team<br>
+      Copyright 2008&ndash;2011 $padre_dev_team<br>
       $license_info
     </p>
   </body>
