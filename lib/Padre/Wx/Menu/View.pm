@@ -85,11 +85,10 @@ sub new {
 
 		my %mimes = Padre::MimeTypes::menu_view_mimes();
 		my @names = sort {
-			($b eq 'text/plain') <=> ($a eq 'text/plain')
-			or
-			Wx::gettext( $mimes{$a} ) cmp Wx::gettext( $mimes{$b} )
+			( $b eq 'text/plain' ) <=> ( $a eq 'text/plain' )
+				or Wx::gettext( $mimes{$a} ) cmp Wx::gettext( $mimes{$b} )
 		} keys %mimes;
-		foreach my $name ( @names ) {
+		foreach my $name (@names) {
 			my $radio = $self->add_menu_action(
 				$self->{view_as_highlighting},
 				"view.mime.$name",

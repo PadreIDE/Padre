@@ -190,7 +190,7 @@ sub dump_padre {
 # Copy %INC and @INC before passing them to _dump,
 # so changes during the _dump process aren't in the output.
 sub dump_inc {
-	$_[0]->_dump( { %INC }, [ @INC ] );
+	$_[0]->_dump( {%INC}, [@INC] );
 }
 
 sub dump_display {

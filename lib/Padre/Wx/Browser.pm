@@ -70,7 +70,7 @@ sub new {
 	$self->{provider} = Padre::Browser->new;
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -90,9 +90,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$self->{search}->SetToolTip(
-		Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') )
-	);
+	$self->{search}->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self,
@@ -107,9 +105,7 @@ sub new {
 		Wx::wxDefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
-	$label->SetToolTip(
-		Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') )
-	);
+	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 

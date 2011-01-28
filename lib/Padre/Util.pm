@@ -36,6 +36,7 @@ use Padre::Constant ();
 
 # If we make $VERSION an 'our' variable the parse_variable() function breaks
 use vars qw{ $VERSION $COMPATIBLE };
+
 BEGIN {
 	$VERSION    = '0.79';
 	$COMPATIBLE = '0.79';
@@ -500,13 +501,14 @@ C<$VERSION> so the following will work.
 
 sub parse_variable {
 	my $parsefile = shift;
-	my $variable  = shift || 'VERSION';
+	my $variable = shift || 'VERSION';
 	my $result;
 	local $/ = "\n";
 	local $_;
 	open( my $fh, '<', $parsefile ) #-# no critic (RequireBriefOpen)
 		or die "Could not open '$parsefile': $!";
 	my $inpod = 0;
+
 	while (<$fh>) {
 		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
 		next if $inpod || /^\s*#/;
@@ -515,8 +517,7 @@ sub parse_variable {
 		if ( $variable eq 'VERSION' and m{^ \s* package \s+ \w[\w\:\']* \s+ (v?[0-9._]+) \s* ;  }x ) {
 			local $^W = 0;
 			$result = $1;
-		}
-		elsif ( m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x ) {
+		} elsif (m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x) {
 			my $eval = qq{
 				package ExtUtils::MakeMaker::_version;
 				no strict;
@@ -537,12 +538,12 @@ sub parse_variable {
 				\$$2;
 			};
 			local $^W = 0;
+
 			# what policy needs to be disabled here????
 			$result = eval($eval);
-			
+
 			warn "Could not eval '$eval' in $parsefile: $@" if $@;
-		}
-		else {
+		} else {
 			next;
 		}
 		last if defined $result;

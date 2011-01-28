@@ -10,8 +10,8 @@ package Padre::Config;
 use 5.008;
 use strict;
 use warnings;
-use Carp                   ();
-use File::Spec        3.21 (); # 3.21 needed for volume-safe abs2rel call
+use Carp ();
+use File::Spec 3.21 (); # 3.21 needed for volume-safe abs2rel call
 use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
@@ -240,7 +240,7 @@ sub set {
 
 			# GetLongPathName returns undef if it doesn't exist.
 			unless ( defined $long ) {
-				Carp::croak("Setting '$name' to non-existant path '$value'")
+				Carp::croak("Setting '$name' to non-existant path '$value'");
 			}
 			$value = $long;
 
@@ -255,6 +255,7 @@ sub set {
 		# If we are in Portable mode convert the path to dist relative if
 		# the setting is going into the host backend.
 		if ( Padre::Constant::PORTABLE and $store == Padre::Constant::HOST ) {
+
 			# NOTE: Even though this says "directory" it is safe for files too
 			$value = Padre::Portable::freeze_directory($value);
 		}

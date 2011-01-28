@@ -36,7 +36,7 @@ use Class::XSAccessor {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Param checking
 	unless ( $self->name ) {

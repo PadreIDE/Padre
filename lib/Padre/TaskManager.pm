@@ -20,6 +20,7 @@ use constant MAX_IDLE_TIMEOUT  => 30;
 
 # Set up the primary integration event
 our $THREAD_SIGNAL : shared;
+
 BEGIN {
 	$THREAD_SIGNAL = Wx::NewEventType();
 }
@@ -148,16 +149,16 @@ sub best_thread {
 
 	# Our basic strategy is to reuse an existing worker that
 	# has done this task before to prevent loading more modules.
-	if ( @seen ) {
+	if (@seen) {
+
 		# Try to concentrate reuse as much as possible.
 		# Pick the worker that has done the least other things.
 		# Break a tie by awarding the task to the worker that has
 		# done this type of task the most often to prevent flipping
 		# between multiple with similar %seen diversity.
 		@seen = sort {
-			scalar(keys %{$a->{seen}}) <=> scalar(keys %{$b->{seen}})
-			or
-			$b->{seen}->{$task} <=> $a->{seen}->{$task}
+			scalar( keys %{ $a->{seen} } ) <=> scalar( keys %{ $b->{seen} } )
+				or $b->{seen}->{$task} <=> $a->{seen}->{$task}
 		} @seen;
 		return $seen[0];
 	}
@@ -173,10 +174,8 @@ sub best_thread {
 	# the other threads will specialise and minimise memory load by
 	# having all the rare stuff in one big thread where they will
 	# hopefully have shared dependencies.
-	if ( @unused ) {
-		@unused = sort {
-			scalar(keys %{$b->{seen}}) <=> scalar(keys %{$a->{seen}})
-		} @unused;
+	if (@unused) {
+		@unused = sort { scalar( keys %{ $b->{seen} } ) <=> scalar( keys %{ $a->{seen} } ) } @unused;
 		return $unused[0];
 	}
 
@@ -321,7 +320,7 @@ sub on_signal {
 	}
 
 	# Fine the task handle for the task
-	my $hid    = shift @$message;
+	my $hid = shift @$message;
 	my $handle = $self->{handles}->{$hid} or return;
 
 	# Update idle thread tracking so we don't force-kill this thread

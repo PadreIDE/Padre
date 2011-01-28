@@ -101,7 +101,7 @@ sub run {
 		$self->handle->status( "Searching... " . $parent->unix );
 
 		my @children = ();
-		foreach my $file ( @list ) {
+		foreach my $file (@list) {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			next if $file =~ /^\.svn$/;
@@ -116,7 +116,7 @@ sub run {
 
 			# Confirm the file still exists and get stat details
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat    = stat($fullname);
+			my @fstat = stat($fullname);
 			unless ( -e _ ) {
 
 				# The file dissapeared mid-search?

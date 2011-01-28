@@ -5,7 +5,7 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec   ();
+use File::Spec ();
 
 our $VERSION = '0.79';
 

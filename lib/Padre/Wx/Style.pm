@@ -20,7 +20,7 @@ our $VERSION = '0.79';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check params
 	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
@@ -34,7 +34,7 @@ sub new {
 	}
 
 	# Compiled types
-	$self->{set} = { };
+	$self->{set} = {};
 
 	return $self;
 }
@@ -65,8 +65,8 @@ sub apply {
 
 	# Generate the style set if needed
 	unless ( $self->{set}->{$type} ) {
-		my $data   = $self->{data}->{$type} || {};
-		my $plain  = $self->{data}->{plain};
+		my $data = $self->{data}->{$type} || {};
+		my $plain = $self->{data}->{plain};
 
 		# Merge the plain style onto the content type style
 		foreach my $key ( keys %$plain ) {
@@ -86,10 +86,10 @@ sub apply {
 	}
 
 	# Apply the type style to the editor
-	my @set = @{$self->{set}->{$type}};
-	while ( @set ) {
+	my @set = @{ $self->{set}->{$type} };
+	while (@set) {
 		my $method = shift @set;
-		$editor->$method( @{shift()} );
+		$editor->$method( @{ shift() } );
 	}
 
 	return 1;
@@ -109,56 +109,58 @@ sub hash2set {
 	my @set   = ();
 
 	# Basic foreground and background colours
-	my $background = Padre::Wx::color($style->{background});
+	my $background = Padre::Wx::color( $style->{background} );
 	foreach ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
 		push @set, StyleSetBackground => [ $_, $background ];
 	}
 	foreach ( keys %{ $style->{foregrounds} } ) {
-		push @set, StyleSetForeground => [ $_, Padre::Wx::color($style->{foregrounds}->{$_}) ];
+		push @set, StyleSetForeground => [ $_, Padre::Wx::color( $style->{foregrounds}->{$_} ) ];
 	}
 
 	# Caret colouring
 	if ( defined $style->{current_line_foreground} ) {
-		push @set, SetCaretForeground => [ Padre::Wx::color($style->{current_line_foreground}) ];
+		push @set, SetCaretForeground => [ Padre::Wx::color( $style->{current_line_foreground} ) ];
 	}
 	if ( defined $style->{currentline} ) {
-		push @set, SetCaretLineBackground => [ Padre::Wx::color($style->{currentline}) ];
+		push @set, SetCaretLineBackground => [ Padre::Wx::color( $style->{currentline} ) ];
 	}
 
 	# The selection background (if applicable)
 	# (The Scintilla official selection background colour is cc0000)
 	if ( defined $style->{selection_background} ) {
-		push @set, SetSelBackground => [ 1, Padre::Wx::color($style->{selection_background}) ];
+		push @set, SetSelBackground => [ 1, Padre::Wx::color( $style->{selection_background} ) ];
 	}
 	if ( defined $style->{selection_foreground} ) {
-		push @set, SetSelForeground => [ 1, Padre::Wx::color($style->{selection_foreground}) ];
+		push @set, SetSelForeground => [ 1, Padre::Wx::color( $style->{selection_foreground} ) ];
 	}
 
 	# Syntax-specific colouring
-	foreach my $name ( keys %{$style->{colors}} ) {
+	foreach my $name ( keys %{ $style->{colors} } ) {
 		my $color = $style->{colors}->{$name};
 		if ( $name =~ /^PADRE_/ ) {
 			$name = "Padre::Constant::$name";
-		} elsif ( /^wx/ ) {
+		} elsif (/^wx/) {
 			$name = "Wx::$name";
 		} else {
+
 			# warn "Invalid style '$name'";
 			next;
 		}
 
 		# Get the id of the style
 		my $id = eval { $name->() };
-		if ( $@ ) {
+		if ($@) {
+
 			# warn "Invalid style '$name'";
 			next;
 		}
 
 		# Apply the style elements
 		if ( defined $color->{foreground} ) {
-			push @set, StyleSetForeground => $id, Padre::Wx::color($color->{foreground});
+			push @set, StyleSetForeground => $id, Padre::Wx::color( $color->{foreground} );
 		}
 		if ( defined $color->{background} ) {
-			push @set, StyleSetBackground => $id, Padre::Wx::color($color->{background});
+			push @set, StyleSetBackground => $id, Padre::Wx::color( $color->{background} );
 		}
 		if ( defined $color->{bold} ) {
 			push @set, StyleSetBold => $id, $color->{bold};
@@ -171,7 +173,7 @@ sub hash2set {
 		}
 		if ( defined $color->{underlined} ) {
 			push @set, StyleSetUnderline => $id, $color->{underline};
-		}		
+		}
 	}
 
 	return \@set;

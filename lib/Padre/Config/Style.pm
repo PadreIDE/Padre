@@ -26,7 +26,9 @@ our $COMPATIBLE = '0.79';
 # Style Library
 
 use vars qw{ %CORE_STYLES $USER_DIRECTORY @USER_STYLES };
+
 BEGIN {
+
 	# Define the core style library
 	%CORE_STYLES = (
 		default   => _T('Padre'),
@@ -45,11 +47,7 @@ BEGIN {
 	if ( -d $USER_DIRECTORY ) {
 		local *STYLEDIR;
 		opendir( STYLEDIR, $USER_DIRECTORY ) or die "Failed to read '$USER_DIRECTORY'";
-		@USER_STYLES = sort map {
-			substr( File::Basename::basename($_), 0, -4 )
-		} grep {
-			/\.yml$/
-		} readdir STYLEDIR;
+		@USER_STYLES = sort map { substr( File::Basename::basename($_), 0, -4 ) } grep { /\.yml$/ } readdir STYLEDIR;
 		closedir STYLEDIR;
 	}
 }
@@ -71,7 +69,7 @@ sub user_styles {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}

@@ -1251,6 +1251,7 @@ sub guess_indentation_style {
 	# Hand off to the standalone module
 	my $indentation = 'u'; # Unknown
 	if ( length $text ) {
+
 		# Allow for the delayed loading of Text::FindIndent if we startup
 		# with no file or a completely empty file.
 		require Text::FindIndent;

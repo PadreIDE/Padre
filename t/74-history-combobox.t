@@ -23,7 +23,7 @@ use Padre::Wx;
 my $mock_history_combobox = Test::MockObject->new();
 $mock_history_combobox->set_isa('Wx::ComboBox');
 
-use_ok( 'Padre::Wx::History::ComboBox' );
+use_ok('Padre::Wx::History::ComboBox');
 
 SCOPE: {
 
@@ -31,7 +31,7 @@ SCOPE: {
 
 	# GIVEN
 	$mock_history_combobox->set_always( 'FindString', Wx::wxNOT_FOUND );
-	$mock_history_combobox->set_always( 'GetValue', 'foo' );
+	$mock_history_combobox->set_always( 'GetValue',   'foo' );
 	$mock_history_combobox->{type} = 'test1';
 
 	# WHEN

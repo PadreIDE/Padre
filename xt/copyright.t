@@ -35,7 +35,8 @@ foreach my $file (@files) {
 	my $content = slurp($file);
 	ok( $content =~ qr{$copyright|$cp}, "Contains Copyright: $file" );
 	ok( $content =~ qr{Copyright 2008-$this_year The Padre development team as listed in Padre.pm\.\s*},
-		"Has 2008-$this_year in Copyright: $file" );
+		"Has 2008-$this_year in Copyright: $file"
+	);
 }
 
 sub slurp {

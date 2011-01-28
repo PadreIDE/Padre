@@ -34,6 +34,7 @@ use strict;
 use warnings;
 use Padre::Constant ();
 use Padre::Current  ();
+
 BEGIN {
 	require Padre::Portable if Padre::Constant::PORTABLE;
 }
@@ -54,7 +55,7 @@ Applies appropriate path translation if we are running in Portable Perl.
 
 sub get_last_pos {
 	my $class = shift;
-	my $file  = Padre::Constant::PORTABLE ? Padre::Portable::freeze(shift) : shift;
+	my $file = Padre::Constant::PORTABLE ? Padre::Portable::freeze(shift) : shift;
 
 	# Find the position in the file
 	Padre::DB->selectcol_arrayref(

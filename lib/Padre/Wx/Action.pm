@@ -65,10 +65,10 @@ sub create {
 # Constructor
 
 sub new {
-	my $class    = shift;
-	my $ide      = Padre->ide;
-	my $config   = $ide->config;
-	my $actions  = $ide->actions;
+	my $class   = shift;
+	my $ide     = Padre->ide;
+	my $config  = $ide->config;
+	my $actions = $ide->actions;
 
 	# Create the raw object
 	my $self = bless {
@@ -83,13 +83,14 @@ sub new {
 		die join( ',', caller ) . ' tried to create an action without name';
 	}
 	if ( $name =~ /^menu\./ ) {
+
 		# The menu prefix is dedicated to menus and must not be used by actions
 		die join( ',', caller ) . ' tried to create an action with name prefix menu';
 	}
 	if ( $actions->{$name} and $name !~ /^view\.language\./ ) {
 		warn "Found a duplicate action '$name'\n";
 	}
-	if ( defined $self->{need} and not Params::Util::_CODE($self->{need}) ) {
+	if ( defined $self->{need} and not Params::Util::_CODE( $self->{need} ) ) {
 		die "Custom action 'need' param must be a CODE reference";
 	}
 

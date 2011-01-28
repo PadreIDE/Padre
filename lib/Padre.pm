@@ -137,7 +137,7 @@ sub new {
 	$self->{config} = Padre::Config->read;
 
 	# Actions and keyboard shortcuts registries
-	$self->actions( {} );
+	$self->actions(   {} );
 	$self->shortcuts( {} );
 
 	# Wizard registry

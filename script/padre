@@ -36,7 +36,8 @@ my $PRELOAD = undef;
 my $DESKTOP = undef;
 my $ACTIONS = undef;
 my $LOCALE  = undef;
-if ( grep { /^-/ } @ARGV ) {
+if ( grep {/^-/} @ARGV ) {
+
 	# Avoid loading Getopt::Long entirely if we can,
 	# sneakily saving a meg or so of RAM.
 	require Getopt::Long;

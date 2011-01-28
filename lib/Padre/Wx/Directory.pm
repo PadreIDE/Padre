@@ -81,8 +81,7 @@ sub new {
 
 	# Use a long and obvious 3 second dwell timer for text events
 	Wx::Event::EVT_TEXT(
-		$self,
-		$search,
+		$self, $search,
 		sub {
 			return if $_[0]->{ignore};
 			$_[0]->dwell_start( 'on_text', 333 );
@@ -90,8 +89,7 @@ sub new {
 	);
 
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self,
-		$search,
+		$self, $search,
 		sub {
 			return if $_[0]->{ignore};
 			$_[0]->{search}->SetValue('');

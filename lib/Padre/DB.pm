@@ -12,6 +12,7 @@ use Padre::Current  ();
 use Padre::Logger;
 
 BEGIN {
+
 	# Trap and warn in any situations where the database API is
 	# loaded in a background thread. This should never happen.
 	if ( $threads::threads and threads->tid ) {

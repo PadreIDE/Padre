@@ -60,8 +60,8 @@ sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	return 0 unless defined $self->{root};
-	return 0 unless length  $self->{root};
-	return 0 unless -d      $self->{root};
+	return 0 unless length $self->{root};
+	return 0 unless -d $self->{root};
 	return 1;
 }
 

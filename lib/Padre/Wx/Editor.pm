@@ -308,10 +308,11 @@ sub padre_setup_plain {
 	# Create the right margin if desired
 	if ( $config->editor_right_margin_enable ) {
 		$self->SetEdgeColumn( $config->editor_right_margin_column );
-		$self->SetEdgeMode( Wx::wxSTC_EDGE_LINE );
+		$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
 	} else {
-		$self->SetEdgeMode( Wx::wxSTC_EDGE_NONE );
+		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
 	}
+
 	# Set the font
 	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
 	if ( defined $config->editor_font && length $config->editor_font > 0 ) {
@@ -1185,9 +1186,11 @@ sub on_mousewheel {
 	}
 
 	if ( $self->config->feature_fontsize ) {
+
 		# The default handler zooms in the wrong direction
 		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
 	} else {
+
 		# Behave as if Ctrl wasn't down
 		$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
 	}

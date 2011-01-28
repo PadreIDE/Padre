@@ -62,7 +62,7 @@ sub new {
 	# within config.yml.
 	my @tools = split /\;/, $config->main_toolbar_items;
 
-	foreach my $item ( @tools ) {
+	foreach my $item (@tools) {
 		if ( $item eq '|' ) {
 			$self->add_separator;
 
@@ -78,6 +78,7 @@ sub new {
 			);
 
 		} else {
+
 			# Silently ignore bad toolbar elements (for now)
 			# warn( 'Unknown toolbar item: ' . $item );
 		}
@@ -101,16 +102,16 @@ sub add_separator {
 
 # Add a tool item to the toolbar re-using Padre menu action name
 sub add_tool_item {
-	my $self    = shift;
-	my %args    = @_;
+	my $self = shift;
+	my %args = @_;
 
 	# Find the action, silently aborting if it is unusable
 	my $actions = $self->ide->actions;
 	my $action  = $actions->{ $args{action} } or return;
-	my $icon    = $action->toolbar_icon       or return;
+	my $icon    = $action->toolbar_icon or return;
 
 	# Make sure the item list if initialised
-	unless ( Params::Util::_HASH0($self->{item_list}) ) {
+	unless ( Params::Util::_HASH0( $self->{item_list} ) ) {
 		$self->{item_list} = {};
 	}
 
@@ -145,19 +146,14 @@ sub add_tool_item {
 }
 
 sub refresh {
-	my $self      = shift;
-	my $current   = Padre::Current::_CURRENT(@_);
-	my $editor    = $current->editor;
-	my $document  = $current->document;
-	my $modified  = ( defined $document and $document->is_modified );
-	my $text      = defined Params::Util::_STRING($current->text);
-	my $file      = (
-		defined $document
-		and
-		defined $document->{file}
-		and
-		defined $document->file->{filename}
-	);
+	my $self     = shift;
+	my $current  = Padre::Current::_CURRENT(@_);
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $modified = ( defined $document and $document->is_modified );
+	my $text     = defined Params::Util::_STRING( $current->text );
+	my $file =
+		( defined $document and defined $document->{file} and defined $document->file->{filename} );
 
 	foreach my $item ( keys( %{ $self->{item_list} } ) ) {
 		my $action = $self->{item_list}->{$item};

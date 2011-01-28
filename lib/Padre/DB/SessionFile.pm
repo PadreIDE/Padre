@@ -18,19 +18,21 @@ our $VERSION = '0.79';
 ######################################################################
 # Portability Support
 
-if ( Padre::Constant::PORTABLE ) {
+if (Padre::Constant::PORTABLE) {
 	require Padre::Portable;
 
 	*new = sub {
 		my $class = shift;
 		my %param = @_;
-		$param{file} = Padre::Portable::freeze($param{file});
+		$param{file} = Padre::Portable::freeze( $param{file} );
 		$class->SUPER::new(%param);
-	} if __PACKAGE__->can('new');
+		}
+		if __PACKAGE__->can('new');
 
 	*file = sub {
 		Padre::Portable::thaw( shift->SUPER::file(@_) );
-	} if __PACKAGE__->can('file');
+		}
+		if __PACKAGE__->can('file');
 
 	*set = sub {
 		my $self  = shift;
@@ -40,7 +42,8 @@ if ( Padre::Constant::PORTABLE ) {
 			$value = Padre::Portable::freeze($value);
 		}
 		$self->SUPER::set( $name => $value );
-	} if __PACKAGE__->can('set');
+		}
+		if __PACKAGE__->can('set');
 
 }
 

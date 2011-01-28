@@ -1077,16 +1077,19 @@ sub single_instance_command {
 		# Now let's raise Padre
 		# We have to do both or (on Win32 at least)
 		# the Raise call only works the first time.
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
 			if ( $single_instance_raised++ ) {
+
 				# After the first time, this seems to work
 				$self->Lower;
 				$self->Raise;
 			} else {
+
 				# The first time this behaves weirdly
 				$self->Raise;
 			}
 		} else {
+
 			# We trust non-Windows to behave sanely
 			$self->Raise;
 		}
@@ -3662,7 +3665,7 @@ sub on_open_selection {
 		my $file = $self->single_choice(
 			Wx::gettext('Choose File'),
 			'',
-			[ @files ],
+			[@files],
 		);
 		$self->setup_editors($file) if defined $file;
 	} else {
@@ -3687,9 +3690,7 @@ sub on_open_all_recent_files {
 
 	# debatable: "reverse" keeps order in "recent files" submenu
 	# but editor tab ordering may "feel" wrong
-	$_[0]->setup_editors(
-		reverse grep { -e $_ } @$files 
-	);
+	$_[0]->setup_editors( reverse grep { -e $_ } @$files );
 }
 
 =pod
@@ -3704,7 +3705,7 @@ Prompt user for a command to filter the selection/document.
 
 sub on_filter_tool {
 	require Padre::Wx::Dialog::FilterTool;
-	Padre::Wx::Dialog::FilterTool->new($_[0])->show;
+	Padre::Wx::Dialog::FilterTool->new( $_[0] )->show;
 }
 
 =head3 C<on_open_url>
@@ -4180,44 +4181,50 @@ sub on_save_as {
 		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
 		my $saveto = $dialog->GetPath;
-		
-		
+
+
 		# feature request: http://padre.perlide.org/trac/ticket/1027
 		# work out if we have an extension to the file name
 		#print "The file name is: " . $dialog->GetFilename . "\n";
 		#print "The mimetype is: " . $document->mimetype . "\n";
-		
-		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type($document->mimetype);
-		
+
+		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type( $document->mimetype );
+
 		my $ext_string = "'" . join( "', '", @file_extensions ) . "'";
+
 		#print "file extensions: $ext_string\n"; # .  join( "\n", @file_extensions ) . "\n";
-		
+
 		# now lets check if we have a file extension that suits the current mimetype:
 		my $fileName = $dialog->GetFilename;
-		my $ext = "";
+		my $ext      = "";
 		$fileName =~ m/\.([^\.]+)$/;
 		$ext = $1;
+
 		#print "File Extension is: $ext\n";
-		
-		if( !defined($ext) || $ext eq '' ) {
+
+		if ( !defined($ext) || $ext eq '' ) {
+
 			#show dialog that the file extension is missing for the mimetype
 			my $ret = Wx::MessageBox(
 				sprintf(
-					Wx::gettext("You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"),
+					Wx::gettext(
+						"You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"
+					),
 					$ext_string
 				),
 				Wx::gettext("File extension missing warning"),
 				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
+
 			# bit blunt really as this will return them back to the editor
 			# it would probably be nicer to return the dialog back
 			#return 0  if $ret == Wx::wxNO;
 			# this works better:
 			next; # because we are in a while(1) loop
-			
+
 		}
-		
+
 
 		#my $path = File::Spec->catfile( $self->cwd, $filename );
 		my $path = File::Spec->catfile($saveto);
@@ -4308,7 +4315,7 @@ sub on_save_intuition {
 
 	# Don't use Save Intuition in null projects
 	my $project = $current->project;
-	unless ( $project ) {
+	unless ($project) {
 		return $self->on_save_as(@_);
 	}
 
@@ -4322,7 +4329,7 @@ sub on_save_intuition {
 	}
 
 	# Convert the guesses to full paths
-	my $dir  = File::Spec->catdir( $document->project_dir, @subpath );
+	my $dir = File::Spec->catdir( $document->project_dir, @subpath );
 	my $path = File::Spec->catfile( $dir, $filename );
 	if ( -f $path ) {
 
@@ -4483,7 +4490,7 @@ sub on_close {
 	# If we are closing the last document we need to trigger a full
 	# refresh. If not, closing this file results in a focus event
 	# on the next remaining document, which does the refresh for us.
-	my @methods = ( 'update_last_session' );
+	my @methods = ('update_last_session');
 	push @methods, 'refresh' unless $self->editors;
 	my $lock = $self->lock( 'DB', @methods );
 
@@ -5992,8 +5999,7 @@ sub on_new_from_template {
 	my $output = '';
 	Template::Tiny->new->process(
 		$template,
-		{
-			config => $self->{config},
+		{   config => $self->{config},
 			util   => Padre::Util::Template->new,
 		},
 		\$output,

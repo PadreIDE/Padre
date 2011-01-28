@@ -1949,7 +1949,7 @@ sub init {
 		need_runable => 1,
 		need_file    => 1,
 		need         => sub {
-			my $current  = shift;
+			my $current = shift;
 			my $filename = $current->filename or return 0;
 			return $filename =~ /\.t$/;
 		},
@@ -1962,8 +1962,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name => 'run.stop',
-		need => sub { 
-			$_[0]->main->{command}
+		need => sub {
+			$_[0]->main->{command};
 		},
 		label      => _T('Stop Execution'),
 		comment    => _T('Stop a running task.'),

@@ -72,15 +72,15 @@ sub dwell_start {
 	# If this is the first time the dwell event is being called
 	# create the timer object to support the dwell.
 	unless ( $self->{$method} ) {
+
 		# Fetch a usable id for the timer
 		my $name = ref($self) . '::' . $method;
-		my $id   = ( $ID{$name} or $ID{$name} = Wx::NewId() );
+		my $id = ( $ID{$name} or $ID{$name} = Wx::NewId() );
 
 		# Create the reusable timer object
 		$self->{$method} = Wx::Timer->new( $self, $id );
 		Wx::Event::EVT_TIMER(
-			$self,
-			$id,
+			$self, $id,
 			sub {
 				$self->$method();
 			},

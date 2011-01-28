@@ -80,9 +80,10 @@ sub startup {
 		);
 		if ($socket) {
 			if (Padre::Constant::WIN32) {
-				my $pid  = '';
+				my $pid = '';
 				my $read = $socket->sysread( $pid, 10 );
 				if ( defined $read and $read == 10 ) {
+
 					# Got the single instance PID
 					$pid =~ s/\s+\s//;
 					require Win32::API;

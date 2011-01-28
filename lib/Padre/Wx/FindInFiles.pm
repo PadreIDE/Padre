@@ -167,6 +167,7 @@ sub search_message {
 
 	# Add the lines nodes to the tree
 	foreach my $row (@_) {
+
 		# Tabs don't display properly
 		$row->[1] =~ s/\t/    /g;
 		my $line = $self->AppendItem(

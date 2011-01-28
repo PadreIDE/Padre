@@ -100,7 +100,7 @@ sub find_next {
 # Makes sure the find button is only enabled when the field
 # values are valid
 sub refresh {
-	my $self   = shift;
+	my $self = shift;
 	my $enable = $self->{find_term}->GetValue ne '';
 	$self->{find_next}->Enable($enable);
 	$self->{find_all}->Enable($enable);
@@ -147,7 +147,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name ( SAVE ) {
+	foreach my $name (SAVE) {
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

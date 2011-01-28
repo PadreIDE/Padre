@@ -39,17 +39,17 @@ sub new {
 	my $self  = bless {
 		client => undef,
 		file   => undef,
-		save   => { },
+		save   => {},
 	}, $class;
 	return $self;
 }
 
 sub message {
-	Padre::Current->main->message($_[1]);
+	Padre::Current->main->message( $_[1] );
 }
 
 sub error {
-	Padre::Current->main->error($_[1]);
+	Padre::Current->main->error( $_[1] );
 }
 
 =pod
@@ -95,7 +95,7 @@ sub debug_perl {
 	}
 
 	# Get the filename
-	my $filename = defined($document->{file}) ? $document->{file}->filename : undef;
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 
 	# TODO: improve the message displayed to the user
 	# If the document is not saved, simply return for now
@@ -125,9 +125,10 @@ sub debug_perl {
 	if ( $save->{breakpoints} ) {
 		foreach my $file ( keys %{ $save->{breakpoints} } ) {
 			foreach my $row ( keys %{ $save->{breakpoints}->{$file} } ) {
+
 				# TODO what if this fails?
 				# TODO find the editor of that $file first!
-				$self->{client}->set_breakpoint( $file, $row ); 
+				$self->{client}->set_breakpoint( $file, $row );
 			}
 		}
 	}
@@ -145,9 +146,9 @@ sub _set_debugger {
 	my $self    = shift;
 	my $current = Padre::Current->new;
 	my $main    = $current->main;
-	my $editor  = $current->editor            or return;
+	my $editor  = $current->editor or return;
 	my $file    = $self->{client}->{filename} or return;
-	my $row     = $self->{client}->{row}      or return;
+	my $row     = $self->{client}->{row} or return;
 
 	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
@@ -161,16 +162,14 @@ sub _set_debugger {
 	# They should be reunited soon !!!! (or not)
 	$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
 	$editor->SetMarginWidth( 1, 16 );
-	$editor->MarkerDeleteAll( Padre::Wx::MarkLocation );
+	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkLocation );
 
 	my $debugger = $main->debugger;
 	my $count    = $debugger->GetItemCount;
 	foreach my $c ( 0 .. $count - 1 ) {
 		my $variable = $debugger->GetItemText($c);
-		my $value    = eval {
-			$self->{client}->get_value($variable);
-		};
+		my $value = eval { $self->{client}->get_value($variable); };
 		if ($@) {
 
 			#$main->error(sprintf(Wx::gettext("Could not evaluate '%s'"), $text));
@@ -196,7 +195,7 @@ sub running {
 		return;
 	}
 
-	return !! Padre::Current->editor;
+	return !!Padre::Current->editor;
 }
 
 sub debug_perl_remove_breakpoint {
@@ -240,9 +239,7 @@ sub debug_perl_list_breakpoints {
 	$self->running or return;
 
 	# LIST context crashes in Debug::Client 0.10
-	$self->message(
-		scalar $self->{client}->list_break_watch_action
-	);
+	$self->message( scalar $self->{client}->list_break_watch_action );
 
 	return;
 }
@@ -261,7 +258,7 @@ sub debug_perl_quit {
 	# Clean up the GUI artifacts
 	my $current = Padre::Current->new;
 	$current->main->show_debug(0);
-	$current->editor->MarkerDeleteAll( Padre::Wx::MarkLocation );
+	$current->editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 
 	# Detach the debugger
 	$self->{client}->quit;
@@ -386,10 +383,8 @@ sub debug_perl_show_value {
 	my $self = shift;
 	$self->running or return;
 
-	my $text  = $self->_debug_get_variable or return;
-	my $value = eval {
-		$self->{client}->get_value($text)
-	};
+	my $text = $self->_debug_get_variable or return;
+	my $value = eval { $self->{client}->get_value($text) };
 	if ($@) {
 		$self->error( sprintf( Wx::gettext("Could not evaluate '%s'"), $text ) );
 		return;
@@ -400,7 +395,7 @@ sub debug_perl_show_value {
 }
 
 sub _debug_get_variable {
-	my $self     = shift;
+	my $self = shift;
 	my $document = Padre::Current->document or return;
 
 	#my $text = $current->text;

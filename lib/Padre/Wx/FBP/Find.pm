@@ -7,8 +7,8 @@ package Padre::Wx::FBP::Find;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
-use Padre::Wx::Role::Main ();
+use Padre::Wx                    ();
+use Padre::Wx::Role::Main        ();
 use Padre::Wx::History::ComboBox ();
 
 our $VERSION = '0.01';
@@ -37,13 +37,10 @@ sub new {
 	);
 
 	$self->{find_term} = Padre::Wx::History::ComboBox->new(
-		$self,
-		-1,
-		"",
+		$self, -1, "",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[
-			"search",
+		[   "search",
 		],
 	);
 
@@ -123,29 +120,29 @@ sub new {
 	);
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 2, 2, 0, 10 );
-	$fgSizer2->AddGrowableCol( 1 );
-	$fgSizer2->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer2->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
-	$fgSizer2->Add( $self->{find_regex}, 1, Wx::wxALL, 5 );
+	$fgSizer2->AddGrowableCol(1);
+	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
+	$fgSizer2->Add( $self->{find_regex},   1, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{find_reverse}, 1, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{find_case}, 1, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{find_first}, 1, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{find_case},    1, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{find_first},   1, Wx::wxALL, 5 );
 
-	my $buttons = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->Add( $self->{find_next}, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{find_all}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{find_all},  0, Wx::wxALL, 5 );
 	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new( Wx::wxVERTICAL );
-	$vsizer->Add( $m_staticText2, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
-	$vsizer->Add( $self->{find_term}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $m_staticline2, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $fgSizer2, 1, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $m_staticText2,     0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
+	$vsizer->Add( $self->{find_term}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND,             5 );
+	$vsizer->Add( $m_staticline2,     0, Wx::wxALL | Wx::wxEXPAND,                                           5 );
+	$vsizer->Add( $fgSizer2,          1, Wx::wxBOTTOM | Wx::wxEXPAND,                                        5 );
+	$vsizer->Add( $m_staticline1,     0, Wx::wxALL | Wx::wxEXPAND,                                           5 );
+	$vsizer->Add( $buttons,           0, Wx::wxEXPAND,                                                       5 );
 
-	my $hsizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$self->SetSizer($hsizer);

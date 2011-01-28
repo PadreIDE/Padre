@@ -57,4 +57,4 @@ foreach my $name (@styles) {
 ######################################################################
 # Ensure the new style API loads as well
 
-use_ok( 'Padre::Wx::Style' );
+use_ok('Padre::Wx::Style');

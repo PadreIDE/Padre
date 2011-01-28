@@ -645,6 +645,7 @@ sub compatible {
 			$compat  = ${"${module}::COMPATIBLE"} || 0;
 
 		} else {
+
 			# Find the unloaded file
 			my $file = Class::Inspector->resolved_filename($module);
 			unless ( defined $file ) {
@@ -652,8 +653,8 @@ sub compatible {
 			}
 
 			# Scan the unloaded file ala EU:MakeMaker
-			$version = Padre::Util::parse_variable($file, 'VERSION');
-			$compat  = Padre::Util::parse_variable($file, 'COMPATIBLE');
+			$version = Padre::Util::parse_variable( $file, 'VERSION' );
+			$compat  = Padre::Util::parse_variable( $file, 'COMPATIBLE' );
 
 		}
 
