@@ -73,7 +73,7 @@ use constant {
 # Colour constructor
 sub color {
 	my $rgb = shift;
-	my @c = ( 0xFF, 0xFF, 0xFF ); # Some default
+	my @c   = ( 0xFF, 0xFF, 0xFF ); # Some default
 	if ( not defined $rgb ) {
 
 		# Carp::cluck("undefined color");
