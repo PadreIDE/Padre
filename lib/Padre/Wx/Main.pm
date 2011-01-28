@@ -1218,6 +1218,12 @@ sub refresh {
 	my $lock    = $self->lock('UPDATE');
 	my $current = $self->current;
 
+	# Although it would be nice to do this later, some of the
+	# optimisations in the other refresh subsections depend on the
+	# checked-state of the menu entries being accurate. So alas, we need
+	# to do this one first and delay the background jobs a little.
+	$self->refresh_menu($current);
+
 	# Refresh elements that generate background tasks first,
 	# so those tasks will run while we do the other things.
 	# Tasks that run more often go before those that don't,
@@ -1231,7 +1237,6 @@ sub refresh {
 	# Refresh the remaining elements while the background tasks
 	# are running for the other elements.
 	$self->refresh_title($current);
-	$self->refresh_menu($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 
