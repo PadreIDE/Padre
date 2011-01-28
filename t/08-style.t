@@ -5,9 +5,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::NoWarnings;
-use File::Spec::Functions ':ALL';
-use t::lib::Padre;
+
 
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
@@ -15,6 +13,10 @@ BEGIN {
 		exit 0;
 	}
 }
+
+use Test::NoWarnings;
+use File::Spec::Functions ':ALL';
+use t::lib::Padre;
 
 plan( tests => 33 );
 
