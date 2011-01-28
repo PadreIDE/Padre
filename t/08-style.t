@@ -49,9 +49,3 @@ foreach my $name (@styles) {
 		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }
-
-
-
-
-
-1;
