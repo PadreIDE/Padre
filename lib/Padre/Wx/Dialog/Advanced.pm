@@ -3,7 +3,6 @@ package Padre::Wx::Dialog::Advanced;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Constant       ();
 use Padre::Config         ();
 use Padre::Wx             ();
