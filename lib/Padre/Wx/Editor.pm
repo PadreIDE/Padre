@@ -299,7 +299,28 @@ sub on_key_up {
 sub padre_setup_plain {
 	my $self   = shift;
 	my $config = $self->main->ide->config;
-	$self->set_font;
+
+	# Code always lays out left to right
+	if ( $self->can('SetLayoutDirection') ) {
+		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
+	}
+
+	# Create the right margin if desired
+	if ( $config->editor_right_margin_enable ) {
+		$self->SetEdgeColumn( $config->editor_right_margin_column );
+		$self->SetEdgeMode( Wx::wxSTC_EDGE_LINE );
+	} else {
+		$self->SetEdgeMode( Wx::wxSTC_EDGE_NONE );
+	}
+	# Set the font
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	if ( defined $config->editor_font && length $config->editor_font > 0 ) {
+		$font->SetNativeFontInfoUserDesc( $config->editor_font );
+	}
+	$self->SetFont($font);
+	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+
+	# Flush the style colouring and apply from scratch
 	$self->StyleClearAll;
 
 	if ( defined $data->{plain}->{current_line_foreground} ) {
@@ -320,15 +341,6 @@ sub padre_setup_plain {
 		$self->StyleSetForeground( $k, _color( $data->{plain}->{foregrounds}->{$k} ) );
 	}
 
-	# Apply tag style for selected lexer (blue)
-	#$self->StyleSetSpec( Wx::wxSTC_H_TAG, "fore:#0000ff" );
-
-	if ( $self->can('SetLayoutDirection') ) {
-		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
-	}
-
-	$self->SetEdgeColumn( $config->editor_right_margin_column );
-	$self->SetEdgeMode( $config->editor_right_margin_enable ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
 
 	$self->setup_style_from_config('plain');
 
@@ -717,18 +729,6 @@ sub show_folding {
 		$self->unfold_all;
 	}
 
-	return;
-}
-
-sub set_font {
-	my $self   = shift;
-	my $config = $self->main->ide->config;
-	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
-		$font->SetNativeFontInfoUserDesc( $config->editor_font );
-	}
-	$self->SetFont($font);
-	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
 	return;
 }
 
