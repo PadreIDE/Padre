@@ -37,7 +37,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Enhancement, ticket #1027 When saving a file without a file extension 
       you are now prompted and provided a list of suitable extensions to 
       name your file. (PLAVEN)
-      
+    - Restored radio select indicator to Style and View Document As...
+      menus, they were lost in the move to the ActionLibrary (ADAMK)
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
