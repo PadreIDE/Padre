@@ -34,6 +34,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Closing files is faster (and the task manager is stressed less) as
       we no longer accidentally do a full refresh twice when closing
       documents other than the last one (ADAMK)
+    - Enhancement, ticket #1027 When saving a file without a file extension 
+      you are now prompted and provided a list of suitable extensions to 
+      name your file. (PLAVEN)
+      
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
