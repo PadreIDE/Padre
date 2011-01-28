@@ -9,7 +9,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Logger;
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 # Due to an overly simplistic implementation at the C level,
 # Wx::AuiManager is only a SCALAR reference and cannot be

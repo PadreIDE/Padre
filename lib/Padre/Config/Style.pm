@@ -15,7 +15,7 @@ use Params::Util    ();
 use Padre::Constant ();
 use Padre::Util     ('_T');
 
-our $VERSION    = '0.80';
+our $VERSION    = '0.81';
 our $COMPATIBLE = '0.79';
 
 

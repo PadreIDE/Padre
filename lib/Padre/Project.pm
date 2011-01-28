@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use File::Spec ();
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 
 

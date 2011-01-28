@@ -12,7 +12,7 @@ use Pod::Abstract                 ();
 use Padre::Browser::Document      ();
 use Padre::Browser::PseudoPerldoc ();
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 use Class::XSAccessor {
 	constructor => 'new',

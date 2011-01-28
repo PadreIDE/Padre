@@ -11,7 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 my $PADRE_SESSION = 'padre-last';
 

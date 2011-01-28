@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel

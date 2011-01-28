@@ -23,7 +23,7 @@ use Padre::Util    ('_T');
 use Padre::Wx      ();
 use Padre::DB      ();
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 #####################################################################
 # Document Registration

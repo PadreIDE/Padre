@@ -11,7 +11,7 @@ use Padre::Wx                ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
 
-our $VERSION        = '0.80';
+our $VERSION        = '0.81';
 our $BACKCOMPATIBLE = '0.66';
 
 # Timeout values

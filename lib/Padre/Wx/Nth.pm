@@ -7,7 +7,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 # Even if more than one rule matches, only ever bother the user once.
 sub nth {
