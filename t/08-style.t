@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 32;
+use Test::More tests => 33;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
@@ -49,3 +49,12 @@ foreach my $name (@styles) {
 		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }
+
+
+
+
+
+######################################################################
+# Ensure the new style API loads as well
+
+use_ok( 'Padre::Wx::Style' );
