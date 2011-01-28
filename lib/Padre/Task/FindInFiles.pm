@@ -100,7 +100,8 @@ sub run {
 		# Notify our parent we are working on this directory
 		$self->handle->status( "Searching... " . $parent->unix );
 
-		foreach my $file (@list) {
+		my @children = ();
+		foreach my $file ( @list ) {
 			my $skip = 0;
 			next if $file =~ /^\.+\z/;
 			next if $file =~ /^\.svn$/;
@@ -115,7 +116,7 @@ sub run {
 
 			# Confirm the file still exists and get stat details
 			my $fullname = File::Spec->catdir( $dir, $file );
-			my @fstat = stat($fullname);
+			my @fstat    = stat($fullname);
 			unless ( -e _ ) {
 
 				# The file dissapeared mid-search?
@@ -126,7 +127,7 @@ sub run {
 			if ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
 				next if $rule->skipped( $object->unix );
-				unshift @queue, $object;
+				push @children, $object;
 				next;
 			}
 			unless ( -f _ ) {
@@ -165,6 +166,7 @@ sub run {
 			# Found results, inform our owner
 			$self->handle->message( OWNER => $object, @lines );
 		}
+		unshift @queue, @children;
 	}
 
 	# Notify our parent we are finished searching
