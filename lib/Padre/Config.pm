@@ -274,9 +274,7 @@ sub apply {
 
 	# Does this setting have an apply hook
 	my $code = $SETTING{$name}->apply;
-	if ($code) {
-		$code->( $current->main, $value );
-	}
+	$code->( $current->main, $value ) if $code;
 
 	return 1;
 }
