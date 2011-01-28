@@ -39,6 +39,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       name your file. (PLAVEN)
     - Restored radio select indicator to Style and View Document As...
       menus, they were lost in the move to the ActionLibrary (ADAMK)
+    - Fixed #1093. The natural zoom of a scintilla window is around the wrong
+      way, hijack ctrl-scroll and reverse it to the right way (ADAMK)
 
 0.79 not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)

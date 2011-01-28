@@ -1178,14 +1178,19 @@ sub on_mousewheel {
 	my $self  = shift;
 	my $event = shift;
 
-	# Behave normally if Ctrl isn't down
-	unless ( $event->ControlDown and not $self->config->feature_fontsize ) {
+	# Ignore this handler if it's a normal wheel movement
+	unless ( $event->ControlDown ) {
 		$event->Skip(1);
 		return;
 	}
 
-	# Behave as if Ctrl wasn't down
-	$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
+	if ( $self->config->feature_fontsize ) {
+		# The default handler zooms in the wrong direction
+		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
+	} else {
+		# Behave as if Ctrl wasn't down
+		$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
+	}
 
 	return;
 }
