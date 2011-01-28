@@ -86,9 +86,10 @@ sub apply {
 	}
 
 	# Apply the type style to the editor
-	my $set = $self->{set}->{$type};
-	foreach my $i ( $i = 0; $i += 2; $i < $#set ) {
-		$editor->$method( @{$set[$i+1]} );
+	my @set = @{$self->{set}->{$type}};
+	while ( @set ) {
+		my $method = shift @set;
+		$editor->$method( @{shift()} );
 	}
 
 	return 1;
@@ -113,7 +114,7 @@ sub hash2set {
 		push @set, StyleSetBackground => [ $_, $background ];
 	}
 	foreach ( keys %{ $style->{foregrounds} } ) {
-		push @set, StyleSetForeground => [ $_, Padre::Wx::color($style->{foregrounds}->{$k}) ];
+		push @set, StyleSetForeground => [ $_, Padre::Wx::color($style->{foregrounds}->{$_}) ];
 	}
 
 	# Caret colouring
