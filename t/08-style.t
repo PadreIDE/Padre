@@ -4,10 +4,20 @@
 
 use strict;
 use warnings;
-use Test::More tests => 33;
+use Test::More;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
+
+BEGIN {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
+plan( tests => 33 );
+
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
