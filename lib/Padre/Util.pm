@@ -538,7 +538,7 @@ sub parse_variable {
 			};
 			local $^W = 0;
 			# what policy needs to be disabled here????
-			$result = eval($eval);  ## no critic
+			$result = eval($eval);
 			
 			warn "Could not eval '$eval' in $parsefile: $@" if $@;
 		}

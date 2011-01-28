@@ -4,6 +4,7 @@ package Padre::Portable;
 
 use 5.008;
 use strict;
+use warnings;
 use File::Spec      ();
 use Params::Util    ();
 use Padre::Constant ();
