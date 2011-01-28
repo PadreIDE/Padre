@@ -11,7 +11,7 @@ use Padre::Wx::Role::Main ();
 use Padre::MimeTypes      ();
 use Padre::Role::Task     ();
 
-our $VERSION = '0.79';
+our $VERSION = '0.80';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Main

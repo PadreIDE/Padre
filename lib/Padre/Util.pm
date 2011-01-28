@@ -38,8 +38,8 @@ use Padre::Constant ();
 use vars qw{ $VERSION $COMPATIBLE };
 
 BEGIN {
-	$VERSION    = '0.79';
-	$COMPATIBLE = '0.79';
+	$VERSION    = '0.80';
+	$COMPATIBLE = '0.80';
 }
 
 our @ISA       = 'Exporter';

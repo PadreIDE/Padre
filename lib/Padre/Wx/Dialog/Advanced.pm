@@ -8,7 +8,7 @@ use Padre::Config         ();
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.79';
+our $VERSION = '0.80';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

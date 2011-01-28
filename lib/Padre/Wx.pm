@@ -21,7 +21,7 @@ use Wx::STC    ();
 use Wx::AUI    ();
 use Wx::Locale ();
 
-our $VERSION        = '0.79';
+our $VERSION        = '0.80';
 our $BACKCOMPATIBLE = '0.43';
 
 # Hard version lock on a new-enough Wx.pm

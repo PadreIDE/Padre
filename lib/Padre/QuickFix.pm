@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.79';
+our $VERSION = '0.80';
 
 # Constructor.
 # No need to override this

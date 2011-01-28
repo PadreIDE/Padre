@@ -26,7 +26,7 @@ use warnings;
 use Padre::Wx ();
 use Wx::Html  ();
 
-our $VERSION = '0.79';
+our $VERSION = '0.80';
 our @ISA     = 'Wx::HtmlWindow';
 
 

@@ -13,7 +13,7 @@ use Padre::Wx::TreeCtrl   ();
 use Padre::Wx::HtmlWindow ();
 use Padre::Logger;
 
-our $VERSION = '0.79';
+our $VERSION = '0.80';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
