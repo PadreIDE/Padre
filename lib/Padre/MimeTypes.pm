@@ -587,19 +587,19 @@ sub remove_highlighter_from_mime_type {
 	delete $MIME_TYPES{$mime}{highlighters}{$module};
 }
 
-# return the mime-types ordered according to their display-name
+# return the MIME types ordered according to their display name
 sub get_mime_types {
 	return [ sort { lc $MIME_TYPES{$a}{name} cmp lc $MIME_TYPES{$b}{name} } keys %MIME_TYPES ];
 }
 
-# return the display-names of the mime-types ordered according to the display-names
+# return the display-names of the MIME types ordered according to the display names
 sub get_mime_type_names {
 	my $self = shift;
 	return [ map { Wx::gettext( $MIME_TYPES{$_}{name} ) } @{ $self->get_mime_types } ];
 }
 
-# given a mime-type
-# return its display-name
+# given a MIME type
+# return its display name
 sub get_mime_type_name {
 	my $self = shift;
 	my $mime_type = shift || '';
@@ -610,21 +610,21 @@ sub get_mime_type_name {
 	return Wx::gettext( $MIME_TYPES{$mime_type}{name} );
 }
 
-# given a mime-type
-# return the display-names of the available highlighters
+# given a MIME type
+# return the display names of the available highlighters
 sub get_highlighters_of_mime_type {
 	my ( $self, $mime_type ) = @_;
 	my @names = map { __PACKAGE__->get_highlighter_name($_) } sort keys %{ $MIME_TYPES{$mime_type}{highlighters} };
 	return \@names;
 }
 
-# given the display-name of a mime-type
-# return the display-names of the available highlighters
+# given the display name of a MIME type
+# return the display names of the available highlighters
 sub get_highlighters_of_mime_type_name {
 	my ( $self, $mime_type_name ) = @_;
 	my ($mime_type) = grep { $MIME_TYPES{$_}{name} eq $mime_type_name } keys %MIME_TYPES;
 	if ( not $mime_type ) {
-		warn "Could not find the mime-type of the display name '$mime_type_name'\n";
+		warn "Could not find the MIME type of the display name '$mime_type_name'\n";
 		return []; # return [] to avoid crash
 	}
 	$self->get_highlighters_of_mime_type($mime_type);
