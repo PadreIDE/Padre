@@ -937,7 +937,7 @@ sub single_instance_start {
 	require Wx::Socket;
 	$self->{single_instance} = Wx::SocketServer->new(
 		'127.0.0.1' => $single_instance_port,
-		Wx::wxSOCKET_NOWAIT Wx::wxSOCKET_REUSEADDR,
+		Wx::wxSOCKET_NOWAIT | Wx::wxSOCKET_REUSEADDR,
 	);
 	unless ( $self->{single_instance}->Ok ) {
 		delete $self->{single_instance_server};
