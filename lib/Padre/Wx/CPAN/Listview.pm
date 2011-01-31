@@ -78,44 +78,6 @@ sub set_column_widths {
 #####################################################################
 # Event Handlers
 
-sub on_timer {
-	my $self   = shift;
-	my $event  = shift;
-	my $force  = shift;
-	my $editor = $self->main->current->editor or return;
-
-	my $document = $editor->{Document};
-	unless ( $document and $document->can('check_syntax') ) {
-		$self->clear;
-		return;
-	}
-
-	my $pre_exec_result = $document->check_syntax_in_background( force => $force );
-
-	# In case we have created a new and still completely empty doc we
-	# need to clean up the message list
-	if ( ref $pre_exec_result eq 'ARRAY' && !@{$pre_exec_result} ) {
-		$self->clear;
-	}
-
-	if ( defined $event ) {
-		$event->Skip(0);
-	}
-
-	return;
-}
-
-sub on_idle {
-	my $self  = shift;
-	my $event = shift;
-	if ( $self->{timer}->IsRunning ) {
-		$self->{timer}->Stop;
-	}
-	$self->{timer}->Start( 300, 1 );
-	$event->Skip(0);
-	return;
-}
-
 sub show_rows {
 	my ( $self, $regex ) = @_;
 

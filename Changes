@@ -2,10 +2,10 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.82 TBA
-
+    - remove methods that are not used any more: check_syntax_in_background and
+      check_syntax (ZENOG)
 
 0.81 Not Released - dev cycle
-
 
 0.80 2011.01.29
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)

@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 48 );
+	plan( tests => 40 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -38,8 +38,6 @@ SCOPE: {
 	$doc->set_editor($editor);
 	$editor->configure_editor($doc);
 
-	my $issues = $doc->check_syntax;
-
 	sub is_row_ok {
 		my %arg = @_;
 		my $row = $arg{row};
@@ -47,22 +45,6 @@ SCOPE: {
 		is( $row->{line}, $arg{line}, "line match in '$arg{test_name}'" );
 		is( $row->{type}, $arg{type}, "type match in '$arg{test_name}'" );
 	}
-
-	is( scalar @$issues, 2, 'has only two lines' );
-	is_row_ok(
-		row       => $issues->[0],
-		message   => qr/Missing right curly or square bracket(?:, at end of line)?/,
-		line      => 17,
-		type      => 'F',
-		test_name => 'check_syntax issue 1',
-	);
-	is_row_ok(
-		row       => $issues->[1],
-		message   => qr/syntax error(?:, at EOF)?/,
-		line      => 17,
-		type      => 'F',
-		test_name => 'check_syntax issue 2',
-	);
 
 	isa_ok( $doc, 'Padre::Document' );
 	isa_ok( $doc, 'Padre::Document::Perl' );
@@ -183,19 +165,6 @@ SCOPE: {
 		$result_declaration = Padre::PPI::find_variable_declaration($elem);
 		ok( $declaration == $result_declaration, 'Correct declaration found' );
 	}
-}
-
-# Test for check_syntax
-SCOPE: {
-	my $editor = t::lib::Padre::Editor->new;
-	my $file   = catfile( $files, 'one_char.pl' );
-	my $doc    = Padre::Document->new(
-		filename => $file,
-	);
-	$doc->set_editor($editor);
-	$editor->configure_editor($doc);
-
-	is_deeply( $doc->check_syntax, [], 'Syntax check is ok' );
 }
 
 # Regression test for get_functions

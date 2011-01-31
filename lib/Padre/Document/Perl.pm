@@ -64,7 +64,7 @@ sub ppi_set {
 	my $self = shift;
 	my $document = Params::Util::_INSTANCE( shift, 'PPI::Document' );
 	unless ($document) {
-		Carp::croak("Did not provide a PPI::Document");
+		Carp::croak('Did not provide a PPI::Document');
 	}
 
 	# Serialize and overwrite the current text
@@ -393,69 +393,6 @@ sub pre_process {
 	}
 
 	return 1;
-}
-
-# Checks the syntax of a Perl document.
-# Documented in Padre::Document!
-# Implemented as a task. See Padre::Document::Perl::Syntax
-sub check_syntax {
-	shift->_check_syntax_internals(
-
-		# Passing all arguments is ok, but critic complains
-		{   @_, ## no critic (ProhibitCommaSeparatedStatements)
-			background => 0
-		}
-	);
-}
-
-sub check_syntax_in_background {
-	shift->_check_syntax_internals(
-
-		# Passing all arguments is ok, but critic complains
-		{   @_, ## no critic (ProhibitCommaSeparatedStatements)
-			background => 1
-		}
-	);
-}
-
-sub _check_syntax_internals {
-	my $self = shift;
-	my $args = shift;
-	my $text = $self->text_get;
-	unless ( defined $text and $text ne '' ) {
-		return [];
-	}
-
-	# Do we really need an update?
-	require Digest::MD5;
-	my $md5 = Digest::MD5::md5_hex( Encode::encode_utf8($text) );
-	unless ( $args->{force} ) {
-		if ( defined( $self->{last_syncheck_md5} )
-			and $self->{last_syncheck_md5} eq $md5 )
-		{
-			return;
-		}
-	}
-	$self->{last_syncheck_md5} = $md5;
-
-	require Padre::Document::Perl::Syntax;
-	my $task = Padre::Document::Perl::Syntax->new(
-		document => $self,
-	);
-
-	if ( $args->{background} ) {
-
-		# asynchroneous execution (see on_finish hook)
-		$task->schedule;
-		return;
-	} else {
-
-		# serial execution, returning the result
-		$task->prepare or return;
-		$task->run;
-		$task->finish;
-		return $task->{model};
-	}
 }
 
 =pod
