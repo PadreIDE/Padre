@@ -2319,7 +2319,7 @@ sub init {
 		comment    => _T('Reset the My plug-in to the default'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
-				Wx::gettext("Reset My plug-in"),
+				Wx::gettext("Warning! This will delete all the changes you made to 'My plug-in' and replace it with the default code that comes with your installation of Padre"),
 				Wx::gettext("Reset My plug-in"),
 				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
 				$main,
