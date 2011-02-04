@@ -87,8 +87,8 @@ sub other_method {
 	# $main->message( "Hello $name", 'Welcome' );
 
 	# my $doc   = Padre::Current->document;
-	# my $code  = $doc->text_get;
-	# my $count = length($code);
+	# my $text  = $doc->text_get;
+	# my $count = length($text);
 	# my $filename = $doc->filename;
 	# $main->message( "Filename: $filename\nCount: $count", 'Current file' );
 
