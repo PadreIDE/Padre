@@ -68,16 +68,16 @@ sub menu_plugins_simple {
 		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
 		'---' => undef,
-
-		Wx::gettext('Dump Expression...')    => 'dump_expression',
-		Wx::gettext('Dump Current Document') => 'dump_document',
-		Wx::gettext('Dump Task Manager')     => 'dump_taskmanager',
-		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
-		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
-		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
-		Wx::gettext('Dump Display Geometry') => 'dump_display',
-		Wx::gettext('Start/Stop sub trace')  => 'trace_sub_startstop',
-
+		Wx::gettext('Dump') => [
+			Wx::gettext('Dump Expression...')    => 'dump_expression',
+			Wx::gettext('Dump Current Document') => 'dump_document',
+			Wx::gettext('Dump Task Manager')     => 'dump_taskmanager',
+			Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
+			Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
+			Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
+			Wx::gettext('Dump Display Geometry') => 'dump_display',
+			Wx::gettext('Start/Stop sub trace')  => 'trace_sub_startstop',
+		],
 		'---' => undef,
 
 		Wx::gettext('Load All Padre Modules')        => 'load_everything',
