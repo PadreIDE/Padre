@@ -34,9 +34,9 @@ sub menu_plugins_simple {
 	return $self->plugin_name => [
 		'About' => sub { $self->show_about },
 
-		# 'Another Menu Entry' => sub { $self->about },
+		# 'Another Menu Entry' => sub { $self->other_method },
 		# 'A Sub-Menu...' => [
-		#     'Sub-Menu Entry' => sub { $self->about },
+		#     'Sub-Menu Entry' => sub { $self->yet_another_method },
 		# ],
 	];
 }
@@ -73,6 +73,29 @@ END_MESSAGE
 
 	# Show the About dialog
 	Wx::AboutBox($about);
+
+	return;
+}
+
+sub other_method {
+	my $self  = shift;
+	my $main = $self->main;
+
+	$main->message( 'Hi from My Plugin', 'Other method' );
+
+	# my $name = $main->prompt('What is your name?', 'Title', 'UNIQUE_KEY_TO_REMEMBER');
+	# $main->message( "Hello $name", 'Welcome' );
+
+	# my $doc   = Padre::Current->document;
+	# my $code  = $doc->text_get;
+	# my $count = length($code);
+	# my $filename = $doc->filename;
+	# $main->message( "Filename: $filename\nCount: $count", 'Current file' );
+
+	# my $doc   = Padre::Current->document;
+	# my $text  = $doc->text_get();
+	# $text     =~ s/[ \t]+$//m;
+	# $doc->text_set( $text );
 
 	return;
 }
