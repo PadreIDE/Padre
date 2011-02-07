@@ -4,6 +4,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 0.82 TBA
     - remove methods that are not used any more: check_syntax_in_background and
       check_syntax (ZENOG)
+    - Fixed a stupid bug in the save file as check for a file extension.  Hardly worth
+      noting, however it's here in case anyone was caught by such a silly bug
+      and wondered if they were going mad (PLAVEN)
 
 0.81 Not Released - dev cycle
 
