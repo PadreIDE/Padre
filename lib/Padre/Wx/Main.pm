@@ -4245,17 +4245,16 @@ sub on_save_as {
 					),
 					$ext_string
 				),
-				Wx::gettext("File extension missing warning"),
+				Wx::gettext("File extension missing warning..."),
 				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
 
-			# bit blunt really as this will return them back to the editor
-			# it would probably be nicer to return the dialog back
-			#return 0  if $ret == Wx::wxNO;
-			# this works better:
-			next; # because we are in a while(1) loop
 
+			# return back to the save as dialog when we click No.
+			if( $ret == Wx::wxNO ) {
+				next; # because we are in a while(1) loop
+			}
 		}
 
 
@@ -5102,8 +5101,10 @@ sub on_toggle_code_folding {
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->editor_folding );
-		$editor->fold_pod
-			if ( $config->editor_folding && $config->editor_fold_pod );
+		if ( $config->editor_folding && $config->editor_fold_pod ) {
+			$editor->fold_pod;
+			$editor->fold_pragma;
+		}
 	}
 
 	$config->write;
