@@ -439,7 +439,7 @@ setting(
 	name    => 'main_title',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => 'Padre [%p]',
+	default => (Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre') . ' [%p]',
 );
 
 setting(
@@ -802,9 +802,9 @@ setting(
 	default => 1,
 );
 setting(
-	name  => 'editor_cursor_blink',
-	type  => Padre::Constant::INTEGER,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_cursor_blink',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HUMAN,
 	default => 500, # milliseconds - this is the actual default for the wxStyledTextCtrl - set to 0 to turn off
 );
 setting(
