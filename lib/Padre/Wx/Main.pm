@@ -912,6 +912,33 @@ sub locked {
 Padre embeds a small network server to handle single instance. Here are
 the methods that allow to control this embedded server.
 
+=head3 C<single_instance_address>
+
+    $main->single_instance_address;
+
+Determines the location of the single instance server for this instance of
+L<Padre>.
+
+=cut
+
+sub single_instance_address {
+	require Wx::Socket;
+	if ( Padre::Constant::WXWIN32 ) {
+		my $address = Wx::IPV4address->new;
+		$address->SetHostname('127.0.0.1');
+		$address->SetService('4444');
+		return $address;
+	} else {
+		my $file = File::Spec->catfile(
+			Padre::Constant::CONFIG_DIR,
+			'single_instance.socket',
+		);
+		my $address = Wx::UNIXaddress->new;
+		$address->SetFilename($file);
+		return $address;
+	}
+}
+
 =cut
 
 my $single_instance_port = 4444;
@@ -936,7 +963,7 @@ sub single_instance_start {
 	# Create the server
 	require Wx::Socket;
 	$self->{single_instance} = Wx::SocketServer->new(
-		'127.0.0.1' => $single_instance_port,
+		$self->single_instance_address,
 		Wx::wxSOCKET_NOWAIT | Wx::wxSOCKET_REUSEADDR,
 	);
 	unless ( $self->{single_instance}->Ok ) {
@@ -1305,70 +1332,78 @@ Sets or updates the Window title.
 =cut
 
 sub refresh_title {
-	my $self     = shift;
-	my $config   = $self->{config};
-	my $current  = $self->current;
+	my $self = shift;
+	return if $self->locked('REFRESH');
+
+	# Get the window title template string
+	my $current = Padre::Current::_CURRENT(@_);
+	my $config  = $current->config;
+	my $title   = $config->main_title || 'Padre %v';
+
+	# Populate any variables used in the template on demand,
+	# avoiding potentially expensive operations unless needed.
 	my %variable = (
 		'%' => '%',
 		'v' => $Padre::VERSION,
-		'f' => '',             # Initialize space for filename
-		'b' => '',             # Initialize space for filename - basename
-		'd' => '',             # Initialize space for filename - dirname
-		'F' => '',             # Initialize space for filename relative to project dir
-		'p' => '',             # Initialize space for project name
 	);
+	foreach my $char ( $title =~ /\%(.)/g ) {
+		next if exists $variable{$char};
+		if ( $char eq 'p' ) {
+			# Fill in the session name, if any
+			if ( defined $self->ide->{session} ) {
+				my ($session) = Padre::DB::Session->select(
+					'where id = ?', $self->ide->{session},
+				);
+				$variable{p} = $session->name;
+			} else {
+				$variable{p} = '';
+			}
+			next;
+		}
 
-	# We may run within window start-up, there may be no "current" or
-	# "document" or "document->file":
-	if (    defined $current
-		and defined $current->document
-		and defined $current->document->file )
-	{
-		my $document = $current->document;
+		# The other variables are all based on the filename
+		my $document = $current->document or next;
 		my $file     = $document->file;
-		$variable{'f'} = $file->{filename};
-		$variable{'b'} = $file->basename;
-		$variable{'d'} = $file->dirname;
-		$variable{'F'} = $file->{filename};
-		my $project_dir = $document->project_dir;
-		if ( defined $project_dir ) {
-			$project_dir = quotemeta $project_dir;
-			$variable{'F'} =~ s/^$project_dir//;
+		next unless defined $file;
+
+		if ( $char eq 'b' ) {
+			$variable{b} = $file->basename;
+		} elsif ( $char eq 'd' ) {
+			$variable{d} = $file->dirname;
+		} elsif ( $char eq 'f' ) {
+			$variable{f} = $file->{filename};
+		} elsif ( $char eq 'F' ) {
+			# Filename relative to the project root
+			$variable{F} = $file->{filename};
+			my $project_dir = $document->project_dir;
+			if ( defined $project_dir ) {
+				$project_dir = quotemeta $project_dir;
+				$variable{F} =~ s/^$project_dir//;
+			}
+		} else {
+			$variable{$char} = '%' . $char;
 		}
 	}
 
-	# Fill in the session, if any
-	if ( defined $self->ide->{session} ) {
-		my ($session) = Padre::DB::Session->select(
-			'where id = ?', $self->ide->{session},
-		);
-		$variable{'p'} = $session->name;
-	}
+	# Process the template into the final string
+	$title =~ s/\%(.)/$variable{$1}/g;
 
-	# Keep it for later usage
-	$self->{title} = $config->main_title;
-
-	my $variables = join '', keys %variable;
-
-	$self->{title} =~ s/\%([$variables])/$variable{$1}/g if $variables;
-
-	unless ( defined $self->{title} ) {
-		$self->{title} = "Padre $Padre::VERSION";
-	}
-
+	# Additional information if we are running the developer versiom.
+	### TODO We should only need to calculate "Are we an svn checkout" once.
+	### TODO Probably should move this code to Padre::Constant
 	require Padre::Util::SVN;
 	my $revision = Padre::Util::SVN::padre_revision();
 	if ( defined $revision ) {
 		$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
 	}
 
-	if ( $self->GetTitle ne $self->{title} ) {
+	unless ( $self->GetTitle eq $title ) {
 
 		# Push the title to the window
-		$self->SetTitle( $self->{title} );
+		$self->SetTitle( $title );
 
 		# Push the title to the process list for better identification
-		$0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
+		$0 = $title; ## no critic (RequireLocalizedPunctuationVars)
 	}
 
 	return;
