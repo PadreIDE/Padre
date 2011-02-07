@@ -5101,10 +5101,8 @@ sub on_toggle_code_folding {
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->editor_folding );
-		if ( $config->editor_folding && $config->editor_fold_pod ) {
-			$editor->fold_pod;
-			$editor->fold_pragma;
-		}
+		$editor->fold_pod 
+			if ( $config->editor_folding && $config->editor_fold_pod );
 	}
 
 	$config->write;
