@@ -1392,7 +1392,7 @@ sub refresh_title {
 	require Padre::Util::SVN;
 	my $revision = Padre::Util::SVN::padre_revision();
 	if ( defined $revision ) {
-		$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
+		$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
 	}
 
 	unless ( $self->GetTitle eq $title ) {
