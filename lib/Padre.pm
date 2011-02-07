@@ -172,6 +172,9 @@ sub run {
 
 	TRACE("Padre->run was called version $VERSION") if DEBUG;
 
+	# make WxWidgets translate the default buttons etc.
+	$ENV{LANGUAGE} = $self->config->locale if Padre::Constant::UNIX;
+
 	# Clean arguments (with a bad patch for saving URLs)
 	if (Padre::Constant::WIN32) {
 
