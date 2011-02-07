@@ -440,6 +440,10 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => (Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre') . ' [%p]',
+	apply   => sub {
+		my $main = shift;
+		$main->refresh_title;
+	},
 );
 
 setting(
