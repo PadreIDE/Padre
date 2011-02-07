@@ -1388,9 +1388,7 @@ sub refresh_title {
 	# Process the template into the final string
 	$title =~ s/\%(.)/$variable{$1}/g;
 
-	# Additional information if we are running the developer versiom.
-	### TODO We should only need to calculate "Are we an svn checkout" once.
-	### TODO Probably should move this code to Padre::Constant
+	# Additional information if we are running the developer version.
 	require Padre::Util::SVN;
 	my $revision = Padre::Util::SVN::padre_revision();
 	if ( defined $revision ) {
