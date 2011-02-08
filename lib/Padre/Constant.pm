@@ -10,8 +10,8 @@ use File::Path ();
 use File::Spec ();
 use File::HomeDir 0.91 ();
 
-our $VERSION        = '0.81';
-our $BACKCOMPATIBLE = '0.57';
+our $VERSION    = '0.81';
+our $COMPATIBLE = '0.57';
 
 our $DISTRO;
 

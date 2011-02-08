@@ -2,15 +2,28 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 0.82 TBA
-    - remove methods that are not used any more: check_syntax_in_background and
+    - Remove methods that are not used any more: check_syntax_in_background and
       check_syntax (ZENOG)
     - Fixed a stupid bug in the save file as check for a file extension.  Hardly
       worth noting, however it's here in case anyone was caught by such a silly
       bug and wondered if they were going mad (PLAVEN)
-    - make sure that default buttons like "OK" and "Cancel" are displayed
+    - Make sure that default buttons like "OK" and "Cancel" are displayed
       when locale is set to something different than the system locale (ZENOG)
+    - Padre::TaskManager now rigourously avoids the assumption that it is
+      implemented using threads. Of course, it always IS implemented with
+      thread at present, but these changes purify and simplify the Task Manager
+      and allows someone else (NOT me) to write a non-thread backend (ADAMK)
+    - Fixed incosistent use of both $COMPATIBLE and $BACKCOMPATIBLE, which was
+      potentially returning false positive plugin compatibility (ADAMK)
 
-0.81 Not Released - dev cycle
+0.81 not released
+    - Padre::TaskManager now uses the term "worker" exclusively in API methods
+      instead of "thread" (e.g. start_thread becomes start_worker). This
+      future-proofs the API against a future alternative task manager backend
+      implementations that do not use threads. All existing Padre::Task code
+      should continue to work, but plugin authors may be impacted by the
+      $COMPATIBLE bump. An unchanged new release with the dependency version
+      updated to 0.81 should resolve the incompatibility. (ADAMK)
 
 0.80 2011.01.29
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)

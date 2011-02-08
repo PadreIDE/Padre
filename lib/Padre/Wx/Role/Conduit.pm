@@ -22,6 +22,7 @@ CPAN spinoff later).
 use 5.008;
 use strict;
 use warnings;
+use Storable  ();
 use Padre::Wx ();
 use Padre::Logger;
 
@@ -56,7 +57,18 @@ sub signal {
 # Pass the event through to the event handler
 sub on_signal {
 	TRACE( $_[1] ) if DEBUG;
-	$HANDLER->on_signal( $_[1] ) if $HANDLER;
+	return 1 unless $HANDLER;
+
+	# Deserialise the message from the Wx event so that our handler does not
+	# need to be aware we are implemented via Wx.
+	my $frozen  = $_[1]->GetData;
+	my $message = eval { Storable::thaw($frozen); };
+	if ($@) {
+		TRACE("Exception deserialising message '$frozen'");
+		return;
+	}
+
+	$HANDLER->on_signal($message);
 	return 1;
 }
 
