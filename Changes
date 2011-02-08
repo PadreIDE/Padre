@@ -15,6 +15,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       and allows someone else (NOT me) to write a non-thread backend (ADAMK)
     - Fixed incosistent use of both $COMPATIBLE and $BACKCOMPATIBLE, which was
       potentially returning false positive plugin compatibility (ADAMK)
+    - Ignore .build directories in "Open Resource" dialog (ZENOG)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods

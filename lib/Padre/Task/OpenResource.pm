@@ -12,12 +12,12 @@ our @ISA     = 'Padre::Task';
 sub run {
 	my $self = shift;
 
-	# Search and ignore rc folders (CVS,.svn,.git) if the user wants
+	# Search and ignore version control and Dist::Zilla folders if the user wants
 	require File::Find::Rule;
 	my $rule = File::Find::Rule->new;
 	if ( $self->{skip_vcs_files} ) {
 		$rule->or(
-			$rule->new->directory->name( 'CVS', '.svn', '.git', 'blib' )->prune->discard,
+			$rule->new->directory->name( 'CVS', '.svn', '.git', 'blib', '.build' )->prune->discard,
 			$rule->new
 		);
 	}
