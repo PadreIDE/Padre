@@ -136,7 +136,8 @@ use Padre::MimeTypes ();
 use Padre::File      ();
 use Padre::Logger;
 
-our $VERSION = '0.81';
+our $VERSION    = '0.81';
+our $COMPATIBLE = '0.81';
 
 
 
@@ -213,7 +214,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -223,9 +224,7 @@ sub new {
 		$self->{file} = Padre::File->new(
 			$self->{filename},
 			info_handler => sub {
-				my $self    = shift;
-				my $message = shift;
-				Padre->ide->wx->main->info($message);
+				Padre::Current->main->info($_[1]);
 			}
 		);
 
@@ -245,8 +244,9 @@ sub new {
 
 		if ( $self->{file}->exists ) {
 
-			# Test script must be able to pass an alternate config object:
-			my $config = $self->{config} || Padre->ide->config;
+			# Test script must be able to pass an alternate config object
+			# NOTE: Since when do we support per-document configuration objects?
+			my $config = $self->{config} || Padre::Current->config;
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
 				my $ret = Wx::MessageBox(
 					sprintf(
@@ -259,7 +259,7 @@ sub new {
 					),
 					Wx::gettext("Warning"),
 					Wx::wxYES_NO | Wx::wxCENTRE,
-					Padre->ide->wx->main,
+					Padre::Current->main,
 				);
 				if ( $ret != Wx::wxYES ) {
 					return;
@@ -288,9 +288,11 @@ sub new {
 
 	$self->rebless;
 
-	Padre->ide->{_popularity_contest}->count( 'mime.' . $self->mimetype )
-		if ( !defined( $ENV{PADRE_IS_TEST} ) )
-		and defined( Padre->ide->{_popularity_contest} );
+	# NOTE: Hacky support for the Padre Popularity Contest
+	unless ( defined $ENV{PADRE_IS_TEST} ) {
+		my $popcon = Padre::Current->ide->{_popularity_contest};
+		$popcon->count( 'mime.' . $self->mimetype ) if $popcon;
+	}
 
 	return $self;
 }
@@ -660,49 +662,42 @@ sub autocomplete_matching_char {
 	my $editor = shift;
 	my $event  = shift;
 	my %table  = @_;
-
-	my $config = Padre->ide->config;
-	my $main   = Padre->ide->wx->main;
-
-	my $selection_exists = 0;
-	my $text             = $editor->GetSelectedText;
-	if ( defined($text) && length($text) > 0 ) {
-		$selection_exists = 1;
+	my $key    = $event->GetUnicodeKey;
+	unless ( $table{$key} ) {
+		return 0;
 	}
 
-	my $key = $event->GetUnicodeKey;
+	# Is autocomplete enabled 
+	my $current = $editor->current;
+	my $config  = $current->config;
+	unless ( $config->autocomplete_brackets ) {
+		return 0;
+	}
 
-	my $pos   = $editor->GetCurrentPos;
-	my $line  = $editor->LineFromPosition($pos);
-	my $first = $editor->PositionFromLine($line);
-	my $last  = $editor->PositionFromLine( $line + 1 ) - 1;
+	# Is something selected?
+	my $pos  = $editor->GetCurrentPos;
+	my $text = $editor->GetSelectedText;
+	if ( defined $text and length $text ) {
+		my $start = $editor->GetSelectionStart;
+		my $end   = $editor->GetSelectionEnd;
+		$editor->GotoPos($end);
+		$editor->AddText( chr( $table{$key} ) );
+		$editor->GotoPos($start);
 
-	if ( $config->autocomplete_brackets ) {
-		if ( $table{$key} ) {
-			if ($selection_exists) {
-				my $start = $editor->GetSelectionStart;
-				my $end   = $editor->GetSelectionEnd;
-				$editor->GotoPos($end);
-				$editor->AddText( chr( $table{$key} ) );
-				$editor->GotoPos($start);
-			} else {
-				my $nextChar;
-				if ( $editor->GetTextLength > $pos ) {
-					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
-				}
-				unless ( defined($nextChar) && ord($nextChar) == $table{$key}
-					and ( !$config->autocomplete_multiclosebracket ) )
-				{
-					$editor->AddText( chr( $table{$key} ) );
-					$editor->CharLeft;
-				}
-			}
-			return 1;
+	} else {
+		my $nextChar;
+		if ( $editor->GetTextLength > $pos ) {
+			$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
+		}
+		unless ( defined($nextChar) && ord($nextChar) == $table{$key}
+			and ( !$config->autocomplete_multiclosebracket ) )
+		{
+			$editor->AddText( chr( $table{$key} ) );
+			$editor->CharLeft;
 		}
 	}
 
-	return 0;
-
+	return 1;
 }
 
 sub set_filename {
