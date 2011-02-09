@@ -8,6 +8,7 @@ use Time::HiRes               ();
 use Padre::Constant           ();
 use Padre::Util               ();
 use Padre::Current            ();
+use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Logger;
@@ -1659,6 +1660,43 @@ sub needs_manual_colorize {
 		$_[0]->{needs_manual_colorize} = $_[1];
 	}
 	return $_[0]->{needs_manual_colorize};
+}
+
+
+
+
+
+######################################################################
+# Cursor Memory
+
+#
+# $doc->store_cursor_position()
+#
+# store document's current cursor position in padre's db.
+# no params, no return value.
+#
+sub store_cursor_position {
+	my $self     = shift;
+	my $document = $self->{Document} or return;
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+	my $position = $editor->GetCurrentPos;
+	Padre::DB::LastPositionInFile->set_last_pos( $filename, $position );
+}
+
+#
+# $doc->restore_cursor_position()
+#
+# restore document's cursor position from padre's db.
+# no params, no return value.
+#
+sub restore_cursor_position {
+	my $self     = shift;
+	my $document = $self->{Document} or return;
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+	my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
+	return unless defined $position;
+	$editor->SetCurrentPos($position);
+	$editor->SetSelection( $position, $position );
 }
 
 1;

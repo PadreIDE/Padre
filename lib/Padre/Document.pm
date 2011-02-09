@@ -928,38 +928,6 @@ sub text_with_one_nl {
 	return $text;
 }
 
-#
-# $doc->store_cursor_position()
-#
-# store document's current cursor position in padre's db.
-# no params, no return value.
-#
-sub store_cursor_position {
-	my $self     = shift;
-	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;
-	my $editor   = $self->editor;
-	return unless $filename && $editor;
-	my $pos = $editor->GetCurrentPos;
-	Padre::DB::LastPositionInFile->set_last_pos( $filename, $pos );
-}
-
-#
-# $doc->restore_cursor_position()
-#
-# restore document's cursor position from padre's db.
-# no params, no return value.
-#
-sub restore_cursor_position {
-	my $self     = shift;
-	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;
-	my $editor   = $self->editor;
-	return unless $filename && $editor;
-	my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
-	return unless $pos;
-	$editor->SetCurrentPos($pos);
-	$editor->SetSelection( $pos, $pos );
-}
-
 
 
 

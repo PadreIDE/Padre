@@ -3583,7 +3583,7 @@ sub setup_editor {
 	# $editor->padre_setup;
 
 	if ( $config->feature_cursormemory ) {
-		$document->restore_cursor_position;
+		$editor->restore_cursor_position;
 	}
 
 	# Update and refresh immediately if not locked
@@ -4067,15 +4067,16 @@ sub reload_file {
 		$editor   = $notebook->GetPage($page) or return 0;
 		$document = $editor->{Document}       or return 0;
 	} else {
-		$document = $self->current->document or return 0;
-		$editor = $document->editor;
+		$document = $self->current->document  or return 0;
+		$editor   = $document->editor;
 	}
 
 	my $pos = $self->config->feature_cursormemory;
-	$document->store_cursor_position if $pos;
+	$editor->store_cursor_position if $pos;
 	if ( $document->reload ) {
-		$document->editor->configure_editor($document);
-		$document->restore_cursor_position if $pos;
+		$editor = $document->editor;
+		$editor->configure_editor($document);
+		$editor->restore_cursor_position if $pos;
 	} else {
 		$self->error(
 			sprintf(
@@ -4553,9 +4554,9 @@ sub close {
 	}
 	return if $id == -1;
 
-	my $editor = $notebook->GetPage($id) or return;
-	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock(
+	my $editor   = $notebook->GetPage($id) or return;
+	my $document = $editor->{Document}     or return;
+	my $lock     = $self->lock(
 		qw{
 			REFRESH DB
 			refresh_directory
@@ -4563,17 +4564,17 @@ sub close {
 			refresh_windowlist
 			}
 	);
-	TRACE( join ' ', "Closing ", ref $doc, $doc->filename || 'Unknown' ) if DEBUG;
+	TRACE( join ' ', "Closing ", ref $document, $document->filename || 'Unknown' ) if DEBUG;
 
-	if ( $doc->is_modified and not $doc->is_unused ) {
+	if ( $document->is_modified and not $document->is_unused ) {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
-			$doc->filename || Wx::gettext("Unsaved File"),
+			$document->filename || Wx::gettext("Unsaved File"),
 			Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
 			$self,
 		);
 		if ( $ret == Wx::wxYES ) {
-			$self->on_save($doc);
+			$self->on_save($document);
 		} elsif ( $ret == Wx::wxNO ) {
 
 			# just close it
@@ -4590,20 +4591,20 @@ sub close {
 
 	# Also, if any padre-client or other listeners to this file exist,
 	# notify it that we're done with it:
-	my $fn = $doc->filename;
+	my $fn = $document->filename;
 	if ($fn) {
 		@{ $self->{on_close_watchers}->{$fn} } = map {
 			warn "Calling on_close() callback";
-			my $remove = $_->($doc);
+			my $remove = $_->($document);
 			$remove ? () : $_
 		} @{ $self->{on_close_watchers}->{$fn} };
 	}
 
 	if ( $self->config->feature_cursormemory ) {
-		$doc->store_cursor_position;
+		$editor->store_cursor_position;
 	}
-	if ( $doc->tempfile ) {
-		$doc->remove_tempfile;
+	if ( $document->tempfile ) {
+		$document->remove_tempfile;
 	}
 
 	# Now we are past the confirmation, apply an update lock as well
