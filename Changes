@@ -16,6 +16,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fixed incosistent use of both $COMPATIBLE and $BACKCOMPATIBLE, which was
       potentially returning false positive plugin compatibility (ADAMK)
     - Ignore .build directories in "Open Resource" dialog (ZENOG)
+    - Padre::Document and Padre::Editor now have $COMPATIBLE tracking (ADAMK)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
@@ -24,7 +25,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       implementations that do not use threads. All existing Padre::Task code
       should continue to work, but plugin authors may be impacted by the
       $COMPATIBLE bump. An unchanged new release with the dependency version
-      updated to 0.81 should resolve the incompatibility. (ADAMK)
+      updated to 0.81 should resolve the incompatibility (ADAMK)
+    - A number of methods relating to GUI and visualisation were moved from
+      Padre::Document to Padre::Editor. This may impact some language
+      plugins. (ADAMK)
 
 0.80 2011.01.29
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)
