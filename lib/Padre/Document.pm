@@ -446,7 +446,7 @@ button. No return value.
 # TO DO: A globally used error/message box function may be better instead
 #       of replicating the same function in many files:
 sub error {
-	Padre->ide->wx->main->message( $_[1], Wx::gettext('Error') );
+	$_[0]->current->main->message( $_[1], Wx::gettext('Error') );
 }
 
 
