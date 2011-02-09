@@ -370,7 +370,7 @@ sub do_full_styling {
 	my $doc    = Padre::Current->document;
 	my $editor = $doc->editor;
 
-	$doc->remove_color;
+	$editor->remove_color;
 	my $text = $doc->text_get;
 	return unless $text;
 	my $ppi_doc = PPI::Document->new( \$text );

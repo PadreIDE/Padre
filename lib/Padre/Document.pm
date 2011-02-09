@@ -364,7 +364,7 @@ sub colourize {
 	$editor->SetLexer($lexer);
 	TRACE("coloUrize called") if DEBUG;
 
-	$self->remove_color;
+	$editor->remove_color;
 	if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 		$self->colorize;
 	} else {
@@ -409,16 +409,6 @@ sub colorize {
 	return;
 }
 
-sub timestamp_now {
-	my $self = shift;
-	my $file = $self->file;
-	return 0 unless defined $file;
-
-	# It's important to return undef if there is no ->mtime for this filetype
-	return unless $file->can('mtime');
-	return $file->mtime;
-}
-
 # For ts without a newline type
 # TO DO: get it from config
 sub default_newline_type {
@@ -455,6 +445,7 @@ sub error {
 
 #####################################################################
 # Disk Interaction Methods
+
 # These methods implement the interaction between the document and the
 # filesystem.
 
@@ -519,6 +510,16 @@ sub has_changed_on_disk {
 	return $self->timestamp < $timestamp_now ? 1 : 0;
 }
 
+sub timestamp_now {
+	my $self = shift;
+	my $file = $self->file;
+	return 0 unless defined $file;
+
+	# It's important to return undef if there is no ->mtime for this filetype
+	return undef unless $file->can('mtime');
+	return $file->mtime;
+}
+
 # Generate MD5-checksum for current file stored on disk
 sub checksum_on_file {
 	warn join( ',', caller ) . ' called Document::checksum_on_file which is out-of-service.';
@@ -555,7 +556,7 @@ Returns true on success false on failure. Sets C<< $doc->errstr >>.
 =cut
 
 sub load_file {
-	my ($self) = @_;
+	my $self = shift;
 	my $file = $self->file;
 
 	if (DEBUG) {
@@ -972,24 +973,6 @@ sub get_title {
 		# (For reasons I don't understand yet)
 		return ' ' . $str;
 	}
-}
-
-sub remove_color {
-	my ($self) = @_;
-
-	TRACE("remove_color called (@_)") if DEBUG;
-
-	my $editor = $self->editor;
-
-	TRACE("editor '$editor'") if DEBUG;
-
-	# TO DO this is strange, do we really need to do it with all?
-	foreach my $i ( 0 .. 31 ) {
-		$editor->StartStyling( 0, $i );
-		$editor->SetStyling( $editor->GetLength, 0 );
-	}
-
-	return;
 }
 
 # TO DO: experimental

@@ -10,21 +10,20 @@ use Padre::Logger;
 our $VERSION = '0.81';
 
 sub colorize {
-	my $self = shift;
-
-	my $doc = Padre::Current->document;
-
 	TRACE("PPILexer colorize called") if DEBUG;
+	my $self     = shift;
+	my $current  = shift;
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $text = $document->text_get or return;
 
-	$doc->remove_color;
+	# Flush old colouring
+	$editor->remove_color;
 
-	my $editor = $doc->editor;
-	my $text   = $doc->text_get;
-	return unless $text;
-
+	# Parse the file
 	require PPI::Document;
-	my $ppi_doc = PPI::Document->new( \$text );
-	if ( not defined $ppi_doc ) {
+	my $ppi = PPI::Document->new( \$text );
+	if ( not defined $ppi ) {
 		if (DEBUG) {
 			TRACE( 'PPI::Document Error %s', PPI::Document->errstr );
 			TRACE( 'Original text: %s',      $text );
@@ -75,8 +74,8 @@ sub colorize {
 		'Version'       => 0,
 	);
 
-	my @tokens = $ppi_doc->tokens;
-	$ppi_doc->index_locations;
+	my @tokens = $ppi->tokens;
+	$ppi->index_locations;
 	my $first = $editor->GetFirstVisibleLine;
 	my $lines = $editor->LinesOnScreen;
 
@@ -110,7 +109,9 @@ sub colorize {
 }
 
 sub _css_class {
-	my ( $self, $Token ) = @_;
+	my $self  = shift;
+	my $Token = shift;
+
 	if ( $Token->isa('PPI::Token::Word') ) {
 
 		# There are some words we can be very confident are
