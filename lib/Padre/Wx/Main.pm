@@ -2981,12 +2981,12 @@ sub search_next {
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
 	} elsif (@_) {
-		die("Invalid argument to search_next");
+		die 'Invalid argument to search_next';
 	}
 	if ( $self->search ) {
 		$self->search->search_next($editor);
 	} else {
-		$self->find->find;
+		$self->find->find_next;
 	}
 }
 
