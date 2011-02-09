@@ -13,8 +13,9 @@ use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Logger;
 
-our $VERSION = '0.81';
-our @ISA     = 'Wx::StyledTextCtrl';
+our $VERSION    = '0.81';
+our $COMPATIBLE = '0.81';
+our @ISA        = 'Wx::StyledTextCtrl';
 
 # End-Of-Line modes:
 # MAC is actually Mac classic.
@@ -1697,7 +1698,7 @@ sub store_cursor_position {
 	my $self     = shift;
 	my $document = $self->{Document} or return;
 	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
-	my $position = $editor->GetCurrentPos;
+	my $position = $self->GetCurrentPos;
 	Padre::DB::LastPositionInFile->set_last_pos( $filename, $position );
 }
 
@@ -1713,8 +1714,8 @@ sub restore_cursor_position {
 	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 	my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
 	return unless defined $position;
-	$editor->SetCurrentPos($position);
-	$editor->SetSelection( $position, $position );
+	$self->SetCurrentPos($position);
+	$self->SetSelection( $position, $position );
 }
 
 1;
