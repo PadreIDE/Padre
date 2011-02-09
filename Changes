@@ -18,6 +18,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Ignore .build directories in "Open Resource" dialog (ZENOG)
     - Padre::Document and Padre::Editor now have $COMPATIBLE tracking (ADAMK)
     - Fix #1100: "Dies when hitting F3" (ZENOG)
+    - Search: when there is no match, also give out the search term (ZENOG)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
