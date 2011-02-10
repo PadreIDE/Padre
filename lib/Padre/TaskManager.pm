@@ -69,6 +69,13 @@ use constant {
 	MAX_IDLE_TIMEOUT  => 30,
 };
 
+# HACK: Temporary flag to control whether or not we are spawning from
+#       the task master or whether we are spawning directly from the parent.
+#       Leave this turned off, Adam is using it to temporarily enable it
+#       while he is debugging it. Once fixed, it will stay on permanently
+#       and this flag will go away.
+use constant ENABLE_SLAVE_MASTER => 0;
+
 
 
 
@@ -255,8 +262,12 @@ sub stop {
 	}
 
 	# Shut down the master thread
+	# NOTE: Ignore the desires of ENABLE_SLAVE_MASTER here on really only
+	# on the reality of the actual running code.
 	if ( $Padre::TaskThread::VERSION ) {
-		Padre::TaskThread->master->stop;
+		if ( Padre::TaskThread->master_running ) {
+			Padre::TaskThread->master->stop;
+		}
 	}
 
 	# Empty task handles
@@ -283,13 +294,41 @@ B<Padre::TaskManager>.
 sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	if ( $Padre::TaskThread::VERSION ) {
+	
+	if ( ENABLE_SLAVE_MASTER ) {
 		# Bootstrap the master thread if it isn't already running
+		require Padre::TaskThread;
 		Padre::TaskThread->master;
+
+		# Start the worker via the master.
+		# TODO: We aren't doing this yet.
+		my $worker = Padre::TaskWorker->new->spawn;
+		push @{$self->{workers}}, $worker;
+		return $worker;
+
+	} else {
+		# Create the worker as normal
+		my $worker = Padre::TaskWorker->new;
+
+		# DBI goes nasty if you have a connection open at the moment
+		# the thread is spawned, which we can have if we are in the
+		# middle of a "DB" lock.
+		# To correct this, we need to anti-lock the database and
+		# get rid of the connection temporarily while the spawn is
+		# being done, then restore the database connection afterwards.
+		if ( $Padre::DB::VERSION and Padre::DB->connected ) {
+			Padre::DB->commit;
+			$worker->spawn;
+			Padre::DB->begin_work;
+			Padre::DB->pragma( 'synchronous' => 0 );
+		} else {
+			$worker->spawn;
+		}
+
+		# Continue as normal
+		push @{$self->{workers}}, $worker;
+		return $worker;
 	}
-	my $worker = Padre::TaskWorker->new->spawn;
-	push @{$self->{workers}}, $worker;
-	return $worker;
 }
 
 =pod
@@ -298,8 +337,8 @@ sub start_worker {
 
   $manager->stop_worker(1);
 
-The C<stop_worker> shuts down a single worker, which (unfortunately) at this
-time is indicated via the internal index position in the workers array.
+The C<stop_worker> method shuts down a single worker, which (unfortunately) at
+this time is indicated via the internal index position in the workers array.
 
 =cut
 
@@ -319,6 +358,21 @@ sub stop_worker {
 	$worker->stop;
 	return 1;
 }
+
+=pod
+
+=head2 kill_worker
+
+  $manager->kill_worker(1);
+
+The C<kill_worker> method forcefully and immediately terminates a worker,
+and like C<stop_worker> the worker to kill is indicated by the internal
+index position within the workers array.
+
+B<This method is not yet in use, the Task Manager does not current have the
+ability to forcefully terminate workers.>
+
+=cut
 
 sub kill_worker {
 		TRACE( $_[0] ) if DEBUG;

@@ -21,7 +21,7 @@ BEGIN {
 }
 
 # Need truncate
-use ORLite 1.36 ();
+use ORLite 1.48 ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
 use Padre::DB::Migrate {
@@ -34,12 +34,12 @@ use Padre::DB::Migrate {
 		'timeline',
 	),
 
-	# Allow overlay classes to override methods fully
-	shim => 1,
-
 	# Acceleration options (remove these if they cause trouble)
 	array      => 1,
 	xsaccessor => 0, # TODO see t/62-migrate.t for explanation
+
+	# Allow overlay classes to override methods fully
+	shim => 1,
 }; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults

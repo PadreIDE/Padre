@@ -43,6 +43,10 @@ sub master {
 	$SINGLETON or $SINGLETON = shift->new->spawn;
 }
 
+sub master_running {
+	!! $SINGLETON;
+}
+
 # Handle master initialisation
 sub import {
 	if ( defined $_[1] and $_[1] eq ':master' ) {
