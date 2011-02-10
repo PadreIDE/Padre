@@ -1697,9 +1697,11 @@ sub needs_manual_colorize {
 sub store_cursor_position {
 	my $self     = shift;
 	my $document = $self->{Document} or return;
-	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
-	my $position = $self->GetCurrentPos;
-	Padre::DB::LastPositionInFile->set_last_pos( $filename, $position );
+	my $file     = $document->{file} or return;
+	Padre::DB::LastPositionInFile->set_last_pos(
+		 $file->filename,
+		 $self->GetCurrentPos,
+	);
 }
 
 #
@@ -1711,7 +1713,8 @@ sub store_cursor_position {
 sub restore_cursor_position {
 	my $self     = shift;
 	my $document = $self->{Document} or return;
-	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+	my $file     = $document->{file} or return;
+	my $filename = $file->filename;
 	my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
 	return unless defined $position;
 	$self->SetCurrentPos($position);
