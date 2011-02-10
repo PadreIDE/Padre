@@ -1,0 +1,353 @@
+---
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+# Items of colors support following properties:
+#   - foreground: color
+#   - background: color
+#   - bold:       0 or 1
+#   - italic:     0 or 1
+#   - eolfilled:  0 or 1
+#   - underline:  0 or 1
+
+#
+# base style
+#
+plain:
+ foregrounds:
+  0: 00007f
+ current_line_foreground: 000000
+ currentline: FFFF04
+ colors:
+  wxSTC_STYLE_DEFAULT:
+  wxSTC_STYLE_LINENUMBER:
+   background: 000000
+   foreground: bebebe
+  wxSTC_STYLE_BRACELIGHT:
+  wxSTC_STYLE_BRACEBAD:
+  wxSTC_STYLE_CONTROLCHAR:
+  wxSTC_STYLE_INDENTGUIDE:
+   foreground: 0000ff
+  wxSTC_STYLE_CALLTIP:
+  wxSTC_STYLE_LASTPREDEFINED:
+
+#
+# default style (load after plain)
+#
+padre:
+ background:  0000ff
+ colors:
+  PADRE_BLACK:
+   foreground: 000000
+  PADRE_BLUE:
+   foreground: 000099
+  PADRE_RED:
+   foreground: 990000
+  PADRE_GREEN:
+   foreground: 00AA00
+  PADRE_MAGENTA:
+   foreground: 8b008b
+  PADRE_ORANGE:
+   foreground: ff8228
+  PADRE_CRIMSON:
+   foreground: dc143c
+  PADRE_BROWN:
+   foreground: a52a2a
+
+#
+# application/x-perl
+#
+perl:
+ background:  0000ff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ffff
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  wxSTC_PL_DEFAULT:
+   foreground: bebebe
+  wxSTC_PL_ERROR:
+   foreground: ff0000
+  wxSTC_PL_COMMENTLINE:
+   foreground: a52a2a
+  wxSTC_PL_POD:
+   foreground: a52a2a
+  wxSTC_PL_POD_VERB:
+   foreground: a52a2a
+  wxSTC_PL_NUMBER:
+   foreground: 00ffff
+  wxSTC_PL_WORD:
+   foreground: 00ffff
+  wxSTC_PL_STRING:
+   foreground: 00ff00
+  wxSTC_PL_CHARACTER:
+   foreground: 00ff00
+  wxSTC_PL_PUNCTUATION:
+   foreground: ff00ff
+  wxSTC_PL_PREPROCESSOR:
+   foreground: 7f7f7f
+  wxSTC_PL_OPERATOR:
+   foreground: 00ffff
+  wxSTC_PL_IDENTIFIER:
+   foreground: ff0ff
+  wxSTC_PL_SCALAR:
+   foreground: 00ff00
+   bold: 1
+  wxSTC_PL_ARRAY:
+   foreground: ffffff
+   bold: 1
+  wxSTC_PL_HASH:
+   foreground: 00ffff
+   bold: 1
+  wxSTC_PL_SYMBOLTABLE:
+   foreground: 00ff00
+# missing SCE_PL_VARIABLE_INDEXER (16)
+  wxSTC_PL_REGEX:
+   foreground: ff007f
+  wxSTC_PL_REGSUBST:
+   foreground: 7f7f00
+  wxSTC_PL_LONGQUOTE:
+   foreground: ff7f00
+  wxSTC_PL_BACKTICKS:
+   foreground: ffffff
+   background: 000000
+   bold: 1
+  wxSTC_PL_DATASECTION:
+   foreground: ff7f00
+  wxSTC_PL_HERE_DELIM:
+   foreground: ff7f00
+  wxSTC_PL_HERE_Q:
+   foreground: 7f007f
+  wxSTC_PL_HERE_QQ:
+   foreground: ff7f00
+  wxSTC_PL_HERE_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_Q:
+   foreground: 00ff00
+  wxSTC_PL_STRING_QQ:
+   foreground: 458b00
+  wxSTC_PL_STRING_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_QR:
+   foreground: ff007f
+  wxSTC_PL_STRING_QW:
+   foreground: 7f007f
+# missing:
+#define SCE_PL_SUB_PROTOTYPE 40
+#define SCE_PL_FORMAT_IDENT 41
+#define SCE_PL_FORMAT 42
+
+#
+# If you want to support another file type
+# then refer wxWidget's include/wx-2.8/wx/stc/stc.h file
+#
+
+#
+# text/x-perlxs
+#
+xs:
+ background: 0000ff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  wxSTC_C_DEFAULT:
+   foreground: 000000
+  wxSTC_C_COMMENT:
+   foreground: 007f00
+  wxSTC_C_COMMENTLINE:
+   foreground: 007f00
+  wxSTC_C_COMMENTDOC:
+   foreground: 007f00
+  wxSTC_C_NUMBER:
+   foreground: 007f7f
+  wxSTC_C_WORD:
+   foreground: 7f007f
+  wxSTC_C_STRING:
+   foreground: ff7f00
+  wxSTC_C_CHARACTER:
+   foreground: 7f007f
+  wxSTC_C_UUID:
+   foreground: 7f007f
+  wxSTC_C_PREPROCESSOR:
+   foreground: 777777
+   bold: 1
+  wxSTC_C_OPERATOR:
+   foreground: 00007f
+  wxSTC_C_IDENTIFIER:
+   foreground: 0000ff
+  wxSTC_C_STRINGEOL:
+   foreground: ff0000
+  wxSTC_C_VERBATIM:
+   foreground: 7f007f
+  wxSTC_C_REGEX:
+   foreground: ff007f
+  wxSTC_C_COMMENTLINEDOC:
+   foreground: 007f00
+  wxSTC_C_WORD2:
+   foreground: 7f007f
+   bold: 1
+  wxSTC_C_COMMENTDOCKEYWORD:
+   foreground: 000000
+   background: ff0000
+  wxSTC_C_COMMENTDOCKEYWORDERROR:
+   foreground: 000000
+   background: ff0000
+  wxSTC_C_GLOBALCLASS:
+   foreground: 7f007f
+
+#
+# text/x-patch
+#
+diff:
+ background: 0000ff
+ colors:
+  wxSTC_DIFF_DEFAULT:
+   foreground: 000000
+  wxSTC_DIFF_COMMENT:
+   foreground: 007f00
+   background: eeeeee
+   bold:       1
+   italic:     1
+   eolfilled:  1
+   underline:  1
+  wxSTC_DIFF_COMMAND:
+   foreground: 7f7f00
+  wxSTC_DIFF_HEADER:
+   foreground: 7f0000
+  wxSTC_DIFF_POSITION:
+   foreground: 7f007f
+  wxSTC_DIFF_DELETED:
+   foreground: 007f7f
+  wxSTC_DIFF_ADDED:
+   foreground: 00007f
+
+#
+# text/x-makefile
+#
+make:
+ background:  0000ff
+ colors:
+  wxSTC_MAKE_DEFAULT:
+   foreground: 000000
+  wxSTC_MAKE_COMMENT:
+   foreground: 007f00
+  wxSTC_MAKE_PREPROCESSOR:
+   foreground: aa0000
+  wxSTC_MAKE_IDENTIFIER:
+   foreground: 000080
+  wxSTC_MAKE_OPERATOR:
+   foreground: 7f007f
+  wxSTC_MAKE_TARGET:
+   foreground: a00000
+  wxSTC_MAKE_IDEOL:
+   foreground: 7f0000
+
+#
+# text/x-yaml
+#
+yaml:
+ background:  0000ff
+ colors:
+  wxSTC_YAML_DEFAULT:
+   foreground: 000000
+  wxSTC_YAML_COMMENT:
+   foreground: 008800
+  wxSTC_YAML_IDENTIFIER:
+   foreground: 000088
+   bold:       1
+  wxSTC_YAML_KEYWORD:
+   foreground: 880088
+  wxSTC_YAML_NUMBER:
+   foreground: 880000
+  wxSTC_YAML_REFERENCE:
+   foreground: 008888
+  wxSTC_YAML_DOCUMENT:
+   foreground: FFFFFF
+   background: 000088
+   bold:       1
+   eolfilled:  1
+  wxSTC_YAML_TEXT:
+   foreground: 333366
+  wxSTC_YAML_ERROR:
+   foreground: ffffff
+   background: 000088
+   bold:       1
+   eolfilled:  1
+
+#
+# text/css
+#
+css:
+ background:  0000ff
+ colors:
+  wxSTC_CSS_DEFAULT:
+   foreground: 000000
+  wxSTC_CSS_TAG:
+   foreground: 2020ff
+   bold:       1
+  wxSTC_CSS_CLASS:
+   foreground: 3350ff
+   bold:       1
+  wxSTC_CSS_PSEUDOCLASS:
+   foreground: 202020
+  wxSTC_CSS_UNKNOWN_PSEUDOCLASS:
+   foreground: 202020
+   bold:       1
+  wxSTC_CSS_OPERATOR:
+   foreground: 208820
+   bold:       1
+  wxSTC_CSS_IDENTIFIER:
+   foreground: 882020
+  wxSTC_CSS_UNKNOWN_IDENTIFIER:
+   foreground: 202020
+   bold:       1
+  wxSTC_CSS_VALUE:
+   foreground: 209999
+  wxSTC_CSS_COMMENT:
+   foreground: 888820
+  wxSTC_CSS_ID:
+   foreground: 3030aa
+   bold:       1
+  wxSTC_CSS_IMPORTANT:
+   foreground: 202020
+  wxSTC_CSS_DIRECTIVE:
+   foreground: 202020
+  wxSTC_CSS_DOUBLESTRING:
+   foreground: 202020
+  wxSTC_CSS_SINGLESTRING:
+   foreground: 202020
+  wxSTC_CSS_IDENTIFIER2:
+   foreground: 202020
+  wxSTC_CSS_ATTRIBUTE:
+   foreground: 202020
+
+#
+# conf: text/plain
+#
+conf:
+ background:  0000ff
+ colors:
+  wxSTC_CONF_DEFAULT:
+   foreground: 000000
+  wxSTC_CONF_COMMENT:
+   foreground: 007f00
+  wxSTC_CONF_NUMBER:
+   foreground: 007f7f
+  wxSTC_CONF_IDENTIFIER:
+   foreground: 0000ff
+  wxSTC_CONF_EXTENSION:
+   foreground: 202020
+  wxSTC_CONF_PARAMETER:
+   foreground: 208820
+  wxSTC_CONF_STRING:
+   foreground: ff7f00
+  wxSTC_CONF_OPERATOR:
+   foreground: 00007f
+  wxSTC_CONF_IP:
+   foreground: 209999
+  wxSTC_CONF_DIRECTIVE:
+   foreground: 202020
