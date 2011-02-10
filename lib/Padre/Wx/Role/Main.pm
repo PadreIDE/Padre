@@ -49,6 +49,14 @@ sub ide {
 Get the L<Padre::Config> for the current user. Provided mainly as a
 convenience because it is needed so often.
 
+Please note that this method does NOT integrate with the L<Padre::Current>
+context system. Any project-specific configuration of overrides of default
+behaviour will not be present in this configuration object.
+
+For a project-aware configuration, use the following instead.
+
+  $self->current->config;
+
 =cut
 
 sub config {
