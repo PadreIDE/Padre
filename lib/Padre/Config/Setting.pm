@@ -23,6 +23,7 @@ use Class::XSAccessor {
 			project
 			options
 			apply
+			help
 			}
 	],
 };

@@ -20,6 +20,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Fix #1100: "Dies when hitting F3" (ZENOG)
     - Search: when there is no match, also give out the search term (ZENOG)
     - Update German translation (ZENOG)
+    - Show the 'help' field of the configuration options in the advanced
+      config dialog and one sample 'help' entry (SZABGAB)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods

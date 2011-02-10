@@ -155,6 +155,18 @@ sub _create_controls {
 	);
 	$self->{options}->Enable(0);
 
+	my $help_label = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
+	$self->{help} = Wx::TextCtrl->new( 
+		$self, 
+		-1, 
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
+
+	$self->{help}->Enable(0);
+
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext('&Set'),
@@ -213,6 +225,10 @@ sub _create_controls {
 	$info_sizer->Add( $options_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
+	my $help_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$help_sizer->Add( $help_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$help_sizer->Add( $self->{help}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
@@ -225,6 +241,7 @@ sub _create_controls {
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $info_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $help_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -232,6 +249,7 @@ sub _create_controls {
 	# Hide value and info sizer at startup
 	$vsizer->Show( 2, 0 );
 	$vsizer->Show( 3, 0 );
+	$vsizer->Show( 4, 0 );
 
 	# Store vertical sizer reference for later usage
 	$self->{vsizer} = $vsizer;
@@ -458,10 +476,12 @@ sub _on_list_item_selected {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
 		$self->{options}->SetValue( $pref->{options} );
 	}
+	$self->{help}->SetValue( $pref->{help} );
 
 	# Show value and info sizers
 	$self->{vsizer}->Show( 2, 1 );
 	$self->{vsizer}->Show( 3, 1 );
+	$self->{vsizer}->Show( 4, 1 );
 
 	# Toggle visibility of fields depending on preference type
 	$self->{value}->Show( not $is_boolean );
@@ -483,6 +503,7 @@ sub _on_list_item_selected {
 	$self->{value}->Enable(1);
 	$self->{default_value}->Enable(1);
 	$self->{options}->Enable(1);
+	#$self->{help}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
 	$self->{button_set}->Enable(1);
 
@@ -556,6 +577,7 @@ sub _update_ui {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
 		$self->{options}->SetValue( $pref->{options} );
 	}
+	$self->{help}->SetValue( $pref->{help} );
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $index, 1, $self->_status_name($pref) );
@@ -780,6 +802,7 @@ sub _init_preferences {
 			'value'      => $value,
 			'original'   => $value,
 			'options'    => $options,
+			'help'       => ($setting->help || ''),
 		};
 	}
 

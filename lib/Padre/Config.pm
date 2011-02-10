@@ -398,6 +398,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	startup => 1,
+	help    => _T('Showing the splash image during start-up'),
 );
 
 # Startup mode, if no files given on the command line this can be
