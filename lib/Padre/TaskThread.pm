@@ -95,6 +95,16 @@ sub spawn {
 	# Spawn the object into the thread and enter the main runloop
 	$WID2TID{ $self->{wid} } = threads->create(
 		sub {
+			# We need to load the worker class even though we
+			# already have an instance of it.
+			my $worker = Scalar::Util::blessed($_[0]);
+			SCOPE: {
+				local $@;
+				eval "require $worker;";
+				die $@ if $@;
+			}
+
+			# Start the worker runloop
 			$_[0]->run;
 		},
 		$self,
@@ -227,7 +237,16 @@ sub run {
 # Spawn a worker object off the current thread
 sub start_child {
 	TRACE( $_[0] ) if DEBUG;
-	$_[1]->spawn;
+
+	# HACK: This is pretty darned evil, but the slave master thread won't
+	# have Padre::ThreadWorker loaded, so it can't invoke ->spawn as a
+	# method. As long as Padre::ThreadWorker never implements it's own
+	# overridden ->spawn method, this hack is valid. We use the fully
+	# resolved function name even though we're in the same class just to
+	# make it clear we're doing something pretty evil.
+	# $_[1]->spawn;
+	Padre::TaskThread::spawn( $_[1] );
+
 	return 1;
 }
 

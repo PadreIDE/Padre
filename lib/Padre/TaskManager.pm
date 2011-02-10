@@ -387,8 +387,8 @@ sub start_worker {
 		my $master = Padre::TaskThread->master;
 
 		# Start the worker via the master.
-		# TODO: We aren't doing this yet.
-		my $worker = Padre::TaskWorker->new->spawn;
+		my $worker = Padre::TaskWorker->new;
+		$master->send( start_child => $worker );
 		push @{$self->{workers}}, $worker;
 		return $worker;
 

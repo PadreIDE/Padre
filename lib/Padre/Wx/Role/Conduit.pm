@@ -31,7 +31,7 @@ our $VERSION = '0.81';
 our $SIGNAL : shared;
 
 BEGIN {
-	$SIGNAL = Wx::NewEventType();
+	$SIGNAL  = Wx::NewEventType();
 }
 
 my $CONDUIT = undef;
@@ -51,7 +51,13 @@ sub conduit_init {
 
 sub signal {
 	TRACE( $_[0] ) if DEBUG;
-	$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) ) if $CONDUIT;
+	if ( $CONDUIT ) {
+		$CONDUIT->AddPendingEvent(
+			Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] )
+		);
+	} elsif ( DEBUG ) {
+		TRACE("Cannot send Wx::PlThreadEvent as \$CONDUIT is undef");
+	}
 }
 
 # Pass the event through to the event handler
@@ -64,7 +70,7 @@ sub on_signal {
 	my $frozen  = $_[1]->GetData;
 	my $message = eval { Storable::thaw($frozen); };
 	if ($@) {
-		TRACE("Exception deserialising message '$frozen'");
+		TRACE("Exception deserialising message '$frozen'") if DEBUG;
 		return;
 	}
 
