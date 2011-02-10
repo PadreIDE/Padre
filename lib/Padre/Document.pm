@@ -224,7 +224,7 @@ sub new {
 		$self->{file} = Padre::File->new(
 			$self->{filename},
 			info_handler => sub {
-				Padre::Current->main->info($_[1]);
+				$self->current->main->info($_[1]);
 			}
 		);
 
@@ -246,7 +246,7 @@ sub new {
 
 			# Test script must be able to pass an alternate config object
 			# NOTE: Since when do we support per-document configuration objects?
-			my $config = $self->{config} || Padre::Current->config;
+			my $config = $self->{config} || $self->current->config;
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
 				my $ret = Wx::MessageBox(
 					sprintf(
@@ -259,7 +259,7 @@ sub new {
 					),
 					Wx::gettext("Warning"),
 					Wx::wxYES_NO | Wx::wxCENTRE,
-					Padre::Current->main,
+					$self->current->main,
 				);
 				if ( $ret != Wx::wxYES ) {
 					return;
@@ -290,7 +290,7 @@ sub new {
 
 	# NOTE: Hacky support for the Padre Popularity Contest
 	unless ( defined $ENV{PADRE_IS_TEST} ) {
-		my $popcon = Padre::Current->ide->{_popularity_contest};
+		my $popcon = $self->current->ide->{_popularity_contest};
 		$popcon->count( 'mime.' . $self->mimetype ) if $popcon;
 	}
 
