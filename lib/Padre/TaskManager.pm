@@ -83,6 +83,9 @@ use constant ENABLE_SLAVE_MASTER => 0;
 ######################################################################
 # Constructor and Accessors
 
+# NOTE: To keep dependencies down in this general area in case of a future
+#       spin-off CPAN module do NOT port accessors below to Class::XSAccessor.
+
 =pod
 
 =head2 new
@@ -149,8 +152,6 @@ shutdown).
 =cut
 
 sub active {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{active};
 }
 
@@ -172,8 +173,6 @@ implementing the alternative backend.
 =cut 
 
 sub threads {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{threads};
 }
 
@@ -190,8 +189,6 @@ first few tasks is important.
 =cut
 
 sub minimum {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{minimum};
 }
 
@@ -207,10 +204,15 @@ onto a queue to wait for a free worker.
 =cut
 
 sub maximum {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{maximum};
 }
+
+
+
+
+
+######################################################################
+# Main Methods
 
 =pod
 
@@ -232,7 +234,10 @@ sub start {
 		}
 	}
 	$self->{active} = 1;
-	$self->step;
+
+	# Take one initial spin through the dispatch loop to run anything
+	# that queued up before we were started.
+	$self->run;
 }
 
 =pod
@@ -279,6 +284,87 @@ sub stop {
 
 =pod
 
+=head2 schedule
+
+The C<schedule> method is used to give a task to the task manager and indicate
+it should be run as soon as possible.
+
+This may be immediately (with the task sent to a worker before the method
+returns) or it may be delayed until some time in the future if all workers
+are busy.
+
+As a convenience, this method returns true if the task could be dispatched
+immediately, or false if it was queued for future execution.
+
+=cut
+ 
+sub schedule {
+	TRACE( $_[1] ) if DEBUG;
+	my $self = shift;
+	my $task = Params::Util::_INSTANCE( shift, 'Padre::Task' );
+	unless ($task) {
+		die "Invalid task scheduled!"; # TO DO: grace
+	}
+
+	# Add to the queue of pending events
+	push @{ $self->{queue} }, $task;
+
+	# Dispatch this task and anything else waiting from a previous call.
+	$self->run;
+}
+
+=pod
+
+=head2 cancel
+
+  $manager->cancel( $owner );
+
+The C<cancel> method is used with the "task ownership" feature of the
+L<Padre::Task> 2.0 API to signal tasks running in the background that
+were created by a particular object that they should voluntarily abort as
+their results are no longer wanted.
+
+=cut
+
+sub cancel {
+	TRACE( $_[0] ) if DEBUG;
+	my $self  = shift;
+	my $owner = shift;
+
+	# Remove any tasks from the pending queue
+	@{ $self->{queue} } = grep {
+		not defined $_->{owner}
+		or
+		$_->{owner} != $owner
+	} @{ $self->{queue} };
+
+	# Signal any active tasks to cooperatively abort themselves
+	foreach my $handle ( values %{ $self->{handles} } ) {
+		my $task = $handle->{task} or next;
+		next unless $task->{owner};
+		next unless $task->{owner} == $owner;
+		foreach my $worker ( @{ $self->{workers} } ) {
+			TRACE("Worker wid = $worker->{wid}")    if DEBUG;
+			TRACE("Handle wid = $handle->{worker}") if DEBUG;
+			next unless $worker->{wid} == $handle->{worker};
+			TRACE("Sending 'cancel' message") if DEBUG;
+			$worker->send('cancel');
+			return 1;
+		}
+	}
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Support Methods
+
+=pod
+
 =head2 start_worker
 
   my $worker = $manager->start_worker;
@@ -298,7 +384,7 @@ sub start_worker {
 	if ( ENABLE_SLAVE_MASTER ) {
 		# Bootstrap the master thread if it isn't already running
 		require Padre::TaskThread;
-		Padre::TaskThread->master;
+		my $master = Padre::TaskThread->master;
 
 		# Start the worker via the master.
 		# TODO: We aren't doing this yet.
@@ -451,47 +537,9 @@ sub best_worker {
 	return undef;
 }
 
-
-
-
-
-######################################################################
-# Task Management
-
 =pod
 
-=head2 schedule
-
-The C<schedule> method is used to give a task to the task manager and indicate
-it should be run as soon as possible.
-
-This may be immediately (with the task sent to a worker before the method
-returns) or it may be delayed until some time in the future if all workers
-are busy.
-
-As a convenience, this method returns true if the task could be dispatched
-immediately, or false if it was queued for future execution.
-
-=cut
- 
-sub schedule {
-	TRACE( $_[1] ) if DEBUG;
-	my $self = shift;
-	my $task = Params::Util::_INSTANCE( shift, 'Padre::Task' );
-	unless ($task) {
-		die "Invalid task scheduled!"; # TO DO: grace
-	}
-
-	# Add to the queue of pending events
-	push @{ $self->{queue} }, $task;
-
-	# Iterate the management loop
-	$self->step;
-}
-
-=pod
-
-=head2 step
+=head2 run
 
 The C<step> method tells the Task Manager to attempt to process the queue of
 pending tasks and dispatch as many as possible.
@@ -504,114 +552,70 @@ remain on the queue.
 
 =cut
 
-sub step {
+# TODO: If a very high number of tasks are added, this method may go into
+#       a very high depth recursion. Change this method to iterate via a
+#       while () loop instead at some point.
+
+sub run {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
+	my $self = shift;
+
+	# Do nothing if we somehow arrive here when the task manager isn't on.
+	return 1 unless $self->{active};
+
+	# Try to dispatch tasks until we run out
 	my $queue   = $self->{queue};
 	my $handles = $self->{handles};
+	while ( @$queue ) {
+		# Shortcut if there is nowhere to run the task
+		if ( $self->{threads} ) {
+			if ( scalar keys %$handles >= $self->{maximum} ) {
+				if ( Padre::Current->config->feature_restart_hung_task_manager ) {
 
-	# Shortcut if not allowed to run, or nothing to do
-	return 1 unless $self->{active};
-	return 1 unless @$queue;
+					# Restart hung task manager!
+					TRACE('PANIC: Restarting task manager') if DEBUG;
+					$self->stop;
+					$self->start;
+				} else {
 
-	# Shortcut if there is nowhere to run the task
-	if ( $self->{threads} ) {
-		if ( scalar keys %$handles >= $self->{maximum} ) {
-			if ( Padre::Current->config->feature_restart_hung_task_manager ) {
-
-				# Restart hung task manager!
-				TRACE('PANIC: Restarting task manager') if DEBUG;
-				$self->stop;
-				$self->start;
-			} else {
-
-				# Ignore the problem and hope the user does not notice :)
-				TRACE('No more task handles available. Sorry') if DEBUG;
-				return;
+					# Ignore the problem and hope the user does not notice :)
+					TRACE('No more task handles available. Sorry') if DEBUG;
+					return;
+				}
 			}
 		}
-	}
 
-	# Fetch and prepare the next task
-	my $task   = shift @$queue;
-	my $handle = Padre::TaskHandle->new($task);
-	my $hid    = $handle->hid;
+		# Fetch and prepare the next task
+		my $task   = shift @$queue;
+		my $handle = Padre::TaskHandle->new($task);
+		my $hid    = $handle->hid;
 
-	# Run the pre-run step in the main thread
-	unless ( $handle->prepare ) {
+		# Run the pre-run step in the main thread
+		unless ( $handle->prepare ) {
 
-		# Task wishes to abort itself. Oblige it.
-		undef $handle;
+			# Task wishes to abort itself. Oblige it.
+			undef $handle;
 
-		# Move on to the next task
-		return $self->step;
-	}
-
-	# Register the handle for child messages
-	$handles->{$hid} = $handle;
-
-	# Find the next/best worker for the task
-	my $worker = $self->best_worker($handle) or return;
-
-	# Prepare handle timing
-	$handle->start_time(time);
-
-	# Send the task to the worker for execution
-	$worker->send_task($handle);
-
-	# Continue to the next iteration
-	return $self->step;
-}
-
-=pod
-
-=head2 cancel
-
-  $manager->cancel( $owner );
-
-The C<cancel> method is used with the "task ownership" feature of the
-L<Padre::Task> 2.0 API to signal tasks running in the background that
-were created by a particular object that they should voluntarily abort as
-their results are no longer wanted.
-
-=cut
-
-sub cancel {
-	TRACE( $_[0] ) if DEBUG;
-	my $self  = shift;
-	my $owner = shift;
-
-	# Remove any tasks from the pending queue
-	@{ $self->{queue} } = grep {
-		not defined $_->{owner}
-		or
-		$_->{owner} != $owner
-	} @{ $self->{queue} };
-
-	# Signal any active tasks to cooperatively abort themselves
-	foreach my $handle ( values %{ $self->{handles} } ) {
-		my $task = $handle->{task} or next;
-		next unless $task->{owner};
-		next unless $task->{owner} == $owner;
-		foreach my $worker ( @{ $self->{workers} } ) {
-			TRACE("Worker wid = $worker->{wid}")    if DEBUG;
-			TRACE("Handle wid = $handle->{worker}") if DEBUG;
-			next unless $worker->{wid} == $handle->{worker};
-			TRACE("Sending 'cancel' message") if DEBUG;
-			$worker->send('cancel');
-			return 1;
+			# Move on to the next task
+			next;
 		}
+
+		# Register the handle for child messages
+		$handles->{$hid} = $handle;
+
+		# Find the next/best worker for the task
+		my $worker = $self->best_worker($handle) or return;
+
+		# Prepare handle timing
+		$handle->start_time(time);
+
+		# Send the task to the worker for execution
+		$worker->send_task($handle);
 	}
 
+	# All pending tasks were dispatched
 	return 1;
 }
-
-
-
-
-
-######################################################################
-# Signal Handling
 
 =pod
 
@@ -691,7 +695,8 @@ sub on_signal {
 
 		# This should have released a worker to process
 		# a new task, kick off the next scheduling iteration.
-		return $self->step;
+		$self->run;
+		return;
 	}
 
 	# Pass the message through to the handle
