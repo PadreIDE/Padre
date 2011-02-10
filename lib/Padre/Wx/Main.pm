@@ -939,7 +939,7 @@ sub single_instance_address {
 	}
 }
 
-=cut
+=pod
 
 my $single_instance_port = 4444;
 
