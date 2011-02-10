@@ -446,18 +446,13 @@ sub _color {
 }
 
 sub remove_color {
-	my ($self) = @_;
-
-	TRACE("remove_color called (@_)") if DEBUG;
-
-	my $editor = $self->editor;
-
-	TRACE("editor '$editor'") if DEBUG;
+	TRACE($_[0]) if DEBUG;
+	my $self = shift;
 
 	# TO DO this is strange, do we really need to do it with all?
 	foreach my $i ( 0 .. 31 ) {
-		$editor->StartStyling( 0, $i );
-		$editor->SetStyling( $editor->GetLength, 0 );
+		$self->StartStyling( 0, $i );
+		$self->SetStyling( $self->GetLength, 0 );
 	}
 
 	return;
