@@ -22,6 +22,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Update German translation (ZENOG)
     - Show the 'help' field of the configuration options in the advanced
       config dialog and one sample 'help' entry (SZABGAB)
+    - First version of "filter through Perl source" (SEWI)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods

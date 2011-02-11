@@ -318,6 +318,11 @@ sub new {
 		'edit.filter_tool',
 	);
 
+	$self->{filter_tool} = $self->add_menu_action(
+		$self,
+		'edit.perl_filter',
+	);
+
 	$self->AppendSeparator;
 
 	$self->{show_as_number} = Wx::Menu->new;

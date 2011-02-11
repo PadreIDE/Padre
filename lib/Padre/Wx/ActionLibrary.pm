@@ -1106,6 +1106,15 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name       => 'edit.perl_filter',
+		label      => _T('Filter through Perl'),
+		comment    => _T('Use Perl source as filter'),
+		menu_event => sub {
+			shift->open_perl_filter(@_);
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
 		label       => _T('Show as Hexadecimal'),

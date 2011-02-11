@@ -4995,7 +4995,42 @@ sub open_regex_editor {
 		require Padre::Wx::Dialog::RegexEditor;
 		$self->{regex_editor} = Padre::Wx::Dialog::RegexEditor->new($self);
 	}
+
+	unless ( defined $self->{regex_editor} ) {
+		$self->error(Wx::gettext('Error loading regex editor.'));
+		return;
+	}
+
 	$self->{regex_editor}->show;
+
+	return;
+}
+
+
+=pod
+
+=head3 C<open_perl_filter>
+
+    $main->open_perl_filter;
+
+Open Padre's filter-through-perl. No return value.
+
+=cut
+
+sub open_perl_filter {
+	my $self = shift;
+
+	unless ( defined $self->{perl_filter} ) {
+		require Padre::Wx::Dialog::PerlFilter;
+		$self->{perl_filter} = Padre::Wx::Dialog::PerlFilter->new($self);
+	}
+
+	unless ( defined $self->{perl_filter} ) {
+		$self->error(Wx::gettext('Error loading perl filter dialog.'));
+		return;
+	}
+
+	$self->{perl_filter}->show;
 
 	return;
 }
