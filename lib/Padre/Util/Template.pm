@@ -50,7 +50,7 @@ Return the user replied value on subsequent calls.
 sub new_modulename {
 	my $self = shift;
 
-	$self->{_modulename} ||= Padre->ide->wx->main->prompt( Wx::gettext('New module'), Wx::gettext('Module name:') )
+	$self->{_modulename} ||= Padre->ide->wx->main->prompt( Wx::gettext('Module name:'), Wx::gettext('New Module') )
 		|| 'New::Module';
 
 	return $self->{_modulename};

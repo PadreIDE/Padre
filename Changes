@@ -24,6 +24,8 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       config dialog and one sample 'help' entry (SZABGAB)
     - First version of "filter through Perl source" (SEWI)
     - translate error message in Main.pm (ZENOG)
+    - fix swapping of window title and content strings for "New Perl Module"
+      name prompt (ZENOG)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
