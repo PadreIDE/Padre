@@ -668,7 +668,7 @@ sub autocomplete_matching_char {
 	}
 
 	# Is autocomplete enabled
-	my $current = $editor->current;
+	my $current = $self->current;
 	my $config  = $current->config;
 	unless ( $config->autocomplete_brackets ) {
 		return 0;
