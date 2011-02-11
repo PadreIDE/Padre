@@ -77,7 +77,7 @@ No support is available
 
 =head1 AUTHOR
 
-Copyright 2010
+Copyright 2011
 [%- IF config.identity_name -%]
  [% config.identity_name %]
 [%- ELSE -%]
