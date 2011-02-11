@@ -78,7 +78,7 @@ END_MESSAGE
 }
 
 sub other_method {
-	my $self  = shift;
+	my $self = shift;
 	my $main = $self->main;
 
 	$main->message( 'Hi from My Plugin', 'Other method' );

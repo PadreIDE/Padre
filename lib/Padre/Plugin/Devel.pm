@@ -67,7 +67,7 @@ sub menu_plugins_simple {
 		Wx::gettext('Run Document inside Padre')  => 'eval_document',
 		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
-		'---' => undef,
+		'---'               => undef,
 		Wx::gettext('Dump') => [
 			Wx::gettext('Dump Expression...')    => 'dump_expression',
 			Wx::gettext('Dump Current Document') => 'dump_document',

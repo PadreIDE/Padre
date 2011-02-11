@@ -15,7 +15,7 @@ sub colorize {
 	my $current  = shift;
 	my $editor   = $current->editor;
 	my $document = $current->document;
-	my $text = $document->text_get or return;
+	my $text     = $document->text_get or return;
 
 	# Flush old colouring
 	$editor->remove_color;

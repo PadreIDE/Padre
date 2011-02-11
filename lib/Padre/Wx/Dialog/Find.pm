@@ -78,7 +78,7 @@ sub find_next {
 
 	} elsif ( not $result ) {
 		$main->info(
-			sprintf ( Wx::gettext('No matches found for "%s".'), $self->{find_term}->GetValue ),
+			sprintf( Wx::gettext('No matches found for "%s".'), $self->{find_term}->GetValue ),
 			Wx::gettext('Search')
 		);
 

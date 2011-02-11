@@ -44,7 +44,7 @@ sub master {
 }
 
 sub master_running {
-	!! $SINGLETON;
+	!!$SINGLETON;
 }
 
 # Handle master initialisation
@@ -95,9 +95,10 @@ sub spawn {
 	# Spawn the object into the thread and enter the main runloop
 	$WID2TID{ $self->{wid} } = threads->create(
 		sub {
+
 			# We need to load the worker class even though we
 			# already have an instance of it.
-			my $worker = Scalar::Util::blessed($_[0]);
+			my $worker = Scalar::Util::blessed( $_[0] );
 			SCOPE: {
 				local $@;
 				eval "require $worker;";

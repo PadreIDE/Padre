@@ -47,7 +47,7 @@ BEGIN {
 	if ( -d $USER_DIRECTORY ) {
 		local *STYLEDIR;
 		opendir( STYLEDIR, $USER_DIRECTORY ) or die "Failed to read '$USER_DIRECTORY'";
-		@USER_STYLES = sort map { substr( File::Basename::basename($_), 0, -4 ) } grep { /\.yml$/ } readdir STYLEDIR;
+		@USER_STYLES = sort map { substr( File::Basename::basename($_), 0, -4 ) } grep {/\.yml$/} readdir STYLEDIR;
 		closedir STYLEDIR;
 	}
 }

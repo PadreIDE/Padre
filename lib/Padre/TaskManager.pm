@@ -55,9 +55,9 @@ against the "maximum workers" limit.
 use 5.008005;
 use strict;
 use warnings;
-use Params::Util             ();
-use Padre::TaskHandle        ();
-use Padre::TaskWorker        ();
+use Params::Util      ();
+use Padre::TaskHandle ();
+use Padre::TaskWorker ();
 use Padre::Logger;
 
 our $VERSION    = '0.81';
@@ -269,7 +269,7 @@ sub stop {
 	# Shut down the master thread
 	# NOTE: Ignore the desires of ENABLE_SLAVE_MASTER here on really only
 	# on the reality of the actual running code.
-	if ( $Padre::TaskThread::VERSION ) {
+	if ($Padre::TaskThread::VERSION) {
 		if ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master->stop;
 		}
@@ -297,7 +297,7 @@ As a convenience, this method returns true if the task could be dispatched
 immediately, or false if it was queued for future execution.
 
 =cut
- 
+
 sub schedule {
 	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
@@ -332,11 +332,8 @@ sub cancel {
 	my $owner = shift;
 
 	# Remove any tasks from the pending queue
-	@{ $self->{queue} } = grep {
-		not defined $_->{owner}
-		or
-		$_->{owner} != $owner
-	} @{ $self->{queue} };
+	@{ $self->{queue} } =
+		grep { not defined $_->{owner} or $_->{owner} != $owner } @{ $self->{queue} };
 
 	# Signal any active tasks to cooperatively abort themselves
 	foreach my $handle ( values %{ $self->{handles} } ) {
@@ -380,8 +377,9 @@ B<Padre::TaskManager>.
 sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	
-	if ( ENABLE_SLAVE_MASTER ) {
+
+	if (ENABLE_SLAVE_MASTER) {
+
 		# Bootstrap the master thread if it isn't already running
 		require Padre::TaskThread;
 		my $master = Padre::TaskThread->master;
@@ -389,10 +387,11 @@ sub start_worker {
 		# Start the worker via the master.
 		my $worker = Padre::TaskWorker->new;
 		$master->send( start_child => $worker );
-		push @{$self->{workers}}, $worker;
+		push @{ $self->{workers} }, $worker;
 		return $worker;
 
 	} else {
+
 		# Create the worker as normal
 		my $worker = Padre::TaskWorker->new;
 
@@ -412,7 +411,7 @@ sub start_worker {
 		}
 
 		# Continue as normal
-		push @{$self->{workers}}, $worker;
+		push @{ $self->{workers} }, $worker;
 		return $worker;
 	}
 }
@@ -461,9 +460,9 @@ ability to forcefully terminate workers.>
 =cut
 
 sub kill_worker {
-		TRACE( $_[0] ) if DEBUG;
-		my $self = shift;
-		die "TO BE COMPLETED";
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	die "TO BE COMPLETED";
 }
 
 =pod
@@ -566,7 +565,8 @@ sub run {
 	# Try to dispatch tasks until we run out
 	my $queue   = $self->{queue};
 	my $handles = $self->{handles};
-	while ( @$queue ) {
+	while (@$queue) {
+
 		# Shortcut if there is nowhere to run the task
 		if ( $self->{threads} ) {
 			if ( scalar keys %$handles >= $self->{maximum} ) {
@@ -649,7 +649,7 @@ sub on_signal {
 	}
 
 	# Fine the task handle for the task
-	my $hid    = shift @$message;
+	my $hid = shift @$message;
 	my $handle = $self->{handles}->{$hid} or return;
 
 	# Update idle tracking so we don't force-kill this worker

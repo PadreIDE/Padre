@@ -923,7 +923,7 @@ L<Padre>.
 
 sub single_instance_address {
 	require Wx::Socket;
-	if ( Padre::Constant::WXWIN32 ) {
+	if (Padre::Constant::WXWIN32) {
 		my $address = Wx::IPV4address->new;
 		$address->SetHostname('127.0.0.1');
 		$address->SetService('4444');
@@ -1349,6 +1349,7 @@ sub refresh_title {
 	foreach my $char ( $title =~ /\%(.)/g ) {
 		next if exists $variable{$char};
 		if ( $char eq 'p' ) {
+
 			# Fill in the session name, if any
 			if ( defined $self->ide->{session} ) {
 				my ($session) = Padre::DB::Session->select(
@@ -1363,7 +1364,7 @@ sub refresh_title {
 
 		# The other variables are all based on the filename
 		my $document = $current->document or next;
-		my $file     = $document->file;
+		my $file = $document->file;
 		next unless defined $file;
 
 		if ( $char eq 'b' ) {
@@ -1373,6 +1374,7 @@ sub refresh_title {
 		} elsif ( $char eq 'f' ) {
 			$variable{f} = $file->{filename};
 		} elsif ( $char eq 'F' ) {
+
 			# Filename relative to the project root
 			$variable{F} = $file->{filename};
 			my $project_dir = $document->project_dir;
@@ -1398,7 +1400,7 @@ sub refresh_title {
 	unless ( $self->GetTitle eq $title ) {
 
 		# Push the title to the window
-		$self->SetTitle( $title );
+		$self->SetTitle($title);
 
 		# Push the title to the process list for better identification
 		$0 = $title; ## no critic (RequireLocalizedPunctuationVars)
@@ -4067,8 +4069,8 @@ sub reload_file {
 		$editor   = $notebook->GetPage($page) or return 0;
 		$document = $editor->{Document}       or return 0;
 	} else {
-		$document = $self->current->document  or return 0;
-		$editor   = $document->editor;
+		$document = $self->current->document or return 0;
+		$editor = $document->editor;
 	}
 
 	my $pos = $self->config->feature_cursormemory;
@@ -4217,52 +4219,52 @@ sub on_save_as {
 		my $saveto = $dialog->GetPath;
 
 
-# PJL - waxhead 10/02/2011
-# commenting out the file extension check
-# for now until a better implimentation is sorted out.
-# As this will be revisited again, don't remove this block of 
-# code unless it's totally bit rotted.
-#
-#		# feature request: http://padre.perlide.org/trac/ticket/1027
-#		# work out if we have an extension to the file name
-#		#print "The file name is: " . $dialog->GetFilename . "\n";
-#		#print "The mimetype is: " . $document->mimetype . "\n";
-#		
-#		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type( $document->mimetype );
-#
-#		my $ext_string = "'" . join( "', '", @file_extensions ) . "'";
-#
-#		#print "file extensions: $ext_string\n"; # .  join( "\n", @file_extensions ) . "\n";
-#
-#		# now lets check if we have a file extension that suits the current mimetype:
-#		my $fileName = $dialog->GetFilename;
-#		my $ext      = "";
-#		$fileName =~ m/\.([^\.]+)$/;
-#		$ext = $1;
-#
-#		#print "File Extension is: $ext\n";
-#
-#		if ( !defined($ext) || $ext eq '' ) {
-#
-#			#show dialog that the file extension is missing for the mimetype
-#			my $ret = Wx::MessageBox(
-#				sprintf(
-#					Wx::gettext(
-#						"You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"
-#					),
-#					$ext_string
-#				),
-#				Wx::gettext("File extension missing warning..."),
-#				Wx::wxYES_NO | Wx::wxCENTRE,
-#				$self,
-#			);
-#
-#
-#			# return back to the save as dialog when we click No.
-#			if( $ret == Wx::wxNO ) {
-#				next; # because we are in a while(1) loop
-#			}
-#		}
+		# PJL - waxhead 10/02/2011
+		# commenting out the file extension check
+		# for now until a better implimentation is sorted out.
+		# As this will be revisited again, don't remove this block of
+		# code unless it's totally bit rotted.
+		#
+		#		# feature request: http://padre.perlide.org/trac/ticket/1027
+		#		# work out if we have an extension to the file name
+		#		#print "The file name is: " . $dialog->GetFilename . "\n";
+		#		#print "The mimetype is: " . $document->mimetype . "\n";
+		#
+		#		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type( $document->mimetype );
+		#
+		#		my $ext_string = "'" . join( "', '", @file_extensions ) . "'";
+		#
+		#		#print "file extensions: $ext_string\n"; # .  join( "\n", @file_extensions ) . "\n";
+		#
+		#		# now lets check if we have a file extension that suits the current mimetype:
+		#		my $fileName = $dialog->GetFilename;
+		#		my $ext      = "";
+		#		$fileName =~ m/\.([^\.]+)$/;
+		#		$ext = $1;
+		#
+		#		#print "File Extension is: $ext\n";
+		#
+		#		if ( !defined($ext) || $ext eq '' ) {
+		#
+		#			#show dialog that the file extension is missing for the mimetype
+		#			my $ret = Wx::MessageBox(
+		#				sprintf(
+		#					Wx::gettext(
+		#						"You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"
+		#					),
+		#					$ext_string
+		#				),
+		#				Wx::gettext("File extension missing warning..."),
+		#				Wx::wxYES_NO | Wx::wxCENTRE,
+		#				$self,
+		#			);
+		#
+		#
+		#			# return back to the save as dialog when we click No.
+		#			if( $ret == Wx::wxNO ) {
+		#				next; # because we are in a while(1) loop
+		#			}
+		#		}
 
 
 		#my $path = File::Spec->catfile( $self->cwd, $filename );
@@ -4997,7 +4999,7 @@ sub open_regex_editor {
 	}
 
 	unless ( defined $self->{regex_editor} ) {
-		$self->error(Wx::gettext('Error loading regex editor.'));
+		$self->error( Wx::gettext('Error loading regex editor.') );
 		return;
 	}
 
@@ -5026,7 +5028,7 @@ sub open_perl_filter {
 	}
 
 	unless ( defined $self->{perl_filter} ) {
-		$self->error(Wx::gettext('Error loading perl filter dialog.'));
+		$self->error( Wx::gettext('Error loading perl filter dialog.') );
 		return;
 	}
 
@@ -5143,7 +5145,7 @@ sub on_toggle_code_folding {
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->editor_folding );
-		$editor->fold_pod 
+		$editor->fold_pod
 			if ( $config->editor_folding && $config->editor_fold_pod );
 	}
 

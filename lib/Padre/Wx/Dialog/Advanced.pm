@@ -156,13 +156,13 @@ sub _create_controls {
 	$self->{options}->Enable(0);
 
 	my $help_label = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
-	$self->{help} = Wx::TextCtrl->new( 
-		$self, 
-		-1, 
+	$self->{help} = Wx::TextCtrl->new(
+		$self,
+		-1,
 		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_READONLY|Wx::wxTE_MULTILINE|Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{help}->Enable(0);
@@ -503,6 +503,7 @@ sub _on_list_item_selected {
 	$self->{value}->Enable(1);
 	$self->{default_value}->Enable(1);
 	$self->{options}->Enable(1);
+
 	#$self->{help}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
 	$self->{button_set}->Enable(1);
@@ -802,7 +803,7 @@ sub _init_preferences {
 			'value'      => $value,
 			'original'   => $value,
 			'options'    => $options,
-			'help'       => ($setting->help || ''),
+			'help'       => ( $setting->help || '' ),
 		};
 	}
 

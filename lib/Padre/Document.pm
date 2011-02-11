@@ -214,7 +214,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -224,7 +224,7 @@ sub new {
 		$self->{file} = Padre::File->new(
 			$self->{filename},
 			info_handler => sub {
-				$self->current->main->info($_[1]);
+				$self->current->main->info( $_[1] );
 			}
 		);
 
@@ -667,7 +667,7 @@ sub autocomplete_matching_char {
 		return 0;
 	}
 
-	# Is autocomplete enabled 
+	# Is autocomplete enabled
 	my $current = $editor->current;
 	my $config  = $current->config;
 	unless ( $config->autocomplete_brackets ) {

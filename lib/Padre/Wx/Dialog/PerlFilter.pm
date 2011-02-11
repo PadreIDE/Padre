@@ -101,7 +101,7 @@ sub _create_controls {
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{run_button}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{run_button},    0, Wx::wxALL, 1 );
 	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
 	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
@@ -116,8 +116,8 @@ sub _create_controls {
 
 	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $result_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
 	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
@@ -129,12 +129,12 @@ sub _bind_events {
 	my $self = shift;
 
 	# Wx::Event::EVT_KEY_DOWN(
-		# $self,
-		# sub {
-			# my ($key_event) = $_[1];
-			# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
-			# return;
-		# }
+	# $self,
+	# sub {
+	# my ($key_event) = $_[1];
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# return;
+	# }
 	# );
 	Wx::Event::EVT_TEXT(
 		$self,
@@ -143,30 +143,30 @@ sub _bind_events {
 	);
 
 	# Wx::Event::EVT_KEY_DOWN(
-		# $self->{source},
-		# sub {
-			# my ($key_event) = $_[1];
-			# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
-			# return;
-		# }
+	# $self->{source},
+	# sub {
+	# my ($key_event) = $_[1];
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# return;
+	# }
 	# );
-# 
+	#
 	# Wx::Event::EVT_KEY_DOWN(
-		# $self->{original_text},
-		# sub {
-			# my ($key_event) = $_[1];
-			# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
-			# return;
-		# }
+	# $self->{original_text},
+	# sub {
+	# my ($key_event) = $_[1];
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# return;
+	# }
 	# );
-# 
+	#
 	# Wx::Event::EVT_KEY_DOWN(
-		# $self->{result_text},
-		# sub {
-			# my ($key_event) = $_[1];
-			# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
-			# return;
-		# }
+	# $self->{result_text},
+	# sub {
+	# my ($key_event) = $_[1];
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# return;
+	# }
 	# );
 
 	Wx::Event::EVT_BUTTON(
@@ -209,7 +209,7 @@ sub show {
 			if ( $selection_length > 0 ) {
 				$self->{original_text}->ChangeValue($selection);
 			} else {
-				$self->{original_text}->ChangeValue($editor->GetText);
+				$self->{original_text}->ChangeValue( $editor->GetText );
 			}
 		} else {
 			$self->{original_text}->ChangeValue('');
@@ -233,9 +233,9 @@ sub get_data {
 
 	my %data = (
 		text => {
-			source         => $self->{source}->GetValue,
+			source        => $self->{source}->GetValue,
 			original_text => $self->{original_text}->GetValue,
-			result_text => $self->{result_text}->GetValue,
+			result_text   => $self->{result_text}->GetValue,
 		},
 	);
 
@@ -266,7 +266,7 @@ sub run {
 	$_ = $original_text;
 	my $result_text = eval $source;
 	if ($@) {
-		$result_text = Wx::gettext('Error').":\n".$@;
+		$result_text = Wx::gettext('Error') . ":\n" . $@;
 	}
 
 	if ( defined $result_text ) {

@@ -446,7 +446,7 @@ sub _color {
 }
 
 sub remove_color {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# TO DO this is strange, do we really need to do it with all?
@@ -1694,8 +1694,8 @@ sub store_cursor_position {
 	my $document = $self->{Document} or return;
 	my $file     = $document->{file} or return;
 	Padre::DB::LastPositionInFile->set_last_pos(
-		 $file->filename,
-		 $self->GetCurrentPos,
+		$file->filename,
+		$self->GetCurrentPos,
 	);
 }
 
