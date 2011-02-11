@@ -6064,9 +6064,7 @@ sub on_new_from_template {
 	);
 	my $template = Padre::Util::slurp($file);
 	unless ($template) {
-
-		# Rare failure, no need to translate
-		$self->error("Failed to find template '$file'");
+		$self->error( sprintf( Wx::gettext("Failed to find template file '%s'"), $file ) );
 	}
 
 	# Generate the full file content
