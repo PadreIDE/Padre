@@ -1736,22 +1736,6 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name        => 'perl.autocomplete_brackets',
-		need_editor => 1,
-		label       => _T('Automatic Bracket Completion'),
-		comment     => _T('When typing { insert a closing } automatically'),
-		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
-
-			# Update the saved config setting
-			my $checked = $_[1]->IsChecked ? 1 : 0;
-			$_[0]->config->set(
-				autocomplete_brackets => $checked,
-			);
-		}
-	);
-
 	# Perl-Specific Refactoring
 
 	Padre::Wx::Action->new(

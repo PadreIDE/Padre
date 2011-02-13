@@ -26,6 +26,7 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - translate error message in Main.pm (ZENOG)
     - fix swapping of window title and content strings for "New Perl Module"
       name prompt (ZENOG)
+    - Remove Remove menu item Perl/Automatic Bracket Completion #1102 (SZABGAB)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods

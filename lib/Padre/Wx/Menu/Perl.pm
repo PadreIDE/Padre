@@ -78,7 +78,7 @@ sub new {
 		'perl.newline_keep_column',
 	);
 
-	$self->AppendSeparator;
+	# $self->AppendSeparator;
 
 	# Move of stacktrace to Run
 	#	# Make it easier to access stack traces
@@ -93,11 +93,6 @@ sub new {
 	#			$self->refresh;
 	#		}
 	#	);
-
-	$self->{autocomplete_brackets} = $self->add_menu_action(
-		$self,
-		'perl.autocomplete_brackets',
-	);
 
 	return $self;
 }
@@ -125,9 +120,6 @@ sub refresh {
 	#	$self->{introduce_temporary}->Enable($perl);
 	#	$self->{extract_subroutine}->Enable($perl);
 	$self->{beginner_check}->Enable($perl);
-
-	# Apply config-driven state
-	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
 	return;
 }
