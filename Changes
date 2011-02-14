@@ -30,6 +30,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - Intuit project root from version control checkout directories and
       classify them as an ordinary vanilla Padre::Project, before we give up
       and treat something as a Null projects (ADAMK)
+    - Getting the project for a document was accidentally path-searching for
+      Makefile.PL-etc and destroying/creating the project object every single
+      time. Fixed project caching, and files now path-match to opened projects
+      before touching the filesystem. Many operations much faster (ADAMK)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods

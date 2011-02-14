@@ -112,6 +112,33 @@ sub from_file {
 	if ( defined $d[-1] and $d[-1] eq '' ) {
 		pop @d;
 	}
+
+	# Is the file inside a class we have loaded already.
+	# This should save a ton of filesystem calls when opening files.
+	require Padre::Current;
+	my $projects = Padre::Current->ide->{project};
+	foreach my $root ( sort keys %$projects ) {
+		next if $projects->{$root}->isa('Padre::Project::Null');
+
+		# Split into parts (check volume before we bother to split dir)
+		my ( $pv, $pd, $pf ) = File::Spec->splitpath($root, 1);
+		if ( defined $v and defined $pv and $v ne $pv ) {
+			next;
+		}
+		my @pd = File::Spec->splitdir($pd);
+		if ( defined $pd[-1] and $pd[-1] eq '' ) {
+			pop @pd;
+		}
+		foreach my $n ( 0 .. $#pd ) {
+			last unless defined $d[$n];
+			last unless $d[$n] eq $pd[$n];
+			next unless $n == $#pd;
+
+			# Found a match, return the cached project
+			return $projects->{$root};
+		}
+	}
+
 	foreach my $n ( reverse 0 .. $#d ) {
 		my $dir = File::Spec->catdir( @d[ 0 .. $n ] );
 
