@@ -32,7 +32,9 @@ use File::Spec      ();
 use File::Basename  ();
 use List::Util      ();
 use POSIX           ();
-use Padre::Constant ();
+use Padre::Constant (); ### NO more Padre:: dependencies
+
+
 
 # If we make $VERSION an 'our' variable the parse_variable() function breaks
 use vars qw{ $VERSION $COMPATIBLE };
