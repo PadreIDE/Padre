@@ -820,19 +820,6 @@ sub load_files {
 	return;
 }
 
-sub _xy_on_screen {
-
-	# Returns true if the initial xy coordinate is on the screen
-	# See ticket #822
-	my $self   = shift;
-	my $config = $self->config;
-	if ( $config->main_top < 0 or $config->main_left < 0 ) {
-		return 0;
-	}
-
-	return 1;
-}
-
 =pod
 
 =head2 C<lock>
