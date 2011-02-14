@@ -720,7 +720,6 @@ sub set_filename {
 	delete $self->{filename};
 	delete $self->{file};
 	delete $self->{project_dir};
-	delete $self->{is_project};
 
 	# Save the new filename
 	$self->{file} = Padre::File->new($filename);
@@ -1129,14 +1128,11 @@ sub project_dir {
 		# Load the project object and project_dir in one step
 		my $project = $self->project_find;
 		return unless defined $project;
-		
+
 		my $project_dir = $project->root;
 		my $ide         = $self->current->ide;
-		$self->{project_dir} = $project_dir;
 		$ide->{project}->{$project_dir} = $project;
-		unless ( $project->isa('Padre::Project::Null') ) {
-			$self->{is_project} = 1;
-		}
+		$self->{project_dir} = $project_dir;
 	}
 	return $self->{project_dir};
 }
