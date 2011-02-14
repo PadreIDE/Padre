@@ -1107,6 +1107,7 @@ sub test_a_plugin {
 sub _plugin {
 	my $self = shift;
 	my $it   = shift;
+
 	if ( Params::Util::_INSTANCE( $it, 'Padre::PluginHandle' ) ) {
 		my $current = $self->{plugins}->{ $it->class };
 		unless ( defined $current ) {
@@ -1125,6 +1126,7 @@ sub _plugin {
 		}
 		return $self->{plugins}->{$it};
 	}
+
 	Carp::croak("Missing or invalid plug-in provided to Padre::PluginManager");
 }
 

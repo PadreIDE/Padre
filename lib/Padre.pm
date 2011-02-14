@@ -35,12 +35,13 @@ use Padre::Logger;
 # Generate faster accessors
 use Class::XSAccessor 1.05 {
 	getters => {
-		original_cwd   => 'original_cwd',
-		opts           => 'opts',
-		config         => 'config',
-		wx             => 'wx',
-		task_manager   => 'task_manager',
-		plugin_manager => 'plugin_manager',
+		original_cwd    => 'original_cwd',
+		opts            => 'opts',
+		config          => 'config',
+		wx              => 'wx',
+		task_manager    => 'task_manager',
+		plugin_manager  => 'plugin_manager',
+		project_manager => 'project_manager',
 	},
 	accessors => {
 		actions     => 'actions',
@@ -49,7 +50,6 @@ use Class::XSAccessor 1.05 {
 		instance_id => 'instance_id',
 	},
 };
-
 
 sub import {
 	unless ( $_[1] and $_[1] eq ':everything' ) {
@@ -114,10 +114,13 @@ sub new {
 		# Wx Attributes
 		wx => undef,
 
-		# Plug-in Attributes
+		# Project Storage
+		project_manager => undef,
+
+		# Plugin Storage
 		plugin_manager => undef,
 
-		# Project Attributes
+		# Project List
 		project => {},
 
 	}, $class;
@@ -142,6 +145,10 @@ sub new {
 
 	# Wizard registry
 	$self->wizards( {} );
+
+	# Create the project manager
+	require Padre::ProjectManager;
+	$self->{project_manager} = Padre::ProjectManager->new;
 
 	# Create the plugin manager
 	require Padre::PluginManager;
