@@ -212,9 +212,17 @@ foreach my $module ( sort keys %modules ) {
 	# Avoid expensive regexp result variables
 	SKIP: {
 		if ( $module eq 'Padre::Wx::Dialog::RegexEditor' ) {
-			skip( q($' or $` or $& is in the pod of this module), 1 );
+			skip( 'Ignoring RegexEditor', 1 );
 		}
-		ok( $document->serialize !~ /[^\$\'\"]\$[\&\'\`]/, $module . ': Uses expensive regexp-variable $&, $\' or $`' );
+		my $good = !$document->find_any(
+			sub {
+				$_[1]->isa('PPI::Token')                or return '';
+				$_[1]->significant                      or return '';
+				$_[1]->content =~ /[^\$\'\"]\$[\&\'\`]/ or return '';
+				return 1;
+			}
+		);	
+		ok( $good, "$module: Uses expensive regexp-variable \$&, \$\' or \$`" );
 	}
 }
 
