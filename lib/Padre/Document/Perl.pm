@@ -729,34 +729,32 @@ sub _find_method {
 		}
 	}
 
-	#use Data::Dumper;
-	#print Dumper $self->{_methods_};
+	# use Data::Dumper;
+	# print Dumper $self->{_methods_};
 
 	if ( $self->{_methods_}{$name} ) {
 		return ( 1, $self->{_methods_}{$name} );
 	}
+
 	return;
 }
 
 #scan text for sub declaration
 sub _find_sub_decl_line_number {
-	my ( $name, $text ) = @_;
-
+	my $name  = shift;
+	my $text  = shift;
 	my @lines = split /\n/, $text;
 
-	#print "Name '$name'\n";
-	foreach my $i ( 0 .. @lines - 1 ) {
-
-		#print "L: $lines[$i]\n";
+	foreach my $i ( 0 .. $#lines ) {
 		if ($lines[$i] =~ /sub \s+ $name\b
 		 (?!;)
 		 (?! \([\$;\@\%\\]+ \);)
 		 /x
-			)
-		{
+		) {
 			return $i;
 		}
 	}
+
 	return -1;
 }
 
@@ -778,6 +776,7 @@ sub goto_sub {
 		$self->editor->goto_line_centerize($line);
 		return 1;
 	}
+
 	return;
 }
 
@@ -1474,8 +1473,7 @@ sub autocomplete {
 }
 
 sub newline_keep_column {
-	my $self = shift;
-
+	my $self   = shift;
 	my $editor = $self->editor or return;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
@@ -1486,7 +1484,7 @@ sub newline_keep_column {
 	$editor->AddText( $self->newline );
 
 	$text =~ s/\S/ /g;
-	$editor->AddText($text);
+	$editor->AddText( $text );
 
 	$editor->SetCurrentPos( $pos + $col + 1 );
 
@@ -1522,7 +1520,8 @@ sub event_on_char {
 
 	if ( $config->autocomplete_brackets ) {
 		$self->autocomplete_matching_char(
-			$editor, $event,
+			$editor,
+			$event,
 			34  => 34,  # " "
 			39  => 39,  # ' '
 			40  => 41,  # ( )
@@ -1671,7 +1670,7 @@ sub event_on_right_down {
 	# PLEASE DO NOT use the mouse event position
 	# You will get inconsistent results regarding refactor tools
 	# when pressing Windows context "right click" key
-	my $pos = $editor->GetCurrentPos();
+	my $pos = $editor->GetCurrentPos;
 
 	my $introduced_separator = 0;
 
@@ -1733,7 +1732,9 @@ sub event_on_right_down {
 
 	my $select_start = $editor->GetSelectionStart;
 	my $select_end   = $editor->GetSelectionEnd;
-	if ( $select_start != $select_end ) { # if something's selected
+
+	# Is something selected
+	if ( $select_start != $select_end ) {
 		$menu->AppendSeparator if not $introduced_separator++;
 
 		$menu->add_menu_action(
@@ -1745,7 +1746,7 @@ sub event_on_right_down {
 			$menu,
 			'perl.edit_with_regex_editor',
 		);
-	} # end if something's selected
+	}
 }
 
 sub event_on_left_up {
@@ -1765,7 +1766,7 @@ sub event_on_left_up {
 		elsif ( defined $location && $self->has_sub($token) ) {
 			$self->goto_sub($token);
 		}
-	} # end if control-click
+	}
 }
 
 sub event_mouse_moving {
