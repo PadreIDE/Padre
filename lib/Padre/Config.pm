@@ -244,11 +244,11 @@ sub set {
 			}
 			$value = $long;
 
-			#Wx::DirPickerCtrl upgrades data to utf8.
-			#Perl on Windows cannot handle utf8 in file names, so this hack converts
-			#path back
+			# Wx::DirPickerCtrl upgrades data to utf8.
+			# Perl on Windows cannot handle utf8 in file names,
+			# so this hack converts path back.
 		}
-		if ( not -e $value ) {
+		unless ( -e $value ) {
 			Carp::croak("Setting '$name' to non-existant path '$value'");
 		}
 
