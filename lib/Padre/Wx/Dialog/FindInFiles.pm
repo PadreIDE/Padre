@@ -10,11 +10,6 @@ our @ISA     = qw{
 	Padre::Wx::FBP::FindInFiles
 };
 
-use constant SAVE => qw{
-	find_case
-	find_regex
-};
-
 
 
 
@@ -90,14 +85,17 @@ sub directory {
 # values are valid
 sub refresh {
 	my $self = shift;
-	$self->{find}->Enable( $self->{find_term}->GetValue ne '' );
+	$self->{find}->Enable(
+		$self->{find_term}->GetValue ne ''
+	);
 }
 
 sub run {
-	my $self = shift;
+	my $self    = shift;
+	my $current = $self->current;
 
 	# Do they have a specific search term in mind?
-	my $text = $self->current->text;
+	my $text = $current->text;
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
@@ -105,7 +103,7 @@ sub run {
 	$self->{find_term}->SetValue($text) if length $text;
 	$self->{find_term}->SetFocus;
 
-	# refresh
+	# Update the user interface
 	$self->refresh;
 
 	# Show the dialog
@@ -118,7 +116,7 @@ sub run {
 
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
-		my $editor = $self->current->editor;
+		my $editor = $current->editor;
 		$editor->SetFocus if $editor;
 
 		return;
@@ -141,7 +139,10 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name (SAVE) {
+	foreach my $name ( qw{
+		find_case
+		find_regex
+	} ) {
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

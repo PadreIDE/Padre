@@ -29,9 +29,9 @@ is( Padre::Util::get_project_dir($current_dir),
 my @path = File::Spec->splitdir($current_dir);
 $current_dir = File::Spec->catdir(
 	@path,
-	File::Spec->updir,                                   # /..
-	$path[-1],                                           # /t
-	File::Spec->updir,                                   # /..
+	File::Spec->updir, # /..
+	$path[-1],         # /t
+	File::Spec->updir, # /..
 	$path[-1]
 );
 
