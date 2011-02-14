@@ -233,8 +233,8 @@ sub reset_my_plugin {
 # Save the plug-in enable/disable states for the next start-up.
 sub shutdown {
 	my $self = shift;
+	my $lock = $self->main->lock('DB');
 
-	my $transaction = $self->main->lock('DB');
 	foreach my $module ( $self->plugin_order ) {
 		my $plugin = $self->_plugin($module);
 		if ( $plugin->enabled ) {
