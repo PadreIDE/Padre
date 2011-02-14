@@ -911,10 +911,13 @@ L<Padre>.
 sub single_instance_address {
 	require Wx::Socket;
 	if (Padre::Constant::WXWIN32) {
-		my $address = Wx::IPV4address->new;
-		$address->SetHostname('127.0.0.1');
-		$address->SetService('4444');
-		return $address;
+		# Since using a Wx::IPv4address doesn't seem to work,
+		# for now just return the two-value host/port list.
+		# my $address = Wx::IPV4address->new;
+		# $address->SetHostname('127.0.0.1');
+		# $address->SetService('4444');
+		# return $address;
+		return ( '127.0.0.1' => 4444 );
 	} else {
 		my $file = File::Spec->catfile(
 			Padre::Constant::CONFIG_DIR,
