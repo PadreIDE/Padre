@@ -43,7 +43,17 @@ my $preferences = do {
 	<$fh>;
 };
 
-my %SKIP = map { $_ => 1 } qw(
+# szabgab:
+# We check each configuration option if it is also visible on
+# the Preference window. As some of them don't yet appear there
+# we have a list of config options here that are known to NOT appear
+# in the Preference window.
+# We don't have to put every option in the Preference window, after
+# all the Advanced window should be also used for something
+# but at least it can be useful to know which one don't have such view.
+# Probably it would be even better if we had a mapping of each config option
+# and the subwindow it appears in.
+my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	autocomplete_always
 	autocomplete_method
 	autocomplete_subroutine
@@ -147,8 +157,10 @@ my @names =
 	sort { length($a) <=> length($b) or $a cmp $b } keys %Padre::Config::SETTING;
 is( scalar(@names), NUMBER_OF_CONFIG_OPTIONS, 'Expected number of config options' );
 foreach my $name (@names) {
+
+	# simple way to check if config option is in the preferences window 
 	SKIP: {
-		skip "'$name' is known to be missing from the preferences window", 1 if $SKIP{$name};
+		skip "'$name' is known to be missing from the preferences window", 1 if $NOT_IN_PREFERENCES{$name};
 		ok $preferences =~ m/$name/, "'$name' is in the preferences window";
 	}
 	ok( defined( $config->$name() ), "->$name is defined" );
