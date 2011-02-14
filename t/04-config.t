@@ -2,11 +2,10 @@
 
 use strict;
 use warnings;
-use constant CONFIG_OPTIONS => 126;
+use constant NUMBER_OF_CONFIG_OPTIONS => 126;
 
 # Move of Debug to Run Menu
-# TODO can someone who knows what *2 + 21 means explain it in a comment please.
-use Test::More tests => CONFIG_OPTIONS * 3 + 21;
+use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 3 + 21;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -146,7 +145,7 @@ my %SKIP = map { $_ => 1 } qw(
 # Check that the defaults work
 my @names =
 	sort { length($a) <=> length($b) or $a cmp $b } keys %Padre::Config::SETTING;
-is( scalar(@names), CONFIG_OPTIONS, 'Expected number of config options' );
+is( scalar(@names), NUMBER_OF_CONFIG_OPTIONS, 'Expected number of config options' );
 foreach my $name (@names) {
 	SKIP: {
 		skip "'$name' is known to be missing from the preferences window", 1 if $SKIP{$name};
