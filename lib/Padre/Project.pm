@@ -37,6 +37,8 @@ sub class {
 		);
 		return 'Padre::Project::Null';
 	}
+
+	# There are several main indicators this is a Perl project
 	if ( -f File::Spec->catfile( $root, 'Makefile.PL' ) ) {
 		return 'Padre::Project::Perl';
 	}
@@ -46,9 +48,24 @@ sub class {
 	if ( -f File::Spec->catfile( $root, 'dist.ini' ) ) {
 		return 'Padre::Project::Perl';
 	}
+
+	# Is this a manually configured explicit Padre project
 	if ( -f File::Spec->catfile( $root, 'padre.yml' ) ) {
 		return 'Padre::Project';
 	}
+
+	# If there are no language-specific indicators, check to see if
+	# this directory is (ideally the root of) a version control checkout.
+	foreach my $vcs ( '.svn', '.git', '.hg', '.bzr' ) {
+		if ( -d File::Spec->catfile($root, $vcs) ) {
+			return 'Padre::Project';
+		}
+	}
+	if ( -f File::Spec->catfile($root, 'CSV', 'Repository') ) {
+		return 'Padre::Project';
+	}
+
+	# This is otherwise not recognisable as a "project"
 	return 'Padre::Project::Null';
 }
 
@@ -95,8 +112,8 @@ sub from_file {
 	if ( defined $d[-1] and $d[-1] eq '' ) {
 		pop @d;
 	}
-	foreach ( reverse 0 .. $#d ) {
-		my $dir = File::Spec->catdir( @d[ 0 .. $_ ] );
+	foreach my $n ( reverse 0 .. $#d ) {
+		my $dir = File::Spec->catdir( @d[ 0 .. $n ] );
 
 		# Check for Dist::Zilla support
 		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
@@ -138,15 +155,66 @@ sub from_file {
 			}
 		}
 
-		# Fall back to looking for null projects
+		# Check for an explicit vanilla project
 		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
 		if ( -f $padre_yml ) {
-			require Padre::Project;
 			return Padre::Project->new(
 				root      => File::Spec->catpath( $v, $dir, '' ),
 				padre_yml => $padre_yml,
 			);
 		}
+
+		# Intuit a vanilla project based on a git, mercurial or Bazaar
+		# checkout (that use a single directory to indicate the root).
+		foreach my $vcs ( '.git', '.hg', '.bzr' ) {
+			my $vcs_dir = File::Spec->catpath( $v, $dir, $vcs );
+			if ( -d $vcs_dir ) {
+				return Padre::Project->new(
+					root => File::Spec->catpath( $v, $dir, '' ),
+				);
+			}
+		}
+
+		# Intuit a vanilla project based on a Subversion checkout
+		my $svn_dir = File::Spec->catpath( $v, $dir, '.svn' );
+		if ( -d $svn_dir ) {
+			# This must be the top-most .svn directory
+			if ( $n ) {
+				# We aren't at the top-most directory in the volume
+				my $updir = File::Spec->catdir( @d[ 0 .. $n-1 ] );
+				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
+				unless ( -d $svn_dir ) {
+					return Padre::Project->new(
+						root => File::Spec->catpath( $v, $dir, '' ),
+					);
+				}
+			}			
+		}
+
+		# Intuit a vanilla project based on a CVS checkout
+		my $cvs_dir = File::Spec->catpath(
+			$v,
+			File::Spec->catdir($dir, 'CVS'),
+			'Repository',
+		);
+		if ( -f $cvs_dir ) {
+			# This must be the top-most CVS directory
+			if ( $n ) {
+				# We aren't at the top-most directory in the volume
+				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
+				my $cvs_updir = File::Spec->catpath(
+					$v,
+					File::Spec->catdir($updir, 'CVS'),
+					'Repository',
+				);
+				unless ( -f $cvs_dir ) {
+					return Padre::Project->new(
+						root => File::Spec->catpath( $v, $dir, '' ),
+					);
+				}
+			}			
+		}
+
 	}
 
 	# This document is part of the null project

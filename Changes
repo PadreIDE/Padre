@@ -27,6 +27,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - fix swapping of window title and content strings for "New Perl Module"
       name prompt (ZENOG)
     - Remove Remove menu item Perl/Automatic Bracket Completion #1102 (SZABGAB)
+    - Intuit project root from version control checkout directories and
+      classify them as an ordinary vanilla Padre::Project, before we give up
+      and treat something as a Null projects (ADAMK)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
