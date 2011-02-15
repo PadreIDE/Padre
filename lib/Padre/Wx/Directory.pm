@@ -384,14 +384,14 @@ sub refresh {
 
 	# Switch project states if needed
 	unless ( $self->{root} eq $root ) {
-		my $ide = $current->ide;
+		my $manager = $current->ide->project_manager;
 
 		# Save the current model data to the cache
 		# if we potentially need it again later.
-		if ( $ide->project_exists( $self->{root} ) ) {
+		if ( $manager->project_exists( $self->{root} ) ) {
 			require Padre::Cache;
 			my $stash = Padre::Cache->stash(
-				__PACKAGE__ => $ide->project( $self->{root} ),
+				__PACKAGE__ => $manager->project( $self->{root} ),
 			);
 			if ( $self->{searching} ) {
 

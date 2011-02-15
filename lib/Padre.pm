@@ -23,7 +23,8 @@ use DBD::SQLite   ();
 # TO DO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
-our $VERSION = '0.81';
+our $VERSION    = '0.81';
+our $COMPATIBLE = '0.81';
 
 # Since everything is used OO-style, we will be require'ing
 # everything other than the bare essentials
@@ -119,9 +120,6 @@ sub new {
 
 		# Plugin Storage
 		plugin_manager => undef,
-
-		# Project List
-		project => {},
 
 	}, $class;
 
@@ -267,20 +265,9 @@ sub save_config {
 #####################################################################
 # Project Management
 
+# Temporary pass-through
 sub project {
-	my $self = shift;
-	my $root = shift;
-	unless ( ref $self->{project}->{$root} ) {
-		require Padre::Project;
-		$self->{project}->{$root} = Padre::Project->from_file(
-			File::Spec->catfile( $root, 'a' ),
-		);
-	}
-	return $self->{project}->{$root};
-}
-
-sub project_exists {
-	defined $_[0]->{project}->{ $_[1] };
+	$_[0]->project_manager->project($_[1]);
 }
 
 1;

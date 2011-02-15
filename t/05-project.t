@@ -20,8 +20,8 @@ use Padre;
 my $padre_null = rel2abs( catdir( 't', 'collection', 'Padre-Null' ) );
 ok( -d $padre_null, 'Found Padre-Null project' );
 
-my $ide = Padre->new;
-isa_ok( $ide, 'Padre' );
+my $manager = Padre->new->project_manager;
+isa_ok( $manager, 'Padre::ProjectManager' );
 
 
 
@@ -31,7 +31,7 @@ isa_ok( $ide, 'Padre' );
 # Load a simple Padre project
 
 SCOPE: {
-	my $simple = $ide->project($padre_null);
+	my $simple = $manager->project($padre_null);
 	isa_ok( $simple, 'Padre::Project' );
 	is( ref($simple),  'Padre::Project', 'Creates an actual Padre project' );
 	is( $simple->root, $padre_null,      '->root ok' );

@@ -131,7 +131,6 @@ use Padre::Constant  ();
 use Padre::Current   ();
 use Padre::Util      ();
 use Padre::Wx        ();
-use Padre            ();
 use Padre::MimeTypes ();
 use Padre::File      ();
 use Padre::Logger;
@@ -744,7 +743,6 @@ sub save_file {
 	# If padre is run on files that have no project
 	# I.E Padre foo.pl &
 	# The assumption of $self->project as defined will cause a fail
-	# Please be more careful mkkkay!
 	my $config;
 	$config = $self->project->config if $self->project;
 	$self->set_errstr('');
@@ -770,7 +768,7 @@ sub save_file {
 			),
 			Wx::gettext("Save Warning"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
-			Padre->ide->wx->main,
+			Padre::Current->main,
 		);
 
 		return 0 if $ret == Wx::wxYES;
@@ -972,7 +970,7 @@ sub get_title {
 # TO DO: experimental
 sub get_indentation_style {
 	my $self   = shift;
-	my $config = Padre->ide->config;
+	my $config = $self->current->config;
 
 	# TO DO: (document >) project > config
 
@@ -1112,43 +1110,41 @@ Returns nothing.
 # Project Integration Methods
 
 sub project {
-	my $self = shift;
-	my $root = $self->project_dir;
-	if ( defined $root ) {
-		return Padre->ide->project($root);
-	} else {
-		return;
+	my $self    = shift;
+	my $manager = $self->current->ide->project_manager;
+
+	# If we have a cached project_dir return the object based on that
+	if ( defined $self->{project_dir} ) {
+		return $manager->project($self->{project_dir});
 	}
+
+	# Anonymous files don't have a project
+	my $file = $self->file or return;
+
+	# Currently no project support for remote files
+	return unless $file->{protocol} eq 'local';
+
+	# Find the project for this document's filename
+	my $project = $manager->from_file( $file->{filename} );
+	return undef unless defined $project;
+
+	# To prevent the creation of tons of references to the project object,
+	# cache the project by it's root directory.
+	$self->{project_dir} = $project->root;
+
+	return $project;
 }
 
 sub project_dir {
 	my $self = shift;
-	unless ( $self->{project_dir} ) {
-
-		# Load the project object and project_dir in one step
-		my $project = $self->project_find;
-		return unless defined $project;
-
-		my $project_dir = $project->root;
-		my $ide         = $self->current->ide;
-		$ide->{project}->{$project_dir} = $project;
-		$self->{project_dir} = $project_dir;
+	unless ( defined $self->{project_dir} ) {
+		# Find the project, which slightly bizarely caches the
+		# location of the project via it's root.
+		# NOTE: Yes this looks weird, but it is significantly
+		# less weird than the code it replaced.
+		$self->project;
 	}
 	return $self->{project_dir};
-}
-
-sub project_find {
-	my $self = shift;
-
-	# Anonymous files don't have a project
-	return unless defined $self->file;
-
-	# Currently no project support for remote files
-	return unless $self->{file}->{protocol} eq 'local';
-
-	# Search upwards from the file to find the project root
-	require Padre::Project;
-	Padre::Project->from_file( $self->{file}->{filename} );
 }
 
 # Find the project-relative file name

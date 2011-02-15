@@ -53,13 +53,15 @@ sub init_search {
 	my $current  = $self->current;
 	my $document = $current->document;
 	my $filename = $current->filename;
+	my $project  = $current->project;
 
 	# Check if we have an open file so we can use its directory
 	my $directory = $filename
 
 		# Current document's project or base directory
-		? Padre::Util::get_project_dir($filename)
-		|| File::Basename::dirname($filename)
+		? $project
+			? $project->root
+			: File::Basename::dirname($filename)
 
 		# Current working directory
 		: Cwd::getcwd();

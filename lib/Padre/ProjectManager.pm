@@ -1,5 +1,8 @@
 package Padre::ProjectManager;
 
+# Prototype for a full project manager abstraction to track projects open
+# in Padre and provide a variety of utility functions.
+
 use 5.008;
 use strict;
 use warnings;
@@ -13,7 +16,7 @@ our $VERSION = '0.81';
 
 
 ######################################################################
-# Constructor
+# Constructors
 
 sub new {
 	my $class = shift;
@@ -23,14 +26,7 @@ sub new {
 	return $self;
 }
 
-
-
-
-
-######################################################################
-# Support Methods
-
-sub from_root {
+sub project {
 	my $self = shift;
 	my $root = shift;
 
@@ -43,7 +39,7 @@ sub from_root {
 	my $dist_ini = File::Spec->catfile( $root, 'dist.ini' );
 	if ( -f $dist_ini ) {
 		require Padre::Project::Perl::DZ;
-		return Padre::Project::Perl::DZ->new(
+		return $self->{$root} = Padre::Project::Perl::DZ->new(
 			root     => $root,
 			dist_ini => $dist_ini,
 		);
@@ -53,7 +49,7 @@ sub from_root {
 	my $build_pl = File::Spec->catfile( $root, 'Build.PL' );
 	if ( -f $build_pl ) {
 		require Padre::Project::Perl::MB;
-		return Padre::Project::Perl::MB->new(
+		return $self->{$root} = Padre::Project::Perl::MB->new(
 			root     => $root,
 			build_pl => $build_pl,
 		);
@@ -66,13 +62,13 @@ sub from_root {
 		# Differentiate between Module::Install and ExtUtils::MakeMaker
 		if (0) {
 			require Padre::Project::Perl::MI;
-			return Padre::Project::Perl::MI->new(
+			return $self->{$root} = Padre::Project::Perl::MI->new(
 				root        => $root,
 				makefile_pl => $makefile_pl,
 			);
 		} else {
 			require Padre::Project::Perl::EUMM;
-			return Padre::Project::Perl::EUMM->new(
+			return $self->{$root} = Padre::Project::Perl::EUMM->new(
 				root        => $root,
 				makefile_pl => $makefile_pl,
 			);
@@ -82,7 +78,7 @@ sub from_root {
 	# Check for an explicit vanilla project
 	my $padre_yml = File::Spec->catfile( $root, 'padre.yml' );
 	if ( -f $padre_yml ) {
-		return Padre::Project->new(
+		return $self->{$root} = Padre::Project->new(
 			root      => $root,
 			padre_yml => $padre_yml,
 		);
@@ -93,8 +89,15 @@ sub from_root {
 	foreach my $vcs ( '.svn', '.git', '.hg', '.bzr' ) {
 		my $vcs_dir = File::Spec->catfile( $root, $vcs );
 		if ( -d $vcs_dir ) {
-			return Padre::Project->new(
+			my $vcs_plugin = {
+				'.svn' => 'SVN',
+				'.git' => 'Git',
+				'.hg'  => 'Mercurial',
+				'.bzr' => 'Bazaar',
+			}->{$vcs};
+			return $self->{$root} = Padre::Project->new(
 				root => $root,
+				vcs  => $vcs_plugin,
 			);
 		}
 	}
@@ -102,8 +105,9 @@ sub from_root {
 	# Intuit a vanilla project based on a CVS version control directory.
 	my $cvs_file = File::Spec->catfile( $root, 'CVS', 'Repository' );
 	if ( -f $cvs_file ) {
-		return Padre::Project->new(
+		return $self->{$root} = Padre::Project->new(
 			root => $root,
+			vcs  => 'CVS',
 		);
 	}
 
@@ -111,6 +115,7 @@ sub from_root {
 	require Padre::Project::Null;
 	return Padre::Project::Null->new(
 		root => $root,
+		vcs  => undef,
 	);
 }
 
@@ -156,7 +161,7 @@ sub from_file {
 		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
 		if ( -f $dist_ini ) {
 			require Padre::Project::Perl::DZ;
-			return Padre::Project::Perl::DZ->new(
+			return $self->{root} = Padre::Project::Perl::DZ->new(
 				root     => File::Spec->catpath( $v, $dir, '' ),
 				dist_ini => $dist_ini,
 			);
@@ -166,7 +171,7 @@ sub from_file {
 		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
 		if ( -f $build_pl ) {
 			require Padre::Project::Perl::MB;
-			return Padre::Project::Perl::MB->new(
+			return $self->{root} = Padre::Project::Perl::MB->new(
 				root     => File::Spec->catpath( $v, $dir, '' ),
 				build_pl => $build_pl,
 			);
@@ -179,13 +184,13 @@ sub from_file {
 			# Differentiate between Module::Install and ExtUtils::MakeMaker
 			if (0) {
 				require Padre::Project::Perl::MI;
-				return Padre::Project::Perl::MI->new(
+				return $self->{root} = Padre::Project::Perl::MI->new(
 					root        => File::Spec->catpath( $v, $dir, '' ),
 					makefile_pl => $makefile_pl,
 				);
 			} else {
 				require Padre::Project::Perl::EUMM;
-				return Padre::Project::Perl::EUMM->new(
+				return $self->{root} = Padre::Project::Perl::EUMM->new(
 					root        => File::Spec->catpath( $v, $dir, '' ),
 					makefile_pl => $makefile_pl,
 				);
@@ -195,7 +200,7 @@ sub from_file {
 		# Check for an explicit vanilla project
 		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
 		if ( -f $padre_yml ) {
-			return Padre::Project->new(
+			return $self->{root} = Padre::Project->new(
 				root      => File::Spec->catpath( $v, $dir, '' ),
 				padre_yml => $padre_yml,
 			);
@@ -206,8 +211,14 @@ sub from_file {
 		foreach my $vcs ( '.git', '.hg', '.bzr' ) {
 			my $vcs_dir = File::Spec->catpath( $v, $dir, $vcs );
 			if ( -d $vcs_dir ) {
-				return Padre::Project->new(
+				my $vcs_plugin = {
+					'.git' => 'Git',
+					'.hg'  => 'Mercurial',
+					'.bzr' => 'Bazaar',
+				}->{$vcs};
+				return $self->{root} = Padre::Project->new(
 					root => File::Spec->catpath( $v, $dir, '' ),
+					vcs  => $vcs_plugin,
 				);
 			}
 		}
@@ -221,8 +232,9 @@ sub from_file {
 				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
 				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
 				unless ( -d $svn_dir ) {
-					return Padre::Project->new(
+					return $self->{root} = Padre::Project->new(
 						root => File::Spec->catpath( $v, $dir, '' ),
+						vcs  => 'SVN',
 					);
 				}
 			}
@@ -245,8 +257,9 @@ sub from_file {
 					'Repository',
 				);
 				unless ( -f $cvs_dir ) {
-					return Padre::Project->new(
+					return $self->{root} = Padre::Project->new(
 						root => File::Spec->catpath( $v, $dir, '' ),
+						vcs  => 'CVS',
 					);
 				}
 			}
@@ -257,11 +270,8 @@ sub from_file {
 	# This document is part of the null project
 	require Padre::Project::Null;
 	return Padre::Project::Null->new(
-		root => File::Spec->catpath(
-			$v,
-			File::Spec->catdir(@d),
-			'',
-		),
+		root => File::Spec->catpath( $v, File::Spec->catdir(@d), '' ),
+		vcs  => undef,
 	);
 }
 
@@ -270,6 +280,28 @@ sub from_document {
 	my $document = shift;
 
 	die "CODE INCOMPLETE";
+}
+
+
+
+
+
+######################################################################
+# General Methods
+
+sub project_exists {
+	defined $_[0]->{$_[1]};
+}
+
+sub projects {
+	my $self = shift;
+	return map { $self->{$_} } sort keys %$self;
+}
+
+sub roots {
+	my $self  = shift;
+	my @roots = sort keys %$self;
+	return @roots;
 }
 
 1;

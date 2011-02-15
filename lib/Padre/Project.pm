@@ -16,6 +16,7 @@ our $VERSION = '0.81';
 ######################################################################
 # Class Methods
 
+### DEPRECATED (I think)
 sub class {
 	my $class = shift;
 	my $root  = shift;
@@ -56,12 +57,7 @@ sub class {
 
 	# If there are no language-specific indicators, check to see if
 	# this directory is (ideally the root of) a version control checkout.
-	foreach my $vcs ( '.svn', '.git', '.hg', '.bzr' ) {
-		if ( -d File::Spec->catfile($root, $vcs) ) {
-			return 'Padre::Project';
-		}
-	}
-	if ( -f File::Spec->catfile($root, 'CSV', 'Repository') ) {
+	if ( $class->_vcs($root) ) {
 		return 'Padre::Project';
 	}
 
@@ -78,7 +74,11 @@ sub class {
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
+
+	# Flag to indicate this root is specifically provided by a user
+	# and is not intuited.
+	$self->{explicit} = !! $self->{explicit};
 
 	# Check the root directory
 	unless ( defined $self->root ) {
@@ -86,8 +86,6 @@ sub new {
 	}
 	unless ( -d $self->root ) {
 		return undef;
-
-		# Carp::croak( "Root directory " . $self->root . " does not exist" );
 	}
 
 	# Check for a padre.yml file
@@ -102,157 +100,18 @@ sub new {
 	return $self;
 }
 
+### DEPRECATED
 sub from_file {
-	my $class = shift;
-	my $file  = shift;
-
-	# Split and scan
-	my ( $v, $d, $f ) = File::Spec->splitpath($file);
-	my @d = File::Spec->splitdir($d);
-	if ( defined $d[-1] and $d[-1] eq '' ) {
-		pop @d;
+	if ( $VERSION > 0.84 ) {
+		warn "Deprecated Padre::Util::get_project_rcs called by " . scalar caller();
 	}
 
-	# Is the file inside a class we have loaded already.
-	# This should save a ton of filesystem calls when opening files.
 	require Padre::Current;
-	my $projects = Padre::Current->ide->{project};
-	foreach my $root ( sort keys %$projects ) {
-		next if $projects->{$root}->isa('Padre::Project::Null');
+	Padre::Current->ide->project_manager->from_file($_[1]);
+}
 
-		# Split into parts (check volume before we bother to split dir)
-		my ( $pv, $pd, $pf ) = File::Spec->splitpath($root, 1);
-		if ( defined $v and defined $pv and $v ne $pv ) {
-			next;
-		}
-		my @pd = File::Spec->splitdir($pd);
-		if ( defined $pd[-1] and $pd[-1] eq '' ) {
-			pop @pd;
-		}
-		foreach my $n ( 0 .. $#pd ) {
-			last unless defined $d[$n];
-			last unless $d[$n] eq $pd[$n];
-			next unless $n == $#pd;
-
-			# Found a match, return the cached project
-			return $projects->{$root};
-		}
-	}
-
-	foreach my $n ( reverse 0 .. $#d ) {
-		my $dir = File::Spec->catdir( @d[ 0 .. $n ] );
-
-		# Check for Dist::Zilla support
-		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
-		if ( -f $dist_ini ) {
-			require Padre::Project::Perl::DZ;
-			return Padre::Project::Perl::DZ->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
-				dist_ini => $dist_ini,
-			);
-		}
-
-		# Check for Module::Build support
-		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
-		if ( -f $build_pl ) {
-			require Padre::Project::Perl::MB;
-			return Padre::Project::Perl::MB->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
-				build_pl => $build_pl,
-			);
-		}
-
-		# Check for ExtUtils::MakeMaker and Module::Install support
-		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
-		if ( -f $makefile_pl ) {
-
-			# Differentiate between Module::Install and ExtUtils::MakeMaker
-			if (0) {
-				require Padre::Project::Perl::MI;
-				return Padre::Project::Perl::MI->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
-					makefile_pl => $makefile_pl,
-				);
-			} else {
-				require Padre::Project::Perl::EUMM;
-				return Padre::Project::Perl::EUMM->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
-					makefile_pl => $makefile_pl,
-				);
-			}
-		}
-
-		# Check for an explicit vanilla project
-		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
-		if ( -f $padre_yml ) {
-			return Padre::Project->new(
-				root      => File::Spec->catpath( $v, $dir, '' ),
-				padre_yml => $padre_yml,
-			);
-		}
-
-		# Intuit a vanilla project based on a git, mercurial or Bazaar
-		# checkout (that use a single directory to indicate the root).
-		foreach my $vcs ( '.git', '.hg', '.bzr' ) {
-			my $vcs_dir = File::Spec->catpath( $v, $dir, $vcs );
-			if ( -d $vcs_dir ) {
-				return Padre::Project->new(
-					root => File::Spec->catpath( $v, $dir, '' ),
-				);
-			}
-		}
-
-		# Intuit a vanilla project based on a Subversion checkout
-		my $svn_dir = File::Spec->catpath( $v, $dir, '.svn' );
-		if ( -d $svn_dir ) {
-			# This must be the top-most .svn directory
-			if ( $n ) {
-				# We aren't at the top-most directory in the volume
-				my $updir = File::Spec->catdir( @d[ 0 .. $n-1 ] );
-				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
-				unless ( -d $svn_dir ) {
-					return Padre::Project->new(
-						root => File::Spec->catpath( $v, $dir, '' ),
-					);
-				}
-			}			
-		}
-
-		# Intuit a vanilla project based on a CVS checkout
-		my $cvs_dir = File::Spec->catpath(
-			$v,
-			File::Spec->catdir($dir, 'CVS'),
-			'Repository',
-		);
-		if ( -f $cvs_dir ) {
-			# This must be the top-most CVS directory
-			if ( $n ) {
-				# We aren't at the top-most directory in the volume
-				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
-				my $cvs_updir = File::Spec->catpath(
-					$v,
-					File::Spec->catdir($updir, 'CVS'),
-					'Repository',
-				);
-				unless ( -f $cvs_dir ) {
-					return Padre::Project->new(
-						root => File::Spec->catpath( $v, $dir, '' ),
-					);
-				}
-			}			
-		}
-
-	}
-
-	# This document is part of the null project
-	require Padre::Project::Null;
-	return Padre::Project::Null->new(
-		root => File::Spec->catpath(
-			$v,
-			File::Spec->catdir(@d),
-			'',
-		),
-	);
+sub explicit {
+	$_[0]->{explicit};
 }
 
 sub root {
@@ -321,6 +180,40 @@ sub headline {
 
 # Intuit the distribution version if possible
 sub version {
+	return undef;
+}
+
+# What is the logical name of the version control system we are using.
+# Identifying the version control flavour is the only support we provide.
+# Anything more details needs to be in the version control plugin.
+# Returns a name or undef if no version control.
+sub vcs {
+	my $self = shift;
+	unless ( exists $self->{vcs} ) {
+		my $class = ref $self;
+		$self->{vcs} = $class->_vcs( $self->root );
+	}
+	return $self->{vcs};
+}
+
+sub _vcs {
+	my $class = shift;
+	my $root  = shift;
+	if ( File::Spec->catdir( $root, '.svn' ) ) {
+		return 'SVN';
+	}
+	if ( File::Spec->catdir( $root, '.git' ) ) {
+		return 'Git';
+	}
+	if ( File::Spec->catdir( $root, '.hg' ) ) {
+		return 'Mercurial';
+	}
+	if ( File::Spec->catdir( $root, '.bzr' ) ) {
+		return 'Bazaar';
+	}
+	if ( File::Spec->catfile( $root, 'CVS', 'Repository' ) ) {
+		return 'CVS';
+	}
 	return undef;
 }
 

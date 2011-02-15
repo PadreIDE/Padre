@@ -34,6 +34,10 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
       Makefile.PL-etc and destroying/creating the project object every single
       time. Fixed project caching, and files now path-match to opened projects
       before touching the filesystem. Many operations much faster (ADAMK)
+    - Added the internals for a proper Project Manager abstraction to replace
+      the current ad-hoc storage in the main IDE object (ADAMK)
+    - Added version control system intuition via the ->vcs method in
+      Padre::Project (ADAMK)
 
 0.81 not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
@@ -46,6 +50,9 @@ NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
     - A number of methods relating to GUI and visualisation were moved from
       Padre::Document to Padre::Editor. This may impact some language
       plugins. (ADAMK)
+    - Padre::Util::get_project_dir was deprecated (ADAMK)
+    - Padre::Util::get_project_rcs was deprecated (ADAMK)
+    - Padre::Document::project_find was deleted (ADAMK)
 
 0.80 2011.01.29
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)

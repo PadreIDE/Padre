@@ -21,11 +21,12 @@ my $files = rel2abs( catdir( 't', 'files' ) );
 use t::lib::Padre;
 use t::lib::Padre::Editor;
 
+use Padre;
 use Padre::Document;
 use Padre::PPI;
 use PPI::Document;
 
-# Create the object so that Padre->ide works
+# Create the object so that ide works
 my $app = Padre->new;
 isa_ok( $app, 'Padre' );
 

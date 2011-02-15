@@ -669,7 +669,9 @@ sub find_method_declaration {
 # Arguments: A method name, optionally a class name
 # Returns: Success-Bit, Filename
 sub _find_method {
-	my ( $self, $name, $class ) = @_;
+	my $self  = shift;
+	my $name  = shift;
+	my $class = shift;
 
 	# Use tags parser if it's configured, return a match
 	my $parser = $self->perltags_parser;
@@ -699,13 +701,20 @@ sub _find_method {
 	# Fallback: Search for methods in source
 	# TO DO: unify with code in Padre::Wx::FunctionList
 	# TO DO: lots of improvement needed here
-	if ( not $self->{_methods_}{$name} ) {
+	unless ( $self->{_methods_}->{$name} ) {
+		# Consume the basic function list
 		my $filename = $self->filename;
-		$self->{_methods_}{$_} = $filename for $self->get_functions;
-		my $project_dir = Padre::Util::get_project_dir($filename);
-		if ($project_dir) {
+		$self->{_methods_}->{$_} = $filename for $self->get_functions;
+
+		# Scan for declarations in all module files.
+		# TODO: This is horrendously slow to be running in the foreground.
+		# TODO: This is pretty crude and doesn't integrate with the project system.
+		my $project = $self->current->project;
+		if ($project) {
 			require File::Find::Rule;
-			my @files = File::Find::Rule->file->name('*.pm')->in( File::Spec->catfile( $project_dir, 'lib' ) );
+			my @files = File::Find::Rule->file->name('*.pm')->in(
+				File::Spec->catfile( $project->root, 'lib' )
+			);
 			foreach my $f (@files) {
 				if ( open my $fh, '<', $f ) {
 					my $lines = do { local $/ = undef; <$fh> };
@@ -719,18 +728,12 @@ sub _find_method {
 						my @subs = $lines =~ /\b(?:method|func)\s+(\w+)/g;
 					}
 
-
-					#use Data::Dumper;
-					#print Dumper \@subs;
-					$self->{_methods_}{$_} = $f for @subs;
+					$self->{_methods_}->{$_} = $f for @subs;
 				}
 			}
 
 		}
 	}
-
-	# use Data::Dumper;
-	# print Dumper $self->{_methods_};
 
 	if ( $self->{_methods_}{$name} ) {
 		return ( 1, $self->{_methods_}{$name} );
@@ -791,20 +794,16 @@ sub has_sub {
 # Returns the line number of a sub (or undef if it doesn't exist) based on the outline data
 sub get_sub_line_number {
 	my $self = shift;
-	my $sub  = shift;
+	my $sub  = shift               or return;
+	my $data = $self->outline_data or return;
 
-	return unless $sub;
-
-	return unless $self->outline_data;
-
-	foreach my $package ( @{ $self->outline_data } ) {
+	foreach my $package ( @$data ) {
 		foreach my $method ( @{ $package->{methods} } ) {
 			return $method->{line} if $method->{name} eq $sub;
 		}
 	}
 
 	return;
-
 }
 
 #####################################################################
@@ -1875,13 +1874,9 @@ document.
 =cut
 
 sub project_tagsfile {
-	my $self = shift;
-
-	my $project_dir = $self->project_dir;
-
-	return if !defined($project_dir);
-
-	return File::Spec->catfile( $project_dir, 'perltags' );
+	my $self    = shift;
+	my $project = $self->project or return;
+	return File::Spec->catfile( $project->root, 'perltags' );
 }
 
 =pod
@@ -1898,15 +1893,12 @@ sub project_create_tagsfile {
 
 	# First try is using the perl-tags command, next version should so this
 	# internal using Padre::File and should skip at least the "blip" dir.
-
-	#	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
 	system 'perl-tags', '-o', $self->project_tagsfile, $self->project_dir;
 
 }
 
 sub find_help_topic {
-	my $self = shift;
-
+	my $self   = shift;
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
 

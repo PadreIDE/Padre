@@ -47,8 +47,6 @@ BEGIN {
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
 
-my %project_dir_cache;
-
 
 
 
@@ -155,6 +153,83 @@ sub newline_type {
 	return "WIN" if $text !~ /$LF/ and $text !~ /$CR/;
 
 	return "Mixed";
+}
+
+=pod
+
+=head2 C<parse_variable>
+
+    my $version = Padre::Util::parse_variable($file, 'VERSION');
+
+Parse a C<$file> and return what C<$VERSION> (or some other variable) is set to
+by the first assignment.
+
+It will return the string C<"undef"> if it can't figure out what C<$VERSION>
+is. C<$VERSION> should be for all to see, so C<our $VERSION> or plain
+C<$VERSION> are okay, but C<my $VERSION> is not.
+
+C<parse_variable()> will try to C<use version> before checking for
+C<$VERSION> so the following will work.
+
+    $VERSION = qv(1.2.3);
+
+Originally based on C<parse_version> from L<ExtUtils::MakeMaker>.
+
+=cut
+
+sub parse_variable {
+	my $parsefile = shift;
+	my $variable = shift || 'VERSION';
+	my $result;
+	local $/ = "\n";
+	local $_;
+	open( my $fh, '<', $parsefile ) #-# no critic (RequireBriefOpen)
+		or die "Could not open '$parsefile': $!";
+	my $inpod = 0;
+
+	while (<$fh>) {
+		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
+		next if $inpod || /^\s*#/;
+		chop;
+		next if /^\s*(if|unless)/;
+		if ( $variable eq 'VERSION' and m{^ \s* package \s+ \w[\w\:\']* \s+ (v?[0-9._]+) \s* ;  }x ) {
+			local $^W = 0;
+			$result = $1;
+		} elsif (m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x) {
+			my $eval = qq{
+				package ExtUtils::MakeMaker::_version;
+				no strict;
+				BEGIN { eval {
+					# Ensure any version() routine which might have leaked
+					# into this package has been deleted.  Interferes with
+					# version->import()
+					undef *version;
+					require version;
+					"version"->import;
+				} }
+
+				local $1$2;
+				\$$2=undef;
+				do {
+					$_
+				};
+				\$$2;
+			};
+			local $^W = 0;
+
+			# what policy needs to be disabled here????
+			$result = eval($eval);
+
+			warn "Could not eval '$eval' in $parsefile: $@" if $@;
+		} else {
+			next;
+		}
+		last if defined $result;
+	}
+	close $fh;
+
+	$result = "undef" unless defined $result;
+	return $result;
 }
 
 =pod
@@ -393,168 +468,29 @@ sub find_perldiag_translations {
 	return @tr;
 }
 
-=pod
-
-=head2 C<get_project_rcs>
-
-Given a project directory (see C<get_project_dir>), returns the project's
-Revision Control System (C<RCS>) by name. This can be either C<CVS>,
-C<SVN> or C<Git>. Returns C<undef> if none was found.
-
-=cut
-
+### DEPRECATED
 sub get_project_rcs {
-	my $project_dir = shift;
-
-	my %evidence_of = (
-		'CVS' => 'CVS',
-		'SVN' => '.svn',
-		'Git' => '.git',
-	);
-
-	foreach my $rcs ( keys %evidence_of ) {
-		my $dir = File::Spec->catdir(
-			$project_dir,
-			$evidence_of{$rcs},
-		);
-		return $rcs if -d $dir;
+	if ( $VERSION > 0.84 ) {
+		warn "Deprecated Padre::Util::get_project_rcs called by " . scalar caller();
 	}
-
-	# special case one step upwards traverse for the git version of the Padre repository
-	my $dir = File::Spec->catdir( File::Basename::dirname($project_dir), '.git' );
-	return 'Git' if -d $dir;
-
-	return;
+	require Padre::Current;
+	my $manager = Padre::Current->ide->project_manager;
+	my $project = $manager->from_root(shift) or return;
+	return $project->vcs;
 }
 
-=pod
-
-=head2 C<get_project_dir>
-
-Given a file it will try to locate the root directory of the given
-project. This is a temporary work around till we get full project
-support but it is used by some (C<SVK>) plug-ins.
-
-=cut
-
+### DEPRECATED
 sub get_project_dir {
-	my $filename = shift or return;
-
-	if ( defined( $project_dir_cache{$filename} ) and ( $project_dir_cache{$filename}->{timeout} >= time ) ) {
-		return $project_dir_cache{$filename}->{dir};
+	if ( $VERSION > 0.84 ) {
+		warn "Deprecated Padre::Util::get_project_dir called by " . scalar caller();
 	}
-
-	# Check for potential relative path on filename
-	if ( $filename =~ m{\.\.} ) {
-		$filename = Cwd::realpath($filename);
-	}
-
-
-	my $olddir = File::Basename::dirname($filename);
-	my $dir    = $olddir;
-	while (1) {
-		foreach my $testfilename ( 'Makefile.PL', 'Build.PL', 'dist.ini', 'padre.yml' ) {
-			next unless -e File::Spec->catfile( $dir, $testfilename );
-
-			$project_dir_cache{$filename} = {
-				timeout => time + 60,
-				dir     => $dir,
-			};
-
-			return $dir;
-		}
-		$olddir = $dir;
-		$dir    = File::Basename::dirname($dir);
-		last if $olddir eq $dir;
-	}
-
-	return;
+	require Padre::Current;
+	my $file    = shift or return;
+	my $manager = Padre::Current->ide->project_manager;
+	my $project = $manager->from_file($file) or return;
+	return $project->root;
 }
 
-
-
-
-
-######################################################################
-# Cloned Functions
-
-=pod
-
-=head2 C<parse_variable>
-
-B<This is a clone of L<ExtUtils::MakeMaker> C<parse_variable> to prevent loading
-a bunch of other modules>
-
-    my $version = Padre::Util::parse_variable($file, 'VERSION');
-
-Parse a C<$file> and return what C<$VERSION> (or some other variable) is set to
-by the first assignment.
-
-It will return the string C<"undef"> if it can't figure out what C<$VERSION>
-is. C<$VERSION> should be for all to see, so C<our $VERSION> or plain
-C<$VERSION> are okay, but C<my $VERSION> is not.
-
-C<parse_variable()> will try to C<use version> before checking for
-C<$VERSION> so the following will work.
-
-    $VERSION = qv(1.2.3);
-
-=cut
-
-sub parse_variable {
-	my $parsefile = shift;
-	my $variable = shift || 'VERSION';
-	my $result;
-	local $/ = "\n";
-	local $_;
-	open( my $fh, '<', $parsefile ) #-# no critic (RequireBriefOpen)
-		or die "Could not open '$parsefile': $!";
-	my $inpod = 0;
-
-	while (<$fh>) {
-		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
-		next if $inpod || /^\s*#/;
-		chop;
-		next if /^\s*(if|unless)/;
-		if ( $variable eq 'VERSION' and m{^ \s* package \s+ \w[\w\:\']* \s+ (v?[0-9._]+) \s* ;  }x ) {
-			local $^W = 0;
-			$result = $1;
-		} elsif (m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x) {
-			my $eval = qq{
-				package ExtUtils::MakeMaker::_version;
-				no strict;
-				BEGIN { eval {
-					# Ensure any version() routine which might have leaked
-					# into this package has been deleted.  Interferes with
-					# version->import()
-					undef *version;
-					require version;
-					"version"->import;
-				} }
-
-				local $1$2;
-				\$$2=undef;
-				do {
-					$_
-				};
-				\$$2;
-			};
-			local $^W = 0;
-
-			# what policy needs to be disabled here????
-			$result = eval($eval);
-
-			warn "Could not eval '$eval' in $parsefile: $@" if $@;
-		} else {
-			next;
-		}
-		last if defined $result;
-	}
-	close $fh;
-
-	$result = "undef" unless defined $result;
-	return $result;
-}
 
 
 
