@@ -129,7 +129,7 @@ BEGIN {
 	init();
 }
 
-sub DISTRO () {
+sub DISTRO {
 	return $DISTRO if defined $DISTRO;
 
 	if (WIN32) {
