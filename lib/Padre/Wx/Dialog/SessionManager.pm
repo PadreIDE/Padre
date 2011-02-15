@@ -5,7 +5,6 @@ package Padre::Wx::Dialog::SessionManager;
 use 5.008;
 use strict;
 use warnings;
-use POSIX qw{ strftime };
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 use Padre::Current  ();
@@ -352,7 +351,11 @@ sub _refresh_list {
 	foreach my $session ( reverse @sessions ) {
 		my $name   = $session->name;
 		my $descr  = $session->description;
-		my $update = strftime( '%Y-%m-%d %H:%M:%S', localtime( $session->last_update ) );
+		require POSIX;
+		my $update = POSIX::strftime(
+			'%Y-%m-%d %H:%M:%S',
+			localtime $session->last_update,
+		);
 
 		# inserting the session in the list
 		my $item = Wx::ListItem->new;
