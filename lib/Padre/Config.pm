@@ -10,8 +10,7 @@ package Padre::Config;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use File::Spec 3.21 (); # 3.21 needed for volume-safe abs2rel call
+use Carp                   ();
 use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
