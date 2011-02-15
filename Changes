@@ -1,6 +1,18 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
+The version numbers in this Changes file represent an Odd/Even scheme, whereby
+the even numbers are the released versions of Padre.  The even numbers list visible
+changes or bug fixes to Padre.
+
+The Odd numbers list API changes that may break compatibility for components of Padre
+notably the plugins.
+
+
+0.84 TBA
+
+0.83 Dev cycle, not released.
+
 0.82 2011.02.15
     - Remove methods that are not used any more: check_syntax_in_background and
       check_syntax (ZENOG)
