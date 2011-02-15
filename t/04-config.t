@@ -40,7 +40,9 @@ is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
 my $preferences = do {
 	open( my $fh, '<', 'lib/Padre/Wx/Dialog/Preferences.pm' ) or die;
 	local $/ = undef;
-	<$fh>;
+	my $line = <$fh>;
+	close $fh;
+	$line;
 };
 
 # szabgab:
