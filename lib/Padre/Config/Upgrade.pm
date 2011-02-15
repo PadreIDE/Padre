@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use Padre::Logger;
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 
 =pod
 

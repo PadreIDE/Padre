@@ -9,7 +9,7 @@ use File::Spec      ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 
 sub freeze {
 	return shift unless defined Params::Util::_STRING( $_[0] );

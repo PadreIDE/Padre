@@ -22,7 +22,7 @@ use constant DEBUG => 0;
 # loaded less code now cuts the per-thread cost of several meg.
 use Wx ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 
 # Worker id sequence, so identifiers will be available in objects
 # across all instances and threads before the thread has been spawned.

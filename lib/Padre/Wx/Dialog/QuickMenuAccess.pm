@@ -11,7 +11,7 @@ use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
 # package exports and version
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

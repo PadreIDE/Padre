@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx ();
 use Wx::Print ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 our @ISA     = 'Wx::Printout';
 
 sub new {

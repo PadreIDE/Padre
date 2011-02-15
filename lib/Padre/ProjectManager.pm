@@ -9,7 +9,7 @@ use warnings;
 use File::Spec     ();
 use Padre::Project ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 
 
 

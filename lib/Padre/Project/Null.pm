@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Project ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 our @ISA     = 'Padre::Project';
 
 use overload 'bool' => sub () {0};

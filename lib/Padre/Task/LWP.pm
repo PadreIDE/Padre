@@ -29,7 +29,7 @@ use warnings;
 use Params::Util ();
 use Padre::Task  ();
 
-our $VERSION = '0.81';
+our $VERSION = '0.83';
 our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor {
