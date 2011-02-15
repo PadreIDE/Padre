@@ -909,6 +909,9 @@ L<Padre>.
 =cut
 
 sub single_instance_address {
+	my $self   = shift;
+	my $config = $self->config;
+
 	require Wx::Socket;
 	if (Padre::Constant::WXWIN32) {
 		# Since using a Wx::IPv4address doesn't seem to work,
@@ -917,7 +920,10 @@ sub single_instance_address {
 		# $address->SetHostname('127.0.0.1');
 		# $address->SetService('4444');
 		# return $address;
-		return ( '127.0.0.1' => 4444 );
+		return (
+			'127.0.0.1',
+			$config->main_singleinstance_port,
+		);
 	} else {
 		my $file = File::Spec->catfile(
 			Padre::Constant::CONFIG_DIR,
