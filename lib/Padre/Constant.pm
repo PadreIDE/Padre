@@ -135,7 +135,7 @@ sub DISTRO () {
 	if (WIN32) {
 		# Inherit from the main Windows classification
 		require Win32;
-		$DISTRO = uc Win32::GetOSName;
+		$DISTRO = uc Win32::GetOSName();
 
 	} elsif (MAC) {
 		$DISTRO = 'MAC';
