@@ -155,53 +155,54 @@ sub from_file {
 	}
 
 	foreach my $n ( reverse 0 .. $#d ) {
-		my $dir = File::Spec->catdir( @d[ 0 .. $n ] );
+		my $dir  = File::Spec->catdir( @d[ 0 .. $n ] );
+		my $root = File::Spec->catpath( $v, $dir, '' );
 
 		# Check for Dist::Zilla support
-		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
+		my $dist_ini = File::Spec->catfile( $root, 'dist.ini' );
 		if ( -f $dist_ini ) {
 			require Padre::Project::Perl::DZ;
 			return $self->{$root} = Padre::Project::Perl::DZ->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
+				root     => $root,
 				dist_ini => $dist_ini,
 			);
 		}
 
 		# Check for Module::Build support
-		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
+		my $build_pl = File::Spec->catfile( $root, 'Build.PL' );
 		if ( -f $build_pl ) {
 			require Padre::Project::Perl::MB;
 			return $self->{$root} = Padre::Project::Perl::MB->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
+				root     => $root,
 				build_pl => $build_pl,
 			);
 		}
 
 		# Check for ExtUtils::MakeMaker and Module::Install support
-		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
+		my $makefile_pl = File::Spec->catfile( $root, 'Makefile.PL' );
 		if ( -f $makefile_pl ) {
 
 			# Differentiate between Module::Install and ExtUtils::MakeMaker
 			if (0) {
 				require Padre::Project::Perl::MI;
 				return $self->{$root} = Padre::Project::Perl::MI->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
+					root        => $root,
 					makefile_pl => $makefile_pl,
 				);
 			} else {
 				require Padre::Project::Perl::EUMM;
 				return $self->{$root} = Padre::Project::Perl::EUMM->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
+					root        => $root,
 					makefile_pl => $makefile_pl,
 				);
 			}
 		}
 
 		# Check for an explicit vanilla project
-		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
+		my $padre_yml = File::Spec->catfile( $root, 'padre.yml' );
 		if ( -f $padre_yml ) {
 			return $self->{$root} = Padre::Project->new(
-				root      => File::Spec->catpath( $v, $dir, '' ),
+				root      => $root,
 				padre_yml => $padre_yml,
 			);
 		}
@@ -209,7 +210,7 @@ sub from_file {
 		# Intuit a vanilla project based on a git, mercurial or Bazaar
 		# checkout (that use a single directory to indicate the root).
 		foreach my $vcs ( '.git', '.hg', '.bzr' ) {
-			my $vcs_dir = File::Spec->catpath( $v, $dir, $vcs );
+			my $vcs_dir = File::Spec->catdir( $root, $vcs );
 			if ( -d $vcs_dir ) {
 				my $vcs_plugin = {
 					'.git' => 'Git',
@@ -217,14 +218,14 @@ sub from_file {
 					'.bzr' => 'Bazaar',
 				}->{$vcs};
 				return $self->{$root} = Padre::Project->new(
-					root => File::Spec->catpath( $v, $dir, '' ),
+					root => $root,
 					vcs  => $vcs_plugin,
 				);
 			}
 		}
 
 		# Intuit a vanilla project based on a Subversion checkout
-		my $svn_dir = File::Spec->catpath( $v, $dir, '.svn' );
+		my $svn_dir = File::Spec->catdir( $root, '.svn' );
 		if ( -d $svn_dir ) {
 			# This must be the top-most .svn directory
 			if ( $n ) {
@@ -233,7 +234,7 @@ sub from_file {
 				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
 				unless ( -d $svn_dir ) {
 					return $self->{$root} = Padre::Project->new(
-						root => File::Spec->catpath( $v, $dir, '' ),
+						root => $root,
 						vcs  => 'SVN',
 					);
 				}
@@ -241,11 +242,7 @@ sub from_file {
 		}
 
 		# Intuit a vanilla project based on a CVS checkout
-		my $cvs_dir = File::Spec->catpath(
-			$v,
-			File::Spec->catdir($dir, 'CVS'),
-			'Repository',
-		);
+		my $cvs_dir = File::Spec->catfile( $root, 'CVS', 'Repository' );
 		if ( -f $cvs_dir ) {
 			# This must be the top-most CVS directory
 			if ( $n ) {
@@ -258,7 +255,7 @@ sub from_file {
 				);
 				unless ( -f $cvs_dir ) {
 					return $self->{$root} = Padre::Project->new(
-						root => File::Spec->catpath( $v, $dir, '' ),
+						root => $root,
 						vcs  => 'CVS',
 					);
 				}
