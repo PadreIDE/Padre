@@ -19,11 +19,11 @@ our $COMPATIBLE = '0.81';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Flag to indicate this root is specifically provided by a user
 	# and is not intuited.
-	$self->{explicit} = !! $self->{explicit};
+	$self->{explicit} = !!$self->{explicit};
 
 	# Check the root directory
 	unless ( defined $self->root ) {
@@ -52,7 +52,7 @@ sub from_file {
 	}
 
 	require Padre::Current;
-	Padre::Current->ide->project_manager->from_file($_[1]);
+	Padre::Current->ide->project_manager->from_file( $_[1] );
 }
 
 sub explicit {

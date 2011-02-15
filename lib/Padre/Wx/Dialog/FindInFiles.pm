@@ -85,9 +85,7 @@ sub directory {
 # values are valid
 sub refresh {
 	my $self = shift;
-	$self->{find}->Enable(
-		$self->{find_term}->GetValue ne ''
-	);
+	$self->{find}->Enable( $self->{find_term}->GetValue ne '' );
 }
 
 sub run {
@@ -139,10 +137,13 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name ( qw{
+	foreach my $name (
+		qw{
 		find_case
 		find_regex
-	} ) {
+		}
+		)
+	{
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

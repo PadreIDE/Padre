@@ -702,6 +702,7 @@ sub _find_method {
 	# TO DO: unify with code in Padre::Wx::FunctionList
 	# TO DO: lots of improvement needed here
 	unless ( $self->{_methods_}->{$name} ) {
+
 		# Consume the basic function list
 		my $filename = $self->filename;
 		$self->{_methods_}->{$_} = $filename for $self->get_functions;
@@ -712,9 +713,7 @@ sub _find_method {
 		my $project = $self->current->project;
 		if ($project) {
 			require File::Find::Rule;
-			my @files = File::Find::Rule->file->name('*.pm')->in(
-				File::Spec->catfile( $project->root, 'lib' )
-			);
+			my @files = File::Find::Rule->file->name('*.pm')->in( File::Spec->catfile( $project->root, 'lib' ) );
 			foreach my $f (@files) {
 				if ( open my $fh, '<', $f ) {
 					my $lines = do { local $/ = undef; <$fh> };
@@ -753,7 +752,8 @@ sub _find_sub_decl_line_number {
 		 (?!;)
 		 (?! \([\$;\@\%\\]+ \);)
 		 /x
-		) {
+			)
+		{
 			return $i;
 		}
 	}
@@ -794,10 +794,10 @@ sub has_sub {
 # Returns the line number of a sub (or undef if it doesn't exist) based on the outline data
 sub get_sub_line_number {
 	my $self = shift;
-	my $sub  = shift               or return;
+	my $sub  = shift or return;
 	my $data = $self->outline_data or return;
 
-	foreach my $package ( @$data ) {
+	foreach my $package (@$data) {
 		foreach my $method ( @{ $package->{methods} } ) {
 			return $method->{line} if $method->{name} eq $sub;
 		}
@@ -1483,7 +1483,7 @@ sub newline_keep_column {
 	$editor->AddText( $self->newline );
 
 	$text =~ s/\S/ /g;
-	$editor->AddText( $text );
+	$editor->AddText($text);
 
 	$editor->SetCurrentPos( $pos + $col + 1 );
 
@@ -1874,7 +1874,7 @@ document.
 =cut
 
 sub project_tagsfile {
-	my $self    = shift;
+	my $self = shift;
 	my $project = $self->project or return;
 	return File::Spec->catfile( $project->root, 'perltags' );
 }

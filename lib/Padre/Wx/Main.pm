@@ -914,6 +914,7 @@ sub single_instance_address {
 
 	require Wx::Socket;
 	if (Padre::Constant::WXWIN32) {
+
 		# Since using a Wx::IPv4address doesn't seem to work,
 		# for now just return the two-value host/port list.
 		# my $address = Wx::IPV4address->new;

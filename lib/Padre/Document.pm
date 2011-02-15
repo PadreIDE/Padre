@@ -1115,7 +1115,7 @@ sub project {
 
 	# If we have a cached project_dir return the object based on that
 	if ( defined $self->{project_dir} ) {
-		return $manager->project($self->{project_dir});
+		return $manager->project( $self->{project_dir} );
 	}
 
 	# Anonymous files don't have a project
@@ -1138,6 +1138,7 @@ sub project {
 sub project_dir {
 	my $self = shift;
 	unless ( defined $self->{project_dir} ) {
+
 		# Find the project, which slightly bizarely caches the
 		# location of the project via it's root.
 		# NOTE: Yes this looks weird, but it is significantly

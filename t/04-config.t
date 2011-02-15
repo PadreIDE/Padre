@@ -158,7 +158,7 @@ my @names =
 is( scalar(@names), NUMBER_OF_CONFIG_OPTIONS, 'Expected number of config options' );
 foreach my $name (@names) {
 
-	# simple way to check if config option is in the preferences window 
+	# simple way to check if config option is in the preferences window
 	SKIP: {
 		skip "'$name' is known to be missing from the preferences window", 1 if $NOT_IN_PREFERENCES{$name};
 		ok $preferences =~ m/$name/, "'$name' is in the preferences window";

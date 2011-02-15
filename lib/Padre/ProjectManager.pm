@@ -21,6 +21,7 @@ our $VERSION = '0.81';
 sub new {
 	my $class = shift;
 	my $self  = bless {
+
 		# For now just store projects in the HASH directly
 	}, $class;
 	return $self;
@@ -136,7 +137,7 @@ sub from_file {
 		next if $self->{$root}->isa('Padre::Project::Null');
 
 		# Split into parts (check volume before we bother to split dir)
-		my ( $pv, $pd, $pf ) = File::Spec->splitpath($root, 1);
+		my ( $pv, $pd, $pf ) = File::Spec->splitpath( $root, 1 );
 		if ( defined $v and defined $pv and $v ne $pv ) {
 			next;
 		}
@@ -155,7 +156,7 @@ sub from_file {
 	}
 
 	foreach my $n ( reverse 0 .. $#d ) {
-		my $dir  = File::Spec->catdir( @d[ 0 .. $n ] );
+		my $dir = File::Spec->catdir( @d[ 0 .. $n ] );
 		my $root = File::Spec->catpath( $v, $dir, '' );
 
 		# Check for Dist::Zilla support
@@ -227,10 +228,12 @@ sub from_file {
 		# Intuit a vanilla project based on a Subversion checkout
 		my $svn_dir = File::Spec->catdir( $root, '.svn' );
 		if ( -d $svn_dir ) {
+
 			# This must be the top-most .svn directory
-			if ( $n ) {
+			if ($n) {
+
 				# We aren't at the top-most directory in the volume
-				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
+				my $updir = File::Spec->catdir( @d[ 0 .. $n - 1 ] );
 				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
 				unless ( -d $svn_dir ) {
 					return $self->{$root} = Padre::Project->new(
@@ -244,13 +247,15 @@ sub from_file {
 		# Intuit a vanilla project based on a CVS checkout
 		my $cvs_dir = File::Spec->catfile( $root, 'CVS', 'Repository' );
 		if ( -f $cvs_dir ) {
+
 			# This must be the top-most CVS directory
-			if ( $n ) {
+			if ($n) {
+
 				# We aren't at the top-most directory in the volume
-				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
+				my $updir     = File::Spec->catdir( @d[ 0 .. $n - 1 ] );
 				my $cvs_updir = File::Spec->catpath(
 					$v,
-					File::Spec->catdir($updir, 'CVS'),
+					File::Spec->catdir( $updir, 'CVS' ),
 					'Repository',
 				);
 				unless ( -f $cvs_dir ) {
@@ -287,7 +292,7 @@ sub from_document {
 # General Methods
 
 sub project_exists {
-	defined $_[0]->{$_[1]};
+	defined $_[0]->{ $_[1] };
 }
 
 sub projects {

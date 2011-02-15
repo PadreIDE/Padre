@@ -216,12 +216,12 @@ foreach my $module ( sort keys %modules ) {
 		}
 		my $good = !$document->find_any(
 			sub {
-				$_[1]->isa('PPI::Token')                or return '';
-				$_[1]->significant                      or return '';
+				$_[1]->isa('PPI::Token') or return '';
+				$_[1]->significant or return '';
 				$_[1]->content =~ /[^\$\'\"]\$[\&\'\`]/ or return '';
 				return 1;
 			}
-		);	
+		);
 		ok( $good, "$module: Uses expensive regexp-variable \$&, \$\' or \$`" );
 	}
 }

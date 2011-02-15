@@ -63,7 +63,7 @@ sub init_search {
 			? $project->root
 			: File::Basename::dirname($filename)
 
-		# Current working directory
+			# Current working directory
 		: Cwd::getcwd();
 
 	# Restart search if the project/current directory is different

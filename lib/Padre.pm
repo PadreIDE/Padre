@@ -267,7 +267,7 @@ sub save_config {
 
 # Temporary pass-through
 sub project {
-	$_[0]->project_manager->project($_[1]);
+	$_[0]->project_manager->project( $_[1] );
 }
 
 1;
