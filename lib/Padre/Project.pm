@@ -7,63 +7,8 @@ use strict;
 use warnings;
 use File::Spec ();
 
-our $VERSION = '0.81';
-
-
-
-
-
-######################################################################
-# Class Methods
-
-### DEPRECATED (I think)
-sub class {
-	my $class = shift;
-	my $root  = shift;
-	unless ( -d $root ) {
-
-		# Carp::croak("Project directory '$root' does not exist");
-		# Project root doesn't exist, this might cause problems
-		# but croaking completly crashs Padre. Fix for #819
-		require Padre::Current;
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext(
-					      'Project directory %s does not exist (any longer). '
-						. 'This is fatal and will cause problems, please close or '
-						. 'save-as this file unless you know what you are doing.'
-				),
-				$root
-			)
-		);
-		return 'Padre::Project::Null';
-	}
-
-	# There are several main indicators this is a Perl project
-	if ( -f File::Spec->catfile( $root, 'Makefile.PL' ) ) {
-		return 'Padre::Project::Perl';
-	}
-	if ( -f File::Spec->catfile( $root, 'Build.PL' ) ) {
-		return 'Padre::Project::Perl';
-	}
-	if ( -f File::Spec->catfile( $root, 'dist.ini' ) ) {
-		return 'Padre::Project::Perl';
-	}
-
-	# Is this a manually configured explicit Padre project
-	if ( -f File::Spec->catfile( $root, 'padre.yml' ) ) {
-		return 'Padre::Project';
-	}
-
-	# If there are no language-specific indicators, check to see if
-	# this directory is (ideally the root of) a version control checkout.
-	if ( $class->_vcs($root) ) {
-		return 'Padre::Project';
-	}
-
-	# This is otherwise not recognisable as a "project"
-	return 'Padre::Project::Null';
-}
+our $VERSION    = '0.81';
+our $COMPATIBLE = '0.81';
 
 
 
