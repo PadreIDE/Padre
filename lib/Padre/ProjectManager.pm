@@ -161,7 +161,7 @@ sub from_file {
 		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
 		if ( -f $dist_ini ) {
 			require Padre::Project::Perl::DZ;
-			return $self->{root} = Padre::Project::Perl::DZ->new(
+			return $self->{$root} = Padre::Project::Perl::DZ->new(
 				root     => File::Spec->catpath( $v, $dir, '' ),
 				dist_ini => $dist_ini,
 			);
@@ -171,7 +171,7 @@ sub from_file {
 		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
 		if ( -f $build_pl ) {
 			require Padre::Project::Perl::MB;
-			return $self->{root} = Padre::Project::Perl::MB->new(
+			return $self->{$root} = Padre::Project::Perl::MB->new(
 				root     => File::Spec->catpath( $v, $dir, '' ),
 				build_pl => $build_pl,
 			);
@@ -184,13 +184,13 @@ sub from_file {
 			# Differentiate between Module::Install and ExtUtils::MakeMaker
 			if (0) {
 				require Padre::Project::Perl::MI;
-				return $self->{root} = Padre::Project::Perl::MI->new(
+				return $self->{$root} = Padre::Project::Perl::MI->new(
 					root        => File::Spec->catpath( $v, $dir, '' ),
 					makefile_pl => $makefile_pl,
 				);
 			} else {
 				require Padre::Project::Perl::EUMM;
-				return $self->{root} = Padre::Project::Perl::EUMM->new(
+				return $self->{$root} = Padre::Project::Perl::EUMM->new(
 					root        => File::Spec->catpath( $v, $dir, '' ),
 					makefile_pl => $makefile_pl,
 				);
@@ -200,7 +200,7 @@ sub from_file {
 		# Check for an explicit vanilla project
 		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
 		if ( -f $padre_yml ) {
-			return $self->{root} = Padre::Project->new(
+			return $self->{$root} = Padre::Project->new(
 				root      => File::Spec->catpath( $v, $dir, '' ),
 				padre_yml => $padre_yml,
 			);
@@ -216,7 +216,7 @@ sub from_file {
 					'.hg'  => 'Mercurial',
 					'.bzr' => 'Bazaar',
 				}->{$vcs};
-				return $self->{root} = Padre::Project->new(
+				return $self->{$root} = Padre::Project->new(
 					root => File::Spec->catpath( $v, $dir, '' ),
 					vcs  => $vcs_plugin,
 				);
@@ -232,7 +232,7 @@ sub from_file {
 				my $updir     = File::Spec->catdir( @d[ 0 .. $n-1 ] );
 				my $svn_updir = File::Spec->catpath( $v, $updir, '.svn' );
 				unless ( -d $svn_dir ) {
-					return $self->{root} = Padre::Project->new(
+					return $self->{$root} = Padre::Project->new(
 						root => File::Spec->catpath( $v, $dir, '' ),
 						vcs  => 'SVN',
 					);
@@ -257,7 +257,7 @@ sub from_file {
 					'Repository',
 				);
 				unless ( -f $cvs_dir ) {
-					return $self->{root} = Padre::Project->new(
+					return $self->{$root} = Padre::Project->new(
 						root => File::Spec->catpath( $v, $dir, '' ),
 						vcs  => 'CVS',
 					);
