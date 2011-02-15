@@ -343,7 +343,7 @@ sub cancel {
 		foreach my $worker ( grep { defined $_ } @{ $self->{workers} } ) {
 			TRACE("Worker wid = $worker->{wid}")    if DEBUG;
 			TRACE("Handle wid = $handle->{worker}") if DEBUG;
-			next unless defined $worker->{wid} and  $worker->{wid} == $handle->{worker};
+			next unless (defined $handle->{worker} and  $worker->{wid} == $handle->{worker});
 			TRACE("Sending 'cancel' message") if DEBUG;
 			$worker->send('cancel');
 			return 1;
