@@ -11,7 +11,6 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                   ();
-use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
 use Padre::Util            ('_T');
