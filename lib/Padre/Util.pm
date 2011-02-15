@@ -29,7 +29,6 @@ use Exporter        ();
 use FindBin         ();
 use Cwd             ();
 use File::Spec      ();
-use File::Basename  ();
 use List::Util      ();
 use Padre::Constant (); ### NO more Padre:: dependencies
 
