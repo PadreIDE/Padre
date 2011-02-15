@@ -38,7 +38,7 @@ is( $config->human->version, undef, '->human->version is undef' );
 is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
 
 my $preferences = do {
-	open my $fh, 'lib/Padre/Wx/Dialog/Preferences.pm' or die;
+	open( my $fh, '<', 'lib/Padre/Wx/Dialog/Preferences.pm' ) or die;
 	local $/ = undef;
 	<$fh>;
 };
