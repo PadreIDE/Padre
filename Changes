@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
-0.82 TBA
+0.82 2011.02.15
     - Remove methods that are not used any more: check_syntax_in_background and
       check_syntax (ZENOG)
     - Fixed a stupid bug in the save file as check for a file extension.  Hardly
