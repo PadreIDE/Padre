@@ -768,7 +768,7 @@ sub save_file {
 			),
 			Wx::gettext("Save Warning"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
-			Padre::Current->main,
+			$self->main,
 		);
 
 		return 0 if $ret == Wx::wxYES;
