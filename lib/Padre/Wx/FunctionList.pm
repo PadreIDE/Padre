@@ -73,13 +73,22 @@ sub new {
 	$self->SetSizerAndFit($sizerh);
 	$sizerh->SetSizeHints($self);
 
-	# Double-click a function name
+	# Handle double-click on a function name
 	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
 		$self->{list},
 		sub {
-			$self->on_list_item_activated( $_[1] );
+			my ( $this, $event ) = @_;
+			$self->on_list_item_activated($event);
+			return;
 		}
+	);
+
+	# Handle double click on list
+	# overwrite this handler to avoid stealing the focus back from the editor
+	Wx::Event::EVT_LEFT_DCLICK(
+		$self->{list},
+		sub { return; }
 	);
 
 	# Handle key events in list

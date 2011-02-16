@@ -82,6 +82,13 @@ sub new {
 		}
 	);
 
+	# Handle double click on list
+	# overwrite this handler to avoid stealing the focus back from the editor
+	Wx::Event::EVT_LEFT_DCLICK(
+		$self->{list},
+		sub { return; }
+	);
+
 	# Handle key events
 	Wx::Event::EVT_KEY_UP(
 		$self->{list},
@@ -186,6 +193,7 @@ sub on_list_item_activated {
 
 	# Move the selection to where we last saw it
 	$editor->goto_pos_centerize( $todo->{pos} );
+	$editor->SetFocus;
 
 	return;
 }
