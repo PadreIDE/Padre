@@ -94,12 +94,22 @@ sub new {
 	Wx::Event::EVT_KEY_UP(
 		$self->{list},
 		sub {
-			if ( $_[1]->GetKeyCode == Wx::WXK_RETURN ) {
+			my ( $this, $event ) = @_;
 
-				# EVT_KEY_UP always binds to a single thing
-				$_[0]->GetParent->on_list_item_activated( $_[1] );
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::WXK_RETURN ) {
+				$self->on_list_item_activated($event);
+			} elsif ( $code == Wx::WXK_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
 			}
-			$_[1]->Skip(1);
+
+			$event->Skip(1);
+			return;
 		}
 	);
 
@@ -126,7 +136,7 @@ sub new {
 				# Escape key clears search and returns the
 				# focus to the editor.
 				$self->{search}->SetValue('');
-				my $editor = $this->current->editor;
+				my $editor = $self->current->editor;
 				$editor->SetFocus if $editor;
 			}
 

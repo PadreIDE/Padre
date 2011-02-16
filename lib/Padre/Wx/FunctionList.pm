@@ -90,19 +90,30 @@ sub new {
 		}
 	);
 
-	# Handle key events
+	# Handle key events in list
 	Wx::Event::EVT_KEY_UP(
 		$self->{list},
 		sub {
 			my ( $this, $event ) = @_;
-			if ( $event->GetKeyCode == Wx::WXK_RETURN ) {
+
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::WXK_RETURN ) {
 				$self->on_list_item_activated($event);
+			} elsif ( $code == Wx::WXK_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
 			}
+
 			$event->Skip(1);
+			return;
 		}
 	);
 
-	# Handle key events
+	# Handle char events in search box
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
@@ -118,7 +129,6 @@ sub new {
 					$selection = 0;
 				}
 				$self->{list}->Select($selection);
-
 			} elsif ( $code == Wx::WXK_ESCAPE ) {
 
 				# Escape key clears search and returns focus
@@ -129,6 +139,7 @@ sub new {
 			}
 
 			$event->Skip(1);
+			return;
 		}
 	);
 
