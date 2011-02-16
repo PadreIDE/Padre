@@ -92,10 +92,10 @@ sub version {
 # Directory Integration
 
 sub ignore_rule {
+	my $super = shift->SUPER::ignore_rule;
 	return sub {
-
-		# Default filter as per normal
-		return 0 if $_->{name} =~ /^\./;
+		# Do the checks from our parent
+		return 0 unless $super->();
 
 		# In a distribution, we can ignore more things
 		return 0 if $_->{name} =~ /^(?:blib|_build|inc|Makefile|pm_to_blib)\z/;
@@ -109,11 +109,16 @@ sub ignore_rule {
 }
 
 sub ignore_skip {
-	return [
-		'(?:^|\\/)\\.',
-		'(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z',
-		'(?:^|\\/)nytprof(?:\.out)\z',
-	];
+	my $self = shift;
+	my $rule = $self->SUPER::ignore_skip();
+
+	# Ignore typical build files
+	push @$rule, '(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z';
+
+	# Ignore the enormous NYTProf output
+	push @$rule, '(?:^|\\/)nytprof(?:\.out)\z';
+
+	return $rule;
 }
 
 1;
