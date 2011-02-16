@@ -437,7 +437,6 @@ sub select_line_in_editor {
 	{
 		$line--;
 		$editor->goto_line_centerize($line);
-		$editor->SetFocus;
 	}
 	return;
 }
