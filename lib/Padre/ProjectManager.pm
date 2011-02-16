@@ -114,7 +114,7 @@ sub project {
 
 	# No idea what this is, nothing probably
 	require Padre::Project::Null;
-	return Padre::Project::Null->new(
+	return $self->{$root} = Padre::Project::Null->new(
 		root => $root,
 		vcs  => undef,
 	);
@@ -271,7 +271,7 @@ sub from_file {
 
 	# This document is part of the null project
 	require Padre::Project::Null;
-	return Padre::Project::Null->new(
+	return $self->{$root} = Padre::Project::Null->new(
 		root => File::Spec->catpath( $v, File::Spec->catdir(@d), '' ),
 		vcs  => undef,
 	);
