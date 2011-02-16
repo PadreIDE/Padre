@@ -1918,7 +1918,7 @@ sub show_todo {
 	return;
 }
 
-# XXX This should be merged with _show_functions again
+# TODO This should be merged with _show_functions again
 sub _show_todo {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
