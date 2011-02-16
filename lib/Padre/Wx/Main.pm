@@ -69,6 +69,7 @@ our @ISA        = qw{
 	Wx::Frame
 };
 
+
 use constant SECONDS => 1000;
 
 =pod
@@ -1247,8 +1248,8 @@ sub refresh {
 
 	# Although it would be nice to do this later, some of the
 	# optimisations in the other refresh subsections depend on the
-	# checked-state of the menu entries being accurate. So alas, we need
-	# to do this one first and delay the background jobs a little.
+	# checked-state of the menu entries being accurate. So alas, we must
+	# do this one first and delay the background jobs a little.
 	$self->refresh_menu($current);
 
 	# Refresh elements that generate background tasks first,
