@@ -271,7 +271,7 @@ sub from_file {
 
 	# This document is part of the null project
 	require Padre::Project::Null;
-	return $self->{$root} = Padre::Project::Null->new(
+	return Padre::Project::Null->new(
 		root => File::Spec->catpath( $v, File::Spec->catdir(@d), '' ),
 		vcs  => undef,
 	);
