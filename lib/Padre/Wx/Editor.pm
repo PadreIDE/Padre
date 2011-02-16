@@ -1547,7 +1547,7 @@ sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;
 
-	$self->goto_pos_centerize( $self->PositionFromLine($line) );
+	$self->goto_pos_centerize( $self->GetLineIndentPosition($line) );
 }
 
 # borrowed from Kephra

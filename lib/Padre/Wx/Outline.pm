@@ -436,8 +436,7 @@ sub select_line_in_editor {
 		&& ( $line <= $editor->GetLineCount ) )
 	{
 		$line--;
-		$editor->EnsureVisible($line);
-		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+		$editor->goto_line_centerize($line);
 		$editor->SetFocus;
 	}
 	return;
