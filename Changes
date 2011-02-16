@@ -10,7 +10,8 @@ notably the plugins.
 
 
 0.84 TBA
-    - Function and TODO  list: also handle Esc when focus is on the list (ZENOG)
+    - Function and TODO list: also handle Esc when focus is on the list (ZENOG)
+    - Function and TODO list: remove unnecessary EVT_KILL_FOCUS handler (ZENOG)
 
 0.83 Dev cycle, not released.
 

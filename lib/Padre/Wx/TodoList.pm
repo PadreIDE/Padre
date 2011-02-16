@@ -73,14 +73,6 @@ sub new {
 	$self->SetSizerAndFit($sizer);
 	$sizer->SetSizeHints($self);
 
-	# Grab the kill focus to prevent deselection
-	Wx::Event::EVT_KILL_FOCUS(
-		$self->{list},
-		sub {
-			return;
-		},
-	);
-
 	# Double-click a function name
 	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
