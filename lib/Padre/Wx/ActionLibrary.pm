@@ -1107,7 +1107,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'edit.perl_filter',
-		label      => _T('Filter through Perl'),
+		label      => _T('Filter through Perl...'),
 		comment    => _T('Use Perl source as filter'),
 		menu_event => sub {
 			shift->open_perl_filter(@_);
