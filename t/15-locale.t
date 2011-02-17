@@ -10,7 +10,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 7 );
+	plan( tests => 7 + 4 );
 }
 use Test::NoWarnings;
 use Test::Exception;
@@ -36,3 +36,20 @@ is( $res,                          undef, '->change_locale(ar)' );
 is( $main->change_locale('de'),    undef, '->change_locale(de)' );
 is( $main->change_locale('en-au'), undef, '->change_locale(en-au)' );
 lives_ok { $main->change_locale } '->change_locale()';
+
+
+# a few sample strings some of them disappeard from messages.pot during the release of 0.82
+# See ticket #1132
+my @strings = (
+	'Dump the Padre object to STDOUT',
+	'Full Screen',
+	'Check for Common (Beginner) Errors',
+	'Run Script',
+);
+
+open my $fh, '<', 'share/locale/messages.pot' or die;
+my @messages = <$fh>;
+foreach my $str (@strings) {
+	ok grep({$_ =~ /\Q$str/} @messages), "messages.pot has entry '$str'";
+}
+
