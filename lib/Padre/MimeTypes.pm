@@ -359,11 +359,23 @@ sub _initialize {
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
 
-	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', _T('Fast but might be out of date') );
+	__PACKAGE__->add_highlighter( 
+		'stc',
+		_T('Scintilla'), 
+		_T('Fast but might be out of date') 
+	);
 
 	foreach my $mime ( keys %MIME_TYPES ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
 	}
+
+	__PACKAGE__->add_highlighter( 
+		'stc',
+		_T('Scintilla'), 
+		_T('Fast but might be out of date') 
+	);
+
+
 
 	# Perl 5 specific highlighters
 	__PACKAGE__->add_highlighter(
@@ -535,8 +547,6 @@ sub read_current_highlighters_from_db {
 	# TO DO check if the highlighter is really available
 	foreach my $e (@$current_highlighters) {
 		$MIME_TYPES{ $e->mime_type }{current_highlighter} = $e->value;
-
-		# printf("%s   %s\n", $e->mime_type, $e->value);
 	}
 
 	# require Data::Dumper;
@@ -595,7 +605,9 @@ sub get_mime_types {
 # return the display-names of the MIME types ordered according to the display names
 sub get_mime_type_names {
 	my $self = shift;
-	return [ map { Wx::gettext( $MIME_TYPES{$_}{name} ) } @{ $self->get_mime_types } ];
+	#return [ map { Wx::gettext( $MIME_TYPES{$_}{name} ) } @{ $self->get_mime_types } ]; # #BUG 1137
+	return [ map { $MIME_TYPES{$_}{name}  } @{ $self->get_mime_types } ]; # Need to be checked with non Western languages
+
 }
 
 # given a MIME type
