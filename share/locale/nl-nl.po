@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-04 15:22+0100\n"
-"PO-Revision-Date: 2010-12-04 18:51+0100\n"
+"PO-Revision-Date: 2011-02-18 18:23+0100\n"
 "Last-Translator: Claudio Ramirez <padre.claudio@apt-get.be>\n"
 "Language-Team: ddn <ddn123456 at gmail.com>\n"
 "Language: \n"
@@ -638,7 +638,7 @@ msgstr "Module"
 
 #: lib/Padre/Wx/WizardLibrary.pm:21
 msgid "Perl 5"
-msgstr "Perl 5 "
+msgstr "Perl 5"
 
 #: lib/Padre/Wx/WizardLibrary.pm:22
 msgid "Opens the Perl 5 module wizard"
