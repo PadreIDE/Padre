@@ -10,240 +10,90 @@ msgid ""
 msgstr ""
 "Project-Id-Version: he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-18 20:14+0200\n"
-"PO-Revision-Date: 2010-12-18 20:29+0200\n"
-"Last-Translator: Uri Bruck <>\n"
+"POT-Creation-Date: 2011-02-15 21:36+1100\n"
+"PO-Revision-Date: 2011-02-19 21:06+0200\n"
+"Last-Translator: Oren Maurer <meorero@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@lists.kde.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 0.2\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/Padre/Config.pm:397
-msgid "Previous open files"
-msgstr "קבצים שהיו פתוחים"
-
-#: lib/Padre/Config.pm:398
-msgid "A new empty file"
-msgstr "קובץ ריק חדש"
-
-#: lib/Padre/Config.pm:399
-msgid "No open files"
-msgstr "אין קבצים פתוחים:"
-
-#: lib/Padre/Config.pm:400
-msgid "Open session"
-msgstr "סביבת עבודה פתוחה"
-
-#: lib/Padre/Config.pm:492
-msgid "Code Order"
-msgstr "לפי הסדר שבקוד"
-
-#: lib/Padre/Config.pm:493
-msgid "Alphabetical Order"
-msgstr "לפי סדר אלפביתי"
-
-#: lib/Padre/Config.pm:494
-msgid "Alphabetical Order (Private Last)"
-msgstr "לפי סדר אלפביתי (פרטי בסוף)"
-
-#: lib/Padre/Config.pm:521
-msgid "Directories First"
-msgstr "קודם תיקיות"
-
-#: lib/Padre/Config.pm:522
-msgid "Directories Mixed"
-msgstr " מעורב תיקיות"
-
-#: lib/Padre/Config.pm:531
-msgid "Project Tools (Left)"
-msgstr "כלי פרויקט "
-
-#: lib/Padre/Config.pm:532
-msgid "Document Tools (Right)"
-msgstr "כלי מסמך "
-
-#: lib/Padre/Config.pm:709
-msgid "No Autoindent"
-msgstr " ללא הזחה אוטומטית"
-
-#: lib/Padre/Config.pm:710
-msgid "Indent to Same Depth"
-msgstr "הזחה לאותה רמה"
-
-#: lib/Padre/Config.pm:711
-msgid "Indent Deeply"
-msgstr "הזחה עמוקה"
-
-#: lib/Padre/Document.pm:234
-msgid "Error while opening file: no file object"
-msgstr "שגיאה בעת פתיחת קובץ: אין אוביקט קובץ"
-
-#: lib/Padre/Document.pm:255
-#, perl-format
-msgid ""
-"The file %s you are trying to open is over the arbitrary file size limit of "
-"Padre which is currently %s. Opening this file may reduce performance. Do "
-"you still want to open the file?"
-msgstr ""
-"הקבץ %s שאתה מנסה לפתוח הם יותר גדולים ממגבלת הגודל השרירותית של Padre שהיא "
-"כרגע %s. פתיחת קבצים אלו עלולה לפגוע בביצועים. האם עדיין ברצונך לפתוח את "
-"הקבצים?"
-
-#: lib/Padre/Document.pm:260 lib/Padre/Wx/Syntax.pm:28
-#: lib/Padre/Wx/Main.pm:2622 lib/Padre/Wx/Main.pm:3229
-#: lib/Padre/Wx/Dialog/Warning.pm:64
-msgid "Warning"
-msgstr "אזהרה"
-
-#: lib/Padre/Document.pm:282
-msgid ""
-"Error while determining MIME type.\n"
-"This is possibly an encoding problem.\n"
-"Are you trying to load a binary file?"
-msgstr ""
-"שגיאה בגילוי טיפוס הMIME  של הקובץ. ייתכן שזו בעיית קידוד. האם אתה מנסה "
-"לטעון קובץ בינארי?"
-
-#: lib/Padre/Document.pm:324
-#, perl-format
-msgid "No module mime_type='%s' filename='%s'"
-msgstr ""
-
-#: lib/Padre/Document.pm:447 lib/Padre/Wx/Editor.pm:213
-#: lib/Padre/Wx/Main.pm:4360 lib/Padre/Wx/Dialog/Sync.pm:447
-#: lib/Padre/Wx/Dialog/Sync.pm:455 lib/Padre/Wx/Dialog/Sync.pm:469
-#: lib/Padre/Wx/Dialog/Sync.pm:493 lib/Padre/Wx/Dialog/Sync.pm:517
-#: lib/Padre/Wx/Dialog/Sync.pm:528 lib/Padre/Wx/Dialog/Sync.pm:538
-#: lib/Padre/Wx/Dialog/Sync.pm:556 lib/Padre/Wx/Dialog/Sync.pm:567
-#: lib/Padre/Wx/Dialog/Sync.pm:578 lib/Padre/Wx/Dialog/Sync.pm:589
-#: lib/Padre/Wx/Dialog/Sync2.pm:67 lib/Padre/Wx/Dialog/Sync2.pm:75
-#: lib/Padre/Wx/Dialog/Sync2.pm:89 lib/Padre/Wx/Dialog/Sync2.pm:108
-#: lib/Padre/Wx/Dialog/Sync2.pm:132 lib/Padre/Wx/Dialog/Sync2.pm:143
-#: lib/Padre/Wx/Dialog/Sync2.pm:153 lib/Padre/Wx/Dialog/Sync2.pm:171
-#: lib/Padre/Wx/Dialog/Sync2.pm:182 lib/Padre/Wx/Dialog/Sync2.pm:193
-#: lib/Padre/Wx/Dialog/Sync2.pm:204 lib/Padre/Wx/Dialog/ModuleStart.pm:185
-#: lib/Padre/Wx/Dialog/OpenResource.pm:116
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90
-#: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Role/Dialog.pm:95
-msgid "Error"
-msgstr "שגיאה"
-
-#: lib/Padre/Document.pm:770
-#, perl-format
-msgid ""
-"Visual filename %s does not match the internal filename %s, do you want to "
-"abort saving?"
-msgstr ""
-"שם הקובץ הויזואלי %s שונה משם הקובץ הפנימי %s, האם ברצונך לבטל את שמירת "
-"הקובץ?"
-
-#: lib/Padre/Document.pm:774
-msgid "Save Warning"
-msgstr "אזהרת שמירה"
-
-#: lib/Padre/Document.pm:979
-#, perl-format
-msgid "no highlighter for mime-type '%s' using stc"
-msgstr ""
-
-#: lib/Padre/Document.pm:999
-#, perl-format
-msgid "Unsaved %d"
-msgstr "קובץ שלא נשמר %d"
-
-#: lib/Padre/Document.pm:1413 lib/Padre/Document.pm:1414
-msgid "Skipped for large files"
-msgstr "לא נספר בקבצים גדולים"
-
-#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:487
-msgid "error"
-msgstr "שגיאה"
-
-#: lib/Padre/PluginHandle.pm:90
-msgid "unloaded"
-msgstr "לא טעון"
-
-#: lib/Padre/PluginHandle.pm:91
-msgid "loaded"
-msgstr "טעון"
-
-#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:499
-msgid "incompatible"
-msgstr "לא תואם"
-
-#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:526
-msgid "disabled"
-msgstr "מבוטל"
-
-#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:514
-msgid "enabled"
-msgstr "מופעל"
-
-#: lib/Padre/PluginHandle.pm:201
-#, perl-format
-msgid "Failed to enable plug-in '%s': %s"
-msgstr "נכשלה הפעלת התוסף '%s': %s"
-
-#: lib/Padre/PluginHandle.pm:281
-#, perl-format
-msgid "Failed to disable plug-in '%s': %s"
-msgstr "כיבוי התוסף '%s' נכשל: %s"
-
-#: lib/Padre/MimeTypes.pm:230
+#: lib/Padre/MimeTypes.pm:229
 msgid "Shell Script"
 msgstr "תכנית מעטפת"
 
-#: lib/Padre/MimeTypes.pm:334
+#: lib/Padre/MimeTypes.pm:333
 msgid "Text"
 msgstr "טקסט"
 
-#: lib/Padre/MimeTypes.pm:363
+#: lib/Padre/MimeTypes.pm:362
 msgid "Fast but might be out of date"
 msgstr "מהיר, אבל יכול להיות לא מעודכן"
 
-#: lib/Padre/MimeTypes.pm:372
+#: lib/Padre/MimeTypes.pm:371
 msgid "PPI Experimental"
 msgstr "PPI ניסיוני"
 
-#: lib/Padre/MimeTypes.pm:373
+#: lib/Padre/MimeTypes.pm:372
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr "אטי, אבל מדויק ועם שליטה מלאה כך שאפשר יהיה לתקן תקלות"
 
-#: lib/Padre/MimeTypes.pm:377
+#: lib/Padre/MimeTypes.pm:376
 msgid "PPI Standard"
-msgstr "תקני לפי PPI"
+msgstr "תקן PPI"
 
-#: lib/Padre/MimeTypes.pm:378
+#: lib/Padre/MimeTypes.pm:377
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
 msgstr "בתקווה מהיר יותר מ-PPI מסורתי. קובץ גדול יעבוד כמו ב-Scintilla"
 
-#: lib/Padre/MimeTypes.pm:404
+#: lib/Padre/MimeTypes.pm:403
 #, perl-format
 msgid "Mime type was not supported when %s(%s) was called"
 msgstr "טיפוס MIME זה לא נתמך כש - %s(%s)  נקרא."
 
-#: lib/Padre/MimeTypes.pm:414
+#: lib/Padre/MimeTypes.pm:413
 #, perl-format
 msgid "Mime type already had a class '%s' when %s(%s) was called"
-msgstr ""
+msgstr "כבר הייתה קיימת מחלקה '%s' עבור Mime type בזמן קריאה ל- %s(%s) "
 
-#: lib/Padre/MimeTypes.pm:430 lib/Padre/MimeTypes.pm:456
+#: lib/Padre/MimeTypes.pm:429 lib/Padre/MimeTypes.pm:455
 #, perl-format
 msgid "Mime type is not supported when %s(%s) was called"
-msgstr ""
+msgstr "Mime type לא נתמך בזמן קריאה ל- %s(%s) "
 
-#: lib/Padre/MimeTypes.pm:440
+#: lib/Padre/MimeTypes.pm:439
 #, perl-format
 msgid "Mime type did not have a class entry when %s(%s) was called"
-msgstr ""
+msgstr "לא נמצא פריט מחלקה עבור Mime type בזמן קריאה ל- %s(%s) "
 
 #: lib/Padre/MimeTypes.pm:606
 msgid "UNKNOWN"
-msgstr ""
+msgstr "לא ידוע"
+
+#: lib/Padre/Config.pm:401
+msgid "Showing the splash image during start-up"
+msgstr "הצגת תמונת splash בעליית התוכנית"
+
+#: lib/Padre/Config.pm:414
+msgid "Previous open files"
+msgstr "קבצים שהיו פתוחים"
+
+#: lib/Padre/Config.pm:415
+msgid "A new empty file"
+msgstr "קובץ ריק חדש"
+
+#: lib/Padre/Config.pm:416
+msgid "No open files"
+msgstr "אין קבצים פתוחים:"
+
+#: lib/Padre/Config.pm:417
+msgid "Open session"
+msgstr "פתח סביבת עבודה"
 
 #: lib/Padre/CPAN.pm:88
 msgid "Failed to find your CPAN configuration"
@@ -265,7 +115,7 @@ msgstr ""
 "הכנס כתובת להתקנה\n"
 "למשל http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
-#: lib/Padre/CPAN.pm:133 lib/Padre/Wx/ActionLibrary.pm:2361
+#: lib/Padre/CPAN.pm:133
 msgid "Install Local Distribution"
 msgstr "להתקין הפצה מקומית"
 
@@ -273,116 +123,39 @@ msgstr "להתקין הפצה מקומית"
 msgid "cpanm is unexpectedly not installed"
 msgstr "באופן לא צפוי cpanm לא מותקן"
 
-#: lib/Padre/PluginManager.pm:393
-msgid ""
-"We found several new plug-ins.\n"
-"In order to configure and enable them go to\n"
-"Plug-ins -> Plug-in Manager\n"
-"\n"
-"List of new plug-ins:\n"
-"\n"
-msgstr ""
-"מצאנו מספר תוספים חדשים.\n"
-"כדי להגדיר ולהפעיל אותם, לך אל\n"
-"תוספים -> מנהל התוספים\n"
-"\n"
-"רשימת תוספים חדשים:\n"
-"\n"
+#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:491
+msgid "error"
+msgstr "שגיאה"
 
-#: lib/Padre/PluginManager.pm:403
-msgid "New plug-ins detected"
-msgstr "זוהו תוספים חדשים"
+#: lib/Padre/PluginHandle.pm:90
+msgid "unloaded"
+msgstr "לא טעון"
 
-#: lib/Padre/PluginManager.pm:535
+#: lib/Padre/PluginHandle.pm:91
+msgid "loaded"
+msgstr "טעון"
+
+#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:503
+msgid "incompatible"
+msgstr "לא תואם"
+
+#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:530
+msgid "disabled"
+msgstr "מבוטל"
+
+#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:518
+msgid "enabled"
+msgstr "מופעל"
+
+#: lib/Padre/PluginHandle.pm:201
 #, perl-format
-msgid "%s - Crashed while loading: %s"
-msgstr "%s - קרס בזמן טעינה: %s"
+msgid "Failed to enable plug-in '%s': %s"
+msgstr "נכשלה הפעלת התוסף '%s': %s"
 
-#: lib/Padre/PluginManager.pm:547
+#: lib/Padre/PluginHandle.pm:281
 #, perl-format
-msgid "%s - Not a Padre::Plugin subclass"
-msgstr "%s - לא תת־מחלקה של Padre::Plugin"
-
-#: lib/Padre/PluginManager.pm:560
-#, perl-format
-msgid "%s - Not compatible with Padre version %s - %s"
-msgstr " %s - אינו תואם ל-Padre גרסה %s - %s"
-
-#: lib/Padre/PluginManager.pm:575
-#, perl-format
-msgid "%s - Crashed while instantiating: %s"
-msgstr "%s - קרס בזמן יצירת מופע: %s"
-
-#: lib/Padre/PluginManager.pm:585
-#, perl-format
-msgid "%s - Failed to instantiate plug-in"
-msgstr "%s - לא ניתן ליצור את מופע התוסף"
-
-#: lib/Padre/PluginManager.pm:820
-#, perl-format
-msgid "Plugin error on event %s: %s"
-msgstr "שגיאת תוסף באירוע %s: %s"
-
-#: lib/Padre/PluginManager.pm:830
-msgid "(core)"
-msgstr ""
-
-#: lib/Padre/PluginManager.pm:831 lib/Padre/File/FTP.pm:145
-#: lib/Padre/Document/Perl.pm:642 lib/Padre/Document/Perl.pm:975
-#: lib/Padre/Document/Perl.pm:1024
-msgid "Unknown error"
-msgstr "שגיאה לא ידועה"
-
-#: lib/Padre/PluginManager.pm:843
-#, perl-format
-msgid "Plugin %s"
-msgstr "תוסף %s"
-
-#: lib/Padre/PluginManager.pm:919
-msgid "Error when calling menu for plug-in "
-msgstr "שגיאה בקריאה לתפריט התוסף"
-
-#: lib/Padre/PluginManager.pm:951 lib/Padre/Wx/Main.pm:2268
-#: lib/Padre/Wx/Main.pm:2323 lib/Padre/Wx/Main.pm:2375
-msgid "No document open"
-msgstr "אין מסמך פתוח"
-
-#: lib/Padre/PluginManager.pm:955 lib/Padre/Util/FileBrowser.pm:47
-#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
-msgid "No filename"
-msgstr "אין שם קובץ"
-
-#: lib/Padre/PluginManager.pm:960
-msgid "Could not locate project directory."
-msgstr "לא נמצאה תיקיית הפרויקט"
-
-#: lib/Padre/PluginManager.pm:979 lib/Padre/PluginManager.pm:1075
-#, perl-format
-msgid ""
-"Failed to load the plug-in '%s'\n"
-"%s"
-msgstr ""
-"טעינת התוסף '%s' נכשלה\n"
-"%s"
-
-#: lib/Padre/PluginManager.pm:1029 lib/Padre/Wx/Main.pm:5267
-msgid "Open file"
-msgstr "פתח קובץ"
-
-#: lib/Padre/PluginManager.pm:1049
-#, perl-format
-msgid "Plug-in must have '%s' as base directory"
-msgstr "תיקיית השורש של תוסף צריכה להיות %s"
-
-#: lib/Padre/Project.pm:32
-#, perl-format
-msgid ""
-"Project directory %s does not exist (any longer). This is fatal and will "
-"cause problems, please close or save-as this file unless you know what you "
-"are doing."
-msgstr ""
-"תיקיית הפרויקט %s אינה קיימת (היתה ואיננה). זוהי שגיאה חמורה שתגרום לבעיות. "
-"סגור קובץ זה, או שמור אותו, אלא אם יש לך סיבה טובה לעשות משהו אחר."
+msgid "Failed to disable plug-in '%s': %s"
+msgstr "כיבוי התוסף '%s' נכשל: %s"
 
 #: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
@@ -392,7 +165,7 @@ msgstr "אנגלית (הממלכה המאוחדת)"
 msgid "English (Australia)"
 msgstr "אנגלית (אוסטרליה)"
 
-#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3537
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3611
 msgid "Unknown"
 msgstr "לא ידוע"
 
@@ -516,29 +289,185 @@ msgstr "סינית (מסורתית)"
 msgid "Klingon"
 msgstr "קלינגונית"
 
-#: lib/Padre/Util/Template.pm:53
-msgid "New module"
-msgstr "מודול חדש"
+#: lib/Padre/PluginManager.pm:402
+msgid ""
+"We found several new plug-ins.\n"
+"In order to configure and enable them go to\n"
+"Plug-ins -> Plug-in Manager\n"
+"\n"
+"List of new plug-ins:\n"
+"\n"
+msgstr ""
+"מצאנו מספר תוספים חדשים.\n"
+"כדי להגדיר ולהפעיל אותם, לך אל\n"
+"תוספים -> מנהל התוספים\n"
+"\n"
+"רשימת תוספים חדשים:\n"
+"\n"
 
-#: lib/Padre/Util/Template.pm:53
-msgid "Module name:"
-msgstr "שם מודול:"
+#: lib/Padre/PluginManager.pm:412
+msgid "New plug-ins detected"
+msgstr "זוהו תוספים חדשים"
 
-#: lib/Padre/Util/FileBrowser.pm:63 lib/Padre/Util/FileBrowser.pm:110
-#: lib/Padre/Util/FileBrowser.pm:153
+#: lib/Padre/PluginManager.pm:544
 #, perl-format
-msgid "Unsupported OS: %s"
-msgstr "מערכת הפעלה שאינה נתמכת: %s"
+msgid "%s - Crashed while loading: %s"
+msgstr "%s - קרס בזמן טעינה: %s"
 
-#: lib/Padre/Util/FileBrowser.pm:193
-msgid "Failed to execute process\n"
-msgstr "הרצת התהליך נכשלה\n"
+#: lib/Padre/PluginManager.pm:556
+#, perl-format
+msgid "%s - Not a Padre::Plugin subclass"
+msgstr "%s - לא תת־מחלקה של Padre::Plugin"
 
-#: lib/Padre/Util/FileBrowser.pm:216
-msgid "Could not find KDE or GNOME"
-msgstr "לא נמצא KDE או GNOME"
+#: lib/Padre/PluginManager.pm:569
+#, perl-format
+msgid "%s - Not compatible with Padre version %s - %s"
+msgstr " %s - אינו תואם ל-Padre גרסה %s - %s"
 
-#: lib/Padre/Plugin/PopularityContest.pm:201 lib/Padre/Plugin/Devel.pm:103
+#: lib/Padre/PluginManager.pm:584
+#, perl-format
+msgid "%s - Crashed while instantiating: %s"
+msgstr "%s - קרס בזמן יצירת מופע: %s"
+
+#: lib/Padre/PluginManager.pm:594
+#, perl-format
+msgid "%s - Failed to instantiate plug-in"
+msgstr "%s - לא ניתן ליצור את מופע התוסף"
+
+#: lib/Padre/PluginManager.pm:846
+#, perl-format
+msgid "Plugin error on event %s: %s"
+msgstr "שגיאת תוסף באירוע %s: %s"
+
+#: lib/Padre/PluginManager.pm:856
+msgid "(core)"
+msgstr "(core)"
+
+#: lib/Padre/PluginManager.pm:857 lib/Padre/File/FTP.pm:145
+#: lib/Padre/Document/Perl.pm:579 lib/Padre/Document/Perl.pm:911
+#: lib/Padre/Document/Perl.pm:960
+msgid "Unknown error"
+msgstr "שגיאה לא ידועה"
+
+#: lib/Padre/PluginManager.pm:867
+#, perl-format
+msgid "Plugin %s"
+msgstr "תוסף %s"
+
+#: lib/Padre/PluginManager.pm:943
+msgid "Error when calling menu for plug-in "
+msgstr "שגיאה בקריאה לתפריט התוסף"
+
+#: lib/Padre/PluginManager.pm:979 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
+msgid "No filename"
+msgstr "אין שם קובץ"
+
+#: lib/Padre/PluginManager.pm:982
+msgid "Could not locate project directory."
+msgstr "לא נמצאה תיקיית הפרויקט"
+
+#: lib/Padre/PluginManager.pm:1004 lib/Padre/PluginManager.pm:1100
+#, perl-format
+msgid ""
+"Failed to load the plug-in '%s'\n"
+"%s"
+msgstr ""
+"טעינת התוסף '%s' נכשלה\n"
+"%s"
+
+#: lib/Padre/PluginManager.pm:1054 lib/Padre/Wx/Main.pm:5438
+msgid "Open file"
+msgstr "פתח קובץ"
+
+#: lib/Padre/PluginManager.pm:1074
+#, perl-format
+msgid "Plug-in must have '%s' as base directory"
+msgstr "תיקיית השורש של תוסף צריכה להיות %s"
+
+#: lib/Padre/Document.pm:231
+msgid "Error while opening file: no file object"
+msgstr "שגיאה בעת פתיחת קובץ: אין אוביקט קובץ"
+
+#: lib/Padre/Document.pm:253
+#, fuzzy, perl-format
+msgid ""
+"The file %s you are trying to open is %s bytes large. It is over the "
+"arbitrary file size limit of Padre which is currently %s. Opening this file "
+"may reduce performance. Do you still want to open the file?"
+msgstr ""
+"הקבץ %s שאתה מנסה לפתוח הם יותר גדולים ממגבלת הגודל השרירותית של Padre שהיא "
+"כרגע %s. פתיחת קבצים אלו עלולה לפגוע בביצועים. האם עדיין ברצונך לפתוח את "
+"הקבצים?"
+
+#: lib/Padre/Document.pm:259 lib/Padre/Wx/Main.pm:2696
+#: lib/Padre/Wx/Main.pm:3303 lib/Padre/Wx/Syntax.pm:31
+#: lib/Padre/Wx/Dialog/Warning.pm:64
+msgid "Warning"
+msgstr "אזהרה"
+
+#: lib/Padre/Document.pm:281
+msgid ""
+"Error while determining MIME type.\n"
+"This is possibly an encoding problem.\n"
+"Are you trying to load a binary file?"
+msgstr ""
+"שגיאה בגילוי טיפוס הMIME  של הקובץ. ייתכן שזו בעיית קידוד. האם אתה מנסה "
+"לטעון קובץ בינארי?"
+
+#: lib/Padre/Document.pm:325
+#, perl-format
+msgid "No module mime_type='%s' filename='%s'"
+msgstr "אין מודול mime_type='%s' filename='%s'"
+
+#: lib/Padre/Document.pm:440 lib/Padre/Wx/Main.pm:4491
+#: lib/Padre/Wx/Editor.pm:215 lib/Padre/Wx/Role/Dialog.pm:95
+#: lib/Padre/Wx/Dialog/Sync.pm:447 lib/Padre/Wx/Dialog/Sync.pm:455
+#: lib/Padre/Wx/Dialog/Sync.pm:469 lib/Padre/Wx/Dialog/Sync.pm:493
+#: lib/Padre/Wx/Dialog/Sync.pm:517 lib/Padre/Wx/Dialog/Sync.pm:528
+#: lib/Padre/Wx/Dialog/Sync.pm:538 lib/Padre/Wx/Dialog/Sync.pm:556
+#: lib/Padre/Wx/Dialog/Sync.pm:567 lib/Padre/Wx/Dialog/Sync.pm:578
+#: lib/Padre/Wx/Dialog/Sync.pm:589 lib/Padre/Wx/Dialog/ModuleStart.pm:185
+#: lib/Padre/Wx/Dialog/Sync2.pm:67 lib/Padre/Wx/Dialog/Sync2.pm:75
+#: lib/Padre/Wx/Dialog/Sync2.pm:89 lib/Padre/Wx/Dialog/Sync2.pm:108
+#: lib/Padre/Wx/Dialog/Sync2.pm:132 lib/Padre/Wx/Dialog/Sync2.pm:143
+#: lib/Padre/Wx/Dialog/Sync2.pm:153 lib/Padre/Wx/Dialog/Sync2.pm:171
+#: lib/Padre/Wx/Dialog/Sync2.pm:182 lib/Padre/Wx/Dialog/Sync2.pm:193
+#: lib/Padre/Wx/Dialog/Sync2.pm:204 lib/Padre/Wx/Dialog/PerlFilter.pm:269
+#: lib/Padre/Wx/Dialog/PluginManager.pm:356
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90
+#: lib/Padre/Wx/Dialog/OpenResource.pm:118
+msgid "Error"
+msgstr "שגיאה"
+
+#: lib/Padre/Document.pm:765
+#, perl-format
+msgid ""
+"Visual filename %s does not match the internal filename %s, do you want to "
+"abort saving?"
+msgstr ""
+"שם הקובץ הויזואלי %s שונה משם הקובץ הפנימי %s, האם ברצונך לבטל את שמירת "
+"הקובץ?"
+
+#: lib/Padre/Document.pm:769
+msgid "Save Warning"
+msgstr "אזהרת שמירה"
+
+#: lib/Padre/Document.pm:942
+#, perl-format
+msgid "no highlighter for mime-type '%s' using stc"
+msgstr "אין סימון של mime-type '%s' בשימוש ב- stc"
+
+#: lib/Padre/Document.pm:962
+#, perl-format
+msgid "Unsaved %d"
+msgstr "קובץ שלא נשמר %d"
+
+#: lib/Padre/Document.pm:1363 lib/Padre/Document.pm:1364
+msgid "Skipped for large files"
+msgstr "לא נספר בקבצים גדולים"
+
+#: lib/Padre/Plugin/PopularityContest.pm:201 lib/Padre/Plugin/Devel.pm:102
 msgid "About"
 msgstr "אודות"
 
@@ -546,292 +475,740 @@ msgstr "אודות"
 msgid "Show current report"
 msgstr "הצג את הדו\"ח הנוכחית"
 
-#: lib/Padre/Plugin/PopularityContest.pm:304
+#: lib/Padre/Plugin/PopularityContest.pm:305
 msgid "Popularity Contest Report"
 msgstr "דו\"ח תחרות פופולריות"
 
-#: lib/Padre/Plugin/Devel.pm:29
+#: lib/Padre/Plugin/Devel.pm:30
 msgid "Padre Developer Tools"
 msgstr "כלי פיתוח Padre"
 
-#: lib/Padre/Plugin/Devel.pm:69
+#: lib/Padre/Plugin/Devel.pm:67
 msgid "Run Document inside Padre"
 msgstr "הרץ ב-Padre"
 
-#: lib/Padre/Plugin/Devel.pm:70
+#: lib/Padre/Plugin/Devel.pm:68
 msgid "Run Selection inside Padre"
 msgstr "הרץ קוד מסומן ב-Padre"
 
-#: lib/Padre/Plugin/Devel.pm:74
+#: lib/Padre/Plugin/Devel.pm:71
+msgid "Dump"
+msgstr "הטל"
+
+#: lib/Padre/Plugin/Devel.pm:72
 #, fuzzy
 msgid "Dump Expression..."
 msgstr "היטל ביטוי רגולרי"
 
-#: lib/Padre/Plugin/Devel.pm:75
+#: lib/Padre/Plugin/Devel.pm:73
 msgid "Dump Current Document"
 msgstr "היטל המסמך הנוכחי"
 
-#: lib/Padre/Plugin/Devel.pm:76
+#: lib/Padre/Plugin/Devel.pm:74
 msgid "Dump Task Manager"
-msgstr ""
+msgstr "הטל מנהל משימות"
 
-#: lib/Padre/Plugin/Devel.pm:77
+#: lib/Padre/Plugin/Devel.pm:75
 msgid "Dump Top IDE Object"
 msgstr "Dump Top IDE Object"
 
-#: lib/Padre/Plugin/Devel.pm:78
+#: lib/Padre/Plugin/Devel.pm:76
 msgid "Dump Current PPI Tree"
 msgstr "היטל עץ ה-PPI הנוכחי"
 
-#: lib/Padre/Plugin/Devel.pm:79
+#: lib/Padre/Plugin/Devel.pm:77
 msgid "Dump %INC and @INC"
 msgstr "היטל %INC ו- @INC"
 
-#: lib/Padre/Plugin/Devel.pm:80
+#: lib/Padre/Plugin/Devel.pm:78
 msgid "Dump Display Geometry"
-msgstr ""
+msgstr "הטל גאומטריית תצוגה"
 
-#: lib/Padre/Plugin/Devel.pm:81
+#: lib/Padre/Plugin/Devel.pm:79
 msgid "Start/Stop sub trace"
-msgstr ""
+msgstr "התחל/עצור תת-מעקב (Sub-trace)"
 
-#: lib/Padre/Plugin/Devel.pm:85
+#: lib/Padre/Plugin/Devel.pm:83
 msgid "Load All Padre Modules"
 msgstr "טען את כל המודולים של Padre"
 
-#: lib/Padre/Plugin/Devel.pm:86
+#: lib/Padre/Plugin/Devel.pm:84
 msgid "Simulate Crash"
 msgstr "הדמיית קריסה"
 
-#: lib/Padre/Plugin/Devel.pm:87
-msgid "Simulate Crashing Bg Task"
-msgstr "הדמיית קריסה של תהליך רקע"
+#: lib/Padre/Plugin/Devel.pm:85
+msgid "Simulate Background Exception"
+msgstr "דמה ביצוע חריגות ברקע"
 
-#: lib/Padre/Plugin/Devel.pm:91
+#: lib/Padre/Plugin/Devel.pm:86
+#, fuzzy
+msgid "Simulate Background Crash"
+msgstr "הדמיית קריסה"
+
+#: lib/Padre/Plugin/Devel.pm:90
 #, fuzzy, perl-format
 msgid "wxWidgets %s Reference"
 msgstr "מילון wxWidgets 2.8.8"
 
-#: lib/Padre/Plugin/Devel.pm:94
+#: lib/Padre/Plugin/Devel.pm:93
 msgid "STC Reference"
 msgstr "העדפות STC"
 
-#: lib/Padre/Plugin/Devel.pm:97
+#: lib/Padre/Plugin/Devel.pm:96
 msgid "wxPerl Live Support"
 msgstr "תמיכה חיה ב-wxPerl"
 
-#: lib/Padre/Plugin/Devel.pm:121 lib/Padre/Plugin/Devel.pm:122
+#: lib/Padre/Plugin/Devel.pm:120 lib/Padre/Plugin/Devel.pm:121
 msgid "Expression"
 msgstr "ביטוי רגולרי"
 
-#: lib/Padre/Plugin/Devel.pm:150 lib/Padre/Wx/Main.pm:5579
+#: lib/Padre/Plugin/Devel.pm:149
 msgid "No file is open"
 msgstr "אין  קובץ פתוח"
 
-#: lib/Padre/Plugin/Devel.pm:173
+#: lib/Padre/Plugin/Devel.pm:170
 msgid "No Perl 5 file is open"
 msgstr "אין קובץ Perl 5  פתוח"
 
-#: lib/Padre/Plugin/Devel.pm:244
+#: lib/Padre/Plugin/Devel.pm:242
 msgid "Sub-tracing stopped"
-msgstr ""
+msgstr "תת-מעקב (Sub-tracing) נעצר"
 
-#: lib/Padre/Plugin/Devel.pm:250
+#: lib/Padre/Plugin/Devel.pm:248
 msgid "Error while loading Aspect, is it installed?"
-msgstr ""
+msgstr "טעות בהעלאת Aspec. האם זה מןתקן?"
 
-#: lib/Padre/Plugin/Devel.pm:262
+#: lib/Padre/Plugin/Devel.pm:260
 msgid "Sub-tracing started"
-msgstr ""
+msgstr "תת-מעקב (Sub-tracing) התחיל"
 
-#: lib/Padre/Plugin/Devel.pm:280
+#: lib/Padre/Plugin/Devel.pm:291
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr "ערכה של כלים אחרים שמפתחי Padre משתמשים בהם\n"
 
-#: lib/Padre/Plugin/Devel.pm:301
+#: lib/Padre/Plugin/Devel.pm:311
 #, perl-format
 msgid "Found %s unloaded modules"
-msgstr ""
+msgstr "נמצאו  %s מודולים שלא הועלו"
 
-#: lib/Padre/Plugin/Devel.pm:313
+#: lib/Padre/Plugin/Devel.pm:323
 #, perl-format
 msgid "Loaded %s modules"
 msgstr "טען את המודולים %s"
 
-#: lib/Padre/Plugin/Devel.pm:324 lib/Padre/Wx/Main.pm:5386
+#: lib/Padre/Plugin/Devel.pm:334
 #, perl-format
 msgid "Error: %s"
 msgstr "שגיאה: %s"
 
-#: lib/Padre/Config/Style.pm:27 lib/Padre/Wx/About.pm:59
-#: lib/Padre/Wx/WizardLibrary.pm:29 lib/Padre/Wx/WizardLibrary.pm:37
+#: lib/Padre/Config/Style.pm:34 lib/Padre/Wx/WizardLibrary.pm:29
+#: lib/Padre/Wx/WizardLibrary.pm:37 lib/Padre/Wx/About.pm:59
 #: lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr "Padre"
 
-#: lib/Padre/Config/Style.pm:28
+#: lib/Padre/Config/Style.pm:35
 msgid "Evening"
 msgstr "ערב"
 
-#: lib/Padre/Config/Style.pm:29
+#: lib/Padre/Config/Style.pm:36
 msgid "Night"
 msgstr "לילה"
 
-#: lib/Padre/Config/Style.pm:30
+#: lib/Padre/Config/Style.pm:37
 msgid "Ultraedit"
 msgstr "Ultraedit"
 
-#: lib/Padre/Config/Style.pm:31
+#: lib/Padre/Config/Style.pm:38
 msgid "Notepad++"
 msgstr "Notepad++"
 
-#: lib/Padre/File/HTTP.pm:48
+#: lib/Padre/Wx/Command.pm:81
+msgid ""
+"Experimental feature. Type '?' at the bottom of the page to get list of "
+"commands. If it does not work, blame szabgab.\n"
+"\n"
+msgstr ""
+"תכונה ניסיונית. הקש '?' בתחתית העמוד להצגת רשימת פקודות. אם *זה* לא עובד, "
+"תמיד אפשר להאשים את szabgab. :-)\n"
+"\n"
+
+#: lib/Padre/Wx/Command.pm:262
+msgid "Command"
+msgstr " פקודה"
+
+#: lib/Padre/Wx/Main.pm:769
 #, perl-format
-msgid "Sending HTTP request %s..."
-msgstr ""
+msgid "No such session %s"
+msgstr "לא נמצאה סביבת העבודה %s"
 
-#: lib/Padre/File/FTP.pm:43
-msgid "Looking for Net::FTP..."
-msgstr ""
+#: lib/Padre/Wx/Main.pm:968
+msgid "Failed to create server"
+msgstr "יצירת שרת נכשלה"
 
-#: lib/Padre/File/FTP.pm:113
+#: lib/Padre/Wx/Main.pm:2312
+msgid "Command line"
+msgstr "שורת הפקודה"
+
+#: lib/Padre/Wx/Main.pm:2313
+msgid "Run setup"
+msgstr "הגדרות ריצה"
+
+#: lib/Padre/Wx/Main.pm:2342 lib/Padre/Wx/Main.pm:2397
+#: lib/Padre/Wx/Main.pm:2449
+msgid "No document open"
+msgstr "אין מסמך פתוח"
+
+#: lib/Padre/Wx/Main.pm:2348 lib/Padre/Wx/Main.pm:2409
+#: lib/Padre/Wx/Main.pm:2464
+msgid "Could not find project root"
+msgstr "לא נמצא שורש הפרויקט"
+
+#: lib/Padre/Wx/Main.pm:2375
+#, fuzzy
+msgid "No Build.PL nor Makefile.PL nor dist.ini found"
+msgstr "לא נמצאו Builde.PL ו-  Makefile.PL"
+
+#: lib/Padre/Wx/Main.pm:2378
+msgid "Could not find perl executable"
+msgstr "לא נמצא קובץ הרצת perl"
+
+#: lib/Padre/Wx/Main.pm:2403 lib/Padre/Wx/Main.pm:2455
+msgid "Current document has no filename"
+msgstr "למסמך הנוכחי אין שם קובץ"
+
+#: lib/Padre/Wx/Main.pm:2458
+msgid "Current document is not a .t file"
+msgstr "למסמך הנוכחי אינו קובץ .t"
+
+#: lib/Padre/Wx/Main.pm:2552 lib/Padre/Wx/Output.pm:141
 #, perl-format
-msgid "Connecting to FTP server %s..."
+msgid ""
+"Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
+"at least 0.20 by typing\n"
+"cpan Wx::Perl::ProcessStream"
 msgstr ""
+"Wx::Perl::ProcessStream הוא גירסה %s שידועה כגירסה בעייתית. להתקנת גירסה 2.0 "
+"ומעלה הקלד: \n"
+"cpan Wx::Perl::ProcessStream"
 
-#: lib/Padre/File/FTP.pm:124
+#: lib/Padre/Wx/Main.pm:2627
 #, perl-format
-msgid "Error connecting to %s:%s: %s"
-msgstr "שגיאה בהתחברות אל %s:%s: %s"
+msgid "Failed to start '%s' command"
+msgstr "הרצת הפקודה '%s' נכשלה"
 
-#: lib/Padre/File/FTP.pm:131
+#: lib/Padre/Wx/Main.pm:2652
+msgid "No open document"
+msgstr "אין מסמך פתוח"
+
+#: lib/Padre/Wx/Main.pm:2670
+msgid "No execution mode was defined for this document type"
+msgstr "  לא הוגדר למסמך זה מצב ביצוע"
+
+#: lib/Padre/Wx/Main.pm:2695
+msgid "Do you want to continue?"
+msgstr "האם ברצונך להמשיך?"
+
+#: lib/Padre/Wx/Main.pm:2781
 #, perl-format
-msgid "Password for user '%s' at %s:"
-msgstr ""
+msgid "Opening session %s..."
+msgstr "פותח סביבת עבודה %s..."
 
-#: lib/Padre/File/FTP.pm:135
-msgid "FTP Password"
-msgstr ""
+#: lib/Padre/Wx/Main.pm:2810
+msgid "Restore focus..."
+msgstr "החזר מוקד..."
 
-#: lib/Padre/File/FTP.pm:141
+#: lib/Padre/Wx/Main.pm:3140
 #, perl-format
-msgid "Logging into FTP server as %s..."
-msgstr ""
+msgid "Could not determine the comment character for %s document type"
+msgstr "לא ניתן לקבוע את תו ההערה  עבור סוד מסמך '%s'"
 
-#: lib/Padre/File/FTP.pm:144
-#, fuzzy, perl-format
-msgid "Error logging in on %s:%s: %s"
+#: lib/Padre/Wx/Main.pm:3189
+msgid "Autocompletion error"
+msgstr "שגיאת השלמות אוטומטיות"
+
+#: lib/Padre/Wx/Main.pm:3302
+msgid "You still have a running process. Do you want to kill it and exit?"
+msgstr "יש לך עדיין תהליך רץ. האם ברצונך להרוג אותו ולצאת?"
+
+#: lib/Padre/Wx/Main.pm:3518
+#, perl-format
+msgid "Cannot open a Directory: %s"
+msgstr "אי אפשר לפתוח תיקייה: %s"
+
+#: lib/Padre/Wx/Main.pm:3645
+msgid "Nothing selected. Enter what should be opened:"
+msgstr "לא נבחר דבר. הכנס מה שצריך להיפתח"
+
+#: lib/Padre/Wx/Main.pm:3646
+msgid "Open selection"
+msgstr "פתח את הפריט שסומן"
+
+#: lib/Padre/Wx/Main.pm:3687
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "לא נמצא הקובץ '%s'"
+
+#: lib/Padre/Wx/Main.pm:3688 lib/Padre/Wx/ActionLibrary.pm:443
+msgid "Open Selection"
+msgstr "פתח את הפריט שסומן"
+
+#: lib/Padre/Wx/Main.pm:3698 lib/Padre/Wx/Dialog/Positions.pm:120
+msgid "Choose File"
+msgstr "בחר קובץ"
+
+#: lib/Padre/Wx/Main.pm:3803
+msgid "JavaScript Files"
+msgstr "קובצי JavaScript"
+
+#: lib/Padre/Wx/Main.pm:3805
+msgid "Perl Files"
+msgstr "קבצים Perl"
+
+#: lib/Padre/Wx/Main.pm:3807
+msgid "PHP Files"
+msgstr "קבצים PHP"
+
+#: lib/Padre/Wx/Main.pm:3809
+msgid "Python Files"
+msgstr "קבצי Python"
+
+#: lib/Padre/Wx/Main.pm:3811
+msgid "Ruby Files"
+msgstr "קובצי Ruby"
+
+#: lib/Padre/Wx/Main.pm:3813
+msgid "SQL Files"
+msgstr "קבצי SQL"
+
+#: lib/Padre/Wx/Main.pm:3815
+msgid "Text Files"
+msgstr "קבצים טקסט"
+
+#: lib/Padre/Wx/Main.pm:3817
+msgid "Web Files"
+msgstr "קבצי Web"
+
+#: lib/Padre/Wx/Main.pm:3819
+msgid "Script Files"
+msgstr "קובצי Script"
+
+#: lib/Padre/Wx/Main.pm:4271
+msgid "File already exists. Overwrite it?"
+msgstr "קובץ כבר קיים. לדרוס אותו?"
+
+#: lib/Padre/Wx/Main.pm:4272
+msgid "Exist"
+msgstr "קיים"
+
+#: lib/Padre/Wx/Main.pm:4375
+msgid "File already exists"
+msgstr "קובץ כבר קיים. "
+
+#: lib/Padre/Wx/Main.pm:4389
+#, perl-format
+msgid "Failed to create path '%s'"
+msgstr "יצירת המסלול '%s' נכשלה "
+
+#: lib/Padre/Wx/Main.pm:4480
+msgid "File changed on disk since last saved. Do you want to overwrite it?"
+msgstr "קובץ השתנה בדיסק מאז השמירה האחרונה. האם ברצונך לדרוס אותו?"
+
+#: lib/Padre/Wx/Main.pm:4481
+msgid "File not in sync"
+msgstr "קובץ לא מסונכרן"
+
+#: lib/Padre/Wx/Main.pm:4490
+msgid "Could not save file: "
+msgstr "לא ניתן לשמור את הקובץ '%s'"
+
+#: lib/Padre/Wx/Main.pm:4576
+msgid "File changed. Do you want to save it?"
+msgstr "קובץ השתנה. האם ברצונך לשמור אותו?"
+
+#: lib/Padre/Wx/Main.pm:4577
+msgid "Unsaved File"
+msgstr "קובץ שלא נשמר"
+
+#: lib/Padre/Wx/Main.pm:4660
+msgid "Close all"
+msgstr "סגור את הכל"
+
+#: lib/Padre/Wx/Main.pm:4700
+msgid "Close some files"
+msgstr "סגור חלק מהקבצים"
+
+#: lib/Padre/Wx/Main.pm:4701
+msgid "Select files to close:"
+msgstr "בחר קבצים לסגור: "
+
+#: lib/Padre/Wx/Main.pm:4716
+msgid "Close some"
+msgstr "סגור חלק מהקבצים"
+
+#: lib/Padre/Wx/Main.pm:4879
+msgid "Cannot diff if file was never saved"
+msgstr "אי אפשר לעשות השוואה לקובץ שמעולם לא נשמר"
+
+#: lib/Padre/Wx/Main.pm:4903
+msgid "There are no differences\n"
+msgstr "אין הבדלים\n"
+
+#: lib/Padre/Wx/Main.pm:4999
+#, fuzzy
+msgid "Error loading regex editor."
 msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
 
-#: lib/Padre/File/FTP.pm:156
-msgid "Connection to FTP server successful."
-msgstr ""
+#: lib/Padre/Wx/Main.pm:5028
+#, fuzzy
+msgid "Error loading perl filter dialog."
+msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
 
-#: lib/Padre/File/FTP.pm:186
-#, fuzzy, perl-format
-msgid "Unable to parse %s"
+#: lib/Padre/Wx/Main.pm:5440
+msgid "All Files"
+msgstr "כל הקבצים"
+
+#: lib/Padre/Wx/Main.pm:5778
+msgid "Space to Tab"
+msgstr "רווחים לטאבים"
+
+#: lib/Padre/Wx/Main.pm:5779
+msgid "Tab to Space"
 msgstr "טאבים לרווחים"
 
-#: lib/Padre/File/FTP.pm:289
-msgid "Reading file from FTP server..."
-msgstr "קורא קובץ משרת ה-FTP..."
+#: lib/Padre/Wx/Main.pm:5784
+msgid "How many spaces for each tab:"
+msgstr "כמה רווחים לכל טאב"
 
-#: lib/Padre/File/FTP.pm:312
-msgid "Writing file to FTP server..."
+#: lib/Padre/Wx/Main.pm:5951
+msgid "Reload some files"
+msgstr "רענן את כל הקבצים"
+
+#: lib/Padre/Wx/Main.pm:5952
+msgid "&Select files to reload:"
+msgstr "בחר קבצים לרענון"
+
+#: lib/Padre/Wx/Main.pm:5953
+msgid "&Reload selected"
+msgstr "רענן את הקבצים שנבחרו"
+
+#: lib/Padre/Wx/Main.pm:6064
+#, fuzzy, perl-format
+msgid "Failed to find template file '%s'"
+msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
+
+#: lib/Padre/Wx/Main.pm:6292
+msgid "Need to select text in order to translate to hex"
+msgstr "צריך לבחור טקסט כדי לתרגם להקסדצימלי"
+
+#: lib/Padre/Wx/Main.pm:6435
+#, perl-format
+msgid ""
+"Error running filter tool:\n"
+"%s"
 msgstr ""
+"שגיאה בעת הרצת כלי הסינון:\n"
+"%s"
 
-#: lib/Padre/PPI/EndifyPod.pm:38
-msgid "Error while searching for POD"
-msgstr "שגיאה בחיפוש POD"
-
-#: lib/Padre/PPI/EndifyPod.pm:42
-msgid "This document does not contain any POD"
+#: lib/Padre/Wx/Main.pm:6450
+#, perl-format
+msgid ""
+"Error returned by filter tool:\n"
+"%s"
 msgstr ""
+"שגיאה שהוחזרה על ידי כלי הסינון:\n"
+"%s"
 
-#: lib/Padre/PPI/EndifyPod.pm:46
-msgid "Only one POD fragment, will not try to merge"
-msgstr ""
+#: lib/Padre/Wx/FindInFiles.pm:129
+#, perl-format
+msgid "Searching for '%s' in '%s'..."
+msgstr "חפוש עבור '%s' בתוך '%s' "
 
-#: lib/Padre/PPI/EndifyPod.pm:53
-msgid "Failed to merge the POD fragments"
-msgstr "נכשל המיזוג של חלקי POD"
+#: lib/Padre/Wx/FindInFiles.pm:155
+#, perl-format
+msgid "%s (%s results)"
+msgstr "%s (%s תוצאות)"
 
-#: lib/Padre/PPI/EndifyPod.pm:60
-msgid "Failed to delete POD fragment"
-msgstr "הרצת מחיקת קטע POD"
+#: lib/Padre/Wx/FindInFiles.pm:212
+#, perl-format
+msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
+msgstr "החיפוש הושלם, '%s'  נמצא %d פעמים ב- %d קבצים בתוך '%s'"
 
-#: lib/Padre/Wx/Notebook.pm:55
-msgid "Files"
-msgstr "קבצים"
+#: lib/Padre/Wx/FindInFiles.pm:223
+#, perl-format
+msgid "No results found for '%s' inside '%s'"
+msgstr "לא נמצאו תוצאות עבור '%s' בתוך '%s'"
 
-#: lib/Padre/Wx/Syntax.pm:34
+#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/FBP/FindInFiles.pm:27
+msgid "Find in Files"
+msgstr "חפש בתוך קבצים"
+
+#: lib/Padre/Wx/Output.pm:196
+msgid "Output"
+msgstr "פלט"
+
+#: lib/Padre/Wx/Debug.pm:113
+msgid "Debugger"
+msgstr "מנפה שגיאות"
+
+#: lib/Padre/Wx/Debug.pm:138
+msgid "Variable"
+msgstr "משתנה"
+
+#: lib/Padre/Wx/Debug.pm:139 lib/Padre/Wx/Dialog/Advanced.pm:113
+msgid "Value"
+msgstr "ערך"
+
+#: lib/Padre/Wx/Syntax.pm:37
 #, fuzzy
 msgid "Deprecation"
 msgstr "תיאור"
 
-#: lib/Padre/Wx/Syntax.pm:40
+#: lib/Padre/Wx/Syntax.pm:43
 msgid "Severe Warning"
 msgstr "אזהרה חמורה"
 
-#: lib/Padre/Wx/Syntax.pm:46
+#: lib/Padre/Wx/Syntax.pm:49
 msgid "Fatal Error"
 msgstr "שגיאה חמורה"
 
-#: lib/Padre/Wx/Syntax.pm:52
+#: lib/Padre/Wx/Syntax.pm:55
 msgid "Internal Error"
 msgstr "שגיאה פנימית"
 
-#: lib/Padre/Wx/Syntax.pm:58
+#: lib/Padre/Wx/Syntax.pm:61
 msgid "Very Fatal Error"
 msgstr "שגיאה חמורה ביותר"
 
-#: lib/Padre/Wx/Syntax.pm:64
+#: lib/Padre/Wx/Syntax.pm:67
 msgid "Alien Error"
 msgstr "שגיאת Alien"
 
-#: lib/Padre/Wx/Syntax.pm:256
+#: lib/Padre/Wx/Syntax.pm:301
 msgid "Syntax Check"
 msgstr "בדיקת תחביר"
 
-#: lib/Padre/Wx/Syntax.pm:344
+#: lib/Padre/Wx/Syntax.pm:392
 #, perl-format
 msgid "No errors or warnings found in %s."
 msgstr "לא נמצאו שגיאות או התראות ב-%s."
 
-#: lib/Padre/Wx/Syntax.pm:347
+#: lib/Padre/Wx/Syntax.pm:395
 msgid "No errors or warnings found."
 msgstr "לא נמצאו שגיאות או התראות."
 
-#: lib/Padre/Wx/Syntax.pm:356
+#: lib/Padre/Wx/Syntax.pm:404
 #, perl-format
 msgid "Found %d issue(s) in %s"
-msgstr ""
+msgstr "נמצאו %d מופע(ים) ב- %s"
 
-#: lib/Padre/Wx/Syntax.pm:357
+#: lib/Padre/Wx/Syntax.pm:405
 #, perl-format
 msgid "Found %d issue(s)"
-msgstr ""
+msgstr "נמצאו %d מופע(ים)"
 
-#: lib/Padre/Wx/Syntax.pm:378
+#: lib/Padre/Wx/Syntax.pm:426
 #, perl-format
 msgid "Line %d:   (%s)   %s"
-msgstr ""
+msgstr "שורה %d:   (%s)   %s"
 
-#: lib/Padre/Wx/Editor.pm:1591
+#: lib/Padre/Wx/Browser.pm:64 lib/Padre/Wx/ActionLibrary.pm:2578
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:398
+msgid "Help"
+msgstr "עזרה"
+
+#: lib/Padre/Wx/Browser.pm:93 lib/Padre/Wx/Browser.pm:108
+msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
+msgstr "חיפוש בתעוד perldoc - למשל Padre::Task, Net::LDAP"
+
+#: lib/Padre/Wx/Browser.pm:104
+msgid "Search:"
+msgstr "חפש:"
+
+#: lib/Padre/Wx/Browser.pm:110 lib/Padre/Wx/About.pm:86
+#: lib/Padre/Wx/ActionLibrary.pm:274 lib/Padre/Wx/Dialog/Replace.pm:191
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:139 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:99
+#: lib/Padre/Wx/Dialog/PluginManager.pm:145
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:238
+msgid "&Close"
+msgstr "סגור"
+
+#: lib/Padre/Wx/Browser.pm:341
+msgid "Untitled"
+msgstr "ללא כותרת"
+
+#: lib/Padre/Wx/Browser.pm:409
+#, perl-format
+msgid "Browser: no viewer for %s"
+msgstr "דפדפן: אין תוכת תצוגה ל- %s"
+
+#: lib/Padre/Wx/Browser.pm:443
+#, perl-format
+msgid "Searched for '%s' and failed..."
+msgstr "בוצע חיפוש עבור '%s', נכשל"
+
+#: lib/Padre/Wx/Browser.pm:444
+msgid "Help not found."
+msgstr "לא נמצאה עזרה."
+
+#: lib/Padre/Wx/Browser.pm:465
+msgid "NAME"
+msgstr "שם"
+
+#: lib/Padre/Wx/Outline.pm:110 lib/Padre/Wx/Outline.pm:312
+msgid "Outline"
+msgstr "קווים כלליים"
+
+#: lib/Padre/Wx/Outline.pm:221
+msgid "&Go to Element"
+msgstr "לך אך אלמנט"
+
+#: lib/Padre/Wx/Outline.pm:235
+msgid "Open &Documentation"
+msgstr "פתח תיעוד"
+
+#: lib/Padre/Wx/Outline.pm:357
+msgid "Pragmata"
+msgstr "Pragmata"
+
+#: lib/Padre/Wx/Outline.pm:358
+msgid "Modules"
+msgstr "מודולים"
+
+#: lib/Padre/Wx/Outline.pm:359
+msgid "Methods"
+msgstr "מתודות"
+
+#: lib/Padre/Wx/Outline.pm:360
+msgid "Attributes"
+msgstr "מאפינים "
+
+#: lib/Padre/Wx/Debugger.pm:78
+msgid "Debugger is already running"
+msgstr "מאתר הבאגים כבר רץ"
+
+#: lib/Padre/Wx/Debugger.pm:82
+msgid "Not a Perl document"
+msgstr "לא מסמך Perl"
+
+#: lib/Padre/Wx/Debugger.pm:137
+msgid "Debugging failed. Did you check your program for syntax errors?"
+msgstr "נפוי שגיאות נכשל. האם בדקת שגיאות תחביר התוכנית שלך?"
+
+#: lib/Padre/Wx/Debugger.pm:191
+msgid ""
+"The debugger is not running.\n"
+"You can start the debugger using one of the commands 'Step In', 'Step Over', "
+"or 'Run till Breakpoint' in the Debug menu."
+msgstr ""
+"מנפה השגיאות לא רץ. \n"
+"אפשר להתחיל את מנפה השגיאות על ידי אחת הפקודות: 'Step In', 'Step Over', או "
+"'Run till Breakpoint' בתפריט Debug."
+
+#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:275
+#: lib/Padre/Wx/Debugger.pm:299 lib/Padre/Wx/Debugger.pm:333
+#: lib/Padre/Wx/Debugger.pm:353
+msgid "Debugger not running"
+msgstr "מאתר הבאגים אינו רץ"
+
+#: lib/Padre/Wx/Debugger.pm:226
+#, perl-format
+msgid "Could not set breakpoint on file '%s' row '%s'"
+msgstr "לא ניתן להגדיר נקודת עצירה בקובץ '%s' שורה '%s'"
+
+#: lib/Padre/Wx/Debugger.pm:389
+#, fuzzy, perl-format
+msgid "Could not evaluate '%s'"
+msgstr "לא נמצא קובץ '%s'"
+
+#: lib/Padre/Wx/Debugger.pm:407
+#, perl-format
+msgid ""
+"'%s' does not look like a variable. First select a variable in the code and "
+"then try again."
+msgstr "'%s' לא נראה כמו משתנה. נא לבחור קודם משתנה בקוד ולנסות שוב. "
+
+#: lib/Padre/Wx/Debugger.pm:439
+msgid "Expression:"
+msgstr "ביטוי רגולרי:"
+
+#: lib/Padre/Wx/Debugger.pm:440
+msgid "Expr"
+msgstr "Expr"
+
+#: lib/Padre/Wx/Bottom.pm:52
+msgid "Output View"
+msgstr "תצוגת פלט"
+
+#: lib/Padre/Wx/StatusBar.pm:290
+msgid "Background Tasks are running"
+msgstr "משימות רקע רצות"
+
+#: lib/Padre/Wx/StatusBar.pm:291
+msgid "Background Tasks are running with high load"
+msgstr "משימות רקע רצות בעומס גבוה"
+
+#: lib/Padre/Wx/StatusBar.pm:417
+msgid "Read Only"
+msgstr "לקריאה בלבד"
+
+#: lib/Padre/Wx/StatusBar.pm:417
+msgid "R/W"
+msgstr "קריאה/כתיבה (R/W)"
+
+#: lib/Padre/Wx/WizardLibrary.pm:20
+msgid "Module"
+msgstr "מודול"
+
+#: lib/Padre/Wx/WizardLibrary.pm:21
+msgid "Perl 5"
+msgstr "Perl 5"
+
+#: lib/Padre/Wx/WizardLibrary.pm:22
+msgid "Opens the Perl 5 module wizard"
+msgstr "פותח את אשף המודולים של Perl 5"
+
+#: lib/Padre/Wx/WizardLibrary.pm:28
+msgid "Plugin"
+msgstr "תוסף"
+
+#: lib/Padre/Wx/WizardLibrary.pm:30
+msgid "Opens the Padre plugin wizard"
+msgstr "פוח את אשף התוספים של Padre"
+
+#: lib/Padre/Wx/WizardLibrary.pm:36 lib/Padre/Wx/Dialog/DocStats.pm:95
+msgid "Document"
+msgstr "מסמך "
+
+#: lib/Padre/Wx/WizardLibrary.pm:38
+msgid "Opens the Padre document wizard"
+msgstr "פתח את אשף המסמכים של  Padre"
+
+#: lib/Padre/Wx/TodoList.pm:199
+msgid "To-do"
+msgstr "To-do"
+
+#: lib/Padre/Wx/Editor.pm:1612
 msgid "You must select a range of lines"
 msgstr "יש לבחור טווח של שורות"
 
-#: lib/Padre/Wx/Editor.pm:1607
+#: lib/Padre/Wx/Editor.pm:1628
 msgid "First character of selection must be a non-word character to align"
 msgstr "התו הראשון בבחירה צריך להיות תו לא של מילים כדי ליישר"
 
-#: lib/Padre/Wx/Progress.pm:76
-msgid "Please wait..."
-msgstr " . נא להמתין..."
-
-#: lib/Padre/Wx/FunctionList.pm:216
+#: lib/Padre/Wx/FunctionList.pm:217
 msgid "Functions"
 msgstr " פונקציות"
+
+#: lib/Padre/Wx/Right.pm:52
+msgid "Document Tools"
+msgstr "כלי מסמך"
+
+#: lib/Padre/Wx/Left.pm:52
+msgid "Project Tools"
+msgstr "כלי פרויקט"
 
 #: lib/Padre/Wx/FindResult.pm:88
 #, perl-format
@@ -858,18 +1235,9 @@ msgstr "העתק את החלק הנבחר "
 msgid "Copy &All"
 msgstr "העתק הכול"
 
-#: lib/Padre/Wx/Directory.pm:72 lib/Padre/Wx/Dialog/Find.pm:331
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
-msgid "Search"
-msgstr "חפש"
-
-#: lib/Padre/Wx/Directory.pm:94
-msgid "Move to other panel"
-msgstr "העבר לחלון אחר"
-
-#: lib/Padre/Wx/Directory.pm:237 lib/Padre/Wx/Dialog/WindowList.pm:223
-msgid "Project"
-msgstr "פרויקט"
+#: lib/Padre/Wx/Notebook.pm:55
+msgid "Files"
+msgstr "קבצים"
 
 #: lib/Padre/Wx/About.pm:25
 msgid "About Padre"
@@ -887,17 +1255,9 @@ msgstr "תרגום"
 msgid "System Info"
 msgstr "מידע על  המערכת"
 
-#: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/ActionLibrary.pm:274
-#: lib/Padre/Wx/Browser.pm:111 lib/Padre/Wx/Dialog/DocStats.pm:58
-#: lib/Padre/Wx/Dialog/Find.pm:159 lib/Padre/Wx/Dialog/HelpSearch.pm:179
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:238 lib/Padre/Wx/Dialog/Replace.pm:191
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:135
-msgid "&Close"
-msgstr "סגור"
-
 #: lib/Padre/Wx/About.pm:102
 msgid "Created by"
-msgstr ""
+msgstr "נוצר על ידי"
 
 #: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:135
 msgid "The Padre Development Team"
@@ -908,14 +1268,16 @@ msgid ""
 "Padre is free software; you can redistribute it and/or modify it under the "
 "same terms as Perl 5."
 msgstr ""
+"Padre היא תוכנה חופשית; מותר לשנות אותה ו/או להפיץ מחדש תחת אותם תנאים של "
+"Perl 5"
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
-msgstr ""
+msgstr "פרפר כחול מעל עלה ירוק"
 
 #: lib/Padre/Wx/About.pm:107
 msgid "splash image is based on work by"
-msgstr ""
+msgstr "תמונת ה- Splash מבוססת על יצירה מאת "
 
 #: lib/Padre/Wx/About.pm:227
 msgid "The Padre Translation Team"
@@ -927,22 +1289,28 @@ msgstr " הגדרות:"
 
 #: lib/Padre/Wx/About.pm:337
 msgid "Uptime"
-msgstr ""
+msgstr "משך פעילות (Uptime)"
 
 #: lib/Padre/Wx/About.pm:342
 msgid "unsupported"
 msgstr "אינו נתמך"
 
-#: lib/Padre/Wx/Command.pm:81
-msgid ""
-"Experimental feature. Type '?' at the bottom of the page to get list of "
-"commands. If it does not work, blame szabgab.\n"
-"\n"
-msgstr ""
+#: lib/Padre/Wx/Directory.pm:79 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
+#: lib/Padre/Wx/Dialog/Find.pm:78
+msgid "Search"
+msgstr "חפש"
 
-#: lib/Padre/Wx/Command.pm:262
-msgid "Command"
-msgstr " פקודה"
+#: lib/Padre/Wx/Directory.pm:110
+msgid "Move to other panel"
+msgstr "העבר לחלון אחר"
+
+#: lib/Padre/Wx/Directory.pm:270 lib/Padre/Wx/Dialog/WindowList.pm:223
+msgid "Project"
+msgstr "פרויקט"
+
+#: lib/Padre/Wx/Progress.pm:76
+msgid "Please wait..."
+msgstr " . נא להמתין..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:39
 msgid "System Default"
@@ -967,19 +1335,19 @@ msgstr "מטיל את פרויקט Padre  המלא ל-STDOUT לצורך בדיק
 
 #: lib/Padre/Wx/ActionLibrary.pm:110
 msgid "Delay the action queue for 10 seconds"
-msgstr ""
+msgstr "לעכב את תור הפעולות למשך 10 שניות"
 
 #: lib/Padre/Wx/ActionLibrary.pm:111
 msgid "Stops processing of other action queue items for 10 seconds"
-msgstr ""
+msgstr "עוצר את ביצוע הפעולות האחרות שבתור למשך 10 שניות"
 
 #: lib/Padre/Wx/ActionLibrary.pm:119
 msgid "Delay the action queue for 30 seconds"
-msgstr ""
+msgstr "לעכב את תור הפעולות למשך 30 שניות"
 
 #: lib/Padre/Wx/ActionLibrary.pm:120
 msgid "Stops processing of other action queue items for 30 seconds"
-msgstr ""
+msgstr "עצור עיבוד של של פעולות אחרו בתור ל- 30 שניות"
 
 #: lib/Padre/Wx/ActionLibrary.pm:130
 msgid "&New"
@@ -1032,11 +1400,11 @@ msgstr "הפצת Perl (Module::Starter)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:192
 msgid "Wizard Selector..."
-msgstr ""
+msgstr "בוחר אשפים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:193
 msgid "Selects and opens a wizard"
-msgstr ""
+msgstr "בוחר ופותח אשף"
 
 #: lib/Padre/Wx/ActionLibrary.pm:206
 msgid "&Open"
@@ -1064,7 +1432,7 @@ msgstr "פותח את המסמך הנוכחי בעזרת סייר הקבצים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:238
 msgid "Open with Default System Editor"
-msgstr ""
+msgstr "פתח עם עורך ברירת המחדל של המערכת"
 
 #: lib/Padre/Wx/ActionLibrary.pm:241
 msgid "Opens the file with the default system editor"
@@ -1133,7 +1501,7 @@ msgstr "סגור קבצים..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:350
 msgid "Select some open files for closing"
-msgstr ""
+msgstr "בחר חלק מהקבצים הפתוחים לסגירה"
 
 #: lib/Padre/Wx/ActionLibrary.pm:359
 msgid "Reload File"
@@ -1157,7 +1525,7 @@ msgstr "רענן חלק מהקבצים..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:380
 msgid "Select some open files for reload"
-msgstr ""
+msgstr "בחר חלק מהקבצים הפתוחים להעלאה מחדש"
 
 #: lib/Padre/Wx/ActionLibrary.pm:393 lib/Padre/Wx/Dialog/Preferences.pm:917
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
@@ -1195,15 +1563,11 @@ msgstr "שמור הכול"
 msgid "Save all the files"
 msgstr "שמור את כל הקבצים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:443 lib/Padre/Wx/Main.pm:3614
-msgid "Open Selection"
-msgstr "פתח את הפריט שסומן"
-
 #: lib/Padre/Wx/ActionLibrary.pm:444
 msgid ""
 "List the files that match the current selection and let the user pick one to "
 "open"
-msgstr ""
+msgstr "הצג רשימה של הקבצים המתאימים לבחירה הנוכחית, והרששה למשתמש לבחור אחד"
 
 #: lib/Padre/Wx/ActionLibrary.pm:453
 msgid "Open Session..."
@@ -1214,6 +1578,8 @@ msgid ""
 "Select a session. Close all the files currently open and open all the listed "
 "in the session"
 msgstr ""
+"בחר סביבת עבודה. סגור את כל הקבצים הפתוחים כעת, ופתח את את כל אלו הרשובים "
+"בסביבת העבודה"
 
 #: lib/Padre/Wx/ActionLibrary.pm:464
 msgid "Save Session..."
@@ -1221,7 +1587,7 @@ msgstr "שמור סביבת עבודה..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:465
 msgid "Ask for a session name and save the list of files currently opened"
-msgstr ""
+msgstr "בקש שם לסביבת העבודה ושמור את רשימת הקבצים הפתוחים כעת"
 
 #: lib/Padre/Wx/ActionLibrary.pm:480
 msgid "&Print..."
@@ -1237,7 +1603,7 @@ msgstr "פתח את כל הקבצים האחרונים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:501
 msgid "Open all the files listed in the recent files list"
-msgstr ""
+msgstr "פתח את כל הקבצים הרשומים ברשימת הקבצים האחרונים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:509
 msgid "Clean Recent Files List"
@@ -1245,7 +1611,7 @@ msgstr "נקה רשימת הקבצים האחרונים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:510
 msgid "Remove the entries from the recent files list"
-msgstr ""
+msgstr "הסר פרטים מרשימת הקבצים האחרונים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:521 lib/Padre/Wx/Dialog/DocStats.pm:31
 msgid "Document Statistics"
@@ -1369,11 +1735,11 @@ msgstr "הדבק את הלוח למיקום הנוכחי"
 
 #: lib/Padre/Wx/ActionLibrary.pm:742
 msgid "&Go To..."
-msgstr ""
+msgstr "&לך אל"
 
 #: lib/Padre/Wx/ActionLibrary.pm:743
 msgid "Jump to a specific line number or character position"
-msgstr ""
+msgstr "דלג אל שורה מספר, או מיקום תו"
 
 #: lib/Padre/Wx/ActionLibrary.pm:753
 msgid "&Next Problem"
@@ -1413,7 +1779,7 @@ msgstr "גש אל הסוגר הפותח או הסוגר התאום { },( ), [ ],
 
 #: lib/Padre/Wx/ActionLibrary.pm:841
 msgid "&Select to Matching Brace"
-msgstr ""
+msgstr "&בחירה על לסוגר תואם"
 
 #: lib/Padre/Wx/ActionLibrary.pm:842
 msgid "Select to the matching opening or closing brace"
@@ -1459,7 +1825,7 @@ msgstr "עזרה בהתאם להקשר\tCtrl-Shift-H"
 
 #: lib/Padre/Wx/ActionLibrary.pm:903
 msgid "Comment out or remove comment out of selected lines in the document"
-msgstr ""
+msgstr "שים הערה או הסר הערה על השורות הנבחרות במסמך"
 
 # msgstr "עבור לקובץ הבא\tCtrl-TAB"
 #: lib/Padre/Wx/ActionLibrary.pm:915
@@ -1473,13 +1839,12 @@ msgstr "הפוך השורות בבחירה להערות\tCtrl-M"
 
 # msgstr "עבור לקובץ הבא\tCtrl-TAB"
 #: lib/Padre/Wx/ActionLibrary.pm:927
-#, fuzzy
 msgid "&Uncomment Selected Lines"
 msgstr "הפוך השורות בבחירה להערות\tCtrl-M"
 
 #: lib/Padre/Wx/ActionLibrary.pm:928
 msgid "Remove comment out of selected lines in the document"
-msgstr ""
+msgstr "הסר הערה על השורות הנבחרות במסמך"
 
 #: lib/Padre/Wx/ActionLibrary.pm:940
 msgid "Encode Document to System Default"
@@ -1605,7 +1970,7 @@ msgstr "להחיל השוואה על קובץ"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1080
 msgid "Apply a patch file to the current document"
-msgstr ""
+msgstr "התאם קובץ טלאי (patch) למסמך נוכחי"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1089
 msgid "Apply Diff to Project"
@@ -1613,7 +1978,7 @@ msgstr "להחיל השוואה על פרויקט"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1090
 msgid "Apply a patch file to the current project"
-msgstr ""
+msgstr "התאם קובץ טלאי (patch) לפרוייקט נוכחי"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1101
 msgid "Filter through External Tool..."
@@ -1624,117 +1989,128 @@ msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr "סנן את הבחירה (או את כל המסמך) דרך כלי חיצוני כלשהו"
 
+#: lib/Padre/Wx/ActionLibrary.pm:1110
+#, fuzzy
+msgid "Filter through Perl"
+msgstr "סנן באמצעות כלי"
+
 #: lib/Padre/Wx/ActionLibrary.pm:1111
+#, fuzzy
+msgid "Use Perl source as filter"
+msgstr "קבצים פתוחים:"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1120
 msgid "Show as Hexadecimal"
 msgstr "להציג כהקסדצימלי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1112
+#: lib/Padre/Wx/ActionLibrary.pm:1121
 #, fuzzy
 msgid ""
 "Show the ASCII values of the selected text in hexadecimal notation in the "
 "output window"
 msgstr "הצג את ערכי ה ASCII של הטקסט הנבחר במספרים עשרוניים בחלון הפלט"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1121
+#: lib/Padre/Wx/ActionLibrary.pm:1130
 msgid "Show as Decimal"
 msgstr "להציג כעשרוני"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1122
+#: lib/Padre/Wx/ActionLibrary.pm:1131
 msgid ""
 "Show the ASCII values of the selected text in decimal numbers in the output "
 "window"
 msgstr "הצג את ערכי ה ASCII של הטקסט הנבחר במספרים עשרוניים בחלון הפלט"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1134
+#: lib/Padre/Wx/ActionLibrary.pm:1143
 msgid "&Find..."
 msgstr "חפש..."
 
-#: lib/Padre/Wx/ActionLibrary.pm:1135
+#: lib/Padre/Wx/ActionLibrary.pm:1144
 msgid "Find text or regular expressions using a traditional dialog"
 msgstr "מצא טקסט או ביטויים רגולריים באמצעות תיבת שיח רגילה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1145 lib/Padre/Wx/ActionLibrary.pm:1200
+#: lib/Padre/Wx/ActionLibrary.pm:1158 lib/Padre/Wx/ActionLibrary.pm:1214
+#: lib/Padre/Wx/FBP/Find.pm:98
 msgid "Find Next"
 msgstr "מצא הבא\tF3"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1147
+#: lib/Padre/Wx/ActionLibrary.pm:1160
 msgid "Repeat the last find to find the next match"
 msgstr "חזור על החיפוש הקודם כדי למצוא את את המקום  התואם הבא"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1179
+#: lib/Padre/Wx/ActionLibrary.pm:1193
 msgid "Failed to find any matches"
 msgstr "לא נמצא שום דבר תואם"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1187
+#: lib/Padre/Wx/ActionLibrary.pm:1201
 msgid "&Find Previous"
 msgstr "מצא הקודם\tShift-F3"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1188
+#: lib/Padre/Wx/ActionLibrary.pm:1202
 msgid "Repeat the last find, but backwards to find the previous match"
 msgstr "חזור על החיפוש האחרון, אבל אחורה כדי למצוא את התוצאה הקודמת"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1201
+#: lib/Padre/Wx/ActionLibrary.pm:1215
 msgid ""
 "Find next matching text using a toolbar-like dialog at the bottom of the "
 "editor"
 msgstr "מצא את תוצאת החיפוש הבאה באמצעות תיבת שיח דמוית סרגל בתחתית העורך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1211
+#: lib/Padre/Wx/ActionLibrary.pm:1225
 msgid "Find Previous"
 msgstr "מצא הקודם\tShift-F3"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1212
+#: lib/Padre/Wx/ActionLibrary.pm:1226
 msgid ""
 "Find previous matching text using a toolbar-like dialog at the bottom of the "
 "editor"
 msgstr "מצא את תוצאת החיפוש הקודמת באמצעות תיבת שיח דמוית סרגל בתחתית העורך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1224
+#: lib/Padre/Wx/ActionLibrary.pm:1238
 msgid "Replace..."
 msgstr "החלף..."
 
-#: lib/Padre/Wx/ActionLibrary.pm:1225
+#: lib/Padre/Wx/ActionLibrary.pm:1239
 #, fuzzy
 msgid "Find a text and replace it"
 msgstr "Ack (חפש בתוך קבצים)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1237
+#: lib/Padre/Wx/ActionLibrary.pm:1251
 msgid "Find in Fi&les..."
 msgstr "חפש בתוך קבצים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1238
+#: lib/Padre/Wx/ActionLibrary.pm:1252
 msgid "Search for a text in all files below a given directory"
 msgstr "חפש טקסט בכל הקבצים מתחת תיקיה נתונה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1251
+#: lib/Padre/Wx/ActionLibrary.pm:1265
 msgid "Open Resource..."
 msgstr "פתח משאב..."
 
-#: lib/Padre/Wx/ActionLibrary.pm:1252
+#: lib/Padre/Wx/ActionLibrary.pm:1266
 msgid "Type in a filter to select a file"
 msgstr "הקלד פילטר כדי לבחור קובץ"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1262
+#: lib/Padre/Wx/ActionLibrary.pm:1276
 msgid "Quick Menu Access..."
 msgstr "גישה מהירה לתפריט..."
 
-#: lib/Padre/Wx/ActionLibrary.pm:1263
+#: lib/Padre/Wx/ActionLibrary.pm:1277
 msgid "Quick access to all menu functions"
 msgstr "גישה מהירה לכל פעולות התפריטים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1278
+#: lib/Padre/Wx/ActionLibrary.pm:1292
 msgid "Lock User Interface"
 msgstr "נעילת ממשק משתמש"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1279
+#: lib/Padre/Wx/ActionLibrary.pm:1293
 msgid "If activated, do not allow moving around some of the windows"
 msgstr "אם מופעל, אל תאפשר למשתמש להזיז חלק מהחלונות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1290
+#: lib/Padre/Wx/ActionLibrary.pm:1304
 msgid "Show Output"
 msgstr "הצג פלט"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1291
+#: lib/Padre/Wx/ActionLibrary.pm:1305
 msgid ""
 "Show the window displaying the standard output and standard error of the "
 "running scripts"
@@ -1742,869 +2118,255 @@ msgstr ""
 "הצג את החלון שמציג את הפלט הסטנדרטי ואת תצוגת השגיאות הסטנדרטית של התוכניות "
 "הרצות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1300
+#: lib/Padre/Wx/ActionLibrary.pm:1314
 msgid "Show Functions"
 msgstr "הצג פונקציות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1301
+#: lib/Padre/Wx/ActionLibrary.pm:1315
 msgid "Show a window listing all the functions in the current document"
 msgstr "הצג חלון עם רשימת כל הפונקציות במסמך הנוכחי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1310
+#: lib/Padre/Wx/ActionLibrary.pm:1324
 msgid "Show Command Line window"
 msgstr "הצג את חלון שורת הפקודה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1311
+#: lib/Padre/Wx/ActionLibrary.pm:1325
 msgid "Show the command line window"
 msgstr "הצג את חלון שורת הפקודה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1320
+#: lib/Padre/Wx/ActionLibrary.pm:1334
 msgid "Show To-do List"
 msgstr "הצג את רשימת המטלות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1321
+#: lib/Padre/Wx/ActionLibrary.pm:1335
 msgid "Show a window listing all todo items in the current document"
 msgstr "הצג חלון עם רשימת כל המטלות במסמך הנוכחי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1330
+#: lib/Padre/Wx/ActionLibrary.pm:1344
 #, fuzzy
 msgid "Show Outline"
 msgstr "הצג תווי שורה חדשה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1331
+#: lib/Padre/Wx/ActionLibrary.pm:1345
 msgid ""
 "Show a window listing all the parts of the current file (functions, pragmas, "
 "modules)"
 msgstr "הצג חלון עם רשימת כל החלקים בקובץ הנוכחי (פונקציות, פרגמות, מודולים)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1340
+#: lib/Padre/Wx/ActionLibrary.pm:1354
 msgid "Show Project Browser/Tree"
 msgstr "הצג את עץ הפרויקט/סייר הפרויקט"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1341
+#: lib/Padre/Wx/ActionLibrary.pm:1355
 msgid "Project Browser - Was known as the Directory Tree."
-msgstr ""
+msgstr "דפדפן פרוייקט - היה ידוע כ- \"עץ תיקייה\""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1350
+#: lib/Padre/Wx/ActionLibrary.pm:1364
 msgid "Show Syntax Check"
 msgstr "הצג בדיקת תחביר"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1351
+#: lib/Padre/Wx/ActionLibrary.pm:1365
 msgid ""
 "Turn on syntax checking of the current document and show output in a window"
 msgstr "הפעל בדיקת תחביר למסמף הנוכחי והצג את הפלט בחלון"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1360
+#: lib/Padre/Wx/ActionLibrary.pm:1374
 msgid "Hide Find in Files"
 msgstr "הסתר חיפוש בתוך קבצים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1361
+#: lib/Padre/Wx/ActionLibrary.pm:1375
 msgid "Hide the list of matches for a Find in Files search"
-msgstr ""
+msgstr "הסתר את רשימת ההתאמות עבור חיפוש \"מצא בתוך קובץ\""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1369
+#: lib/Padre/Wx/ActionLibrary.pm:1383
 msgid "Show Status Bar"
 msgstr "הצג סרגל סטאטוס"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1370
+#: lib/Padre/Wx/ActionLibrary.pm:1384
 msgid "Show/hide the status bar at the bottom of the screen"
 msgstr "התג/הסתר את סרגל הסטאטוס בתחתית המסך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1379
+#: lib/Padre/Wx/ActionLibrary.pm:1393
 msgid "Show Toolbar"
 msgstr "הצג סרגל כלים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1380
+#: lib/Padre/Wx/ActionLibrary.pm:1394
 msgid "Show/hide the toolbar at the top of the editor"
 msgstr "הצג/הסתר את סרגל הכלים בראש העורך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1395
+#: lib/Padre/Wx/ActionLibrary.pm:1409
 msgid "Switch document type"
 msgstr "החלף את סוג המסמך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1407
+#: lib/Padre/Wx/ActionLibrary.pm:1422
 msgid "Show Line Numbers"
 msgstr "הצג מספרי שורות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1408
+#: lib/Padre/Wx/ActionLibrary.pm:1423
 msgid ""
 "Show/hide the line numbers of all the documents on the left side of the "
 "window"
 msgstr "הצג/הסתר את מספרי השורות של כל המסמכים בצד השמאלי של החלון"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1417
+#: lib/Padre/Wx/ActionLibrary.pm:1432
 msgid "Show Code Folding"
 msgstr "הצג קיפול קוד"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1418
+#: lib/Padre/Wx/ActionLibrary.pm:1433
 msgid ""
 "Show/hide a vertical line on the left hand side of the window to allow "
 "folding rows"
 msgstr "הצג/הסתר את הקו האנכי בצד שמאל של החלון כדי לאפשר קיפול שורות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1427
+#: lib/Padre/Wx/ActionLibrary.pm:1442
 msgid "Fold all"
 msgstr "לקפל הכול"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1428
+#: lib/Padre/Wx/ActionLibrary.pm:1443
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
 msgstr "קפל את כל הבלוקים שניתן לקבל (בתנאי שקיפול  מאופשר)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1437
+#: lib/Padre/Wx/ActionLibrary.pm:1452
 msgid "Unfold all"
 msgstr "לפרוס הכול"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1438
+#: lib/Padre/Wx/ActionLibrary.pm:1453
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr "   (בתנאי שקיפול מאופשר)פרוש את הבלוקים שניתן לקבל"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1447
+#: lib/Padre/Wx/ActionLibrary.pm:1462
 msgid "Show Call Tips"
 msgstr "הצג טיפים לקריאה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1448
+#: lib/Padre/Wx/ActionLibrary.pm:1463
 msgid "When typing in functions allow showing short examples of the function"
 msgstr "בזמן הקלדת פונקציות אפשר הצגת דוגמאות קצרות של השימוש בפונקציה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:1461
-msgid "Show Current Line"
-msgstr "הצג את השורה הנוכחית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1462
-msgid "Highlight the line where the cursor is"
-msgstr "צבע את השורה שבה נמצא הסמן"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1471
-msgid "Show Right Margin"
-msgstr "הצג שול ימני"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1472
-msgid "Show a vertical line indicating the right margin"
-msgstr "הצג קו אנכי שמראה את מיקום השול הימני"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1483
-msgid "Show Newlines"
-msgstr "הצג תווי שורה חדשה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1484
-msgid "Show/hide the newlines with special character"
-msgstr "הצג/הסתר תווי שורה חדשה באמצעות תו מיוחד"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1493
-msgid "Show Whitespaces"
-msgstr "הצג רווחים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1494
-msgid "Show/hide the tabs and the spaces with special characters"
-msgstr "הצג/הסתר את הטאבים ואת הרווחים עם תווים מיוחדים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1503
-msgid "Show Indentation Guide"
-msgstr "הצג מדריך הזחה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1504
-msgid ""
-"Show/hide vertical bars at every indentation position on the left of the rows"
-msgstr "הצג/הסתר קווים אנכיים בכל נקודת הזחה  מצד שמאל של השורות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1513
-msgid "Word-Wrap"
-msgstr "גלישת מילים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1514
-msgid "Wrap long lines"
-msgstr "הגלש שורות ארוכות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1525
-msgid "Increase Font Size"
-msgstr "הגדל גופן"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1526
-msgid "Make the letters bigger in the editor window"
-msgstr "הגדל את האותיות בחלון העריכה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1535
-msgid "Decrease Font Size"
-msgstr "הקטן גופן"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1536
-msgid "Make the letters smaller in the editor window"
-msgstr "הקטן את האותיות בחלון העריכה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1545
-msgid "Reset Font Size"
-msgstr "חזור לגודל גופן מקורי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1546
-#, fuzzy
-msgid "Reset the size of the letters to the default in the editor window"
-msgstr "החזר את האותיות לגודל ברירת המחדל בחלון העריכה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1558 lib/Padre/Wx/Dialog/Bookmarks.pm:56
-msgid "Set Bookmark"
-msgstr "צור סימנייה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1559
-msgid "Create a bookmark in the current file current row"
-msgstr "צור סימניה בקובץ הנוכחי בשורה הנוכחית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1569 lib/Padre/Wx/Dialog/Bookmarks.pm:57
-msgid "Go to Bookmark"
-msgstr "לך לסימנייה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1570
-msgid "Select a bookmark created earlier and jump to that position"
-msgstr "בחר סימניה שנוצרה קודם לכן וקפוץ אל מיקום הסימניה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1587 lib/Padre/Wx/ActionLibrary.pm:1602
-msgid "Switch highlighting colours"
-msgstr "החלף את צבעי הקוד ל"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1616
-msgid "&Full Screen"
-msgstr "הצג במלוא המסך"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1617
-msgid "Set Padre in full screen mode"
-msgstr "הגדר את Padre למצב עבודה במלוא המסך"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1638
-msgid "Check for Common (Beginner) Errors"
-msgstr "חפש שגיאות (מתחילים) נפוצות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1639
-msgid "Check the current file for common beginner errors"
-msgstr "חפש שגיאות (מתחילים) נפוצות בקובץ הנוכחי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1650
-msgid "Find Unmatched Brace"
-msgstr "מצא סוגר ללא תואם"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1651
-msgid ""
-"Searches the source code for brackets with lack a matching (opening/closing) "
-"part."
-msgstr "מחפש בקוד המקור סוגריים מסולסלים ללא סוגריים תואמים (פתוחים/סגורים))"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1662
-msgid "Find Variable Declaration"
-msgstr "מצא הצהרת המשתנה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1663
-msgid ""
-"Find where the selected variable was declared using \"my\" and put the focus "
-"there."
-msgstr "מצא את המקום שבו המשתנה הנבחר הוגדר באמצעות \"my\" והעבר לשם את המיקוד"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1674
-msgid "Find Method Declaration"
-msgstr "מצא הצהרת המתודה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1675
-msgid "Find where the selected function was defined and put the focus there."
-msgstr "מצא את המקום שבו הוגדרה הפונקציה הנבחרת והעבר לשם את המיקוד"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1687
-msgid "Vertically Align Selected"
-msgstr "יישור אנכי של הבחירה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1688
-msgid "Align a selection of text to the same left column."
-msgstr "יישר טקסט נבחר לאותה עמודה שמאלית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1699
-#, fuzzy
-msgid "Newline Same Column"
-msgstr "שורה חדשה באותה העמודה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1701
-msgid ""
-"Like pressing ENTER somewhere on a line, but use the current position as "
-"ident for the new line."
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1713
-#, fuzzy
-msgid "Create Project Tagsfile"
-msgstr "סגור את שאר הפרויקטים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1714
-msgid ""
-"Creates a perltags - file for the current project supporting find_method and "
-"autocomplete."
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1725
-msgid "Automatic Bracket Completion"
-msgstr "השלמת סוגריים אוטומטית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1726
-msgid "When typing { insert a closing } automatically"
-msgstr "בעת הקלדת { הכנס באופן אוטומטיאת הסוגר {"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1743
-msgid "Rename Variable"
-msgstr "החלף משתנה "
-
-#: lib/Padre/Wx/ActionLibrary.pm:1744
-#, fuzzy
-msgid ""
-"Prompt for a replacement variable name and replace all occurrences of this "
-"variable"
-msgstr "בקש שם חליפי למשתנה והחלף את כל המופעים של המשתנה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1756
-msgid "Change variable to camelCase"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1757
-msgid "Change variable style from camel_case to camelCase"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1770
-msgid "Change variable to CamelCase"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1771
-msgid "Change variable style from camel_case to CamelCase"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1784
-msgid "Change variable style to using_underscores"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1785
-msgid "Change variable style from camelCase to camel_case"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1798
-msgid "Change variable style to Using_Underscores"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1799
-msgid "Change variable style from camelCase to Camel_Case"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1812
-msgid "Extract Subroutine..."
-msgstr "חלץ שגרה..."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1814
-msgid ""
-"Cut the current selection and create a new sub from it. A call to this sub "
-"is added in the place where the selection was."
-msgstr ""
-"חתוך את הטקסט הנבחר וצור ממנו שגרה חדשה. קריאה לשגרה זו תוכנס במקום הטקסט "
-"הנבחר."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1824
-msgid "Name for the new subroutine"
-msgstr " שם לשגרה החדשה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1825
-msgid "Extract Subroutine"
-msgstr "חלץ שגרה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1839
-msgid "Introduce Temporary Variable..."
-msgstr "ליצור משתנה זמני..."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1840
-msgid "Assign the selected expression to a newly declared variable"
-msgstr "הצב את הביטוי שנבחר למשתנה החדש שהוגדר"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1847
-msgid "Variable Name"
-msgstr "שם משתנה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1848
-msgid "Introduce Temporary Variable"
-msgstr "ליצור משתנה זמני"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1862
-msgid "Move POD to __END__"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1863
-#, fuzzy
-msgid "Combine scattered POD at the end of the document"
-msgstr "צרף את השורה הבאה לסוף השורה הנוכחית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1878
-msgid "Run Script"
-msgstr "הרץ תסריט"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1879
-msgid "Runs the current document and shows its output in the output panel."
-msgstr "מריץ את המסמך הנוכחי ומציג את הפלט שלו בחלון הפלט."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1894
-msgid "Run Script (Debug Info)"
-msgstr "הרץ תכנית (עם מידע דיבוג)"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1895
-msgid "Run the current document but include debug info in the output."
-msgstr "הרץ את המסמך הנוכחי וכלול את  מידע הדיבוג בפלט."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1906
-msgid "Run Command"
-msgstr "הפעל פקודה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1907
-msgid "Runs a shell command and shows the output."
-msgstr "מריץ פקודת מעטפת ומציג את הפלט."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1917
-msgid "Run Build and Tests"
-msgstr "בנה והרץ את כל הבדיקות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1918
-msgid "Builds the current project, then run all tests."
-msgstr "בנה את הפרויקט הנוכחי והרץ את כל הבדיקות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1929
-msgid "Run Tests"
-msgstr "הרץ בדיקות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1931
-msgid ""
-"Run all tests for the current project or document and show the results in "
-"the output panel."
-msgstr ""
-"הרץ את כל הבדיקות של הפרויקט או של המסמך הנוכחי והצג את התוצאות בחלון הפלט."
-
-#: lib/Padre/Wx/ActionLibrary.pm:1949
-msgid "Run This Test"
-msgstr "הרץ בדיקה זו"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1950
-msgid "Run the current test if the current document is a test. (prove -bv)"
-msgstr "הרץ את הבדיקה הנוכחית אם המסמך הנוכחי הוא בדיקה (prove -bv)"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1962
-msgid "Stop Execution"
-msgstr "הפסק הרצה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1963
-msgid "Stop a running task."
-msgstr "הפסק משימה רצה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:1988
-msgid "Step In (&s)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1990
-msgid ""
-"Execute the next statement, enter subroutine if needed. (Start debugger if "
-"it is not yet running)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2005
-msgid "Step Over (&n)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2007
-msgid ""
-"Execute the next statement. If it is a subroutine call, stop only after it "
-"returned. (Start debugger if it is not yet running)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2024
-msgid "Step Out (&r)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2025
-msgid "If within a subroutine, run till return is called and then stop."
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2040
-msgid "Run till Breakpoint (&c)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2041
-msgid "Start running and/or continue running till next breakpoint or watch"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2055
-msgid "Jump to Current Execution Line"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2056
-msgid ""
-"Set focus to the line where the current statement is in the debugging process"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2071
-msgid "Set Breakpoint (&b)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2072
-msgid "Set a breakpoint to the current location of the cursor with a condition"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2086
-msgid "Remove Breakpoint"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2087
-msgid "Remove the breakpoint at the current location of the cursor"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2101
-msgid "List All Breakpoints"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2102
-msgid "List all the breakpoints on the console"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2116
-msgid "Run to Cursor"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2117
-msgid "Set a breakpoint at the line where to cursor is and run till there"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2132
-#, fuzzy
-msgid "Show Stack Trace (&t)"
-msgstr "הצג בדיקת תחביר"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2133
-msgid ""
-"When in a subroutine call show all the calls since the main of the program"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2148
-msgid "Display Value"
-msgstr "הצג ערך"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2149
-msgid ""
-"Display the current value of a variable in the right hand side debugger pane"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2163
-msgid "Show Value Now (&x)"
-msgstr "הצג ערך כעת"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2164
-#, fuzzy
-msgid "Show the value of a variable now in a pop-up window."
-msgstr "הצג את ערכי ה ASCII של הטקסט הנבחר בהקס בחלון הפלט"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2178
-#, fuzzy
-msgid "Evaluate Expression..."
-msgstr "ביטוי רגולרי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2179
-msgid "Type in any expression and evaluate it in the debugged process"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2194
-msgid "Quit Debugger (&q)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2195
-msgid "Quit the process being debugged"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2208 lib/Padre/Wx/Dialog/Preferences.pm:828
-#: lib/Padre/Wx/Dialog/PluginManager.pm:131
-msgid "Preferences"
-msgstr "העדפות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2209
-msgid "Edit the user preferences"
-msgstr "ערוך את העדפות המשתמש"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2217
-msgid "Preferences Sync"
-msgstr "סינכרון העדפות"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2218
-msgid "Share your preferences between multiple computers"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2227 lib/Padre/Wx/Dialog/KeyBindings.pm:29
-msgid "Key Bindings"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2228
-msgid "Show the key bindings dialog to configure Padre shortcuts"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2236 lib/Padre/Wx/Dialog/RegexEditor.pm:33
-msgid "Regex Editor"
-msgstr "עורך ביטוי רגולרי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2237
-msgid "Open the regular expression editing window"
-msgstr "פתח את חלון עריכת הביטויים הרגולריים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2246
-#, fuzzy
-msgid "Edit with Regex Editor"
-msgstr "עורך ביטוי רגולרי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2247
-#, fuzzy
-msgid "Open the selected text in the Regex Editor"
-msgstr "הגדל את האותיות בחלון העריכה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2259 lib/Padre/Wx/Dialog/PluginManager.pm:35
-msgid "Plug-in Manager"
-msgstr "מנהל התוספים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2260
-msgid "Show the Padre plug-in manager to enable or disable plug-ins"
-msgstr "הצג את מנהל התוספים של Padre כדי לאפשר או לבטל את השימוש בתוספים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2275
-msgid "Plug-in List (CPAN)"
-msgstr "רשימת תוספים (CPAN)"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2276
-msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
-msgstr "פתח את הדפדפן לחיפוש CPAN כשהוא מציג את חבילות Padre::Plugin"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2284
-msgid "Edit My Plug-in"
-msgstr "ערוך את התוסף שלי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2285
-msgid ""
-"My Plug-in is a plug-in where developers could extend their Padre "
-"installation"
-msgstr "התוסף My Plug-in הוא תוסף שיכול לשמש מפתחים להרחבת Padre  המותקן אצלם"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2291
-msgid "Could not find the Padre::Plugin::My plug-in"
-msgstr "לא מצאתי את התוסף Padre::Plugin::My"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2301
-msgid "Reload My Plug-in"
-msgstr "טען מחדש את התוסף שלי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2302
-msgid "This function reloads the My plug-in without restarting Padre"
-msgstr "פעולה זו מרעננת את My plug-in בלי להפעיל מחדש את Padre"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2310 lib/Padre/Wx/ActionLibrary.pm:2314
-#: lib/Padre/Wx/ActionLibrary.pm:2315
-msgid "Reset My plug-in"
-msgstr "אתחל את התוסף השלי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2311
-msgid "Reset the My plug-in to the default"
-msgstr "אפס את התוסף My Plugin  לברירת המחדל"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2330
-msgid "Reload All Plug-ins"
-msgstr "טען מחדש את כל התוספים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2331
-msgid "Reload all plug-ins from disk"
-msgstr "טען מחדש את כל התוספים מהדיסק"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2339
-msgid "(Re)load Current Plug-in"
-msgstr "טען מחדש את התוסף הנוכחי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2340
-msgid "Reloads (or initially loads) the current plug-in"
-msgstr "טוען מחדש, (או טוען לראשונה) את התוסף הנוכחי"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2348
-msgid "Install CPAN Module"
-msgstr "להתקין מודול CPAN"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2349
-msgid "Install a Perl module from CPAN"
-msgstr "התקן מודול Perl  מ-CPAN"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2362
-msgid "Using CPAN.pm to install a CPAN like package opened locally"
-msgstr "משתמש ב-CPAN.pm כדי להתקין חבילה דמוית CPAN בהתקנה מקומית"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2371
-msgid "Install Remote Distribution"
-msgstr "להתקין הפצה מרוחקת"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2372
-msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
-msgstr "משתמש ב-pip להורדת קובץ tar.gz והתקנתו באמצעות CPAN.pm"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2381
-msgid "Open CPAN Config File"
-msgstr "פתח את קובץ ההגדרות של CPAN"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2382
-msgid "Open CPAN::MyConfig.pm for manual editing by experts"
-msgstr "פתח את  CPAN::MyConfig.pm  לעריכה ידנית על ידי מומחים"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2393 lib/Padre/Wx/ActionLibrary.pm:2439
+#: lib/Padre/Wx/ActionLibrary.pm:2442
 msgid "Last Visited File"
 msgstr "הקובץ שבוקר לאחרונה\tCtrl-6"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2394
-msgid ""
-"Switch to edit the file that was previously edited (can switch back and "
-"forth)"
-msgstr "עבור לעריכת קובץ שנערך קודם לכן (ניתן לעבור הלוך וחזור)"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2404
-msgid "Oldest Visited File"
-msgstr "הקובץ שבוקר לאחרונה\tCtrl-6"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2405
-msgid "Put focus on tab visited the longest time ago."
-msgstr "העבר את המיקוד ללשונית שבוקרה לפני הכי הרבה זמן"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2415
-msgid "Next File"
-msgstr "קובץ חדש"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2416
-msgid "Put focus on the next tab to the right"
-msgstr "העבר את המיקוד ללשונית הבאה מצד ימין"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2426
-msgid "Previous File"
-msgstr "הקובץ הקודם"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2427
-msgid "Put focus on the previous tab to the left"
-msgstr "העבר את המיקוד ללשונית הקודמת משמאל"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2440
+#: lib/Padre/Wx/ActionLibrary.pm:2443
 msgid "Jump between the two last visited files back and forth"
-msgstr ""
+msgstr "דלג בין שני הקבצים האחרונים שנצפו אחורה וקדימה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2450
+#: lib/Padre/Wx/ActionLibrary.pm:2453
 msgid "Goto previous position"
-msgstr ""
+msgstr "לך אל המיקום הקודם"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2451
+#: lib/Padre/Wx/ActionLibrary.pm:2454
 msgid "Jump to the last position saved in memory"
-msgstr ""
+msgstr "דלג אל המיקום האחרון השמור בזכרון"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2463 lib/Padre/Wx/Dialog/Positions.pm:108
+#: lib/Padre/Wx/ActionLibrary.pm:2466 lib/Padre/Wx/Dialog/Positions.pm:108
 msgid "Show previous positions"
-msgstr ""
+msgstr "הצג מיקומים קודמים"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2464
+#: lib/Padre/Wx/ActionLibrary.pm:2467
 msgid "Show the list of positions recently visited"
-msgstr ""
+msgstr "הצג רשימת מיקומים שנצפו לאחרונה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2477
+#: lib/Padre/Wx/ActionLibrary.pm:2480
 msgid "Right Click"
 msgstr "לחיצה ימנית\tAlt-/"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2478
+#: lib/Padre/Wx/ActionLibrary.pm:2481
 msgid "Imitate clicking on the right mouse button"
 msgstr "סמה לחיצה על הכפתור הימני של העכבר"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2491
+#: lib/Padre/Wx/ActionLibrary.pm:2494
 msgid "Go to Functions Window"
 msgstr "עבור לחלון הפונקציות\tAlt-O"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2492
+#: lib/Padre/Wx/ActionLibrary.pm:2495
 msgid "Set the focus to the \"Functions\" window"
 msgstr "קבע את המיקוד על חלון הפונקציות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2505
+#: lib/Padre/Wx/ActionLibrary.pm:2508
 #, fuzzy
 msgid "Go to Todo Window"
 msgstr "עבור לחלון הראשי\tAlt-M"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2506
+#: lib/Padre/Wx/ActionLibrary.pm:2509
 msgid "Set the focus to the \"Todo\" window"
 msgstr "קבע את המיקוד על חלון המטלות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2517
+#: lib/Padre/Wx/ActionLibrary.pm:2520
 #, fuzzy
 msgid "Go to Outline Window"
 msgstr "עבור לחלון הפלט\tAlt-O"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2518
+#: lib/Padre/Wx/ActionLibrary.pm:2521
 #, fuzzy
 msgid "Set the focus to the \"Outline\" window"
 msgstr "קבע את המיקוד על חלון הפונקציות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2528
+#: lib/Padre/Wx/ActionLibrary.pm:2531
 msgid "Go to Output Window"
 msgstr "עבור לחלון הפלט\tAlt-O"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2529
+#: lib/Padre/Wx/ActionLibrary.pm:2532
 msgid "Set the focus to the \"Output\" window"
 msgstr "קבע את המיקוד על חלון הפלט"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2539
+#: lib/Padre/Wx/ActionLibrary.pm:2542
 msgid "Go to Syntax Check Window"
 msgstr "עבור לחלון בדיקת תחביר\tAlt-C"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2540
+#: lib/Padre/Wx/ActionLibrary.pm:2543
 msgid "Set the focus to the \"Syntax Check\" window"
 msgstr "קבע את המיקוד על חלון בדיקת התחביר"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2550
+#: lib/Padre/Wx/ActionLibrary.pm:2553
 msgid "Go to Command Line Window"
 msgstr "עבור לחלון שורת הפקודה\t"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2551
+#: lib/Padre/Wx/ActionLibrary.pm:2554
 #, fuzzy
 msgid "Set the focus to the \"Command Line\" window"
 msgstr "העבר את המיקוד לחלון העריכה הראשי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2561
+#: lib/Padre/Wx/ActionLibrary.pm:2564
 msgid "Go to Main Window"
 msgstr "עבור לחלון הראשי\tAlt-M"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2562
+#: lib/Padre/Wx/ActionLibrary.pm:2565
 msgid "Set the focus to the main editor window"
 msgstr "העבר את המיקוד לחלון העריכה הראשי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2575 lib/Padre/Wx/Browser.pm:65
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:398
-msgid "Help"
-msgstr "עזרה"
-
-#: lib/Padre/Wx/ActionLibrary.pm:2576
+#: lib/Padre/Wx/ActionLibrary.pm:2579
 msgid "Show the Padre help"
-msgstr ""
+msgstr "הצג את העזרה של Padre"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2584
+#: lib/Padre/Wx/ActionLibrary.pm:2587
 msgid "Search Help"
 msgstr "חפש בעזרה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2585
+#: lib/Padre/Wx/ActionLibrary.pm:2588
 msgid "Search the Perl help pages (perldoc)"
-msgstr ""
+msgstr "חפש בדפי העזרה של Perl  (perldoc)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2596
+#: lib/Padre/Wx/ActionLibrary.pm:2599
 msgid "Context Help"
 msgstr "עזרה בהתאם להקשר\tCtrl-Shift-H"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2597
+#: lib/Padre/Wx/ActionLibrary.pm:2600
 msgid "Show the help article for the current context"
 msgstr "הצג את מאמר העזרה להקשר הנוכחי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2609
+#: lib/Padre/Wx/ActionLibrary.pm:2612
 msgid "Current Document"
 msgstr " מסמך נוכחי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2610
+#: lib/Padre/Wx/ActionLibrary.pm:2613
 msgid "Show the POD (Perldoc) version of the current document"
 msgstr "הצג את גירסת ה POD של המסמך הנוכחי"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2620
+#: lib/Padre/Wx/ActionLibrary.pm:2623
 msgid "Padre Support (English)"
 msgstr "תמיכה ב־Padre (אנגלית)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2622
+#: lib/Padre/Wx/ActionLibrary.pm:2625
 msgid ""
 "Open the Padre live support chat in your web browser and talk to others who "
 "may help you with your problem"
@@ -2612,11 +2374,11 @@ msgstr ""
 "פתח את התמיכה החיה של Padre בדפדפן ברירת המחדל שלך ושוחח עם משתמשים אחרים "
 "שעשויים לסייע לך בפתרון הבעיה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2632
+#: lib/Padre/Wx/ActionLibrary.pm:2635
 msgid "Perl Help"
 msgstr "עזרה ל-Perl"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2634
+#: lib/Padre/Wx/ActionLibrary.pm:2637
 msgid ""
 "Open the Perl live support chat in your web browser and talk to others who "
 "may help you with your problem"
@@ -2624,11 +2386,11 @@ msgstr ""
 "פתח את התמיכה החיה של Perl בדפדפן ברירת המחדל שלך ושוחח עם משתמשים אחרים "
 "שעשויים לסייע לך בפתרון הבעיה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2644
+#: lib/Padre/Wx/ActionLibrary.pm:2647
 msgid "Win32 Questions (English)"
 msgstr "שאלות Win32 (אנגלית)"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2646
+#: lib/Padre/Wx/ActionLibrary.pm:2649
 msgid ""
 "Open the Perl/Win32 live support chat in your web browser and talk to others "
 "who may help you with your problem"
@@ -2636,11 +2398,11 @@ msgstr ""
 "פתח את התמיכה החיה של Perl/Win32 בדפדפן ברירת המחדל שלך ושוחח עם משתמשים "
 "אחרים שעשויים לסייע לך בפתרון הבעיה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2658
+#: lib/Padre/Wx/ActionLibrary.pm:2661
 msgid "Visit the PerlMonks"
 msgstr "בקר ב-PerlMonks"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2660
+#: lib/Padre/Wx/ActionLibrary.pm:2663
 msgid ""
 "Open perlmonks.org, one of the biggest Perl community sites, in your default "
 "web browser"
@@ -2648,814 +2410,744 @@ msgstr ""
 "פתח את אתר perlmonks.org, אחד מאתרי הקהילה הגדולים ביותר של Perl בדפדפן "
 "ברירת המחדל שלך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2670
+#: lib/Padre/Wx/ActionLibrary.pm:2673
 msgid "Report a New &Bug"
 msgstr "לדווח תקלה חדשה"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2671
+#: lib/Padre/Wx/ActionLibrary.pm:2674
 msgid "Send a bug report to the Padre developer team"
 msgstr "שלח דוח תקלה לצוות מפתחי Padre"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2678
+#: lib/Padre/Wx/ActionLibrary.pm:2681
 msgid "View All &Open Bugs"
 msgstr "להציג את כל התקלות הפתוחות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2679
+#: lib/Padre/Wx/ActionLibrary.pm:2682
 msgid "View all known and currently unsolved bugs in Padre"
 msgstr "הצג את כל התקלות הידועות שכרגע אינן פתורות ב-Padre"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2687
+#: lib/Padre/Wx/ActionLibrary.pm:2690
 msgid "&Translate Padre..."
 msgstr "לתרגם את Padre..."
 
-#: lib/Padre/Wx/ActionLibrary.pm:2688
+#: lib/Padre/Wx/ActionLibrary.pm:2691
 msgid "Help by translating Padre to your local language"
 msgstr "עזור על ידי תירגום Padre לשפה המקומית שלך"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2699
+#: lib/Padre/Wx/ActionLibrary.pm:2702
 msgid "&About"
 msgstr "אודות"
 
-#: lib/Padre/Wx/ActionLibrary.pm:2700
+#: lib/Padre/Wx/ActionLibrary.pm:2703
 msgid "Show information about Padre"
 msgstr "הצג מידע על Padre"
 
-#: lib/Padre/Wx/Debugger.pm:55
-msgid "Debugger is already running"
-msgstr "מאתר הבאגים כבר רץ"
-
-#: lib/Padre/Wx/Debugger.pm:60
-msgid "Not a Perl document"
-msgstr "לא מסמך Perl"
-
-#: lib/Padre/Wx/Debugger.pm:188
-msgid ""
-"The debugger is not running.\n"
-"You can start the debugger using one of the commands 'Step In', 'Step Over', "
-"or 'Run till Breakpoint' in the Debug menu."
-msgstr ""
-
-#: lib/Padre/Wx/Debugger.pm:190 lib/Padre/Wx/Debugger.pm:296
-#: lib/Padre/Wx/Debugger.pm:322 lib/Padre/Wx/Debugger.pm:362
-#: lib/Padre/Wx/Debugger.pm:385
-msgid "Debugger not running"
-msgstr "מאתר הבאגים אינו רץ"
-
-#: lib/Padre/Wx/Debugger.pm:244
-#, perl-format
-msgid "Could not set breakpoint on file '%s' row '%s'"
-msgstr "לא ניתן להגדיר נקודת עצירה בקובץ '%s' שורה '%s'"
-
-#: lib/Padre/Wx/Debugger.pm:426
-#, fuzzy, perl-format
-msgid "Could not evaluate '%s'"
-msgstr "לא נמצא קובץ '%s'"
-
-#: lib/Padre/Wx/Debugger.pm:447
-#, perl-format
-msgid ""
-"'%s' does not look like a variable. First select a variable in the code and "
-"then try again."
-msgstr ""
-
-#: lib/Padre/Wx/Debugger.pm:484
-msgid "Expression:"
-msgstr "ביטוי רגולרי:"
-
-#: lib/Padre/Wx/Debugger.pm:485
-msgid "Expr"
-msgstr ""
-
-#: lib/Padre/Wx/FindInFiles.pm:126
-#, perl-format
-msgid "Searching for '%s' in '%s'..."
-msgstr ""
-
-#: lib/Padre/Wx/FindInFiles.pm:178
-#, perl-format
-msgid "%s (%s results)"
-msgstr ""
-
-#: lib/Padre/Wx/FindInFiles.pm:202
-#, perl-format
-msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
-msgstr ""
-
-#: lib/Padre/Wx/FindInFiles.pm:210
-#, perl-format
-msgid "No results found for '%s' inside '%s'"
-msgstr ""
-
-#: lib/Padre/Wx/FindInFiles.pm:305 lib/Padre/Wx/FBP/FindInFiles.pm:26
-msgid "Find in Files"
-msgstr "חפש בתוך קבצים"
-
-#: lib/Padre/Wx/Outline.pm:109 lib/Padre/Wx/Outline.pm:311
-msgid "Outline"
-msgstr "קווים כלליים"
-
-#: lib/Padre/Wx/Outline.pm:220
-msgid "&Go to Element"
-msgstr "לך אך אלמנט"
-
-#: lib/Padre/Wx/Outline.pm:234
-msgid "Open &Documentation"
-msgstr "פתח תיעוד"
-
-#: lib/Padre/Wx/Outline.pm:356
-msgid "Pragmata"
-msgstr ""
-
-#: lib/Padre/Wx/Outline.pm:357
-msgid "Modules"
-msgstr "מודולים"
-
-#: lib/Padre/Wx/Outline.pm:358
-msgid "Methods"
-msgstr "מתודות"
-
-#: lib/Padre/Wx/Left.pm:52
-msgid "Project Tools"
-msgstr "כלי פרויקט"
-
-#: lib/Padre/Wx/TodoList.pm:198
-msgid "To-do"
-msgstr ""
-
-#: lib/Padre/Wx/Right.pm:52
-msgid "Document Tools"
-msgstr "כלי מסמך"
-
-#: lib/Padre/Wx/Output.pm:141 lib/Padre/Wx/Main.pm:2478
-#, perl-format
-msgid ""
-"Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
-"at least 0.20 by typing\n"
-"cpan Wx::Perl::ProcessStream"
-msgstr ""
-"Wx::Perl::ProcessStream הוא גירסה %s שידועה כגירסה בעייתית. להתקנת גירסה 2.0 "
-"ומעלה הקלד: \n"
-"cpan Wx::Perl::ProcessStream"
-
-#: lib/Padre/Wx/Output.pm:196
-msgid "Output"
-msgstr "פלט"
-
-#: lib/Padre/Wx/StatusBar.pm:290
-msgid "Background Tasks are running"
-msgstr "משימות רקע רצות"
-
-#: lib/Padre/Wx/StatusBar.pm:291
-msgid "Background Tasks are running with high load"
-msgstr "משימות רקע רצות בעומס גבוה"
-
-#: lib/Padre/Wx/StatusBar.pm:417
-msgid "Read Only"
-msgstr "לקריאה בלבד"
-
-#: lib/Padre/Wx/StatusBar.pm:417
-msgid "R/W"
-msgstr ""
-
-#: lib/Padre/Wx/Main.pm:751
-#, perl-format
-msgid "No such session %s"
-msgstr "לא נמצאה סביבת העבודה %s"
-
-#: lib/Padre/Wx/Main.pm:926
-msgid "Failed to create server"
-msgstr "יצירת שרת נכשלה"
-
-#: lib/Padre/Wx/Main.pm:2238
-msgid "Command line"
-msgstr "שורת הפקודה"
-
-#: lib/Padre/Wx/Main.pm:2239
-msgid "Run setup"
-msgstr "הגדרות ריצה"
-
-#: lib/Padre/Wx/Main.pm:2274 lib/Padre/Wx/Main.pm:2335
-#: lib/Padre/Wx/Main.pm:2390
-msgid "Could not find project root"
-msgstr "לא נמצא שורש הפרויקט"
-
-#: lib/Padre/Wx/Main.pm:2301
-#, fuzzy
-msgid "No Build.PL nor Makefile.PL nor dist.ini found"
-msgstr "לא נמצאו Builde.PL ו-  Makefile.PL"
-
-#: lib/Padre/Wx/Main.pm:2304
-msgid "Could not find perl executable"
-msgstr "לא נמצא קובץ הרצת perl"
-
-#: lib/Padre/Wx/Main.pm:2329 lib/Padre/Wx/Main.pm:2381
-msgid "Current document has no filename"
-msgstr "למסמך הנוכחי אין שם קובץ"
-
-#: lib/Padre/Wx/Main.pm:2384
-msgid "Current document is not a .t file"
-msgstr "למסמך הנוכחי אינו קובץ .t"
-
-#: lib/Padre/Wx/Main.pm:2553
-#, perl-format
-msgid "Failed to start '%s' command"
-msgstr "הרצת הפקודה '%s' נכשלה"
-
-#: lib/Padre/Wx/Main.pm:2578
-msgid "No open document"
-msgstr "אין מסמך פתוח"
-
-#: lib/Padre/Wx/Main.pm:2596
-msgid "No execution mode was defined for this document type"
-msgstr "  לא הוגדר למסמך זה מצב ביצוע"
-
-#: lib/Padre/Wx/Main.pm:2621
-msgid "Do you want to continue?"
-msgstr "האם ברצונך להמשיך?"
-
-#: lib/Padre/Wx/Main.pm:2707
-#, perl-format
-msgid "Opening session %s..."
-msgstr "פותח סביבת עבודה %s..."
-
-#: lib/Padre/Wx/Main.pm:2736
-msgid "Restore focus..."
-msgstr "החזר מוקד..."
-
-#: lib/Padre/Wx/Main.pm:3066
-#, perl-format
-msgid "Could not determine the comment character for %s document type"
-msgstr ""
-
-#: lib/Padre/Wx/Main.pm:3115
-msgid "Autocompletion error"
-msgstr "שגיאת השלמות אוטומטיות"
-
-#: lib/Padre/Wx/Main.pm:3228
-msgid "You still have a running process. Do you want to kill it and exit?"
-msgstr "יש לך עדיין תהליך רץ. האם ברצונך להרוג אותו ולצאת?"
-
-#: lib/Padre/Wx/Main.pm:3444
-#, perl-format
-msgid "Cannot open a Directory: %s"
-msgstr "אי אפשר לפתוח תיקייה: %s"
-
-#: lib/Padre/Wx/Main.pm:3571
-msgid "Nothing selected. Enter what should be opened:"
-msgstr "לא נבחר דבר. הכנס מה שצריך להיפתח"
-
-#: lib/Padre/Wx/Main.pm:3572
-msgid "Open selection"
-msgstr "פתח את הפריט שסומן"
-
-#: lib/Padre/Wx/Main.pm:3613
-#, perl-format
-msgid "Could not find file '%s'"
-msgstr "לא נמצא הקובץ '%s'"
-
-#: lib/Padre/Wx/Main.pm:3623 lib/Padre/Wx/Dialog/Positions.pm:120
-msgid "Choose File"
-msgstr "בחר קובץ"
-
-#: lib/Padre/Wx/Main.pm:3730
-msgid "JavaScript Files"
-msgstr "קובצי JavaScript"
-
-#: lib/Padre/Wx/Main.pm:3732
-msgid "Perl Files"
-msgstr "קבצים Perl"
-
-#: lib/Padre/Wx/Main.pm:3734
-msgid "PHP Files"
-msgstr "קבצים PHP"
-
-#: lib/Padre/Wx/Main.pm:3736
-msgid "Python Files"
-msgstr "קבצי Python"
-
-#: lib/Padre/Wx/Main.pm:3738
-msgid "Ruby Files"
-msgstr "קובצי Ruby"
-
-#: lib/Padre/Wx/Main.pm:3740
-msgid "SQL Files"
-msgstr "קבצי SQL"
-
-#: lib/Padre/Wx/Main.pm:3742
-msgid "Text Files"
-msgstr "קבצים טקסט"
-
-#: lib/Padre/Wx/Main.pm:3744
-msgid "Web Files"
-msgstr "קבצי Web"
-
-#: lib/Padre/Wx/Main.pm:3746
-#, fuzzy
-msgid "Script Files"
-msgstr "קובצי JavaScript"
-
-#: lib/Padre/Wx/Main.pm:3751 lib/Padre/Wx/Main.pm:3752
-#: lib/Padre/Wx/Main.pm:4123 lib/Padre/Wx/Main.pm:5269
-msgid "All Files"
-msgstr "כל הקבצים"
-
-#: lib/Padre/Wx/Main.pm:3754 lib/Padre/Wx/Directory/TreeCtrl.pm:210
-msgid "Open File"
-msgstr "פתח קובץ"
-
-#: lib/Padre/Wx/Main.pm:3791
-#, perl-format
-msgid ""
-"File name %s contains * or ? which are special chars on most computers. Skip?"
-msgstr "שם הקובץ %s מכיל * או ? שמוגדרים כתווים מיוחדים ברוב המחשבים. לדלג?"
-
-#: lib/Padre/Wx/Main.pm:3794 lib/Padre/Wx/Main.pm:3814
-msgid "Open Warning"
-msgstr "אזהרת פתיחה"
-
-#: lib/Padre/Wx/Main.pm:3811
-#, perl-format
-msgid "File name %s does not exist on disk. Skip?"
-msgstr "קובץ בשם %s לא קיים בדיסק. לדלג?"
-
-#: lib/Padre/Wx/Main.pm:3899
-msgid "Reload all files"
-msgstr "רענן את כל הקבצים"
-
-#: lib/Padre/Wx/Main.pm:3929 lib/Padre/Wx/Main.pm:5779
-msgid "Reload some files"
-msgstr "רענן את כל הקבצים"
-
-#: lib/Padre/Wx/Main.pm:3930 lib/Padre/Wx/Main.pm:5780
-msgid "&Select files to reload:"
-msgstr "בחר קבצים לרענון"
-
-#: lib/Padre/Wx/Main.pm:3931 lib/Padre/Wx/Main.pm:5781
-msgid "&Reload selected"
-msgstr "רענן את הקבצים שנבחרו"
-
-#: lib/Padre/Wx/Main.pm:3945
-msgid "Reload some"
-msgstr "רענן חלק מהקבצים"
-
-#: lib/Padre/Wx/Main.pm:4007
-#, perl-format
-msgid "Could not reload file: %s"
-msgstr "לא ניתן לרענן את הקובץ '%s'"
-
-#: lib/Padre/Wx/Main.pm:4120
-msgid "Save file as..."
-msgstr "שמור קובץ בשם..."
-
-#: lib/Padre/Wx/Main.pm:4147
-msgid "File already exists. Overwrite it?"
-msgstr "קובץ כבר קיים. לדרוס אותו?"
-
-#: lib/Padre/Wx/Main.pm:4148
-msgid "Exist"
-msgstr "קיים"
-
-#: lib/Padre/Wx/Main.pm:4244
-msgid "File already exists"
-msgstr "קובץ כבר קיים. "
-
-#: lib/Padre/Wx/Main.pm:4258
-#, perl-format
-msgid "Failed to create path '%s'"
-msgstr "יצירת המסלול '%s' נכשלה "
-
-#: lib/Padre/Wx/Main.pm:4349
-msgid "File changed on disk since last saved. Do you want to overwrite it?"
-msgstr "קובץ השתנה בדיסק מאז השמירה האחרונה. האם ברצונך לדרוס אותו?"
-
-#: lib/Padre/Wx/Main.pm:4350
-msgid "File not in sync"
-msgstr "קובץ לא מסונכרן"
-
-#: lib/Padre/Wx/Main.pm:4359
-msgid "Could not save file: "
-msgstr "לא ניתן לשמור את הקובץ '%s'"
-
-#: lib/Padre/Wx/Main.pm:4441
-msgid "File changed. Do you want to save it?"
-msgstr "קובץ השתנה. האם ברצונך לשמור אותו?"
-
-#: lib/Padre/Wx/Main.pm:4442
-msgid "Unsaved File"
-msgstr "קובץ שלא נשמר"
-
-#: lib/Padre/Wx/Main.pm:4525
-msgid "Close all"
-msgstr "סגור את הכל"
-
-#: lib/Padre/Wx/Main.pm:4564
-msgid "Close some files"
-msgstr "סגור חלק מהקבצים"
-
-#: lib/Padre/Wx/Main.pm:4565
-msgid "Select files to close:"
-msgstr ""
-
-#: lib/Padre/Wx/Main.pm:4580
-msgid "Close some"
-msgstr "סגור חלק מהקבצים"
-
-#: lib/Padre/Wx/Main.pm:4743
-msgid "Cannot diff if file was never saved"
-msgstr "אי אפשר לעשות השוואה לקובץ שמעולם לא נשמר"
-
-#: lib/Padre/Wx/Main.pm:4767
-msgid "There are no differences\n"
-msgstr "אין הבדלים\n"
-
-#: lib/Padre/Wx/Main.pm:5387
-msgid "Internal error"
-msgstr "תקלה פנימית"
-
-#: lib/Padre/Wx/Main.pm:5579
-msgid "Stats"
-msgstr "נתוני המסמך"
-
-#: lib/Padre/Wx/Main.pm:5607
-msgid "Space to Tab"
-msgstr "רווחים לטאבים"
-
-#: lib/Padre/Wx/Main.pm:5608
-msgid "Tab to Space"
-msgstr "טאבים לרווחים"
-
-#: lib/Padre/Wx/Main.pm:5613
-msgid "How many spaces for each tab:"
-msgstr "כמה רווחים לכל טאב"
-
-#: lib/Padre/Wx/Main.pm:6120
-msgid "Need to select text in order to translate to hex"
-msgstr "צריך לבחור טקסט כדי לתרגם להקסדצימלי"
-
-#: lib/Padre/Wx/Main.pm:6262
-#, perl-format
-msgid ""
-"Error running filter tool:\n"
-"%s"
-msgstr ""
-"שגיאה בעת הרצת כלי הסינון:\n"
-"%s"
-
-#: lib/Padre/Wx/Main.pm:6277
-#, perl-format
-msgid ""
-"Error returned by filter tool:\n"
-"%s"
-msgstr ""
-"שגיאה שהוחזרה על ידי כלי הסינון:\n"
-"%s"
-
-#: lib/Padre/Wx/Browser.pm:94 lib/Padre/Wx/Browser.pm:109
-msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
-msgstr ""
-
-#: lib/Padre/Wx/Browser.pm:105
-msgid "Search:"
-msgstr "חפש:"
-
-#: lib/Padre/Wx/Browser.pm:342
-msgid "Untitled"
-msgstr "ללא כותרת"
-
-#: lib/Padre/Wx/Browser.pm:410
-#, perl-format
-msgid "Browser: no viewer for %s"
-msgstr ""
-
-#: lib/Padre/Wx/Browser.pm:444
-#, perl-format
-msgid "Searched for '%s' and failed..."
-msgstr ""
-
-#: lib/Padre/Wx/Browser.pm:445
-msgid "Help not found."
-msgstr "לא נמצאה עזרה."
-
-#: lib/Padre/Wx/Browser.pm:466
-msgid "NAME"
-msgstr "שם"
-
-#: lib/Padre/Wx/Bottom.pm:52
-msgid "Output View"
-msgstr "תצוגת פלט"
-
-#: lib/Padre/Wx/WizardLibrary.pm:20
-msgid "Module"
-msgstr "מודול"
-
-#: lib/Padre/Wx/WizardLibrary.pm:21
-msgid "Perl 5"
-msgstr "Perl 5"
-
-#: lib/Padre/Wx/WizardLibrary.pm:22
-msgid "Opens the Perl 5 module wizard"
-msgstr ""
-
-#: lib/Padre/Wx/WizardLibrary.pm:28
-msgid "Plugin"
-msgstr "תוסף"
-
-#: lib/Padre/Wx/WizardLibrary.pm:30
-msgid "Opens the Padre plugin wizard"
-msgstr ""
-
-#: lib/Padre/Wx/WizardLibrary.pm:36 lib/Padre/Wx/Dialog/DocStats.pm:95
-msgid "Document"
-msgstr "מסמך "
-
-#: lib/Padre/Wx/WizardLibrary.pm:38
-msgid "Opens the Padre document wizard"
-msgstr "פתח את אשף המסמכים של  Padre"
-
-#: lib/Padre/Wx/Debugger/View.pm:59
-msgid "Debugger"
-msgstr ""
-
-#: lib/Padre/Wx/Debugger/View.pm:102
-msgid "Variable"
-msgstr "משתנה"
-
-#: lib/Padre/Wx/Debugger/View.pm:103 lib/Padre/Wx/Dialog/Advanced.pm:110
-msgid "Value"
-msgstr "ערך"
-
-#: lib/Padre/Wx/FBP/Sync.pm:25 lib/Padre/Wx/Dialog/Sync.pm:43
+#: lib/Padre/Wx/Role/Dialog.pm:69 lib/Padre/Wx/Role/Dialog.pm:141
+msgid "Message"
+msgstr "מסר"
+
+#: lib/Padre/Wx/Role/Dialog.pm:92
+msgid "Unknown error from "
+msgstr "שגיאה לא ידועה מ-"
+
+#: lib/Padre/Wx/Dialog/Sync.pm:43 lib/Padre/Wx/FBP/Sync.pm:25
 msgid "Padre Sync"
 msgstr " סינכרון Padre"
 
-#: lib/Padre/Wx/FBP/Sync.pm:34
-msgid "Server"
-msgstr "שרת"
+#: lib/Padre/Wx/Dialog/Sync.pm:468 lib/Padre/Wx/Dialog/Sync2.pm:88
+msgid "Please input a valid value for both username and password"
+msgstr "נא להזין ערך חוקי גם עבור שם משתמש וסיסמא"
 
-#: lib/Padre/Wx/FBP/Sync.pm:48 lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64 lib/Padre/Wx/Dialog/Advanced.pm:108
-#: lib/Padre/Wx/Dialog/PluginManager.pm:68
-msgid "Status"
-msgstr "סטאטוס"
+#: lib/Padre/Wx/Dialog/Sync.pm:516 lib/Padre/Wx/Dialog/Sync2.pm:131
+msgid "Please ensure all inputs have appropriate values."
+msgstr "נא לוודא שכל הערכים שהוזנו מתאימים"
 
-#: lib/Padre/Wx/FBP/Sync.pm:54
-msgid "Logged out"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Sync.pm:527 lib/Padre/Wx/Dialog/Sync2.pm:142
+msgid "Password and confirmation do not match."
+msgstr "\"סיסמא\" ו- \"אישור\" אינם תואמים"
 
-#: lib/Padre/Wx/FBP/Sync.pm:68 lib/Padre/Wx/FBP/Sync.pm:111
-msgid "Username"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Sync.pm:537 lib/Padre/Wx/Dialog/Sync2.pm:152
+msgid "Email and confirmation do not match."
+msgstr "\"דואר אלקטרוני\" ו- \"אישור\" אינם תואמים"
 
-#: lib/Padre/Wx/FBP/Sync.pm:82 lib/Padre/Wx/FBP/Sync.pm:125
-msgid "Password"
-msgstr ""
+#: lib/Padre/Wx/Dialog/SessionManager.pm:38
+msgid "Session Manager"
+msgstr "מנהל סביבות עבודה"
 
-#: lib/Padre/Wx/FBP/Sync.pm:97
-#, fuzzy
-msgid "Login"
-msgstr "שורה:"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:215
+msgid "List of sessions"
+msgstr "רשימת סביבות עבודה"
 
-#: lib/Padre/Wx/FBP/Sync.pm:139 lib/Padre/Wx/FBP/Sync.pm:167
-msgid "Confirm"
-msgstr "אישור"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:227
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:25
+#: lib/Padre/Wx/Dialog/PluginManager.pm:66
+msgid "Name"
+msgstr "שם"
 
-#: lib/Padre/Wx/FBP/Sync.pm:153
-msgid "Email"
-msgstr "דואר אלקטרוני"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:228
+msgid "Description"
+msgstr "תיאור"
 
-#: lib/Padre/Wx/FBP/Sync.pm:181
-#, fuzzy
-msgid "Register"
-msgstr "עורך ביטויים רגולריים"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:229
+msgid "Last update"
+msgstr "עדכון אחרון"
 
-#: lib/Padre/Wx/FBP/Sync.pm:203
-#, fuzzy
-msgid "Upload"
-msgstr "טעון"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:261
+msgid "Save session automatically"
+msgstr "שמור סביבת עבודה באופן אוטומטי"
 
-#: lib/Padre/Wx/FBP/Sync.pm:218
-#, fuzzy
-msgid "Download"
-msgstr "לא טעון"
+#: lib/Padre/Wx/Dialog/SessionManager.pm:291
+msgid "Open"
+msgstr "פתח"
 
-#: lib/Padre/Wx/FBP/Sync.pm:233 lib/Padre/Wx/Dialog/SessionManager.pm:292
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
+#: lib/Padre/Wx/Dialog/SessionManager.pm:292
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100 lib/Padre/Wx/FBP/Sync.pm:233
 msgid "Delete"
 msgstr "מחק"
 
-#: lib/Padre/Wx/FBP/Sync.pm:248 lib/Padre/Wx/Dialog/FilterTool.pm:152
-#: lib/Padre/Wx/Dialog/SessionSave.pm:230
-#: lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionManager.pm:293
-#: lib/Padre/Wx/Dialog/PluginManager.pm:145 lib/Padre/Wx/Menu/File.pm:140
+#: lib/Padre/Wx/Dialog/SessionSave.pm:230
+#: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
+#: lib/Padre/Wx/FBP/Sync.pm:248 lib/Padre/Wx/Menu/File.pm:140
 msgid "Close"
 msgstr "סגור"
 
-#: lib/Padre/Wx/FBP/Sync.pm:283
-#, fuzzy
-msgid "Authentication"
-msgstr "  הזחה"
+#: lib/Padre/Wx/Dialog/Warning.pm:32 lib/Padre/Wx/Dialog/Form.pm:32
+#: lib/Padre/Wx/Dialog/Shortcut.pm:32
+msgid "A Dialog"
+msgstr "תיבת שיח"
 
-#: lib/Padre/Wx/FBP/Sync.pm:310
-#, fuzzy
-msgid "Registration"
-msgstr "תיאור"
+#: lib/Padre/Wx/Dialog/Warning.pm:41
+msgid "See http://padre.perlide.org/ for update information"
+msgstr "עיין ב- http://padre.perlide.org/ למידע על עידכונים "
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:35
-#, fuzzy
-msgid "Search Term:"
-msgstr "חפש בעזרה"
+#: lib/Padre/Wx/Dialog/Warning.pm:49
+msgid "Do not show this again"
+msgstr "אל תציג את זה שוב"
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:49
-#, fuzzy
-msgid "Search Directory:"
-msgstr "תיקיית אב:"
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:18
+msgid "Wizard Selector"
+msgstr "בורר אשף"
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:63
-msgid "Browse"
-msgstr ""
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:86
+msgid "&Back"
+msgstr "&אחורה"
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:77
-#, fuzzy
-msgid "Search in Types:"
-msgstr "חיפוש והחלפה"
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:87 lib/Padre/Wx/Dialog/Search.pm:172
+msgid "&Next"
+msgstr "הבא"
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:100
-msgid "Regular Expression"
-msgstr "ביטוי רגולרי"
-
-#: lib/Padre/Wx/FBP/FindInFiles.pm:108
-msgid "Case Sensitive"
-msgstr " תלוי רישיות"
-
-#: lib/Padre/Wx/FBP/FindInFiles.pm:124 lib/Padre/Wx/Dialog/Find.pm:52
-#: lib/Padre/Wx/Dialog/Find.pm:176 lib/Padre/Wx/Dialog/Replace.pm:218
-msgid "Find"
-msgstr "חפש:"
-
-#: lib/Padre/Wx/FBP/FindInFiles.pm:131
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
-msgid "Cancel"
-msgstr "בטל"
-
-#: lib/Padre/Wx/FBP/WhereFrom.pm:31
-msgid "Where did you hear about Padre?"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/WhereFrom.pm:54
-msgid "OK"
-msgstr "אישור"
-
-#: lib/Padre/Wx/FBP/WhereFrom.pm:60
-msgid "Skip question without giving feedback"
-msgstr ""
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
-msgid "Directory"
-msgstr " תיקייה"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:163
-#, perl-format
-msgid "Could not create: '%s': %s"
-msgstr "לא ניתן ליצור: '%s': %s"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
-#, fuzzy, perl-format
-msgid "Really delete the file \"%s\"?"
-msgstr "שמור את כל הקבצים"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:182
-#, perl-format
-msgid "Could not delete: '%s': %s"
-msgstr "לא ניתן למחוק: '%s': %s"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:226
-msgid "Delete File"
-msgstr "מחק קובץ"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:237
-msgid "Create Directory"
-msgstr "צור תיקייה"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
-msgid "Refresh"
-msgstr "רענן "
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:31
-msgid "Existing bookmarks:"
-msgstr "סימניות קיימות:"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:43
-msgid "Delete &All"
-msgstr "מחק הכול"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:123
-msgid "Cannot set bookmark in unsaved document"
-msgstr "לא ניתן להגדיר סימנייה במסמך לא שמור"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:134
-#, perl-format
-msgid "%s line %s: %s"
-msgstr "%s שורה %s: %s"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:170
-#, perl-format
-msgid "The bookmark '%s' no longer exists"
-msgstr "הסימנייה '%s' לא קיימת עוד"
-
-#: lib/Padre/Wx/Dialog/Goto.pm:39
-msgid "Goto"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Goto.pm:86
-#, fuzzy
-msgid "Position type"
-msgstr "סוג תוכן: %s"
-
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
-#: lib/Padre/Wx/Dialog/Goto.pm:226 lib/Padre/Wx/Dialog/Goto.pm:245
-msgid "Line number"
-msgstr "מספר שורה"
-
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:230
-msgid "Character position"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Goto.pm:93 lib/Padre/Wx/Dialog/OpenResource.pm:176
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
-#: lib/Padre/Wx/Dialog/OpenURL.pm:62
-msgid "&OK"
-msgstr "אישור"
-
-#: lib/Padre/Wx/Dialog/Goto.pm:100 lib/Padre/Wx/Dialog/Preferences.pm:939
-#: lib/Padre/Wx/Dialog/OpenResource.pm:182
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:88
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
-#: lib/Padre/Wx/Dialog/Advanced.pm:175 lib/Padre/Wx/Dialog/OpenURL.pm:70
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:88 lib/Padre/Wx/Dialog/OpenURL.pm:70
+#: lib/Padre/Wx/Dialog/Advanced.pm:190 lib/Padre/Wx/Dialog/Preferences.pm:939
+#: lib/Padre/Wx/Dialog/Goto.pm:100 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
+#: lib/Padre/Wx/Dialog/OpenResource.pm:184
 msgid "&Cancel"
 msgstr "בטל"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:228
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:174
 #, perl-format
-msgid "&Enter a line number between 1 and %s:"
-msgstr "הכנס מספר שורה בין (1-%s):"
+msgid "%s has no constructor"
+msgstr "ל- %s אין הדרת מבנה (constructor)"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:229
-#, perl-format
-msgid "Current line number: %s"
-msgstr "מספר שורה נוכחית: %s"
+#: lib/Padre/Wx/Dialog/FindInFiles.pm:63
+#, fuzzy
+msgid "Select Directory"
+msgstr "סמן תיקייה"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:232
+#: lib/Padre/Wx/Dialog/Form.pm:41
+msgid "Label One"
+msgstr "תווית ראשונה"
+
+#: lib/Padre/Wx/Dialog/Form.pm:55
+msgid "Second Label"
+msgstr "תווית שניה"
+
+#: lib/Padre/Wx/Dialog/Form.pm:71
+msgid "Whatever"
+msgstr "כלשהו"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:16 lib/Padre/Wx/Dialog/ModuleStart.pm:36
+msgid "Apache License"
+msgstr "רישיון Apache"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:17 lib/Padre/Wx/Dialog/ModuleStart.pm:37
+msgid "Artistic License 1.0"
+msgstr "Artistic License 1.0"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:18 lib/Padre/Wx/Dialog/ModuleStart.pm:38
+msgid "Artistic License 2.0"
+msgstr "Artistic License 2.0"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:19 lib/Padre/Wx/Dialog/ModuleStart.pm:39
+msgid "Revised BSD License"
+msgstr "Revised BSD License"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:20 lib/Padre/Wx/Dialog/ModuleStart.pm:40
+msgid "GPL 2 or later"
+msgstr "GPL 2 או מאוחר יותר"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:21 lib/Padre/Wx/Dialog/ModuleStart.pm:41
+msgid "LGPL 2.1 or later"
+msgstr "GPL 2.1 או מאוחר יותר"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
+msgid "MIT License"
+msgstr "רישיון MIT"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:23 lib/Padre/Wx/Dialog/ModuleStart.pm:43
+msgid "Mozilla Public License"
+msgstr "הרשיון הציבורי של מוזילה"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:24 lib/Padre/Wx/Dialog/ModuleStart.pm:44
+msgid "Open Source"
+msgstr "קוד פתוח"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:25 lib/Padre/Wx/Dialog/ModuleStart.pm:45
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:113
+msgid "Perl licensing terms"
+msgstr "תנאי הרשוי של Perl"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:26 lib/Padre/Wx/Dialog/ModuleStart.pm:46
+msgid "restrictive"
+msgstr "מגביל"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:27 lib/Padre/Wx/Dialog/ModuleStart.pm:47
+#, fuzzy
+msgid "unrestricted"
+msgstr "אינו נתמך"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:55
+msgid "Module Name:"
+msgstr "שם מודול:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:58
+msgid "Author:"
+msgstr "מאת:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:61
+msgid "Email Address:"
+msgstr "דואר אלקטרוני:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:64
+msgid "Builder:"
+msgstr "בונה:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:67
+msgid "License:"
+msgstr "רישיון:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:70
+msgid "Parent Directory:"
+msgstr "תיקיית אב:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:71
+msgid "Pick parent directory"
+msgstr "בחר תיקיית אב"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:97
+msgid "Module Start"
+msgstr "תחילת מודול"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:147
 #, perl-format
-msgid "&Enter a position between 1 and %s:"
+msgid "Field %s was missing. Module not created."
+msgstr "שדה %s לא מולא. מודול לא נוצר."
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:148
+msgid "missing field"
+msgstr "שדה לא מולא"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:182
+#, perl-format
+msgid ""
+"An error has occured while generating '%s':\n"
+"%s"
 msgstr ""
+"שגיאה בזמן חילול '%s':\n"
+"%s"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:233
-#, perl-format
-msgid "Current position: %s"
-msgstr "מיקום נוכחי: %s"
+#: lib/Padre/Wx/Dialog/OpenURL.pm:37
+msgid "Open URL"
+msgstr "פתח URL"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:257
-msgid "Not a positive number!"
-msgstr "לא מספר חיובי! "
+#: lib/Padre/Wx/Dialog/OpenURL.pm:62 lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
+#: lib/Padre/Wx/Dialog/OpenResource.pm:178
+msgid "&OK"
+msgstr "אישור"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:266
-msgid "Out of range!"
-msgstr ""
+#: lib/Padre/Wx/Dialog/OpenURL.pm:79
+msgid "e.g."
+msgstr "לדוגמה"
 
-#: lib/Padre/Wx/Dialog/FilterTool.pm:30
-msgid "Filter through tool"
-msgstr "סנן באמצעות כלי"
+#: lib/Padre/Wx/Dialog/Advanced.pm:26
+msgid "Boolean"
+msgstr "בוליאני"
 
-#: lib/Padre/Wx/Dialog/FilterTool.pm:130
-msgid "Filter command:"
-msgstr "פקודת סינון:"
+#: lib/Padre/Wx/Dialog/Advanced.pm:27
+msgid "Positive Integer"
+msgstr "מספר שלם חיובי"
 
-#: lib/Padre/Wx/Dialog/FilterTool.pm:151
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:394
-msgid "Run"
-msgstr "הרץ"
+#: lib/Padre/Wx/Dialog/Advanced.pm:28
+#, fuzzy
+msgid "Integer"
+msgstr "הכנס"
 
-#: lib/Padre/Wx/Dialog/SessionSave.pm:31
-msgid "Save session as..."
-msgstr "שמור סביבת עבודה בשם..."
+#: lib/Padre/Wx/Dialog/Advanced.pm:29
+#, fuzzy
+msgid "String"
+msgstr "אזהרה"
 
-#: lib/Padre/Wx/Dialog/SessionSave.pm:200
-msgid "Session name:"
-msgstr "שם סביבת העבודה:"
+#: lib/Padre/Wx/Dialog/Advanced.pm:30
+msgid "File/Directory"
+msgstr " קובץ/תיקייה"
 
+#: lib/Padre/Wx/Dialog/Advanced.pm:62
+msgid "Advanced Settings"
+msgstr "הגדרות מתקדמות"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:97 lib/Padre/Wx/Dialog/KeyBindings.pm:64
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:26
+#, fuzzy
+msgid "&Filter:"
+msgstr "קובץ"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:110
+#, fuzzy
+msgid "Preference Name"
+msgstr "העדפות"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/Dialog/PluginManager.pm:68
+#: lib/Padre/Wx/FBP/Sync.pm:48 lib/Padre/Wx/CPAN/Listview.pm:32
+#: lib/Padre/Wx/CPAN/Listview.pm:64
+msgid "Status"
+msgstr "סטאטוס"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:112
+msgid "Type"
+msgstr "טיפוס"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:117
+msgid "Copy"
+msgstr "העתק"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:118
+msgid "Copy Name"
+msgstr "העתק את שם הקובץ"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:119
+msgid "Copy Value"
+msgstr "העתק ערך"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:122
+msgid "&Value:"
+msgstr "ערך"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:129 lib/Padre/Wx/Dialog/Advanced.pm:598
+msgid "True"
+msgstr "אמת"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:130 lib/Padre/Wx/Dialog/Advanced.pm:599
+#, fuzzy
+msgid "False"
+msgstr "קבצים"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:135
+msgid "Default value:"
+msgstr "ברירת המחדל  "
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:147
+msgid "Options:"
+msgstr "אפשרויות:"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:158 lib/Padre/Wx/Dialog/Preferences.pm:165
 #: lib/Padre/Wx/Dialog/SessionSave.pm:209
-#: lib/Padre/Wx/Dialog/Preferences.pm:165
 msgid "Description:"
 msgstr "תיאור"
 
-#: lib/Padre/Wx/Dialog/SessionSave.pm:229
-msgid "Save"
+#: lib/Padre/Wx/Dialog/Advanced.pm:172 lib/Padre/Wx/Dialog/KeyBindings.pm:120
+msgid "&Set"
+msgstr "קבע "
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:178 lib/Padre/Wx/Dialog/KeyBindings.pm:132
+#, fuzzy
+msgid "&Reset"
+msgstr "הכנס"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:184
+msgid "S&ave"
 msgstr "שמור"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:430 lib/Padre/Wx/Dialog/Preferences.pm:805
+msgid "Default"
+msgstr "ברירת המחדל  "
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:796
+msgid "User"
+msgstr "משתמש"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:796
+msgid "Host"
+msgstr "מארח (שרת)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:50
+msgid "Find and Replace"
+msgstr "חפש והחלף"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:80
+msgid "Case &sensitive"
+msgstr " תלוי רישיות"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:94
+msgid "Regular &Expression"
+msgstr "ביטוי רגולרי"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:108
+msgid "Close Window on &Hit"
+msgstr "סגור חלון בפגיעה"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:122
+msgid "Search &Backwards"
+msgstr "חפש אחורה"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:136
+msgid "Replace &All"
+msgstr "החלף הכול"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:150
+msgid "&Find"
+msgstr "חפש:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:170
+msgid "&Replace"
+msgstr "החלף"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:218 lib/Padre/Wx/FBP/FindInFiles.pm:125
+#: lib/Padre/Wx/FBP/Find.pm:27
+msgid "Find"
+msgstr "חפש:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:226
+msgid "Find Text:"
+msgstr "חפש טקסט:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:250
+msgid "Replace"
+msgstr "החלף"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:258
+msgid "Replace Text:"
+msgstr "החלף ב:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:304
+msgid "Options"
+msgstr "אפשרויות"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:537 lib/Padre/Wx/Dialog/Replace.pm:586
+#: lib/Padre/Wx/Dialog/Find.pm:75
+#, fuzzy, perl-format
+msgid "No matches found for \"%s\"."
+msgstr "לא נמצאו התאמות"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:538 lib/Padre/Wx/Dialog/Replace.pm:582
+#: lib/Padre/Wx/Dialog/Replace.pm:587
+msgid "Search and Replace"
+msgstr "חיפוש והחלפה"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:577
+#, perl-format
+msgid "Replaced %d match"
+msgstr "הוחלפו %d התאמות:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:577
+#, perl-format
+msgid "Replaced %d matches"
+msgstr "הוחלפו %d התאמות:"
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:38
+msgid "Select Function"
+msgstr "בחר פונקציה"
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:92
+msgid ""
+"Select which subroutine you want the new subroutine\n"
+"inserted before."
+msgstr "בחר את השגרה שלפניה יש להכניס את השגרה החדשה"
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:104
+msgid "Function"
+msgstr "פונקציה"
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:125
+#: lib/Padre/Wx/Menu/Edit.pm:49
+msgid "Select"
+msgstr "בחר "
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
+#: lib/Padre/Wx/FBP/FindInFiles.pm:132 lib/Padre/Wx/FBP/Find.pm:119
+msgid "Cancel"
+msgstr "בטל"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:29
+msgid "Key Bindings"
+msgstr "מיפוי מקשים "
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:86
+msgid "Sh&ortcut:"
+msgstr "קיצור דרך"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:89
+msgid "Ctrl"
+msgstr "מקש Ctrl"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:90
+msgid "Alt"
+msgstr "הכל"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:91
+msgid "Shift"
+msgstr "מקש Shift"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "None"
+msgstr "אין"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Backspace"
+msgstr "מקש Backspace"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Tab"
+msgstr "מקש Tab"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Space"
+msgstr "רווח"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Up"
+msgstr "מקש Up"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Down"
+msgstr "למטה"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "Left"
+msgstr "מקש Left"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "Right"
+msgstr "ימינה"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100 lib/Padre/Wx/Dialog/PerlFilter.pm:94
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:233 lib/Padre/Wx/Menu/Edit.pm:121
+msgid "Insert"
+msgstr "הכנס"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "Home"
+msgstr "מקש Home"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "End"
+msgstr "מקש End"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "PageUp"
+msgstr "מקש PageUp"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "PageDown"
+msgstr "מקש PageDown"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "Enter"
+msgstr "מקש Enter"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "Escape"
+msgstr "Escape"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:126
+msgid "&Delete"
+msgstr "מחק"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:134
+msgid "Reset to default shortcut"
+msgstr "איפוס לקיצורי ברירת המחדל"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:388
+#, perl-format
+msgid "The shortcut '%s' is already used by the action '%s'.\n"
+msgstr "הקיצור '%s' נמצא כבר בשימוש עבור הפעולה  '%s'.\n"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:391
+msgid "Do you want to override it with the selected action?"
+msgstr "האם ברצונך לדרוס זאת עם הפעולה הנבחרת?"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:392
+msgid "Override Shortcut"
+msgstr "עקוף קיצור דרך"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:41
+#, perl-format
+msgid "Action: %s"
+msgstr "פעולה: %s"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:54
+msgid "CTRL"
+msgstr "CTRL"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
+#: lib/Padre/Wx/Dialog/Shortcut.pm:89
+msgid "+"
+msgstr "+"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:68
+msgid "ALT"
+msgstr "ALT"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:82
+msgid "SHIFT"
+msgstr "SHIFT"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:113
+msgid "Shortcut"
+msgstr "קיצור דרך"
+
+#: lib/Padre/Wx/Dialog/Search.pm:135
+msgid "Find:"
+msgstr "חפש:"
+
+#: lib/Padre/Wx/Dialog/Search.pm:154
+msgid "Previ&ous"
+msgstr "הקודם"
+
+#: lib/Padre/Wx/Dialog/Search.pm:180
+msgid "Case &insensitive"
+msgstr "לא תלוי רישיות"
+
+#: lib/Padre/Wx/Dialog/Search.pm:184
+msgid "Use rege&x"
+msgstr "השתמש בביטוי רגולרי"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:39
+msgid "Filename"
+msgstr "שם הקובץ"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:40
+#, fuzzy
+msgid "Selection"
+msgstr "בחר "
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:60
+msgid "&Update"
+msgstr "עדכן"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:98
+msgid "Lines"
+msgstr "שורות"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:102
+msgid "Words"
+msgstr "מילים"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:106
+msgid "Characters (including whitespace)"
+msgstr "תוים (כולל רווח)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:110
+msgid "Non-whitespace characters"
+msgstr "תוים שאינם רווח"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:114
+msgid "Kilobytes (kB)"
+msgstr "קילובייטים (kB)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:118
+msgid "Kibibytes (kiB)"
+msgstr "קיביבייטים (kiB)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:129
+msgid "Line break mode"
+msgstr "מצב שבירת שורות"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:131
+msgid "Encoding"
+msgstr "קידוד"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:133
+msgid "Document type"
+msgstr "סוג מסמך"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:179
+msgid "none"
+msgstr "אין"
+
+#: lib/Padre/Wx/Dialog/Positions.pm:107
+msgid "There are no positions saved yet"
+msgstr "עדיין אין עמדות שנשמרו"
+
+#: lib/Padre/Wx/Dialog/Positions.pm:124
+#, fuzzy, perl-format
+msgid "%s. Line: %s File: %s - %s"
+msgstr "%s שורה %s: %s"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:15
+msgid "Date/Time"
+msgstr "תאריך/שעה"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:16
+msgid "Now"
+msgstr "עכשיו"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:17
+msgid "Today"
+msgstr "היום"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:18
+msgid "Year"
+msgstr "שנה"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:19
+msgid "Epoch"
+msgstr "Epoch"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:21
+#: lib/Padre/Wx/Dialog/WindowList.pm:224
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
+msgid "File"
+msgstr "קובץ"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:22
+msgid "Size"
+msgstr "גודל "
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:30
+msgid "Number of lines"
+msgstr "מספר שורות"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
+msgid "Class:"
+msgstr "מחלקה:"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:47
+msgid "Special Value:"
+msgstr "ערך מיוחד:"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50 lib/Padre/Wx/Dialog/Snippets.pm:24
+msgid "&Insert"
+msgstr "הכנס"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:63
+msgid "Insert Special Values"
+msgstr "הכנס ערכים מיוחדים"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:18
 msgid "Local/Remote File Access"
-msgstr ""
+msgstr "גישה לקובץ מקומי/מרוחק"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:19
 msgid "Perl Auto Complete"
@@ -3533,11 +3225,11 @@ msgstr "גלישת שורות בברירת מחדל לכל קובץ"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:305
 msgid "Use panel order for Ctrl-Tab (not usage history)"
-msgstr ""
+msgstr "השתמש ב- Ctrl-Tab לסידור פאנל (ולא להיסטוריית שימוש)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:312
 msgid "Clean up file content on saving (for supported document types)"
-msgstr ""
+msgstr "נקוי תוכן קובץ בזמן שמירה (בסוגי קבצים נתמכים)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:317
 msgid "Auto-fold POD markup when code folding enabled"
@@ -3581,7 +3273,7 @@ msgstr "כל כמה זמן לבדוק שנעשו שינויים בקובץ (בש
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:351
 msgid "Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):"
-msgstr ""
+msgstr "קצב הבהו הסמן (אלפיות שניה - 0 = ללא הבהוב; 500 = ברירת מחדל)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:360
 msgid "Autocomplete brackets"
@@ -3604,15 +3296,15 @@ msgstr "קצר את המסלול המשותף ברשימת החלונות"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:390
 msgid "Use X11 middle button paste style"
-msgstr ""
+msgstr "השתמש בסגנון הדבקה של מקש אמצעי של X11"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:394
 msgid "RegExp for TODO-panel:"
-msgstr ""
+msgstr "ביטוי רגולרי (RegExp) לפאנל TODO:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:400
 msgid "Use Splash Screen"
-msgstr ""
+msgstr "שימוש במסך Splash"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:437
 msgid "Project name"
@@ -3628,7 +3320,7 @@ msgstr " שם הקובץ הנוכחי"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:440
 msgid "Current file's dirname"
-msgstr ""
+msgstr "תיקיית הקובץ הנוכחי"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:441
 #, fuzzy
@@ -3637,7 +3329,7 @@ msgstr "למסמך הנוכחי אין שם קובץ"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:442
 msgid "Current filename relative to project"
-msgstr ""
+msgstr "קובץ נוכחי - יחסית לפרוייקט"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:463
 msgid "Window title:"
@@ -3733,14 +3425,14 @@ msgstr "שם מסמך:"
 msgid "Document location:"
 msgstr "מיקום המסמך"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:805 lib/Padre/Wx/Dialog/Advanced.pm:400
-msgid "Default"
-msgstr "ברירת המחדל  "
-
 #: lib/Padre/Wx/Dialog/Preferences.pm:811
 #, perl-format
 msgid "Current Document: %s"
 msgstr "מסמך נוכחי: %s"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:828
+msgid "Preferences"
+msgstr "העדפות"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:854
 msgid "Behaviour"
@@ -3768,7 +3460,7 @@ msgstr "כלים חיצוניים"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:926
 msgid "&Advanced..."
-msgstr ""
+msgstr "&מתקדם..."
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:974
 msgid "new"
@@ -3815,21 +3507,108 @@ msgstr "לפי אלפבית שם פרטי בסוף"
 msgid "Save settings"
 msgstr "שמור הגדרות"
 
-#: lib/Padre/Wx/Dialog/Sync.pm:468 lib/Padre/Wx/Dialog/Sync2.pm:88
-msgid "Please input a valid value for both username and password"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Goto.pm:39
+msgid "Goto"
+msgstr "לך אל"
 
-#: lib/Padre/Wx/Dialog/Sync.pm:516 lib/Padre/Wx/Dialog/Sync2.pm:131
-msgid "Please ensure all inputs have appropriate values."
-msgstr ""
+#: lib/Padre/Wx/Dialog/Goto.pm:86
+#, fuzzy
+msgid "Position type"
+msgstr "סוג תוכן: %s"
 
-#: lib/Padre/Wx/Dialog/Sync.pm:527 lib/Padre/Wx/Dialog/Sync2.pm:142
-msgid "Password and confirmation do not match."
-msgstr ""
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
+#: lib/Padre/Wx/Dialog/Goto.pm:226 lib/Padre/Wx/Dialog/Goto.pm:245
+msgid "Line number"
+msgstr "מספר שורה"
 
-#: lib/Padre/Wx/Dialog/Sync.pm:537 lib/Padre/Wx/Dialog/Sync2.pm:152
-msgid "Email and confirmation do not match."
-msgstr ""
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:230
+msgid "Character position"
+msgstr "מיקום תו"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:228
+#, perl-format
+msgid "&Enter a line number between 1 and %s:"
+msgstr "הכנס מספר שורה בין (1-%s):"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:229
+#, perl-format
+msgid "Current line number: %s"
+msgstr "מספר שורה נוכחית: %s"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:232
+#, perl-format
+msgid "&Enter a position between 1 and %s:"
+msgstr "&הכנס מיקום בין 1 ו- %s:"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:233
+#, perl-format
+msgid "Current position: %s"
+msgstr "מיקום נוכחי: %s"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:257
+msgid "Not a positive number!"
+msgstr "לא מספר חיובי! "
+
+#: lib/Padre/Wx/Dialog/Goto.pm:266
+msgid "Out of range!"
+msgstr "מחוץ לטווח!"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:31
+msgid "Save session as..."
+msgstr "שמור סביבת עבודה בשם..."
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:200
+msgid "Session name:"
+msgstr "שם סביבת העבודה:"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:229
+msgid "Save"
+msgstr "שמור"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:24
+msgid "Other search engine"
+msgstr "מנוע חיפוש אחר"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:27
+msgid "Other event"
+msgstr "אירוע אחר"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:28
+msgid "Friend"
+msgstr "חבר"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:29
+msgid "Reinstalling/installing on other computer"
+msgstr "התקנה מחדש/התקנה על מחשב אחר"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:30
+msgid "Padre Developer"
+msgstr "מפתח Padre"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:31
+msgid "Other (Please fill in here)"
+msgstr "אחר (נא למלא כאן)"
+
+#: lib/Padre/Wx/Dialog/FilterTool.pm:30
+msgid "Filter through tool"
+msgstr "סנן באמצעות כלי"
+
+#: lib/Padre/Wx/Dialog/FilterTool.pm:130
+msgid "Filter command:"
+msgstr "פקודת סינון:"
+
+#: lib/Padre/Wx/Dialog/FilterTool.pm:151
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:394
+msgid "Run"
+msgstr "הרץ"
+
+#: lib/Padre/Wx/Dialog/Encode.pm:53
+msgid "Encode to:"
+msgstr "לקודד ל:"
+
+#: lib/Padre/Wx/Dialog/Encode.pm:63
+msgid "Encode document to..."
+msgstr "קודד מסמך ל..."
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:35
 msgid "Window list"
@@ -3839,599 +3618,88 @@ msgstr "רשימת חלונות"
 msgid "List of open files"
 msgstr "רשימת קבצים פתוחים"
 
-#: lib/Padre/Wx/Dialog/WindowList.pm:224
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:21
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
-msgid "File"
-msgstr "קובץ"
-
 #: lib/Padre/Wx/Dialog/WindowList.pm:225
 msgid "Editor"
 msgstr "עורך"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Disk"
-msgstr ""
+msgstr "דיסק"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:350 lib/Padre/Wx/Dialog/WindowList.pm:358
 msgid "CHANGED"
-msgstr ""
+msgstr "שונה"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:350 lib/Padre/Wx/Dialog/WindowList.pm:354
 msgid "fresh"
-msgstr ""
+msgstr "רענן"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:356
 msgid "DELETED"
-msgstr ""
+msgstr "נמחק"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:16 lib/Padre/Wx/Dialog/ModuleStart.pm:36
-msgid "Apache License"
-msgstr "רישיון Apache"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:17 lib/Padre/Wx/Dialog/ModuleStart.pm:37
-msgid "Artistic License 1.0"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:18 lib/Padre/Wx/Dialog/ModuleStart.pm:38
-msgid "Artistic License 2.0"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:19 lib/Padre/Wx/Dialog/ModuleStart.pm:39
-msgid "Revised BSD License"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:20 lib/Padre/Wx/Dialog/ModuleStart.pm:40
-msgid "GPL 2 or later"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:21 lib/Padre/Wx/Dialog/ModuleStart.pm:41
-msgid "LGPL 2.1 or later"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
-msgid "MIT License"
-msgstr "רישיון MIT"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:23 lib/Padre/Wx/Dialog/ModuleStart.pm:43
-msgid "Mozilla Public License"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:24 lib/Padre/Wx/Dialog/ModuleStart.pm:44
-msgid "Open Source"
-msgstr "קוד פתוח"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:25 lib/Padre/Wx/Dialog/ModuleStart.pm:45
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:113
-msgid "Perl licensing terms"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:26 lib/Padre/Wx/Dialog/ModuleStart.pm:46
-msgid "restrictive"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:27 lib/Padre/Wx/Dialog/ModuleStart.pm:47
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:33
 #, fuzzy
-msgid "unrestricted"
-msgstr "אינו נתמך"
+msgid "Perl filter"
+msgstr "קבצים Perl"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:55
-msgid "Module Name:"
-msgstr "שם מודול:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:58
-msgid "Author:"
-msgstr "מאת:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:61
-msgid "Email Address:"
-msgstr "דואר אלקטרוני:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:64
-msgid "Builder:"
-msgstr "בונה:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:67
-msgid "License:"
-msgstr "רישיון:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:70
-msgid "Parent Directory:"
-msgstr "תיקיית אב:"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:71
-msgid "Pick parent directory"
-msgstr "בחר תיקיית אב"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:97
-msgid "Module Start"
-msgstr "תחילת מודול"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:147
-#, perl-format
-msgid "Field %s was missing. Module not created."
-msgstr "שדה %s לא מולא. מודול לא נוצר."
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:148
-msgid "missing field"
-msgstr "שדה לא מולא"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:182
-#, perl-format
-msgid ""
-"An error has occured while generating '%s':\n"
-"%s"
-msgstr ""
-"שגיאה בזמן חילול '%s':\n"
-"%s"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:39
-msgid "Filename"
-msgstr "שם הקובץ"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:40
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:67
 #, fuzzy
-msgid "Selection"
-msgstr "בחר "
+msgid "&Perl filter source:"
+msgstr "מפרש Perl:"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:60
-msgid "&Update"
-msgstr "עדכן"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:98
-msgid "Lines"
-msgstr "שורות"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:102
-msgid "Words"
-msgstr "מילים"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:106
-msgid "Characters (including whitespace)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:110
-msgid "Non-whitespace characters"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:114
-msgid "Kilobytes (kB)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:118
-msgid "Kibibytes (kiB)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:129
-msgid "Line break mode"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:131
-msgid "Encoding"
-msgstr "קידוד"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:133
-msgid "Document type"
-msgstr "סוג מסמך"
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:179
-msgid "none"
-msgstr "אין"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:30
-#: lib/Padre/Wx/Dialog/OpenResource.pm:74
-msgid "Open Resource"
-msgstr "לפתוח משאב"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:115
-msgid "Error while trying to perform Padre action"
-msgstr "שגיאה בזמן ניסיון לבצע פעולת Padre"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:204
-msgid "&Select an item to open (? = any character, * = any string):"
-msgstr "בחר פריט כדי לפתוח (? = כל תו, * = כל מחרוזת)"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:218
-msgid "&Matching Items:"
-msgstr "פריטים תואמים:"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:234
-msgid "Current Directory: "
-msgstr "תיקייה נוכחית:"
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:261
-msgid "Skip version control system files"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/OpenResource.pm:265
-msgid "Skip using MANIFEST.SKIP"
-msgstr "לדלג על שימוש ב־MANIFEST.SKIP"
-
-#: lib/Padre/Wx/Dialog/Form.pm:32 lib/Padre/Wx/Dialog/Shortcut.pm:32
-#: lib/Padre/Wx/Dialog/Warning.pm:32
-msgid "A Dialog"
-msgstr "תיבת שיח"
-
-#: lib/Padre/Wx/Dialog/Form.pm:41
-msgid "Label One"
-msgstr "תווית ראשונה"
-
-#: lib/Padre/Wx/Dialog/Form.pm:55
-msgid "Second Label"
-msgstr "תווית שניה"
-
-#: lib/Padre/Wx/Dialog/Form.pm:71
-msgid "Whatever"
-msgstr "כלשהו"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:18
-msgid "All"
-msgstr "הכול"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:22 lib/Padre/Wx/Dialog/SpecialValues.pm:46
-msgid "Class:"
-msgstr "מחלקה:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
-msgid "Snippet:"
-msgstr "קטע קוד:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:24 lib/Padre/Wx/Dialog/SpecialValues.pm:50
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:233
-msgid "&Insert"
-msgstr "הכנס"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:26 lib/Padre/Wx/Menu/Edit.pm:344
-msgid "&Edit"
-msgstr "ערוך"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:26
-msgid "&Add"
-msgstr "הוסף"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "קטעי קוד"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:111
-msgid "Category:"
-msgstr "קטגוריה:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:112
-msgid "Name:"
-msgstr "שם:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:125
-msgid "Edit/Add Snippets"
-msgstr "ערוך/הוסף קטעי קוד"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:38
-msgid "Session Manager"
-msgstr "מנהל סביבות עבודה"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:215
-msgid "List of sessions"
-msgstr "רשימת סביבות עבודה"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:227
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:25
-#: lib/Padre/Wx/Dialog/PluginManager.pm:66
-msgid "Name"
-msgstr "שם"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:228
-msgid "Description"
-msgstr "תיאור"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:229
-msgid "Last update"
-msgstr "עדכון אחרון"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:261
-msgid "Save session automatically"
-msgstr "שמור סביבת עבודה באופן אוטומטי"
-
-#: lib/Padre/Wx/Dialog/SessionManager.pm:291
-msgid "Open"
-msgstr "פתח"
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:15
-msgid "Date/Time"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:16
-msgid "Now"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:17
-msgid "Today"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:18
-msgid "Year"
-msgstr "שנה"
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:19
-msgid "Epoch"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:22
-msgid "Size"
-msgstr "גודל "
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:30
-msgid "Number of lines"
-msgstr "מספר שורות"
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:47
-msgid "Special Value:"
-msgstr "ערך מיוחד:"
-
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:63
-msgid "Insert Special Values"
-msgstr "הכנס ערכים מיוחדים"
-
-#: lib/Padre/Wx/Dialog/FindInFiles.pm:63
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:74
 #, fuzzy
-msgid "Select Directory"
-msgstr "סמן תיקייה"
+msgid "Or&iginal text:"
+msgstr "טקסט מקורי: "
 
-#: lib/Padre/Wx/Dialog/Positions.pm:107
-msgid "There are no positions saved yet"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Positions.pm:124
-#, fuzzy, perl-format
-msgid "%s. Line: %s File: %s - %s"
-msgstr "%s שורה %s: %s"
-
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
-#: lib/Padre/Wx/Dialog/Wizard/Select.pm:18
-msgid "Wizard Selector"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:86
-msgid "&Back"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:87 lib/Padre/Wx/Dialog/Search.pm:172
-msgid "&Next"
-msgstr "הבא"
-
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:174
-#, perl-format
-msgid "%s has no constructor"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Find.pm:74
-msgid "&Regular Expression"
-msgstr "ביטוי רגולרי"
-
-#: lib/Padre/Wx/Dialog/Find.pm:88 lib/Padre/Wx/Dialog/Replace.pm:122
-msgid "Search &Backwards"
-msgstr "חפש אחורה"
-
-#: lib/Padre/Wx/Dialog/Find.pm:102 lib/Padre/Wx/Dialog/Replace.pm:80
-msgid "Case &sensitive"
-msgstr " תלוי רישיות"
-
-#: lib/Padre/Wx/Dialog/Find.pm:116 lib/Padre/Wx/Dialog/Replace.pm:108
-msgid "Close Window on &Hit"
-msgstr "סגור חלון בפגיעה"
-
-#: lib/Padre/Wx/Dialog/Find.pm:130
-msgid "&Find Next"
-msgstr "מצא הבא"
-
-#: lib/Padre/Wx/Dialog/Find.pm:145
-msgid "Find &All"
-msgstr "מצא הכל"
-
-#: lib/Padre/Wx/Dialog/Find.pm:184
-msgid "Find &Text:"
-msgstr "חפש טקסט"
-
-#: lib/Padre/Wx/Dialog/Find.pm:209 lib/Padre/Wx/Dialog/Replace.pm:304
-msgid "Options"
-msgstr "אפשרויות"
-
-#: lib/Padre/Wx/Dialog/Find.pm:330 lib/Padre/Wx/Dialog/Replace.pm:537
-#: lib/Padre/Wx/Dialog/Replace.pm:586
-msgid "No matches found"
-msgstr "לא נמצאו התאמות"
-
-#: lib/Padre/Wx/Dialog/Find.pm:388
-msgid "Not a valid search"
-msgstr "חיפוש לא תקין"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:39
-msgid "Quick Menu Access"
-msgstr "גישה מהירה לתפריט"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
-#, perl-format
-msgid "Error while trying to perform Padre action: %s"
-msgstr "שגיאה בזמן ניסיון לבצע פעולת Padre: %s"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:176
-msgid "&Type a menu item name to access:"
-msgstr "הקלד שם פריט בתפריט כדי לגשת:"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:183
-msgid "&Matching Menu Items:"
-msgstr "פריטי תפריט תואמים:"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:352
-msgid "Reading items. Please wait..."
-msgstr "קורא פריטים. נא להמתין..."
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
-msgid "Edit"
-msgstr "ערוך"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:391
-msgid "View"
-msgstr "הצג"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:392
-msgid "Perl"
-msgstr "Perl"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
-msgid "Refactor"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:395
-msgid "Debug"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:396
-msgid "Plugins"
-msgstr "תוספים"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
-msgid "Window"
-msgstr "חלון"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:41
-#, perl-format
-msgid "Action: %s"
-msgstr "פעולה: %s"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:54
-msgid "CTRL"
-msgstr "CTRL"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
-#: lib/Padre/Wx/Dialog/Shortcut.pm:89
-msgid "+"
-msgstr "+"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:68
-msgid "ALT"
-msgstr "ALT"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:82
-msgid "SHIFT"
-msgstr "SHIFT"
-
-#: lib/Padre/Wx/Dialog/Shortcut.pm:113
-msgid "Shortcut"
-msgstr "קיצור דרך"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:27
-msgid "Boolean"
-msgstr "בוליאני"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:28
-msgid "Positive Integer"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:29
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:81
 #, fuzzy
-msgid "Integer"
-msgstr "הכנס"
+msgid "&Output text:"
+msgstr "תצוגת פלט"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:30
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:89
 #, fuzzy
-msgid "String"
-msgstr "אזהרה"
+msgid "Run filter"
+msgstr "פתח קובץ"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:31
-msgid "File/Directory"
-msgstr " קובץ/תיקייה"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:35
+msgid "Plug-in Manager"
+msgstr "מנהל התוספים"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:63
-msgid "Advanced Settings"
-msgstr "הגדרות מתקדמות"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:67
+msgid "Version"
+msgstr "גרסה"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:94 lib/Padre/Wx/Dialog/KeyBindings.pm:60
-#: lib/Padre/Wx/Dialog/Wizard/Select.pm:26
+#: lib/Padre/Wx/Dialog/PluginManager.pm:102
+msgid "Plug-in Name"
+msgstr "שם התוסף"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:117
+#: lib/Padre/Wx/Dialog/PluginManager.pm:528
 #, fuzzy
-msgid "&Filter:"
-msgstr "קובץ"
+msgid "&Enable"
+msgstr "אפשר"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:107
-#, fuzzy
-msgid "Preference Name"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:131
+msgid "&Preferences"
 msgstr "העדפות"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:109
-msgid "Type"
-msgstr "טיפוס"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:245
+#, perl-format
+msgid "Error loading pod for class '%s': %s"
+msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:114
-msgid "Copy"
-msgstr "העתק"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:115
-msgid "Copy Name"
-msgstr "העתק את שם הקובץ"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:116
-msgid "Copy Value"
-msgstr "העתק ערך"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:119
-msgid "&Value:"
-msgstr "ערך"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:126 lib/Padre/Wx/Dialog/Advanced.pm:563
-msgid "True"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:127 lib/Padre/Wx/Dialog/Advanced.pm:564
+#: lib/Padre/Wx/Dialog/PluginManager.pm:489
+#: lib/Padre/Wx/Dialog/PluginManager.pm:501
 #, fuzzy
-msgid "False"
-msgstr "קבצים"
+msgid "&Show error message"
+msgstr "הצג הודעת שגיאה"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:132
-msgid "Default value:"
-msgstr "ברירת המחדל  "
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:144
-msgid "Options:"
-msgstr "אפשרויות:"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:157 lib/Padre/Wx/Dialog/KeyBindings.pm:116
-msgid "&Set"
-msgstr "קבע "
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:163 lib/Padre/Wx/Dialog/KeyBindings.pm:128
+#: lib/Padre/Wx/Dialog/PluginManager.pm:516
 #, fuzzy
-msgid "&Reset"
-msgstr "הכנס"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:169
-msgid "S&ave"
-msgstr "שמור"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:735
-msgid "User"
-msgstr "משתמש"
-
-#: lib/Padre/Wx/Dialog/Advanced.pm:735
-msgid "Host"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:38
-msgid "Select Function"
-msgstr "בחר פונקציה"
-
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:92
-msgid ""
-"Select which subroutine you want the new subroutine\n"
-"inserted before."
-msgstr "בחר את השגרה שלפניה יש להכניס את השגרה החדשה"
-
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:104
-msgid "Function"
-msgstr "פונקציה"
-
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:125
-#: lib/Padre/Wx/Menu/Edit.pm:49
-msgid "Select"
-msgstr "בחר "
+msgid "&Disable"
+msgstr "בטל"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:39 lib/Padre/Wx/Dialog/HelpSearch.pm:96
 msgid "Help Search"
@@ -4470,43 +3738,127 @@ msgstr "לא נמצא ספק עזרה עבור'"
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:395
 #, perl-format
 msgid "Found %s help topic(s)\n"
-msgstr ""
+msgstr "נמצאו %s נושא(ים) בעזרה\n"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:31
+msgid "Existing bookmarks:"
+msgstr "סימניות קיימות:"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:43
+msgid "Delete &All"
+msgstr "מחק הכול"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:56
+msgid "Set Bookmark"
+msgstr "צור סימנייה"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:57
+msgid "Go to Bookmark"
+msgstr "לך לסימנייה"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:123
+msgid "Cannot set bookmark in unsaved document"
+msgstr "לא ניתן להגדיר סימנייה במסמך לא שמור"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:134
+#, perl-format
+msgid "%s line %s: %s"
+msgstr "%s שורה %s: %s"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:170
+#, perl-format
+msgid "The bookmark '%s' no longer exists"
+msgstr "הסימנייה '%s' לא קיימת עוד"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:40
+msgid "Quick Menu Access"
+msgstr "גישה מהירה לתפריט"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
+#, perl-format
+msgid "Error while trying to perform Padre action: %s"
+msgstr "שגיאה בזמן ניסיון לבצע פעולת Padre: %s"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:176
+msgid "&Type a menu item name to access:"
+msgstr "הקלד שם פריט בתפריט כדי לגשת:"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:183
+msgid "&Matching Menu Items:"
+msgstr "פריטי תפריט תואמים:"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:352
+msgid "Reading items. Please wait..."
+msgstr "קורא פריטים. נא להמתין..."
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
+msgid "Edit"
+msgstr "ערוך"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:391
+msgid "View"
+msgstr "הצג"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:392
+msgid "Perl"
+msgstr "Perl"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
+msgid "Refactor"
+msgstr "ניקוי קוד (Refactor)"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:395
+msgid "Debug"
+msgstr "מנפה שגיאת (Debug)"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:396
+msgid "Plugins"
+msgstr "תוספים"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+msgid "Window"
+msgstr "חלון"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:33
+msgid "Regex Editor"
+msgstr "עורך ביטוי רגולרי"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:70
-msgid "&Character classes"
-msgstr ""
+#, fuzzy
+msgid "Character classes"
+msgstr "מיקום תו"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any character except a newline"
-msgstr ""
+msgstr "כל תו חוץ מתו שורה חדשה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:73
 msgid "Any decimal digit"
-msgstr ""
+msgstr "כל ספרה עשרונית"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:74
 msgid "Any non-digit"
-msgstr ""
+msgstr "כל תו שאינו ספרה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:75
 msgid "Any whitespace character"
-msgstr ""
+msgstr "כל תו רווח"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:76
 msgid "Any non-whitespace character"
-msgstr ""
+msgstr "כל תו שאינו רווח"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:77
 msgid "Any word character"
-msgstr ""
+msgstr "כל תו שהוא מלה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:78
 msgid "Any non-word character"
-msgstr ""
+msgstr "כל תו שאינו מלה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:82
 msgid "&POSIX Character classes"
-msgstr ""
+msgstr "&מחלקות תווי POSIX"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:84
 msgid "Alphabetic characters"
@@ -4566,34 +3918,35 @@ msgstr "ספרות הקסדצימליות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:101
 msgid "&Quantifiers"
-msgstr ""
+msgstr "&מצייני כמות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:103
 msgid "Match 0 or more times"
-msgstr ""
+msgstr "חפש 0 פעמים או יותר"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:104
 msgid "Match 1 or more times"
-msgstr ""
+msgstr "חפש 1 פעמים או יותר"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:105
 msgid "Match 1 or 0 times"
-msgstr ""
+msgstr "חפש 1 או 0 פעמים "
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:106
 msgid "Match exactly m times"
-msgstr ""
+msgstr "חפש בדיוק m פעמים"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:107
 msgid "Match at least n times"
-msgstr ""
+msgstr "חפש לפחות n פעמים"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:108
 msgid "Match at least m but not more than n times"
-msgstr ""
+msgstr "חפש לפחות m פעמים, אך לא יותר מ- n פעמים"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:112
-msgid "&Miscellaneous"
+#, fuzzy
+msgid "Miscellaneous"
 msgstr "שונות &M"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:114
@@ -4603,11 +3956,11 @@ msgstr "תרגום"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:115
 msgid "Character set"
-msgstr ""
+msgstr "סט תווים (Character set)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:116
 msgid "Beginning of line"
-msgstr ""
+msgstr "תחילת שורה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
 msgid "End of line"
@@ -4615,23 +3968,23 @@ msgstr "סוף שורה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:118
 msgid "A word boundary"
-msgstr ""
+msgstr "גבולות מלה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:119
 msgid "Not a word boundary"
-msgstr ""
+msgstr "לא גבולות מלה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:120
 msgid "A comment"
 msgstr "הערה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:124
-msgid "&Grouping constructs"
+msgid "Grouping constructs"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:126
 msgid "A group"
-msgstr ""
+msgstr "קבוצה A"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:127
 msgid "Non-capturing group"
@@ -4674,7 +4027,8 @@ msgid "&Original text:"
 msgstr "טקסט מקורי: "
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:218
-msgid "&Matched text:"
+#, fuzzy
+msgid "Matched text:"
 msgstr "טקסט תואם:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:225
@@ -4695,7 +4049,7 @@ msgstr "שורה בודדת "
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:413
 msgid "\".\" also matches newline"
-msgstr ""
+msgstr "\".\" מציג גם שורה חדשה"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:416
 msgid "Multi-line (&m)"
@@ -4703,7 +4057,7 @@ msgstr "שורות מרובות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:417
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
-msgstr ""
+msgstr "\"^\" ו- \"$\" מציינים התחלת שורה וסוף שורה בתוך הטקסט"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:420
 msgid "Extended (&x)"
@@ -4713,7 +4067,7 @@ msgstr "מורחב"
 msgid ""
 "Extended regular expressions allow free formatting (whitespace is ignored) "
 "and comments"
-msgstr ""
+msgstr "ביטויים רגולרים מורחבים מאפשרים פורמט חופשי (רווח לא נחשב) והערות"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:425
 msgid "Global (&g)"
@@ -4742,258 +4096,99 @@ msgstr "לא נמצאו התאמות"
 msgid "Replace failure in %s:  %s"
 msgstr "החלף את הכשלון ב - %s: %s"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:67
-msgid "Version"
-msgstr "גרסה"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:30
+#: lib/Padre/Wx/Dialog/OpenResource.pm:76
+msgid "Open Resource"
+msgstr "לפתוח משאב"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:102
-msgid "Plug-in Name"
-msgstr "שם התוסף"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:117
+msgid "Error while trying to perform Padre action"
+msgstr "שגיאה בזמן ניסיון לבצע פעולת Padre"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:117
-#: lib/Padre/Wx/Dialog/PluginManager.pm:524
-msgid "Enable"
-msgstr "אפשר"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:206
+msgid "&Select an item to open (? = any character, * = any string):"
+msgstr "בחר פריט כדי לפתוח (? = כל תו, * = כל מחרוזת)"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:245
-#, perl-format
-msgid "Error loading pod for class '%s': %s"
-msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:220
+msgid "&Matching Items:"
+msgstr "פריטים תואמים:"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:485
-#: lib/Padre/Wx/Dialog/PluginManager.pm:497
-msgid "Show error message"
-msgstr "הצג הודעת שגיאה"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:236
+msgid "Current Directory: "
+msgstr "תיקייה נוכחית:"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:512
-msgid "Disable"
-msgstr "בטל"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:263
+msgid "Skip version control system files"
+msgstr "דילוג על קבצי מערכת נהול גרסאות"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:24
-msgid "Other search engine"
-msgstr "מנוע חיפוש אחר"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:267
+msgid "Skip using MANIFEST.SKIP"
+msgstr "לדלג על שימוש ב־MANIFEST.SKIP"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:27
-msgid "Other event"
-msgstr "אירוע אחר"
-
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:28
-msgid "Friend"
-msgstr "חבר"
-
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:29
-msgid "Reinstalling/installing on other computer"
-msgstr "התקנה מחדש/התקנה על מחשב אחר"
-
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:30
-msgid "Padre Developer"
-msgstr "מפתח Padre"
-
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:31
-msgid "Other (Please fill in here)"
-msgstr "אחר (נא למלא כאן)"
-
-#: lib/Padre/Wx/Dialog/Encode.pm:53
-msgid "Encode to:"
-msgstr "לקודד ל:"
-
-#: lib/Padre/Wx/Dialog/Encode.pm:63
-msgid "Encode document to..."
-msgstr "קודד מסמך ל..."
-
-#: lib/Padre/Wx/Dialog/Search.pm:135
-msgid "Find:"
-msgstr "חפש:"
-
-#: lib/Padre/Wx/Dialog/Search.pm:154
-msgid "Previ&ous"
-msgstr "הקודם"
-
-#: lib/Padre/Wx/Dialog/Search.pm:180
-msgid "Case &insensitive"
-msgstr "לא תלוי רישיות"
-
-#: lib/Padre/Wx/Dialog/Search.pm:184
-msgid "Use rege&x"
-msgstr "השתמש בביטוי רגולרי"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:50
-msgid "Find and Replace"
-msgstr "חפש והחלף"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:94
-msgid "Regular &Expression"
-msgstr "ביטוי רגולרי"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:136
-msgid "Replace &All"
-msgstr "החלף הכול"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:150
-msgid "&Find"
-msgstr "חפש:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:170
-msgid "&Replace"
-msgstr "החלף"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:226
-msgid "Find Text:"
-msgstr "חפש טקסט:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:250
-msgid "Replace"
-msgstr "החלף"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:258
-msgid "Replace Text:"
-msgstr "החלף ב:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:538 lib/Padre/Wx/Dialog/Replace.pm:582
-#: lib/Padre/Wx/Dialog/Replace.pm:587
-msgid "Search and Replace"
-msgstr "חיפוש והחלפה"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:577
-#, perl-format
-msgid "Replaced %d match"
-msgstr "הוחלפו %d התאמות:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:577
-#, perl-format
-msgid "Replaced %d matches"
-msgstr "הוחלפו %d התאמות:"
-
-#: lib/Padre/Wx/Dialog/OpenURL.pm:37
-msgid "Open URL"
-msgstr "פתח URL"
-
-#: lib/Padre/Wx/Dialog/OpenURL.pm:79
-msgid "e.g."
-msgstr "לדוגמה"
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:82
-msgid "Sh&ortcut:"
-msgstr "קיצור דרך"
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:85
-msgid "Ctrl"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:86
-#, fuzzy
-msgid "Alt"
+#: lib/Padre/Wx/Dialog/Snippets.pm:18
+msgid "All"
 msgstr "הכול"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:87
-msgid "Shift"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
+msgid "Snippet:"
+msgstr "קטע קוד:"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "None"
-msgstr "אין"
+#: lib/Padre/Wx/Dialog/Snippets.pm:26 lib/Padre/Wx/Menu/Edit.pm:349
+msgid "&Edit"
+msgstr "ערוך"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "Backspace"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Snippets.pm:26
+msgid "&Add"
+msgstr "הוסף"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "Tab"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "קטעי קוד"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "Space"
-msgstr "רווח"
+#: lib/Padre/Wx/Dialog/Snippets.pm:111
+msgid "Category:"
+msgstr "קטגוריה:"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "Up"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Snippets.pm:112
+msgid "Name:"
+msgstr "שם:"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:95
-msgid "Down"
-msgstr "למטה"
+#: lib/Padre/Wx/Dialog/Snippets.pm:125
+msgid "Edit/Add Snippets"
+msgstr "ערוך/הוסף קטעי קוד"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
-msgid "Left"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:17
+msgid "Select a Wizard"
+msgstr "בחר אשף"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
-msgid "Right"
-msgstr "ימינה"
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96 lib/Padre/Wx/Menu/Edit.pm:121
-msgid "Insert"
-msgstr "הכנס"
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
-msgid "Home"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:96
-msgid "End"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:97
-msgid "PageUp"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:97
-msgid "PageDown"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:97
-msgid "Enter"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:97
-msgid "Escape"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:122
-msgid "&Delete"
-msgstr "מחק"
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:130
-msgid "Reset to default shortcut"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:375
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:126
 #, perl-format
-msgid "The shortcut '%s' is already used by the action '%s'.\n"
-msgstr ""
+msgid "Error while loading %s"
+msgstr "שגיאה בעת טעינת ל- %s"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:378
-msgid "Do you want to override it with the selected action?"
-msgstr ""
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:15
+msgid "Creates a Padre Plugin"
+msgstr "יוצר תוסף ל- Padre"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:379
-msgid "Override Shortcut"
-msgstr "עקוף קיצור דרך"
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:16
+msgid "Padre Plugin Wizard"
+msgstr "אשף התוספים של Padre"
 
-#: lib/Padre/Wx/Dialog/Warning.pm:41
-msgid "See http://padre.perlide.org/ for update information"
-msgstr "עיין ב- http://padre.perlide.org/ למידע על עידכונים "
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:15
+msgid "Creates a Padre document"
+msgstr "יוצר מסמך Padre"
 
-#: lib/Padre/Wx/Dialog/Warning.pm:49
-msgid "Do not show this again"
-msgstr "אל תציג את זה שוב"
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:16
+msgid "Padre Document Wizard"
+msgstr "אשף הקובץ של Padre"
 
-#: lib/Padre/Wx/Dialog/Preferences/File.pm:36
-msgid "File access via HTTP"
-msgstr "גישה לקבצים באמצעות HTTP"
+#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:17
+msgid "Creates a Perl 5 module or script"
+msgstr "יוצר מודול של Perl 5 או סקריפט"
 
-#: lib/Padre/Wx/Dialog/Preferences/File.pm:39
-#: lib/Padre/Wx/Dialog/Preferences/File.pm:47
-msgid "Timeout (in seconds):"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/Preferences/File.pm:44
-msgid "File access via FTP"
-msgstr "גישה לקבצים באמצעות FTP"
-
-#: lib/Padre/Wx/Dialog/Preferences/File.pm:51
-msgid "Use FTP passive mode"
-msgstr "השתמש ב-FTP במוד פסיבי"
+#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:18
+msgid "Perl 5 Module Wizard"
+msgstr "אשף מודול Perl 5"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
 msgid "Autocomplete always while typing"
@@ -5019,50 +4214,224 @@ msgstr "מספר הצעות מירבי"
 msgid "Min. chars for autocompletion:"
 msgstr "מספר תווים מזערי להשלמות אוטומטיות"
 
-#: lib/Padre/Wx/Dialog/Wizard/Select.pm:17
-msgid "Select a Wizard"
-msgstr "בחר אשף"
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:36
+msgid "File access via HTTP"
+msgstr "גישה לקבצים באמצעות HTTP"
 
-#: lib/Padre/Wx/Dialog/Wizard/Select.pm:126
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:39
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:47
+msgid "Timeout (in seconds):"
+msgstr "Timeout (בשניות):"
+
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:44
+msgid "File access via FTP"
+msgstr "גישה לקבצים באמצעות FTP"
+
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:51
+msgid "Use FTP passive mode"
+msgstr "השתמש ב-FTP במוד פסיבי"
+
+#: lib/Padre/Wx/FBP/Sync.pm:34
+msgid "Server"
+msgstr "שרת"
+
+#: lib/Padre/Wx/FBP/Sync.pm:54
+msgid "Logged out"
+msgstr "מנותק"
+
+#: lib/Padre/Wx/FBP/Sync.pm:68 lib/Padre/Wx/FBP/Sync.pm:111
+msgid "Username"
+msgstr "שם משתמש"
+
+#: lib/Padre/Wx/FBP/Sync.pm:82 lib/Padre/Wx/FBP/Sync.pm:125
+msgid "Password"
+msgstr "סיסמא"
+
+#: lib/Padre/Wx/FBP/Sync.pm:97
+#, fuzzy
+msgid "Login"
+msgstr "שורה:"
+
+#: lib/Padre/Wx/FBP/Sync.pm:139 lib/Padre/Wx/FBP/Sync.pm:167
+msgid "Confirm"
+msgstr "אישור"
+
+#: lib/Padre/Wx/FBP/Sync.pm:153
+msgid "Email"
+msgstr "דואר אלקטרוני"
+
+#: lib/Padre/Wx/FBP/Sync.pm:181
+#, fuzzy
+msgid "Register"
+msgstr "עורך ביטויים רגולריים"
+
+#: lib/Padre/Wx/FBP/Sync.pm:203
+#, fuzzy
+msgid "Upload"
+msgstr "טעון"
+
+#: lib/Padre/Wx/FBP/Sync.pm:218
+#, fuzzy
+msgid "Download"
+msgstr "לא טעון"
+
+#: lib/Padre/Wx/FBP/Sync.pm:283
+#, fuzzy
+msgid "Authentication"
+msgstr "  הזחה"
+
+#: lib/Padre/Wx/FBP/Sync.pm:310
+#, fuzzy
+msgid "Registration"
+msgstr "תיאור"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:36 lib/Padre/Wx/FBP/Find.pm:36
+msgid "Search Term:"
+msgstr "חפש מונח: "
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:50
+#, fuzzy
+msgid "Search Directory:"
+msgstr "תיקיית אב:"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:64
+msgid "Browse"
+msgstr "דפדף"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:78
+#, fuzzy
+msgid "Search in Types:"
+msgstr "חיפוש והחלפה"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:101 lib/Padre/Wx/FBP/Find.pm:58
+msgid "Regular Expression"
+msgstr "ביטוי רגולרי"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:109 lib/Padre/Wx/FBP/Find.pm:74
+msgid "Case Sensitive"
+msgstr " תלוי רישיות"
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:31
+msgid "Where did you hear about Padre?"
+msgstr "היכן שמעת על Padre?"
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:54
+msgid "OK"
+msgstr "אישור"
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:60
+msgid "Skip question without giving feedback"
+msgstr "דלג על שאלה בלי לתת משוב"
+
+#: lib/Padre/Wx/FBP/Find.pm:66
+#, fuzzy
+msgid "Search Backwards"
+msgstr "חפש אחורה"
+
+#: lib/Padre/Wx/FBP/Find.pm:82
+#, fuzzy
+msgid "Close Window on Hit"
+msgstr "סגור חלון בפגיעה"
+
+#: lib/Padre/Wx/FBP/Find.pm:113
+#, fuzzy
+msgid "Find All"
+msgstr "מצא הכל"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
+msgid "Directory"
+msgstr " תיקייה"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:163
 #, perl-format
-msgid "Error while loading %s"
-msgstr "שגיאה בעת טעינת ל- %s"
+msgid "Could not create: '%s': %s"
+msgstr "לא ניתן ליצור: '%s': %s"
 
-#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:15
-msgid "Creates a Padre document"
-msgstr "יוצר מסמך Padre"
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
+#, fuzzy, perl-format
+msgid "Really delete the file \"%s\"?"
+msgstr "שמור את כל הקבצים"
 
-#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:16
-msgid "Padre Document Wizard"
-msgstr ""
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:182
+#, perl-format
+msgid "Could not delete: '%s': %s"
+msgstr "לא ניתן למחוק: '%s': %s"
 
-#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:15
-msgid "Creates a Padre Plugin"
-msgstr ""
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:210
+msgid "Open File"
+msgstr "פתח קובץ"
 
-#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:16
-msgid "Padre Plugin Wizard"
-msgstr ""
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:226
+msgid "Delete File"
+msgstr "מחק קובץ"
 
-#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:17
-msgid "Creates a Perl 5 module or script"
-msgstr ""
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:237
+msgid "Create Directory"
+msgstr "צור תיקייה"
 
-#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:18
-msgid "Perl 5 Module Wizard"
-msgstr "אשף מודול Perl 5"
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
+msgid "Refresh"
+msgstr "רענן "
 
-#: lib/Padre/Wx/Role/Dialog.pm:69 lib/Padre/Wx/Role/Dialog.pm:141
-msgid "Message"
-msgstr "מסר"
+#: lib/Padre/Wx/Menu/Window.pm:110
+msgid "&Window"
+msgstr "חלון"
 
-#: lib/Padre/Wx/Role/Dialog.pm:92
-msgid "Unknown error from "
-msgstr "שגיאה לא ידועה מ-"
+#: lib/Padre/Wx/Menu/Help.pm:60
+msgid "Live Support"
+msgstr "תמיכה חיה"
+
+#: lib/Padre/Wx/Menu/Help.pm:121
+msgid "&Help"
+msgstr "עזרה"
+
+#: lib/Padre/Wx/Menu/Debug.pm:116
+msgid "&Debug"
+msgstr "&מנפה שגיאות (Debug)"
+
+#: lib/Padre/Wx/Menu/View.pm:82
+msgid "View Document As..."
+msgstr "להציג מסמך בתור..."
+
+#: lib/Padre/Wx/Menu/View.pm:174
+msgid "Font Size"
+msgstr "גודל גופן"
+
+#: lib/Padre/Wx/Menu/View.pm:197
+msgid "Style"
+msgstr "סגנון"
+
+#: lib/Padre/Wx/Menu/View.pm:245
+msgid "Language"
+msgstr "שפה"
+
+#: lib/Padre/Wx/Menu/View.pm:283
+msgid "&View"
+msgstr "הצג"
+
+#: lib/Padre/Wx/Menu/Tools.pm:65
+msgid "Module Tools"
+msgstr "כלי מודול"
+
+#: lib/Padre/Wx/Menu/Tools.pm:103
+msgid "Plug-in Tools"
+msgstr "כלים לתוספים"
+
+#: lib/Padre/Wx/Menu/Tools.pm:198
+msgid "&Tools"
+msgstr "כלים"
+
+#: lib/Padre/Wx/Menu/Search.pm:99
+msgid "&Search"
+msgstr "חפש"
+
+#: lib/Padre/Wx/Menu/Run.pm:74
+msgid "&Run"
+msgstr "הרץ"
 
 #: lib/Padre/Wx/Menu/Edit.pm:90
 msgid "Copy Specials"
-msgstr ""
+msgstr "העתק  Specials"
 
 #: lib/Padre/Wx/Menu/Edit.pm:200
 msgid "Convert Encoding"
@@ -5084,9 +4453,21 @@ msgstr "אותיות גדולות/קטנות"
 msgid "Diff Tools"
 msgstr "כלי השוואה"
 
-#: lib/Padre/Wx/Menu/Edit.pm:326
+#: lib/Padre/Wx/Menu/Edit.pm:331
 msgid "Show as"
 msgstr "להציג כ..."
+
+#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1696
+msgid "Change variable style"
+msgstr "שינוי סגנון המישתנה"
+
+#: lib/Padre/Wx/Menu/Refactor.pm:94
+msgid "Ref&actor"
+msgstr "Ref&actor (מנקה קוד)"
+
+#: lib/Padre/Wx/Menu/Perl.pm:101
+msgid "&Perl"
+msgstr "Perl"
 
 #: lib/Padre/Wx/Menu/File.pm:44
 msgid "New"
@@ -5117,148 +4498,155 @@ msgstr "הקובץ %s לא נמצא."
 msgid "Open cancelled"
 msgstr "הפתיחה בוטלה"
 
-#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1759
-msgid "Change variable style"
-msgstr ""
+#: lib/Padre/File/HTTP.pm:48
+#, perl-format
+msgid "Sending HTTP request %s..."
+msgstr "שולח בקשת HTTP %s ..."
 
-#: lib/Padre/Wx/Menu/Refactor.pm:94
-msgid "Ref&actor"
-msgstr ""
+#: lib/Padre/File/FTP.pm:43
+msgid "Looking for Net::FTP..."
+msgstr "מחפש את Net::FTP..."
 
-#: lib/Padre/Wx/Menu/Help.pm:60
-msgid "Live Support"
-msgstr "תמיכה חיה"
+#: lib/Padre/File/FTP.pm:113
+#, perl-format
+msgid "Connecting to FTP server %s..."
+msgstr "מתחבר לשרת HTTP %s ..."
 
-#: lib/Padre/Wx/Menu/Help.pm:121
-msgid "&Help"
-msgstr "עזרה"
+#: lib/Padre/File/FTP.pm:124
+#, perl-format
+msgid "Error connecting to %s:%s: %s"
+msgstr "שגיאה בהתחברות אל %s:%s: %s"
 
-#: lib/Padre/Wx/Menu/Perl.pm:106
-msgid "&Perl"
-msgstr "Perl"
+#: lib/Padre/File/FTP.pm:131
+#, perl-format
+msgid "Password for user '%s' at %s:"
+msgstr "סיסמא למשתמש %s ב- %s : "
 
-#: lib/Padre/Wx/Menu/Window.pm:110
-msgid "&Window"
-msgstr "חלון"
+#: lib/Padre/File/FTP.pm:135
+msgid "FTP Password"
+msgstr "סיסמאת FTP"
 
-#: lib/Padre/Wx/Menu/View.pm:82
-msgid "View Document As..."
-msgstr "להציג מסמך בתור..."
+#: lib/Padre/File/FTP.pm:141
+#, perl-format
+msgid "Logging into FTP server as %s..."
+msgstr "מתחבר לשרת FTP כ- %s ..."
 
-#: lib/Padre/Wx/Menu/View.pm:170
-msgid "Font Size"
-msgstr "גודל גופן"
+#: lib/Padre/File/FTP.pm:144
+#, fuzzy, perl-format
+msgid "Error logging in on %s:%s: %s"
+msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
 
-#: lib/Padre/Wx/Menu/View.pm:193
-msgid "Style"
-msgstr "סגנון"
+#: lib/Padre/File/FTP.pm:156
+msgid "Connection to FTP server successful."
+msgstr "התחברות ל- FTP הצליחה."
 
-#: lib/Padre/Wx/Menu/View.pm:241
-msgid "Language"
-msgstr "שפה"
+#: lib/Padre/File/FTP.pm:186
+#, fuzzy, perl-format
+msgid "Unable to parse %s"
+msgstr "טאבים לרווחים"
 
-#: lib/Padre/Wx/Menu/View.pm:279
-msgid "&View"
-msgstr "הצג"
+#: lib/Padre/File/FTP.pm:289
+msgid "Reading file from FTP server..."
+msgstr "קורא קובץ משרת ה-FTP..."
 
-#: lib/Padre/Wx/Menu/Search.pm:100
-msgid "&Search"
-msgstr "חפש"
+#: lib/Padre/File/FTP.pm:312
+msgid "Writing file to FTP server..."
+msgstr "כותב קובץ לשרת FTP ..."
 
-#: lib/Padre/Wx/Menu/Debug.pm:116
-msgid "&Debug"
-msgstr ""
+#: lib/Padre/PPI/EndifyPod.pm:38
+msgid "Error while searching for POD"
+msgstr "שגיאה בחיפוש POD"
 
-#: lib/Padre/Wx/Menu/Tools.pm:65
-msgid "Module Tools"
-msgstr "כלי מודול"
+#: lib/Padre/PPI/EndifyPod.pm:42
+msgid "This document does not contain any POD"
+msgstr "אין כל POD למסמך זה"
 
-#: lib/Padre/Wx/Menu/Tools.pm:103
-msgid "Plug-in Tools"
-msgstr "כלים לתוספים"
+#: lib/Padre/PPI/EndifyPod.pm:46
+msgid "Only one POD fragment, will not try to merge"
+msgstr "רק פרגמנטאחד של POD, לא מנסה לאחד"
 
-#: lib/Padre/Wx/Menu/Tools.pm:198
-msgid "&Tools"
-msgstr "כלים"
+#: lib/Padre/PPI/EndifyPod.pm:53
+msgid "Failed to merge the POD fragments"
+msgstr "נכשל המיזוג של חלקי POD"
 
-#: lib/Padre/Wx/Menu/Run.pm:74
-msgid "&Run"
-msgstr "הרץ"
+#: lib/Padre/PPI/EndifyPod.pm:60
+msgid "Failed to delete POD fragment"
+msgstr "הרצת מחיקת קטע POD"
 
-#: lib/Padre/Document/Perl.pm:493
+#: lib/Padre/Document/Perl.pm:430
 msgid "Error: "
 msgstr "שגיאה:"
 
-#: lib/Padre/Document/Perl.pm:495
+#: lib/Padre/Document/Perl.pm:432
 msgid "No errors found."
 msgstr "לא נמצאו שגיאות."
 
-#: lib/Padre/Document/Perl.pm:534
+#: lib/Padre/Document/Perl.pm:471
 msgid "All braces appear to be matched"
 msgstr "נראה שלכל הסוגרים יש תואמים"
 
-#: lib/Padre/Document/Perl.pm:535
+#: lib/Padre/Document/Perl.pm:472
 msgid "Check Complete"
 msgstr "בדיקה הסתיימה"
 
-#: lib/Padre/Document/Perl.pm:604 lib/Padre/Document/Perl.pm:638
+#: lib/Padre/Document/Perl.pm:541 lib/Padre/Document/Perl.pm:575
 msgid "Current cursor does not seem to point at a variable"
 msgstr "לא נראה שהסמן מצביע על משתנה"
 
-#: lib/Padre/Document/Perl.pm:605 lib/Padre/Document/Perl.pm:659
-#: lib/Padre/Document/Perl.pm:694
+#: lib/Padre/Document/Perl.pm:542 lib/Padre/Document/Perl.pm:596
+#: lib/Padre/Document/Perl.pm:631
 msgid "Check cancelled"
 msgstr "הבדיקה בוטלה"
 
-#: lib/Padre/Document/Perl.pm:640
+#: lib/Padre/Document/Perl.pm:577
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr "לא מצאתי הצהרה למשתנה (הלקסיקלי?) שבוקש"
 
-#: lib/Padre/Document/Perl.pm:646
+#: lib/Padre/Document/Perl.pm:583
 msgid "Search Canceled"
 msgstr "החיפוש בוטל"
 
-#: lib/Padre/Document/Perl.pm:658
+#: lib/Padre/Document/Perl.pm:595
 msgid "Current cursor does not seem to point at a method"
 msgstr "לא נראה שהסמן מצביע על מתודה"
 
-#: lib/Padre/Document/Perl.pm:693
+#: lib/Padre/Document/Perl.pm:630
 #, perl-format
 msgid "Current '%s' not found"
 msgstr "ה-'%s' הנוכחי לא נמצא"
 
-#: lib/Padre/Document/Perl.pm:883 lib/Padre/Document/Perl.pm:933
-#: lib/Padre/Document/Perl.pm:971
+#: lib/Padre/Document/Perl.pm:819 lib/Padre/Document/Perl.pm:869
+#: lib/Padre/Document/Perl.pm:907
 msgid "Current cursor does not seem to point at a variable."
 msgstr "לא נראה שהסמן מצביע על משתנה"
 
-#: lib/Padre/Document/Perl.pm:884 lib/Padre/Document/Perl.pm:894
+#: lib/Padre/Document/Perl.pm:820 lib/Padre/Document/Perl.pm:830
 msgid "Rename variable"
 msgstr "החלף שם משתנה"
 
-#: lib/Padre/Document/Perl.pm:893
+#: lib/Padre/Document/Perl.pm:829
 msgid "New name"
 msgstr "שם חדש"
 
-#: lib/Padre/Document/Perl.pm:934
+#: lib/Padre/Document/Perl.pm:870
 #, fuzzy
 msgid "Variable case change"
 msgstr "שם משתנה"
 
-#: lib/Padre/Document/Perl.pm:973
+#: lib/Padre/Document/Perl.pm:909
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr "לא נמצאה הצהרה למשתנה (הלקסיקלי?) שבוקש"
 
-#: lib/Padre/Document/Perl.pm:979 lib/Padre/Document/Perl.pm:1028
+#: lib/Padre/Document/Perl.pm:915 lib/Padre/Document/Perl.pm:964
 msgid "Replace Operation Canceled"
 msgstr "פעולת החלפה בוטלה"
 
-#: lib/Padre/Document/Perl.pm:1020
+#: lib/Padre/Document/Perl.pm:956
 #, fuzzy
 msgid "First character of selection does not seem to point at a token."
 msgstr "התו הראשון בבחירה צריך להיות תו לא של מילים כדי ליישר"
 
-#: lib/Padre/Document/Perl.pm:1022
+#: lib/Padre/Document/Perl.pm:958
 msgid "Selection not part of a Perl statement?"
 msgstr "הבחירה אינה חלק ממשפט ב-Perl"
 
@@ -5269,7 +4657,449 @@ msgstr "( מאז  Perl %s)"
 
 #: lib/Padre/Document/Perl/Help.pm:306
 msgid "- DEPRECATED!"
-msgstr ""
+msgstr " - לא נתמך!"
+
+#: lib/Padre/Util/FileBrowser.pm:63 lib/Padre/Util/FileBrowser.pm:110
+#: lib/Padre/Util/FileBrowser.pm:153
+#, perl-format
+msgid "Unsupported OS: %s"
+msgstr "מערכת הפעלה שאינה נתמכת: %s"
+
+#: lib/Padre/Util/FileBrowser.pm:193
+msgid "Failed to execute process\n"
+msgstr "הרצת התהליך נכשלה\n"
+
+#: lib/Padre/Util/FileBrowser.pm:216
+msgid "Could not find KDE or GNOME"
+msgstr "לא נמצא KDE או GNOME"
+
+#: lib/Padre/Util/Template.pm:53
+msgid "Module name:"
+msgstr "שם מודול:"
+
+#: lib/Padre/Util/Template.pm:53
+#, fuzzy
+msgid "New Module"
+msgstr "מודול חדש"
+
+#~ msgid "Code Order"
+#~ msgstr "לפי הסדר שבקוד"
+
+#~ msgid "Alphabetical Order"
+#~ msgstr "לפי סדר אלפביתי"
+
+#~ msgid "Alphabetical Order (Private Last)"
+#~ msgstr "לפי סדר אלפביתי (פרטי בסוף)"
+
+#~ msgid "Directories First"
+#~ msgstr "קודם תיקיות"
+
+#~ msgid "Directories Mixed"
+#~ msgstr " מעורב תיקיות"
+
+#~ msgid "Project Tools (Left)"
+#~ msgstr "כלי פרויקט "
+
+#~ msgid "Document Tools (Right)"
+#~ msgstr "כלי מסמך "
+
+#~ msgid "No Autoindent"
+#~ msgstr " ללא הזחה אוטומטית"
+
+#~ msgid "Indent to Same Depth"
+#~ msgstr "הזחה לאותה רמה"
+
+#~ msgid "Indent Deeply"
+#~ msgstr "הזחה עמוקה"
+
+#~ msgid ""
+#~ "Project directory %s does not exist (any longer). This is fatal and will "
+#~ "cause problems, please close or save-as this file unless you know what "
+#~ "you are doing."
+#~ msgstr ""
+#~ "תיקיית הפרויקט %s אינה קיימת (היתה ואיננה). זוהי שגיאה חמורה שתגרום "
+#~ "לבעיות. סגור קובץ זה, או שמור אותו, אלא אם יש לך סיבה טובה לעשות משהו אחר."
+
+#~ msgid "Simulate Crashing Bg Task"
+#~ msgstr "הדמיית קריסה של תהליך רקע"
+
+#~ msgid "Show Current Line"
+#~ msgstr "הצג את השורה הנוכחית"
+
+#~ msgid "Highlight the line where the cursor is"
+#~ msgstr "צבע את השורה שבה נמצא הסמן"
+
+#~ msgid "Show Right Margin"
+#~ msgstr "הצג שול ימני"
+
+#~ msgid "Show a vertical line indicating the right margin"
+#~ msgstr "הצג קו אנכי שמראה את מיקום השול הימני"
+
+#~ msgid "Show Newlines"
+#~ msgstr "הצג תווי שורה חדשה"
+
+#~ msgid "Show/hide the newlines with special character"
+#~ msgstr "הצג/הסתר תווי שורה חדשה באמצעות תו מיוחד"
+
+#~ msgid "Show Whitespaces"
+#~ msgstr "הצג רווחים"
+
+#~ msgid "Show/hide the tabs and the spaces with special characters"
+#~ msgstr "הצג/הסתר את הטאבים ואת הרווחים עם תווים מיוחדים"
+
+#~ msgid "Show Indentation Guide"
+#~ msgstr "הצג מדריך הזחה"
+
+#~ msgid ""
+#~ "Show/hide vertical bars at every indentation position on the left of the "
+#~ "rows"
+#~ msgstr "הצג/הסתר קווים אנכיים בכל נקודת הזחה  מצד שמאל של השורות"
+
+#~ msgid "Word-Wrap"
+#~ msgstr "גלישת מילים"
+
+#~ msgid "Wrap long lines"
+#~ msgstr "הגלש שורות ארוכות"
+
+#~ msgid "Increase Font Size"
+#~ msgstr "הגדל גופן"
+
+#~ msgid "Make the letters bigger in the editor window"
+#~ msgstr "הגדל את האותיות בחלון העריכה"
+
+#~ msgid "Decrease Font Size"
+#~ msgstr "הקטן גופן"
+
+#~ msgid "Make the letters smaller in the editor window"
+#~ msgstr "הקטן את האותיות בחלון העריכה"
+
+#~ msgid "Reset Font Size"
+#~ msgstr "חזור לגודל גופן מקורי"
+
+#, fuzzy
+#~ msgid "Reset the size of the letters to the default in the editor window"
+#~ msgstr "החזר את האותיות לגודל ברירת המחדל בחלון העריכה"
+
+#~ msgid "Create a bookmark in the current file current row"
+#~ msgstr "צור סימניה בקובץ הנוכחי בשורה הנוכחית"
+
+#~ msgid "Select a bookmark created earlier and jump to that position"
+#~ msgstr "בחר סימניה שנוצרה קודם לכן וקפוץ אל מיקום הסימניה"
+
+#~ msgid "Switch highlighting colours"
+#~ msgstr "החלף את צבעי הקוד ל"
+
+#~ msgid "&Full Screen"
+#~ msgstr "הצג במלוא המסך"
+
+#~ msgid "Set Padre in full screen mode"
+#~ msgstr "הגדר את Padre למצב עבודה במלוא המסך"
+
+#~ msgid "Check for Common (Beginner) Errors"
+#~ msgstr "חפש שגיאות (מתחילים) נפוצות"
+
+#~ msgid "Check the current file for common beginner errors"
+#~ msgstr "חפש שגיאות (מתחילים) נפוצות בקובץ הנוכחי"
+
+#~ msgid "Find Unmatched Brace"
+#~ msgstr "מצא סוגר ללא תואם"
+
+#~ msgid ""
+#~ "Searches the source code for brackets with lack a matching (opening/"
+#~ "closing) part."
+#~ msgstr ""
+#~ "מחפש בקוד המקור סוגריים מסולסלים ללא סוגריים תואמים (פתוחים/סגורים))"
+
+#~ msgid "Find Variable Declaration"
+#~ msgstr "מצא הצהרת המשתנה"
+
+#~ msgid ""
+#~ "Find where the selected variable was declared using \"my\" and put the "
+#~ "focus there."
+#~ msgstr ""
+#~ "מצא את המקום שבו המשתנה הנבחר הוגדר באמצעות \"my\" והעבר לשם את המיקוד"
+
+#~ msgid "Find Method Declaration"
+#~ msgstr "מצא הצהרת המתודה"
+
+#~ msgid ""
+#~ "Find where the selected function was defined and put the focus there."
+#~ msgstr "מצא את המקום שבו הוגדרה הפונקציה הנבחרת והעבר לשם את המיקוד"
+
+#~ msgid "Vertically Align Selected"
+#~ msgstr "יישור אנכי של הבחירה"
+
+#~ msgid "Align a selection of text to the same left column."
+#~ msgstr "יישר טקסט נבחר לאותה עמודה שמאלית"
+
+#, fuzzy
+#~ msgid "Newline Same Column"
+#~ msgstr "שורה חדשה באותה העמודה"
+
+#, fuzzy
+#~ msgid "Create Project Tagsfile"
+#~ msgstr "סגור את שאר הפרויקטים"
+
+#~ msgid "Automatic Bracket Completion"
+#~ msgstr "השלמת סוגריים אוטומטית"
+
+#~ msgid "When typing { insert a closing } automatically"
+#~ msgstr "בעת הקלדת { הכנס באופן אוטומטיאת הסוגר {"
+
+#~ msgid "Rename Variable"
+#~ msgstr "החלף משתנה "
+
+#, fuzzy
+#~ msgid ""
+#~ "Prompt for a replacement variable name and replace all occurrences of "
+#~ "this variable"
+#~ msgstr "בקש שם חליפי למשתנה והחלף את כל המופעים של המשתנה"
+
+#~ msgid "Extract Subroutine..."
+#~ msgstr "חלץ שגרה..."
+
+#~ msgid ""
+#~ "Cut the current selection and create a new sub from it. A call to this "
+#~ "sub is added in the place where the selection was."
+#~ msgstr ""
+#~ "חתוך את הטקסט הנבחר וצור ממנו שגרה חדשה. קריאה לשגרה זו תוכנס במקום הטקסט "
+#~ "הנבחר."
+
+#~ msgid "Name for the new subroutine"
+#~ msgstr " שם לשגרה החדשה"
+
+#~ msgid "Extract Subroutine"
+#~ msgstr "חלץ שגרה"
+
+#~ msgid "Introduce Temporary Variable..."
+#~ msgstr "ליצור משתנה זמני..."
+
+#~ msgid "Assign the selected expression to a newly declared variable"
+#~ msgstr "הצב את הביטוי שנבחר למשתנה החדש שהוגדר"
+
+#~ msgid "Variable Name"
+#~ msgstr "שם משתנה"
+
+#~ msgid "Introduce Temporary Variable"
+#~ msgstr "ליצור משתנה זמני"
+
+#, fuzzy
+#~ msgid "Combine scattered POD at the end of the document"
+#~ msgstr "צרף את השורה הבאה לסוף השורה הנוכחית"
+
+#~ msgid "Run Script"
+#~ msgstr "הרץ תסריט"
+
+#~ msgid "Runs the current document and shows its output in the output panel."
+#~ msgstr "מריץ את המסמך הנוכחי ומציג את הפלט שלו בחלון הפלט."
+
+#~ msgid "Run Script (Debug Info)"
+#~ msgstr "הרץ תכנית (עם מידע דיבוג)"
+
+#~ msgid "Run the current document but include debug info in the output."
+#~ msgstr "הרץ את המסמך הנוכחי וכלול את  מידע הדיבוג בפלט."
+
+#~ msgid "Run Command"
+#~ msgstr "הפעל פקודה"
+
+#~ msgid "Runs a shell command and shows the output."
+#~ msgstr "מריץ פקודת מעטפת ומציג את הפלט."
+
+#~ msgid "Run Build and Tests"
+#~ msgstr "בנה והרץ את כל הבדיקות"
+
+#~ msgid "Builds the current project, then run all tests."
+#~ msgstr "בנה את הפרויקט הנוכחי והרץ את כל הבדיקות"
+
+#~ msgid "Run Tests"
+#~ msgstr "הרץ בדיקות"
+
+#~ msgid ""
+#~ "Run all tests for the current project or document and show the results in "
+#~ "the output panel."
+#~ msgstr ""
+#~ "הרץ את כל הבדיקות של הפרויקט או של המסמך הנוכחי והצג את התוצאות בחלון "
+#~ "הפלט."
+
+#~ msgid "Run This Test"
+#~ msgstr "הרץ בדיקה זו"
+
+#~ msgid "Run the current test if the current document is a test. (prove -bv)"
+#~ msgstr "הרץ את הבדיקה הנוכחית אם המסמך הנוכחי הוא בדיקה (prove -bv)"
+
+#~ msgid "Stop Execution"
+#~ msgstr "הפסק הרצה"
+
+#~ msgid "Stop a running task."
+#~ msgstr "הפסק משימה רצה"
+
+#~ msgid "Run to Cursor"
+#~ msgstr "הרצה על לסמן"
+
+#, fuzzy
+#~ msgid "Show Stack Trace (&t)"
+#~ msgstr "הצג בדיקת תחביר"
+
+#~ msgid "Display Value"
+#~ msgstr "הצג ערך"
+
+#~ msgid "Show Value Now (&x)"
+#~ msgstr "הצג ערך כעת"
+
+#, fuzzy
+#~ msgid "Show the value of a variable now in a pop-up window."
+#~ msgstr "הצג את ערכי ה ASCII של הטקסט הנבחר בהקס בחלון הפלט"
+
+#, fuzzy
+#~ msgid "Evaluate Expression..."
+#~ msgstr "ביטוי רגולרי"
+
+#~ msgid "Edit the user preferences"
+#~ msgstr "ערוך את העדפות המשתמש"
+
+#~ msgid "Preferences Sync"
+#~ msgstr "סינכרון העדפות"
+
+#~ msgid "Open the regular expression editing window"
+#~ msgstr "פתח את חלון עריכת הביטויים הרגולריים"
+
+#, fuzzy
+#~ msgid "Edit with Regex Editor"
+#~ msgstr "עורך ביטוי רגולרי"
+
+#, fuzzy
+#~ msgid "Open the selected text in the Regex Editor"
+#~ msgstr "הגדל את האותיות בחלון העריכה"
+
+#~ msgid "Show the Padre plug-in manager to enable or disable plug-ins"
+#~ msgstr "הצג את מנהל התוספים של Padre כדי לאפשר או לבטל את השימוש בתוספים"
+
+#~ msgid "Plug-in List (CPAN)"
+#~ msgstr "רשימת תוספים (CPAN)"
+
+#~ msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
+#~ msgstr "פתח את הדפדפן לחיפוש CPAN כשהוא מציג את חבילות Padre::Plugin"
+
+#~ msgid "Edit My Plug-in"
+#~ msgstr "ערוך את התוסף שלי"
+
+#~ msgid ""
+#~ "My Plug-in is a plug-in where developers could extend their Padre "
+#~ "installation"
+#~ msgstr ""
+#~ "התוסף My Plug-in הוא תוסף שיכול לשמש מפתחים להרחבת Padre  המותקן אצלם"
+
+#~ msgid "Could not find the Padre::Plugin::My plug-in"
+#~ msgstr "לא מצאתי את התוסף Padre::Plugin::My"
+
+#~ msgid "Reload My Plug-in"
+#~ msgstr "טען מחדש את התוסף שלי"
+
+#~ msgid "This function reloads the My plug-in without restarting Padre"
+#~ msgstr "פעולה זו מרעננת את My plug-in בלי להפעיל מחדש את Padre"
+
+#~ msgid "Reset My plug-in"
+#~ msgstr "אתחל את התוסף השלי"
+
+#~ msgid "Reset the My plug-in to the default"
+#~ msgstr "אפס את התוסף My Plugin  לברירת המחדל"
+
+#~ msgid "Reload All Plug-ins"
+#~ msgstr "טען מחדש את כל התוספים"
+
+#~ msgid "Reload all plug-ins from disk"
+#~ msgstr "טען מחדש את כל התוספים מהדיסק"
+
+#~ msgid "(Re)load Current Plug-in"
+#~ msgstr "טען מחדש את התוסף הנוכחי"
+
+#~ msgid "Reloads (or initially loads) the current plug-in"
+#~ msgstr "טוען מחדש, (או טוען לראשונה) את התוסף הנוכחי"
+
+#~ msgid "Install CPAN Module"
+#~ msgstr "להתקין מודול CPAN"
+
+#~ msgid "Install a Perl module from CPAN"
+#~ msgstr "התקן מודול Perl  מ-CPAN"
+
+#~ msgid "Using CPAN.pm to install a CPAN like package opened locally"
+#~ msgstr "משתמש ב-CPAN.pm כדי להתקין חבילה דמוית CPAN בהתקנה מקומית"
+
+#~ msgid "Install Remote Distribution"
+#~ msgstr "להתקין הפצה מרוחקת"
+
+#~ msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
+#~ msgstr "משתמש ב-pip להורדת קובץ tar.gz והתקנתו באמצעות CPAN.pm"
+
+#~ msgid "Open CPAN Config File"
+#~ msgstr "פתח את קובץ ההגדרות של CPAN"
+
+#~ msgid "Open CPAN::MyConfig.pm for manual editing by experts"
+#~ msgstr "פתח את  CPAN::MyConfig.pm  לעריכה ידנית על ידי מומחים"
+
+#~ msgid ""
+#~ "Switch to edit the file that was previously edited (can switch back and "
+#~ "forth)"
+#~ msgstr "עבור לעריכת קובץ שנערך קודם לכן (ניתן לעבור הלוך וחזור)"
+
+#~ msgid "Oldest Visited File"
+#~ msgstr "הקובץ שבוקר לאחרונה\tCtrl-6"
+
+#~ msgid "Put focus on tab visited the longest time ago."
+#~ msgstr "העבר את המיקוד ללשונית שבוקרה לפני הכי הרבה זמן"
+
+#~ msgid "Next File"
+#~ msgstr "קובץ חדש"
+
+#~ msgid "Put focus on the next tab to the right"
+#~ msgstr "העבר את המיקוד ללשונית הבאה מצד ימין"
+
+#~ msgid "Previous File"
+#~ msgstr "הקובץ הקודם"
+
+#~ msgid "Put focus on the previous tab to the left"
+#~ msgstr "העבר את המיקוד ללשונית הקודמת משמאל"
+
+#~ msgid ""
+#~ "File name %s contains * or ? which are special chars on most computers. "
+#~ "Skip?"
+#~ msgstr "שם הקובץ %s מכיל * או ? שמוגדרים כתווים מיוחדים ברוב המחשבים. לדלג?"
+
+#~ msgid "Open Warning"
+#~ msgstr "אזהרת פתיחה"
+
+#~ msgid "File name %s does not exist on disk. Skip?"
+#~ msgstr "קובץ בשם %s לא קיים בדיסק. לדלג?"
+
+#~ msgid "Reload all files"
+#~ msgstr "רענן את כל הקבצים"
+
+#~ msgid "Reload some"
+#~ msgstr "רענן חלק מהקבצים"
+
+#~ msgid "Could not reload file: %s"
+#~ msgstr "לא ניתן לרענן את הקובץ '%s'"
+
+#~ msgid "Save file as..."
+#~ msgstr "שמור קובץ בשם..."
+
+#~ msgid "Internal error"
+#~ msgstr "תקלה פנימית"
+
+#~ msgid "Stats"
+#~ msgstr "נתוני המסמך"
+
+#~ msgid "&Regular Expression"
+#~ msgstr "ביטוי רגולרי"
+
+#~ msgid "&Find Next"
+#~ msgstr "מצא הבא"
+
+#~ msgid "Find &Text:"
+#~ msgstr "חפש טקסט"
+
+#~ msgid "Not a valid search"
+#~ msgstr "חיפוש לא תקין"
 
 #~ msgid "Norwegian (Norway)"
 #~ msgstr "נורווגית (נורווגיה)"
@@ -5530,10 +5360,6 @@ msgstr ""
 #~ msgid "&Split window"
 #~ msgstr "חלון מפוצל"
 
-#, fuzzy
-#~ msgid "Error loading template file '%s'"
-#~ msgstr "שגיאה בטעינת pod למחלקה '%s': %s"
-
 #~ msgid "Found %d matching occurrences"
 #~ msgstr "נמצאו %d מופעים מתאימים"
 
@@ -5724,9 +5550,6 @@ msgstr ""
 
 #~ msgid "%s apparantly created."
 #~ msgstr "כנראה שנוצר %s."
-
-#~ msgid "&Preferences"
-#~ msgstr "העדפות"
 
 #~ msgid "&Bookmarks"
 #~ msgstr "סימניות"
