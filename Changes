@@ -1,21 +1,25 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
-The version numbers in this Changes file represent an Odd/Even scheme, whereby
-the even numbers are the released versions of Padre.  The even numbers list visible
-changes or bug fixes to Padre.
+Padre version numbers follow an odd/even pattern, where the even numbers are
+used for the production releases of the distribution. The even versions below
+details visible changes or bug fixes for the Padre IDE.
 
-The Odd numbers list API changes that may break compatibility for components of Padre
-notably the plugins.
+The odd versions are used during development and the change entries for them
+list API changes that may break compatibility for components of Padre, most
+notably for plugins. This allows plugins to update compatibility before the
+next production release, and synchronise their release to the Padre schedule.
 
-
-0.84 TBA
+0.84 to be released
     - Function and TODO list: also handle Esc when focus is on the list (ZENOG)
     - Function and TODO list: remove unnecessary EVT_KILL_FOCUS handler (ZENOG)
     - Outline: simplify method 'select_line_in_editor' (ZENOG)
     - Fix #967: Reset Focus (ZENOG)
+    - Added Padre::Task::FileRemove to allow non-blocking deletion of temporary
+      directories in the background once they are of no further use (ADAMK)
 
-0.83 Dev cycle, not released.
+0.83 Development version, not released
+    - No incompatible API changes during the 0.84 release cycle
 
 0.82 2011.02.15
     - Remove methods that are not used any more: check_syntax_in_background and
@@ -55,7 +59,7 @@ notably the plugins.
     - Added version control system intuition via the ->vcs method in
       Padre::Project (ADAMK)
 
-0.81 not released
+0.81 Development version, not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
       instead of "thread" (e.g. start_thread becomes start_worker). This
       future-proofs the API against a future alternative task manager backend
@@ -112,7 +116,7 @@ notably the plugins.
       way, hijack ctrl-scroll and reverse it to the right way (ADAMK)
     - Find in Files directory recursion now happens ordered (ADAMK)
 
-0.79 not released
+0.79 Development version, not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
 
 0.78 2011.01.14
@@ -161,7 +165,7 @@ notably the plugins.
     - Added additional test to copyright.t to check all copyright notices
       have the current year. (PLAVEN)
 
-0.75 not released
+0.77 Development version, not released
     - No incompatible API changes during the 0.78 release cycle
 
 0.76 2010.12.08
@@ -242,7 +246,7 @@ notably the plugins.
       (e.g. v5.8.9 instead of v5.008009) (AZAWAWI)
     - Correctly start up maximized if we were closed maximized (ADAMK)
 
-0.73 not released
+0.75 Development version, not released
     - No incompatible API changes during the 0.76 release cycle
 
 0.74 2010.11.14
@@ -280,7 +284,7 @@ notably the plugins.
     - Directory tree: support deletion of directories (ZENOG)
     - Update German translation (ZENOG)
 
-0.73 not released
+0.73 Development version, not released
     - No incompatible API changes during the 0.74 release cycle
 
 0.72 2010.10.10
@@ -345,7 +349,7 @@ notably the plugins.
     - Add "Create directory" and "remove file" to the directory browser. (SZABGAB) 
     - Aff "Goto Last position" (SZABGAB)
 
-0.71 not released
+0.71 Development version, not released
     - No incompatible API changes during the 0.72 release cycle
 
 0.70 2010.09.09
