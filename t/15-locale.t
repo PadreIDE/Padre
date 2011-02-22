@@ -4,13 +4,17 @@ use strict;
 use warnings;
 use Test::More;
 use Capture::Tiny qw(capture);
+use Cwd qw(cwd);
+use File::Spec ();
 
+my $messages_pot;
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
 	plan( tests => 7 + 4 );
+	$messages_pot = File::Spec->catfile(cwd(), 'share', 'locale', 'messages.pot');
 }
 use Test::NoWarnings;
 use Test::Exception;
@@ -47,7 +51,7 @@ my @strings = (
 	'Run Script',
 );
 
-open my $fh, '<', 'share/locale/messages.pot' or die;
+open my $fh, '<', $messages_pot or die "Could not open '$messages_pot' $!";
 my @messages = <$fh>;
 TODO:
 {
