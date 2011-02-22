@@ -405,7 +405,7 @@ sub start_worker {
 		if ( $Padre::DB::VERSION and Padre::DB->connected ) {
 			Padre::DB->commit;
 			$worker->spawn;
-			Padre::DB->begin_work;
+			Padre::DB->begin;
 			Padre::DB->pragma( 'synchronous' => 0 );
 		} else {
 			$worker->spawn;
