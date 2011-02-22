@@ -5,7 +5,8 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
+use File::Spec      ();
+use Padre::Constant ();
 
 our $VERSION    = '0.83';
 our $COMPATIBLE = '0.81';
@@ -255,12 +256,12 @@ sub ignore_skip {
 		# with a dollar sign as "hidden". This is mainly relevant if
 		# we are opening some project across a UNC path on more recent
 		# versions of Windows.
-		push @$rule, '(?:^|\\/)\\$';
-		push @$rule, '\\$\$';
+		push @$rule, "(?:^|\\/)\\\$";
+		push @$rule, "\\\$\$";
 
 		# Likewise, desktop.ini files are stupid files used by windows
 		# to make a folder behave weirdly. Ignore them too.
-		push @$rule, '(?:^|\\/)desktop.ini\$';
+		push @$rule, "(?:^|\\/)desktop.ini\$";
 	}
 
 	return $rule;
