@@ -5,7 +5,6 @@ package Padre::Wx::Menu::File;
 use 5.008;
 use strict;
 use warnings;
-use Fcntl           ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Constant ();
@@ -327,68 +326,71 @@ sub refresh {
 	return 1;
 }
 
+# Does not do the actual refresh, just kicks off the background job.
 sub refresh_recent {
 	my $self = shift;
 
-	# menu entry count starts at 0
-	# first 3 entries are "open all", "clean list" and a separator
-	foreach my $i ( reverse( 3 .. $self->{recentfiles}->GetMenuItemCount - 1 ) ) {
-		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
-			$self->{recentfiles}->Delete($item);
-		}
+	# Fire the recent files background task
+	require Padre::Task::RecentFiles;
+	Padre::Task::RecentFiles->new(
+		want => 9,
+	)->schedule;
+
+	return;
+}
+
+sub refill_recent {
+	my $self  = shift;
+	my $files = shift;
+	my $lock  = $self->{main}->lock('UPDATE');
+
+	# Flush the old menu.
+	# Menu entry count starts at 0
+	# The first 3 entries are "open all", "clean list" and a separator
+	my $recentfiles = $self->{recentfiles};
+	foreach my $i ( reverse( 3 .. $recentfiles->GetMenuItemCount - 1 ) ) {
+		my $item = $recentfiles->FindItemByPosition($i) or next;
+		$recentfiles->Delete($item);
 	}
 
-	my %is_open_document = map { defined $_->filename ? ( $_->filename => 1 ) : () } $self->{main}->documents;
-
-	my $idx = 0;
-	foreach my $file ( Padre::DB::History->recent( 'files', 10 + scalar keys %is_open_document ) ) {
-		next if exists $is_open_document{$file};
-
-		if (Padre::Constant::WIN32) {
-			next unless -f $file;
-		} else {
-
-			# Try a non-blocking "-f" (doesn't work in all cases)
-			# File does not exist or is not accessable.
-			# NOTE: O_NONBLOCK does not exist on Windows, kaboom
-			sysopen(
-				my $fh,
-				$file,
-				Fcntl::O_RDONLY | Fcntl::O_NONBLOCK
-			) or next;
-			close $fh;
-		}
-
+	# Repopulate with the new files
+	foreach my $i ( 0 .. 9 ) {
+		my $file = $files->[$i] or last;
 		Wx::Event::EVT_MENU(
 			$self->{main},
-			$self->{recentfiles}->Append(
-				-1,
-				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
-			),
+			$recentfiles->Append( -1, "&$i. $file" ),
 			sub {
-				if ( -f $file ) {
-					$_[0]->setup_editors($file);
-				} else {
-
-					# Handle "File not found" situation
-					Padre::Current->main->lock( 'UPDATE', 'DB', 'refresh_recent' );
-					Padre::DB::History->delete(
-						'where name = ? and type = ?',
-						$file, 'files',
-					);
-					Wx::MessageBox(
-						sprintf( Wx::gettext('File %s not found.'), $file ),
-						Wx::gettext('Open cancelled'),
-						Wx::wxOK,
-						$self->{main},
-					);
-				}
+				$self->on_recent($file);
 			},
 		);
-		TRACE("Recent entry created for '$file'") if DEBUG;
 	}
 
 	return;
+}
+
+sub on_recent {
+	my $self = shift;
+	my $file = shift;
+
+	# The file will most likely exist
+	if ( -f $file ) {
+		$self->setup_editors($file);
+		return;
+	}
+
+	# Because we filter for files that exist to generate the recent files
+	# list, anything that doesn't exist must have been deleted a short
+	# time ago. So we can remove it from history, it won't be coming back.
+	Padre::DB::History->delete(
+		'where name = ? and type = ?',
+		$file, 'files',
+	);
+	Wx::MessageBox(
+		sprintf( Wx::gettext('File %s not found.'), $file ),
+		Wx::gettext('Open cancelled'),
+		Wx::wxOK,
+		$self->{main},
+	);
 }
 
 1;

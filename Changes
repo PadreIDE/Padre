@@ -17,6 +17,9 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #967: Reset Focus (ZENOG)
     - Added Padre::Task::File to allow non-blocking deletion of temporary
       directories in the background once they are of no further use (ADAMK)
+    - The Recent Files menu now supports UNC paths on Windows (ADAMK)
+    - The Recent Files menu is now generated in a background task to prevent
+      long IDE blocking, such as when checking -f over a network mount (ADAMK)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
