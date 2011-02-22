@@ -1,16 +1,16 @@
-package Padre::Task::FileRemove;
+package Padre::Task::File;
 
 =pod
 
 =head1 NAME
 
-Padre::Task::FileRemove - Delete files and folders in a background thread
+Padre::Task::File - File operations in the background
 
 =head1 SYNOPSIS
 
-  # Fire and forget background deletion of a temporary directory
-  Padre::Task::FileRemove->new(
-    path => 'C:\foo\bar\baz',
+  # Recursively delete
+  Padre::Task::File->new(
+    remove => 'C:\foo\bar\baz',
   )->schedule;
 
 =head1 DESCRIPTION
@@ -27,6 +27,9 @@ deletion (a particular problem on Windows).
 The task takes the name of a single file or directory to delete (for now), and
 proceeds to attempt a recursive deletion of the file or directory via the
 L<File::Remove> C<remove> method.
+
+In the future, this module will also support more types of file operations
+and support the execution of a list of operations.
 
 =head1 METHODS
 
@@ -52,13 +55,13 @@ our @ISA     = 'Padre::Task';
 
 =head2 new
 
-  my $task = Padre::Task::FileRemove->new(
-      path => '/foo/bar/baz',
+  my $task = Padre::Task::File->new(
+      remove => '/foo/bar/baz',
   );
 
 Creates a new deletion task.
 
-Takes a single parameter C<path> which B<must> be an absolute path to the
+Takes a single parameter C<remove> which B<must> be an absolute path to the
 file to delete (as the "current directory" may change between the time the
 removal task is created and when it is executed).
 
@@ -68,10 +71,10 @@ sub new {
 	my $self = shift->SUPER::new(@_);
 
 	# Check the path to remove
-	unless ( defined $self->path ) {
+	unless ( defined $self->remove ) {
 		die "Missing or invalid path";
 	}
-	unless ( File::Spec->file_name_is_absolute($self->path) ) {
+	unless ( File::Spec->file_name_is_absolute($self->remove) ) {
 		die "File path is not absolute";
 	}
 
@@ -80,15 +83,15 @@ sub new {
 
 =pod
 
-=head2 path
+=head2 remove
 
-The C<path> accessor returns the absolute path of the file or directory the
+The C<remove> accessor returns the absolute path of the file or directory the
 task will try to delete (or tried to delete in the case of completed tasks).
 
 =cut
 
-sub path {
-	$_[0]->{path};
+sub remove {
+	$_[0]->{remove};
 }
 
 
@@ -104,7 +107,7 @@ sub run {
 	# Do not check for the path existing at prepare time as this involves
 	# a blocking stat call. Better to just pass it through and do the file
 	# existance check and any resulting shortcuts in the background.
-	my $path = $self->path;
+	my $path = $self->remove;
 	unless ( -e $path ) {
 		return 1;
 	}
@@ -112,7 +115,7 @@ sub run {
 	# Hand off to the specialist module
 	require File::Remove;
 	$self->{removed} = [
-		File::Remove::remove( \1, $path );
+		File::Remove::remove( \1, $path )
 	];
 
 	return 1;
