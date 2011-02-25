@@ -390,7 +390,7 @@ sub _insert_regex {
 	my $match_part   = $self->{regex}->GetValue;
 	my $replace_part = $self->{replace}->GetValue;
 
-	my $modifiers = $self->_get_modifier_settings;
+	my ($modifiers) = $self->_get_modifier_settings;
 
 	my $editor = $self->current->editor or return;
 	$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$modifiers" );
