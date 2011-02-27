@@ -5,344 +5,285 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.69\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-15 19:39+0200\n"
+"POT-Creation-Date: 2011-02-21 16:11+0100\n"
 "PO-Revision-Date: 2009-04-30 13:08+0200\n"
 "Last-Translator: Marcela Mašláňová <mmaslano@redhat.com>\n"
 "Language-Team: Czech\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: lib/Padre/PluginManager.pm:371
+#: lib/Padre/PluginManager.pm:402
+#, fuzzy
 msgid ""
-"We found several new plugins.\n"
+"We found several new plug-ins.\n"
 "In order to configure and enable them go to\n"
-"Plugins -> Plugin Manager\n"
+"Plug-ins -> Plug-in Manager\n"
 "\n"
-"List of new plugins:\n"
+"List of new plug-ins:\n"
 "\n"
 msgstr ""
 "Nalezeno několik nových doplňků.\n"
-"Pro nastavení přejděte v menu na\n"
-"Pluginy -> Správce pluginů\n"
+"Pro další nastavení přejděte v menu na\n"
+"Doplňky -> Správce doplňků\n"
 "\n"
 "Seznam nových doplňků:\n"
 "\n"
 
-#: lib/Padre/PluginManager.pm:381
-msgid "New plugins detected"
+#: lib/Padre/PluginManager.pm:412
+#, fuzzy
+msgid "New plug-ins detected"
 msgstr "Nalezeny nové doplňky"
 
-#: lib/Padre/PluginManager.pm:510
+#: lib/Padre/PluginManager.pm:544
 #, perl-format
 msgid "%s - Crashed while loading: %s"
 msgstr "%s - Pád aplikace během nahrávání: %s"
 
-#: lib/Padre/PluginManager.pm:522
+#: lib/Padre/PluginManager.pm:556
 #, perl-format
 msgid "%s - Not a Padre::Plugin subclass"
 msgstr "%s - Nejedná se o podtřídu Padre::Plugin"
 
-#: lib/Padre/PluginManager.pm:535
+#: lib/Padre/PluginManager.pm:569
+#, perl-format
+msgid "%s - Not compatible with Padre version %s - %s"
+msgstr "%s - Nekompatibilní s verzí Padre %s - %s"
+
+#: lib/Padre/PluginManager.pm:584
 #, perl-format
 msgid "%s - Crashed while instantiating: %s"
 msgstr "%s - Pád během vytváření instance: %s"
 
-#: lib/Padre/PluginManager.pm:545
+#: lib/Padre/PluginManager.pm:594
 #, fuzzy, perl-format
-msgid "%s - Failed to instantiate plugin"
-msgstr "Doplněk:%s - Nelze vytvořit instanci objektu"
+msgid "%s - Failed to instantiate plug-in"
+msgstr "%s - Nelze vytvořit instanci objektu doplňku"
 
-#: lib/Padre/PluginManager.pm:779
-msgid "Error when calling menu for plugin"
+#: lib/Padre/PluginManager.pm:846
+#, perl-format
+msgid "Plugin error on event %s: %s"
+msgstr "Chyba doplňku na události %s: %s"
+
+#: lib/Padre/PluginManager.pm:856
+msgid "(core)"
+msgstr "(jádro)"
+
+#: lib/Padre/PluginManager.pm:857 lib/Padre/File/FTP.pm:145
+#: lib/Padre/Document/Perl.pm:579 lib/Padre/Document/Perl.pm:911
+#: lib/Padre/Document/Perl.pm:960
+msgid "Unknown error"
+msgstr "Neznámá chyba"
+
+#: lib/Padre/PluginManager.pm:867
+#, fuzzy, perl-format
+msgid "Plugin %s"
+msgstr "Doplněk %s"
+
+#: lib/Padre/PluginManager.pm:943
+#, fuzzy
+msgid "Error when calling menu for plug-in "
 msgstr "Chyba při vytváření menu doplňků"
 
-#: lib/Padre/PluginManager.pm:812 lib/Padre/Wx/Main.pm:1590
-msgid "No document open"
-msgstr "Žádný dokument"
-
-#: lib/Padre/PluginManager.pm:816 lib/Padre/Wx/Main.pm:4077
-#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:46
+#: lib/Padre/PluginManager.pm:979 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
-msgstr "Žádný soubor"
+msgstr "Žádné jméno souboru"
 
-#: lib/Padre/PluginManager.pm:821
-msgid "Could not locate project dir"
+#: lib/Padre/PluginManager.pm:982
+#, fuzzy
+msgid "Could not locate project directory."
 msgstr "Nelze najít adresář projektu"
 
-#: lib/Padre/PluginManager.pm:840 lib/Padre/PluginManager.pm:936
-#, perl-format
+#: lib/Padre/PluginManager.pm:1004 lib/Padre/PluginManager.pm:1100
+#, fuzzy, perl-format
 msgid ""
-"Failed to load the plugin '%s'\n"
+"Failed to load the plug-in '%s'\n"
 "%s"
 msgstr ""
 "Selhalo nahrání doplňku '%s'\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:890 lib/Padre/Wx/Main.pm:3751
+#: lib/Padre/PluginManager.pm:1054 lib/Padre/Wx/Main.pm:5439
 msgid "Open file"
 msgstr "Otevřít soubor"
 
-#: lib/Padre/PluginManager.pm:910
-#, perl-format
-msgid "Plugin must have '%s' as base directory"
+#: lib/Padre/PluginManager.pm:1074
+#, fuzzy, perl-format
+msgid "Plug-in must have '%s' as base directory"
 msgstr "Doplněk potřebuje '%s' jako hlavní adresář"
 
-#: lib/Padre/Locale.pm:73
+#: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
 msgstr "Anglický (Spojené Království)"
 
-#: lib/Padre/Locale.pm:112
-msgid "English (Australian)"
+#: lib/Padre/Locale.pm:124
+#, fuzzy
+msgid "English (Australia)"
 msgstr "Anglický (Austrálie)"
 
-#: lib/Padre/Locale.pm:130
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3612
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: lib/Padre/Locale.pm:144
+#: lib/Padre/Locale.pm:156
 msgid "Arabic"
 msgstr "Arabský"
 
-#: lib/Padre/Locale.pm:154
+#: lib/Padre/Locale.pm:166
 msgid "Czech"
 msgstr "Český"
 
-#: lib/Padre/Locale.pm:164
+#: lib/Padre/Locale.pm:176
+#, fuzzy
+msgid "Danish"
+msgstr "Španělský"
+
+#: lib/Padre/Locale.pm:186
 msgid "German"
 msgstr "Německý"
 
-#: lib/Padre/Locale.pm:174
+#: lib/Padre/Locale.pm:196
 msgid "English"
 msgstr "Anglický"
 
-#: lib/Padre/Locale.pm:183
+#: lib/Padre/Locale.pm:205
 msgid "English (Canada)"
 msgstr "Anglický (Kanada)"
 
-#: lib/Padre/Locale.pm:192
+#: lib/Padre/Locale.pm:214
 msgid "English (New Zealand)"
 msgstr "Anglický (Nový Zéland)"
 
-#: lib/Padre/Locale.pm:203
+#: lib/Padre/Locale.pm:225
 msgid "English (United States)"
 msgstr "Anglický (USA)"
 
-#: lib/Padre/Locale.pm:212
+#: lib/Padre/Locale.pm:234
 msgid "Spanish (Argentina)"
 msgstr "Španělský (Argentina)"
 
-#: lib/Padre/Locale.pm:226
+#: lib/Padre/Locale.pm:248
 msgid "Spanish"
 msgstr "Španělský"
 
-#: lib/Padre/Locale.pm:236
+#: lib/Padre/Locale.pm:258
 msgid "Persian (Iran)"
 msgstr "Perský (Írán)"
 
-#: lib/Padre/Locale.pm:246
-msgid "French (France)"
+#: lib/Padre/Locale.pm:268
+#, fuzzy
+msgid "French (Canada)"
 msgstr "Francouzský (Francie)"
 
-#: lib/Padre/Locale.pm:260
+#: lib/Padre/Locale.pm:282
 msgid "French"
 msgstr "Francouzský"
 
-#: lib/Padre/Locale.pm:270
+#: lib/Padre/Locale.pm:292
 msgid "Hebrew"
 msgstr "Hebrejský"
 
-#: lib/Padre/Locale.pm:280
+#: lib/Padre/Locale.pm:302
 msgid "Hungarian"
 msgstr "Maďarský"
 
-#: lib/Padre/Locale.pm:294
+#: lib/Padre/Locale.pm:316
 msgid "Italian"
 msgstr "Italský"
 
-#: lib/Padre/Locale.pm:304
+#: lib/Padre/Locale.pm:326
 msgid "Japanese"
 msgstr "Japonský"
 
-#: lib/Padre/Locale.pm:314
+#: lib/Padre/Locale.pm:336
 msgid "Korean"
 msgstr "Korejský"
 
-#: lib/Padre/Locale.pm:328
+#: lib/Padre/Locale.pm:350
 msgid "Dutch"
 msgstr "Holandský"
 
-#: lib/Padre/Locale.pm:338
+#: lib/Padre/Locale.pm:360
 msgid "Dutch (Belgium)"
 msgstr "Holandský (Belgie)"
 
-#: lib/Padre/Locale.pm:348
-msgid "Norwegian (Norway)"
+#: lib/Padre/Locale.pm:370
+#, fuzzy
+msgid "Norwegian"
 msgstr "Norský (Norsko)"
 
-#: lib/Padre/Locale.pm:358
+#: lib/Padre/Locale.pm:380
 msgid "Polish"
 msgstr "Polský"
 
-#: lib/Padre/Locale.pm:368
+#: lib/Padre/Locale.pm:390
 msgid "Portuguese (Brazil)"
 msgstr "Portugalský (Brazílie)"
 
-#: lib/Padre/Locale.pm:378
+#: lib/Padre/Locale.pm:400
 msgid "Portuguese (Portugal)"
 msgstr "Portugalský (Portugalsko)"
 
-#: lib/Padre/Locale.pm:388
+#: lib/Padre/Locale.pm:410
 msgid "Russian"
 msgstr "Ruský"
 
-#: lib/Padre/Locale.pm:398
+#: lib/Padre/Locale.pm:420
+msgid "Turkish"
+msgstr "Turecký"
+
+#: lib/Padre/Locale.pm:430
 msgid "Chinese"
 msgstr "Čínský"
 
-#: lib/Padre/Locale.pm:408
+#: lib/Padre/Locale.pm:440
 msgid "Chinese (Simplified)"
 msgstr "Čínský (zjednodušený)"
 
-#: lib/Padre/Locale.pm:418
+#: lib/Padre/Locale.pm:450
 msgid "Chinese (Traditional)"
 msgstr "Čínský (Tradiční)"
 
-#: lib/Padre/Locale.pm:432
+#: lib/Padre/Locale.pm:464
 msgid "Klingon"
 msgstr "Klingonský"
 
-#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:474
-msgid "error"
-msgstr "chyba"
+#: lib/Padre/MimeTypes.pm:229
+#, fuzzy
+msgid "Shell Script"
+msgstr "Shellový skript"
 
-#: lib/Padre/PluginHandle.pm:90
-msgid "unloaded"
-msgstr "načtený"
+#: lib/Padre/MimeTypes.pm:333
+msgid "Text"
+msgstr "Text"
 
-#: lib/Padre/PluginHandle.pm:91
-msgid "loaded"
-msgstr "nahráný"
-
-#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:484
-msgid "incompatible"
-msgstr "nekompatibilní"
-
-#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:507
-msgid "disabled"
-msgstr "zakázán"
-
-#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:497
-msgid "enabled"
-msgstr "povolen"
-
-#: lib/Padre/PluginHandle.pm:201
-#, perl-format
-msgid "Failed to enable plugin '%s': %s"
-msgstr "Selhalo nahrání doplňku '%s': %s"
-
-#: lib/Padre/PluginHandle.pm:281
-#, perl-format
-msgid "Failed to disable plugin '%s': %s"
-msgstr "Selhalo odebrání doplňku '%s': %s"
-
-#: lib/Padre/TaskManager.pm:592
-#, perl-format
-msgid "%s worker threads are running.\n"
-msgstr "%s vykonávaná vlákna probíhají.\n"
-
-#: lib/Padre/TaskManager.pm:594
-msgid "Currently, no background tasks are being executed.\n"
-msgstr "Nyní neprobíhají žádné úkoly na pozadí.\n"
-
-#: lib/Padre/TaskManager.pm:600
-msgid "The following tasks are currently executing in the background:\n"
-msgstr "Následující úlohy jsou spuštěny na pozadí:\n"
-
-#: lib/Padre/TaskManager.pm:606
-#, perl-format
-msgid ""
-"- %s of type '%s':\n"
-"  (in thread(s) %s)\n"
+#: lib/Padre/MimeTypes.pm:364 lib/Padre/MimeTypes.pm:374
+msgid "Scintilla"
 msgstr ""
-"- %s typu '%s':\n"
-"  (ve vláknech %s)\n"
 
-#: lib/Padre/TaskManager.pm:618
-#, perl-format
-msgid ""
-"\n"
-"Additionally, there are %s tasks pending execution.\n"
-msgstr ""
-"\n"
-"Další úkoly %s čekají na provedení.\n"
-
-#: lib/Padre/Document.pm:694
-#, perl-format
-msgid "Unsaved %d"
-msgstr "Neuloženo %d"
-
-#: lib/Padre/Document.pm:963 lib/Padre/Document.pm:964
-msgid "Skipped for large files"
-msgstr "Přeskočeno pro velké soubory"
-
-#: lib/Padre/Config.pm:178
-#, fuzzy
-msgid "Previous open files"
-msgstr "Otevři soubory:"
-
-#: lib/Padre/Config.pm:179
-msgid "A new empty file"
-msgstr "Nový prázdný soubor"
-
-#: lib/Padre/Config.pm:180
-#, fuzzy
-msgid "No open files"
-msgstr "Otevři soubory:"
-
-#: lib/Padre/Config.pm:235
-msgid "Code Order"
-msgstr "Seřazení podle"
-
-#: lib/Padre/Config.pm:236
-#, fuzzy
-msgid "Alphabetical Order"
-msgstr "Abecedy"
-
-#: lib/Padre/Config.pm:237
-#, fuzzy
-msgid "Alphabetical Order (Private Last)"
-msgstr "Abecedně (privátní poslední)"
-
-#: lib/Padre/Config.pm:258
-msgid "Project Tools (Left)"
-msgstr "Nástroje projektu (vlevo)"
-
-#: lib/Padre/Config.pm:259
-msgid "Document Tools (Right)"
-msgstr "Nástroje projektu (pravo)"
-
-#: lib/Padre/MimeTypes.pm:264
+#: lib/Padre/MimeTypes.pm:365 lib/Padre/MimeTypes.pm:375
 msgid "Fast but might be out of date"
 msgstr "Rychlé, ale možná zastaralé."
 
-#: lib/Padre/MimeTypes.pm:273
+#: lib/Padre/MimeTypes.pm:383
 #, fuzzy
 msgid "PPI Experimental"
-msgstr "PPI E&xperimentální"
+msgstr "PPI Experimentální"
 
-#: lib/Padre/MimeTypes.pm:274
+#: lib/Padre/MimeTypes.pm:384
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr "Pomalé ale přesné a pod naší kontrolou tudíž chyby mohou být opraveny"
 
-#: lib/Padre/MimeTypes.pm:278
+#: lib/Padre/MimeTypes.pm:388
 msgid "PPI Standard"
 msgstr "PPI Standard"
 
-#: lib/Padre/MimeTypes.pm:279
+#: lib/Padre/MimeTypes.pm:389
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -350,1437 +291,3997 @@ msgstr ""
 "Snad rychlejší než PPI Traditional. Velké soubory jsou zpracovávány "
 "Scintilla zvýrazňovačem."
 
-#: lib/Padre/Wx/Directory.pm:72 lib/Padre/Wx/Directory/TreeCtrl.pm:103
-msgid "Directory"
-msgstr "Adresář"
-
-#: lib/Padre/Wx/Directory.pm:127
-#, fuzzy
-msgid "Choose a directory"
-msgstr "Zvolte adresář"
-
-#: lib/Padre/Wx/Right.pm:48
-#, fuzzy
-msgid "Document Tools"
-msgstr "Umístění dokumentu:"
-
-#: lib/Padre/Wx/Main.pm:510
+#: lib/Padre/MimeTypes.pm:415
 #, perl-format
-msgid "No such session %s"
-msgstr "Neexistující sezení %s"
+msgid "Mime type was not supported when %s(%s) was called"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:671
-msgid "Failed to create server"
-msgstr "Selhalo vytvoření serveru"
-
-#: lib/Padre/Wx/Main.pm:1560
-msgid "Command line"
-msgstr "Příkazová řádka"
-
-#: lib/Padre/Wx/Main.pm:1561
-msgid "Run setup"
-msgstr "Spusť setup"
-
-#: lib/Padre/Wx/Main.pm:1596
-msgid "Current document has no filename"
-msgstr "Aktuální dokument není pojmenován"
-
-#: lib/Padre/Wx/Main.pm:1602
-msgid "Could not find project root"
-msgstr "Nelze najít kořen projektu"
-
-#: lib/Padre/Wx/Main.pm:1697
+#: lib/Padre/MimeTypes.pm:425
 #, perl-format
-msgid "Failed to start '%s' command"
-msgstr "Nelze spustit příkaz '%s'"
+msgid "Mime type already had a class '%s' when %s(%s) was called"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:1698 lib/Padre/Wx/Main.pm:1952
-#: lib/Padre/Wx/Main.pm:2976 lib/Padre/Wx/Syntax.pm:84
-#: lib/Padre/Wx/Syntax.pm:87 lib/Padre/Wx/Editor.pm:120
-#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:46
-#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:76
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:429
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:463
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:651
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:759
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:789
-#: lib/Padre/Wx/Dialog/PluginManager.pm:361
-#: lib/Padre/Wx/Dialog/OpenResource.pm:104
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:85
-#: lib/Padre/Task/SyntaxChecker.pm:179
-msgid "Error"
-msgstr "Chyba"
+#: lib/Padre/MimeTypes.pm:441 lib/Padre/MimeTypes.pm:467
+#, perl-format
+msgid "Mime type is not supported when %s(%s) was called"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:1725
-msgid "No open document"
-msgstr "Žádný otevřený dokument"
+#: lib/Padre/MimeTypes.pm:451
+#, perl-format
+msgid "Mime type did not have a class entry when %s(%s) was called"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:1742
-msgid "No execution mode was defined for this document"
-msgstr "Tento dokument nemá práva pro spuštění."
+#: lib/Padre/MimeTypes.pm:618
+msgid "UNKNOWN"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:1776
-msgid "Not a Perl document"
-msgstr "Není to perlový dokument"
+#: lib/Padre/Config.pm:398
+msgid "Showing the splash image during start-up"
+msgstr ""
 
-#: lib/Padre/Wx/Main.pm:1935
-msgid "Message"
-msgstr "Zpráva"
-
-#: lib/Padre/Wx/Main.pm:2177
+#: lib/Padre/Config.pm:411
 #, fuzzy
-msgid "Autocompletion error"
-msgstr "Chyba dokončování"
+msgid "Previous open files"
+msgstr "Předchozí otevřené soubory"
 
-#: lib/Padre/Wx/Main.pm:2203
+#: lib/Padre/Config.pm:412
+msgid "A new empty file"
+msgstr "Nový prázdný soubor"
+
+#: lib/Padre/Config.pm:413
+#, fuzzy
+msgid "No open files"
+msgstr "Žádné otevřené soubory"
+
+#: lib/Padre/Config.pm:414
+#, fuzzy
+msgid "Open session"
+msgstr "Otevřená sezení"
+
+#: lib/Padre/Config.pm:721
+#, fuzzy
+msgid "No Autoindent"
+msgstr "Bez autoodsazování"
+
+#: lib/Padre/Config.pm:722
+msgid "Indent to Same Depth"
+msgstr "Odsazovat do stejné hloubky"
+
+#: lib/Padre/Config.pm:723
+msgid "Indent Deeply"
+msgstr "Odsazovat hlouběji"
+
+#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:491
+msgid "error"
+msgstr "chyba"
+
+#: lib/Padre/PluginHandle.pm:90
+msgid "unloaded"
+msgstr "odebrán"
+
+#: lib/Padre/PluginHandle.pm:91
+msgid "loaded"
+msgstr "nahrán"
+
+#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:503
+msgid "incompatible"
+msgstr "nekompatibilní"
+
+#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:530
+msgid "disabled"
+msgstr "zakázán"
+
+#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:518
+msgid "enabled"
+msgstr "povolen"
+
+#: lib/Padre/PluginHandle.pm:201
 #, fuzzy, perl-format
-msgid "Line number between (1-%s):"
-msgstr "Číslo řádku:"
+msgid "Failed to enable plug-in '%s': %s"
+msgstr "Selhalo povolení doplňku '%s': %s"
 
-#: lib/Padre/Wx/Main.pm:2204
-#, fuzzy
-msgid "Go to line number"
-msgstr "Číslo řádku:"
-
-#: lib/Padre/Wx/Main.pm:2466
-#, perl-format
-msgid ""
-"Cannot open %s as it is over the arbitrary file size limit of Padre which is "
-"currently %s"
-msgstr ""
-"Nelze otevřít %s, protože soubor překročil povolenou velikost pro Padre, "
-"cožje právě %s"
-
-#: lib/Padre/Wx/Main.pm:2578
-msgid "Nothing selected. Enter what should be opened:"
-msgstr "Nemáte nic vybráno. Zvolte co má být otevřeno:"
-
-#: lib/Padre/Wx/Main.pm:2579
-msgid "Open selection"
-msgstr "Otevřít volbu"
-
-#: lib/Padre/Wx/Main.pm:2657
-#, perl-format
-msgid "Could not find file '%s'"
-msgstr "Nelze najít soubor '%s'"
-
-#: lib/Padre/Wx/Main.pm:2658 lib/Padre/Wx/Menu/File.pm:237
-msgid "Open Selection"
-msgstr "Otevřít volbu"
-
-#: lib/Padre/Wx/Main.pm:2729
-msgid "JavaScript Files"
-msgstr ""
-
-#: lib/Padre/Wx/Main.pm:2730
-#, fuzzy
-msgid "Perl Files"
-msgstr "Nový soubor"
-
-#: lib/Padre/Wx/Main.pm:2731
-#, fuzzy
-msgid "PHP Files"
-msgstr "PHP soubory"
-
-#: lib/Padre/Wx/Main.pm:2732
-msgid "Python Files"
-msgstr "Python soubory"
-
-#: lib/Padre/Wx/Main.pm:2733
-#, fuzzy
-msgid "Ruby Files"
-msgstr "Ruby soubory"
-
-#: lib/Padre/Wx/Main.pm:2734
-#, fuzzy
-msgid "SQL Files"
-msgstr "SQL soubory"
-
-#: lib/Padre/Wx/Main.pm:2735
-#, fuzzy
-msgid "Text Files"
-msgstr "Textové soubory"
-
-#: lib/Padre/Wx/Main.pm:2736
-#, fuzzy
-msgid "Web Files"
-msgstr "Webové soubory"
-
-#: lib/Padre/Wx/Main.pm:2740 lib/Padre/Wx/Main.pm:2741
-#, fuzzy
-msgid "All Files"
-msgstr "Všechny soubory"
-
-#: lib/Padre/Wx/Main.pm:2744
-msgid "Open File"
-msgstr "Otevři soubor"
-
-#: lib/Padre/Wx/Main.pm:2794 lib/Padre/Wx/Main.pm:4250
-#, perl-format
-msgid "Could not reload file: %s"
-msgstr "Nelze obnovit soubor: %s"
-
-#: lib/Padre/Wx/Main.pm:2825
-msgid "Save file as..."
-msgstr "Ulož jako..."
-
-#: lib/Padre/Wx/Main.pm:2852
-msgid "File already exists. Overwrite it?"
-msgstr "Soubor již existuje. Chcete ho přepsat?"
-
-#: lib/Padre/Wx/Main.pm:2853
-msgid "Exist"
-msgstr "Existuje"
-
-#: lib/Padre/Wx/Main.pm:2965
-msgid "File changed on disk since last saved. Do you want to overwrite it?"
-msgstr "Soubor se změnil od posledního uložení. Chcete ho přepsat?"
-
-#: lib/Padre/Wx/Main.pm:2966 lib/Padre/Wx/Main.pm:4243
-msgid "File not in sync"
-msgstr "Soubor nesynchronizován"
-
-#: lib/Padre/Wx/Main.pm:2975
-msgid "Could not save file: "
-msgstr "Nelze uložit soubor: "
-
-#: lib/Padre/Wx/Main.pm:3043
-msgid "File changed. Do you want to save it?"
-msgstr "Soubor změněn. Chcete ho uložit?"
-
-#: lib/Padre/Wx/Main.pm:3044
-msgid "Unsaved File"
-msgstr "Neuložený soubor"
-
-#: lib/Padre/Wx/Main.pm:3233
-msgid "Cannot diff if file was never saved"
-msgstr "Nelze provést diff pro neuložené"
-
-#: lib/Padre/Wx/Main.pm:3254
-msgid "There are no differences\n"
-msgstr "Žádné rozdíly\n"
-
-#: lib/Padre/Wx/Main.pm:3871 lib/Padre/Plugin/Devel.pm:226
-#, perl-format
-msgid "Error: %s"
-msgstr "Chyba: %s"
-
-#: lib/Padre/Wx/Main.pm:3872
-msgid "Internal error"
-msgstr "Interní chyba"
-
-#: lib/Padre/Wx/Main.pm:4068
-#, perl-format
-msgid "Words: %s"
-msgstr "Slova: %s"
-
-#: lib/Padre/Wx/Main.pm:4069
-#, perl-format
-msgid "Lines: %d"
-msgstr "Řádky: %d"
-
-#: lib/Padre/Wx/Main.pm:4070
-#, perl-format
-msgid "Chars without spaces: %s"
-msgstr "Znaků bez mezer: %s"
-
-#: lib/Padre/Wx/Main.pm:4071
-#, perl-format
-msgid "Chars with spaces: %d"
-msgstr "Znaků s mezerami: %d"
-
-#: lib/Padre/Wx/Main.pm:4072
-#, perl-format
-msgid "Newline type: %s"
-msgstr "Typ nového řádku: %s"
-
-#: lib/Padre/Wx/Main.pm:4073
-#, perl-format
-msgid "Encoding: %s"
-msgstr "Kódování: %s"
-
-#: lib/Padre/Wx/Main.pm:4074
-#, perl-format
-msgid "Document type: %s"
-msgstr "Typ dokumentu: %s"
-
-#: lib/Padre/Wx/Main.pm:4074
-msgid "none"
-msgstr "žádný"
-
-#: lib/Padre/Wx/Main.pm:4076
-#, perl-format
-msgid "Filename: %s"
-msgstr "Jméno souboru: %s"
-
-#: lib/Padre/Wx/Main.pm:4109
-msgid "Space to Tab"
-msgstr "Mezery na tabulátory"
-
-#: lib/Padre/Wx/Main.pm:4110
-msgid "Tab to Space"
-msgstr "Tabulátory na mezery"
-
-#: lib/Padre/Wx/Main.pm:4114
-msgid "How many spaces for each tab:"
-msgstr "Počet mezer na tabulátor:"
-
-#: lib/Padre/Wx/Main.pm:4242
-msgid "File changed on disk since last saved. Do you want to reload it?"
-msgstr "Soubor se změnil od posledního uložení. Chcete ho obnovit?"
-
-#: lib/Padre/Wx/Main.pm:4319
+#: lib/Padre/PluginHandle.pm:281
 #, fuzzy, perl-format
-msgid "Error loading template file '%s'"
-msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
+msgid "Failed to disable plug-in '%s': %s"
+msgstr "Selhalo zakázání doplňku '%s': %s"
 
-#: lib/Padre/Wx/Main.pm:4487
-msgid "Need to select text in order to translate to hex"
-msgstr "Zvolte text souboru k překladu do hexa"
+#: lib/Padre/CPAN.pm:88
+msgid "Failed to find your CPAN configuration"
+msgstr "Selhalo nalezení vaší CPAN konfigurace"
 
-#: lib/Padre/Wx/About.pm:21 lib/Padre/Plugin/PopularityContest.pm:122
-#: lib/Padre/Plugin/Devel.pm:105
-msgid "About"
-msgstr "O programu"
-
-#: lib/Padre/Wx/About.pm:188 lib/Padre/Wx/Menu/View.pm:337
-msgid "Padre"
-msgstr "Padre"
-
-#: lib/Padre/Wx/About.pm:193
-msgid "Development"
-msgstr "Vývoj"
-
-#: lib/Padre/Wx/About.pm:198
-msgid "Translation"
-msgstr "Překlad"
-
-#: lib/Padre/Wx/Notebook.pm:49
-msgid "Files"
-msgstr "Soubory"
-
-#: lib/Padre/Wx/Left.pm:48
-msgid "Project Tools"
-msgstr "Nástroje projektu"
-
-#: lib/Padre/Wx/DocBrowser.pm:148
-#, fuzzy
-msgid "&Close\tCtrl+W"
-msgstr "&Zavřít\tCtrl-W"
-
-#: lib/Padre/Wx/DocBrowser.pm:149
-#, fuzzy
-msgid "&Open\tCtrl+O"
-msgstr "&Otevřít...\tCtrl-O"
-
-#: lib/Padre/Wx/DocBrowser.pm:152
-#, fuzzy
-msgid "E&xit\tCtrl+X"
-msgstr "Vyj&mi\tCtrl-X"
-
-#: lib/Padre/Wx/DocBrowser.pm:328
-msgid "Untitled"
-msgstr "Bezejmený"
-
-#: lib/Padre/Wx/DocBrowser.pm:449
-msgid "NAME"
-msgstr "JMÉNO"
-
-#: lib/Padre/Wx/Menubar.pm:71
-msgid "&File"
-msgstr "&Soubor"
-
-#: lib/Padre/Wx/Menubar.pm:72 lib/Padre/Wx/Dialog/Snippets.pm:26
-msgid "&Edit"
-msgstr "&Edituj"
-
-#: lib/Padre/Wx/Menubar.pm:73
-msgid "&Search"
-msgstr "&Hledej"
-
-#: lib/Padre/Wx/Menubar.pm:74
-msgid "&View"
-msgstr "&Zobraz"
-
-#: lib/Padre/Wx/Menubar.pm:75
-msgid "&Run"
-msgstr "&Spusť"
-
-#: lib/Padre/Wx/Menubar.pm:76
-msgid "Pl&ugins"
-msgstr "Do&plněk"
-
-#: lib/Padre/Wx/Menubar.pm:77
-msgid "&Window"
-msgstr "&Okno"
-
-#: lib/Padre/Wx/Menubar.pm:78
-msgid "&Help"
-msgstr "&Pomoc"
-
-#: lib/Padre/Wx/Menubar.pm:107 lib/Padre/Wx/Menubar.pm:147
-msgid "&Perl"
-msgstr "&Perl"
-
-#: lib/Padre/Wx/Outline.pm:59 lib/Padre/Task/Outline/Perl.pm:164
-msgid "Outline"
-msgstr "Osnova"
-
-#: lib/Padre/Wx/Syntax.pm:54
-msgid "Syntax Check"
-msgstr "Kontrola syntaxe"
-
-#: lib/Padre/Wx/Syntax.pm:80 lib/Padre/Wx/Syntax.pm:301
-msgid "Line"
-msgstr "Řádek"
-
-#: lib/Padre/Wx/Syntax.pm:84 lib/Padre/Wx/Syntax.pm:85
-#: lib/Padre/Task/SyntaxChecker.pm:179
-msgid "Warning"
-msgstr "Varování"
-
-#: lib/Padre/Wx/Syntax.pm:302
-msgid "Type"
-msgstr "Typ"
-
-#: lib/Padre/Wx/Syntax.pm:303 lib/Padre/Wx/Dialog/SessionManager.pm:215
-msgid "Description"
-msgstr "Popis"
-
-#: lib/Padre/Wx/Editor.pm:831
-msgid "Select all\tCtrl-A"
-msgstr "Označ vše\tCtrl-A"
-
-#: lib/Padre/Wx/Editor.pm:842
-msgid "&Copy\tCtrl-C"
-msgstr "&Kopíruj\tCtrl-C"
-
-#: lib/Padre/Wx/Editor.pm:854
-msgid "Cu&t\tCtrl-X"
-msgstr "Vyj&mi\tCtrl-X"
-
-#: lib/Padre/Wx/Editor.pm:866
-msgid "&Paste\tCtrl-V"
-msgstr "&Vlož\tCtrl-V"
-
-#: lib/Padre/Wx/Editor.pm:883
-msgid "&Toggle Comment\tCtrl-Shift-C"
-msgstr "&Zobraz komentář\tCtrl-Shift-C"
-
-#: lib/Padre/Wx/Editor.pm:891
-msgid "&Comment Selected Lines\tCtrl-M"
-msgstr "&Zakomentuj vybrané řádky\tCtrl-M"
-
-#: lib/Padre/Wx/Editor.pm:898
-msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr "&Odkomentuj vybrané řádky\tCtrl-Shift-M"
-
-#: lib/Padre/Wx/Editor.pm:919
-msgid "Fold all"
-msgstr "Sbal vše"
-
-#: lib/Padre/Wx/Editor.pm:926
-msgid "Unfold all"
-msgstr "Rozbal vše"
-
-#: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Menu/Window.pm:33
-msgid "&Split window"
-msgstr "&Rozděl okno"
-
-#: lib/Padre/Wx/Editor.pm:1306
-msgid "You must select a range of lines"
-msgstr "Zvolte rozsah řádek"
-
-#: lib/Padre/Wx/Editor.pm:1322
-msgid "First character of selection must be a non-word character to align"
-msgstr ""
-"První znak výběru nesmí být alfanumerický znak nebo podtržítko k seřazení"
-
-#: lib/Padre/Wx/Ack.pm:102
-msgid "Term:"
-msgstr "Term:"
-
-#: lib/Padre/Wx/Ack.pm:106
-msgid "Dir:"
-msgstr "Adresář:"
-
-#: lib/Padre/Wx/Ack.pm:108
-msgid "Pick &directory"
-msgstr "Zvol &adresář"
-
-#: lib/Padre/Wx/Ack.pm:110
-msgid "In Files/Types:"
-msgstr "V souborech/typech:"
-
-#: lib/Padre/Wx/Ack.pm:116 lib/Padre/Wx/Dialog/Replace.pm:84
-#: lib/Padre/Wx/Dialog/Find.pm:74
-msgid "Case &Insensitive"
-msgstr "Ignoruj velikostí písmen"
-
-#: lib/Padre/Wx/Ack.pm:122
-msgid "I&gnore hidden Subdirectories"
-msgstr "I&gnoruj skryté podadresáře"
-
-#: lib/Padre/Wx/Ack.pm:138
-#, fuzzy
-msgid "Find in Files"
-msgstr "Ack (Hledej v souborech)"
-
-#: lib/Padre/Wx/Ack.pm:171
-msgid "Select directory"
-msgstr "Zvolte adresář"
-
-#: lib/Padre/Wx/Ack.pm:301 lib/Padre/Wx/Ack.pm:324
-msgid "Ack"
-msgstr "Ack"
-
-#: lib/Padre/Wx/Bottom.pm:49
-msgid "Output View"
-msgstr "Zobraz výstup"
-
-#: lib/Padre/Wx/StatusBar.pm:253
-msgid "Background Tasks are running"
-msgstr "Úlohy na pozadí běží"
-
-#: lib/Padre/Wx/StatusBar.pm:254
-msgid "Background Tasks are running with high load"
-msgstr "Úlohy na pozadí běží s vysokou zátěží"
-
-#: lib/Padre/Wx/FunctionList.pm:71
-#, fuzzy
-msgid "Functions"
-msgstr "Zobraz funkce"
-
-#: lib/Padre/Wx/Output.pm:58
-msgid "Output"
-msgstr "Výstup"
-
-#: lib/Padre/Wx/ErrorList.pm:90
-msgid "Error List"
-msgstr "Seznam chyb"
-
-#: lib/Padre/Wx/ErrorList.pm:126
-msgid "No diagnostics available for this error!"
-msgstr "K této chybě neexistují diagnostiky!"
-
-#: lib/Padre/Wx/ErrorList.pm:135
-msgid "Diagnostics"
-msgstr "Diagnostiky"
-
-#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:31
-msgid "Failed to execute process\n"
-msgstr "Selhalo provedení procesu\n"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:526
-msgid "Please choose a different name."
-msgstr "Prosím zvolte jiné jméno."
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:527
-#, fuzzy
-msgid "File already exists"
-msgstr "Soubor již existuje. Chcete ho přepsat?"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:650
-msgid "A file with the same name already exists in this directory"
-msgstr "Soubor tohoto jména v adresáři již existuje"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:664
-msgid "Move here"
-msgstr "Přesuň sem"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:675
-#, fuzzy
-msgid "Copy here"
-msgstr "Kopíruj sem"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:687
-#, fuzzy
-msgid "Cancel"
-msgstr "&Zrušit"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:714
-msgid "folder"
-msgstr "adresář"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:724
-#, fuzzy
-msgid "Open In File Browser"
-msgstr "Otevři soubor v prohlížeči"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:736
-msgid "Rename / Move"
-msgstr "Přejmenuj/Přesuň"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:748
-msgid "Move to trash"
-msgstr "Přesuň do koše"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:769
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:777
-#: lib/Padre/Wx/Dialog/SessionManager.pm:244
-msgid "Delete"
-msgstr "Smazat"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:776
-msgid "Are you sure you want to delete this item?"
-msgstr "Jste si jistí, že chcete smazat tuto položku?"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:799 lib/Padre/Task/Outline/Perl.pm:210
-msgid "Open &Documentation"
-msgstr "Otevřít &Dokumentaci"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:817
-#, fuzzy
-msgid "Show hidden files"
-msgstr "Zobraz skryté soubory"
-
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:838
-#, fuzzy
-msgid "Reload"
-msgstr "Obnov soubor"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:26
-#, fuzzy
-msgid "Search"
-msgstr "&Hledej"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:400
-#, fuzzy
-msgid "Skip hidden files"
-msgstr "Přeskoč skryté soubory:"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:415
-msgid "Skip CVS/.svn/.git/blib folders"
-msgstr "Přeskoč CVS.svn/.git/blib adresáře"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:431
-#, fuzzy
-msgid "Change project directory"
-msgstr "Změňte adresář projektu"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:444
-msgid "Tree listing"
-msgstr "Strom"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:445
-#, fuzzy
-msgid "Navigate"
-msgstr "Naviguj"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:446
-msgid "Change listing mode view"
-msgstr "Změň výpis zobrazení"
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:472
-msgid "Move to other panel"
-msgstr "Přesuň do jiného panelu"
-
-#: lib/Padre/Wx/Menu/View.pm:36
-msgid "Lock User Interface"
-msgstr "Uzamkni uživatelské rozhraní"
-
-#: lib/Padre/Wx/Menu/View.pm:48
-msgid "Show Output"
-msgstr "Zobraz výstup"
-
-#: lib/Padre/Wx/Menu/View.pm:57
-msgid "Show Functions"
-msgstr "Zobraz funkce"
-
-#: lib/Padre/Wx/Menu/View.pm:72
-msgid "Show Outline"
-msgstr "Zobraz osnovu"
-
-#: lib/Padre/Wx/Menu/View.pm:81
-#, fuzzy
-msgid "Show Directory Tree"
-msgstr "Zobraz strom adresářů"
-
-#: lib/Padre/Wx/Menu/View.pm:90
-msgid "Show Syntax Check"
-msgstr "Zobraz kontrolu syntaxe"
-
-#: lib/Padre/Wx/Menu/View.pm:99
-msgid "Show Error List"
-msgstr "Zobraz seznam chyb"
-
-#: lib/Padre/Wx/Menu/View.pm:110
-msgid "Show StatusBar"
-msgstr "Zobraz StatusBar"
-
-#: lib/Padre/Wx/Menu/View.pm:120
-msgid "Show Toolbar"
-msgstr "Zobraz panel nástrojů"
-
-#: lib/Padre/Wx/Menu/View.pm:132
-msgid "View Document As..."
-msgstr "Zobraz dokument jako..."
-
-#: lib/Padre/Wx/Menu/View.pm:170
-msgid "Show Line Numbers"
-msgstr "Zobraz čísla řádků"
-
-#: lib/Padre/Wx/Menu/View.pm:179
-msgid "Show Code Folding"
-msgstr "Zobraz sbalování kódu"
-
-#: lib/Padre/Wx/Menu/View.pm:188
-msgid "Show Call Tips"
-msgstr "Zobraz tipy"
-
-#: lib/Padre/Wx/Menu/View.pm:201
-msgid "Show Current Line"
-msgstr "Zobraz aktuální řádek"
-
-#: lib/Padre/Wx/Menu/View.pm:210
-msgid "Show Right Margin"
-msgstr "Zobraz pravý okraj"
-
-#: lib/Padre/Wx/Menu/View.pm:222
-msgid "Show Newlines"
-msgstr "Zobraz nové řádky"
-
-#: lib/Padre/Wx/Menu/View.pm:231
-msgid "Show Whitespaces"
-msgstr "Zobraz bílé znaky"
-
-#: lib/Padre/Wx/Menu/View.pm:240
-msgid "Show Indentation Guide"
-msgstr "Zobraz průvodce odsazováním"
-
-#: lib/Padre/Wx/Menu/View.pm:249
-msgid "Word-Wrap"
-msgstr "Zalomení slov"
-
-#: lib/Padre/Wx/Menu/View.pm:263
-msgid "Font Size"
-msgstr "Velikost písma"
-
-#: lib/Padre/Wx/Menu/View.pm:269
-#, fuzzy
-msgid "Increase Font Size"
-msgstr "Zvětši font\tCtrl-+"
-
-#: lib/Padre/Wx/Menu/View.pm:279
-#, fuzzy
-msgid "Decrease Font Size"
-msgstr "Zmenši font\tCtrl--"
-
-#: lib/Padre/Wx/Menu/View.pm:289
-#, fuzzy
-msgid "Reset Font Size"
-msgstr "Resetuj font\tCtrl-/"
-
-#: lib/Padre/Wx/Menu/View.pm:306 lib/Padre/Wx/Dialog/Bookmarks.pm:55
-msgid "Set Bookmark"
-msgstr "Uprav záložku"
-
-#: lib/Padre/Wx/Menu/View.pm:317
-#, fuzzy
-msgid "Goto Bookmark"
-msgstr "Přejdi na záložku"
-
-#: lib/Padre/Wx/Menu/View.pm:333
-msgid "Style"
-msgstr "Styl"
-
-#: lib/Padre/Wx/Menu/View.pm:338
-msgid "Night"
-msgstr "Noc"
-
-#: lib/Padre/Wx/Menu/View.pm:339
-msgid "Ultraedit"
-msgstr "Ultraedit"
-
-#: lib/Padre/Wx/Menu/View.pm:340
-msgid "Notepad++"
-msgstr "Notepad++"
-
-#: lib/Padre/Wx/Menu/View.pm:393
-msgid "Language"
-msgstr "Jazyk"
-
-#: lib/Padre/Wx/Menu/View.pm:401
-msgid "System Default"
-msgstr "Systémové nastavení"
-
-#: lib/Padre/Wx/Menu/View.pm:446
-#, fuzzy
-msgid "&Full Screen"
-msgstr "&Celá obrazovka\tF11"
-
-#: lib/Padre/Wx/Menu/Edit.pm:33
-msgid "&Undo"
-msgstr "&Zpět"
-
-#: lib/Padre/Wx/Menu/Edit.pm:45
-msgid "&Redo"
-msgstr "&Znovu"
-
-#: lib/Padre/Wx/Menu/Edit.pm:59
-msgid "Select"
-msgstr "Označ"
-
-#: lib/Padre/Wx/Menu/Edit.pm:66
-msgid "Select all"
-msgstr "Označ vše"
-
-#: lib/Padre/Wx/Menu/Edit.pm:78
-#, fuzzy
-msgid "Mark selection start"
-msgstr "Začni označování od\tCtrl-["
-
-#: lib/Padre/Wx/Menu/Edit.pm:89
-#, fuzzy
-msgid "Mark selection end"
-msgstr "Ukonči označování\tCtrl-]"
-
-#: lib/Padre/Wx/Menu/Edit.pm:100
-msgid "Clear selection marks"
-msgstr "Smaž označovací znaménka"
-
-#: lib/Padre/Wx/Menu/Edit.pm:112
-msgid "Cu&t"
-msgstr "Vyjmi"
-
-#: lib/Padre/Wx/Menu/Edit.pm:124
-#, fuzzy
-msgid "&Copy"
-msgstr "Kopíruj"
-
-#: lib/Padre/Wx/Menu/Edit.pm:136
-#, fuzzy
-msgid "&Paste"
-msgstr "Vlož"
-
-#: lib/Padre/Wx/Menu/Edit.pm:150
-msgid "&Goto Line"
-msgstr "Přejdi na řádku"
-
-#: lib/Padre/Wx/Menu/Edit.pm:160
-msgid "&Next Problem"
-msgstr "Další problém"
-
-#: lib/Padre/Wx/Menu/Edit.pm:170
-#, fuzzy
-msgid "&AutoComplete"
-msgstr "&AutoDokonči"
-
-#: lib/Padre/Wx/Menu/Edit.pm:180
-#, fuzzy
-msgid "&Brace matching"
-msgstr "&Chybějící závorky"
-
-#: lib/Padre/Wx/Menu/Edit.pm:190
-#, fuzzy
-msgid "&Join lines"
-msgstr "&Spoj řádky"
-
-#: lib/Padre/Wx/Menu/Edit.pm:200 lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "Úryvky"
-
-#: lib/Padre/Wx/Menu/Edit.pm:214
-#, fuzzy
-msgid "&Toggle Comment"
-msgstr "&Zobraz komentář"
-
-#: lib/Padre/Wx/Menu/Edit.pm:224
-#, fuzzy
-msgid "&Comment Selected Lines"
-msgstr "&Zakomentuj vybrané řádky"
-
-#: lib/Padre/Wx/Menu/Edit.pm:234
-#, fuzzy
-msgid "&Uncomment Selected Lines"
-msgstr "&Zakomentuj vybrané řádky"
-
-#: lib/Padre/Wx/Menu/Edit.pm:246
-msgid "Convert Encoding"
-msgstr "Konvertuj kódování"
-
-#: lib/Padre/Wx/Menu/Edit.pm:253
-msgid "Encode document to System Default"
-msgstr "Překóduj dokument do systémových hodnot"
-
-#: lib/Padre/Wx/Menu/Edit.pm:263
-#, fuzzy
-msgid "Encode document to utf-8"
-msgstr "Překóduj dokument do utf-8"
-
-#: lib/Padre/Wx/Menu/Edit.pm:273 lib/Padre/Wx/Dialog/Encode.pm:62
-#, fuzzy
-msgid "Encode document to..."
-msgstr "Zobraz dokument jako..."
-
-#: lib/Padre/Wx/Menu/Edit.pm:283
-#, fuzzy
-msgid "Convert EOL"
-msgstr "Konvertuj EOL"
-
-#: lib/Padre/Wx/Menu/Edit.pm:290
-msgid "EOL to Windows"
-msgstr "EOL do Windows"
-
-#: lib/Padre/Wx/Menu/Edit.pm:299
-msgid "EOL to Unix"
-msgstr "EOL do Unixu"
-
-#: lib/Padre/Wx/Menu/Edit.pm:308
-msgid "EOL to Mac Classic"
-msgstr "EOL do Mac klasický"
-
-#: lib/Padre/Wx/Menu/Edit.pm:318
-msgid "Tabs and Spaces"
-msgstr "Taby a mezery"
-
-#: lib/Padre/Wx/Menu/Edit.pm:325
-msgid "Tabs to Spaces..."
-msgstr "Taby na mezery..."
-
-#: lib/Padre/Wx/Menu/Edit.pm:334
-msgid "Spaces to Tabs..."
-msgstr "Mezery na taby..."
-
-#: lib/Padre/Wx/Menu/Edit.pm:345
-msgid "Delete Trailing Spaces"
-msgstr "Smaž koncové mezery"
-
-#: lib/Padre/Wx/Menu/Edit.pm:354
-msgid "Delete Leading Spaces"
-msgstr "Smaž počáteční mezery"
-
-#: lib/Padre/Wx/Menu/Edit.pm:364
-msgid "Upper/Lower Case"
-msgstr "Velká/malá písmena"
-
-#: lib/Padre/Wx/Menu/Edit.pm:371
-msgid "Upper All"
-msgstr "Všechna velká"
-
-#: lib/Padre/Wx/Menu/Edit.pm:381
-#, fuzzy
-msgid "Lower All"
-msgstr "Všechna malá"
-
-#: lib/Padre/Wx/Menu/Edit.pm:394
-#, fuzzy
-msgid "Diff Tools"
-msgstr "Diff nástroje"
-
-#: lib/Padre/Wx/Menu/Edit.pm:401
-msgid "Diff to Saved Version"
-msgstr "Diff proti uložené verzi"
-
-#: lib/Padre/Wx/Menu/Edit.pm:410
-msgid "Apply Diff to File"
-msgstr "Aplikuj diff na soubor"
-
-#: lib/Padre/Wx/Menu/Edit.pm:418
-msgid "Apply Diff to Project"
-msgstr "Aplikuj diff na projekt"
-
-#: lib/Padre/Wx/Menu/Edit.pm:427
-msgid "Insert From File..."
-msgstr "Vlož ze souboru..."
-
-#: lib/Padre/Wx/Menu/Edit.pm:438
-msgid "Show as ..."
-msgstr "Ukaž jako ..."
-
-#: lib/Padre/Wx/Menu/Edit.pm:445
-#, fuzzy
-msgid "Show as hexa"
-msgstr "Ukaž jako hexa"
-
-#: lib/Padre/Wx/Menu/Edit.pm:454
-msgid "Show as decimal"
-msgstr "Ukaž jako decimální"
-
-#: lib/Padre/Wx/Menu/Edit.pm:466 lib/Padre/Wx/Dialog/PluginManager.pm:296
-#: lib/Padre/Wx/Dialog/Preferences.pm:646
-msgid "Preferences"
-msgstr "Předvolby"
-
-#: lib/Padre/Wx/Menu/Perl.pm:40
-msgid "Find Unmatched Brace"
-msgstr "Najdi chybějící závorky"
-
-#: lib/Padre/Wx/Menu/Perl.pm:51 lib/Padre/Document/Perl.pm:730
-msgid "Find Variable Declaration"
-msgstr "Najdi deklarované proměnné"
-
-#: lib/Padre/Wx/Menu/Perl.pm:65 lib/Padre/Document/Perl.pm:742
-msgid "Lexically Rename Variable"
-msgstr "Lexikální přejmenování proměnných"
-
-#: lib/Padre/Wx/Menu/Perl.pm:72 lib/Padre/Wx/Menu/Perl.pm:73
-#: lib/Padre/Document/Perl.pm:754 lib/Padre/Document/Perl.pm:755
-msgid "Replacement"
-msgstr "Nahraď"
-
-#: lib/Padre/Wx/Menu/Perl.pm:87 lib/Padre/Document/Perl.pm:772
-msgid "Introduce Temporary Variable"
-msgstr "Uveď dočasné proměnné"
-
-#: lib/Padre/Wx/Menu/Perl.pm:94 lib/Padre/Wx/Menu/Perl.pm:95
-#: lib/Padre/Document/Perl.pm:785 lib/Padre/Document/Perl.pm:786
-#, fuzzy
-msgid "Variable Name"
-msgstr "Jména proměnných"
-
-#: lib/Padre/Wx/Menu/Perl.pm:109
-msgid "Vertically Align Selected"
-msgstr "Vertikální odsazení zvoleno"
-
-#: lib/Padre/Wx/Menu/Perl.pm:119
-msgid "Newline same column"
-msgstr "Nový řádek, stejný sloupec"
-
-#: lib/Padre/Wx/Menu/Perl.pm:147
-msgid "Automatic bracket completion"
-msgstr "Automatické doplnění závorek"
-
-#: lib/Padre/Wx/Menu/Help.pm:38
-#, fuzzy
-msgid "Help"
-msgstr "Pomoc"
-
-#: lib/Padre/Wx/Menu/Help.pm:46
-#, fuzzy
-msgid "Context Help"
-msgstr "Kontextová nápověda"
-
-#: lib/Padre/Wx/Menu/Help.pm:69 lib/Padre/Wx/Dialog/HelpSearch.pm:34
-#, fuzzy
-msgid "Help Search"
-msgstr "Hledej"
-
-#: lib/Padre/Wx/Menu/Help.pm:82
-msgid "Current Document"
-msgstr "Aktuální dokument"
-
-#: lib/Padre/Wx/Menu/Help.pm:95
-msgid "Live Support"
-msgstr "Technická podpora"
-
-#: lib/Padre/Wx/Menu/Help.pm:102
-msgid "Padre Support (English)"
-msgstr "Padre - podpora (anglicky)"
-
-#: lib/Padre/Wx/Menu/Help.pm:113
-#, fuzzy
-msgid "Perl Help"
-msgstr "Perl Help"
-
-#: lib/Padre/Wx/Menu/Help.pm:123
-msgid "Win32 Questions (English)"
-msgstr "Win32 otázky (anglicky)"
-
-#: lib/Padre/Wx/Menu/Help.pm:136
-msgid "Visit the PerlMonks"
-msgstr "Navštivte PerlMonks"
-
-#: lib/Padre/Wx/Menu/Help.pm:148
-msgid "Report a New &Bug"
-msgstr "Ohlásit novou &chybu"
-
-#: lib/Padre/Wx/Menu/Help.pm:156
-msgid "View All &Open Bugs"
-msgstr "Ukaž všechny &otevřené chyby"
-
-#: lib/Padre/Wx/Menu/Help.pm:165
-msgid "&Translate Padre..."
-msgstr "&Přeložit Padre..."
-
-#: lib/Padre/Wx/Menu/Help.pm:178
-msgid "&About"
-msgstr "&O programu"
-
-#: lib/Padre/Wx/Menu/File.pm:35
-#, fuzzy
-msgid "&New"
-msgstr "&Zobraz"
-
-#: lib/Padre/Wx/Menu/File.pm:45
-msgid "New..."
-msgstr "Nový..."
-
-#: lib/Padre/Wx/Menu/File.pm:51
-#, fuzzy
-msgid "Perl 5 Script"
-msgstr "Perl 5 skript"
-
-#: lib/Padre/Wx/Menu/File.pm:59
-#, fuzzy
-msgid "Perl 5 Module"
-msgstr "Perl 5 modul"
-
-#: lib/Padre/Wx/Menu/File.pm:67
-#, fuzzy
-msgid "Perl 5 Test"
-msgstr "Perl 5 test"
-
-#: lib/Padre/Wx/Menu/File.pm:75
-#, fuzzy
-msgid "Perl 6 Script"
-msgstr "Perl 6 skript"
-
-#: lib/Padre/Wx/Menu/File.pm:83
-msgid "Perl Distribution (Module::Starter)"
-msgstr "Distribuce Perlu (Module::Starter)"
-
-#: lib/Padre/Wx/Menu/File.pm:96
-#, fuzzy
-msgid "&Open..."
-msgstr "&Otevřít..."
-
-#: lib/Padre/Wx/Menu/File.pm:107
-#, fuzzy
-msgid "&Close"
-msgstr "&Zavři"
-
-#: lib/Padre/Wx/Menu/File.pm:119
-#, fuzzy
-msgid "Close..."
-msgstr "Zavři..."
-
-#: lib/Padre/Wx/Menu/File.pm:126
-#, fuzzy
-msgid "Close All Files"
-msgstr "Zavři soubor"
-
-#: lib/Padre/Wx/Menu/File.pm:135
-#, fuzzy
-msgid "Close All Other Files"
-msgstr "Zavři všechny ostatní soubory"
-
-#: lib/Padre/Wx/Menu/File.pm:146
-msgid "Close This Project"
-msgstr "Zavři tento projekt"
-
-#: lib/Padre/Wx/Menu/File.pm:150 lib/Padre/Wx/Menu/File.pm:168
-#, fuzzy
-msgid "File is not in a project"
-msgstr "Soubor nesynchronizován"
-
-#: lib/Padre/Wx/Menu/File.pm:164
-msgid "Close Other Projects"
-msgstr "Zavři ostatní projekty"
-
-#: lib/Padre/Wx/Menu/File.pm:182
-#, fuzzy
-msgid "Reload File"
-msgstr "Obnov soubor"
-
-#: lib/Padre/Wx/Menu/File.pm:191
-#, fuzzy
-msgid "Open Example"
-msgstr "Otevři soubor"
-
-#: lib/Padre/Wx/Menu/File.pm:204 lib/Padre/Wx/Dialog/Preferences.pm:715
-#: lib/Padre/Wx/Dialog/Snippets.pm:114
-msgid "&Save"
-msgstr "&Ulož"
-
-#: lib/Padre/Wx/Menu/File.pm:214
-#, fuzzy
-msgid "Save &As"
-msgstr "Ulož &jako"
-
-#: lib/Padre/Wx/Menu/File.pm:223
-msgid "Save All"
-msgstr "Ulož vše"
-
-#: lib/Padre/Wx/Menu/File.pm:247
-#, fuzzy
-msgid "Open Session"
-msgstr "Otevřít sezení"
-
-#: lib/Padre/Wx/Menu/File.pm:258
-#, fuzzy
-msgid "Save Session"
-msgstr "Ulož sezení"
-
-#: lib/Padre/Wx/Menu/File.pm:275
-#, fuzzy
-msgid "&Print"
-msgstr "&Tisk"
-
-#: lib/Padre/Wx/Menu/File.pm:295
-msgid "&Recent Files"
-msgstr "&Nedávno otevřené"
-
-#: lib/Padre/Wx/Menu/File.pm:301
-msgid "Open All Recent Files"
-msgstr "Otevři všechny nedávno otevřené"
-
-#: lib/Padre/Wx/Menu/File.pm:309
-msgid "Clean Recent Files List"
-msgstr "Smaž seznam nedávno otevřených"
-
-#: lib/Padre/Wx/Menu/File.pm:326
-#, fuzzy
-msgid "Document Statistics"
-msgstr "Statistky"
-
-#: lib/Padre/Wx/Menu/File.pm:338
-#, fuzzy
-msgid "&Quit"
-msgstr "&Konec"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:39 lib/Padre/Wx/Dialog/PluginManager.pm:42
-msgid "Plugin Manager"
-msgstr "Správce doplňků"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:53
-msgid "Plugin Tools"
-msgstr "Nástroje doplňků"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:63
-msgid "Plugin List (CPAN)"
-msgstr "Seznam doplňků (CPAN)"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:74
-msgid "Edit My Plugin"
-msgstr "Edituj mé doplňky"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:80
-msgid "Could not find the Padre::Plugin::My plugin"
-msgstr "Nelze nalézt Padre::Plugin::Můj doplněk"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:91
-msgid "Reload My Plugin"
-msgstr "Nahrej můj doplněk"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:100 lib/Padre/Wx/Menu/Plugins.pm:103
-#: lib/Padre/Wx/Menu/Plugins.pm:104
-msgid "Reset My Plugin"
-msgstr "Resetuj můj doplněk"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:122
-msgid "Reload All Plugins"
-msgstr "Nahrej všechny doplňky"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:131
-msgid "(Re)load Current Plugin"
-msgstr "Nahrej aktuální doplněk"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:140
-msgid "Test A Plugin From Local Dir"
-msgstr "Testuj doplněk z lokálního adresáře"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:150
-msgid "Module Tools"
-msgstr "Module nástrojů"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:158
-msgid "Install CPAN Module"
-msgstr "Instaluj CPAN modul"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:173
-msgid "Install Local Distribution"
-msgstr "Instaluj lokální distribuci"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:184
-msgid "Install Remote Distribution"
-msgstr "Instaluj vzdálenou distribuci"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:197
-msgid "Open CPAN Config File"
-msgstr "Otevři CPAN konfigurační soubor"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:281
+#: lib/Padre/CPAN.pm:105
 msgid "Select distribution to install"
 msgstr "Zvolte instalaci distribuce"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:294 lib/Padre/Wx/Menu/Plugins.pm:319
+#: lib/Padre/CPAN.pm:118 lib/Padre/CPAN.pm:142
 msgid "Did not provide a distribution"
-msgstr "Neposkytnuto distribucí"
+msgstr "Neposkytuje distribuci"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:309
+#: lib/Padre/CPAN.pm:132
+#, fuzzy
 msgid ""
-"Enter URL to install\n"
-"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+"Enter URL to install\\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00."
+"tar.gz"
 msgstr ""
 "Zadejte URL pro instalaci\n"
 "např. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:336
-msgid "pip is unexpectedly not installed"
-msgstr "pip není nečekaně nainstalován"
+#: lib/Padre/CPAN.pm:133
+msgid "Install Local Distribution"
+msgstr "Instaluj lokální distribuci"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:382
-msgid "Failed to find your CPAN configuration"
-msgstr "Selhalo nalezení vaší CPAN konfigurace"
-
-#: lib/Padre/Wx/Menu/Window.pm:45
+#: lib/Padre/CPAN.pm:178
 #, fuzzy
-msgid "Next File"
-msgstr "Nový soubor"
+msgid "cpanm is unexpectedly not installed"
+msgstr "cpanm neočekávaně není nainstalován"
 
-#: lib/Padre/Wx/Menu/Window.pm:55
+#: lib/Padre/Document.pm:231
+msgid "Error while opening file: no file object"
+msgstr ""
+
+#: lib/Padre/Document.pm:253
+#, perl-format
+msgid ""
+"The file %s you are trying to open is %s bytes large. It is over the "
+"arbitrary file size limit of Padre which is currently %s. Opening this file "
+"may reduce performance. Do you still want to open the file?"
+msgstr ""
+
+#: lib/Padre/Document.pm:259 lib/Padre/Wx/Syntax.pm:31
+#: lib/Padre/Wx/Main.pm:2697 lib/Padre/Wx/Main.pm:3304
+#: lib/Padre/Wx/Dialog/Warning.pm:64
+msgid "Warning"
+msgstr "Varování"
+
+#: lib/Padre/Document.pm:281
+msgid ""
+"Error while determining MIME type.\n"
+"This is possibly an encoding problem.\n"
+"Are you trying to load a binary file?"
+msgstr ""
+"Došlo k chybě během pokusu odhadnutí typu MIME.\n"
+"Pravděpodobně se jedná o problém kódování.\n"
+"Snažíte se otevřít binární soubor?"
+
+#: lib/Padre/Document.pm:325
+#, perl-format
+msgid "No module mime_type='%s' filename='%s'"
+msgstr ""
+
+#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:215
+#: lib/Padre/Wx/Main.pm:4492 lib/Padre/Wx/Role/Dialog.pm:95
+#: lib/Padre/Wx/Dialog/PluginManager.pm:356
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:185
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync2.pm:67
+#: lib/Padre/Wx/Dialog/Sync2.pm:75 lib/Padre/Wx/Dialog/Sync2.pm:89
+#: lib/Padre/Wx/Dialog/Sync2.pm:108 lib/Padre/Wx/Dialog/Sync2.pm:132
+#: lib/Padre/Wx/Dialog/Sync2.pm:143 lib/Padre/Wx/Dialog/Sync2.pm:153
+#: lib/Padre/Wx/Dialog/Sync2.pm:171 lib/Padre/Wx/Dialog/Sync2.pm:182
+#: lib/Padre/Wx/Dialog/Sync2.pm:193 lib/Padre/Wx/Dialog/Sync2.pm:204
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:274 lib/Padre/Wx/Dialog/Sync.pm:447
+#: lib/Padre/Wx/Dialog/Sync.pm:455 lib/Padre/Wx/Dialog/Sync.pm:469
+#: lib/Padre/Wx/Dialog/Sync.pm:493 lib/Padre/Wx/Dialog/Sync.pm:517
+#: lib/Padre/Wx/Dialog/Sync.pm:528 lib/Padre/Wx/Dialog/Sync.pm:538
+#: lib/Padre/Wx/Dialog/Sync.pm:556 lib/Padre/Wx/Dialog/Sync.pm:567
+#: lib/Padre/Wx/Dialog/Sync.pm:578 lib/Padre/Wx/Dialog/Sync.pm:589
+#: lib/Padre/Wx/Dialog/OpenResource.pm:118
+msgid "Error"
+msgstr "Chyba"
+
+#: lib/Padre/Document.pm:765
+#, perl-format
+msgid ""
+"Visual filename %s does not match the internal filename %s, do you want to "
+"abort saving?"
+msgstr ""
+"Visual jméno souboru %s nesouhlasí s interním jménem souboru %s. Chcete "
+"zrušit ukládání?"
+
+#: lib/Padre/Document.pm:769
 #, fuzzy
-msgid "Previous File"
-msgstr "Předchozí"
+msgid "Save Warning"
+msgstr "Bezpečnostní varování"
 
-#: lib/Padre/Wx/Menu/Window.pm:65
+#: lib/Padre/Document.pm:942
+#, perl-format
+msgid "no highlighter for mime-type '%s' using stc"
+msgstr ""
+
+#: lib/Padre/Document.pm:962
+#, perl-format
+msgid "Unsaved %d"
+msgstr "Neuloženo %d"
+
+#: lib/Padre/Document.pm:1363 lib/Padre/Document.pm:1364
+msgid "Skipped for large files"
+msgstr "Přeskočeno pro velké soubory"
+
+#: lib/Padre/Util/Template.pm:53
 #, fuzzy
-msgid "Last Visited File"
-msgstr "Poslední otevřený"
+msgid "Module name:"
+msgstr "Jméno modulu:"
 
-#: lib/Padre/Wx/Menu/Window.pm:75
+#: lib/Padre/Util/Template.pm:53
 #, fuzzy
-msgid "Right Click"
-msgstr "Pravý klik"
+msgid "New Module"
+msgstr "Perl 5 modul"
 
-#: lib/Padre/Wx/Menu/Window.pm:91
-msgid "GoTo Subs Window"
-msgstr "Jdi na podokna"
+#: lib/Padre/Util/FileBrowser.pm:63 lib/Padre/Util/FileBrowser.pm:110
+#: lib/Padre/Util/FileBrowser.pm:153
+#, perl-format
+msgid "Unsupported OS: %s"
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Window.pm:102
+#: lib/Padre/Util/FileBrowser.pm:193
+msgid "Failed to execute process\n"
+msgstr "Selhalo provedení procesu\n"
+
+#: lib/Padre/Util/FileBrowser.pm:216
 #, fuzzy
-msgid "GoTo Outline Window"
-msgstr "Jdi na okna pod čarou"
+msgid "Could not find KDE or GNOME"
+msgstr "Nelze najít kořen projektu"
 
-#: lib/Padre/Wx/Menu/Window.pm:113
-#, fuzzy
-msgid "GoTo Output Window"
-msgstr "Jdi na okno výstupu"
+#: lib/Padre/File/HTTP.pm:48
+#, perl-format
+msgid "Sending HTTP request %s..."
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Window.pm:124
-#, fuzzy
-msgid "GoTo Syntax Check Window"
-msgstr "Jdi na okno s kontrolou syntaxe"
+#: lib/Padre/File/FTP.pm:43
+msgid "Looking for Net::FTP..."
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Window.pm:135
-#, fuzzy
-msgid "GoTo Main Window"
-msgstr "Jdi na hlavní okno"
+#: lib/Padre/File/FTP.pm:113
+#, perl-format
+msgid "Connecting to FTP server %s..."
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Run.pm:36
-#, fuzzy
-msgid "Run Script"
-msgstr "Spusť skript"
+#: lib/Padre/File/FTP.pm:124
+#, fuzzy, perl-format
+msgid "Error connecting to %s:%s: %s"
+msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
 
-#: lib/Padre/Wx/Menu/Run.pm:46
-#, fuzzy
-msgid "Run Script (debug info)"
-msgstr "Spusť skript (debug)"
+#: lib/Padre/File/FTP.pm:131
+#, perl-format
+msgid "Password for user '%s' at %s:"
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Run.pm:56
+#: lib/Padre/File/FTP.pm:135
+msgid "FTP Password"
+msgstr ""
+
+#: lib/Padre/File/FTP.pm:141
+#, perl-format
+msgid "Logging into FTP server as %s..."
+msgstr ""
+
+#: lib/Padre/File/FTP.pm:144
+#, fuzzy, perl-format
+msgid "Error logging in on %s:%s: %s"
+msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
+
+#: lib/Padre/File/FTP.pm:156
+msgid "Connection to FTP server successful."
+msgstr ""
+
+#: lib/Padre/File/FTP.pm:186
+#, fuzzy, perl-format
+msgid "Unable to parse %s"
+msgstr "Tabulátory na mezery"
+
+#: lib/Padre/File/FTP.pm:289
 #, fuzzy
-msgid "Run Command"
+msgid "Reading file from FTP server..."
+msgstr "Čtení položek. Prosím čekejte..."
+
+#: lib/Padre/File/FTP.pm:312
+msgid "Writing file to FTP server..."
+msgstr ""
+
+#: lib/Padre/PPI/EndifyPod.pm:38
+#, fuzzy
+msgid "Error while searching for POD"
+msgstr "Chyba při provádění operace Padre"
+
+#: lib/Padre/PPI/EndifyPod.pm:42
+msgid "This document does not contain any POD"
+msgstr ""
+
+#: lib/Padre/PPI/EndifyPod.pm:46
+msgid "Only one POD fragment, will not try to merge"
+msgstr ""
+
+#: lib/Padre/PPI/EndifyPod.pm:53
+#, fuzzy
+msgid "Failed to merge the POD fragments"
+msgstr "Selhalo provedení procesu\n"
+
+#: lib/Padre/PPI/EndifyPod.pm:60
+#, fuzzy
+msgid "Failed to delete POD fragment"
+msgstr "Selhalo provedení procesu\n"
+
+#: lib/Padre/Plugin/Devel.pm:30
+msgid "Padre Developer Tools"
+msgstr "Padre vývojářské nástroje"
+
+#: lib/Padre/Plugin/Devel.pm:67
+msgid "Run Document inside Padre"
+msgstr "Spusť dokument v Padre"
+
+#: lib/Padre/Plugin/Devel.pm:68
+#, fuzzy
+msgid "Run Selection inside Padre"
+msgstr "Spusť dokument v Padre"
+
+#: lib/Padre/Plugin/Devel.pm:71
+msgid "Dump"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:72
+#, fuzzy
+msgid "Dump Expression..."
+msgstr "&Regulární výraz"
+
+#: lib/Padre/Plugin/Devel.pm:73
+msgid "Dump Current Document"
+msgstr "Dumpni aktuální dokument"
+
+#: lib/Padre/Plugin/Devel.pm:74
+msgid "Dump Task Manager"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:75
+msgid "Dump Top IDE Object"
+msgstr "Dumpni hlavní IDE objekt"
+
+#: lib/Padre/Plugin/Devel.pm:76
+#, fuzzy
+msgid "Dump Current PPI Tree"
+msgstr "Dumpni aktuální dokument"
+
+#: lib/Padre/Plugin/Devel.pm:77
+msgid "Dump %INC and @INC"
+msgstr "Dumpni %INC a @INC"
+
+#: lib/Padre/Plugin/Devel.pm:78
+msgid "Dump Display Geometry"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:79
+msgid "Start/Stop sub trace"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:83
+msgid "Load All Padre Modules"
+msgstr "Nahraj všechny moduly Padre"
+
+#: lib/Padre/Plugin/Devel.pm:84
+msgid "Simulate Crash"
+msgstr "Simuluj pád"
+
+#: lib/Padre/Plugin/Devel.pm:85
+msgid "Simulate Background Exception"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:86
+#, fuzzy
+msgid "Simulate Background Crash"
+msgstr "Simuluj pád"
+
+#: lib/Padre/Plugin/Devel.pm:90
+#, fuzzy, perl-format
+msgid "wxWidgets %s Reference"
+msgstr "wxWidgets %s reference"
+
+#: lib/Padre/Plugin/Devel.pm:93
+msgid "STC Reference"
+msgstr "STC reference"
+
+#: lib/Padre/Plugin/Devel.pm:96
+msgid "wxPerl Live Support"
+msgstr "wxPerl živá podpora"
+
+#: lib/Padre/Plugin/Devel.pm:102 lib/Padre/Plugin/PopularityContest.pm:201
+msgid "About"
+msgstr "O programu"
+
+#: lib/Padre/Plugin/Devel.pm:120 lib/Padre/Plugin/Devel.pm:121
+#, fuzzy
+msgid "Expression"
+msgstr "&Regulární výraz"
+
+#: lib/Padre/Plugin/Devel.pm:149
+msgid "No file is open"
+msgstr "Žádný soubor otevřen"
+
+#: lib/Padre/Plugin/Devel.pm:170
+#, fuzzy
+msgid "No Perl 5 file is open"
+msgstr "Žádný soubor otevřen"
+
+#: lib/Padre/Plugin/Devel.pm:242
+msgid "Sub-tracing stopped"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:248
+msgid "Error while loading Aspect, is it installed?"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:260
+msgid "Sub-tracing started"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:291
+msgid "A set of unrelated tools used by the Padre developers\n"
+msgstr "Soubor všech nástrojů použitých vývojáři Padre\n"
+
+#: lib/Padre/Plugin/Devel.pm:311
+#, perl-format
+msgid "Found %s unloaded modules"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:323
+#, fuzzy, perl-format
+msgid "Loaded %s modules"
+msgstr "Nahraj všechny moduly Padre"
+
+#: lib/Padre/Plugin/Devel.pm:334
+#, perl-format
+msgid "Error: %s"
+msgstr "Chyba: %s"
+
+#: lib/Padre/Plugin/PopularityContest.pm:202
+#, fuzzy
+msgid "Show current report"
+msgstr "Zobraz aktuální řádek"
+
+#: lib/Padre/Plugin/PopularityContest.pm:305
+msgid "Popularity Contest Report"
+msgstr ""
+
+#: lib/Padre/Document/Perl.pm:430
+#, fuzzy
+msgid "Error: "
+msgstr "Chyba: %s"
+
+#: lib/Padre/Document/Perl.pm:432
+msgid "No errors found."
+msgstr ""
+
+#: lib/Padre/Document/Perl.pm:471
+msgid "All braces appear to be matched"
+msgstr "Nechybí žádná závorka"
+
+#: lib/Padre/Document/Perl.pm:472
+msgid "Check Complete"
+msgstr "Kontrola hotova"
+
+#: lib/Padre/Document/Perl.pm:541 lib/Padre/Document/Perl.pm:575
+msgid "Current cursor does not seem to point at a variable"
+msgstr "Kurzor aktuálně neukazuje na žádnou proměnnou"
+
+#: lib/Padre/Document/Perl.pm:542 lib/Padre/Document/Perl.pm:596
+#: lib/Padre/Document/Perl.pm:631
+msgid "Check cancelled"
+msgstr "Kontrola zrušena"
+
+#: lib/Padre/Document/Perl.pm:577
+msgid "No declaration could be found for the specified (lexical?) variable"
+msgstr "Nebyla nalezena deklarace pro specifikovanou (lexikální?) proměnnou"
+
+#: lib/Padre/Document/Perl.pm:583
+#, fuzzy
+msgid "Search Canceled"
+msgstr "Kontrola zrušena"
+
+#: lib/Padre/Document/Perl.pm:595
+#, fuzzy
+msgid "Current cursor does not seem to point at a method"
+msgstr "Kurzor aktuálně neukazuje na žádnou proměnnou"
+
+#: lib/Padre/Document/Perl.pm:630
+#, perl-format
+msgid "Current '%s' not found"
+msgstr ""
+
+#: lib/Padre/Document/Perl.pm:819 lib/Padre/Document/Perl.pm:869
+#: lib/Padre/Document/Perl.pm:907
+#, fuzzy
+msgid "Current cursor does not seem to point at a variable."
+msgstr "Kurzor aktuálně neukazuje na žádnou proměnnou"
+
+#: lib/Padre/Document/Perl.pm:820 lib/Padre/Document/Perl.pm:830
+#, fuzzy
+msgid "Rename variable"
+msgstr "Lexikální přejmenování proměnných"
+
+#: lib/Padre/Document/Perl.pm:829
+#, fuzzy
+msgid "New name"
+msgstr "Žádný soubor"
+
+#: lib/Padre/Document/Perl.pm:870
+#, fuzzy
+msgid "Variable case change"
+msgstr "Jména proměnných"
+
+#: lib/Padre/Document/Perl.pm:909
+#, fuzzy
+msgid "No declaration could be found for the specified (lexical?) variable."
+msgstr "Nebyla nalezena deklarace pro specifikovanou (lexikální?) proměnnou"
+
+#: lib/Padre/Document/Perl.pm:915 lib/Padre/Document/Perl.pm:964
+msgid "Replace Operation Canceled"
+msgstr "Nahraď zrušenou operaci"
+
+#: lib/Padre/Document/Perl.pm:956
+#, fuzzy
+msgid "First character of selection does not seem to point at a token."
+msgstr "První vybraný znak není symbolem."
+
+#: lib/Padre/Document/Perl.pm:958
+msgid "Selection not part of a Perl statement?"
+msgstr "Označení není částí perlového příkazu?"
+
+#: lib/Padre/Document/Perl.pm:1696 lib/Padre/Wx/Menu/Refactor.pm:49
+#, fuzzy
+msgid "Change variable style"
+msgstr "Lexikální přejmenování proměnných"
+
+#: lib/Padre/Document/Perl/Help.pm:302
+#, perl-format
+msgid "(Since Perl %s)"
+msgstr ""
+
+#: lib/Padre/Document/Perl/Help.pm:306
+msgid "- DEPRECATED!"
+msgstr ""
+
+#: lib/Padre/Wx/TodoList.pm:209
+msgid "To-do"
+msgstr ""
+
+#: lib/Padre/Wx/Progress.pm:76
+#, fuzzy
+msgid "Please wait..."
+msgstr "Čtení položek. Prosím čekejte..."
+
+#: lib/Padre/Wx/FindInFiles.pm:129
+#, perl-format
+msgid "Searching for '%s' in '%s'..."
+msgstr ""
+
+#: lib/Padre/Wx/FindInFiles.pm:155
+#, perl-format
+msgid "%s (%s results)"
+msgstr ""
+
+#: lib/Padre/Wx/FindInFiles.pm:212
+#, perl-format
+msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
+msgstr ""
+
+#: lib/Padre/Wx/FindInFiles.pm:223
+#, perl-format
+msgid "No results found for '%s' inside '%s'"
+msgstr ""
+
+#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/FBP/FindInFiles.pm:27
+#, fuzzy
+msgid "Find in Files"
+msgstr "Hledání v souborech"
+
+#: lib/Padre/Wx/Syntax.pm:37
+#, fuzzy
+msgid "Deprecation"
+msgstr "Označ"
+
+#: lib/Padre/Wx/Syntax.pm:43
+#, fuzzy
+msgid "Severe Warning"
+msgstr "Bezpečnostní varování"
+
+#: lib/Padre/Wx/Syntax.pm:49
+#, fuzzy
+msgid "Fatal Error"
+msgstr "Interní chyba"
+
+#: lib/Padre/Wx/Syntax.pm:55
+#, fuzzy
+msgid "Internal Error"
+msgstr "Interní chyba"
+
+#: lib/Padre/Wx/Syntax.pm:61
+#, fuzzy
+msgid "Very Fatal Error"
+msgstr "Interní chyba"
+
+#: lib/Padre/Wx/Syntax.pm:67
+#, fuzzy
+msgid "Alien Error"
+msgstr "Chyba"
+
+#: lib/Padre/Wx/Syntax.pm:301
+msgid "Syntax Check"
+msgstr "Kontrola syntaxe"
+
+#: lib/Padre/Wx/Syntax.pm:392
+#, perl-format
+msgid "No errors or warnings found in %s."
+msgstr ""
+
+#: lib/Padre/Wx/Syntax.pm:395
+msgid "No errors or warnings found."
+msgstr ""
+
+#: lib/Padre/Wx/Syntax.pm:404
+#, fuzzy, perl-format
+msgid "Found %d issue(s) in %s"
+msgstr "Nalezeno '%s' v '%s':\n"
+
+#: lib/Padre/Wx/Syntax.pm:405
+#, fuzzy, perl-format
+msgid "Found %d issue(s)"
+msgstr "Nalezeno %d souborů\n"
+
+#: lib/Padre/Wx/Syntax.pm:426
+#, perl-format
+msgid "Line %d:   (%s)   %s"
+msgstr ""
+
+#: lib/Padre/Wx/Debug.pm:113
+msgid "Debugger"
+msgstr ""
+
+#: lib/Padre/Wx/Debug.pm:138
+#, fuzzy
+msgid "Variable"
+msgstr "Jména proměnných"
+
+#: lib/Padre/Wx/Debug.pm:139 lib/Padre/Wx/Dialog/Advanced.pm:113
+msgid "Value"
+msgstr ""
+
+#: lib/Padre/Wx/Command.pm:81
+msgid ""
+"Experimental feature. Type '?' at the bottom of the page to get list of "
+"commands. If it does not work, blame szabgab.\n"
+"\n"
+msgstr ""
+
+#: lib/Padre/Wx/Command.pm:262
+#, fuzzy
+msgid "Command"
 msgstr "Spusť příkaz"
 
-#: lib/Padre/Wx/Menu/Run.pm:66 lib/Padre/Wx/Menu/Run.pm:76
-msgid "Run Tests"
-msgstr "Spusť testy"
+#: lib/Padre/Wx/WizardLibrary.pm:20
+#, fuzzy
+msgid "Module"
+msgstr "Module nástrojů"
 
-#: lib/Padre/Wx/Menu/Search.pm:38
-msgid "&Find"
+#: lib/Padre/Wx/WizardLibrary.pm:21
+#, fuzzy
+msgid "Perl 5"
+msgstr "&Perl"
+
+#: lib/Padre/Wx/WizardLibrary.pm:22
+msgid "Opens the Perl 5 module wizard"
+msgstr ""
+
+#: lib/Padre/Wx/WizardLibrary.pm:28
+#, fuzzy
+msgid "Plugin"
+msgstr "Do&plněk"
+
+#: lib/Padre/Wx/WizardLibrary.pm:29 lib/Padre/Wx/WizardLibrary.pm:37
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Dialog/Form.pm:98
+#: lib/Padre/Config/Style.pm:34
+msgid "Padre"
+msgstr "Padre"
+
+#: lib/Padre/Wx/WizardLibrary.pm:30
+msgid "Opens the Padre plugin wizard"
+msgstr ""
+
+#: lib/Padre/Wx/WizardLibrary.pm:36 lib/Padre/Wx/Dialog/DocStats.pm:95
+#, fuzzy
+msgid "Document"
+msgstr "Žádný dokument"
+
+#: lib/Padre/Wx/WizardLibrary.pm:38
+#, fuzzy
+msgid "Opens the Padre document wizard"
+msgstr "Otevři nový prázdný dokument"
+
+#: lib/Padre/Wx/Editor.pm:1612
+msgid "You must select a range of lines"
+msgstr "Musí být zvolen rozsah řádek"
+
+#: lib/Padre/Wx/Editor.pm:1628
+msgid "First character of selection must be a non-word character to align"
+msgstr ""
+"První znak výběru nesmí být alfanumerický znak nebo podtržítko k seřazení"
+
+#: lib/Padre/Wx/Browser.pm:64 lib/Padre/Wx/ActionLibrary.pm:2578
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:398
+#, fuzzy
+msgid "Help"
+msgstr "Pomoc"
+
+#: lib/Padre/Wx/Browser.pm:93 lib/Padre/Wx/Browser.pm:108
+msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
+msgstr ""
+
+#: lib/Padre/Wx/Browser.pm:104
+#, fuzzy
+msgid "Search:"
+msgstr "&Hledej"
+
+#: lib/Padre/Wx/Browser.pm:110 lib/Padre/Wx/ActionLibrary.pm:274
+#: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/Dialog/PluginManager.pm:145
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:139
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/Replace.pm:191
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:238 lib/Padre/Wx/Dialog/PerlFilter.pm:99
+#, fuzzy
+msgid "&Close"
+msgstr "&Zavřít"
+
+#: lib/Padre/Wx/Browser.pm:341
+msgid "Untitled"
+msgstr "Bezejmený"
+
+#: lib/Padre/Wx/Browser.pm:409
+#, perl-format
+msgid "Browser: no viewer for %s"
+msgstr ""
+
+#: lib/Padre/Wx/Browser.pm:443
+#, perl-format
+msgid "Searched for '%s' and failed..."
+msgstr ""
+
+#: lib/Padre/Wx/Browser.pm:444
+msgid "Help not found."
+msgstr ""
+
+#: lib/Padre/Wx/Browser.pm:465
+msgid "NAME"
+msgstr "JMÉNO"
+
+#: lib/Padre/Wx/ActionLibrary.pm:39
+msgid "System Default"
+msgstr "Systémové nastavení"
+
+#: lib/Padre/Wx/ActionLibrary.pm:40
+#, fuzzy
+msgid "Switch language to system default"
+msgstr "Přepnutí jazyka do systémového nastavení"
+
+#: lib/Padre/Wx/ActionLibrary.pm:69
+#, perl-format
+msgid "Switch Padre interface language to %s"
+msgstr "Přepnutí rozhraní jazyka Padre do %s"
+
+#: lib/Padre/Wx/ActionLibrary.pm:89
+msgid "Dump the Padre object to STDOUT"
+msgstr "Vypsání Padre objektu na STDOUT"
+
+#: lib/Padre/Wx/ActionLibrary.pm:90
+msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
+msgstr "Vypsání celého Padre objektu na STDOUT pro testování/ladění."
+
+#: lib/Padre/Wx/ActionLibrary.pm:110
+msgid "Delay the action queue for 10 seconds"
+msgstr "Prodleva akcí ve frontě o 10 sekund"
+
+#: lib/Padre/Wx/ActionLibrary.pm:111
+msgid "Stops processing of other action queue items for 10 seconds"
+msgstr "Zastaví zpracování ostatních položek fronty na 10 sekund"
+
+#: lib/Padre/Wx/ActionLibrary.pm:119
+msgid "Delay the action queue for 30 seconds"
+msgstr "Odložení akcí fronty o 30 sekund"
+
+#: lib/Padre/Wx/ActionLibrary.pm:120
+msgid "Stops processing of other action queue items for 30 seconds"
+msgstr "Zastaví zpracování ostatních položek fronty na 30 sekund"
+
+#: lib/Padre/Wx/ActionLibrary.pm:130
+#, fuzzy
+msgid "&New"
+msgstr "&Nový"
+
+#: lib/Padre/Wx/ActionLibrary.pm:131
+msgid "Open a new empty document"
+msgstr "Otevři nový prázdný dokument"
+
+#: lib/Padre/Wx/ActionLibrary.pm:141
+#, fuzzy
+msgid "Perl 5 Script"
+msgstr "Perl 5 skript"
+
+#: lib/Padre/Wx/ActionLibrary.pm:142
+msgid "Open a document with a skeleton Perl 5 script"
+msgstr "Otevření dokumentu s kostrou skriptu pro Perl 5"
+
+#: lib/Padre/Wx/ActionLibrary.pm:150
+#, fuzzy
+msgid "Perl 5 Module"
+msgstr "Perl 5 modul"
+
+#: lib/Padre/Wx/ActionLibrary.pm:151
+msgid "Open a document with a skeleton Perl 5 module"
+msgstr "Otevření dokumentu s kostrou modulu pro Perl 5"
+
+#: lib/Padre/Wx/ActionLibrary.pm:159
+#, fuzzy
+msgid "Perl 5 Test"
+msgstr "Perl 5 test"
+
+#: lib/Padre/Wx/ActionLibrary.pm:160
+msgid "Open a document with a skeleton Perl 5 test  script"
+msgstr "Otevření dokumentu s kostrou testů skriptu pro Perl 5"
+
+#: lib/Padre/Wx/ActionLibrary.pm:170
+#, fuzzy
+msgid "Perl 6 Script"
+msgstr "Perl 6 skript"
+
+#: lib/Padre/Wx/ActionLibrary.pm:171
+msgid "Open a document with a skeleton Perl 6 script"
+msgstr "Otevření dokumentu s kostrou skriptu pro Perl 6"
+
+#: lib/Padre/Wx/ActionLibrary.pm:181
+#, fuzzy
+msgid "Perl Distribution..."
+msgstr "Distribuce Perlu..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:182
+msgid "Setup a skeleton Perl module distribution"
+msgstr "Nastaví kostru Perlového modulu distribuce"
+
+#: lib/Padre/Wx/ActionLibrary.pm:192
+msgid "Wizard Selector..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:193
+msgid "Selects and opens a wizard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:206
+#, fuzzy
+msgid "&Open"
+msgstr "&Otevřít"
+
+#: lib/Padre/Wx/ActionLibrary.pm:207
+msgid "Browse directory of the current document to open one or several files"
+msgstr "Procházení adresáře aktuálního dokumentu pro otevření několika souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:217
+#, fuzzy
+msgid "Open &URL..."
+msgstr "Otevřít &URL..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:218
+msgid "Open a file from a remote location"
+msgstr "Otevřít soubor ze vzdáleného místa"
+
+#: lib/Padre/Wx/ActionLibrary.pm:228 lib/Padre/Wx/Directory/TreeCtrl.pm:218
+#, fuzzy
+msgid "Open in File Browser"
+msgstr "Otevřít v prohlížeči souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:229
+msgid "Opens the current document using the file browser"
+msgstr "Otevřít aktuální dokument prohlížečem souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:238
+msgid "Open with Default System Editor"
+msgstr "Otevřít v systémovém editoru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:241
+msgid "Opens the file with the default system editor"
+msgstr "Otevřít soubor v systémovém editoru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:252
+#, fuzzy
+msgid "Open in Command Line"
+msgstr "Otevřít na příkazové řádce"
+
+#: lib/Padre/Wx/ActionLibrary.pm:253
+msgid "Opens a command line using the current document folder"
+msgstr "Otevřít na příkazové řádce v aktuálním adresáři"
+
+#: lib/Padre/Wx/ActionLibrary.pm:262
+#, fuzzy
+msgid "Open Example"
+msgstr "Otevírá příklad"
+
+#: lib/Padre/Wx/ActionLibrary.pm:263
+msgid "Browse the directory of the installed examples to open one file"
+msgstr "Prochází adresáře s nainstalovanými příklady pro otevření souboru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:275
+#, fuzzy
+msgid "Close current document"
+msgstr "Zavřít aktuální dokument"
+
+#: lib/Padre/Wx/ActionLibrary.pm:288
+#, fuzzy
+msgid "Close this Project"
+msgstr "Zavřít tento projekt"
+
+#: lib/Padre/Wx/ActionLibrary.pm:289
+msgid "Close all the files belonging to the current project"
+msgstr "Zavřít všechny soubory aktuálního projektu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:295 lib/Padre/Wx/ActionLibrary.pm:315
+#, fuzzy
+msgid "File is not in a project"
+msgstr "Soubor nepatří do žádného projektu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:309
+#, fuzzy
+msgid "Close other Projects"
+msgstr "Zavřít ostatní projekty"
+
+#: lib/Padre/Wx/ActionLibrary.pm:310
+msgid "Close all the files that do not belong to the current project"
+msgstr "Zavřít všechny soubory, které nepatří do aktuálního projektu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:329
+#, fuzzy
+msgid "Close all Files"
+msgstr "Zavřít všechny soubory"
+
+#: lib/Padre/Wx/ActionLibrary.pm:330
+msgid "Close all the files open in the editor"
+msgstr "Zavřít všechny soubory otevřené v editoru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:339
+#, fuzzy
+msgid "Close all other Files"
+msgstr "Zavřít všechny ostatní soubory"
+
+#: lib/Padre/Wx/ActionLibrary.pm:340
+msgid "Close all the files except the current one"
+msgstr "Zavřít všechny soubory mimo tohoto"
+
+#: lib/Padre/Wx/ActionLibrary.pm:349
+#, fuzzy
+msgid "Close Files..."
+msgstr "Zavřít soubory..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:350
+msgid "Select some open files for closing"
+msgstr "Výběr otevřených souborů k uzavření"
+
+#: lib/Padre/Wx/ActionLibrary.pm:359
+#, fuzzy
+msgid "Reload File"
+msgstr "Obnovení souboru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:360
+#, fuzzy
+msgid "Reload current file from disk"
+msgstr "Obnovení aktuálního souboru z disku"
+
+#: lib/Padre/Wx/ActionLibrary.pm:369
+#, fuzzy
+msgid "Reload All"
+msgstr "Obnovení všech"
+
+#: lib/Padre/Wx/ActionLibrary.pm:370
+msgid "Reload all files currently open"
+msgstr "Obnovení všech otevřených souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:379
+#, fuzzy
+msgid "Reload Some..."
+msgstr "Obnovení některých..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:380
+msgid "Select some open files for reload"
+msgstr "Výběr některých otevřených souborů pro obnovení"
+
+#: lib/Padre/Wx/ActionLibrary.pm:393 lib/Padre/Wx/Dialog/Preferences.pm:917
+#: lib/Padre/Wx/Dialog/Snippets.pm:114
+msgid "&Save"
+msgstr "&Uložit"
+
+#: lib/Padre/Wx/ActionLibrary.pm:394
+#, fuzzy
+msgid "Save current document"
+msgstr "Uložit aktuální dokument"
+
+#: lib/Padre/Wx/ActionLibrary.pm:406
+#, fuzzy
+msgid "Save &As..."
+msgstr "Uložit &jako"
+
+#: lib/Padre/Wx/ActionLibrary.pm:407
+msgid "Allow the selection of another name to save the current document"
+msgstr "Povolení výběru jiného než aktuálního jména aktuálního dokumentu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:419
+#, fuzzy
+msgid "Save Intuition"
+msgstr "Uložit intuitivně"
+
+#: lib/Padre/Wx/ActionLibrary.pm:420
+msgid ""
+"For new document try to guess the filename based on the file content and "
+"offer to save it."
+msgstr ""
+"Nový dokument se pokusí odhadnout své jméno souboru na základě obsahua "
+"nabídne uložení."
+
+#: lib/Padre/Wx/ActionLibrary.pm:430
+msgid "Save All"
+msgstr "Uložit vše"
+
+#: lib/Padre/Wx/ActionLibrary.pm:431
+#, fuzzy
+msgid "Save all the files"
+msgstr "Zavřít všechny soubory"
+
+#: lib/Padre/Wx/ActionLibrary.pm:443 lib/Padre/Wx/Main.pm:3689
+msgid "Open Selection"
+msgstr "Otevřít volby"
+
+#: lib/Padre/Wx/ActionLibrary.pm:444
+msgid ""
+"List the files that match the current selection and let the user pick one to "
+"open"
+msgstr ""
+"Zobrazí seznam souborů, které souhlasí s aktuálním výběrem a nechá z nich "
+"uživatelevybrat"
+
+#: lib/Padre/Wx/ActionLibrary.pm:453
+#, fuzzy
+msgid "Open Session..."
+msgstr "Otevřít sezení..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:454
+msgid ""
+"Select a session. Close all the files currently open and open all the listed "
+"in the session"
+msgstr ""
+"Volba sezení. Zavřít všechny otevřené soubory a otevřít všechny ze seznemu v "
+"tomto sezení"
+
+#: lib/Padre/Wx/ActionLibrary.pm:464
+#, fuzzy
+msgid "Save Session..."
+msgstr "Uložit sezení"
+
+#: lib/Padre/Wx/ActionLibrary.pm:465
+msgid "Ask for a session name and save the list of files currently opened"
+msgstr "Zeptat se na jméno sezení a uložit seznam aktuálně otevřených souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:480
+#, fuzzy
+msgid "&Print..."
+msgstr "&Tisk..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:481
+#, fuzzy
+msgid "Print the current document"
+msgstr "Tisk aktuálního dokumentu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:500
+msgid "Open All Recent Files"
+msgstr "Otevřít všechny nedávno otevřené"
+
+#: lib/Padre/Wx/ActionLibrary.pm:501
+msgid "Open all the files listed in the recent files list"
+msgstr "Otevřít všechny nedávno otevřené soubory"
+
+#: lib/Padre/Wx/ActionLibrary.pm:509
+msgid "Clean Recent Files List"
+msgstr "Vymazat seznam nedávno otevřených"
+
+#: lib/Padre/Wx/ActionLibrary.pm:510
+msgid "Remove the entries from the recent files list"
+msgstr "Odstranit položky ze seznamu nedávno otevřených souborů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:521 lib/Padre/Wx/Dialog/DocStats.pm:31
+#, fuzzy
+msgid "Document Statistics"
+msgstr "Statistky dokumentu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:522
+msgid "Word count and other statistics of the current document"
+msgstr "Počet slov a další statistiky aktuálního dokumentu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:534
+#, fuzzy
+msgid "&Quit"
+msgstr "&Konec"
+
+#: lib/Padre/Wx/ActionLibrary.pm:535
+msgid "Ask if unsaved files should be saved and then exit Padre"
+msgstr "Zeptat se zda neuložené soubory mají být uloženy a pak ukončit Padre"
+
+#: lib/Padre/Wx/ActionLibrary.pm:554
+msgid "&Undo"
+msgstr "&Zpět"
+
+#: lib/Padre/Wx/ActionLibrary.pm:555
+msgid "Undo last change in current file"
+msgstr "Zpět poslední změnu v aktuálním souboru"
+
+#: lib/Padre/Wx/ActionLibrary.pm:574
+msgid "&Redo"
+msgstr "&Znova"
+
+#: lib/Padre/Wx/ActionLibrary.pm:575
+msgid "Redo last undo"
+msgstr "Znova poslední zpět"
+
+#: lib/Padre/Wx/ActionLibrary.pm:588
+#, fuzzy
+msgid "Select All"
+msgstr "Označit vše"
+
+#: lib/Padre/Wx/ActionLibrary.pm:589
+msgid "Select all the text in the current document"
+msgstr "Označit všechen text v aktuálním dokumentu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:601
+#, fuzzy
+msgid "Mark Selection Start"
+msgstr "Začni označování od\tCtrl-["
+
+#: lib/Padre/Wx/ActionLibrary.pm:602
+msgid "Mark the place where the selection should start"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:613
+#, fuzzy
+msgid "Mark Selection End"
+msgstr "Ukonči označování\tCtrl-]"
+
+#: lib/Padre/Wx/ActionLibrary.pm:614
+msgid "Mark the place where the selection should end"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:625
+#, fuzzy
+msgid "Clear Selection Marks"
+msgstr "Smaž označovací znaménka"
+
+#: lib/Padre/Wx/ActionLibrary.pm:626
+#, fuzzy
+msgid "Remove all the selection marks"
+msgstr "Smaž označovací znaménka"
+
+#: lib/Padre/Wx/ActionLibrary.pm:640
+msgid "Cu&t"
+msgstr "Vyjmi"
+
+#: lib/Padre/Wx/ActionLibrary.pm:641
+msgid "Remove the current selection and put it in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:655
+#, fuzzy
+msgid "&Copy"
+msgstr "Kopíruj"
+
+#: lib/Padre/Wx/ActionLibrary.pm:656
+msgid "Put the current selection in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:671
+#, fuzzy
+msgid "Copy Full Filename"
+msgstr "Žádný soubor"
+
+#: lib/Padre/Wx/ActionLibrary.pm:672
+msgid "Put the full path of the current file in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:685
+#, fuzzy
+msgid "Copy Filename"
+msgstr "Žádný soubor"
+
+#: lib/Padre/Wx/ActionLibrary.pm:686
+msgid "Put the name of the current file in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:699
+#, fuzzy
+msgid "Copy Directory Name"
+msgstr "Zobraz strom adresářů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:700
+msgid "Put the full path of the directory of the current file in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:712
+#, fuzzy
+msgid "Copy Editor Content"
+msgstr "Font editoru:"
+
+#: lib/Padre/Wx/ActionLibrary.pm:713
+msgid "Put the content of the current document in the clipboard"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:728
+#, fuzzy
+msgid "&Paste"
+msgstr "Vlož"
+
+#: lib/Padre/Wx/ActionLibrary.pm:729
+msgid "Paste the clipboard to the current location"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:742
+msgid "&Go To..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:743
+msgid "Jump to a specific line number or character position"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:753
+msgid "&Next Problem"
+msgstr "Další problém"
+
+#: lib/Padre/Wx/ActionLibrary.pm:754
+msgid "Jump to the code that triggered the next error"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:764
+#, fuzzy
+msgid "&Quick Fix"
+msgstr "Rychlé hledání"
+
+#: lib/Padre/Wx/ActionLibrary.pm:765
+msgid "Apply one of the quick fixes for the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:790
+#, fuzzy
+msgid "No suggestions"
+msgstr "Neexistující sezení %s"
+
+#: lib/Padre/Wx/ActionLibrary.pm:819
+#, fuzzy
+msgid "&Autocomplete"
+msgstr "&AutoDokonči"
+
+#: lib/Padre/Wx/ActionLibrary.pm:820
+msgid "Offer completions to the current string. See Preferences"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:830
+#, fuzzy
+msgid "&Brace Matching"
+msgstr "&Chybějící závorky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:831
+msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:841
+msgid "&Select to Matching Brace"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:842
+msgid "Select to the matching opening or closing brace"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:853
+#, fuzzy
+msgid "&Join Lines"
+msgstr "&Spoj řádky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:854
+msgid "Join the next line to the end of the current line."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:864
+msgid "Special Value..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:865
+msgid ""
+"Select a date, filename or other value and insert at the current location"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:877
+#, fuzzy
+msgid "Snippets..."
+msgstr "Úryvky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:878
+msgid "Select and insert a snippet at the current location"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:889
+#, fuzzy
+msgid "File..."
+msgstr "Soubory"
+
+#: lib/Padre/Wx/ActionLibrary.pm:890
+msgid "Select a file and insert its content at the current location"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:902
+#, fuzzy
+msgid "&Toggle Comment"
+msgstr "&Zobraz komentář"
+
+#: lib/Padre/Wx/ActionLibrary.pm:903
+msgid "Comment out or remove comment out of selected lines in the document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:915
+#, fuzzy
+msgid "&Comment Selected Lines"
+msgstr "&Zakomentuj vybrané řádky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:916
+#, fuzzy
+msgid "Comment out selected lines in the document"
+msgstr "&Zakomentuj vybrané řádky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:927
+#, fuzzy
+msgid "&Uncomment Selected Lines"
+msgstr "&Zakomentuj vybrané řádky"
+
+#: lib/Padre/Wx/ActionLibrary.pm:928
+msgid "Remove comment out of selected lines in the document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:940
+#, fuzzy
+msgid "Encode Document to System Default"
+msgstr "Překóduj dokument do systémových hodnot"
+
+#: lib/Padre/Wx/ActionLibrary.pm:941
+msgid ""
+"Change the encoding of the current document to the default of the operating "
+"system"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:951
+#, fuzzy
+msgid "Encode Document to utf-8"
+msgstr "Překóduj dokument do utf-8"
+
+#: lib/Padre/Wx/ActionLibrary.pm:952
+#, fuzzy
+msgid "Change the encoding of the current document to utf-8"
+msgstr "Překóduj dokument do utf-8"
+
+#: lib/Padre/Wx/ActionLibrary.pm:962
+#, fuzzy
+msgid "Encode Document to..."
+msgstr "Zobraz dokument jako..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:963
+msgid "Select an encoding and encode the document to that"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:973
+msgid "EOL to Windows"
+msgstr "EOL do Windows"
+
+#: lib/Padre/Wx/ActionLibrary.pm:974
+msgid ""
+"Change the end of line character of the current document to those used in "
+"files on MS Windows"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:983
+msgid "EOL to Unix"
+msgstr "EOL do Unixu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:984
+msgid ""
+"Change the end of line character of the current document to that used on "
+"Unix, Linux, Mac OSX"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:993
+msgid "EOL to Mac Classic"
+msgstr "EOL do Mac klasický"
+
+#: lib/Padre/Wx/ActionLibrary.pm:994
+msgid ""
+"Change the end of line character of the current document to that used on Mac "
+"Classic"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1005
+msgid "Tabs to Spaces..."
+msgstr "Taby na mezery..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:1006
+msgid "Convert all tabs to spaces in the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1015
+msgid "Spaces to Tabs..."
+msgstr "Mezery na taby..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:1016
+msgid "Convert all the spaces to tabs in the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1025
+msgid "Delete Trailing Spaces"
+msgstr "Smaž koncové mezery"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1026
+msgid "Remove the spaces from the end of the selected lines"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1035
+msgid "Delete Leading Spaces"
+msgstr "Smaž počáteční mezery"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1036
+msgid "Remove the spaces from the beginning of the selected lines"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1047
+msgid "Upper All"
+msgstr "Všechna velká"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1048
+msgid "Change the current selection to upper case"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1058
+#, fuzzy
+msgid "Lower All"
+msgstr "Všechna malá"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1059
+msgid "Change the current selection to lower case"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1069
+msgid "Diff to Saved Version"
+msgstr "Diff proti uložené verzi"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1070
+msgid ""
+"Compare the file in the editor to that on the disk and show the diff in the "
+"output window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1079
+msgid "Apply Diff to File"
+msgstr "Aplikuj diff na soubor"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1080
+msgid "Apply a patch file to the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1089
+msgid "Apply Diff to Project"
+msgstr "Aplikuj diff na projekt"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1090
+msgid "Apply a patch file to the current project"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1101
+msgid "Filter through External Tool..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1102
+msgid ""
+"Filters the selection (or the whole document) through any external command."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1110
+msgid "Filter through Perl..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1111
+#, fuzzy
+msgid "Use Perl source as filter"
+msgstr "Nový soubor"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1120
+#, fuzzy
+msgid "Show as Hexadecimal"
+msgstr "Ukaž jako decimální"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1121
+msgid ""
+"Show the ASCII values of the selected text in hexadecimal notation in the "
+"output window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1130
+#, fuzzy
+msgid "Show as Decimal"
+msgstr "Ukaž jako decimální"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1131
+msgid ""
+"Show the ASCII values of the selected text in decimal numbers in the output "
+"window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1143
+#, fuzzy
+msgid "&Find..."
 msgstr "&Najdi"
 
-#: lib/Padre/Wx/Menu/Search.pm:48 lib/Padre/Wx/Menu/Search.pm:117
+#: lib/Padre/Wx/ActionLibrary.pm:1144
+msgid "Find text or regular expressions using a traditional dialog"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1158 lib/Padre/Wx/ActionLibrary.pm:1214
+#: lib/Padre/Wx/FBP/Find.pm:98
 #, fuzzy
 msgid "Find Next"
 msgstr "Najdi další"
 
-#: lib/Padre/Wx/Menu/Search.pm:80
+#: lib/Padre/Wx/ActionLibrary.pm:1160
+msgid "Repeat the last find to find the next match"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1193
 msgid "Failed to find any matches"
 msgstr "Nenalezeny shody"
 
-#: lib/Padre/Wx/Menu/Search.pm:88
+#: lib/Padre/Wx/ActionLibrary.pm:1201
 #, fuzzy
 msgid "&Find Previous"
 msgstr "&Najdi předchozí"
 
-#: lib/Padre/Wx/Menu/Search.pm:101
-msgid "Quick Find"
-msgstr "Rychlé hledání"
+#: lib/Padre/Wx/ActionLibrary.pm:1202
+msgid "Repeat the last find, but backwards to find the previous match"
+msgstr ""
 
-#: lib/Padre/Wx/Menu/Search.pm:127
+#: lib/Padre/Wx/ActionLibrary.pm:1215
+msgid ""
+"Find next matching text using a toolbar-like dialog at the bottom of the "
+"editor"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1225
 #, fuzzy
 msgid "Find Previous"
 msgstr "Najdi předchozí"
 
-#: lib/Padre/Wx/Menu/Search.pm:140 lib/Padre/Wx/Dialog/Replace.pm:242
+#: lib/Padre/Wx/ActionLibrary.pm:1226
+msgid ""
+"Find previous matching text using a toolbar-like dialog at the bottom of the "
+"editor"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1238
 #, fuzzy
-msgid "Replace"
+msgid "Replace..."
 msgstr "Nahraď"
 
-#: lib/Padre/Wx/Menu/Search.pm:153
+#: lib/Padre/Wx/ActionLibrary.pm:1239
+#, fuzzy
+msgid "Find a text and replace it"
+msgstr "Najdi a nahraď"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1251
 #, fuzzy
 msgid "Find in Fi&les..."
 msgstr "Najdi v souborech..."
 
-#: lib/Padre/Wx/Menu/Search.pm:165 lib/Padre/Wx/Dialog/OpenResource.pm:50
-msgid "Open Resource"
+#: lib/Padre/Wx/ActionLibrary.pm:1252
+msgid "Search for a text in all files below a given directory"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1265
+#, fuzzy
+msgid "Open Resource..."
 msgstr "Otevři prostředky"
 
-#: lib/Padre/Wx/Menu/Search.pm:178 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:33
-msgid "Quick Menu Access"
+#: lib/Padre/Wx/ActionLibrary.pm:1266
+msgid "Type in a filter to select a file"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1276
+#, fuzzy
+msgid "Quick Menu Access..."
 msgstr "Rychlé menu"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:178
+#: lib/Padre/Wx/ActionLibrary.pm:1277
+msgid "Quick access to all menu functions"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1292
+msgid "Lock User Interface"
+msgstr "Uzamkni uživatelské rozhraní"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1293
+msgid "If activated, do not allow moving around some of the windows"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1304
+msgid "Show Output"
+msgstr "Zobraz výstup"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1305
+msgid ""
+"Show the window displaying the standard output and standard error of the "
+"running scripts"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1314
+msgid "Show Functions"
+msgstr "Zobraz funkce"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1315
+msgid "Show a window listing all the functions in the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1324
+#, fuzzy
+msgid "Show Command Line window"
+msgstr "Příkazová řádka"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1325
+#, fuzzy
+msgid "Show the command line window"
+msgstr "Jdi na okna pod čarou"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1334
+#, fuzzy
+msgid "Show To-do List"
+msgstr "Zobraz seznam chyb"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1335
+msgid "Show a window listing all todo items in the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1344
+msgid "Show Outline"
+msgstr "Zobraz osnovu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1345
+msgid ""
+"Show a window listing all the parts of the current file (functions, pragmas, "
+"modules)"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1354
+#, fuzzy
+msgid "Show Project Browser/Tree"
+msgstr "Zobraz strom adresářů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1355
+msgid "Project Browser - Was known as the Directory Tree."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1364
+msgid "Show Syntax Check"
+msgstr "Zobraz kontrolu syntaxe"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1365
+msgid ""
+"Turn on syntax checking of the current document and show output in a window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1374
+#, fuzzy
+msgid "Hide Find in Files"
+msgstr "Hledání v souborech"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1375
+msgid "Hide the list of matches for a Find in Files search"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1383
+#, fuzzy
+msgid "Show Status Bar"
+msgstr "Zobraz StatusBar"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1384
+msgid "Show/hide the status bar at the bottom of the screen"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1393
+msgid "Show Toolbar"
+msgstr "Zobraz panel nástrojů"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1394
+msgid "Show/hide the toolbar at the top of the editor"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1409
+#, fuzzy
+msgid "Switch document type"
+msgstr "Žádný dokument"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1422
+msgid "Show Line Numbers"
+msgstr "Zobraz čísla řádků"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1423
+msgid ""
+"Show/hide the line numbers of all the documents on the left side of the "
+"window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1432
+msgid "Show Code Folding"
+msgstr "Zobraz sbalování kódu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1433
+msgid ""
+"Show/hide a vertical line on the left hand side of the window to allow "
+"folding rows"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1442
+msgid "Fold all"
+msgstr "Sbal vše"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1443
+msgid "Fold all the blocks that can be folded (need folding to be enabled)"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1452
+msgid "Unfold all"
+msgstr "Rozbal vše"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1453
+msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1462
+msgid "Show Call Tips"
+msgstr "Zobraz tipy"
+
+#: lib/Padre/Wx/ActionLibrary.pm:1463
+msgid "When typing in functions allow showing short examples of the function"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2442
+#, fuzzy
+msgid "Last Visited File"
+msgstr "Poslední otevřený"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2443
+msgid "Jump between the two last visited files back and forth"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2453
+msgid "Goto previous position"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2454
+msgid "Jump to the last position saved in memory"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2466 lib/Padre/Wx/Dialog/Positions.pm:108
+#, fuzzy
+msgid "Show previous positions"
+msgstr "Popis"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2467
+msgid "Show the list of positions recently visited"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2480
+#, fuzzy
+msgid "Right Click"
+msgstr "Pravý klik"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2481
+msgid "Imitate clicking on the right mouse button"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2494
+#, fuzzy
+msgid "Go to Functions Window"
+msgstr "Jdi na okna pod čarou"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2495
+msgid "Set the focus to the \"Functions\" window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2508
+#, fuzzy
+msgid "Go to Todo Window"
+msgstr "Jdi na podokna"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2509
+msgid "Set the focus to the \"Todo\" window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2520
+#, fuzzy
+msgid "Go to Outline Window"
+msgstr "Jdi na okna pod čarou"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2521
+msgid "Set the focus to the \"Outline\" window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2531
+#, fuzzy
+msgid "Go to Output Window"
+msgstr "Jdi na okno výstupu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2532
+msgid "Set the focus to the \"Output\" window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2542
+#, fuzzy
+msgid "Go to Syntax Check Window"
+msgstr "Jdi na okno s kontrolou syntaxe"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2543
+#, fuzzy
+msgid "Set the focus to the \"Syntax Check\" window"
+msgstr "Jdi na okno s kontrolou syntaxe"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2553
+#, fuzzy
+msgid "Go to Command Line Window"
+msgstr "Jdi na hlavní okno"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2554
+#, fuzzy
+msgid "Set the focus to the \"Command Line\" window"
+msgstr "Jdi na okno s kontrolou syntaxe"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2564
+#, fuzzy
+msgid "Go to Main Window"
+msgstr "Jdi na hlavní okno"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2565
+msgid "Set the focus to the main editor window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2579
+msgid "Show the Padre help"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2587
+#, fuzzy
+msgid "Search Help"
+msgstr "&Hledej"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2588
+msgid "Search the Perl help pages (perldoc)"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2599
+#, fuzzy
+msgid "Context Help"
+msgstr "Kontextová nápověda"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2600
+msgid "Show the help article for the current context"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2612
+msgid "Current Document"
+msgstr "Aktuální dokument"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2613
+msgid "Show the POD (Perldoc) version of the current document"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2623
+msgid "Padre Support (English)"
+msgstr "Padre - podpora (anglicky)"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2625
+msgid ""
+"Open the Padre live support chat in your web browser and talk to others who "
+"may help you with your problem"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2635
+#, fuzzy
+msgid "Perl Help"
+msgstr "Perl Help"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2637
+msgid ""
+"Open the Perl live support chat in your web browser and talk to others who "
+"may help you with your problem"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2647
+msgid "Win32 Questions (English)"
+msgstr "Win32 otázky (anglicky)"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2649
+msgid ""
+"Open the Perl/Win32 live support chat in your web browser and talk to others "
+"who may help you with your problem"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2661
+msgid "Visit the PerlMonks"
+msgstr "Navštivte PerlMonks"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2663
+msgid ""
+"Open perlmonks.org, one of the biggest Perl community sites, in your default "
+"web browser"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2673
+msgid "Report a New &Bug"
+msgstr "Ohlásit novou &chybu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2674
+#, fuzzy
+msgid "Send a bug report to the Padre developer team"
+msgstr "Soubor všech nástrojů použitých vývojáři Padre\n"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2681
+msgid "View All &Open Bugs"
+msgstr "Ukaž všechny &otevřené chyby"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2682
+msgid "View all known and currently unsolved bugs in Padre"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2690
+msgid "&Translate Padre..."
+msgstr "&Přeložit Padre..."
+
+#: lib/Padre/Wx/ActionLibrary.pm:2691
+msgid "Help by translating Padre to your local language"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2702
+msgid "&About"
+msgstr "&O programu"
+
+#: lib/Padre/Wx/ActionLibrary.pm:2703
+#, fuzzy
+msgid "Show information about Padre"
+msgstr "Zobraz průvodce odsazováním"
+
+#: lib/Padre/Wx/FunctionList.pm:229
+#, fuzzy
+msgid "Functions"
+msgstr "Zobraz funkce"
+
+#: lib/Padre/Wx/Notebook.pm:55
+msgid "Files"
+msgstr "Soubory"
+
+#: lib/Padre/Wx/Bottom.pm:52
+msgid "Output View"
+msgstr "Zobraz výstup"
+
+#: lib/Padre/Wx/StatusBar.pm:290
+msgid "Background Tasks are running"
+msgstr "Úlohy na pozadí běží"
+
+#: lib/Padre/Wx/StatusBar.pm:291
+msgid "Background Tasks are running with high load"
+msgstr "Úlohy na pozadí běží s vysokou zátěží"
+
+#: lib/Padre/Wx/StatusBar.pm:417
+msgid "Read Only"
+msgstr ""
+
+#: lib/Padre/Wx/StatusBar.pm:417
+msgid "R/W"
+msgstr ""
+
+#: lib/Padre/Wx/Right.pm:52
+#, fuzzy
+msgid "Document Tools"
+msgstr "Umístění dokumentu:"
+
+#: lib/Padre/Wx/Debugger.pm:78
+msgid "Debugger is already running"
+msgstr "Debugger již běží"
+
+#: lib/Padre/Wx/Debugger.pm:82
+msgid "Not a Perl document"
+msgstr "Nejedná se Perlový dokument"
+
+#: lib/Padre/Wx/Debugger.pm:137
+msgid "Debugging failed. Did you check your program for syntax errors?"
+msgstr ""
+
+#: lib/Padre/Wx/Debugger.pm:191
+msgid ""
+"The debugger is not running.\n"
+"You can start the debugger using one of the commands 'Step In', 'Step Over', "
+"or 'Run till Breakpoint' in the Debug menu."
+msgstr ""
+"Lazení neběží.\n"
+"Můžete zapnout lazení použitím některého z příkazů 'Zanořit/Step in', 'Step "
+"over', nebo 'Běžet po bod přerušení' v debugovacím menu."
+
+#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:275
+#: lib/Padre/Wx/Debugger.pm:299 lib/Padre/Wx/Debugger.pm:333
+#: lib/Padre/Wx/Debugger.pm:353
+msgid "Debugger not running"
+msgstr "Lazení neběží"
+
+#: lib/Padre/Wx/Debugger.pm:226
+#, fuzzy, perl-format
+msgid "Could not set breakpoint on file '%s' row '%s'"
+msgstr "Nelze nastavit bod přerušení v souboru '%s' sloupec '%s'"
+
+#: lib/Padre/Wx/Debugger.pm:389
+#, fuzzy, perl-format
+msgid "Could not evaluate '%s'"
+msgstr "Nelze vyhodnotit soubor '%s'"
+
+#: lib/Padre/Wx/Debugger.pm:407
+#, perl-format
+msgid ""
+"'%s' does not look like a variable. First select a variable in the code and "
+"then try again."
+msgstr "'%s' není proměnná. Nejprve zvolte proměnou v kódua zkuste to znovu."
+
+#: lib/Padre/Wx/Debugger.pm:439
+#, fuzzy
+msgid "Expression:"
+msgstr "Výraz:"
+
+#: lib/Padre/Wx/Debugger.pm:440
+msgid "Expr"
+msgstr "Výraz"
+
+#: lib/Padre/Wx/Left.pm:52
+msgid "Project Tools"
+msgstr "Nástroje projektu"
+
+#: lib/Padre/Wx/FindResult.pm:88
+#, perl-format
+msgid "Find Results (%s)"
+msgstr ""
+
+#: lib/Padre/Wx/FindResult.pm:125
+msgid "Related editor has been closed"
+msgstr ""
+
+#: lib/Padre/Wx/FindResult.pm:177
+msgid "Line"
+msgstr "Řádek"
+
+#: lib/Padre/Wx/FindResult.pm:178
+#, fuzzy
+msgid "Content"
+msgstr "Typ obsahu:"
+
+#: lib/Padre/Wx/FindResult.pm:226
+#, fuzzy
+msgid "Copy &Selected"
+msgstr "Kopíruj sem"
+
+#: lib/Padre/Wx/FindResult.pm:249
+msgid "Copy &All"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:770
+#, perl-format
+msgid "No such session %s"
+msgstr "Neexistující sezení %s"
+
+#: lib/Padre/Wx/Main.pm:969
+msgid "Failed to create server"
+msgstr "Selhalo vytvoření serveru"
+
+#: lib/Padre/Wx/Main.pm:2313
+msgid "Command line"
+msgstr "Příkazová řádka"
+
+#: lib/Padre/Wx/Main.pm:2314
+msgid "Run setup"
+msgstr "Spusť setup"
+
+#: lib/Padre/Wx/Main.pm:2343 lib/Padre/Wx/Main.pm:2398
+#: lib/Padre/Wx/Main.pm:2450
+msgid "No document open"
+msgstr "Žádný otevřený dokument"
+
+#: lib/Padre/Wx/Main.pm:2349 lib/Padre/Wx/Main.pm:2410
+#: lib/Padre/Wx/Main.pm:2465
+msgid "Could not find project root"
+msgstr "Nelze najít kořen projektu"
+
+#: lib/Padre/Wx/Main.pm:2376
+msgid "No Build.PL nor Makefile.PL nor dist.ini found"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2379
+#, fuzzy
+msgid "Could not find perl executable"
+msgstr "Nelze najít kořen projektu"
+
+#: lib/Padre/Wx/Main.pm:2404 lib/Padre/Wx/Main.pm:2456
+msgid "Current document has no filename"
+msgstr "Aktuální dokument není pojmenován"
+
+#: lib/Padre/Wx/Main.pm:2459
+#, fuzzy
+msgid "Current document is not a .t file"
+msgstr "Aktuální dokument není pojmenován"
+
+#: lib/Padre/Wx/Main.pm:2553 lib/Padre/Wx/Output.pm:141
+#, perl-format
+msgid ""
+"Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
+"at least 0.20 by typing\n"
+"cpan Wx::Perl::ProcessStream"
+msgstr ""
+"Wx::Perl::ProcessStream má verzi %s, která je známá problémy.Nainstalujte si "
+"alespoň 0.20 napsáním\n"
+"cpan Wx::Perl::ProcessStream"
+
+#: lib/Padre/Wx/Main.pm:2628
+#, perl-format
+msgid "Failed to start '%s' command"
+msgstr "Nelze spustit příkaz '%s'"
+
+#: lib/Padre/Wx/Main.pm:2653
+msgid "No open document"
+msgstr "Žádný otevřený dokument"
+
+#: lib/Padre/Wx/Main.pm:2671
+#, fuzzy
+msgid "No execution mode was defined for this document type"
+msgstr "Tento dokument nemá práva pro spuštění."
+
+#: lib/Padre/Wx/Main.pm:2696
+msgid "Do you want to continue?"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2782
+#, fuzzy, perl-format
+msgid "Opening session %s..."
+msgstr "Ulož sezení jako..."
+
+#: lib/Padre/Wx/Main.pm:2811
+msgid "Restore focus..."
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:3141
+#, perl-format
+msgid "Could not determine the comment character for %s document type"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:3190
+#, fuzzy
+msgid "Autocompletion error"
+msgstr "Chyba dokončování"
+
+#: lib/Padre/Wx/Main.pm:3303
+msgid "You still have a running process. Do you want to kill it and exit?"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:3519
+#, fuzzy, perl-format
+msgid "Cannot open a Directory: %s"
+msgstr "Zvolte adresář"
+
+#: lib/Padre/Wx/Main.pm:3646
+msgid "Nothing selected. Enter what should be opened:"
+msgstr "Nemáte nic vybráno. Zvolte co má být otevřeno:"
+
+#: lib/Padre/Wx/Main.pm:3647
+msgid "Open selection"
+msgstr "Otevřít volbu"
+
+#: lib/Padre/Wx/Main.pm:3688
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "Nelze najít soubor '%s'"
+
+#: lib/Padre/Wx/Main.pm:3699 lib/Padre/Wx/Dialog/Positions.pm:120
+#, fuzzy
+msgid "Choose File"
+msgstr "Zavři soubor"
+
+#: lib/Padre/Wx/Main.pm:3804
+msgid "JavaScript Files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:3806
+#, fuzzy
+msgid "Perl Files"
+msgstr "Nový soubor"
+
+#: lib/Padre/Wx/Main.pm:3808
+#, fuzzy
+msgid "PHP Files"
+msgstr "PHP soubory"
+
+#: lib/Padre/Wx/Main.pm:3810
+msgid "Python Files"
+msgstr "Python soubory"
+
+#: lib/Padre/Wx/Main.pm:3812
+#, fuzzy
+msgid "Ruby Files"
+msgstr "Ruby soubory"
+
+#: lib/Padre/Wx/Main.pm:3814
+#, fuzzy
+msgid "SQL Files"
+msgstr "SQL soubory"
+
+#: lib/Padre/Wx/Main.pm:3816
+#, fuzzy
+msgid "Text Files"
+msgstr "Textové soubory"
+
+#: lib/Padre/Wx/Main.pm:3818
+#, fuzzy
+msgid "Web Files"
+msgstr "Webové soubory"
+
+#: lib/Padre/Wx/Main.pm:3820
+#, fuzzy
+msgid "Script Files"
+msgstr "SQL soubory"
+
+#: lib/Padre/Wx/Main.pm:4272
+msgid "File already exists. Overwrite it?"
+msgstr "Soubor již existuje. Chcete ho přepsat?"
+
+#: lib/Padre/Wx/Main.pm:4273
+msgid "Exist"
+msgstr "Existuje"
+
+#: lib/Padre/Wx/Main.pm:4376
+#, fuzzy
+msgid "File already exists"
+msgstr "Soubor již existuje. Chcete ho přepsat?"
+
+#: lib/Padre/Wx/Main.pm:4390
+#, fuzzy, perl-format
+msgid "Failed to create path '%s'"
+msgstr "Selhalo vytvoření serveru"
+
+#: lib/Padre/Wx/Main.pm:4481
+msgid "File changed on disk since last saved. Do you want to overwrite it?"
+msgstr "Soubor se změnil od posledního uložení. Chcete ho přepsat?"
+
+#: lib/Padre/Wx/Main.pm:4482
+msgid "File not in sync"
+msgstr "Soubor nesynchronizován"
+
+#: lib/Padre/Wx/Main.pm:4491
+msgid "Could not save file: "
+msgstr "Nelze uložit soubor: "
+
+#: lib/Padre/Wx/Main.pm:4577
+msgid "File changed. Do you want to save it?"
+msgstr "Soubor změněn. Chcete ho uložit?"
+
+#: lib/Padre/Wx/Main.pm:4578
+msgid "Unsaved File"
+msgstr "Neuložený soubor"
+
+#: lib/Padre/Wx/Main.pm:4661
+#, fuzzy
+msgid "Close all"
+msgstr "Zavři"
+
+#: lib/Padre/Wx/Main.pm:4701
+#, fuzzy
+msgid "Close some files"
+msgstr "Zavři soubor"
+
+#: lib/Padre/Wx/Main.pm:4702
+msgid "Select files to close:"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:4717
+#, fuzzy
+msgid "Close some"
+msgstr "Zavři"
+
+#: lib/Padre/Wx/Main.pm:4880
+msgid "Cannot diff if file was never saved"
+msgstr "Nelze provést diff pro neuložené"
+
+#: lib/Padre/Wx/Main.pm:4904
+msgid "There are no differences\n"
+msgstr "Žádné rozdíly\n"
+
+#: lib/Padre/Wx/Main.pm:5000
+#, fuzzy
+msgid "Error loading regex editor."
+msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
+
+#: lib/Padre/Wx/Main.pm:5029
+#, fuzzy
+msgid "Error loading perl filter dialog."
+msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
+
+#: lib/Padre/Wx/Main.pm:5441
+#, fuzzy
+msgid "All Files"
+msgstr "Všechny soubory"
+
+#: lib/Padre/Wx/Main.pm:5779
+msgid "Space to Tab"
+msgstr "Mezery na tabulátory"
+
+#: lib/Padre/Wx/Main.pm:5780
+msgid "Tab to Space"
+msgstr "Tabulátory na mezery"
+
+#: lib/Padre/Wx/Main.pm:5785
+msgid "How many spaces for each tab:"
+msgstr "Počet mezer na tabulátor:"
+
+#: lib/Padre/Wx/Main.pm:5952
+#, fuzzy
+msgid "Reload some files"
+msgstr "Obnov soubor"
+
+#: lib/Padre/Wx/Main.pm:5953
+#, fuzzy
+msgid "&Select files to reload:"
+msgstr "Zvolte adresář"
+
+#: lib/Padre/Wx/Main.pm:5954
+#, fuzzy
+msgid "&Reload selected"
+msgstr "Obnov soubor"
+
+#: lib/Padre/Wx/Main.pm:6065
+#, fuzzy, perl-format
+msgid "Failed to find template file '%s'"
+msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
+
+#: lib/Padre/Wx/Main.pm:6293
+msgid "Need to select text in order to translate to hex"
+msgstr "Zvolte text souboru k překladu do hexa"
+
+#: lib/Padre/Wx/Main.pm:6436
+#, perl-format
+msgid ""
+"Error running filter tool:\n"
+"%s"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:6451
+#, perl-format
+msgid ""
+"Error returned by filter tool:\n"
+"%s"
+msgstr ""
+
+#: lib/Padre/Wx/Outline.pm:110 lib/Padre/Wx/Outline.pm:312
+msgid "Outline"
+msgstr "Osnova"
+
+#: lib/Padre/Wx/Outline.pm:221
+#, fuzzy
+msgid "&Go to Element"
+msgstr "&Přejdi na element"
+
+#: lib/Padre/Wx/Outline.pm:235
+msgid "Open &Documentation"
+msgstr "Otevřít &Dokumentaci"
+
+#: lib/Padre/Wx/Outline.pm:357
+msgid "Pragmata"
+msgstr ""
+
+#: lib/Padre/Wx/Outline.pm:358
+#, fuzzy
+msgid "Modules"
+msgstr "Module nástrojů"
+
+#: lib/Padre/Wx/Outline.pm:359
+#, fuzzy
+msgid "Methods"
+msgstr "Metody řazení:"
+
+#: lib/Padre/Wx/Outline.pm:360
+msgid "Attributes"
+msgstr ""
+
+#: lib/Padre/Wx/Output.pm:196
+msgid "Output"
+msgstr "Výstup"
+
+#: lib/Padre/Wx/Directory.pm:79 lib/Padre/Wx/Dialog/Find.pm:78
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
+#, fuzzy
+msgid "Search"
+msgstr "&Hledej"
+
+#: lib/Padre/Wx/Directory.pm:110
+msgid "Move to other panel"
+msgstr "Přesuň do jiného panelu"
+
+#: lib/Padre/Wx/Directory.pm:270 lib/Padre/Wx/Dialog/WindowList.pm:223
+#, fuzzy
+msgid "Project"
+msgstr "Nástroje projektu"
+
+#: lib/Padre/Wx/About.pm:25
+#, fuzzy
+msgid "About Padre"
+msgstr "O programu"
+
+#: lib/Padre/Wx/About.pm:64
+msgid "Development"
+msgstr "Vývoj"
+
+#: lib/Padre/Wx/About.pm:69
+msgid "Translation"
+msgstr "Překlad"
+
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:317
+#, fuzzy
+msgid "System Info"
+msgstr "Systémové nastavení"
+
+#: lib/Padre/Wx/About.pm:102
+msgid "Created by"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:135
+#, fuzzy
+msgid "The Padre Development Team"
+msgstr "Padre vývojářské nástroje"
+
+#: lib/Padre/Wx/About.pm:105
+msgid ""
+"Padre is free software; you can redistribute it and/or modify it under the "
+"same terms as Perl 5."
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:106
+msgid "Blue butterfly on a green leaf"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:107
+msgid "splash image is based on work by"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:227
+msgid "The Padre Translation Team"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:318
+msgid "Config:"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:337
+msgid "Uptime"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:342
+msgid "unsupported"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Find.pm:27 lib/Padre/Wx/FBP/FindInFiles.pm:125
+#: lib/Padre/Wx/Dialog/Replace.pm:218
+msgid "Find"
+msgstr "Najdi"
+
+#: lib/Padre/Wx/FBP/Find.pm:36 lib/Padre/Wx/FBP/FindInFiles.pm:36
+#, fuzzy
+msgid "Search Term:"
+msgstr "Hledání termu"
+
+#: lib/Padre/Wx/FBP/Find.pm:58 lib/Padre/Wx/FBP/FindInFiles.pm:101
+#, fuzzy
+msgid "Regular Expression"
+msgstr "&Regulární výraz"
+
+#: lib/Padre/Wx/FBP/Find.pm:66
+#, fuzzy
+msgid "Search Backwards"
+msgstr "Hledej &obráceně"
+
+#: lib/Padre/Wx/FBP/Find.pm:74 lib/Padre/Wx/FBP/FindInFiles.pm:109
+#, fuzzy
+msgid "Case Sensitive"
+msgstr "Ignoruj velikostí písmen"
+
+#: lib/Padre/Wx/FBP/Find.pm:82
+#, fuzzy
+msgid "Close Window on Hit"
+msgstr "Zavři okno &kliknutím"
+
+#: lib/Padre/Wx/FBP/Find.pm:113
+#, fuzzy
+msgid "Find All"
+msgstr "Najdi"
+
+#: lib/Padre/Wx/FBP/Find.pm:119 lib/Padre/Wx/FBP/FindInFiles.pm:132
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
+#, fuzzy
+msgid "Cancel"
+msgstr "&Zrušit"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:50
+#, fuzzy
+msgid "Search Directory:"
+msgstr "Hledání adresáře:"
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:64
+#, fuzzy
+msgid "Browse"
+msgstr "Zavři..."
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:78
+#, fuzzy
+msgid "Search in Types:"
+msgstr "Hledání v souborech/typech:"
+
+#: lib/Padre/Wx/FBP/Sync.pm:25 lib/Padre/Wx/Dialog/Sync.pm:43
+#, fuzzy
+msgid "Padre Sync"
+msgstr "Padre"
+
+#: lib/Padre/Wx/FBP/Sync.pm:34
+msgid "Server"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:48 lib/Padre/Wx/CPAN/Listview.pm:32
+#: lib/Padre/Wx/CPAN/Listview.pm:64 lib/Padre/Wx/Dialog/PluginManager.pm:68
+#: lib/Padre/Wx/Dialog/Advanced.pm:111
+msgid "Status"
+msgstr "Stav"
+
+#: lib/Padre/Wx/FBP/Sync.pm:54
+msgid "Logged out"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:68 lib/Padre/Wx/FBP/Sync.pm:111
+#, fuzzy
+msgid "Username"
+msgstr "Jméno souboru: %s"
+
+#: lib/Padre/Wx/FBP/Sync.pm:82 lib/Padre/Wx/FBP/Sync.pm:125
+msgid "Password"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:97
+msgid "Login"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:139 lib/Padre/Wx/FBP/Sync.pm:167
+msgid "Confirm"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:153
+msgid "Email"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:181
+msgid "Register"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Sync.pm:203
+#, fuzzy
+msgid "Upload"
+msgstr "nahrán"
+
+#: lib/Padre/Wx/FBP/Sync.pm:218
+#, fuzzy
+msgid "Download"
+msgstr "odebrán"
+
+#: lib/Padre/Wx/FBP/Sync.pm:233 lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/Dialog/SessionManager.pm:291
+msgid "Delete"
+msgstr "Smazat"
+
+#: lib/Padre/Wx/FBP/Sync.pm:248 lib/Padre/Wx/Menu/File.pm:140
+#: lib/Padre/Wx/Dialog/SessionSave.pm:230
+#: lib/Padre/Wx/Dialog/SessionManager.pm:292
+#: lib/Padre/Wx/Dialog/WindowList.pm:280 lib/Padre/Wx/Dialog/FilterTool.pm:152
+msgid "Close"
+msgstr "Zavři"
+
+#: lib/Padre/Wx/FBP/Sync.pm:283
+#, fuzzy
+msgid "Authentication"
+msgstr "Překlad"
+
+#: lib/Padre/Wx/FBP/Sync.pm:310
+#, fuzzy
+msgid "Registration"
+msgstr "Odsazování"
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:31
+msgid "Where did you hear about Padre?"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:54
+msgid "OK"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/WhereFrom.pm:60
+msgid "Skip question without giving feedback"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Help.pm:60
+msgid "Live Support"
+msgstr "Technická podpora"
+
+#: lib/Padre/Wx/Menu/Help.pm:121
+msgid "&Help"
+msgstr "&Pomoc"
+
+#: lib/Padre/Wx/Menu/Tools.pm:65
+msgid "Module Tools"
+msgstr "Module nástrojů"
+
+#: lib/Padre/Wx/Menu/Tools.pm:103
+#, fuzzy
+msgid "Plug-in Tools"
+msgstr "Nástroje doplňků"
+
+#: lib/Padre/Wx/Menu/Tools.pm:198
+#, fuzzy
+msgid "&Tools"
+msgstr "Diff nástroje"
+
+#: lib/Padre/Wx/Menu/File.pm:44
+#, fuzzy
+msgid "New"
+msgstr "&Zobraz"
+
+#: lib/Padre/Wx/Menu/File.pm:96
+#, fuzzy
+msgid "Open..."
+msgstr "&Otevřít..."
+
+#: lib/Padre/Wx/Menu/File.pm:179
+#, fuzzy
+msgid "Reload"
+msgstr "Obnov soubor"
+
+#: lib/Padre/Wx/Menu/File.pm:254
+msgid "&Recent Files"
+msgstr "&Nedávno otevřené"
+
+#: lib/Padre/Wx/Menu/File.pm:293
+msgid "&File"
+msgstr "&Soubor"
+
+#: lib/Padre/Wx/Menu/File.pm:380
+#, perl-format
+msgid "File %s not found."
+msgstr ""
+
+#: lib/Padre/Wx/Menu/File.pm:381
+#, fuzzy
+msgid "Open cancelled"
+msgstr "Kontrola zrušena"
+
+#: lib/Padre/Wx/Menu/Edit.pm:49
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:125
+msgid "Select"
+msgstr "Označ"
+
+#: lib/Padre/Wx/Menu/Edit.pm:90
+msgid "Copy Specials"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:233 lib/Padre/Wx/Dialog/PerlFilter.pm:94
+#, fuzzy
+msgid "Insert"
+msgstr "&Vlož"
+
+#: lib/Padre/Wx/Menu/Edit.pm:200
+msgid "Convert Encoding"
+msgstr "Konvertuj kódování"
+
+#: lib/Padre/Wx/Menu/Edit.pm:222
+#, fuzzy
+msgid "Convert Line Endings"
+msgstr "Konvertuj kódování"
+
+#: lib/Padre/Wx/Menu/Edit.pm:245
+msgid "Tabs and Spaces"
+msgstr "Taby a mezery"
+
+#: lib/Padre/Wx/Menu/Edit.pm:275
+msgid "Upper/Lower Case"
+msgstr "Velká/malá písmena"
+
+#: lib/Padre/Wx/Menu/Edit.pm:295
+#, fuzzy
+msgid "Diff Tools"
+msgstr "Diff nástroje"
+
+#: lib/Padre/Wx/Menu/Edit.pm:331
+#, fuzzy
+msgid "Show as"
+msgstr "Ukaž jako ..."
+
+#: lib/Padre/Wx/Menu/Edit.pm:349 lib/Padre/Wx/Dialog/Snippets.pm:26
+msgid "&Edit"
+msgstr "&Edituj"
+
+#: lib/Padre/Wx/Menu/Refactor.pm:94
+msgid "Ref&actor"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Perl.pm:101
+msgid "&Perl"
+msgstr "&Perl"
+
+#: lib/Padre/Wx/Menu/Window.pm:110
+msgid "&Window"
+msgstr "&Okno"
+
+#: lib/Padre/Wx/Menu/View.pm:82
+msgid "View Document As..."
+msgstr "Zobraz dokument jako..."
+
+#: lib/Padre/Wx/Menu/View.pm:174
+msgid "Font Size"
+msgstr "Velikost písma"
+
+#: lib/Padre/Wx/Menu/View.pm:197
+msgid "Style"
+msgstr "Styl"
+
+#: lib/Padre/Wx/Menu/View.pm:245
+msgid "Language"
+msgstr "Jazyk"
+
+#: lib/Padre/Wx/Menu/View.pm:283
+msgid "&View"
+msgstr "&Zobraz"
+
+#: lib/Padre/Wx/Menu/Debug.pm:116
+msgid "&Debug"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Run.pm:74
+msgid "&Run"
+msgstr "&Spusť"
+
+#: lib/Padre/Wx/Menu/Search.pm:99
+msgid "&Search"
+msgstr "&Hledej"
+
+#: lib/Padre/Wx/Role/Dialog.pm:69 lib/Padre/Wx/Role/Dialog.pm:141
+msgid "Message"
+msgstr "Zpráva"
+
+#: lib/Padre/Wx/Role/Dialog.pm:92
+#, fuzzy
+msgid "Unknown error from "
+msgstr "Neznámá chyba"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
+msgid "Directory"
+msgstr "Adresář"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:163
+#, fuzzy, perl-format
+msgid "Could not create: '%s': %s"
+msgstr "Nelze vyhodnotit soubor '%s'"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
+#, fuzzy, perl-format
+msgid "Really delete the file \"%s\"?"
+msgstr "Zavřít všechny soubory"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:182
+#, fuzzy, perl-format
+msgid "Could not delete: '%s': %s"
+msgstr "Nelze vyhodnotit soubor '%s'"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:210
+msgid "Open File"
+msgstr "Otevři soubor"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:226
+#, fuzzy
+msgid "Delete File"
+msgstr "Smaž &vše"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:237
+#, fuzzy
+msgid "Create Directory"
+msgstr "Aktuální adresář:"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
+msgid "Refresh"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:39
+#, fuzzy
+msgid "Filename"
+msgstr "Jméno souboru: %s"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:40
+#, fuzzy
+msgid "Selection"
+msgstr "Označ"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:60
+msgid "&Update"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:98
+#, fuzzy
+msgid "Lines"
+msgstr "Řádek"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:102
+#, fuzzy
+msgid "Words"
+msgstr "Slova: %s"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:106
+msgid "Characters (including whitespace)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:110
+msgid "Non-whitespace characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:114
+msgid "Kilobytes (kB)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:118
+msgid "Kibibytes (kiB)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:129
+msgid "Line break mode"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:131
+#, fuzzy
+msgid "Encoding"
+msgstr "Kódování: %s"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:133
+#, fuzzy
+msgid "Document type"
+msgstr "Typ dokumentu: %s"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:179
+msgid "none"
+msgstr "žádný"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:35
+#, fuzzy
+msgid "Plug-in Manager"
+msgstr "Správce doplňků"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:66
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:25
+#: lib/Padre/Wx/Dialog/SessionManager.pm:226
+msgid "Name"
+msgstr "Jméno"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:67
+msgid "Version"
+msgstr "Verze"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:102
+#, fuzzy
+msgid "Plug-in Name"
+msgstr "Správce doplňků"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:117
+#: lib/Padre/Wx/Dialog/PluginManager.pm:528
+#, fuzzy
+msgid "&Enable"
+msgstr "Povolit"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:131
+#, fuzzy
+msgid "&Preferences"
+msgstr "Předvolby"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:245
 #, perl-format
 msgid "Error loading pod for class '%s': %s"
 msgstr "Chyba nahrávání pod(u) třídy '%s': %s"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:234
-#: lib/Padre/Wx/Dialog/SessionManager.pm:214
-msgid "Name"
-msgstr "Jméno"
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:235
-msgid "Version"
-msgstr "Verze"
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:236 lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64
-msgid "Status"
-msgstr "Stav"
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:297
-#: lib/Padre/Wx/Dialog/SessionManager.pm:245
-#: lib/Padre/Wx/Dialog/SessionSave.pm:205
-msgid "Close"
-msgstr "Zavři"
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:471
-#: lib/Padre/Wx/Dialog/PluginManager.pm:481
-msgid "Show error message"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:489
+#: lib/Padre/Wx/Dialog/PluginManager.pm:501
+#, fuzzy
+msgid "&Show error message"
 msgstr "Ukaž hlášení o chybách"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:494
-msgid "Disable"
+#: lib/Padre/Wx/Dialog/PluginManager.pm:516
+#, fuzzy
+msgid "&Disable"
 msgstr "Zakázat"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:504
-msgid "Enable"
-msgstr "Povolit"
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:29
+msgid "Key Bindings"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Encode.pm:52
-msgid "Encode to:"
-msgstr "Překóduj do:"
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:64 lib/Padre/Wx/Dialog/Advanced.pm:97
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:26
+#, fuzzy
+msgid "&Filter:"
+msgstr "&Soubor"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:30
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:86
+msgid "Sh&ortcut:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:89
+msgid "Ctrl"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:90
+#, fuzzy
+msgid "Alt"
+msgstr "Vše"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:91
+msgid "Shift"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "None"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Backspace"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Tab"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Space"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Up"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+msgid "Down"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "Left"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#, fuzzy
+msgid "Right"
+msgstr "Noc"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "Home"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+msgid "End"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "PageUp"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "PageDown"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "Enter"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:101
+msgid "Escape"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:120 lib/Padre/Wx/Dialog/Advanced.pm:172
+msgid "&Set"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:126
+#, fuzzy
+msgid "&Delete"
+msgstr "Smazat"
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:132 lib/Padre/Wx/Dialog/Advanced.pm:178
+msgid "&Reset"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:134
+msgid "Reset to default shortcut"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:388
+#, perl-format
+msgid "The shortcut '%s' is already used by the action '%s'.\n"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:391
+msgid "Do you want to override it with the selected action?"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:392
+msgid "Override Shortcut"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Form.pm:32 lib/Padre/Wx/Dialog/Warning.pm:32
+#: lib/Padre/Wx/Dialog/Shortcut.pm:32
+msgid "A Dialog"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Form.pm:41
+msgid "Label One"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Form.pm:55
+msgid "Second Label"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Form.pm:71
+msgid "Whatever"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:39 lib/Padre/Wx/Dialog/HelpSearch.pm:96
+#, fuzzy
+msgid "Help Search"
+msgstr "Hledej"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:81 lib/Padre/Wx/Dialog/HelpSearch.pm:307
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:325
+#, fuzzy, perl-format
+msgid "Error while calling %s %s"
+msgstr "Chyba při vytváření menu doplňků"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:93
+msgid "No Help found"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:129
+msgid "Select the help &topic"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:146
+msgid "Type a help &keyword to read:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:153
+#, fuzzy
+msgid "&Matching Help Topics:"
+msgstr "&Shodné položky:"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:273
+#, fuzzy
+msgid "Reading items. Please wait"
+msgstr "Čtení položek. Prosím čekejte..."
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:311
+#, fuzzy
+msgid "Could not find a help provider for "
+msgstr "Nelze najít kořen projektu"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:395
+#, perl-format
+msgid "Found %s help topic(s)\n"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:16 lib/Padre/Wx/Dialog/ModuleStart.pm:36
+#, fuzzy
+msgid "Apache License"
+msgstr "Licence:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:17 lib/Padre/Wx/Dialog/ModuleStart.pm:37
+msgid "Artistic License 1.0"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:18 lib/Padre/Wx/Dialog/ModuleStart.pm:38
+msgid "Artistic License 2.0"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:19 lib/Padre/Wx/Dialog/ModuleStart.pm:39
+msgid "Revised BSD License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:20 lib/Padre/Wx/Dialog/ModuleStart.pm:40
+msgid "GPL 2 or later"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:21 lib/Padre/Wx/Dialog/ModuleStart.pm:41
+msgid "LGPL 2.1 or later"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
+#, fuzzy
+msgid "MIT License"
+msgstr "Licence:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:23 lib/Padre/Wx/Dialog/ModuleStart.pm:43
+msgid "Mozilla Public License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:24 lib/Padre/Wx/Dialog/ModuleStart.pm:44
+#, fuzzy
+msgid "Open Source"
+msgstr "Otevři prostředky"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:25 lib/Padre/Wx/Dialog/ModuleStart.pm:45
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:113
+msgid "Perl licensing terms"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:26 lib/Padre/Wx/Dialog/ModuleStart.pm:46
+msgid "restrictive"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:27 lib/Padre/Wx/Dialog/ModuleStart.pm:47
+msgid "unrestricted"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:55
+msgid "Module Name:"
+msgstr "Jméno modulu:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:58
+msgid "Author:"
+msgstr "Autor:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:61
+#, fuzzy
+msgid "Email Address:"
+msgstr "Email:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:64
+msgid "Builder:"
+msgstr "Builder:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:67
+msgid "License:"
+msgstr "Licence:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:70
+msgid "Parent Directory:"
+msgstr "Rodičovský adresář:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:71
+msgid "Pick parent directory"
+msgstr "Zvol rodičovský adresář"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:97
+msgid "Module Start"
+msgstr "Průvodce modulem"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:147
+#, perl-format
+msgid "Field %s was missing. Module not created."
+msgstr "Chybí pole %s. Modul nebyl vytvořen."
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:148
+msgid "missing field"
+msgstr "chybějící pole"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:182
+#, perl-format
+msgid ""
+"An error has occured while generating '%s':\n"
+"%s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Find.pm:75 lib/Padre/Wx/Dialog/Replace.pm:537
+#: lib/Padre/Wx/Dialog/Replace.pm:586
+#, perl-format
+msgid "No matches found for \"%s\"."
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:26
+msgid "Boolean"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:27
+msgid "Positive Integer"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:28
+msgid "Integer"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:29
+msgid "String"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:30
+#, fuzzy
+msgid "File/Directory"
+msgstr "Adresář"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:62
+msgid "Advanced Settings"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:110
+#, fuzzy
+msgid "Preference Name"
+msgstr "Předvolby"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:112
+msgid "Type"
+msgstr "Typ"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:117
+#, fuzzy
+msgid "Copy"
+msgstr "Kopíruj"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:118
+#, fuzzy
+msgid "Copy Name"
+msgstr "Kopíruj sem"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:119
+#, fuzzy
+msgid "Copy Value"
+msgstr "Kopíruj sem"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:122
+msgid "&Value:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:129 lib/Padre/Wx/Dialog/Advanced.pm:598
+msgid "True"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:130 lib/Padre/Wx/Dialog/Advanced.pm:599
+msgid "False"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:135
+#, fuzzy
+msgid "Default value:"
+msgstr "Výchozí"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:147
+#, fuzzy
+msgid "Options:"
+msgstr "Možnosti"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:158 lib/Padre/Wx/Dialog/SessionSave.pm:209
+#: lib/Padre/Wx/Dialog/Preferences.pm:165
+msgid "Description:"
+msgstr "Popis:"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:184
+msgid "S&ave"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:190
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155 lib/Padre/Wx/Dialog/Goto.pm:100
+#: lib/Padre/Wx/Dialog/Preferences.pm:939
+#: lib/Padre/Wx/Dialog/OpenResource.pm:184
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:88 lib/Padre/Wx/Dialog/OpenURL.pm:70
+msgid "&Cancel"
+msgstr "&Zrušit"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:430 lib/Padre/Wx/Dialog/Preferences.pm:805
+msgid "Default"
+msgstr "Výchozí"
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:796
+msgid "User"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Advanced.pm:796
+msgid "Host"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Replace.pm:50
+#, fuzzy
+msgid "Find and Replace"
+msgstr "Najdi a nahraď"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:80
+#, fuzzy
+msgid "Case &sensitive"
+msgstr "Ignoruj velikostí písmen"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:94
+#, fuzzy
+msgid "Regular &Expression"
+msgstr "&Regulární výraz"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:108
+#, fuzzy
+msgid "Close Window on &Hit"
+msgstr "Zavři okno &kliknutím"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:122
+msgid "Search &Backwards"
+msgstr "Hledej &obráceně"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:136
+#, fuzzy
+msgid "Replace &All"
+msgstr "Nahraď &vše"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:150
+msgid "&Find"
+msgstr "&Najdi"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:170
+msgid "&Replace"
+msgstr "&Nahraď"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:226
+#, fuzzy
+msgid "Find Text:"
+msgstr "Najdi text:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:250
+#, fuzzy
+msgid "Replace"
+msgstr "Nahraď"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:258
+#, fuzzy
+msgid "Replace Text:"
+msgstr "Nahraď text:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:304
+msgid "Options"
+msgstr "Možnosti"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:538 lib/Padre/Wx/Dialog/Replace.pm:582
+#: lib/Padre/Wx/Dialog/Replace.pm:587
+#, fuzzy
+msgid "Search and Replace"
+msgstr "Kontrola zrušena"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:577
+#, fuzzy, perl-format
+msgid "Replaced %d match"
+msgstr "Nahraď"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:577
+#, fuzzy, perl-format
+msgid "Replaced %d matches"
+msgstr "Nahraď"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:15
+msgid "Date/Time"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:16
+msgid "Now"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:17
+msgid "Today"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:18
+msgid "Year"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:19
+msgid "Epoch"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:21
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
+#: lib/Padre/Wx/Dialog/WindowList.pm:224
+#, fuzzy
+msgid "File"
+msgstr "Soubory"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:22
+#, fuzzy
+msgid "Size"
+msgstr "Velikost písma"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:30
+msgid "Number of lines"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
+msgid "Class:"
+msgstr "Třída:"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:47
+msgid "Special Value:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50 lib/Padre/Wx/Dialog/Snippets.pm:24
+msgid "&Insert"
+msgstr "&Vlož"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:63
+msgid "Insert Special Values"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Warning.pm:41
+msgid "See http://padre.perlide.org/ for update information"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Warning.pm:49
+msgid "Do not show this again"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:31
+msgid "Save session as..."
+msgstr "Ulož sezení jako..."
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:200
+msgid "Session name:"
+msgstr "Jméno sezení:"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:229
+msgid "Save"
+msgstr "Ulož"
+
+#: lib/Padre/Wx/Dialog/FindInFiles.pm:63
+#, fuzzy
+msgid "Select Directory"
+msgstr "Volba adresáře"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:37
+msgid "Session Manager"
+msgstr "Manažer sezení"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:214
+msgid "List of sessions"
+msgstr "Seznam sezení"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:227
+msgid "Description"
+msgstr "Popis"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:228
+msgid "Last update"
+msgstr "Poslední aktualizace"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:260
+#, fuzzy
+msgid "Save session automatically"
+msgstr "Ulož sezení jako..."
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:290
+msgid "Open"
+msgstr "Otevřít"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:40
+msgid "Quick Menu Access"
+msgstr "Rychlé menu"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
+#, fuzzy, perl-format
+msgid "Error while trying to perform Padre action: %s"
+msgstr "Chyba při provádění operace Padre"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151 lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/OpenResource.pm:178 lib/Padre/Wx/Dialog/OpenURL.pm:62
+msgid "&OK"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:176
+msgid "&Type a menu item name to access:"
+msgstr "&Zadej položku menu k přístupu:"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:183
+msgid "&Matching Menu Items:"
+msgstr "&Odpovídající položky menu:"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:352
+msgid "Reading items. Please wait..."
+msgstr "Čtení položek. Prosím čekejte..."
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
+#, fuzzy
+msgid "Edit"
+msgstr "&Edituj"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:391
+#, fuzzy
+msgid "View"
+msgstr "&Zobraz"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:392
+#, fuzzy
+msgid "Perl"
+msgstr "&Perl"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
+msgid "Refactor"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:394
+#: lib/Padre/Wx/Dialog/FilterTool.pm:151
+#, fuzzy
+msgid "Run"
+msgstr "&Spusť"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:395
+msgid "Debug"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:396
+#, fuzzy
+msgid "Plugins"
+msgstr "Do&plněk"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#, fuzzy
+msgid "Window"
+msgstr "&Okno"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:33
+msgid "Regex Editor"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:70
+msgid "Character classes"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:72
+msgid "Any character except a newline"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:73
+msgid "Any decimal digit"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:74
+msgid "Any non-digit"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:75
+msgid "Any whitespace character"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:76
+msgid "Any non-whitespace character"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:77
+msgid "Any word character"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:78
+msgid "Any non-word character"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:82
+msgid "&POSIX Character classes"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:84
+#, fuzzy
+msgid "Alphabetic characters"
+msgstr "Abecedy"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:85
+msgid "Alphanumeric characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:86
+msgid "7-bit US-ASCII character"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:87
+#, fuzzy
+msgid "Space and tab"
+msgstr "Mezery na tabulátory"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:88
+msgid "Control characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:89
+msgid "Digits"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:90
+#, fuzzy
+msgid "Visible characters"
+msgstr "Zakaž tracování"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:91
+msgid "Lowercase characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:92
+msgid "Visible characters and spaces"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:93
+msgid "Punctuation characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:94
+msgid "Whitespace characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:95
+msgid "Uppercase characters"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:96
+msgid "Alphanumeric characters plus \"_\""
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:97
+msgid "Hexadecimal digits"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:101
+msgid "&Quantifiers"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:103
+msgid "Match 0 or more times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:104
+msgid "Match 1 or more times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:105
+msgid "Match 1 or 0 times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:106
+msgid "Match exactly m times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:107
+msgid "Match at least n times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:108
+msgid "Match at least m but not more than n times"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:112
+msgid "Miscellaneous"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:114
+#, fuzzy
+msgid "Alternation"
+msgstr "Překlad"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:115
+msgid "Character set"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:116
+msgid "Beginning of line"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:117
+#, fuzzy
+msgid "End of line"
+msgstr "Příkazová řádka"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:118
+msgid "A word boundary"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:119
+msgid "Not a word boundary"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:120
+#, fuzzy
+msgid "A comment"
+msgstr "Žádný dokument"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:124
+msgid "Grouping constructs"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:126
+msgid "A group"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:127
+msgid "Non-capturing group"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:128
+msgid "Positive lookahead assertion"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:129
+msgid "Negative lookahead assertion"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:130
+msgid "Positive lookbehind assertion"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:131
+msgid "Negative lookbehind assertion"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:132
+msgid "Backreference to the nth group"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:144
+#, fuzzy
+msgid "&Regular expression:"
+msgstr "&Regulární výraz"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:191
+#, fuzzy
+msgid "Show &Description"
+msgstr "Popis"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:204
+#, fuzzy
+msgid "&Replace text with:"
+msgstr "Nahraď text:"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:211
+#, fuzzy
+msgid "&Original text:"
+msgstr "originální"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:218
+#, fuzzy
+msgid "Matched text:"
+msgstr "&Shodné položky:"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:225
+msgid "&Result from replace:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:408
+msgid "Ignore case (&i)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:409
+#, fuzzy
+msgid "Case-insensitive matching"
+msgstr "Ignoruj &malá/velká písmena"
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:412
+msgid "Single-line (&s)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:413
+msgid "\".\" also matches newline"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:416
+msgid "Multi-line (&m)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:417
+msgid "\"^\" and \"$\" match the start and end of any line inside the string"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:420
+msgid "Extended (&x)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:422
+msgid ""
+"Extended regular expressions allow free formatting (whitespace is ignored) "
+"and comments"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:425
+msgid "Global (&g)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:426
+msgid "Replace all occurrences of the pattern"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:617
+#, perl-format
+msgid "Match failure in %s:  %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:624
+#, perl-format
+msgid "Match warning in %s:  %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:645
+msgid "No match"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:656
+#, perl-format
+msgid "Replace failure in %s:  %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:35
+#, fuzzy
+msgid "Window list"
+msgstr "&Okno"
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:211
+#, fuzzy
+msgid "List of open files"
+msgstr "Otevři soubory:"
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:225
+#, fuzzy
+msgid "Editor"
+msgstr "&Edituj"
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:226
+msgid "Disk"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:350 lib/Padre/Wx/Dialog/WindowList.pm:358
+msgid "CHANGED"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:350 lib/Padre/Wx/Dialog/WindowList.pm:354
+msgid "fresh"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:356
+msgid "DELETED"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:41
+#, fuzzy, perl-format
+msgid "Action: %s"
+msgstr "Kódování: %s"
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:54
+msgid "CTRL"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
+#: lib/Padre/Wx/Dialog/Shortcut.pm:89
+msgid "+"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:68
+msgid "ALT"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:82
+msgid "SHIFT"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Shortcut.pm:113
+msgid "Shortcut"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:39
+msgid "Goto"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:86
+#, fuzzy
+msgid "Position type"
+msgstr "Typ obsahu:"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
+#: lib/Padre/Wx/Dialog/Goto.pm:226 lib/Padre/Wx/Dialog/Goto.pm:245
+#, fuzzy
+msgid "Line number"
+msgstr "Číslo řádku:"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:230
+msgid "Character position"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:228
+#, fuzzy, perl-format
+msgid "&Enter a line number between 1 and %s:"
+msgstr "Číslo řádku:"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:229
+#, fuzzy, perl-format
+msgid "Current line number: %s"
+msgstr "Aktuální dokument: %s"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:232
+#, perl-format
+msgid "&Enter a position between 1 and %s:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:233
+#, fuzzy, perl-format
+msgid "Current position: %s"
+msgstr "Aktuální dokument: %s"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:257
+#, fuzzy
+msgid "Not a positive number!"
+msgstr "Číslo řádku:"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:266
+msgid "Out of range!"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Positions.pm:107
+msgid "There are no positions saved yet"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Positions.pm:124
+#, fuzzy, perl-format
+msgid "%s. Line: %s File: %s - %s"
+msgstr "%s řádka %s: %s"
+
+#: lib/Padre/Wx/Dialog/Search.pm:135
+msgid "Find:"
+msgstr "Najdi:"
+
+#: lib/Padre/Wx/Dialog/Search.pm:154
+msgid "Previ&ous"
+msgstr "Předch&ozí"
+
+#: lib/Padre/Wx/Dialog/Search.pm:172 lib/Padre/Wx/Dialog/WizardSelector.pm:87
+msgid "&Next"
+msgstr "&Další"
+
+#: lib/Padre/Wx/Dialog/Search.pm:180
+msgid "Case &insensitive"
+msgstr "Ignoruj &malá/velká písmena"
+
+#: lib/Padre/Wx/Dialog/Search.pm:184
+msgid "Use rege&x"
+msgstr "Užij regulárn&í výraz"
+
+#: lib/Padre/Wx/Dialog/FilterTool.pm:30
+msgid "Filter through tool"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/FilterTool.pm:130
+#, fuzzy
+msgid "Filter command:"
+msgstr "Nelze spustit příkaz '%s'"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:31
 msgid "Existing bookmarks:"
 msgstr "Existující záložky:"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:42
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:43
 msgid "Delete &All"
 msgstr "Smaž &vše"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:56
-msgid "GoTo Bookmark"
+msgid "Set Bookmark"
+msgstr "Uprav záložku"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:57
+#, fuzzy
+msgid "Go to Bookmark"
 msgstr "Přejdi na záložku"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:122
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:123
 msgid "Cannot set bookmark in unsaved document"
 msgstr "Nelze přidat záložku v neuloženém"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:133
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:134
 #, perl-format
 msgid "%s line %s: %s"
 msgstr "%s řádka %s: %s"
@@ -1790,200 +4291,296 @@ msgstr "%s řádka %s: %s"
 msgid "The bookmark '%s' no longer exists"
 msgstr "Záložka '%s' již neexistuje"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:103
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:84
-msgid "Error while trying to perform Padre action"
-msgstr "Chyba při provádění operace Padre"
+#: lib/Padre/Wx/Dialog/Sync2.pm:88 lib/Padre/Wx/Dialog/Sync.pm:468
+msgid "Please input a valid value for both username and password"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:177
-msgid "&Select an item to open (? = any character, * = any string):"
-msgstr "&Zvolte položku k otevření (? = jakýkoli znak, * = jakýkoli řetězec):"
+#: lib/Padre/Wx/Dialog/Sync2.pm:131 lib/Padre/Wx/Dialog/Sync.pm:516
+msgid "Please ensure all inputs have appropriate values."
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:189
-msgid "&Matching Items:"
-msgstr "&Shodné položky:"
+#: lib/Padre/Wx/Dialog/Sync2.pm:142 lib/Padre/Wx/Dialog/Sync.pm:527
+msgid "Password and confirmation do not match."
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:202
+#: lib/Padre/Wx/Dialog/Sync2.pm:152 lib/Padre/Wx/Dialog/Sync.pm:537
+msgid "Email and confirmation do not match."
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:33
 #, fuzzy
-msgid "Current Directory: "
-msgstr "Aktuální adresář:"
+msgid "Perl Filter"
+msgstr "Nový soubor"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:227
-msgid "Skip VCS files"
-msgstr "Přeskoč VCS soubory"
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:67
+#, fuzzy
+msgid "&Perl filter source:"
+msgstr "Žádný soubor otevřen"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:229
-msgid "Skip using MANIFEST.SKIP"
-msgstr "Přeskoč použitý MANIFEST.SKIP"
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:74
+#, fuzzy
+msgid "Or&iginal text:"
+msgstr "originální"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:34
-msgid "Session Manager"
-msgstr "Manažer sezení"
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:81
+#, fuzzy
+msgid "&Output text:"
+msgstr "Zobraz výstup"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:202
-msgid "List of sessions"
-msgstr "Seznam sezení"
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:89
+#, fuzzy
+msgid "Run filter"
+msgstr "Otevřít soubor"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:216
-msgid "Last update"
-msgstr "Poslední aktualizace"
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:208
+msgid ""
+"# Input is in $_\n"
+"$_ = $_;\n"
+"# Output goes to $_\n"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:243
-msgid "Open"
-msgstr "Otevřít"
+#: lib/Padre/Wx/Dialog/Preferences.pm:18
+msgid "Local/Remote File Access"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:33
+#: lib/Padre/Wx/Dialog/Preferences.pm:19
+#, fuzzy
+msgid "Perl Auto Complete"
+msgstr "&AutoDokonči"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:39
 #, fuzzy
 msgid "Enable bookmarks"
 msgstr "Povol záložky"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:34
+#: lib/Padre/Wx/Dialog/Preferences.pm:40
 msgid "Change font size"
 msgstr "Změň velikost fontu"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:35
+#: lib/Padre/Wx/Dialog/Preferences.pm:41
 #, fuzzy
 msgid "Enable session manager"
 msgstr "Povol manažera sezení"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:60
+#: lib/Padre/Wx/Dialog/Preferences.pm:86
 msgid "Diff tool:"
 msgstr "Diff - nástroj:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:78
+#: lib/Padre/Wx/Dialog/Preferences.pm:88 lib/Padre/Wx/Dialog/Preferences.pm:92
+#, fuzzy
+msgid "Browse..."
+msgstr "Zavři..."
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:90
+#, fuzzy
+msgid "Perl ctags file:"
+msgstr "Nový soubor"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:159
 #, fuzzy
 msgid "File type:"
 msgstr "Typ souboru:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:81
+#: lib/Padre/Wx/Dialog/Preferences.pm:162
 msgid "Highlighter:"
 msgstr "Zvýrazňovač:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:84
-#: lib/Padre/Wx/Dialog/SessionSave.pm:184
-msgid "Description:"
-msgstr "Popis:"
-
-#: lib/Padre/Wx/Dialog/Preferences.pm:87
+#: lib/Padre/Wx/Dialog/Preferences.pm:168
 #, fuzzy
 msgid "Content type:"
 msgstr "Typ obsahu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:179
+#: lib/Padre/Wx/Dialog/Preferences.pm:260
 #, fuzzy
 msgid "Automatic indentation style detection"
 msgstr "Automatická detekce stylu odsazování"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:183
+#: lib/Padre/Wx/Dialog/Preferences.pm:264
 msgid "Use Tabs"
 msgstr "Použij taby"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:186
-msgid "TAB display size (in spaces):"
+#: lib/Padre/Wx/Dialog/Preferences.pm:267
+#, fuzzy
+msgid "Tab display size (in spaces):"
 msgstr "TAB zobraz velikost (v mezerách):"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:189
+#: lib/Padre/Wx/Dialog/Preferences.pm:270
 msgid "Indentation width (in columns):"
 msgstr "Šířka odsazování (v sloupcích):"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:192
+#: lib/Padre/Wx/Dialog/Preferences.pm:273
 msgid "Guess from current document:"
 msgstr "Hádej z aktuálního dokumentu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:193
+#: lib/Padre/Wx/Dialog/Preferences.pm:274
 msgid "Guess"
 msgstr "Hádej"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:195
+#: lib/Padre/Wx/Dialog/Preferences.pm:276
 msgid "Autoindent:"
 msgstr "Autoodsazení:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:218
+#: lib/Padre/Wx/Dialog/Preferences.pm:300
 msgid "Default word wrap on for each file"
 msgstr "Implicitní zalamování pro každý soubor"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:223
+#: lib/Padre/Wx/Dialog/Preferences.pm:305
+msgid "Use panel order for Ctrl-Tab (not usage history)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:312
+msgid "Clean up file content on saving (for supported document types)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:317
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr "Autosbalení POD značek pokud je sbaleni povoleno"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:228
+#: lib/Padre/Wx/Dialog/Preferences.pm:322
 msgid "Perl beginner mode"
 msgstr "Perl mód začátečník"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:232
+#: lib/Padre/Wx/Dialog/Preferences.pm:326
 msgid "Open files:"
 msgstr "Otevři soubory:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:235
+#: lib/Padre/Wx/Dialog/Preferences.pm:329
 #, fuzzy
 msgid "Default projects directory:"
 msgstr "Výchozí adresář projektu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:237
+#: lib/Padre/Wx/Dialog/Preferences.pm:331
 msgid "Choose the default projects directory"
 msgstr "Zvolte výchozí adresář projektu"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:241
+#: lib/Padre/Wx/Dialog/Preferences.pm:335
 msgid "Open files in existing Padre"
 msgstr "Otevři soubory existující v Padre"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:245
+#: lib/Padre/Wx/Dialog/Preferences.pm:339
 msgid "Methods order:"
 msgstr "Metody řazení:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:248
+#: lib/Padre/Wx/Dialog/Preferences.pm:342
 msgid "Preferred language for error diagnostics:"
 msgstr "Preferovaný jazyk pro diagnostiku chyb:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:251
+#: lib/Padre/Wx/Dialog/Preferences.pm:345
 msgid "Default line ending:"
 msgstr "Výchozí konce řádků:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:254
+#: lib/Padre/Wx/Dialog/Preferences.pm:348
 msgid "Check for file updates on disk every (seconds):"
 msgstr "Zkontroluj aktualizace souborů na disku každou (sekundy):"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:263
-msgid ""
-"Add another closing bracket if there is already one (and the auto-bracket-"
-"function is enabled)"
+#: lib/Padre/Wx/Dialog/Preferences.pm:351
+msgid "Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):"
 msgstr ""
-"Přidej další uzavírací závorku, pokud je tu už jedna (a autom. doplňování"
-"je povoleno"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:301
+#: lib/Padre/Wx/Dialog/Preferences.pm:360
+#, fuzzy
+msgid "Autocomplete brackets"
+msgstr "&AutoDokonči"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:368
+#, fuzzy
+msgid ""
+"Add another closing bracket if there is already one (and the 'Autocomplete "
+"brackets' above is enabled)"
+msgstr ""
+"Přidej další uzavírací závorku, pokud je tu už jedna (a autom. doplňováníje "
+"povoleno"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:376
+msgid "Enable Smart highlighting while typing"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:383
+msgid "Shorten the common path in window list"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:390
+msgid "Use X11 middle button paste style"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:394
+msgid "RegExp for TODO-panel:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:400
+msgid "Use Splash Screen"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:437
+#, fuzzy
+msgid "Project name"
+msgstr "Nástroje projektu"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:438
+#, fuzzy
+msgid "Padre version"
+msgstr "Ulož sezení"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:439
+#, fuzzy
+msgid "Current filename"
+msgstr "Aktuální dokument není pojmenován"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:440
+msgid "Current file's dirname"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:441
+#, fuzzy
+msgid "Current file's basename"
+msgstr "Aktuální dokument není pojmenován"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:442
+msgid "Current filename relative to project"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:463
+#, fuzzy
+msgid "Window title:"
+msgstr "&Okno"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:470
 msgid "Colored text in output window (ANSI)"
 msgstr "Barevný text na výstupu (ANSI)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:306
+#: lib/Padre/Wx/Dialog/Preferences.pm:475
+msgid "Show low-priority info messages on statusbar (not in a popup)"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:480
 msgid "Show right margin at column:"
 msgstr "Zobraz pravý okraj sloupce:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:310
+#: lib/Padre/Wx/Dialog/Preferences.pm:484
 msgid "Editor Font:"
 msgstr "Font editoru:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:313
+#: lib/Padre/Wx/Dialog/Preferences.pm:487
 msgid "Editor Current Line Background Colour:"
 msgstr "Editor barvy pozadí aktuální řádky"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:376
+#: lib/Padre/Wx/Dialog/Preferences.pm:550
 msgid "Settings Demo"
 msgstr "Ukázka nastavení"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:383
+#: lib/Padre/Wx/Dialog/Preferences.pm:559
 msgid "Any changes to these options require a restart:"
 msgstr "Každá změna tohoto nastavení potřebuje restart:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:491
+#: lib/Padre/Wx/Dialog/Preferences.pm:670
 msgid "Enable?"
 msgstr "Povolit?"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:506
+#: lib/Padre/Wx/Dialog/Preferences.pm:685
 msgid "Crashed"
 msgstr "Pád"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:539
+#: lib/Padre/Wx/Dialog/Preferences.pm:718
 msgid ""
 "i.e.\n"
 "\tinclude directory:  -I<dir>\n"
@@ -1999,196 +4596,174 @@ msgstr ""
 "\tpovol všechna varování:  -W\n"
 "\tzakaž všechna varování:  -X\n"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:549
-#: lib/Padre/Wx/Dialog/Preferences.pm:599
+#: lib/Padre/Wx/Dialog/Preferences.pm:728
+msgid "Perl interpreter:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:731
+#: lib/Padre/Wx/Dialog/Preferences.pm:781
 msgid "Interpreter arguments:"
 msgstr "Argumenty interpretu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:555
-#: lib/Padre/Wx/Dialog/Preferences.pm:605
+#: lib/Padre/Wx/Dialog/Preferences.pm:737
+#: lib/Padre/Wx/Dialog/Preferences.pm:787
 msgid "Script arguments:"
 msgstr "Argumenty skriptu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:559
-msgid "Use external window for execution (xterm)"
+#: lib/Padre/Wx/Dialog/Preferences.pm:741
+#, fuzzy
+msgid "Use external window for execution"
 msgstr "Použij externí okno pro spuštění (xterm)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:568
+#: lib/Padre/Wx/Dialog/Preferences.pm:750
 msgid "Unsaved"
 msgstr "Neuloženo"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:569
+#: lib/Padre/Wx/Dialog/Preferences.pm:751
 msgid "N/A"
 msgstr "N/A"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:588
+#: lib/Padre/Wx/Dialog/Preferences.pm:770
 msgid "No Document"
 msgstr "Žádný dokument"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:593
+#: lib/Padre/Wx/Dialog/Preferences.pm:775
 msgid "Document name:"
 msgstr "Jméno dokumentu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:596
+#: lib/Padre/Wx/Dialog/Preferences.pm:778
 msgid "Document location:"
 msgstr "Umístění dokumentu:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:623
-msgid "Default"
-msgstr "Výchozí"
-
-#: lib/Padre/Wx/Dialog/Preferences.pm:629
+#: lib/Padre/Wx/Dialog/Preferences.pm:811
 #, perl-format
 msgid "Current Document: %s"
 msgstr "Aktuální dokument: %s"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:672
+#: lib/Padre/Wx/Dialog/Preferences.pm:828
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:854
 msgid "Behaviour"
 msgstr "Chování"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:675
+#: lib/Padre/Wx/Dialog/Preferences.pm:857
 msgid "Appearance"
 msgstr "Vzhled"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:678
+#: lib/Padre/Wx/Dialog/Preferences.pm:861
 msgid "Run Parameters"
 msgstr "Spusť s parametry"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:682
+#: lib/Padre/Wx/Dialog/Preferences.pm:865
 msgid "Files and Colors"
 msgstr "Soubory a barvy"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:685
+#: lib/Padre/Wx/Dialog/Preferences.pm:868
 #, fuzzy
 msgid "Indentation"
 msgstr "Odsazování"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:688
+#: lib/Padre/Wx/Dialog/Preferences.pm:871
 msgid "External Tools"
 msgstr "Externí nástroje"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:726 lib/Padre/Wx/Dialog/Replace.pm:195
-#: lib/Padre/Wx/Dialog/Find.pm:159
-msgid "&Cancel"
-msgstr "&Zrušit"
+#: lib/Padre/Wx/Dialog/Preferences.pm:926
+msgid "&Advanced..."
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:761
+#: lib/Padre/Wx/Dialog/Preferences.pm:974
 msgid "new"
 msgstr "nový"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:762
+#: lib/Padre/Wx/Dialog/Preferences.pm:975
 msgid "nothing"
 msgstr "nic"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:763
+#: lib/Padre/Wx/Dialog/Preferences.pm:976
 msgid "last"
 msgstr "poslední"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:764
+#: lib/Padre/Wx/Dialog/Preferences.pm:977
+#, fuzzy
+msgid "session"
+msgstr "Verze"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:978
 msgid "no"
 msgstr "ne"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:765
+#: lib/Padre/Wx/Dialog/Preferences.pm:979
 msgid "same_level"
 msgstr "stejná_úroveň"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:766
+#: lib/Padre/Wx/Dialog/Preferences.pm:980
 msgid "deep"
 msgstr "hloubková"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:767
+#: lib/Padre/Wx/Dialog/Preferences.pm:981
 msgid "alphabetical"
 msgstr "abecední"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:768
+#: lib/Padre/Wx/Dialog/Preferences.pm:982
 msgid "original"
 msgstr "originální"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:769
+#: lib/Padre/Wx/Dialog/Preferences.pm:983
 msgid "alphabetical_private_last"
 msgstr "abecedně_privátní_poslední"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:26
-msgid "Module Name:"
-msgstr "Jméno modulu:"
+#: lib/Padre/Wx/Dialog/Preferences.pm:1150
+#, fuzzy
+msgid "Save settings"
+msgstr "Ulož sezení jako..."
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:29
-msgid "Author:"
-msgstr "Autor:"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:30
+#: lib/Padre/Wx/Dialog/OpenResource.pm:76
+msgid "Open Resource"
+msgstr "Otevři prostředky"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:32
-msgid "Email:"
-msgstr "Email:"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:117
+msgid "Error while trying to perform Padre action"
+msgstr "Chyba při provádění operace Padre"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:35
-msgid "Builder:"
-msgstr "Builder:"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:206
+msgid "&Select an item to open (? = any character, * = any string):"
+msgstr "&Zvolte položku k otevření (? = jakýkoli znak, * = jakýkoli řetězec):"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:38
-msgid "License:"
-msgstr "Licence:"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:220
+msgid "&Matching Items:"
+msgstr "&Shodné položky:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:41
-msgid "Parent Directory:"
-msgstr "Rodičovský adresář:"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:236
+#, fuzzy
+msgid "Current Directory: "
+msgstr "Aktuální adresář:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:42
-msgid "Pick parent directory"
-msgstr "Zvol rodičovský adresář"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:263
+msgid "Skip version control system files"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:68
-msgid "Module Start"
-msgstr "Průvodce modulem"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:118
-#, perl-format
-msgid "Field %s was missing. Module not created."
-msgstr "Chybí pole %s. Modul nebyl vytvořen."
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:119
-msgid "missing field"
-msgstr "chybějící pole"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:147
-#, perl-format
-msgid "%s apparantly created. Do you want to open it now?"
-msgstr "%s právě vytvořen. Chcete ho rovnou otevřít?"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:148
-msgid "Done"
-msgstr "Hotovo"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:158
-msgid "&Type a menu item name to access:"
-msgstr "&Zadej položku menu k přístupu:"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:165
-msgid "&Matching Menu Items:"
-msgstr "&Odpovídající položky menu:"
-
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:324
-msgid "Reading items. Please wait..."
-msgstr "Čtení položek. Prosím čekejte..."
+#: lib/Padre/Wx/Dialog/OpenResource.pm:267
+msgid "Skip using MANIFEST.SKIP"
+msgstr "Přeskoč použitý MANIFEST.SKIP"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:18
 msgid "All"
 msgstr "Vše"
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:22
-msgid "Class:"
-msgstr "Třída:"
-
 #: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
 msgid "Snippet:"
 msgstr "Úryvek:"
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:24
-msgid "&Insert"
-msgstr "&Vlož"
-
 #: lib/Padre/Wx/Dialog/Snippets.pm:26
 msgid "&Add"
 msgstr "&Přidej"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "Úryvky"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:111
 msgid "Category:"
@@ -2202,256 +4777,650 @@ msgstr "Jméno:"
 msgid "Edit/Add Snippets"
 msgstr "Edituj/přidej úryvky"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:54
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:47
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:18
 #, fuzzy
-msgid "Find and Replace"
-msgstr "Najdi a nahraď"
+msgid "Wizard Selector"
+msgstr "Začni označování od\tCtrl-["
 
-#: lib/Padre/Wx/Dialog/Replace.pm:98
-msgid "&Use Regex"
-msgstr "&Užij regulární výraz"
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:86
+msgid "&Back"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:112
-msgid "Close Window on &hit"
-msgstr "Zavři okno &kliknutím"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:126 lib/Padre/Wx/Dialog/Find.pm:116
-msgid "Search &Backwards"
-msgstr "Hledej &obráceně"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:140
-#, fuzzy
-msgid "Replace &All"
-msgstr "Nahraď &vše"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:154 lib/Padre/Wx/Dialog/Find.pm:130
-#, fuzzy
-msgid "&Find Next"
-msgstr "&Najdi další"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:174
-msgid "&Replace"
-msgstr "&Nahraď"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:210 lib/Padre/Wx/Dialog/Find.pm:52
-#: lib/Padre/Wx/Dialog/Find.pm:176
-msgid "Find"
-msgstr "Najdi"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:218 lib/Padre/Wx/Dialog/Find.pm:184
-#, fuzzy
-msgid "Find Text:"
-msgstr "Najdi text:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:250
-#, fuzzy
-msgid "Replace Text:"
-msgstr "Nahraď text:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:296 lib/Padre/Wx/Dialog/Find.pm:230
-msgid "Options"
-msgstr "Možnosti"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:663
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:174
 #, perl-format
-msgid "%s occurences were replaced"
-msgstr "%s výskytů nahrazeno"
+msgid "%s has no constructor"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:668
-msgid "Nothing to replace"
-msgstr "Nic k nahrazení"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:758
-#, perl-format
-msgid "Cannot build regex for '%s'"
-msgstr "Reg. výraz nejde pro '%s'"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:759
+#: lib/Padre/Wx/Dialog/OpenURL.pm:37
 #, fuzzy
-msgid "Search error"
-msgstr "Hledej chybu"
+msgid "Open URL"
+msgstr "Otevřít"
 
-#: lib/Padre/Wx/Dialog/Search.pm:135
-msgid "Find:"
-msgstr "Najdi:"
+#: lib/Padre/Wx/Dialog/OpenURL.pm:79
+msgid "e.g."
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Search.pm:154
-msgid "Previ&ous"
-msgstr "Předch&ozí"
-
-#: lib/Padre/Wx/Dialog/Search.pm:172
-msgid "&Next"
-msgstr "&Další"
-
-#: lib/Padre/Wx/Dialog/Search.pm:180
-msgid "Case &insensitive"
-msgstr "Ignoruj &malá/velká písmena"
-
-#: lib/Padre/Wx/Dialog/Search.pm:184
-msgid "Use rege&x"
-msgstr "Užij regulárn&í výraz"
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:28
-msgid "Save session as..."
-msgstr "Ulož sezení jako..."
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:175
-msgid "Session name:"
-msgstr "Jméno sezení:"
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:204
-msgid "Save"
-msgstr "Ulož"
-
-#: lib/Padre/Wx/Dialog/Find.pm:88
-msgid "&Regular Expression"
-msgstr "&Regulární výraz"
-
-#: lib/Padre/Wx/Dialog/Find.pm:102
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:38
 #, fuzzy
-msgid "Close Window on &Hit"
-msgstr "Zavři okno &kliknutím"
+msgid "Select Function"
+msgstr "Zobraz funkce"
 
-#: lib/Padre/Wx/Dialog/Find.pm:145
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:92
+msgid ""
+"Select which subroutine you want the new subroutine\n"
+"inserted before."
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:104
 #, fuzzy
-msgid "&Count All"
-msgstr "&Sečti vše"
+msgid "Function"
+msgstr "Zobraz funkce"
 
-#: lib/Padre/Wx/Dialog/Find.pm:357
-msgid "Not a valid search"
-msgstr "Neplatné hledání"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:24
+msgid "Other search engine"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:366
-#, perl-format
-msgid "Found %d matching occurrences"
-msgstr "Nalezeno %d výskytů"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:27
+msgid "Other event"
+msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource/SearchTask.pm:93
-msgid "Finished Searching"
-msgstr "Dokončeno hledání"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:28
+msgid "Friend"
+msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:123
-msgid "Ping"
-msgstr "Ping"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:29
+msgid "Reinstalling/installing on other computer"
+msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:25
-msgid "Padre Developer Tools"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:30
+#, fuzzy
+msgid "Padre Developer"
 msgstr "Padre vývojářské nástroje"
 
-#: lib/Padre/Plugin/Devel.pm:59
-msgid "Run Document inside Padre"
-msgstr "Spusť dokument v Padre"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:31
+msgid "Other (Please fill in here)"
+msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:63
-msgid "Dump Current Document"
-msgstr "Dumpni aktuální dokument"
+#: lib/Padre/Wx/Dialog/Encode.pm:53
+msgid "Encode to:"
+msgstr "Překóduj do:"
 
-#: lib/Padre/Plugin/Devel.pm:64
-msgid "Dump Top IDE Object"
-msgstr "Dumpni hlavní IDE objekt"
+#: lib/Padre/Wx/Dialog/Encode.pm:63
+#, fuzzy
+msgid "Encode document to..."
+msgstr "Zobraz dokument jako..."
 
-#: lib/Padre/Plugin/Devel.pm:65
-msgid "Dump %INC and @INC"
-msgstr "Dumpni %INC a @INC"
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:17
+msgid "Select a Wizard"
+msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:72
-msgid "Enable logging"
-msgstr "Povol logování"
-
-#: lib/Padre/Plugin/Devel.pm:75
-msgid "Disable logging"
-msgstr "Zakaž logování"
-
-#: lib/Padre/Plugin/Devel.pm:78
-msgid "Enable trace when logging"
-msgstr "Povol tracování s logováním"
-
-#: lib/Padre/Plugin/Devel.pm:81
-msgid "Disable trace"
-msgstr "Zakaž tracování"
-
-#: lib/Padre/Plugin/Devel.pm:87
-msgid "Load All Padre Modules"
-msgstr "Nahraj všechny moduly Padre"
-
-#: lib/Padre/Plugin/Devel.pm:88
-msgid "Simulate Crash"
-msgstr "Simuluj pád"
-
-#: lib/Padre/Plugin/Devel.pm:89
-msgid "Simulate Crashing Bg Task"
-msgstr "Simuluj pád úlohy na pozadí"
-
-#: lib/Padre/Plugin/Devel.pm:93
+#: lib/Padre/Wx/Dialog/Wizard/Select.pm:126
 #, fuzzy, perl-format
-msgid "wxWidgets %s Reference"
-msgstr "wxWidgets %s reference"
+msgid "Error while loading %s"
+msgstr "Chyba při vytváření menu doplňků"
 
-#: lib/Padre/Plugin/Devel.pm:96
-msgid "STC Reference"
-msgstr "STC reference"
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:15
+msgid "Creates a Padre Plugin"
+msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:99
-msgid "wxPerl Live Support"
-msgstr "wxPerl živá podpora"
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Plugin.pm:16
+msgid "Padre Plugin Wizard"
+msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:153
-msgid "No file is open"
-msgstr "Žádný soubor otevřen"
-
-#: lib/Padre/Plugin/Devel.pm:182
-msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr "Soubor všech nástrojů použitých vývojáři Padre\n"
-
-#: lib/Padre/Document/Perl.pm:405 lib/Padre/Document/Perl.pm:432
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:101
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:88
-msgid "Current cursor does not seem to point at a variable"
-msgstr "Kurzor aktuálně neukazuje na žádnou proměnnou"
-
-#: lib/Padre/Document/Perl.pm:406 lib/Padre/Document/Perl.pm:433
-msgid "Check cancelled"
-msgstr "Kontrola zrušena"
-
-#: lib/Padre/Task/Outline/Perl.pm:198
-msgid "&GoTo Element"
-msgstr "&Přejdi na element"
-
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:90
-msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr "Nebyla nalezena deklarace pro specifikovanou (lexikální?) proměnnou"
-
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:105
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:92
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:106
-msgid "Unknown error"
-msgstr "Neznámá chyba"
-
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:108
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:109
-msgid "Replace Operation Canceled"
-msgstr "Nahraď zrušenou operaci"
-
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:95
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:15
 #, fuzzy
-msgid "Search Canceled"
-msgstr "Kontrola zrušena"
+msgid "Creates a Padre document"
+msgstr "Nejedná se Perlový dokument"
 
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
-msgid "All braces appear to be matched"
-msgstr "Nechybí žádná závorka"
+#: lib/Padre/Wx/Dialog/Wizard/Padre/Document.pm:16
+msgid "Padre Document Wizard"
+msgstr ""
 
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:78
-msgid "Check Complete"
-msgstr "Kontrola hotova"
+#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:17
+msgid "Creates a Perl 5 module or script"
+msgstr ""
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:102
+#: lib/Padre/Wx/Dialog/Wizard/Perl/Module.pm:18
 #, fuzzy
-msgid "First character of selection does not seem to point at a token."
-msgstr "První vybraný znak není symbolem."
+msgid "Perl 5 Module Wizard"
+msgstr "Perl 5 modul"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:104
-msgid "Selection not part of a Perl statement?"
-msgstr "Označení není částí perlového příkazu?"
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:36
+msgid "File access via HTTP"
+msgstr ""
 
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:39
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:47
+msgid "Timeout (in seconds):"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:44
+msgid "File access via FTP"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/File.pm:51
+msgid "Use FTP passive mode"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
+msgid "Autocomplete always while typing"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:41
+msgid "Autocomplete new methods in packages"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:48
+msgid "Autocomplete new subroutines in scripts"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:52
+#, fuzzy
+msgid "Min. length of suggestions:"
+msgstr "Seznam sezení"
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:57
+msgid "Max. number of suggestions:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:60
+msgid "Min. chars for autocompletion:"
+msgstr ""
+
+#: lib/Padre/Config/Style.pm:35
+msgid "Evening"
+msgstr ""
+
+#: lib/Padre/Config/Style.pm:36
+msgid "Night"
+msgstr "Noc"
+
+#: lib/Padre/Config/Style.pm:37
+msgid "Ultraedit"
+msgstr "Ultraedit"
+
+#: lib/Padre/Config/Style.pm:38
+msgid "Notepad++"
+msgstr "Notepad++"
+
+#~ msgid ""
+#~ "Project directory %s does not exist (any longer). This is fatal and will "
+#~ "cause problems, please close or save-as this file unless you know what "
+#~ "you are doing."
+#~ msgstr ""
+#~ "Adresář projektu %s už neexistuje. Tento problém je závažný,prosím "
+#~ "zavřete soubory nebo použijte uložit jako pokud si nejstejisti."
+
+#~ msgid ""
+#~ "Cannot open %s as it is over the arbitrary file size limit of Padre which "
+#~ "is currently %s"
+#~ msgstr ""
+#~ "Nelze otevřít %s, protože soubor překročil povolenou velikost pro Padre, "
+#~ "cožje právě %s"
+
+#~ msgid "Code Order"
+#~ msgstr "Seřazení podle"
+
+#, fuzzy
+#~ msgid "Alphabetical Order"
+#~ msgstr "Abecední pořadí"
+
+#, fuzzy
+#~ msgid "Alphabetical Order (Private Last)"
+#~ msgstr "Abecední pořadí (privátní poslední)"
+
+#, fuzzy
+#~ msgid "Directories First"
+#~ msgstr "Adresáře první"
+
+#, fuzzy
+#~ msgid "Directories Mixed"
+#~ msgstr "Adresáře abecedně"
+
+#~ msgid "Project Tools (Left)"
+#~ msgstr "Projektové nástroje(vlevo)"
+
+#~ msgid "Document Tools (Right)"
+#~ msgstr "Dokumentační nástroje (vpravo)"
+
+#~ msgid "Pick &directory"
+#~ msgstr "Volba &adresáře"
+
+#~ msgid "Case &Insensitive"
+#~ msgstr "Ignorování velikosti písmen"
+
+#~ msgid "I&gnore hidden Subdirectories"
+#~ msgstr "I&gnorování skrytých podadresářů"
+
+#~ msgid "Show only files that don't match"
+#~ msgstr "Zobrazní souborů, které nesouhlasí"
+
+#, fuzzy
+#~ msgid "Found %d files and %d matches\n"
+#~ msgstr "Nalezeno % souborů a %d shod\n"
+
+#, fuzzy
+#~ msgid "'%s' missing in file '%s'\n"
+#~ msgstr "'%s' chybí v souboru '%s'"
+
+#~ msgid "Quick Find"
+#~ msgstr "Rychlé hledání"
+
+#, fuzzy
+#~ msgid "Show Errors"
+#~ msgstr "Zobraz seznam chyb"
+
+#~ msgid "Show Current Line"
+#~ msgstr "Zobraz aktuální řádek"
+
+#~ msgid "Show Right Margin"
+#~ msgstr "Zobraz pravý okraj"
+
+#~ msgid "Show Newlines"
+#~ msgstr "Zobraz nové řádky"
+
+#~ msgid "Show Whitespaces"
+#~ msgstr "Zobraz bílé znaky"
+
+#~ msgid "Show Indentation Guide"
+#~ msgstr "Zobraz průvodce odsazováním"
+
+#~ msgid "Word-Wrap"
+#~ msgstr "Zalomení slov"
+
+#, fuzzy
+#~ msgid "Wrap long lines"
+#~ msgstr "&Spoj řádky"
+
+#, fuzzy
+#~ msgid "Increase Font Size"
+#~ msgstr "Zvětši font\tCtrl-+"
+
+#, fuzzy
+#~ msgid "Decrease Font Size"
+#~ msgstr "Zmenši font\tCtrl--"
+
+#, fuzzy
+#~ msgid "Reset Font Size"
+#~ msgstr "Resetuj font\tCtrl-/"
+
+#, fuzzy
+#~ msgid "&Full Screen"
+#~ msgstr "&Celá obrazovka\tF11"
+
+#~ msgid "Find Unmatched Brace"
+#~ msgstr "Najdi chybějící závorky"
+
+#~ msgid "Find Variable Declaration"
+#~ msgstr "Najdi deklarované proměnné"
+
+#, fuzzy
+#~ msgid "Find Method Declaration"
+#~ msgstr "Najdi deklarované proměnné"
+
+#~ msgid "Vertically Align Selected"
+#~ msgstr "Vertikální odsazení zvoleno"
+
+#, fuzzy
+#~ msgid "Newline Same Column"
+#~ msgstr "Nový řádek, stejný sloupec"
+
+#, fuzzy
+#~ msgid "Create Project Tagsfile"
+#~ msgstr "Zavři ostatní projekty"
+
+#, fuzzy
+#~ msgid "Automatic Bracket Completion"
+#~ msgstr "Automatické doplnění závorek"
+
+#, fuzzy
+#~ msgid "Rename Variable..."
+#~ msgstr "Lexikální přejmenování proměnných"
+
+#, fuzzy
+#~ msgid "Introduce Temporary Variable..."
+#~ msgstr "Uveď dočasné proměnné"
+
+#~ msgid "Introduce Temporary Variable"
+#~ msgstr "Uveď dočasné proměnné"
+
+#, fuzzy
+#~ msgid "Run Script"
+#~ msgstr "Spusť skript"
+
+#, fuzzy
+#~ msgid "Run Script (Debug Info)"
+#~ msgstr "Spusť skript (debug)"
+
+#, fuzzy
+#~ msgid "Run Build and Tests"
+#~ msgstr "Spusť testy"
+
+#~ msgid "Run Tests"
+#~ msgstr "Spusť testy"
+
+#, fuzzy
+#~ msgid "Run This Test"
+#~ msgstr "Spusť testy"
+
+#, fuzzy
+#~ msgid "Show Stack Trace"
+#~ msgstr "Zobraz kontrolu syntaxe"
+
+#, fuzzy
+#~ msgid "Evaluate Expression..."
+#~ msgstr "&Regulární výraz"
+
+#, fuzzy
+#~ msgid "Plug-in List (CPAN)"
+#~ msgstr "Seznam doplňků (CPAN)"
+
+#, fuzzy
+#~ msgid "Edit My Plug-in"
+#~ msgstr "Edituj mé doplňky"
+
+#, fuzzy
+#~ msgid "Could not find the Padre::Plugin::My plug-in"
+#~ msgstr "Nelze nalézt Padre::Plugin::Můj doplněk"
+
+#, fuzzy
+#~ msgid "Reload My Plug-in"
+#~ msgstr "Nahrej můj doplněk"
+
+#, fuzzy
+#~ msgid "Reset My plug-in"
+#~ msgstr "Resetuj můj doplněk"
+
+#, fuzzy
+#~ msgid "Reload All Plug-ins"
+#~ msgstr "Nahrej všechny doplňky"
+
+#, fuzzy
+#~ msgid "Reload all plug-ins from disk"
+#~ msgstr "Nahrej všechny doplňky"
+
+#, fuzzy
+#~ msgid "(Re)load Current Plug-in"
+#~ msgstr "Nahrej aktuální doplněk"
+
+#~ msgid "Install CPAN Module"
+#~ msgstr "Instaluj CPAN modul"
+
+#, fuzzy
+#~ msgid "Install a Perl module from CPAN"
+#~ msgstr "Instaluj CPAN modul"
+
+#~ msgid "Install Remote Distribution"
+#~ msgstr "Instaluj vzdálenou distribuci"
+
+#~ msgid "Open CPAN Config File"
+#~ msgstr "Otevři CPAN konfigurační soubor"
+
+#, fuzzy
+#~ msgid "Oldest Visited File"
+#~ msgstr "Poslední otevřený"
+
+#, fuzzy
+#~ msgid "Next File"
+#~ msgstr "Nový soubor"
+
+#, fuzzy
+#~ msgid "Previous File"
+#~ msgstr "Předchozí"
+
+#, fuzzy
+#~ msgid "No diagnostics available for this error."
+#~ msgstr "K této chybě neexistují diagnostiky!"
+
+#~ msgid "Diagnostics"
+#~ msgstr "Diagnostiky"
+
+#, fuzzy
+#~ msgid "Errors"
+#~ msgstr "Chyba"
+
+#, fuzzy
+#~ msgid "Open Warning"
+#~ msgstr "Varování"
+
+#, fuzzy
+#~ msgid "Reload all files"
+#~ msgstr "Obnov soubor"
+
+#, fuzzy
+#~ msgid "Reload some"
+#~ msgstr "Obnov soubor"
+
+#~ msgid "Could not reload file: %s"
+#~ msgstr "Nelze obnovit soubor: %s"
+
+#~ msgid "Save file as..."
+#~ msgstr "Ulož jako..."
+
+#, fuzzy
+#~ msgid "Stats"
+#~ msgstr "Stav"
+
+#, fuzzy
+#~ msgid "&Find Next"
+#~ msgstr "&Najdi další"
+
+#, fuzzy
+#~ msgid "Find &Text:"
+#~ msgstr "Najdi text:"
+
+#~ msgid "Not a valid search"
+#~ msgstr "Neplatné hledání"
+
+#, fuzzy
+#~ msgid "Action"
+#~ msgstr "Zobraz funkce"
+
+#~ msgid "Simulate Crashing Bg Task"
+#~ msgstr "Simuluj pád úlohy na pozadí"
+
+#, fuzzy
+#~ msgid "Rename Variable"
+#~ msgstr "Lexikální přejmenování proměnných"
+
+#~ msgid "%s worker threads are running.\n"
+#~ msgstr "%s vykonávaná vlákna probíhají.\n"
+
+#~ msgid "Currently, no background tasks are being executed.\n"
+#~ msgstr "Nyní neprobíhají žádné úkoly na pozadí.\n"
+
+#~ msgid "The following tasks are currently executing in the background:\n"
+#~ msgstr "Následující úlohy jsou spuštěny na pozadí:\n"
+
+#~ msgid ""
+#~ "- %s of type '%s':\n"
+#~ "  (in thread(s) %s)\n"
+#~ msgstr ""
+#~ "- %s typu '%s':\n"
+#~ "  (ve vláknech %s)\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Additionally, there are %s tasks pending execution.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Další úkoly %s čekají na provedení.\n"
+
+#~ msgid "Lines: %d"
+#~ msgstr "Řádky: %d"
+
+#~ msgid "Chars without spaces: %s"
+#~ msgstr "Znaků bez mezer: %s"
+
+#~ msgid "Chars with spaces: %d"
+#~ msgstr "Znaků s mezerami: %d"
+
+#~ msgid "Newline type: %s"
+#~ msgstr "Typ nového řádku: %s"
+
+#~ msgid "File changed on disk since last saved. Do you want to reload it?"
+#~ msgstr "Soubor se změnil od posledního uložení. Chcete ho obnovit?"
+
+#, fuzzy
+#~ msgid "&Close\tCtrl+W"
+#~ msgstr "&Zavřít\tCtrl-W"
+
+#, fuzzy
+#~ msgid "&Open\tCtrl+O"
+#~ msgstr "&Otevřít...\tCtrl-O"
+
+#, fuzzy
+#~ msgid "E&xit\tCtrl+X"
+#~ msgstr "Vyj&mi\tCtrl-X"
+
+#~ msgid "Select all\tCtrl-A"
+#~ msgstr "Označ vše\tCtrl-A"
+
+#~ msgid "&Copy\tCtrl-C"
+#~ msgstr "&Kopíruj\tCtrl-C"
+
+#~ msgid "Cu&t\tCtrl-X"
+#~ msgstr "Vyj&mi\tCtrl-X"
+
+#~ msgid "&Paste\tCtrl-V"
+#~ msgstr "&Vlož\tCtrl-V"
+
+#~ msgid "&Toggle Comment\tCtrl-Shift-C"
+#~ msgstr "&Zobraz komentář\tCtrl-Shift-C"
+
+#~ msgid "&Comment Selected Lines\tCtrl-M"
+#~ msgstr "&Zakomentuj vybrané řádky\tCtrl-M"
+
+#~ msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+#~ msgstr "&Odkomentuj vybrané řádky\tCtrl-Shift-M"
+
+#~ msgid "&Split window"
+#~ msgstr "&Rozděl okno"
+
+#~ msgid "Term:"
+#~ msgstr "Term:"
+
+#~ msgid "Dir:"
+#~ msgstr "Adresář:"
+
+#~ msgid "Ack"
+#~ msgstr "Ack"
+
+#~ msgid "Error List"
+#~ msgstr "Seznam chyb"
+
+#~ msgid "Please choose a different name."
+#~ msgstr "Prosím zvolte jiné jméno."
+
+#~ msgid "A file with the same name already exists in this directory"
+#~ msgstr "Soubor tohoto jména v adresáři již existuje"
+
+#~ msgid "Move here"
+#~ msgstr "Přesuň sem"
+
+#~ msgid "folder"
+#~ msgstr "adresář"
+
+#~ msgid "Rename / Move"
+#~ msgstr "Přejmenuj/Přesuň"
+
+#~ msgid "Move to trash"
+#~ msgstr "Přesuň do koše"
+
+#~ msgid "Are you sure you want to delete this item?"
+#~ msgstr "Jste si jistí, že chcete smazat tuto položku?"
+
+#, fuzzy
+#~ msgid "Show hidden files"
+#~ msgstr "Zobraz skryté soubory"
+
+#, fuzzy
+#~ msgid "Skip hidden files"
+#~ msgstr "Přeskoč skryté soubory:"
+
+#~ msgid "Skip CVS/.svn/.git/blib folders"
+#~ msgstr "Přeskoč CVS.svn/.git/blib adresáře"
+
+#, fuzzy
+#~ msgid "Change project directory"
+#~ msgstr "Změňte adresář projektu"
+
+#~ msgid "Tree listing"
+#~ msgstr "Strom"
+
+#, fuzzy
+#~ msgid "Navigate"
+#~ msgstr "Naviguj"
+
+#~ msgid "Change listing mode view"
+#~ msgstr "Změň výpis zobrazení"
+
+#~ msgid "&Goto Line"
+#~ msgstr "Přejdi na řádku"
+
+#, fuzzy
+#~ msgid "Convert EOL"
+#~ msgstr "Konvertuj EOL"
+
+#~ msgid "Insert From File..."
+#~ msgstr "Vlož ze souboru..."
+
+#, fuzzy
+#~ msgid "Show as hexa"
+#~ msgstr "Ukaž jako hexa"
+
+#~ msgid "New..."
+#~ msgstr "Nový..."
+
+#~ msgid "Test A Plugin From Local Dir"
+#~ msgstr "Testuj doplněk z lokálního adresáře"
+
+#~ msgid "GoTo Bookmark"
+#~ msgstr "Přejdi na záložku"
+
+#~ msgid "Skip VCS files"
+#~ msgstr "Přeskoč VCS soubory"
+
+#~ msgid "%s apparantly created. Do you want to open it now?"
+#~ msgstr "%s právě vytvořen. Chcete ho rovnou otevřít?"
+
+#~ msgid "Done"
+#~ msgstr "Hotovo"
+
+#~ msgid "&Use Regex"
+#~ msgstr "&Užij regulární výraz"
+
+#~ msgid "Close Window on &hit"
+#~ msgstr "Zavři okno &kliknutím"
+
+#~ msgid "%s occurences were replaced"
+#~ msgstr "%s výskytů nahrazeno"
+
+#~ msgid "Nothing to replace"
+#~ msgstr "Nic k nahrazení"
+
+#~ msgid "Cannot build regex for '%s'"
+#~ msgstr "Reg. výraz nejde pro '%s'"
+
+#, fuzzy
+#~ msgid "&Count All"
+#~ msgstr "&Sečti vše"
+
+#~ msgid "Found %d matching occurrences"
+#~ msgstr "Nalezeno %d výskytů"
+
+#~ msgid "Finished Searching"
+#~ msgstr "Dokončeno hledání"
+
+#~ msgid "Ping"
+#~ msgstr "Ping"
+
+#~ msgid "Enable logging"
+#~ msgstr "Povol logování"
+
+#~ msgid "Disable logging"
+#~ msgstr "Zakaž logování"
+
+#~ msgid "Enable trace when logging"
+#~ msgstr "Povol tracování s logováním"
