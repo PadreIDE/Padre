@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-28 00:35-0800\n"
+"POT-Creation-Date: 2011-02-28 11:43-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,18 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:413
 msgid "\".\" also matches newline"
+msgstr ""
+
+#: lib/Padre/Config.pm:416
+msgid ""
+"\"Open session\" will ask which session (set of files) to open when you "
+"launch Padre."
+msgstr ""
+
+#: lib/Padre/Config.pm:417
+msgid ""
+"\"Previous open files\" will remember the open files when you close Padre "
+"and open the same files next time you launch Padre."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:417
@@ -499,11 +511,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:511
+#: lib/Padre/Config.pm:513
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:512
+#: lib/Padre/Config.pm:514
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -981,7 +993,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:510
+#: lib/Padre/Config.pm:512
 msgid "Code Order"
 msgstr ""
 
@@ -1417,11 +1429,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:539
+#: lib/Padre/Config.pm:541
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:540
+#: lib/Padre/Config.pm:542
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1466,7 +1478,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:550
+#: lib/Padre/Config.pm:552
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -2336,11 +2348,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:723
+#: lib/Padre/Config.pm:725
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:722
+#: lib/Padre/Config.pm:724
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2809,7 +2821,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:721
+#: lib/Padre/Config.pm:723
 msgid "No Autoindent"
 msgstr ""
 
@@ -3488,7 +3500,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:549
+#: lib/Padre/Config.pm:551
 msgid "Project Tools (Left)"
 msgstr ""
 
