@@ -413,6 +413,8 @@ setting(
 		'nothing' => _T('No open files'),
 		'session' => _T('Open session'),
 	},
+	help    => _T('"Open session" will ask which session (set of files) to open when you launch Padre.')
+	         . _T('"Previous open files" will remember the open files when you close Padre and open the same files next time you launch Padre.'),
 );
 
 # How many times has the user run Padre?
