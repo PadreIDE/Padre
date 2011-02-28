@@ -9,10 +9,24 @@ use File::Spec ();
 # a few sample strings some of them disappeard from messages.pot during the release of 0.82
 # See ticket #1132
 my @strings = (
-	'Dump the Padre object to STDOUT',
-	'Full Screen',
-	'Check for Common (Beginner) Errors',
-	'Run Script',
+	q(msgid "Open in File Browser"),                  # File/Open/
+	q(msgid "Clear Selection Marks"),                 # Edit/Select/
+	q(msgid "&Full Screen"),                          # View/
+	q(msgid "Quick Menu Access..."),                  # Search/
+	q(msgid "Check for Common (Beginner) Errors"),    # Perl/
+	q(msgid "Find Unmatched Brace"),                  # Perl/
+	q(msgid "Move POD to __END__"),                   # Refactor/
+	q(msgid "Run Script"),                            # Run/
+	q(msgid "Dump the Padre object to STDOUT"),       # internal
+
+	q("The file %s you are trying to open is %s bytes large. It is over the "),            # Padre::Document
+	q("arbitrary file size limit of Padre which is currently %s. Opening this file "),
+	q("may reduce performance. Do you still want to open the file?"),
+
+	q(msgid "%s - Crashed while instantiating: %s"),      # Padre::PluginManager
+
+	q(msgid "Default word wrap on for each file"),        # Padre::Wx::Dialog::Preferences.pm
+	q(msgid "Any non-word character"),                    #: lib/Padre/Wx/Dialog/RegexEditor.pm:78
 );
 
 plan tests => scalar @strings;
