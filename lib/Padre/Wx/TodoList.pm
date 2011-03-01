@@ -248,9 +248,12 @@ sub refresh {
 	my $regexp = $current->config->todo_regexp;
 	my $text   = $document->text_get;
 	my @items  = ();
-	while ( $text =~ /$regexp/gim ) {
-		push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
-	}
+	eval {
+		while ( $text =~ /$regexp/gim ) {
+			push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
+		}
+	};
+	$self->main->error('foo');
 	while ( $text =~ /#\s*(Ticket #\d+.*?)$/gim ) {
 		push @items, { text => $1, 'pos' => pos($text) };
 	}
