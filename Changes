@@ -21,6 +21,10 @@ next production release, and synchronise their release to the Padre schedule.
     - The Recent Files menu is now generated in a background task to prevent
       long IDE blocking, such as when checking -f over a network mount (ADAMK)
     - Fix #1140: RegEx editor reversed flags when inserting (SEWI)
+    - Padre::PluginHandle will parse_variable the version of crashed or
+      incompatible plugins rather than return '???' (ADAMK)
+    - The PluginManager dialog can now correctly distinguish between broken
+      plugins and merely incompatible plugins (ADAMK)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

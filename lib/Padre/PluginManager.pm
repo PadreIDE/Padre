@@ -430,7 +430,11 @@ again when the editor is restarted.
 sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
-	return grep { $plugins->{$_}->status eq 'error' } sort keys %$plugins;
+	return grep {
+		$plugins->{$_}->status eq 'error'
+		or
+		$plugins->{$_}->status eq 'incompatible'
+	} sort keys %$plugins;
 }
 
 
@@ -566,18 +570,20 @@ sub _load_plugin {
 	if ($compatible) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Not compatible with Padre version %s - %s"),
+				Wx::gettext("%s - Not compatible with Padre %s - %s"),
 				$module,
 				$Padre::PluginManager::VERSION,
 				$compatible,
 			)
 		);
-		$plugin->status('error');
+		$plugin->status('incompatible');
 		return;
 	}
 
 	# Attempt to instantiate the plug-in
-	my $object = eval { $module->new( $self->{parent} ); };
+	my $object = eval {
+		$module->new( $self->{parent} );
+	};
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
@@ -824,14 +830,14 @@ sub plugin_event {
 		my $plugin = $self->{plugins}->{$module};
 		if ( !ref($plugin) ) {
 
-			#			$self->_error($plugin,Wx::gettext('Not found in plugin list!'));
+			# $self->_error($plugin,Wx::gettext('Not found in plugin list!'));
 			next;
 		}
 
 		my $object = $plugin->{object};
 		if ( !ref($object) ) {
 
-			#			$self->_error($plugin,Wx::gettext('Plugin object missing!'));
+			# $self->_error($plugin,Wx::gettext('Plugin object missing!'));
 			next;
 		}
 
