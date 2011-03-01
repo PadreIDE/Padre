@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-01 00:10-0800\n"
+"POT-Creation-Date: 2011-03-01 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,11 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/WizardSelector.pm:174
 #, perl-format
 msgid "%s has no constructor"
+msgstr ""
+
+#: lib/Padre/Wx/TodoList.pm:256
+#, perl-format
+msgid "%s in TODO regex, check your config."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:134
