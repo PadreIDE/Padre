@@ -7,6 +7,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Spec     ();
+use Scalar::Util   ();
 use Padre::Project ();
 
 our $VERSION = '0.83';
@@ -131,10 +132,16 @@ sub from_file {
 		pop @d;
 	}
 
-	# Is the file inside a class we have loaded already.
+	# Is the file inside a project we have loaded already.
 	# This should save a ton of filesystem calls when opening files.
 	foreach my $root ( sort keys %$self ) {
-		next if $self->{$root}->isa('Padre::Project::Null');
+		my $project = $self->{$root} or next;
+
+		# Skip baseline projects without a padre.yml file as we
+		# can't be confident enough that they are actually correct.
+		if ( Scalar::Util::blessed($project) eq 'Padre::Project' ) {
+			next unless $project->padre_yml;
+		}
 
 		# Split into parts (check volume before we bother to split dir)
 		my ( $pv, $pd, $pf ) = File::Spec->splitpath( $root, 1 );
@@ -151,7 +158,7 @@ sub from_file {
 			next unless $n == $#pd;
 
 			# Found a match, return the cached project
-			return $self->{$root};
+			return $project;
 		}
 	}
 
