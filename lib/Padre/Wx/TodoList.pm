@@ -253,7 +253,7 @@ sub refresh {
 			push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
 		}
 	};
-	$self->main->error('foo');
+	$self->main->error(sprintf(Wx::gettext('%s in TODO regex, check your config.'),$@)) if $@;
 	while ( $text =~ /#\s*(Ticket #\d+.*?)$/gim ) {
 		push @items, { text => $1, 'pos' => pos($text) };
 	}
