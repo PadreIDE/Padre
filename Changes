@@ -70,7 +70,7 @@ next production release, and synchronise their release to the Padre schedule.
 0.81 Development version, not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
       instead of "thread" (e.g. start_thread becomes start_worker). This
-      future-proofs the API against a future alternative task manager backend
+      future-proofs the API against potential alternative task manager backend
       implementations that do not use threads. All existing Padre::Task code
       should continue to work, but plugin authors may be impacted by the
       $COMPATIBLE bump. An unchanged new release with the dependency version
