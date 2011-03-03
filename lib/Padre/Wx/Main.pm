@@ -5053,8 +5053,8 @@ sub on_preferences {
 	my %old_highlighters = Padre::MimeTypes->get_current_highlighters;
 
 	require Padre::Wx::Dialog::Preferences;
-	my $prefDlg = Padre::Wx::Dialog::Preferences->new;
-	if ( $prefDlg->run($self) ) {
+	my $preferences_dialog = Padre::Wx::Dialog::Preferences->new;
+	if ( $preferences_dialog->run($self) ) {
 		my %mime_types; # all the mime-types of currently open files
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
