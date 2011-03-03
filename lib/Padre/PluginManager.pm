@@ -430,11 +430,7 @@ again when the editor is restarted.
 sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
-	return grep {
-		$plugins->{$_}->status eq 'error'
-		or
-		$plugins->{$_}->status eq 'incompatible'
-	} sort keys %$plugins;
+	return grep { $plugins->{$_}->status eq 'error' or $plugins->{$_}->status eq 'incompatible' } sort keys %$plugins;
 }
 
 
@@ -581,9 +577,7 @@ sub _load_plugin {
 	}
 
 	# Attempt to instantiate the plug-in
-	my $object = eval {
-		$module->new( $self->{parent} );
-	};
+	my $object = eval { $module->new( $self->{parent} ); };
 	if ($@) {
 		$plugin->errstr(
 			sprintf(

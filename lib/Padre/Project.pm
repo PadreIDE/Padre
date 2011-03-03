@@ -222,7 +222,8 @@ sub ignore_rule {
 		if ( $_->{name} =~ /^\./ ) {
 			return 0;
 		}
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
+
 			# On Windows only ignore files or directories that
 			# begin or end with a dollar sign as "hidden". This is
 			# mainly relevant if we are opening some project across
@@ -251,7 +252,8 @@ sub ignore_skip {
 		'(?:^|\\/)\\.',
 	];
 
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
+
 		# On Windows only ignore files or directories that begin or end
 		# with a dollar sign as "hidden". This is mainly relevant if
 		# we are opening some project across a UNC path on more recent

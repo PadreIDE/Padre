@@ -37,44 +37,44 @@ sub new {
 
 # Fetch the state data at the last moment, to maximise accuracy.
 sub prepare {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Save the list of open files
 	require Padre::Current;
 	$self->{open} = [
 		grep { defined $_ }
-		map { $_->filename }
-		Padre::Current->main->documents
+		map  { $_->filename } Padre::Current->main->documents
 	];
 
 	# Load the last 100 recent files
 	require Padre::DB;
-	$self->{history} = Padre::DB::History->recent('files', 100);
+	$self->{history} = Padre::DB::History->recent( 'files', 100 );
 
 	return 1;
 }
 
 sub run {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Index the open files
-	my %skip = map { $_ => 1 } @{$self->{open}};
+	my %skip = map { $_ => 1 } @{ $self->{open} };
 
 	# Iterate through our candidates
 	my @recent = ();
-	foreach my $file ( @{$self->{history}} ) {
+	foreach my $file ( @{ $self->{history} } ) {
 		next if $skip{$file};
 		TRACE("Checking $file\n") if DEBUG;
 
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
-			TRACE(__PACKAGE__ . ' task cancelled') if DEBUG;
+			TRACE( __PACKAGE__ . ' task cancelled' ) if DEBUG;
 			return 1;
 		}
 
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
+
 			# NOTE: Does anyone know a smarter way to do this?
 			next unless -f $file;
 		} else {
@@ -105,14 +105,14 @@ sub run {
 }
 
 sub finish {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# If we ran successfully, hand off the list of known-good files
 	# to the menu to populate it.
 	if ( $self->{recent} ) {
 		require Padre::Current;
-		Padre::Current->main->menu->file->refill_recent($self->{recent});
+		Padre::Current->main->menu->file->refill_recent( $self->{recent} );
 	}
 
 	return 1;

@@ -74,7 +74,7 @@ sub new {
 	unless ( defined $self->remove ) {
 		die "Missing or invalid path";
 	}
-	unless ( File::Spec->file_name_is_absolute($self->remove) ) {
+	unless ( File::Spec->file_name_is_absolute( $self->remove ) ) {
 		die "File path is not absolute";
 	}
 
@@ -114,9 +114,7 @@ sub run {
 
 	# Hand off to the specialist module
 	require File::Remove;
-	$self->{removed} = [
-		File::Remove::remove( \1, $path )
-	];
+	$self->{removed} = [ File::Remove::remove( \1, $path ) ];
 
 	return 1;
 }

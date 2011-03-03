@@ -359,20 +359,20 @@ sub _initialize {
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
 
-	__PACKAGE__->add_highlighter( 
+	__PACKAGE__->add_highlighter(
 		'stc',
-		_T('Scintilla'), 
-		_T('Fast but might be out of date') 
+		_T('Scintilla'),
+		_T('Fast but might be out of date')
 	);
 
 	foreach my $mime ( keys %MIME_TYPES ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
 	}
 
-	__PACKAGE__->add_highlighter( 
+	__PACKAGE__->add_highlighter(
 		'stc',
-		_T('Scintilla'), 
-		_T('Fast but might be out of date') 
+		_T('Scintilla'),
+		_T('Fast but might be out of date')
 	);
 
 
@@ -605,8 +605,9 @@ sub get_mime_types {
 # return the display-names of the MIME types ordered according to the display names
 sub get_mime_type_names {
 	my $self = shift;
+
 	#return [ map { Wx::gettext( $MIME_TYPES{$_}{name} ) } @{ $self->get_mime_types } ]; # #BUG 1137
-	return [ map { $MIME_TYPES{$_}{name}  } @{ $self->get_mime_types } ]; # Need to be checked with non Western languages
+	return [ map { $MIME_TYPES{$_}{name} } @{ $self->get_mime_types } ]; # Need to be checked with non Western languages
 
 }
 

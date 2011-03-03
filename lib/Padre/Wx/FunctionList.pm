@@ -87,7 +87,7 @@ sub new {
 	# Handle double click on list.
 	# Overwrite to avoid stealing the focus back from the editor.
 	# On Windows this appears to kill the double-click feature entirely.
-	unless ( Padre::Constant::WXWIN32 ) {
+	unless (Padre::Constant::WXWIN32) {
 		Wx::Event::EVT_LEFT_DCLICK(
 			$self->{list},
 			sub {

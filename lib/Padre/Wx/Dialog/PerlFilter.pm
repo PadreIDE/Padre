@@ -205,8 +205,8 @@ sub show {
 		my $editor = $self->current->editor;
 
 		# Insert sample, but do not overwrite an exisiting filter source
-		$self->{source}->ChangeValue(Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n"))
-		 unless $self->{source}->GetValue;
+		$self->{source}->ChangeValue( Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n") )
+			unless $self->{source}->GetValue;
 
 		if ($editor) {
 			my $selection        = $editor->GetSelectedText;

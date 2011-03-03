@@ -11,9 +11,9 @@ our $VERSION = '0.83';
 
 sub colorize {
 	TRACE("PPILexer colorize called") if DEBUG;
-	my $self     = shift;
-	
-	my $document  = Padre::Current->document;
+	my $self = shift;
+
+	my $document = Padre::Current->document;
 	my $editor   = $document->editor;
 	my $text     = $document->text_get or return;
 

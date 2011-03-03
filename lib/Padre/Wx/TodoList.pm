@@ -249,11 +249,12 @@ sub refresh {
 	my $text   = $document->text_get;
 	my @items  = ();
 	eval {
-		while ( $text =~ /$regexp/gim ) {
+		while ( $text =~ /$regexp/gim )
+		{
 			push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
 		}
 	};
-	$self->main->error(sprintf(Wx::gettext('%s in TODO regex, check your config.'),$@)) if $@;
+	$self->main->error( sprintf( Wx::gettext('%s in TODO regex, check your config.'), $@ ) ) if $@;
 	while ( $text =~ /#\s*(Ticket #\d+.*?)$/gim ) {
 		push @items, { text => $1, 'pos' => pos($text) };
 	}

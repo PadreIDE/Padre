@@ -349,8 +349,8 @@ sub _refresh_list {
 	my $list = $self->_list;
 	$list->DeleteAllItems;
 	foreach my $session ( reverse @sessions ) {
-		my $name   = $session->name;
-		my $descr  = $session->description;
+		my $name  = $session->name;
+		my $descr = $session->description;
 		require POSIX;
 		my $update = POSIX::strftime(
 			'%Y-%m-%d %H:%M:%S',

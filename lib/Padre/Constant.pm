@@ -133,6 +133,7 @@ sub DISTRO {
 	return $DISTRO if defined $DISTRO;
 
 	if (WIN32) {
+
 		# Inherit from the main Windows classification
 		require Win32;
 		$DISTRO = uc Win32::GetOSName();
@@ -145,8 +146,9 @@ sub DISTRO {
 		# Try to identify a more specific linux distribution
 		local $@;
 		eval {
-			if ( open my $lsb_file, '<', '/etc/lsb-release' ) {
-				while ( <$lsb_file> ) {
+			if ( open my $lsb_file, '<', '/etc/lsb-release' )
+			{
+				while (<$lsb_file>) {
 					next unless /^DISTRIB_ID\=(.+?)[\r\n]/;
 					if ( $1 eq 'Ubuntu' ) {
 						$DISTRO = 'UBUNTU';

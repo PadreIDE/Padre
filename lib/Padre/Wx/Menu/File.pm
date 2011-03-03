@@ -356,7 +356,7 @@ sub refill_recent {
 
 	# Repopulate with the new files
 	foreach my $i ( 1 .. 9 ) {
-		my $file = $files->[$i - 1] or last;
+		my $file = $files->[ $i - 1 ] or last;
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$recentfiles->Append( -1, "&$i. $file" ),

@@ -170,10 +170,10 @@ sub version {
 
 	# Intuit the version by reading the actual file
 	require Class::Inspector;
-	my $file = Class::Inspector->resolved_filename($self->class);
-	if ( $file ) {
+	my $file = Class::Inspector->resolved_filename( $self->class );
+	if ($file) {
 		require Padre::Util;
-		my $version = Padre::Util::parse_variable($file, 'VERSION');
+		my $version = Padre::Util::parse_variable( $file, 'VERSION' );
 		return $version if $version;
 	}
 

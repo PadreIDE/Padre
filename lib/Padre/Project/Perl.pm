@@ -94,6 +94,7 @@ sub version {
 sub ignore_rule {
 	my $super = shift->SUPER::ignore_rule;
 	return sub {
+
 		# Do the checks from our parent
 		return 0 unless $super->();
 
