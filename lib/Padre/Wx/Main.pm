@@ -1330,153 +1330,87 @@ Sets or updates the Window title.
 =cut
 
 sub refresh_title {
-        my $self     = shift;
-        my $config   = $self->{config};
-        my $current  = $self->current;
-        my %variable = (
-                '%' => '%',
-                'v' => $Padre::VERSION,
-                'f' => '',             # Initialize space for filename
-                'b' => '',             # Initialize space for filename - basename
-                'd' => '',             # Initialize space for filename - dirname
-                'F' => '',             # Initialize space for filename relative to project dir
-                'p' => '',             # Initialize space for project name
-        );
+	my $self = shift;
+	return if $self->locked('REFRESH');
 
-        # We may run within window start-up, there may be no "current" or
-        # "document" or "document->file":
-        if (    defined $current
-                and defined $current->document
-                and defined $current->document->file )
-        {
-                my $document = $current->document;
-                my $file     = $document->file;
-                $variable{'f'} = $file->{filename};
-                $variable{'b'} = $file->basename;
-                $variable{'d'} = $file->dirname;
-                $variable{'F'} = $file->{filename};
-                my $project_dir = $document->project_dir;
-                if ( defined $project_dir ) {
-                        $project_dir = quotemeta $project_dir;
-                        $variable{'F'} =~ s/^$project_dir//;
-                }
-        }
+	# Get the window title template string
+	my $current = Padre::Current::_CURRENT(@_);
+	my $config  = $current->config;
+	my $title   = $config->main_title || 'Padre %v';
 
-        # Fill in the session, if any
-        if ( defined $self->ide->{session} ) {
-                my ($session) = Padre::DB::Session->select(
-                        'where id = ?', $self->ide->{session},
-                );
-                $variable{'p'} = $session->name;
-        }
+	# Populate any variables used in the template on demand,
+	# avoiding potentially expensive operations unless needed.
+	my %variable = (
+		'%' => '%',
+		'v' => $Padre::VERSION,
+	);
+	foreach my $char ( $title =~ /\%(.)/g ) {
+		next if exists $variable{$char};
+		
+		if ( $char eq 'p' ) {
 
-        # Keep it for later usage
-        $self->{title} = $config->main_title;
+			# Fill in the session name, if any
+			if ( defined $self->ide->{session} ) {
+				my ($session) = Padre::DB::Session->select(
+					'where id = ?', $self->ide->{session},
+				);
+				$variable{p} = $session->name;
+			} else {
+				$variable{p} = '';
+			}
+			next;
+		}
 
-        my $variables = join '', keys %variable;
+		# The other variables are all based on the filename
+		my $document = $current->document;
+		my $file = $document->file if defined $document;
+		
+		unless (defined $file) {
+			@variable{ qw(f b d F) } = ('') x 4;
+			next;
+		}
 
-        $self->{title} =~ s/\%([$variables])/$variable{$1}/g if $variables;
+		if ( $char eq 'b' ) {
+			$variable{b} = $file->basename;
+		} elsif ( $char eq 'd' ) {
+			$variable{d} = $file->dirname;
+		} elsif ( $char eq 'f' ) {
+			$variable{f} = $file->{filename};
+		} elsif ( $char eq 'F' ) {
 
-        unless ( defined $self->{title} ) {
-                $self->{title} = "Padre $Padre::VERSION";
-        }
+			# Filename relative to the project root
+			$variable{F} = $file->{filename};
+			my $project_dir = $document->project_dir;
+			if ( defined $project_dir ) {
+				$project_dir = quotemeta $project_dir;
+				$variable{F} =~ s/^$project_dir//;
+			}
+		} else {
+			$variable{$char} = '%' . $char;
+		}
+	}
 
-        require Padre::Util::SVN;
-        my $revision = Padre::Util::SVN::padre_revision();
-        if ( defined $revision ) {
-                $self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
-        }
+	# Process the template into the final string
+	$title =~ s/\%(.)/$variable{$1}/g;
 
-        if ( $self->GetTitle ne $self->{title} ) {
+	# Additional information if we are running the developer version
+	require Padre::Util::SVN;
+	my $revision = Padre::Util::SVN::padre_revision();
+	if ( defined $revision ) {
+		$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
+	}
 
-                # Push the title to the window
-                $self->SetTitle( $self->{title} );
+	unless ( $self->GetTitle eq $title ) {
 
-                # Push the title to the process list for better identification
-                $0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
-        }
+		# Push the title to the window
+		$self->SetTitle($title);
 
-        return;
+		# Push the title to the process list for better identification
+		$0 = $title; ## no critic (RequireLocalizedPunctuationVars)
+	}
+
+	return;
 }
-
-# sub refresh_title {
-	# my $self = shift;
-	# return if $self->locked('REFRESH');
-# 
-	# # Get the window title template string
-	# my $current = Padre::Current::_CURRENT(@_);
-	# my $config  = $current->config;
-	# my $title   = $config->main_title || 'Padre %v';
-# 
-	# # Populate any variables used in the template on demand,
-	# # avoiding potentially expensive operations unless needed.
-	# my %variable = (
-		# '%' => '%',
-		# 'v' => $Padre::VERSION,
-	# );
-	# foreach my $char ( $title =~ /\%(.)/g ) {
-		# next if exists $variable{$char};
-		# 
-		# if ( $char eq 'p' ) {
-# 
-			# # Fill in the session name, if any
-			# if ( defined $self->ide->{session} ) {
-				# my ($session) = Padre::DB::Session->select(
-					# 'where id = ?', $self->ide->{session},
-				# );
-				# $variable{p} = $session->name;
-			# } else {
-				# $variable{p} = '';
-			# }
-			# next;
-		# }
-# 
-		# # The other variables are all based on the filename
-		# my $document = $current->document or next;
-		# my $file = $document->file;
-		# next unless defined $file;
-# 
-		# if ( $char eq 'b' ) {
-			# $variable{b} = $file->basename;
-		# } elsif ( $char eq 'd' ) {
-			# $variable{d} = $file->dirname;
-		# } elsif ( $char eq 'f' ) {
-			# $variable{f} = $file->{filename};
-		# } elsif ( $char eq 'F' ) {
-# 
-			# # Filename relative to the project root
-			# $variable{F} = $file->{filename};
-			# my $project_dir = $document->project_dir;
-			# if ( defined $project_dir ) {
-				# $project_dir = quotemeta $project_dir;
-				# $variable{F} =~ s/^$project_dir//;
-			# }
-		# } else {
-			# $variable{$char} = '%' . $char;
-		# }
-	# }
-# 
-	# # Process the template into the final string
-	# $title =~ s/\%(.)/$variable{$1}/g;
-# 
-	# # Additional information if we are running the developer version.
-	# require Padre::Util::SVN;
-	# my $revision = Padre::Util::SVN::padre_revision();
-	# if ( defined $revision ) {
-		# $title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
-	# }
-# 
-	# unless ( $self->GetTitle eq $title ) {
-# 
-		# # Push the title to the window
-		# $self->SetTitle($title);
-# 
-		# # Push the title to the process list for better identification
-		# $0 = $title; ## no critic (RequireLocalizedPunctuationVars)
-	# }
-# 
-	# return;
-# }
 
 =pod
 
@@ -1648,13 +1582,15 @@ Force a refresh of the function list on the right.
 # eliminated ?
 sub refresh_functions {
 	my $self = shift;
-	
+
 	return unless $self->has_functions;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
+	
 	my @windows = @_;
 	push @windows, $self->current unless @windows;
 	$self->functions->refresh(@windows);
+	
 	return;
 }
 
@@ -1663,10 +1599,13 @@ sub refresh_functions {
 # eliminated ?
 sub refresh_todo {
 	my $self = shift;
+	
 	return unless $self->has_todo;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{todo}->IsChecked;
+	
 	$self->todo->refresh(@_);
+	
 	return;
 }
 
