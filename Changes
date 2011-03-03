@@ -31,6 +31,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre crashed on error in TODO list regex, fixed (FENDERSON, SEWI)
     - Eliminate crash in PPI Standard Syntax highlighter #1109 (SZABGAB)
     - Eliminate crash when opening recent file #1148 (SZABGAB)
+    - Stop jumping to first character when Goto "string" #1149 (SZABGAB)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
