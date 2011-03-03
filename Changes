@@ -34,6 +34,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Stop jumping to first character when Goto "string" #1149 (SZABGAB)
     - After the making changes in the Advanced Preference Editor
       apply those changes. (fixing #1150) (SZABGAB)
+    - Fix #1153: %p, %f, etc. do not work for in window title (ZENOG)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
