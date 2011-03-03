@@ -1577,9 +1577,6 @@ Force a refresh of the function list on the right.
 
 =cut
 
-# TO DO now on every ui change (move of the mouse) we refresh
-# this even though that should not be necessary can that be
-# eliminated ?
 sub refresh_functions {
 	my $self = shift;
 
@@ -1594,9 +1591,16 @@ sub refresh_functions {
 	return;
 }
 
-# TO DO now on every ui change (move of the mouse) we refresh
-# this even though that should not be necessary can that be
-# eliminated ?
+=pod
+
+=head3 C<refresh_todo>
+
+    $main->refresh_todo;
+
+Force a refresh of the TODO list on the right.
+
+=cut
+
 sub refresh_todo {
 	my $self = shift;
 	
