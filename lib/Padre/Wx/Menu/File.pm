@@ -268,6 +268,7 @@ sub new {
 	# We'll do one later anyway, and the list is premature at this point.
 	# NOTE: Do not ignore the above note. I mean it --ADAMK
 	# $self->refresh_recent;
+	# open_recent_files - the menu is populated in ->refill_recent
 
 	$self->AppendSeparator;
 
@@ -374,7 +375,7 @@ sub on_recent {
 
 	# The file will most likely exist
 	if ( -f $file ) {
-		$self->setup_editors($file);
+		$self->{main}->setup_editors($file);
 		return;
 	}
 
