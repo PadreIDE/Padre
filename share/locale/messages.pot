@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-01 08:10-0800\n"
+"POT-Creation-Date: 2011-03-03 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgid ""
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:417
+#: lib/Padre/Config.pm:418
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -48,27 +48,27 @@ msgstr ""
 msgid "%s (%s results)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:590
+#: lib/Padre/PluginManager.pm:584
 #, perl-format
 msgid "%s - Crashed while instantiating: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:548
+#: lib/Padre/PluginManager.pm:544
 #, perl-format
 msgid "%s - Crashed while loading: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:600
+#: lib/Padre/PluginManager.pm:594
 #, perl-format
 msgid "%s - Failed to instantiate plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:560
+#: lib/Padre/PluginManager.pm:556
 #, perl-format
 msgid "%s - Not a Padre::Plugin subclass"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:573
+#: lib/Padre/PluginManager.pm:569
 #, perl-format
 msgid "%s - Not compatible with Padre %s - %s"
 msgstr ""
@@ -78,7 +78,7 @@ msgstr ""
 msgid "%s has no constructor"
 msgstr ""
 
-#: lib/Padre/Wx/TodoList.pm:256
+#: lib/Padre/Wx/TodoList.pm:257
 #, perl-format
 msgid "%s in TODO regex, check your config."
 msgstr ""
@@ -163,17 +163,17 @@ msgstr ""
 msgid "&Enable"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:228
+#: lib/Padre/Wx/Dialog/Goto.pm:234
 #, perl-format
 msgid "&Enter a line number between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:232
+#: lib/Padre/Wx/Dialog/Goto.pm:238
 #, perl-format
 msgid "&Enter a position between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:292
+#: lib/Padre/Wx/Menu/File.pm:293
 msgid "&File"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "(Since Perl %s)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:862
+#: lib/Padre/PluginManager.pm:856
 msgid "(core)"
 msgstr ""
 
@@ -516,11 +516,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:513
+#: lib/Padre/Config.pm:515
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:514
+#: lib/Padre/Config.pm:516
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -862,7 +862,7 @@ msgstr ""
 msgid "Character classes"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:230
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:236
 msgid "Character position"
 msgstr ""
 
@@ -998,7 +998,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:512
+#: lib/Padre/Config.pm:514
 msgid "Code Order"
 msgstr ""
 
@@ -1167,7 +1167,7 @@ msgstr ""
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:988
+#: lib/Padre/PluginManager.pm:982
 msgid "Could not locate project directory."
 msgstr ""
 
@@ -1286,12 +1286,12 @@ msgstr ""
 msgid "Current filename relative to project"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:229
+#: lib/Padre/Wx/Dialog/Goto.pm:235
 #, perl-format
 msgid "Current line number: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:233
+#: lib/Padre/Wx/Dialog/Goto.pm:239
 #, perl-format
 msgid "Current position: %s"
 msgstr ""
@@ -1434,11 +1434,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:541
+#: lib/Padre/Config.pm:543
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:542
+#: lib/Padre/Config.pm:544
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1483,7 +1483,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:552
+#: lib/Padre/Config.pm:554
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -1754,7 +1754,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:949
+#: lib/Padre/PluginManager.pm:943
 msgid "Error when calling menu for plug-in "
 msgstr ""
 
@@ -1923,7 +1923,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1010 lib/Padre/PluginManager.pm:1106
+#: lib/Padre/PluginManager.pm:1004 lib/Padre/PluginManager.pm:1100
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -1962,7 +1962,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:389
+#: lib/Padre/Wx/Menu/File.pm:390
 #, perl-format
 msgid "File %s not found."
 msgstr ""
@@ -2353,11 +2353,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:725
+#: lib/Padre/Config.pm:727
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:724
+#: lib/Padre/Config.pm:726
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2528,7 +2528,7 @@ msgid "Line break mode"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
-#: lib/Padre/Wx/Dialog/Goto.pm:226 lib/Padre/Wx/Dialog/Goto.pm:245
+#: lib/Padre/Wx/Dialog/Goto.pm:232 lib/Padre/Wx/Dialog/Goto.pm:251
 msgid "Line number"
 msgstr ""
 
@@ -2746,7 +2746,7 @@ msgstr ""
 msgid "Move POD to __END__"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:112
+#: lib/Padre/Wx/Directory.pm:114
 msgid "Move to other panel"
 msgstr ""
 
@@ -2826,7 +2826,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:723
+#: lib/Padre/Config.pm:725
 msgid "No Autoindent"
 msgstr ""
 
@@ -2880,7 +2880,7 @@ msgstr ""
 msgid "No file is open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:985 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/PluginManager.pm:979 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
@@ -2942,7 +2942,7 @@ msgstr ""
 msgid "Not a Perl document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:257
+#: lib/Padre/Wx/Dialog/Goto.pm:200 lib/Padre/Wx/Dialog/Goto.pm:263
 msgid "Not a positive number!"
 msgstr ""
 
@@ -3075,11 +3075,11 @@ msgstr ""
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:390
+#: lib/Padre/Wx/Menu/File.pm:391
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1060 lib/Padre/Wx/Main.pm:5439
+#: lib/Padre/PluginManager.pm:1054 lib/Padre/Wx/Main.pm:5439
 msgid "Open file"
 msgstr ""
 
@@ -3200,7 +3200,7 @@ msgstr ""
 msgid "Other search engine"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:266
+#: lib/Padre/Wx/Dialog/Goto.pm:272
 msgid "Out of range!"
 msgstr ""
 
@@ -3402,7 +3402,7 @@ msgstr ""
 msgid "Plug-in Tools"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1080
+#: lib/Padre/PluginManager.pm:1074
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
@@ -3411,12 +3411,12 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:873
+#: lib/Padre/PluginManager.pm:867
 #, perl-format
 msgid "Plugin %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:852
+#: lib/Padre/PluginManager.pm:846
 #, perl-format
 msgid "Plugin error on event %s: %s"
 msgstr ""
@@ -3493,7 +3493,7 @@ msgstr ""
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:272 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:274 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
@@ -3505,7 +3505,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:551
+#: lib/Padre/Config.pm:553
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -3995,7 +3995,7 @@ msgstr ""
 msgid "Script arguments:"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:81 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
+#: lib/Padre/Wx/Directory.pm:83 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
 #: lib/Padre/Wx/Dialog/Find.pm:78
 msgid "Search"
 msgstr ""
@@ -4803,7 +4803,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:618
+#: lib/Padre/MimeTypes.pm:619
 msgid "UNKNOWN"
 msgstr ""
 
@@ -4832,7 +4832,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:863 lib/Padre/Document/Perl.pm:579
+#: lib/Padre/PluginManager.pm:857 lib/Padre/Document/Perl.pm:579
 #: lib/Padre/Document/Perl.pm:911 lib/Padre/Document/Perl.pm:960
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
