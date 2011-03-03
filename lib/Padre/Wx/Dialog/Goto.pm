@@ -191,16 +191,17 @@ sub _on_ok_button {
 
 	# Fetch values
 	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
-	my $value   = $self->{goto_text}->GetValue;
+	my $value = $self->{goto_text}->GetValue;
 
 	# Destroy the dialog
 	$self->Hide;
 
-if ($value !~ m{^\d+$}) {
+	if ( $value !~ m{^\d+$} ) {
 		Padre::Current::_CURRENT->main->error( Wx::gettext('Not a positive number!') );
-		return; }
+		return;
+	}
 
-	my $editor    = $self->current->editor;
+	my $editor = $self->current->editor;
 
 	# Bounds checking
 	my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
