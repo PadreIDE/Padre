@@ -29,6 +29,7 @@ next production release, and synchronise their release to the Padre schedule.
       previously intuited projects without secondary evidence such as a 
       padre.yml file or a Makefile.PL (ADAMK)
     - Padre crashed on error in TODO list regex, fixed (FENDERSON, SEWI)
+    - Eliminate crash in PPI Standard Syntax highlighter #1109 (SZABGAB)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
