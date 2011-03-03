@@ -12,9 +12,9 @@ our $VERSION = '0.83';
 sub colorize {
 	TRACE("PPILexer colorize called") if DEBUG;
 	my $self     = shift;
-	my $current  = shift;
-	my $editor   = $current->editor;
-	my $document = $current->document;
+	
+	my $document  = Padre::Current->document;
+	my $editor   = $document->editor;
 	my $text     = $document->text_get or return;
 
 	# Flush old colouring
