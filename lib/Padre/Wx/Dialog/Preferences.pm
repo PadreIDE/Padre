@@ -1035,6 +1035,7 @@ sub run {
 	my $ret = $self->{dialog}->ShowModal;
 
 	if ( $ret eq Wx::wxID_CANCEL ) {
+		return 1 if $self->{_had_advanced};
 		return;
 	}
 
@@ -1287,7 +1288,14 @@ sub _show_advanced_settings {
 	#show the advanced settings dialog instead
 	require Padre::Wx::Dialog::Advanced;
 	my $advanced = Padre::Wx::Dialog::Advanced->new( Padre->ide->{wx}->main );
-	$advanced->show;
+	my $ret      = $advanced->show;
+
+	#Indicate that we used the advanced editor and
+	#there were changes so the caller
+	#will update the editors with the new settings
+	if ( $ret != Wx::wxID_CANCEL ) {
+		$self->{_had_advanced} = 1;
+	}
 
 	return;
 }

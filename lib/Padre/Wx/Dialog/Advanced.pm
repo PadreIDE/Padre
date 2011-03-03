@@ -869,9 +869,7 @@ sub show {
 	$self->_resize_columns;
 
 	# If it is not shown, show the dialog
-	$self->ShowModal;
-
-	return;
+	return $self->ShowModal;
 }
 
 1;
