@@ -191,7 +191,7 @@ sub _on_ok_button {
 
 	# Fetch values
 	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
-	my $value    = $self->{goto_text}->GetValue;
+	my $value   = $self->{goto_text}->GetValue;
 
 	# Destroy the dialog
 	$self->Hide;
