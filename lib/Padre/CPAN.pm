@@ -151,6 +151,10 @@ sub install_cpanm {
 	my $main   = shift;
 	my $module = shift;
 
+	# TODO cpanm might come with Padre but if we are dealing with another perl
+	# not the one that Padre runs on then we will need to look for cpanm
+	# in some other place
+
 	# Find 'cpanm', used to install modules
 	require Config;
 	my %seen = ();
@@ -165,6 +169,9 @@ sub install_cpanm {
 		scriptdirexp
 		binexp
 	};
+
+	push @where, split /$Config::Config{path_sep}/, $ENV{PATH};
+
 	my $cpanm = '';
 
 	foreach my $dir (@where) {
