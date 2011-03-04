@@ -441,8 +441,10 @@ sub _appearance_panel {
 		'%b' => Wx::gettext("Current file's basename"),
 		'%F' => Wx::gettext('Current filename relative to project'),
 
-		# frequently changing, should not be used in title:
+		# frequently changing, should not be used in title as it
+		# is only update on rare events
 		'%m' => Wx::gettext('Indication if current file was modified'),
+		'%s' => Wx::gettext('Name of the current subroutine'),
 	);
 	my @main_title_keys = sort { lc($a) cmp lc($b); } ( keys(%main_title_vars) );
 	my $main_title_left;

@@ -1403,6 +1403,34 @@ sub process_template {
 			next;
 		}
 
+		if ( $char eq 's' ) {
+			if ($document) {
+				my $text = $document->text_get;
+
+				my $editor = $document->editor;
+				my $pos    = $editor->GetCurrentPos;
+				my $first  = $editor->PositionFromLine(0);
+				my $prefix = $editor->GetTextRange( $first, $pos );
+
+				my ( $start, $end ) = Padre::Util::get_matches(
+					$prefix,
+					$document->get_function_regex(qr/\w+/),
+					0, length($prefix),
+					1
+				);
+				if ( defined $start and defined $end ) {
+					my $match = substr( $prefix, $start, ( $end - $start ) );
+					my ( $p, $name ) = split /\s+/, $match;
+					$variable{$char} = $name;
+				} else {
+					$variable{$char} = '';
+				}
+			} else {
+				$variable{$char} = '';
+			}
+			next;
+		}
+
 		if ( $char eq 'b' ) {
 			$variable{b} = $file->basename;
 		} elsif ( $char eq 'd' ) {
