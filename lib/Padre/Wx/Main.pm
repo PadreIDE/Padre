@@ -3616,7 +3616,7 @@ sub setup_editor {
 		if ( -d $file_obj->{filename} ) {
 			$self->error(
 				sprintf(
-					Wx::gettext("Cannot open a Directory: %s"),
+					Wx::gettext("Cannot open a directory: %s"),
 					$file
 				)
 			);
@@ -3786,7 +3786,7 @@ sub on_open_selection {
 	unless (@files) {
 		$self->message(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
-			Wx::gettext("Open Selection")
+			Wx::gettext('Open Selection')
 		);
 		return;
 	}
