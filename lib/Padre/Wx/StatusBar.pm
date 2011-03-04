@@ -223,7 +223,8 @@ sub refresh {
 	{
 		$self->SetStatusText( $main->{infomessage}, FILENAME );
 	} else {
-		my $status = $main->process_template('%m %f');
+		$self->{_template_} = $main->process_template('%m %f');
+		my $status = $main->process_template_frequent( $self->{_template_} );
 		$self->SetStatusText( $status, FILENAME );
 	}
 	$self->SetStatusText( $highlighter,    HIGHLIGHTER );
@@ -340,6 +341,21 @@ sub update_pos {
 
 	$self->SetStatusText( $postring, POSTRING );
 
+
+}
+
+# this sub is called frequently, on every key stroke or mouse movement
+# TODO speed should be improved
+sub refresh_from_template {
+	my $self = shift;
+
+	return unless $self->{_template_};
+
+	my $main   = $self->{main};
+	my $status = $main->process_template_frequent( $self->{_template_} );
+	$self->SetStatusText( $status, FILENAME );
+
+	return;
 }
 
 #####################################################################

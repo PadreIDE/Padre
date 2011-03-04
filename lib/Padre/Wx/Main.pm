@@ -1359,6 +1359,59 @@ sub refresh_title {
 	return;
 }
 
+# this sub is called frequently, on every key stroke or mouse movement
+# TODO speed should be improved
+sub process_template_frequent {
+	my $self     = shift;
+	my $template = shift;
+
+	my $current = Padre::Current::_CURRENT(@_);
+
+	my $document = $current->document;
+
+	if ( $template =~ /\%m/ ) {
+		if ($document) {
+			my $modified = $document->editor->GetModify ? '*' : '';
+			$template =~ s/\%m/$modified/;
+		} else {
+			$template =~ s/\%m/*/; # maybe set to '' if document is empty?
+		}
+	}
+
+
+	if ( $template =~ /\%s/ ) {
+		my $sub = '';
+		if ($document) {
+			my $text = $document->text_get;
+
+			my $editor = $document->editor;
+			my $pos    = $editor->GetCurrentPos;
+			my $first  = $editor->PositionFromLine(0);
+			my $prefix = $editor->GetTextRange( $first, $pos );
+
+			my ( $start, $end ) = Padre::Util::get_matches(
+				$prefix,
+				$document->get_function_regex(qr/\w+/),
+				0, length($prefix),
+				1
+			);
+			if ( defined $start and defined $end ) {
+				my $match = substr( $prefix, $start, ( $end - $start ) );
+				my ( $p, $name ) = split /\s+/, $match;
+				$sub = $name;
+			} else {
+				$sub = '';
+			}
+		} else {
+			$sub = '';
+		}
+		$template =~ s/\%s/$sub/;
+	}
+
+
+	return $template;
+}
+
 sub process_template {
 	my $self     = shift;
 	my $template = shift;
@@ -1395,38 +1448,8 @@ sub process_template {
 		unless ( defined $file ) {
 			if ( $char =~ m/^[fbdF]$/ ) {
 				$variable{$char} = '';
-			} elsif ( $char eq 'm' ) {
-				$variable{$char} = '*'; # maybe set to '' if document is empty?
 			} else {
 				$variable{$char} = '%' . $char;
-			}
-			next;
-		}
-
-		if ( $char eq 's' ) {
-			if ($document) {
-				my $text = $document->text_get;
-
-				my $editor = $document->editor;
-				my $pos    = $editor->GetCurrentPos;
-				my $first  = $editor->PositionFromLine(0);
-				my $prefix = $editor->GetTextRange( $first, $pos );
-
-				my ( $start, $end ) = Padre::Util::get_matches(
-					$prefix,
-					$document->get_function_regex(qr/\w+/),
-					0, length($prefix),
-					1
-				);
-				if ( defined $start and defined $end ) {
-					my $match = substr( $prefix, $start, ( $end - $start ) );
-					my ( $p, $name ) = split /\s+/, $match;
-					$variable{$char} = $name;
-				} else {
-					$variable{$char} = '';
-				}
-			} else {
-				$variable{$char} = '';
 			}
 			next;
 		}
@@ -1446,8 +1469,6 @@ sub process_template {
 				$project_dir = quotemeta $project_dir;
 				$variable{F} =~ s/^$project_dir//;
 			}
-		} elsif ( $char eq 'm' ) {
-			$variable{$char} = $document->editor->GetModify ? '*' : '';
 		} else {
 			$variable{$char} = '%' . $char;
 		}
@@ -1591,6 +1612,22 @@ sub refresh_status {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
+}
+
+
+=head3 C<refresh_status_template>
+
+    $main->refresh_status_templat;
+
+Force a refresh of Padre's status bar. 
+The part that is driven by a template.
+
+=cut
+
+sub refresh_status_template {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->GetStatusBar->refresh_from_template( $_[0] or $self->current );
 }
 
 =pod
@@ -5706,6 +5743,7 @@ sub on_stc_update_ui {
 	$self->refresh_toolbar($current);
 
 	# $self->refresh_status($current);
+	$self->refresh_status_template($current);
 	$self->refresh_cursorpos($current);
 
 	# This call makes live filesystem calls every time the cursor moves
