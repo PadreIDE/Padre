@@ -468,6 +468,9 @@ sub _appearance_panel {
 		[   [ 'Wx::StaticText', 'undef',      Wx::gettext('Window title:') ],
 			[ 'Wx::TextCtrl',   'main_title', $config->main_title ],
 		],
+		[   [ 'Wx::StaticText', 'undef',                   Wx::gettext('Statusbar:') ],
+			[ 'Wx::TextCtrl',   'main_statusbar_template', $config->main_statusbar_template ],
+		],
 		[   [ 'Wx::StaticText', 'undef', $main_title_left ],
 			[ 'Wx::StaticText', 'undef', $main_title_right ],
 		],
@@ -1135,6 +1138,10 @@ sub run {
 	$config->set(
 		'main_title',
 		$data->{main_title}
+	);
+	$config->set(
+		'main_statusbar_template',
+		$data->{main_statusbar_template}
 	);
 	$config->set(
 		'editor_right_margin_enable',

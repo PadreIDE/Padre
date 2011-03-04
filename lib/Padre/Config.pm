@@ -446,6 +446,21 @@ setting(
 		my $main = shift;
 		$main->refresh_title;
 	},
+	help => _T('User can configure what Padre whill show in the title of the window.')
+		. _T('There are several placeholders that can be used'),
+);
+
+setting(
+	name    => 'main_statusbar_template',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '%m %f',
+	apply   => sub {
+		my $main = shift;
+		$main->refresh_from_template;
+	},
+	help => _T('User can configure what Padre whill show in the statusbar of the window.')
+		. _T('There are several placeholders that can be used'),
 );
 
 setting(
@@ -607,6 +622,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
+	help    => _T('Show or hide the status bar at the bottom of the window.'),
 );
 setting(
 	name  => 'main_toolbar',
@@ -954,6 +970,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	help    => _T('Show low-priority info messages on statusbar (not in a popup)'),
 );
 
 # Move of stacktrace to run menu: will be removed (run_stacktrace)

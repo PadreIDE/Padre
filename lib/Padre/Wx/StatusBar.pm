@@ -223,7 +223,8 @@ sub refresh {
 	{
 		$self->SetStatusText( $main->{infomessage}, FILENAME );
 	} else {
-		$self->{_template_} = $main->process_template('%m %f');
+		my $config = $self->config;
+		$self->{_template_} = $main->process_template( $config->main_statusbar_template );
 		my $status = $main->process_template_frequent( $self->{_template_} );
 		$self->SetStatusText( $status, FILENAME );
 	}
