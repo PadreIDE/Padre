@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-04 08:10-0800\n"
+"POT-Creation-Date: 2011-03-04 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -755,7 +755,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3619
 #, perl-format
-msgid "Cannot open a Directory: %s"
+msgid "Cannot open a directory: %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:123
