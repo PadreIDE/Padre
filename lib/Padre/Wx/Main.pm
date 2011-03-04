@@ -1346,7 +1346,7 @@ sub refresh_title {
 	);
 	foreach my $char ( $title =~ /\%(.)/g ) {
 		next if exists $variable{$char};
-		
+
 		if ( $char eq 'p' ) {
 
 			# Fill in the session name, if any
@@ -1364,9 +1364,9 @@ sub refresh_title {
 		# The other variables are all based on the filename
 		my $document = $current->document;
 		my $file = $document->file if defined $document;
-		
-		unless (defined $file) {
-			@variable{ qw(f b d F) } = ('') x 4;
+
+		unless ( defined $file ) {
+			@variable{qw(f b d F)} = ('') x 4;
 			next;
 		}
 
@@ -1583,11 +1583,11 @@ sub refresh_functions {
 	return unless $self->has_functions;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
-	
+
 	my @windows = @_;
 	push @windows, $self->current unless @windows;
 	$self->functions->refresh(@windows);
-	
+
 	return;
 }
 
@@ -1603,13 +1603,13 @@ Force a refresh of the TODO list on the right.
 
 sub refresh_todo {
 	my $self = shift;
-	
+
 	return unless $self->has_todo;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{todo}->IsChecked;
-	
+
 	$self->todo->refresh(@_);
-	
+
 	return;
 }
 
