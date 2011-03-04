@@ -1366,7 +1366,11 @@ sub refresh_title {
 		my $file = $document->file if defined $document;
 
 		unless ( defined $file ) {
-			@variable{qw(f b d F)} = ('') x 4;
+			if ( $char =~ m/^[fbdF]$/ ) {
+				$variable{$char} = '';
+			} else {
+				$variable{$char} = '%' . $char;
+			}
 			next;
 		}
 
