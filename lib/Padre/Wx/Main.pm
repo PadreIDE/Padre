@@ -1334,9 +1334,36 @@ sub refresh_title {
 	return if $self->locked('REFRESH');
 
 	# Get the window title template string
+	my $current  = Padre::Current::_CURRENT(@_);
+	my $config   = $current->config;
+	my $template = $config->main_title || 'Padre %v';
+
+	my $title = $self->process_template($template);
+
+	# Additional information if we are running the developer version
+	require Padre::Util::SVN;
+	my $revision = Padre::Util::SVN::padre_revision();
+	if ( defined $revision ) {
+		$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
+	}
+
+	unless ( $self->GetTitle eq $title ) {
+
+		# Push the title to the window
+		$self->SetTitle($title);
+
+		# Push the title to the process list for better identification
+		$0 = $title; ## no critic (RequireLocalizedPunctuationVars)
+	}
+
+	return;
+}
+
+sub process_template {
+	my $self     = shift;
+	my $template = shift;
+
 	my $current = Padre::Current::_CURRENT(@_);
-	my $config  = $current->config;
-	my $title   = $config->main_title || 'Padre %v';
 
 	# Populate any variables used in the template on demand,
 	# avoiding potentially expensive operations unless needed.
@@ -1344,7 +1371,7 @@ sub refresh_title {
 		'%' => '%',
 		'v' => $Padre::VERSION,
 	);
-	foreach my $char ( $title =~ /\%(.)/g ) {
+	foreach my $char ( $template =~ /\%(.)/g ) {
 		next if exists $variable{$char};
 
 		if ( $char eq 'p' ) {
@@ -1395,26 +1422,11 @@ sub refresh_title {
 	}
 
 	# Process the template into the final string
-	$title =~ s/\%(.)/$variable{$1}/g;
+	$template =~ s/\%(.)/$variable{$1}/g;
 
-	# Additional information if we are running the developer version
-	require Padre::Util::SVN;
-	my $revision = Padre::Util::SVN::padre_revision();
-	if ( defined $revision ) {
-		$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
-	}
-
-	unless ( $self->GetTitle eq $title ) {
-
-		# Push the title to the window
-		$self->SetTitle($title);
-
-		# Push the title to the process list for better identification
-		$0 = $title; ## no critic (RequireLocalizedPunctuationVars)
-	}
-
-	return;
+	return $template;
 }
+
 
 =pod
 

@@ -223,7 +223,8 @@ sub refresh {
 	{
 		$self->SetStatusText( $main->{infomessage}, FILENAME );
 	} else {
-		$self->SetStatusText( "$modified $filename", FILENAME );
+		my $status = "$modified " . $main->process_template('%f');
+		$self->SetStatusText( $status, FILENAME );
 	}
 	$self->SetStatusText( $highlighter,    HIGHLIGHTER );
 	$self->SetStatusText( $mime_type_name, MIMETYPE );
