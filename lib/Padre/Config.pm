@@ -446,7 +446,7 @@ setting(
 		my $main = shift;
 		$main->refresh_title;
 	},
-	help => _T('User can configure what Padre whill show in the title of the window.')
+	help => _T('User can configure what Padre will show in the title of the window.')
 		. _T('There are several placeholders that can be used'),
 );
 
@@ -459,7 +459,7 @@ setting(
 		my $main = shift;
 		$main->refresh_from_template;
 	},
-	help => _T('User can configure what Padre whill show in the statusbar of the window.')
+	help => _T('User can configure what Padre will show in the statusbar of the window.')
 		. _T('There are several placeholders that can be used'),
 );
 
