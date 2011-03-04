@@ -1395,6 +1395,8 @@ sub process_template {
 		unless ( defined $file ) {
 			if ( $char =~ m/^[fbdF]$/ ) {
 				$variable{$char} = '';
+			} elsif ( $char eq 'm' ) {
+				$variable{$char} = '*'; # maybe set to '' if document is empty?
 			} else {
 				$variable{$char} = '%' . $char;
 			}
@@ -1416,6 +1418,8 @@ sub process_template {
 				$project_dir = quotemeta $project_dir;
 				$variable{F} =~ s/^$project_dir//;
 			}
+		} elsif ( $char eq 'm' ) {
+			$variable{$char} = $document->editor->GetModify ? '*' : '';
 		} else {
 			$variable{$char} = '%' . $char;
 		}

@@ -440,6 +440,9 @@ sub _appearance_panel {
 		'%d' => Wx::gettext("Current file's dirname"),
 		'%b' => Wx::gettext("Current file's basename"),
 		'%F' => Wx::gettext('Current filename relative to project'),
+
+		# frequently changing, should not be used in title:
+		'%m' => Wx::gettext('Indication if current file was modified'),
 	);
 	my @main_title_keys = sort { lc($a) cmp lc($b); } ( keys(%main_title_vars) );
 	my $main_title_left;

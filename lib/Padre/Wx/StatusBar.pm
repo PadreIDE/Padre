@@ -223,7 +223,7 @@ sub refresh {
 	{
 		$self->SetStatusText( $main->{infomessage}, FILENAME );
 	} else {
-		my $status = "$modified " . $main->process_template('%f');
+		my $status = $main->process_template('%m %f');
 		$self->SetStatusText( $status, FILENAME );
 	}
 	$self->SetStatusText( $highlighter,    HIGHLIGHTER );
