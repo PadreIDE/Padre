@@ -234,6 +234,7 @@ sub editor_search_down {
 	return unless defined $start;
 
 	# Highlight the found item
+	$editor->goto_pos_centerize( $start );
 	$editor->SetSelection( $start, $end );
 	return 1;
 }
@@ -255,6 +256,7 @@ sub editor_search_up {
 	return unless defined $start;
 
 	# Highlight the found item
+	$editor->goto_pos_centerize( $start );
 	$editor->SetSelection( $start, $end );
 	return 1;
 }
