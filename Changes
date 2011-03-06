@@ -37,9 +37,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1153: %p, %f, etc. do not work for in window title (ZENOG)
     - Add configuration option main_statusbar_template to allow the
       user to fine tune the status bar #1104 (SZABGAB)
-    - center the highlighted search term so that the context is visible
-      (ZENOG)
-    - find the cpanm also if it is "only" in the PATH. 
+    - Center the highlighted search term so that the context is visible (ZENOG)
+    - Find the cpanm also if it is "only" in the PATH. 
       e.g. when using local::lib (SZABGAB)
 
 0.83 Development version, not released
