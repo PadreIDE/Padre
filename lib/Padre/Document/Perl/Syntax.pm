@@ -61,7 +61,7 @@ sub syntax {
 			$file->print("BEGIN {\n");
 			$file->print("\t\$INC{'$module_file'} = '$file';\n");
 			$file->print("}\n");
-			$file->print("#line 0\n");
+			$file->print("#line 1\n");
 		}
 
 		$file->print($text);
