@@ -250,12 +250,14 @@ sub _create_controls {
 		-1,
 		Padre::Wx::Icon::find("actions/edit-copy"),
 	);
+	$self->{copy_button}->SetToolTip( Wx::gettext('Copy filename to clipboard') );
 
 	$self->{popup_button} = Wx::BitmapButton->new(
 		$self,
 		-1,
 		Padre::Wx::Icon::find("actions/down")
 	);
+	$self->{popup_button}->SetToolTip( Wx::gettext('Click on the arrow for filter settings') );
 
 	$self->{popup_menu}     = Wx::Menu->new;
 	$self->{skip_vcs_files} = $self->{popup_menu}->AppendCheckItem(

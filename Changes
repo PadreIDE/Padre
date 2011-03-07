@@ -42,6 +42,7 @@ next production release, and synchronise their release to the Padre schedule.
       e.g. when using local::lib (SZABGAB)
     - Fixed #1136: The syntax checker often marks the wrong line in a package
       (AZAWAWI)
+    - Add tooltips to "Open Resource" dialog (ZENOG)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
