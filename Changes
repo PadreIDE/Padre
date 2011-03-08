@@ -46,7 +46,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1114: Open Selection: create non-existing files (ZENOG)
     - Fix #1078: 'Open Resource' should find things like 'Wx:.Dialog' (ZENOG)
     - 'Open Resource': set focus to text field on character input in the list
-      box (ZENOG)
+      box, fix tab order (ZENOG)
     - Rename 'Open Resource' to 'Open Resources' to reflect the fact that it
       can open several files at once (ZENOG)
 

@@ -214,6 +214,13 @@ sub _create_controls {
 	);
 	$self->{search_text}->SetToolTip( Wx::gettext('Enter parts of the resource name to find it') );
 
+	$self->{popup_button} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Padre::Wx::Icon::find("actions/down")
+	);
+	$self->{popup_button}->SetToolTip( Wx::gettext('Click on the arrow for filter settings') );
+
 	# matches result list
 	my $matches_label = Wx::StaticText->new(
 		$self,
@@ -253,13 +260,6 @@ sub _create_controls {
 		Padre::Wx::Icon::find("actions/edit-copy"),
 	);
 	$self->{copy_button}->SetToolTip( Wx::gettext('Copy filename to clipboard') );
-
-	$self->{popup_button} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Padre::Wx::Icon::find("actions/down")
-	);
-	$self->{popup_button}->SetToolTip( Wx::gettext('Click on the arrow for filter settings') );
 
 	$self->{popup_menu}     = Wx::Menu->new;
 	$self->{skip_vcs_files} = $self->{popup_menu}->AppendCheckItem(
