@@ -541,6 +541,7 @@ sub render {
 	# Populate the list box
 	$self->{matches_list}->Clear;
 	my $pos = 0;
+	my %contains_file;
 	foreach my $file ( @{ $self->{matched_files} } ) {
 		my $filename = File::Basename::fileparse($file);
 		if ( $filename =~ /^$search_expr/i ) {
@@ -555,9 +556,43 @@ sub render {
 				}
 			}
 			$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
+			$contains_file{ $filename . $pkg } = 1;
 			$pos++;
 		}
 	}
+
+	my $is_perl_package = 0;
+	if ( $search_expr =~ s/\\:\\:/\//g ) { # undo quotemeta and substitute / for ::
+		$is_perl_package = 1;
+	}
+	if ( $search_expr =~ s/\\:/\//g ) {    # undo quotemeta and substitute / for :
+		$is_perl_package = 1;
+	}
+	foreach my $file ( @{ $self->{matched_files} } ) {
+		if ( $file =~ /$search_expr/i ) {
+			my $filename = File::Basename::fileparse($file);
+
+			# Display package name if it is a Perl file
+			my $pkg = '';
+			my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
+			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
+				my $contents = Padre::Util::slurp($file);
+				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
+					$pkg = "  ($1)";
+				}
+				unless ( exists $contains_file{ $filename . $pkg } ) {
+					$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
+					$pos++;
+				}
+			} else {
+				unless ( exists $contains_file{ $filename . $pkg } || $is_perl_package ) {
+					$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
+					$pos++;
+				}
+			}
+		}
+	}
+
 	if ( $pos > 0 ) {
 
 		# Keep the old user selection if it is possible
