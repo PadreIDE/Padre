@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-08 04:10-0800\n"
+"POT-Creation-Date: 2011-03-08 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,7 +130,9 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:238
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:139 lib/Padre/Wx/Dialog/Replace.pm:191
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:139
+#: lib/Padre/Wx/Dialog/SessionManager.pm:292
+#: lib/Padre/Wx/Dialog/Replace.pm:191
 msgid "&Close"
 msgstr ""
 
@@ -147,6 +149,7 @@ msgid "&Debug"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:126
+#: lib/Padre/Wx/Dialog/SessionManager.pm:291
 msgid "&Delete"
 msgstr ""
 
@@ -222,7 +225,7 @@ msgstr ""
 msgid "&Matching Help Topics:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:221
+#: lib/Padre/Wx/Dialog/OpenResource.pm:228
 msgid "&Matching Items:"
 msgstr ""
 
@@ -248,7 +251,7 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:206
+#: lib/Padre/Wx/ActionLibrary.pm:206 lib/Padre/Wx/Dialog/SessionManager.pm:290
 msgid "&Open"
 msgstr ""
 
@@ -335,6 +338,10 @@ msgstr ""
 #: lib/Padre/Wx/ActionLibrary.pm:393 lib/Padre/Wx/Dialog/Preferences.pm:925
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
 msgid "&Save"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:260
+msgid "&Save session automatically"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Search.pm:99
@@ -931,14 +938,13 @@ msgstr ""
 msgid "Clear Selection Marks"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:262
+#: lib/Padre/Wx/Dialog/OpenResource.pm:222
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:248 lib/Padre/Wx/Menu/File.pm:139
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
-#: lib/Padre/Wx/Dialog/SessionManager.pm:292
 msgid "Close"
 msgstr ""
 
@@ -1125,7 +1131,7 @@ msgstr ""
 msgid "Copy Value"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:255
+#: lib/Padre/Wx/Dialog/OpenResource.pm:262
 msgid "Copy filename to clipboard"
 msgstr ""
 
@@ -1239,7 +1245,7 @@ msgstr ""
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:238
+#: lib/Padre/Wx/Dialog/OpenResource.pm:245
 msgid "Current Directory: "
 msgstr ""
 
@@ -1380,7 +1386,6 @@ msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:233 lib/Padre/Wx/Dialog/KeyBindings.pm:100
-#: lib/Padre/Wx/Dialog/SessionManager.pm:291
 msgid "Delete"
 msgstr ""
 
@@ -2997,10 +3002,6 @@ msgstr ""
 msgid "Only one POD fragment, will not try to merge"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:290
-msgid "Open"
-msgstr ""
-
 #: lib/Padre/Wx/Outline.pm:235
 msgid "Open &Documentation"
 msgstr ""
@@ -3031,11 +3032,11 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:30
 #: lib/Padre/Wx/Dialog/OpenResource.pm:76
-msgid "Open Resource"
+msgid "Open Resources"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1265
-msgid "Open Resource..."
+msgid "Open Resources..."
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:443
@@ -3989,10 +3990,6 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:260
-msgid "Save session automatically"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Preferences.pm:1163
 msgid "Save settings"
 msgstr ""
@@ -4153,7 +4150,7 @@ msgstr ""
 msgid "Select files to close:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:232
+#: lib/Padre/Wx/Dialog/OpenResource.pm:239
 msgid "Select one or more resources to open"
 msgstr ""
 
@@ -4826,10 +4823,6 @@ msgstr ""
 msgid "Type a help &keyword to read:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1266
-msgid "Type in a filter to select a file"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:2178
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
@@ -4938,6 +4931,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:390
 msgid "Use X11 middle button paste style"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1266
+msgid "Use a filter to select one or more files"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:749
