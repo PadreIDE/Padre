@@ -1262,8 +1262,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'search.open_resource',
-		label      => _T('Open Resource...'),
-		comment    => _T('Type in a filter to select a file'),
+		label      => _T('Open Resources...'),
+		comment    => _T('Use a filter to select one or more files'),
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {

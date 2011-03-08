@@ -27,7 +27,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Open Resource'),
+		Wx::gettext('Open Resources'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
@@ -73,7 +73,7 @@ sub init_search {
 	}
 
 	$self->{directory} = $directory;
-	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $directory );
+	$self->SetLabel( Wx::gettext('Open Resources') . ' - ' . $directory );
 }
 
 # -- event handler
@@ -653,7 +653,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::OpenResource - Open Resource dialog
+Padre::Wx::Dialog::OpenResource - Open Resources dialog
 
 =head1 DESCRIPTION
 

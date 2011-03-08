@@ -47,6 +47,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1078: 'Open Resource' should find things like 'Wx:.Dialog' (ZENOG)
     - 'Open Resource': set focus to text field on character input in the list
       box (ZENOG)
+    - Rename 'Open Resource' to 'Open Resources' to reflect the fact that it
+      can open several files at once (ZENOG)
 
 0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
