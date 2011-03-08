@@ -212,6 +212,7 @@ sub _create_controls {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
+	$self->{search_text}->SetToolTip( Wx::gettext('Enter parts of the resource name to find it') );
 
 	# matches result list
 	my $matches_label = Wx::StaticText->new(
@@ -228,6 +229,7 @@ sub _create_controls {
 		[],
 		Wx::wxLB_EXTENDED,
 	);
+	$self->{matches_list}->SetToolTip( Wx::gettext('Select one or more resources to open') );
 
 	# Shows how many items are selected and information about what is selected
 	$self->{status_text} = Wx::TextCtrl->new(
@@ -536,7 +538,7 @@ sub render {
 	# Save user selections for later
 	my @matches = $self->{matches_list}->GetSelections;
 
-	#Populate the list box now
+	# Populate the list box
 	$self->{matches_list}->Clear;
 	my $pos = 0;
 	foreach my $file ( @{ $self->{matched_files} } ) {
@@ -558,7 +560,7 @@ sub render {
 	}
 	if ( $pos > 0 ) {
 
-		#Keep the old user selection if it is possible
+		# Keep the old user selection if it is possible
 		$self->{matches_list}->Select( scalar @matches > 0 ? $matches[0] : 0 );
 		$self->{status_text}->ChangeValue( $self->_path( $self->{matches_list}->GetClientData(0) ) );
 		$self->{status_text}->Enable(1);
