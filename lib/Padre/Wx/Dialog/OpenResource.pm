@@ -538,6 +538,15 @@ sub render {
 	# Save user selections for later
 	my @matches = $self->{matches_list}->GetSelections;
 
+	# prepare more general search expression
+	my $is_perl_package_expr = 0;
+	if ( $search_expr =~ s/\\:\\:/\//g ) { # undo quotemeta and substitute / for ::
+		$is_perl_package_expr = 1;
+	}
+	if ( $search_expr =~ s/\\:/\//g ) {    # undo quotemeta and substitute / for :
+		$is_perl_package_expr = 1;
+	}
+
 	# Populate the list box
 	$self->{matches_list}->Clear;
 	my $pos = 0;
@@ -561,15 +570,8 @@ sub render {
 		}
 	}
 
-	my $is_perl_package = 0;
-	if ( $search_expr =~ s/\\:\\:/\//g ) { # undo quotemeta and substitute / for ::
-		$is_perl_package = 1;
-	}
-	if ( $search_expr =~ s/\\:/\//g ) {    # undo quotemeta and substitute / for :
-		$is_perl_package = 1;
-	}
 	foreach my $file ( @{ $self->{matched_files} } ) {
-		if ( $file =~ /$search_expr/i ) {
+		if ( $file =~ /^$self->{directory}.+$search_expr/i ) {
 			my $filename = File::Basename::fileparse($file);
 
 			# Display package name if it is a Perl file
@@ -580,15 +582,13 @@ sub render {
 				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
 					$pkg = "  ($1)";
 				}
-				unless ( exists $contains_file{ $filename . $pkg } ) {
-					$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
-					$pos++;
-				}
 			} else {
-				unless ( exists $contains_file{ $filename . $pkg } || $is_perl_package ) {
-					$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
-					$pos++;
-				}
+				next if $is_perl_package_expr; # do nothing if input contains : or ::
+			}
+
+			unless ( exists $contains_file{ $filename . $pkg } ) {
+				$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
+				$pos++;
 			}
 		}
 	}
