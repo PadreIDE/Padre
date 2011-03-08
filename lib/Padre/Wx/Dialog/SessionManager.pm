@@ -257,7 +257,7 @@ sub _create_options {
 	$self->{autosave} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Save session automatically'),
+		Wx::gettext('&Save session automatically'),
 	);
 	$self->{autosave}->SetValue( $config->session_autosave ? 1 : 0 );
 
@@ -287,9 +287,9 @@ sub _create_buttons {
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# the buttons
-	my $bo = Wx::Button->new( $self, -1,              Wx::gettext('Open') );
-	my $bd = Wx::Button->new( $self, -1,              Wx::gettext('Delete') );
-	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
+	my $bo = Wx::Button->new( $self, -1,              Wx::gettext('&Open') );
+	my $bd = Wx::Button->new( $self, -1,              Wx::gettext('&Delete') );
+	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 	$self->_butopen($bo);
 	$self->_butdelete($bd);
 	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
