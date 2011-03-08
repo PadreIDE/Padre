@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-07 16:10-0800\n"
+"POT-Creation-Date: 2011-03-08 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,7 +222,7 @@ msgstr ""
 msgid "&Matching Help Topics:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:220
+#: lib/Padre/Wx/Dialog/OpenResource.pm:221
 msgid "&Matching Items:"
 msgstr ""
 
@@ -931,7 +931,7 @@ msgstr ""
 msgid "Clear Selection Marks"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:260
+#: lib/Padre/Wx/Dialog/OpenResource.pm:262
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
@@ -1125,7 +1125,7 @@ msgstr ""
 msgid "Copy Value"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:253
+#: lib/Padre/Wx/Dialog/OpenResource.pm:255
 msgid "Copy filename to clipboard"
 msgstr ""
 
@@ -1239,7 +1239,7 @@ msgstr ""
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:236
+#: lib/Padre/Wx/Dialog/OpenResource.pm:238
 msgid "Current Directory: "
 msgstr ""
 
@@ -1694,6 +1694,10 @@ msgstr ""
 msgid ""
 "Enter URL to install\\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00."
 "tar.gz"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:215
+msgid "Enter parts of the resource name to find it"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:19
@@ -4149,6 +4153,10 @@ msgstr ""
 msgid "Select files to close:"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/OpenResource.pm:232
+msgid "Select one or more resources to open"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:350
 msgid "Select some open files for closing"
 msgstr ""
@@ -4538,11 +4546,11 @@ msgstr ""
 msgid "Skip question without giving feedback"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:269
+#: lib/Padre/Wx/Dialog/OpenResource.pm:271
 msgid "Skip using MANIFEST.SKIP"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:265
+#: lib/Padre/Wx/Dialog/OpenResource.pm:267
 msgid "Skip version control system files"
 msgstr ""
 
