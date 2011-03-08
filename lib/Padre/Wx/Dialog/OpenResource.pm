@@ -314,7 +314,29 @@ sub _setup_events {
 				if ( $code == Wx::WXK_DOWN )
 				or ( $code == Wx::WXK_UP )
 				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-				or ( $code == Wx::WXK_PAGEDOWN );
+				or ( $code == Wx::WXK_PAGEDOWN )
+				or ( $code == Wx::WXK_NUMPAD_PAGEUP )
+				or ( $code == Wx::WXK_PAGEUP );
+
+
+			$event->Skip(1);
+		}
+	);
+
+	Wx::Event::EVT_CHAR(
+		$self->{matches_list},
+		sub {
+			my $this  = shift;
+			my $event = shift;
+			my $code  = $event->GetKeyCode;
+
+			$self->{search_text}->SetFocus
+				unless ( $code == Wx::WXK_DOWN )
+				or ( $code == Wx::WXK_UP )
+				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
+				or ( $code == Wx::WXK_PAGEDOWN )
+				or ( $code == Wx::WXK_NUMPAD_PAGEUP )
+				or ( $code == Wx::WXK_PAGEUP );
 
 			$event->Skip(1);
 		}
