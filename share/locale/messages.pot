@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-08 08:10-0800\n"
+"POT-Creation-Date: 2011-03-09 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1065,6 +1065,14 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:168
 msgid "Content type:"
+msgstr ""
+
+#: lib/Padre/Config.pm:462
+msgid "Contents of the status bar"
+msgstr ""
+
+#: lib/Padre/Config.pm:449
+msgid "Contents of the window title"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2599
@@ -4270,6 +4278,10 @@ msgstr ""
 msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
+#: lib/Padre/Config.pm:450 lib/Padre/Config.pm:463
+msgid "Several placeholders like the filename can be used"
+msgstr ""
+
 #: lib/Padre/Wx/Syntax.pm:43
 msgid "Severe Warning"
 msgstr ""
@@ -4773,10 +4785,6 @@ msgstr ""
 msgid "There are no positions saved yet"
 msgstr ""
 
-#: lib/Padre/Config.pm:450 lib/Padre/Config.pm:463
-msgid "There are several placeholders that can be used"
-msgstr ""
-
 #: lib/Padre/PPI/EndifyPod.pm:42
 msgid "This document does not contain any POD"
 msgstr ""
@@ -4951,14 +4959,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:796
 msgid "User"
-msgstr ""
-
-#: lib/Padre/Config.pm:462
-msgid "User can configure what Padre will show in the statusbar of the window."
-msgstr ""
-
-#: lib/Padre/Config.pm:449
-msgid "User can configure what Padre will show in the title of the window."
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:68 lib/Padre/Wx/FBP/Sync.pm:111
