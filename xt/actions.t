@@ -8,6 +8,8 @@ use strict;
 use warnings;
 use Test::More;
 
+use Capture::Tiny qw(capture);
+
 #use Test::NoWarnings;
 use File::Temp ();
 use File::Spec();
@@ -34,20 +36,34 @@ for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	last;
 }
 
+diag "devpl '$devpl'";
+
 use_ok('Padre::Perl');
 
 my $cmd;
 my @chances = (
-	Padre::Perl::cperl() . ' ',             '"' . $^X . '" ', 'perl ', 'wperl ', '/usr/bin/perl ',
-	'C:\\strawberry\\perl\\bin\\perl.exe ', '/usr/pkg/bin/perl '
+	Padre::Perl::cperl() . ' ', '"' . $^X . '" ', 'perl ', 'wperl ',
 );
+push @chances, map {"$_ "} grep { -e $_ } qw(/usr/bin/perl /usr/pkg/bin/perl);
+push @chances, 'C:\\strawberry\\perl\\bin\\perl.exe ' if $^O =~ /MSWin32/i;
+
 unshift @chances, '' if $^O eq 'linux';
 push @chances, '' if $^O ne 'linux';
 for my $prefix (@chances) {
-	next unless `$prefix$devpl --help` =~ /(run Padre in the command line|\-\-fulltrace|\-\-actionqueue)/;
+	my $try = "$prefix$devpl --help";
+	diag "Try: '$try'";
+	my $res = qx{$try};
+
+	#diag "Result: $res";
+	next if not defined $res;
+	next unless $res =~ /(run Padre in the command line|\-\-fulltrace|\-\-actionqueue)/;
 	$cmd = $prefix;
 	last;
 }
+
+# The above will fail even if the user has not run
+# perl Makefile.PL ; make
+# so the error message below is not really good
 
 plan skip_all => 'Need some Perl for this test' unless defined($cmd);
 
@@ -64,8 +80,10 @@ $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=internal.dump_padre,file.quit';
 
-print "Command is: $cmd\n";
-system $cmd;
+diag "Command is: '$cmd'";
+my ( $stdout, $stderr ) = capture { system($cmd); };
+diag $stdout;
+diag $stderr;
 
 my $dump_fn = File::Spec->catfile( $dir->dirname, 'padre.dump' );
 
