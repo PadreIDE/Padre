@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-09 04:10-0800\n"
+"POT-Creation-Date: 2011-03-09 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -523,11 +523,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:530
+#: lib/Padre/Config.pm:528
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:531
+#: lib/Padre/Config.pm:529
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -1008,7 +1008,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:529
+#: lib/Padre/Config.pm:527
 msgid "Code Order"
 msgstr ""
 
@@ -1067,7 +1067,7 @@ msgstr ""
 msgid "Content type:"
 msgstr ""
 
-#: lib/Padre/Config.pm:462
+#: lib/Padre/Config.pm:461
 msgid "Contents of the status bar"
 msgstr ""
 
@@ -1450,11 +1450,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:558
+#: lib/Padre/Config.pm:556
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:559
+#: lib/Padre/Config.pm:557
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1499,7 +1499,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:569
+#: lib/Padre/Config.pm:567
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -2373,11 +2373,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:743
+#: lib/Padre/Config.pm:741
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:742
+#: lib/Padre/Config.pm:740
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2854,7 +2854,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:741
+#: lib/Padre/Config.pm:739
 msgid "No Autoindent"
 msgstr ""
 
@@ -3529,7 +3529,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:568
+#: lib/Padre/Config.pm:566
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -4278,7 +4278,7 @@ msgstr ""
 msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
-#: lib/Padre/Config.pm:450 lib/Padre/Config.pm:463
+#: lib/Padre/Config.pm:449 lib/Padre/Config.pm:461
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4428,11 +4428,11 @@ msgstr ""
 msgid "Show information about Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:973 lib/Padre/Wx/Dialog/Preferences.pm:483
+#: lib/Padre/Config.pm:971 lib/Padre/Wx/Dialog/Preferences.pm:483
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:625
+#: lib/Padre/Config.pm:623
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
