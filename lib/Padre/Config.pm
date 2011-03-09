@@ -446,8 +446,8 @@ setting(
 		my $main = shift;
 		$main->refresh_title;
 	},
-	help => _T('User can configure what Padre will show in the title of the window.')
-		. _T('There are several placeholders that can be used'),
+	help => _T('Contents of the window title')
+		. _T('Several placeholders like the filename can be used'),
 );
 
 setting(
@@ -459,8 +459,8 @@ setting(
 		my $main = shift;
 		$main->refresh_from_template;
 	},
-	help => _T('User can configure what Padre will show in the statusbar of the window.')
-		. _T('There are several placeholders that can be used'),
+	help => _T('Contents of the status bar')
+		. _T('Several placeholders like the filename can be used'),
 );
 
 setting(
