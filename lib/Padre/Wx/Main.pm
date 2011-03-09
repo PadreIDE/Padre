@@ -1443,7 +1443,8 @@ sub process_template {
 
 		# The other variables are all based on the filename
 		my $document = $current->document;
-		my $file = $document->file if defined $document;
+		my $file;
+		$file = $document->file if defined $document;
 
 		unless ( defined $file ) {
 			if ( $char =~ m/^[fbdF]$/ ) {
