@@ -69,7 +69,7 @@ system $cmd;
 
 my $dump_fn = File::Spec->catfile( $dir->dirname, 'padre.dump' );
 
-ok( -e $dump_fn, 'Dump file exists' );
+ok( -e $dump_fn, "Dump file '$dump_fn' exists" ) or exit;
 
 our $VAR1;
 
