@@ -446,8 +446,7 @@ setting(
 		my $main = shift;
 		$main->refresh_title;
 	},
-	help => _T('Contents of the window title')
-		. _T('Several placeholders like the filename can be used'),
+	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
@@ -459,8 +458,7 @@ setting(
 		my $main = shift;
 		$main->refresh_from_template;
 	},
-	help => _T('Contents of the status bar')
-		. _T('Several placeholders like the filename can be used'),
+	help => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
