@@ -111,10 +111,6 @@ sub syntax {
 		local $/ = undef;
 		$stderr = <$fh>;
 		close $fh;
-
-		# ...and delete it
-		require File::Remove;
-		File::Remove::remove( $err->filename );
 	}
 
 	# Shortcut: Handle the "no errors or warnings" case
