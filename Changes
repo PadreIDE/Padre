@@ -10,7 +10,7 @@ list API changes that may break compatibility for components of Padre, most
 notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
-0.84 to be released
+0.84 2011.03.10
     - Function and TODO list: also handle Esc when focus is on the list (ZENOG)
     - Function and TODO list: remove unnecessary EVT_KILL_FOCUS handler (ZENOG)
     - Outline: simplify method 'select_line_in_editor' (ZENOG)
