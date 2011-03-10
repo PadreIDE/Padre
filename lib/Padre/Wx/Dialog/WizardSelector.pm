@@ -7,7 +7,7 @@ use Padre::Wx       ();
 use Padre::Wx::Icon ();
 use Padre::Logger;
 
-our $VERSION = '0.83';
+our $VERSION = '0.84';
 our @ISA     = qw{ Wx::Dialog };
 
 # Generate faster accessors

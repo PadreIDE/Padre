@@ -13,7 +13,7 @@ use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Logger;
 
-our $VERSION    = '0.83';
+our $VERSION    = '0.84';
 our $COMPATIBLE = '0.81';
 our @ISA        = 'Wx::StyledTextCtrl';
 

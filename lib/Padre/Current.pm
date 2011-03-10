@@ -88,7 +88,7 @@ use Carp         ();
 use Exporter     ();
 use Params::Util ();
 
-our $VERSION   = '0.83';
+our $VERSION   = '0.84';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_CURRENT';
 

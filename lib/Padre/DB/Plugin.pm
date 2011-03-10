@@ -11,7 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.83';
+our $VERSION = '0.84';
 
 # Finds and returns a single element by name
 sub fetch_name {
