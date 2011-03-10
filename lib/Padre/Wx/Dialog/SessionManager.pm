@@ -351,13 +351,22 @@ sub _refresh_list {
 	foreach my $session ( reverse @sessions ) {
 		my $name  = $session->name;
 		my $descr = $session->description;
+
+		# adjust name and description length (fix #1124)
+		if ( length $name < 10 ) {
+			$name .= ' ' x ( 10 - length $name );
+		}
+		if ( length $descr < 30 ) {
+			$descr .= ' ' x ( 30 - length $descr );
+		}
+
 		require POSIX;
 		my $update = POSIX::strftime(
 			'%Y-%m-%d %H:%M:%S',
 			localtime $session->last_update,
 		);
 
-		# inserting the session in the list
+		# insert the session in the list
 		my $item = Wx::ListItem->new;
 		$item->SetId(0);
 		$item->SetColumn(0);
