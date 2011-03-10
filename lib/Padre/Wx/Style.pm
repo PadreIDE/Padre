@@ -9,7 +9,7 @@ use warnings;
 use Padre::Wx            ();
 use Padre::Config::Style ();
 
-our $VERSION = '0.84';
+our $VERSION = '0.85';
 
 
 

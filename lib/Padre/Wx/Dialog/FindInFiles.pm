@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx::FBP::FindInFiles ();
 
-our $VERSION = '0.84';
+our $VERSION = '0.85';
 our @ISA     = qw{
 	Padre::Wx::FBP::FindInFiles
 };

@@ -9,7 +9,7 @@ use File::Spec     ();
 use Padre::Util    ();
 use Padre::Project ();
 
-our $VERSION = '0.84';
+our $VERSION = '0.85';
 our @ISA     = 'Padre::Project';
 
 

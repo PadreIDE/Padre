@@ -7,7 +7,7 @@ use warnings;
 use Wx        ();
 use Padre::Wx ();
 
-our $VERSION = '0.84';
+our $VERSION = '0.85';
 our @ISA     = ('Wx::Dialog');
 
 sub create_widget {
