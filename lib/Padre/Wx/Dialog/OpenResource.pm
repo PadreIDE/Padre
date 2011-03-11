@@ -573,11 +573,13 @@ sub render {
 	$self->{matches_list}->Clear;
 	my $pos = 0;
 	my %contains_file;
+
+	# direct filename matches
 	foreach my $file ( @{ $self->{matched_files} } ) {
 		my $filename = File::Basename::fileparse($file);
 		if ( $filename =~ /^$search_expr/i ) {
 
-			# Display package name if it is a Perl file
+			# display package name if it is a Perl file
 			my $pkg = '';
 			my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
 			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
@@ -592,24 +594,33 @@ sub render {
 		}
 	}
 
+	# path matches
+	my @ignore_path_extensions = '.t';
 	foreach my $file ( @{ $self->{matched_files} } ) {
 		if ( $file =~ /^$self->{directory}.+$search_expr/i ) {
-			my $filename = File::Basename::fileparse($file);
+			my ( $filename, $path, $suffix ) = File::Basename::fileparse( $file, @ignore_path_extensions );
 
-			# Display package name if it is a Perl file
-			my $pkg = '';
-			my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
-			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
-				my $contents = Padre::Util::slurp($file);
-				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
-					$pkg = "  ($1)";
-				}
+			my $pkg_name = '';
+
+			if ( length $suffix > 0 ) {
+				next unless $filename =~ /$search_expr/i; # ignore path for certain files
+				$filename .= $suffix;                     # add suffix again
 			} else {
-				next if $is_perl_package_expr; # do nothing if input contains : or ::
+
+				# display package name if it is a Perl file
+				my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
+				if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
+					my $contents = Padre::Util::slurp($file);
+					if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
+						$pkg_name = "  ($1)";
+					}
+				} else {
+					next if $is_perl_package_expr;        # do nothing if input contains : or ::
+				}
 			}
 
-			unless ( exists $contains_file{ $filename . $pkg } ) {
-				$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
+			unless ( exists $contains_file{ $filename . $pkg_name } ) {
+				$self->{matches_list}->Insert( $filename . $pkg_name, $pos, $file );
 				$pos++;
 			}
 		}
@@ -617,7 +628,7 @@ sub render {
 
 	if ( $pos > 0 ) {
 
-		# Keep the old user selection if it is possible
+		# keep the old user selection if it is possible
 		$self->{matches_list}->Select( scalar @matches > 0 ? $matches[0] : 0 );
 		$self->{status_text}->ChangeValue( $self->_path( $self->{matches_list}->GetClientData(0) ) );
 		$self->{status_text}->Enable(1);
