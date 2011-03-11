@@ -106,9 +106,13 @@ sub _on_butopen_clicked {
 	$self->_butdelete->Disable;
 	$self->_butopen->Disable;
 
-	if (!defined($self->_current_session)) {
-		$main->error(sprintf(Wx::gettext("Something is wrong with your Padre database:\nSession %s is listed but there is no data"),
-		$self->_curname));
+	if ( !defined( $self->_current_session ) ) {
+		$main->error(
+			sprintf(
+				Wx::gettext("Something is wrong with your Padre database:\nSession %s is listed but there is no data"),
+				$self->_curname
+			)
+		);
 		return;
 	}
 
@@ -321,10 +325,10 @@ sub _current_session {
 		'where name = ?',
 		$self->_curname
 	);
-	
+
 	# The session name may get some spaces around it even if they are not in the database
 	# This workaround removes all leading/following spaces and tries loading again
-	if (!defined($current)) {
+	if ( !defined($current) ) {
 		my $curname = $self->_curname;
 		$curname =~ s/^\s*(.+?)\s*$/$1/;
 
@@ -334,7 +338,7 @@ sub _current_session {
 		);
 
 	}
-	
+
 	return $current;
 }
 
