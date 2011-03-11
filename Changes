@@ -16,6 +16,9 @@ next production release, and synchronise their release to the Padre schedule.
     - Open Resources: do not match path for .t files (ZENOG, found by SZABGAB)
 
 0.85 Development version, not released
+    - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
+      editable if clicked after selection. Keyboard scrolling was broken as a
+      result (AZAWAWI)
 
 0.84 2011.03.10
     - Function and TODO list: also handle Esc when focus is on the list (ZENOG)
