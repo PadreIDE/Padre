@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-09 12:10-0800\n"
+"POT-Creation-Date: 2011-03-11 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,7 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:238
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:139
-#: lib/Padre/Wx/Dialog/SessionManager.pm:292
+#: lib/Padre/Wx/Dialog/SessionManager.pm:303
 #: lib/Padre/Wx/Dialog/Replace.pm:191
 msgid "&Close"
 msgstr ""
@@ -149,7 +149,7 @@ msgid "&Debug"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:126
-#: lib/Padre/Wx/Dialog/SessionManager.pm:291
+#: lib/Padre/Wx/Dialog/SessionManager.pm:302
 msgid "&Delete"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:206 lib/Padre/Wx/Dialog/SessionManager.pm:290
+#: lib/Padre/Wx/ActionLibrary.pm:206 lib/Padre/Wx/Dialog/SessionManager.pm:301
 msgid "&Open"
 msgstr ""
 
@@ -340,7 +340,7 @@ msgstr ""
 msgid "&Save"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:260
+#: lib/Padre/Wx/Dialog/SessionManager.pm:271
 msgid "&Save session automatically"
 msgstr ""
 
@@ -1417,7 +1417,7 @@ msgstr ""
 msgid "Deprecation"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:227
+#: lib/Padre/Wx/Dialog/SessionManager.pm:238
 msgid "Description"
 msgstr ""
 
@@ -2520,7 +2520,7 @@ msgstr ""
 msgid "Last Visited File"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:228
+#: lib/Padre/Wx/Dialog/SessionManager.pm:239
 msgid "Last update"
 msgstr ""
 
@@ -2572,7 +2572,7 @@ msgstr ""
 msgid "List of open files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:214
+#: lib/Padre/Wx/Dialog/SessionManager.pm:225
 msgid "List of sessions"
 msgstr ""
 
@@ -2798,7 +2798,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:66
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:25
-#: lib/Padre/Wx/Dialog/SessionManager.pm:226
+#: lib/Padre/Wx/Dialog/SessionManager.pm:237
 msgid "Name"
 msgstr ""
 
@@ -4581,6 +4581,13 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:877
 msgid "Snippets..."
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:112
+#, perl-format
+msgid ""
+"Something is wrong with your Padre database:\n"
+"Session %s is listed but there is no data"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:99
