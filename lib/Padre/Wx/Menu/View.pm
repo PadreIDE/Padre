@@ -190,46 +190,6 @@ sub new {
 		);
 	}
 
-	# Editor Look and Feel
-	$self->{style} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext("Style"),
-		$self->{style}
-	);
-
-	SCOPE: {
-		my %styles = Padre::Config::Style->core_styles;
-		my @order =
-			sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
-
-		foreach my $name (@order) {
-			my $radio = $self->add_menu_action(
-				$self->{style},
-				"view.style.$name",
-			);
-			if ( $config->editor_style and $config->editor_style eq $name ) {
-				$radio->Check(1);
-			}
-		}
-	}
-
-	SCOPE: {
-		my @styles = Padre::Config::Style->user_styles;
-		if (@styles) {
-			$self->{style}->AppendSeparator;
-			foreach my $name (@styles) {
-				my $radio = $self->add_menu_action(
-					$self->{style},
-					"view.style.$name",
-				);
-				if ( $config->editor_style and $config->editor_style eq $name ) {
-					$radio->Check(1);
-				}
-			}
-		}
-	}
-
 	# Language Support
 	Padre::Wx::ActionLibrary->init_language_actions;
 

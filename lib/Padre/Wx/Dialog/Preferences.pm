@@ -10,6 +10,7 @@ use Padre::Wx::Dialog                      ();
 use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
+use Padre::Config::Style                   ();
 
 our $VERSION = '0.85';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -228,6 +229,14 @@ sub _on_highlighter_changed {
 	$self->update_description;
 }
 
+sub _on_styles_changed {
+	my ( $self, $order_names_ref ) = @_;
+	my $style_selection = $self->get_widget('styles')->GetSelection;
+	my $int_name        = $order_names_ref->[$style_selection]->[0];
+	Padre::Current->main->action("view.style.$int_name");
+	$self->get_widget('preview_editor')->set_preferences;
+}
+
 sub update_description {
 	my ($self) = @_;
 
@@ -241,12 +250,6 @@ sub update_description {
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
 	my $highlighter           = $highlighters->[$highlighter_selection];
 
-	$self->{_highlighters_}{$mime_type_name} = $highlighter;
-
-	#print "Highlighter $highlighter\n";
-
-	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
-	$self->get_widget('mime_type_name')->SetLabel( $mime_types->[$mime_type_selection] );
 }
 
 
@@ -309,7 +312,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'save_autoclean',
 				( $config->save_autoclean ? 1 : 0 ),
-				Wx::gettext("Clean up file content on saving (for supported document types)")
+				Wx::gettext('Clean up file content on saving (for supported document types)')
 			],
 			[]
 		],
@@ -433,6 +436,27 @@ sub _appearance_panel {
 		? '#' . $config->editor_currentline_color
 		: '#ffff04';
 
+
+	# Migration for styles from Menu to preferences
+	my %core_styles = Padre::Config::Style->core_styles;
+	my %user_styles = Padre::Config::Style->user_styles;
+
+	# put default in front
+	my @order =
+		sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $core_styles{$a} cmp $core_styles{$b} } keys %core_styles;
+
+	# The Choice box uses a "pretty name" (hash value) as input, returns an index for the selection and the Padre::Wx::ActionLibrary
+	# expects a short "internal name" (hash key) as input: @order_names data structure for _on_changes_styles
+	my @order_names;
+	for my $int_name (@order) {
+		push @order_names, [ $int_name, $core_styles{$int_name} ];
+	}
+	for my $int_name ( sort values %user_styles ) {
+		push @order_names, [ $int_name, $user_styles{$int_name} ];
+	}
+	my $styles = [ map { $_->[1] } @order_names ];
+
+
 	my %main_title_vars = (
 		'%p' => Wx::gettext('Project name'),
 		'%v' => Wx::gettext('Padre version'),
@@ -492,6 +516,10 @@ sub _appearance_panel {
 		[   [ 'Wx::StaticText',     'undef',       Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font', $font_desc ]
 		],
+		[   [ 'Wx::StaticText', undef,    Wx::gettext('Style:') ],
+			[ 'Wx::Choice',     'styles', $styles ]
+		],
+
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color', $bgcolor ]
 		],
@@ -535,6 +563,22 @@ sub _appearance_panel {
 			$preview->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
 		},
 	);
+
+	Wx::Event::EVT_CHOICE(
+		$panel, $self->get_widget('styles'),
+		sub { _on_styles_changed( $self, \@order_names ) }
+
+	);
+
+	# Set the configured style
+	if ( defined $config->editor_style ) {
+		foreach my $idx ( 0 .. $#order_names ) {
+			if ( $config->editor_style eq $order_names[$idx]->[0] ) {
+				$self->get_widget('styles')->SetSelection($idx);
+				last;
+			}
+		}
+	}
 
 	my $preview_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$main_sizer->Add( $preview_sizer, 3, Wx::wxGROW | Wx::wxALL, 3 );
@@ -1008,6 +1052,8 @@ sub run {
 		grep { $_ ne $editor_autoindent } qw{no same_level deep}
 	);
 	my @editor_autoindent_localized = map { Wx::gettext($_) } @editor_autoindent_items;
+
+
 
 	# Function List Ordering
 	my $main_functions_order       = $config->main_functions_order;

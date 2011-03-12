@@ -1597,11 +1597,12 @@ sub init {
 
 		foreach my $name ( sort keys %styles ) {
 			Padre::Wx::Action->new(
-				name        => "view.style.$name",
-				label       => $styles{$name},
-				comment     => _T('Switch highlighting colours'),
-				menu_method => 'AppendRadioItem',
-				menu_event  => sub {
+				name    => "view.style.$name",
+				label   => $styles{$name},
+				comment => _T('Switch highlighting colours'),
+
+				#menu_method => 'AppendRadioItem',
+				menu_event => sub {
 					$_[0]->change_style($name);
 				},
 			);
@@ -1613,11 +1614,12 @@ sub init {
 
 		foreach my $name (@styles) {
 			Padre::Wx::Action->new(
-				name        => "view.style.$name",
-				label       => $name,
-				comment     => _T('Switch highlighting colours'),
-				menu_method => 'AppendRadioItem',
-				menu_event  => sub {
+				name    => "view.style.$name",
+				label   => $name,
+				comment => _T('Switch highlighting colours'),
+
+				#menu_method => 'AppendRadioItem',
+				menu_event => sub {
 					$_[0]->change_style( $name, 1 );
 				},
 			);
