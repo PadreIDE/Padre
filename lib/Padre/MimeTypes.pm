@@ -951,6 +951,7 @@ sub menu_view_mimes {
     return %menu_view_mimes;
 }
 
+
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
