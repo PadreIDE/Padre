@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-12 12:10-0800\n"
+"POT-Creation-Date: 2011-03-13 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1963,7 +1963,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:365 lib/Padre/MimeTypes.pm:375
+#: lib/Padre/MimeTypes.pm:364 lib/Padre/MimeTypes.pm:371
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2335,7 +2335,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:389
+#: lib/Padre/MimeTypes.pm:381
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -2710,22 +2710,22 @@ msgstr ""
 msgid "Methods order:"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:425
+#: lib/Padre/MimeTypes.pm:422
 #, perl-format
 msgid "Mime type already had a class '%s' when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:451
+#: lib/Padre/MimeTypes.pm:454
 #, perl-format
 msgid "Mime type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:441 lib/Padre/MimeTypes.pm:467
+#: lib/Padre/MimeTypes.pm:442 lib/Padre/MimeTypes.pm:473
 #, perl-format
 msgid "Mime type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:415
+#: lib/Padre/MimeTypes.pm:410
 #, perl-format
 msgid "Mime type was not supported when %s(%s) was called"
 msgstr ""
@@ -3248,11 +3248,11 @@ msgstr ""
 msgid "PHP Files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:383
+#: lib/Padre/MimeTypes.pm:375
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:388
+#: lib/Padre/MimeTypes.pm:379
 msgid "PPI Standard"
 msgstr ""
 
@@ -4002,7 +4002,7 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:364 lib/Padre/MimeTypes.pm:374
+#: lib/Padre/MimeTypes.pm:363 lib/Padre/MimeTypes.pm:370
 msgid "Scintilla"
 msgstr ""
 
@@ -4567,7 +4567,7 @@ msgstr ""
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:384
+#: lib/Padre/MimeTypes.pm:376
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -4842,7 +4842,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:619
+#: lib/Padre/MimeTypes.pm:637
 msgid "UNKNOWN"
 msgstr ""
 
