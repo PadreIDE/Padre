@@ -243,13 +243,15 @@ sub update_description {
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
 	my $mime_type_names     = Padre::MimeTypes->get_mime_type_names;
 	my $mime_types          = Padre::MimeTypes->get_mime_types;
-
 	my $mime_type_name = $mime_type_names->[$mime_type_selection];
+	my $mime_type = $mime_types->[$mime_type_selection];
+	$self->get_widget('mime_type_name')->SetLabel($mime_type);	
+	
 
 	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
 	my $highlighter           = $highlighters->[$highlighter_selection];
-
+	$self->get_widget('description')->SetLabel(Padre::MimeTypes->get_highlighter_explanation($highlighter)); 
 }
 
 
