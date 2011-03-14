@@ -152,7 +152,6 @@ sub _file_dialog {
 
 sub _mime_type_panel {
 	my ( $self, $treebook ) = @_;
-
 	my $mime_types = Padre::MimeTypes->get_mime_type_names;
 
 	# get list of mime-types
@@ -196,36 +195,42 @@ sub _mime_type_panel {
 }
 
 sub _on_highlighter_changed {
-	my ( $self, $panel, $event ) = @_;
+	my ($self) = @_;
 	$self->update_highlighters;
 	$self->update_description;
 }
 
 sub _on_mime_type_changed {
-	my ( $self, $panel, $event ) = @_;
+	my ($self) = @_;
 	$self->update_highlighters;
 	$self->update_description;
 }
 
 sub update_highlighters {
-	my ($self)         = @_;
-	my $selection      = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types     = Padre::MimeTypes->get_mime_type_names;
-	my $mime_type_name = $mime_types->[$selection];
+	my ($self)              = @_;
+	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
+	my $mime_type_names     = Padre::MimeTypes->get_mime_type_names;
+	my $mime_types          = Padre::MimeTypes->get_mime_types;
+	my $mime_type_name      = $mime_type_names->[$mime_type_selection];
+	my $mime_type           = $mime_types->[$mime_type_selection];
 
 	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
 	my $highlighter           = $highlighters->[$highlighter_selection];
+	$self->{_highlighters_}{$mime_type_name} =
+		( defined $highlighter )
+		? $highlighter
+		: Padre::MimeTypes->get_lexer($mime_type_name);
 
+	# Save the highlighters
 	my %changed_highlighters;
-	$self->{_highlighters_}{$mime_type_name} = $highlighter;
-	$changed_highlighters{$mime_type_name} = $highlighter;
+	$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
 	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
 
 	$self->get_widget('highlighters')->Clear;
 	$self->get_widget('highlighters')->AppendItems($highlighters);
-
-	my ($id) = grep { $highlighters->[$_] eq $highlighter } ( 0 .. @$highlighters - 1 );
+	my ($id) =
+		grep { $_ if $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} } ( 0 .. @$highlighters - 1 );
 	$id ||= 0;
 	$self->get_widget('highlighters')->SetSelection($id);
 }
@@ -1009,7 +1014,6 @@ sub guess_indentation_settings {
 
 sub new {
 	my ( $class, $win ) = @_;
-
 	return bless {}, $class;
 }
 
@@ -1096,8 +1100,8 @@ sub run {
 	foreach my $mime_type_name ( keys %{ $self->{_highlighters_} } ) {
 		if ( $self->{_start_highlighters_}{$mime_type_name} ne $self->{_highlighters_}{$mime_type_name} ) {
 			$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
-
-			#print "Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
+			print
+				"Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
 		}
 	}
 	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
