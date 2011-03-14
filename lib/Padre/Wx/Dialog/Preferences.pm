@@ -192,14 +192,7 @@ sub _mime_type_panel {
 
 	$self->update_highlighters;
 	$self->update_description;
-	$self->get_widget('description')->Wrap(200); # TO DO should be based on the width of the page !
 	return $panel;
-}
-
-sub _on_mime_type_changed {
-	my ( $self, $panel, $event ) = @_;
-	$self->update_highlighters;
-	$self->update_description;
 }
 
 sub update_highlighters {
@@ -208,13 +201,8 @@ sub update_highlighters {
 	my $selection      = $self->get_widget('mime_type')->GetSelection;
 	my $mime_types     = Padre::MimeTypes->get_mime_type_names;
 	my $mime_type_name = $mime_types->[$selection];
-
-	#print "mime '$mime_type_name'\n";
 	$self->{_highlighters_}{$mime_type_name} ||= $self->{_start_highlighters_}{$mime_type_name};
-
 	my $highlighters = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
-
-	#print "hl '$highlighters'\n";
 	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} } ( 0 .. @$highlighters - 1 );
 	$id ||= 0;
 
@@ -229,6 +217,12 @@ sub _on_highlighter_changed {
 	$self->update_description;
 }
 
+sub _on_mime_type_changed {
+	my ( $self, $panel, $event ) = @_;
+	$self->update_highlighters;
+	$self->update_description;
+}
+
 sub _on_styles_changed {
 	my ( $self, $order_names_ref ) = @_;
 	my $style_selection = $self->get_widget('styles')->GetSelection;
@@ -239,19 +233,23 @@ sub _on_styles_changed {
 
 sub update_description {
 	my ($self) = @_;
-
+	$self->get_widget('description')->Wrap(200); # TO DO should be based on the width of the page !
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
 	my $mime_type_names     = Padre::MimeTypes->get_mime_type_names;
 	my $mime_types          = Padre::MimeTypes->get_mime_types;
-	my $mime_type_name = $mime_type_names->[$mime_type_selection];
-	my $mime_type = $mime_types->[$mime_type_selection];
-	$self->get_widget('mime_type_name')->SetLabel($mime_type);	
-	
+	my $mime_type_name      = $mime_type_names->[$mime_type_selection];
+	my $mime_type           = $mime_types->[$mime_type_selection];
+	$self->get_widget('mime_type_name')->SetLabel($mime_type);
+
 
 	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
 	my $highlighter           = $highlighters->[$highlighter_selection];
-	$self->get_widget('description')->SetLabel(Padre::MimeTypes->get_highlighter_explanation($highlighter)); 
+	$self->{_highlighters_}{$mime_type_name} = $highlighter;
+	my %changed_highlighters;
+	$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
+	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
+	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
 }
 
 
