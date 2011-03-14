@@ -195,25 +195,9 @@ sub _mime_type_panel {
 	return $panel;
 }
 
-sub update_highlighters {
-	my ($self) = @_;
-
-	my $selection      = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types     = Padre::MimeTypes->get_mime_type_names;
-	my $mime_type_name = $mime_types->[$selection];
-	$self->{_highlighters_}{$mime_type_name} ||= $self->{_start_highlighters_}{$mime_type_name};
-	my $highlighters = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
-	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} } ( 0 .. @$highlighters - 1 );
-	$id ||= 0;
-
-	my $list = $self->get_widget('highlighters');
-	$list->Clear;
-	$list->AppendItems($highlighters);
-	$list->SetSelection($id);
-}
-
 sub _on_highlighter_changed {
 	my ( $self, $panel, $event ) = @_;
+	$self->update_highlighters;
 	$self->update_description;
 }
 
@@ -223,12 +207,27 @@ sub _on_mime_type_changed {
 	$self->update_description;
 }
 
-sub _on_styles_changed {
-	my ( $self, $order_names_ref ) = @_;
-	my $style_selection = $self->get_widget('styles')->GetSelection;
-	my $int_name        = $order_names_ref->[$style_selection]->[0];
-	Padre::Current->main->action("view.style.$int_name");
-	$self->get_widget('preview_editor')->set_preferences;
+sub update_highlighters {
+	my ($self)         = @_;
+	my $selection      = $self->get_widget('mime_type')->GetSelection;
+	my $mime_types     = Padre::MimeTypes->get_mime_type_names;
+	my $mime_type_name = $mime_types->[$selection];
+
+	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
+	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
+	my $highlighter           = $highlighters->[$highlighter_selection];
+
+	my %changed_highlighters;
+	$self->{_highlighters_}{$mime_type_name} = $highlighter;
+	$changed_highlighters{$mime_type_name} = $highlighter;
+	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
+
+	$self->get_widget('highlighters')->Clear;
+	$self->get_widget('highlighters')->AppendItems($highlighters);
+
+	my ($id) = grep { $highlighters->[$_] eq $highlighter } ( 0 .. @$highlighters - 1 );
+	$id ||= 0;
+	$self->get_widget('highlighters')->SetSelection($id);
 }
 
 sub update_description {
@@ -240,18 +239,17 @@ sub update_description {
 	my $mime_type_name      = $mime_type_names->[$mime_type_selection];
 	my $mime_type           = $mime_types->[$mime_type_selection];
 	$self->get_widget('mime_type_name')->SetLabel($mime_type);
-
-
-	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
-	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
-	my $highlighter           = $highlighters->[$highlighter_selection];
-	$self->{_highlighters_}{$mime_type_name} = $highlighter;
-	my %changed_highlighters;
-	$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
-	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
-	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
+	$self->get_widget('description')
+		->SetLabel( Padre::MimeTypes->get_highlighter_explanation( $self->{_highlighters_}{$mime_type_name} ) );
 }
 
+sub _on_styles_changed {
+	my ( $self, $order_names_ref ) = @_;
+	my $style_selection = $self->get_widget('styles')->GetSelection;
+	my $int_name        = $order_names_ref->[$style_selection]->[0];
+	Padre::Current->main->action("view.style.$int_name");
+	$self->get_widget('preview_editor')->set_preferences;
+}
 
 sub _indentation_panel {
 	my ( $self, $treebook, $editor_autoindent ) = @_;
