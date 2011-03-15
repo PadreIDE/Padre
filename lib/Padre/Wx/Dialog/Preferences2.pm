@@ -32,12 +32,33 @@ sub load {
 		next unless $self->can($name);
 
 		# Get the Wx element for this option
-		my $value  = $config->$name();
-		my $widget = $self->$name();
+		my $setting = $config->setting($name);
+		my $value   = $config->$name();
+		my $ctrl    = $self->$name();
 
 		# Apply this one setting to this one widget
-		if ( $widget->isa('Wx::Checkbox') ) {
-			$widget->SetValue( $value ? 1 : 0 );
+		if ( $ctrl->isa('Wx::CheckBox') ) {
+			$ctrl->SetValue( $value );
+
+		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
+			$ctrl->SetValue( $value );
+
+		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
+			$ctrl->SetValue( $value );
+
+		} elsif ( $ctrl->isa('Wx::Choice') ) {
+			my $options = $setting->options;
+			if ( $options ) {
+				$ctrl->Clear;
+				foreach my $option ( sort keys %$options ) {
+					# NOTE: Probably wrong
+					my $i = $ctrl->Append($option);
+					next unless $option eq $value;
+					$ctrl->SetSelection($i);
+				}
+			}
+			
+
 		} else {
 			next;
 		}
