@@ -3744,8 +3744,8 @@ sub on_open_selection {
 	unless ( length $text ) {
 		my $dialog = Wx::TextEntryDialog->new(
 			$self,
-			Wx::gettext('Nothing selected. Enter what should be opened:'),
-			Wx::gettext('Open selection'), ''
+			Wx::gettext("Nothing selected. Enter what should be opened:"),
+			Wx::gettext("Open selection"), ''
 		);
 		return if $dialog->ShowModal == Wx::wxID_CANCEL;
 
@@ -3780,23 +3780,17 @@ sub on_open_selection {
 		}
 	}
 	unless (@files) {
-		my $document         = $current->document;
-		my $guessed_filename = $document->guess_filename_to_open($text);
-		if ( length $guessed_filename > 0 ) {
-			push @files, $guessed_filename;
-		} else {
-			push @files, $text;
-		}
+		my $document = $current->document;
+		push @files, $document->guess_filename_to_open($text);
 	}
 
-	# if something is pushed on @files before, @files can never evaluate to false
-	#unless (@files) {
-	#	$self->message(
-	#		sprintf( Wx::gettext("Could not find file '%s'"), $text ),
-	#		Wx::gettext('Open Selection')
-	#	);
-	#	return;
-	#}
+	unless (@files) {
+		$self->message(
+			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
+			Wx::gettext("Open Selection")
+		);
+		return;
+	}
 
 	# Pick a file
 	require List::MoreUtils;

@@ -55,7 +55,6 @@ next production release, and synchronise their release to the Padre schedule.
     - Fixed #1136: The syntax checker often marks the wrong line in a package
       (AZAWAWI)
     - Add tooltips to "Open Resource" dialog (ZENOG)
-    - Fix #1114: Open Selection: create non-existing files (ZENOG)
     - Fix #1078: 'Open Resource' should find things like 'Wx::Dialog' (ZENOG)
     - 'Open Resource': set focus to text field on character input in the list
       box, fix tab order (ZENOG)
