@@ -877,7 +877,7 @@ sub dialog {
 	);
 
 	my $mime_types = $self->_mime_type_panel($tb);
-	$tb->AddPage( $mime_types, Wx::gettext('Files and Colors') );
+	$tb->AddPage( $mime_types, Wx::gettext('Syntax Highlighting') );
 
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
 	$tb->AddPage( $indentation, Wx::gettext('Indentation') );
