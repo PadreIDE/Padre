@@ -1144,14 +1144,6 @@ sub run {
 		$data->{info_on_statusbar} ? 1 : 0
 	);
 	$config->set(
-		'main_title',
-		$data->{main_title}
-	);
-	$config->set(
-		'main_statusbar_template',
-		$data->{main_statusbar_template}
-	);
-	$config->set(
 		'editor_right_margin_enable',
 		$data->{editor_right_margin_enable} ? 1 : 0
 	);
