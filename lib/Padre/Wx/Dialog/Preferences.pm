@@ -460,47 +460,7 @@ sub _appearance_panel {
 	my $styles = [ map { $_->[1] } @order_names ];
 
 
-	my %main_title_vars = (
-		'%p' => Wx::gettext('Project name'),
-		'%v' => Wx::gettext('Padre version'),
-		'%f' => Wx::gettext('Current filename'),
-		'%d' => Wx::gettext("Current file's dirname"),
-		'%b' => Wx::gettext("Current file's basename"),
-		'%F' => Wx::gettext('Current filename relative to project'),
-
-		# frequently changing, should not be used in title as it
-		# is only update on rare events
-		'%m' => Wx::gettext('Indication if current file was modified'),
-		'%s' => Wx::gettext('Name of the current subroutine'),
-	);
-	my @main_title_keys = sort { lc($a) cmp lc($b); } ( keys(%main_title_vars) );
-	my $main_title_left;
-	my $main_title_right;
-
-	while ( $#main_title_keys > -1 ) {
-
-		my $key = shift @main_title_keys;
-		$main_title_left .= $key . ' => ' . $main_title_vars{$key} . "\n";
-
-		last if $#main_title_keys < 0;
-
-		$key = shift @main_title_keys;
-		$main_title_right .= $key . ' => ' . $main_title_vars{$key} . "\n";
-
-	}
-	$main_title_left  =~ s/\n$//;
-	$main_title_right =~ s/\n$//;
-
 	my $table = [
-		[   [ 'Wx::StaticText', 'undef',      Wx::gettext('Window title:') ],
-			[ 'Wx::TextCtrl',   'main_title', $config->main_title ],
-		],
-		[   [ 'Wx::StaticText', 'undef',                   Wx::gettext('Statusbar:') ],
-			[ 'Wx::TextCtrl',   'main_statusbar_template', $config->main_statusbar_template ],
-		],
-		[   [ 'Wx::StaticText', 'undef', $main_title_left ],
-			[ 'Wx::StaticText', 'undef', $main_title_right ],
-		],
 		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
 				Wx::gettext('Colored text in output window (ANSI)')
 			],
