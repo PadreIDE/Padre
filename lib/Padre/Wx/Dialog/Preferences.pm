@@ -445,16 +445,19 @@ sub _appearance_panel {
 	my %user_styles = Padre::Config::Style->user_styles;
 
 	# put default in front
-	my @order =
+	my @core_order =
 		sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $core_styles{$a} cmp $core_styles{$b} } keys %core_styles;
+
+	my @user_order =
+		sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $user_styles{$a} cmp $user_styles{$b} } keys %user_styles;
 
 	# The Choice box uses a "pretty name" (hash value) as input, returns an index for the selection and the Padre::Wx::ActionLibrary
 	# expects a short "internal name" (hash key) as input: @order_names data structure for _on_changes_styles
 	my @order_names;
-	for my $int_name (@order) {
+	for my $int_name (@core_order) {
 		push @order_names, [ $int_name, $core_styles{$int_name} ];
 	}
-	for my $int_name ( sort values %user_styles ) {
+	for my $int_name (@user_order) {
 		push @order_names, [ $int_name, $user_styles{$int_name} ];
 	}
 	my $styles = [ map { $_->[1] } @order_names ];

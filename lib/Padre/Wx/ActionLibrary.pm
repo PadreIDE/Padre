@@ -1610,12 +1610,12 @@ sub init {
 	}
 
 	SCOPE: {
-		my @styles = Padre::Config::Style->user_styles;
+		my %styles = Padre::Config::Style->user_styles;
 
-		foreach my $name (@styles) {
+		foreach my $name ( sort keys %styles ) {
 			Padre::Wx::Action->new(
 				name    => "view.style.$name",
-				label   => $name,
+				label   => $styles{name},
 				comment => _T('Switch highlighting colours'),
 
 				#menu_method => 'AppendRadioItem',

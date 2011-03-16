@@ -57,7 +57,7 @@ sub core_styles {
 }
 
 sub user_styles {
-	return @USER_STYLES;
+	return map { $_ => $_ } @USER_STYLES;
 }
 
 
