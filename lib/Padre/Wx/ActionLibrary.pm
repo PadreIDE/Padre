@@ -2223,7 +2223,7 @@ sub init {
 		menu_event => sub {
 			$DB::single = 1;
 			require Padre::Wx::Dialog::Preferences2;
-			my $dialog = Padre::Wx::Dialog::Preferences2->new($_[0]);
+			my $dialog = Padre::Wx::Dialog::Preferences2->new( $_[0] );
 			$dialog->load( $_[0]->config );
 			$dialog->ShowModal;
 		},

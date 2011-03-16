@@ -38,26 +38,27 @@ sub load {
 
 		# Apply this one setting to this one widget
 		if ( $ctrl->isa('Wx::CheckBox') ) {
-			$ctrl->SetValue( $value );
+			$ctrl->SetValue($value);
 
 		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$ctrl->SetValue( $value );
+			$ctrl->SetValue($value);
 
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$ctrl->SetValue( $value );
+			$ctrl->SetValue($value);
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
-			if ( $options ) {
+			if ($options) {
 				$ctrl->Clear;
 				foreach my $option ( sort keys %$options ) {
+
 					# NOTE: Probably wrong
 					my $i = $ctrl->Append($option);
 					next unless $option eq $value;
 					$ctrl->SetSelection($i);
 				}
 			}
-			
+
 
 		} else {
 			next;
