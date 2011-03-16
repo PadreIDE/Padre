@@ -194,9 +194,10 @@ sub enable {
 	}
 
 	# add the plugin catalog to the locale
-	my $locale = Padre::Current->main->{locale};
-	my $code   = Padre::Locale::rfc4646();
-	my $prefix = $self->locale_prefix;
+	my $locale  = Padre::Current->main->{locale};
+	my $code    = Padre::Locale::rfc4646();
+	my $prefix  = $self->locale_prefix;
+	my $manager = Padre->ide->plugin_manager;
 	$locale->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
@@ -254,8 +255,42 @@ sub enable {
 
 	# If the plugin has a hook for the context menu, cache it
 	if ( $self->object->can('event_on_context_menu') ) {
-		my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
+		my $cxt_menu_hook_cache = $manager->plugins_with_context_menu;
 		$cxt_menu_hook_cache->{ $self->class } = 1;
+	}
+
+	# Look for Padre hooks
+	if ( $self->object->can('padre_hooks') ) {
+		my $hooks = $self->object->padre_hooks;
+
+		if ( ref($hooks) ne 'HASH' ) {
+			$manager->main->error(
+				sprintf(
+					Wx::gettext('Plugin %s returnd %s instead of a hook list on ->padre_hooks'), $self->class, $hooks
+				)
+			);
+			return;
+		}
+
+		for my $hookname ( keys( %{$hooks} ) ) {
+
+			if ( !$Padre::PluginManager::PADRE_HOOKS{$hookname} ) {
+				$manager->main->error(
+					sprintf( Wx::gettext('Plugin %s tried to register invalid hook %s'), $self->class, $hookname ) );
+				next;
+			}
+
+			for my $hook ( ( ref( $hooks->{$hookname} ) eq 'ARRAY' ) ? @{ $hooks->{$hookname} } : $hooks->{$hookname} )
+			{
+				if ( ref($hook) ne 'CODE' ) {
+					$manager->main->error(
+						sprintf( Wx::gettext('Plugin %s tried to register non-CODE hook %s'), $self->class, $hookname )
+					);
+					next;
+				}
+				push @{ $manager->{hooks}->{$hookname} }, [ $self->object, $hook ];
+			}
+		}
 	}
 
 	# Update the status
@@ -270,6 +305,8 @@ sub disable {
 	unless ( $self->can_disable ) {
 		Carp::croak("Cannot disable plug-in '$self'");
 	}
+
+	my $manager = Padre->ide->plugin_manager;
 
 	# If the plugin defines document types, deregister them
 	my @documents = $self->object->registered_documents;
@@ -296,8 +333,20 @@ sub disable {
 	}
 
 	# If the plugin has a hook for the context menu, cache it
-	my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
+	my $cxt_menu_hook_cache = $manager->plugins_with_context_menu;
 	delete $cxt_menu_hook_cache->{ $self->class };
+
+	# Remove hooks
+	# The ->padre_hooks method may not return constant values, scanning the hook
+	# tree is much safer than removing the hooks reported _now_
+	for my $hookname ( keys( %{ $manager->{hooks} } ) ) {
+		my @new_list;
+		for my $hook ( @{ $manager->{hooks}->{$hookname} } ) {
+			next if $hook->[0] eq $self->object;
+			push @new_list, $hook;
+		}
+		$self->{hooks}->{$hookname} = \@new_list;
+	}
 
 	# Update the status
 	$self->status('disabled');

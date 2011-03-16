@@ -74,7 +74,7 @@ $ENV{PADRE_HOME} = $dir->dirname;
 # Complete the dev.pl - command
 $cmd .= $devpl . ' --invisible -- --with-plugin=Padre::Plugin::Test --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
-$cmd .= ' --actionqueue=file.save,file.quit';
+$cmd .= ' --actionqueue=edit.copy_filename,edit.paste,file.save,file.quit';
 
 diag "Command is: '$cmd'";
 my ( $stdout, $stderr ) = capture { system($cmd); };

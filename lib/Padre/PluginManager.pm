@@ -41,9 +41,18 @@ use Padre::Wx::Menu::Tools ();
 
 our $VERSION = '0.85';
 
+#####################################################################
+# Contants and definitions
 
+# Constants limited to this file
+use constant PADRE_HOOK_RETURN_IGNORE => 1;
+use constant PADRE_HOOK_RETURN_ERROR  => 2;
 
-
+#  List if valid Padre hooks:
+our %PADRE_HOOKS = (
+	before_save => PADRE_HOOK_RETURN_ERROR,
+	after_save  => PADRE_HOOK_RETURN_IGNORE,
+);
 
 #####################################################################
 # Constructor and Accessors
@@ -751,20 +760,15 @@ sub reload_plugin {
 }
 
 
-
-
-
-#####################################################################
-# Enabling and Disabling a Plugin
-
-# Assume the named plug-in exists, enable it
-sub _plugin_enable {
-	$_[0]->_plugin( $_[1] )->enable;
-}
-
 # Assume the named plug-in exists, disable it
 sub _plugin_disable {
-	$_[0]->_plugin( $_[1] )->disable;
+	my $self = shift;
+	my $name = shift;
+
+	my $plugin = $self->_plugin($name);
+
+	$plugin->disable;
+
 }
 
 =pod
@@ -849,6 +853,41 @@ sub plugin_event {
 	}
 	return 1;
 }
+
+# Run a plugin hook
+sub hook {
+	my $self     = shift;
+	my $hookname = shift;
+	my @args     = @_;
+
+	my $result = 1; # Default to success
+
+	if ( ref( $self->{hooks}->{$hookname} ) eq 'ARRAY' ) {
+		for my $hook ( @{ $self->{hooks}->{$hookname} } ) {
+
+			my @retval = eval { &{ $hook->[1] }( $hook->[0], @args ); };
+			if ($@) {
+				warn 'Plugin ' . $hook->[0] . ', hook ' . $hookname . ', code ' . $hook->[1] . ' crashed with ' . $@;
+				next;
+			}
+
+			# Return value handling depends on hook type
+			if ( $PADRE_HOOKS{$hookname} == PADRE_HOOK_RETURN_ERROR ) {
+				next unless defined( $retval[0] ); # Returned undef = no error
+				$self->main->error(
+					$retval[0] || sprintf(
+						Wx::gettext('Plugin %s, hook %s returned an emtpy error message'), $hook->[0], $hookname
+					)
+				);
+				$result = 0;
+			}
+
+		}
+	}
+
+	return $result;
+}
+
 
 # Show an error message
 sub _error {

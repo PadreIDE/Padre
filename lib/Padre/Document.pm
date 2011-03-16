@@ -737,6 +737,9 @@ sub autoclean {
 sub save_file {
 	my $self = shift;
 
+	my $manager = $self->current->ide->plugin_manager;
+	return unless $manager->hook( 'before_save', $self );
+
 	# Show the file-changed-dialog again after the file was saved:
 	delete $self->{_already_popup_file_changed};
 
@@ -802,6 +805,8 @@ sub save_file {
 
 	# Update read-only-cache
 	$self->{readonly} = $self->file->readonly;
+
+	$manager->hook( 'after_save', $self );
 
 	return 1;
 }

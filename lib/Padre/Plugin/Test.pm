@@ -74,20 +74,16 @@ sub padre_hooks {
 
 	return {
 		before_save => sub {
-			my $self = shift;
-			my $main = $self->main;
 
-			print "[[[TEST_PLUGIN:before_save]]]\n";
+			print "[[[TEST_PLUGIN:before_save]]] " . join( ', ', @_ ) . "\n";
 
-			return 1;
+			return undef;
 		},
 		after_save => sub {
 			my $self = shift;
 			my $main = $self->main;
 
 			print "[[[TEST_PLUGIN:after_save]]]\n";
-
-			return 1;
 		},
 	};
 
