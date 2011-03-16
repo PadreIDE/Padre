@@ -37,6 +37,10 @@ sub new {
 		$self,
 		'tools.preferences',
 	);
+	$self->add_menu_action(
+		$self,
+		'tools.preferences2',
+	);
 
 	# TODO Remove comments after 0.69 release
 	#	$self->add_menu_action(

@@ -2215,6 +2215,20 @@ sub init {
 		},
 	);
 
+	# Temporary action for Preferences 2.0
+	Padre::Wx::Action->new(
+		name       => 'tools.preferences2',
+		label      => _T('Preferences 2.0'),
+		comment    => _T('Edit user and host preferences'),
+		menu_event => sub {
+			$DB::single = 1;
+			require Padre::Wx::Dialog::Preferences2;
+			my $dialog = Padre::Wx::Dialog::Preferences2->new($_[0]);
+			$dialog->load( $_[0]->config );
+			$dialog->ShowModal;
+		},
+	);
+
 	Padre::Wx::Action->new(
 		name       => 'tools.sync',
 		label      => _T('Preferences Sync'),

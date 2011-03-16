@@ -10,7 +10,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.85';
+our $VERSION = '0.01';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -368,7 +368,7 @@ sub new {
 	$self->{m_colourPicker1} = Wx::ColourPickerCtrl->new(
 		$m_panel3,
 		-1,
-		undef,
+		Wx::Colour->new(0, 0, 0),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
@@ -508,10 +508,18 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->{m_button4} = Wx::Button->new(
+	$self->{guess_indentation} = Wx::Button->new(
 		$m_panel1,
 		-1,
 		Wx::gettext("Guess from Current Document"),
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{guess_indentation},
+		sub {
+			shift->guess_indentation(@_);
+		},
 	);
 
 	$self->{m_checkBox5} = Wx::CheckBox->new(
@@ -788,14 +796,6 @@ sub new {
 	);
 	$self->{save}->SetDefault;
 
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{save},
-		sub {
-			shift->find_next(@_);
-		},
-	);
-
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
@@ -920,7 +920,7 @@ sub new {
 	my $fgSizer2 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
 	$fgSizer2->SetFlexibleDirection( Wx::wxBOTH );
 	$fgSizer2->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_ALL );
-	$fgSizer2->Add( $self->{m_button4}, 0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{guess_indentation}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{m_checkBox5}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{m_checkBox7}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $m_staticText2, 0, Wx::wxALL, 5 );
@@ -1018,11 +1018,8 @@ sub editor_wordwrap {
 	$_[0]->{editor_wordwrap};
 }
 
-sub find_next {
-	my $self  = shift;
-	my $event = shift;
-
-	die 'EVENT HANDLER NOT IMPLEMENTED';
+sub guess_indentation {
+	die 'Handler method guess_indentation for event guess_indentation.OnButtonClick not implemented';
 }
 
 1;

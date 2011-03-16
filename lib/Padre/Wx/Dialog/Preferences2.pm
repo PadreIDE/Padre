@@ -32,7 +32,7 @@ sub load {
 		next unless $self->can($name);
 
 		# Get the Wx element for this option
-		my $setting = $config->setting($name);
+		my $setting = $config->meta($name);
 		my $value   = $config->$name();
 		my $ctrl    = $self->$name();
 
@@ -73,6 +73,13 @@ sub save {
 
 	die "CODE INCOMPLETE";
 }
+
+
+
+
+
+######################################################################
+# Event Handlers
 
 1;
 
