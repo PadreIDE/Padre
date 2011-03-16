@@ -610,7 +610,7 @@ sub _load_plugin {
 		# Do not enable by default
 		$config->set( enabled => 0 );
 	}
-	unless ( $config->enabled ) {
+	unless ( $config->enabled or Padre->ide->{with_plugin}->{$module} ) {
 		$plugin->status('disabled');
 		return;
 	}

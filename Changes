@@ -17,6 +17,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Handle corrupt padre.db in SessionManager (SEWI)
     - Migration of Style Settings from Menu to Preferences window (CLAUDIO)
     - Add list of escape characters to the Regex Editor (SZABGAB)
+    - Add a test plugin and first tests using that plugin (SEWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
