@@ -383,7 +383,7 @@ sub _initialize {
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::PPILexer',
 		_T('PPI Standard'),
-		_T( 'Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.' )
+		_T('Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.')
 	);
 
 	__PACKAGE__->add_highlighter_to_mime_type(
@@ -425,7 +425,7 @@ sub add_mime_class {
 	if ( $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext( "Mime type already had a class '%s' when %s(%s) was called" ),
+				Wx::gettext("Mime type already had a class '%s' when %s(%s) was called"),
 				$MIME_TYPES{$mime}{class},
 				'add_mime_class',
 				$mime
@@ -454,7 +454,7 @@ sub remove_mime_class {
 	if ( not $MIME_TYPES{$mime}{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext( "Mime type did not have a class entry when %s(%s) was called" ),
+				Wx::gettext("Mime type did not have a class entry when %s(%s) was called"),
 				'remove_mime_class',
 				$mime
 			)

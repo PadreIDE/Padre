@@ -830,28 +830,42 @@ sub new {
 	$fgSizer3->Add( $self->{m_checkBox10}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText41, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_choice2}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_choice2}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $m_staticText5, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_dirPicker1}, 0,
-		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add(
+		$self->{m_dirPicker1},                                                      0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5
+	);
 	$fgSizer3->Add( $self->{m_checkBox11}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText6, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_choice3}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_choice3}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $m_staticText7, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_choice31}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_choice31}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $m_staticText8, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_choice7}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_choice7}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $m_staticText9, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_spinCtrl3}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_spinCtrl3}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $m_staticText10, 0, Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_textCtrl1}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_textCtrl1}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $self->{m_checkBox91}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{m_checkBox101}, 0, Wx::wxALL, 5 );
@@ -863,8 +877,10 @@ sub new {
 	$fgSizer3->Add( $self->{m_checkBox13}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText11, 0, Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{m_textCtrl2}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
-		5 );
+	$fgSizer3->Add(
+		$self->{m_textCtrl2}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5
+	);
 	$fgSizer3->Add( $self->{m_checkBox14}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 
