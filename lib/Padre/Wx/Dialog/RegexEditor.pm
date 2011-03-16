@@ -131,7 +131,32 @@ sub _regex_groups {
 				'05(?<! )' => Wx::gettext('Negative lookbehind assertion'),
 				'06\n'     => Wx::gettext('Backreference to the nth group'),
 			}
-		}
+		},
+
+		# next list taken from perldoc perlre
+		# most of these are not interesting for beginners so I am not sure we need to show them
+		'05' => {
+			label => Wx::gettext('Escape characters'),
+			value => {
+				'00\t'       => Wx::gettext('TAB'),
+				'01\n'       => Wx::gettext('Newline'),
+				'02\r'       => Wx::gettext('Return'),
+				'03\f'       => Wx::gettext('Form feed'),
+				'04\a'       => Wx::gettext('Alarm'),
+				'05\e'       => Wx::gettext('Escape (ESC)'),
+				'06\033'     => Wx::gettext('Octal character'),
+				'07\x1B'     => Wx::gettext('Hex character'),
+				'08\x{263a}' => Wx::gettext('Long hex character'),
+				'09\cK'      => Wx::gettext('Control character'),
+				'10\N{name}' => Wx::gettext('Name Unicode character'),
+				'11\l'       => Wx::gettext('Lowercase next character'),
+				'12\u'       => Wx::gettext('Uppercase next character'),
+				'13\L'       => Wx::gettext('Lowercase till \E (think vi)'),
+				'14\U'       => Wx::gettext('Uppercase till \E (think vi)'),
+				'15\E'       => Wx::gettext('End case modification (think vi)'),
+				'16\Q'       => Wx::gettext('Quote (disable) pattern metacharacters till \E'),
+			}
+		},
 	);
 }
 
