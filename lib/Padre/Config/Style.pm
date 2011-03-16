@@ -53,11 +53,11 @@ BEGIN {
 }
 
 sub core_styles {
-	return %CORE_STYLES;
+	return \%CORE_STYLES;
 }
 
 sub user_styles {
-	return map { $_ => $_ } @USER_STYLES;
+	return { map { $_ => $_ } @USER_STYLES };
 }
 
 

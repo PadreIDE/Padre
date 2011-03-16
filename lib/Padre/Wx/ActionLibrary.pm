@@ -1592,37 +1592,28 @@ sub init {
 
 	# Style Actions
 
-	SCOPE: {
-		my %styles = Padre::Config::Style->core_styles;
-
-		foreach my $name ( sort keys %styles ) {
-			Padre::Wx::Action->new(
-				name    => "view.style.$name",
-				label   => $styles{$name},
-				comment => _T('Switch highlighting colours'),
-
-				#menu_method => 'AppendRadioItem',
-				menu_event => sub {
-					$_[0]->change_style($name);
-				},
-			);
-		}
-	}
 
 	SCOPE: {
-		my %styles = Padre::Config::Style->user_styles;
+		my @styles = (
+			Padre::Config::Style->core_styles,
+			Padre::Config::Style->user_styles,
+		);
 
-		foreach my $name ( sort keys %styles ) {
-			Padre::Wx::Action->new(
-				name    => "view.style.$name",
-				label   => $styles{name},
-				comment => _T('Switch highlighting colours'),
+		foreach my $private ( 0 .. 1 ) {
+			my $styles = $styles[$private];
 
-				#menu_method => 'AppendRadioItem',
-				menu_event => sub {
-					$_[0]->change_style( $name, 1 );
-				},
-			);
+			foreach my $name ( sort keys %$styles ) {
+				Padre::Wx::Action->new(
+					name    => "view.style.$name",
+					label   => $styles->{$name},
+					comment => _T('Switch highlighting colours'),
+
+					#menu_method => 'AppendRadioItem',
+					menu_event => sub {
+						$_[0]->change_style( $name, $private );
+					},
+				);
+			}
 		}
 	}
 
