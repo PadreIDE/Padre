@@ -105,13 +105,16 @@ sub diff {
 			my $options = $setting->options;
 			if ($options) {
 				my $i = $ctrl->GetSelection;
-				$DB::single = 1;
-				1;
+				$value = $options->[$i];
 			}
 		} else {
-			# blah
+			# To be completed
 		}
-		
+
+		# Skip if null
+		next unless defined $value;
+		next if $value eq $current;
+		$diff{$name} = $value;
 	}
 
 	return \%diff;
