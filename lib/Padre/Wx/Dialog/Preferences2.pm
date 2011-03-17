@@ -75,6 +75,48 @@ sub save {
 	die "CODE INCOMPLETE";
 }
 
+sub diff {
+	my $self   = shift;
+	my $config = shift;
+	my %diff   = ();
+
+	# Iterate over the configuration entries and apply the
+	# configuration state to the dialog.
+	foreach my $name ( $config->settings ) {
+		next unless $self->can($name);
+
+		# Get the Wx element for this option
+		my $setting = $config->meta($name);
+		my $current = $config->$name();
+		my $ctrl    = $self->$name();
+
+		# Extract the value from the control
+		my $value = undef;
+		if ( $ctrl->isa('Wx::CheckBox') ) {
+			$value $ctrl->SetValue($value);
+
+		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
+			$ctrl->SetValue($value);
+
+		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
+			$ctrl->SetValue($value);
+
+		} elsif ( $ctrl->isa('Wx::Choice') ) {
+			my $options = $setting->options;
+			if ($options) {
+				my $i = $ctrl->GetSelection;
+				$DB::single = 1;
+				1;
+			}
+		} else {
+			# blah
+		}
+		
+	}
+
+	return \%diff;
+}
+
 
 
 
