@@ -2217,6 +2217,7 @@ sub init {
 			my $dialog = Padre::Wx::Dialog::Preferences2->new( $_[0] );
 			$dialog->load( $_[0]->config );
 			$dialog->ShowModal;
+			$dialog->diff( $_[0]->config );
 		},
 	);
 

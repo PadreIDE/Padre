@@ -93,19 +93,20 @@ sub diff {
 		# Extract the value from the control
 		my $value = undef;
 		if ( $ctrl->isa('Wx::CheckBox') ) {
-			$value $ctrl->SetValue($value);
+			$value = $ctrl->GetValue ? 1 : 0;
 
 		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$ctrl->SetValue($value);
+			$value = $ctrl->GetValue;
 
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$ctrl->SetValue($value);
+			$value = $ctrl->GetValue;
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
 			if ($options) {
+				my @k = sort keys %$options;
 				my $i = $ctrl->GetSelection;
-				$value = $options->[$i];
+				$value = $k[$i];
 			}
 		} else {
 			# To be completed
