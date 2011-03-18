@@ -218,8 +218,8 @@ sub set {
 	# We don't need to do additional checks on Padre::Constant::ASCII
 	my $type  = $setting->type;
 	my $store = $setting->store;
-	if (!defined($type)) {
-			Carp::croak("Setting '$name' has undefined type");
+	if ( !defined($type) ) {
+		Carp::croak("Setting '$name' has undefined type");
 	}
 	if ( $type == Padre::Constant::BOOLEAN ) {
 		$value = 0 if $value eq '';
