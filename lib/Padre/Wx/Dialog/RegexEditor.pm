@@ -376,6 +376,10 @@ sub _bind_events {
 		sub {
 
 			# toggles the visibility of the description field
+			if ( $self->{description_checkbox}->IsChecked ) {
+				my $regex = $self->{regex}->GetValue;
+				$self->{description_text}->SetValue( $self->_dump_regex($regex) );
+			}
 			$self->{description_text}->Show( $self->{description_checkbox}->IsChecked );
 			$self->{sizer}->Layout;
 		},
