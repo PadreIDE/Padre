@@ -609,6 +609,15 @@ sub run {
 	my $replace       = $self->{replace}->GetValue;
 	my $result_text   = $original_text;
 
+	# TODO what about white space only regexes?
+	if ( $regex eq '' ) {
+		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->SetValue( Wx::gettext('Empty regex') );
+		$self->{matched_text}->EndTextColour;
+		return;
+	}
+
+
 	my ( $active, $inactive ) = $self->_get_modifier_settings;
 	my $xism = "$active-$inactive";
 
@@ -620,28 +629,28 @@ sub run {
 	my $match;
 	my $match_start;
 	my $match_end;
+	my $result;
 
 	my $warning;
 
 	# XXX Ignore Win32::API warnings. It's ugly but it works :)
 	local $SIG{__WARN__} = sub { $warning = $_[0] };
 
-	eval {
+	# /g modifier is useless in this case
+	# TODO loop on all matches
+	$xism =~ s/g//g;
 
-		# /g modifier is useless in this case
-		# TODO loop on all matches
-		$xism =~ s/g//g;
-		if ( $original_text =~ /(?$xism:$regex)/ ) {
-			$match_start = $-[0];
-			$match_end   = $+[0];
-			$match       = substr( $original_text, $match_start, $match_end - $match_start );
-		}
-	};
+	my $code = "\$result = \$original_text =~ /\$regex/$active; (\$match_start, \$match_end) = (\$-[0], \$+[0])";
+	eval $code;
 	if ($@) {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
 		$self->{matched_text}->SetValue( sprintf( Wx::gettext('Match failure in %s:  %s'), $regex, $@ ) );
 		$self->{matched_text}->EndTextColour;
 		return;
+	}
+
+	if ($result) {
+		$match = substr( $original_text, $match_start, $match_end - $match_start );
 	}
 
 	if ($warning) {
@@ -652,18 +661,25 @@ sub run {
 	}
 
 	if ( defined $match ) {
-		my @chars = split( //, $original_text );
-		my $pos = 0;
-		foreach my $char (@chars) {
-			if ( $pos == $match_start ) {
-				$self->{matched_text}->BeginTextColour(Wx::wxRED);
-				$self->{matched_text}->BeginUnderline;
-			} elsif ( $pos == $match_end ) {
-				$self->{matched_text}->EndTextColour;
-				$self->{matched_text}->EndUnderline;
+		if ( $match_start == $match_end ) {
+			$self->{matched_text}->BeginTextColour(Wx::wxRED);
+			$self->{matched_text}
+				->SetValue( sprintf( Wx::gettext('Match with 0 width at character %s'), $match_start ) );
+			$self->{matched_text}->EndTextColour;
+		} else {
+			my @chars = split( //, $original_text );
+			my $pos = 0;
+			foreach my $char (@chars) {
+				if ( $pos == $match_start ) {
+					$self->{matched_text}->BeginTextColour(Wx::wxRED);
+					$self->{matched_text}->BeginUnderline;
+				} elsif ( $pos == $match_end ) {
+					$self->{matched_text}->EndTextColour;
+					$self->{matched_text}->EndUnderline;
+				}
+				$self->{matched_text}->AppendText($char);
+				$pos++;
 			}
-			$self->{matched_text}->AppendText($char);
-			$pos++;
 		}
 	} else {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
