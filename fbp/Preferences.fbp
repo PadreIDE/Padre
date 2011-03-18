@@ -151,7 +151,7 @@
                                 <object class="listbookpage" expanded="1">
                                     <property name="bitmap"></property>
                                     <property name="label">Behaviour</property>
-                                    <property name="select">1</property>
+                                    <property name="select">0</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -4593,10 +4593,10 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="initial">0</property>
-                                                    <property name="max">10</property>
+                                                    <property name="initial">10</property>
+                                                    <property name="max">900</property>
                                                     <property name="maximum_size"></property>
-                                                    <property name="min">0</property>
+                                                    <property name="min">10</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">file_http_timeout</property>
                                                     <property name="permission">public</property>
@@ -4775,10 +4775,10 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="initial">0</property>
-                                                    <property name="max">10</property>
+                                                    <property name="initial">10</property>
+                                                    <property name="max">900</property>
                                                     <property name="maximum_size"></property>
-                                                    <property name="min">0</property>
+                                                    <property name="min">10</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">file_ftp_timeout</property>
                                                     <property name="permission">public</property>
@@ -4885,7 +4885,7 @@
                                 <object class="listbookpage" expanded="1">
                                     <property name="bitmap"></property>
                                     <property name="label">Perl Auto Complete</property>
-                                    <property name="select">0</property>
+                                    <property name="select">1</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -5215,10 +5215,10 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="initial">0</property>
-                                                    <property name="max">10</property>
+                                                    <property name="initial">1</property>
+                                                    <property name="max">64</property>
                                                     <property name="maximum_size"></property>
-                                                    <property name="min">0</property>
+                                                    <property name="min">1</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">perl_autocomplete_min_suggestion_len</property>
                                                     <property name="permission">public</property>
@@ -5331,10 +5331,10 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="initial">0</property>
-                                                    <property name="max">10</property>
+                                                    <property name="initial">5</property>
+                                                    <property name="max">256</property>
                                                     <property name="maximum_size"></property>
-                                                    <property name="min">0</property>
+                                                    <property name="min">5</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">perl_autocomplete_max_suggestions</property>
                                                     <property name="permission">public</property>
@@ -5447,10 +5447,10 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="initial">0</property>
-                                                    <property name="max">10</property>
+                                                    <property name="initial">1</property>
+                                                    <property name="max">16</property>
                                                     <property name="maximum_size"></property>
-                                                    <property name="min">0</property>
+                                                    <property name="min">1</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">perl_autocomplete_min_chars</property>
                                                     <property name="permission">public</property>

@@ -51,11 +51,11 @@ sub load {
 			if ($options) {
 				$ctrl->Clear;
 				foreach my $option ( sort keys %$options ) {
-
-					# NOTE: Probably wrong
-					my $i = $ctrl->Append($option);
+					# NOTE: This assumes that the list will
+					# not be sorted in Wx via a style flag.
+					$ctrl->Append($option, $option);
 					next unless $option eq $value;
-					$ctrl->SetSelection($i);
+					$ctrl->SetSelection( $ctrl->GetCount - 1 );
 				}
 			}
 
