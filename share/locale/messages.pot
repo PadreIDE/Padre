@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-17 16:10-0700\n"
+"POT-Creation-Date: 2011-03-18 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:416
+#: lib/Padre/Config.pm:419
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:418
+#: lib/Padre/Config.pm:421
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -455,7 +455,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:412
+#: lib/Padre/Config.pm:415
 msgid "A new empty file"
 msgstr ""
 
@@ -535,11 +535,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:528
+#: lib/Padre/Config.pm:531
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:529
+#: lib/Padre/Config.pm:532
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -1035,7 +1035,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:527
+#: lib/Padre/Config.pm:530
 msgid "Code Order"
 msgstr ""
 
@@ -1102,11 +1102,11 @@ msgstr ""
 msgid "Content type:"
 msgstr ""
 
-#: lib/Padre/Config.pm:461
+#: lib/Padre/Config.pm:464
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:449
+#: lib/Padre/Config.pm:452
 msgid "Contents of the window title"
 msgstr ""
 
@@ -1495,11 +1495,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:556
+#: lib/Padre/Config.pm:559
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:557
+#: lib/Padre/Config.pm:560
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1544,7 +1544,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:567
+#: lib/Padre/Config.pm:570
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -2433,7 +2433,7 @@ msgid ""
 "Scintilla highlighter."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:796
+#: lib/Padre/Wx/Dialog/Advanced.pm:804
 msgid "Host"
 msgstr ""
 
@@ -2474,11 +2474,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:741
+#: lib/Padre/Config.pm:744
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:740
+#: lib/Padre/Config.pm:743
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2991,7 +2991,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:739
+#: lib/Padre/Config.pm:742
 msgid "No Autoindent"
 msgstr ""
 
@@ -3069,7 +3069,7 @@ msgstr ""
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:413
+#: lib/Padre/Config.pm:416
 msgid "No open files"
 msgstr ""
 
@@ -3278,7 +3278,7 @@ msgstr ""
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:414
+#: lib/Padre/Config.pm:417
 msgid "Open session"
 msgstr ""
 
@@ -3690,7 +3690,7 @@ msgstr ""
 msgid "Previous File"
 msgstr ""
 
-#: lib/Padre/Config.pm:411
+#: lib/Padre/Config.pm:414
 msgid "Previous open files"
 msgstr ""
 
@@ -3710,7 +3710,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:566
+#: lib/Padre/Config.pm:569
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -4471,7 +4471,7 @@ msgstr ""
 msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
-#: lib/Padre/Config.pm:449 lib/Padre/Config.pm:461
+#: lib/Padre/Config.pm:452 lib/Padre/Config.pm:464
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4625,11 +4625,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:971 lib/Padre/Wx/Dialog/Preferences.pm:475
+#: lib/Padre/Config.pm:974 lib/Padre/Wx/Dialog/Preferences.pm:475
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:623
+#: lib/Padre/Config.pm:626
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -4728,7 +4728,7 @@ msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:398
+#: lib/Padre/Config.pm:401
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -5190,7 +5190,7 @@ msgstr ""
 msgid "Use splash screen"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:796
+#: lib/Padre/Wx/Dialog/Advanced.pm:804
 msgid "User"
 msgstr ""
 
