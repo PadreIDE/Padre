@@ -697,6 +697,14 @@ sub _update_list {
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
+	# Hide value and info sizer when searching for other entry
+	$self->{vsizer}->Show( 2, 0 );
+	$self->{vsizer}->Show( 3, 0 );
+	$self->{vsizer}->Show( 4, 0 );
+
+	# Recalculate sizers
+	$self->Layout;
+
 	my $index          = -1;
 	my $preferences    = $self->{preferences};
 	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
