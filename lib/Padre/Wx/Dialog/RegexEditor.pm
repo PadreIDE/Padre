@@ -225,13 +225,6 @@ sub _create_controls {
 	# Description is hidden by default
 	$self->{description_text}->Hide;
 
-	# Replace regex text field
-	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
-	$self->{replace} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
-	);
-
 	# Original input text field
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
@@ -244,6 +237,13 @@ sub _create_controls {
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+	);
+
+	# Replace regex text field
+	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
+	$self->{replace} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Result from replace text field
@@ -310,20 +310,22 @@ sub _create_controls {
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
-	$left->Add( $regex_label,                  0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $combined,                     0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+
 	$left->Add( $self->{description_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{description_text},     2, Wx::wxALL | Wx::wxEXPAND, 1 );
-
-	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{replace}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $matched_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{matched_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
+
+	$left->Add( $replace_label,       0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace},     1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $result_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+
 	$left->AddSpacer(5);
 	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
