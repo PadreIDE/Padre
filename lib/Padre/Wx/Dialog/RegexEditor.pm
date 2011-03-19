@@ -653,7 +653,6 @@ sub run {
 
 
 	my ( $active, $inactive ) = $self->_get_modifier_settings;
-	my $xism = "$active-$inactive";
 
 	$self->{matched_text}->Clear;
 
@@ -668,10 +667,6 @@ sub run {
 
 	# XXX Ignore Win32::API warnings. It's ugly but it works :)
 	local $SIG{__WARN__} = sub { $warning = $_[0] };
-
-	# /g modifier is useless in this case
-	# TODO loop on all matches
-	$xism =~ s/g//g;
 
 	my $code = "\$result = \$original_text =~ /\$regex/$active; (\$match_start, \$match_end) = (\$-[0], \$+[0])";
 	eval $code;
@@ -756,6 +751,10 @@ sub replace {
 
 	my ( $active, $inactive ) = $self->_get_modifier_settings;
 	my $xism = "$active-$inactive";
+
+	# /g modifier is useless in this case
+	# TODO loop on all matches
+	$xism =~ s/g//g;
 
 	$self->{result_text}->Clear;
 
