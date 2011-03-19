@@ -407,13 +407,9 @@ sub _bind_events {
 		$self->{replace_checkbox},
 		sub {
 
+			$self->replace;
+
 			# toggles the visibility of the replace fields
-			if ( $self->{replace_checkbox}->IsChecked ) {
-
-				#my $regex = $self->{regex}->GetValue;
-				#$self->{replace_text}->SetValue( $self->_dump_regex($regex) );
-			}
-
 			foreach my $field (qw(replace_label replace_text result_label result_text)) {
 				$self->{$field}->Show( $self->{replace_checkbox}->IsChecked );
 			}
@@ -646,8 +642,6 @@ sub run {
 
 	my $regex         = $self->{regex}->GetValue;
 	my $original_text = $self->{original_text}->GetValue;
-	my $replace       = $self->{replace_text}->GetValue;
-	my $result_text   = $original_text;
 
 	# TODO what about white space only regexes?
 	if ( $regex eq '' ) {
@@ -662,7 +656,6 @@ sub run {
 	my $xism = "$active-$inactive";
 
 	$self->{matched_text}->Clear;
-	$self->{result_text}->Clear;
 
 	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
 
@@ -726,24 +719,10 @@ sub run {
 		$self->{matched_text}->SetValue( Wx::gettext('No match') );
 		$self->{matched_text}->EndTextColour;
 	}
-
-	if ( $self->{global}->IsChecked ) {
-		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}g";
-	} else {
-		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}";
-	}
-	if ($@) {
-		$self->{result_text}->BeginTextColour(Wx::wxRED);
-		$self->{result_text}->AppendText( sprintf( Wx::gettext('Replace failure in %s:  %s'), $regex, $@ ) );
-		$self->{result_text}->EndTextColour;
-		return;
-	}
-
-	if ( defined $result_text ) {
-		$self->{result_text}->SetValue($result_text);
-	}
-
 	$self->{matched_text}->EndTextColour;
+
+
+	$self->replace;
 
 	$self->{description_text}->SetValue( $self->_dump_regex($regex) ) if $self->{description_text}->IsShown;
 
@@ -763,6 +742,38 @@ sub run {
 	#		$self->{regex}->AppendText($element->content);
 	#	$self->{regex}->EndTextColour;
 	#	}
+
+	return;
+}
+
+sub replace {
+	my $self = shift;
+	return if !$self->{replace_checkbox}->IsChecked;
+
+	my $regex       = $self->{regex}->GetValue;
+	my $result_text = $self->{original_text}->GetValue;
+	my $replace     = $self->{replace_text}->GetValue;
+
+	my ( $active, $inactive ) = $self->_get_modifier_settings;
+	my $xism = "$active-$inactive";
+
+	$self->{result_text}->Clear;
+
+	if ( $self->{global}->IsChecked ) {
+		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}g";
+	} else {
+		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}";
+	}
+	if ($@) {
+		$self->{result_text}->BeginTextColour(Wx::wxRED);
+		$self->{result_text}->AppendText( sprintf( Wx::gettext('Replace failure in %s:  %s'), $regex, $@ ) );
+		$self->{result_text}->EndTextColour;
+		return;
+	}
+
+	if ( defined $result_text ) {
+		$self->{result_text}->SetValue($result_text);
+	}
 
 	return;
 }
