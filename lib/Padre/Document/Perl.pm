@@ -179,8 +179,45 @@ sub guess_filename {
 		return $self->SUPER::guess_filename;
 	}
 
+	my $text    = $self->text_get;
+	my $project = $self->current->project;
+
+	# Is this a test?
+	if ( $text =~ /(?:use Test::|plan \=\>)/ ) {
+		my $fn = eval {
+			die unless defined($project);
+
+			my $t_path = File::Spec->catfile( $project->root, 't' );
+
+			die unless -d $t_path;
+
+			opendir my $t_dh, $t_path or die;
+			my %t_num;
+			my $nulls = 1; # default
+			for ( readdir($t_dh) ) {
+				next unless /^(\d+)/;
+
+				# Convert 1, 01 and 001 to 1 and mark the number as used:
+				$t_num{ $1 + 0 } = 1;
+				$nulls = length($1);
+			}
+
+			my $free_num = 0;
+			while ( $t_num{ ++$free_num } ) { }
+
+			my $t_format = '%0' . $nulls . 'd';
+
+			# Return filename relative to project
+			return sprintf( $t_format, $free_num ) . '_unnamed.t';
+
+		};
+
+		return 'unnamed_test.t' if $@;
+		warn $fn;
+		return $fn if defined($fn);
+	}
+
 	# Is this a script?
-	my $text = $self->text_get;
 	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
 
 		# It's impossible to predict the name of a script in
@@ -210,16 +247,17 @@ sub guess_subpath {
 		return $self->SUPER::guess_subpath;
 	}
 
-	# Is this a script?
 	my $text = $self->text_get;
+
+	# Is this a test?
+	if ( $text =~ /(?:use Test::|plan \=\>)/ ) {
+		return 't';
+	}
+
+	# Is this a script?
 	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
 
-		# Is this a test?
-		if ( $text =~ /use Test::/ ) {
-			return 't';
-		} else {
-			return 'script';
-		}
+		return 'script';
 	}
 
 	# Is this a module?
