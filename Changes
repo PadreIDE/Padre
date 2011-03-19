@@ -19,7 +19,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Add list of escape characters to the Regex Editor (SZABGAB)
     - Add a test plugin and first tests using that plugin (SEWI)
     - Add plugin hooks (SEWI)
-    - Some fixes to the Regex Editor (SZABGAB)
+    - Regex Editor: Substitution can be toggled and it is off by default (SZABGAB)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

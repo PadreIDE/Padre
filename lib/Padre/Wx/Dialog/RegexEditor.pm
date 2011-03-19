@@ -239,19 +239,32 @@ sub _create_controls {
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
+	# Toggle the visibility of the replace (substitution) fields
+	$self->{replace_checkbox} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Show Subs&titution'),
+	);
+
 	# Replace regex text field
-	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
-	$self->{replace} = Wx::TextCtrl->new(
+	$self->{replace_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
+	$self->{replace_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	$self->{replace_label}->Hide;
+	$self->{replace_text}->Hide;
+
 	# Result from replace text field
-	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
+	$self->{result_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
+
+	$self->{result_label}->Hide;
+	$self->{result_text}->Hide;
 
 	# Insert regex into current document button_name
 	$self->{insert_button} = Wx::Button->new(
@@ -321,10 +334,11 @@ sub _create_controls {
 	$left->Add( $matched_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{matched_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
-	$left->Add( $replace_label,       0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{replace},     1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $result_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace_label},    0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace_text},     1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_label},     0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_text},      1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->AddSpacer(5);
 	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -351,7 +365,7 @@ sub _bind_events {
 	);
 	Wx::Event::EVT_TEXT(
 		$self,
-		$self->{replace},
+		$self->{replace_text},
 		sub { $_[0]->run; },
 	);
 	Wx::Event::EVT_TEXT(
@@ -383,6 +397,26 @@ sub _bind_events {
 				$self->{description_text}->SetValue( $self->_dump_regex($regex) );
 			}
 			$self->{description_text}->Show( $self->{description_checkbox}->IsChecked );
+			$self->{sizer}->Layout;
+		},
+	);
+
+	# Replace checkbox
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{replace_checkbox},
+		sub {
+
+			# toggles the visibility of the replace fields
+			if ( $self->{replace_checkbox}->IsChecked ) {
+
+				#my $regex = $self->{regex}->GetValue;
+				#$self->{replace_text}->SetValue( $self->_dump_regex($regex) );
+			}
+
+			foreach my $field (qw(replace_label replace_text result_label result_text)) {
+				$self->{$field}->Show( $self->{replace_checkbox}->IsChecked );
+			}
 			$self->{sizer}->Layout;
 		},
 	);
@@ -419,7 +453,7 @@ sub _insert_regex {
 	my $self = shift;
 
 	my $match_part   = $self->{regex}->GetValue;
-	my $replace_part = $self->{replace}->GetValue;
+	my $replace_part = $self->{replace_text}->GetValue;
 
 	my ($modifiers) = $self->_get_modifier_settings;
 
@@ -488,7 +522,7 @@ sub show {
 			$self->{regex}->ChangeValue('\w+');
 		}
 
-		$self->{replace}->ChangeValue('Baz');
+		$self->{replace_text}->ChangeValue('Baz');
 		$self->{original_text}->SetValue('Foo Bar');
 
 		$self->Show;
@@ -557,7 +591,7 @@ sub get_data {
 	my %data = (
 		text => {
 			regex         => $self->{regex}->GetValue,
-			replace       => $self->{replace}->GetValue,
+			replace       => $self->{replace_text}->GetValue,
 			original_text => $self->{original_text}->GetValue,
 		},
 		modifiers => [ $self->_get_modifier_settings ],
@@ -612,7 +646,7 @@ sub run {
 
 	my $regex         = $self->{regex}->GetValue;
 	my $original_text = $self->{original_text}->GetValue;
-	my $replace       = $self->{replace}->GetValue;
+	my $replace       = $self->{replace_text}->GetValue;
 	my $result_text   = $original_text;
 
 	# TODO what about white space only regexes?
