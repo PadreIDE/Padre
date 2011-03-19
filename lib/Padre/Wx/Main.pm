@@ -3737,8 +3737,8 @@ No return value.
 sub on_open_selection {
 	my $self    = shift;
 	my $current = $self->current;
+	my $text    = shift || $current->text;
 	my $editor  = $current->editor or return;
-	my $text    = $current->text;
 
 	# get selection, ask for it if needed
 	unless ( length $text ) {

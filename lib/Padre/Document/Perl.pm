@@ -1765,6 +1765,11 @@ sub event_on_left_up {
 		elsif ( defined $location && $self->has_sub($token) ) {
 			$self->goto_sub($token);
 		}
+
+		# Does it look like a path or module?
+		elsif ( defined($token) and ( $token =~ /(?:\/|\:\:)/ ) ) {
+			Padre->ide->wx->main->on_open_selection($token);
+		}
 	}
 }
 
