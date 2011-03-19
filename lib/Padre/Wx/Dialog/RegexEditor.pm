@@ -668,6 +668,7 @@ sub run {
 	# XXX Ignore Win32::API warnings. It's ugly but it works :)
 	local $SIG{__WARN__} = sub { $warning = $_[0] };
 
+	# TODO loop on all matches in case of /g
 	my $code = "\$result = \$original_text =~ /\$regex/$active; (\$match_start, \$match_end) = (\$-[0], \$+[0])";
 	eval $code;
 	if ($@) {
@@ -750,19 +751,11 @@ sub replace {
 	my $replace     = $self->{replace_text}->GetValue;
 
 	my ( $active, $inactive ) = $self->_get_modifier_settings;
-	my $xism = "$active-$inactive";
-
-	# /g modifier is useless in this case
-	# TODO loop on all matches
-	$xism =~ s/g//g;
 
 	$self->{result_text}->Clear;
 
-	if ( $self->{global}->IsChecked ) {
-		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}g";
-	} else {
-		eval "\$result_text =~ s{(?$xism:$regex)}{$replace}";
-	}
+	my $code = "\$result_text =~ s{\$regex}{$replace}$active";
+	eval $code;
 	if ($@) {
 		$self->{result_text}->BeginTextColour(Wx::wxRED);
 		$self->{result_text}->AppendText( sprintf( Wx::gettext('Replace failure in %s:  %s'), $regex, $@ ) );
