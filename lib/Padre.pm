@@ -301,15 +301,13 @@ very fast.
 After installing Padre you can start it by typing B<padre> on the command line.
 On Windows that would be Start/Run padre.bat
 
-(TO DO) By default Padre starts with an editor containing a simple Perl script
-and instructions.
+You can start new files File/New (C<Ctrl+N>)
+or open existing files File/Open (C<Ctrl+O>).
 
 You can edit the file and save it using File/Save (C<Ctrl+S>).
 
 You can run the script by pressing Run/Run Script (C<F5>)
 
-You can start new files File/New (C<Ctrl+N>)
-or open existing files File/Open (C<Ctrl+O>).
 
 By default Padre uses the same Perl interpreter for
 executing code that it uses for itself but this will be configurable
@@ -603,8 +601,6 @@ There are the current view printed preferences such as B<Show newlines>
 or B<Show Line numbers> and there are the project and file
 oriented preferences such as the use of tabulators or white space
 for indentation.
-
-We would like to achieve that the
 
 Currently some of the preferences are accessible via the
 B<Edit/Preferences> menu options, others via the B<View>
