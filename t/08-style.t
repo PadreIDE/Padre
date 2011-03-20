@@ -39,8 +39,8 @@ my @styles = qw{
 # Check the new Padre::Style API
 
 use_ok('Padre::Config::Style');
-my %hash = Padre::Config::Style->core_styles;
-is( scalar( keys %hash ), 5, 'Found 5 core styles' );
+my $hash = Padre::Config::Style->core_styles;
+is( scalar( keys %$hash ), 5, 'Found 5 core styles' );
 my @user = Padre::Config::Style->user_styles;
 
 
