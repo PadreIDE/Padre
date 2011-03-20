@@ -22,6 +22,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Regex Editor: Substitution can be toggled and it is off by default (SZABGAB)
     - Extent Ctrl-left-mouse-click to modules and files with path (SEWI)
     - Fix #1122: Save intuition recognizes more tests (SEWI)
+    - Fix #1138: Padre single instance server not working (MJ41)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

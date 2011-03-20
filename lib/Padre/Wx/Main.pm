@@ -927,6 +927,14 @@ sub single_instance_address {
 			$config->main_singleinstance_port,
 		);
 	} else {
+
+		# Fix for #1138, remove the part following the return once the
+		# fix has been tested propably
+		return (
+			'127.0.0.1',
+			$config->main_singleinstance_port
+		);
+
 		my $file = File::Spec->catfile(
 			Padre::Constant::CONFIG_DIR,
 			'single_instance.socket',
