@@ -62,6 +62,13 @@ sub can_run {
 	return 1;
 }
 
+sub can_delete {
+	my $self = shift;
+
+	# Can't delete readonly files
+	return $self->readonly ? 0 : 1;
+}
+
 sub stat {
 	my $self = shift;
 	return CORE::stat( $self->{filename} );
@@ -209,6 +216,15 @@ sub browse_url_join {
 
 	return File::Spec->catfile( $server, $path, $filename );
 }
+
+sub delete {
+	my $self = shift;
+
+	return 1 if unlink $self->{filename};
+
+	$self->{error} = $!;
+}
+
 
 1;
 

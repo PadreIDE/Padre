@@ -336,6 +336,24 @@ sub can_clone {
 
 =pod
 
+=head2 C<can_delete>
+
+  $file->can_delete;
+
+Returns true if the protocol allows deletion of files or false if it
+doesn't.
+
+=cut
+
+sub can_delete {
+
+	# If the module does not state that it could remove files,
+	# we return a safe default of false.
+	return 0;
+}
+
+=pod
+
 =head2 C<can_run>
 
   $file->can_run;
@@ -434,6 +452,18 @@ the empty list is returned.
 =cut
 
 sub ctime { }
+
+=head2 C<delete>
+
+  $file->delete;
+
+Removes the current object's file from disk (or whereever it's stored).
+
+Should clear any caches.
+
+=cut
+
+sub delete { }
 
 =head2 C<dev>
 
