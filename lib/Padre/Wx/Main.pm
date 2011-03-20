@@ -4887,6 +4887,87 @@ sub close_where {
 
 =pod
 
+=head3 C<on_delete>
+
+    $main->on_delete;
+
+Close the current tab and remove the associated file from disk.
+No return value.
+
+=cut
+
+sub on_delete {
+	my $self = shift;
+
+	$self->delete;
+}
+
+=pod
+
+=head3 C<delete>
+
+    my $success = $main->delete( $id );
+
+Request to close document in tab C<$id>, or current one if no C<$id>
+provided and DELETE THE FILE FROM DISK. Return true if closed, false otherwise.
+
+=cut
+
+sub delete {
+	my $self     = shift;
+	my $notebook = $self->notebook;
+	my $id       = shift;
+	unless ( defined $id ) {
+		$id = $notebook->GetSelection;
+	}
+	return if $id == -1;
+
+	my $editor   = $notebook->GetPage($id) or return;
+	my $document = $editor->{Document}     or return;
+
+	# We need those even when the document is already closed:
+	my $file     = $document->file;
+	my $filename = $document->filename;
+
+	if ( !$file->can_delete ) {
+		$self->error( Wx::gettext('This type of file (URL) is missing delete support.') );
+		return 1;
+	}
+
+	if ( !$filename ) {
+		$self->error( Wx::gettext("File was never saved and has no filename - can't delete from disk") );
+		return 1;
+	}
+
+	my $ret = Wx::MessageBox(
+		sprintf(
+			Wx::gettext("Do you really want to close and delete %s from disk?"),
+			$filename
+		),
+		Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
+		$self,
+	);
+	return 1 unless $ret == Wx::wxYES;
+
+	TRACE( join ' ', "Deleting ", ref $document, $filename || 'Unknown' ) if DEBUG;
+
+	$self->close($id);
+
+	my $manager = $self->{ide}->plugin_manager;
+	return unless $manager->hook( 'before_delete', $file );
+
+	if ( !$file->delete ) {
+		$self->error( sprintf( Wx::gettext("Error deleting %s:\n%s"), $filename, $file->error ) );
+		return 1;
+	}
+
+	$manager->hook( 'after_delete', $file );
+
+	return 1;
+}
+
+=pod
+
 =head3 C<on_nth_path>
 
     $main->on_nth_pane( $id );

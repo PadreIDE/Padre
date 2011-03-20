@@ -354,6 +354,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'file.delete',
+		need_editor => 1,
+		label       => _T('&Delete'),
+		comment     => _T('Close current document and remove the file from disk'),
+		menu_event  => sub {
+			$_[0]->on_delete;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'file.reload_file',
 		need_editor => 1,
 		label       => _T('Reload File'),

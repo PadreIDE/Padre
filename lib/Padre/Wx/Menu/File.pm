@@ -171,6 +171,11 @@ sub new {
 
 	### End of close submenu
 
+	$self->{delete} = $self->add_menu_action(
+		$self,
+		'file.delete',
+	);
+
 	# Reload file(s)
 	my $file_reload = Wx::Menu->new;
 	$self->Append(
@@ -311,6 +316,7 @@ sub refresh {
 		$self->{open_in_command_line}->Enable(0);
 	}
 	$self->{close}->Enable($document);
+	$self->{delete}->Enable($document);
 	$self->{close_all}->Enable($document);
 	$self->{close_all_but_current}->Enable($document);
 	$self->{reload_file}->Enable($document);
