@@ -25,7 +25,7 @@ a single instance of a particular Task Class.
 From the perspective of a task author, the execution of a task will occur
 in four distinct phases.
 
-=head3 Construction
+=head3 1. Construction
 
 The creation of a task is always done completely independantly of its
 execution. Typically this is done via the C<new> method, or something
@@ -36,7 +36,7 @@ advance, as well as allowing bulk task pre-generation and advanced task
 management functionality such as prioritisation, queueing, throttling and
 load-balancing of tasks.
 
-=head3 Preparation
+=head3 2. Preparation
 
 Once a task has been constructed, an arbitrarily long time may pass before
 the code is actually run (if it is ever run at all).
@@ -66,7 +66,7 @@ Because it will execute in the parent thead, the rest of the Padre instance
 is available for use if needed, but the preparation code should run quickly
 and must not block.
 
-=head3 Execution
+=head3 3. Execution
 
 The main phase of the task is where the CPU-intensive or blocking code can
 be safely run. It is run inside a worker thread in the background, without
@@ -81,6 +81,8 @@ L<Padre::Current>) will not be loaded at all in the worker thread.
 Any output that needs to be transported back to the parent should be stored
 in the object somewhere. When the cleanup phase is run, these values will
 be available automatically in the parent.
+
+=head3 4. Cleanup
 
 TO BE COMPLETED
 
