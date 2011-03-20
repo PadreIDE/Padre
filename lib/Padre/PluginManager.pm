@@ -50,8 +50,10 @@ use constant PADRE_HOOK_RETURN_ERROR  => 2;
 
 #  List if valid Padre hooks:
 our %PADRE_HOOKS = (
-	before_save => PADRE_HOOK_RETURN_ERROR,
-	after_save  => PADRE_HOOK_RETURN_IGNORE,
+	before_delete => PADRE_HOOK_RETURN_ERROR,
+	after_delete  => PADRE_HOOK_RETURN_IGNORE,
+	before_save   => PADRE_HOOK_RETURN_ERROR,
+	after_save    => PADRE_HOOK_RETURN_IGNORE,
 );
 
 #####################################################################
