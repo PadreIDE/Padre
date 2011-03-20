@@ -5,7 +5,7 @@ use warnings;
 use constant NUMBER_OF_CONFIG_OPTIONS => 127;
 
 # Move of Debug to Run Menu
-use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 3 + 21;
+use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 21;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -161,10 +161,11 @@ is( scalar(@names), NUMBER_OF_CONFIG_OPTIONS, 'Expected number of config options
 foreach my $name (@names) {
 
 	# simple way to check if config option is in the preferences window
-	SKIP: {
-		skip "'$name' is known to be missing from the preferences window", 1 if $NOT_IN_PREFERENCES{$name};
-		ok $preferences =~ m/$name/, "'$name' is in the preferences window";
-	}
+	# szabgab: for now comment it out. Maybe after all it is not such an interesting test.
+	#	SKIP: {
+	#		skip "'$name' is known to be missing from the preferences window", 1 if $NOT_IN_PREFERENCES{$name};
+	#		ok $preferences =~ m/$name/, "'$name' is in the preferences window";
+	#	}
 	ok( defined( $config->$name() ), "->$name is defined" );
 	is( $config->$name(),
 		$Padre::Config::DEFAULT{$name},
