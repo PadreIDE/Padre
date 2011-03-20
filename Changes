@@ -23,6 +23,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Extent Ctrl-left-mouse-click to modules and files with path (SEWI)
     - Fix #1122: Save intuition recognizes more tests (SEWI)
     - Fix #1138: Padre single instance server not working (MJ41)
+    - Fix #510, #704, #1178 Closing DocBrowser crashing Padre (SZABGAB)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

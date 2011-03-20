@@ -159,7 +159,7 @@ sub on_close {
 	# In case we have a busy cursor still:
 	$self->{busy} = undef;
 
-	$self->Close;
+	$self->Destroy
 }
 
 sub on_search_text_enter {
