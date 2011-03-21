@@ -137,6 +137,18 @@ sub advanced {
 	return;
 }
 
+sub guess {
+	my $self     = shift;
+	my $document = Padre::Current->document or return;
+	my $indent   = $document->guess_indentation_style;
+
+	$self->editor_indent_tab->SetValue( $indent->{use_tabs} );
+	$self->editor_indent_tab_width->SetValue( $indent->{tabwidth} );
+	$self->editor_indent_width->SetValue( $indent->{indentwidth} );
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
