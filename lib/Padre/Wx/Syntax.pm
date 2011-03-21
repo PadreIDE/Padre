@@ -328,10 +328,17 @@ sub relocale {
 }
 
 sub refresh {
-	my $self = shift;
+	my $self     = shift;
 	my $document = $self->current->document or return;
 
-	# allows us to check when an empty or unsaved document is open
+	# If the document is unused, shortcut to avoid pointless tasks
+	if ( $document->is_unused ) {
+		my $lock = $self->main->lock('UPDATE');
+		$self->clear;
+		return;
+	}
+
+	# Allows us to check when an empty or unsaved document is open
 	my $filename = defined( $document->filename ) ? $document->filename : '';
 
 	my $length = $document->text_length;
