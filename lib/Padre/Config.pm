@@ -864,7 +864,12 @@ setting(
 	name    => 'default_line_ending',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => Padre::Constant::NEWLINE
+	default => Padre::Constant::NEWLINE,
+	options => {
+		'UNIX' => 'UNIX',
+		'WIN'  => 'WIN',
+		'MAC'  => 'MAC',
+	},
 );
 setting(
 	name    => 'update_file_from_disk_interval',
