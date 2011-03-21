@@ -12,13 +12,6 @@ our @ISA     = 'Padre::Wx::FBP::Preferences2';
 
 
 
-######################################################################
-# Constructor and Accessors
-
-
-
-
-
 #####################################################################
 # Load and Save
 
@@ -127,6 +120,20 @@ sub diff {
 
 ######################################################################
 # Event Handlers
+
+sub advanced {
+	my $self = shift;
+
+	# Cancel the preferences dialog since it is not needed
+	$self->EndModal(Wx::wxID_CANCEL);
+
+	# Show the advanced settings dialog instead
+	require Padre::Wx::Dialog::Advanced;
+	my $advanced = Padre::Wx::Dialog::Advanced->new( $self->main );
+	my $ret      = $advanced->show;
+
+	return;
+}
 
 1;
 

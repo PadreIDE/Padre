@@ -29,16 +29,15 @@ sub new {
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
-	$self->{listbook} = Wx::Listbook->new(
+	$self->{treebook} = Wx::Treebook->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLB_DEFAULT,
 	);
 
 	my $m_panel2 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -96,7 +95,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{startup_files}->SetSelection(0);
 
@@ -135,7 +134,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{main_functions_order}->SetSelection(0);
 
@@ -150,7 +149,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{locale_perldiag}->SetSelection(0);
 
@@ -165,7 +164,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{default_line_ending}->SetSelection(0);
 
@@ -264,7 +263,7 @@ sub new {
 	);
 
 	my $m_panel3 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -328,14 +327,14 @@ sub new {
 	$self->{editor_currentline_color} = Wx::ColourPickerCtrl->new(
 		$m_panel3,
 		-1,
-		Wx::Colour->new(0, 0, 0),
+		Wx::Colour->new( 0, 0, 0 ),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
 	);
 
 	my $m_panel4 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -399,7 +398,7 @@ sub new {
 	);
 
 	my $m_panel5 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -417,7 +416,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{m_choice8}->SetSelection(0);
 
@@ -432,7 +431,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{m_choice9}->SetSelection(0);
 
@@ -461,7 +460,7 @@ sub new {
 	);
 
 	my $m_panel1 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -545,12 +544,12 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		[ ],
+		[],
 	);
 	$self->{editor_autoindent}->SetSelection(0);
 
 	my $m_panel6 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -592,7 +591,7 @@ sub new {
 	);
 
 	my $m_panel8 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -656,7 +655,7 @@ sub new {
 	);
 
 	my $m_panel7 = Wx::Panel->new(
-		$self->{listbook},
+		$self->{treebook},
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -762,6 +761,14 @@ sub new {
 		Wx::gettext("Advanced..."),
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{advanced},
+		sub {
+			shift->advanced(@_);
+		},
+	);
+
 	$self->{cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
@@ -769,10 +776,10 @@ sub new {
 	);
 
 	my $fgSizer3 = Wx::FlexGridSizer->new( 20, 2, 0, 10 );
-	$fgSizer3->AddGrowableCol( 0 );
-	$fgSizer3->AddGrowableCol( 1 );
-	$fgSizer3->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer3->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_NONE );
+	$fgSizer3->AddGrowableCol(0);
+	$fgSizer3->AddGrowableCol(1);
+	$fgSizer3->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer3->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_NONE);
 	$fgSizer3->Add( $self->{editor_wordwrap}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{swap_ctrl_tab_alt_right}, 0, Wx::wxALL, 5 );
@@ -819,10 +826,10 @@ sub new {
 	$fgSizer3->Fit($m_panel2);
 
 	my $fgSizer4 = Wx::FlexGridSizer->new( 8, 2, 0, 10 );
-	$fgSizer4->AddGrowableCol( 0 );
-	$fgSizer4->AddGrowableCol( 1 );
-	$fgSizer4->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer4->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer4->AddGrowableCol(0);
+	$fgSizer4->AddGrowableCol(1);
+	$fgSizer4->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer4->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer4->Add( $self->{main_output_ansi}, 0, Wx::wxALL, 5 );
 	$fgSizer4->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer4->Add( $self->{info_on_statusbar}, 0, Wx::wxALL, 5 );
@@ -839,8 +846,8 @@ sub new {
 	$fgSizer4->Fit($m_panel3);
 
 	my $fgSizer9 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
-	$fgSizer9->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer9->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer9->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer9->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer9->Add( $m_staticText34, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer9->Add( $self->{run_perl_cmd}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer9->Add( $m_staticText35, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
@@ -856,8 +863,8 @@ sub new {
 	$fgSizer9->Fit($m_panel4);
 
 	my $fgSizer5 = Wx::FlexGridSizer->new( 4, 2, 0, 0 );
-	$fgSizer5->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer5->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer5->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer5->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer5->Add( $m_staticText19, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer5->Add( $self->{m_choice8}, 0, Wx::wxALL, 5 );
 	$fgSizer5->Add( $m_staticText20, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
@@ -872,8 +879,8 @@ sub new {
 	$fgSizer5->Fit($m_panel5);
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
-	$fgSizer2->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer2->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_ALL );
+	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
 	$fgSizer2->Add( $self->{editor_indent_guess}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{editor_indent_auto}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{editor_indent_tab}, 0, Wx::wxALL, 5 );
@@ -889,9 +896,9 @@ sub new {
 	$fgSizer2->Fit($m_panel1);
 
 	my $fgSizer6 = Wx::FlexGridSizer->new( 2, 2, 0, 10 );
-	$fgSizer6->AddGrowableCol( 1 );
-	$fgSizer6->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer6->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer6->AddGrowableCol(1);
+	$fgSizer6->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer6->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer6->Add( $m_staticText25, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer6->Add( $self->{external_diff_tool}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer6->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
@@ -902,8 +909,8 @@ sub new {
 	$fgSizer6->Fit($m_panel6);
 
 	my $fgSizer8 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
-	$fgSizer8->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer8->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer8->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer8->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer8->Add( $m_staticText30, 0, Wx::wxALL, 5 );
 	$fgSizer8->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer8->Add( $m_staticText31, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
@@ -919,8 +926,8 @@ sub new {
 	$fgSizer8->Fit($m_panel8);
 
 	my $fgSizer7 = Wx::FlexGridSizer->new( 10, 2, 0, 0 );
-	$fgSizer7->SetFlexibleDirection( Wx::wxBOTH );
-	$fgSizer7->SetNonFlexibleGrowMode( Wx::wxFLEX_GROWMODE_SPECIFIED );
+	$fgSizer7->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer7->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer7->Add( $self->{autocomplete_always}, 0, Wx::wxALL, 5 );
 	$fgSizer7->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer7->Add( $self->{autocomplete_method}, 0, Wx::wxALL, 5 );
@@ -938,26 +945,26 @@ sub new {
 	$m_panel7->Layout;
 	$fgSizer7->Fit($m_panel7);
 
-	$self->{listbook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{listbook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
-	$self->{listbook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"), 0 );
-	$self->{listbook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"), 0 );
-	$self->{listbook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
-	$self->{listbook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
-	$self->{listbook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
-	$self->{listbook}->AddPage( $m_panel7, Wx::gettext("Perl Auto Complete"), 1 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"), 0 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"), 0 );
+	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
+	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
+	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
+	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Perl Auto Complete"), 1 );
 
-	my $buttons = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::wxALL, 5 );
 	$buttons->Add( $self->{advanced}, 0, Wx::wxALL, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new( Wx::wxVERTICAL );
-	$vsizer->Add( $self->{listbook}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{treebook}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxALIGN_RIGHT, 5 );
 
-	my $hsizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$self->SetSizer($hsizer);
@@ -968,8 +975,8 @@ sub new {
 	return $self;
 }
 
-sub listbook {
-	$_[0]->{listbook};
+sub treebook {
+	$_[0]->{treebook};
 }
 
 sub editor_wordwrap {
@@ -1158,6 +1165,10 @@ sub perl_autocomplete_min_chars {
 
 sub guess_indentation {
 	die 'Handler method guess_indentation for event editor_indent_guess.OnButtonClick not implemented';
+}
+
+sub advanced {
+	die 'Handler method advanced for event advanced.OnButtonClick not implemented';
 }
 
 1;

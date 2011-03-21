@@ -26,6 +26,15 @@ isa_ok( $main, 'Padre::Wx::Main' );
 # Create the Preferences 2.0 dialog
 my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences2', [ $main ] );
 
+# Check the listview properties
+my $listbook = $dialog->listbook;
+isa_ok( $listbook, 'Wx::Listbook' );
+my $listview = $listbook->GetListView;
+isa_ok( $listview, 'Wx::ListView' );
+is( $listview->GetItemCount,   8, 'Found siz items'  );
+is( $listview->GetColumnCount, 0, 'Found one column' );
+is( $listview->GetColumnWidth(-1), 100, 'Got column width' );
+
 # Load the dialog from configuration
 my $config = $main->config;
 isa_ok( $config, 'Padre::Config' );
