@@ -179,7 +179,9 @@ sub get_character_at {
 
 
 
-
+# private is undefined if we don't know and need to search for it
+# private is 0 if this is a standard style
+# private is 1 if this is a private style
 sub data {
 	my $name    = shift;
 	my $private = shift;
@@ -187,13 +189,24 @@ sub data {
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
+	my $private_file = File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'styles', "$name.yml" );
+	my $standard_file = Padre::Util::sharefile( 'styles', "$name.yml" );
+
+	if ( not defined $private ) {
+		if ( -e $private_file ) {
+			$private = 1;
+		} elsif ( -e $standard_file ) {
+			$private = 0;
+		} else {
+			warn "style $name could not be found in either places: '$standard_file' and '$private_file'\n";
+			return $data;
+		}
+	}
+
 	my $file =
-		$private
-		? File::Spec->catfile(
-		Padre::Constant::CONFIG_DIR,
-		'styles', "$name.yml"
-		)
-		: Padre::Util::sharefile( 'styles', "$name.yml" );
+		  $private
+		? $private_file
+		: $standard_file;
 	my $tdata;
 	eval { $tdata = YAML::Tiny::LoadFile($file); };
 	if ($@) {
