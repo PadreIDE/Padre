@@ -44,9 +44,10 @@ sub load {
 			if ($options) {
 				$ctrl->Clear;
 				foreach my $option ( sort keys %$options ) {
+
 					# NOTE: This assumes that the list will
 					# not be sorted in Wx via a style flag.
-					$ctrl->Append($option, $option);
+					$ctrl->Append( $option, $option );
 					next unless $option eq $value;
 					$ctrl->SetSelection( $ctrl->GetCount - 1 );
 				}
@@ -102,6 +103,7 @@ sub diff {
 				$value = $k[$i];
 			}
 		} else {
+
 			# To be completed
 		}
 

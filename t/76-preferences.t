@@ -16,7 +16,7 @@ use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Wx;
 use Padre;
-use_ok( 'Padre::Wx::Dialog::Preferences2' );
+use_ok('Padre::Wx::Dialog::Preferences2');
 
 # Create the IDE
 my $padre = new_ok('Padre');
@@ -24,15 +24,15 @@ my $main  = $padre->wx->main;
 isa_ok( $main, 'Padre::Wx::Main' );
 
 # Create the Preferences 2.0 dialog
-my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences2', [ $main ] );
+my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences2', [$main] );
 
 # Check the listview properties
 my $listbook = $dialog->listbook;
 isa_ok( $listbook, 'Wx::Listbook' );
 my $listview = $listbook->GetListView;
 isa_ok( $listview, 'Wx::ListView' );
-is( $listview->GetItemCount,   8, 'Found siz items'  );
-is( $listview->GetColumnCount, 0, 'Found one column' );
+is( $listview->GetItemCount,       8,   'Found siz items' );
+is( $listview->GetColumnCount,     0,   'Found one column' );
 is( $listview->GetColumnWidth(-1), 100, 'Got column width' );
 
 # Load the dialog from configuration
@@ -42,4 +42,4 @@ ok( $dialog->load($config), '->load ok' );
 
 # The diff (extracted from dialog) to the config should be null
 my $diff = $dialog->diff($config);
-is_deeply( $diff, { }, '->diff returns an empty HASH' );
+is_deeply( $diff, {}, '->diff returns an empty HASH' );

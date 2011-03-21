@@ -328,7 +328,7 @@ sub relocale {
 }
 
 sub refresh {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 
 	# If the document is unused, shortcut to avoid pointless tasks

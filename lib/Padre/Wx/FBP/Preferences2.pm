@@ -7,7 +7,7 @@ package Padre::Wx::FBP::Preferences2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.01';
@@ -372,7 +372,9 @@ sub new {
 	my $m_staticText36 = Wx::StaticText->new(
 		$m_panel4,
 		-1,
-		Wx::gettext("Include directory:  -I<dir>\nEnable tainting checks:  -T\nEnable many useful warnings:  -w\nEnable all warnings:  -W\nDisable all warnings:  -X"),
+		Wx::gettext(
+			"Include directory:  -I<dir>\nEnable tainting checks:  -T\nEnable many useful warnings:  -w\nEnable all warnings:  -W\nDisable all warnings:  -X"
+		),
 	);
 
 	my $m_staticText37 = Wx::StaticText->new(
@@ -791,21 +793,28 @@ sub new {
 	$fgSizer3->Add( $self->{editor_beginner}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText41, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{startup_files}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{startup_files}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText5, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{default_projects_directory}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{default_projects_directory}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{main_singleinstance}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText6, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{main_functions_order}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{main_functions_order}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText7, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{locale_perldiag}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{locale_perldiag}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText8, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{default_line_ending}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{default_line_ending}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText9, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{update_file_from_disk_interval}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{update_file_from_disk_interval}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText10, 0, Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{editor_cursor_blink}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{editor_cursor_blink}, 0,
+		Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{autocomplete_brackets}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{autocomplete_multiclosebracket}, 0, Wx::wxALL, 5 );
@@ -817,7 +826,8 @@ sub new {
 	$fgSizer3->Add( $self->{mid_button_paste}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText11, 0, Wx::wxALL, 5 );
-	$fgSizer3->Add( $self->{todo_regexp}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer3->Add( $self->{todo_regexp}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND,
+		5 );
 	$fgSizer3->Add( $self->{startup_splash}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 
@@ -835,11 +845,11 @@ sub new {
 	$fgSizer4->Add( $self->{info_on_statusbar}, 0, Wx::wxALL, 5 );
 	$fgSizer4->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer4->Add( $self->{editor_right_margin_enable}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer4->Add( $self->{editor_right_margin_column}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer4->Add( $m_staticText17, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer4->Add( $self->{editor_font}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer4->Add( $m_staticText18, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer4->Add( $self->{editor_right_margin_column}, 0, Wx::wxALL | Wx::wxEXPAND,                5 );
+	$fgSizer4->Add( $m_staticText17,                     0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer4->Add( $self->{editor_font},                0, Wx::wxALL | Wx::wxEXPAND,                5 );
+	$fgSizer4->Add( $m_staticText18,                     0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer4->Add( $self->{editor_currentline_color},   0, Wx::wxALL | Wx::wxEXPAND,                5 );
 
 	$m_panel3->SetSizer($fgSizer4);
 	$m_panel3->Layout;
@@ -848,15 +858,15 @@ sub new {
 	my $fgSizer9 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$fgSizer9->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer9->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer9->Add( $m_staticText34, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_perl_cmd}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $m_staticText35, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_interpreter_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer9->Add( $m_staticText34,                       0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_perl_cmd},                 0, Wx::wxALL | Wx::wxEXPAND,                5 );
+	$fgSizer9->Add( $m_staticText35,                       0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_interpreter_args_default}, 0, Wx::wxALL | Wx::wxEXPAND,                5 );
 	$fgSizer9->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $m_staticText36, 0, Wx::wxALL, 5 );
-	$fgSizer9->Add( $m_staticText37, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_script_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $self->{run_use_external_window}, 0, Wx::wxALL, 5 );
+	$fgSizer9->Add( $m_staticText36,                  0, Wx::wxALL,                               5 );
+	$fgSizer9->Add( $m_staticText37,                  0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_script_args_default}, 0, Wx::wxALL | Wx::wxEXPAND,                5 );
+	$fgSizer9->Add( $self->{run_use_external_window}, 0, Wx::wxALL,                               5 );
 
 	$m_panel4->SetSizer($fgSizer9);
 	$m_panel4->Layout;
@@ -865,14 +875,14 @@ sub new {
 	my $fgSizer5 = Wx::FlexGridSizer->new( 4, 2, 0, 0 );
 	$fgSizer5->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer5->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer5->Add( $m_staticText19, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_choice8}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText20, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_choice9}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText21, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_staticText22}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText23, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_staticText24}, 0, Wx::wxALL, 5 );
+	$fgSizer5->Add( $m_staticText19,         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer5->Add( $self->{m_choice8},      0, Wx::wxALL,                               5 );
+	$fgSizer5->Add( $m_staticText20,         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer5->Add( $self->{m_choice9},      0, Wx::wxALL,                               5 );
+	$fgSizer5->Add( $m_staticText21,         0, Wx::wxALL,                               5 );
+	$fgSizer5->Add( $self->{m_staticText22}, 0, Wx::wxALL,                               5 );
+	$fgSizer5->Add( $m_staticText23,         0, Wx::wxALL,                               5 );
+	$fgSizer5->Add( $self->{m_staticText24}, 0, Wx::wxALL,                               5 );
 
 	$m_panel5->SetSizer($fgSizer5);
 	$m_panel5->Layout;
@@ -881,15 +891,15 @@ sub new {
 	my $fgSizer2 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
 	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
-	$fgSizer2->Add( $self->{editor_indent_guess}, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{editor_indent_auto}, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{editor_indent_tab}, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $m_staticText2, 0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{editor_indent_guess},     0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{editor_indent_auto},      0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{editor_indent_tab},       0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText2,                   0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{editor_indent_tab_width}, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $m_staticText3, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{editor_indent_width}, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $m_staticText4, 0, Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{editor_autoindent}, 0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText3,                   0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{editor_indent_width},     0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $m_staticText4,                   0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{editor_autoindent},       0, Wx::wxALL, 5 );
 
 	$m_panel1->SetSizer($fgSizer2);
 	$m_panel1->Layout;
@@ -899,10 +909,10 @@ sub new {
 	$fgSizer6->AddGrowableCol(1);
 	$fgSizer6->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer6->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer6->Add( $m_staticText25, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer6->Add( $self->{external_diff_tool}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer6->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer6->Add( $self->{perl_tags_file}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer6->Add( $m_staticText25,             0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer6->Add( $self->{external_diff_tool}, 0, Wx::wxALL | Wx::wxEXPAND,                5 );
+	$fgSizer6->Add( $m_staticText26,             0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer6->Add( $self->{perl_tags_file},     0, Wx::wxALL | Wx::wxEXPAND,                5 );
 
 	$m_panel6->SetSizer($fgSizer6);
 	$m_panel6->Layout;
@@ -913,13 +923,13 @@ sub new {
 	$fgSizer8->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer8->Add( $m_staticText30, 0, Wx::wxALL, 5 );
 	$fgSizer8->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer8->Add( $m_staticText31, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer8->Add( $self->{file_http_timeout}, 0, Wx::wxALL, 5 );
-	$fgSizer8->Add( $m_staticText32, 0, Wx::wxALL, 5 );
+	$fgSizer8->Add( $m_staticText31,            0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer8->Add( $self->{file_http_timeout}, 0, Wx::wxALL,                               5 );
+	$fgSizer8->Add( $m_staticText32,            0, Wx::wxALL,                               5 );
 	$fgSizer8->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer8->Add( $m_staticText33, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer8->Add( $self->{file_ftp_timeout}, 0, Wx::wxALL, 5 );
-	$fgSizer8->Add( $self->{file_ftp_passive}, 0, Wx::wxALL, 5 );
+	$fgSizer8->Add( $m_staticText33,           0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer8->Add( $self->{file_ftp_timeout}, 0, Wx::wxALL,                               5 );
+	$fgSizer8->Add( $self->{file_ftp_passive}, 0, Wx::wxALL,                               5 );
 
 	$m_panel8->SetSizer($fgSizer8);
 	$m_panel8->Layout;
@@ -934,35 +944,35 @@ sub new {
 	$fgSizer7->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer7->Add( $self->{autocomplete_subroutine}, 0, Wx::wxALL, 5 );
 	$fgSizer7->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer7->Add( $m_staticText27, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_min_suggestion_len}, 0, Wx::wxALL, 5 );
-	$fgSizer7->Add( $m_staticText28, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_max_suggestions}, 0, Wx::wxALL, 5 );
-	$fgSizer7->Add( $m_staticText29, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_min_chars}, 0, Wx::wxALL, 5 );
+	$fgSizer7->Add( $m_staticText27,                               0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{perl_autocomplete_min_suggestion_len}, 0, Wx::wxALL,                               5 );
+	$fgSizer7->Add( $m_staticText28,                               0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{perl_autocomplete_max_suggestions},    0, Wx::wxALL,                               5 );
+	$fgSizer7->Add( $m_staticText29,                               0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{perl_autocomplete_min_chars},          0, Wx::wxALL,                               5 );
 
 	$m_panel7->SetSizer($fgSizer7);
 	$m_panel7->Layout;
 	$fgSizer7->Fit($m_panel7);
 
-	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
-	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"), 0 );
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"), 0 );
-	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
-	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"),                0 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"),               0 );
+	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"),           0 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"),        0 );
+	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"),              0 );
+	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"),           0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
-	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Perl Auto Complete"), 1 );
+	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Perl Auto Complete"),       1 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{save}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{save},     0, Wx::wxALL, 5 );
 	$buttons->Add( $self->{advanced}, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{cancel},   0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $self->{treebook}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $buttons, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->Add( $m_staticline1,    0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $buttons,          0, Wx::wxALIGN_RIGHT,        5 );
 
 	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
