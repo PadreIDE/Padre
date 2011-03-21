@@ -2222,7 +2222,6 @@ sub init {
 		label      => _T('Preferences 2.0'),
 		comment    => _T('Edit user and host preferences'),
 		menu_event => sub {
-			$DB::single = 1;
 			require Padre::Wx::Dialog::Preferences2;
 			my $dialog = Padre::Wx::Dialog::Preferences2->new( $_[0] );
 			$dialog->load( $_[0]->config );
