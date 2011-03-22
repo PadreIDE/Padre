@@ -15,7 +15,10 @@ use Padre::Logger;
 
 our $VERSION    = '0.85';
 our $COMPATIBLE = '0.81';
-our @ISA        = 'Wx::StyledTextCtrl';
+our @ISA        = qw{
+	Padre::Wx::Role::Main
+	Wx::StyledTextCtrl
+};
 
 # End-Of-Line modes:
 # MAC is actually Mac classic.
@@ -158,16 +161,6 @@ sub new {
 	);
 
 	return $self;
-}
-
-sub main {
-	$_[0]->GetGrandParent;
-}
-
-# convenience accessor method (and to ensure consistency)
-# return the Padre::Config instance
-sub config {
-	$_[0]->main->config;
 }
 
 # convenience methods

@@ -3,14 +3,13 @@ package Padre::Wx::Dialog::Preferences;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current                         ();
-use Padre::Util                            ('_T');
-use Padre::Wx                              ();
-use Padre::Wx::Dialog                      ();
-use Padre::Wx::Editor                      ();
-use Padre::Wx::Dialog::Preferences::Editor ();
-use Padre::MimeTypes                       ();
-use Padre::Config::Style                   ();
+use Padre::Current       ();
+use Padre::Util          ('_T');
+use Padre::Wx            ();
+use Padre::Wx::Dialog    ();
+use Padre::Wx::Editor    ();
+use Padre::MimeTypes     ();
+use Padre::Config::Style ();
 
 our $VERSION = '0.85';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -557,7 +556,7 @@ sub _appearance_panel {
 	my $editor_panel_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$editor_panel->SetSizer($editor_panel_sizer);
 
-	my $editor = Padre::Wx::Dialog::Preferences::Editor->new($editor_panel);
+	my $editor = Padre::Wx::Editor->new($editor_panel);
 	$self->add_widget( 'preview_editor', $editor );
 	$self->_init_preview_editor( $bgcolor, $font_desc );
 
