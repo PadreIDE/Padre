@@ -629,6 +629,9 @@ sub _load_plugin {
 		# Do not enable by default
 		$config->set( enabled => 0 );
 	}
+
+	# NOTE: This violates encapsulation. The plugin manager should be
+	# manipulated from the outside, it shouldn't introspect it's parent IDE
 	unless ( $config->enabled or $self->ide->{with_plugin}->{$module} ) {
 		$plugin->status('disabled');
 		return;
