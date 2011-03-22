@@ -41,6 +41,10 @@ use Padre::Wx::Menu::Tools ();
 
 our $VERSION = '0.85';
 
+
+
+
+
 #####################################################################
 # Contants and definitions
 
@@ -55,6 +59,10 @@ our %PADRE_HOOKS = (
 	before_save   => PADRE_HOOK_RETURN_ERROR,
 	after_save    => PADRE_HOOK_RETURN_IGNORE,
 );
+
+
+
+
 
 #####################################################################
 # Constructor and Accessors
@@ -621,7 +629,7 @@ sub _load_plugin {
 		# Do not enable by default
 		$config->set( enabled => 0 );
 	}
-	unless ( $config->enabled or Padre->ide->{with_plugin}->{$module} ) {
+	unless ( $config->enabled or $self->ide->{with_plugin}->{$module} ) {
 		$plugin->status('disabled');
 		return;
 	}

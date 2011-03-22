@@ -7,7 +7,6 @@ use YAML::Tiny                ();
 use Time::HiRes               ();
 use Padre::Constant           ();
 use Padre::Util               ();
-use Padre::Current            ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
@@ -786,7 +785,7 @@ sub show_calltip {
 		$self->CallTipCancel;
 	}
 
-	my $doc      = Padre::Current->document or return;
+	my $doc      = $self->current->document or return;
 	my $keywords = $doc->keywords;
 	my $regex    = join '|', sort { length $a <=> length $b } keys %$keywords;
 
@@ -1153,7 +1152,8 @@ sub on_middle_up {
 		if $config->mid_button_paste;
 
 	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
-		Padre::Current->editor->Paste;
+		# NOTE: Editor->Current->Editor? Circular loop?
+		$self->current->editor->Paste;
 	}
 
 	my $doc = $self->{Document};
