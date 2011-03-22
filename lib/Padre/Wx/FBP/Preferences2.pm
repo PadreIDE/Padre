@@ -757,7 +757,7 @@ sub new {
 
 	$self->{advanced} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		-1,
 		Wx::gettext("Advanced..."),
 	);
 

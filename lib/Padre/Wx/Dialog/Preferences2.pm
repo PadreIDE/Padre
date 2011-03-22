@@ -53,7 +53,6 @@ sub load {
 				}
 			}
 
-
 		} else {
 			next;
 		}
@@ -66,7 +65,17 @@ sub save {
 	my $self   = shift;
 	my $config = shift;
 
-	die "CODE INCOMPLETE";
+	# Apply the changes to the configuration, if any
+	my $diff    = $self->diff($config) or return;
+	my $current = $self->current;
+	foreach my $name ( sort keys %$diff ) {
+		$config->apply( $name, $diff->{$name}, $current );
+	}
+
+	# Save the config file
+	$config->write;
+
+	return;
 }
 
 sub diff {
@@ -83,6 +92,10 @@ sub diff {
 		my $setting = $config->meta($name);
 		my $current = $config->$name();
 		my $ctrl    = $self->$name();
+
+		# Don't capture options that are not shown,
+		# as this may result in falsely clearing them.
+		next unless $ctrl->IsEnabled;
 
 		# Extract the value from the control
 		my $value = undef;
@@ -113,6 +126,7 @@ sub diff {
 		$diff{$name} = $value;
 	}
 
+	return unless %diff;
 	return \%diff;
 }
 

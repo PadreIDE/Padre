@@ -2225,8 +2225,10 @@ sub init {
 			require Padre::Wx::Dialog::Preferences2;
 			my $dialog = Padre::Wx::Dialog::Preferences2->new( $_[0] );
 			$dialog->load( $_[0]->config );
-			$dialog->ShowModal;
-			$dialog->diff( $_[0]->config );
+			$dialog->CentreOnParent;
+			unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+				$dialog->save( $_[0]->config );
+			}
 		},
 	);
 

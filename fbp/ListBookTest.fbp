@@ -90,7 +90,7 @@
                     <property name="proportion">1</property>
                     <object class="wxListbook" expanded="1">
                         <property name="bg"></property>
-                        <property name="bitmapsize">64,64</property>
+                        <property name="bitmapsize">-1,-1</property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
                         <property name="enabled">1</property>
@@ -105,7 +105,7 @@
                         <property name="pos"></property>
                         <property name="size">200,200</property>
                         <property name="style">wxLB_DEFAULT</property>
-                        <property name="subclass"></property>
+                        <property name="subclass">Wx::TreeBook; </property>
                         <property name="tooltip"></property>
                         <property name="validator_data_type"></property>
                         <property name="validator_style">wxFILTER_NONE</property>
@@ -140,7 +140,7 @@
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
                         <object class="listbookpage" expanded="1">
-                            <property name="bitmap">../share/icons/padre/64x64/logo.png; Load From File</property>
+                            <property name="bitmap">; Load From File</property>
                             <property name="label">a long page title</property>
                             <property name="select">1</property>
                             <object class="wxPanel" expanded="1">
