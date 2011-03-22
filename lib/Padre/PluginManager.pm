@@ -632,7 +632,7 @@ sub _load_plugin {
 
 	# NOTE: This violates encapsulation. The plugin manager should be
 	# manipulated from the outside, it shouldn't introspect it's parent IDE
-	unless ( $config->enabled or $self->ide->{with_plugin}->{$module} ) {
+	unless ( $config->enabled or $self->current->ide->{with_plugin}->{$module} ) {
 		$plugin->status('disabled');
 		return;
 	}
