@@ -11,6 +11,7 @@ use Padre::Current            ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
+use Padre::Wx::Role::Main     ();
 use Padre::Logger;
 
 our $VERSION    = '0.85';

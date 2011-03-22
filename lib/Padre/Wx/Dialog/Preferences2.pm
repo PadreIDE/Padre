@@ -90,7 +90,7 @@ sub diff {
 
 		# Get the Wx element for this option
 		my $setting = $config->meta($name);
-		my $current = $config->$name();
+		my $old     = $config->$name();
 		my $ctrl    = $self->$name();
 
 		# Don't capture options that are not shown,
@@ -122,7 +122,7 @@ sub diff {
 
 		# Skip if null
 		next unless defined $value;
-		next if $value eq $current;
+		next if $value eq $old;
 		$diff{$name} = $value;
 	}
 
@@ -153,7 +153,7 @@ sub advanced {
 
 sub guess {
 	my $self     = shift;
-	my $document = Padre::Current->document or return;
+	my $document = $self->current->document or return;
 	my $indent   = $document->guess_indentation_style;
 
 	$self->editor_indent_tab->SetValue( $indent->{use_tabs} );

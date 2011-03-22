@@ -43,4 +43,4 @@ ok( $dialog->load($config), '->load ok' );
 
 # The diff (extracted from dialog) to the config should be null
 my $diff = $dialog->diff($config);
-is_deeply( $diff, {}, '->diff returns an empty HASH' );
+is_deeply( $diff, undef, '->diff returns an empty HASH' );
