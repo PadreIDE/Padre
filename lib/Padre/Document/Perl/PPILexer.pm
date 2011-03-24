@@ -20,16 +20,12 @@ sub colorize {
 	# Flush old colouring
 	$editor->remove_color;
 
-	# Parse the file
-	require PPI::Document;
-	my $ppi = PPI::Document->new( \$text );
-	if ( not defined $ppi ) {
-		if (DEBUG) {
-			TRACE( 'PPI::Document Error %s', PPI::Document->errstr );
-			TRACE( 'Original text: %s',      $text );
-		}
-		return;
-	}
+	lexer( $text, sub { put_color( $editor, @_ ) } );
+
+	return;
+}
+
+sub get_colors {
 
 	my %colors = (
 		keyword      => 4, # dark green
@@ -74,42 +70,59 @@ sub colorize {
 		'Version'       => 0,
 	);
 
+	return \%colors;
+}
+
+sub put_color {
+	my ( $editor, $css, $row, $rowchar, $len ) = @_;
+
+	my $color = get_colors()->{$css};
+	if ( not defined $color ) {
+		TRACE("Missing definition for '$css'\n") if DEBUG;
+		return;
+	}
+	return if not $color;
+
+	my $start = $editor->PositionFromLine( $row - 1 ) + $rowchar - 1;
+	$editor->StartStyling( $start, $color );
+	$editor->SetStyling( $len, $color );
+
+	return;
+}
+
+sub lexer {
+	my $text   = shift;
+	my $markup = shift;
+
+	# Parse the file
+	require PPI::Document;
+	my $ppi = PPI::Document->new( \$text );
+	if ( not defined $ppi ) {
+		if (DEBUG) {
+			TRACE( 'PPI::Document Error %s', PPI::Document->errstr );
+			TRACE( 'Original text: %s',      $text );
+		}
+		return;
+	}
+
+
 	my @tokens = $ppi->tokens;
 	$ppi->index_locations;
-	my $first = $editor->GetFirstVisibleLine;
-	my $lines = $editor->LinesOnScreen;
 
-	#print "First $first lines $lines\n";
 	foreach my $t (@tokens) {
 
-		#print $t->content;
 		my ( $row, $rowchar, $col ) = @{ $t->location };
 
-		#		next if $row < $first;
-		#		next if $row > $first + $lines;
-		my $css = $self->_css_class($t);
+		my $css = class_to_css($t);
 
-		#		if ($row > $first and $row < $first + 5) {
-		#			print "$row, $rowchar, ", $t->length, "  ", $t->class, "  ", $css, "  ", $t->content, "\n";
-		#		}
-		#		last if $row > 10;
-		my $color = $colors{$css};
-		if ( not defined $color ) {
-			TRACE("Missing definition for '$css'\n") if DEBUG;
-			next;
-		}
-		next if not $color;
+		my $len = $t->length;
 
-		my $start = $editor->PositionFromLine( $row - 1 ) + $rowchar - 1;
-		my $len   = $t->length;
-
-		$editor->StartStyling( $start, $color );
-		$editor->SetStyling( $len, $color );
+		$markup->( $css, $row, $rowchar, $len );
 	}
 }
 
-sub _css_class {
-	my $self  = shift;
+
+sub class_to_css {
 	my $Token = shift;
 
 	if ( $Token->isa('PPI::Token::Word') ) {
@@ -123,11 +136,13 @@ sub _css_class {
 				return 'core';
 			}
 		}
+
 		if ( $Token->previous_sibling and $Token->previous_sibling->content eq '->' ) {
 			if ( $Token->content =~ /^(?:new)$/ ) {
 				return 'core';
 			}
 		}
+
 		if ( $Token->parent->isa('PPI::Statement::Include') ) {
 			if ( $Token->content =~ /^(?:use|no)$/ ) {
 				return 'keyword';
