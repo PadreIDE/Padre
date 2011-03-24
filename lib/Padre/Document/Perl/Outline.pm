@@ -20,7 +20,7 @@ sub find {
 	my $text = shift;
 
 	require PPIx::EditorTools::Outline;
-	return PPIx::EditorTools::Outline->new->find( code => $text )
+	return PPIx::EditorTools::Outline->new->find( code => $text );
 }
 
 1;
