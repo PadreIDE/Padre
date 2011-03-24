@@ -119,6 +119,11 @@ sub new {
 		'view.unfold_all',
 	);
 
+	$self->{fold_this} = $self->add_menu_action(
+		$self,
+		'view.fold_this',
+	);
+
 	$self->{show_calltips} = $self->add_menu_action(
 		$self,
 		'view.show_calltips',
@@ -282,6 +287,7 @@ sub refresh {
 
 	$self->{fold_all}->Enable( $self->{folding}->IsChecked );
 	$self->{unfold_all}->Enable( $self->{folding}->IsChecked );
+	$self->{fold_this}->Enable( $self->{folding}->IsChecked );
 
 	# Check state for word wrap is document-specific
 	if ($document) {

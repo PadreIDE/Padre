@@ -939,6 +939,28 @@ sub _get_line_by_number {
 	return $self->GetTextRange( $start, $end );
 }
 
+sub fold_this {
+	my ($self) = @_;
+
+	my $currentLine = $self->GetCurrentLine;
+
+	if ( !$self->GetFoldExpanded($currentLine) ) {
+		$self->ToggleFold($currentLine);
+		return;
+	}
+
+	while ( $currentLine >= 0 ) {
+		if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
+			$self->ToggleFold($parentLine);
+			return;
+		} else {
+			$currentLine--;
+		}
+	}
+
+	return;
+}
+
 sub fold_all {
 	my ($self) = @_;
 
@@ -1152,6 +1174,7 @@ sub on_middle_up {
 		if $config->mid_button_paste;
 
 	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
+
 		# NOTE: Editor->Current->Editor? Circular loop?
 		$self->current->editor->Paste;
 	}

@@ -1468,6 +1468,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'view.fold_this',
+		label       => _T('Fold/Unfold this'),
+		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->current->editor->fold_this;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'view.show_calltips',
 		label       => _T('Show Call Tips'),
 		comment     => _T('When typing in functions allow showing short examples of the function'),
