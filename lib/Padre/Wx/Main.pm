@@ -5339,6 +5339,8 @@ sub on_toggle_code_folding {
 
 	$config->write;
 
+	$self->menu->view->refresh;
+
 	return;
 }
 
