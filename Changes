@@ -27,6 +27,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Add File->Delete menu option (#1179) (SEWI)
     - Avoid running pointless syntax checks for unused documents (ADAMK)
     - No longer need a different editor class for the Preferences dialog (ADAMK)
+    - Move Outline building to PPIx::EditorTools::Outline 0.12 (SZABGAB)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
