@@ -3,7 +3,7 @@ package Padre::Document::Perl::Help;
 use 5.008;
 use strict;
 use warnings;
-use Pod::Functions;
+use Pod::Functions qw(%Type);
 use Cwd         ();
 use Padre::Util ();
 use Padre::Help ();
