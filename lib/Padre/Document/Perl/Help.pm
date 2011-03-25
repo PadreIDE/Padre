@@ -27,7 +27,34 @@ sub help_init {
 		return;
 	}
 
-	my @index = ();
+	my @index = $self->_collect_perldoc();
+
+	# Add Installed modules
+	push @index, $self->_find_installed_modules;
+
+	# Add Perl Operators Reference
+	$self->{perlopquick} = $self->_parse_perlopquick;
+	push @index, keys %{ $self->{perlopquick} };
+
+	# Add wxWidgets documentation
+	$self->{wxwidgets} = $self->_parse_wxwidgets;
+	push @index, keys %{ $self->{wxwidgets} };
+
+	# Return a unique sorted index
+	my %seen = ();
+	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
+	$self->{help_list} = \@unique_sorted_index;
+
+	# Store the cached help list for faster access
+	$cached_help_list   = $self->{help_list};
+	$cached_perlopquick = $self->{perlopquick};
+	$cached_wxwidgets   = $self->{wxwidgets};
+}
+
+sub _collect_perldoc {
+	my $self = shift;
+
+	my @index;
 
 	# The categorization has been "borrowed" from
 	# http://github.com/jonallen/perldoc.perl.org/tree
@@ -132,26 +159,7 @@ sub help_init {
 	$Type{break} = 1;
 	push @index, keys %Type;
 
-	# Add Installed modules
-	push @index, $self->_find_installed_modules;
-
-	# Add Perl Operators Reference
-	$self->{perlopquick} = $self->_parse_perlopquick;
-	push @index, keys %{ $self->{perlopquick} };
-
-	# Add wxWidgets documentation
-	$self->{wxwidgets} = $self->_parse_wxwidgets;
-	push @index, keys %{ $self->{wxwidgets} };
-
-	# Return a unique sorted index
-	my %seen = ();
-	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
-	$self->{help_list} = \@unique_sorted_index;
-
-	# Store the cached help list for faster access
-	$cached_help_list   = $self->{help_list};
-	$cached_perlopquick = $self->{perlopquick};
-	$cached_wxwidgets   = $self->{wxwidgets};
+	return @index;
 }
 
 # Finds installed CPAN modules via @INC
