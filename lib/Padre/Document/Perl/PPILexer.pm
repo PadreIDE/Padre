@@ -105,73 +105,16 @@ sub lexer {
 		return;
 	}
 
+	require PPIx::EditorTools::Lexer;
+	PPIx::EditorTools::Lexer->new->lexer(
+		ppi => $ppi,
+		highlighter => $markup,
+	);
 
-	my @tokens = $ppi->tokens;
-	$ppi->index_locations;
-
-	foreach my $t (@tokens) {
-
-		my ( $row, $rowchar, $col ) = @{ $t->location };
-
-		my $css = class_to_css($t);
-
-		my $len = $t->length;
-
-		$markup->( $css, $row, $rowchar, $len );
-	}
+	return;
 }
 
 
-sub class_to_css {
-	my $Token = shift;
-
-	if ( $Token->isa('PPI::Token::Word') ) {
-
-		# There are some words we can be very confident are
-		# being used as keywords
-		unless ( $Token->snext_sibling and $Token->snext_sibling->content eq '=>' ) {
-			if ( $Token->content =~ /^(?:sub|return)$/ ) {
-				return 'keyword';
-			} elsif ( $Token->content =~ /^(?:undef|shift|defined|bless)$/ ) {
-				return 'core';
-			}
-		}
-
-		if ( $Token->previous_sibling and $Token->previous_sibling->content eq '->' ) {
-			if ( $Token->content =~ /^(?:new)$/ ) {
-				return 'core';
-			}
-		}
-
-		if ( $Token->parent->isa('PPI::Statement::Include') ) {
-			if ( $Token->content =~ /^(?:use|no)$/ ) {
-				return 'keyword';
-			}
-			if ( $Token->content eq $Token->parent->pragma ) {
-				return 'pragma';
-			}
-		} elsif ( $Token->parent->isa('PPI::Statement::Variable') ) {
-			if ( $Token->content =~ /^(?:my|local|our)$/ ) {
-				return 'keyword';
-			}
-		} elsif ( $Token->parent->isa('PPI::Statement::Compound') ) {
-			if ( $Token->content =~ /^(?:if|else|elsif|unless|for|foreach|while|my)$/ ) {
-				return 'keyword';
-			}
-		} elsif ( $Token->parent->isa('PPI::Statement::Package') ) {
-			if ( $Token->content eq 'package' ) {
-				return 'keyword';
-			}
-		} elsif ( $Token->parent->isa('PPI::Statement::Scheduled') ) {
-			return 'keyword';
-		}
-	}
-
-	# Normal coloring
-	my $css = ref $Token;
-	$css =~ s/^.+:://;
-	$css;
-}
 
 1;
 
