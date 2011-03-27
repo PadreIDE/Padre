@@ -1329,11 +1329,11 @@ sub autocomplete {
 	# (Ticket #676)
 
 	# check for variables
+	my $parser = $self->perltags_parser;
 
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
-		my $parser = $self->perltags_parser;
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -1389,7 +1389,6 @@ sub autocomplete {
 		my $class  = $1;
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
-		my $parser = $self->perltags_parser;
 		if ( defined $parser ) {
 			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -1414,7 +1413,6 @@ sub autocomplete {
 	# check for packages
 	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
 		my $prefix = $1;
-		my $parser = $self->perltags_parser;
 
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
