@@ -1331,6 +1331,14 @@ sub autocomplete {
 	# check for variables
 	my $parser = $self->perltags_parser;
 
+	my $last = $editor->GetLength();
+	my $text = $editor->GetTextRange( 0, $last );
+
+	my $prefix2 = $prefix;
+	$prefix2 =~ s{^.*?((\w+::)*\w+)$}{$1};
+	my $pre_text  = $editor->GetTextRange( 0,      $first + length($prefix2) );
+	my $post_text = $editor->GetTextRange( $first, $last );
+
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
@@ -1362,9 +1370,6 @@ sub autocomplete {
 		my $hashname   = $1;
 		my $textmarker = $2;
 		my $keyprefix  = $3;
-
-		my $last = $editor->GetLength();
-		my $text = $editor->GetTextRange( 0, $last );
 
 		my %words;
 		while ( $text =~ /\Q$hashname\E\{(([\'\"]?)\Q$keyprefix\E.+?\2)\}/g ) {
@@ -1437,23 +1442,17 @@ sub autocomplete {
 		}
 	}
 
-	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
-
 	if ( defined($nextchar) ) {
-		return if ( length($prefix) + 1 ) < $min_chars;
+		return if ( length($prefix2) + 1 ) < $min_chars;
 	} else {
-		return if length($prefix) < $min_chars;
+		return if length($prefix2) < $min_chars;
 	}
 
-	my $last      = $editor->GetLength();
-	my $text      = $editor->GetTextRange( 0, $last );
-	my $pre_text  = $editor->GetTextRange( 0, $first + length($prefix) );
-	my $post_text = $editor->GetTextRange( $first, $last );
 
 	my $regex;
-	eval { $regex = qr{\b(\Q$prefix\E\w+(?:::\w+)*)\b} };
+	eval { $regex = qr{\b(\Q$prefix2\E\w+(?:::\w+)*)\b} };
 	if ($@) {
-		return ("Cannot build regular expression for '$prefix'.");
+		return ("Cannot build regular expression for '$prefix2'.");
 	}
 
 	my %seen;
@@ -1469,7 +1468,7 @@ sub autocomplete {
 	# Suggesting the current word as the only solution doesn't help
 	# anything, but your need to close the suggestions window before
 	# you may press ENTER/RETURN.
-	if ( ( $#words == 0 ) and ( $prefix eq $words[0] ) ) {
+	if ( ( $#words == 0 ) and ( $prefix2 eq $words[0] ) ) {
 		return;
 	}
 
@@ -1483,7 +1482,7 @@ sub autocomplete {
 
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
-	#	return ( length($prefix), @words ) if !defined($nextchar);
+	#	return ( length($prefix2), @words ) if !defined($nextchar);
 
 	my $min_length = $config->perl_autocomplete_min_suggestion_len;
 
@@ -1498,13 +1497,13 @@ sub autocomplete {
 
 		# Accept everything which has prefix + next char + at least one other char
 		# (check only if any char is pending)
-		next if defined($nextchar) and ( !/^\Q$prefix$nextchar\E./ );
+		next if defined($nextchar) and ( !/^\Q$prefix2$nextchar\E./ );
 
 		# All checks passed, add to the final list
 		push @final_words, $_;
 	}
 
-	return ( length($prefix), @final_words );
+	return ( length($prefix2), @final_words );
 }
 
 sub newline_keep_column {
