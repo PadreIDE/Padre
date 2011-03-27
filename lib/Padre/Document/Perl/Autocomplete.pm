@@ -6,6 +6,10 @@ use warnings;
 
 our $VERSION = '0.85';
 
+# Experimental package. The API needs a lot of refactoring
+# and the whole thing needs a lot of tests
+
+
 # WARNING: This is totally not done, but Gabor made me commit it.
 # TO DO:
 # a) complete this list
@@ -133,7 +137,77 @@ sub run {
 	return;
 }
 
+sub auto {
+	my $nextchar   = shift;
+	my $prefix2    = shift;
+	my $suffix     = shift;
+	my $min_chars  = shift;
+	my $max_length = shift;
+	my $min_length = shift;
+	my $pre_text   = shift;
+	my $post_text  = shift;
 
+	if ( defined($nextchar) ) {
+		return if ( length($prefix2) + 1 ) < $min_chars;
+	} else {
+		return if length($prefix2) < $min_chars;
+	}
+
+
+	my $regex;
+	eval { $regex = qr{\b(\Q$prefix2\E\w+(?:::\w+)*)\b} };
+	if ($@) {
+		return ("Cannot build regular expression for '$prefix2'.");
+	}
+
+	my %seen;
+	my @words;
+	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
+
+	if ( @words > $max_length ) {
+		@words = @words[ 0 .. ( $max_length - 1 ) ];
+	}
+
+	# Suggesting the current word as the only solution doesn't help
+	# anything, but your need to close the suggestions window before
+	# you may press ENTER/RETURN.
+	if ( ( $#words == 0 ) and ( $prefix2 eq $words[0] ) ) {
+		return;
+	}
+
+	# While typing within a word, the rest of the word shouldn't be
+	# inserted.
+	if ( defined($suffix) ) {
+		for ( 0 .. $#words ) {
+			$words[$_] =~ s/\Q$suffix\E$//;
+		}
+	}
+
+	# This is the final result if there is no char which hasn't been
+	# saved to the editor buffer until now
+	#	return ( length($prefix2), @words ) if !defined($nextchar);
+
+
+	# Finally cut out all words which do not match the next char
+	# which will be inserted into the editor (by the current event)
+	# and remove all which are too short
+	my @final_words;
+	for (@words) {
+
+		# Filter out everything which is too short
+		next if length($_) < $min_length;
+
+		# Accept everything which has prefix + next char + at least one other char
+		# (check only if any char is pending)
+		next if defined($nextchar) and ( !/^\Q$prefix2$nextchar\E./ );
+
+		# All checks passed, add to the final list
+		push @final_words, $_;
+	}
+
+	return ( length($prefix2), @final_words );
+}
 
 1;
 

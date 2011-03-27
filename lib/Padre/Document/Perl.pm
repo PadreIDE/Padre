@@ -1267,6 +1267,13 @@ Returns the prefix length and an array of suggestions. C<prefix_length> is the
 number of characters left to the cursor position which need to be replaced if
 a suggestion is accepted.
 
+If there are no suggestions, the functions returns an empty list.
+
+In case of error the function returns the error string as the first parameter.
+Hence users of this subroution need to check if the value returned in the first
+position is undef meaning no result or a string (including non digits) which
+means a failure or a number which means the prefix length.
+
 WARNING: This method runs very often (on each keypress), keep it as efficient
          and fast as possible!
 
@@ -1276,8 +1283,10 @@ sub autocomplete {
 	my $self  = shift;
 	my $event = shift;
 
-	my $config    = Padre->ide->config;
-	my $min_chars = $config->perl_autocomplete_min_chars;
+	my $config     = Padre->ide->config;
+	my $min_chars  = $config->perl_autocomplete_min_chars;
+	my $max_length = $config->perl_autocomplete_max_suggestions;
+	my $min_length = $config->perl_autocomplete_min_suggestion_len;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
@@ -1327,68 +1336,10 @@ sub autocomplete {
 	my @ret = Padre::Document::Perl::Autocomplete::run( $prefix, $text, $parser );
 	return @ret if @ret;
 
-	if ( defined($nextchar) ) {
-		return if ( length($prefix2) + 1 ) < $min_chars;
-	} else {
-		return if length($prefix2) < $min_chars;
-	}
-
-
-	my $regex;
-	eval { $regex = qr{\b(\Q$prefix2\E\w+(?:::\w+)*)\b} };
-	if ($@) {
-		return ("Cannot build regular expression for '$prefix2'.");
-	}
-
-	my %seen;
-	my @words;
-	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
-	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
-
-	my $max_length = $config->perl_autocomplete_max_suggestions;
-	if ( @words > $max_length ) {
-		@words = @words[ 0 .. ( $max_length - 1 ) ];
-	}
-
-	# Suggesting the current word as the only solution doesn't help
-	# anything, but your need to close the suggestions window before
-	# you may press ENTER/RETURN.
-	if ( ( $#words == 0 ) and ( $prefix2 eq $words[0] ) ) {
-		return;
-	}
-
-	# While typing within a word, the rest of the word shouldn't be
-	# inserted.
-	if ( defined($suffix) ) {
-		for ( 0 .. $#words ) {
-			$words[$_] =~ s/\Q$suffix\E$//;
-		}
-	}
-
-	# This is the final result if there is no char which hasn't been
-	# saved to the editor buffer until now
-	#	return ( length($prefix2), @words ) if !defined($nextchar);
-
-	my $min_length = $config->perl_autocomplete_min_suggestion_len;
-
-	# Finally cut out all words which do not match the next char
-	# which will be inserted into the editor (by the current event)
-	# and remove all which are too short
-	my @final_words;
-	for (@words) {
-
-		# Filter out everything which is too short
-		next if length($_) < $min_length;
-
-		# Accept everything which has prefix + next char + at least one other char
-		# (check only if any char is pending)
-		next if defined($nextchar) and ( !/^\Q$prefix2$nextchar\E./ );
-
-		# All checks passed, add to the final list
-		push @final_words, $_;
-	}
-
-	return ( length($prefix2), @final_words );
+	return Padre::Document::Perl::Autocomplete::auto(
+		$nextchar,   $prefix2,  $suffix, $min_chars, $max_length,
+		$min_length, $pre_text, $post_text
+	);
 }
 
 sub newline_keep_column {
