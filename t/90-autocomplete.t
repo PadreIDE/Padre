@@ -19,8 +19,12 @@ my $prefix = '$self->{';
 my $text   = read_file('t/files/Debugger.pm');
 my $parser;
 
-my $ac = Padre::Document::Perl::Autocomplete->new;
-my @result = $ac->run( $prefix, $text, $parser );
+my $ac = Padre::Document::Perl::Autocomplete->new(
+	prefix    => $prefix,
+	pre_text  => $text,
+	post_text => '',
+);
+my @result = $ac->run($parser);
 is_deeply \@result, [ 0, 'xyz' ], 'hash-ref';
 
 #diag explain \@result;

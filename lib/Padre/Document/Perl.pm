@@ -1320,22 +1320,26 @@ sub autocomplete {
 	my $parser = $self->perltags_parser;
 
 	my $last = $editor->GetLength();
-	my $text = $editor->GetTextRange( 0, $last );
 
-	my $pre_text = $editor->GetTextRange( 0, $first );
-	my $post_text = $editor->GetTextRange( $first + length($prefix), $last );
+	my $pre_text  = $editor->GetTextRange( 0,    $first );
+	my $post_text = $editor->GetTextRange( $pos, $last );
 
 	require Padre::Document::Perl::Autocomplete;
 	my $ac = Padre::Document::Perl::Autocomplete->new(
 		minimum_prefix_length        => $min_chars,
 		maximum_number_of_choices    => $config->perl_autocomplete_max_suggestions,
 		minimum_length_of_suggestion => $config->perl_autocomplete_min_suggestion_len,
+
+		prefix    => $prefix,
+		nextchar  => $nextchar,
+		pre_text  => $pre_text,
+		post_text => $post_text,
 	);
 
-	my @ret = $ac->run( $prefix, $text, $parser );
+	my @ret = $ac->run($parser);
 	return @ret if @ret;
 
-	return $ac->auto( $nextchar, $prefix, $pre_text, $post_text );
+	return $ac->auto();
 }
 
 sub newline_keep_column {

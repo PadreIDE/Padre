@@ -46,11 +46,10 @@ sub new {
 
 sub run {
 	my $self   = shift;
-	my $prefix = shift;
-	my $text   = shift;
 	my $parser = shift;
 
-	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
+
+	if ( $self->{prefix} =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
 		if ( defined $parser ) {
@@ -77,12 +76,13 @@ sub run {
 	}
 
 	# check for hashs
-	elsif ( $prefix =~ /(\$\w+(?:\-\>)?)\{([\'\"]?)([\$\&]?\w*)$/ ) {
+	elsif ( $self->{prefix} =~ /(\$\w+(?:\-\>)?)\{([\'\"]?)([\$\&]?\w*)$/ ) {
 		my $hashname   = $1;
 		my $textmarker = $2;
 		my $keyprefix  = $3;
 
 		my %words;
+		my $text = $self->{pre_text} . ' ' . $self->{post_text};
 		while ( $text =~ /\Q$hashname\E\{(([\'\"]?)\Q$keyprefix\E.+?\2)\}/g ) {
 			$words{$1} = 1;
 		}
@@ -101,7 +101,7 @@ sub run {
 	}
 
 	# check for methods
-	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/ ) {
+	elsif ( $self->{prefix} =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/ ) {
 		my $class  = $1;
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
@@ -127,7 +127,7 @@ sub run {
 	}
 
 	# check for packages
-	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
+	elsif ( $self->{prefix} =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
 		my $prefix = $1;
 
 		if ( defined $parser ) {
@@ -157,15 +157,14 @@ sub run {
 }
 
 sub auto {
-	my $self      = shift;
-	my $nextchar  = shift;
-	my $prefix    = shift;
-	my $pre_text  = shift;
-	my $post_text = shift;
+	my $self = shift;
+
+	my $nextchar = $self->{nextchar};
+	my $prefix   = $self->{prefix};
 
 	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
 
-	my $suffix = substr $post_text, 0, List::Util::min( 15, length $post_text );
+	my $suffix = substr $self->{post_text}, 0, List::Util::min( 15, length $self->{post_text} );
 	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
 	if ( defined($nextchar) ) {
@@ -183,8 +182,8 @@ sub auto {
 
 	my %seen;
 	my @words;
-	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
-	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } reverse( $self->{pre_text} =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } ( $self->{post_text} =~ /$regex/g );
 
 	if ( @words > $self->{maximum_number_of_choices} ) {
 		@words = @words[ 0 .. ( $self->{maximum_number_of_choices} - 1 ) ];
