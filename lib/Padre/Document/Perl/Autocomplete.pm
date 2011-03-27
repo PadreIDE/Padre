@@ -12,6 +12,22 @@ our $VERSION = '0.85';
 # and the whole thing needs a lot of tests
 
 
+sub new {
+	my $class = shift;
+
+	# Padre has its own defaults for each parameter but this code
+	# might serve other purposes as well
+	my %args = (
+		minimum_prefix_length        => 1,
+		maximum_number_of_choices    => 20,
+		minimum_length_of_suggestion => 3,
+		@_
+	);
+
+	my $self = bless \%args, $class;
+	return $self;
+}
+
 # WARNING: This is totally not done, but Gabor made me commit it.
 # TO DO:
 # a) complete this list
@@ -29,6 +45,7 @@ our $VERSION = '0.85';
 # (Ticket #676)
 
 sub run {
+	my $self   = shift;
 	my $prefix = shift;
 	my $text   = shift;
 	my $parser = shift;
@@ -140,13 +157,11 @@ sub run {
 }
 
 sub auto {
-	my $nextchar   = shift;
-	my $prefix     = shift;
-	my $min_chars  = shift;
-	my $max_length = shift;
-	my $min_length = shift;
-	my $pre_text   = shift;
-	my $post_text  = shift;
+	my $self      = shift;
+	my $nextchar  = shift;
+	my $prefix    = shift;
+	my $pre_text  = shift;
+	my $post_text = shift;
 
 	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
 
@@ -154,9 +169,9 @@ sub auto {
 	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
 	if ( defined($nextchar) ) {
-		return if ( length($prefix) + 1 ) < $min_chars;
+		return if ( length($prefix) + 1 ) < $self->{minimum_prefix_length};
 	} else {
-		return if length($prefix) < $min_chars;
+		return if length($prefix) < $self->{minimum_prefix_length};
 	}
 
 
@@ -171,8 +186,8 @@ sub auto {
 	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
 	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
 
-	if ( @words > $max_length ) {
-		@words = @words[ 0 .. ( $max_length - 1 ) ];
+	if ( @words > $self->{maximum_number_of_choices} ) {
+		@words = @words[ 0 .. ( $self->{maximum_number_of_choices} - 1 ) ];
 	}
 
 	# Suggesting the current word as the only solution doesn't help
@@ -202,7 +217,7 @@ sub auto {
 	for (@words) {
 
 		# Filter out everything which is too short
-		next if length($_) < $min_length;
+		next if length($_) < $self->{minimum_length_of_suggestion};
 
 		# Accept everything which has prefix + next char + at least one other char
 		# (check only if any char is pending)

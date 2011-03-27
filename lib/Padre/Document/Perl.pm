@@ -1283,10 +1283,8 @@ sub autocomplete {
 	my $self  = shift;
 	my $event = shift;
 
-	my $config     = Padre->ide->config;
-	my $min_chars  = $config->perl_autocomplete_min_chars;
-	my $max_length = $config->perl_autocomplete_max_suggestions;
-	my $min_length = $config->perl_autocomplete_min_suggestion_len;
+	my $config    = Padre->ide->config;
+	my $min_chars = $config->perl_autocomplete_min_chars;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
@@ -1328,13 +1326,16 @@ sub autocomplete {
 	my $post_text = $editor->GetTextRange( $first + length($prefix), $last );
 
 	require Padre::Document::Perl::Autocomplete;
-	my @ret = Padre::Document::Perl::Autocomplete::run( $prefix, $text, $parser );
+	my $ac = Padre::Document::Perl::Autocomplete->new(
+		minimum_prefix_length        => $min_chars,
+		maximum_number_of_choices    => $config->perl_autocomplete_max_suggestions,
+		minimum_length_of_suggestion => $config->perl_autocomplete_min_suggestion_len,
+	);
+
+	my @ret = $ac->run( $prefix, $text, $parser );
 	return @ret if @ret;
 
-	return Padre::Document::Perl::Autocomplete::auto(
-		$nextchar,   $prefix,   $min_chars, $max_length,
-		$min_length, $pre_text, $post_text
-	);
+	return $ac->auto( $nextchar, $prefix, $pre_text, $post_text );
 }
 
 sub newline_keep_column {
