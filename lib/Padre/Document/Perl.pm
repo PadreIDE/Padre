@@ -1306,19 +1306,16 @@ sub autocomplete {
 	# One char may be added by the current event
 	return if length($prefix) < ( $min_chars - 1 );
 
-	my $suffix = $editor->GetTextRange( $pos, $pos + 15 );
-	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
-
 	# The second parameter may be a reference to the current event or the next
 	# char which will be added to the editor:
-	my $nextchar = '';                   # Use empty instead of undef
+	my $nextchar = ''; # Use empty instead of undef
 	if ( defined($event) and ( ref($event) eq 'Wx::KeyEvent' ) ) {
 		my $key = $event->GetUnicodeKey;
 		$nextchar = chr($key);
 	} elsif ( defined($event) and ( !ref($event) ) ) {
 		$nextchar = $event;
 	}
-	return if ord($nextchar) == 27;      # Close on escape
+	return if ord($nextchar) == 27; # Close on escape
 	$nextchar = '' if ord($nextchar) < 32;
 
 	# check for variables
@@ -1327,17 +1324,15 @@ sub autocomplete {
 	my $last = $editor->GetLength();
 	my $text = $editor->GetTextRange( 0, $last );
 
-	my $prefix2 = $prefix;
-	$prefix2 =~ s{^.*?((\w+::)*\w+)$}{$1};
-	my $pre_text  = $editor->GetTextRange( 0,      $first + length($prefix2) );
-	my $post_text = $editor->GetTextRange( $first, $last );
+	my $pre_text = $editor->GetTextRange( 0, $first );
+	my $post_text = $editor->GetTextRange( $first + length($prefix), $last );
 
 	require Padre::Document::Perl::Autocomplete;
 	my @ret = Padre::Document::Perl::Autocomplete::run( $prefix, $text, $parser );
 	return @ret if @ret;
 
 	return Padre::Document::Perl::Autocomplete::auto(
-		$nextchar,   $prefix2,  $suffix, $min_chars, $max_length,
+		$nextchar,   $prefix,   $min_chars, $max_length,
 		$min_length, $pre_text, $post_text
 	);
 }

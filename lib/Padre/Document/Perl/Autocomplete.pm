@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 
+use List::Util ();
+
 our $VERSION = '0.85';
 
 # Experimental package. The API needs a lot of refactoring
@@ -139,25 +141,29 @@ sub run {
 
 sub auto {
 	my $nextchar   = shift;
-	my $prefix2    = shift;
-	my $suffix     = shift;
+	my $prefix     = shift;
 	my $min_chars  = shift;
 	my $max_length = shift;
 	my $min_length = shift;
 	my $pre_text   = shift;
 	my $post_text  = shift;
 
+	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
+
+	my $suffix = substr $post_text, 0, List::Util::min( 15, length $post_text );
+	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
+
 	if ( defined($nextchar) ) {
-		return if ( length($prefix2) + 1 ) < $min_chars;
+		return if ( length($prefix) + 1 ) < $min_chars;
 	} else {
-		return if length($prefix2) < $min_chars;
+		return if length($prefix) < $min_chars;
 	}
 
 
 	my $regex;
-	eval { $regex = qr{\b(\Q$prefix2\E\w+(?:::\w+)*)\b} };
+	eval { $regex = qr{\b(\Q$prefix\E\w+(?:::\w+)*)\b} };
 	if ($@) {
-		return ("Cannot build regular expression for '$prefix2'.");
+		return ("Cannot build regular expression for '$prefix'.");
 	}
 
 	my %seen;
@@ -172,7 +178,7 @@ sub auto {
 	# Suggesting the current word as the only solution doesn't help
 	# anything, but your need to close the suggestions window before
 	# you may press ENTER/RETURN.
-	if ( ( $#words == 0 ) and ( $prefix2 eq $words[0] ) ) {
+	if ( ( $#words == 0 ) and ( $prefix eq $words[0] ) ) {
 		return;
 	}
 
@@ -186,7 +192,7 @@ sub auto {
 
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
-	#	return ( length($prefix2), @words ) if !defined($nextchar);
+	#	return ( length($prefix), @words ) if !defined($nextchar);
 
 
 	# Finally cut out all words which do not match the next char
@@ -200,13 +206,13 @@ sub auto {
 
 		# Accept everything which has prefix + next char + at least one other char
 		# (check only if any char is pending)
-		next if defined($nextchar) and ( !/^\Q$prefix2$nextchar\E./ );
+		next if defined($nextchar) and ( !/^\Q$prefix$nextchar\E./ );
 
 		# All checks passed, add to the final list
 		push @final_words, $_;
 	}
 
-	return ( length($prefix2), @final_words );
+	return ( length($prefix), @final_words );
 }
 
 1;
