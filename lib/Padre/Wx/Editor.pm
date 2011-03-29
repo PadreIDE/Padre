@@ -295,7 +295,7 @@ sub on_key_up {
 	}
 
 	# Doc specific processing
-	my $doc = $self->{Document};
+	my $doc = $self->{Document} or return;
 	if ( $doc->can('event_key_up') ) {
 		$doc->event_key_up( $self, $event );
 	}
@@ -1039,7 +1039,7 @@ sub on_focus {
 sub on_char {
 	my $self     = shift;
 	my $event    = shift;
-	my $document = $self->{Document};
+	my $document = $self->{Document} or return;
 	if ( $document->can('event_on_char') ) {
 		$document->event_on_char( $self, $event );
 	}
@@ -1148,8 +1148,8 @@ sub on_mouse_moving {
 	my ( $self, $event ) = @_;
 
 	if ( $event->Moving ) {
-		my $doc = $self->{Document};
-		if ( $doc and $doc->can('event_mouse_moving') ) {
+		my $doc = $self->{Document} or return;
+		if ( $doc->can('event_mouse_moving') ) {
 			$doc->event_mouse_moving( $self, $event );
 		}
 	} else {

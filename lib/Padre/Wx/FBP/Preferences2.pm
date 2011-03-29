@@ -9,6 +9,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::Editor ();
 
 our $VERSION = '0.01';
 our @ISA     = qw{
@@ -331,6 +332,11 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
+	);
+
+	$self->{preview} = Padre::Wx::Editor->new(
+		$m_panel3,
+		-1,
 	);
 
 	my $m_panel4 = Wx::Panel->new(
@@ -841,9 +847,13 @@ sub new {
 	$fgSizer4->Add( $m_staticText18, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	$m_panel3->SetSizer($fgSizer4);
+	my $bSizer4 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$bSizer4->Add( $fgSizer4, 0, Wx::wxEXPAND, 0 );
+	$bSizer4->Add( $self->{preview}, 1, Wx::wxALL | Wx::wxEXPAND, 20 );
+
+	$m_panel3->SetSizer($bSizer4);
 	$m_panel3->Layout;
-	$fgSizer4->Fit($m_panel3);
+	$bSizer4->Fit($m_panel3);
 
 	my $fgSizer9 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$fgSizer9->SetFlexibleDirection(Wx::wxBOTH);
@@ -945,8 +955,8 @@ sub new {
 	$m_panel7->Layout;
 	$fgSizer7->Fit($m_panel7);
 
-	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 1 );
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"), 0 );
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );

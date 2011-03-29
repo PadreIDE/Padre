@@ -138,12 +138,14 @@ sub new {
 	}
 
 	my $doc = $editor->{Document};
-	if ( $doc->can('event_on_right_down') ) {
-		$doc->event_on_right_down( $editor, $self, $event );
-	}
+	if ( $doc ) {
+		if ( $doc->can('event_on_right_down') ) {
+			$doc->event_on_right_down( $editor, $self, $event );
+		}
 
-	# Let the plugins have a go
-	$editor->main->ide->plugin_manager->on_context_menu( $doc, $editor, $self, $event );
+		# Let the plugins have a go
+		$editor->main->ide->plugin_manager->on_context_menu( $doc, $editor, $self, $event );
+	}
 
 	return $self;
 }
