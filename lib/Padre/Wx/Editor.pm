@@ -1136,7 +1136,7 @@ sub on_left_up {
 	}
 
 	my $doc = $self->{Document};
-	if ( $doc->can('event_on_left_up') ) {
+	if ( $doc and $doc->can('event_on_left_up') ) {
 		$doc->event_on_left_up( $self, $event );
 	}
 
