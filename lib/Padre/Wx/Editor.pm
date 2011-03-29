@@ -1149,7 +1149,7 @@ sub on_mouse_moving {
 
 	if ( $event->Moving ) {
 		my $doc = $self->{Document};
-		if ( $doc->can('event_mouse_moving') ) {
+		if ( $doc and $doc->can('event_mouse_moving') ) {
 			$doc->event_mouse_moving( $self, $event );
 		}
 	} else {
