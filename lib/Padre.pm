@@ -326,49 +326,6 @@ about every feature in our wiki: L<http://padre.perlide.org/trac/wiki/Features/>
 The application maintains its configuration information in a
 directory called F<.padre>.
 
-B<Edit/Select All> C<Ctrl+A>, select all the characters in the current document
-
-B<Edit/Copy> C<Ctrl+C>
-
-B<Edit/Cut> C<Ctrl+X>
-
-B<Edit/Paste> C<Ctrl+V>
-
-(TO DO What is C<Ctrl+D> ?, duplicate the current line?)
-
-=head2 Projects (TO DO)
-
-Padre will have the notion of a Perl project. As we would like
-to make things as natural as possible for the Perl developer
-and we think the distribution methods used for C<CPAN> module are
-a good way to handle any project Padre will understand a project
-as a C<CPAN> module. This does not mean that your project needs to end
-up on C<CPAN> of course. But if your projects directory structure
-follows that of the modules on C<CPAN>, Padre will be automatically
-recognize it.
-
-=head2 Module::Starter
-
-As a first step in the direction of supporting C<CPAN>-style Perl
-projects we integrated into Padre the use of L<Module::Starter>
-
-B<File/New.../Perl Distribution> will bring up a dialog box where
-you can select some of the parameters your new project has such
-as Name of the Project (e.g. My::Widgets), Author - that is probably
-your name, e-mail (your e-mail).
-
-Builder is the tool that you project is going to use to package itself
-and then your user will use to install the project.
-Currently L<Module::Build> and L<ExtUtils::MakeMaker> are supported.
-(TO DO add Module::Install as well).
-
-License is one of the keywords currently listed in the F<META.yml> spec of
-Module::Build. (TO DO: update the list or make it dynamic)
-
-Once you click B<OK>, Module::Starter will create a new
-directory called My-Widgets in the parent directory you selected
-in the last field.
-
 =head2 Other
 
 On Strawberry Perl you can associate .pl file extension with
@@ -396,18 +353,9 @@ is running inside Padre or not.
 
 =head2 Navigation
 
-  Ctrl+G          Go to Line
-  Ctrl+1          Matching Brace
   Ctrl+2          Quick Fix
   Ctrl+.          Next Problem
-  Ctrl+P          Word Auto-completion
-  Alt+N           Nth Pane
-  Ctrl+Tab        Next Pane
-  Ctrl+Shift+Tab  Previous Pane
-  Alt+S           Jump to list of subs window
-
-  Ctrl+M Ctrl+Shift+M  comment/uncomment selected lines of code
-
+ 
   Ctrl+H opens a help window where you can see the documentation of
   any Perl module. Just use open (in the help window) and type in the name
   of a module.
@@ -704,18 +652,6 @@ TO DO: Padre should offer an easy but simple way for plug-in authors
 to declare configuration variables and automatically generate both configuration
 file and configuration dialog. Padre should also allow for full customization
 of both for those more advanced in Wx.
-
-=head1 Editing tools
-
-=head2 Case Changes
-
-Change the case of the selected text or if there
-is no selection all the text in the current file.
-
-Change all characters to upper or lower case
-
-Change the first character of every word to upper/lower
-case leaving the rest as they were.
 
 =head2 Tab and space conversion
 
