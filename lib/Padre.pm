@@ -1053,14 +1053,18 @@ handles everything the toolbar should know and do.
 
 =head1 BUGS
 
-Please submit your bugs at L<http://padre.perlide.org/>
+Before submitting a bug please talk to the Padre developers
+on IRC: #padre on irc.perl.org. You can use this web based
+IRC client: L<http://padre.perlide.org/irc.html?channel=padre>
+
+Please submit your bugs at L<http://padre.perlide.org/trac/>
 
 =head1 SUPPORT
 
 I hope the L<http://www.perlmonks.org/> will be ready to take
 upon themselves supporting this application.
 
-See also L<http://padre.perlide.org/>
+See also L<http://padre.perlide.org/contact.html>
 
 =head1 COPYRIGHT
 
