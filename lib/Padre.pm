@@ -378,83 +378,6 @@ is running inside Padre or not.
 
   padre --index
 
-=head2 Rectangular Text Selection
-
-Simple text editors usually only allow you to select contiguous lines of text with your mouse.
-Sometimes, however, it is handy to be able to select a rectangular area of text for more precise
-cutting/copying/pasting or performing search/replace on. You can select a rectangular area in Padre
-by holding down C<Ctrl+Alt> whilst selecting text with your mouse.
-
-For example, imagine you have the following nicely formatted hash assignment in a Perl source file:
-
-  my %hash = (
-      key1 => 'value1',
-      key2 => 'value2',
-      key3 => 'value3',
- );
-
-With a rectangular text selection you can select only the keys, only the values, etc..
-
-=head2 Syntax highlighting
-
-Padre is using L<Wx> (aka wxPerl), wxWidgets for GUI and Scintilla for the editor.
-Scintilla provides very good syntax highlighting for many languages but Padre is still
-bound by the version of Scintilla included.
-
-The F<share/styles/default.yml> file is the mapping between the Scintilla defined
-constants for various syntactical elements of each language and the C<RGB> values
-of the color to be used to highlight them.
-
-=head3 Adding new syntax highlighting
-
-TO DO does this stuff below really belong here?
-
-Need to define constants in L<Padre::Util> to be in the C<Padre::Constant> namespace.
-
-Need to add the color mapping to F<share/styles/default.yml>
-
-Need to implement the C<Padre::Document::Language> class.
-
-Need to define the MIME type mapping in L<Padre::Document>
-
-For examples see L<Padre::Document::PASM>, L<Padre::Document::PIR>,
-L<Padre::Document::Perl>.
-
-=head2 Syntax checking
-
-Depending on a corresponding support in the respective C<Padre::Document::Language>
-class, Padre supports real time syntax checking capabilities:
-
-=over 4
-
-=item
-
-Syntax errors or warnings are displayed in a side bar (usually at the bottom of the
-Padre window). By double-clicking a list entry you can navigate to the position in
-the file.
-
-=item
-
-Additionally, there is a symbol column on the left side of the editor where colored
-symbols mark the code lines with problems.
-
-=back
-
-=head3 WARNING NOTE
-
-Syntax checking for Perl5 documents comes bundled with Padre. It is implemented
-using C<perl -c>. This means that parts of the code actually get executed (e.g.
-C<BEGIN> blocks). Malicious software might used this fact to damage your system
-(C<BEGIN { system('rm -rf ~') }>) or suck up your resources
-(C<BEGIN { while(1) { } }>).
-Syntax checking is currently disabled by default and has to be enabled manually
-after every start of Padre. This somewhat increases security when doing
-C<padre some_unknown_file.pl>.
-However, it does not protect you when you open a file from within Padre while
-syntax checking is turned on.
-The most secure solution would require a really fast non-executing syntax checker
-which unfortunately is currently not available.
-
 =head1 Preferences
 
 There are several types of preferences we can think of.
@@ -501,22 +424,9 @@ even when moving between computers.
 
 =item Size and location of windows
 
-=item Show/Hide various windows, Status bar, Toolbar
-
 =item Files recently opened
 
 =item Files that were open last time, cursor location
-
-=item Show newlines
-
-=item Show Line numbers
-
-=item Show indentation guide
-
-B<View/Show Indentation Guide>
-
-When set, Padre will display a thin vertical line at every indentation
-level on every row with are indented more than one level.
 
 =item Highlight indentation guide (TO DO)
 
@@ -529,8 +439,6 @@ on column 8 - will be highlighted. (in green).
 
 As I understand Padre should constantly adjust the C<SetHighlightGuide>
 so that in every block the "correct" indentation guide is highlighted.
-
-=item Show Call Tips
 
 =item Tabulator display size
 
@@ -554,25 +462,6 @@ nothing, new, those that were open last time?
 
 =item Max/Min number of modules to display in POD viewer
 
-=item Auto-indentation
-
-Possible values: no/same level/deep
-
-There are at least two levels of auto-indentation:
-
-1) when ENTER is pressed indent to exactly the same level as the previous line
-
-2) if there is an opening brace { on the previous line, indent one level more
-
-=item Brace matching
-
-When the cursor reaches an opening or closing brace { }, square bracket [ ]
-or parentheses ( ), Padre automatically highlight the pair of the braces.
-
-TO DO make this optional, let the user set the color
-
-=item Auto-save on/off?
-
 =back
 
 =head2 File and Project oriented preferences
@@ -584,34 +473,6 @@ TO DO make this optional, let the user set the color
 =item In case of using spaces for indentation, the width  of every indentation level
 
 =back
-
-=head1 Other features
-
-=head2 Auto-backup (Planned)
-
-See L<Padre::Autosave>
-
-When Padre opens a file it automatically creates a copy of the original
-in F<~/.padre/backup/PATH>  where PATH is the same PATH as the full PATH of
-the file. On Windows the initial drive letter is converted to another
-subdirectory so F<c:\dir\file.txt>  will be saved as
-F<~/padre/backup/c/dir/file.txt>.
-
-When a new file is created no need for auto-backup.
-
-When a remote file is opened the backup will probably go to
-F<~/padre/backup_remote/>
-
-Configurable options: on/off
-
-=head2 Auto-save files (Planned)
-
-Every N seconds all the files changed since the last auto-save are
-saved to a temporary place maybe F<~/.padre/save>.
-
-When the user closes the file, the auto-saved file is removed.
-
-Configurable options: on/off, frequency in seconds
 
 =head1 SQLite
 
@@ -663,67 +524,6 @@ the lines or better yet only at the indentation levels.
 Delete All Ending space does just what it says.
 
 Delete Leading Space will ask How many leading spaces and act accordingly.
-
-
-=head1 Search, Find and Replace
-
-(planning)
-
-=head2 Search
-
-C<Ctrl+F> opens the search window, if something was selected then that is given as the search text.
-Otherwise the last search string should be displayed.
-
-Provide option to search backwards
-
-Limit action to current block, current subroutine, current
-file (should be the default) current project, current directory
-with some file filters.
-
-When the user presses Find
-
-=over 4
-
-=item 1
-
-We find the first hit and the search window disappears. C<F3> jumps to next one.
-
-=item 2
-
-The first match is highlighted and focused but the window stays
-When the user clicks on the Find button again, we jump to the next hit
-In this case the user must be able to edit the document while the search window
-is on.
-
-=item 3
-
-All the matches are highlighted and we go to the first match, window disappears.
-C<F3> jumps to next one
-
-=item 4
-
-All the matches are highlighted and we go to the first one, window stays open
-user can edit text
-
-=back
-
-=head2 Find and Replace
-
-Find - find the next occurrence
-
-Replace all - do just that
-
-Replace - if currently a match is selected then replace it find the next occurrence and select it
-
-=head2 TO DO describe what to do if we have to deal with files that are not in the editor
-
-if "Replace all" was pressed then do just that
-   1) without opening editors for the files.
-   2) opening an editor for each file and keep it in unsaved state (sounds crazy having 1000 editors open...)
-if Search or Replace is clicked then we might show the next location in the lower pane.
-If the user then presses Replace we open the file in an editor window and go on.
-If the user presses Search then we show the next occurrence.
-Opened and edited files will be left in a not saved state.
 
 =head1 Code layout
 
