@@ -317,7 +317,8 @@ later.
 
 Instead of duplicating all the text here, let me point you to the
 web site of Padre L<http://padre.perlide.org/> where we keep a list
-of existing and planned features.
+of existing and planned features. We are creating detailed explanation
+about every feature in our wiki: L<http://padre.perlide.org/trac/wiki/Features/>
 
 =head1 DESCRIPTION
 
@@ -327,32 +328,6 @@ The application maintains its configuration information in a
 directory called F<.padre>.
 
 =head2 Files operations
-
-B<File/New> creates a new empty file. By default Padre assumes this is a Perl script.
-(TO DO later this default will be configurable).
-
-B<File/Open> allows you to browse for a file and select it for opening.
-
-B<File/Open Selection>, (C<Ctrl+Shift+O>) if there is a selected text this will
-try to locate files that match the selection. If the selection looks like a path
-Padre will try to open that path either absolute or relative.
-If it looks like a module name (Some::Thing) it will try to find the appropriate file Some/Thing.pm in @INC and open it.
-currently this feature opens the first file encountered.
-(TO DO it should find all the possibilities and if there are multiple hits
-offer the user to choose. This will be especially important if we are
-working on a module that is also already installed. Padre might
-find the installed version first while we might want to open the
-development version.)
-
-(TO DO: when the file is not of Perl type we should have other ways to recognize
-files from internal naming and have paths to search. Surprise, not every
-language uses @INC.)
-
-B<File/Close> - checks if the file is saved, if it is closes the current tab.
-
-B<File/Close All> - closes all opened files (in case they are not saved yet ask for instructions).
-
-B<File/Close All but Current> - closes all opened files except for the currently being edited.
 
 B<File/Reload File> - Reloads the file. This is interesting if you either made changes and want to discard them
 and/or if the file has changed on the disk. If there are unsaved changes Padre will ask
@@ -370,10 +345,6 @@ B<Files/Recent Files> - a list of recently opened files to open them easily.
 (TO DO: update the list when we open a file, not only when opening padre)
 (TO DO: allow the user to configure size of history)
 
-B<File/Doc Stats> - just random statistics about the current document.
-(TO DO: If you miss anything important let us know!)
-
-B<File/Quit> - Exits Padre.
 
 =head2 Simple editing
 
@@ -539,12 +510,6 @@ constants for various syntactical elements of each language and the C<RGB> value
 of the color to be used to highlight them.
 
 =head3 Adding new syntax highlighting
-
-To set up a custom syntax highlighting scheme, you create a F<.yml> file that defines
-the mappings described above. The easiest way to create your own scheme is probably to copy an existing
-F<.yml> file (for instance, F<default.yml>) from the F<share/styles/> folder, put it in
-F<~/.padre/styles>, and then modify it. Padre checks this folder on start-up and adds
-any styles in the F<.yml> files there to the C<< View -> Style >> menu.
 
 TO DO does this stuff below really belong here?
 
