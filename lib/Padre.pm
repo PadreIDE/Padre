@@ -308,14 +308,13 @@ You can edit the file and save it using File/Save (C<Ctrl+S>).
 
 You can run the script by pressing Run/Run Script (C<F5>)
 
-
 By default Padre uses the same Perl interpreter for
 executing code that it uses for itself but this will be configurable
 later.
 
 =head1 FEATURES
 
-Instead of duplicating all the text here, let me point you to the
+Instead of duplicating all the text here, let us point you to the
 web site of Padre L<http://padre.perlide.org/> where we keep a list
 of existing and planned features. We are creating detailed explanation
 about every feature in our wiki: L<http://padre.perlide.org/trac/wiki/Features/>
@@ -327,34 +326,6 @@ about every feature in our wiki: L<http://padre.perlide.org/trac/wiki/Features/>
 The application maintains its configuration information in a
 directory called F<.padre>.
 
-=head2 Files operations
-
-B<File/Reload File> - Reloads the file. This is interesting if you either made changes and want to discard them
-and/or if the file has changed on the disk. If there are unsaved changes Padre will ask
-you if you really want to throw them away. (TO DO: make a backup of the file before discarding it)
-
-B<File/Save> C<Ctrl+S> - save the current file. If the buffer is not yet saved and has no file name associated with it, Padre will ask you for a file name.
-
-B<File/Save As> - Offer the user to select a new file name and save the content under that name.
-
-B<File/Save All> - Save all the currently opened files.
-
-B<File/Convert> - Convert line endings to Windows, Unix or Mac Classic style.
-
-B<Files/Recent Files> - a list of recently opened files to open them easily.
-(TO DO: update the list when we open a file, not only when opening padre)
-(TO DO: allow the user to configure size of history)
-
-
-=head2 Simple editing
-
-The simple editing features (should) provide the expected behavior
-for Windows users.
-
-B<Edit/Undo> C<Ctrl+Z>
-
-B<Edit/Redo>
-
 B<Edit/Select All> C<Ctrl+A>, select all the characters in the current document
 
 B<Edit/Copy> C<Ctrl+C>
@@ -364,12 +335,6 @@ B<Edit/Cut> C<Ctrl+X>
 B<Edit/Paste> C<Ctrl+V>
 
 (TO DO What is C<Ctrl+D> ?, duplicate the current line?)
-
-=head2 Mouse right click
-
-Click on the right button of the mouse brings up a context sensitive menu.
-It provides the basic editing functions and will provide other context
-sensitive options.
 
 =head2 Projects (TO DO)
 
@@ -428,23 +393,6 @@ You can edit the command line using the Run/Setup menu item.
 
 Please Note that you can use C<$ENV{PADRE_VERSION}> to detect whether the script
 is running inside Padre or not.
-
-=head2 Bookmarks
-
-B<View/Set Bookmark> (C<Ctrl+B>) brings up a window with a
-predefined text containing the file name and line number
-(TO DO should be the content of the current line).
-
-B<View/Go to Bookmark> (C<Ctrl+Shift+B>) brings up a window with the
-list of available bookmarks. You can select one and press B<OK>
-to jump to that location. If the file where the bookmark belongs
-to is not open currently, it will be opened and the cursor will
-jump to the desired place.
-
-In both cases while the window is open you can select
-existing bookmarks and press the B<Delete> button to remove the
-selected one or press B<Delete All> to remove all the existing
-bookmarks.
 
 =head2 Navigation
 
