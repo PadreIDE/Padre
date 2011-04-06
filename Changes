@@ -31,6 +31,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Add menu options in View to Fold All and Unfold All (SZABGAB)
     - Add menu option to Fold/Unfold where the cursor is now (SZABGAB)
     - Move the standard PPILexer to PPIx::EditorTools::Lexer 0.13 (SZABGAB)
+    - Fix #1182: Crash when enabling a plugin (SEWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

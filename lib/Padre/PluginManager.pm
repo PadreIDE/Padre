@@ -753,6 +753,17 @@ sub _unload_plugin {
 	return 1;
 }
 
+sub _plugin_enable {
+	my $self   = shift;
+	my $plugin = shift;
+
+	# Do nothing but calling the PluginHandle here, this method is only used by the GUI, not
+	# for plugins enabled by config!
+
+	$self->_plugin($plugin)->enabled;
+}
+
+
 =pod
 
 =head2 C<reload_plugin>
