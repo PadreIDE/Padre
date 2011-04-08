@@ -335,6 +335,14 @@ sub new {
 	);
 	$self->{editor_font}->SetMaxPointSize(100);
 
+	Wx::Event::EVT_FONTPICKER_CHANGED(
+		$self,
+		$self->{editor_font},
+		sub {
+			shift->preview_refresh(@_);
+		},
+	);
+
 	my $m_staticText18 = Wx::StaticText->new(
 		$m_panel3,
 		-1,
@@ -348,6 +356,14 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
+	);
+
+	Wx::Event::EVT_COLOURPICKER_CHANGED(
+		$self,
+		$self->{editor_currentline_color},
+		sub {
+			shift->preview_refresh(@_);
+		},
 	);
 
 	$self->{m_staticline2} = Wx::StaticLine->new(

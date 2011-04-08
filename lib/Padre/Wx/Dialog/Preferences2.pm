@@ -223,7 +223,33 @@ sub guess {
 	return;
 }
 
+# We do this the long-hand way for now, as we don't have a suitable
+# method for generating proper logical style objects.
 sub preview_refresh {
+	my $self    = shift;
+	my $config  = $self->config;
+	my $preview = $self->preview;
+
+	# Set the colour of the current line (if visible)
+	if ( $config->editor_currentline ) {
+		$preview->SetCaretLineBackground(
+			$self->editor_currentline_color->GetColour
+		);
+	}
+
+	# Set the font for the editor
+	my $font = $self->editor_font->GetSelectedFont;
+	$preview->SetFont($font);
+	$preview->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+
+	# Set the right margin if applicable
+	if ( $self->editor_right_margin_enable->GetValue ) {
+		$preview->SetEdgeColumn( $self->editor_right_margin_column );
+		$preview->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
+	} else {
+		$preview->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
+	}
+
 	return;
 }
 
