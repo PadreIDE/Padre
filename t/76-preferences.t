@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 #	plan tests => 8;
-	plan tests => 9;
+	plan tests => 6;
 }
 
 use Test::NoWarnings;
