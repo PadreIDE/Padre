@@ -76,6 +76,9 @@ sub load {
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$ctrl->SetValue($value);
 
+		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
+			$ctrl->SetColour( Padre::Wx::color($value) );
+
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
 			if ($options) {
@@ -144,6 +147,10 @@ sub diff {
 
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$value = $ctrl->GetValue;
+
+		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
+			$value = $ctrl->GetColour->GetAsString(Wx::wxC2S_HTML_SYNTAX);
+			$value =~ s/^#// if defined $value;
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
