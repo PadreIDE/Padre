@@ -230,7 +230,9 @@ sub padre_setup {
 	my $self = shift;
 
 	TRACE("before setting the lexer") if DEBUG;
-	$self->SetLexer( $self->{Document}->lexer );
+	if ( $self->{Document} ) {
+		$self->SetLexer( $self->{Document}->lexer );
+	}
 
 	# the next line will change the ESC key to cut the current selection
 	# See: http://www.yellowbrain.com/stc/keymap.html
@@ -240,13 +242,16 @@ sub padre_setup {
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
 
-	my $mimetype = $self->{Document}->mimetype || 'text/plain';
+	my $mimetype = $self->{Document} ? $self->{Document}->mimetype : '';
+	$mimetype ||= 'text/plain';
+
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 
 	} elsif ( $mimetype eq 'text/plain' ) {
 		$self->padre_setup_plain;
-		my $filename = $self->{Document}->filename || q{};
+		my $filename = $self->{Document} ? $self->{Document}->filename : '';
+		$filename ||= '';
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 			my $ext = lc $1;
 
@@ -767,7 +772,9 @@ sub set_preferences {
 
 	$self->padre_setup;
 
-	$self->{Document}->set_indentation_style;
+	if ( $self->{Document} ) {
+		$self->{Document}->set_indentation_style;
+	}
 
 	return;
 }
