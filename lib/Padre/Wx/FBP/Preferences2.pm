@@ -295,12 +295,28 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{editor_right_margin_enable},
+		sub {
+			shift->preview_refresh(@_);
+		},
+	);
+
 	$self->{editor_right_margin_column} = Wx::TextCtrl->new(
 		$m_panel3,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
+	);
+
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{editor_right_margin_column},
+		sub {
+			shift->preview_refresh(@_);
+		},
 	);
 
 	my $m_staticText17 = Wx::StaticText->new(
@@ -332,6 +348,23 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
+	);
+
+	$self->{m_staticline2} = Wx::StaticLine->new(
+		$m_panel3,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
+	);
+
+	$self->{m_staticText331} = Wx::StaticText->new(
+		$m_panel3,
+		-1,
+		Wx::gettext("Appearance Preview"),
+	);
+	$self->{m_staticText331}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{preview} = Padre::Wx::Editor->new(
@@ -849,7 +882,9 @@ sub new {
 
 	my $bSizer4 = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$bSizer4->Add( $fgSizer4, 0, Wx::wxEXPAND, 0 );
-	$bSizer4->Add( $self->{preview}, 1, Wx::wxALL | Wx::wxEXPAND, 20 );
+	$bSizer4->Add( $self->{m_staticline2}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer4->Add( $self->{m_staticText331}, 0, Wx::wxALL, 5 );
+	$bSizer4->Add( $self->{preview}, 1, Wx::wxEXPAND | Wx::wxTOP, 5 );
 
 	$m_panel3->SetSizer($bSizer4);
 	$m_panel3->Layout;
@@ -1093,6 +1128,10 @@ sub editor_currentline_color {
 	$_[0]->{editor_currentline_color};
 }
 
+sub preview {
+	$_[0]->{preview};
+}
+
 sub run_perl_cmd {
 	$_[0]->{run_perl_cmd};
 }
@@ -1173,12 +1212,16 @@ sub perl_autocomplete_min_chars {
 	$_[0]->{perl_autocomplete_min_chars};
 }
 
+sub preview_refresh {
+	$_[0]->main->error('Handler method preview_refresh for event editor_right_margin_enable.OnCheckBox not implemented');
+}
+
 sub guess {
-	die 'Handler method guess for event editor_indent_guess.OnButtonClick not implemented';
+	$_[0]->main->error('Handler method guess for event editor_indent_guess.OnButtonClick not implemented');
 }
 
 sub advanced {
-	die 'Handler method advanced for event advanced.OnButtonClick not implemented';
+	$_[0]->main->error('Handler method advanced for event advanced.OnButtonClick not implemented');
 }
 
 1;

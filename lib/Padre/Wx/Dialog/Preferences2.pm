@@ -13,6 +13,43 @@ our @ISA     = 'Padre::Wx::FBP::Preferences2';
 
 
 #####################################################################
+# Constructor and Accessors
+
+sub new {
+	my $self = shift->SUPER::new(@_);
+
+	# Set the content of the editor preview
+	$self->preview->SetText(
+		join '', map { "$_\n" }
+		"#!/usr/bin/perl",
+		"",
+		"use strict;",
+		"",
+		"main();",
+		"",
+		"exit 0;",
+		"",
+		"sub main {",
+		"\t# some senseles comment",
+		"\tmy \$x = \$_[0] ? \$_[0] : 5;",
+		"\tif ( \$x > 5 ) {",
+		"\t\treturn 1;",
+		"\t} else {",
+		"\t\treturn 0;",
+		"\t}",
+		"}",
+		"",
+		"__END__",
+	);
+
+	return $self;
+}
+
+
+
+
+
+#####################################################################
 # Load and Save
 
 sub load {
@@ -136,6 +173,10 @@ sub diff {
 
 ######################################################################
 # Event Handlers
+
+sub preview_refresh {
+	return 1;
+}
 
 sub advanced {
 	my $self = shift;
