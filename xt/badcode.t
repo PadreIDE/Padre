@@ -109,6 +109,10 @@ foreach my $module ( sort keys %modules ) {
 	if ( $module =~ /^Padre::Wx/ or $module =~ /^Wx::/ ) {
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");
+	} elsif ( $module =~ /^Padre::Plugin::/ ) {
+		# Plugins are exempt from this rule.
+		my $Test = Test::Builder->new;
+		$Test->skip("$module is a Wx module");
 	} else {
 		my ($error) = $content =~ m/^use\s+.*Wx.*;/gmx;
 		my $Test = Test::Builder->new;
