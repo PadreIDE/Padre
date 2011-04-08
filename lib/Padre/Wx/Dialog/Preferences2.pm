@@ -108,6 +108,9 @@ sub load {
 		}
 	}
 
+	# Sync the editor preview to the current config
+	$self->preview->set_preferences;
+
 	return 1;
 }
 
@@ -194,10 +197,6 @@ sub diff {
 ######################################################################
 # Event Handlers
 
-sub preview_refresh {
-	return 1;
-}
-
 sub advanced {
 	my $self = shift;
 
@@ -221,6 +220,10 @@ sub guess {
 	$self->editor_indent_tab_width->SetValue( $indent->{tabwidth} );
 	$self->editor_indent_width->SetValue( $indent->{indentwidth} );
 
+	return;
+}
+
+sub preview_refresh {
 	return;
 }
 
