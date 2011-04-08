@@ -701,7 +701,7 @@ setting(
 	name  => 'editor_font',
 	type  => Padre::Constant::ASCII,
 	store => Padre::Constant::HUMAN,
-	default => Padre::Constant::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'Consolas 10' : '',
+	default => Padre::Constant::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
 	name    => 'editor_linenumbers',
