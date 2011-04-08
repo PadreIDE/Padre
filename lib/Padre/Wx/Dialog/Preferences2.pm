@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::Preferences2;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Wx ();
 use Padre::Wx::FBP::Preferences2 ();
 
 our $VERSION = '0.85';
@@ -79,6 +80,15 @@ sub load {
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$ctrl->SetColour( Padre::Wx::color($value) );
 
+		} elsif ( $ctrl->isa('Wx::FontPickerCtrl' ) ) {
+			my $font = Wx::Font->new(Wx::wxNullFont);
+			local $@;
+			eval {
+				$font->SetNativeFontInfoUserDesc($value);
+			};
+			$font = Wx::Font->new(Wx::wxNullFont) if $@;
+			$ctrl->SetSelectedFont($font);
+
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
 			if ($options) {
@@ -151,6 +161,9 @@ sub diff {
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$value = $ctrl->GetColour->GetAsString(Wx::wxC2S_HTML_SYNTAX);
 			$value =~ s/^#// if defined $value;
+
+		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
+			$value = $ctrl->GetSelectedFont->GetNativeFontInfoUserDesc;
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
