@@ -47,8 +47,8 @@ SCOPE: {
 
 	my $editor_font = $config->editor_font;
 	if ( $^O eq 'MSWin32' ) {
-		ok( ( $editor_font eq '' ) || ( $editor_font eq 'Consolas 10' ),
-			'editor_font is either empty or Consolas 10 on win32'
+		ok( ( $editor_font eq '' ) || ( $editor_font eq 'consolas 10' ),
+			'editor_font is either empty or consolas 10 on win32'
 		);
 	} else {
 		is( $editor_font => '' );
