@@ -513,8 +513,14 @@ sub browse_message {
 
 				# TODO: this should never happen, but it does and it crashes padre in the compare method
 				# when calling is_directory on the object.
-				warn "Something is wrong as one of the directory objects is undef";
-				next;
+				warn
+					"Something is wrong as one of the directory objects is undef (position=$position, child=$child, chd=$chd)";
+				$self->main->error(
+					Wx::gettext(
+						'The directory browser got an undef object and may stop working now. Please save your work and restart Padre.'
+					)
+				);
+				last;
 			}
 			my $compare = $self->compare( $_[0], $chd );
 			if ( $compare > 0 ) {
