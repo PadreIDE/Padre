@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: he\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-11 12:10-0800\n"
-"PO-Revision-Date: 2011-03-12 08:40+0200\n"
-"Last-Translator: Oren Maurer <meorero@gmail.com>\n"
+"PO-Revision-Date: 2011-04-19 18:22+0200\n"
+"Last-Translator: meorero <meorero@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@lists.kde.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -360,9 +360,8 @@ msgid "&Save"
 msgstr "שמור "
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:271
-#, fuzzy
 msgid "&Save session automatically"
-msgstr "שמור סביבת עבודה באופן אוטומטי"
+msgstr "&שמור סביבת עבודה באופן אוטומטי"
 
 #: lib/Padre/Wx/Menu/Search.pm:99
 msgid "&Search"
@@ -1104,9 +1103,8 @@ msgid "Contents of the status bar"
 msgstr "תוכן שורת המצב"
 
 #: lib/Padre/Config.pm:449
-#, fuzzy
 msgid "Contents of the window title"
-msgstr "קצר את המסלול המשותף ברשימת החלונות"
+msgstr "תוכן כותרת החלון"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2599
 msgid "Context Help"
@@ -1173,9 +1171,8 @@ msgid "Copy Value"
 msgstr "העתק ערך"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:262
-#, fuzzy
 msgid "Copy filename to clipboard"
-msgstr "העתק את שם הקובץ"
+msgstr "העתק שם הקובץ ללוח"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:163
 #, perl-format
@@ -1755,7 +1752,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:215
 msgid "Enter parts of the resource name to find it"
-msgstr ""
+msgstr "הכנס חלק משם משאב כדי למצוא אותו"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:19
 msgid "Epoch"
@@ -1895,9 +1892,8 @@ msgid "Escape"
 msgstr "Escape"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2177
-#, fuzzy
 msgid "Evaluate Expression..."
-msgstr "ביטוי רגולרי"
+msgstr "הערך ביטוי"
 
 #: lib/Padre/Config/Style.pm:35
 msgid "Evening"
@@ -1905,11 +1901,11 @@ msgstr "ערב"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1991
 msgid "Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)"
-msgstr ""
+msgstr "בצע את הפקודה הבאה, הכנס לתת-שגרה אם יש צורך. (התחל מנפה שגיאות אם עדיין לא רץ)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2008
 msgid "Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)"
-msgstr ""
+msgstr "בצע את הפקודה הבאה. אם זו קריאה לתת-שגרה, עצור רק אחרי חזרה ממנה. (התחל מנפה שגיאות אם עדיין לא רץ)"
 
 #: lib/Padre/Wx/Main.pm:4380
 msgid "Exist"
@@ -2129,9 +2125,8 @@ msgid "Filter through External Tool..."
 msgstr "סנן באמצעות כלי חיצוני"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1110
-#, fuzzy
 msgid "Filter through Perl..."
-msgstr "סנן בתוך Perl"
+msgstr "סנן בתוך Perl..."
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:30
 msgid "Filter through tool"
@@ -2875,9 +2870,8 @@ msgid "Name for the new subroutine"
 msgstr " שם לשגרה החדשה"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:447
-#, fuzzy
 msgid "Name of the current subroutine"
-msgstr " שם לשגרה החדשה"
+msgstr " שם השגרה הנוכחית"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:112
 msgid "Name:"
@@ -2912,9 +2906,8 @@ msgid "New plug-ins detected"
 msgstr "זוהו תוספים חדשים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1716
-#, fuzzy
 msgid "Newline Same Column"
-msgstr "שורה חדשה באותה העמודה"
+msgstr "שורה חדשה - אותה העמודה"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2418
 msgid "Next File"
@@ -3117,14 +3110,12 @@ msgstr "פתח קובץ"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:30
 #: lib/Padre/Wx/Dialog/OpenResource.pm:76
-#, fuzzy
 msgid "Open Resources"
-msgstr "לפתוח משאב"
+msgstr "פתח משאבים"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1265
-#, fuzzy
 msgid "Open Resources..."
-msgstr "פתח משאב..."
+msgstr "משאבים פתוחים ..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:443
 msgid "Open Selection"
@@ -4097,7 +4088,7 @@ msgstr "שמור הגדרות"
 #: lib/Padre/MimeTypes.pm:364
 #: lib/Padre/MimeTypes.pm:374
 msgid "Scintilla"
-msgstr ""
+msgstr "מודול עורך טקסט - Scintilla"
 
 #: lib/Padre/Wx/Main.pm:3927
 msgid "Script Files"
@@ -4316,7 +4307,7 @@ msgstr "צור סימנייה"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2071
 msgid "Set Breakpoint (&b)"
-msgstr ""
+msgstr "קבע נקודת עצירה  (&b)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1634
 msgid "Set Padre in full screen mode"
@@ -4324,15 +4315,15 @@ msgstr "הגדר את Padre למצב עבודה במלוא המסך"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2117
 msgid "Set a breakpoint at the line where to cursor is and run till there"
-msgstr ""
+msgstr "קבע נקודת עצירה בשורה בה נמצא הסמן והרץ עד אליה"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2072
 msgid "Set a breakpoint to the current location of the cursor with a condition"
-msgstr ""
+msgstr "קבע נקודת עצירה בשורה בה נמצא הסמן עם תנאי"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2056
 msgid "Set focus to the line where the current statement is in the debugging process"
-msgstr ""
+msgstr "קבע התמקדות בשורה בה נמצאת הפקודה הנוכחית בתהליך נפוי השגיאות"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2554
 msgid "Set the focus to the \"Command Line\" window"
@@ -4372,9 +4363,8 @@ msgstr "הגדרת מבנה (skeleton) להפצת מודול Perl"
 
 #: lib/Padre/Config.pm:449
 #: lib/Padre/Config.pm:461
-#, fuzzy
 msgid "Several placeholders like the filename can be used"
-msgstr "יש כמה ממלאי-מקום בהם ניתן להשתמש"
+msgstr "יש כמה ממלאי-מקום כמו שם קובץ בהם ניתן להשתמש"
 
 #: lib/Padre/Wx/Syntax.pm:43
 msgid "Severe Warning"
@@ -4675,6 +4665,8 @@ msgid ""
 "Something is wrong with your Padre database:\n"
 "Session %s is listed but there is no data"
 msgstr ""
+"משהו שגוי במסד הנתונים של ה- Padre שלך: \n"
+"סביבת העבודה %s רשומה אך אין נתונים"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:99
 msgid "Space"
@@ -4710,7 +4702,7 @@ msgstr "ערך מיוחד:"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2041
 msgid "Start running and/or continue running till next breakpoint or watch"
-msgstr ""
+msgstr "התחל ו/או המשך הרצה עד נקודת העצירה הבאה או נקודה המבט הבאה"
 
 #: lib/Padre/Plugin/Devel.pm:79
 msgid "Start/Stop sub trace"
@@ -4734,15 +4726,15 @@ msgstr "שורת מצב"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1989
 msgid "Step In (&s)"
-msgstr ""
+msgstr "צעד פנימה (&s)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2024
 msgid "Step Out (&r)"
-msgstr ""
+msgstr "צעד החוצה (&r)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2006
 msgid "Step Over (&n)"
-msgstr ""
+msgstr "צעד מעבר (&n)"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1961
 msgid "Stop Execution"
