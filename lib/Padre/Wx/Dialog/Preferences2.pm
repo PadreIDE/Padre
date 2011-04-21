@@ -3,7 +3,8 @@ package Padre::Wx::Dialog::Preferences2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Document              ();
+use Padre::Wx                    ();
 use Padre::Wx::FBP::Preferences2 ();
 
 our $VERSION = '0.85';
@@ -20,6 +21,10 @@ sub new {
 	my $self = shift->SUPER::new(@_);
 
 	# Set the content of the editor preview
+	$self->preview->{Document} = Padre::Document->new(
+		mimetype => 'application/x-perl',
+	);
+	$self->preview->{Document}->set_editor($self->preview);
 	$self->preview->SetText(
 		join '', map { "$_\n" }
 		"#!/usr/bin/perl",
