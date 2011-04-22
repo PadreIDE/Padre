@@ -27,7 +27,7 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 	my $wx_perl = File::Spec->catfile( $dir, 'wxPerl' );
 	my $perl    = $wx_perl && -e $wx_perl && -x _
 			? $wx_perl
-			: scalar File::Which::which('wxPerl');
+			: File::Which::which('wxPerl');
 	chomp($perl);
 	if ( -e $perl ) {
 		warn "spawning 'wxPerl' interpreter for OS X\n";
