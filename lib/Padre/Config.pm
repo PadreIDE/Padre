@@ -16,6 +16,7 @@ use Padre::Constant        ();
 use Padre::Util            ('_T');
 use Padre::Current         ();
 use Padre::Config::Setting ();
+use Padre::Config::Style   ();
 use Padre::Config::Human   ();
 use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
@@ -1044,6 +1045,7 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HOST,
 	default => 'default',
+	options => Padre::Config::Style->styles,
 );
 
 # Window Geometry

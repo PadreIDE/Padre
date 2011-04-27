@@ -1615,7 +1615,7 @@ sub init {
 
 	SCOPE: {
 		my @styles = (
-			Padre::Config::Style->core_styles,
+			Padre::Config::Style->styles,
 			Padre::Config::Style->user_styles,
 		);
 

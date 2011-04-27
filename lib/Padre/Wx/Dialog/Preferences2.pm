@@ -6,6 +6,7 @@ use warnings;
 use Padre::Document              ();
 use Padre::Wx                    ();
 use Padre::Wx::FBP::Preferences2 ();
+use Padre::Logger;
 
 our $VERSION = '0.85';
 our @ISA     = 'Padre::Wx::FBP::Preferences2';
@@ -18,6 +19,7 @@ our @ISA     = 'Padre::Wx::FBP::Preferences2';
 # Constructor and Accessors
 
 sub new {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift->SUPER::new(@_);
 
 	# Set the content of the editor preview
@@ -59,6 +61,7 @@ sub new {
 # Load and Save
 
 sub load {
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $config = shift;
 
@@ -116,10 +119,15 @@ sub load {
 	# Sync the editor preview to the current config
 	$self->preview->set_preferences;
 
+	### HACK
+	# Backup the editor style
+	$self->{original_style} = $config->editor_style;
+
 	return 1;
 }
 
 sub save {
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $config = shift;
 
@@ -150,6 +158,12 @@ sub diff {
 		my $setting = $config->meta($name);
 		my $old     = $config->$name();
 		my $ctrl    = $self->$name();
+
+		### HACK
+		# Get the "old" value from the backed up copy of the style
+		if ( $name eq 'editor_style' ) {
+			$old = $self->{original_style};
+		}
 
 		# Don't capture options that are not shown,
 		# as this may result in falsely clearing them.
@@ -195,6 +209,17 @@ sub diff {
 	return \%diff;
 }
 
+# Convenience method to get the current value for a single named choice
+sub choice {
+	my $self    = shift;
+	my $name    = shift;
+	my $ctrl    = $self->$name()             or return;
+	my $setting = $self->config->meta($name) or return;
+	my $options = $setting->options          or return;
+	my @results = sort keys %$options;
+	return $results[ $ctrl->GetSelection ];
+}
+
 
 
 
@@ -202,11 +227,26 @@ sub diff {
 ######################################################################
 # Event Handlers
 
+sub cancel {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+
+	# Apply the original style
+	my $style = delete $self->{original_style};
+	$self->main->action("view.style.$style");
+
+	# Cancel the preferences dialog in Wx
+	$self->EndModal(Wx::wxID_CANCEL);
+
+	return;
+}
+
 sub advanced {
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Cancel the preferences dialog since it is not needed
-	$self->EndModal(Wx::wxID_CANCEL);
+	$self->cancel;
 
 	# Show the advanced settings dialog instead
 	require Padre::Wx::Dialog::Advanced;
@@ -231,6 +271,7 @@ sub guess {
 # We do this the long-hand way for now, as we don't have a suitable
 # method for generating proper logical style objects.
 sub preview_refresh {
+	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $config  = $self->config;
 	my $preview = $self->preview;
@@ -253,6 +294,13 @@ sub preview_refresh {
 		$preview->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
 	} else {
 		$preview->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
+	}
+
+	# Apply the style (but only if we can do so safely)
+	if ( $self->{original_style} ) {
+		my $style = $self->choice('editor_style');
+		Padre::Current->main->action("view.style.$style");
+		$preview->set_preferences;
 	}
 
 	return;

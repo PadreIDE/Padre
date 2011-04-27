@@ -271,6 +271,40 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
+	$self->{m_staticText341} = Wx::StaticText->new(
+		$m_panel3,
+		-1,
+		Wx::gettext("Editor Style"),
+	);
+	$self->{m_staticText341}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	$self->{editor_style} = Wx::Choice->new(
+		$m_panel3,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		[],
+	);
+	$self->{editor_style}->SetSelection(0);
+
+	Wx::Event::EVT_CHOICE(
+		$self,
+		$self->{editor_style},
+		sub {
+			shift->preview_refresh(@_);
+		},
+	);
+
+	$self->{m_staticline21} = Wx::StaticLine->new(
+		$m_panel3,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
+	);
+
 	$self->{main_output_ansi} = Wx::CheckBox->new(
 		$m_panel3,
 		-1,
@@ -826,8 +860,16 @@ sub new {
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		-1,
 		Wx::gettext("Cancel"),
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{cancel},
+		sub {
+			shift->cancel(@_);
+		},
 	);
 
 	my $fgSizer3 = Wx::FlexGridSizer->new( 20, 2, 0, 10 );
@@ -880,6 +922,12 @@ sub new {
 	$m_panel2->Layout;
 	$fgSizer3->Fit($m_panel2);
 
+	my $fgSizer91 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$fgSizer91->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer91->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
+	$fgSizer91->Add( $self->{m_staticText341}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer91->Add( $self->{editor_style}, 0, Wx::wxALL, 5 );
+
 	my $fgSizer4 = Wx::FlexGridSizer->new( 8, 2, 0, 10 );
 	$fgSizer4->AddGrowableCol(0);
 	$fgSizer4->AddGrowableCol(1);
@@ -897,6 +945,8 @@ sub new {
 	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	my $bSizer4 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$bSizer4->Add( $fgSizer91, 0, Wx::wxEXPAND, 5 );
+	$bSizer4->Add( $self->{m_staticline21}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
 	$bSizer4->Add( $fgSizer4, 0, Wx::wxEXPAND, 0 );
 	$bSizer4->Add( $self->{m_staticline2}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
 	$bSizer4->Add( $self->{m_staticText331}, 0, Wx::wxALL, 5 );
@@ -1120,6 +1170,10 @@ sub startup_splash {
 	$_[0]->{startup_splash};
 }
 
+sub editor_style {
+	$_[0]->{editor_style};
+}
+
 sub main_output_ansi {
 	$_[0]->{main_output_ansi};
 }
@@ -1229,7 +1283,7 @@ sub perl_autocomplete_min_chars {
 }
 
 sub preview_refresh {
-	$_[0]->main->error('Handler method preview_refresh for event editor_right_margin_enable.OnCheckBox not implemented');
+	$_[0]->main->error('Handler method preview_refresh for event editor_style.OnChoice not implemented');
 }
 
 sub guess {
@@ -1238,6 +1292,10 @@ sub guess {
 
 sub advanced {
 	$_[0]->main->error('Handler method advanced for event advanced.OnButtonClick not implemented');
+}
+
+sub cancel {
+	$_[0]->main->error('Handler method cancel for event cancel.OnButtonClick not implemented');
 }
 
 1;

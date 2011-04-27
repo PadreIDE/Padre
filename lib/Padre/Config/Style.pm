@@ -52,6 +52,14 @@ BEGIN {
 	}
 }
 
+# Convenience access to the merged style list
+sub styles {
+	return {
+		%CORE_STYLES,
+		map { $_ => $_ } @USER_STYLES,
+	};
+}
+
 sub core_styles {
 	return \%CORE_STYLES;
 }
