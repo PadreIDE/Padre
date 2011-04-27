@@ -153,7 +153,7 @@ sub _regex_groups {
 				'12\u'       => Wx::gettext('Uppercase next character'),
 				'13\L'       => Wx::gettext('Lowercase till \E'),
 				'14\U'       => Wx::gettext('Uppercase till \E'),
-				'15\E'       => Wx::gettext('End case modification'),
+				'15\E'       => Wx::gettext('End case modification/metacharacter quoting'),
 				'16\Q'       => Wx::gettext('Quote (disable) pattern metacharacters till \E'),
 			}
 		},
