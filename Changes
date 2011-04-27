@@ -34,6 +34,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1182: Crash when enabling a plugin (SEWI)
     - Reverted commit 13860 which tried to fix ticker #1141 but broken the
       directory list at startup at the same time (ADAMK)
+    - The Preferences dialog now translates options in drop-down boxes (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::Preferences2;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Locale                ();
 use Padre::Document              ();
 use Padre::Wx                    ();
 use Padre::Wx::FBP::Preferences2 ();
@@ -101,11 +102,18 @@ sub load {
 			my $options = $setting->options;
 			if ($options) {
 				$ctrl->Clear;
-				foreach my $option ( sort keys %$options ) {
 
-					# NOTE: This assumes that the list will
-					# not be sorted in Wx via a style flag.
-					$ctrl->Append( $option, $option );
+				# NOTE: This assumes that the list will not be
+				# sorted in Wx via a style flag and that the
+				# order of the fields should be that of the key
+				# and not of the translated label.
+				# Doing sort in Wx will probably break this.
+				foreach my $option ( sort keys %$options ) {
+					my $label = $options->{$option};
+					$ctrl->Append(
+						Wx::gettext($label),
+						$option,
+					);
 					next unless $option eq $value;
 					$ctrl->SetSelection( $ctrl->GetCount - 1 );
 				}
