@@ -53,11 +53,7 @@ sub new {
 	);
 
 	# Where is the current root directory of the tree
-	#$self->{root} = '';
-	$self->{root} =
-		( defined $main->config->main_directory_root )
-		? $main->config->main_directory_root
-		: '';
+	$self->{root} = '';
 
 	# Modes (browse or search)
 	$self->{searching} = 0;
