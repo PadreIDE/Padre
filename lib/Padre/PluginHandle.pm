@@ -266,7 +266,7 @@ sub enable {
 		if ( ref($hooks) ne 'HASH' ) {
 			$manager->main->error(
 				sprintf(
-					Wx::gettext('Plugin %s returnd %s instead of a hook list on ->padre_hooks'), $self->class, $hooks
+					Wx::gettext('Plugin %s returned %s instead of a hook list on ->padre_hooks'), $self->class, $hooks
 				)
 			);
 			return;
