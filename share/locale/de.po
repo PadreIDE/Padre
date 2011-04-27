@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-27 13:34+0200\n"
+"POT-Creation-Date: 2011-04-27 14:50+0200\n"
 "PO-Revision-Date: 2011-03-08 12:00+0100\n"
 "Last-Translator: Zeno Gantner\n"
 "Language-Team: German\n"
@@ -1782,8 +1782,8 @@ msgid "End"
 msgstr "Ende"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:156
-msgid "End case modification (think vi)"
-msgstr "Ende der modifizierten Groß- und Kleinschreibung"
+msgid "End case modification/metacharacter quoting"
+msgstr "Ende der modifizierten Groß- und Kleinschreibung/deaktivierten Metazeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
 msgid "End of line"
@@ -1864,7 +1864,9 @@ msgstr "Fehler beim Verbinden zu %s:%s: %s"
 msgid ""
 "Error deleting %s:\n"
 "%s"
-msgstr "Fehler beim Löschen von %s:\n%s"
+msgstr ""
+"Fehler beim Löschen von %s:\n"
+"%s"
 
 #: lib/Padre/Wx/Main.pm:5219
 msgid "Error loading perl filter dialog."
@@ -1963,8 +1965,8 @@ msgid "Escape"
 msgstr "Escape"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:146
-msgid "Escape (ESC)"
-msgstr "Escape (ESC)"
+msgid "Escape (Esc)"
+msgstr "Escape (Esc)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:139
 msgid "Escape characters"
@@ -2198,7 +2200,8 @@ msgstr "In Dateien/Typen:"
 
 #: lib/Padre/Wx/Main.pm:4938
 msgid "File was never saved and has no filename - can't delete from disk"
-msgstr "Datei wurde nie gespeichert und hat keinen Dateinamen - Löschen nicht möglich"
+msgstr ""
+"Datei wurde nie gespeichert und hat keinen Dateinamen - Löschen nicht möglich"
 
 #: lib/Padre/Wx/ActionLibrary.pm:899
 msgid "File..."
@@ -2853,7 +2856,7 @@ msgid "Lowercase next character"
 msgstr "Nächstes Zeichen klein"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:154
-msgid "Lowercase till \\E (think vi)"
+msgid "Lowercase till \\E"
 msgstr "Kleinbuchstaben bis \\E"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
@@ -3052,10 +3055,6 @@ msgstr "NAME"
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:25
 msgid "Name"
 msgstr "Name"
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
-msgid "Name Unicode character"
-msgstr "Unicode-Zeichen 'Name'"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1838
 msgid "Name for the new subroutine"
@@ -3719,8 +3718,8 @@ msgstr "Plugin %s"
 
 #: lib/Padre/PluginHandle.pm:269
 #, perl-format
-msgid "Plugin %s returnd %s instead of a hook list on ->padre_hooks"
-msgstr "Plugin %s hat auf ->padre_hhoks %s statt Hook-Liste zurückgegeben"
+msgid "Plugin %s returned %s instead of a hook list on ->padre_hooks"
+msgstr "Plugin %s hat auf ->padre_hooks %s statt Hook-Liste zurückgegeben"
 
 #: lib/Padre/PluginHandle.pm:279
 #, perl-format
@@ -4942,7 +4941,8 @@ msgstr "Schnipsel..."
 msgid ""
 "Something is wrong with your Padre database:\n"
 "Session %s is listed but there is no data"
-msgstr "Etwas is nicht in Ordnung mit Ihrer Padre-Datenbank:\n"
+msgstr ""
+"Etwas is nicht in Ordnung mit Ihrer Padre-Datenbank:\n"
 "Sitzung %s ist in der Liste, aber es fehlen die entsprechenden Daten"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:99
@@ -5084,11 +5084,8 @@ msgstr "System-Vorgabe"
 msgid "System Info"
 msgstr "System-Info"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
-msgid "TAB"
-msgstr "TAB"
-
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
 msgid "Tab"
 msgstr "Tabulator"
 
@@ -5147,9 +5144,10 @@ msgstr ""
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
 "save your work and restart Padre."
-msgstr "Der Verzeichnis-Browser hat ein undefiniertes Objekt erhaltung und könnte "
-"unter Umständen aufhören zu funktionieren. Bitte speichern Sie Ihre Daten und "
-"starten Sie Padre neu."
+msgstr ""
+"Der Verzeichnis-Browser hat ein undefiniertes Objekt erhaltung und könnte "
+"unter Umständen aufhören zu funktionieren. Bitte speichern Sie Ihre Daten "
+"und starten Sie Padre neu."
 
 #: lib/Padre/Document.pm:253
 #, perl-format
@@ -5262,6 +5260,10 @@ msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 "Alle möglichen Blöcke aufklappen (sofern einklappbarer Code aktiviert ist)"
 
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
+msgid "Unicode character 'name'"
+msgstr "Unicode-Zeichen 'name'"
+
 #: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3721
 msgid "Unknown"
 msgstr "Unbekannt"
@@ -5321,11 +5323,11 @@ msgstr "Großbuchstaben"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:153
 msgid "Uppercase next character"
-msgstr "nächstes Zeichen groß"
+msgstr "Nächstes Zeichen groß"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:155
-msgid "Uppercase till \\E (think vi)"
-msgstr "Großuchstaben bis \\E"
+msgid "Uppercase till \\E"
+msgstr "Großbuchstaben bis \\E"
 
 #: lib/Padre/Wx/About.pm:337
 msgid "Uptime"
@@ -5707,6 +5709,9 @@ msgstr "Live-Support für wxPerl"
 #, perl-format
 msgid "wxWidgets %s Reference"
 msgstr "wxWidgets-%s-Referenz"
+
+#~ msgid "TAB"
+#~ msgstr "TAB"
 
 #~ msgid "Current file's basename"
 #~ msgstr "Name (ohne Pfad) der aktuellen Datei"

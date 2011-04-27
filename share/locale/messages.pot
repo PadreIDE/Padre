@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-27 13:34+0200\n"
+"POT-Creation-Date: 2011-04-27 14:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1751,7 +1751,7 @@ msgid "End"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:156
-msgid "End case modification (think vi)"
+msgid "End case modification/metacharacter quoting"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
@@ -1922,7 +1922,7 @@ msgid "Escape"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:146
-msgid "Escape (ESC)"
+msgid "Escape (Esc)"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:139
@@ -2782,7 +2782,7 @@ msgid "Lowercase next character"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:154
-msgid "Lowercase till \\E (think vi)"
+msgid "Lowercase till \\E"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:22 lib/Padre/Wx/Dialog/ModuleStart.pm:42
@@ -2978,10 +2978,6 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:66
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:25
 msgid "Name"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
-msgid "Name Unicode character"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1838
@@ -3640,7 +3636,7 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:269
 #, perl-format
-msgid "Plugin %s returnd %s instead of a hook list on ->padre_hooks"
+msgid "Plugin %s returned %s instead of a hook list on ->padre_hooks"
 msgstr ""
 
 #: lib/Padre/PluginHandle.pm:279
@@ -4974,11 +4970,8 @@ msgstr ""
 msgid "System Info"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
-msgid "TAB"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:99
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
 msgid "Tab"
 msgstr ""
 
@@ -5140,6 +5133,10 @@ msgstr ""
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
+msgid "Unicode character 'name'"
+msgstr ""
+
 #: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3721
 msgid "Unknown"
 msgstr ""
@@ -5202,7 +5199,7 @@ msgid "Uppercase next character"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:155
-msgid "Uppercase till \\E (think vi)"
+msgid "Uppercase till \\E"
 msgstr ""
 
 #: lib/Padre/Wx/About.pm:337
