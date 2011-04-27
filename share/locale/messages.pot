@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-18 04:10-0700\n"
+"POT-Creation-Date: 2011-04-27 13:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,23 +16,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:438
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:474
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:419
+#: lib/Padre/Config.pm:420
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:421
+#: lib/Padre/Config.pm:422
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:442
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:478
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
 msgstr ""
 
@@ -48,27 +48,27 @@ msgstr ""
 msgid "%s (%s results)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:593
+#: lib/Padre/PluginManager.pm:603
 #, perl-format
 msgid "%s - Crashed while instantiating: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:553
+#: lib/Padre/PluginManager.pm:563
 #, perl-format
 msgid "%s - Crashed while loading: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:603
+#: lib/Padre/PluginManager.pm:613
 #, perl-format
 msgid "%s - Failed to instantiate plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:565
+#: lib/Padre/PluginManager.pm:575
 #, perl-format
 msgid "%s - Not a Padre::Plugin subclass"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:578
+#: lib/Padre/PluginManager.pm:588
 #, perl-format
 msgid "%s - Not compatible with Padre %s - %s"
 msgstr ""
@@ -93,7 +93,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2710
+#: lib/Padre/Wx/ActionLibrary.pm:2731
 msgid "&About"
 msgstr ""
 
@@ -101,11 +101,11 @@ msgstr ""
 msgid "&Add"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:946
+#: lib/Padre/Wx/Dialog/Preferences.pm:945
 msgid "&Advanced..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:819
+#: lib/Padre/Wx/ActionLibrary.pm:829
 msgid "&Autocomplete"
 msgstr ""
 
@@ -113,34 +113,33 @@ msgstr ""
 msgid "&Back"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:830
+#: lib/Padre/Wx/ActionLibrary.pm:840
 msgid "&Brace Matching"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:959 lib/Padre/Wx/Dialog/Advanced.pm:190
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
-#: lib/Padre/Wx/Dialog/OpenResource.pm:184
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:88 lib/Padre/Wx/Dialog/Goto.pm:100
-#: lib/Padre/Wx/Dialog/OpenURL.pm:70
+#: lib/Padre/Wx/Dialog/Preferences.pm:958
+#: lib/Padre/Wx/Dialog/OpenResource.pm:184 lib/Padre/Wx/Dialog/Advanced.pm:190
+#: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/Goto.pm:100
+#: lib/Padre/Wx/Dialog/WizardSelector.pm:88
 msgid "&Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:274 lib/Padre/Wx/Browser.pm:110
-#: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/Dialog/DocStats.pm:58
-#: lib/Padre/Wx/Dialog/PluginManager.pm:145
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:263
+#: lib/Padre/Wx/ActionLibrary.pm:274 lib/Padre/Wx/About.pm:86
+#: lib/Padre/Wx/Browser.pm:110 lib/Padre/Wx/Dialog/SessionManager.pm:303
+#: lib/Padre/Wx/Dialog/DocStats.pm:58 lib/Padre/Wx/Dialog/PluginManager.pm:145
+#: lib/Padre/Wx/Dialog/Replace.pm:191 lib/Padre/Wx/Dialog/PerlFilter.pm:99
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:139
-#: lib/Padre/Wx/Dialog/SessionManager.pm:303
-#: lib/Padre/Wx/Dialog/Replace.pm:191
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:276
 msgid "&Close"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:915
+#: lib/Padre/Wx/ActionLibrary.pm:925
 msgid "&Comment Selected Lines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:655
+#: lib/Padre/Wx/ActionLibrary.pm:665
 msgid "&Copy"
 msgstr ""
 
@@ -148,8 +147,8 @@ msgstr ""
 msgid "&Debug"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:359 lib/Padre/Wx/Dialog/SessionManager.pm:302
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:126
-#: lib/Padre/Wx/Dialog/SessionManager.pm:302
 msgid "&Delete"
 msgstr ""
 
@@ -176,7 +175,7 @@ msgstr ""
 msgid "&Enter a position between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:293
+#: lib/Padre/Wx/Menu/File.pm:298
 msgid "&File"
 msgstr ""
 
@@ -189,23 +188,23 @@ msgstr ""
 msgid "&Find"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1201
+#: lib/Padre/Wx/ActionLibrary.pm:1211
 msgid "&Find Previous"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1143
+#: lib/Padre/Wx/ActionLibrary.pm:1153
 msgid "&Find..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1626
+#: lib/Padre/Wx/ActionLibrary.pm:1646
 msgid "&Full Screen"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:742
+#: lib/Padre/Wx/ActionLibrary.pm:752
 msgid "&Go To..."
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:221
+#: lib/Padre/Wx/Outline.pm:223
 msgid "&Go to Element"
 msgstr ""
 
@@ -213,11 +212,11 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:24 lib/Padre/Wx/Dialog/SpecialValues.pm:50
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50 lib/Padre/Wx/Dialog/Snippets.pm:24
 msgid "&Insert"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:853
+#: lib/Padre/Wx/ActionLibrary.pm:863
 msgid "&Join Lines"
 msgstr ""
 
@@ -237,17 +236,17 @@ msgstr ""
 msgid "&New"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/WizardSelector.pm:87 lib/Padre/Wx/Dialog/Search.pm:172
+#: lib/Padre/Wx/Dialog/Search.pm:172 lib/Padre/Wx/Dialog/WizardSelector.pm:87
 msgid "&Next"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:753
+#: lib/Padre/Wx/ActionLibrary.pm:763
 msgid "&Next Problem"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
-#: lib/Padre/Wx/Dialog/OpenResource.pm:178 lib/Padre/Wx/Dialog/Goto.pm:93
-#: lib/Padre/Wx/Dialog/OpenURL.pm:62
+#: lib/Padre/Wx/Dialog/OpenResource.pm:178 lib/Padre/Wx/Dialog/OpenURL.pm:62
+#: lib/Padre/Wx/Dialog/Goto.pm:93
 msgid "&OK"
 msgstr ""
 
@@ -255,7 +254,7 @@ msgstr ""
 msgid "&Open"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:236
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:229
 msgid "&Original text:"
 msgstr ""
 
@@ -267,7 +266,7 @@ msgstr ""
 msgid "&POSIX Character classes"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:728
+#: lib/Padre/Wx/ActionLibrary.pm:738
 msgid "&Paste"
 msgstr ""
 
@@ -283,7 +282,7 @@ msgstr ""
 msgid "&Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:480
+#: lib/Padre/Wx/ActionLibrary.pm:490
 msgid "&Print..."
 msgstr ""
 
@@ -291,19 +290,19 @@ msgstr ""
 msgid "&Quantifiers"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:764
+#: lib/Padre/Wx/ActionLibrary.pm:774
 msgid "&Quick Fix"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:534
+#: lib/Padre/Wx/ActionLibrary.pm:544
 msgid "&Quit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:253
+#: lib/Padre/Wx/Menu/File.pm:258
 msgid "&Recent Files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:574
+#: lib/Padre/Wx/ActionLibrary.pm:584
 msgid "&Redo"
 msgstr ""
 
@@ -311,7 +310,7 @@ msgstr ""
 msgid "&Regular expression:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4107 lib/Padre/Wx/Main.pm:6056
+#: lib/Padre/Wx/Main.pm:4115 lib/Padre/Wx/Main.pm:6147
 msgid "&Reload selected"
 msgstr ""
 
@@ -319,7 +318,7 @@ msgstr ""
 msgid "&Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:229
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:250
 msgid "&Replace text with:"
 msgstr ""
 
@@ -327,7 +326,7 @@ msgstr ""
 msgid "&Reset"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:250
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:260
 msgid "&Result from replace:"
 msgstr ""
 
@@ -335,7 +334,7 @@ msgstr ""
 msgid "&Run"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:393 lib/Padre/Wx/Dialog/Preferences.pm:937
+#: lib/Padre/Wx/ActionLibrary.pm:403 lib/Padre/Wx/Dialog/Preferences.pm:936
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
 msgid "&Save"
 msgstr ""
@@ -352,11 +351,11 @@ msgstr ""
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4106 lib/Padre/Wx/Main.pm:6055
+#: lib/Padre/Wx/Main.pm:4114 lib/Padre/Wx/Main.pm:6146
 msgid "&Select files to reload:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:841
+#: lib/Padre/Wx/ActionLibrary.pm:851
 msgid "&Select to Matching Brace"
 msgstr ""
 
@@ -369,7 +368,7 @@ msgstr ""
 msgid "&Show error message"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:902
+#: lib/Padre/Wx/ActionLibrary.pm:912
 msgid "&Toggle Comment"
 msgstr ""
 
@@ -377,7 +376,7 @@ msgstr ""
 msgid "&Tools"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2698
+#: lib/Padre/Wx/ActionLibrary.pm:2719
 msgid "&Translate Padre..."
 msgstr ""
 
@@ -385,11 +384,11 @@ msgstr ""
 msgid "&Type a menu item name to access:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:927
+#: lib/Padre/Wx/ActionLibrary.pm:937
 msgid "&Uncomment Selected Lines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:554
+#: lib/Padre/Wx/ActionLibrary.pm:564
 msgid "&Undo"
 msgstr ""
 
@@ -401,7 +400,7 @@ msgstr ""
 msgid "&Value:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:243
+#: lib/Padre/Wx/Menu/View.pm:258
 msgid "&View"
 msgstr ""
 
@@ -416,16 +415,16 @@ msgid ""
 "then try again."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2350
+#: lib/Padre/Wx/ActionLibrary.pm:2371
 msgid "(Re)load Current Plug-in"
 msgstr ""
 
-#: lib/Padre/Document/Perl/Help.pm:302
+#: lib/Padre/Document/Perl/Help.pm:310
 #, perl-format
 msgid "(Since Perl %s)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:895
+#: lib/Padre/PluginManager.pm:919
 msgid "(core)"
 msgstr ""
 
@@ -434,7 +433,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: lib/Padre/Document/Perl/Help.pm:306
+#: lib/Padre/Document/Perl/Help.pm:314
 msgid "- DEPRECATED!"
 msgstr ""
 
@@ -442,8 +441,8 @@ msgstr ""
 msgid "7-bit US-ASCII character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Shortcut.pm:32 lib/Padre/Wx/Dialog/Form.pm:32
-#: lib/Padre/Wx/Dialog/Warning.pm:32
+#: lib/Padre/Wx/Dialog/Form.pm:32 lib/Padre/Wx/Dialog/Warning.pm:32
+#: lib/Padre/Wx/Dialog/Shortcut.pm:32
 msgid "A Dialog"
 msgstr ""
 
@@ -455,7 +454,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:415
+#: lib/Padre/Config.pm:416
 msgid "A new empty file"
 msgstr ""
 
@@ -471,7 +470,7 @@ msgstr ""
 msgid "ALT"
 msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:201 lib/Padre/Plugin/Devel.pm:102
+#: lib/Padre/Plugin/Devel.pm:102 lib/Padre/Plugin/PopularityContest.pm:201
 msgid "About"
 msgstr ""
 
@@ -488,7 +487,7 @@ msgstr ""
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:374
+#: lib/Padre/Wx/Dialog/Preferences.pm:373
 msgid ""
 "Add another closing bracket if there is already one (and the 'Autocomplete "
 "brackets' above is enabled)"
@@ -498,7 +497,7 @@ msgstr ""
 msgid "Advanced Settings"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:762
+#: lib/Padre/Wx/FBP/Preferences2.pm:850
 msgid "Advanced..."
 msgstr ""
 
@@ -510,7 +509,7 @@ msgstr ""
 msgid "Alien Error"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1698
+#: lib/Padre/Wx/ActionLibrary.pm:1718
 msgid "Align a selection of text to the same left column."
 msgstr ""
 
@@ -518,16 +517,16 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3926 lib/Padre/Wx/Main.pm:3927
-#: lib/Padre/Wx/Main.pm:4300 lib/Padre/Wx/Main.pm:5542
+#: lib/Padre/Wx/Main.pm:3934 lib/Padre/Wx/Main.pm:3935
+#: lib/Padre/Wx/Main.pm:4308 lib/Padre/Wx/Main.pm:5633
 msgid "All Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:471
+#: lib/Padre/Document/Perl.pm:509
 msgid "All braces appear to be matched"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:407
+#: lib/Padre/Wx/ActionLibrary.pm:417
 msgid "Allow the selection of another name to save the current document"
 msgstr ""
 
@@ -535,11 +534,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:531
+#: lib/Padre/Config.pm:532
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:532
+#: lib/Padre/Config.pm:533
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -566,7 +565,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:579
+#: lib/Padre/Wx/Dialog/Preferences.pm:578
 msgid "Any changes to these options require a restart:"
 msgstr ""
 
@@ -602,27 +601,32 @@ msgstr ""
 msgid "Apache License"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:942 lib/Padre/Wx/Dialog/Preferences.pm:877
+#: lib/Padre/Wx/Dialog/Preferences.pm:876
+#: lib/Padre/Wx/FBP/Preferences2.pm:1060
 msgid "Appearance"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1079
-msgid "Apply Diff to File"
+#: lib/Padre/Wx/FBP/Preferences2.pm:414
+msgid "Appearance Preview"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1089
+msgid "Apply Diff to File"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1099
 msgid "Apply Diff to Project"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1080
+#: lib/Padre/Wx/ActionLibrary.pm:1090
 msgid "Apply a patch file to the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1090
+#: lib/Padre/Wx/ActionLibrary.pm:1100
 msgid "Apply a patch file to the current project"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:765
+#: lib/Padre/Wx/ActionLibrary.pm:775
 msgid "Apply one of the quick fixes for the current document"
 msgstr ""
 
@@ -638,19 +642,19 @@ msgstr ""
 msgid "Artistic License 2.0"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:465
+#: lib/Padre/Wx/ActionLibrary.pm:475
 msgid "Ask for a session name and save the list of files currently opened"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:535
+#: lib/Padre/Wx/ActionLibrary.pm:545
 msgid "Ask if unsaved files should be saved and then exit Padre"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1834
+#: lib/Padre/Wx/ActionLibrary.pm:1854
 msgid "Assign the selected expression to a newly declared variable"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:360
+#: lib/Padre/Wx/Outline.pm:362
 msgid "Attributes"
 msgstr ""
 
@@ -662,25 +666,25 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:75 lib/Padre/Wx/Dialog/Preferences.pm:323
+#: lib/Padre/Wx/Dialog/Preferences.pm:322 lib/Padre/Wx/FBP/Preferences2.pm:75
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:669
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
+#: lib/Padre/Wx/FBP/Preferences2.pm:757
 msgid "Autocomplete always while typing"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:207 lib/Padre/Wx/Dialog/Preferences.pm:366
+#: lib/Padre/Wx/Dialog/Preferences.pm:365 lib/Padre/Wx/FBP/Preferences2.pm:207
 msgid "Autocomplete brackets"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:685
+#: lib/Padre/Wx/FBP/Preferences2.pm:773
 msgid "Autocomplete new functions in scripts"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:677
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:41
+#: lib/Padre/Wx/FBP/Preferences2.pm:765
 msgid "Autocomplete new methods in packages"
 msgstr ""
 
@@ -688,19 +692,19 @@ msgstr ""
 msgid "Autocomplete new subroutines in scripts"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3291
+#: lib/Padre/Wx/Main.pm:3299
 msgid "Autocompletion error"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:540
+#: lib/Padre/Wx/FBP/Preferences2.pm:628
 msgid "Autoindent"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:282
+#: lib/Padre/Wx/Dialog/Preferences.pm:281
 msgid "Autoindent:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:488 lib/Padre/Wx/Dialog/Preferences.pm:266
+#: lib/Padre/Wx/Dialog/Preferences.pm:265 lib/Padre/Wx/FBP/Preferences2.pm:576
 msgid "Automatic indentation style detection"
 msgstr ""
 
@@ -724,7 +728,8 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:941 lib/Padre/Wx/Dialog/Preferences.pm:874
+#: lib/Padre/Wx/Dialog/Preferences.pm:873
+#: lib/Padre/Wx/FBP/Preferences2.pm:1059
 msgid "Behaviour"
 msgstr ""
 
@@ -748,7 +753,7 @@ msgstr ""
 msgid "Browse the directory of the installed examples to open one file"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:89 lib/Padre/Wx/Dialog/Preferences.pm:93
+#: lib/Padre/Wx/Dialog/Preferences.pm:88 lib/Padre/Wx/Dialog/Preferences.pm:92
 msgid "Browse..."
 msgstr ""
 
@@ -761,7 +766,7 @@ msgstr ""
 msgid "Builder:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1912
+#: lib/Padre/Wx/ActionLibrary.pm:1932
 msgid "Builds the current project, then run all tests."
 msgstr ""
 
@@ -773,17 +778,17 @@ msgstr ""
 msgid "CTRL"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:132 lib/Padre/Wx/FBP/Find.pm:119
-#: lib/Padre/Wx/FBP/Preferences2.pm:768
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
+#: lib/Padre/Wx/FBP/Find.pm:119 lib/Padre/Wx/FBP/FindInFiles.pm:132
+#: lib/Padre/Wx/FBP/Preferences2.pm:864
 msgid "Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4981
+#: lib/Padre/Wx/Main.pm:5070
 msgid "Cannot diff if file was never saved"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3620
+#: lib/Padre/Wx/Main.pm:3628
 #, perl-format
 msgid "Cannot open a directory: %s"
 msgstr ""
@@ -800,11 +805,11 @@ msgstr ""
 msgid "Case &sensitive"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:109 lib/Padre/Wx/FBP/Find.pm:74
+#: lib/Padre/Wx/FBP/Find.pm:74 lib/Padre/Wx/FBP/FindInFiles.pm:109
 msgid "Case Sensitive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:434
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:470
 msgid "Case-insensitive matching"
 msgstr ""
 
@@ -812,79 +817,79 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:41
+#: lib/Padre/Wx/Dialog/Preferences.pm:40
 msgid "Change font size"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1059
+#: lib/Padre/Wx/ActionLibrary.pm:1069
 msgid "Change the current selection to lower case"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1048
+#: lib/Padre/Wx/ActionLibrary.pm:1058
 msgid "Change the current selection to upper case"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:941
+#: lib/Padre/Wx/ActionLibrary.pm:951
 msgid ""
 "Change the encoding of the current document to the default of the operating "
 "system"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:952
+#: lib/Padre/Wx/ActionLibrary.pm:962
 msgid "Change the encoding of the current document to utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:994
+#: lib/Padre/Wx/ActionLibrary.pm:1004
 msgid ""
 "Change the end of line character of the current document to that used on Mac "
 "Classic"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:984
+#: lib/Padre/Wx/ActionLibrary.pm:994
 msgid ""
 "Change the end of line character of the current document to that used on "
 "Unix, Linux, Mac OSX"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:974
+#: lib/Padre/Wx/ActionLibrary.pm:984
 msgid ""
 "Change the end of line character of the current document to those used in "
 "files on MS Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1696
+#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1567
 msgid "Change variable style"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1793
+#: lib/Padre/Wx/ActionLibrary.pm:1813
 msgid "Change variable style from camelCase to Camel_Case"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1779
+#: lib/Padre/Wx/ActionLibrary.pm:1799
 msgid "Change variable style from camelCase to camel_case"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1765
+#: lib/Padre/Wx/ActionLibrary.pm:1785
 msgid "Change variable style from camel_case to CamelCase"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1751
+#: lib/Padre/Wx/ActionLibrary.pm:1771
 msgid "Change variable style from camel_case to camelCase"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1792
+#: lib/Padre/Wx/ActionLibrary.pm:1812
 msgid "Change variable style to Using_Underscores"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1778
+#: lib/Padre/Wx/ActionLibrary.pm:1798
 msgid "Change variable style to using_underscores"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1764
+#: lib/Padre/Wx/ActionLibrary.pm:1784
 msgid "Change variable to CamelCase"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1750
+#: lib/Padre/Wx/ActionLibrary.pm:1770
 msgid "Change variable to camelCase"
 msgstr ""
 
@@ -904,16 +909,16 @@ msgstr ""
 msgid "Characters (including whitespace)"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:472
+#: lib/Padre/Document/Perl.pm:510
 msgid "Check Complete"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:542 lib/Padre/Document/Perl.pm:596
-#: lib/Padre/Document/Perl.pm:631
+#: lib/Padre/Document/Perl.pm:580 lib/Padre/Document/Perl.pm:634
+#: lib/Padre/Document/Perl.pm:669
 msgid "Check cancelled"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1648
+#: lib/Padre/Wx/ActionLibrary.pm:1668
 msgid "Check for Common (Beginner) Errors"
 msgstr ""
 
@@ -921,11 +926,11 @@ msgstr ""
 msgid "Check for file updates on disk every (seconds)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:354
+#: lib/Padre/Wx/Dialog/Preferences.pm:353
 msgid "Check for file updates on disk every (seconds):"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1649
+#: lib/Padre/Wx/ActionLibrary.pm:1669
 msgid "Check the current file for common beginner errors"
 msgstr ""
 
@@ -941,27 +946,27 @@ msgstr ""
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3800 lib/Padre/Wx/Dialog/Positions.pm:120
+#: lib/Padre/Wx/Main.pm:3808 lib/Padre/Wx/Dialog/Positions.pm:120
 msgid "Choose File"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:337
+#: lib/Padre/Wx/Dialog/Preferences.pm:336
 msgid "Choose the default projects directory"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:22 lib/Padre/Wx/Dialog/SpecialValues.pm:46
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
 msgid "Class:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:509
+#: lib/Padre/Wx/ActionLibrary.pm:519
 msgid "Clean Recent Files List"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:67 lib/Padre/Wx/Dialog/Preferences.pm:318
+#: lib/Padre/Wx/Dialog/Preferences.pm:317 lib/Padre/Wx/FBP/Preferences2.pm:67
 msgid "Clean up file content on saving (for supported document types)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:625
+#: lib/Padre/Wx/ActionLibrary.pm:635
 msgid "Clear Selection Marks"
 msgstr ""
 
@@ -969,9 +974,9 @@ msgstr ""
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:248 lib/Padre/Wx/Menu/File.pm:139
-#: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
-#: lib/Padre/Wx/Dialog/SessionSave.pm:230
+#: lib/Padre/Wx/Menu/File.pm:139 lib/Padre/Wx/Dialog/FilterTool.pm:152
+#: lib/Padre/Wx/Dialog/WindowList.pm:280
+#: lib/Padre/Wx/Dialog/SessionSave.pm:230 lib/Padre/Wx/FBP/Sync.pm:248
 msgid "Close"
 msgstr ""
 
@@ -987,7 +992,7 @@ msgstr ""
 msgid "Close Window on Hit"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4762
+#: lib/Padre/Wx/Main.pm:4770
 msgid "Close all"
 msgstr ""
 
@@ -1019,15 +1024,19 @@ msgstr ""
 msgid "Close current document"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:360
+msgid "Close current document and remove the file from disk"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:309
 msgid "Close other Projects"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4818
+#: lib/Padre/Wx/Main.pm:4826
 msgid "Close some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4802
+#: lib/Padre/Wx/Main.pm:4810
 msgid "Close some files"
 msgstr ""
 
@@ -1035,19 +1044,19 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:530
+#: lib/Padre/Config.pm:531
 msgid "Code Order"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:470
+#: lib/Padre/Wx/Dialog/Preferences.pm:469
 msgid "Colored text in output window (ANSI)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:277
+#: lib/Padre/Wx/FBP/Preferences2.pm:311
 msgid "Coloured text in output window (ANSI)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1857
+#: lib/Padre/Wx/ActionLibrary.pm:1877
 msgid "Combine scattered POD at the end of the document"
 msgstr ""
 
@@ -1055,19 +1064,19 @@ msgstr ""
 msgid "Command"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2414
+#: lib/Padre/Wx/Main.pm:2422
 msgid "Command line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:903
+#: lib/Padre/Wx/ActionLibrary.pm:913
 msgid "Comment out or remove comment out of selected lines in the document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:916
+#: lib/Padre/Wx/ActionLibrary.pm:926
 msgid "Comment out selected lines in the document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1070
+#: lib/Padre/Wx/ActionLibrary.pm:1080
 msgid ""
 "Compare the file in the editor to that on the disk and show the diff in the "
 "output window"
@@ -1094,23 +1103,23 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:454
+#: lib/Padre/Wx/FBP/Preferences2.pm:542
 msgid "Content type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:168
+#: lib/Padre/Wx/Dialog/Preferences.pm:167
 msgid "Content type:"
 msgstr ""
 
-#: lib/Padre/Config.pm:464
+#: lib/Padre/Config.pm:465
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:452
+#: lib/Padre/Config.pm:453
 msgid "Contents of the window title"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2607
+#: lib/Padre/Wx/ActionLibrary.pm:2628
 msgid "Context Help"
 msgstr ""
 
@@ -1130,11 +1139,11 @@ msgstr ""
 msgid "Convert Line Endings"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1006
+#: lib/Padre/Wx/ActionLibrary.pm:1016
 msgid "Convert all tabs to spaces in the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1016
+#: lib/Padre/Wx/ActionLibrary.pm:1026
 msgid "Convert all the spaces to tabs in the current document"
 msgstr ""
 
@@ -1150,19 +1159,19 @@ msgstr ""
 msgid "Copy &Selected"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:699
+#: lib/Padre/Wx/ActionLibrary.pm:709
 msgid "Copy Directory Name"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:712
+#: lib/Padre/Wx/ActionLibrary.pm:722
 msgid "Copy Editor Content"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:685
+#: lib/Padre/Wx/ActionLibrary.pm:695
 msgid "Copy Filename"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:671
+#: lib/Padre/Wx/ActionLibrary.pm:681
 msgid "Copy Full Filename"
 msgstr ""
 
@@ -1192,7 +1201,7 @@ msgstr ""
 msgid "Could not delete: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3242
+#: lib/Padre/Wx/Main.pm:3250
 #, perl-format
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
@@ -1210,34 +1219,34 @@ msgstr ""
 msgid "Could not find a help provider for "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3789
+#: lib/Padre/Wx/Main.pm:3797
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2480
+#: lib/Padre/Wx/Main.pm:2488
 msgid "Could not find perl executable"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2450 lib/Padre/Wx/Main.pm:2511
-#: lib/Padre/Wx/Main.pm:2566
+#: lib/Padre/Wx/Main.pm:2458 lib/Padre/Wx/Main.pm:2519
+#: lib/Padre/Wx/Main.pm:2574
 msgid "Could not find project root"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2300
+#: lib/Padre/Wx/ActionLibrary.pm:2321
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1021
+#: lib/Padre/PluginManager.pm:1045
 msgid "Could not locate project directory."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4184
+#: lib/Padre/Wx/Main.pm:4192
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4592
+#: lib/Padre/Wx/Main.pm:4600
 msgid "Could not save file: "
 msgstr ""
 
@@ -1246,7 +1255,7 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:705
+#: lib/Padre/Wx/Dialog/Preferences.pm:704
 msgid "Crashed"
 msgstr ""
 
@@ -1254,11 +1263,11 @@ msgstr ""
 msgid "Create Directory"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1723
+#: lib/Padre/Wx/ActionLibrary.pm:1743
 msgid "Create Project Tagsfile"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1574
+#: lib/Padre/Wx/ActionLibrary.pm:1594
 msgid "Create a bookmark in the current file current row"
 msgstr ""
 
@@ -1278,7 +1287,7 @@ msgstr ""
 msgid "Creates a Perl 5 module or script"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1724
+#: lib/Padre/Wx/ActionLibrary.pm:1744
 msgid ""
 "Creates a perltags - file for the current project supporting find_method and "
 "autocomplete."
@@ -1288,11 +1297,11 @@ msgstr ""
 msgid "Ctrl"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:640
+#: lib/Padre/Wx/ActionLibrary.pm:650
 msgid "Cu&t"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:630
+#: lib/Padre/Document/Perl.pm:668
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
@@ -1301,33 +1310,33 @@ msgstr ""
 msgid "Current Directory: "
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2620
+#: lib/Padre/Wx/ActionLibrary.pm:2641
 msgid "Current Document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:831
+#: lib/Padre/Wx/Dialog/Preferences.pm:830
 #, perl-format
 msgid "Current Document: %s"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:595
+#: lib/Padre/Document/Perl.pm:633
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:541 lib/Padre/Document/Perl.pm:575
+#: lib/Padre/Document/Perl.pm:579 lib/Padre/Document/Perl.pm:613
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:819 lib/Padre/Document/Perl.pm:869
-#: lib/Padre/Document/Perl.pm:907
+#: lib/Padre/Document/Perl.pm:857 lib/Padre/Document/Perl.pm:907
+#: lib/Padre/Document/Perl.pm:945
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2505 lib/Padre/Wx/Main.pm:2557
+#: lib/Padre/Wx/Main.pm:2513 lib/Padre/Wx/Main.pm:2565
 msgid "Current document has no filename"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2560
+#: lib/Padre/Wx/Main.pm:2568
 msgid "Current document is not a .t file"
 msgstr ""
 
@@ -1341,7 +1350,7 @@ msgstr ""
 msgid "Current position: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:357
+#: lib/Padre/Wx/Dialog/Preferences.pm:356
 msgid "Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):"
 msgstr ""
 
@@ -1349,7 +1358,7 @@ msgstr ""
 msgid "Cursor blink rate (milliseconds - 0 = off, 500 = default)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1808
+#: lib/Padre/Wx/ActionLibrary.pm:1828
 msgid ""
 "Cut the current selection and create a new sub from it. A call to this sub "
 "is added in the place where the selection was."
@@ -1393,11 +1402,11 @@ msgstr ""
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1550
+#: lib/Padre/Wx/ActionLibrary.pm:1570
 msgid "Decrease Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:825 lib/Padre/Wx/Dialog/Advanced.pm:430
+#: lib/Padre/Wx/Dialog/Preferences.pm:824 lib/Padre/Wx/Dialog/Advanced.pm:430
 msgid "Default"
 msgstr ""
 
@@ -1405,7 +1414,7 @@ msgstr ""
 msgid "Default line ending"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:351
+#: lib/Padre/Wx/Dialog/Preferences.pm:350
 msgid "Default line ending:"
 msgstr ""
 
@@ -1413,7 +1422,7 @@ msgstr ""
 msgid "Default projects directory"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:335
+#: lib/Padre/Wx/Dialog/Preferences.pm:334
 msgid "Default projects directory:"
 msgstr ""
 
@@ -1421,7 +1430,7 @@ msgstr ""
 msgid "Default value:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:51 lib/Padre/Wx/Dialog/Preferences.pm:306
+#: lib/Padre/Wx/Dialog/Preferences.pm:305 lib/Padre/Wx/FBP/Preferences2.pm:51
 msgid "Default word wrap on for each file"
 msgstr ""
 
@@ -1433,7 +1442,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:233 lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100 lib/Padre/Wx/FBP/Sync.pm:233
 msgid "Delete"
 msgstr ""
 
@@ -1445,11 +1454,11 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1035
+#: lib/Padre/Wx/ActionLibrary.pm:1045
 msgid "Delete Leading Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1025
+#: lib/Padre/Wx/ActionLibrary.pm:1035
 msgid "Delete Trailing Spaces"
 msgstr ""
 
@@ -1457,12 +1466,12 @@ msgstr ""
 msgid "Deprecation"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:442
 #: lib/Padre/Wx/Dialog/SessionManager.pm:238
+#: lib/Padre/Wx/FBP/Preferences2.pm:530
 msgid "Description"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:165 lib/Padre/Wx/Dialog/Advanced.pm:158
+#: lib/Padre/Wx/Dialog/Preferences.pm:164 lib/Padre/Wx/Dialog/Advanced.pm:158
 #: lib/Padre/Wx/Dialog/SessionSave.pm:209
 msgid "Description:"
 msgstr ""
@@ -1479,15 +1488,15 @@ msgstr ""
 msgid "Diff Tools"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1069
+#: lib/Padre/Wx/ActionLibrary.pm:1079
 msgid "Diff to Saved Version"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:563
+#: lib/Padre/Wx/FBP/Preferences2.pm:651
 msgid "Diff tool"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:87
+#: lib/Padre/Wx/Dialog/Preferences.pm:86
 msgid "Diff tool:"
 msgstr ""
 
@@ -1495,11 +1504,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:559
+#: lib/Padre/Config.pm:560
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:560
+#: lib/Padre/Config.pm:561
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1511,11 +1520,11 @@ msgstr ""
 msgid "Disk"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2140
+#: lib/Padre/Wx/ActionLibrary.pm:2160
 msgid "Display Value"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2141
+#: lib/Padre/Wx/ActionLibrary.pm:2161
 msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
 msgstr ""
@@ -1524,7 +1533,12 @@ msgstr ""
 msgid "Do not show this again"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2797
+#: lib/Padre/Wx/Main.pm:4944
+#, perl-format
+msgid "Do you really want to close and delete %s from disk?"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2805
 msgid "Do you want to continue?"
 msgstr ""
 
@@ -1536,7 +1550,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:521 lib/Padre/Wx/Dialog/DocStats.pm:31
+#: lib/Padre/Wx/ActionLibrary.pm:531 lib/Padre/Wx/Dialog/DocStats.pm:31
 msgid "Document Statistics"
 msgstr ""
 
@@ -1544,15 +1558,15 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:570
+#: lib/Padre/Config.pm:571
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:798
+#: lib/Padre/Wx/Dialog/Preferences.pm:797
 msgid "Document location:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:795
+#: lib/Padre/Wx/Dialog/Preferences.pm:794
 msgid "Document name:"
 msgstr ""
 
@@ -1616,15 +1630,15 @@ msgstr ""
 msgid "Dutch (Belgium)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:993
+#: lib/Padre/Wx/ActionLibrary.pm:1003
 msgid "EOL to Mac Classic"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:983
+#: lib/Padre/Wx/ActionLibrary.pm:993
 msgid "EOL to Unix"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:973
+#: lib/Padre/Wx/ActionLibrary.pm:983
 msgid "EOL to Windows"
 msgstr ""
 
@@ -1632,19 +1646,19 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2293
+#: lib/Padre/Wx/ActionLibrary.pm:2314
 msgid "Edit My Plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2203
+#: lib/Padre/Wx/ActionLibrary.pm:2223
 msgid "Edit the user preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2213
+#: lib/Padre/Wx/ActionLibrary.pm:2233
 msgid "Edit user and host preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2255
+#: lib/Padre/Wx/ActionLibrary.pm:2276
 msgid "Edit with Regex Editor"
 msgstr ""
 
@@ -1656,20 +1670,24 @@ msgstr ""
 msgid "Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:325
+#: lib/Padre/Wx/FBP/Preferences2.pm:383
 msgid "Editor Current Line Background Colour"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:491
+#: lib/Padre/Wx/Dialog/Preferences.pm:490
 msgid "Editor Current Line Background Colour:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:309
+#: lib/Padre/Wx/FBP/Preferences2.pm:359
 msgid "Editor Font"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:484
+#: lib/Padre/Wx/Dialog/Preferences.pm:483
 msgid "Editor Font:"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Preferences2.pm:277
+msgid "Editor Style"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:153
@@ -1680,35 +1698,39 @@ msgstr ""
 msgid "Email Address:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync2.pm:152 lib/Padre/Wx/Dialog/Sync.pm:537
+#: lib/Padre/Wx/Dialog/Sync.pm:537 lib/Padre/Wx/Dialog/Sync2.pm:152
 msgid "Email and confirmation do not match."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:223 lib/Padre/Wx/Dialog/Preferences.pm:382
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:649
+msgid "Empty regex"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:381 lib/Padre/Wx/FBP/Preferences2.pm:223
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:40
+#: lib/Padre/Wx/Dialog/Preferences.pm:39
 msgid "Enable bookmarks"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:42
+#: lib/Padre/Wx/Dialog/Preferences.pm:41
 msgid "Enable session manager"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:690
+#: lib/Padre/Wx/Dialog/Preferences.pm:689
 msgid "Enable?"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:940
+#: lib/Padre/Wx/ActionLibrary.pm:950
 msgid "Encode Document to System Default"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:951
+#: lib/Padre/Wx/ActionLibrary.pm:961
 msgid "Encode Document to utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:962
+#: lib/Padre/Wx/ActionLibrary.pm:972
 msgid "Encode Document to..."
 msgstr ""
 
@@ -1778,23 +1800,24 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:215
-#: lib/Padre/Wx/Main.pm:4593 lib/Padre/Wx/Role/Dialog.pm:95
+#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:221
+#: lib/Padre/Wx/Main.pm:4601 lib/Padre/Wx/Role/Dialog.pm:95
+#: lib/Padre/Wx/Dialog/PluginManager.pm:356
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:185
-#: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync2.pm:67
-#: lib/Padre/Wx/Dialog/Sync2.pm:75 lib/Padre/Wx/Dialog/Sync2.pm:89
-#: lib/Padre/Wx/Dialog/Sync2.pm:108 lib/Padre/Wx/Dialog/Sync2.pm:132
-#: lib/Padre/Wx/Dialog/Sync2.pm:143 lib/Padre/Wx/Dialog/Sync2.pm:153
-#: lib/Padre/Wx/Dialog/Sync2.pm:171 lib/Padre/Wx/Dialog/Sync2.pm:182
-#: lib/Padre/Wx/Dialog/Sync2.pm:193 lib/Padre/Wx/Dialog/Sync2.pm:204
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:274
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:447
+#: lib/Padre/Wx/Dialog/OpenResource.pm:118
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:274 lib/Padre/Wx/Dialog/Sync.pm:447
 #: lib/Padre/Wx/Dialog/Sync.pm:455 lib/Padre/Wx/Dialog/Sync.pm:469
 #: lib/Padre/Wx/Dialog/Sync.pm:493 lib/Padre/Wx/Dialog/Sync.pm:517
 #: lib/Padre/Wx/Dialog/Sync.pm:528 lib/Padre/Wx/Dialog/Sync.pm:538
 #: lib/Padre/Wx/Dialog/Sync.pm:556 lib/Padre/Wx/Dialog/Sync.pm:567
 #: lib/Padre/Wx/Dialog/Sync.pm:578 lib/Padre/Wx/Dialog/Sync.pm:589
-#: lib/Padre/Wx/Dialog/OpenResource.pm:118
+#: lib/Padre/Wx/Dialog/Sync2.pm:67 lib/Padre/Wx/Dialog/Sync2.pm:75
+#: lib/Padre/Wx/Dialog/Sync2.pm:89 lib/Padre/Wx/Dialog/Sync2.pm:108
+#: lib/Padre/Wx/Dialog/Sync2.pm:132 lib/Padre/Wx/Dialog/Sync2.pm:143
+#: lib/Padre/Wx/Dialog/Sync2.pm:153 lib/Padre/Wx/Dialog/Sync2.pm:171
+#: lib/Padre/Wx/Dialog/Sync2.pm:182 lib/Padre/Wx/Dialog/Sync2.pm:193
+#: lib/Padre/Wx/Dialog/Sync2.pm:204
 msgid "Error"
 msgstr ""
 
@@ -1803,7 +1826,14 @@ msgstr ""
 msgid "Error connecting to %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5130
+#: lib/Padre/Wx/Main.pm:4960
+#, perl-format
+msgid ""
+"Error deleting %s:\n"
+"%s"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:5219
 msgid "Error loading perl filter dialog."
 msgstr ""
 
@@ -1812,7 +1842,7 @@ msgstr ""
 msgid "Error loading pod for class '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5101
+#: lib/Padre/Wx/Main.pm:5190
 msgid "Error loading regex editor."
 msgstr ""
 
@@ -1821,21 +1851,21 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6553
+#: lib/Padre/Wx/Main.pm:6644
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6538
+#: lib/Padre/Wx/Main.pm:6629
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:982
+#: lib/Padre/PluginManager.pm:1006
 msgid "Error when calling menu for plug-in "
 msgstr ""
 
@@ -1878,11 +1908,11 @@ msgstr ""
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:430
+#: lib/Padre/Document/Perl.pm:468
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5659 lib/Padre/Plugin/Devel.pm:334
+#: lib/Padre/Wx/Main.pm:5750 lib/Padre/Plugin/Devel.pm:334
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1899,7 +1929,7 @@ msgstr ""
 msgid "Escape characters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2170
+#: lib/Padre/Wx/ActionLibrary.pm:2190
 msgid "Evaluate Expression..."
 msgstr ""
 
@@ -1907,19 +1937,19 @@ msgstr ""
 msgid "Evening"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1984
+#: lib/Padre/Wx/ActionLibrary.pm:2004
 msgid ""
 "Execute the next statement, enter subroutine if needed. (Start debugger if "
 "it is not yet running)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2001
+#: lib/Padre/Wx/ActionLibrary.pm:2021
 msgid ""
 "Execute the next statement. If it is a subroutine call, stop only after it "
 "returned. (Start debugger if it is not yet running)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4374
+#: lib/Padre/Wx/Main.pm:4382
 msgid "Exist"
 msgstr ""
 
@@ -1946,25 +1976,26 @@ msgstr ""
 msgid "Expression:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:445
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:481
 msgid "Extended (&x)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:447
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:483
 msgid ""
 "Extended regular expressions allow free formatting (whitespace is ignored) "
 "and comments"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:946 lib/Padre/Wx/Dialog/Preferences.pm:891
+#: lib/Padre/Wx/Dialog/Preferences.pm:890
+#: lib/Padre/Wx/FBP/Preferences2.pm:1064
 msgid "External Tools"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1819
+#: lib/Padre/Wx/ActionLibrary.pm:1839
 msgid "Extract Subroutine"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1806
+#: lib/Padre/Wx/ActionLibrary.pm:1826
 msgid "Extract Subroutine..."
 msgstr ""
 
@@ -1972,12 +2003,12 @@ msgstr ""
 msgid "FTP Password"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4491
+#: lib/Padre/Wx/Main.pm:4499
 #, perl-format
 msgid "Failed to create path '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:969
+#: lib/Padre/Wx/Main.pm:977
 msgid "Failed to create server"
 msgstr ""
 
@@ -1999,11 +2030,11 @@ msgstr ""
 msgid "Failed to execute process\n"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1193
+#: lib/Padre/Wx/ActionLibrary.pm:1203
 msgid "Failed to find any matches"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6167
+#: lib/Padre/Wx/Main.pm:6258
 #, perl-format
 msgid "Failed to find template file '%s'"
 msgstr ""
@@ -2012,7 +2043,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1043 lib/Padre/PluginManager.pm:1139
+#: lib/Padre/PluginManager.pm:1067 lib/Padre/PluginManager.pm:1163
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -2023,7 +2054,7 @@ msgstr ""
 msgid "Failed to merge the POD fragments"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2729
+#: lib/Padre/Wx/Main.pm:2737
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr ""
@@ -2033,7 +2064,7 @@ msgid "False"
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:365 lib/Padre/MimeTypes.pm:374
-#: lib/Padre/Wx/FBP/Preferences2.pm:448
+#: lib/Padre/Wx/FBP/Preferences2.pm:536
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2047,43 +2078,43 @@ msgid "Field %s was missing. Module not created."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
-#: lib/Padre/Wx/Dialog/WindowList.pm:224
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:21
+#: lib/Padre/Wx/Dialog/WindowList.pm:224
 msgid "File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:390
+#: lib/Padre/Wx/Menu/File.pm:396
 #, perl-format
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:412
+#: lib/Padre/Wx/FBP/Preferences2.pm:500
 msgid "File Type"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:629
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
+#: lib/Padre/Wx/FBP/Preferences2.pm:717
 msgid "File access via FTP"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:605
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:36
+#: lib/Padre/Wx/FBP/Preferences2.pm:693
 msgid "File access via HTTP"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4477
+#: lib/Padre/Wx/Main.pm:4485
 msgid "File already exists"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4373
+#: lib/Padre/Wx/Main.pm:4381
 msgid "File already exists. Overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4582
+#: lib/Padre/Wx/Main.pm:4590
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4678
+#: lib/Padre/Wx/Main.pm:4686
 msgid "File changed. Do you want to save it?"
 msgstr ""
 
@@ -2091,26 +2122,30 @@ msgstr ""
 msgid "File is not in a project"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3966
+#: lib/Padre/Wx/Main.pm:3974
 #, perl-format
 msgid ""
 "File name %s contains * or ? which are special chars on most computers. Skip?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3986
+#: lib/Padre/Wx/Main.pm:3994
 #, perl-format
 msgid "File name %s does not exist on disk. Skip?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4583
+#: lib/Padre/Wx/Main.pm:4591
 msgid "File not in sync"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:159
+#: lib/Padre/Wx/Dialog/Preferences.pm:158
 msgid "File type:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:889
+#: lib/Padre/Wx/Main.pm:4938
+msgid "File was never saved and has no filename - can't delete from disk"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:899
 msgid "File..."
 msgstr ""
 
@@ -2126,7 +2161,7 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:944
+#: lib/Padre/Wx/FBP/Preferences2.pm:1062
 msgid "Files and Colours"
 msgstr ""
 
@@ -2134,11 +2169,11 @@ msgstr ""
 msgid "Filter command:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1101
+#: lib/Padre/Wx/ActionLibrary.pm:1111
 msgid "Filter through External Tool..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1110
+#: lib/Padre/Wx/ActionLibrary.pm:1120
 msgid "Filter through Perl..."
 msgstr ""
 
@@ -2146,13 +2181,13 @@ msgstr ""
 msgid "Filter through tool"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1102
+#: lib/Padre/Wx/ActionLibrary.pm:1112
 msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:125 lib/Padre/Wx/FBP/Find.pm:27
-#: lib/Padre/Wx/Dialog/Replace.pm:218
+#: lib/Padre/Wx/Dialog/Replace.pm:218 lib/Padre/Wx/FBP/Find.pm:27
+#: lib/Padre/Wx/FBP/FindInFiles.pm:125
 msgid "Find"
 msgstr ""
 
@@ -2160,16 +2195,16 @@ msgstr ""
 msgid "Find All"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1684
+#: lib/Padre/Wx/ActionLibrary.pm:1704
 msgid "Find Method Declaration"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1158 lib/Padre/Wx/ActionLibrary.pm:1214
+#: lib/Padre/Wx/ActionLibrary.pm:1168 lib/Padre/Wx/ActionLibrary.pm:1224
 #: lib/Padre/Wx/FBP/Find.pm:98
 msgid "Find Next"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1225
+#: lib/Padre/Wx/ActionLibrary.pm:1235
 msgid "Find Previous"
 msgstr ""
 
@@ -2182,15 +2217,15 @@ msgstr ""
 msgid "Find Text:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1660
+#: lib/Padre/Wx/ActionLibrary.pm:1680
 msgid "Find Unmatched Brace"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1672
+#: lib/Padre/Wx/ActionLibrary.pm:1692
 msgid "Find Variable Declaration"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1239
+#: lib/Padre/Wx/ActionLibrary.pm:1249
 msgid "Find a text and replace it"
 msgstr ""
 
@@ -2198,7 +2233,7 @@ msgstr ""
 msgid "Find and Replace"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1251
+#: lib/Padre/Wx/ActionLibrary.pm:1261
 msgid "Find in Fi&les..."
 msgstr ""
 
@@ -2206,27 +2241,27 @@ msgstr ""
 msgid "Find in Files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1215
+#: lib/Padre/Wx/ActionLibrary.pm:1225
 msgid ""
 "Find next matching text using a toolbar-like dialog at the bottom of the "
 "editor"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1226
+#: lib/Padre/Wx/ActionLibrary.pm:1236
 msgid ""
 "Find previous matching text using a toolbar-like dialog at the bottom of the "
 "editor"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1144
+#: lib/Padre/Wx/ActionLibrary.pm:1154
 msgid "Find text or regular expressions using a traditional dialog"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1685
+#: lib/Padre/Wx/ActionLibrary.pm:1705
 msgid "Find where the selected function was defined and put the focus there."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1673
+#: lib/Padre/Wx/ActionLibrary.pm:1693
 msgid ""
 "Find where the selected variable was declared using \"my\" and put the focus "
 "there."
@@ -2236,27 +2271,31 @@ msgstr ""
 msgid "Find:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:956
+#: lib/Padre/Document/Perl.pm:994
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1628
+#: lib/Padre/Wx/Editor.pm:1665
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1442
+#: lib/Padre/Wx/ActionLibrary.pm:1452
 msgid "Fold all"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1443
+#: lib/Padre/Wx/ActionLibrary.pm:1453
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:174
+#: lib/Padre/Wx/ActionLibrary.pm:1472
+msgid "Fold/Unfold this"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/View.pm:189
 msgid "Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:420
+#: lib/Padre/Wx/ActionLibrary.pm:430
 msgid ""
 "For new document try to guess the filename based on the file content and "
 "offer to save it."
@@ -2266,12 +2305,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:405
+#: lib/Padre/Wx/Syntax.pm:412
 #, perl-format
 msgid "Found %d issue(s)"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:404
+#: lib/Padre/Wx/Syntax.pm:411
 #, perl-format
 msgid "Found %d issue(s) in %s"
 msgstr ""
@@ -2314,39 +2353,39 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:450
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:486
 msgid "Global (&g)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1584 lib/Padre/Wx/Dialog/Bookmarks.pm:57
+#: lib/Padre/Wx/ActionLibrary.pm:1604 lib/Padre/Wx/Dialog/Bookmarks.pm:57
 msgid "Go to Bookmark"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2561
+#: lib/Padre/Wx/ActionLibrary.pm:2582
 msgid "Go to Command Line Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2502
+#: lib/Padre/Wx/ActionLibrary.pm:2523
 msgid "Go to Functions Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2572
+#: lib/Padre/Wx/ActionLibrary.pm:2593
 msgid "Go to Main Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2528
+#: lib/Padre/Wx/ActionLibrary.pm:2549
 msgid "Go to Outline Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2539
+#: lib/Padre/Wx/ActionLibrary.pm:2560
 msgid "Go to Output Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2550
+#: lib/Padre/Wx/ActionLibrary.pm:2571
 msgid "Go to Syntax Check Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2516
+#: lib/Padre/Wx/ActionLibrary.pm:2537
 msgid "Go to Todo Window"
 msgstr ""
 
@@ -2354,7 +2393,7 @@ msgstr ""
 msgid "Goto"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2461
+#: lib/Padre/Wx/ActionLibrary.pm:2482
 msgid "Goto previous position"
 msgstr ""
 
@@ -2362,15 +2401,15 @@ msgstr ""
 msgid "Grouping constructs"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:280
+#: lib/Padre/Wx/Dialog/Preferences.pm:279
 msgid "Guess"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:474
+#: lib/Padre/Wx/FBP/Preferences2.pm:562
 msgid "Guess from Current Document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:279
+#: lib/Padre/Wx/Dialog/Preferences.pm:278
 msgid "Guess from current document:"
 msgstr ""
 
@@ -2378,7 +2417,7 @@ msgstr ""
 msgid "Hebrew"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2586 lib/Padre/Wx/Browser.pm:64
+#: lib/Padre/Wx/ActionLibrary.pm:2607 lib/Padre/Wx/Browser.pm:64
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:398
 msgid "Help"
 msgstr ""
@@ -2387,7 +2426,7 @@ msgstr ""
 msgid "Help Search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2699
+#: lib/Padre/Wx/ActionLibrary.pm:2720
 msgid "Help by translating Padre to your local language"
 msgstr ""
 
@@ -2403,23 +2442,23 @@ msgstr ""
 msgid "Hexadecimal digits"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1374
+#: lib/Padre/Wx/ActionLibrary.pm:1384
 msgid "Hide Find in Files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1375
+#: lib/Padre/Wx/ActionLibrary.pm:1385
 msgid "Hide the list of matches for a Find in Files search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1477
+#: lib/Padre/Wx/ActionLibrary.pm:1497
 msgid "Highlight the line where the cursor is"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:427
+#: lib/Padre/Wx/FBP/Preferences2.pm:515
 msgid "Highlighter"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:162
+#: lib/Padre/Wx/Dialog/Preferences.pm:161
 msgid "Highlighter:"
 msgstr ""
 
@@ -2437,7 +2476,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5887
+#: lib/Padre/Wx/Main.pm:5978
 msgid "How many spaces for each tab:"
 msgstr ""
 
@@ -2445,23 +2484,23 @@ msgstr ""
 msgid "Hungarian"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1293
+#: lib/Padre/Wx/ActionLibrary.pm:1303
 msgid "If activated, do not allow moving around some of the windows"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2018
+#: lib/Padre/Wx/ActionLibrary.pm:2038
 msgid "If within a subroutine, run till return is called and then stop."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:433
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:469
 msgid "Ignore case (&i)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2489
+#: lib/Padre/Wx/ActionLibrary.pm:2510
 msgid "Imitate clicking on the right mouse button"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:376
+#: lib/Padre/Wx/FBP/Preferences2.pm:464
 msgid ""
 "Include directory:  -I<dir>\n"
 "Enable tainting checks:  -T\n"
@@ -2470,33 +2509,34 @@ msgid ""
 "Disable all warnings:  -X"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1540
+#: lib/Padre/Wx/ActionLibrary.pm:1560
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:744
+#: lib/Padre/Config.pm:745
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:743
+#: lib/Padre/Config.pm:744
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:945 lib/Padre/Wx/Dialog/Preferences.pm:888
+#: lib/Padre/Wx/Dialog/Preferences.pm:887
+#: lib/Padre/Wx/FBP/Preferences2.pm:1063
 msgid "Indentation"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:522
+#: lib/Padre/Wx/FBP/Preferences2.pm:610
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:276
+#: lib/Padre/Wx/Dialog/Preferences.pm:275
 msgid "Indentation width (in columns):"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/PerlFilter.pm:94
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:258
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:271
 msgid "Insert"
 msgstr ""
 
@@ -2504,19 +2544,19 @@ msgstr ""
 msgid "Insert Special Values"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2359
+#: lib/Padre/Wx/ActionLibrary.pm:2380
 msgid "Install CPAN Module"
 msgstr ""
 
-#: lib/Padre/CPAN.pm:133 lib/Padre/Wx/ActionLibrary.pm:2372
+#: lib/Padre/CPAN.pm:133 lib/Padre/Wx/ActionLibrary.pm:2393
 msgid "Install Local Distribution"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2382
+#: lib/Padre/Wx/ActionLibrary.pm:2403
 msgid "Install Remote Distribution"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2360
+#: lib/Padre/Wx/ActionLibrary.pm:2381
 msgid "Install a Perl module from CPAN"
 msgstr ""
 
@@ -2528,24 +2568,24 @@ msgstr ""
 msgid "Internal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5660
+#: lib/Padre/Wx/Main.pm:5751
 msgid "Internal error"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:362
+#: lib/Padre/Wx/FBP/Preferences2.pm:450
 msgid "Interpreter arguments"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:751
-#: lib/Padre/Wx/Dialog/Preferences.pm:801
+#: lib/Padre/Wx/Dialog/Preferences.pm:750
+#: lib/Padre/Wx/Dialog/Preferences.pm:800
 msgid "Interpreter arguments:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1842
+#: lib/Padre/Wx/ActionLibrary.pm:1862
 msgid "Introduce Temporary Variable"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1833
+#: lib/Padre/Wx/ActionLibrary.pm:1853
 msgid "Introduce Temporary Variable..."
 msgstr ""
 
@@ -2557,39 +2597,39 @@ msgstr ""
 msgid "Japanese"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3905
+#: lib/Padre/Wx/Main.pm:3913
 msgid "JavaScript Files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:854
+#: lib/Padre/Wx/ActionLibrary.pm:864
 msgid "Join the next line to the end of the current line."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2451
+#: lib/Padre/Wx/ActionLibrary.pm:2472
 msgid "Jump between the two last visited files back and forth"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2048
+#: lib/Padre/Wx/ActionLibrary.pm:2068
 msgid "Jump to Current Execution Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:743
+#: lib/Padre/Wx/ActionLibrary.pm:753
 msgid "Jump to a specific line number or character position"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:754
+#: lib/Padre/Wx/ActionLibrary.pm:764
 msgid "Jump to the code that triggered the next error"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2462
+#: lib/Padre/Wx/ActionLibrary.pm:2483
 msgid "Jump to the last position saved in memory"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:831
+#: lib/Padre/Wx/ActionLibrary.pm:841
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2236 lib/Padre/Wx/Dialog/KeyBindings.pm:29
+#: lib/Padre/Wx/ActionLibrary.pm:2257 lib/Padre/Wx/Dialog/KeyBindings.pm:29
 msgid "Key Bindings"
 msgstr ""
 
@@ -2617,11 +2657,11 @@ msgstr ""
 msgid "Label One"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:205
+#: lib/Padre/Wx/Menu/View.pm:220
 msgid "Language"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2404 lib/Padre/Wx/ActionLibrary.pm:2450
+#: lib/Padre/Wx/ActionLibrary.pm:2425 lib/Padre/Wx/ActionLibrary.pm:2471
 msgid "Last Visited File"
 msgstr ""
 
@@ -2637,7 +2677,7 @@ msgstr ""
 msgid "License:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1711
+#: lib/Padre/Wx/ActionLibrary.pm:1731
 msgid ""
 "Like pressing ENTER somewhere on a line, but use the current position as "
 "ident for the new line."
@@ -2647,7 +2687,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:426
+#: lib/Padre/Wx/Syntax.pm:433
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -2665,11 +2705,11 @@ msgstr ""
 msgid "Lines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2094
+#: lib/Padre/Wx/ActionLibrary.pm:2114
 msgid "List All Breakpoints"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2095
+#: lib/Padre/Wx/ActionLibrary.pm:2115
 msgid "List all the breakpoints on the console"
 msgstr ""
 
@@ -2681,7 +2721,7 @@ msgstr ""
 msgid "List of sessions"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:444
+#: lib/Padre/Wx/ActionLibrary.pm:454
 msgid ""
 "List the files that match the current selection and let the user pick one to "
 "open"
@@ -2700,11 +2740,11 @@ msgstr ""
 msgid "Loaded %s modules"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:947 lib/Padre/Wx/Dialog/Preferences.pm:19
+#: lib/Padre/Wx/Dialog/Preferences.pm:18 lib/Padre/Wx/FBP/Preferences2.pm:1065
 msgid "Local/Remote File Access"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1292
+#: lib/Padre/Wx/ActionLibrary.pm:1302
 msgid "Lock User Interface"
 msgstr ""
 
@@ -2729,7 +2769,7 @@ msgstr ""
 msgid "Looking for Net::FTP..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1058
+#: lib/Padre/Wx/ActionLibrary.pm:1068
 msgid "Lower All"
 msgstr ""
 
@@ -2749,27 +2789,27 @@ msgstr ""
 msgid "MIT License"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1541
+#: lib/Padre/Wx/ActionLibrary.pm:1561
 msgid "Make the letters bigger in the editor window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1551
+#: lib/Padre/Wx/ActionLibrary.pm:1571
 msgid "Make the letters smaller in the editor window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:613
+#: lib/Padre/Wx/ActionLibrary.pm:623
 msgid "Mark Selection End"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:601
+#: lib/Padre/Wx/ActionLibrary.pm:611
 msgid "Mark Selection Start"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:614
+#: lib/Padre/Wx/ActionLibrary.pm:624
 msgid "Mark the place where the selection should end"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:602
+#: lib/Padre/Wx/ActionLibrary.pm:612
 msgid "Mark the place where the selection should start"
 msgstr ""
 
@@ -2797,17 +2837,22 @@ msgstr ""
 msgid "Match exactly m times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:642
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:676
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:649
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:687
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:243
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:696
+#, perl-format
+msgid "Match with 0 width at character %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:236
 msgid "Matched text:"
 msgstr ""
 
@@ -2815,7 +2860,7 @@ msgstr ""
 msgid "Max. number of suggestions:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:711
+#: lib/Padre/Wx/FBP/Preferences2.pm:799
 msgid "Maximum number of suggestions"
 msgstr ""
 
@@ -2823,7 +2868,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:359
+#: lib/Padre/Wx/Outline.pm:361
 msgid "Methods"
 msgstr ""
 
@@ -2831,7 +2876,7 @@ msgstr ""
 msgid "Methods order"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:345
+#: lib/Padre/Wx/Dialog/Preferences.pm:344
 msgid "Methods order:"
 msgstr ""
 
@@ -2863,11 +2908,11 @@ msgstr ""
 msgid "Min. length of suggestions:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:729
+#: lib/Padre/Wx/FBP/Preferences2.pm:817
 msgid "Minimum characters for autocomplete"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:693
+#: lib/Padre/Wx/FBP/Preferences2.pm:781
 msgid "Minimum length of suggestions"
 msgstr ""
 
@@ -2895,15 +2940,15 @@ msgstr ""
 msgid "Module name:"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:358
+#: lib/Padre/Wx/Outline.pm:360
 msgid "Modules"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1856
+#: lib/Padre/Wx/ActionLibrary.pm:1876
 msgid "Move POD to __END__"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:114
+#: lib/Padre/Wx/Directory.pm:110
 msgid "Move to other panel"
 msgstr ""
 
@@ -2911,17 +2956,17 @@ msgstr ""
 msgid "Mozilla Public License"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:441
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:477
 msgid "Multi-line (&m)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2294
+#: lib/Padre/Wx/ActionLibrary.pm:2315
 msgid ""
 "My Plug-in is a plug-in where developers could extend their Padre "
 "installation"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:771
+#: lib/Padre/Wx/Dialog/Preferences.pm:770
 msgid "N/A"
 msgstr ""
 
@@ -2929,9 +2974,9 @@ msgstr ""
 msgid "NAME"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/SessionManager.pm:237
 #: lib/Padre/Wx/Dialog/PluginManager.pm:66
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:25
-#: lib/Padre/Wx/Dialog/SessionManager.pm:237
 msgid "Name"
 msgstr ""
 
@@ -2939,7 +2984,7 @@ msgstr ""
 msgid "Name Unicode character"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1818
+#: lib/Padre/Wx/ActionLibrary.pm:1838
 msgid "Name for the new subroutine"
 msgstr ""
 
@@ -2947,7 +2992,7 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6395
+#: lib/Padre/Wx/Main.pm:6486
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
@@ -2967,11 +3012,11 @@ msgstr ""
 msgid "New Module"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:829
+#: lib/Padre/Document/Perl.pm:867
 msgid "New name"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:421
+#: lib/Padre/PluginManager.pm:431
 msgid "New plug-ins detected"
 msgstr ""
 
@@ -2979,11 +3024,11 @@ msgstr ""
 msgid "Newline"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1709
+#: lib/Padre/Wx/ActionLibrary.pm:1729
 msgid "Newline Same Column"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2426
+#: lib/Padre/Wx/ActionLibrary.pm:2447
 msgid "Next File"
 msgstr ""
 
@@ -2991,15 +3036,15 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:742
+#: lib/Padre/Config.pm:743
 msgid "No Autoindent"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2477
+#: lib/Padre/Wx/Main.pm:2485
 msgid "No Build.PL nor Makefile.PL nor dist.ini found"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:790
+#: lib/Padre/Wx/Dialog/Preferences.pm:789
 msgid "No Document"
 msgstr ""
 
@@ -3011,46 +3056,46 @@ msgstr ""
 msgid "No Perl 5 file is open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:577
+#: lib/Padre/Document/Perl.pm:615
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:909
+#: lib/Padre/Document/Perl.pm:947
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2444 lib/Padre/Wx/Main.pm:2499
-#: lib/Padre/Wx/Main.pm:2551
+#: lib/Padre/Wx/Main.pm:2452 lib/Padre/Wx/Main.pm:2507
+#: lib/Padre/Wx/Main.pm:2559
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:432
+#: lib/Padre/Document/Perl.pm:470
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:392
+#: lib/Padre/Wx/Syntax.pm:399
 #, perl-format
 msgid "No errors or warnings found in %s."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:395
+#: lib/Padre/Wx/Syntax.pm:402
 msgid "No errors or warnings found."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2772
+#: lib/Padre/Wx/Main.pm:2780
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5853 lib/Padre/Plugin/Devel.pm:149
+#: lib/Padre/Wx/Main.pm:5944 lib/Padre/Plugin/Devel.pm:149
 msgid "No file is open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1018 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/PluginManager.pm:1042 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:670
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:715
 msgid "No match"
 msgstr ""
 
@@ -3065,11 +3110,11 @@ msgstr ""
 msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2754
+#: lib/Padre/Wx/Main.pm:2762
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:416
+#: lib/Padre/Config.pm:417
 msgid "No open files"
 msgstr ""
 
@@ -3083,7 +3128,7 @@ msgstr ""
 msgid "No such session %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:790
+#: lib/Padre/Wx/ActionLibrary.pm:800
 msgid "No suggestions"
 msgstr ""
 
@@ -3119,7 +3164,7 @@ msgstr ""
 msgid "Notepad++"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3747
+#: lib/Padre/Wx/Main.pm:3755
 msgid "Nothing selected. Enter what should be opened:"
 msgstr ""
 
@@ -3139,11 +3184,11 @@ msgstr ""
 msgid "Octal character"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:820
+#: lib/Padre/Wx/ActionLibrary.pm:830
 msgid "Offer completions to the current string. See Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2415
+#: lib/Padre/Wx/ActionLibrary.pm:2436
 msgid "Oldest Visited File"
 msgstr ""
 
@@ -3151,7 +3196,7 @@ msgstr ""
 msgid "Only one POD fragment, will not try to merge"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:235
+#: lib/Padre/Wx/Outline.pm:237
 msgid "Open &Documentation"
 msgstr ""
 
@@ -3159,15 +3204,15 @@ msgstr ""
 msgid "Open &URL..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:500
+#: lib/Padre/Wx/ActionLibrary.pm:510
 msgid "Open All Recent Files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2392
+#: lib/Padre/Wx/ActionLibrary.pm:2413
 msgid "Open CPAN Config File"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2393
+#: lib/Padre/Wx/ActionLibrary.pm:2414
 msgid "Open CPAN::MyConfig.pm for manual editing by experts"
 msgstr ""
 
@@ -3175,7 +3220,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3929 lib/Padre/Wx/Directory/TreeCtrl.pm:210
+#: lib/Padre/Wx/Main.pm:3937 lib/Padre/Wx/Directory/TreeCtrl.pm:210
 msgid "Open File"
 msgstr ""
 
@@ -3184,15 +3229,15 @@ msgstr ""
 msgid "Open Resources"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1265
+#: lib/Padre/Wx/ActionLibrary.pm:1275
 msgid "Open Resources..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:443 lib/Padre/Wx/Main.pm:3790
+#: lib/Padre/Wx/ActionLibrary.pm:453 lib/Padre/Wx/Main.pm:3798
 msgid "Open Selection"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:453
+#: lib/Padre/Wx/ActionLibrary.pm:463
 msgid "Open Session..."
 msgstr ""
 
@@ -3204,7 +3249,7 @@ msgstr ""
 msgid "Open URL"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3969 lib/Padre/Wx/Main.pm:3989
+#: lib/Padre/Wx/Main.pm:3977 lib/Padre/Wx/Main.pm:3997
 msgid "Open Warning"
 msgstr ""
 
@@ -3232,19 +3277,19 @@ msgstr ""
 msgid "Open a new empty document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:501
+#: lib/Padre/Wx/ActionLibrary.pm:511
 msgid "Open all the files listed in the recent files list"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2285
+#: lib/Padre/Wx/ActionLibrary.pm:2306
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:391
+#: lib/Padre/Wx/Menu/File.pm:397
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1093 lib/Padre/Wx/Main.pm:5540
+#: lib/Padre/PluginManager.pm:1117 lib/Padre/Wx/Main.pm:5631
 msgid "Open file"
 msgstr ""
 
@@ -3252,11 +3297,11 @@ msgstr ""
 msgid "Open files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:122 lib/Padre/Wx/Dialog/Preferences.pm:341
+#: lib/Padre/Wx/Dialog/Preferences.pm:340 lib/Padre/Wx/FBP/Preferences2.pm:122
 msgid "Open files in existing Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:332
+#: lib/Padre/Wx/Dialog/Preferences.pm:331
 msgid "Open files:"
 msgstr ""
 
@@ -3268,43 +3313,43 @@ msgstr ""
 msgid "Open in File Browser"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2671
+#: lib/Padre/Wx/ActionLibrary.pm:2692
 msgid ""
 "Open perlmonks.org, one of the biggest Perl community sites, in your default "
 "web browser"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3748
+#: lib/Padre/Wx/Main.pm:3756
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:417
+#: lib/Padre/Config.pm:418
 msgid "Open session"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2633
+#: lib/Padre/Wx/ActionLibrary.pm:2654
 msgid ""
 "Open the Padre live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2645
+#: lib/Padre/Wx/ActionLibrary.pm:2666
 msgid ""
 "Open the Perl live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2657
+#: lib/Padre/Wx/ActionLibrary.pm:2678
 msgid ""
 "Open the Perl/Win32 live support chat in your web browser and talk to others "
 "who may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2246
+#: lib/Padre/Wx/ActionLibrary.pm:2267
 msgid "Open the regular expression editing window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2256
+#: lib/Padre/Wx/ActionLibrary.pm:2277
 msgid "Open the selected text in the Regex Editor"
 msgstr ""
 
@@ -3316,7 +3361,7 @@ msgstr ""
 msgid "Open..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2883
+#: lib/Padre/Wx/Main.pm:2891
 #, perl-format
 msgid "Opening session %s..."
 msgstr ""
@@ -3373,7 +3418,7 @@ msgstr ""
 msgid "Out of range!"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:110 lib/Padre/Wx/Outline.pm:312
+#: lib/Padre/Wx/Outline.pm:110 lib/Padre/Wx/Outline.pm:314
 msgid "Outline"
 msgstr ""
 
@@ -3389,7 +3434,7 @@ msgstr ""
 msgid "Override Shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3909
+#: lib/Padre/Wx/Main.pm:3917
 msgid "PHP Files"
 msgstr ""
 
@@ -3423,15 +3468,15 @@ msgstr ""
 msgid "Padre Plugin Wizard"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:26
+#: lib/Padre/Wx/FBP/Preferences2.pm:27
 msgid "Padre Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2631
+#: lib/Padre/Wx/ActionLibrary.pm:2652
 msgid "Padre Support (English)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:25 lib/Padre/Wx/Dialog/Sync.pm:43
+#: lib/Padre/Wx/Dialog/Sync.pm:43 lib/Padre/Wx/FBP/Sync.pm:25
 msgid "Padre Sync"
 msgstr ""
 
@@ -3457,7 +3502,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync2.pm:142 lib/Padre/Wx/Dialog/Sync.pm:527
+#: lib/Padre/Wx/Dialog/Sync.pm:527 lib/Padre/Wx/Dialog/Sync2.pm:142
 msgid "Password and confirmation do not match."
 msgstr ""
 
@@ -3466,7 +3511,7 @@ msgstr ""
 msgid "Password for user '%s' at %s:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:729
+#: lib/Padre/Wx/ActionLibrary.pm:739
 msgid "Paste the clipboard to the current location"
 msgstr ""
 
@@ -3498,7 +3543,7 @@ msgstr ""
 msgid "Perl 6 Script"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:948 lib/Padre/Wx/Dialog/Preferences.pm:20
+#: lib/Padre/Wx/Dialog/Preferences.pm:19 lib/Padre/Wx/FBP/Preferences2.pm:1066
 msgid "Perl Auto Complete"
 msgstr ""
 
@@ -3506,7 +3551,7 @@ msgstr ""
 msgid "Perl Distribution..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3907
+#: lib/Padre/Wx/Main.pm:3915
 msgid "Perl Files"
 msgstr ""
 
@@ -3514,27 +3559,27 @@ msgstr ""
 msgid "Perl Filter"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2643
+#: lib/Padre/Wx/ActionLibrary.pm:2664
 msgid "Perl Help"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:83 lib/Padre/Wx/Dialog/Preferences.pm:328
+#: lib/Padre/Wx/Dialog/Preferences.pm:327 lib/Padre/Wx/FBP/Preferences2.pm:83
 msgid "Perl beginner mode"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:580
+#: lib/Padre/Wx/FBP/Preferences2.pm:668
 msgid "Perl ctags file"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:91
+#: lib/Padre/Wx/Dialog/Preferences.pm:90
 msgid "Perl ctags file:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:348
+#: lib/Padre/Wx/FBP/Preferences2.pm:436
 msgid "Perl interpreter"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:748
+#: lib/Padre/Wx/Dialog/Preferences.pm:747
 msgid "Perl interpreter:"
 msgstr ""
 
@@ -3551,11 +3596,11 @@ msgstr ""
 msgid "Pick parent directory"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync2.pm:131 lib/Padre/Wx/Dialog/Sync.pm:516
+#: lib/Padre/Wx/Dialog/Sync.pm:516 lib/Padre/Wx/Dialog/Sync2.pm:131
 msgid "Please ensure all inputs have appropriate values."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync2.pm:88 lib/Padre/Wx/Dialog/Sync.pm:468
+#: lib/Padre/Wx/Dialog/Sync.pm:468 lib/Padre/Wx/Dialog/Sync2.pm:88
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
@@ -3563,11 +3608,11 @@ msgstr ""
 msgid "Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2284
+#: lib/Padre/Wx/ActionLibrary.pm:2305
 msgid "Plug-in List (CPAN)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2268 lib/Padre/Wx/Dialog/PluginManager.pm:35
+#: lib/Padre/Wx/ActionLibrary.pm:2289 lib/Padre/Wx/Dialog/PluginManager.pm:35
 msgid "Plug-in Manager"
 msgstr ""
 
@@ -3579,7 +3624,7 @@ msgstr ""
 msgid "Plug-in Tools"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1113
+#: lib/Padre/PluginManager.pm:1137
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
@@ -3588,7 +3633,7 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:906
+#: lib/Padre/PluginManager.pm:930
 #, perl-format
 msgid "Plugin %s"
 msgstr ""
@@ -3608,12 +3653,12 @@ msgstr ""
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:879
+#: lib/Padre/PluginManager.pm:903
 #, perl-format
 msgid "Plugin %s, hook %s returned an emtpy error message"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:850
+#: lib/Padre/PluginManager.pm:874
 #, perl-format
 msgid "Plugin error on event %s: %s"
 msgstr ""
@@ -3654,7 +3699,7 @@ msgstr ""
 msgid "Positive lookbehind assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:357
+#: lib/Padre/Wx/Outline.pm:359
 msgid "Pragmata"
 msgstr ""
 
@@ -3666,19 +3711,19 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2202 lib/Padre/Wx/Dialog/Preferences.pm:848
+#: lib/Padre/Wx/ActionLibrary.pm:2222 lib/Padre/Wx/Dialog/Preferences.pm:847
 msgid "Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2212
+#: lib/Padre/Wx/ActionLibrary.pm:2232
 msgid "Preferences 2.0"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2226
+#: lib/Padre/Wx/ActionLibrary.pm:2247
 msgid "Preferences Sync"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:348
+#: lib/Padre/Wx/Dialog/Preferences.pm:347
 msgid "Preferred language for error diagnostics:"
 msgstr ""
 
@@ -3686,23 +3731,23 @@ msgstr ""
 msgid "Previ&ous"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2437
+#: lib/Padre/Wx/ActionLibrary.pm:2458
 msgid "Previous File"
 msgstr ""
 
-#: lib/Padre/Config.pm:414
+#: lib/Padre/Config.pm:415
 msgid "Previous open files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:481
+#: lib/Padre/Wx/ActionLibrary.pm:491
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:274 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:270 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1355
+#: lib/Padre/Wx/ActionLibrary.pm:1365
 msgid "Project Browser - Was known as the Directory Tree."
 msgstr ""
 
@@ -3710,11 +3755,11 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:569
+#: lib/Padre/Config.pm:570
 msgid "Project Tools (Left)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1738
+#: lib/Padre/Wx/ActionLibrary.pm:1758
 msgid ""
 "Prompt for a replacement variable name and replace all occurrences of this "
 "variable"
@@ -3724,39 +3769,39 @@ msgstr ""
 msgid "Punctuation characters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2416
+#: lib/Padre/Wx/ActionLibrary.pm:2437
 msgid "Put focus on tab visited the longest time ago."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2427
+#: lib/Padre/Wx/ActionLibrary.pm:2448
 msgid "Put focus on the next tab to the right"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2438
+#: lib/Padre/Wx/ActionLibrary.pm:2459
 msgid "Put focus on the previous tab to the left"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:713
+#: lib/Padre/Wx/ActionLibrary.pm:723
 msgid "Put the content of the current document in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:656
+#: lib/Padre/Wx/ActionLibrary.pm:666
 msgid "Put the current selection in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:672
+#: lib/Padre/Wx/ActionLibrary.pm:682
 msgid "Put the full path of the current file in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:700
+#: lib/Padre/Wx/ActionLibrary.pm:710
 msgid "Put the full path of the directory of the current file in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:686
+#: lib/Padre/Wx/ActionLibrary.pm:696
 msgid "Put the name of the current file in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3911
+#: lib/Padre/Wx/Main.pm:3919
 msgid "Python Files"
 msgstr ""
 
@@ -3764,19 +3809,19 @@ msgstr ""
 msgid "Quick Menu Access"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1276
+#: lib/Padre/Wx/ActionLibrary.pm:1286
 msgid "Quick Menu Access..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1277
+#: lib/Padre/Wx/ActionLibrary.pm:1287
 msgid "Quick access to all menu functions"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2186
+#: lib/Padre/Wx/ActionLibrary.pm:2206
 msgid "Quit Debugger (&q)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2187
+#: lib/Padre/Wx/ActionLibrary.pm:2207
 msgid "Quit the process being debugged"
 msgstr ""
 
@@ -3809,7 +3854,7 @@ msgstr ""
 msgid "Really delete the file \"%s\"?"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:575
+#: lib/Padre/Wx/ActionLibrary.pm:585
 msgid "Redo last undo"
 msgstr ""
 
@@ -3829,11 +3874,11 @@ msgstr ""
 msgid "RegExp for TODO panel"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:400
+#: lib/Padre/Wx/Dialog/Preferences.pm:399
 msgid "RegExp for TODO-panel:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2245 lib/Padre/Wx/Dialog/RegexEditor.pm:33
+#: lib/Padre/Wx/ActionLibrary.pm:2266 lib/Padre/Wx/Dialog/RegexEditor.pm:33
 msgid "Regex Editor"
 msgstr ""
 
@@ -3849,7 +3894,7 @@ msgstr ""
 msgid "Regular &Expression"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:101 lib/Padre/Wx/FBP/Find.pm:58
+#: lib/Padre/Wx/FBP/Find.pm:58 lib/Padre/Wx/FBP/FindInFiles.pm:101
 msgid "Regular Expression"
 msgstr ""
 
@@ -3861,103 +3906,103 @@ msgstr ""
 msgid "Related editor has been closed"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:178
+#: lib/Padre/Wx/Menu/File.pm:183
 msgid "Reload"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:369
+#: lib/Padre/Wx/ActionLibrary.pm:379
 msgid "Reload All"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2341
+#: lib/Padre/Wx/ActionLibrary.pm:2362
 msgid "Reload All Plug-ins"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:359
+#: lib/Padre/Wx/ActionLibrary.pm:369
 msgid "Reload File"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2310
+#: lib/Padre/Wx/ActionLibrary.pm:2331
 msgid "Reload My Plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:379
+#: lib/Padre/Wx/ActionLibrary.pm:389
 msgid "Reload Some..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4074
+#: lib/Padre/Wx/Main.pm:4082
 msgid "Reload all files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:370
+#: lib/Padre/Wx/ActionLibrary.pm:380
 msgid "Reload all files currently open"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2342
+#: lib/Padre/Wx/ActionLibrary.pm:2363
 msgid "Reload all plug-ins from disk"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:360
+#: lib/Padre/Wx/ActionLibrary.pm:370
 msgid "Reload current file from disk"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4121
+#: lib/Padre/Wx/Main.pm:4129
 msgid "Reload some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4105 lib/Padre/Wx/Main.pm:6054
+#: lib/Padre/Wx/Main.pm:4113 lib/Padre/Wx/Main.pm:6145
 msgid "Reload some files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2351
+#: lib/Padre/Wx/ActionLibrary.pm:2372
 msgid "Reloads (or initially loads) the current plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2079
+#: lib/Padre/Wx/ActionLibrary.pm:2099
 msgid "Remove Breakpoint"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:626
+#: lib/Padre/Wx/ActionLibrary.pm:636
 msgid "Remove all the selection marks"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:928
+#: lib/Padre/Wx/ActionLibrary.pm:938
 msgid "Remove comment out of selected lines in the document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2080
+#: lib/Padre/Wx/ActionLibrary.pm:2100
 msgid "Remove the breakpoint at the current location of the cursor"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:641
+#: lib/Padre/Wx/ActionLibrary.pm:651
 msgid "Remove the current selection and put it in the clipboard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:510
+#: lib/Padre/Wx/ActionLibrary.pm:520
 msgid "Remove the entries from the recent files list"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1036
+#: lib/Padre/Wx/ActionLibrary.pm:1046
 msgid "Remove the spaces from the beginning of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1026
+#: lib/Padre/Wx/ActionLibrary.pm:1036
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1737
+#: lib/Padre/Wx/ActionLibrary.pm:1757
 msgid "Rename Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:820 lib/Padre/Document/Perl.pm:830
+#: lib/Padre/Document/Perl.pm:858 lib/Padre/Document/Perl.pm:868
 msgid "Rename variable"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1160
+#: lib/Padre/Wx/ActionLibrary.pm:1170
 msgid "Repeat the last find to find the next match"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1202
+#: lib/Padre/Wx/ActionLibrary.pm:1212
 msgid "Repeat the last find, but backwards to find the previous match"
 msgstr ""
 
@@ -3969,7 +4014,7 @@ msgstr ""
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:915 lib/Padre/Document/Perl.pm:964
+#: lib/Padre/Document/Perl.pm:953 lib/Padre/Document/Perl.pm:1002
 msgid "Replace Operation Canceled"
 msgstr ""
 
@@ -3977,16 +4022,16 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:451
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:487
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:681
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:761
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1238
+#: lib/Padre/Wx/ActionLibrary.pm:1248
 msgid "Replace..."
 msgstr ""
 
@@ -4000,23 +4045,23 @@ msgstr ""
 msgid "Replaced %d matches"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2681
+#: lib/Padre/Wx/ActionLibrary.pm:2702
 msgid "Report a New &Bug"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1560
+#: lib/Padre/Wx/ActionLibrary.pm:1580
 msgid "Reset Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2319 lib/Padre/Wx/ActionLibrary.pm:2326
+#: lib/Padre/Wx/ActionLibrary.pm:2340 lib/Padre/Wx/ActionLibrary.pm:2347
 msgid "Reset My plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2320
+#: lib/Padre/Wx/ActionLibrary.pm:2341
 msgid "Reset the My plug-in to the default"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1561
+#: lib/Padre/Wx/ActionLibrary.pm:1581
 msgid "Reset the size of the letters to the default in the editor window"
 msgstr ""
 
@@ -4024,7 +4069,7 @@ msgstr ""
 msgid "Reset to default shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2912
+#: lib/Padre/Wx/Main.pm:2920
 msgid "Restore focus..."
 msgstr ""
 
@@ -4040,24 +4085,24 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2488
+#: lib/Padre/Wx/ActionLibrary.pm:2509
 msgid "Right Click"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3913
+#: lib/Padre/Wx/Main.pm:3921
 msgid "Ruby Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FilterTool.pm:151
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:394
+#: lib/Padre/Wx/Dialog/FilterTool.pm:151
 msgid "Run"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1911
+#: lib/Padre/Wx/ActionLibrary.pm:1931
 msgid "Run Build and Tests"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1900
+#: lib/Padre/Wx/ActionLibrary.pm:1920
 msgid "Run Command"
 msgstr ""
 
@@ -4065,15 +4110,16 @@ msgstr ""
 msgid "Run Document inside Padre"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:943 lib/Padre/Wx/Dialog/Preferences.pm:881
+#: lib/Padre/Wx/Dialog/Preferences.pm:880
+#: lib/Padre/Wx/FBP/Preferences2.pm:1061
 msgid "Run Parameters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1872
+#: lib/Padre/Wx/ActionLibrary.pm:1892
 msgid "Run Script"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1888
+#: lib/Padre/Wx/ActionLibrary.pm:1908
 msgid "Run Script (Debug Info)"
 msgstr ""
 
@@ -4081,15 +4127,15 @@ msgstr ""
 msgid "Run Selection inside Padre"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1923
+#: lib/Padre/Wx/ActionLibrary.pm:1943
 msgid "Run Tests"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1942
+#: lib/Padre/Wx/ActionLibrary.pm:1962
 msgid "Run This Test"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1925
+#: lib/Padre/Wx/ActionLibrary.pm:1945
 msgid ""
 "Run all tests for the current project or document and show the results in "
 "the output panel."
@@ -4099,31 +4145,31 @@ msgstr ""
 msgid "Run filter"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2415
+#: lib/Padre/Wx/Main.pm:2423
 msgid "Run setup"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1889
+#: lib/Padre/Wx/ActionLibrary.pm:1909
 msgid "Run the current document but include debug info in the output."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1943
+#: lib/Padre/Wx/ActionLibrary.pm:1963
 msgid "Run the current test if the current document is a test. (prove -bv)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2033
+#: lib/Padre/Wx/ActionLibrary.pm:2053
 msgid "Run till Breakpoint (&c)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2109
+#: lib/Padre/Wx/ActionLibrary.pm:2129
 msgid "Run to Cursor"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1901
+#: lib/Padre/Wx/ActionLibrary.pm:1921
 msgid "Runs a shell command and shows the output."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1873
+#: lib/Padre/Wx/ActionLibrary.pm:1893
 msgid "Runs the current document and shows its output in the output panel."
 msgstr ""
 
@@ -4139,7 +4185,7 @@ msgstr ""
 msgid "SHIFT"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3915
+#: lib/Padre/Wx/Main.pm:3923
 msgid "SQL Files"
 msgstr ""
 
@@ -4147,23 +4193,23 @@ msgstr ""
 msgid "STC Reference"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:755 lib/Padre/Wx/Dialog/SessionSave.pm:229
+#: lib/Padre/Wx/Dialog/SessionSave.pm:229 lib/Padre/Wx/FBP/Preferences2.pm:843
 msgid "Save"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:406
+#: lib/Padre/Wx/ActionLibrary.pm:416
 msgid "Save &As..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:430
+#: lib/Padre/Wx/ActionLibrary.pm:440
 msgid "Save All"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:419
+#: lib/Padre/Wx/ActionLibrary.pm:429
 msgid "Save Intuition"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:464
+#: lib/Padre/Wx/ActionLibrary.pm:474
 msgid "Save Session..."
 msgstr ""
 
@@ -4171,15 +4217,15 @@ msgstr ""
 msgid "Save Warning"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:431
+#: lib/Padre/Wx/ActionLibrary.pm:441
 msgid "Save all the files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:394
+#: lib/Padre/Wx/ActionLibrary.pm:404
 msgid "Save current document"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4297
+#: lib/Padre/Wx/Main.pm:4305
 msgid "Save file as..."
 msgstr ""
 
@@ -4187,7 +4233,7 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1168
+#: lib/Padre/Wx/Dialog/Preferences.pm:1167
 msgid "Save settings"
 msgstr ""
 
@@ -4195,21 +4241,21 @@ msgstr ""
 msgid "Scintilla"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3921
+#: lib/Padre/Wx/Main.pm:3929
 msgid "Script Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:382
+#: lib/Padre/Wx/FBP/Preferences2.pm:470
 msgid "Script arguments"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:757
-#: lib/Padre/Wx/Dialog/Preferences.pm:807
+#: lib/Padre/Wx/Dialog/Preferences.pm:756
+#: lib/Padre/Wx/Dialog/Preferences.pm:806
 msgid "Script arguments:"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:83 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
-#: lib/Padre/Wx/Dialog/Find.pm:78
+#: lib/Padre/Wx/Directory.pm:79 lib/Padre/Wx/Dialog/Find.pm:78
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
 msgid "Search"
 msgstr ""
 
@@ -4221,7 +4267,7 @@ msgstr ""
 msgid "Search Backwards"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:583
+#: lib/Padre/Document/Perl.pm:621
 msgid "Search Canceled"
 msgstr ""
 
@@ -4229,11 +4275,11 @@ msgstr ""
 msgid "Search Directory:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2595
+#: lib/Padre/Wx/ActionLibrary.pm:2616
 msgid "Search Help"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:36 lib/Padre/Wx/FBP/Find.pm:36
+#: lib/Padre/Wx/FBP/Find.pm:36 lib/Padre/Wx/FBP/FindInFiles.pm:36
 msgid "Search Term:"
 msgstr ""
 
@@ -4247,7 +4293,7 @@ msgstr ""
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1252
+#: lib/Padre/Wx/ActionLibrary.pm:1262
 msgid "Search for a text in all files below a given directory"
 msgstr ""
 
@@ -4259,7 +4305,7 @@ msgstr ""
 msgid "Search in Types:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2596
+#: lib/Padre/Wx/ActionLibrary.pm:2617
 msgid "Search the Perl help pages (perldoc)"
 msgstr ""
 
@@ -4272,7 +4318,7 @@ msgstr ""
 msgid "Searched for '%s' and failed..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1661
+#: lib/Padre/Wx/ActionLibrary.pm:1681
 msgid ""
 "Searches the source code for brackets with lack a matching (opening/closing) "
 "part."
@@ -4296,7 +4342,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:588
+#: lib/Padre/Wx/ActionLibrary.pm:598
 msgid "Select All"
 msgstr ""
 
@@ -4312,34 +4358,34 @@ msgstr ""
 msgid "Select a Wizard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1585
+#: lib/Padre/Wx/ActionLibrary.pm:1605
 msgid "Select a bookmark created earlier and jump to that position"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:865
+#: lib/Padre/Wx/ActionLibrary.pm:875
 msgid ""
 "Select a date, filename or other value and insert at the current location"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:890
+#: lib/Padre/Wx/ActionLibrary.pm:900
 msgid "Select a file and insert its content at the current location"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:454
+#: lib/Padre/Wx/ActionLibrary.pm:464
 msgid ""
 "Select a session. Close all the files currently open and open all the listed "
 "in the session"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:589
+#: lib/Padre/Wx/ActionLibrary.pm:599
 msgid "Select all the text in the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:963
+#: lib/Padre/Wx/ActionLibrary.pm:973
 msgid "Select an encoding and encode the document to that"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:878
+#: lib/Padre/Wx/ActionLibrary.pm:888
 msgid "Select and insert a snippet at the current location"
 msgstr ""
 
@@ -4347,7 +4393,7 @@ msgstr ""
 msgid "Select distribution to install"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4803
+#: lib/Padre/Wx/Main.pm:4811
 msgid "Select files to close:"
 msgstr ""
 
@@ -4359,7 +4405,7 @@ msgstr ""
 msgid "Select some open files for closing"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:380
+#: lib/Padre/Wx/ActionLibrary.pm:390
 msgid "Select some open files for reload"
 msgstr ""
 
@@ -4367,7 +4413,7 @@ msgstr ""
 msgid "Select the help &topic"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:842
+#: lib/Padre/Wx/ActionLibrary.pm:852
 msgid "Select to the matching opening or closing brace"
 msgstr ""
 
@@ -4381,7 +4427,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:958
+#: lib/Padre/Document/Perl.pm:996
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
@@ -4389,7 +4435,7 @@ msgstr ""
 msgid "Selects and opens a wizard"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2682
+#: lib/Padre/Wx/ActionLibrary.pm:2703
 msgid "Send a bug report to the Padre developer team"
 msgstr ""
 
@@ -4410,60 +4456,60 @@ msgstr ""
 msgid "Session name:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1573 lib/Padre/Wx/Dialog/Bookmarks.pm:56
+#: lib/Padre/Wx/ActionLibrary.pm:1593 lib/Padre/Wx/Dialog/Bookmarks.pm:56
 msgid "Set Bookmark"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2064
+#: lib/Padre/Wx/ActionLibrary.pm:2084
 msgid "Set Breakpoint (&b)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1627
+#: lib/Padre/Wx/ActionLibrary.pm:1647
 msgid "Set Padre in full screen mode"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2110
+#: lib/Padre/Wx/ActionLibrary.pm:2130
 msgid "Set a breakpoint at the line where to cursor is and run till there"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2065
+#: lib/Padre/Wx/ActionLibrary.pm:2085
 msgid "Set a breakpoint to the current location of the cursor with a condition"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2049
+#: lib/Padre/Wx/ActionLibrary.pm:2069
 msgid ""
 "Set focus to the line where the current statement is in the debugging process"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2562
+#: lib/Padre/Wx/ActionLibrary.pm:2583
 msgid "Set the focus to the \"Command Line\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2503
+#: lib/Padre/Wx/ActionLibrary.pm:2524
 msgid "Set the focus to the \"Functions\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2529
+#: lib/Padre/Wx/ActionLibrary.pm:2550
 msgid "Set the focus to the \"Outline\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2540
+#: lib/Padre/Wx/ActionLibrary.pm:2561
 msgid "Set the focus to the \"Output\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2551
+#: lib/Padre/Wx/ActionLibrary.pm:2572
 msgid "Set the focus to the \"Syntax Check\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2517
+#: lib/Padre/Wx/ActionLibrary.pm:2538
 msgid "Set the focus to the \"Todo\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2573
+#: lib/Padre/Wx/ActionLibrary.pm:2594
 msgid "Set the focus to the main editor window"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:570
+#: lib/Padre/Wx/Dialog/Preferences.pm:569
 msgid "Settings Demo"
 msgstr ""
 
@@ -4471,7 +4517,7 @@ msgstr ""
 msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
-#: lib/Padre/Config.pm:452 lib/Padre/Config.pm:464
+#: lib/Padre/Config.pm:453 lib/Padre/Config.pm:465
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4483,7 +4529,7 @@ msgstr ""
 msgid "Sh&ortcut:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2227
+#: lib/Padre/Wx/ActionLibrary.pm:2248
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
@@ -4499,7 +4545,7 @@ msgstr ""
 msgid "Shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:231 lib/Padre/Wx/Dialog/Preferences.pm:389
+#: lib/Padre/Wx/Dialog/Preferences.pm:388 lib/Padre/Wx/FBP/Preferences2.pm:231
 msgid "Shorten the common path in window list"
 msgstr ""
 
@@ -4507,97 +4553,101 @@ msgstr ""
 msgid "Show &Description"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1462
+#: lib/Padre/Wx/ActionLibrary.pm:1482
 msgid "Show Call Tips"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1432
+#: lib/Padre/Wx/ActionLibrary.pm:1442
 msgid "Show Code Folding"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1324
+#: lib/Padre/Wx/ActionLibrary.pm:1334
 msgid "Show Command Line window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1476
+#: lib/Padre/Wx/ActionLibrary.pm:1496
 msgid "Show Current Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1314
+#: lib/Padre/Wx/ActionLibrary.pm:1324
 msgid "Show Functions"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1518
+#: lib/Padre/Wx/ActionLibrary.pm:1538
 msgid "Show Indentation Guide"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1422
+#: lib/Padre/Wx/ActionLibrary.pm:1432
 msgid "Show Line Numbers"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1498
+#: lib/Padre/Wx/ActionLibrary.pm:1518
 msgid "Show Newlines"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1344
+#: lib/Padre/Wx/ActionLibrary.pm:1354
 msgid "Show Outline"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1304
+#: lib/Padre/Wx/ActionLibrary.pm:1314
 msgid "Show Output"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1354
+#: lib/Padre/Wx/ActionLibrary.pm:1364
 msgid "Show Project Browser/Tree"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1486
+#: lib/Padre/Wx/ActionLibrary.pm:1506
 msgid "Show Right Margin"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2124
+#: lib/Padre/Wx/ActionLibrary.pm:2144
 msgid "Show Stack Trace (&t)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1383
+#: lib/Padre/Wx/ActionLibrary.pm:1393
 msgid "Show Status Bar"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1364
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:246
+msgid "Show Subs&titution"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1374
 msgid "Show Syntax Check"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1334
+#: lib/Padre/Wx/ActionLibrary.pm:1344
 msgid "Show To-do List"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1393
+#: lib/Padre/Wx/ActionLibrary.pm:1403
 msgid "Show Toolbar"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2155
+#: lib/Padre/Wx/ActionLibrary.pm:2175
 msgid "Show Value Now (&x)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1508
+#: lib/Padre/Wx/ActionLibrary.pm:1528
 msgid "Show Whitespaces"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1487
+#: lib/Padre/Wx/ActionLibrary.pm:1507
 msgid "Show a vertical line indicating the right margin"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1315
+#: lib/Padre/Wx/ActionLibrary.pm:1325
 msgid "Show a window listing all the functions in the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1345
+#: lib/Padre/Wx/ActionLibrary.pm:1355
 msgid ""
 "Show a window listing all the parts of the current file (functions, pragmas, "
 "modules)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1335
+#: lib/Padre/Wx/ActionLibrary.pm:1345
 msgid "Show a window listing all todo items in the current document"
 msgstr ""
 
@@ -4605,11 +4655,11 @@ msgstr ""
 msgid "Show as"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1130
+#: lib/Padre/Wx/ActionLibrary.pm:1140
 msgid "Show as Decimal"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1120
+#: lib/Padre/Wx/ActionLibrary.pm:1130
 msgid "Show as Hexadecimal"
 msgstr ""
 
@@ -4617,118 +4667,118 @@ msgstr ""
 msgid "Show current report"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2711
+#: lib/Padre/Wx/ActionLibrary.pm:2732
 msgid "Show information about Padre"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:285
+#: lib/Padre/Wx/FBP/Preferences2.pm:319
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:974 lib/Padre/Wx/Dialog/Preferences.pm:475
+#: lib/Padre/Config.pm:980 lib/Padre/Wx/Dialog/Preferences.pm:474
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:626
+#: lib/Padre/Config.pm:627
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2474 lib/Padre/Wx/Dialog/Positions.pm:108
+#: lib/Padre/Wx/ActionLibrary.pm:2495 lib/Padre/Wx/Dialog/Positions.pm:108
 msgid "Show previous positions"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:293
+#: lib/Padre/Wx/FBP/Preferences2.pm:327
 msgid "Show right margin at column"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:480
+#: lib/Padre/Wx/Dialog/Preferences.pm:479
 msgid "Show right margin at column:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1131
+#: lib/Padre/Wx/ActionLibrary.pm:1141
 msgid ""
 "Show the ASCII values of the selected text in decimal numbers in the output "
 "window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1121
+#: lib/Padre/Wx/ActionLibrary.pm:1131
 msgid ""
 "Show the ASCII values of the selected text in hexadecimal notation in the "
 "output window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2621
+#: lib/Padre/Wx/ActionLibrary.pm:2642
 msgid "Show the POD (Perldoc) version of the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2587
+#: lib/Padre/Wx/ActionLibrary.pm:2608
 msgid "Show the Padre help"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2269
+#: lib/Padre/Wx/ActionLibrary.pm:2290
 msgid "Show the Padre plug-in manager to enable or disable plug-ins"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1325
+#: lib/Padre/Wx/ActionLibrary.pm:1335
 msgid "Show the command line window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2608
+#: lib/Padre/Wx/ActionLibrary.pm:2629
 msgid "Show the help article for the current context"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2237
+#: lib/Padre/Wx/ActionLibrary.pm:2258
 msgid "Show the key bindings dialog to configure Padre shortcuts"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2475
+#: lib/Padre/Wx/ActionLibrary.pm:2496
 msgid "Show the list of positions recently visited"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2156
+#: lib/Padre/Wx/ActionLibrary.pm:2176
 msgid "Show the value of a variable now in a pop-up window."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1305
+#: lib/Padre/Wx/ActionLibrary.pm:1315
 msgid ""
 "Show the window displaying the standard output and standard error of the "
 "running scripts"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1433
+#: lib/Padre/Wx/ActionLibrary.pm:1443
 msgid ""
 "Show/hide a vertical line on the left hand side of the window to allow "
 "folding rows"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1423
+#: lib/Padre/Wx/ActionLibrary.pm:1433
 msgid ""
 "Show/hide the line numbers of all the documents on the left side of the "
 "window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1499
+#: lib/Padre/Wx/ActionLibrary.pm:1519
 msgid "Show/hide the newlines with special character"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1384
+#: lib/Padre/Wx/ActionLibrary.pm:1394
 msgid "Show/hide the status bar at the bottom of the screen"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1509
+#: lib/Padre/Wx/ActionLibrary.pm:1529
 msgid "Show/hide the tabs and the spaces with special characters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1394
+#: lib/Padre/Wx/ActionLibrary.pm:1404
 msgid "Show/hide the toolbar at the top of the editor"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1519
+#: lib/Padre/Wx/ActionLibrary.pm:1539
 msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:401
+#: lib/Padre/Config.pm:402
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -4744,7 +4794,7 @@ msgstr ""
 msgid "Simulate Crash"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:437
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:473
 msgid "Single-line (&s)"
 msgstr ""
 
@@ -4780,7 +4830,7 @@ msgstr ""
 msgid "Snippets"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:877
+#: lib/Padre/Wx/ActionLibrary.pm:887
 msgid "Snippets..."
 msgstr ""
 
@@ -4799,11 +4849,11 @@ msgstr ""
 msgid "Space and tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5881
+#: lib/Padre/Wx/Main.pm:5972
 msgid "Space to Tab"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1015
+#: lib/Padre/Wx/ActionLibrary.pm:1025
 msgid "Spaces to Tabs..."
 msgstr ""
 
@@ -4815,7 +4865,7 @@ msgstr ""
 msgid "Spanish (Argentina)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:864
+#: lib/Padre/Wx/ActionLibrary.pm:874
 msgid "Special Value..."
 msgstr ""
 
@@ -4823,7 +4873,7 @@ msgstr ""
 msgid "Special Value:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2034
+#: lib/Padre/Wx/ActionLibrary.pm:2054
 msgid "Start running and/or continue running till next breakpoint or watch"
 msgstr ""
 
@@ -4831,33 +4881,33 @@ msgstr ""
 msgid "Start/Stop sub trace"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5853
+#: lib/Padre/Wx/Main.pm:5944
 msgid "Stats"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:48 lib/Padre/Wx/Dialog/PluginManager.pm:68
-#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/Dialog/PluginManager.pm:68 lib/Padre/Wx/Dialog/Advanced.pm:111
+#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/FBP/Sync.pm:48
 msgid "Status"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1982
+#: lib/Padre/Wx/ActionLibrary.pm:2002
 msgid "Step In (&s)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2017
+#: lib/Padre/Wx/ActionLibrary.pm:2037
 msgid "Step Out (&r)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1999
+#: lib/Padre/Wx/ActionLibrary.pm:2019
 msgid "Step Over (&n)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1954
+#: lib/Padre/Wx/ActionLibrary.pm:1974
 msgid "Stop Execution"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1955
+#: lib/Padre/Wx/ActionLibrary.pm:1975
 msgid "Stop a running task."
 msgstr ""
 
@@ -4873,7 +4923,7 @@ msgstr ""
 msgid "String"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:487
+#: lib/Padre/Wx/Dialog/Preferences.pm:486
 msgid "Style:"
 msgstr ""
 
@@ -4890,11 +4940,11 @@ msgstr ""
 msgid "Switch Padre interface language to %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1409
+#: lib/Padre/Wx/ActionLibrary.pm:1419
 msgid "Switch document type"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1609
+#: lib/Padre/Wx/ActionLibrary.pm:1629
 msgid "Switch highlighting colours"
 msgstr ""
 
@@ -4902,7 +4952,7 @@ msgstr ""
 msgid "Switch language to system default"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2405
+#: lib/Padre/Wx/ActionLibrary.pm:2426
 msgid ""
 "Switch to edit the file that was previously edited (can switch back and "
 "forth)"
@@ -4912,7 +4962,7 @@ msgstr ""
 msgid "Syntax Check"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:885
+#: lib/Padre/Wx/Dialog/Preferences.pm:884
 msgid "Syntax Highlighting"
 msgstr ""
 
@@ -4932,15 +4982,15 @@ msgstr ""
 msgid "Tab"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:504
+#: lib/Padre/Wx/FBP/Preferences2.pm:592
 msgid "Tab display size (in spaces)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:273
+#: lib/Padre/Wx/Dialog/Preferences.pm:272
 msgid "Tab display size (in spaces):"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5882
+#: lib/Padre/Wx/Main.pm:5973
 msgid "Tab to Space"
 msgstr ""
 
@@ -4948,7 +4998,7 @@ msgstr ""
 msgid "Tabs and Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1005
+#: lib/Padre/Wx/ActionLibrary.pm:1015
 msgid "Tabs to Spaces..."
 msgstr ""
 
@@ -4956,7 +5006,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3917
+#: lib/Padre/Wx/Main.pm:3925
 msgid "Text Files"
 msgstr ""
 
@@ -4980,6 +5030,12 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 
+#: lib/Padre/Wx/Directory.pm:516
+msgid ""
+"The directory browser got an undef object and may stop working now. Please "
+"save your work and restart Padre."
+msgstr ""
+
 #: lib/Padre/Document.pm:253
 #, perl-format
 msgid ""
@@ -4993,7 +5049,7 @@ msgstr ""
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5005
+#: lib/Padre/Wx/Main.pm:5094
 msgid "There are no differences\n"
 msgstr ""
 
@@ -5005,11 +5061,15 @@ msgstr ""
 msgid "This document does not contain any POD"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2311
+#: lib/Padre/Wx/ActionLibrary.pm:2332
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:611 lib/Padre/Wx/FBP/Preferences2.pm:635
+#: lib/Padre/Wx/Main.pm:4933
+msgid "This type of file (URL) is missing delete support."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Preferences2.pm:699 lib/Padre/Wx/FBP/Preferences2.pm:723
 msgid "Timeout (in seconds)"
 msgstr ""
 
@@ -5038,7 +5098,7 @@ msgstr ""
 msgid "Turkish"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1365
+#: lib/Padre/Wx/ActionLibrary.pm:1375
 msgid ""
 "Turn on syntax checking of the current document and show output in a window"
 msgstr ""
@@ -5051,7 +5111,7 @@ msgstr ""
 msgid "Type a help &keyword to read:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2171
+#: lib/Padre/Wx/ActionLibrary.pm:2191
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
@@ -5068,24 +5128,24 @@ msgstr ""
 msgid "Unable to parse %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:555
+#: lib/Padre/Wx/ActionLibrary.pm:565
 msgid "Undo last change in current file"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1452
+#: lib/Padre/Wx/ActionLibrary.pm:1462
 msgid "Unfold all"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1453
+#: lib/Padre/Wx/ActionLibrary.pm:1463 lib/Padre/Wx/ActionLibrary.pm:1473
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3713
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3721
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:896 lib/Padre/Document/Perl.pm:579
-#: lib/Padre/Document/Perl.pm:911 lib/Padre/Document/Perl.pm:960
+#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:617
+#: lib/Padre/Document/Perl.pm:949 lib/Padre/Document/Perl.pm:998
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr ""
@@ -5094,7 +5154,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:770
+#: lib/Padre/Wx/Dialog/Preferences.pm:769
 msgid "Unsaved"
 msgstr ""
 
@@ -5103,7 +5163,7 @@ msgstr ""
 msgid "Unsaved %d"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4679
+#: lib/Padre/Wx/Main.pm:4687
 msgid "Unsaved File"
 msgstr ""
 
@@ -5125,7 +5185,7 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1047
+#: lib/Padre/Wx/ActionLibrary.pm:1057
 msgid "Upper All"
 msgstr ""
 
@@ -5149,36 +5209,36 @@ msgstr ""
 msgid "Uptime"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:653
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:51
+#: lib/Padre/Wx/FBP/Preferences2.pm:741
 msgid "Use FTP passive mode"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1111
+#: lib/Padre/Wx/ActionLibrary.pm:1121
 msgid "Use Perl source as filter"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:406
+#: lib/Padre/Wx/Dialog/Preferences.pm:405
 msgid "Use Splash Screen"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:496 lib/Padre/Wx/Dialog/Preferences.pm:270
+#: lib/Padre/Wx/Dialog/Preferences.pm:269 lib/Padre/Wx/FBP/Preferences2.pm:584
 msgid "Use Tabs"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:239 lib/Padre/Wx/Dialog/Preferences.pm:396
+#: lib/Padre/Wx/Dialog/Preferences.pm:395 lib/Padre/Wx/FBP/Preferences2.pm:239
 msgid "Use X11 middle button paste style"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1266
+#: lib/Padre/Wx/ActionLibrary.pm:1276
 msgid "Use a filter to select one or more files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:396 lib/Padre/Wx/Dialog/Preferences.pm:761
+#: lib/Padre/Wx/Dialog/Preferences.pm:760 lib/Padre/Wx/FBP/Preferences2.pm:484
 msgid "Use external window for execution"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:59 lib/Padre/Wx/Dialog/Preferences.pm:311
+#: lib/Padre/Wx/Dialog/Preferences.pm:310 lib/Padre/Wx/FBP/Preferences2.pm:59
 msgid "Use panel order for Ctrl-Tab (not usage history)"
 msgstr ""
 
@@ -5198,11 +5258,11 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2373
+#: lib/Padre/Wx/ActionLibrary.pm:2394
 msgid "Using CPAN.pm to install a CPAN like package opened locally"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2383
+#: lib/Padre/Wx/ActionLibrary.pm:2404
 msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
 msgstr ""
 
@@ -5214,11 +5274,11 @@ msgstr ""
 msgid "Variable"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1841
+#: lib/Padre/Wx/ActionLibrary.pm:1861
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:870
+#: lib/Padre/Document/Perl.pm:908
 msgid "Variable case change"
 msgstr ""
 
@@ -5226,7 +5286,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1697
+#: lib/Padre/Wx/ActionLibrary.pm:1717
 msgid "Vertically Align Selected"
 msgstr ""
 
@@ -5238,7 +5298,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2689
+#: lib/Padre/Wx/ActionLibrary.pm:2710
 msgid "View All &Open Bugs"
 msgstr ""
 
@@ -5246,7 +5306,7 @@ msgstr ""
 msgid "View Document As..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2690
+#: lib/Padre/Wx/ActionLibrary.pm:2711
 msgid "View all known and currently unsolved bugs in Padre"
 msgstr ""
 
@@ -5258,7 +5318,7 @@ msgstr ""
 msgid "Visible characters and spaces"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2669
+#: lib/Padre/Wx/ActionLibrary.pm:2690
 msgid "Visit the PerlMonks"
 msgstr ""
 
@@ -5270,18 +5330,18 @@ msgid ""
 msgstr ""
 
 #: lib/Padre/Document.pm:259 lib/Padre/Wx/Syntax.pm:31
-#: lib/Padre/Wx/Main.pm:2798 lib/Padre/Wx/Main.pm:3405
+#: lib/Padre/Wx/Main.pm:2806 lib/Padre/Wx/Main.pm:3413
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2324
+#: lib/Padre/Wx/ActionLibrary.pm:2345
 msgid ""
 "Warning! This will delete all the changes you made to 'My plug-in' and "
 "replace it with the default code that comes with your installation of Padre"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:411
+#: lib/Padre/PluginManager.pm:421
 msgid ""
 "We found several new plug-ins.\n"
 "In order to configure and enable them go to\n"
@@ -5291,7 +5351,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3919
+#: lib/Padre/Wx/Main.pm:3927
 msgid "Web Files"
 msgstr ""
 
@@ -5299,12 +5359,12 @@ msgstr ""
 msgid "Whatever"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2125
+#: lib/Padre/Wx/ActionLibrary.pm:2145
 msgid ""
 "When in a subroutine call show all the calls since the main of the program"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1463
+#: lib/Padre/Wx/ActionLibrary.pm:1483
 msgid "When typing in functions allow showing short examples of the function"
 msgstr ""
 
@@ -5316,7 +5376,7 @@ msgstr ""
 msgid "Whitespace characters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2655
+#: lib/Padre/Wx/ActionLibrary.pm:2676
 msgid "Win32 Questions (English)"
 msgstr ""
 
@@ -5337,11 +5397,11 @@ msgstr ""
 msgid "Wizard Selector..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:522
+#: lib/Padre/Wx/ActionLibrary.pm:532
 msgid "Word count and other statistics of the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1528
+#: lib/Padre/Wx/ActionLibrary.pm:1548
 msgid "Word-Wrap"
 msgstr ""
 
@@ -5349,7 +5409,7 @@ msgstr ""
 msgid "Words"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1529
+#: lib/Padre/Wx/ActionLibrary.pm:1549
 msgid "Wrap long lines"
 msgstr ""
 
@@ -5357,7 +5417,7 @@ msgstr ""
 msgid "Writing file to FTP server..."
 msgstr ""
 
-#: lib/Padre/Wx/Output.pm:141 lib/Padre/Wx/Main.pm:2654
+#: lib/Padre/Wx/Output.pm:141 lib/Padre/Wx/Main.pm:2662
 #, perl-format
 msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
@@ -5369,23 +5429,23 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1612
+#: lib/Padre/Wx/Editor.pm:1649
 msgid "You must select a range of lines"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3404
+#: lib/Padre/Wx/Main.pm:3412
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1000
+#: lib/Padre/Wx/Dialog/Preferences.pm:999
 msgid "alphabetical"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1002
+#: lib/Padre/Wx/Dialog/Preferences.pm:1001
 msgid "alphabetical_private_last"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:460
+#: lib/Padre/Wx/FBP/Preferences2.pm:548
 msgid "application/x-perl"
 msgstr ""
 
@@ -5393,7 +5453,7 @@ msgstr ""
 msgid "cpanm is unexpectedly not installed"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:999
+#: lib/Padre/Wx/Dialog/Preferences.pm:998
 msgid "deep"
 msgstr ""
 
@@ -5417,7 +5477,7 @@ msgstr ""
 msgid "fresh"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:738
+#: lib/Padre/Wx/Dialog/Preferences.pm:737
 msgid ""
 "i.e.\n"
 "\tinclude directory:  -I<dir>\n"
@@ -5431,7 +5491,7 @@ msgstr ""
 msgid "incompatible"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:995
+#: lib/Padre/Wx/Dialog/Preferences.pm:994
 msgid "last"
 msgstr ""
 
@@ -5443,11 +5503,11 @@ msgstr ""
 msgid "missing field"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:993
+#: lib/Padre/Wx/Dialog/Preferences.pm:992
 msgid "new"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:997
+#: lib/Padre/Wx/Dialog/Preferences.pm:996
 msgid "no"
 msgstr ""
 
@@ -5460,11 +5520,11 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:994
+#: lib/Padre/Wx/Dialog/Preferences.pm:993
 msgid "nothing"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1001
+#: lib/Padre/Wx/Dialog/Preferences.pm:1000
 msgid "original"
 msgstr ""
 
@@ -5472,11 +5532,11 @@ msgstr ""
 msgid "restrictive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:998
+#: lib/Padre/Wx/Dialog/Preferences.pm:997
 msgid "same_level"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:996
+#: lib/Padre/Wx/Dialog/Preferences.pm:995
 msgid "session"
 msgstr ""
 
