@@ -1386,7 +1386,6 @@ sub process_template_frequent {
 		}
 	}
 
-
 	if ( $template =~ /\%s/ ) {
 		my $sub = '';
 		if ($document) {
@@ -1415,7 +1414,6 @@ sub process_template_frequent {
 		}
 		$template =~ s/\%s/$sub/;
 	}
-
 
 	return $template;
 }
@@ -1623,6 +1621,7 @@ sub refresh_status {
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
 }
 
+=pod
 
 =head3 C<refresh_status_template>
 
