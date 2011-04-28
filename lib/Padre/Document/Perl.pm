@@ -28,7 +28,7 @@ our @ISA     = qw{
 
 
 #####################################################################
-# Task Integration
+# Padre::Document Task Integration
 
 sub task_functions {
 	return 'Padre::Document::Perl::FunctionList';
@@ -308,7 +308,7 @@ sub find_functions {
 		(?:
 		(?:$n)*__(?:DATA|END)__\b.*
 		|
-		$n$n=\w+.*?$n$n=cut\b(?=.*?$n$n)
+		$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?$n)
 		|
 		(?:^|$n)\s*(?:sub|func|method)\s+(\w+(?:::\w+)*)
 		)

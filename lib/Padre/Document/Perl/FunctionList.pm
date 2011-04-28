@@ -19,7 +19,7 @@ our $sub_search_re = qr/
 		(?:
 		(?:$n)*__(?:DATA|END)__\b.*
 		|
-		$n$n=\w+.*?$n$n=cut\b(?=.*?$n$n)
+		$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?(?:$n){1,2})
 		|
 		(?:^|$n)\s*(?:sub|func|method)\s+(\w+(?:::\w+)*)
 		)
