@@ -532,6 +532,9 @@ setting(
 		'alphabetical'              => _T('Alphabetical Order'),
 		'alphabetical_private_last' => _T('Alphabetical Order (Private Last)'),
 	},
+	apply   => sub {
+		$_[0]->refresh_functions;
+	}
 );
 setting(
 	name    => 'main_outline',
