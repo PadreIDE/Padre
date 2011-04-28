@@ -78,7 +78,7 @@ sub _external_tools_panel {
 	my $config = Padre->ide->config;
 
 	my $diff_tool_path = $config->external_diff_tool;
-	my $perl_tags_path = $config->perl_tags_file;
+	my $perl_tags_path = $config->lang_perl5_tags_file;
 
 	# TODO: Really needs a "browse" button. - Done!  Not sure it's such a good way to do it though!
 	# TODO: Need to make the TextCtrl a bit more stretched, it's too narrow.
@@ -88,7 +88,7 @@ sub _external_tools_panel {
 			[ 'Wx::Button',     '_diff_tool_',        Wx::gettext('Browse...') ],
 		],
 		[   [ 'Wx::StaticText', undef,             Wx::gettext('Perl ctags file:') ],
-			[ 'Wx::TextCtrl',   'perl_tags_file',  $perl_tags_path ],
+			[ 'Wx::TextCtrl',   'lang_perl5_tags_file',  $perl_tags_path ],
 			[ 'Wx::Button',     '_perltags_file_', Wx::gettext('Browse...') ],
 		],
 	];
@@ -121,7 +121,7 @@ sub _file_dialog {
 	# this comes off as not right
 	my %ext_tool = (
 		'diff'    => [ 'Diff Tool File', 'external_diff_tool' ],
-		'perltag' => [ 'Perl Tag File',  'perl_tags_file' ],
+		'perltag' => [ 'Perl Tag File',  'lang_perl5_tags_file' ],
 	);
 
 
@@ -323,7 +323,7 @@ sub _behaviour_panel {
 			],
 			[]
 		],
-		[   [   'Wx::CheckBox', 'editor_beginner', ( $config->editor_beginner ? 1 : 0 ),
+		[   [   'Wx::CheckBox', 'lang_perl5_beginner', ( $config->lang_perl5_beginner ? 1 : 0 ),
 				Wx::gettext('Perl beginner mode')
 			],
 			[]
@@ -1112,8 +1112,8 @@ sub run {
 		$data->{editor_fold_pod} ? 1 : 0
 	);
 	$config->set(
-		'editor_beginner',
-		$data->{editor_beginner} ? 1 : 0
+		'lang_perl5_beginner',
+		$data->{lang_perl5_beginner} ? 1 : 0
 	);
 	$config->set(
 		'editor_cursor_blink',
@@ -1195,8 +1195,8 @@ sub run {
 		$data->{run_use_external_window}
 	);
 	$config->set(
-		'perl_tags_file',
-		$data->{perl_tags_file}
+		'lang_perl5_tags_file',
+		$data->{lang_perl5_tags_file}
 	);
 	$config->set(
 		'external_diff_tool',

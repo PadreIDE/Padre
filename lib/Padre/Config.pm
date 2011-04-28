@@ -787,12 +787,6 @@ setting(
 	default => 'FFFF04',
 );
 setting(
-	name    => 'editor_beginner',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 1,
-);
-setting(
 	name    => 'editor_wordwrap',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
@@ -908,25 +902,25 @@ setting(
 	default => 0,
 );
 setting(
-	name    => 'perl_autocomplete_max_suggestions',
+	name    => 'lang_perl5_autocomplete_max_suggestions',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 20,
 );
 setting(
-	name    => 'perl_autocomplete_min_chars',
+	name    => 'lang_perl5_autocomplete_min_chars',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
 setting(
-	name    => 'perl_autocomplete_min_suggestion_len',
+	name    => 'lang_perl5_autocomplete_min_suggestion_len',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 3,
 );
 setting(
-	name    => 'perl_ppi_lexer_limit',
+	name    => 'lang_perl5_lexer_ppi_limit',
 	type    => Padre::Constant::POSINT,
 	store   => Padre::Constant::HUMAN,
 	default => 4000,
@@ -959,12 +953,24 @@ setting(
 );
 
 setting(
-	name  => 'perl_tags_file',
+	name  => 'lang_perl5_tags_file',
 	type  => Padre::Constant::ASCII,
 	store => Padre::Constant::HOST,
 
 	# Don't save a default to allow future updates
 	default => '',
+);
+
+setting(
+	name    => 'lang_perl5_lexer',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => 'stc',
+	options => {
+		'stc'                             => _T('Scintilla'),
+		'Padre::Document::Perl::Lexer'    => _T('PPI Experimental'),
+		'Padre::Document::Perl::PPILexer' => _T('PPI Standard'),
+	},
 );
 
 setting(
@@ -1175,93 +1181,100 @@ setting(
 	default => 1,
 );
 
-# Beginner error checks configuration
+# Perl 5 Beginner Mode
 setting(
-	name    => 'begerror_split',
+	name    => 'lang_perl5_beginner',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+
+setting(
+	name    => 'lang_perl5_beginner_split',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_warning',
+	name    => 'lang_perl5_beginner_warning',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_map',
+	name    => 'lang_perl5_beginner_map',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_DB',
+	name    => 'lang_perl5_beginner_debugger',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_chomp',
+	name    => 'lang_perl5_beginner_chomp',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_map2',
+	name    => 'lang_perl5_beginner_map2',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_perl6',
+	name    => 'lang_perl5_beginner_perl6',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_ifsetvar',
+	name    => 'lang_perl5_beginner_ifsetvar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_pipeopen',
+	name    => 'lang_perl5_beginner_pipeopen',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_pipe2open',
+	name    => 'lang_perl5_beginner_pipe2open',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_regexq',
+	name    => 'lang_perl5_beginner_regexq',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_elseif',
+	name    => 'lang_perl5_beginner_elseif',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
 
 setting(
-	name    => 'begerror_close',
+	name    => 'lang_perl5_beginner_close',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HOST,
 	default => 1,

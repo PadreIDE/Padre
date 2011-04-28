@@ -26,31 +26,31 @@ sub config {
 	return $_[0];
 }
 
-sub begerror_chomp { 1; }
+sub lang_perl5_beginner_chomp { 1; }
 
-sub begerror_close { 1; }
+sub lang_perl5_beginner_close { 1; }
 
-sub begerror_DB { 1; }
+sub lang_perl5_beginner_debugger { 1; }
 
-sub begerror_elseif { 1; }
+sub lang_perl5_beginner_elseif { 1; }
 
-sub begerror_ifsetvar { 1; }
+sub lang_perl5_beginner_ifsetvar { 1; }
 
-sub begerror_map { 1; }
+sub lang_perl5_beginner_map { 1; }
 
-sub begerror_map2 { 1; }
+sub lang_perl5_beginner_map2 { 1; }
 
-sub begerror_perl6 { 1; }
+sub lang_perl5_beginner_perl6 { 1; }
 
-sub begerror_pipe2open { 1; }
+sub lang_perl5_beginner_pipe2open { 1; }
 
-sub begerror_pipeopen { 1; }
+sub lang_perl5_beginner_pipeopen { 1; }
 
-sub begerror_regexq { 1; }
+sub lang_perl5_beginner_regexq { 1; }
 
-sub begerror_split { 1; }
+sub lang_perl5_beginner_split { 1; }
 
-sub begerror_warning { 1; }
+sub lang_perl5_beginner_warning { 1; }
 
 # The real test...
 package main;

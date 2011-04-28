@@ -36,6 +36,10 @@ next production release, and synchronise their release to the Padre schedule.
       directory list at startup at the same time (ADAMK)
     - The Preferences dialog now translates options in drop-down boxes (ADAMK)
     - Update German translation (ZENOG)
+    - Moved various Perl 5 related config options into a unified config
+      namespace lang_perl5_* (ADAMK)
+    - Moved various Perl 5 Preferences dialog elements into a single Perl 5
+      specific tab in preparation for additional future tabs (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

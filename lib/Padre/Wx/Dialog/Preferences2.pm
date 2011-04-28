@@ -139,6 +139,9 @@ sub save {
 	my $self   = shift;
 	my $config = shift;
 
+	# Lock a bunch of stuff so the apply handlers run quickly
+	my $lock = $self->main->lock('UPDATE', 'REFRESH', 'DB');
+
 	# Apply the changes to the configuration, if any
 	my $diff    = $self->diff($config) or return;
 	my $current = $self->current;

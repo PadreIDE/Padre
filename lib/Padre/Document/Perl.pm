@@ -141,7 +141,7 @@ sub set_highlighter {
 	# configuration variable
 	my $limit;
 	if ( $module eq 'Padre::Document::Perl::PPILexer' ) {
-		$limit = $self->current->config->perl_ppi_lexer_limit;
+		$limit = $self->current->config->lang_perl5_lexer_ppi_limit;
 	} elsif ( $module eq 'Padre::Document::Perl::Lexer' ) {
 		$limit = 4000;
 	} elsif ( $module eq 'Padre::Plugin::Kate' ) {
@@ -419,7 +419,7 @@ sub get_interpreter {
 sub pre_process {
 	my $self = shift;
 
-	if ( Padre->ide->config->editor_beginner ) {
+	if ( Padre->ide->config->lang_perl5_beginner ) {
 		require Padre::Document::Perl::Beginner;
 		my $b = Padre::Document::Perl::Beginner->new( document => $self );
 		if ( $b->check( $self->text_get ) ) {
@@ -1154,11 +1154,11 @@ sub perltags_parser {
 	# Use the configured file (if any) or the old default, reset on config change
 	if (   not defined $perltags_file
 		or not defined $self->{_perltags_config}
-		or $self->{_perltags_config} ne $config->perl_tags_file )
+		or $self->{_perltags_config} ne $config->lang_perl5_tags_file )
 	{
 
 		foreach my $candidate (
-			$self->project_tagsfile, $config->perl_tags_file,
+			$self->project_tagsfile, $config->lang_perl5_tags_file,
 			File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' )
 			)
 		{
@@ -1203,7 +1203,7 @@ sub perltags_parser {
 		}
 
 		# Remember current value for later checks
-		$self->{_perltags_config} = $config->perl_tags_file;
+		$self->{_perltags_config} = $config->lang_perl5_tags_file;
 
 		$perltags_file = $self->{_perltags_file};
 
@@ -1284,7 +1284,7 @@ sub autocomplete {
 	my $event = shift;
 
 	my $config    = Padre->ide->config;
-	my $min_chars = $config->perl_autocomplete_min_chars;
+	my $min_chars = $config->lang_perl5_autocomplete_min_chars;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
@@ -1327,8 +1327,8 @@ sub autocomplete {
 	require Padre::Document::Perl::Autocomplete;
 	my $ac = Padre::Document::Perl::Autocomplete->new(
 		minimum_prefix_length        => $min_chars,
-		maximum_number_of_choices    => $config->perl_autocomplete_max_suggestions,
-		minimum_length_of_suggestion => $config->perl_autocomplete_min_suggestion_len,
+		maximum_number_of_choices    => $config->lang_perl5_autocomplete_max_suggestions,
+		minimum_length_of_suggestion => $config->lang_perl5_autocomplete_min_suggestion_len,
 
 		prefix    => $prefix,
 		nextchar  => $nextchar,

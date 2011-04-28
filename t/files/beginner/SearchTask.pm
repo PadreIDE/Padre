@@ -41,7 +41,7 @@ if ( $x =~ /42/ ) {
 }
 
 
-my $name = 'begerror_elseif';
+my $name = 'lang_perl5_beginner_elseif';
 
 
 1;

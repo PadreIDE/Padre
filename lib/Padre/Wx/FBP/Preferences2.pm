@@ -77,14 +77,6 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	$self->{editor_beginner} = Wx::CheckBox->new(
-		$m_panel2,
-		-1,
-		Wx::gettext("Perl beginner mode"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
 	my $m_staticText41 = Wx::StaticText->new(
 		$m_panel2,
 		-1,
@@ -422,132 +414,6 @@ sub new {
 		-1,
 	);
 
-	my $m_panel4 = Wx::Panel->new(
-		$self->{treebook},
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL,
-	);
-
-	my $m_staticText34 = Wx::StaticText->new(
-		$m_panel4,
-		-1,
-		Wx::gettext("Perl interpreter"),
-	);
-
-	$self->{run_perl_cmd} = Wx::TextCtrl->new(
-		$m_panel4,
-		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
-	my $m_staticText35 = Wx::StaticText->new(
-		$m_panel4,
-		-1,
-		Wx::gettext("Interpreter arguments"),
-	);
-
-	$self->{run_interpreter_args_default} = Wx::TextCtrl->new(
-		$m_panel4,
-		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
-	my $m_staticText36 = Wx::StaticText->new(
-		$m_panel4,
-		-1,
-		Wx::gettext("Include directory:  -I<dir>\nEnable tainting checks:  -T\nEnable many useful warnings:  -w\nEnable all warnings:  -W\nDisable all warnings:  -X"),
-	);
-
-	my $m_staticText37 = Wx::StaticText->new(
-		$m_panel4,
-		-1,
-		Wx::gettext("Script arguments"),
-	);
-
-	$self->{run_script_args_default} = Wx::TextCtrl->new(
-		$m_panel4,
-		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
-	$self->{run_use_external_window} = Wx::CheckBox->new(
-		$m_panel4,
-		-1,
-		Wx::gettext("Use external window for execution"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
-	my $m_panel5 = Wx::Panel->new(
-		$self->{treebook},
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL,
-	);
-
-	my $m_staticText19 = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("File Type"),
-	);
-
-	$self->{m_choice8} = Wx::Choice->new(
-		$m_panel5,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		[],
-	);
-	$self->{m_choice8}->SetSelection(0);
-
-	my $m_staticText20 = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("Highlighter"),
-	);
-
-	$self->{m_choice9} = Wx::Choice->new(
-		$m_panel5,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		[],
-	);
-	$self->{m_choice9}->SetSelection(0);
-
-	my $m_staticText21 = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("Description"),
-	);
-
-	$self->{m_staticText22} = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("Fast but might be out of date"),
-	);
-
-	my $m_staticText23 = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("Content type"),
-	);
-
-	$self->{m_staticText24} = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("application/x-perl"),
-	);
-
 	my $m_panel1 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -662,23 +528,6 @@ sub new {
 		Wx::wxFLP_DEFAULT_STYLE,
 	);
 
-	my $m_staticText26 = Wx::StaticText->new(
-		$m_panel6,
-		-1,
-		Wx::gettext("Perl ctags file"),
-	);
-
-	$self->{perl_tags_file} = Wx::FilePickerCtrl->new(
-		$m_panel6,
-		-1,
-		"",
-		"Select a file",
-		"*.*",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxFLP_DEFAULT_STYLE,
-	);
-
 	my $m_panel8 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -751,6 +600,145 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
+	$self->{m_staticText39} = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Language Integration"),
+	);
+	$self->{m_staticText39}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	my $m_staticText34 = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Perl interpreter"),
+	);
+
+	$self->{run_perl_cmd} = Wx::TextCtrl->new(
+		$m_panel7,
+		-1,
+		"",
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	$self->{run_use_external_window} = Wx::CheckBox->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Use external window for execution"),
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	my $m_staticText35 = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Interpreter arguments"),
+	);
+
+	$self->{run_interpreter_args_default} = Wx::TextCtrl->new(
+		$m_panel7,
+		-1,
+		"",
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	my $m_staticText36 = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Include directory:  -I<dir>\nEnable tainting checks:  -T\nEnable many useful warnings:  -w\nEnable all warnings:  -W\nDisable all warnings:  -X"),
+	);
+
+	my $m_staticText37 = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Script arguments"),
+	);
+
+	$self->{run_script_args_default} = Wx::TextCtrl->new(
+		$m_panel7,
+		-1,
+		"",
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	$self->{m_staticline5} = Wx::StaticLine->new(
+		$m_panel7,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
+	);
+
+	$self->{m_staticText351} = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Editor Options"),
+	);
+	$self->{m_staticText351}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	$self->{lang_perl5_beginner} = Wx::CheckBox->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Perl beginner mode"),
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	$self->{m_staticText371} = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Syntax Highlighter"),
+	);
+
+	$self->{lang_perl5_lexer} = Wx::Choice->new(
+		$m_panel7,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		[],
+	);
+	$self->{lang_perl5_lexer}->SetSelection(0);
+
+	my $m_staticText26 = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Perl ctags file"),
+	);
+
+	$self->{lang_perl5_tags_file} = Wx::FilePickerCtrl->new(
+		$m_panel7,
+		-1,
+		"",
+		"Select a file",
+		"*.*",
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxFLP_DEFAULT_STYLE,
+	);
+
+	$self->{m_staticline4} = Wx::StaticLine->new(
+		$m_panel7,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
+	);
+
+	$self->{m_staticText361} = Wx::StaticText->new(
+		$m_panel7,
+		-1,
+		Wx::gettext("Autocomplete"),
+	);
+	$self->{m_staticText361}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
 	$self->{autocomplete_always} = Wx::CheckBox->new(
 		$m_panel7,
 		-1,
@@ -781,7 +769,7 @@ sub new {
 		Wx::gettext("Minimum length of suggestions"),
 	);
 
-	$self->{perl_autocomplete_min_suggestion_len} = Wx::SpinCtrl->new(
+	$self->{lang_perl5_autocomplete_min_suggestion_len} = Wx::SpinCtrl->new(
 		$m_panel7,
 		-1,
 		"",
@@ -799,7 +787,7 @@ sub new {
 		Wx::gettext("Maximum number of suggestions"),
 	);
 
-	$self->{perl_autocomplete_max_suggestions} = Wx::SpinCtrl->new(
+	$self->{lang_perl5_autocomplete_max_suggestions} = Wx::SpinCtrl->new(
 		$m_panel7,
 		-1,
 		"",
@@ -817,7 +805,7 @@ sub new {
 		Wx::gettext("Minimum characters for autocomplete"),
 	);
 
-	$self->{perl_autocomplete_min_chars} = Wx::SpinCtrl->new(
+	$self->{lang_perl5_autocomplete_min_chars} = Wx::SpinCtrl->new(
 		$m_panel7,
 		-1,
 		"",
@@ -884,8 +872,6 @@ sub new {
 	$fgSizer3->Add( $self->{save_autoclean}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $self->{editor_fold_pod}, 0, Wx::wxALL, 5 );
-	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer3->Add( $self->{editor_beginner}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer3->Add( $m_staticText41, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer3->Add( $self->{startup_files}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -956,39 +942,6 @@ sub new {
 	$m_panel3->Layout;
 	$bSizer4->Fit($m_panel3);
 
-	my $fgSizer9 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
-	$fgSizer9->SetFlexibleDirection(Wx::wxBOTH);
-	$fgSizer9->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer9->Add( $m_staticText34, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_perl_cmd}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $m_staticText35, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_interpreter_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $m_staticText36, 0, Wx::wxALL, 5 );
-	$fgSizer9->Add( $m_staticText37, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer9->Add( $self->{run_script_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer9->Add( $self->{run_use_external_window}, 0, Wx::wxALL, 5 );
-
-	$m_panel4->SetSizer($fgSizer9);
-	$m_panel4->Layout;
-	$fgSizer9->Fit($m_panel4);
-
-	my $fgSizer5 = Wx::FlexGridSizer->new( 4, 2, 0, 0 );
-	$fgSizer5->SetFlexibleDirection(Wx::wxBOTH);
-	$fgSizer5->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer5->Add( $m_staticText19, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_choice8}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText20, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_choice9}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText21, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_staticText22}, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $m_staticText23, 0, Wx::wxALL, 5 );
-	$fgSizer5->Add( $self->{m_staticText24}, 0, Wx::wxALL, 5 );
-
-	$m_panel5->SetSizer($fgSizer5);
-	$m_panel5->Layout;
-	$fgSizer5->Fit($m_panel5);
-
 	my $fgSizer2 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
 	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
@@ -1012,8 +965,6 @@ sub new {
 	$fgSizer6->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer6->Add( $m_staticText25, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer6->Add( $self->{external_diff_tool}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer6->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer6->Add( $self->{perl_tags_file}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$m_panel6->SetSizer($fgSizer6);
 	$m_panel6->Layout;
@@ -1036,6 +987,30 @@ sub new {
 	$m_panel8->Layout;
 	$fgSizer8->Fit($m_panel8);
 
+	my $fgSizer9 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$fgSizer9->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer9->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
+	$fgSizer9->Add( $m_staticText34, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_perl_cmd}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer9->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
+	$fgSizer9->Add( $self->{run_use_external_window}, 0, Wx::wxALL, 5 );
+	$fgSizer9->Add( $m_staticText35, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_interpreter_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer9->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
+	$fgSizer9->Add( $m_staticText36, 0, Wx::wxALL, 5 );
+	$fgSizer9->Add( $m_staticText37, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer9->Add( $self->{run_script_args_default}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+
+	my $fgSizer11 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$fgSizer11->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer11->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
+	$fgSizer11->Add( $self->{lang_perl5_beginner}, 0, Wx::wxALL, 5 );
+	$fgSizer11->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
+	$fgSizer11->Add( $self->{m_staticText371}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer11->Add( $self->{lang_perl5_lexer}, 0, Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer11->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer11->Add( $self->{lang_perl5_tags_file}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+
 	my $fgSizer7 = Wx::FlexGridSizer->new( 10, 2, 0, 0 );
 	$fgSizer7->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer7->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
@@ -1046,24 +1021,32 @@ sub new {
 	$fgSizer7->Add( $self->{autocomplete_subroutine}, 0, Wx::wxALL, 5 );
 	$fgSizer7->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer7->Add( $m_staticText27, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_min_suggestion_len}, 0, Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{lang_perl5_autocomplete_min_suggestion_len}, 0, Wx::wxALL, 5 );
 	$fgSizer7->Add( $m_staticText28, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_max_suggestions}, 0, Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{lang_perl5_autocomplete_max_suggestions}, 0, Wx::wxALL, 5 );
 	$fgSizer7->Add( $m_staticText29, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer7->Add( $self->{perl_autocomplete_min_chars}, 0, Wx::wxALL, 5 );
+	$fgSizer7->Add( $self->{lang_perl5_autocomplete_min_chars}, 0, Wx::wxALL, 5 );
 
-	$m_panel7->SetSizer($fgSizer7);
+	my $bSizer5 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$bSizer5->Add( $self->{m_staticText39}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $fgSizer9, 1, Wx::wxEXPAND, 5 );
+	$bSizer5->Add( $self->{m_staticline5}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer5->Add( $self->{m_staticText351}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $fgSizer11, 0, 0, 5 );
+	$bSizer5->Add( $self->{m_staticline4}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer5->Add( $self->{m_staticText361}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $fgSizer7, 1, Wx::wxEXPAND, 5 );
+
+	$m_panel7->SetSizer($bSizer5);
 	$m_panel7->Layout;
-	$fgSizer7->Fit($m_panel7);
+	$bSizer5->Fit($m_panel7);
 
-	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 1 );
-	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Run Parameters"), 0 );
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Files and Colours"), 0 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 1 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
-	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Perl Auto Complete"), 0 );
+	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::wxALL, 5 );
@@ -1104,10 +1087,6 @@ sub save_autoclean {
 
 sub editor_fold_pod {
 	$_[0]->{editor_fold_pod};
-}
-
-sub editor_beginner {
-	$_[0]->{editor_beginner};
 }
 
 sub startup_files {
@@ -1202,22 +1181,6 @@ sub preview {
 	$_[0]->{preview};
 }
 
-sub run_perl_cmd {
-	$_[0]->{run_perl_cmd};
-}
-
-sub run_interpreter_args_default {
-	$_[0]->{run_interpreter_args_default};
-}
-
-sub run_script_args_default {
-	$_[0]->{run_script_args_default};
-}
-
-sub run_use_external_window {
-	$_[0]->{run_use_external_window};
-}
-
 sub editor_indent_auto {
 	$_[0]->{editor_indent_auto};
 }
@@ -1242,10 +1205,6 @@ sub external_diff_tool {
 	$_[0]->{external_diff_tool};
 }
 
-sub perl_tags_file {
-	$_[0]->{perl_tags_file};
-}
-
 sub file_http_timeout {
 	$_[0]->{file_http_timeout};
 }
@@ -1256,6 +1215,34 @@ sub file_ftp_timeout {
 
 sub file_ftp_passive {
 	$_[0]->{file_ftp_passive};
+}
+
+sub run_perl_cmd {
+	$_[0]->{run_perl_cmd};
+}
+
+sub run_use_external_window {
+	$_[0]->{run_use_external_window};
+}
+
+sub run_interpreter_args_default {
+	$_[0]->{run_interpreter_args_default};
+}
+
+sub run_script_args_default {
+	$_[0]->{run_script_args_default};
+}
+
+sub lang_perl5_beginner {
+	$_[0]->{lang_perl5_beginner};
+}
+
+sub lang_perl5_lexer {
+	$_[0]->{lang_perl5_lexer};
+}
+
+sub lang_perl5_tags_file {
+	$_[0]->{lang_perl5_tags_file};
 }
 
 sub autocomplete_always {
@@ -1270,16 +1257,16 @@ sub autocomplete_subroutine {
 	$_[0]->{autocomplete_subroutine};
 }
 
-sub perl_autocomplete_min_suggestion_len {
-	$_[0]->{perl_autocomplete_min_suggestion_len};
+sub lang_perl5_autocomplete_min_suggestion_len {
+	$_[0]->{lang_perl5_autocomplete_min_suggestion_len};
 }
 
-sub perl_autocomplete_max_suggestions {
-	$_[0]->{perl_autocomplete_max_suggestions};
+sub lang_perl5_autocomplete_max_suggestions {
+	$_[0]->{lang_perl5_autocomplete_max_suggestions};
 }
 
-sub perl_autocomplete_min_chars {
-	$_[0]->{perl_autocomplete_min_chars};
+sub lang_perl5_autocomplete_min_chars {
+	$_[0]->{lang_perl5_autocomplete_min_chars};
 }
 
 sub preview_refresh {

@@ -60,19 +60,19 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	autocomplete_method
 	autocomplete_subroutine
 
-	begerror_DB
-	begerror_map
-	begerror_map2
-	begerror_chomp
-	begerror_close
-	begerror_perl6
-	begerror_split
-	begerror_elseif
-	begerror_regexq
-	begerror_pipe2open
-	begerror_warning
-	begerror_ifsetvar
-	begerror_pipeopen
+	lang_perl5_beginner_debugger
+	lang_perl5_beginner_map
+	lang_perl5_beginner_map2
+	lang_perl5_beginner_chomp
+	lang_perl5_beginner_close
+	lang_perl5_beginner_perl6
+	lang_perl5_beginner_split
+	lang_perl5_beginner_elseif
+	lang_perl5_beginner_regexq
+	lang_perl5_beginner_pipe2open
+	lang_perl5_beginner_warning
+	lang_perl5_beginner_ifsetvar
+	lang_perl5_beginner_pipeopen
 	builder
 
 	config_perlcritic
@@ -137,10 +137,10 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	main_syntaxcheck
 	main_singleinstance_port
 
-	perl_ppi_lexer_limit
-	perl_autocomplete_min_chars
-	perl_autocomplete_max_suggestions
-	perl_autocomplete_min_suggestion_len
+	lang_perl5_lexer_ppi_limit
+	lang_perl5_autocomplete_min_chars
+	lang_perl5_autocomplete_max_suggestions
+	lang_perl5_autocomplete_min_suggestion_len
 
 	run_save
 	run_stacktrace
