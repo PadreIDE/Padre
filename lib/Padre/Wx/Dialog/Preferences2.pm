@@ -54,6 +54,21 @@ sub new {
 	return $self;
 }
 
+# One-shot creation, display and execution.
+# Does return the object, but we don't expect anyone to use it.
+sub run {
+	my $class  = shift;
+	my $main   = shift;
+	my $config = $main->config;
+	my $self   = Padre::Wx::Dialog::Preferences2->new( $main );
+	$self->load( $main->config );
+	$self->CentreOnParent;
+	unless ( $self->ShowModal == Wx::wxID_CANCEL ) {
+		$self->save( $main->config );
+	}
+	return $self;
+}
+
 
 
 

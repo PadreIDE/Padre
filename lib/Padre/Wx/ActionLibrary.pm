@@ -2220,25 +2220,10 @@ sub init {
 	Padre::Wx::Action->new(
 		name       => 'tools.preferences',
 		label      => _T('Preferences'),
-		comment    => _T('Edit the user preferences'),
-		menu_event => sub {
-			shift->on_preferences(@_);
-		},
-	);
-
-	# Temporary action for Preferences 2.0
-	Padre::Wx::Action->new(
-		name       => 'tools.preferences2',
-		label      => _T('Preferences 2.0'),
 		comment    => _T('Edit user and host preferences'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::Preferences2;
-			my $dialog = Padre::Wx::Dialog::Preferences2->new( $_[0] );
-			$dialog->load( $_[0]->config );
-			$dialog->CentreOnParent;
-			unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-				$dialog->save( $_[0]->config );
-			}
+			Padre::Wx::Dialog::Preferences2->run( $_[0] );
 		},
 	);
 
