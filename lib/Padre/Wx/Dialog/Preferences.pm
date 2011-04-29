@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::Preferences2;
+package Padre::Wx::Dialog::Preferences;
 
 use 5.008;
 use strict;
@@ -60,7 +60,7 @@ sub run {
 	my $class  = shift;
 	my $main   = shift;
 	my $config = $main->config;
-	my $self   = Padre::Wx::Dialog::Preferences2->new( $main );
+	my $self   = Padre::Wx::Dialog::Preferences->new($main);
 	$self->load( $main->config );
 	$self->CentreOnParent;
 	unless ( $self->ShowModal == Wx::wxID_CANCEL ) {

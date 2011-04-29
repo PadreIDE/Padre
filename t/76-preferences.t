@@ -17,7 +17,7 @@ use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Wx;
 use Padre;
-use_ok('Padre::Wx::Dialog::Preferences2');
+use_ok('Padre::Wx::Dialog::Preferences');
 
 # Create the IDE
 my $padre = new_ok('Padre');
@@ -25,7 +25,7 @@ my $main  = $padre->wx->main;
 isa_ok( $main, 'Padre::Wx::Main' );
 
 # Create the Preferences 2.0 dialog
-my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences2', [$main] );
+my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences', [$main] );
 
 # Check the listview properties
 my $treebook = $dialog->treebook;

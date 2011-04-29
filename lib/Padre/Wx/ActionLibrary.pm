@@ -2222,8 +2222,8 @@ sub init {
 		label      => _T('Preferences'),
 		comment    => _T('Edit user and host preferences'),
 		menu_event => sub {
-			require Padre::Wx::Dialog::Preferences2;
-			Padre::Wx::Dialog::Preferences2->run( $_[0] );
+			require Padre::Wx::Dialog::Preferences;
+			Padre::Wx::Dialog::Preferences->run( $_[0] );
 		},
 	);
 
