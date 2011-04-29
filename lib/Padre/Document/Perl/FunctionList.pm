@@ -17,7 +17,7 @@ our @ISA     = 'Padre::Task::FunctionList';
 my $n = "\\cM?\\cJ";
 our $sub_search_re = qr/
 		(?:
-		(?:$n)*__(?:DATA|END)__\b.*
+		${n}__(?:DATA|END)__\b.*
 		|
 		$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?(?:$n){1,2})
 		|

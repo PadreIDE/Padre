@@ -306,7 +306,7 @@ sub find_functions {
 	my $n = "\\cM?\\cJ";
 	return grep { defined $_ } $_[1] =~ m/
 		(?:
-		(?:$n)*__(?:DATA|END)__\b.*
+		${n}__(?:DATA|END)__\b.*
 		|
 		$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?$n)
 		|

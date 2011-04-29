@@ -187,6 +187,7 @@ SCOPE: {
 				keywords
 				two_lines
 				three_lines
+				after_data
 				}
 		],
 		'Found expected Perl functions',

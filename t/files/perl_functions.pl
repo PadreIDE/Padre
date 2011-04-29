@@ -31,3 +31,10 @@ three_lines
 {
 	return 1;
 }
+
+# This is a false __DATA__ that shouldn't result in a culled document
+'__DATA__';
+
+sub after_data {
+	return 1;
+}
