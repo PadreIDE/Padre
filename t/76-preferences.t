@@ -9,8 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-#	plan tests => 8;
-	plan tests => 6;
+	plan tests => 9;
 }
 
 use Test::NoWarnings;
