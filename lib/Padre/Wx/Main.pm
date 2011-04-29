@@ -5224,49 +5224,6 @@ sub open_perl_filter {
 	return;
 }
 
-
-=pod
-
-=head3 C<on_preferences>
-
-    $main->on_preferences;
-
-Open Padre's preferences dialog. No return value.
-
-=cut
-
-sub on_preferences {
-	my $self = shift;
-
-	require Padre::MimeTypes;
-	my %old_highlighters = Padre::MimeTypes->get_current_highlighters;
-
-	require Padre::Wx::Dialog::Preferences;
-	my $preferences_dialog = Padre::Wx::Dialog::Preferences->new;
-	if ( $preferences_dialog->run($self) ) {
-		my %mime_types; # all the mime-types of currently open files
-		foreach my $editor ( $self->editors ) {
-			$editor->set_preferences;
-			$mime_types{ $editor->{Document}->mimetype } = 1;
-		}
-
-		my %new_highlighters = Padre::MimeTypes->get_current_highlighters;
-
-		foreach my $mime_type ( keys %mime_types ) {
-			my $old_highlighter = $old_highlighters{$mime_type};
-			my $new_highlighter = $new_highlighters{$mime_type};
-			if ( $old_highlighter ne $new_highlighter ) {
-				$self->change_highlighter( $mime_type, $new_highlighter );
-			}
-		}
-
-		$self->refresh_functions( $self->current );
-	}
-	$self->ide->save_config;
-
-	return;
-}
-
 =pod
 
 =head3 C<on_key_bindings>
