@@ -3,14 +3,14 @@ package Padre::Wx::Dialog::Preferences;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Locale                ();
-use Padre::Document              ();
-use Padre::Wx                    ();
-use Padre::Wx::FBP::Preferences2 ();
+use Padre::Locale               ();
+use Padre::Document             ();
+use Padre::Wx                   ();
+use Padre::Wx::FBP::Preferences ();
 use Padre::Logger;
 
 our $VERSION = '0.85';
-our @ISA     = 'Padre::Wx::FBP::Preferences2';
+our @ISA     = 'Padre::Wx::FBP::Preferences';
 
 
 

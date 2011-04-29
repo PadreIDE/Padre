@@ -499,7 +499,7 @@ msgstr "Informazioni su Padre"
 msgid "Action: %s"
 msgstr "Azione: %s"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:215
+#: lib/Padre/Wx/FBP/Preferences.pm:215
 msgid "Add another closing bracket if there already is one"
 msgstr "Aggiungi una parentesi chiusa se ce n'è già una"
 
@@ -511,7 +511,7 @@ msgstr "Aggiungi una parentesi chiusa se ce n'è già una (e la funzione 'comple
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:762
+#: lib/Padre/Wx/FBP/Preferences.pm:762
 msgid "Advanced..."
 msgstr "Avanzate..."
 
@@ -620,7 +620,7 @@ msgstr "Qualsiasi carattere utilizzato nelle parole"
 msgid "Apache License"
 msgstr "Apache License"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:942
+#: lib/Padre/Wx/FBP/Preferences.pm:942
 #: lib/Padre/Wx/Dialog/Preferences.pm:877
 msgid "Appearance"
 msgstr "Aspetto"
@@ -683,26 +683,26 @@ msgstr "Autenticazione"
 msgid "Author:"
 msgstr "Autore:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:75
+#: lib/Padre/Wx/FBP/Preferences.pm:75
 #: lib/Padre/Wx/Dialog/Preferences.pm:323
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr "Coprimi automaticamente il markup POD quando la compressione del codice è abilitata"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:669
+#: lib/Padre/Wx/FBP/Preferences.pm:669
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
 msgid "Autocomplete always while typing"
 msgstr "Autocompleta sempre mentre si digita"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:207
+#: lib/Padre/Wx/FBP/Preferences.pm:207
 #: lib/Padre/Wx/Dialog/Preferences.pm:366
 msgid "Autocomplete brackets"
 msgstr "Completamento automatico parentesi"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:685
+#: lib/Padre/Wx/FBP/Preferences.pm:685
 msgid "Autocomplete new functions in scripts"
 msgstr "Completa automaticamente le nuove funzioni negli script"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:677
+#: lib/Padre/Wx/FBP/Preferences.pm:677
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:41
 msgid "Autocomplete new methods in packages"
 msgstr "Completa automaticamente i nuovi metodi nei package"
@@ -715,7 +715,7 @@ msgstr "Completa automaticamente le nuove subroutine negli script"
 msgid "Autocompletion error"
 msgstr "Errore del completamento automatico"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:540
+#: lib/Padre/Wx/FBP/Preferences.pm:540
 msgid "Autoindent"
 msgstr "Indentazione automatica"
 
@@ -723,7 +723,7 @@ msgstr "Indentazione automatica"
 msgid "Autoindent:"
 msgstr "Indentazione automatica:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:488
+#: lib/Padre/Wx/FBP/Preferences.pm:488
 #: lib/Padre/Wx/Dialog/Preferences.pm:266
 msgid "Automatic indentation style detection"
 msgstr "Individuazione automatica stile di indentazione"
@@ -748,7 +748,7 @@ msgstr "Backspace"
 msgid "Beginning of line"
 msgstr "Inizio riga"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:941
+#: lib/Padre/Wx/FBP/Preferences.pm:941
 #: lib/Padre/Wx/Dialog/Preferences.pm:874
 msgid "Behaviour"
 msgstr "Comportamento"
@@ -802,7 +802,7 @@ msgstr "CTRL"
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:132
 #: lib/Padre/Wx/FBP/Find.pm:119
-#: lib/Padre/Wx/FBP/Preferences2.pm:768
+#: lib/Padre/Wx/FBP/Preferences.pm:768
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr "Annulla"
@@ -941,7 +941,7 @@ msgstr "Verifica cancellata"
 msgid "Check for Common (Beginner) Errors"
 msgstr "Verifica errori comuni (da principianti)"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:175
+#: lib/Padre/Wx/FBP/Preferences.pm:175
 msgid "Check for file updates on disk every (seconds)"
 msgstr "Verifica aggiornamenti ai file su disco ogni (secondi):"
 
@@ -983,7 +983,7 @@ msgstr "Classe:"
 msgid "Clean Recent Files List"
 msgstr "Ripulisci elenco file recenti"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:67
+#: lib/Padre/Wx/FBP/Preferences.pm:67
 #: lib/Padre/Wx/Dialog/Preferences.pm:318
 msgid "Clean up file content on saving (for supported document types)"
 msgstr "Ripulisci il contenuto del file durante il salvataggio (per i tipi di documento supportati)"
@@ -1072,7 +1072,7 @@ msgstr "Ordine del codice"
 msgid "Colored text in output window (ANSI)"
 msgstr "Testo colorato nella finestra di output (ANSI)"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:277
+#: lib/Padre/Wx/FBP/Preferences.pm:277
 msgid "Coloured text in output window (ANSI)"
 msgstr "Testo colorato nella finestra di output (ANSI)"
 
@@ -1122,7 +1122,7 @@ msgstr "Connessione al server FTP avvenuta con successo!"
 msgid "Content"
 msgstr "Contenuto"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:454
+#: lib/Padre/Wx/FBP/Preferences.pm:454
 msgid "Content type"
 msgstr "Tipo di contenuto"
 
@@ -1375,7 +1375,7 @@ msgstr "Posizione corrente: %s"
 msgid "Cursor Blink Rate (milliseconds - 0 = blink off; 500 = default):"
 msgstr "Frequenza di intermittenza del cursore (millisecondi - 0 = disattivata; 500 = predefinita):"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:193
+#: lib/Padre/Wx/FBP/Preferences.pm:193
 msgid "Cursor blink rate (milliseconds - 0 = off, 500 = default)"
 msgstr "Frequenza di intermittenza del cursore (millisecondi - 0 = disattivata; 500 = predefinita)"
 
@@ -1432,7 +1432,7 @@ msgstr "Diminuisci dimensione carattere"
 msgid "Default"
 msgstr "Predefinito"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:160
+#: lib/Padre/Wx/FBP/Preferences.pm:160
 msgid "Default line ending"
 msgstr "Carattere di fine riga predefinito"
 
@@ -1440,7 +1440,7 @@ msgstr "Carattere di fine riga predefinito"
 msgid "Default line ending:"
 msgstr "Carattere di fine riga predefinito:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:106
+#: lib/Padre/Wx/FBP/Preferences.pm:106
 msgid "Default projects directory"
 msgstr "Cartella di progetto predefinita"
 
@@ -1452,7 +1452,7 @@ msgstr "Cartella di progetto predefinita"
 msgid "Default value:"
 msgstr "Valore predefinito"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:51
+#: lib/Padre/Wx/FBP/Preferences.pm:51
 #: lib/Padre/Wx/Dialog/Preferences.pm:306
 msgid "Default word wrap on for each file"
 msgstr "A  capo automatico di default per ciascun file"
@@ -1490,7 +1490,7 @@ msgstr "Elimina spaziatura a fine riga"
 msgid "Deprecation"
 msgstr "Deprecato"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:442
+#: lib/Padre/Wx/FBP/Preferences.pm:442
 #: lib/Padre/Wx/Dialog/SessionManager.pm:238
 msgid "Description"
 msgstr "Descrizione"
@@ -1518,7 +1518,7 @@ msgstr "Strumenti per le differenze"
 msgid "Diff to Saved Version"
 msgstr "Differenze rispetto alla versione salvata"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:563
+#: lib/Padre/Wx/FBP/Preferences.pm:563
 msgid "Diff tool"
 msgstr "Strumento per le differenze"
 
@@ -1692,7 +1692,7 @@ msgstr "Modifica/aggiungi frammenti"
 msgid "Editor"
 msgstr "Edtor"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:325
+#: lib/Padre/Wx/FBP/Preferences.pm:325
 msgid "Editor Current Line Background Colour"
 msgstr "Colore di sfondo della riga corrente dell'editor"
 
@@ -1700,7 +1700,7 @@ msgstr "Colore di sfondo della riga corrente dell'editor"
 msgid "Editor Current Line Background Colour:"
 msgstr "Colore di sfondo della riga corrente:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:309
+#: lib/Padre/Wx/FBP/Preferences.pm:309
 msgid "Editor Font"
 msgstr "Font dell'editor"
 
@@ -1721,7 +1721,7 @@ msgstr "Indirizzo email:"
 msgid "Email and confirmation do not match."
 msgstr "Email e conferma non coincidono"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:223
+#: lib/Padre/Wx/FBP/Preferences.pm:223
 #: lib/Padre/Wx/Dialog/Preferences.pm:382
 msgid "Enable Smart highlighting while typing"
 msgstr "Abilita evidenziazione Smart mentre si digita"
@@ -2015,7 +2015,7 @@ msgstr "&Esteso (&x)"
 msgid "Extended regular expressions allow free formatting (whitespace is ignored) and comments"
 msgstr "Le espressioni regolari consentono la formattazione e i commenti liberi (la spaziatura viene ignorata) "
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:946
+#: lib/Padre/Wx/FBP/Preferences.pm:946
 #: lib/Padre/Wx/Dialog/Preferences.pm:891
 msgid "External Tools"
 msgstr "Strumenti esterno"
@@ -2098,7 +2098,7 @@ msgstr "Falso"
 
 #: lib/Padre/MimeTypes.pm:365
 #: lib/Padre/MimeTypes.pm:374
-#: lib/Padre/Wx/FBP/Preferences2.pm:448
+#: lib/Padre/Wx/FBP/Preferences.pm:448
 msgid "Fast but might be out of date"
 msgstr "Veloce, ma potrebbe essere obsoleto"
 
@@ -2122,16 +2122,16 @@ msgstr "File"
 msgid "File %s not found."
 msgstr "File %s non trovato"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:412
+#: lib/Padre/Wx/FBP/Preferences.pm:412
 msgid "File Type"
 msgstr "Tipo file"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:629
+#: lib/Padre/Wx/FBP/Preferences.pm:629
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
 msgstr "Accesso al file mediante FTP"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:605
+#: lib/Padre/Wx/FBP/Preferences.pm:605
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:36
 msgid "File access via HTTP"
 msgstr "Accesso al file mediante HTTP"
@@ -2191,7 +2191,7 @@ msgstr "Nome file"
 msgid "Files"
 msgstr "File"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:944
+#: lib/Padre/Wx/FBP/Preferences.pm:944
 msgid "Files and Colours"
 msgstr "File e colori"
 
@@ -2427,7 +2427,7 @@ msgstr "Costrutti di Raggruppamento"
 msgid "Guess"
 msgstr "Determina"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:474
+#: lib/Padre/Wx/FBP/Preferences.pm:474
 msgid "Guess from Current Document"
 msgstr "Determina dal documento corrente"
 
@@ -2478,7 +2478,7 @@ msgstr "Nasconde la lista di corrispondenze per la ricerca 'Trova nei file'"
 msgid "Highlight the line where the cursor is"
 msgstr "Evidenzia la linea su cui è posizionato il cursore"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:427
+#: lib/Padre/Wx/FBP/Preferences.pm:427
 msgid "Highlighter"
 msgstr "Evidenziatore"
 
@@ -2522,7 +2522,7 @@ msgstr "Ignora maiuscole/minuscole (&i)"
 msgid "Imitate clicking on the right mouse button"
 msgstr "Imita il click del tasto destro del mouse"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:376
+#: lib/Padre/Wx/FBP/Preferences.pm:376
 msgid ""
 "Include directory:  -I<dir>\n"
 "Enable tainting checks:  -T\n"
@@ -2548,12 +2548,12 @@ msgstr "Indenta profondamente"
 msgid "Indent to Same Depth"
 msgstr "Indenta alla stessa profondità"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:945
+#: lib/Padre/Wx/FBP/Preferences.pm:945
 #: lib/Padre/Wx/Dialog/Preferences.pm:888
 msgid "Indentation"
 msgstr "Indentazione"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:522
+#: lib/Padre/Wx/FBP/Preferences.pm:522
 msgid "Indentation width (in columns)"
 msgstr "Larghezza dell'indentazione (in colonne)"
 
@@ -2601,7 +2601,7 @@ msgstr "Errore interno"
 msgid "Internal error"
 msgstr "Errore interno"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:362
+#: lib/Padre/Wx/FBP/Preferences.pm:362
 msgid "Interpreter arguments"
 msgstr "Argomenti dell'interprete"
 
@@ -2770,7 +2770,7 @@ msgstr "Carica tutti i moduli di Padre"
 msgid "Loaded %s modules"
 msgstr "Caricati %s moduli"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:947
+#: lib/Padre/Wx/FBP/Preferences.pm:947
 #: lib/Padre/Wx/Dialog/Preferences.pm:19
 msgid "Local/Remote File Access"
 msgstr "Accesso file locale/remoto"
@@ -2887,7 +2887,7 @@ msgstr "Testo corrispondente:"
 msgid "Max. number of suggestions:"
 msgstr "Numero massimo di suggerimenti:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:711
+#: lib/Padre/Wx/FBP/Preferences.pm:711
 msgid "Maximum number of suggestions"
 msgstr "Numero massimo di suggerimenti"
 
@@ -2900,7 +2900,7 @@ msgstr "Messaggio"
 msgid "Methods"
 msgstr "Metodi"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:130
+#: lib/Padre/Wx/FBP/Preferences.pm:130
 msgid "Methods order"
 msgstr "Ordine dei metodi"
 
@@ -2937,11 +2937,11 @@ msgstr "Numero minimo di caratteri per il completamento automatico:"
 msgid "Min. length of suggestions:"
 msgstr "Lunghezza minima dei suggerimenti:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:729
+#: lib/Padre/Wx/FBP/Preferences.pm:729
 msgid "Minimum characters for autocomplete"
 msgstr "Numero minimo di caratteri per il completamento automatico"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:693
+#: lib/Padre/Wx/FBP/Preferences.pm:693
 msgid "Minimum length of suggestions"
 msgstr "Lunghezza minima dei suggerimenti"
 
@@ -3332,11 +3332,11 @@ msgstr "Apertura annullata"
 msgid "Open file"
 msgstr "Apri file"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:91
+#: lib/Padre/Wx/FBP/Preferences.pm:91
 msgid "Open files"
 msgstr "Apri file"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:122
+#: lib/Padre/Wx/FBP/Preferences.pm:122
 #: lib/Padre/Wx/Dialog/Preferences.pm:341
 msgid "Open files in existing Padre"
 msgstr "Apri i file nell'istanza esistente di Padre"
@@ -3504,7 +3504,7 @@ msgstr "Wizard per documento Padre"
 msgid "Padre Plugin Wizard"
 msgstr "Wizard per i plugin di Padre"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:26
+#: lib/Padre/Wx/FBP/Preferences.pm:26
 msgid "Padre Preferences"
 msgstr "Preferenze Padre"
 
@@ -3580,7 +3580,7 @@ msgstr "Test Perl 5"
 msgid "Perl 6 Script"
 msgstr "Script Perl 6"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:948
+#: lib/Padre/Wx/FBP/Preferences.pm:948
 #: lib/Padre/Wx/Dialog/Preferences.pm:20
 msgid "Perl Auto Complete"
 msgstr "Completamento automatico Perl"
@@ -3601,12 +3601,12 @@ msgstr "Filtro Perl"
 msgid "Perl Help"
 msgstr "Aiuto riguardo Perl"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:83
+#: lib/Padre/Wx/FBP/Preferences.pm:83
 #: lib/Padre/Wx/Dialog/Preferences.pm:328
 msgid "Perl beginner mode"
 msgstr "Modalità principiante del Perl"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:580
+#: lib/Padre/Wx/FBP/Preferences.pm:580
 msgid "Perl ctags file"
 msgstr "File ctags di Perl"
 
@@ -3614,7 +3614,7 @@ msgstr "File ctags di Perl"
 msgid "Perl ctags file:"
 msgstr "File ctags di Perl:"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:348
+#: lib/Padre/Wx/FBP/Preferences.pm:348
 msgid "Perl interpreter"
 msgstr "Interprete Perl"
 
@@ -3746,7 +3746,7 @@ msgstr "Asserzione di lookbehind positivo"
 msgid "Pragmata"
 msgstr "Pragmata"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:145
+#: lib/Padre/Wx/FBP/Preferences.pm:145
 msgid "Prefered language for error diagnostics"
 msgstr "Linguaggio preferito per la diagnostica degli errori"
 
@@ -3913,7 +3913,7 @@ msgstr "Refactor"
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:247
+#: lib/Padre/Wx/FBP/Preferences.pm:247
 msgid "RegExp for TODO panel"
 msgstr "Espressione regolare per la finestra delle attività"
 
@@ -4160,7 +4160,7 @@ msgstr "Esegui comando"
 msgid "Run Document inside Padre"
 msgstr "Esegui documento in &Padre"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:943
+#: lib/Padre/Wx/FBP/Preferences.pm:943
 #: lib/Padre/Wx/Dialog/Preferences.pm:881
 msgid "Run Parameters"
 msgstr "Parametri di esecuzione"
@@ -4241,7 +4241,7 @@ msgstr "File SQL"
 msgid "STC Reference"
 msgstr "Documentazione di riferimento STC"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:755
+#: lib/Padre/Wx/FBP/Preferences.pm:755
 #: lib/Padre/Wx/Dialog/SessionSave.pm:229
 msgid "Save"
 msgstr "Salva"
@@ -4295,7 +4295,7 @@ msgstr "Scintilla"
 msgid "Script Files"
 msgstr "File di script"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:382
+#: lib/Padre/Wx/FBP/Preferences.pm:382
 msgid "Script arguments"
 msgstr "Argomenti script"
 
@@ -4597,7 +4597,7 @@ msgstr "Shift"
 msgid "Shortcut"
 msgstr "Scorciatoia"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:231
+#: lib/Padre/Wx/FBP/Preferences.pm:231
 #: lib/Padre/Wx/Dialog/Preferences.pm:389
 msgid "Shorten the common path in window list"
 msgstr "Accorcia il percorso comune nell'elenco finestre"
@@ -4718,7 +4718,7 @@ msgstr "Mostra report corrente"
 msgid "Show information about Padre"
 msgstr "Mostra informazioni riguardo Padre"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:285
+#: lib/Padre/Wx/FBP/Preferences.pm:285
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr "Mostra i messaggi informativi a bassa priorità nella barra di stato (non in un popup)"
 
@@ -4736,7 +4736,7 @@ msgstr "Mostra/nasconde la barra di stato al fondo della finestra."
 msgid "Show previous positions"
 msgstr "Mostra la posizione precedente"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:293
+#: lib/Padre/Wx/FBP/Preferences.pm:293
 msgid "Show right margin at column"
 msgstr "Mostra il margine destro alla colonna"
 
@@ -5025,7 +5025,7 @@ msgstr "TAB"
 msgid "Tab"
 msgstr "Tab"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:504
+#: lib/Padre/Wx/FBP/Preferences.pm:504
 msgid "Tab display size (in spaces)"
 msgstr "Dimensione delle tabulazioni (in spazi)"
 
@@ -5101,8 +5101,8 @@ msgstr "Questo documento non contiene nessun POD"
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr "Questa funzione ricarica My plug-in senza riavviare Padre"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:611
-#: lib/Padre/Wx/FBP/Preferences2.pm:635
+#: lib/Padre/Wx/FBP/Preferences.pm:611
+#: lib/Padre/Wx/FBP/Preferences.pm:635
 msgid "Timeout (in seconds)"
 msgstr "Timeout (in secondi)"
 
@@ -5246,7 +5246,7 @@ msgstr "Maiuscolo fino a \\E (pensate a vi)"
 msgid "Uptime"
 msgstr "Uptime"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:653
+#: lib/Padre/Wx/FBP/Preferences.pm:653
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:51
 msgid "Use FTP passive mode"
 msgstr "Usa modalità FTP passiva"
@@ -5259,12 +5259,12 @@ msgstr "Usa il sorgente Perl come filtro"
 msgid "Use Splash Screen"
 msgstr "Usare la schermata di avvio"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:496
+#: lib/Padre/Wx/FBP/Preferences.pm:496
 #: lib/Padre/Wx/Dialog/Preferences.pm:270
 msgid "Use Tabs"
 msgstr "Usa tabulazioni"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:239
+#: lib/Padre/Wx/FBP/Preferences.pm:239
 #: lib/Padre/Wx/Dialog/Preferences.pm:396
 msgid "Use X11 middle button paste style"
 msgstr "Usa per incollare la pressione del pulsante centrale (in stile X11)"
@@ -5273,12 +5273,12 @@ msgstr "Usa per incollare la pressione del pulsante centrale (in stile X11)"
 msgid "Use a filter to select one or more files"
 msgstr "Usate un filtro per selezionare un file"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:396
+#: lib/Padre/Wx/FBP/Preferences.pm:396
 #: lib/Padre/Wx/Dialog/Preferences.pm:761
 msgid "Use external window for execution"
 msgstr "Usa una finestra esterna per l'esecuzione"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:59
+#: lib/Padre/Wx/FBP/Preferences.pm:59
 #: lib/Padre/Wx/Dialog/Preferences.pm:311
 msgid "Use panel order for Ctrl-Tab (not usage history)"
 msgstr "Usa l'ordine delle schede per CTRL-TAB (non la cronologia dell'utilizzo)"
@@ -5287,7 +5287,7 @@ msgstr "Usa l'ordine delle schede per CTRL-TAB (non la cronologia dell'utilizzo)
 msgid "Use rege&x"
 msgstr "Usa espressioni regolari"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:261
+#: lib/Padre/Wx/FBP/Preferences.pm:261
 msgid "Use splash screen"
 msgstr "Usare la schermata di avvio"
 
@@ -5493,7 +5493,7 @@ msgstr "alfabetico"
 msgid "alphabetical_private_last"
 msgstr "ultimo_privato_alfabetico"
 
-#: lib/Padre/Wx/FBP/Preferences2.pm:460
+#: lib/Padre/Wx/FBP/Preferences.pm:460
 msgid "application/x-perl"
 msgstr "application/x-perl"
 
