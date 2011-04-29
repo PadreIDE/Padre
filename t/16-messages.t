@@ -27,7 +27,7 @@ my @strings = (
 
 	q(msgid "%s - Crashed while instantiating: %s"),                            # Padre::PluginManager
 
-	q(msgid "Default word wrap on for each file"),                              # Padre::Wx::Dialog::Preferences.pm
+	q(msgid "Default word wrap on for each file"),                              # Padre::Wx::Dialog::Preferences2
 	q(msgid "Any non-word character"),                                          #: lib/Padre/Wx/Dialog/RegexEditor.pm:78
 );
 

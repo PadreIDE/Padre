@@ -30,7 +30,7 @@ use_ok('Padre::Wx');
 use_ok('Padre::Wx::HtmlWindow');
 use_ok('Padre::Wx::Printout');
 use_ok('Padre::Wx::Dialog::PluginManager');
-use_ok('Padre::Wx::Dialog::Preferences');
+use_ok('Padre::Wx::Dialog::Preferences2');
 use_ok('Padre::Wx::History::TextEntryDialog');
 use_ok('Padre::Wx::History::ComboBox');
 use_ok('Padre');
