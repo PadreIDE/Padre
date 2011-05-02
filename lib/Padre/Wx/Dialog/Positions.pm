@@ -1,11 +1,13 @@
 package Padre::Wx::Dialog::Positions;
 
+# TODO: This has no place as a separate class, and shouldn't be under dialogs,
+# and shouldn't store local class data. Move into Padre::Wx::Main???
+
 use 5.008;
 use strict;
 use warnings;
 use Padre::DB         ();
 use Padre::Wx         ();
-use Padre::Wx::Dialog ();
 
 our $VERSION = '0.85';
 
