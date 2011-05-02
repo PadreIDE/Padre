@@ -24,7 +24,8 @@ sub show {
 	# Create the dialog
 	my $self  = $class->new($main);
 	$self->SetTitle($title);
-	$self->display->SetText($text);
+	$self->text->SetValue($text);
+	$self->close->SetFocus;
 
 	# Display the dialog
 	$self->CentreOnParent;
