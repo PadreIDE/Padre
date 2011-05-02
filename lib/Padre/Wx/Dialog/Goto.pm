@@ -209,7 +209,7 @@ sub _on_ok_button {
 	$value--;
 
 	require Padre::Wx::Dialog::Positions;
-	Padre::Wx::Dialog::Positions->set_position();
+	Padre::Wx::Dialog::Positions->set_position;
 
 	# And then goto to the line or position
 	# keeping it in the center of the editor
