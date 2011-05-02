@@ -419,9 +419,9 @@ sub get_lexer {
 # prefered default values ?
 
 sub add_mime_class {
-	my $class  = shift;
-	my $type  = shift;
 	my $class = shift;
+	my $type  = shift;
+	my $mime_class = shift;
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
 			sprintf(
@@ -444,7 +444,7 @@ sub add_mime_class {
 		);
 		return;
 	}
-	$MIME{$type}->{class} = $class;
+	$MIME{$type}->{class} = $mime_class;
 }
 
 sub remove_mime_class {
