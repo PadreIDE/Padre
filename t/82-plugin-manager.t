@@ -34,7 +34,7 @@ SCOPE: {
 		'->plugin_dir ok',
 	);
 	is( keys %{ $manager->plugins }, 0, 'Found no plugins' );
-	ok( !defined( $manager->load_plugins() ),
+	ok( !defined( $manager->load_plugins ),
 		'load_plugins always returns undef'
 	);
 
@@ -47,12 +47,18 @@ SCOPE: {
 SCOPE: {
 	my $manager = Padre::PluginManager->new($padre);
 	is( keys %{ $manager->plugins }, 0, 'No plugins loaded' );
+
+	# Load the plugin
 	ok( !$manager->load_plugin('Padre::Plugin::My'), 'Loaded My Plugin' );
 	is( keys %{ $manager->plugins }, 1, 'Loaded something' );
 	my $handle = $manager->_plugin('Padre::Plugin::My');
 	isa_ok( $handle, 'Padre::PluginHandle' );
 	is( $handle->class, 'Padre::Plugin::My', 'Loaded My Plugin' );
 	ok( $handle->disabled,                            'My Plugin is disabled' );
+
+	# Enable the plugin
+	
+
 	ok( $manager->unload_plugin('Padre::Plugin::My'), '->unload_plugin ok' );
 	ok( !defined( $manager->plugins->{My} ),          'Plugin no longer loaded' );
 	is( eval("\$Padre::Plugin::My::VERSION"), undef, 'My Plugin was cleaned up' );

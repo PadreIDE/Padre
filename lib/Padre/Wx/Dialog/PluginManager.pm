@@ -321,7 +321,7 @@ sub _plugin_disable {
 
 	# disable plug-in
 	Padre::DB::Plugin->update_enabled( $plugin => 0 );
-	$self->{manager}->_plugin_disable($plugin);
+	$self->{manager}->plugin_disable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
@@ -339,7 +339,7 @@ sub _plugin_enable {
 
 	# Enable plug-in
 	Padre::DB::Plugin->update_enabled( $plugin => 1 );
-	$self->{manager}->_plugin_enable($plugin);
+	$self->{manager}->plugin_enable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;

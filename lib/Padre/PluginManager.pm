@@ -270,7 +270,7 @@ sub shutdown {
 			Padre::DB::Plugin->update_enabled(
 				$module => 1,
 			);
-			$self->_plugin_disable($plugin);
+			$self->plugin_disable($plugin);
 
 		} elsif ( $plugin->disabled ) {
 			Padre::DB::Plugin->update_enabled(
@@ -753,16 +753,17 @@ sub _unload_plugin {
 	return 1;
 }
 
-sub _plugin_enable {
+sub plugin_enable {
 	my $self   = shift;
-	my $plugin = shift;
-
-	# Do nothing but calling the PluginHandle here, this method is only used by the GUI, not
-	# for plugins enabled by config!
-
-	$self->_plugin($plugin)->enabled;
+	my $handle = $self->_plugin(shift) or return;
+	$handle->enable;
 }
 
+sub plugin_disable {
+	my $self   = shift;
+	my $handle = $self->_plugin(shift) or return;
+	$handle->disable;
+}
 
 =pod
 
@@ -781,18 +782,6 @@ sub reload_plugin {
 	$self->_load_plugin($module)   or return;
 	$self->enable_editors($module) or return;
 	return 1;
-}
-
-
-# Assume the named plug-in exists, disable it
-sub _plugin_disable {
-	my $self = shift;
-	my $name = shift;
-
-	my $plugin = $self->_plugin($name);
-
-	$plugin->disable;
-
 }
 
 =pod
