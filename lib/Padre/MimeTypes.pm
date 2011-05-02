@@ -19,7 +19,7 @@ use strict;
 use warnings;
 use Carp           ();
 use File::Basename ();
-use Padre::Config  ();
+use Padre::Current ();
 use Padre::Util    ('_T');
 use Padre::Wx      ();
 use Padre::DB      ();
@@ -35,7 +35,10 @@ my %EXT_MIME = ();
 # The list of available syntax highlighting modules
 my %HIGHLIGHTER = ();
 
-# MIME Type database and settings.
+# Highlighters preferences defined in Padre's configuration system
+my %HIGHLIGHTER_CONFIG = ();
+
+# Main MIME type database and settings.
 # NOTE: This has gotten complex enough it probably needs to be a HASH
 #       of objects now.
 my %MIME = ();
@@ -133,6 +136,10 @@ sub _initialize {
 		p6m => 'application/x-perl6',
 		pl6 => 'application/x-perl6',
 		pm6 => 'application/x-perl6',
+	);
+
+	%HIGHLIGHTER_CONFIG = (
+		'application/x-perl' => 'lang_perl5_lexer',
 	);
 
 	# This is the mime-type to Scintilla lexer mapping.
@@ -370,7 +377,7 @@ sub _initialize {
 	#'text/x-pod'         => 'Padre::Document::POD',
 
 	# Array ref of objects with value and mime_type fields that have the raw values
-	__PACKAGE__->read_current_highlighters_from_db;
+	__PACKAGE__->load_highlighter_config;
 
 	__PACKAGE__->add_highlighter(
 		'stc', _T('Scintilla'),
@@ -553,10 +560,10 @@ sub change_highlighters {
 		Padre::DB::SyntaxHighlight->set_mime_type( $type, $highlighter );
 	}
 
-	$class->read_current_highlighters_from_db;
+	$class->load_highlighter_config;
 }
 
-sub read_current_highlighters_from_db {
+sub load_highlighter_config {
 	my $current_highlighters = Padre::DB::SyntaxHighlight->select || [];
 
 	# Set defaults
@@ -569,6 +576,14 @@ sub read_current_highlighters_from_db {
 		if ( defined $e->mime_type ) {
 			$MIME{ $e->mime_type }->{current_highlighter} = $e->value;
 		}
+	}
+
+	# Override with settings that have been moved from the database
+	# to the Padre::Config system
+	my $config = Padre::Current->config;
+	foreach my $type ( keys %HIGHLIGHTER_CONFIG ) {
+		my $method = $HIGHLIGHTER_CONFIG{$type};
+		$MIME{$type}->{current_highlighter} = $config->$method();
 	}
 }
 
@@ -596,7 +611,7 @@ sub get_current_highlighter_of_mime_type {
 }
 
 sub add_highlighter_to_mime_type {
-	my $class   = shift;
+	my $class  = shift;
 	my $mime   = shift;
 	my $module = shift; # Or 'stc' to indicate Scintilla
 
