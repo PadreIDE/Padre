@@ -56,9 +56,7 @@ SCOPE: {
 	is( $handle->class, 'Padre::Plugin::My', 'Loaded My Plugin' );
 	ok( $handle->disabled,                            'My Plugin is disabled' );
 
-	# Enable the plugin
-	
-
+	# Unload the plugin
 	ok( $manager->unload_plugin('Padre::Plugin::My'), '->unload_plugin ok' );
 	ok( !defined( $manager->plugins->{My} ),          'Plugin no longer loaded' );
 	is( eval("\$Padre::Plugin::My::VERSION"), undef, 'My Plugin was cleaned up' );
