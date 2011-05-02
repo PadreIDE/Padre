@@ -419,7 +419,7 @@ sub get_lexer {
 # prefered default values ?
 
 sub add_mime_class {
-	my $self  = shift;
+	my $class  = shift;
 	my $type  = shift;
 	my $class = shift;
 	if ( not $MIME{$type} ) {
@@ -448,7 +448,7 @@ sub add_mime_class {
 }
 
 sub remove_mime_class {
-	my $self = shift;
+	my $class = shift;
 	my $type = shift;
 
 	if ( not $MIME{$type} ) {
@@ -476,7 +476,7 @@ sub remove_mime_class {
 }
 
 sub get_mime_class {
-	my $self = shift;
+	my $class = shift;
 	my $type = shift;
 
 	if ( not $MIME{$type} ) {
@@ -494,7 +494,7 @@ sub get_mime_class {
 }
 
 sub add_highlighter {
-	my $self        = shift;
+	my $class        = shift;
 	my $module      = shift;
 	my $human       = shift;
 	my $explanation = shift || '';
@@ -510,7 +510,7 @@ sub add_highlighter {
 }
 
 sub get_highlighter_explanation {
-	my $self = shift;
+	my $class = shift;
 	my $name = shift;
 
 	my ($highlighter) =
@@ -524,7 +524,7 @@ sub get_highlighter_explanation {
 }
 
 sub get_highlighter_name {
-	my $self        = shift;
+	my $class        = shift;
 	my $highlighter = shift;
 
 	# TO DO this can happen if the user configureda highlighter but on the next start
@@ -539,7 +539,7 @@ sub get_highlighter_name {
 # get a hash of mime-type => highlighter
 # update the database
 sub change_highlighters {
-	my $self    = shift;
+	my $class    = shift;
 	my $changed = shift;
 
 	my %mtn = map { $MIME{$_}->{name} => $_ } keys %MIME;
@@ -553,7 +553,7 @@ sub change_highlighters {
 		Padre::DB::SyntaxHighlight->set_mime_type( $type, $highlighter );
 	}
 
-	$self->read_current_highlighters_from_db;
+	$class->read_current_highlighters_from_db;
 }
 
 sub read_current_highlighters_from_db {
@@ -581,23 +581,23 @@ sub get_current_highlighters {
 
 # returns hash-ref of mime_type_name => highlighter_name
 sub get_current_highlighter_names {
-	my $self = shift;
+	my $class = shift;
 	my %MT;
 
 	foreach my $type ( keys %MIME ) {
-		$MT{ $self->get_mime_type_name($type) } =
-			$self->get_highlighter_name( $MIME{$type}->{current_highlighter} );
+		$MT{ $class->get_mime_type_name($type) } =
+			$class->get_highlighter_name( $MIME{$type}->{current_highlighter} );
 	}
 	return \%MT;
 }
 
 sub get_current_highlighter_of_mime_type {
-	my ( $self, $type ) = @_;
+	my ( $class, $type ) = @_;
 	return $MIME{$type}->{current_highlighter};
 }
 
 sub add_highlighter_to_mime_type {
-	my $self   = shift;
+	my $class   = shift;
 	my $mime   = shift;
 	my $module = shift; # module name or stc to indicate Scintilla
 	                    # TO DO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
@@ -605,7 +605,7 @@ sub add_highlighter_to_mime_type {
 }
 
 sub remove_highlighter_from_mime_type {
-	my $self   = shift;
+	my $class   = shift;
 	my $mime   = shift;
 	my $module = shift;
 
@@ -623,17 +623,17 @@ sub get_mime_types {
 
 # return the display-names of the MIME types ordered according to the display names
 sub get_mime_type_names {
-	my $self = shift;
+	my $class = shift;
 
-	#return [ map { Wx::gettext( $MIME{$_}->{name} ) } @{ $self->get_mime_types } ]; # #BUG 1137
-	return [ map { $MIME{$_}->{name} } @{ $self->get_mime_types } ]; # Need to be checked with non Western languages
+	#return [ map { Wx::gettext( $MIME{$_}->{name} ) } @{ $class->get_mime_types } ]; # #BUG 1137
+	return [ map { $MIME{$_}->{name} } @{ $class->get_mime_types } ]; # Need to be checked with non Western languages
 
 }
 
 # given a MIME type
 # return its display name
 sub get_mime_type_name {
-	my $self = shift;
+	my $class = shift;
 	my $type = shift || '';
 	return Wx::gettext('UNKNOWN')
 		if $type eq ''
@@ -645,7 +645,7 @@ sub get_mime_type_name {
 # given a MIME type
 # return the display names of the available highlighters
 sub get_highlighters_of_mime_type {
-	my $self  = shift;
+	my $class  = shift;
 	my $type  = shift;
 	my @names =
 		map { __PACKAGE__->get_highlighter_name($_) }
@@ -656,14 +656,14 @@ sub get_highlighters_of_mime_type {
 # given the display name of a MIME type
 # return the display names of the available highlighters
 sub get_highlighters_of_mime_type_name {
-	my ( $self, $name ) = @_;
+	my ( $class, $name ) = @_;
 	my ($type) =
 		grep { $MIME{$_}->{name} eq $name } keys %MIME;
 	if ( not $type ) {
 		warn "Could not find the MIME type of the display name '$name'\n";
 		return []; # return [] to avoid crash
 	}
-	$self->get_highlighters_of_mime_type($type);
+	$class->get_highlighters_of_mime_type($type);
 }
 
 
@@ -683,7 +683,7 @@ sub _guess_mimetype {
 }
 
 sub guess_mimetype {
-	my $self = shift;
+	my $class = shift;
 	my $text = shift;
 	my $file = shift; # Could be a filename or a Padre::File - object
 
@@ -706,7 +706,7 @@ sub guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->( $self, $text );
+				return $EXT_MIME{$ext}->( $class, $text );
 			} else {
 				return $EXT_MIME{$ext};
 			}
@@ -740,7 +740,7 @@ sub guess_mimetype {
 
 			# Is this a script of some kind?
 			if ( $text =~ /\A#!/ ) {
-				return $self->perl_mime_type($text)
+				return $class->perl_mime_type($text)
 					if $text =~ /\A#!.*\bperl6?\b/m;
 				return 'application/x-tcl'
 					if $text =~ /\A#!.*\bsh\b.*(?:\n.*)?\nexec wish/m;
@@ -778,7 +778,7 @@ sub guess_mimetype {
 				if ( $text =~ /1\;[\r\n]+$/ )    { $score += .5; }
 				if ( $text =~ /\$\w+\{/ )        { $score += .5; }
 				if ( $text =~ /\bsplit[ \(]\// ) { $score += .5; }
-				return $self->perl_mime_type($text) if $score >= 3;
+				return $class->perl_mime_type($text) if $score >= 3;
 			}
 
 			# Look for Template::Toolkit syntax
@@ -855,7 +855,7 @@ sub guess_mimetype {
 	# Fallback mime-type of new files, should be configurable in the GUI
 	# TO DO: Make it configurable in the GUI :)
 	unless ($filename) {
-		return $self->perl_mime_type($text);
+		return $class->perl_mime_type($text);
 	}
 
 	# Fall back to plain text file
@@ -863,7 +863,7 @@ sub guess_mimetype {
 }
 
 sub perl_mime_type {
-	my $self = shift;
+	my $class = shift;
 	my $text = shift;
 
 	# Sometimes Perl 6 will look like Perl 5
@@ -883,7 +883,7 @@ sub get_extensions_by_mime_type {
 
 	# %EXT_MIME holds a mapping of extenions to their mimetypes
 	# We may want to know what extensions belong to a mimetype:
-	my $self     = shift;
+	my $class     = shift;
 	my $mimetype = shift;
 
 	my @extensions;
