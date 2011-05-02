@@ -34,7 +34,7 @@
             <property name="hidden">0</property>
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
-            <property name="minimum_size"></property>
+            <property name="minimum_size">-1,-1</property>
             <property name="name">Padre::Wx::FBP::Text</property>
             <property name="pos"></property>
             <property name="size">300,300</property>
@@ -108,7 +108,7 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="maximum_size"></property>
                                 <property name="maxlength">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">250,250</property>
                                 <property name="name">text</property>
                                 <property name="permission">public</property>
                                 <property name="pos"></property>
