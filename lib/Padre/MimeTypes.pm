@@ -426,8 +426,8 @@ sub get_lexer {
 # prefered default values ?
 
 sub add_mime_class {
-	my $class = shift;
-	my $type  = shift;
+	my $class      = shift;
+	my $type       = shift;
 	my $mime_class = shift;
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
@@ -456,7 +456,7 @@ sub add_mime_class {
 
 sub remove_mime_class {
 	my $class = shift;
-	my $type = shift;
+	my $type  = shift;
 
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
@@ -484,7 +484,7 @@ sub remove_mime_class {
 
 sub get_mime_class {
 	my $class = shift;
-	my $type = shift;
+	my $type  = shift;
 
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
@@ -501,7 +501,7 @@ sub get_mime_class {
 }
 
 sub add_highlighter {
-	my $class        = shift;
+	my $class       = shift;
 	my $module      = shift;
 	my $human       = shift;
 	my $explanation = shift || '';
@@ -518,7 +518,7 @@ sub add_highlighter {
 
 sub get_highlighter_explanation {
 	my $class = shift;
-	my $name = shift;
+	my $name  = shift;
 
 	my ($highlighter) =
 		grep { $HIGHLIGHTER{$_}->{name} eq $name }
@@ -531,7 +531,7 @@ sub get_highlighter_explanation {
 }
 
 sub get_highlighter_name {
-	my $class        = shift;
+	my $class       = shift;
 	my $highlighter = shift;
 
 	# TO DO this can happen if the user configureda highlighter but on the next start
@@ -546,7 +546,7 @@ sub get_highlighter_name {
 # get a hash of mime-type => highlighter
 # update the database
 sub change_highlighters {
-	my $class    = shift;
+	my $class   = shift;
 	my $changed = shift;
 
 	my %mtn = map { $MIME{$_}->{name} => $_ } keys %MIME;
@@ -648,7 +648,7 @@ sub get_mime_type_names {
 # return its display name
 sub get_mime_type_name {
 	my $class = shift;
-	my $type = shift || '';
+	my $type  = shift || '';
 	return Wx::gettext('UNKNOWN')
 		if $type eq ''
 			or not $MIME{$type}
@@ -659,11 +659,11 @@ sub get_mime_type_name {
 # given a MIME type
 # return the display names of the available highlighters
 sub get_highlighters_of_mime_type {
-	my $class  = shift;
+	my $class = shift;
 	my $type  = shift;
-	my @names =
-		map { __PACKAGE__->get_highlighter_name($_) }
-		sort keys %{ $MIME{$type}->{highlighters} };
+	my @names = map {
+		__PACKAGE__->get_highlighter_name($_)
+	} sort keys %{ $MIME{$type}->{highlighters} };
 	return \@names;
 }
 
@@ -698,8 +698,8 @@ sub _guess_mimetype {
 
 sub guess_mimetype {
 	my $class = shift;
-	my $text = shift;
-	my $file = shift; # Could be a filename or a Padre::File - object
+	my $text  = shift;
+	my $file  = shift; # Could be a filename or a Padre::File - object
 
 	my $filename;
 
