@@ -5,7 +5,7 @@ use warnings;
 use constant NUMBER_OF_CONFIG_OPTIONS => 128;
 
 # Move of Debug to Run Menu
-use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 21;
+use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 27;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -216,3 +216,37 @@ is_deeply( $config2, $config, 'Config round-trips ok' );
 
 # No configuration operations require loading Wx
 is( $Wx::VERSION, undef, 'Wx is never loaded during config operations' );
+
+
+
+
+
+######################################################################
+# Check configuration values not in the relevant option list
+
+SCOPE: {
+	my $bad = Padre::Config->new(
+		Padre::Config::Host->_new( {
+			# Invalid option
+			lang_perl5_lexer => 'Bad::Class::Does::Not::Exist',
+		} ),
+		bless {
+			revision         => Padre::Config::Human->VERSION,
+
+			# Valid option
+			startup_files    => 'new',
+
+			# Invalid key
+			nonexistant      => 'nonexistant',
+		}, 'Padre::Config::Human'
+	);
+	isa_ok( $bad, 'Padre::Config' );
+	isa_ok( $bad->host, 'Padre::Config::Host' );
+	isa_ok( $bad->human, 'Padre::Config::Human' );
+	is( $bad->startup_files, 'new', '->startup_files ok' );
+
+	# Configuration should ignore a value not in configuration and go
+	# with the default instead.
+	is( $bad->default('lang_perl5_lexer'), 'stc', 'Default Perl 5 lexer ok' );
+	is( $bad->lang_perl5_lexer, 'stc', '->lang_perl5_lexer matches default' );
+}

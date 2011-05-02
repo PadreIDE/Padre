@@ -44,24 +44,36 @@ sub new {
 		Carp::croak("Missing or invalid name");
 	}
 	unless ( _TYPE( $self->type ) ) {
-		Carp::croak("Missing or invalid type for setting $self->{name}");
+		Carp::croak("Missing or invalid type for config '$self->{name}'");
 	}
 	unless ( _STORE( $self->store ) ) {
-		Carp::croak("Missing or invalid store for setting $self->{name}");
+		Carp::croak("Missing or invalid store for config '$self->{name}'");
 	}
 	unless ( exists $self->{default} ) {
-		Carp::croak("Missing or invalid default for setting $self->{name}");
+		Carp::croak("Missing or invalid default for config '$self->{name}'");
 	}
 
-	# It is illegal to store paths in the human config
-	if (    $self->type == Padre::Constant::PATH
-		and $self->store == Padre::Constant::HUMAN )
-	{
-		Carp::croak("PATH values must only be placed in the HOST store");
+	if ( defined $self->{options} ) {
+		unless ( Params::Util::_HASH($self->{options}) ) {
+			Carp::croak("Invalid or empty options for config '$self->{name}'");
+		}
+	}
+
+	# Path settings are subject to some special constraints
+	if ( $self->type == Padre::Constant::PATH ) {
+		# It is illegal to store paths in the human config
+		if ( $self->store == Padre::Constant::HUMAN ) {
+			Carp::croak("PATH value not in HOST store for config '$self->{name}'");
+		}
+
+		# You cannot (yet) define option lists for paths
+		if ( defined $self->{options} ) {
+			Carp::croak("PATH values cannot define options for config '$self->{name}'");
+		}
 	}
 
 	# Normalise
-	$self->{project} = !!$self->project;
+	$self->{project} = !! $self->project;
 
 	return $self;
 }
@@ -71,6 +83,23 @@ sub code {
 	my $self  = shift;
 	my $name  = $self->name;
 	my $store = $self->store;
+
+	# Don't return loaded values not in the valid option list
+	# "$self" in this code refs to the Padre::Config parent object
+	return <<"END_PERL" if defined $self->{options};
+sub $name {
+	my \$self   = shift;
+	my \$config = \$self->[$store];
+	if ( exists \$config->{$name} ) {
+		my \$options = \$self->meta('$name')->options;
+		my \$value   = \$config->{$name};
+		if ( defined \$value and exists \$options->{\$value} ) {
+			return \$value;
+		}
+	}
+	return \$DEFAULT{$name};
+}
+END_PERL
 
 	# Vanilla code for everything other than PATH entries
 	return <<"END_PERL" unless $self->type == Padre::Constant::PATH;

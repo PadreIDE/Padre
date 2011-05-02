@@ -19,6 +19,7 @@ use strict;
 use warnings;
 use Carp           ();
 use File::Basename ();
+use Padre::Config  ();
 use Padre::Current ();
 use Padre::Util    ('_T');
 use Padre::Wx      ();
@@ -580,7 +581,8 @@ sub load_highlighter_config {
 
 	# Override with settings that have been moved from the database
 	# to the Padre::Config system
-	my $config = Padre::Current->config;
+	# Can't use Padre::Current here, because we won't have Padre->new yet.
+	my $config = Padre::Config->read;
 	foreach my $type ( keys %HIGHLIGHTER_CONFIG ) {
 		my $method = $HIGHLIGHTER_CONFIG{$type};
 		$MIME{$type}->{current_highlighter} = $config->$method();
