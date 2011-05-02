@@ -548,8 +548,8 @@ sub change_highlighters {
 		keys %HIGHLIGHTER;
 
 	foreach my $name ( keys %$changed ) {
-		my $type   = $mtn{$name};                        # get mime_type from name
-		my $highlighter = $highlighters{ $changed->{$name} }; # get highlighter from name
+		my $type        = $mtn{$name};
+		my $highlighter = $highlighters{ $changed->{$name} };
 		Padre::DB::SyntaxHighlight->set_mime_type( $type, $highlighter );
 	}
 
@@ -582,30 +582,30 @@ sub get_current_highlighters {
 # returns hash-ref of mime_type_name => highlighter_name
 sub get_current_highlighter_names {
 	my $class = shift;
-	my %MT;
+	my %hash  = ();
 
 	foreach my $type ( keys %MIME ) {
-		$MT{ $class->get_mime_type_name($type) } =
+		$hash{ $class->get_mime_type_name($type) } =
 			$class->get_highlighter_name( $MIME{$type}->{current_highlighter} );
 	}
-	return \%MT;
+	return \%hash;
 }
 
 sub get_current_highlighter_of_mime_type {
-	my ( $class, $type ) = @_;
-	return $MIME{$type}->{current_highlighter};
+	return $MIME{$_[1]}->{current_highlighter};
 }
 
 sub add_highlighter_to_mime_type {
 	my $class   = shift;
 	my $mime   = shift;
-	my $module = shift; # module name or stc to indicate Scintilla
-	                    # TO DO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
+	my $module = shift; # Or 'stc' to indicate Scintilla
+
+	# TO DO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
 	$MIME{$mime}->{highlighters}->{$module} = 1;
 }
 
 sub remove_highlighter_from_mime_type {
-	my $class   = shift;
+	my $class  = shift;
 	my $mime   = shift;
 	my $module = shift;
 
@@ -625,7 +625,6 @@ sub get_mime_types {
 sub get_mime_type_names {
 	my $class = shift;
 
-	#return [ map { Wx::gettext( $MIME{$_}->{name} ) } @{ $class->get_mime_types } ]; # #BUG 1137
 	return [ map { $MIME{$_}->{name} } @{ $class->get_mime_types } ]; # Need to be checked with non Western languages
 
 }
