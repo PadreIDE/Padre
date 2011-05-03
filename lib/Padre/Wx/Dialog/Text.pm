@@ -3,57 +3,33 @@ package Padre::Wx::Dialog::Text;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::Wx;
-use Padre::Wx::Dialog;
-use Wx::Locale qw(:default);
+use Padre::Wx::FBP::Text;
 
 our $VERSION = '0.85';
+our @ISA     = 'Padre::Wx::FBP::Text';
 
-sub get_layout {
-	my ($text) = @_;
 
-	my $width     = 300;
-	my $multiline = 1;
-	my @layout    = (
-		[ [ 'Wx::TextCtrl', 'display', $text, 300, $multiline ] ],
-		[   [ 'Wx::Button', 'ok', Wx::wxID_OK ],
-		],
-	);
 
-	return \@layout;
-}
 
-sub dialog {
-	my ( $class, $main, $title, $text ) = @_;
 
-	my $layout = get_layout($text);
-	my $dialog = Padre::Wx::Dialog->new(
-		parent => $main,
-		title  => $title,
-		layout => $layout,
-		width  => [ 300, 50 ],
-	);
-
-	#	if ($dialog->{_widgets_}->{display}) {
-	#		$dialog->{_widgets_}->{display}->SetSize(10 * length $text, -1);
-	#	}
-	#
-
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{ok}, sub { $dialog->EndModal(Wx::wxID_OK) } );
-	$dialog->{_widgets_}->{ok}->SetDefault;
-
-	$dialog->{_widgets_}->{ok}->SetFocus;
-
-	return $dialog;
-}
+######################################################################
+# Original API Emulation
 
 sub show {
-	my ( $class, $main, $title, $text ) = @_;
+	my $class = shift;
+	my $main  = shift;
+	my $title = shift || '';
+	my $text  = shift || '';
 
-	my $dialog = $class->dialog( $main, $title, $text );
-	$dialog->show_modal;
-	return $dialog->get_widget_value('display');
+	# Create the dialog
+	my $self  = $class->new($main);
+	$self->SetTitle($title);
+	$self->text->SetValue($text);
+	$self->close->SetFocus;
+
+	# Display the dialog
+	$self->CentreOnParent;
+	$self->ShowModal;
 }
 
 1;
