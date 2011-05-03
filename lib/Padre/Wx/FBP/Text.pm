@@ -28,6 +28,7 @@ sub new {
 		[ 300, 300 ],
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
+	$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	$self->{text} = Wx::TextCtrl->new(
 		$self,
@@ -37,6 +38,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE,
 	);
+	$self->{text}->SetMinSize( [ 250, 250 ] );
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
@@ -67,7 +69,6 @@ sub new {
 
 	$self->SetSizer($hsizer);
 	$self->Layout;
-	$hsizer->Fit($self);
 	$hsizer->SetSizeHints($self);
 
 	return $self;
