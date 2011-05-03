@@ -26,9 +26,10 @@ sub new {
 		-1,
 		Wx::gettext("Padre Preferences"),
 		Wx::wxDefaultPosition,
-		[ -1, -1 ],
+		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
+	$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	$self->{treebook} = Wx::Treebook->new(
 		$self,
@@ -263,12 +264,12 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->{m_staticText341} = Wx::StaticText->new(
+	my $m_staticText341 = Wx::StaticText->new(
 		$m_panel3,
 		-1,
 		Wx::gettext("Editor Style"),
 	);
-	$self->{m_staticText341}->SetFont(
+	$m_staticText341->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -289,7 +290,7 @@ sub new {
 		},
 	);
 
-	$self->{m_staticline21} = Wx::StaticLine->new(
+	my $m_staticline21 = Wx::StaticLine->new(
 		$m_panel3,
 		-1,
 		Wx::wxDefaultPosition,
@@ -392,7 +393,7 @@ sub new {
 		},
 	);
 
-	$self->{m_staticline2} = Wx::StaticLine->new(
+	my $m_staticline2 = Wx::StaticLine->new(
 		$m_panel3,
 		-1,
 		Wx::wxDefaultPosition,
@@ -400,12 +401,12 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{m_staticText331} = Wx::StaticText->new(
+	my $m_staticText331 = Wx::StaticText->new(
 		$m_panel3,
 		-1,
 		Wx::gettext("Appearance Preview"),
 	);
-	$self->{m_staticText331}->SetFont(
+	$m_staticText331->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -422,7 +423,7 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->{editor_indent_guess} = Wx::Button->new(
+	my $editor_indent_guess = Wx::Button->new(
 		$m_panel1,
 		-1,
 		Wx::gettext("Guess from Current Document"),
@@ -430,7 +431,7 @@ sub new {
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{editor_indent_guess},
+		$editor_indent_guess,
 		sub {
 			shift->guess(@_);
 		},
@@ -600,12 +601,12 @@ sub new {
 		Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->{m_staticText39} = Wx::StaticText->new(
+	my $m_staticText39 = Wx::StaticText->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Language Integration"),
 	);
-	$self->{m_staticText39}->SetFont(
+	$m_staticText39->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -665,7 +666,7 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	$self->{m_staticline5} = Wx::StaticLine->new(
+	my $m_staticline5 = Wx::StaticLine->new(
 		$m_panel7,
 		-1,
 		Wx::wxDefaultPosition,
@@ -673,12 +674,12 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{m_staticText351} = Wx::StaticText->new(
+	my $m_staticText351 = Wx::StaticText->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Editor Options"),
 	);
-	$self->{m_staticText351}->SetFont(
+	$m_staticText351->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -690,7 +691,7 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	$self->{m_staticText371} = Wx::StaticText->new(
+	my $m_staticText371 = Wx::StaticText->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Syntax Highlighter"),
@@ -722,7 +723,7 @@ sub new {
 		Wx::wxFLP_DEFAULT_STYLE,
 	);
 
-	$self->{m_staticline4} = Wx::StaticLine->new(
+	my $m_staticline4 = Wx::StaticLine->new(
 		$m_panel7,
 		-1,
 		Wx::wxDefaultPosition,
@@ -730,12 +731,12 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{m_staticText361} = Wx::StaticText->new(
+	my $m_staticText361 = Wx::StaticText->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Autocomplete"),
 	);
-	$self->{m_staticText361}->SetFont(
+	$m_staticText361->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -825,14 +826,14 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{save} = Wx::Button->new(
+	my $save = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("Save"),
 	);
-	$self->{save}->SetDefault;
+	$save->SetDefault;
 
-	$self->{advanced} = Wx::Button->new(
+	my $advanced = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Advanced..."),
@@ -840,13 +841,13 @@ sub new {
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{advanced},
+		$advanced,
 		sub {
 			shift->advanced(@_);
 		},
 	);
 
-	$self->{cancel} = Wx::Button->new(
+	my $cancel = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Cancel"),
@@ -854,7 +855,7 @@ sub new {
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{cancel},
+		$cancel,
 		sub {
 			shift->cancel(@_);
 		},
@@ -911,7 +912,7 @@ sub new {
 	my $fgSizer91 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$fgSizer91->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer91->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer91->Add( $self->{m_staticText341}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer91->Add( $m_staticText341, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer91->Add( $self->{editor_style}, 0, Wx::wxALL, 5 );
 
 	my $fgSizer4 = Wx::FlexGridSizer->new( 8, 2, 0, 10 );
@@ -932,10 +933,10 @@ sub new {
 
 	my $bSizer4 = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$bSizer4->Add( $fgSizer91, 0, Wx::wxEXPAND, 5 );
-	$bSizer4->Add( $self->{m_staticline21}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer4->Add( $m_staticline21, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
 	$bSizer4->Add( $fgSizer4, 0, Wx::wxEXPAND, 0 );
-	$bSizer4->Add( $self->{m_staticline2}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
-	$bSizer4->Add( $self->{m_staticText331}, 0, Wx::wxALL, 5 );
+	$bSizer4->Add( $m_staticline2, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer4->Add( $m_staticText331, 0, Wx::wxALL, 5 );
 	$bSizer4->Add( $self->{preview}, 1, Wx::wxEXPAND | Wx::wxTOP, 5 );
 
 	$m_panel3->SetSizer($bSizer4);
@@ -945,7 +946,7 @@ sub new {
 	my $fgSizer2 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
 	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
-	$fgSizer2->Add( $self->{editor_indent_guess}, 0, Wx::wxALL, 5 );
+	$fgSizer2->Add( $editor_indent_guess, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{editor_indent_auto}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{editor_indent_tab}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( $m_staticText2, 0, Wx::wxALL, 5 );
@@ -1006,7 +1007,7 @@ sub new {
 	$fgSizer11->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer11->Add( $self->{lang_perl5_beginner}, 0, Wx::wxALL, 5 );
 	$fgSizer11->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer11->Add( $self->{m_staticText371}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer11->Add( $m_staticText371, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer11->Add( $self->{lang_perl5_lexer}, 0, Wx::wxALIGN_RIGHT | Wx::wxALL | Wx::wxEXPAND, 5 );
 	$fgSizer11->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer11->Add( $self->{lang_perl5_tags_file}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -1028,13 +1029,13 @@ sub new {
 	$fgSizer7->Add( $self->{lang_perl5_autocomplete_min_chars}, 0, Wx::wxALL, 5 );
 
 	my $bSizer5 = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$bSizer5->Add( $self->{m_staticText39}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $m_staticText39, 0, Wx::wxALL, 5 );
 	$bSizer5->Add( $fgSizer9, 1, Wx::wxEXPAND, 5 );
-	$bSizer5->Add( $self->{m_staticline5}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
-	$bSizer5->Add( $self->{m_staticText351}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $m_staticline5, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer5->Add( $m_staticText351, 0, Wx::wxALL, 5 );
 	$bSizer5->Add( $fgSizer11, 0, 0, 5 );
-	$bSizer5->Add( $self->{m_staticline4}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
-	$bSizer5->Add( $self->{m_staticText361}, 0, Wx::wxALL, 5 );
+	$bSizer5->Add( $m_staticline4, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
+	$bSizer5->Add( $m_staticText361, 0, Wx::wxALL, 5 );
 	$bSizer5->Add( $fgSizer7, 1, Wx::wxEXPAND, 5 );
 
 	$m_panel7->SetSizer($bSizer5);
@@ -1049,9 +1050,9 @@ sub new {
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{save}, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{advanced}, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $save, 0, Wx::wxALL, 5 );
+	$buttons->Add( $advanced, 0, Wx::wxALL, 5 );
+	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $self->{treebook}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
