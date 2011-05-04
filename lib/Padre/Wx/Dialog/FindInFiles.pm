@@ -24,21 +24,11 @@ sub new {
 	# Default the search directory to the root of the current project
 	my $project = $self->current->project;
 	if ( defined $project ) {
-		$self->{find_directory}->SetValue( $project->root );
+		$self->find_directory->SetValue( $project->root );
 	}
 
 	# Prepare to be shown
 	$self->CenterOnParent;
-
-	# As the user types the search term, make sure the find button
-	# enabled status is correct
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{find_term},
-		sub {
-			shift->refresh;
-		}
-	);
 
 	return $self;
 }
@@ -52,7 +42,7 @@ sub new {
 
 sub directory {
 	my $self    = shift;
-	my $default = $self->{find_directory}->GetValue;
+	my $default = $self->find_directory->GetValue;
 	unless ($default) {
 		$default = $self->config->default_projects_directory;
 	}
@@ -68,7 +58,7 @@ sub directory {
 
 	# Update the dialog
 	unless ( $result == Wx::wxID_CANCEL ) {
-		$self->{find_directory}->SetValue( $dialog->GetPath );
+		$self->find_directory->SetValue( $dialog->GetPath );
 	}
 
 	return;
@@ -85,7 +75,7 @@ sub directory {
 # values are valid
 sub refresh {
 	my $self = shift;
-	$self->{find}->Enable( $self->{find_term}->GetValue ne '' );
+	$self->find->Enable( $self->find_term->GetValue ne '' );
 }
 
 sub run {
@@ -97,9 +87,9 @@ sub run {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
-	$self->{find_term}->refresh;
-	$self->{find_term}->SetValue($text) if length $text;
-	$self->{find_term}->SetFocus;
+	$self->find_term->refresh;
+	$self->find_term->SetValue($text) if length $text;
+	$self->find_term->SetFocus;
 
 	# Update the user interface
 	$self->refresh;
@@ -123,7 +113,7 @@ sub run {
 	# Run the search in the Find in Files tool
 	$self->main->show_findinfiles;
 	$self->main->findinfiles->search(
-		root   => $self->{find_directory}->SaveValue,
+		root   => $self->find_directory->SaveValue,
 		search => $self->as_search,
 	);
 
@@ -144,7 +134,7 @@ sub save {
 		}
 		)
 	{
-		my $value = $self->{$name}->GetValue;
+		my $value = $self->$name()->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );
 		$changed = 1;
@@ -160,9 +150,9 @@ sub as_search {
 	my $self = shift;
 	require Padre::Search;
 	Padre::Search->new(
-		find_term  => $self->{find_term}->SaveValue,
-		find_case  => $self->{find_case}->GetValue,
-		find_regex => $self->{find_regex}->GetValue,
+		find_term  => $self->find_term->SaveValue,
+		find_case  => $self->find_case->GetValue,
+		find_regex => $self->find_regex->GetValue,
 	);
 }
 

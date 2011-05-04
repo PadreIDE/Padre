@@ -25,16 +25,6 @@ sub new {
 	# Prepare to be shown.
 	$self->CenterOnParent;
 
-	# As the user types the search term, make sure the find button
-	# enabled status is correct.
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{find_term},
-		sub {
-			$_[0]->refresh;
-		}
-	);
-
 	return $self;
 }
 
@@ -45,7 +35,7 @@ sub new {
 ######################################################################
 # Event Handlers
 
-sub find_next {
+sub find_next_clicked {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $config = $self->save;
@@ -57,7 +47,7 @@ sub find_next {
 
 		# Move the focus back to the search text
 		# so they can tweak their search.
-		$self->{find_term}->SetFocus;
+		$self->find_term->SetFocus;
 
 		return;
 	}
@@ -66,7 +56,7 @@ sub find_next {
 	my $result = $main->search_next($search);
 
 	# If we're only searching once, we won't need the dialog any more
-	if ( $self->{find_first}->GetValue ) {
+	if ( $self->find_first->GetValue ) {
 		$self->Hide;
 
 	} elsif ( not $result ) {
@@ -80,7 +70,7 @@ sub find_next {
 
 		# Move the focus back to the search text
 		# so they can tweak their search.
-		$self->{find_term}->SetFocus;
+		$self->find_term->SetFocus;
 	}
 
 	return;
@@ -96,9 +86,9 @@ sub find_next {
 # Ensure the find button is only enabled if the field values are valid
 sub refresh {
 	my $self = shift;
-	my $enable = $self->{find_term}->GetValue ne '';
-	$self->{find_next}->Enable($enable);
-	$self->{find_all}->Enable($enable);
+	my $enable = $self->find_term->GetValue ne '';
+	$self->find_next->Enable($enable);
+	$self->find_all->Enable($enable);
 }
 
 sub run {
@@ -109,9 +99,9 @@ sub run {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
-	$self->{find_term}->refresh;
-	$self->{find_term}->SetValue($text) if length $text;
-	$self->{find_term}->SetFocus;
+	$self->find_term->refresh;
+	$self->find_term->SetValue($text) if length $text;
+	$self->find_term->SetFocus;
 
 	# Refresh
 	$self->refresh;
@@ -151,7 +141,7 @@ sub save {
 		}
 		)
 	{
-		my $value = $self->{$name}->GetValue;
+		my $value = $self->$name()->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );
 		$changed = 1;
@@ -166,10 +156,10 @@ sub save {
 sub as_search {
 	my $self = shift;
 	Padre::Search->new(
-		find_term    => $self->{find_term}->SaveValue,
-		find_case    => $self->{find_case}->GetValue,
-		find_regex   => $self->{find_regex}->GetValue,
-		find_reverse => $self->{find_reverse}->GetValue
+		find_term    => $self->find_term->SaveValue,
+		find_case    => $self->find_case->GetValue,
+		find_regex   => $self->find_regex->GetValue,
+		find_reverse => $self->find_reverse->GetValue
 	);
 }
 
