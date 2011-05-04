@@ -568,6 +568,17 @@ sub _load_plugin {
 		return;
 	}
 
+	unless ( defined $module->VERSION ) {
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext("%s - Plugin is empty or unversioned"),
+				$module,
+			)
+		);
+		$plugin->status('error');
+		return;
+	}
+
 	# Plug-in must be a Padre::Plugin subclass
 	unless ( $module->isa('Padre::Plugin') ) {
 		$plugin->errstr(

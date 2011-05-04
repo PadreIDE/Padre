@@ -46,6 +46,9 @@ next production release, and synchronise their release to the Padre schedule.
       list for a setting will use the default, but no overwrite (ADAMK)
     - Upgraded Padre::Wx::Dialog::Text to wxFormBuilder (ADAMK)
     - Find and Find in Files now save search options again (ADAMK)
+    - PluginManager now checks for a defined ->VERSION in plugins to help
+      make sure they are real modules and don't have mismatching package
+      statements or similar weird problems (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
