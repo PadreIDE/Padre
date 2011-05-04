@@ -45,6 +45,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Config file entries referring to values which are not in the valid option
       list for a setting will use the default, but no overwrite (ADAMK)
     - Upgraded Padre::Wx::Dialog::Text to wxFormBuilder (ADAMK)
+    - Find and Find in Files now save search options again (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

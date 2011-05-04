@@ -10,6 +10,10 @@ our @ISA     = qw{
 	Padre::Wx::FBP::FindInFiles
 };
 
+use constant CONFIG => qw{
+	find_case
+	find_regex
+};
 
 
 
@@ -71,16 +75,10 @@ sub directory {
 ######################################################################
 # Main Methods
 
-# Makes sure the find button is only enabled when the field
-# values are valid
-sub refresh {
-	my $self = shift;
-	$self->find->Enable( $self->find_term->GetValue ne '' );
-}
-
 sub run {
 	my $self    = shift;
 	my $current = $self->current;
+	my $config  = $current->config;
 
 	# Do they have a specific search term in mind?
 	my $text = $current->text;
@@ -90,6 +88,11 @@ sub run {
 	$self->find_term->refresh;
 	$self->find_term->SetValue($text) if length $text;
 	$self->find_term->SetFocus;
+
+	# Load search preferences
+	foreach my $name ( CONFIG ) {
+		$self->$name()->SetValue( $config->$name() );
+	}
 
 	# Update the user interface
 	$self->refresh;
@@ -120,6 +123,13 @@ sub run {
 	return;
 }
 
+# Makes sure the find button is only enabled when the field
+# values are valid
+sub refresh {
+	my $self = shift;
+	$self->find->Enable( $self->find_term->GetValue ne '' );
+}
+
 # Save the dialog settings to configuration.
 # Returns the config object as a convenience.
 sub save {
@@ -127,13 +137,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name (
-		qw{
-		find_case
-		find_regex
-		}
-		)
-	{
+	foreach my $name ( CONFIG ) {
 		my $value = $self->$name()->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

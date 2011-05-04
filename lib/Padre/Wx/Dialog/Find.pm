@@ -11,6 +11,13 @@ our @ISA     = qw{
 	Padre::Wx::FBP::Find
 };
 
+use constant CONFIG => qw{
+	find_case
+	find_regex
+	find_first
+	find_reverse
+};
+
 
 
 
@@ -83,25 +90,24 @@ sub find_next_clicked {
 ######################################################################
 # Main Methods
 
-# Ensure the find button is only enabled if the field values are valid
-sub refresh {
-	my $self = shift;
-	my $enable = $self->find_term->GetValue ne '';
-	$self->find_next->Enable($enable);
-	$self->find_all->Enable($enable);
-}
-
 sub run {
-	my $self = shift;
+	my $self    = shift;
+	my $current = $self->current;
+	my $config  = $current->config;
 
 	# Do they have a specific search term in mind?
-	my $text = $self->current->text;
+	my $text = $current->text;
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
 	$self->find_term->refresh;
 	$self->find_term->SetValue($text) if length $text;
 	$self->find_term->SetFocus;
+
+	# Load search preferences
+	foreach my $name ( CONFIG ) {
+		$self->$name()->SetValue( $config->$name() );
+	}
 
 	# Refresh
 	$self->refresh;
@@ -125,6 +131,14 @@ sub run {
 	return;
 }
 
+# Ensure the find button is only enabled if the field values are valid
+sub refresh {
+	my $self = shift;
+	my $enable = $self->find_term->GetValue ne '';
+	$self->find_next->Enable($enable);
+	$self->find_all->Enable($enable);
+}
+
 # Save the dialog settings to configuration.
 # Returns the config object as a convenience.
 sub save {
@@ -132,15 +146,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name (
-		qw{
-		find_case
-		find_regex
-		find_first
-		find_reverse
-		}
-		)
-	{
+	foreach my $name ( CONFIG ) {
 		my $value = $self->$name()->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );
