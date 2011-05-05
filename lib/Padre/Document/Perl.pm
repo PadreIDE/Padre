@@ -367,13 +367,19 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
+	my $shortname = File::Basename::basename($filename);
 
 	my @commands = (qq{"$perl"});
 	push @commands, '-d'                        if $debug;
 	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
 	push @commands, "$run_args{interpreter}";
-	push @commands, qq{"$filename"$script_args};
+	if (Padre::Constant::WIN32) {
+		push @commands, qq{"$shortname"$script_args};
+	} else {
 
+		# Use single quote to allow spaces in the shortname of the file #1219
+		push @commands, qq{'$shortname'$script_args};
+	}
 	return join ' ', @commands;
 }
 

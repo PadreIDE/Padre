@@ -49,6 +49,8 @@ next production release, and synchronise their release to the Padre schedule.
     - PluginManager now checks for a defined ->VERSION in plugins to help
       make sure they are real modules and don't have mismatching package
       statements or similar weird problems (ADAMK)
+    - Allow spaces in the path and filename of Perl script and still
+      be able to run them. #1219 (SZABGAB)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
