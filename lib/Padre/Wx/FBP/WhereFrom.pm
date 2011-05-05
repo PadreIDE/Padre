@@ -10,7 +10,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.85';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -28,7 +28,6 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
-	#$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	my $label = Wx::StaticText->new(
 		$self,
