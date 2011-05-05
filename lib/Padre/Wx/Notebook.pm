@@ -168,6 +168,9 @@ sub prefix {
 }
 
 # Build a page id to label map
+# returns list of ARRAY refs
+#   in each ARRAY ref the first value is the label
+#   the second value is the full path
 sub labels {
 	my $self   = shift;
 	my @prefix = $self->prefix;
@@ -184,7 +187,7 @@ sub labels {
 		unless ($file) {
 			my $title = $self->GetPageText($i);
 			$title =~ s/[ *]+//;
-			push @labels, $title;
+			push @labels, [ $title, $title ];
 			next;
 		}
 
@@ -192,12 +195,12 @@ sub labels {
 		if ( $file->isa('Padre::File::Local') ) {
 			my @path = $file->splitall;
 			@path = @path[ scalar(@prefix) .. $#path ];
-			push @labels, File::Spec->catfile(@path);
+			push @labels, [ File::Spec->catfile(@path), $file->filename ];
 			next;
 		}
 
 		# Show the full path to non-local files
-		push @labels, $file->{filename};
+		push @labels, [ $file->{filename}, $file->{filename} ];
 	}
 
 	return @labels;
@@ -208,7 +211,7 @@ sub find_pane_by_label {
 	my $label = shift;
 
 	my @labels = $self->labels;
-	my ($id) = grep { $label eq $labels[$_] } 0 .. $#labels;
+	my ($id) = grep { $label eq $labels[$_][0] } 0 .. $#labels;
 
 	return $id;
 }
