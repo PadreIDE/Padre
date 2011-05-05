@@ -70,7 +70,7 @@ sub find_next_clicked {
 		$main->info(
 			sprintf(
 				Wx::gettext('No matches found for "%s".'),
-				$self->{find_term}->GetValue,
+				$self->find_term->GetValue,
 			),
 			Wx::gettext('Search')
 		);
