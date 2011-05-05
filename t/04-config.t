@@ -226,27 +226,31 @@ is( $Wx::VERSION, undef, 'Wx is never loaded during config operations' );
 
 SCOPE: {
 	my $bad = Padre::Config->new(
-		Padre::Config::Host->_new( {
-			# Invalid option
-			lang_perl5_lexer => 'Bad::Class::Does::Not::Exist',
-		} ),
+		Padre::Config::Host->_new(
+			{
+
+				# Invalid option
+				lang_perl5_lexer => 'Bad::Class::Does::Not::Exist',
+			}
+		),
 		bless {
-			revision         => Padre::Config::Human->VERSION,
+			revision => Padre::Config::Human->VERSION,
 
 			# Valid option
-			startup_files    => 'new',
+			startup_files => 'new',
 
 			# Invalid key
-			nonexistant      => 'nonexistant',
-		}, 'Padre::Config::Human'
+			nonexistant => 'nonexistant',
+		},
+		'Padre::Config::Human'
 	);
-	isa_ok( $bad, 'Padre::Config' );
-	isa_ok( $bad->host, 'Padre::Config::Host' );
+	isa_ok( $bad,        'Padre::Config' );
+	isa_ok( $bad->host,  'Padre::Config::Host' );
 	isa_ok( $bad->human, 'Padre::Config::Human' );
 	is( $bad->startup_files, 'new', '->startup_files ok' );
 
 	# Configuration should ignore a value not in configuration and go
 	# with the default instead.
 	is( $bad->default('lang_perl5_lexer'), 'stc', 'Default Perl 5 lexer ok' );
-	is( $bad->lang_perl5_lexer, 'stc', '->lang_perl5_lexer matches default' );
+	is( $bad->lang_perl5_lexer,            'stc', '->lang_perl5_lexer matches default' );
 }

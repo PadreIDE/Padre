@@ -27,10 +27,10 @@ sub new {
 	$self->preview->{Document} = Padre::Document->new(
 		mimetype => 'application/x-perl',
 	);
-	$self->preview->{Document}->set_editor($self->preview);
+	$self->preview->{Document}->set_editor( $self->preview );
 	$self->preview->SetText(
-		join '', map { "$_\n" }
-		"#!/usr/bin/perl",
+		join '', map {"$_\n"}
+			"#!/usr/bin/perl",
 		"",
 		"use strict;",
 		"",
@@ -104,12 +104,10 @@ sub load {
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$ctrl->SetColour( Padre::Wx::color($value) );
 
-		} elsif ( $ctrl->isa('Wx::FontPickerCtrl' ) ) {
+		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
 			my $font = Wx::Font->new(Wx::wxNullFont);
 			local $@;
-			eval {
-				$font->SetNativeFontInfoUserDesc($value);
-			};
+			eval { $font->SetNativeFontInfoUserDesc($value); };
 			$font = Wx::Font->new(Wx::wxNullFont) if $@;
 			$ctrl->SetSelectedFont($font);
 
@@ -155,10 +153,10 @@ sub save {
 	my $config = shift;
 
 	# Lock a bunch of stuff so the apply handlers run quickly
-	my $lock = $self->main->lock('UPDATE', 'REFRESH', 'DB');
+	my $lock = $self->main->lock( 'UPDATE', 'REFRESH', 'DB' );
 
 	# Apply the changes to the configuration, if any
-	my $diff    = $self->diff($config) or return;
+	my $diff = $self->diff($config) or return;
 	my $current = $self->current;
 	foreach my $name ( sort keys %$diff ) {
 		$config->apply( $name, $diff->{$name}, $current );
@@ -239,9 +237,9 @@ sub diff {
 sub choice {
 	my $self    = shift;
 	my $name    = shift;
-	my $ctrl    = $self->$name()             or return;
+	my $ctrl    = $self->$name() or return;
 	my $setting = $self->config->meta($name) or return;
-	my $options = $setting->options          or return;
+	my $options = $setting->options or return;
 	my @results = sort keys %$options;
 	return $results[ $ctrl->GetSelection ];
 }
@@ -255,7 +253,7 @@ sub choice {
 
 sub cancel {
 	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
+	my $self = shift;
 
 	# Apply the original style
 	my $style = delete $self->{original_style};
@@ -304,9 +302,7 @@ sub preview_refresh {
 
 	# Set the colour of the current line (if visible)
 	if ( $config->editor_currentline ) {
-		$preview->SetCaretLineBackground(
-			$self->editor_currentline_color->GetColour
-		);
+		$preview->SetCaretLineBackground( $self->editor_currentline_color->GetColour );
 	}
 
 	# Set the font for the editor

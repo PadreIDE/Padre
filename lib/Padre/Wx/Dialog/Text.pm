@@ -22,7 +22,7 @@ sub show {
 	my $text  = shift || '';
 
 	# Create the dialog
-	my $self  = $class->new($main);
+	my $self = $class->new($main);
 	$self->SetTitle($title);
 	$self->text->SetValue($text);
 	$self->close->SetFocus;

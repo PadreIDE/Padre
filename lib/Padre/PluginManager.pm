@@ -765,13 +765,13 @@ sub _unload_plugin {
 }
 
 sub plugin_enable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->_plugin(shift) or return;
 	$handle->enable;
 }
 
 sub plugin_disable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->_plugin(shift) or return;
 	$handle->disable;
 }

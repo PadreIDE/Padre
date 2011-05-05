@@ -138,7 +138,7 @@ sub new {
 	}
 
 	my $doc = $editor->{Document};
-	if ( $doc ) {
+	if ($doc) {
 		if ( $doc->can('event_on_right_down') ) {
 			$doc->event_on_right_down( $editor, $self, $event );
 		}

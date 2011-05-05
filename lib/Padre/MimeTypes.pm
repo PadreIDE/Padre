@@ -355,10 +355,10 @@ sub _initialize {
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => { # totally not confirmed
+		'text/x-perlxs' => {             # totally not confirmed
 			name => 'XS',
 			lexer =>
-				Wx::wxSTC_LEX_CPP, # for the lack of a better XS lexer (vim?)
+				Wx::wxSTC_LEX_CPP,       # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
@@ -417,7 +417,7 @@ sub _initialize {
 }
 
 sub get_lexer {
-	$MIME{$_[1]}->{lexer};
+	$MIME{ $_[1] }->{lexer};
 }
 
 # TO DO: Set some reasonable default highlighers for each mime-type for when there
@@ -573,7 +573,7 @@ sub load_highlighter_config {
 	}
 
 	# TO DO check if the highlighter is really available
-	foreach my $e ( @$current_highlighters ) {
+	foreach my $e (@$current_highlighters) {
 		if ( defined $e->mime_type ) {
 			$MIME{ $e->mime_type }->{current_highlighter} = $e->value;
 		}
@@ -591,9 +591,7 @@ sub load_highlighter_config {
 
 # returns hash of mime_type => highlighter
 sub get_current_highlighters {
-	map {
-		$_ => $MIME{$_}->{current_highlighter}
-	} keys %MIME;
+	map { $_ => $MIME{$_}->{current_highlighter} } keys %MIME;
 }
 
 # returns hash-ref of mime_type_name => highlighter_name
@@ -609,7 +607,7 @@ sub get_current_highlighter_names {
 }
 
 sub get_current_highlighter_of_mime_type {
-	return $MIME{$_[1]}->{current_highlighter};
+	return $MIME{ $_[1] }->{current_highlighter};
 }
 
 sub add_highlighter_to_mime_type {
@@ -650,7 +648,7 @@ sub get_mime_type_names {
 # return its display name
 sub get_mime_type_name {
 	my $class = shift;
-	my $type  = shift || '';
+	my $type = shift || '';
 	return Wx::gettext('UNKNOWN')
 		if $type eq ''
 			or not $MIME{$type}
@@ -663,9 +661,7 @@ sub get_mime_type_name {
 sub get_highlighters_of_mime_type {
 	my $class = shift;
 	my $type  = shift;
-	my @names = map {
-		__PACKAGE__->get_highlighter_name($_)
-	} sort keys %{ $MIME{$type}->{highlighters} };
+	my @names = map { __PACKAGE__->get_highlighter_name($_) } sort keys %{ $MIME{$type}->{highlighters} };
 	return \@names;
 }
 
@@ -880,7 +876,7 @@ sub guess_mimetype {
 
 sub perl_mime_type {
 	my $class = shift;
-	my $text = shift;
+	my $text  = shift;
 
 	# Sometimes Perl 6 will look like Perl 5
 	# But only do this test if the Perl 6 plugin is enabled.
@@ -899,7 +895,7 @@ sub get_extensions_by_mime_type {
 
 	# %EXT_MIME holds a mapping of extenions to their mimetypes
 	# We may want to know what extensions belong to a mimetype:
-	my $class     = shift;
+	my $class    = shift;
 	my $mimetype = shift;
 
 	my @extensions;

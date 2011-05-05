@@ -29,6 +29,7 @@ my $dialog = new_ok( 'Padre::Wx::Dialog::Preferences', [$main] );
 # Check the listview properties
 my $treebook = $dialog->treebook;
 isa_ok( $treebook, 'Wx::Treebook' );
+
 #my $listview = $treebook->GetListView;
 #isa_ok( $listview, 'Wx::ListView' );
 #is( $listview->,       8,   'Found siz items' );

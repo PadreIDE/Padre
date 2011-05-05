@@ -107,7 +107,7 @@ sub lexer {
 
 	require PPIx::EditorTools::Lexer;
 	PPIx::EditorTools::Lexer->new->lexer(
-		ppi => $ppi,
+		ppi         => $ppi,
 		highlighter => $markup,
 	);
 

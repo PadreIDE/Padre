@@ -17,17 +17,18 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 	require File::Basename;
 	require File::Spec;
 
-	my $this_perl = File::Which::which( $^X ) || $^X;
+	my $this_perl = File::Which::which($^X) || $^X;
 	if ( -l $this_perl ) {
-		my $link   = readlink $this_perl;
+		my $link = readlink $this_perl;
 		$this_perl = $link if $link;
 	}
 
-	my $dir     = File::Basename::dirname( $this_perl );
+	my $dir = File::Basename::dirname($this_perl);
 	my $wx_perl = File::Spec->catfile( $dir, 'wxPerl' );
-	my $perl    = $wx_perl && -e $wx_perl && -x _
-			? $wx_perl
-			: File::Which::which('wxPerl');
+	my $perl =
+		  $wx_perl && -e $wx_perl && -x _
+		? $wx_perl
+		: File::Which::which('wxPerl');
 	chomp($perl);
 	if ( -e $perl ) {
 		warn "spawning 'wxPerl' interpreter for OS X\n";

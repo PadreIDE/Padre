@@ -6,8 +6,8 @@ package Padre::Wx::Dialog::Positions;
 use 5.008;
 use strict;
 use warnings;
-use Padre::DB         ();
-use Padre::Wx         ();
+use Padre::DB ();
+use Padre::Wx ();
 
 our $VERSION = '0.85';
 

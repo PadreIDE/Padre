@@ -54,13 +54,14 @@ sub new {
 	}
 
 	if ( defined $self->{options} ) {
-		unless ( Params::Util::_HASH($self->{options}) ) {
+		unless ( Params::Util::_HASH( $self->{options} ) ) {
 			Carp::croak("Invalid or empty options for config '$self->{name}'");
 		}
 	}
 
 	# Path settings are subject to some special constraints
 	if ( $self->type == Padre::Constant::PATH ) {
+
 		# It is illegal to store paths in the human config
 		if ( $self->store == Padre::Constant::HUMAN ) {
 			Carp::croak("PATH value not in HOST store for config '$self->{name}'");
@@ -73,7 +74,7 @@ sub new {
 	}
 
 	# Normalise
-	$self->{project} = !! $self->project;
+	$self->{project} = !!$self->project;
 
 	return $self;
 }

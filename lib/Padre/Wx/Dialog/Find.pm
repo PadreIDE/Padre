@@ -105,7 +105,7 @@ sub run {
 	$self->find_term->SetFocus;
 
 	# Load search preferences
-	foreach my $name ( CONFIG ) {
+	foreach my $name (CONFIG) {
 		$self->$name()->SetValue( $config->$name() );
 	}
 
@@ -146,7 +146,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name ( CONFIG ) {
+	foreach my $name (CONFIG) {
 		my $value = $self->$name()->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

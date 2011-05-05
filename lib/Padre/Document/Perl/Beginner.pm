@@ -152,7 +152,9 @@ which means: map all C<@items> and them add C<$extra_item> without mapping it.
 
 =cut
 
-	if ( $config->lang_perl5_beginner_map and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
+	if (    $config->lang_perl5_beginner_map
+		and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ )
+	{
 		$self->_report( "map (),x uses x also as list value for map.", $1 );
 		return;
 	}
@@ -276,7 +278,8 @@ Regular expression starting with a quantifier such as
 
 =cut
 
-	if ( $config->lang_perl5_beginner_regexq and $text =~ m/^([\x00-\xff]*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
+	if ( $config->lang_perl5_beginner_regexq and $text =~ m/^([\x00-\xff]*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs )
+	{
 		$self->_report(
 			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.",
 			$1

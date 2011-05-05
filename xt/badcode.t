@@ -110,6 +110,7 @@ foreach my $module ( sort keys %modules ) {
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");
 	} elsif ( $module =~ /^Padre::Plugin::/ ) {
+
 		# Plugins are exempt from this rule.
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");

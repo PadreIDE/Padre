@@ -532,7 +532,7 @@ setting(
 		'alphabetical'              => _T('Alphabetical Order'),
 		'alphabetical_private_last' => _T('Alphabetical Order (Private Last)'),
 	},
-	apply   => sub {
+	apply => sub {
 		$_[0]->lock('refresh_functions');
 	}
 );
