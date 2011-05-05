@@ -28,7 +28,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
-	$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
+	#$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	my $m_staticText1 = Wx::StaticText->new(
 		$self,

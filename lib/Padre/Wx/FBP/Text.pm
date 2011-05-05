@@ -28,7 +28,7 @@ sub new {
 		[ 300, 300 ],
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
-	$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
+	#$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	$self->{text} = Wx::TextCtrl->new(
 		$self,
