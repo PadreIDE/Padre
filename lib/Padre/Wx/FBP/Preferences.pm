@@ -11,7 +11,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::Editor ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.85';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -29,7 +29,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
-	#$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
+	$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	$self->{treebook} = Wx::Treebook->new(
 		$self,

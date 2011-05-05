@@ -11,7 +11,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::History::ComboBox ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.85';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -29,7 +29,6 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
-	#$self->SetSizeHints( Wx::wxDefaultSize, Wx::wxDefaultSize );
 
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
