@@ -64,26 +64,28 @@ BEGIN {
 
 	# Build the second-generation config objects
 	%STYLES = ();
-	foreach my $name ( sort keys %CORE_STYLES ) {
-		$STYLES{$name} = Padre::Config::Style->new(
-			name    => $name,
-			label   => $CORE_STYLES{$name},
-			private => 0,
-			file    => File::Spec->catfile(
-				$CORE_DIRECTORY, "$name.yml",
-			),
-		);
-	}
-	foreach my $name ( @USER_STYLES ) {
-		$STYLES{$name} = Padre::Config::Style->new(
-			name    => $name,
-			label   => $name,
-			private => 1,
-			file    => File::Spec->catfile(
-				$USER_DIRECTORY, "$name.yml",
-			),
-		);
-	}
+# You don't have your own ->new in the BEGIN block
+# before you declare it
+#	foreach my $name ( sort keys %CORE_STYLES ) {
+#		$STYLES{$name} = Padre::Config::Style->new(
+#			name    => $name,
+#			label   => $CORE_STYLES{$name},
+#			private => 0,
+#			file    => File::Spec->catfile(
+#				$CORE_DIRECTORY, "$name.yml",
+#			),
+#		);
+#	}
+#	foreach my $name ( @USER_STYLES ) {
+#		$STYLES{$name} = Padre::Config::Style->new(
+#			name    => $name,
+#			label   => $name,
+#			private => 1,
+#			file    => File::Spec->catfile(
+#				$USER_DIRECTORY, "$name.yml",
+#			),
+#		);
+#	}
 }
 
 # Convenience access to the merged style list
