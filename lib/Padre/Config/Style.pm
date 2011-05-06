@@ -14,6 +14,7 @@ use File::Basename  ();
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Util     ('_T');
+use Padre::Logger;
 
 our $VERSION    = '0.85';
 our $COMPATIBLE = '0.79';
@@ -25,9 +26,19 @@ our $COMPATIBLE = '0.79';
 ######################################################################
 # Style Library
 
-use vars qw{ %CORE_STYLES $USER_DIRECTORY @USER_STYLES };
+use vars qw{
+	%CORE_STYLES $CORE_DIRECTORY
+	@USER_STYLES $USER_DIRECTORY
+	%STYLES
+};
 
 BEGIN {
+	# The location of the style files
+	$CORE_DIRECTORY = Padre::Util::sharedir('styles');
+	$USER_DIRECTORY = File::Spec->catdir(
+		Padre::Constant::CONFIG_DIR,
+		'styles',
+	);
 
 	# Define the core style library
 	%CORE_STYLES = (
@@ -39,16 +50,39 @@ BEGIN {
 	);
 
 	# Locate any custom user styles
-	@USER_STYLES    = ();
-	$USER_DIRECTORY = File::Spec->catdir(
-		Padre::Constant::CONFIG_DIR,
-		'styles',
-	);
+	@USER_STYLES = ();
 	if ( -d $USER_DIRECTORY ) {
 		local *STYLEDIR;
 		opendir( STYLEDIR, $USER_DIRECTORY ) or die "Failed to read '$USER_DIRECTORY'";
-		@USER_STYLES = sort map { substr( File::Basename::basename($_), 0, -4 ) } grep {/\.yml$/} readdir STYLEDIR;
+		@USER_STYLES = sort grep {
+			defined Params::Util::_IDENTIFIER($_)
+		} map {
+			substr( File::Basename::basename($_), 0, -4 )
+		} grep { /\.yml$/ } readdir STYLEDIR;
 		closedir STYLEDIR;
+	}
+
+	# Build the second-generation config objects
+	%STYLES = ();
+	foreach my $name ( sort keys %CORE_STYLES ) {
+		$STYLES{$name} = Padre::Config::Style->new(
+			name    => $name,
+			label   => $CORE_STYLES{$name},
+			private => 0,
+			file    => File::Spec->catfile(
+				$CORE_DIRECTORY, "$name.yml",
+			),
+		);
+	}
+	foreach my $name ( @USER_STYLES ) {
+		$STYLES{$name} = Padre::Config::Style->new(
+			name    => $name,
+			label   => $name,
+			private => 1,
+			file    => File::Spec->catfile(
+				$USER_DIRECTORY, "$name.yml",
+			),
+		);
 	}
 }
 
@@ -76,18 +110,13 @@ sub user_styles {
 # Constructor
 
 sub new {
+	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
-	my $self = bless {@_}, $class;
-	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
-		Carp::croak("Missing or invalid style name");
-	}
-	unless ( Params::Util::_HASH( $self->data ) ) {
-		Carp::croak("Missing or invalid style data");
-	}
-	return $self;
+	bless { @_ }, $class;
 }
 
 sub load {
+	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
 	my $name  = shift;
 	my $file  = shift;
@@ -116,8 +145,40 @@ sub name {
 	$_[0]->{name};
 }
 
+sub label {
+	$_[0]->{label};
+}
+
+sub private {
+	$_[0]->{private};
+}
+
+sub file {
+	$_[0]->{file};
+}
+
 sub data {
-	$_[0]->{data};
+	$_[0]->{data} or
+	$_[0]->{data} = $_[0]->read;
+}
+
+sub read {
+	my $self = shift;
+	my $file = $self->file;
+	unless ( -f $file ) {
+		Carp::croak("Missing or invalid file name");
+	}
+
+	# Load the YAML file
+	my $data = eval {
+		require YAML::Tiny;
+		YAML::Tiny::LoadFile($file);
+	};
+	if ($@) {
+		warn $@;
+		return;
+	}
+
 }
 
 1;
