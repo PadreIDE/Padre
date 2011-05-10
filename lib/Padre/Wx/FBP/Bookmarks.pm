@@ -29,7 +29,7 @@ sub new {
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
-	my $m_staticText1 = Wx::StaticText->new(
+	$self->{set_label} = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Set Bookmark:"),
@@ -43,7 +43,7 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	my $m_staticline2 = Wx::StaticLine->new(
+	$self->{set_line} = Wx::StaticLine->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
@@ -51,7 +51,7 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	my $m_staticText2 = Wx::StaticText->new(
+	$self->{m_staticText2} = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Existing Bookmarks:"),
@@ -88,12 +88,28 @@ sub new {
 	);
 	$self->{delete}->Disable;
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{delete},
+		sub {
+			shift->delete_clicked(@_);
+		},
+	);
+
 	$self->{delete_all} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Delete All"),
 	);
 	$self->{delete_all}->Disable;
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{delete_all},
+		sub {
+			shift->delete_all_clicked(@_);
+		},
+	);
 
 	my $cancel = Wx::Button->new(
 		$self,
@@ -102,7 +118,7 @@ sub new {
 	);
 
 	my $existing = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$existing->Add( $m_staticText2, 0, Wx::wxALL, 5 );
+	$existing->Add( $self->{m_staticText2}, 0, Wx::wxALL, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->Add( $ok, 0, Wx::wxALL, 5 );
@@ -112,9 +128,9 @@ sub new {
 	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $m_staticText1, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
+	$vsizer->Add( $self->{set_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
 	$vsizer->Add( $self->{set}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $m_staticline2, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{set_line}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $existing, 1, Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -127,11 +143,26 @@ sub new {
 	$self->Layout;
 	$hsizer->Fit($self);
 
+	$self->{set_label} = $self->{set_label}->GetId;
+	$self->{set} = $self->{set}->GetId;
+	$self->{set_line} = $self->{set_line}->GetId;
+	$self->{list} = $self->{list}->GetId;
+	$self->{delete} = $self->{delete}->GetId;
+	$self->{delete_all} = $self->{delete_all}->GetId;
+
 	return $self;
+}
+
+sub set_label {
+	$_[0]->{set_label};
 }
 
 sub set {
 	$_[0]->{set};
+}
+
+sub set_line {
+	$_[0]->{set_line};
 }
 
 sub list {
@@ -144,6 +175,14 @@ sub delete {
 
 sub delete_all {
 	$_[0]->{delete_all};
+}
+
+sub delete_clicked {
+	$_[0]->main->error('Handler method delete_clicked for event delete.OnButtonClick not implemented');
+}
+
+sub delete_all_clicked {
+	$_[0]->main->error('Handler method delete_all_clicked for event delete_all.OnButtonClick not implemented');
 }
 
 1;
