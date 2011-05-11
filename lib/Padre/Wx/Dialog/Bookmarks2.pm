@@ -49,6 +49,7 @@ sub run_set {
 	$self->Fit;
 
 	# Show the dialog
+	$self->refresh;
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
@@ -63,6 +64,7 @@ sub run_goto {
 	my $self  = $class->new($main);
 
 	# Show the dialog
+	$self->refresh;
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
@@ -111,7 +113,8 @@ sub delete_clicked {
 	$bookmark->delete if $bookmark;
 	$list->Delete($id);
 
-	return 1;
+	# Update button state
+	$self->refresh;
 }
 
 sub delete_all_clicked {
@@ -121,7 +124,8 @@ sub delete_all_clicked {
 	Padre::DB::Bookmark->truncate;
 	$self->list->Clear;
 
-	return 1;
+	# Update button state
+	$self->refresh;
 }
 
 
@@ -149,10 +153,39 @@ sub load {
 	}
 
 	# Reflow the dialog
-	$self->Layout;
-	$self->GetSizer->Fit($self);
+	$self->Fit;
 
-	return 1;
+	return;
+}
+
+sub refresh {
+	my $self = shift;
+
+	# When in goto mode, the OK button should only be enabled if
+	# there is something selected to goto.
+	unless ( $self->set->IsShown ) {
+		if ( $self->list->GetSelection == Wx::wxNOT_FOUND ) {
+			$self->ok->Disable;
+		} else {
+			$self->ok->Enable;
+		}
+	}
+
+	# The Delete button should only be enabled if a bookmark is selected.
+	if ( $self->list->GetSelection == Wx::wxNOT_FOUND ) {
+		$self->delete->Disable;
+	} else {
+		$self->delete->Enable;
+	}
+
+	# The Delete All button should only be enabled if there is a list
+	if ( $self->list->IsEmpty ) {
+		$self->delete_all->Disable;
+	} else {
+		$self->delete_all->Enable;
+	}
+
+	return;
 }
 
 1;

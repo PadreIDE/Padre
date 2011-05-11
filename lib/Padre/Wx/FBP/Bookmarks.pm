@@ -89,7 +89,6 @@ sub new {
 		-1,
 		Wx::gettext("Delete"),
 	);
-	$delete->Disable;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -104,7 +103,6 @@ sub new {
 		-1,
 		Wx::gettext("Delete All"),
 	);
-	$delete_all->Disable;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -150,6 +148,7 @@ sub new {
 	$self->{set} = $set->GetId;
 	$self->{set_line} = $set_line->GetId;
 	$self->{list} = $list->GetId;
+	$self->{ok} = $ok->GetId;
 	$self->{delete} = $delete->GetId;
 	$self->{delete_all} = $delete_all->GetId;
 
@@ -170,6 +169,10 @@ sub set_line {
 
 sub list {
 	Wx::Window::FindWindowById($_[0]->{list});
+}
+
+sub ok {
+	Wx::Window::FindWindowById($_[0]->{ok});
 }
 
 sub delete {
