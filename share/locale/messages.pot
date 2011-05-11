@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 20:10-0700\n"
+"POT-Creation-Date: 2011-05-11 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -762,7 +762,7 @@ msgid "CTRL"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:853 lib/Padre/Wx/FBP/FindInFiles.pm:146
-#: lib/Padre/Wx/FBP/Bookmarks.pm:120 lib/Padre/Wx/FBP/Find.pm:130
+#: lib/Padre/Wx/FBP/Bookmarks.pm:118 lib/Padre/Wx/FBP/Find.pm:130
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -1390,7 +1390,7 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:105
+#: lib/Padre/Wx/FBP/Bookmarks.pm:104
 msgid "Delete All"
 msgstr ""
 
