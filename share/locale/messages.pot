@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-09 20:10-0700\n"
+"POT-Creation-Date: 2011-05-10 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr ""
 msgid "%s in TODO regex, check your config."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:134
+#: lib/Padre/Wx/Dialog/Bookmarks2.pm:36 lib/Padre/Wx/Dialog/Bookmarks.pm:134
 #, perl-format
 msgid "%s line %s: %s"
 msgstr ""
@@ -762,7 +762,7 @@ msgid "CTRL"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:853 lib/Padre/Wx/FBP/FindInFiles.pm:146
-#: lib/Padre/Wx/FBP/Bookmarks.pm:117 lib/Padre/Wx/FBP/Find.pm:130
+#: lib/Padre/Wx/FBP/Bookmarks.pm:120 lib/Padre/Wx/FBP/Find.pm:130
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -776,7 +776,7 @@ msgstr ""
 msgid "Cannot open a directory: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:123
+#: lib/Padre/Wx/Dialog/Bookmarks2.pm:26 lib/Padre/Wx/Dialog/Bookmarks.pm:123
 msgid "Cannot set bookmark in unsaved document"
 msgstr ""
 
@@ -1381,7 +1381,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/FBP/Bookmarks.pm:87
+#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/FBP/Bookmarks.pm:90
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
@@ -1390,7 +1390,7 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:102
+#: lib/Padre/Wx/FBP/Bookmarks.pm:105
 msgid "Delete All"
 msgstr ""
 
@@ -1862,7 +1862,7 @@ msgstr ""
 msgid "Exist"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:57
+#: lib/Padre/Wx/FBP/Bookmarks.pm:60
 msgid "Existing Bookmarks:"
 msgstr ""
 
@@ -3031,7 +3031,7 @@ msgstr ""
 msgid "Number of lines"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:80 lib/Padre/Wx/FBP/WhereFrom.pm:58
+#: lib/Padre/Wx/FBP/Bookmarks.pm:83 lib/Padre/Wx/FBP/WhereFrom.pm:58
 msgid "OK"
 msgstr ""
 
