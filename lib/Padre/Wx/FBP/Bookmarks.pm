@@ -29,35 +29,38 @@ sub new {
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
-	$self->{set_label} = Wx::StaticText->new(
+	my $set_label = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Set Bookmark:"),
 	);
+	$set_label->Hide;
 
-	$self->{set} = Wx::TextCtrl->new(
+	my $set = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
+	$set->Hide;
 
-	$self->{set_line} = Wx::StaticLine->new(
+	my $set_line = Wx::StaticLine->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
+	$set_line->Hide;
 
-	$self->{m_staticText2} = Wx::StaticText->new(
+	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Existing Bookmarks:"),
 	);
 
-	$self->{list} = Wx::ListBox->new(
+	my $list = Wx::ListBox->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
@@ -81,31 +84,31 @@ sub new {
 	);
 	$ok->SetDefault;
 
-	$self->{delete} = Wx::Button->new(
+	my $delete = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Delete"),
 	);
-	$self->{delete}->Disable;
+	$delete->Disable;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{delete},
+		$delete,
 		sub {
 			shift->delete_clicked(@_);
 		},
 	);
 
-	$self->{delete_all} = Wx::Button->new(
+	my $delete_all = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Delete All"),
 	);
-	$self->{delete_all}->Disable;
+	$delete_all->Disable;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{delete_all},
+		$delete_all,
 		sub {
 			shift->delete_all_clicked(@_);
 		},
@@ -118,63 +121,63 @@ sub new {
 	);
 
 	my $existing = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$existing->Add( $self->{m_staticText2}, 0, Wx::wxALL, 5 );
+	$existing->Add( $m_staticText2, 0, Wx::wxALL, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->Add( $ok, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{delete}, 0, Wx::wxALL, 5 );
-	$buttons->Add( $self->{delete_all}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $delete, 0, Wx::wxALL, 5 );
+	$buttons->Add( $delete_all, 0, Wx::wxALL, 5 );
 	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{set_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
-	$vsizer->Add( $self->{set}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $self->{set_line}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $set_label, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
+	$vsizer->Add( $set, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $set_line, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $existing, 1, Wx::wxEXPAND, 5 );
-	$vsizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	$self->SetSizer($hsizer);
+	$self->SetSizer($sizer);
 	$self->Layout;
-	$hsizer->Fit($self);
+	$sizer->Fit($self);
 
-	$self->{set_label} = $self->{set_label}->GetId;
-	$self->{set} = $self->{set}->GetId;
-	$self->{set_line} = $self->{set_line}->GetId;
-	$self->{list} = $self->{list}->GetId;
-	$self->{delete} = $self->{delete}->GetId;
-	$self->{delete_all} = $self->{delete_all}->GetId;
+	$self->{set_label} = $set_label->GetId;
+	$self->{set} = $set->GetId;
+	$self->{set_line} = $set_line->GetId;
+	$self->{list} = $list->GetId;
+	$self->{delete} = $delete->GetId;
+	$self->{delete_all} = $delete_all->GetId;
 
 	return $self;
 }
 
 sub set_label {
-	$_[0]->{set_label};
+	Wx::Window::FindWindowById($_[0]->{set_label});
 }
 
 sub set {
-	$_[0]->{set};
+	Wx::Window::FindWindowById($_[0]->{set});
 }
 
 sub set_line {
-	$_[0]->{set_line};
+	Wx::Window::FindWindowById($_[0]->{set_line});
 }
 
 sub list {
-	$_[0]->{list};
+	Wx::Window::FindWindowById($_[0]->{list});
 }
 
 sub delete {
-	$_[0]->{delete};
+	Wx::Window::FindWindowById($_[0]->{delete});
 }
 
 sub delete_all {
-	$_[0]->{delete_all};
+	Wx::Window::FindWindowById($_[0]->{delete_all});
 }
 
 sub delete_clicked {

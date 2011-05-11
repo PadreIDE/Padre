@@ -17,12 +17,36 @@ our @ISA     = 'Padre::Wx::FBP::Bookmarks';
 # Class Methods
 
 sub run_set {
-	my $class = shift;
-	my $main  = shift;
-	my $self  = $class->new($main);
+	my $class   = shift;
+	my $main    = shift;
+	my $current = $main->current;
+	my $editor  = $current->editor or return;
+	my $path    = $current->filename;
+	unless ( defined $path ) {
+		$main->error( Wx::gettext("Cannot set bookmark in unsaved document") );
+		return;
+	}
 
-	# Focus on the set
+	# Determine the default name for the bookmark
+	my $line   = $editor->GetCurrentLine;
+	my $file   = File::Basename::basename( $path || '' );
+	my ($text) = $editor->GetLine($line);
+	$text =~ s/\r?\n?$//;
+	my $name = sprintf(
+		Wx::gettext("%s line %s: %s"),
+		$file, $line, $text,
+	);
+
+	# Create the bookmark dialog
+	my $self = $class->new($main);
+
+	# Prepare for display
+	$self->set->SetValue($name);
 	$self->set->SetFocus;
+	$self->set->Show;
+	$self->set_label->Show;
+	$self->set_line->Show;
+	$self->Fit;
 
 	# Show the dialog
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
@@ -37,11 +61,6 @@ sub run_goto {
 	my $class = shift;
 	my $main  = shift;
 	my $self  = $class->new($main);
-
-	# Hide the set section of the dialog
-	$self->set->Hide;
-	$self->set_label->Hide;
-	$self->set_line->Hide;
 
 	# Show the dialog
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
@@ -80,7 +99,19 @@ sub new {
 # Event Handlers
 
 sub delete_clicked {
-	
+	my $self = shift;
+	my $list = $self->list;
+
+	# Find the selected bookmark
+	my $id       = $list->GetSelection;
+	my $name     = $list->GetString($id);
+	my $bookmark = Padre::DB::Bookmark->fetch_name($name);
+
+	# Delete the bookmark
+	$bookmark->delete if $bookmark;
+	$list->Delete($id);
+
+	return 1;
 }
 
 sub delete_all_clicked {
@@ -116,6 +147,10 @@ sub load {
 		$self->delete->Disable;
 		$self->delete_all->Disable;
 	}
+
+	# Reflow the dialog
+	$self->Layout;
+	$self->GetSizer->Fit($self);
 
 	return 1;
 }
