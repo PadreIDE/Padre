@@ -143,27 +143,7 @@ my @events = (
 				my $doc = $main->current->document;
 				$T->is_eq( basename( $doc->filename ), 'cyrillic_test.pl', 'filename is cyrillic_test.pl' );
 			}
-			Padre::Wx::Dialog::Bookmarks->set_bookmark($main);
 		},
-		subevents => [
-			{   delay => 1000,
-				code  => sub {
-					my $main   = $ide->wx->main;
-					my $T      = Test::Builder->new;
-					my $dialog = Padre::Wx::Dialog::Bookmarks::get_dialog();
-					my $event  = Wx::CommandEvent->new(
-						&Wx::wxEVT_COMMAND_BUTTON_CLICKED,
-						$dialog->{_widgets_}->{cancel}->GetId
-					);
-
-					#$dialog->{_widgets_}->{cancel}->GetEventHandler->ProcessEvent( $event );
-					$dialog->GetEventHandler->ProcessEvent($event);
-
-					#$dialog->GetEventHandler->AddPendingEvent( $event );
-					#$dialog->EndModal(Wx::wxID_CANCEL);
-				},
-			},
-		],
 	},
 	{   delay => 200,
 		code  => sub {
@@ -176,7 +156,6 @@ my @events = (
 				my $doc = $main->current->document;
 				$T->ok( not( defined $doc ), 'no document' );
 			}
-			Padre::Wx::Dialog::Bookmarks->set_bookmark($main);
 		},
 	},
 	{   delay => 400,

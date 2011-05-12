@@ -51,6 +51,7 @@ next production release, and synchronise their release to the Padre schedule.
       statements or similar weird problems (ADAMK)
     - Allow spaces in the path and filename of Perl script and still
       be able to run them. #1219 (SZABGAB)
+    - Upgraded Padre::Wx::Dialog::Bookmarks to wxFormBuilder (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

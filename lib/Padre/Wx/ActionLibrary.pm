@@ -1594,8 +1594,8 @@ sub init {
 		comment    => _T('Create a bookmark in the current file current row'),
 		shortcut   => 'Ctrl-B',
 		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
+			require Padre::Wx::Dialog::Bookmarks2;
+			Padre::Wx::Dialog::Bookmarks2->run_set($_[0]);
 		},
 	);
 
@@ -1605,8 +1605,8 @@ sub init {
 		comment    => _T('Select a bookmark created earlier and jump to that position'),
 		shortcut   => 'Ctrl-Shift-B',
 		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
+			require Padre::Wx::Dialog::Bookmarks2;
+			Padre::Wx::Dialog::Bookmarks2->run_goto($_[0]);
 		},
 	);
 

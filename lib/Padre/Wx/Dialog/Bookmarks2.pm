@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::Bookmarks2;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util              ();
 use Padre::DB                 ();
 use Padre::Wx::FBP::Bookmarks ();
 
@@ -31,17 +32,18 @@ sub run_set {
 	my $line   = $editor->GetCurrentLine;
 	my $file   = File::Basename::basename( $path || '' );
 	my ($text) = $editor->GetLine($line);
-	$text =~ s/\r?\n?$//;
-	my $name = sprintf(
-		Wx::gettext("%s line %s: %s"),
-		$file, $line, $text,
+	$text = $class->clean(
+		sprintf(
+			Wx::gettext("%s line %s: %s"),
+			$file, $line, $text,
+		)
 	);
 
 	# Create the bookmark dialog
 	my $self = $class->new($main);
 
 	# Prepare for display
-	$self->set->SetValue($name);
+	$self->set->SetValue($text);
 	$self->set->SetFocus;
 	$self->set->Show;
 	$self->set_label->Show;
@@ -54,8 +56,29 @@ sub run_set {
 		return;
 	}
 
-	return 1;
-	die "CODE INCOMPLETE";
+	# Fetch and clean the name
+	my $name = $class->clean( $self->set->GetValue );
+	unless ( defined Params::Util::_STRING($name) ) {
+		$self->main->error(
+			Wx::gettext('Did not provide a bookmark name')
+		);
+		return;
+	}
+
+	# Save it to the database
+	SCOPE: {
+		my $transaction = $self->main->lock('DB');
+		Padre::DB::Bookmark->delete(
+			'where name = ?', $name,
+		);
+		Padre::DB::Bookmark->create(
+			name => $name,
+			file => $path,
+			line => $line,
+		);
+	}
+
+	return;
 }
 
 sub run_goto {
@@ -69,8 +92,53 @@ sub run_goto {
 		return;
 	}
 
-	return 1;
-	die "CODE INCOMPLETE";
+	# Was a bookmark selected
+	my $id = $self->list->GetSelection;
+	if ( $id == Wx::wxNOT_FOUND ) {
+		$self->main->error(
+			Wx::gettext('Did not select a bookmark')
+		);
+		return;
+	}
+
+	# Can we find it in the database
+	my $name     = $self->list->GetString($id);
+	my @bookmark = Padre::DB::Bookmark->select(
+		'where name = ?', $name,
+	);
+	unless ( @bookmark ) {
+		# Deleted since the dialog was shown
+		$main->error(
+			sprintf(
+				Wx::gettext("The bookmark '%s' no longer exists"),
+				$name,
+			)
+		);
+		return;
+	}
+
+	# Is the file already open
+	my $file   = $bookmark[0]->file;
+	my $line   = $bookmark[0]->line;
+	my $pageid = $main->find_editor_of_file($file);
+
+	# Load it if it isn't loaded
+	unless ( defined $pageid ) {
+		if ( -e $file ) {
+			$main->setup_editor($file);
+			$pageid = $main->find_editor_of_file($file);
+		}
+	}
+
+	# Go to the relevant editor and row
+	if ( defined $pageid ) {
+		$main->on_nth_pane($pageid);
+		my $page = $main->notebook->GetPage($pageid);
+		$page->goto_line_centerize($line);
+		$page->SetFocus;
+	}
+
+	return;
 }
 
 
@@ -186,6 +254,15 @@ sub refresh {
 	}
 
 	return;
+}
+
+sub clean {
+	my $class = shift;
+	my $name  = shift;
+	$name =~ s/\s+/ /g;
+	$name =~ s/^\s+//;
+	$name =~ s/\s+$//;
+	return $name;
 }
 
 1;
