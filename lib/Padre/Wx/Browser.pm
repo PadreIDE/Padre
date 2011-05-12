@@ -32,7 +32,6 @@ use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::AuiManager ();
-use Padre::Wx::Dialog     ();
 use Padre::Role::Task     ();
 use Padre::Logger;
 
