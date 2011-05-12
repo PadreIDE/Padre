@@ -65,8 +65,6 @@ before/after goto search result
 # TO DO reset the rest of the history when someone moves forward from the middle
 #    A, B, C,  -> goto(B), D  then the history should be A, B, D   I think.
 
-
-# a lot copied from Padre::Wx::Dialog::Bookmarks::set_position
 sub set_position {
 	my $class = shift;
 
