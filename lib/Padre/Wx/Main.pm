@@ -6606,8 +6606,52 @@ sub _filter_tool_run {
 	return $newtext;
 }
 
+# Encode the current document to some character set
+sub encode {
+	my $self     = shift;
+	my $charset  = shift;
+	my $document = $self->current->document;
+	$document->{encoding} = $charset;
+	if ( $document->filename ) {
+		$document->save_file;
+	}
+	$self->message(
+		sprintf(
+			Wx::gettext('Document encoded to (%s)'),
+			$charset,
+		)
+	);
+	return;
+}
 
+sub encode_utf8 {
+	$_[0]->encode('utf-8');
+}
 
+sub encode_default {
+	$_[0]->encode(
+		Padre::Locale::encoding_system_default() || 'utf-8'
+	);
+}
+
+sub encode_dialog {
+	my $self = shift;
+
+	# Select an encoding
+	require Encode;
+	my $charset = $self->single_choice(
+		Wx::gettext('Encode to:'),
+		Wx::gettext("Encode document to..."),
+		[ Encode->encodings(":all") ],
+	);
+
+	# Change to the selected encoding
+	if ( defined $charset ) {
+		$self->encode($charset);
+	}
+
+	return;
+}
 
 1;
 

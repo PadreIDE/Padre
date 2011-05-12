@@ -899,7 +899,7 @@ sub init {
 		label       => _T('File...'),
 		comment     => _T('Select a file and insert its content at the current location'),
 		menu_event  => sub {
-			shift->on_insert_from_file(@_);
+			$_[0]->on_insert_from_file(@_);
 		},
 	);
 
@@ -914,7 +914,7 @@ sub init {
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
-			shift->on_comment_block('TOGGLE');
+			$_[0]->on_comment_block('TOGGLE');
 		},
 	);
 
@@ -926,7 +926,7 @@ sub init {
 		comment        => _T('Comment out selected lines in the document'),
 		shortcut       => 'Ctrl-M',
 		menu_event     => sub {
-			shift->on_comment_block('COMMENT');
+			$_[0]->on_comment_block('COMMENT');
 		},
 	);
 
@@ -938,7 +938,7 @@ sub init {
 		comment        => _T('Remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-M',
 		menu_event     => sub {
-			shift->on_comment_block('UNCOMMENT');
+			$_[0]->on_comment_block('UNCOMMENT');
 		},
 	);
 
@@ -950,8 +950,7 @@ sub init {
 		label       => _T('Encode Document to System Default'),
 		comment     => _T('Change the encoding of the current document to the default of the operating system'),
 		menu_event  => sub {
-			require Padre::Wx::Dialog::Encode;
-			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
+			$_[0]->encode_default;
 		},
 	);
 
@@ -961,8 +960,7 @@ sub init {
 		label       => _T('Encode Document to utf-8'),
 		comment     => _T('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
-			require Padre::Wx::Dialog::Encode;
-			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);
+			$_[0]->encode_utf8;
 		},
 	);
 
@@ -972,8 +970,7 @@ sub init {
 		label       => _T('Encode Document to...'),
 		comment     => _T('Select an encoding and encode the document to that'),
 		menu_event  => sub {
-			require Padre::Wx::Dialog::Encode;
-			Padre::Wx::Dialog::Encode::encode_document_to(@_);
+			$_[0]->encode_dialog;
 		},
 	);
 

@@ -168,6 +168,8 @@ sub yes_no {
 Generates a standard L<Wx> single-choice dialog, using the standard
 internal L<Wx::SingleChoiceDialog> class.
 
+Returns the selected string, or C<undef> if the user selects C<Cancel>.
+
 =cut
 
 sub single_choice {
