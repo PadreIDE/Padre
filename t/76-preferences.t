@@ -39,8 +39,8 @@ isa_ok( $treebook, 'Wx::Treebook' );
 # Load the dialog from configuration
 my $config = $main->config;
 isa_ok( $config, 'Padre::Config' );
-ok( $dialog->load($config), '->load ok' );
+ok( $dialog->config_load($config), '->load ok' );
 
 # The diff (extracted from dialog) to the config should be null
-my $diff = $dialog->diff($config);
+my $diff = $dialog->config_diff($config);
 is_deeply( $diff, undef, '->diff returns an empty HASH' );
