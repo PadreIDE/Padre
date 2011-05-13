@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-12 20:10-0700\n"
+"POT-Creation-Date: 2011-05-13 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -766,7 +766,7 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:853 lib/Padre/Wx/FBP/ModuleStarter.pm:146
 #: lib/Padre/Wx/FBP/FindInFiles.pm:146 lib/Padre/Wx/FBP/Bookmarks.pm:118
-#: lib/Padre/Wx/FBP/Find.pm:130
+#: lib/Padre/Wx/FBP/Find.pm:130 lib/Padre/Wx/FBP/Insert.pm:103
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -2087,6 +2087,10 @@ msgstr ""
 msgid "Filter through tool"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Insert.pm:35
+msgid "Filter:"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:1119
 msgid ""
 "Filters the selection (or the whole document) through any external command."
@@ -2420,10 +2424,14 @@ msgstr ""
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/PerlFilter.pm:94
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:271
+#: lib/Padre/Wx/FBP/Insert.pm:96 lib/Padre/Wx/Menu/Edit.pm:121
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:94 lib/Padre/Wx/Dialog/RegexEditor.pm:271
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Insert"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Insert.pm:26
+msgid "Insert Snippit"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:63
@@ -3588,6 +3596,10 @@ msgstr ""
 msgid "Previ&ous"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Insert.pm:73
+msgid "Preview:"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2450
 msgid "Previous File"
 msgstr ""
@@ -4677,6 +4689,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:897
 msgid "Snippets..."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Insert.pm:50
+msgid "Snippit:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:112
