@@ -337,19 +337,19 @@ setting(
 
 # Support for Module::Starter
 setting(
-	name    => 'license',
+	name    => 'module_starter_directory',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
 setting(
-	name    => 'builder',
+	name    => 'module_starter_license',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
 setting(
-	name    => 'module_start_directory',
+	name    => 'module_starter_builder',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => '',

@@ -102,17 +102,17 @@ sub dialog {
 
 	$dialog->{_widgets_}->{_author_name_}->SetValue( $config->identity_name );
 	$dialog->{_widgets_}->{_email_}->SetValue( $config->identity_email );
-	if ( $config->builder ) {
-		$dialog->{_widgets_}->{_builder_choice_}->SetValue( $config->builder );
+	if ( $config->module_starter_builder ) {
+		$dialog->{_widgets_}->{_builder_choice_}->SetValue( $config->module_starter_builder );
 	} else {
 		$dialog->{_widgets_}->{_builder_choice_}->SetValue('ExtUtils::MakeMaker');
 	}
-	if ( $config->license ) {
-		$dialog->{_widgets_}->{_license_choice_}->SetValue( $license_name{ $config->license } );
+	if ( $config->module_starter_license ) {
+		$dialog->{_widgets_}->{_license_choice_}->SetValue( $license_name{ $config->module_starter_license } );
 	} else {
 		$dialog->{_widgets_}->{_license_choice_}->SetValue( Wx::gettext('Perl licensing terms') );
 	}
-	$dialog->{_widgets_}->{_directory_}->SetPath( $config->module_start_directory );
+	$dialog->{_widgets_}->{_directory_}->SetPath( $config->module_starter_directory );
 
 	$dialog->{_widgets_}->{_ok_}->SetDefault;
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_ok_},     \&ok_clicked );
@@ -152,11 +152,11 @@ sub ok_clicked {
 	}
 
 	my $config = Padre->ide->config;
-	$config->set( 'identity_name',          $data->{_author_name_} );
-	$config->set( 'identity_email',         $data->{_email_} );
-	$config->set( 'builder',                $data->{_builder_choice_} );
-	$config->set( 'license',                $license_id{ $data->{_license_choice_} } );
-	$config->set( 'module_start_directory', $data->{_directory_} );
+	$config->set( 'identity_name',            $data->{_author_name_} );
+	$config->set( 'identity_email',           $data->{_email_} );
+	$config->set( 'module_starter_builder',   $data->{_builder_choice_} );
+	$config->set( 'module_starter_license',   $license_id{ $data->{_license_choice_} } );
+	$config->set( 'module_starter_directory', $data->{_directory_} );
 
 	my $pwd = Cwd::cwd();
 	my $parent_dir = $data->{_directory_} eq '' ? './' : $data->{_directory_};

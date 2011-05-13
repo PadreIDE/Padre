@@ -73,7 +73,6 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	lang_perl5_beginner_warning
 	lang_perl5_beginner_ifsetvar
 	lang_perl5_beginner_pipeopen
-	builder
 
 	config_perlcritic
 	config_sync_server
@@ -114,7 +113,9 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	identity_email
 	identity_nickname
 
-	license
+	module_starter_directory
+	module_starter_license
+	module_starter_builder
 
 	main_directory_order
 	main_top
@@ -133,7 +134,6 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	main_command_line
 	main_lockinterface
 	main_toolbar_items
-	module_start_directory
 	main_syntaxcheck
 	main_singleinstance_port
 
