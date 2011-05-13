@@ -6,11 +6,15 @@ use warnings;
 use Padre::Locale               ();
 use Padre::Document             ();
 use Padre::Wx                   ();
+use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Logger;
 
 our $VERSION = '0.85';
-our @ISA     = 'Padre::Wx::FBP::Preferences';
+our @ISA     = qw{
+	Padre::Wx::Role::Config
+	Padre::Wx::FBP::Preferences
+};
 
 
 
@@ -51,7 +55,20 @@ sub new {
 		"__END__",
 	);
 
+	# Build the list of configuration dialog elements.
+	# We assume all public dialog elements will match a wx widget with
+	# a public method returning it.
+	$self->{names} = [
+		grep {
+			$self->can($_)
+		} $self->config->settings
+	];
+
 	return $self;
+}
+
+sub names {
+	return @{ $_[0]->{names} };
 }
 
 # One-shot creation, display and execution.
@@ -61,10 +78,10 @@ sub run {
 	my $main   = shift;
 	my $config = $main->config;
 	my $self   = Padre::Wx::Dialog::Preferences->new($main);
-	$self->load( $main->config );
+	$self->config_load( $main->config );
 	$self->CentreOnParent;
 	unless ( $self->ShowModal == Wx::wxID_CANCEL ) {
-		$self->save( $main->config );
+		$self->config_save( $main->config );
 	}
 	return $self;
 }
@@ -74,68 +91,16 @@ sub run {
 
 
 #####################################################################
-# Load and Save
+# Padre::Wx::Role::Config Methods
 
-sub load {
+sub config_load {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $config = shift;
 
-	# Iterate over the configuration entries and apply the
-	# configuration state to the dialog.
-	foreach my $name ( $config->settings ) {
-		next unless $self->can($name);
-
-		# Get the Wx element for this option
-		my $setting = $config->meta($name);
-		my $value   = $config->$name();
-		my $ctrl    = $self->$name();
-
-		# Apply this one setting to this one widget
-		if ( $ctrl->isa('Wx::CheckBox') ) {
-			$ctrl->SetValue($value);
-
-		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$ctrl->SetValue($value);
-
-		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$ctrl->SetValue($value);
-
-		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-			$ctrl->SetColour( Padre::Wx::color($value) );
-
-		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			my $font = Wx::Font->new(Wx::wxNullFont);
-			local $@;
-			eval { $font->SetNativeFontInfoUserDesc($value); };
-			$font = Wx::Font->new(Wx::wxNullFont) if $@;
-			$ctrl->SetSelectedFont($font);
-
-		} elsif ( $ctrl->isa('Wx::Choice') ) {
-			my $options = $setting->options;
-			if ($options) {
-				$ctrl->Clear;
-
-				# NOTE: This assumes that the list will not be
-				# sorted in Wx via a style flag and that the
-				# order of the fields should be that of the key
-				# and not of the translated label.
-				# Doing sort in Wx will probably break this.
-				foreach my $option ( sort keys %$options ) {
-					my $label = $options->{$option};
-					$ctrl->Append(
-						Wx::gettext($label),
-						$option,
-					);
-					next unless $option eq $value;
-					$ctrl->SetSelection( $ctrl->GetCount - 1 );
-				}
-			}
-
-		} else {
-			next;
-		}
-	}
+	# We assume all public dialog elements will match a wx widget with
+	# a public method returning it.
+	$self->SUPER::config_load($config, $self->names);
 
 	# Sync the editor preview to the current config
 	$self->preview->set_preferences;
@@ -147,28 +112,8 @@ sub load {
 	return 1;
 }
 
-sub save {
-	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
-	my $config = shift;
-
-	# Lock a bunch of stuff so the apply handlers run quickly
-	my $lock = $self->main->lock( 'UPDATE', 'REFRESH', 'DB' );
-
-	# Apply the changes to the configuration, if any
-	my $diff = $self->diff($config) or return;
-	my $current = $self->current;
-	foreach my $name ( sort keys %$diff ) {
-		$config->apply( $name, $diff->{$name}, $current );
-	}
-
-	# Save the config file
-	$config->write;
-
-	return;
-}
-
-sub diff {
+# Customised with an extra hack
+sub config_diff {
 	my $self   = shift;
 	my $config = shift;
 	my %diff   = ();
@@ -231,17 +176,6 @@ sub diff {
 
 	return unless %diff;
 	return \%diff;
-}
-
-# Convenience method to get the current value for a single named choice
-sub choice {
-	my $self    = shift;
-	my $name    = shift;
-	my $ctrl    = $self->$name() or return;
-	my $setting = $self->config->meta($name) or return;
-	my $options = $setting->options or return;
-	my @results = sort keys %$options;
-	return $results[ $ctrl->GetSelection ];
 }
 
 
@@ -326,6 +260,24 @@ sub preview_refresh {
 	}
 
 	return;
+}
+
+
+
+
+
+######################################################################
+# Support Methods
+
+# Convenience method to get the current value for a single named choice
+sub choice {
+	my $self    = shift;
+	my $name    = shift;
+	my $ctrl    = $self->$name() or return;
+	my $setting = $self->config->meta($name) or return;
+	my $options = $setting->options or return;
+	my @results = sort keys %$options;
+	return $results[ $ctrl->GetSelection ];
 }
 
 1;

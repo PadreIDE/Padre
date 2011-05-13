@@ -343,16 +343,35 @@ setting(
 	default => '',
 );
 setting(
-	name    => 'module_starter_license',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
-	default => '',
-);
-setting(
 	name    => 'module_starter_builder',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => '',
+	default => 'ExtUtils::MakeMaker',
+	options => {
+		'ExtUtils::MakeMaker' => 'ExtUtils::MakeMaker',
+		'Module::Build'       => 'Module::Build',
+		'Module::Install'     => 'Module::Install',
+	},
+);
+setting(
+	name    => 'module_starter_license',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'perl',
+	options => {
+		'apache'       => Wx::gettext('Apache License'),
+		'artistic'     => Wx::gettext('Artistic License 1.0'),
+		'artistic_2'   => Wx::gettext('Artistic License 2.0'),
+		'bsd'          => Wx::gettext('Revised BSD License'),
+		'gpl'          => Wx::gettext('GPL 2 or later'),
+		'lgpl'         => Wx::gettext('LGPL 2.1 or later'),
+		'mit'          => Wx::gettext('MIT License'),
+		'mozilla'      => Wx::gettext('Mozilla Public License'),
+		'perl'         => Wx::gettext('The same as Perl itself'),
+		'open_source'  => Wx::gettext('Other Open Source'),
+		'unrestricted' => Wx::gettext('Other Unrestricted'),
+		'restrictive'  => Wx::gettext('Proprietary/Restrictive'),
+	},
 );
 
 # Indent settings
