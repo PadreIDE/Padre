@@ -33,7 +33,7 @@ sub new {
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Search Term:"),
+		Wx::gettext("Search &Term:"),
 	);
 
 	$self->{find_term} = Padre::Wx::History::ComboBox->new(
@@ -75,7 +75,7 @@ sub new {
 	my $directory = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Browse"),
+		Wx::gettext("&Browse"),
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -112,7 +112,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Regular Expression"),
+		Wx::gettext("&Regular Expression"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -120,7 +120,7 @@ sub new {
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Case Sensitive"),
+		Wx::gettext("&Case Sensitive"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -136,7 +136,7 @@ sub new {
 	$self->{find} = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
-		Wx::gettext("Find"),
+		Wx::gettext("&Find"),
 	);
 	$self->{find}->SetDefault;
 
