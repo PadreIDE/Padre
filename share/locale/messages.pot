@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-13 00:10-0700\n"
+"POT-Creation-Date: 2011-05-13 04:11-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,12 +118,20 @@ msgstr ""
 msgid "&Brace Matching"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/FindInFiles.pm:78
+msgid "&Browse"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Advanced.pm:190
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
 #: lib/Padre/Wx/Dialog/OpenResource.pm:184
 #: lib/Padre/Wx/Dialog/WizardSelector.pm:88 lib/Padre/Wx/Dialog/Goto.pm:100
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70
 msgid "&Cancel"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:123 lib/Padre/Wx/FBP/Find.pm:85
+msgid "&Case Sensitive"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:284 lib/Padre/Wx/Browser.pm:109
@@ -149,7 +157,8 @@ msgstr ""
 msgid "&Debug"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:369 lib/Padre/Wx/Dialog/KeyBindings.pm:126
+#: lib/Padre/Wx/ActionLibrary.pm:369 lib/Padre/Wx/FBP/Bookmarks.pm:90
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:126
 #: lib/Padre/Wx/Dialog/SessionManager.pm:302
 msgid "&Delete"
 msgstr ""
@@ -186,7 +195,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:150
+#: lib/Padre/Wx/FBP/FindInFiles.pm:139 lib/Padre/Wx/Dialog/Replace.pm:150
 msgid "&Find"
 msgstr ""
 
@@ -306,6 +315,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:594
 msgid "&Redo"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/FindInFiles.pm:115 lib/Padre/Wx/FBP/Find.pm:69
+msgid "&Regular Expression"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:169
@@ -731,10 +744,6 @@ msgstr ""
 msgid "Boolean"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:78
-msgid "Browse"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:217
 msgid "Browse directory of the current document to open one or several files"
 msgstr ""
@@ -790,10 +799,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Replace.pm:80
 msgid "Case &sensitive"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/FindInFiles.pm:123 lib/Padre/Wx/FBP/Find.pm:85
-msgid "Case Sensitive"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:470
@@ -929,6 +934,10 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Find.pm:93
+msgid "Cl&ose Window on Hit"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Snippets.pm:22 lib/Padre/Wx/Dialog/SpecialValues.pm:46
 msgid "Class:"
 msgstr ""
@@ -962,10 +971,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Replace.pm:108
 msgid "Close Window on &Hit"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/Find.pm:93
-msgid "Close Window on Hit"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4769
@@ -1385,13 +1390,12 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/FBP/Bookmarks.pm:90
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Bookmarks.pm:104
-msgid "Delete All"
+msgid "Delete &All"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:226
@@ -2096,13 +2100,16 @@ msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:139 lib/Padre/Wx/FBP/Find.pm:27
-#: lib/Padre/Wx/Dialog/Replace.pm:218
+#: lib/Padre/Wx/FBP/Find.pm:27 lib/Padre/Wx/Dialog/Replace.pm:218
 msgid "Find"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Find.pm:124
-msgid "Find All"
+msgid "Find &All"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Find.pm:109
+msgid "Find &Next"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1711
@@ -2110,7 +2117,6 @@ msgid "Find Method Declaration"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1175 lib/Padre/Wx/ActionLibrary.pm:1231
-#: lib/Padre/Wx/FBP/Find.pm:109
 msgid "Find Next"
 msgstr ""
 
@@ -3763,10 +3769,6 @@ msgstr ""
 msgid "Regular &Expression"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:115 lib/Padre/Wx/FBP/Find.pm:69
-msgid "Regular Expression"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:29
 msgid "Reinstalling/installing on other computer"
 msgstr ""
@@ -4116,12 +4118,12 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:122
+#: lib/Padre/Wx/FBP/Find.pm:77 lib/Padre/Wx/Dialog/Replace.pm:122
 msgid "Search &Backwards"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:77
-msgid "Search Backwards"
+#: lib/Padre/Wx/FBP/FindInFiles.pm:36 lib/Padre/Wx/FBP/Find.pm:36
+msgid "Search &Term:"
 msgstr ""
 
 #: lib/Padre/Document/Perl.pm:627
@@ -4134,10 +4136,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2608
 msgid "Search Help"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/FindInFiles.pm:36 lib/Padre/Wx/FBP/Find.pm:36
-msgid "Search Term:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Replace.pm:538 lib/Padre/Wx/Dialog/Replace.pm:582
