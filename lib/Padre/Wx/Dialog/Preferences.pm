@@ -21,6 +21,39 @@ our @ISA     = qw{
 
 
 #####################################################################
+# Class Methods
+
+# One-shot creation, display and execution.
+# Does return the object, but we don't expect anyone to use it.
+sub run {
+	my $class  = shift;
+	my $main   = shift;
+	my $self   = $class->new($main);
+
+	# Load preferences from configuration
+	my $config = $main->config;
+	$self->config_load($config);
+
+	# Show the dialog
+	$self->Fit;
+	$self->CentreOnParent;
+	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+
+	# Save back to configuration
+	$self->config_save($config);
+
+	# Clean up
+	$self->Destroy;
+	return 1;
+}
+
+
+
+
+
+#####################################################################
 # Constructor and Accessors
 
 sub new {
@@ -69,21 +102,6 @@ sub new {
 
 sub names {
 	return @{ $_[0]->{names} };
-}
-
-# One-shot creation, display and execution.
-# Does return the object, but we don't expect anyone to use it.
-sub run {
-	my $class  = shift;
-	my $main   = shift;
-	my $config = $main->config;
-	my $self   = Padre::Wx::Dialog::Preferences->new($main);
-	$self->config_load( $main->config );
-	$self->CentreOnParent;
-	unless ( $self->ShowModal == Wx::wxID_CANCEL ) {
-		$self->config_save( $main->config );
-	}
-	return $self;
 }
 
 

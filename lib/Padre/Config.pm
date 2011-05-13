@@ -358,6 +358,12 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'perl',
+
+	# licenses list taken from
+	# http://search.cpan.org/dist/Module-Build/lib/Module/Build/API.pod
+	# even though it should be in http://module-build.sourceforge.net/META-spec.html
+	# and we should fetch it from Module::Start or maybe Software::License.
+	# (but don't load them in this module, it adds bloat)
 	options => {
 		'apache'       => Wx::gettext('Apache License'),
 		'artistic'     => Wx::gettext('Artistic License 1.0'),
