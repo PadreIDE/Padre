@@ -33,7 +33,7 @@ sub new {
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Search Term:"),
+		Wx::gettext("Search &Term:"),
 	);
 
 	my $find_term = Padre::Wx::History::ComboBox->new(
@@ -66,7 +66,7 @@ sub new {
 	my $find_regex = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Regular Expression"),
+		Wx::gettext("&Regular Expression"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -74,7 +74,7 @@ sub new {
 	my $find_reverse = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Search Backwards"),
+		Wx::gettext("Search &Backwards"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -82,7 +82,7 @@ sub new {
 	my $find_case = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Case Sensitive"),
+		Wx::gettext("&Case Sensitive"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -90,7 +90,7 @@ sub new {
 	my $find_first = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Close Window on Hit"),
+		Wx::gettext("Cl&ose Window on Hit"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -106,7 +106,7 @@ sub new {
 	my $find_next = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
-		Wx::gettext("Find Next"),
+		Wx::gettext("Find &Next"),
 	);
 	$find_next->SetDefault;
 
@@ -121,7 +121,7 @@ sub new {
 	my $find_all = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
-		Wx::gettext("Find All"),
+		Wx::gettext("Find &All"),
 	);
 
 	my $cancel = Wx::Button->new(

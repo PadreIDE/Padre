@@ -106,7 +106,7 @@
                                 <property name="font"></property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Search Term:</property>
+                                <property name="label">Search &amp;Term:</property>
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">m_staticText2</property>
@@ -292,7 +292,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Regular Expression</property>
+                                        <property name="label">&amp;Regular Expression</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_regex</property>
@@ -349,7 +349,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Search Backwards</property>
+                                        <property name="label">Search &amp;Backwards</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_reverse</property>
@@ -406,7 +406,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Case Sensitive</property>
+                                        <property name="label">&amp;Case Sensitive</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_case</property>
@@ -463,7 +463,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Close Window on Hit</property>
+                                        <property name="label">Cl&amp;ose Window on Hit</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_first</property>
@@ -585,7 +585,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_OK</property>
-                                        <property name="label">Find Next</property>
+                                        <property name="label">Find &amp;Next</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_next</property>
@@ -642,7 +642,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_OK</property>
-                                        <property name="label">Find All</property>
+                                        <property name="label">Find &amp;All</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_all</property>
