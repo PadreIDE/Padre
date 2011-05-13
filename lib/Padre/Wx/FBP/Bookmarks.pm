@@ -87,7 +87,7 @@ sub new {
 	my $delete = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Delete"),
+		Wx::gettext("&Delete"),
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -101,7 +101,7 @@ sub new {
 	my $delete_all = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Delete All"),
+		Wx::gettext("Delete &All"),
 	);
 
 	Wx::Event::EVT_BUTTON(
