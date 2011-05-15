@@ -56,6 +56,7 @@ next production release, and synchronise their release to the Padre schedule.
       moved it to Padre::Wx::Main, removing the need for a dedicated
       "Convert Encoding" dialog (ADAMK)
     - Moved all Module::Starter options into module_starter_* (ADAMK)
+    - "toggle comments" button doesn't require text selection (GARU)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
