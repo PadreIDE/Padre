@@ -918,7 +918,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name           => 'edit.comment_toggle',
 		need_editor    => 1,
-		need_selection => 1,
+		need_selection => 0,
 		label          => _T('&Toggle Comment'),
 		comment        => _T('Comment out or remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-C',
