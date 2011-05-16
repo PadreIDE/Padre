@@ -27,13 +27,13 @@ sub nth {
 		return 1;
 	}
 
-	if ( $nth > 2 and not $config->feedback_done ) {
-		require Padre::Wx::Dialog::WhereFrom;
-		my $dialog = Padre::Wx::Dialog::WhereFrom->new($main);
-		$dialog->run;
-		$dialog->Destroy;
-		return 1;
-	}
+#	if ( $nth > 2 and not $config->feedback_done ) {
+#		require Padre::Wx::Dialog::WhereFrom;
+#		my $dialog = Padre::Wx::Dialog::WhereFrom->new($main);
+#		$dialog->run;
+#		$dialog->Destroy;
+#		return 1;
+#	}
 
 	# Nothing to say
 	return 1;
