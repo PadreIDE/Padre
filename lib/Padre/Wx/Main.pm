@@ -3092,7 +3092,7 @@ sub search_next {
 		die 'Invalid argument to search_next';
 	}
 	if ( $self->search ) {
-		$self->search->search_next($editor);
+		$self->search->search_next($editor, @_);
 	} else {
 		$self->find->find_next;
 	}
@@ -3123,7 +3123,7 @@ sub search_previous {
 		die("Invalid argument to search_previous");
 	}
 	if ( $self->search ) {
-		$self->search->search_previous($editor);
+		$self->search->search_previous($editor, @_);
 	} else {
 		$self->find->find;
 	}
@@ -3154,7 +3154,7 @@ sub replace_next {
 		die("Invalid argument to replace_next");
 	}
 	if ( $self->search ) {
-		$self->search->replace_next($editor);
+		$self->search->replace_next($editor, @_);
 	} else {
 		$self->replace->find;
 	}
@@ -3185,7 +3185,7 @@ sub replace_all {
 		die("Invalid argument to replace_all");
 	}
 	if ( $self->search ) {
-		$self->search->replace_all($editor);
+		$self->search->replace_all($editor, @_);
 	} else {
 		$self->replace->find;
 	}

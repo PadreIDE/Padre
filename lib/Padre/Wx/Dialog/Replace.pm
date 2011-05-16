@@ -384,8 +384,8 @@ Grab currently selected text, if any, and place it in find combo box.
 Bring up the dialog or perform search for string's next occurrence
 if dialog is already displayed.
 
-TO DO: if selection is more than one line then consider it as the limit
-of the search and not as the string to be used.
+If selection is more than one line then it is considered as the limit
+of the search, not as the string to be used.
 
 =cut
 
@@ -397,9 +397,17 @@ sub find {
 	# No search if no file is open (TO DO ??)
 	return unless $self->current->editor;
 
-	# TO DO: if selection is more than one lines then consider it as the
+	# If selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
-	$text = '' if $text =~ /\n/;
+	if ($text =~ /\n/) {
+		$text = '';
+	    ($self->{find_begin}, $self->{find_end}) =
+			Padre::Current->editor->GetSelection;
+	}
+	else {
+		$self->{find_begin} = 0;
+		$self->{find_end}   = Padre::Current->editor->GetLength;
+	}
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
@@ -451,7 +459,7 @@ sub find_button {
 	}
 
 	# Apply the search to the current editor
-	$main->search_next($search);
+	$main->search_next($search, $self->{find_begin}, $self->{find_end});
 
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
@@ -531,7 +539,8 @@ sub replace_button {
 	}
 
 	# Just replace once
-	my $changed = $main->replace_next($search);
+	my $changed = $main->replace_next($search, $self->{find_begin}, $self->{find_end});
+
 	unless ($changed) {
 		$main->message(
 			sprintf( Wx::gettext('No matches found for "%s".'), $self->{find_text}->GetValue ),
@@ -571,7 +580,7 @@ sub replace_all {
 	}
 
 	# Apply the search to the current editor
-	my $number_of_changes = $main->replace_all($search);
+	my $number_of_changes = $main->replace_all($search, $self->{find_begin}, $self->{find_end});
 	if ($number_of_changes) {
 		my $message_text =
 			$number_of_changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
