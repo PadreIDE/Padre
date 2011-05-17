@@ -9,8 +9,10 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 15;
+	plan tests => 25;
 }
+use File::Copy qw(copy);
+use File::Spec::Functions qw(catfile);
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -68,6 +70,21 @@ SCOPE: {
 		[1,   4],
 		[18, 21],
 	], 'matches returns a correct relative structure (within selection)';
+}
+
+SCOPE: {
+	my $search = new_ok 'Padre::Search', [find_term => 'style'];
+	ok my $main = $padre->ide->wx->main, 'got main object';
+	eval { $main->setup_editor( catfile( 't', 'files', 'perl_functions.pl' ) ) }; diag $@ if $@;
+	is scalar $main->editors, 1, '1 editor loaded';
+	
+    ok my $doc    = $main->current->document, 'fetched document';
+    ok my $editor = $doc->editor, 'fetched editor';
+	ok $search->search_next($editor), 'calling search_next()';
+	ok my ($begin, $end) = $editor->GetSelection, 'retrieving current selection';
+	is $begin, 22, 'search_next() selects text with proper beginning position';
+	is $end, 27, 'search_next() selects text with proper ending position';
+	is $editor->GetTextRange( $begin, $end ), 'style', 'got the right text';
 }
 
 ### commands below should generate an exception
