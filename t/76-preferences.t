@@ -43,6 +43,7 @@ ok( $dialog->config_load($config), '->load ok' );
 
 # The diff (extracted from dialog) to the config should be null,
 # except maybe for a potential default font value. This is because 
+# SetSelectedFont() doesn't work on wxNullFont.
 my $diff = $dialog->config_diff($config);
 if ($diff) {
 	is scalar keys %$diff, 1, 'only one key defined in the diff';
