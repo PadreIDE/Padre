@@ -576,7 +576,7 @@ is an abstraction class to deal with a single document.
 
 locates and loads the plug-ins.
 
-=item L<Plugin>
+=item L<Padre::Plugin>
 
 Should be the base class of all plug-ins.
 
