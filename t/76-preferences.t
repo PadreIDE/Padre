@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 9;
+	plan tests => 10;
 }
 
 use Test::NoWarnings;
@@ -41,6 +41,15 @@ my $config = $main->config;
 isa_ok( $config, 'Padre::Config' );
 ok( $dialog->config_load($config), '->load ok' );
 
-# The diff (extracted from dialog) to the config should be null
+# The diff (extracted from dialog) to the config should be null,
+# except maybe for a potential default font value. This is because 
 my $diff = $dialog->config_diff($config);
-is_deeply( $diff, undef, '->diff returns an empty HASH' );
+if ($diff) {
+	is scalar keys %$diff, 1, 'only one key defined in the diff';
+	ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
+}
+else {
+	ok !$diff, 'null font loaded, config_diff() returned nothing';
+	ok 1, 'placebo to stick to the plan';
+}
+

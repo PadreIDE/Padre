@@ -41,7 +41,10 @@ sub config_load {
 			local $@;
 			eval { $font->SetNativeFontInfoUserDesc($value); };
 			$font = Wx::Font->new(Wx::wxNullFont) if $@;
-			$ctrl->SetSelectedFont($font);
+			
+			# SetSelectedFont(wxNullFont) doesn't work on
+			# Linux, so we only do it if the font is valid
+			$ctrl->SetSelectedFont($font) if $font->IsOk;
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
