@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-17 08:10-0700\n"
+"POT-Creation-Date: 2011-05-18 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1426,7 +1426,7 @@ msgstr ""
 msgid "Development"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:63
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:62
 msgid "Did not provide a bookmark name"
 msgstr ""
 
@@ -1434,7 +1434,7 @@ msgstr ""
 msgid "Did not provide a distribution"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:99
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:96
 msgid "Did not select a bookmark"
 msgstr ""
 
@@ -1661,11 +1661,11 @@ msgstr ""
 msgid "Encode Document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6644
+#: lib/Padre/Wx/Main.pm:6642
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6643
+#: lib/Padre/Wx/Main.pm:6641
 msgid "Encode to:"
 msgstr ""
 
@@ -1859,7 +1859,7 @@ msgstr ""
 msgid "Evaluate Expression..."
 msgstr ""
 
-#: lib/Padre/Config/Style.pm:46
+#: lib/Padre/Config/Style.pm:47
 msgid "Evening"
 msgstr ""
 
@@ -2918,7 +2918,7 @@ msgstr ""
 msgid "Next File"
 msgstr ""
 
-#: lib/Padre/Config/Style.pm:47
+#: lib/Padre/Config/Style.pm:48
 msgid "Night"
 msgstr ""
 
@@ -2981,8 +2981,8 @@ msgstr ""
 msgid "No match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:72 lib/Padre/Wx/Dialog/Replace.pm:546
-#: lib/Padre/Wx/Dialog/Replace.pm:595
+#: lib/Padre/Wx/Dialog/Find.pm:72 lib/Padre/Wx/Dialog/Replace.pm:544
+#: lib/Padre/Wx/Dialog/Replace.pm:593
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -3042,7 +3042,7 @@ msgstr ""
 msgid "Not a word boundary"
 msgstr ""
 
-#: lib/Padre/Config/Style.pm:49
+#: lib/Padre/Config/Style.pm:50
 msgid "Notepad++"
 msgstr ""
 
@@ -3335,7 +3335,7 @@ msgstr ""
 
 #: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/WizardLibrary.pm:29
 #: lib/Padre/Wx/WizardLibrary.pm:37 lib/Padre/Wx/Dialog/Form.pm:98
-#: lib/Padre/Config/Style.pm:45
+#: lib/Padre/Config/Style.pm:46
 msgid "Padre"
 msgstr ""
 
@@ -3906,12 +3906,12 @@ msgstr ""
 msgid "Replace..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:586
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:586
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4138,8 +4138,8 @@ msgstr ""
 msgid "Search Help"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:547 lib/Padre/Wx/Dialog/Replace.pm:591
-#: lib/Padre/Wx/Dialog/Replace.pm:596
+#: lib/Padre/Wx/Dialog/Replace.pm:545 lib/Padre/Wx/Dialog/Replace.pm:589
+#: lib/Padre/Wx/Dialog/Replace.pm:594
 msgid "Search and Replace"
 msgstr ""
 
@@ -4866,7 +4866,7 @@ msgstr ""
 msgid "The Padre Translation Team"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:113
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:110
 #, perl-format
 msgid "The bookmark '%s' no longer exists"
 msgstr ""
@@ -4966,7 +4966,7 @@ msgstr ""
 msgid "UNKNOWN"
 msgstr ""
 
-#: lib/Padre/Config/Style.pm:48
+#: lib/Padre/Config/Style.pm:49
 msgid "Ultraedit"
 msgstr ""
 
