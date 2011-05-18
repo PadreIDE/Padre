@@ -192,7 +192,7 @@ sub init {
 		comment    => _T('Setup a skeleton Perl distribution'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStarter;
-			Padre::Wx::Dialog::ModuleStarter->run($_[0]);
+			Padre::Wx::Dialog::ModuleStarter->run( $_[0] );
 		},
 	);
 
@@ -1602,7 +1602,7 @@ sub init {
 		shortcut   => 'Ctrl-B',
 		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_set($_[0]);
+			Padre::Wx::Dialog::Bookmarks->run_set( $_[0] );
 		},
 	);
 
@@ -1613,7 +1613,7 @@ sub init {
 		shortcut   => 'Ctrl-Shift-B',
 		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_goto($_[0]);
+			Padre::Wx::Dialog::Bookmarks->run_goto( $_[0] );
 		},
 	);
 

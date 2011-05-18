@@ -26,13 +26,15 @@ sub run {
 	my $config = $main->config;
 
 	# Load preferences
-	$self->config_load( $config, qw{
-		identity_name
-		identity_email
-		module_starter_directory
-		module_starter_builder
-		module_starter_license
-	} );
+	$self->config_load(
+		$config, qw{
+			identity_name
+			identity_email
+			module_starter_directory
+			module_starter_builder
+			module_starter_license
+			}
+	);
 
 	# Show the dialog
 	$self->Fit;
@@ -42,11 +44,13 @@ sub run {
 	}
 
 	# Save preferences
-	$self->config_save( $config, qw{
-		module_starter_directory
-		module_starter_builder
-		module_starter_license
-	} );
+	$self->config_save(
+		$config, qw{
+			module_starter_directory
+			module_starter_builder
+			module_starter_license
+			}
+	);
 
 	# Generate the distribution
 	### TO BE COMPLETED

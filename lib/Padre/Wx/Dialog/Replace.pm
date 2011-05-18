@@ -399,12 +399,10 @@ sub find {
 
 	# If selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
-	if ($text =~ /\n/) {
+	if ( $text =~ /\n/ ) {
 		$text = '';
-	    ($self->{find_begin}, $self->{find_end}) =
-			Padre::Current->editor->GetSelection;
-	}
-	else {
+		( $self->{find_begin}, $self->{find_end} ) = Padre::Current->editor->GetSelection;
+	} else {
 		$self->{find_begin} = 0;
 		$self->{find_end}   = Padre::Current->editor->GetLength;
 	}
@@ -459,7 +457,7 @@ sub find_button {
 	}
 
 	# Apply the search to the current editor
-	$main->search_next($search, $self->{find_begin}, $self->{find_end});
+	$main->search_next( $search, $self->{find_begin}, $self->{find_end} );
 
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
@@ -539,7 +537,7 @@ sub replace_button {
 	}
 
 	# Just replace once
-	my $changed = $main->replace_next($search, $self->{find_begin}, $self->{find_end});
+	my $changed = $main->replace_next( $search, $self->{find_begin}, $self->{find_end} );
 
 	unless ($changed) {
 		$main->message(
@@ -580,7 +578,7 @@ sub replace_all {
 	}
 
 	# Apply the search to the current editor
-	my $number_of_changes = $main->replace_all($search, $self->{find_begin}, $self->{find_end});
+	my $number_of_changes = $main->replace_all( $search, $self->{find_begin}, $self->{find_end} );
 	if ($number_of_changes) {
 		my $message_text =
 			$number_of_changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');

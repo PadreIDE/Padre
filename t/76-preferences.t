@@ -42,14 +42,13 @@ isa_ok( $config, 'Padre::Config' );
 ok( $dialog->config_load($config), '->load ok' );
 
 # The diff (extracted from dialog) to the config should be null,
-# except maybe for a potential default font value. This is because 
+# except maybe for a potential default font value. This is because
 # SetSelectedFont() doesn't work on wxNullFont.
 my $diff = $dialog->config_diff($config);
 if ($diff) {
 	is scalar keys %$diff, 1, 'only one key defined in the diff';
 	ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
-}
-else {
+} else {
 	ok !$diff, 'null font loaded, config_diff() returned nothing';
 	ok 1, 'placebo to stick to the plan';
 }

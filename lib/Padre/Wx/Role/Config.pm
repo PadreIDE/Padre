@@ -15,7 +15,7 @@ sub config_load {
 	my $config = shift;
 
 	# Iterate over the specified config elements
-	foreach my $name ( @_ ) {
+	foreach my $name (@_) {
 		next unless $self->can($name);
 
 		# Get the Wx element for this option
@@ -41,7 +41,7 @@ sub config_load {
 			local $@;
 			eval { $font->SetNativeFontInfoUserDesc($value); };
 			$font = Wx::Font->new(Wx::wxNullFont) if $@;
-			
+
 			# SetSelectedFont(wxNullFont) doesn't work on
 			# Linux, so we only do it if the font is valid
 			$ctrl->SetSelectedFont($font) if $font->IsOk;
@@ -81,7 +81,7 @@ sub config_save {
 	my $current = $self->current;
 
 	# Find the changes we need to save, if any
-	my $diff = $self->config_diff($config, @_) or return;
+	my $diff = $self->config_diff( $config, @_ ) or return;
 
 	# Lock most of Padre so any apply handlers run quickly
 	my $lock = $self->main->lock( 'UPDATE', 'REFRESH', 'DB' );
@@ -102,7 +102,7 @@ sub config_diff {
 	my $config = shift;
 	my %diff   = ();
 
-	foreach my $name ( @_ ) {
+	foreach my $name (@_) {
 		next unless $self->can($name);
 
 		# Get the Wx element for this option

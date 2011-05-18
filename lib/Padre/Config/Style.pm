@@ -33,6 +33,7 @@ use vars qw{
 };
 
 BEGIN {
+
 	# The location of the style files
 	$CORE_DIRECTORY = Padre::Util::sharedir('styles');
 	$USER_DIRECTORY = File::Spec->catdir(
@@ -54,38 +55,37 @@ BEGIN {
 	if ( -d $USER_DIRECTORY ) {
 		local *STYLEDIR;
 		opendir( STYLEDIR, $USER_DIRECTORY ) or die "Failed to read '$USER_DIRECTORY'";
-		@USER_STYLES = sort grep {
-			defined Params::Util::_IDENTIFIER($_)
-		} map {
-			substr( File::Basename::basename($_), 0, -4 )
-		} grep { /\.yml$/ } readdir STYLEDIR;
+		@USER_STYLES =
+			sort grep { defined Params::Util::_IDENTIFIER($_) }
+			map { substr( File::Basename::basename($_), 0, -4 ) } grep {/\.yml$/} readdir STYLEDIR;
 		closedir STYLEDIR;
 	}
 
 	# Build the second-generation config objects
 	%STYLES = ();
-# You don't have your own ->new in the BEGIN block
-# before you declare it
-#	foreach my $name ( sort keys %CORE_STYLES ) {
-#		$STYLES{$name} = Padre::Config::Style->new(
-#			name    => $name,
-#			label   => $CORE_STYLES{$name},
-#			private => 0,
-#			file    => File::Spec->catfile(
-#				$CORE_DIRECTORY, "$name.yml",
-#			),
-#		);
-#	}
-#	foreach my $name ( @USER_STYLES ) {
-#		$STYLES{$name} = Padre::Config::Style->new(
-#			name    => $name,
-#			label   => $name,
-#			private => 1,
-#			file    => File::Spec->catfile(
-#				$USER_DIRECTORY, "$name.yml",
-#			),
-#		);
-#	}
+
+	# You don't have your own ->new in the BEGIN block
+	# before you declare it
+	#	foreach my $name ( sort keys %CORE_STYLES ) {
+	#		$STYLES{$name} = Padre::Config::Style->new(
+	#			name    => $name,
+	#			label   => $CORE_STYLES{$name},
+	#			private => 0,
+	#			file    => File::Spec->catfile(
+	#				$CORE_DIRECTORY, "$name.yml",
+	#			),
+	#		);
+	#	}
+	#	foreach my $name ( @USER_STYLES ) {
+	#		$STYLES{$name} = Padre::Config::Style->new(
+	#			name    => $name,
+	#			label   => $name,
+	#			private => 1,
+	#			file    => File::Spec->catfile(
+	#				$USER_DIRECTORY, "$name.yml",
+	#			),
+	#		);
+	#	}
 }
 
 # Convenience access to the merged style list
@@ -114,7 +114,7 @@ sub user_styles {
 sub new {
 	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
-	bless { @_ }, $class;
+	bless {@_}, $class;
 }
 
 sub load {
@@ -160,8 +160,8 @@ sub file {
 }
 
 sub data {
-	$_[0]->{data} or
-	$_[0]->{data} = $_[0]->read;
+	$_[0]->{data}
+		or $_[0]->{data} = $_[0]->read;
 }
 
 sub read {

@@ -65,7 +65,7 @@ sub new {
 	unless ( defined $self->search_regex ) {
 		return;
 	}
-	
+
 	return $self;
 }
 
@@ -228,7 +228,7 @@ sub editor_search_down {
 	# unless a range is provided, we'll search the entire document
 	my $search_begin = shift || 0;
 	my $search_end   = shift || $editor->GetLength;
-	my ($from, $to) = map { $_ - $search_begin } $editor->GetSelection;
+	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
@@ -251,11 +251,11 @@ sub editor_search_up {
 	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die "Failed to provide editor object to search in";
 	}
-	
+
 	# unless a range is provided, we'll search the entire document
 	my $search_begin = shift || 0;
 	my $search_end   = shift || $editor->GetLength;
-	my ($from, $to) = map { $_ - $search_begin } $editor->GetSelection;
+	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
@@ -283,7 +283,7 @@ sub editor_replace {
 	# unless a range is provided, we'll search the entire document
 	my $search_begin = shift || 0;
 	my $search_end   = shift || $editor->GetLength;
-	my ($from, $to) = map { $_ - $search_begin } $editor->GetSelection;
+	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
 
 	# Execute the search
 	my ( $start, $end, @matches ) = $self->matches(
@@ -292,17 +292,16 @@ sub editor_replace {
 		$from,
 		$to,
 	);
-	
+
 	# update starting position
 	$start += $search_begin;
 
 	# Are they perfectly selecting a match already?
 	my $selection = [ $editor->GetSelection ];
 	if ( $selection->[0] != $selection->[1] ) {
-		if ( grep { $selection->[0] == $_->[0] + $search_begin
-		        and $selection->[1] == $_->[1] + $search_begin
-		     } @matches
-		) {
+		if ( grep { $selection->[0] == $_->[0] + $search_begin and $selection->[1] == $_->[1] + $search_begin }
+			@matches )
+		{
 
 			# Yes, replace it
 			$editor->ReplaceSelection( $self->replace_term );
@@ -318,7 +317,7 @@ sub editor_replace {
 				my $length = length( $self->replace_term );
 				$start = $start + $length;
 				$editor->SetSelection( $start, $start );
-				$search_end += ($length - $selection->[1] - $selection->[0] );
+				$search_end += ( $length - $selection->[1] - $selection->[0] );
 			}
 		}
 	}
@@ -337,7 +336,7 @@ sub editor_replace_all {
 	# unless a range is provided, we'll search the entire document
 	my $search_begin = shift || 0;
 	my $search_end   = shift || $editor->GetLength;
-	my ($from, $to) = map { $_ - $search_begin } $editor->GetSelection;
+	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
 
 	# Execute the search for all matches
 	my ( undef, undef, @matches ) = $self->matches(
@@ -351,7 +350,7 @@ sub editor_replace_all {
 	if (@matches) {
 		my $replace = $self->replace_term;
 		$editor->BeginUndoAction;
-		foreach my $match ( reverse map { [$_->[0] + $search_begin, $_->[1] + $search_begin] } @matches ) {
+		foreach my $match ( reverse map { [ $_->[0] + $search_begin, $_->[1] + $search_begin ] } @matches ) {
 			$editor->SetTargetStart( $match->[0] );
 			$editor->SetTargetEnd( $match->[1] );
 			$editor->ReplaceTarget($replace);

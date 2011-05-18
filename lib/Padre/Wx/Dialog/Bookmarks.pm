@@ -59,9 +59,7 @@ sub run_set {
 	# Fetch and clean the name
 	my $name = $class->clean( $self->set->GetValue );
 	unless ( defined Params::Util::_STRING($name) ) {
-		$self->main->error(
-			Wx::gettext('Did not provide a bookmark name')
-		);
+		$self->main->error( Wx::gettext('Did not provide a bookmark name') );
 		return;
 	}
 
@@ -95,9 +93,7 @@ sub run_goto {
 	# Was a bookmark selected
 	my $id = $self->list->GetSelection;
 	if ( $id == Wx::wxNOT_FOUND ) {
-		$self->main->error(
-			Wx::gettext('Did not select a bookmark')
-		);
+		$self->main->error( Wx::gettext('Did not select a bookmark') );
 		return;
 	}
 
@@ -106,7 +102,8 @@ sub run_goto {
 	my @bookmark = Padre::DB::Bookmark->select(
 		'where name = ?', $name,
 	);
-	unless ( @bookmark ) {
+	unless (@bookmark) {
+
 		# Deleted since the dialog was shown
 		$main->error(
 			sprintf(
@@ -207,9 +204,9 @@ sub load {
 	my $self  = shift;
 	my $names = Padre::DB::Bookmark->select_names;
 
-	if ( @$names ) {
+	if (@$names) {
 		$self->list->Clear;
-		foreach my $name ( @$names ) {
+		foreach my $name (@$names) {
 			$self->list->Append( $name, $name );
 		}
 		$self->list->SetSelection(0);

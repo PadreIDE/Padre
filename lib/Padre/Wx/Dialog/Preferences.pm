@@ -26,9 +26,9 @@ our @ISA     = qw{
 # One-shot creation, display and execution.
 # Does return the object, but we don't expect anyone to use it.
 sub run {
-	my $class  = shift;
-	my $main   = shift;
-	my $self   = $class->new($main);
+	my $class = shift;
+	my $main  = shift;
+	my $self  = $class->new($main);
 
 	# Load preferences from configuration
 	my $config = $main->config;
@@ -91,11 +91,7 @@ sub new {
 	# Build the list of configuration dialog elements.
 	# We assume all public dialog elements will match a wx widget with
 	# a public method returning it.
-	$self->{names} = [
-		grep {
-			$self->can($_)
-		} $self->config->settings
-	];
+	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
 
 	return $self;
 }
@@ -118,7 +114,7 @@ sub config_load {
 
 	# We assume all public dialog elements will match a wx widget with
 	# a public method returning it.
-	$self->SUPER::config_load($config, $self->names);
+	$self->SUPER::config_load( $config, $self->names );
 
 	# Sync the editor preview to the current config
 	$self->preview->set_preferences;

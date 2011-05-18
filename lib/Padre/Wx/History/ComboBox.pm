@@ -40,8 +40,8 @@ recent history entry if it set to the null string.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx          ();
-use Padre::DB          ();
+use Padre::Wx ();
+use Padre::DB ();
 
 our $VERSION = '0.85';
 our @ISA     = 'Wx::ComboBox';
