@@ -38,6 +38,9 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 	}
 	exit 0;
 }
+elsif ($^O eq 'linux') {
+	$ENV{LIBOVERLAY_SCROLLBAR}=0;
+}
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
