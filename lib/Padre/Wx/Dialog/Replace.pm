@@ -18,7 +18,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_STRING};
-use Padre::Current               ();
+#use Padre::Current               ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::Main        ();
@@ -401,10 +401,10 @@ sub find {
 	# limit of the search and not as the string to be used.
 	if ( $text =~ /\n/ ) {
 		$text = '';
-		( $self->{find_begin}, $self->{find_end} ) = Padre::Current->editor->GetSelection;
+		( $self->{find_begin}, $self->{find_end} ) = $self->current->editor->GetSelection; # Padre::Current
 	} else {
 		$self->{find_begin} = 0;
-		$self->{find_end}   = Padre::Current->editor->GetLength;
+		$self->{find_end}   = $self->current->editor->GetLength; # Padre::Current
 	}
 
 	# Clear out and reset the dialog, then prepare the new find
