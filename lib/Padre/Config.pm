@@ -480,11 +480,11 @@ setting(
 
 # Window
 setting(
-	name  => 'main_title',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'main_title',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ) . ' [%p]',
-	apply => sub {
+	apply   => sub {
 		my $main = shift;
 		$main->refresh_title;
 	},
