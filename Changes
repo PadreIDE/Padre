@@ -43,7 +43,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Fixed bug where the Function List scanner was incorrectly matching
       __DATA__ or __END__ anywhere in any statement (ADAMK)
     - Config file entries referring to values which are not in the valid option
-      list for a setting will use the default, but no overwrite (ADAMK)
+      list for a setting will use the default, but not overwrite (ADAMK)
     - Upgraded Padre::Wx::Dialog::Text to wxFormBuilder (ADAMK)
     - Find and Find in Files now save search options again (ADAMK)
     - PluginManager now checks for a defined ->VERSION in plugins to help
