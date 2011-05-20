@@ -199,6 +199,19 @@ sub default {
 	return $DEFAULT{$name};
 }
 
+sub changed {
+	my $self = shift;
+	my $name = shift;
+	my $new  = shift;
+	my $old  = $self->$name();
+	my $type = $self->meta($name)->type;
+	if ( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH ) {
+		return $new ne $old;
+	} else {
+		return $new != $old;
+	}
+}
+
 sub set {
 	TRACE( $_[1] ) if DEBUG;
 	my $self  = shift;
