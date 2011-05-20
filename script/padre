@@ -37,9 +37,8 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 		warn "padre cannot find wxPerl executable (which it requires on OS X)\n";
 	}
 	exit 0;
-}
-elsif ($^O eq 'linux') {
-	$ENV{LIBOVERLAY_SCROLLBAR}=0;
+} elsif ( $^O eq 'linux' ) {
+	$ENV{LIBOVERLAY_SCROLLBAR} = 0;
 }
 
 # Handle special command line cases early, because options like --home
