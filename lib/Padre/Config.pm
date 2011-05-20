@@ -485,8 +485,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ) . ' [%p]',
 	apply   => sub {
-		my $main = shift;
-		$main->refresh_title;
+		$_[0]->lock('refresh_title');
 	},
 	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
 );
@@ -497,8 +496,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '%m %f',
 	apply   => sub {
-		my $main = shift;
-		$main->refresh_from_template;
+		$_[0]->lock('refresh_title');
 	},
 	help => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
 );
@@ -527,6 +525,15 @@ setting(
 	store   => Padre::Constant::HOST,
 	default => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
 	startup => 1,
+	apply   => sub {
+		my $main = shift;
+		if ( $main->config->main_singleinstance ) {
+			# Restart on the new port or the next attempt
+			# to use it will produce a new instance.
+			$main->single_instance_stop;
+			$main->single_instance_start;
+		}
+	},
 );
 
 setting(
@@ -559,6 +566,13 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{functions};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_functions($on);
+	},
 );
 setting(
 	name    => 'main_functions_order',
@@ -579,6 +593,13 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{outline};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_outline($on);
+	},
 );
 setting(
 	name    => 'main_todo',
@@ -591,6 +612,13 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{directory};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_directory($on);
+	},
 );
 setting(
 	name    => 'main_directory_order',
@@ -600,6 +628,9 @@ setting(
 	options => {
 		first => _T('Directories First'),
 		mixed => _T('Directories Mixed'),
+	},
+	apply   => sub {
+		$_[0]->lock('refresh_directory');
 	},
 );
 setting(
@@ -631,10 +662,13 @@ setting(
 	}
 );
 setting(
-	name  => 'main_directory_root',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HOST,
+	name    => 'main_directory_root',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
+	apply   => sub {
+		$_[0]->lock('refresh_directory');
+	},
 );
 setting(
 	name    => 'main_output',
