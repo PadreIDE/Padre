@@ -23,7 +23,7 @@ my @GUI_ELEMENTS = qw{
 	outline
 	directory
 	output
-	show_syntaxcheck
+	syntaxcheck
 	command_line
 	statusbar
 	toolbar
@@ -282,7 +282,7 @@ sub refresh {
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
 	$self->{show_calltips}->Check( $config->editor_calltips );
 	$self->{command_line}->Check( $config->main_command_line );
-	$self->{show_syntaxcheck}->Check( $config->main_syntaxcheck );
+	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{toolbar}->Check( $config->main_toolbar );
 
 	$self->{fold_all}->Enable( $self->{folding}->IsChecked );

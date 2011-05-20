@@ -273,7 +273,7 @@ sub new {
 	$self->_show_directory( $config->main_directory );
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
-	$self->_show_syntax( $config->main_syntaxcheck );
+	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -1503,7 +1503,7 @@ sub refresh_syntaxcheck {
 	my $self = shift;
 	return unless $self->has_syntax;
 	return if $self->locked('REFRESH');
-	return unless $self->menu->view->{show_syntaxcheck}->IsChecked;
+	return unless $self->menu->view->{syntaxcheck}->IsChecked;
 	$self->syntax->on_timer( undef, 1 );
 	return;
 }
@@ -1716,9 +1716,12 @@ Force a refresh of the directory tree
 
 sub refresh_directory {
 	my $self = shift;
+
 	return unless $self->has_directory;
 	return if $self->locked('REFRESH');
+
 	$self->directory->refresh( $_[0] or $self->current );
+
 	return;
 }
 
@@ -1918,7 +1921,7 @@ sub reconfig {
 	$self->show_directory( $config->main_directory );
 	$self->show_output( $config->main_output );
 	$self->show_command_line( $config->main_command_line );
-	$self->show_syntax( $config->main_syntaxcheck );
+	$self->show_syntaxcheck( $config->main_syntaxcheck );
 
 	# Finally refresh the menu to clean it up
 	$self->menu->refresh;
@@ -2265,9 +2268,9 @@ sub _show_command_line {
 
 =pod
 
-=head3 C<show_syntax>
+=head3 C<show_syntaxcheck>
 
-    $main->show_syntax( $visible );
+    $main->show_syntaxcheck( $visible );
 
 Show the syntax panel at the bottom if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2275,30 +2278,32 @@ the panel.
 
 =cut
 
-sub show_syntax {
+sub show_syntaxcheck {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'refresh_syntaxcheck' );
-	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$self->menu->view->{show_syntaxcheck}->Check($on);
+	unless ( $on == $self->menu->view->{syntaxcheck}->IsChecked ) {
+		$self->menu->view->{syntaxcheck}->Check($on);
 	}
 
 	$self->config->set( main_syntaxcheck => $on );
-	$self->_show_syntax($on);
+	$self->_show_syntaxcheck($on);
 	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
 }
 
-sub _show_syntax {
+sub _show_syntaxcheck {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		my $syntax = $self->syntax;
 		$self->bottom->show(
 			$syntax,
-			sub { $self->show_syntax(0) },
+			sub {
+				$self->show_syntaxcheck(0);
+			},
 		);
 		$syntax->start unless $syntax->running;
 	} elsif ( $self->has_syntax ) {

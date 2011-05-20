@@ -1404,12 +1404,12 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.show_syntaxcheck',
+		name        => 'view.syntaxcheck',
 		label       => _T('Show Syntax Check'),
 		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_syntax( $_[1]->IsChecked );
+			$_[0]->show_syntaxcheck( $_[1]->IsChecked );
 		},
 	);
 
@@ -2591,7 +2591,7 @@ sub init {
 		comment    => _T('Set the focus to the "Syntax Check" window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
-			$_[0]->show_syntax(1);
+			$_[0]->show_syntaxcheck(1);
 			$_[0]->syntax->SetFocus;
 		},
 	);

@@ -244,7 +244,7 @@ sub new {
 	$self->_show_directory( $config->main_directory );
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
-	$self->_show_syntax( $config->main_syntaxcheck );
+	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );

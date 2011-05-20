@@ -174,8 +174,8 @@ my @events = (
 			$T->diag("setting syntax check");
 			my $main = $ide->wx->main;
 			$T->diag( "syntaxcheck_panel: " . $main->syntax );
-			$main->menu->view->{show_syntaxcheck}->Check(1);
-			$main->show_syntax(1);
+			$main->menu->view->{syntaxcheck}->Check(1);
+			$main->show_syntaxcheck(1);
 			$T->ok( $main->syntax->isa('Wx::ListView'), 'is a Wx::ListView' );
 		},
 	},

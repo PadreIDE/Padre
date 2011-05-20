@@ -63,6 +63,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Ctrl-F launches the quick search (bottom pane), 2nd time Ctrl-F
       launches regular search and 3rd time Ctrl-F launches find in files
       which will loose it's own shortcut Ctrl-Shift-F in the future #1223 (SEWI)
+    - Expanding the coverage of "apply" handlers in Padre::Config in
+      preparation for Padre Sync (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

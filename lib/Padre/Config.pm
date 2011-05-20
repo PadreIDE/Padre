@@ -572,6 +572,7 @@ setting(
 		my $item = $main->menu->view->{functions};
 		$item->Check($on) if $on != $item->IsChecked;
 		$main->_show_functions($on);
+		$main->aui->Update;
 	},
 );
 setting(
@@ -599,6 +600,7 @@ setting(
 		my $item = $main->menu->view->{outline};
 		$item->Check($on) if $on != $item->IsChecked;
 		$main->_show_outline($on);
+		$main->aui->Update;
 	},
 );
 setting(
@@ -618,6 +620,7 @@ setting(
 		my $item = $main->menu->view->{directory};
 		$item->Check($on) if $on != $item->IsChecked;
 		$main->_show_directory($on);
+		$main->aui->Update;
 	},
 );
 setting(
@@ -675,6 +678,14 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{output};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_output($on);
+		$main->aui->Update;
+	},
 );
 setting(
 	name    => 'main_command_line',
@@ -693,6 +704,14 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{syntaxcheck};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_syntaxcheck($on);
+		$main->aui->Update;
+	},
 );
 setting(
 	name    => 'main_statusbar',
@@ -764,9 +783,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name  => 'default_projects_directory',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -1093,7 +1112,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => "0,0",
 );
-
 
 # By default use background threads unless profiling
 # TO DO - Make the default actually change
