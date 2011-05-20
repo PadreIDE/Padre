@@ -34,6 +34,13 @@ sub new {
 	# Prepare to be shown
 	$self->CenterOnParent;
 
+	Wx::Event::EVT_KEY_UP(
+		$self,
+		sub {
+			shift->key_up(@_);
+		},
+	);
+
 	return $self;
 }
 
@@ -79,6 +86,9 @@ sub run {
 	my $self    = shift;
 	my $current = $self->current;
 	my $config  = $current->config;
+
+	# Clear
+	$self->{cycle_ctrl_f} = 0;
 
 	# Do they have a specific search term in mind?
 	my $text = $current->text;
@@ -158,6 +168,26 @@ sub as_search {
 		find_case  => $self->find_case->GetValue,
 		find_regex => $self->find_regex->GetValue,
 	);
+}
+
+sub key_up {
+	my $self  = shift;
+	my $event = shift;
+
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
+
+	# A fixed key binding isn't good at all.
+	# TODO: Change this to the action's keybinding
+
+	# Handle Ctrl-F only
+	return unless ( $mod == 2 ) and ( $code == 70 );
+
+	$self->{cycle_ctrl_f} = 1;
+
+	$self->Hide;
+
+	return;
 }
 
 1;

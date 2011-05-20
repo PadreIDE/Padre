@@ -223,6 +223,8 @@ sub _hide_panel {
 	$auimngr->GetPane('find')->Hide;
 	$auimngr->Update;
 
+	$self->{visible} = 0;
+
 	return 1;
 }
 
@@ -243,8 +245,16 @@ sub _show_panel {
 	# You probably want to use the Find
 	$self->{entry}->SetFocus;
 
+	$self->{visible} = 1;
+
 	return 1;
 }
+
+sub visible {
+	my $self = shift;
+	return $self->{visible} || 0;
+}
+
 
 # -- Event handlers
 

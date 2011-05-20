@@ -1162,10 +1162,29 @@ sub init {
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
-			require Padre::Wx::Dialog::Find;
-			my $dialog = Padre::Wx::Dialog::Find->new( $_[0] );
-			$dialog->run;
-			$dialog->Destroy;
+			my $main  = shift;
+			my $event = shift;
+
+			if ( $main->fast_find->visible ) {
+				$main->fast_find->_hide_panel;
+
+				require Padre::Wx::Dialog::Find;
+				my $dialog_find = Padre::Wx::Dialog::Find->new($main);
+				$dialog_find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
+				$dialog_find->run;
+				$dialog_find->Destroy;
+				return unless $dialog_find->{cycle_ctrl_f};
+
+				# Ctrl-F in find dialog: Show find in files
+				require Padre::Wx::Dialog::FindInFiles;
+				my $dialog_fif = Padre::Wx::Dialog::FindInFiles->new($main);
+				$dialog_fif->run;
+				$dialog_fif->Destroy;
+				return unless $dialog_fif->{cycle_ctrl_f};
+			}
+
+			$main->fast_find->search('next');
+
 			return;
 		},
 	);
