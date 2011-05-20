@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-18 08:10-0700\n"
+"POT-Creation-Date: 2011-05-19 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -325,7 +325,7 @@ msgstr ""
 msgid "&Regular expression:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4114 lib/Padre/Wx/Main.pm:6103
+#: lib/Padre/Wx/Main.pm:4114 lib/Padre/Wx/Main.pm:6091
 msgid "&Reload selected"
 msgstr ""
 
@@ -365,7 +365,7 @@ msgstr ""
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4113 lib/Padre/Wx/Main.pm:6102
+#: lib/Padre/Wx/Main.pm:4113 lib/Padre/Wx/Main.pm:6090
 msgid "&Select files to reload:"
 msgstr ""
 
@@ -1512,7 +1512,7 @@ msgstr ""
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6620
+#: lib/Padre/Wx/Main.pm:6608
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -1661,11 +1661,11 @@ msgstr ""
 msgid "Encode Document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6642
+#: lib/Padre/Wx/Main.pm:6630
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6641
+#: lib/Padre/Wx/Main.pm:6629
 msgid "Encode to:"
 msgstr ""
 
@@ -1727,7 +1727,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:221
+#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:227
 #: lib/Padre/Wx/Main.pm:4600 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:185
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync2.pm:67
@@ -1777,14 +1777,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6600
+#: lib/Padre/Wx/Main.pm:6588
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6585
+#: lib/Padre/Wx/Main.pm:6573
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -1838,7 +1838,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5706 lib/Padre/Plugin/Devel.pm:334
+#: lib/Padre/Wx/Main.pm:5694 lib/Padre/Plugin/Devel.pm:334
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1959,7 +1959,7 @@ msgstr ""
 msgid "Failed to find any matches"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6214
+#: lib/Padre/Wx/Main.pm:6202
 #, perl-format
 msgid "Failed to find template file '%s'"
 msgstr ""
@@ -2191,7 +2191,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1665
+#: lib/Padre/Wx/Editor.pm:1682
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2377,7 +2377,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5934
+#: lib/Padre/Wx/Main.pm:5922
 msgid "How many spaces for each tab:"
 msgstr ""
 
@@ -2468,7 +2468,7 @@ msgstr ""
 msgid "Internal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5707
+#: lib/Padre/Wx/Main.pm:5695
 msgid "Internal error"
 msgstr ""
 
@@ -2874,7 +2874,7 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6442
+#: lib/Padre/Wx/Main.pm:6430
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
@@ -2968,7 +2968,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5900 lib/Padre/Plugin/Devel.pm:149
+#: lib/Padre/Wx/Main.pm:5888 lib/Padre/Plugin/Devel.pm:149
 msgid "No file is open"
 msgstr ""
 
@@ -3821,7 +3821,7 @@ msgstr ""
 msgid "Reload some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4112 lib/Padre/Wx/Main.pm:6101
+#: lib/Padre/Wx/Main.pm:4112 lib/Padre/Wx/Main.pm:6089
 msgid "Reload some files"
 msgstr ""
 
@@ -4708,7 +4708,7 @@ msgstr ""
 msgid "Space and tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5928
+#: lib/Padre/Wx/Main.pm:5916
 msgid "Space to Tab"
 msgstr ""
 
@@ -4740,7 +4740,7 @@ msgstr ""
 msgid "Start/Stop sub trace"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5900
+#: lib/Padre/Wx/Main.pm:5888
 msgid "Stats"
 msgstr ""
 
@@ -4838,7 +4838,7 @@ msgstr ""
 msgid "Tab display size (in spaces)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5929
+#: lib/Padre/Wx/Main.pm:5917
 msgid "Tab to Space"
 msgstr ""
 
@@ -5271,7 +5271,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1649
+#: lib/Padre/Wx/Editor.pm:1666
 msgid "You must select a range of lines"
 msgstr ""
 
