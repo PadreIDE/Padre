@@ -740,9 +740,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name  => 'editor_font',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_font',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => Padre::Constant::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
@@ -855,9 +855,9 @@ setting(
 	default => 1,
 );
 setting(
-	name  => 'editor_cursor_blink',
-	type  => Padre::Constant::INTEGER,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_cursor_blink',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HUMAN,
 	default => 500, # milliseconds - this is the actual default for the wxStyledTextCtrl - set to 0 to turn off
 );
 setting(
