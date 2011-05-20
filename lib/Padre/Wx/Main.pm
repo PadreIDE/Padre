@@ -5615,19 +5615,7 @@ C<UNIX>, or C<MAC>). No return value.
 sub convert_to {
 	my $self    = shift;
 	my $newline = shift;
-	my $current = $self->current;
-	my $editor  = $current->editor;
-
-	# Convert and Set the EOL mode for pastes to work correctly
-	my $mode = $Padre::Wx::Editor::mode{$newline};
-	$editor->ConvertEOLs($mode);
-	$editor->SetEOLMode($mode);
-
-	# TO DO: include the changing of file type in the undo/redo actions
-	# or better yet somehow fetch it from the document when it is needed.
-	my $document = $current->document or return;
-	$document->set_newline_type($newline);
-
+	$self->current->editor->convert_eols($newline);
 	$self->refresh;
 }
 

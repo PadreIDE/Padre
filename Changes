@@ -57,6 +57,9 @@ next production release, and synchronise their release to the Padre schedule.
       "Convert Encoding" dialog (ADAMK)
     - Moved all Module::Starter options into module_starter_* (ADAMK)
     - "toggle comments" button doesn't require text selection (GARU)
+    - A bug in the EOL Mode setup when opening Windows-mode text documents
+      while the default line endings are set to Unix was resulting in the
+      corruption of documents into mixed newline (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

@@ -20,13 +20,22 @@ our @ISA        = qw{
 	Wx::StyledTextCtrl
 };
 
+# Convenience colour constants
+use constant {
+	# NOTE: DO NOT USE "orange" string since it is actually red on win32
+	ORANGE => Wx::Colour->new( 255, 165, 0 ),
+	RED    => Wx::Colour->new("red"),
+	GREEN  => Wx::Colour->new("green"),
+	BLUE   => Wx::Colour->new("blue"),
+};
+
 # End-Of-Line modes:
 # MAC is actually Mac classic.
 # MAC OS X and later uses UNIX EOLs
 #
 # Please note that WIN32 is the API. DO NOT change it to that :)
 #
-our %mode = (
+my %WXEOL = (
 	WIN  => Wx::wxSTC_EOL_CRLF,
 	MAC  => Wx::wxSTC_EOL_CR,
 	UNIX => Wx::wxSTC_EOL_LF,
@@ -73,9 +82,10 @@ sub new {
 	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
 	my $self = $class->SUPER::new($parent);
 
-	# TO DO: Make this suck less
-	my $config = $main->config;
-	$data = data( $config->editor_style );
+	# Integration with the rest of Padre
+	$self->SetDropTarget(
+		Padre::Wx::FileDropTarget->new($main)
+	);
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
@@ -87,9 +97,57 @@ sub new {
 	$self->SetMarginWidth( 1, 0 );
 	$self->SetMarginWidth( 2, 0 );
 
-	# Set word chars to match Perl variables
-	$self->SetWordChars( join '', ( '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z' ) );
+	# Set the colour scheme for syntax highlight markers
+	$self->MarkerDefine(
+		Padre::Wx::MarkError(), 
+		Wx::wxSTC_MARK_SMALLRECT,
+		RED,
+		RED,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkWarn(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		ORANGE,
+		ORANGE,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkLocation(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		GREEN,
+		GREEN,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkBreakpoint(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		BLUE,
+		BLUE,
+	);
 
+	# Set word chars to match Perl variables
+	### This should probably move somewhere Perl-specific
+	$self->SetWordChars( join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z' );
+
+	# No more unsafe CTRL-L for you :)
+	# CTRL-L or line cut should only work when there is no empty line
+	# This prevents the accidental destruction of the clipboard
+	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
+
+	# Disable CTRL keypad -/+. These seem to emit wrong scan codes
+	# on some laptop keyboards. (e.g. CTRL-Caps lock is the same as CTRL -)
+	# Please see bug #790
+	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
+	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
+
+	# Apply settings based on configuration
+	# TO DO: Make this suck less (because it really does suck a lot)
+	my $config = $main->config;
+	$data = data( $config->editor_style );
+	if ( $config->editor_wordwrap ) {
+		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
+	}
+	$self->SetCaretPeriod( $config->editor_cursor_blink );
+
+	# Generate event bindings
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
@@ -108,57 +166,8 @@ sub new {
 	Wx::Event::EVT_LEFT_DOWN( $self, \&on_smart_highlight_end );
 	Wx::Event::EVT_KEY_DOWN( $self, \&on_smart_highlight_end );
 
-	# No more unsafe CTRL-L for you :)
-	# CTRL-L or line cut should only work when there is no empty line
-	# This prevents the accidental destruction of the clipboard
-	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
-
 	# Setup EVT_KEY_UP for smart highlighting and non-destructive CTRL-L
 	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
-
-	if ( $config->editor_wordwrap ) {
-		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
-	}
-
-	$self->SetDropTarget( Padre::Wx::FileDropTarget->new( $self->main ) );
-
-	# Disable CTRL keypad -/+. These seem to emit wrong scan codes
-	# on some laptop keyboards. (e.g. CTRL-Caps lock is the same as CTRL -)
-	# Please see bug #790
-	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
-	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
-
-	my $green = Wx::Colour->new("green");
-	my $red   = Wx::Colour->new("red");
-	my $blue  = Wx::Colour->new("blue");
-
-	#NOTE: DO NOT USE "orange" string since it is actually red on win32
-	my $orange = Wx::Colour->new( 255, 165, 0 );
-
-	$self->MarkerDefine(
-		Padre::Wx::MarkError(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$red,
-		$red,
-	);
-	$self->MarkerDefine(
-		Padre::Wx::MarkWarn(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$orange,
-		$orange,
-	);
-	$self->MarkerDefine(
-		Padre::Wx::MarkLocation(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$green,
-		$green,
-	);
-	$self->MarkerDefine(
-		Padre::Wx::MarkBreakpoint(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$blue,
-		$blue,
-	);
 
 	return $self;
 }
@@ -166,11 +175,8 @@ sub new {
 # convenience methods
 # return the character at a given position as a perl string
 sub get_character_at {
-	my ( $self, $pos ) = @_;
-	return chr( $self->GetCharAt($pos) );
+	return chr $_[0]->GetCharAt($_[1]);
 }
-
-
 
 # private is undefined if we don't know and need to search for it
 # private is 0 if this is a standard style
@@ -1329,6 +1335,24 @@ sub current_paragraph {
 	return ( $begin, $end );
 }
 
+# TO DO: include the changing of file type in the undo/redo actions
+# or better yet somehow fetch it from the document when it is needed.
+sub convert_eols {
+	my $self    = shift;
+	my $newline = shift;
+	my $mode    = $WXEOL{$newline};
+
+	# Apply the change to the underlying document
+	my $document = $self->document or return;
+	$document->set_newline_type($newline);
+
+	# Convert and Set the EOL mode in the editor
+	$self->ConvertEOLs($mode);
+	$self->SetEOLMode($mode);
+
+	return 1;
+}
+
 sub Paste {
 	my $self = shift;
 
@@ -1560,22 +1584,15 @@ sub fold_pod {
 }
 
 sub configure_editor {
-	my ( $self, $doc ) = @_;
+	my $self     = shift;
+	my $document = shift;
 
-	my $newline_type = $doc->newline_type;
+	$self->SetEOLMode( $WXEOL{$document->newline_type} );
 
-	$self->SetEOLMode( $mode{$newline_type} or $mode{ $self->main->config->default_line_ending } );
-
-	if ( defined $doc->{original_content} ) {
-		$self->SetText( $doc->{original_content} );
+	if ( defined $document->{original_content} ) {
+		$self->SetText( $document->{original_content} );
 	}
 	$self->EmptyUndoBuffer;
-
-	$doc->{newline_type} = $newline_type;
-
-	# Set the cursor blink rate
-	$self->SetCaretPeriod( $self->main->config->editor_cursor_blink );
-
 
 	return;
 }
