@@ -22,6 +22,7 @@ our @ISA        = qw{
 
 # Convenience colour constants
 use constant {
+
 	# NOTE: DO NOT USE "orange" string since it is actually red on win32
 	ORANGE => Wx::Colour->new( 255, 165, 0 ),
 	RED    => Wx::Colour->new("red"),
@@ -83,9 +84,7 @@ sub new {
 	my $self = $class->SUPER::new($parent);
 
 	# Integration with the rest of Padre
-	$self->SetDropTarget(
-		Padre::Wx::FileDropTarget->new($main)
-	);
+	$self->SetDropTarget( Padre::Wx::FileDropTarget->new($main) );
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
@@ -99,7 +98,7 @@ sub new {
 
 	# Set the colour scheme for syntax highlight markers
 	$self->MarkerDefine(
-		Padre::Wx::MarkError(), 
+		Padre::Wx::MarkError(),
 		Wx::wxSTC_MARK_SMALLRECT,
 		RED,
 		RED,
@@ -175,7 +174,7 @@ sub new {
 # convenience methods
 # return the character at a given position as a perl string
 sub get_character_at {
-	return chr $_[0]->GetCharAt($_[1]);
+	return chr $_[0]->GetCharAt( $_[1] );
 }
 
 # private is undefined if we don't know and need to search for it
@@ -1587,7 +1586,7 @@ sub configure_editor {
 	my $self     = shift;
 	my $document = shift;
 
-	$self->SetEOLMode( $WXEOL{$document->newline_type} );
+	$self->SetEOLMode( $WXEOL{ $document->newline_type } );
 
 	if ( defined $document->{original_content} ) {
 		$self->SetText( $document->{original_content} );

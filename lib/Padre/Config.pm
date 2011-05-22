@@ -480,11 +480,11 @@ setting(
 
 # Window
 setting(
-	name    => 'main_title',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	name  => 'main_title',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
 	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ) . ' [%p]',
-	apply   => sub {
+	apply => sub {
 		$_[0]->lock('refresh_title');
 	},
 	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
@@ -528,6 +528,7 @@ setting(
 	apply   => sub {
 		my $main = shift;
 		if ( $main->config->main_singleinstance ) {
+
 			# Restart on the new port or the next attempt
 			# to use it will produce a new instance.
 			$main->single_instance_stop;
@@ -632,7 +633,7 @@ setting(
 		first => _T('Directories First'),
 		mixed => _T('Directories Mixed'),
 	},
-	apply   => sub {
+	apply => sub {
 		$_[0]->lock('refresh_directory');
 	},
 );
@@ -665,11 +666,11 @@ setting(
 	}
 );
 setting(
-	name    => 'main_directory_root',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HOST,
+	name  => 'main_directory_root',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
-	apply   => sub {
+	apply => sub {
 		$_[0]->lock('refresh_directory');
 	},
 );
@@ -783,9 +784,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name    => 'default_projects_directory',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
+	name  => 'default_projects_directory',
+	type  => Padre::Constant::PATH,
+	store => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -793,9 +794,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name    => 'editor_font',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	name  => 'editor_font',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
 	default => Padre::Constant::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
@@ -908,9 +909,9 @@ setting(
 	default => 1,
 );
 setting(
-	name    => 'editor_cursor_blink',
-	type    => Padre::Constant::INTEGER,
-	store   => Padre::Constant::HUMAN,
+	name  => 'editor_cursor_blink',
+	type  => Padre::Constant::INTEGER,
+	store => Padre::Constant::HUMAN,
 	default => 500, # milliseconds - this is the actual default for the wxStyledTextCtrl - set to 0 to turn off
 );
 setting(

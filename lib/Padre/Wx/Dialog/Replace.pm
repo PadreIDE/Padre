@@ -18,6 +18,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_STRING};
+
 #use Padre::Current               ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
@@ -404,7 +405,7 @@ sub find {
 		( $self->{find_begin}, $self->{find_end} ) = $self->current->editor->GetSelection; # Padre::Current
 	} else {
 		$self->{find_begin} = 0;
-		$self->{find_end}   = $self->current->editor->GetLength; # Padre::Current
+		$self->{find_end}   = $self->current->editor->GetLength;                           # Padre::Current
 	}
 
 	# Clear out and reset the dialog, then prepare the new find
