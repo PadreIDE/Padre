@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-20 04:10-0700\n"
+"POT-Creation-Date: 2011-05-22 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:139
 #: lib/Padre/Wx/Dialog/SessionManager.pm:303
-#: lib/Padre/Wx/Dialog/Replace.pm:191
+#: lib/Padre/Wx/Dialog/Replace.pm:192
 msgid "&Close"
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:139 lib/Padre/Wx/Dialog/Replace.pm:150
+#: lib/Padre/Wx/FBP/FindInFiles.pm:139 lib/Padre/Wx/Dialog/Replace.pm:151
 msgid "&Find"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgstr ""
 msgid "&Reload selected"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:170
+#: lib/Padre/Wx/Dialog/Replace.pm:171
 msgid "&Replace"
 msgstr ""
 
@@ -542,11 +542,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:585
+#: lib/Padre/Config.pm:586
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:586
+#: lib/Padre/Config.pm:587
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -797,7 +797,7 @@ msgstr ""
 msgid "Case &insensitive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:80
+#: lib/Padre/Wx/Dialog/Replace.pm:81
 msgid "Case &sensitive"
 msgstr ""
 
@@ -969,7 +969,7 @@ msgstr ""
 msgid "Close Files..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:108
+#: lib/Padre/Wx/Dialog/Replace.pm:109
 msgid "Close Window on &Hit"
 msgstr ""
 
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:584
+#: lib/Padre/Config.pm:585
 msgid "Code Order"
 msgstr ""
 
@@ -1454,11 +1454,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:632
+#: lib/Padre/Config.pm:633
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:633
+#: lib/Padre/Config.pm:634
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1508,7 +1508,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:646
+#: lib/Padre/Config.pm:647
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -1727,7 +1727,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:227
+#: lib/Padre/Document.pm:440 lib/Padre/Wx/Editor.pm:226
 #: lib/Padre/Wx/Main.pm:4605 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:185
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync2.pm:67
@@ -2100,7 +2100,7 @@ msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:27 lib/Padre/Wx/Dialog/Replace.pm:218
+#: lib/Padre/Wx/FBP/Find.pm:27 lib/Padre/Wx/Dialog/Replace.pm:219
 msgid "Find"
 msgstr ""
 
@@ -2129,7 +2129,7 @@ msgstr ""
 msgid "Find Results (%s)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:226
+#: lib/Padre/Wx/Dialog/Replace.pm:227
 msgid "Find Text:"
 msgstr ""
 
@@ -2145,7 +2145,7 @@ msgstr ""
 msgid "Find a text and replace it"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:50
+#: lib/Padre/Wx/Dialog/Replace.pm:51
 msgid "Find and Replace"
 msgstr ""
 
@@ -2195,7 +2195,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1682
+#: lib/Padre/Wx/Editor.pm:1681
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2418,11 +2418,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:839
+#: lib/Padre/Config.pm:840
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:838
+#: lib/Padre/Config.pm:839
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2926,7 +2926,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:837
+#: lib/Padre/Config.pm:838
 msgid "No Autoindent"
 msgstr ""
 
@@ -2985,8 +2985,8 @@ msgstr ""
 msgid "No match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:544
-#: lib/Padre/Wx/Dialog/Replace.pm:593
+#: lib/Padre/Wx/Dialog/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:545
+#: lib/Padre/Wx/Dialog/Replace.pm:594
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -3273,7 +3273,7 @@ msgstr ""
 msgid "Opens the file with the default system editor"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:304
+#: lib/Padre/Wx/Dialog/Replace.pm:305
 msgid "Options"
 msgstr ""
 
@@ -3329,11 +3329,11 @@ msgstr ""
 msgid "PHP Files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:400 lib/Padre/Config.pm:1062
+#: lib/Padre/MimeTypes.pm:400 lib/Padre/Config.pm:1063
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:405 lib/Padre/Config.pm:1063
+#: lib/Padre/MimeTypes.pm:405 lib/Padre/Config.pm:1064
 msgid "PPI Standard"
 msgstr ""
 
@@ -3634,7 +3634,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:645
+#: lib/Padre/Config.pm:646
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -3769,7 +3769,7 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:94
+#: lib/Padre/Wx/Dialog/Replace.pm:95
 msgid "Regular &Expression"
 msgstr ""
 
@@ -3881,11 +3881,11 @@ msgstr ""
 msgid "Repeat the last find, but backwards to find the previous match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:250
+#: lib/Padre/Wx/Dialog/Replace.pm:251
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:136
+#: lib/Padre/Wx/Dialog/Replace.pm:137
 msgid "Replace &All"
 msgstr ""
 
@@ -3893,7 +3893,7 @@ msgstr ""
 msgid "Replace Operation Canceled"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:258
+#: lib/Padre/Wx/Dialog/Replace.pm:259
 msgid "Replace Text:"
 msgstr ""
 
@@ -3910,12 +3910,12 @@ msgstr ""
 msgid "Replace..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:584
+#: lib/Padre/Wx/Dialog/Replace.pm:585
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:584
+#: lib/Padre/Wx/Dialog/Replace.pm:585
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4105,7 +4105,7 @@ msgid "Save session as..."
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:384 lib/Padre/MimeTypes.pm:393
-#: lib/Padre/Config.pm:1061
+#: lib/Padre/Config.pm:1062
 msgid "Scintilla"
 msgstr ""
 
@@ -4122,7 +4122,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:77 lib/Padre/Wx/Dialog/Replace.pm:122
+#: lib/Padre/Wx/FBP/Find.pm:77 lib/Padre/Wx/Dialog/Replace.pm:123
 msgid "Search &Backwards"
 msgstr ""
 
@@ -4142,8 +4142,8 @@ msgstr ""
 msgid "Search Help"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:545 lib/Padre/Wx/Dialog/Replace.pm:589
-#: lib/Padre/Wx/Dialog/Replace.pm:594
+#: lib/Padre/Wx/Dialog/Replace.pm:546 lib/Padre/Wx/Dialog/Replace.pm:590
+#: lib/Padre/Wx/Dialog/Replace.pm:595
 msgid "Search and Replace"
 msgstr ""
 
@@ -4538,11 +4538,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1080
+#: lib/Padre/Config.pm:1081
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:721
+#: lib/Padre/Config.pm:722
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -5275,7 +5275,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1666
+#: lib/Padre/Wx/Editor.pm:1665
 msgid "You must select a range of lines"
 msgstr ""
 
