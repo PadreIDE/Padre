@@ -12,6 +12,7 @@ use Padre::Wx::Icon         ();
 use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
+use Alien::wxWidgets        ();
 
 our $VERSION = '0.85';
 our @ISA     = 'Wx::Dialog';
@@ -373,6 +374,10 @@ sub _content_info {
       <tr>
         <td valign="top">wxWidgets</td>
         <td>$wx_widgets</td>
+      </tr>
+      <tr>
+        <td valign="top">Alien::wxWidgets</td>
+        <td>$Alien::wxWidgets::VERSION</td>
       </tr>
       <tr>
         <td valign="top">
