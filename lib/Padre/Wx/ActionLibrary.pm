@@ -1288,16 +1288,8 @@ sub init {
 		comment    => _T('Search for a text in all files below a given directory'),
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
-			my $main = shift;
-
-			# In 0.85/0.86: Notify the user and launch the dialog.
-			# In 0.87/0.88: Notify the user, don't launch the dialog.
-			# From 0.89: Remove the shortcut from this action
-
-			$main->message( Wx::gettext('Find in files moved from Ctrl-Shift-F to 3-times-Ctrl-F.') );
-
 			require Padre::Wx::Dialog::FindInFiles;
-			my $dialog = Padre::Wx::Dialog::FindInFiles->new($main);
+			my $dialog = Padre::Wx::Dialog::FindInFiles->new($_[0]);
 			$dialog->run;
 			$dialog->Destroy;
 			return;
