@@ -65,6 +65,8 @@ next production release, and synchronise their release to the Padre schedule.
       which will loose it's own shortcut Ctrl-Shift-F in the future #1223 (SEWI)
     - Expanding the coverage of "apply" handlers in Padre::Config in
       preparation for Padre Sync (ADAMK)
+    - Updated perlopquick.pod (Perl 5 operator quick reference) to latest
+      version (COWENS, AZAWAWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
