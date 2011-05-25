@@ -225,23 +225,17 @@ sub editor_search_down {
 		die "Failed to provide editor object to search in";
 	}
 
-	# unless a range is provided, we'll search the entire document
-	my $search_begin = shift || 0;
-	my $search_end   = shift || $editor->GetLength;
-	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
-
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( $search_begin, $search_end ),
+		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
-		$from,
-		$to,
+		$editor->GetSelection,
 	);
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_pos_centerize( $search_begin + $start );
-	$editor->SetSelection( $search_begin + $start, $search_begin + $end );
+	$editor->goto_pos_centerize($start);
+	$editor->SetSelection( $start, $end );
 	return 1;
 }
 
@@ -252,24 +246,18 @@ sub editor_search_up {
 		die "Failed to provide editor object to search in";
 	}
 
-	# unless a range is provided, we'll search the entire document
-	my $search_begin = shift || 0;
-	my $search_end   = shift || $editor->GetLength;
-	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
-
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( $search_begin, $search_end ),
+		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
-		$from,
-		$to,
+		$editor->GetSelection,
 		'backwards'
 	);
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_pos_centerize( $search_begin + $start );
-	$editor->SetSelection( $search_begin + $start, $search_begin + $end );
+	$editor->goto_pos_centerize($start);
+	$editor->SetSelection( $start, $end );
 	return 1;
 }
 
@@ -280,28 +268,17 @@ sub editor_replace {
 		die "Failed to provide editor object to replace in";
 	}
 
-	# unless a range is provided, we'll search the entire document
-	my $search_begin = shift || 0;
-	my $search_end   = shift || $editor->GetLength;
-	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
-
 	# Execute the search
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( $search_begin, $search_end ),
+		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
-		$from,
-		$to,
+		$editor->GetSelection,
 	);
-
-	# update starting position
-	$start += $search_begin;
 
 	# Are they perfectly selecting a match already?
 	my $selection = [ $editor->GetSelection ];
 	if ( $selection->[0] != $selection->[1] ) {
-		if ( grep { $selection->[0] == $_->[0] + $search_begin and $selection->[1] == $_->[1] + $search_begin }
-			@matches )
-		{
+		if ( grep { $selection->[0] == $_->[0] and $selection->[1] == $_->[1] } @matches ) {
 
 			# Yes, replace it
 			$editor->ReplaceSelection( $self->replace_term );
@@ -314,16 +291,14 @@ sub editor_replace {
 
 				# TO DO: There might be unicode bugs in this.
 				# TO DO: Someone that understands needs to check.
-				my $length = length( $self->replace_term );
-				$start = $start + $length;
+				$start = $start + length( $self->replace_term );
 				$editor->SetSelection( $start, $start );
-				$search_end += ( $length - $selection->[1] - $selection->[0] );
 			}
 		}
 	}
 
 	# Move to the next match
-	$self->search_next( $editor, $search_begin, $search_end );
+	$self->search_next($editor);
 }
 
 sub editor_replace_all {
@@ -333,24 +308,18 @@ sub editor_replace_all {
 		die 'Failed to provide editor object to replace in';
 	}
 
-	# unless a range is provided, we'll search the entire document
-	my $search_begin = shift || 0;
-	my $search_end   = shift || $editor->GetLength;
-	my ( $from, $to ) = map { $_ - $search_begin } $editor->GetSelection;
-
 	# Execute the search for all matches
 	my ( undef, undef, @matches ) = $self->matches(
-		$editor->GetTextRange( $search_begin, $search_end ),
+		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
-		$from,
-		$to,
+		$editor->GetSelection
 	);
 
 	# Replace all matches as a single undo
 	if (@matches) {
 		my $replace = $self->replace_term;
 		$editor->BeginUndoAction;
-		foreach my $match ( reverse map { [ $_->[0] + $search_begin, $_->[1] + $search_begin ] } @matches ) {
+		foreach my $match ( reverse @matches ) {
 			$editor->SetTargetStart( $match->[0] );
 			$editor->SetTargetEnd( $match->[1] );
 			$editor->ReplaceTarget($replace);

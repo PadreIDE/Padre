@@ -18,8 +18,6 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_STRING};
-
-#use Padre::Current               ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::Main        ();
@@ -38,7 +36,6 @@ our @ISA     = qw{
 Create and return a C<Padre::Wx::Dialog::Replace> search and replace widget.
 
 =cut
-
 
 sub new {
 	my $class = shift;
@@ -385,11 +382,10 @@ Grab currently selected text, if any, and place it in find combo box.
 Bring up the dialog or perform search for string's next occurrence
 if dialog is already displayed.
 
-If selection is more than one line then it is considered as the limit
-of the search, not as the string to be used.
+TO DO: if selection is more than one line then consider it as the limit
+of the search and not as the string to be used.
 
 =cut
-
 
 sub find {
 	my $self = shift;
@@ -398,15 +394,9 @@ sub find {
 	# No search if no file is open (TO DO ??)
 	return unless $self->current->editor;
 
-	# If selection is more than one lines then consider it as the
+	# TO DO: if selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
-	if ( $text =~ /\n/ ) {
-		$text = '';
-		( $self->{find_begin}, $self->{find_end} ) = $self->current->editor->GetSelection; # Padre::Current
-	} else {
-		$self->{find_begin} = 0;
-		$self->{find_end}   = $self->current->editor->GetLength;                           # Padre::Current
-	}
+	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
@@ -426,6 +416,11 @@ sub find {
 	}
 	return;
 }
+
+
+
+
+
 ######################################################################
 # Button Events
 
@@ -458,7 +453,7 @@ sub find_button {
 	}
 
 	# Apply the search to the current editor
-	$main->search_next( $search, $self->{find_begin}, $self->{find_end} );
+	$main->search_next($search);
 
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
@@ -476,7 +471,6 @@ sub find_button {
 Hide dialog.
 
 =cut
-
 
 sub close {
 	my $self = shift;
@@ -509,7 +503,6 @@ again.
 
 =cut
 
-
 # TO DO: The change to this function that turned it into a dual-purpose function
 #       unintentionally transfered responsibility for the implementation of
 #       "Replace All" from the main class to a dialog class.
@@ -538,8 +531,7 @@ sub replace_button {
 	}
 
 	# Just replace once
-	my $changed = $main->replace_next( $search, $self->{find_begin}, $self->{find_end} );
-
+	my $changed = $main->replace_next($search);
 	unless ($changed) {
 		$main->message(
 			sprintf( Wx::gettext('No matches found for "%s".'), $self->{find_text}->GetValue ),
@@ -565,7 +557,6 @@ Replace all appearances of given string in the current document.
 
 =cut
 
-
 sub replace_all {
 	my $self   = shift;
 	my $main   = $self->main;
@@ -579,7 +570,7 @@ sub replace_all {
 	}
 
 	# Apply the search to the current editor
-	my $number_of_changes = $main->replace_all( $search, $self->{find_begin}, $self->{find_end} );
+	my $number_of_changes = $main->replace_all($search);
 	if ($number_of_changes) {
 		my $message_text =
 			$number_of_changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
@@ -601,6 +592,11 @@ sub replace_all {
 	$self->{find_text}->SetFocus;
 	return;
 }
+
+
+
+
+
 #####################################################################
 # Support Methods
 
@@ -670,6 +666,7 @@ sub save {
 	$config->write if $changed;
 	return $config;
 }
+
 1;
 
 =pod
@@ -683,7 +680,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
