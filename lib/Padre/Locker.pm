@@ -11,8 +11,9 @@ Padre::Locker - The Padre Multi-Resource Lock Manager
 use 5.008;
 use strict;
 use warnings;
-use Padre::Lock ();
-use Padre::DB   ();
+use Padre::Lock     ();
+use Padre::DB       ();
+use Padre::Constant ();
 use Padre::Logger;
 
 our $VERSION = '0.85';
@@ -149,7 +150,12 @@ sub update_increment {
 		return if $self->{shutdown};
 
 		# Locking for the first time
-		$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
+		# wxWidgets 2.8.12 introduces some improvements to wxAuiNotebook.
+		# The window will no longer carry out updates if it is Frozen (Mark Dootson)
+		$self->{update_locker} =
+			  Padre::Constant::UNIX
+			? Wx::WindowUpdateLocker->new( $self->{owner} )
+			: 1;
 	}
 	return;
 }
