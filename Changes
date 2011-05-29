@@ -67,6 +67,8 @@ next production release, and synchronise their release to the Padre schedule.
       preparation for Padre Sync (ADAMK)
     - Updated perlopquick.pod (Perl 5 operator quick reference) to latest
       version (COWENS, AZAWAWI)
+    - Fixed wxWidgets 2.8.12 wxAuiNoteBook new behavior bug: the window will
+      not carry updates while it is frozen (MDOOTSON, AZAWAWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
