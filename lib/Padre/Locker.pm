@@ -150,12 +150,17 @@ sub update_increment {
 		return if $self->{shutdown};
 
 		# Locking for the first time
-		# wxWidgets 2.8.12 introduces some improvements to wxAuiNotebook.
-		# The window will no longer carry out updates if it is Frozen (Mark Dootson)
-		$self->{update_locker} =
-			  Padre::Constant::UNIX
-			? Wx::WindowUpdateLocker->new( $self->{owner} )
-			: 1;
+		if ( Wx::wxVERSION() >= 2.008012 ) {
+
+			# wxWidgets 2.8.12 introduces some improvements to wxAuiNotebook.
+			# The window will no longer carry out updates if it is Frozen (Mark Dootson)
+			$self->{update_locker} =
+				  Padre::Constant::UNIX
+				? Wx::WindowUpdateLocker->new( $self->{owner} )
+				: 1;
+		} else {
+			$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
+		}
 	}
 	return;
 }
