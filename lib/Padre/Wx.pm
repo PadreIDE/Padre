@@ -51,6 +51,24 @@ use constant {
 
 
 #####################################################################
+# Wx Version Methods
+
+sub version_perl {
+	Wx::wxVERSION();
+}
+
+sub version_human {
+	my $string = Wx::wxVERSION();
+	$string =~ s/(\d\d\d)(\d\d\d)/$1.$2/;
+	$string =~ s/\.0+(\d)/.$1/g;
+	return $string;
+}
+
+
+
+
+
+#####################################################################
 # Convenience Functions
 
 # Colour constructor
