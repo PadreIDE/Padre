@@ -144,22 +144,22 @@ sub update_increment {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
 
-		# When a Wx application quits with ->Update locked, windows will segfault.
-		# During shutdown, do not allow the application to enable an update lock.
-		# This should be pointless anyway, because the window shouldn't be visible.
+		# When a Wx application quits with ->Update locked, windows will
+		# segfault. During shutdown, do not allow the application to
+		# enable an update lock. This should be pointless anyway,
+		# because the window shouldn't be visible.
 		return if $self->{shutdown};
 
 		# Locking for the first time
-		if ( Wx::wxVERSION() >= 2.008012 ) {
-
-			# wxWidgets 2.8.12 introduces some improvements to wxAuiNotebook.
-			# The window will no longer carry out updates if it is Frozen (Mark Dootson)
-			$self->{update_locker} =
-				  Padre::Constant::UNIX
-				? Wx::WindowUpdateLocker->new( $self->{owner} )
-				: 1;
-		} else {
+		# Version 2.8.12  of wxWidgets introduces some improvements to
+		# wxAuiNotebook. The window will no longer carry out updates if
+		# it is Frozen (Mark Dootson)
+		### TODO This is an crude emergency hack, we need to find
+		### something better than disabling all render optimisation.
+		if ( Wx::wxVERSION() < 2.008012 or Padre::Constant::UNIX ) {
 			$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
+		} else {
+			$self->{update_locker} = 1;
 		}
 	}
 	return;
