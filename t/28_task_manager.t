@@ -23,6 +23,7 @@ BEGIN {
 use Padre::Logger ':ALL';
 use Padre::Wx                 ();
 use Padre::Wx::App            ();
+use Padre::Wx::Main           ();
 use Padre::TaskManager        ();
 use Padre::Task::Addition     ();
 use t::lib::Padre::NullWindow ();
