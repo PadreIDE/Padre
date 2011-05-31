@@ -20,6 +20,10 @@ our @ISA     = qw{
 };
 
 
+# Wx timer ids
+use constant {
+	TIMER_OUTLINE => Wx::NewId(),
+};
 
 
 
@@ -175,11 +179,11 @@ sub start {
 	} else {
 		$self->{timer} = Wx::Timer->new(
 			$self,
-			Padre::Wx::ID_TIMER_OUTLINE
+			TIMER_OUTLINE
 		);
 		Wx::Event::EVT_TIMER(
 			$self,
-			Padre::Wx::ID_TIMER_OUTLINE,
+			TIMER_OUTLINE,
 			sub {
 				$_[1]->Skip(0);
 				$_[0]->refresh;
