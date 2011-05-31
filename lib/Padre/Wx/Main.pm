@@ -72,6 +72,13 @@ our @ISA        = qw{
 
 use constant SECONDS => 1000;
 
+# Wx timer ids
+use constant {
+	TIMER_FILECHECK => Wx::NewId(),
+	TIMER_POSTINIT  => Wx::NewId(),
+	TIMER_NTH       => Wx::NewId(),
+};
+
 =pod
 
 =head1 PUBLIC API
@@ -290,10 +297,10 @@ sub new {
 	# at the beginning and hide it in the timer, if it was not needed
 	# TO DO: there might be better ways to fix that issue...
 	#$statusbar->Show;
-	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
+	my $timer = Wx::Timer->new( $self, TIMER_POSTINIT );
 	Wx::Event::EVT_TIMER(
 		$self,
-		Padre::Wx::ID_TIMER_POSTINIT,
+		TIMER_POSTINIT,
 		sub {
 			$_[0]->timer_start;
 		},
@@ -386,10 +393,10 @@ sub timer_start {
 	$manager->alert_new;
 
 	# Start the change detection timer
-	my $timer1 = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
+	my $timer1 = Wx::Timer->new( $self, TIMER_FILECHECK );
 	Wx::Event::EVT_TIMER(
 		$self,
-		Padre::Wx::ID_TIMER_FILECHECK,
+		TIMER_FILECHECK,
 		sub {
 			$_[0]->timer_check_overwrite;
 		},
@@ -400,10 +407,10 @@ sub timer_start {
 	$self->ide->task_manager->start;
 
 	# Give a chance for post-start code to run, then do the nth-start logic
-	my $timer2 = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_NTH );
+	my $timer2 = Wx::Timer->new( $self, TIMER_NTH );
 	Wx::Event::EVT_TIMER(
 		$self,
-		Padre::Wx::ID_TIMER_NTH,
+		TIMER_NTH,
 		sub {
 			$_[0]->timer_nth;
 		},

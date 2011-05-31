@@ -18,6 +18,8 @@ use Padre::Wx ();
 
 our $VERSION = '0.85';
 
+use constant TIMER_ACTIONQUEUE => Wx::NewId();
+
 sub new {
 	my $class = shift;
 	my $wx    = shift;
@@ -33,11 +35,11 @@ sub new {
 	# Create the Wx timer
 	$self->{timer} = Wx::Timer->new(
 		$main,
-		Padre::Wx::ID_TIMER_ACTIONQUEUE
+		TIMER_ACTIONQUEUE
 	);
 	Wx::Event::EVT_TIMER(
 		$main,
-		Padre::Wx::ID_TIMER_ACTIONQUEUE,
+		TIMER_ACTIONQUEUE,
 		sub {
 			$self->on_timer( $_[1], $_[2] );
 		},

@@ -51,23 +51,6 @@ use constant {
 
 
 #####################################################################
-# Allocation of Timer IDs
-
-use constant {
-	ID_TIMER_FILECHECK   => Wx::NewId(),
-	ID_TIMER_POSTINIT    => Wx::NewId(),
-	ID_TIMER_OUTLINE     => Wx::NewId(),
-	ID_TIMER_ACTIONQUEUE => Wx::NewId(),
-	ID_TIMER_LASTRESORT  => Wx::NewId(),
-	ID_TIMER_NTH         => Wx::NewId(),
-	ID_TIMER_DIRECTORY   => Wx::NewId(),
-};
-
-
-
-
-
-#####################################################################
 # Convenience Functions
 
 # Colour constructor

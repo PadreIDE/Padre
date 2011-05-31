@@ -10,6 +10,10 @@ use Padre::Wx::Icon ();
 
 our $VERSION = '0.85';
 
+
+
+
+
 ######################################################################
 # Constructor
 
@@ -24,6 +28,10 @@ sub new {
 	return $self;
 }
 
+
+
+
+
 ######################################################################
 # Main Methods
 
@@ -36,7 +44,8 @@ sub search {
 	my $self      = shift;
 	my $direction = shift;
 
-	return if not Padre->ide->wx->main->current->editor; # avoid crash if no file open
+	# Avoid crash if no file open
+	return if not Padre->ide->wx->main->current->editor;
 
 	$self->{backward} = $direction eq 'previous';
 	unless ( $self->{panel} ) {

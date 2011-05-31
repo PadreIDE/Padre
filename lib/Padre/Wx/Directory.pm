@@ -22,6 +22,8 @@ our @ISA     = qw{
 	Wx::Panel
 };
 
+use constant TIMER_DIRECTORY => Wx::NewId();
+
 use Class::XSAccessor {
 	getters => {
 		root   => 'root',
@@ -604,11 +606,11 @@ sub find {
 	# Create the find timer
 	$self->{find_timer} = Wx::Timer->new(
 		$self,
-		Padre::Wx::ID_TIMER_DIRECTORY
+		TIMER_DIRECTORY
 	);
 	Wx::Event::EVT_TIMER(
 		$self,
-		Padre::Wx::ID_TIMER_ACTIONQUEUE,
+		TIMER_DIRECTORY,
 		sub {
 			$self->find_timer( $_[1], $_[2] );
 		},
