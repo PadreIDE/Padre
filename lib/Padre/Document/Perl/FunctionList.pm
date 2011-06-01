@@ -11,7 +11,10 @@ our @ISA     = 'Padre::Task::FunctionList';
 
 
 
-
+# TODO: the regex containing func|method should either reuse what
+# we have in PPIx::EditorTools::Outline or copy the list from there
+# for now let's leave it as it is and focus on improving the Outline
+# code and then we'll see if we reuse or copy paste.
 ######################################################################
 # Padre::Task::FunctionList Methods
 my $n = "\\cM?\\cJ";
