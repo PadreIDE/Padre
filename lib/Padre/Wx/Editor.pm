@@ -1342,7 +1342,7 @@ sub convert_eols {
 	my $mode    = $WXEOL{$newline};
 
 	# Apply the change to the underlying document
-	my $document = $self->document or return;
+	my $document = $self->{Document} or return;
 	$document->set_newline_type($newline);
 
 	# Convert and Set the EOL mode in the editor
