@@ -12,7 +12,6 @@ use Padre::Wx::Icon         ();
 use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
-use Alien::wxWidgets        ();
 
 our $VERSION = '0.85';
 our @ISA     = 'Wx::Dialog';
@@ -350,6 +349,7 @@ sub _content_info {
 	# How many threads are running
 	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : 'disabled';
 
+	my $alien = Wx::wxVERSION();
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -377,7 +377,7 @@ sub _content_info {
       </tr>
       <tr>
         <td valign="top">Alien::wxWidgets</td>
-        <td>$Alien::wxWidgets::VERSION</td>
+        <td>$alien</td>
       </tr>
       <tr>
         <td valign="top">
