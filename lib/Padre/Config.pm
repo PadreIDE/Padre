@@ -480,14 +480,14 @@ setting(
 
 # Window
 setting(
-	name  => 'main_title',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
-	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ) . ' [%p]',
-	apply => sub {
+	name    => 'main_title',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ),
+	apply   => sub {
 		$_[0]->lock('refresh_title');
 	},
-	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
+	help    => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
