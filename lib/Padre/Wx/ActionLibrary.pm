@@ -1289,7 +1289,7 @@ sub init {
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
 			require Padre::Wx::Dialog::FindInFiles;
-			my $dialog = Padre::Wx::Dialog::FindInFiles->new($_[0]);
+			my $dialog = Padre::Wx::Dialog::FindInFiles->new( $_[0] );
 			$dialog->run;
 			$dialog->Destroy;
 			return;
