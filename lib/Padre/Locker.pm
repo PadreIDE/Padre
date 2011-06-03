@@ -153,13 +153,13 @@ sub update_increment {
 		# Locking for the first time
 		# Version 2.8.12  of wxWidgets introduces some improvements to
 		# wxAuiNotebook. The window will no longer carry out updates if
-		# it is Frozen (Mark Dootson)
+		# it is Frozen on win32 platform (Mark Dootson)
 		### TODO This is an crude emergency hack, we need to find
 		### something better than disabling all render optimisation.
-		if ( Wx::wxVERSION() < 2.008012 or Padre::Constant::UNIX ) {
-			$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
-		} else {
+		if ( Wx::wxVERSION() >= 2.008012 and Padre::Constant::WIN32 ) {
 			$self->{update_locker} = 1;
+		} else {
+			$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
 		}
 	}
 	return;
