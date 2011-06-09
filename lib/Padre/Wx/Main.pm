@@ -3380,6 +3380,12 @@ sub on_close_window {
 
 	TRACE("on_close_window") if DEBUG;
 
+	# Terminate any currently running debugger session before we start
+	# to do anything significant.
+	if ( $self->{debugger} ) {
+		$self->{debugger}->quit;
+	}
+
 	# Wrap one big database transaction around this entire shutdown process.
 	# If the user aborts the shutdown, then the resulting commit will
 	# just save some basic parts like the last session and so on.
@@ -3390,8 +3396,6 @@ sub on_close_window {
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up.
 	$self->update_last_session;
-
-	$self->{debugger}->quit;
 
 	TRACE("went over list of files") if DEBUG;
 
@@ -3444,14 +3448,16 @@ sub on_close_window {
 
 	TRACE("Files saved (or not), hiding window") if DEBUG;
 
-	# Immediately hide the window so that the user perceives the application
-	# as closing faster. This knocks about quarter of a second off the speed
-	# at which Padre appears to close compared to letting it close naturally.
+	# A number of things don't like being destroyed while they are locked.
+	# Potential segfaults and what not. Instructing the locker to shutdown
+	# will make it release all locks and silently suppress all attempts to
+	# make new locks.
 	$self->locker->shutdown;
-	$self->Show(0);
 
-	# Save the window geometry
-	#$config->set( main_auilayout => $self->aui->SavePerspective );
+	# Save the window geometry before we hide the window. There's some
+	# weak evidence that capturing position while not showing might be
+	# flaky in some situations, and this is pretty cheap so doing it before
+	# rather than after the ->Show(0) shouldn't hurt much.
 	$config->set( main_maximized => $self->IsMaximized ? 1 : 0 );
 	unless ( $self->IsMaximized ) {
 		my ( $main_width, $main_height ) = $self->GetSizeWH;
@@ -3461,6 +3467,14 @@ sub on_close_window {
 		$config->set( main_left   => $main_left );
 		$config->set( main_top    => $main_top );
 	}
+
+	# Hide the window before any of the following slow/intensive stuff so
+	# that the user perceives the application as closing faster. This knocks
+	# at least quarter of a second off the speed at which Padre appears to
+	# close compared to letting it close naturally.
+	# It probably also makes it shut actually faster as well, as Wx won't
+	# try to do any updates or painting as we shut things down.
+	$self->Show(0);
 
 	# Clean up our secondary windows
 	if ( $self->has_about ) {
@@ -3487,8 +3501,12 @@ sub on_close_window {
 	TRACE("Shutting down Task Manager") if DEBUG;
 	$self->ide->task_manager->stop;
 
+	# The AUI manager requires a manual UnInit. The documentation for it
+	# says that if we don't do this it may segfault the process on exit.
+	$self->aui->UnInit;
+
 	# Vacuum database on exit so that it does not grow.
-	# Since you can't VACUUM inside a transaction, finish it here.
+	# Since you can't VACUUM inside a transaction, end it first.
 	undef $transaction;
 	Padre::DB->vacuum;
 
