@@ -156,11 +156,13 @@ sub update_increment {
 		# it is Frozen on win32 platform (Mark Dootson)
 		### TODO This is an crude emergency hack, we need to find
 		### something better than disabling all render optimisation.
-		if ( Wx::wxVERSION() >= 2.008012 and Padre::Constant::WIN32 ) {
-			$self->{update_locker} = 1;
-		} else {
+		### Commented out to record for posterity, the forced Layout
+		### solution below evades the bug but without the flickering.
+		# if ( Wx::wxVERSION() >= 2.008012 and Padre::Constant::WXWIN32 ) {
+			# $self->{update_locker} = 1;
+		# } else {
 			$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
-		}
+		# }
 	}
 	return;
 }
@@ -172,6 +174,14 @@ sub update_decrement {
 
 		# Unlocked for the final time
 		$self->{update_locker} = undef;
+
+		# On Windows, we need to force layouts down to notebooks
+		if ( Wx::wxVERSION() >= 2.008012 and Padre::Constant::WXWIN32 ) {
+			my @notebook = grep {
+				$_->isa('Wx::AuiNotebook')
+			} $self->{owner}->GetChildren;
+			$_->Layout foreach @notebook;
+		}
 	}
 	return;
 }
