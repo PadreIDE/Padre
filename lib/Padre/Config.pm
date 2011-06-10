@@ -1263,6 +1263,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+setting(
+	name    => 'feature_wx_scintilla',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 
 # Window menu list shorten common path
 setting(

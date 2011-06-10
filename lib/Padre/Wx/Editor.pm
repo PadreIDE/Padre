@@ -15,10 +15,21 @@ use Padre::Logger;
 
 our $VERSION    = '0.85';
 our $COMPATIBLE = '0.81';
-our @ISA        = qw{
-	Padre::Wx::Role::Main
-	Wx::StyledTextCtrl
-};
+
+# Try to load Wx::Scintilla is the experimental feature is enabled
+our @ISA = qw {	Padre::Wx::Role::Main };
+if ( Padre::Current->config->feature_wx_scintilla ) {
+	eval "use Wx::Scintilla";
+	if ($@) {
+		# Wx::Scintilla is not installed. Show a warning to the user and fallback afterwards to Wx::STC
+		print STDERR "Warning: Wx::Scintilla not found even though you enabled it in feature_wx_scintilla.\n";
+		push @ISA, 'Wx::StyledTextCtrl';
+	} else {
+		push @ISA, 'Wx::ScintillaTextCtrl';
+	}
+} else {
+	push @ISA, 'Wx::StyledTextCtrl';
+}
 
 # Convenience colour constants
 use constant {
