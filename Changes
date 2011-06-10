@@ -71,7 +71,8 @@ next production release, and synchronise their release to the Padre schedule.
       updates while it is frozen (MDOOTSON, AZAWAWI, ADAMK)
     - Bumped Wx dependency to 0.9901 to fix the Wx::Button::GetDefaultSize
       build bug (AZAWAWI)
-    - Padre can now use Wx::Scintilla if feature_wx_scintilla is enabled
+    - Padre can now use Wx::Scintilla if feature_wx_scintilla is enabled.
+      This fixes #257: Backport Scintilla Perl lexer for wxWidgets 2.8.10?
       (AZAWAWI)
 
 0.85 Development version, not released
