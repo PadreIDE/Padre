@@ -74,6 +74,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre can now use Wx::Scintilla if feature_wx_scintilla is enabled.
       This fixes #257: Backport Scintilla Perl lexer for wxWidgets 2.8.10?
       (AZAWAWI)
+    - About dialog displays now the Wx::Scintilla version if it is being used
+      by Padre (AZAWAWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
