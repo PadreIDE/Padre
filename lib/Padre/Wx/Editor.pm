@@ -16,21 +16,9 @@ use Padre::Logger;
 our $VERSION    = '0.85';
 our $COMPATIBLE = '0.81';
 
-# Try to load Wx::Scintilla is the experimental feature is enabled
+# NOTE: Wx::ScintillaTextCtrl (Wx::Scintilla) or Wx::StyledTextCtrl (Wx::STC) is added later
+# before object construction
 our @ISA = qw {	Padre::Wx::Role::Main };
-if ( Padre::Current->config->feature_wx_scintilla ) {
-	eval "use Wx::Scintilla";
-	if ($@) {
-
-		# Wx::Scintilla is not installed. Show a warning to the user and fallback afterwards to Wx::STC
-		print STDERR "Warning: Wx::Scintilla is not found even though feature_wx_scintilla is on.\n";
-		push @ISA, 'Wx::StyledTextCtrl';
-	} else {
-		push @ISA, 'Wx::ScintillaTextCtrl';
-	}
-} else {
-	push @ISA, 'Wx::StyledTextCtrl';
-}
 
 # Convenience colour constants
 use constant {
@@ -90,6 +78,18 @@ sub new {
 	while ( not $main->isa('Padre::Wx::Main') ) {
 		$main = $main->GetParent;
 	}
+
+	# Figure out what to use as this editor instance super class
+	# Wx::ScintillaTextCtrl which needs to be installed (i.e. cpanm Wx::Scintilla),
+	# or Wx::StyledTextCtrl which comes by default with Wx and is very *old*
+	my $editor_super_class = 'Wx::StyledTextCtrl';
+	if ( $main->config->feature_wx_scintilla ) {
+		eval "use Wx::Scintilla";
+		$editor_super_class = 'Wx::ScintillaTextCtrl' unless $@;
+	}
+
+	# Push the appropriate editor super class to inheritance list :)
+	push @ISA, $editor_super_class;
 
 	# Create the underlying Wx object
 	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
