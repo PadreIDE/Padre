@@ -21,6 +21,7 @@ our @ISA = qw {	Padre::Wx::Role::Main };
 if ( Padre::Current->config->feature_wx_scintilla ) {
 	eval "use Wx::Scintilla";
 	if ($@) {
+
 		# Wx::Scintilla is not installed. Show a warning to the user and fallback afterwards to Wx::STC
 		print STDERR "Warning: Wx::Scintilla is not found even though feature_wx_scintilla is on.\n";
 		push @ISA, 'Wx::StyledTextCtrl';
