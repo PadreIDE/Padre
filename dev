@@ -60,7 +60,7 @@ use Padre::Perl ();
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
 	my $make = $Config::Config{make} || 'make';
-	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl");
+	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev");
 }
 
 vmsgfmt($FindBin::Bin);
