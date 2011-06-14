@@ -714,7 +714,7 @@ Return current quick find dialog. Create a new one if needed.
 
 =cut
 
-sub fast_find {
+sub findfast {
 	my $self = shift;
 	unless ( defined $self->{findfast} ) {
 		require Padre::Wx::Dialog::FindFast;
