@@ -513,6 +513,7 @@ use Class::XSAccessor {
 		has_todo         => 'todo',
 		has_debugger     => 'debugger',
 		has_find         => 'find',
+		has_findfast     => 'findfast',
 		has_replace      => 'replace',
 		has_outline      => 'outline',
 		has_directory    => 'directory',
@@ -2241,6 +2242,25 @@ sub _show_output {
 
 =pod
 
+=head2 C<show_findfast>
+
+    $main->show_findfast( $visible );
+
+Show the Fast Find panel at the bottom of the editor area if C<$visible> is
+true. Hide it otherwise. If C<$visible> is not provided, the method defaults
+to show the panel.
+
+=cut
+
+sub show_findfast {
+	my $self = shift;
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+
+	return;
+}
+
+=pod
+
 =head3 C<show_findinfiles>
 
     $main->show_findinfiles( $visible );
@@ -2358,6 +2378,33 @@ sub _show_syntaxcheck {
 		$syntax->stop if $syntax->running;
 		delete $self->{syntax};
 	}
+}
+
+=pod
+
+=head2 Search and Replace
+
+=head2 find_dialog
+
+    $main->find_dialog;
+
+Show the find dialog, escalating from the fast find if needed
+
+=cut
+
+sub find_dialog {
+	my $self = shift;
+	my $term = '';
+
+	# Close the fast find panel if it was open
+	if ( $self->has_findfast ) {
+		
+	}
+
+	# Create the find dialog.
+	my $find = $self->find;
+
+	
 }
 
 =pod
