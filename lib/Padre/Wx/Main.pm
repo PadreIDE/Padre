@@ -62,13 +62,12 @@ use Padre::Wx::Role::Dialog   ();
 use Padre::Logger;
 
 our $VERSION    = '0.85';
-our $COMPATIBLE = '0.58';
+our $COMPATIBLE = '0.85';
 our @ISA        = qw{
 	Padre::Wx::Role::Conduit
 	Padre::Wx::Role::Dialog
 	Wx::Frame
 };
-
 
 use constant SECONDS => 1000;
 
@@ -3629,7 +3628,7 @@ sub setup_editor {
 		# Use Padre::File to get the real filenames
 		my $file_obj = Padre::File->new($file);
 		if ( defined($file_obj) and ref($file_obj) and $file_obj->exists ) {
-			my $id = $self->find_editor_of_file( $file_obj->{filename} );
+			my $id = $self->editor_of_file( $file_obj->{filename} );
 			if ( defined $id ) {
 				$self->on_nth_pane($id);
 				return;
@@ -4276,7 +4275,7 @@ sub on_save {
 
 	#print $document->filename, "\n";
 
-	my $pageid = $self->find_id_of_editor( $document->editor );
+	my $pageid = $self->editor_id( $document->editor );
 	if ( $document->is_new ) {
 
 		# move focus to document to be saved
@@ -5651,16 +5650,16 @@ sub convert_to {
 
 =pod
 
-=head3 C<find_editor_of_file>
+=head3 C<editor_of_file>
 
-    my $editor = $main->find_editor_of_file( $file );
+    my $editor = $main->editor_of_file( $file );
 
 Return the editor (a C<Padre::Wx::Editor> object) containing the wanted
 C<$file>, or C<undef> if file is not opened currently.
 
 =cut
 
-sub find_editor_of_file {
+sub editor_of_file {
 	my $self     = shift;
 	my $filename = shift;
 	my $file     = Padre::File->new($filename); # This reformats our filename
@@ -5677,9 +5676,9 @@ sub find_editor_of_file {
 
 =pod
 
-=head3 C<find_id_of_editor>
+=head3 C<editor_id>
 
-    my $id = $main->find_id_of_editor( $editor );
+    my $id = $main->editor_id( $editor );
 
 Given C<$editor>, return the tab id holding it, or C<undef> if it was
 not found.
@@ -5688,7 +5687,7 @@ Note: can this really work? What happens when we split a window?
 
 =cut
 
-sub find_id_of_editor {
+sub editor_id {
 	my $self     = shift;
 	my $editor   = shift;
 	my $notebook = $self->notebook;

@@ -150,14 +150,14 @@ sub goto_position {
 	# Is the file already open
 	my $file   = $positions[$pos]{file};
 	my $line   = $positions[$pos]{line};
-	my $pageid = $main->find_editor_of_file($file);
+	my $pageid = $main->editor_of_file($file);
 
 	unless ( defined $pageid ) {
 
 		# Load the file
 		if ( -e $file ) {
 			$main->setup_editor($file);
-			$pageid = $main->find_editor_of_file($file);
+			$pageid = $main->editor_of_file($file);
 		}
 	}
 

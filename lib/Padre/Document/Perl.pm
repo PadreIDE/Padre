@@ -692,7 +692,7 @@ sub find_method_declaration {
 		my $main = Padre->ide->wx->main;
 
 		# open or switch to file
-		my $id = $main->find_editor_of_file($filename);
+		my $id = $main->editor_of_file($filename);
 		if ( not defined $id ) {
 			$id = $main->setup_editor($filename);
 		}

@@ -105,7 +105,7 @@ sub ok_button {
 		eval {
 
 			# Try to open the file now
-			if ( my $id = $main->find_editor_of_file($filename) ) {
+			if ( my $id = $main->editor_of_file($filename) ) {
 				my $page = $main->notebook->GetPage($id);
 				$page->SetFocus;
 			} else {

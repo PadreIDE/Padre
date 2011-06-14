@@ -82,6 +82,9 @@ next production release, and synchronise their release to the Padre schedule.
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
       editable if clicked after selection. Keyboard scrolling was broken as a
       result (AZAWAWI)
+    - Padre::Wx::Main::find_editor_of_file renamed to editor_of_file and
+      Padre::Wx::Main::find_id_of_editor renamed to editor_id to clean out the
+      method namespace find* for use with search related functionality (ADAMK)
 
 0.84 2011.03.10
     - Function and TODO list: also handle Esc when focus is on the list (ZENOG)

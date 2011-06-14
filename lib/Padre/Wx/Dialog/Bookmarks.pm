@@ -117,13 +117,13 @@ sub run_goto {
 	# Is the file already open
 	my $file   = $bookmark[0]->file;
 	my $line   = $bookmark[0]->line;
-	my $pageid = $main->find_editor_of_file($file);
+	my $pageid = $main->editor_of_file($file);
 
 	# Load it if it isn't loaded
 	unless ( defined $pageid ) {
 		if ( -e $file ) {
 			$main->setup_editor($file);
-			$pageid = $main->find_editor_of_file($file);
+			$pageid = $main->editor_of_file($file);
 		}
 	}
 
