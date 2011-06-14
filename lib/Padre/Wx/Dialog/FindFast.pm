@@ -234,6 +234,8 @@ sub _hide_panel {
 
 	$self->{visible} = 0;
 
+	Padre->ide->wx->main->current->editor->SetFocus();
+
 	return 1;
 }
 
