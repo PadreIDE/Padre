@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::Search;
+package Padre::Wx::Dialog::FindFast;
 
 # Incremental search
 

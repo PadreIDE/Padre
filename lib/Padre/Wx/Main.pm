@@ -706,9 +706,9 @@ sub find {
 
 =pod
 
-=head3 C<fast_find>
+=head3 C<findfast>
 
-    my $find = $main->fast_find;
+    my $find = $main->findfast;
 
 Return current quick find dialog. Create a new one if needed.
 
@@ -716,11 +716,11 @@ Return current quick find dialog. Create a new one if needed.
 
 sub fast_find {
 	my $self = shift;
-	unless ( defined $self->{fast_find} ) {
-		require Padre::Wx::Dialog::Search;
-		$self->{fast_find} = Padre::Wx::Dialog::Search->new;
+	unless ( defined $self->{findfast} ) {
+		require Padre::Wx::Dialog::FindFast;
+		$self->{findfast} = Padre::Wx::Dialog::FindFast->new;
 	}
-	return $self->{fast_find};
+	return $self->{findfast};
 }
 
 =pod

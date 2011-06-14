@@ -548,9 +548,9 @@ L<Module::Start> integration. Maybe it should be moved to be a plug-in.
 
 =item L<Padre::Wx::Dialog::Preferences>
 
-=item L<Padre::Wx::Dialog::Search>
+=item L<Padre::Wx::Dialog::FindFast>
 
-This is the newer Firefox like search box. Not yet integrated.
+This is the newer Firefox like search box.
 
 =item L<Padre::Wx::Dialog::Snippets>
 

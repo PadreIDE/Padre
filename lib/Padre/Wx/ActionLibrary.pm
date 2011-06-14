@@ -1165,8 +1165,8 @@ sub init {
 			my $main  = shift;
 			my $event = shift;
 
-			if ( $main->fast_find->visible ) {
-				$main->fast_find->_hide_panel;
+			if ( $main->findfast->visible ) {
+				$main->findfast->_hide_panel;
 
 				require Padre::Wx::Dialog::Find;
 				my $dialog_find = Padre::Wx::Dialog::Find->new($main);
@@ -1183,7 +1183,7 @@ sub init {
 				return unless $dialog_fif->{cycle_ctrl_f};
 			}
 
-			$main->fast_find->search('next');
+			$main->findfast->search('next');
 
 			return;
 		},
@@ -1251,7 +1251,7 @@ sub init {
 		comment     => _T('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut    => 'F4',
 		menu_event  => sub {
-			$_[0]->fast_find->search('next');
+			$_[0]->findfast->search('next');
 		},
 	);
 
@@ -1262,7 +1262,7 @@ sub init {
 		comment     => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut    => 'Shift-F4',
 		menu_event  => sub {
-			$_[0]->fast_find->search('previous');
+			$_[0]->findfast->search('previous');
 		},
 	);
 

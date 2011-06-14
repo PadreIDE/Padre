@@ -76,6 +76,7 @@ next production release, and synchronise their release to the Padre schedule.
       (AZAWAWI)
     - About dialog displays now the Wx::Scintilla version if it is being used
       by Padre (AZAWAWI)
+    - Unify terminology for the Firefox-like search box to "Find Fast" (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
