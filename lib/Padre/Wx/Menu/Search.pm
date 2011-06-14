@@ -47,20 +47,6 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# We should be able to remove F4 and Shift+F4 and hook this functionality
-	# to F3 and Shift+F3 Incremental find (#60)
-	$self->{quick_find_next} = $self->add_menu_action(
-		$self,
-		'search.quick_find_next',
-	);
-
-	$self->{quick_find_previous} = $self->add_menu_action(
-		$self,
-		'search.quick_find_previous',
-	);
-
-	$self->AppendSeparator;
-
 	# Search and Replace
 	$self->{replace} = $self->add_menu_action(
 		$self,
@@ -101,14 +87,12 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $doc = Padre::Current->editor ? 1 : 0;
+	my $doc  = Padre::Current->editor ? 1 : 0;
 
 	$self->{find}->Enable($doc);
 	$self->{find_next}->Enable($doc);
 	$self->{find_previous}->Enable($doc);
 	$self->{replace}->Enable($doc);
-	$self->{quick_find_next}->Enable($doc);
-	$self->{quick_find_previous}->Enable($doc);
 
 	return;
 }
