@@ -537,6 +537,16 @@ use Class::XSAccessor {
 	},
 };
 
+=pod
+
+=head3 C<about>
+
+    my $dialog = $main->about;
+
+Returns the About Padre dialog, creating it if needed.
+
+=cut
+
 sub about {
 	my $self = shift;
 	unless ( defined $self->{about} ) {
@@ -545,6 +555,16 @@ sub about {
 	}
 	return $self->{about};
 }
+
+=pod
+
+=head3 C<left>
+
+    my $panel = $main->left;
+
+Returns the left toolbar container panel, creating it if needed.
+
+=cut
 
 sub left {
 	my $self = shift;
@@ -555,6 +575,16 @@ sub left {
 	return $self->{left};
 }
 
+=pod
+
+=head3 C<right>
+
+    my $panel = $main->right;
+
+Returns the right toolbar container panel, creating it if needed.
+
+=cut
+
 sub right {
 	my $self = shift;
 	unless ( defined $self->{right} ) {
@@ -563,6 +593,16 @@ sub right {
 	}
 	return $self->{right};
 }
+
+=pod
+
+=head3 C<bottom>
+
+    my $panel = $main->bottom;
+
+Returns the bottom toolbar container panel, creating it if needed.
+
+=cut
 
 sub bottom {
 	my $self = shift;
