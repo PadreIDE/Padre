@@ -2254,7 +2254,7 @@ to show the panel.
 
 sub show_findfast {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 
 	return;
 }
@@ -2398,13 +2398,13 @@ sub find_dialog {
 
 	# Close the fast find panel if it was open
 	if ( $self->has_findfast ) {
-		
+
 	}
 
 	# Create the find dialog.
 	my $find = $self->find;
 
-	
+
 }
 
 =pod
@@ -5109,6 +5109,9 @@ sub on_nth_pane {
 
 		return 1;
 	}
+
+	$self->current->editor->SetFocus();
+
 	return;
 }
 
@@ -5135,6 +5138,9 @@ sub on_next_pane {
 	} else {
 		$self->on_nth_pane(0);
 	}
+
+	$self->current->editor->SetFocus();
+
 	return;
 }
 
@@ -5161,6 +5167,9 @@ sub on_prev_pane {
 	} else {
 		$self->on_nth_pane( $count - 1 );
 	}
+
+	$self->current->editor->SetFocus();
+
 	return;
 }
 
@@ -6251,6 +6260,9 @@ sub on_last_visited_pane {
 		$self->refresh_status( $self->current );
 		$self->refresh_toolbar( $self->current );
 	}
+
+	$self->current->editor->SetFocus();
+
 }
 
 =pod
