@@ -137,6 +137,15 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name       => 'file.new_copy',
+		label      => _T('Copy of current file'),
+		comment    => _T('Open a document and copy the content of the current tab'),
+		menu_event => sub {
+			$_[0]->on_new_from_current;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name       => 'file.new_p5_script',
 		label      => _T('Perl 5 Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),

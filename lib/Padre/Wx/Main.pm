@@ -6307,6 +6307,25 @@ sub on_oldest_visited_pane {
 
 =pod
 
+=head3 C<on_new_from_current>
+
+    $main->on_new_from_current();
+
+Create a new document and copy the contents of the current file.
+No return value.
+
+=cut
+
+sub on_new_from_current {
+	my $self = shift;
+
+	my $document = $self->current->document;
+
+	return $self->new_document_from_string( $document->text_get, $document->mimetype );
+}
+
+=pod
+
 =head3 C<on_new_from_template>
 
     $main->on_new_from_template( $extension );

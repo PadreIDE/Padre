@@ -45,6 +45,10 @@ sub new {
 	);
 	$self->add_menu_action(
 		$file_new,
+		'file.new_copy',
+	);
+	$self->add_menu_action(
+		$file_new,
 		'file.new_p5_script',
 	);
 	$self->add_menu_action(

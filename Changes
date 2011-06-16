@@ -79,6 +79,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Unify terminology for the Firefox-like search box to "Find Fast" (ADAMK)
     - Set focus to editor window if search bar is closed (SEWI)
     - Set focus to editor after switching panes/tabs (SEWI)
+    - Add File -> New -> Copy of current document (SEWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
