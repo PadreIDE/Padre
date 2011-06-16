@@ -3044,6 +3044,8 @@ sub save_session {
 		$file->insert;
 	}
 
+	Padre::DB->do( 'UPDATE session SET last_update=? WHERE id=?', {}, time, $session->id );
+
 }
 
 sub save_current_session {
