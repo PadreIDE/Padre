@@ -83,6 +83,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix "last update" timestamp for sessions (SEWI)
     - Fast Find resets term correctly across multiple uses (ADAMK)
     - Padre::Project::Perl detects project-wide version correctly (ADAMK)
+    - Padre can use Wx::Scintilla's built-in Perl 6 lexer if Wx::Scintilla
+      is being used by Padre (AZAWAWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
