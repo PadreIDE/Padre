@@ -301,8 +301,11 @@ sub _on_case_checked {
 # case, we'll start searching from the start of the document.
 #
 sub _on_entry_changed {
-	$_[0]->{restart} = 1;
-	$_[0]->_find;
+	my $self = shift;
+	unless ( $self->{entry}->GetValue eq '' ) {
+		$self->{restart} = 1;
+		$self->_find;
+	}
 	return;
 }
 
@@ -320,7 +323,7 @@ sub _on_key_pressed {
 	my $mod   = $event->GetModifiers || 0;
 	my $code  = $event->GetKeyCode;
 
-	# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
+	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
 
 	if ( $code == Wx::WXK_ESCAPE ) {
