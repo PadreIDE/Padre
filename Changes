@@ -81,6 +81,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Set focus to editor after switching panes/tabs (SEWI)
     - Add File -> New -> Copy of current document (SEWI)
     - Fix "last update" timestamp for sessions (SEWI)
+    - Fast Find resets term correctly across multiple uses (ADAMK)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
