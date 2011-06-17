@@ -80,7 +80,7 @@ sub version {
 
 	# The first approach is to look for a version declaration in the
 	# headline module for the project.
-	my $file = $self->{headline} or return undef;
+	my $file = $self->headline or return undef;
 	Padre::Util::parse_variable( $file, 'VERSION' );
 }
 
