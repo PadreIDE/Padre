@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-16 08:10-0700\n"
+"POT-Creation-Date: 2011-06-16 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2188,7 +2188,7 @@ msgid ""
 "there."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindFast.pm:144
+#: lib/Padre/Wx/FBP/FindFast.pm:48 lib/Padre/Wx/Dialog/FindFast.pm:144
 msgid "Find:"
 msgstr ""
 
@@ -2735,6 +2735,10 @@ msgstr ""
 msgid "Match 1 or more times"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/FindFast.pm:100
+msgid "Match Case"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:108
 msgid "Match at least m but not more than n times"
 msgstr ""
@@ -2917,6 +2921,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1764
 msgid "Newline Same Column"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/FindFast.pm:71
+msgid "Next"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2467
@@ -3613,6 +3621,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Insert.pm:73
 msgid "Preview:"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/FindFast.pm:86
+msgid "Previous"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2478
@@ -5274,6 +5286,10 @@ msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
 "at least 0.20 by typing\n"
 "cpan Wx::Perl::ProcessStream"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/FindFast.pm:34
+msgid "X"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:18
