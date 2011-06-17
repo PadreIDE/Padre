@@ -151,6 +151,16 @@ sub _initialize {
 	# name  => Human readable name
 	# lexer => The Scintilla lexer to be used
 	# class => document class
+
+	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
+	my $perl6_scintilla_lexer = Wx::wxSTC_LEX_NULL;
+	if ( Padre::Wx::Editor->isa('Wx::ScintillaTextCtrl') ) {
+		eval "use Wx::Scintilla";
+		unless ($@) {
+			no warnings;
+			$perl6_scintilla_lexer = $Wx::Scintilla::wxSCINTILLA_LEX_PERL6;
+		}
+	}
 	%MIME = (
 		'text/x-abc' => {
 			name  => 'ABC',
@@ -346,7 +356,7 @@ sub _initialize {
 
 		'application/x-perl6' => {
 			name  => 'Perl 6',
-			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
+			lexer => $perl6_scintilla_lexer, # CONFIRMED
 		},
 
 		'text/plain' => {
