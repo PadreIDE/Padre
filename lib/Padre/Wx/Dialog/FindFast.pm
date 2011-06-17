@@ -194,10 +194,15 @@ sub _create_panel {
 	Wx::Event::EVT_CHECKBOX( $main, $self->{regex}, sub { $self->_on_regex_checked } );
 
 	# Place all controls
-	foreach my $element (qw{ close label entry previous previous_text next next_text case regex }) {
-		$self->{hbox}->Add( 10, 0 );
-		$self->{hbox}->Add( $self->{$element}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALIGN_LEFT, 0 );
-	}
+	$self->{hbox}->Add( $self->{close}, 0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{hbox}->Add( $self->{label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT, 10 );
+	$self->{hbox}->Add( $self->{entry}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{previous}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{previous_text}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{next}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{next_text}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{case}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$self->{hbox}->Add( $self->{regex}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$self->{hbox}->Add( 0, 1, Wx::wxEXPAND, 5 );
 
 	$self->{panel}->SetSizer( $self->{hbox} );
@@ -218,6 +223,7 @@ sub _create_panel {
 			Name           => 'find',
 			CaptionVisible => 0,
 			Layer          => 1,
+			PaneBorder     => 0,
 			)->Bottom->Fixed->Hide,
 	);
 
@@ -253,7 +259,8 @@ sub _show_panel {
 	$self->{case}->SetValue( $config->find_case   ? 0 : 1 );
 	$self->{regex}->SetValue( $config->find_regex ? 0 : 1 );
 
-	# You probably want to use the Find
+	# You probably want to use the Find (and with a fresh term)
+	$self->{entry}->SetValue('');
 	$self->{entry}->SetFocus;
 
 	$self->{visible} = 1;
