@@ -87,7 +87,7 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $doc  = Padre::Current->editor ? 1 : 0;
+	my $doc = Padre::Current->editor ? 1 : 0;
 
 	$self->{find}->Enable($doc);
 	$self->{find_next}->Enable($doc);

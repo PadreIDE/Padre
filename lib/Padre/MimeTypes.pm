@@ -361,14 +361,14 @@ sub _initialize {
 
 		'text/plain' => {
 			name  => _T('Text'),
-			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,     # CONFIRMED
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => {             # totally not confirmed
+		'text/x-perlxs' => {                 # totally not confirmed
 			name => 'XS',
 			lexer =>
-				Wx::wxSTC_LEX_CPP,       # for the lack of a better XS lexer (vim?)
+				Wx::wxSTC_LEX_CPP,           # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
@@ -377,7 +377,7 @@ sub _initialize {
 
 		'text/x-csharp' => {
 			name  => 'C#',
-			lexer => Wx::wxSTC_LEX_CPP,  # better than nothing
+			lexer => Wx::wxSTC_LEX_CPP,      # better than nothing
 		},
 
 	);
@@ -722,6 +722,7 @@ sub guess_mimetype {
 		$filename = $file;
 		undef $file;
 	}
+
 
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
