@@ -10,7 +10,7 @@ use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Logger;
 
-our $VERSION = '0.85';
+our $VERSION = '0.86';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::FBP::Preferences

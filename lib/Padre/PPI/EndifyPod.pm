@@ -18,7 +18,7 @@ use strict;
 use warnings;
 use Padre::PPI::Transform ();
 
-our $VERSION = '0.85';
+our $VERSION = '0.86';
 our @ISA     = 'Padre::PPI::Transform';
 
 

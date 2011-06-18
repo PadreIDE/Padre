@@ -6,7 +6,7 @@ use warnings;
 use Padre::Task::PPI ();
 use Padre::Logger;
 
-our $VERSION = '0.85';
+our $VERSION = '0.86';
 our @ISA     = 'Padre::Task::PPI';
 
 =pod

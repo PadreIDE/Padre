@@ -8,7 +8,7 @@ use warnings;
 use File::Spec      ();
 use Padre::Constant ();
 
-our $VERSION    = '0.85';
+our $VERSION    = '0.86';
 our $COMPATIBLE = '0.81';
 
 

@@ -11,7 +11,7 @@ use Class::Adapter::Builder
 	ISA      => 'Wx::TextEntryDialog',
 	AUTOLOAD => 1;
 
-our $VERSION    = '0.85';
+our $VERSION    = '0.86';
 our $COMPATIBLE = '0.26';
 
 sub new {
