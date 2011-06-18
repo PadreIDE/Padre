@@ -10,6 +10,12 @@ list API changes that may break compatibility for components of Padre, most
 notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
+0.88 TBA
+
+
+0.87 Development version, not released
+
+
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
       (ZENOG)
