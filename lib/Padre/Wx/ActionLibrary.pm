@@ -1175,11 +1175,11 @@ sub init {
 			my $event = shift;
 
 			if ( $main->findfast->visible ) {
-				$main->findfast->_hide_panel;
-
 				require Padre::Wx::Dialog::Find;
 				my $dialog_find = Padre::Wx::Dialog::Find->new($main);
 				$dialog_find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
+				$dialog_find->find_term->SetValue( $main->findfast->{entry}->GetValue );
+				$main->findfast->_hide_panel;
 				$dialog_find->run;
 				$dialog_find->Destroy;
 				return unless $dialog_find->{cycle_ctrl_f};
@@ -1192,6 +1192,14 @@ sub init {
 				return unless $dialog_fif->{cycle_ctrl_f};
 			}
 
+			my $current = $main->current;
+
+			# Do they have a specific search term in mind?
+			my $text = $current->text;
+			$text = '' if $text =~ /\n/;
+
+			# Clear out and reset the search term box
+			$main->findfast->{entry}->SetValue($text) if length $text;
 			$main->findfast->search('next');
 
 			return;
