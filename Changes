@@ -94,6 +94,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Disable overlay scrollbars on linux (CLAUDIO)
     - Share one search termin between FindFast (panel), Find (dialog) and
       Find in files (SEWI)
+    - ESC now closes the find dialog (1st ESC) and the output window (2nd) (SEWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 

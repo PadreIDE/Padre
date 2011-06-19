@@ -6540,6 +6540,12 @@ sub key_up {
 		#			#TRACE("Selection: " . $self->bottom->GetSelection) if DEBUG;
 		#			#$self->bottom->GetSelection;
 		#		}
+	} elsif ( !$mod and $code == 27 ) { # ESC
+		if ( $self->findfast->visible ) {
+			$self->findfast->_hide_panel;
+		} elsif ( $self->has_output ) {
+			$self->show_output(0);
+		}
 	}
 
 
