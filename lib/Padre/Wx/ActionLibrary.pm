@@ -1181,12 +1181,14 @@ sub init {
 				$dialog_find->find_term->SetValue( $main->findfast->{entry}->GetValue );
 				$main->findfast->_hide_panel;
 				$dialog_find->run;
+				my $term = $dialog_find->find_term->GetValue;
 				$dialog_find->Destroy;
 				return unless $dialog_find->{cycle_ctrl_f};
 
 				# Ctrl-F in find dialog: Show find in files
 				require Padre::Wx::Dialog::FindInFiles;
 				my $dialog_fif = Padre::Wx::Dialog::FindInFiles->new($main);
+				$dialog_fif->find_term->SetValue($term);
 				$dialog_fif->run;
 				$dialog_fif->Destroy;
 				return unless $dialog_fif->{cycle_ctrl_f};

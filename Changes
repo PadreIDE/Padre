@@ -92,6 +92,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre can use Wx::Scintilla's built-in Perl 6 lexer if Wx::Scintilla
       is being used by Padre (AZAWAWI)
     - Disable overlay scrollbars on linux (CLAUDIO)
+    - Share one search termin between FindFast (panel), Find (dialog) and
+      Find in files (SEWI)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
