@@ -91,6 +91,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre::Project::Perl detects project-wide version correctly (ADAMK)
     - Padre can use Wx::Scintilla's built-in Perl 6 lexer if Wx::Scintilla
       is being used by Padre (AZAWAWI)
+    - Disable overlay scrollbars on linux (CLAUDIO)
 
 0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
