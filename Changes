@@ -14,7 +14,7 @@ next production release, and synchronise their release to the Padre schedule.
 
 
 0.87 Development version, not released
-
+    - Properly enable Perl 6 Wx::Scintilla support (AZAWAWI)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
