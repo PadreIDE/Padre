@@ -52,7 +52,7 @@ use warnings;
 use Params::Util ();
 use Padre::Wx    ();
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 sub new {
 	my $class = shift;

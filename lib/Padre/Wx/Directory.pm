@@ -13,7 +13,7 @@ use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Wx                      ();
 use Padre::Logger;
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Dwell

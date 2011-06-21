@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx::Role::Config       ();
 use Padre::Wx::FBP::ModuleStarter ();
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::FBP::ModuleStarter

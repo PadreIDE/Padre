@@ -16,7 +16,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 use constant TIMER_ACTIONQUEUE => Wx::NewId();
 

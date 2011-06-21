@@ -13,7 +13,7 @@ use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 our @ISA     = 'Wx::Dialog';
 
 sub new {
