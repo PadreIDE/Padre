@@ -190,7 +190,7 @@ sub on_tree_item_menu {
 	my $self  = shift;
 	my $event = shift;
 	my $item  = $event->GetItem;
-	my $data  = $self->GetPlData($item);
+	my $data  = $self->GetPlData($item) or return;
 
 	# Only show the context menu for files (for now)
 	if ( $data->type == Padre::Wx::Directory::Path::DIRECTORY ) {
