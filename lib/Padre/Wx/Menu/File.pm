@@ -43,7 +43,7 @@ sub new {
 		Wx::gettext('New'),
 		$file_new,
 	);
-	$self->add_menu_action(
+	$self->{new_copy} = $self->add_menu_action(
 		$file_new,
 		'file.new_copy',
 	);
@@ -312,6 +312,7 @@ sub refresh {
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
+	$self->{new_copy}->Enable($document);
 	if (Padre::Constant::WIN32) {
 
 		#Win32
