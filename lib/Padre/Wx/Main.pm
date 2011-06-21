@@ -6321,7 +6321,7 @@ No return value.
 sub on_new_from_current {
 	my $self = shift;
 
-	my $document = $self->current->document;
+	my $document = $self->current->document or return;
 
 	return $self->new_document_from_string( $document->text_get, $document->mimetype );
 }
