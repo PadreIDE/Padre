@@ -2733,7 +2733,7 @@ sub run_command {
 			$title =~ s/"//g;
 			system qq(start "$title" cmd /C "$cmd & pause");
 		} else {
-			system qq(xterm -e "$cmd; sleep 1000" &);
+			system qq(xterm -sb -e "$cmd; sleep 1000" &);
 		}
 		return;
 	}
