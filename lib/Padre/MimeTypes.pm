@@ -154,7 +154,7 @@ sub _initialize {
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
 	my $perl6_scintilla_lexer = Wx::wxSTC_LEX_NULL;
-	my $config = Padre::Config->read;
+	my $config                = Padre::Config->read;
 	if ( $config->feature_wx_scintilla ) {
 		eval "use Wx::Scintilla";
 		unless ($@) {
