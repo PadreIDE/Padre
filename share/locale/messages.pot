@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 08:10-0700\n"
+"POT-Creation-Date: 2011-06-23 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2759,17 +2759,17 @@ msgstr ""
 msgid "Match exactly m times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:676
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:675
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:687
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:686
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:696
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:695
 #, perl-format
 msgid "Match with 0 width at character %s"
 msgstr ""
@@ -2998,7 +2998,7 @@ msgstr ""
 msgid "No filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:715
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:714
 msgid "No match"
 msgstr ""
 
@@ -3930,7 +3930,7 @@ msgstr ""
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:761
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:760
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""
