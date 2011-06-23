@@ -4,13 +4,12 @@ package Padre::Util::Win32;
 
 =head1 NAME
 
-Padre::Util::Win32 - Padre Win32 Utility Functions
+Padre::Util::Win32 - Padre Win32 API Functions
 
 =head1 DESCRIPTION
 
-The C<Padre::Util::Win32> package is a internal storage area for miscellaneous
-functions that aren't really Padre-specific that we want to throw
-somewhere convenient so they won't clog up task-specific packages.
+The C<Padre::Util::Win32> package provides an XS wrapper for Win32
+API functions
 
 All functions are exportable and documented for maintenance purposes,
 but except for in the L<Padre> core distribution you are discouraged in the
@@ -28,16 +27,16 @@ use warnings;
 use Padre::Constant ();
 use Padre::Logger;
 
-# This module may be loaded by others, so don't crash on Linux when just being loaded:
-if (Padre::Constant::WIN32) {
-	require Win32::API;
-} else {
-	TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
-}
-
 our $VERSION = '0.87';
 
-my %Types = ();
+# This module may be loaded by others, so don't crash on Linux when just being loaded:
+if (Padre::Constant::WIN32) {
+    require Win32;
+        require XSLoader;
+        XSLoader::load('Padre::Util::Win32', $VERSION);
+} else {
+    TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
+}
 
 =head2 C<GetLongPathName>
 
@@ -49,26 +48,10 @@ Returns C<undef> for failure, or the long form of the specified path
 =cut
 
 sub GetLongPathName {
-
-	# Only for win32
-	die "Win32 function called!" unless Padre::Constant::WIN32;
-
-	my $path = shift;
-
-	# Allocate a buffer that can take the maximum allowed win32 path
-	my $MAX_PATH = 260 + 1;
-	my $buf      = ' ' x $MAX_PATH;
-
-	my $func = Win32::API->new( kernel32 => <<'CODE');
-	DWORD GetLongPathName(
-		LPCTSTR lpszShortPath,
-		LPTSTR lpszLongPath,
-		DWORD cchBuffer
-	);
-CODE
-	my $length = $func->Call( $path, $buf, $MAX_PATH );
-
-	return $length ? substr( $buf, 0, $length ) : undef;
+    # Only for win32
+    die "Win32 function called!" unless Padre::Constant::WIN32;
+    my $path = shift;
+        return Win32::GetLongPathName($path);
 }
 
 =head2 C<Recycle>
@@ -81,47 +64,11 @@ Returns C<undef> (failed), zero (aborted) or one (success)
 =cut
 
 sub Recycle {
+    # Only for win32
+    die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	# Only for win32
-	die "Win32 function called!" unless Padre::Constant::WIN32;
-
-	my $file_to_recycle = shift;
-
-	unless ( $Types{SHFILEOPSTRUCT} ) {
-
-		# define the win32 structure
-		Win32::API::Struct->typedef(
-			SHFILEOPSTRUCT => qw(
-				HWND hwnd;
-				UINT wFunc;
-				LPCTSTR pFrom;
-				LPCTSTR pTo;
-				FILEOP_FLAGS fFlags;
-				BOOL fAnyOperationsAborted;
-				LPVOID hNameMappings;
-				LPCTSTR lpszProgressTitle;
-				)
-		);
-		$Types{SHFILEOPSTRUCT} = 1;
-	}
-
-	# prepare structure for win32 call
-	my $op = Win32::API::Struct->new('SHFILEOPSTRUCT');
-	$op->{wFunc}  = 0x0003;                   # FO_DELETE from ShellAPI.h
-	$op->{fFlags} = 0x0040;                   # FOF_ALLOWUNDO from ShellAPI.h
-	$op->{pFrom}  = $file_to_recycle . "\0\0";
-
-	# perform the recycling
-	my $result = Win32::API->new( shell32 => q{ int SHFileOperation( LPSHFILEOPSTRUCT lpFileOp ) } )->Call($op);
-
-	# failed miserably
-	return if $result;
-
-	# user aborted...
-	return 0 if $op->{fAnyOperationsAborted};
-
-	# file recycled
-	return 1;
+    my $file_to_recycle = shift;
+        return _recycle_file( $file_to_recycle );
 }
 
 =head2 C<AllowSetForegroundWindow>
@@ -141,25 +88,21 @@ L<http://msdn.microsoft.com/en-us/library/ms633539(VS.85).aspx>
 #
 sub AllowSetForegroundWindow {
 
-	die "Win32 function called!" unless Padre::Constant::WIN32;
+    die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	my $pid = shift;
-
-	my $func = Win32::API->new( user32 => <<'CODE');
-BOOL AllowSetForegroundWindow(
-	DWORD dwProcessId
-);
-CODE
-	return $func->Call($pid);
+    my $pid = shift;
+        
+        return _allow_set_foreground_window( $pid );
+        
 }
 
 =head2 C<ExecuteProcessAndWait>
 
   Padre::Util::Win32::ExecuteProcessAndWait(
-	directory  => $directory,
-	file       => $file,
-	parameters => $parameters,
-	show       => $show)
+    directory  => $directory,
+    file       => $file,
+    parameters => $parameters,
+    show       => $show)
 
 Execute a background process named "C<$file> C<$parameters>" with the current
 directory set to C<$directory> and wait for it to end. If you set C<$show> to 0,
@@ -168,75 +111,13 @@ then you have an invisible command line window on win32!
 =cut
 
 sub ExecuteProcessAndWait {
-	die "Win32 function called!" unless Padre::Constant::WIN32;
-
-	unless ( $Types{SHELLEXECUTEINFO} ) {
-		Win32::API::Struct->typedef(
-			'SHELLEXECUTEINFO', qw(
-				DWORD cbSize;
-				ULONG fMask;
-				HWND hwnd;
-				LPCTSTR lpVerb;
-				LPCTSTR lpFile;
-				LPCTSTR lpParameters;
-				LPCTSTR lpDirectory;
-				int nShow;
-				HINSTANCE hInstApp;
-				LPVOID lpIDList;
-				LPCTSTR lpClass;
-				HKEY hkeyClass;
-				DWORD dwHotKey;
-				HANDLE hIconOrMonitor;
-				HANDLE hProcess;
-				)
-		);
-		$Types{SHELLEXECUTEINFO} = 1;
-	}
-
-	# XXX Ignore Win32::API warnings. It's ugly but it works :)
-	local $SIG{__WARN__} = sub { };
-
-	# Set up for the API call
-	my %params = @_;
-	my $info   = Win32::API::Struct->new('SHELLEXECUTEINFO');
-	$info->{cbSize}       = $info->sizeof;
-	$info->{lpVerb}       = 'open';
-	$info->{lpDirectory}  = $params{directory} if $params{directory};
-	$info->{lpFile}       = $params{file};
-	$info->{lpParameters} = $params{parameters};
-	$info->{nShow}        = $params{show} ? 1 : 0;
-	$info->{fMask}        = 0x40;                                    # SEE_MASK_NOCLOSEPROCESS
-	my $ShellExecuteEx = Win32::API->new( shell32 => <<'CODE');
-		BOOL ShellExecuteEx(
-			LPSHELLEXECUTEINFO lpExecInfo
-		);
-CODE
-
-	if ( $ShellExecuteEx->Call($info) ) {
-
-		# Wait for the process to finish
-		my $WaitForSingleObject = Win32::API->new( kernel32 => <<'CODE');
-			DWORD WaitForSingleObject(
-				HANDLE hHandle,
-				DWORD dwMilliseconds
-			);
-CODE
-		$WaitForSingleObject->Call( $info->{hProcess}, 0xFFFFFFFF );
-
-		# Clean process handle!
-		my $CloseHandle = Win32::API->new( kernel32 => <<'CODE');
-			BOOL CloseHandle(
-				HANDLE hObject
-			);
-CODE
-		$CloseHandle->Call( $info->{hProcess} );
-
-		# And we have finished successfully
-		return 1;
-	}
-
-	# We failed miserably!
-	return 0;
+    die "Win32 function called!" unless Padre::Constant::WIN32;
+    my %params = @_;
+    my $directory = $params{directory} || '.';
+    my $show = ( $params{show} ) ? 1 : 0;
+    my $parameters = $params{parameters} || '';
+    
+    return _execute_process_and_wait ( $params{file}, $parameters, $directory, $show );
 }
 
 =head2 C<GetCurrentProcessMemorySize>
@@ -248,47 +129,11 @@ Returns the current process memory size in bytes
 =cut
 
 sub GetCurrentProcessMemorySize {
-
-	# Retrieves the current process handle
-	my $hProcess = Win32::API->new( 'kernel32', <<'CODE' )->Call();
-		HANDLE GetCurrentProcess();
-CODE
-
-	# Define the process memory counters structure
-	Win32::API::Struct->typedef(
-		PPROCESS_MEMORY_COUNTERS => qw(
-			DWORD  cb;
-			DWORD  PageFaultCount;
-			SIZE_T PeakWorkingSetSize;
-			SIZE_T WorkingSetSize;
-			SIZE_T QuotaPeakPagedPoolUsage;
-			SIZE_T QuotaPagedPoolUsage;
-			SIZE_T QuotaPeakNonPagedPoolUsage;
-			SIZE_T QuotaNonPagedPoolUsage;
-			SIZE_T PagefileUsage;
-			SIZE_T PeakPagefileUsage;
-			)
-	);
-
-	# Creates the structure
-	my $stats = Win32::API::Struct->new('PPROCESS_MEMORY_COUNTERS');
-	$stats->{cb} = $stats->sizeof;
-
-	# Retrieves process memory information
-	my $GetProcessMemoryInfo = Win32::API->new( 'psapi', <<'CODE' );
-		BOOL GetProcessMemoryInfo(
-			HANDLE Process,
-			PPROCESS_MEMORY_COUNTERS ppsmemCounters,
-			DWORD cb
-		);
-CODE
-	$GetProcessMemoryInfo->Call( $hProcess, $stats, $stats->{cb} );
-
-	# Returns the peak memory size as bytes
-	return $stats->{PeakWorkingSetSize};
+    die "Win32 function called!" unless Padre::Constant::WIN32;
+    return _get_current_process_memory_size();
 }
 
-=head2 C<GetLastError>
+=head2 C<GetLastErrorString>
 
   Padre::Util::Win32::GetLastError;
 
@@ -299,14 +144,25 @@ L<http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx>.
 
 =cut
 
-# This sub is here to remember everyone that $^E could also be
-# used and to keep the link to the error code list in a public
-# place.
-
 sub GetLastError {
-
-	return $^E;
+    die "Win32 function called!" unless Padre::Constant::WIN32;
+    return Win32::GetLastError();
 }
+
+=head2 C<GetLastErrorString>
+
+  Padre::Util::Win32::GetLastErrorString;
+
+Returns the string representation for the error code of the last
+Win32 API call.
+
+=cut
+
+sub GetLastErrorString {
+    die "Win32 function called!" unless Padre::Constant::WIN32;
+    return Win32::FormatMessage(Win32::GetLastError());
+}
+
 
 1;
 
@@ -330,3 +186,4 @@ LICENSE file included with this module.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
+

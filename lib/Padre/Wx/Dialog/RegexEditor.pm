@@ -651,7 +651,6 @@ sub run {
 		return;
 	}
 
-
 	my ( $active, $inactive ) = $self->_get_modifier_settings;
 
 	$self->{matched_text}->Clear;
@@ -666,6 +665,7 @@ sub run {
 	my $warning;
 
 	# XXX Ignore Win32::API warnings. It's ugly but it works :)
+	# Win32::API not now used - but maybe this is still needed ?
 	local $SIG{__WARN__} = sub { $warning = $_[0] };
 
 	# TODO loop on all matches in case of /g

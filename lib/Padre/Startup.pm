@@ -83,13 +83,10 @@ sub startup {
 				my $pid = '';
 				my $read = $socket->sysread( $pid, 10 );
 				if ( defined $read and $read == 10 ) {
-
 					# Got the single instance PID
 					$pid =~ s/\s+\s//;
-					require Win32::API;
-					Win32::API->new(
-						user32 => AllowSetForeground,
-					)->Call($pid);
+					require Padre::Util::Win32;
+					Padre::Util::Win32::AllowSetForeground($pid);
 				}
 			}
 			foreach my $file (@ARGV) {

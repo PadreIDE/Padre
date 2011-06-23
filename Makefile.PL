@@ -149,7 +149,6 @@ requires 'threads::shared'          => '1.33';
 requires 'URI'                      => '0';
 requires 'version'                  => '0.80';
 requires 'Win32'              => '0.31' if win32;
-requires 'Win32::API'         => '0.58' if win32;
 requires 'Win32::Shortcut'    => '0.07' if win32;
 requires 'Win32::TieRegistry' => '0.26' if win32;
 requires 'Wx' => ( win32 and $] >= 5.01 ) ? '0.9901' : '0.91';
