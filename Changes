@@ -23,6 +23,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1176: Preferences 2.0 screen is too big (BOWTIE, AZAWAWI)
     - Fix #1231: Add scroll bar to xterm (BOWTIE, AZAWAWI)
     - Remove Win32::API dependency (MARKD)
+    - Partial fix #913: almost no syntax highlighting for C/C++ code (ZENOG)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
