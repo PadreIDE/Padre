@@ -117,7 +117,7 @@ sub task_finish {
 		Wx::TreeItemData->new('')
 	);
 
-	# Add the packge trees
+	# Add the package trees
 	foreach my $pkg (@$data) {
 		my $branch = $self->AppendItem(
 			$root,
@@ -172,6 +172,8 @@ sub running {
 sub start {
 	my $self = shift;
 	TRACE("Starting Outline timer") if DEBUG;
+
+	warn "Starting Outline timer ...\n";
 
 	# Set up or reinitialise the timer
 	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {

@@ -43,6 +43,7 @@ my %WXEOL = (
 );
 
 # mapping for mime-type to the style name in the share/styles/default.yml file
+# TODO this should be defined in MimeTypes.pm
 our %MIME_STYLE = (
 	'application/x-perl' => 'perl',
 	'application/x-psgi' => 'perl',
@@ -52,6 +53,8 @@ our %MIME_STYLE = (
 	'text/x-yaml'        => 'yaml',
 	'text/css'           => 'css',
 	'application/x-php'  => 'perl', # temporary solution
+	'text/x-c'           => 'c',
+	'text/x-c++src'      => 'c',
 );
 
 # Karl
