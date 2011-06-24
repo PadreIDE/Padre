@@ -144,8 +144,8 @@ sub _initialize {
 	);
 
 	# This is the mime-type to Scintilla lexer mapping.
-	# Lines marked with CONFIRMED indicate that the mime-typehas been checked
-	# to confirm that the MIME type is either the official type, or the primary
+	# Lines marked with CONFIRMED indicate that the mime-type has been checked
+	# that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
 
 	# name  => Human readable name
@@ -263,7 +263,7 @@ sub _initialize {
 
 		'text/x-java-source' => {
 			name  => 'Java',
-			lexer => Wx::wxSTC_LEX_NULL,
+			lexer => Wx::wxSTC_LEX_CPP,
 		},
 
 		'text/x-lua' => {
@@ -378,7 +378,7 @@ sub _initialize {
 
 		'text/x-csharp' => {
 			name  => 'C#',
-			lexer => Wx::wxSTC_LEX_CPP,      # better than nothing
+			lexer => Wx::wxSTC_LEX_CPP,
 		},
 
 	);

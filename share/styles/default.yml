@@ -129,9 +129,9 @@ perl:
   wxSTC_PL_STRING_QW:
    foreground: 7f007f
 # missing:
-#define SCE_PL_SUB_PROTOTYPE 40
-#define SCE_PL_FORMAT_IDENT 41
-#define SCE_PL_FORMAT 42
+#SCE_PL_SUB_PROTOTYPE 40
+#SCE_PL_FORMAT_IDENT 41
+#SCE_PL_FORMAT 42
 
 #
 # If you want to support another file type
@@ -367,7 +367,7 @@ c:
    foreground: ff7f00
   wxSTC_C_CHARACTER:
    foreground: 7f007f
-  wxSTC_C_UUID:
+#  wxSTC_C_UUID:
   wxSTC_C_PREPROCESSOR:
    foreground: 7f7f7f
   wxSTC_C_OPERATOR:

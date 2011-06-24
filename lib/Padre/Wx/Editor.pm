@@ -45,16 +45,19 @@ my %WXEOL = (
 # mapping for mime-type to the style name in the share/styles/default.yml file
 # TODO this should be defined in MimeTypes.pm
 our %MIME_STYLE = (
-	'application/x-perl' => 'perl',
-	'application/x-psgi' => 'perl',
-	'text/x-perlxs'      => 'xs',   # should be in the plugin...
-	'text/x-patch'       => 'diff',
-	'text/x-makefile'    => 'make',
-	'text/x-yaml'        => 'yaml',
-	'text/css'           => 'css',
-	'application/x-php'  => 'perl', # temporary solution
-	'text/x-c'           => 'c',
-	'text/x-c++src'      => 'c',
+	'application/x-perl'     => 'perl',
+	'application/x-psgi'     => 'perl',
+	'text/x-perlxs'          => 'xs',   # should be in the plugin...
+	'text/x-patch'           => 'diff',
+	'text/x-makefile'        => 'make',
+	'text/x-yaml'            => 'yaml',
+	'text/css'               => 'css',
+	'application/x-php'      => 'perl', # temporary solution
+	'text/x-c'               => 'c',
+	'text/x-c++src'          => 'c',
+	'text/x-csharp'          => 'c',
+	'application/javascript' => 'c',
+	'text/x-java-source'     => 'c',
 );
 
 # Karl
@@ -495,13 +498,13 @@ sub remove_color {
 
 =head2 get_brace_info
 
-Look at a given position in the editor if there is a brace (according to the 
+Look at a given position in the editor if there is a brace (according to the
 setting editor_braces) before or after, and return the information about the context
 It always look first at the character after the position.
 
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
-		
+
 	Return:
 		undef if no brace, otherwise [brace, actual_pos, is_after, is_opening]
 		where:
@@ -509,10 +512,10 @@ It always look first at the character after the position.
 			actual_pos - the actual position where the brace has been found
 			is_after - true iff the brace is after the cursor : boolean
 			is_opening - true iff only the brace is an opening one
-			
+
 	Examples:
 
-		|{} => should find the { : [0,{,1,1] 
+		|{} => should find the { : [0,{,1,1]
 		{|} => should find the } : [1,},1,0]
 		{| } => should find the { : [0,{,0,1]
 
@@ -543,7 +546,7 @@ Tell if a character is a brace, and if it is an opening or a closing one
 
 	Params:
 		char - a character : string
-		
+
 	Return:
 		int : 0 if this is not a brace, an odd value if it is an opening brace and an even
 		one for a closing brace
@@ -624,12 +627,12 @@ sub highlight_braces {
 
 =head2 find_matching_brace
 
-Find the position of to the matching brace if any. If the cursor is inside the braces the destination 
+Find the position of to the matching brace if any. If the cursor is inside the braces the destination
 will be inside too, same it is outside.
 
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
-		
+
 	Return:
 		matching_pos - the matching position, or undef if none
 
@@ -650,12 +653,12 @@ sub find_matching_brace {
 
 =head2 goto_matching_brace
 
-Move the cursor to the matching brace if any. If the cursor is inside the braces the destination 
+Move the cursor to the matching brace if any. If the cursor is inside the braces the destination
 will be inside too, same it is outside.
 
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
-		
+
 
 =cut
 
@@ -667,12 +670,12 @@ sub goto_matching_brace {
 
 =head2 select_to_matching_brace
 
-Select to the matching opening or closing brace. If the cursor is inside the braces the destination 
+Select to the matching opening or closing brace. If the cursor is inside the braces the destination
 will be inside too, same it is outside.
 
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
-		
+
 
 
 =cut
