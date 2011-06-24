@@ -173,8 +173,6 @@ sub start {
 	my $self = shift;
 	TRACE("Starting Outline timer") if DEBUG;
 
-	warn "Starting Outline timer ...\n";
-
 	# Set up or reinitialise the timer
 	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop if $self->{timer}->IsRunning;
