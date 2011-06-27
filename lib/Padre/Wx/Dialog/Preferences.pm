@@ -254,9 +254,8 @@ sub preview_refresh {
 
     # Set the right margin if applicable
     if ( $self->editor_right_margin_enable->GetValue ) {
-        $preview->SetEdgeColumn( $self->editor_right_margin_column ->GetValue);
+        $preview->SetEdgeColumn( $self->editor_right_margin_column);
         $preview->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
-        $preview->set_preferences;
     }
     else {
         $preview->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
