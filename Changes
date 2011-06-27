@@ -26,7 +26,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Partial fix #913: almost no syntax highlighting for C/C++ code; also fix
       for C#, Java and JavaScript (ZENOG)
     - Save changed preferences (instead of throw changes away) 
-      when Advanced is clicked in the Preferenced dialog.
+      when Advanced is clicked in the Preferenced dialog. (NXADM)
+    - Added LICENSE file to fix #1224 (NXADM)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
