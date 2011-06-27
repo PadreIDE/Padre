@@ -343,8 +343,8 @@ sub padre_setup_plain {
 
 	# Create the right margin if desired
 	if ( $config->editor_right_margin_enable ) {
-		$self->SetEdgeColumn( $config->editor_right_margin_column );
-		$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
+		$self->SetEdgeColumn( $config->editor_right_margin_column);
+		#$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
 	} else {
 		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
 	}
