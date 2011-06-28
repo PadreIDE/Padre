@@ -36,11 +36,7 @@ use constant {
 #
 # Please note that WIN32 is the API. DO NOT change it to that :)
 #
-my %WXEOL = (
-	WIN  => Wx::wxSTC_EOL_CRLF,
-	MAC  => Wx::wxSTC_EOL_CR,
-	UNIX => Wx::wxSTC_EOL_LF,
-);
+my %WXEOL;
 
 # mapping for mime-type to the style name in the share/styles/default.yml file
 # TODO this should be defined in MimeTypes.pm
@@ -66,7 +62,7 @@ our %MIME_STYLE = (
 # Brace* methods
 # always altern opening and starting braces in the constant
 my $BRACES               = '{}[]()';
-my $STC_INVALID_POSITION = Wx::wxSTC_INVALID_POSITION;
+my $STC_INVALID_POSITION;
 
 my $data;
 my $data_name;
@@ -90,15 +86,23 @@ sub new {
 	# or Wx::StyledTextCtrl which comes by default with Wx and is very *old*
 	my $editor_super_class;
 	if ( $main->config->feature_wx_scintilla ) {
-		eval "use Wx::Scintilla";
+		eval 'use Wx::Scintilla';
 		$editor_super_class = 'Wx::ScintillaTextCtrl' unless $@;
 	}
 	if(!$editor_super_class) {
-		eval "use Wx::STC";
+		eval 'use Wx::STC';
 		$editor_super_class = 'Wx::StyledTextCtrl';
 	}
 	# Push the appropriate editor super class to inheritance list :)
 	push @ISA, $editor_super_class;
+
+	# Initialize variables after loading either Wx::Scintilla or Wx::STC
+	%WXEOL = (
+		WIN  => Wx::wxSTC_EOL_CRLF,
+		MAC  => Wx::wxSTC_EOL_CR,
+		UNIX => Wx::wxSTC_EOL_LF,
+	);
+	$STC_INVALID_POSITION = Wx::wxSTC_INVALID_POSITION;
 
 	# Create the underlying Wx object
 	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );

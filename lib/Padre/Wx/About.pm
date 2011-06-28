@@ -353,7 +353,7 @@ sub _content_info {
 
 	my $wx_scintilla_html = '';
 	if ( Padre::Wx::Editor->isa('Wx::ScintillaTextCtrl') ) {
-		eval "use Wx::Scintilla";
+		eval 'use Wx::Scintilla';
 		unless ($@) {
 			$wx_scintilla_html = <<"END_HTML";
       <tr>

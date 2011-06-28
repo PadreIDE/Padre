@@ -201,7 +201,7 @@ sub _initialize {
 	my $perl6_scintilla_lexer;
 	my $config = Padre::Config->read;
 	if ( $config->feature_wx_scintilla ) {
-		eval "use Wx::Scintilla;";
+		eval 'use Wx::Scintilla;';
 		unless ($@) {
 			no warnings;
 			$perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
