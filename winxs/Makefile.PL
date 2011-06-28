@@ -1,4 +1,8 @@
 use 5.008005;
+
+# This is only needed for win32
+exit if $^O !~ /^mswin/i;
+
 use strict;
 use ExtUtils::MakeMaker;
 use Config;
