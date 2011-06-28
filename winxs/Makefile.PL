@@ -14,8 +14,8 @@ if($^O =~ /^mswin/i) {
     my $libs = ( $Config{cc} =~ /cl/ ) ? 'psapi.lib' : '-lpsapi';
     $mparams{LIBS}   = [ $libs ];
     $mparams{DEFINE} = '-DPSAPI_VERSION=1';
-    WriteMakefile(%mparams);
 }
 
+WriteMakefile(%mparams);
 
 1;
