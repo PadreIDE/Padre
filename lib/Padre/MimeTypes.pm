@@ -450,12 +450,6 @@ sub get_lexer {
 	$MIME{ $_[1] }->{lexer};
 }
 
-# TO DO: Set some reasonable default highlighers for each mime-type for when there
-# are no plugins. e.g. For Perl 6 style files that should be plain text.
-# Either allow the plugins to set the defaults (maybe allow the plugin that implements
-# the special features of this mime-type to pick the default or shall we have a list of
-# prefered default values ?
-
 sub add_mime_class {
 	my $class      = shift;
 	my $type       = shift;
