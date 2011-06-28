@@ -255,6 +255,7 @@ sub _initialize {
 		'application/x-latex' => {
 			name  => 'LaTeX',
 			lexer => Wx::wxSTC_LEX_LATEX,                  # CONFIRMED
+			class => 'Padre::Document::PercentComment',
 		},
 
 		'application/x-lisp' => {
