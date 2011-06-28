@@ -44,9 +44,8 @@ my %HIGHLIGHTER_CONFIG = ();
 #       of objects now.
 my %MIME = ();
 
-
-
-
+# Default document classes
+my %DEFAULT_DOC_CLASS = ();
 
 #####################################################################
 # Document Registration
@@ -139,6 +138,53 @@ sub _initialize {
 		pm6 => 'application/x-perl6',
 	);
 
+	%DEFAULT_DOC_CLASS = (
+
+		#	'text/x-abc'                => ## \
+		'text/x-adasrc' => 'DoubleDashComment',
+		'text/x-asm'    => 'HashComment',
+
+		#	'text/x-bat'                => ## REM
+		#	'application/x-bibtex'      => 'PercentComment',
+		'text/x-c'      => 'DoubleSlashComment',
+		'text/x-c++src' => 'DoubleSlashComment',
+
+		#	'text/css'                  => ## /* ... */
+		'text/x-eiffel' => 'DoubleDashComment',
+
+		#	'text/x-forth'              => ## \
+		#	'text/x-fortran'            => ## !
+		#	'text/html'                 => ## <!-- ... -->
+		#	'application/javascript'    => 'DoubleSlashComment',
+		#	'application/x-latex'       => 'PercentComment',
+		#	'application/x-lisp'        => ## ;
+		#	'application/x-shellscript' => 'HashComment',
+		'text/x-java-source' => 'DoubleSlashComment',
+		'text/x-lua'         => 'DoubleDashComment',
+		'text/x-makefile'    => 'HashComment',
+		'text/x-matlab'      => 'PercentComment',
+
+		#	'text/x-pascal'             => ## { ... }
+		'application/x-perl' => 'Perl',
+
+		#	'application/x-psgi'        => ## Perl or HashComment or something else?
+		'text/x-python' => 'HashComment',
+
+		#	'application/x-php'         => 'HashComment',
+		'application/x-ruby' => 'HashComment',
+
+		#	'text/x-sql'                => 'DoubleDashComment',
+		#	'text/vbscript'             => ## '
+		'text/x-config' => 'HashComment',
+
+		#	'text/xml'                  => ## <!-- ... -->
+		#	'text/x-yaml'               => 'HashComment',
+		#	'application/x-perl6'       => 'HashComment',
+		#       'text/x-perlxs'             => ## ' #'
+		#	'text/x-perltt'             => ## <!-- ... -->
+		'text/x-csharp' => 'DoubleSlashComment',
+	);
+
 	%HIGHLIGHTER_CONFIG = (
 		'application/x-perl' => 'lang_perl5_lexer',
 	);
@@ -150,7 +196,6 @@ sub _initialize {
 
 	# name  => Human readable name
 	# lexer => The Scintilla lexer to be used
-	# class => document class
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
 	my $perl6_scintilla_lexer;
@@ -176,14 +221,12 @@ sub _initialize {
 
 		'text/x-adasrc' => {
 			name  => 'ADA',
-			lexer => Wx::wxSTC_LEX_ADA,                   # CONFIRMED
-			class => 'Padre::Document::DoubleDashComment',
+			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
 		},
 
 		'text/x-asm' => {
 			name  => 'ASM',
-			lexer => Wx::wxSTC_LEX_ASM,                   # CONFIRMED
-			class => 'Padre::Document::HashComment',
+			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
 		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
@@ -191,7 +234,7 @@ sub _initialize {
 		# they need to be the same
 		'text/x-bat' => {
 			name  => 'BAT',
-			lexer => Wx::wxSTC_LEX_BATCH,                 # CONFIRMED
+			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
 		},
 
 		'application/x-bibtex' => {
@@ -201,71 +244,67 @@ sub _initialize {
 
 		'application/x-bml' => {
 			name  => 'BML',
-			lexer => Wx::wxSTC_LEX_NULL,                  #
+			lexer => Wx::wxSTC_LEX_NULL,  #
 		},
 
 		'text/x-c' => {
 			name  => 'C',
 			lexer => Wx::wxSTC_LEX_CPP,
-			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 		'text/x-c++src' => {
 			name  => 'C++',
-			lexer => Wx::wxSTC_LEX_CPP,                    # CONFIRMED
-			class => 'Padre::Document::DoubleSlashComment',
+			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
 		},
 
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::wxSTC_LEX_CSS,                    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
 		},
 
 		'text/x-eiffel' => {
 			name  => 'Eiffel',
-			lexer => Wx::wxSTC_LEX_EIFFEL,                 # CONFIRMED
-			class => 'Padre::Document::DoubleDashComment',
+			lexer => Wx::wxSTC_LEX_EIFFEL, # CONFIRMED
 		},
 
 		'text/x-forth' => {
 			name  => 'Forth',
-			lexer => Wx::wxSTC_LEX_FORTH,                  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_FORTH,  # CONFIRMED
 		},
 
 		'text/x-fortran' => {
 			name  => 'Fortran',
-			lexer => Wx::wxSTC_LEX_FORTRAN,                # CONFIRMED
+			lexer => Wx::wxSTC_LEX_FORTRAN, # CONFIRMED
 		},
 
 		'text/html' => {
 			name  => 'HTML',
-			lexer => Wx::wxSTC_LEX_HTML,                   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_HTML,    # CONFIRMED
 		},
 
 		'application/javascript' => {
 			name  => 'JavaScript',
-			lexer => Wx::wxSTC_LEX_ESCRIPT,                # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/json' => {
 			name  => 'JSON',
-			lexer => Wx::wxSTC_LEX_ESCRIPT,                # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/x-latex' => {
 			name  => 'LaTeX',
-			lexer => Wx::wxSTC_LEX_LATEX,                  # CONFIRMED
-			class => 'Padre::Document::PercentComment',
+			lexer => Wx::wxSTC_LEX_LATEX,   # CONFIRMED
 		},
 
 		'application/x-lisp' => {
 			name  => 'LISP',
-			lexer => Wx::wxSTC_LEX_LISP,                   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_LISP,    # CONFIRMED
 		},
 
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,                   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_DIFF,    # CONFIRMED
 		},
 
 		'application/x-shellscript' => {
@@ -276,118 +315,112 @@ sub _initialize {
 		'text/x-java-source' => {
 			name  => 'Java',
 			lexer => Wx::wxSTC_LEX_CPP,
-			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 		'text/x-lua' => {
 			name  => 'Lua',
-			lexer => Wx::wxSTC_LEX_LUA,                   # CONFIRMED
-			class => 'Padre::Document::DoubleDashComment',
+			lexer => Wx::wxSTC_LEX_LUA, # CONFIRMED
 		},
 
 		'text/x-makefile' => {
 			name  => 'Makefile',
-			lexer => Wx::wxSTC_LEX_MAKEFILE,              # CONFIRMED
-			class => 'Padre::Document::HashComment',
+			lexer => Wx::wxSTC_LEX_MAKEFILE, # CONFIRMED
 		},
 
 		'text/x-matlab' => {
 			name  => 'Matlab',
-			lexer => Wx::wxSTC_LEX_MATLAB,                # CONFIRMED
-			class => 'Padre::Document::PercentComment',
+			lexer => Wx::wxSTC_LEX_MATLAB,   # CONFIRMED
 		},
 
 		'text/x-pascal' => {
 			name  => 'Pascal',
-			lexer => Wx::wxSTC_LEX_PASCAL,                # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PASCAL,   # CONFIRMED
 		},
 
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer => Wx::wxSTC_LEX_PERL,                  # CONFIRMED
-			class => 'Padre::Document::Perl',
+			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 		},
 
 		'application/x-psgi' => {
 			name  => 'PSGI',
-			lexer => Wx::wxSTC_LEX_PERL,                  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 		},
 
 		'text/x-python' => {
 			name  => 'Python',
-			lexer => Wx::wxSTC_LEX_PYTHON,                # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PYTHON,          # CONFIRMED
 			class => 'Padre::Document::HashComment',
 		},
 
 		'application/x-php' => {
 			name  => 'PHP',
-			lexer => Wx::wxSTC_LEX_PHPSCRIPT,             # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PHPSCRIPT,       # CONFIRMED
 		},
 
 		'application/x-ruby' => {
 			name  => 'Ruby',
-			lexer => Wx::wxSTC_LEX_RUBY,                  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_RUBY,            # CONFIRMED
 			class => 'Padre::Document::HashComment',
 		},
 
 		'text/x-sql' => {
 			name  => 'SQL',
-			lexer => Wx::wxSTC_LEX_SQL,                   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_SQL,             # CONFIRMED
 		},
 
 		'application/x-tcl' => {
 			name  => 'Tcl',
-			lexer => Wx::wxSTC_LEX_TCL,                   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_TCL,             # CONFIRMED
 		},
 
 		'text/vbscript' => {
 			name  => 'VBScript',
-			lexer => Wx::wxSTC_LEX_VBSCRIPT,              # CONFIRMED
+			lexer => Wx::wxSTC_LEX_VBSCRIPT,        # CONFIRMED
 		},
 
 		'text/x-config' => {
 			name  => 'Config',
 			lexer => Wx::wxSTC_LEX_CONF,
-			class => 'Padre::Document::HashComment',
 		},
 
 		# text/xml specifically means "human-readable XML".
 		# This is prefered to the more generic application/xml
 		'text/xml' => {
 			name  => 'XML',
-			lexer => Wx::wxSTC_LEX_XML, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_XML,             # CONFIRMED
 		},
 
 		'text/x-yaml' => {
 			name  => 'YAML',
-			lexer => Wx::wxSTC_LEX_YAML, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_YAML,            # CONFIRMED
 		},
 
 		'application/x-pir' => {
 			name  => 'PIR',
-			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 		},
 
 		'application/x-pasm' => {
 			name  => 'PASM',
-			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 		},
 
 		'application/x-perl6' => {
 			name  => 'Perl 6',
-			lexer => $perl6_scintilla_lexer, # CONFIRMED
+			lexer => $perl6_scintilla_lexer,        # CONFIRMED
 		},
 
 		'text/plain' => {
 			name  => _T('Text'),
-			lexer => Wx::wxSTC_LEX_NULL,     # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => {                 # totally not confirmed
+		'text/x-perlxs' => {                        # totally not confirmed
 			name => 'XS',
 			lexer =>
-				Wx::wxSTC_LEX_CPP,           # for the lack of a better XS lexer (vim?)
+				Wx::wxSTC_LEX_CPP,                  # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
@@ -397,15 +430,21 @@ sub _initialize {
 		'text/x-csharp' => {
 			name  => 'C#',
 			lexer => Wx::wxSTC_LEX_CPP,
-			class => 'Padre::Document::DoubleSlashComment',
 		},
-
 	);
 
 	# TO DO:
 	# add some mime-type for pod files
 	# or remove the whole Padre::Document::POD class as it is not in use
 	#'text/x-pod'         => 'Padre::Document::POD',
+
+	foreach my $type ( keys %DEFAULT_DOC_CLASS ) {
+		if ( exists $MIME{$type} ) {
+			$MIME{$type}->{class} = 'Padre::Document::' . $DEFAULT_DOC_CLASS{$type};
+		} else {
+			warn "Unknown MIME type: $type\n";
+		}
+	}
 
 	# Array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->load_highlighter_config;
@@ -454,10 +493,11 @@ sub add_mime_class {
 	my $class      = shift;
 	my $type       = shift;
 	my $mime_class = shift;
+
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type was not supported when %s(%s) was called"),
+				Wx::gettext('MIME type was not supported when %s(%s) was called'),
 				'add_mime_class',
 				$type
 			)
@@ -465,28 +505,17 @@ sub add_mime_class {
 		return;
 	}
 
-	if ( $MIME{$type}->{class} ) {
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext("Mime type already had a class '%s' when %s(%s) was called"),
-				$MIME{$type}->{class},
-				'add_mime_class',
-				$type
-			)
-		);
-		return;
-	}
 	$MIME{$type}->{class} = $mime_class;
 }
 
-sub remove_mime_class {
+sub reset_mime_class {
 	my $class = shift;
 	my $type  = shift;
 
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				Wx::gettext('MIME type is not supported when %s(%s) was called'),
 				'remove_mime_class',
 				$type
 			)
@@ -497,14 +526,19 @@ sub remove_mime_class {
 	if ( not $MIME{$type}->{class} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type did not have a class entry when %s(%s) was called"),
+				Wx::gettext('MIME type did not have a class entry when %s(%s) was called'),
 				'remove_mime_class',
 				$type
 			)
 		);
 		return;
 	}
-	delete $MIME{$type}->{class};
+
+	if ( exists $DEFAULT_DOC_CLASS{$type} ) {
+		$MIME{$type}->{class} = 'Padre::Document::' . $DEFAULT_DOC_CLASS{$type};
+	} else {
+		delete $MIME{$type}->{class};
+	}
 }
 
 sub get_mime_class {
@@ -514,7 +548,7 @@ sub get_mime_class {
 	if ( not $MIME{$type} ) {
 		Padre::Current->main->error(
 			sprintf(
-				Wx::gettext("Mime type is not supported when %s(%s) was called"),
+				Wx::gettext('MIME type is not supported when %s(%s) was called'),
 				'get_mime_class',
 				$type
 			)

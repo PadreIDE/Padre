@@ -313,7 +313,7 @@ sub disable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		Padre::MimeTypes->remove_mime_class($type);
+		Padre::MimeTypes->reset_mime_class($type);
 	}
 
 	# Call the plugin's own disable method
