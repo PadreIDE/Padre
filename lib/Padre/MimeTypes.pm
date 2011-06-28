@@ -154,7 +154,7 @@ sub _initialize {
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
 	my $perl6_scintilla_lexer;
-	my $config                = Padre::Config->read;
+	my $config = Padre::Config->read;
 	if ( $config->feature_wx_scintilla ) {
 		eval "use Wx::Scintilla;";
 		unless ($@) {
@@ -162,8 +162,9 @@ sub _initialize {
 			$perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
 		}
 	}
+
 	# fall back to default if no STC
-	if(!$perl6_scintilla_lexer) {
+	if ( !$perl6_scintilla_lexer ) {
 		eval "use Wx::STC;";
 		$perl6_scintilla_lexer = Wx::wxSTC_LEX_NULL;
 	}
@@ -175,12 +176,14 @@ sub _initialize {
 
 		'text/x-adasrc' => {
 			name  => 'ADA',
-			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ADA,                   # CONFIRMED
+			class => 'Padre::Document::DoubleDashComment',
 		},
 
 		'text/x-asm' => {
 			name  => 'ASM',
-			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ASM,                   # CONFIRMED
+			class => 'Padre::Document::HashComment',
 		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
@@ -188,7 +191,7 @@ sub _initialize {
 		# they need to be the same
 		'text/x-bat' => {
 			name  => 'BAT',
-			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_BATCH,                 # CONFIRMED
 		},
 
 		'application/x-bibtex' => {
@@ -198,67 +201,70 @@ sub _initialize {
 
 		'application/x-bml' => {
 			name  => 'BML',
-			lexer => Wx::wxSTC_LEX_NULL,  #
+			lexer => Wx::wxSTC_LEX_NULL,                  #
 		},
 
 		'text/x-c' => {
 			name  => 'C',
 			lexer => Wx::wxSTC_LEX_CPP,
+			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 		'text/x-c++src' => {
 			name  => 'C++',
-			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CPP,                    # CONFIRMED
+			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CSS,                    # CONFIRMED
 		},
 
 		'text/x-eiffel' => {
 			name  => 'Eiffel',
-			lexer => Wx::wxSTC_LEX_EIFFEL, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_EIFFEL,                 # CONFIRMED
+			class => 'Padre::Document::DoubleDashComment',
 		},
 
 		'text/x-forth' => {
 			name  => 'Forth',
-			lexer => Wx::wxSTC_LEX_FORTH,  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_FORTH,                  # CONFIRMED
 		},
 
 		'text/x-fortran' => {
 			name  => 'Fortran',
-			lexer => Wx::wxSTC_LEX_FORTRAN, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_FORTRAN,                # CONFIRMED
 		},
 
 		'text/html' => {
 			name  => 'HTML',
-			lexer => Wx::wxSTC_LEX_HTML,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_HTML,                   # CONFIRMED
 		},
 
 		'application/javascript' => {
 			name  => 'JavaScript',
-			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ESCRIPT,                # CONFIRMED
 		},
 
 		'application/json' => {
 			name  => 'JSON',
-			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_ESCRIPT,                # CONFIRMED
 		},
 
 		'application/x-latex' => {
 			name  => 'LaTeX',
-			lexer => Wx::wxSTC_LEX_LATEX,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_LATEX,                  # CONFIRMED
 		},
 
 		'application/x-lisp' => {
 			name  => 'LISP',
-			lexer => Wx::wxSTC_LEX_LISP,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_LISP,                   # CONFIRMED
 		},
 
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_DIFF,                   # CONFIRMED
 		},
 
 		'application/x-shellscript' => {
@@ -269,73 +275,79 @@ sub _initialize {
 		'text/x-java-source' => {
 			name  => 'Java',
 			lexer => Wx::wxSTC_LEX_CPP,
+			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 		'text/x-lua' => {
 			name  => 'Lua',
-			lexer => Wx::wxSTC_LEX_LUA, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_LUA,                   # CONFIRMED
+			class => 'Padre::Document::DoubleDashComment',
 		},
 
 		'text/x-makefile' => {
 			name  => 'Makefile',
-			lexer => Wx::wxSTC_LEX_MAKEFILE, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_MAKEFILE,              # CONFIRMED
+			class => 'Padre::Document::HashComment',
 		},
 
 		'text/x-matlab' => {
 			name  => 'Matlab',
-			lexer => Wx::wxSTC_LEX_MATLAB,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_MATLAB,                # CONFIRMED
+			class => 'Padre::Document::PercentComment',
 		},
 
 		'text/x-pascal' => {
 			name  => 'Pascal',
-			lexer => Wx::wxSTC_LEX_PASCAL,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PASCAL,                # CONFIRMED
 		},
 
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PERL,                  # CONFIRMED
 			class => 'Padre::Document::Perl',
 		},
 
 		'application/x-psgi' => {
 			name  => 'PSGI',
-			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PERL,                  # CONFIRMED
 		},
 
 		'text/x-python' => {
 			name  => 'Python',
-			lexer => Wx::wxSTC_LEX_PYTHON,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PYTHON,                # CONFIRMED
+			class => 'Padre::Document::HashComment',
 		},
 
 		'application/x-php' => {
 			name  => 'PHP',
-			lexer => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PHPSCRIPT,             # CONFIRMED
 		},
 
 		'application/x-ruby' => {
 			name  => 'Ruby',
-			lexer => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
+			lexer => Wx::wxSTC_LEX_RUBY,                  # CONFIRMED
+			class => 'Padre::Document::HashComment',
 		},
 
 		'text/x-sql' => {
 			name  => 'SQL',
-			lexer => Wx::wxSTC_LEX_SQL,       # CONFIRMED
+			lexer => Wx::wxSTC_LEX_SQL,                   # CONFIRMED
 		},
 
 		'application/x-tcl' => {
 			name  => 'Tcl',
-			lexer => Wx::wxSTC_LEX_TCL,       # CONFIRMED
+			lexer => Wx::wxSTC_LEX_TCL,                   # CONFIRMED
 		},
 
 		'text/vbscript' => {
 			name  => 'VBScript',
-			lexer => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_VBSCRIPT,              # CONFIRMED
 		},
 
 		'text/x-config' => {
 			name  => 'Config',
 			lexer => Wx::wxSTC_LEX_CONF,
-			class => 'Padre::Document::Config',
+			class => 'Padre::Document::HashComment',
 		},
 
 		# text/xml specifically means "human-readable XML".
@@ -384,6 +396,7 @@ sub _initialize {
 		'text/x-csharp' => {
 			name  => 'C#',
 			lexer => Wx::wxSTC_LEX_CPP,
+			class => 'Padre::Document::DoubleSlashComment',
 		},
 
 	);
@@ -551,7 +564,7 @@ sub get_highlighter_name {
 	my $class       = shift;
 	my $highlighter = shift;
 
-	# TO DO this can happen if the user configureda highlighter but on the next start
+	# TO DO this can happen if the user configured highlighter but on the next start
 	# the highlighter is not available any more
 	# we need to handle this situation
 	return '' if !defined($highlighter);
