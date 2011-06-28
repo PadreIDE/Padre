@@ -1,8 +1,4 @@
 use 5.008005;
-
-# This is only needed for win32
-exit if $^O !~ /^mswin/i;
-
 use strict;
 use ExtUtils::MakeMaker;
 use Config;
@@ -18,8 +14,8 @@ if($^O =~ /^mswin/i) {
     my $libs = ( $Config{cc} =~ /cl/ ) ? 'psapi.lib' : '-lpsapi';
     $mparams{LIBS}   = [ $libs ];
     $mparams{DEFINE} = '-DPSAPI_VERSION=1';
+    WriteMakefile(%mparams);
 }
 
-WriteMakefile(%mparams);
 
 1;
