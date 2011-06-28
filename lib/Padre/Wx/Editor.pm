@@ -61,7 +61,7 @@ our %MIME_STYLE = (
 # this has to be subset of  ( ) [ ] { } < > since we use the scintilla
 # Brace* methods
 # always altern opening and starting braces in the constant
-my $BRACES               = '{}[]()';
+my $BRACES = '{}[]()';
 my $STC_INVALID_POSITION;
 
 my $data;
@@ -89,10 +89,11 @@ sub new {
 		eval 'use Wx::Scintilla';
 		$editor_super_class = 'Wx::ScintillaTextCtrl' unless $@;
 	}
-	if(!$editor_super_class) {
+	if ( !$editor_super_class ) {
 		eval 'use Wx::STC';
 		$editor_super_class = 'Wx::StyledTextCtrl';
 	}
+
 	# Push the appropriate editor super class to inheritance list :)
 	push @ISA, $editor_super_class;
 
@@ -350,7 +351,8 @@ sub padre_setup_plain {
 
 	# Create the right margin if desired
 	if ( $config->editor_right_margin_enable ) {
-		$self->SetEdgeColumn( $config->editor_right_margin_column);
+		$self->SetEdgeColumn( $config->editor_right_margin_column );
+
 		#$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
 	} else {
 		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
