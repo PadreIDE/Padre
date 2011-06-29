@@ -7,7 +7,6 @@ my %params = (
     NAME            => 'Padre::Util::Win32',
     VERSION_FROM    => '../lib/Padre/Util/Win32.pm',
     ABSTRACT        => 'Padre Win32 API XS Wrapper',
-    AUTHOR_FROM     => '../lib/Padre.pm',
     SKIP            => [ qw( test ) ],
 );
 
