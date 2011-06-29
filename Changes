@@ -22,7 +22,8 @@ next production release, and synchronise their release to the Padre schedule.
       pane's empty space (NILSONSFJ, AZAWAWI)
     - Fix #1176: Preferences 2.0 screen is too big (BOWTIE, AZAWAWI)
     - Fix #1231: Add scroll bar to xterm (BOWTIE, AZAWAWI)
-    - Remove Win32::API dependency (MARKD)
+    - Remove Win32::API dependency on win32 by introducing built-in
+      Padre::Util::Win32 XS wrapper (MARKD)
     - Partial fix #913: almost no syntax highlighting for C/C++ code; also fix
       for C#, Java and JavaScript (ZENOG)
     - Save changed preferences (instead of throw changes away) 
