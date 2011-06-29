@@ -36,6 +36,10 @@ next production release, and synchronise their release to the Padre schedule.
       shell script, SQL; introduce Padre::Document classes HashComment,
       PercentComment, DoubleDashComment, DoubleSlashComment, get rid of class
       Config (ZENOG)
+    - Fix #1232: "modified" display ("*") is not updated with Wx::Scintilla (MARKD)
+    - Fix #1237: Wx::Scintilla does not always update line/column numbers in the
+      status bar (MARKD)
+    - Fix #1242: Autoindent broken when using Wx::Scintilla (MARKD)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
