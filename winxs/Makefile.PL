@@ -13,6 +13,7 @@ if($^O =~ /^mswin/i) {
         AUTHOR          => 'Gabor Szabo', # Same as Padre
         LIBS            => [ $libs ],
         DEFINE          => '-DPSAPI_VERSION=1',
+        SKIP            => [ qw( test ) ],
     
     );
     
@@ -23,9 +24,13 @@ if($^O =~ /^mswin/i) {
         VERSION_FROM    => '../lib/Padre/Util/Win32.pm',
         ABSTRACT        => 'Padre Win32 API XS Wrapper',
         AUTHOR          => 'Gabor Szabo', # Same as Padre
+        SKIP            => [ qw( test ) ],
     );
     
 }
 
+sub MY::postamble {
+    return qq(\n) . 'test :' . qq(\n);
+}
 
 1;
