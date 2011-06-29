@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-29 04:10-0700\n"
+"POT-Creation-Date: 2011-06-29 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1660,6 +1660,11 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:489
 msgid "Enable Smart highlighting while typing"
+msgstr ""
+
+#: lib/Padre/Config.pm:1271
+msgid ""
+"Enable or disable the newer Wx::Scintilla source code editing component. "
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:970
@@ -4943,6 +4948,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2363
 msgid "This function reloads the My plug-in without restarting Padre"
+msgstr ""
+
+#: lib/Padre/Config.pm:1272
+msgid "This requires an installed Wx::Scintilla and a Padre restart"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:5050
