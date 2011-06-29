@@ -145,9 +145,9 @@ sub _initialize {
 		'text/x-asm'    => 'HashComment',
 
 		#	'text/x-bat'                => ## REM
-		#	'application/x-bibtex'      => 'PercentComment',
-		'text/x-c'      => 'DoubleSlashComment',
-		'text/x-c++src' => 'DoubleSlashComment',
+		'application/x-bibtex' => 'PercentComment',
+		'text/x-c'             => 'DoubleSlashComment',
+		'text/x-c++src'        => 'DoubleSlashComment',
 
 		#	'text/css'                  => ## /* ... */
 		'text/x-eiffel' => 'DoubleDashComment',
@@ -155,14 +155,15 @@ sub _initialize {
 		#	'text/x-forth'              => ## \
 		#	'text/x-fortran'            => ## !
 		#	'text/html'                 => ## <!-- ... -->
-		#	'application/javascript'    => 'DoubleSlashComment',
-		#	'application/x-latex'       => 'PercentComment',
+		'application/javascript' => 'DoubleSlashComment',
+		'application/x-latex'    => 'PercentComment',
+
 		#	'application/x-lisp'        => ## ;
-		#	'application/x-shellscript' => 'HashComment',
-		'text/x-java-source' => 'DoubleSlashComment',
-		'text/x-lua'         => 'DoubleDashComment',
-		'text/x-makefile'    => 'HashComment',
-		'text/x-matlab'      => 'PercentComment',
+		'application/x-shellscript' => 'HashComment',
+		'text/x-java-source'        => 'DoubleSlashComment',
+		'text/x-lua'                => 'DoubleDashComment',
+		'text/x-makefile'           => 'HashComment',
+		'text/x-matlab'             => 'PercentComment',
 
 		#	'text/x-pascal'             => ## { ... }
 		'application/x-perl' => 'Perl',
@@ -170,16 +171,18 @@ sub _initialize {
 		#	'application/x-psgi'        => ## Perl or HashComment or something else?
 		'text/x-python' => 'HashComment',
 
-		#	'application/x-php'         => 'HashComment',
+		'application/x-php'  => 'HashComment',
 		'application/x-ruby' => 'HashComment',
 
-		#	'text/x-sql'                => 'DoubleDashComment',
+		'text/x-sql' => 'DoubleDashComment',
+
 		#	'text/vbscript'             => ## '
 		'text/x-config' => 'HashComment',
 
 		#	'text/xml'                  => ## <!-- ... -->
-		#	'text/x-yaml'               => 'HashComment',
-		#	'application/x-perl6'       => 'HashComment',
+		'text/x-yaml'         => 'HashComment',
+		'application/x-perl6' => 'HashComment',
+
 		#       'text/x-perlxs'             => ## ' #'
 		#	'text/x-perltt'             => ## <!-- ... -->
 		'text/x-csharp' => 'DoubleSlashComment',

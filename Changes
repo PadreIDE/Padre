@@ -31,8 +31,9 @@ next production release, and synchronise their release to the Padre schedule.
     - Added LICENSE file to fix #1224 (NXADM)
     - Fix #1243: Error message when plugin overrides document class/document
       class lost after plugin deactivation (ZENOG)
-    - Add comment support for ADA, ASM, C, C++, C#, Eiffel, Java, Lua, Makefile,
-      Matlab, Python, Ruby; introduce Padre::Document classes HashComment,
+    - Add out-of-the-box comment support for ADA, ASM, BibTeX, C, C++, C#,
+      Eiffel, Java, LaTeX, Lua, Makefile, Matlab, Perl 6, PHP, Python, Ruby,
+      shell script, SQL; introduce Padre::Document classes HashComment,
       PercentComment, DoubleDashComment, DoubleSlashComment, get rid of class
       Config (ZENOG)
 
