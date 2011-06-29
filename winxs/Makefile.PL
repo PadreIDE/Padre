@@ -3,30 +3,22 @@ use strict;
 use ExtUtils::MakeMaker qw( WriteMakefile WriteEmptyMakefile );
 use Config;
 
+my %params = (
+    NAME            => 'Padre::Util::Win32',
+    VERSION_FROM    => '../lib/Padre/Util/Win32.pm',
+    ABSTRACT        => 'Padre Win32 API XS Wrapper',
+    AUTHOR          => 'Gabor Szabo',
+    SKIP            => [ qw( test ) ],
+);
+
 if($^O =~ /^mswin/i) {
     my $libs = ( $Config{cc} =~ /cl/ ) ? 'psapi.lib' : '-lpsapi';
-    
-    WriteMakefile(
-        NAME            => 'Padre::Util::Win32',
-        VERSION_FROM    => '../lib/Padre/Util/Win32.pm',
-        ABSTRACT        => 'Padre Win32 API XS Wrapper',
-        AUTHOR          => 'Gabor Szabo', # Same as Padre
-        LIBS            => [ $libs ],
-        DEFINE          => '-DPSAPI_VERSION=1',
-        SKIP            => [ qw( test ) ],
-    
-    );
-    
+    $params{LIBS} = [ $libs ];
+    $params{DEFINE} = '-DPSAPI_VERSION=1';
+    WriteMakefile(%params);
 }   else {
     # WriteEmptyMakefile seems to need params to avoid warnings
-    WriteEmptyMakefile(
-        NAME            => 'Padre::Util::Win32',
-        VERSION_FROM    => '../lib/Padre/Util/Win32.pm',
-        ABSTRACT        => 'Padre Win32 API XS Wrapper',
-        AUTHOR          => 'Gabor Szabo', # Same as Padre
-        SKIP            => [ qw( test ) ],
-    );
-    
+    WriteEmptyMakefile(%params);
 }
 
 sub MY::postamble {
