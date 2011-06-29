@@ -94,7 +94,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Updated perlopquick.pod (Perl 5 operator quick reference) to latest
       version (COWENS, AZAWAWI)
     - Fixed wxWidgets 2.8.12 wxAuiNoteBook bug: the window will not carry
-      updates while it is frozen (MDOOTSON, AZAWAWI, ADAMK)
+      updates while it is frozen (MARKD, AZAWAWI, ADAMK)
     - Bumped Wx dependency to 0.9901 to fix the Wx::Button::GetDefaultSize
       build bug (AZAWAWI)
     - Padre can now use Wx::Scintilla if feature_wx_scintilla is enabled.
@@ -380,7 +380,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Update Italian translation (SBLANDIN)
     - Update Dutch and Spanish translation (CLAUDIO)
     - Update Russan translation (Vladimir)
-    - Fix #1064: Build failures on Padre 0.74 Perl 5.8.9 (AZAWAWI, ADAMK, MDOOTSON)
+    - Fix #1064: Build failures on Padre 0.74 Perl 5.8.9 (AZAWAWI, ADAMK, MARKD)
     - Added feature_restart_hung_task_manager configuration setting to enable
       automatic restart of the currently hung task manager. This is enabled by
       default (AZAWAWI)
@@ -1195,7 +1195,7 @@ next production release, and synchronise their release to the Padre schedule.
     - "Last session" now restores the last state even if Padre crashed and not
       the last stated saved by a planned exit (SEWI)
     - Fixed Wx::Perl::ProcessStream installation failure on vista/win7 by
-      upgrading to 0.16 (AZAWAWI, Mark Dootson - mdootson)
+      upgrading to 0.16 (AZAWAWI, Mark Dootson - MARKD)
     - Fixed the error dialog so that it displays the error icon (AZAWAWI)
     - Fixed ticket #292: "Split window" command does not work by removing
       the non-working feature (AZAWAWI)
