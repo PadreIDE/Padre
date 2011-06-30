@@ -44,7 +44,6 @@ sub new {
 
 	# Create the content for the Info page
 	$self->{info} = Padre::Wx::HtmlWindow->new($self);
-	$self->_content_info;
 
 	# Layout for the About dialog
 	$self->{notebook} = Wx::AuiNotebook->new(
