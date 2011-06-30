@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-29 12:10-0700\n"
+"POT-Creation-Date: 2011-06-30 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgid "&Case Sensitive"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:294 lib/Padre/Wx/Browser.pm:109
-#: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/About.pm:85 lib/Padre/Wx/Dialog/DocStats.pm:58
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
@@ -733,7 +733,7 @@ msgstr ""
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:106
+#: lib/Padre/Wx/About.pm:105
 msgid "Blue butterfly on a green leaf"
 msgstr ""
 
@@ -1064,7 +1064,7 @@ msgid ""
 "output window"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:318
+#: lib/Padre/Wx/About.pm:317
 msgid "Config:"
 msgstr ""
 
@@ -1249,7 +1249,7 @@ msgstr ""
 msgid "Create a bookmark in the current file current row"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:102
+#: lib/Padre/Wx/About.pm:101
 msgid "Created by"
 msgstr ""
 
@@ -1435,7 +1435,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:64
+#: lib/Padre/Wx/About.pm:63
 msgid "Development"
 msgstr ""
 
@@ -3362,7 +3362,7 @@ msgstr ""
 msgid "PPI Standard"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/WizardLibrary.pm:29
+#: lib/Padre/Wx/About.pm:58 lib/Padre/Wx/WizardLibrary.pm:29
 #: lib/Padre/Wx/WizardLibrary.pm:37 lib/Padre/Wx/Dialog/Form.pm:98
 #: lib/Padre/Config/Style.pm:46
 msgid "Padre"
@@ -3396,7 +3396,7 @@ msgstr ""
 msgid "Padre Sync"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:105
+#: lib/Padre/Wx/About.pm:104
 msgid ""
 "Padre is free software; you can redistribute it and/or modify it under the "
 "same terms as Perl 5."
@@ -4858,7 +4858,7 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:317
+#: lib/Padre/Wx/About.pm:73 lib/Padre/Wx/About.pm:316
 msgid "System Info"
 msgstr ""
 
@@ -4891,11 +4891,11 @@ msgstr ""
 msgid "Text Files"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:135
+#: lib/Padre/Wx/About.pm:102 lib/Padre/Wx/About.pm:134
 msgid "The Padre Development Team"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:227
+#: lib/Padre/Wx/About.pm:226
 msgid "The Padre Translation Team"
 msgstr ""
 
@@ -4970,7 +4970,7 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:69
+#: lib/Padre/Wx/About.pm:68
 msgid "Translation"
 msgstr ""
 
@@ -5089,7 +5089,7 @@ msgstr ""
 msgid "Uppercase till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:337
+#: lib/Padre/Wx/About.pm:336
 msgid "Uptime"
 msgstr ""
 
@@ -5369,7 +5369,7 @@ msgstr ""
 msgid "restrictive"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:107
+#: lib/Padre/Wx/About.pm:106
 msgid "splash image is based on work by"
 msgstr ""
 
@@ -5381,7 +5381,7 @@ msgstr ""
 msgid "unrestricted"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:342
+#: lib/Padre/Wx/About.pm:341
 msgid "unsupported"
 msgstr ""
 
