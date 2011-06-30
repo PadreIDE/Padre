@@ -137,6 +137,7 @@ requires 'POSIX'                    => 0;
 requires 'PPI'                      => '1.213';
 requires 'PPIx::EditorTools'        => '0.13';
 requires 'PPIx::Regexp'             => '0.011';
+requires 'Probe::Perl'              => '0.01';
 requires 'Storable'                 => '2.15';
 requires 'Template::Tiny'           => '0.11';
 requires 'Term::ReadLine'           => 0;
