@@ -105,7 +105,7 @@
                         <property name="pos"></property>
                         <property name="size">200,200</property>
                         <property name="style">wxLB_DEFAULT</property>
-                        <property name="subclass">Wx::TreeBook; </property>
+                        <property name="subclass">Wx::Treebook; </property>
                         <property name="tooltip"></property>
                         <property name="validator_data_type"></property>
                         <property name="validator_style">wxFILTER_NONE</property>
