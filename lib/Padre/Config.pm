@@ -1268,8 +1268,8 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	help => _T('Enable or disable the newer Wx::Scintilla source code editing component. ') .
-		_T('This requires an installed Wx::Scintilla and a Padre restart'),
+	help    => _T('Enable or disable the newer Wx::Scintilla source code editing component. ')
+		. _T('This requires an installed Wx::Scintilla and a Padre restart'),
 );
 
 # Window menu list shorten common path

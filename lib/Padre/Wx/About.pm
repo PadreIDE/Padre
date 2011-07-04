@@ -351,7 +351,7 @@ sub _content_info {
 	my $alien = Wx::wxVERSION();
 
 	my $wx_scintilla_html = '';
-	if ( Padre::Util::wx_scintilla_ready ) {
+	if (Padre::Util::wx_scintilla_ready) {
 		eval 'use Wx::Scintilla';
 		unless ($@) {
 			$wx_scintilla_html = <<"END_HTML";

@@ -531,6 +531,7 @@ Returns 1 when Wx::Scintilla is ready to be used (i.e. enabled
 and installed) otherwise it is undefined.
 
 =cut
+
 sub wx_scintilla_ready {
 	my $enabled;
 	if ( Padre::Config->read->feature_wx_scintilla ) {
