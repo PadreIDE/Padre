@@ -6795,26 +6795,6 @@ sub encode_dialog {
 }
 
 
-=pod
-
-=head3 C<wx_scintilla_ready>
-
-    my $enabled = $main->wx_scintilla_ready;
-
-Returns 1 when Wx::Scintilla is ready to be used (i.e. enabled
-and installed) otherwise it is undefined.
-
-=cut
-sub wx_scintilla_ready {
-	my $enabled;
-	if ( $_[0]->config->feature_wx_scintilla ) {
-		eval 'use Wx::Scintilla';
-		$enabled = 1 unless $@;
-	}
-	eval 'use Wx::STC' unless $enabled;
-	return $enabled;
-}
-
 1;
 
 =pod

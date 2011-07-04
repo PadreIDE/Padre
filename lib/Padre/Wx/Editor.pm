@@ -84,12 +84,7 @@ sub new {
 	# Figure out what to use as this editor instance super class
 	# Wx::ScintillaTextCtrl which needs to be installed (i.e. cpanm Wx::Scintilla),
 	# or Wx::StyledTextCtrl which comes by default with Wx and is very *old*
-	my $editor_super_class;
-	if ( $main->wx_scintilla_ready ) {
-		$editor_super_class = 'Wx::ScintillaTextCtrl';
-	} else {
-		$editor_super_class = 'Wx::StyledTextCtrl';
-	}
+	my $editor_super_class = Padre::Util::wx_scintilla_ready() ? 'Wx::ScintillaTextCtrl' : 'Wx::StyledTextCtrl';
 
 	# Push the appropriate editor super class to inheritance list :)
 	push @ISA, $editor_super_class;

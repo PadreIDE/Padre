@@ -201,21 +201,8 @@ sub _initialize {
 	# lexer => The Scintilla lexer to be used
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
-	my $perl6_scintilla_lexer;
-	my $config = Padre::Config->read;
-	if ( $config->feature_wx_scintilla ) {
-		eval 'use Wx::Scintilla;';
-		unless ($@) {
-			no warnings;
-			$perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
-		}
-	}
+	my $perl6_scintilla_lexer = Padre::Util::wx_scintilla_ready() ? Wx::Scintilla::wxSCINTILLA_LEX_PERL6() : Wx::wxSTC_LEX_NULL;
 
-	# fall back to default if no STC
-	if ( !$perl6_scintilla_lexer ) {
-		eval "use Wx::STC;";
-		$perl6_scintilla_lexer = Wx::wxSTC_LEX_NULL;
-	}
 	%MIME = (
 		'text/x-abc' => {
 			name  => 'ABC',
