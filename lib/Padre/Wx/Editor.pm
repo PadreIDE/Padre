@@ -85,12 +85,9 @@ sub new {
 	# Wx::ScintillaTextCtrl which needs to be installed (i.e. cpanm Wx::Scintilla),
 	# or Wx::StyledTextCtrl which comes by default with Wx and is very *old*
 	my $editor_super_class;
-	if ( $main->config->feature_wx_scintilla ) {
-		eval 'use Wx::Scintilla';
-		$editor_super_class = 'Wx::ScintillaTextCtrl' unless $@;
-	}
-	if ( !$editor_super_class ) {
-		eval 'use Wx::STC';
+	if ( $main->wx_scintilla_ready ) {
+		$editor_super_class = 'Wx::ScintillaTextCtrl';
+	} else {
 		$editor_super_class = 'Wx::StyledTextCtrl';
 	}
 

@@ -26,6 +26,7 @@ sub new {
 		Wx::wxDefaultPosition,
 		[ 700, 600 ],
 	);
+	$self->{main} = $main;
 
 	# Until we get a real icon use the same one as the others
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -351,7 +352,7 @@ sub _content_info {
 	my $alien = Wx::wxVERSION();
 
 	my $wx_scintilla_html = '';
-	if ( Padre::Wx::Editor->isa('Wx::ScintillaTextCtrl') ) {
+	if ( $self->{main}->wx_scintilla_ready ) {
 		eval 'use Wx::Scintilla';
 		unless ($@) {
 			$wx_scintilla_html = <<"END_HTML";
