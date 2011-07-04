@@ -41,6 +41,7 @@ next production release, and synchronise their release to the Padre schedule.
       status bar (MARKD)
     - Fix #1242: Autoindent broken when using Wx::Scintilla (MARKD)
     - Update dialog information once instead of twice at startup (AZAWAWI)
+    - Fix #1245: Info missing for Wx::Scintilla in Padre System About (AZAWAWI)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
