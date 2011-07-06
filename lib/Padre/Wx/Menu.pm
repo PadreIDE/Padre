@@ -27,11 +27,11 @@ sub refresh {1}
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys
 sub Append {
-	my $self   = shift;
-	my $string = $_[1];
-	my $item   = $self->wx->Append(@_);
-	my ($underlined) = ( $string =~ m/(\&\w)/ );
-	my ($accel)      = ( $string =~ m/(Ctrl-.+|Alt-.+)/ );
+	my $self  = shift;
+	my $item  = $self->wx->Append(@_);
+	my $label = $item->GetLabel;
+	my ($underlined) = ( $label =~ m/(\&\w)/ );
+	my ($accel)      = ( $label =~ m/(Ctrl-.+|Alt-.+)/ );
 	if ( $underlined or $accel ) {
 		$self->{main}->{accel_keys} ||= {};
 		if ($underlined) {
