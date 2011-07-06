@@ -78,10 +78,52 @@ sub _headline {
 sub version {
 	my $self = shift;
 
-	# The first approach is to look for a version declaration in the
-	# headline module for the project.
+	# Look for a version declaration in the headline module for the project.
 	my $file = $self->headline or return undef;
 	Padre::Util::parse_variable( $file, 'VERSION' );
+}
+
+sub module {
+	$_[0]->{module} or
+	$_[0]->{module} = $_[0]->_module;
+}
+
+# Attempts to determine a headline module name for the project
+sub _module {
+	my $self = shift;
+
+	# Look for a package declaration in the headline module for the project
+	my $file = $self->headline or return undef;
+	local $/ = "\n";
+	local $_;
+	open( my $fh, '<', $file ) #-# no critic (RequireBriefOpen)
+		or die "Could not open '$file': $!";
+
+	# Look for a package declaration somewhere in the first 10 lines.
+	# After that, it's probably more likely to be superfluous than real.
+	my $lines  = 0;
+	my $result = undef;
+	while (<$fh>) {
+		if ( m{^ \s* package \s+ (\w[\w\:\']*) }x ) {
+			$result = $1;
+			last;
+		}
+		last if ++$lines > 10;
+	}
+	close $fh;
+
+	return $result;
+}
+
+# Attempts to determine a distribution name (e.g. Foo-Bar) for the project
+sub distribution {
+	my $self = shift;
+	my $name = $self->module;
+	return undef unless defined $name;
+
+	# Transform using the most common pattern
+	$name =~ s/(?:::|')/-/g;
+	return $name;
 }
 
 
