@@ -41,6 +41,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1245: Info missing for Wx::Scintilla in Padre System About (AZAWAWI)
     - Padre::Plugin::menu_plugins can now return a single Wx::MenuItem so that
       plugins are no longer forced to have a submenu (ADAMK)
+    - Padre::Project::Perl can now do basic intuition of the probable distribution
+      name and headline module for a Perl project (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
