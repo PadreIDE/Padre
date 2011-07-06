@@ -11,9 +11,6 @@ notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
 0.88 TBA
-
-
-0.87 Development version, not released
     - Properly enable Perl 6 Wx::Scintilla support (AZAWAWI)
     - Properly handle File/New/Copy of current file when there is no current
       document (AZAWAWI)
@@ -42,6 +39,11 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1242: Autoindent broken when using Wx::Scintilla (MARKD)
     - Update dialog information once instead of twice at startup (AZAWAWI)
     - Fix #1245: Info missing for Wx::Scintilla in Padre System About (AZAWAWI)
+    - Padre::Plugin::menu_plugins can now return a single Wx::MenuItem so that
+      plugins are no longer forced to have a submenu (ADAMK)
+
+0.87 Development version, not released
+    - No incompatible API changes during the 0.88 release cycle
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty

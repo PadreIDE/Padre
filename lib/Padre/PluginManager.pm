@@ -1001,7 +1001,9 @@ sub get_menu {
 	return () unless $plugin and $plugin->{status} eq 'enabled';
 	return () unless $plugin->{object}->can('menu_plugins');
 
-	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
+	my @menu = eval {
+		$plugin->{object}->menu_plugins($main)
+	};
 	if ($@) {
 		$plugin->errstr( Wx::gettext('Error when calling menu for plug-in ') . "'$module': $@" );
 		$plugin->{status} = 'error';
@@ -1010,8 +1012,29 @@ sub get_menu {
 		# crazy anyone trying to write a plug-in
 		return ();
 	}
-	return () unless defined $label and defined $menu;
-	return ( $label, $menu );
+
+	# Plugin provides a single menu item
+	if (
+		@menu == 1 
+		and
+		Params::Util::_INSTANCE($menu[0], 'Wx::MenuItem')
+	) {
+		return @menu;
+	}
+
+	# Plugin provides a full submenu
+	if (
+		@menu == 2
+		and
+		defined Params::Util::_STRING($menu[0])
+		and
+		Params::Util::_INSTANCE($menu[1], 'Wx::Menu')
+	) {
+		return ( -1, @menu );
+	}
+
+	# Unrecognised or unsupported menu type
+	return ();
 }
 
 =pod

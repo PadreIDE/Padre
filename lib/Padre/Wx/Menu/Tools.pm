@@ -170,7 +170,7 @@ sub add {
 			$need = 0;
 		}
 
-		push @$entries, $self->Append( -1, @menu );
+		push @$entries, $self->Append( @menu );
 		if ( $module eq 'Padre::Plugin::My' ) {
 			$need = 1;
 		}
