@@ -37,7 +37,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix #1237: Wx::Scintilla does not always update line/column numbers in the
       status bar (MARKD)
     - Fix #1242: Autoindent broken when using Wx::Scintilla (MARKD)
-    - Update dialog information once instead of twice at startup (AZAWAWI)
+    - Update 'About' dialog information once instead of twice at startup (AZAWAWI)
     - Fix #1245: Info missing for Wx::Scintilla in Padre System About (AZAWAWI)
     - Padre::Plugin::menu_plugins can now return a single Wx::MenuItem so that
       plugins are no longer forced to have a submenu (ADAMK)
