@@ -194,7 +194,7 @@ sub parse_variable {
 		} elsif (m{(?<!\\) ([\$*]) (([\w\:\']*) \b$variable)\b .* =}x) {
 			my $eval = qq{
 				package # Hide from PAUSE
-                                  ExtUtils::MakeMaker::_version;
+					ExtUtils::MakeMaker::_version;
 				no strict;
 				BEGIN { eval {
 					# Ensure any version() routine which might have leaked

@@ -198,6 +198,7 @@ sub from_file {
 					makefile_pl => $makefile_pl,
 				);
 			} else {
+				$DB::single = 1;
 				require Padre::Project::Perl::EUMM;
 				return $self->{$root} = Padre::Project::Perl::EUMM->new(
 					root        => $root,
