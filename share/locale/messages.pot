@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-04 08:10-0700\n"
+"POT-Creation-Date: 2011-07-05 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1219,7 +1219,7 @@ msgstr ""
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1045
+#: lib/Padre/PluginManager.pm:1068
 msgid "Could not locate project directory."
 msgstr ""
 
@@ -1809,7 +1809,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1006
+#: lib/Padre/PluginManager.pm:1008
 msgid "Error when calling menu for plug-in "
 msgstr ""
 
@@ -1986,7 +1986,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1067 lib/Padre/PluginManager.pm:1163
+#: lib/Padre/PluginManager.pm:1090 lib/Padre/PluginManager.pm:1186
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -2993,7 +2993,7 @@ msgstr ""
 msgid "No file is open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1042 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/PluginManager.pm:1065 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
@@ -3197,7 +3197,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1117 lib/Padre/Wx/Main.pm:5714
+#: lib/Padre/PluginManager.pm:1140 lib/Padre/Wx/Main.pm:5714
 msgid "Open file"
 msgstr ""
 
@@ -3532,7 +3532,7 @@ msgstr ""
 msgid "Plug-in Tools"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1137
+#: lib/Padre/PluginManager.pm:1160
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
