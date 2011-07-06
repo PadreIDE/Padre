@@ -23,19 +23,18 @@ moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Constant ();
-use Padre::Logger;
 
 our $VERSION = '0.87';
 
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
 if (Padre::Constant::WIN32) {
-    require Win32;
-        require XSLoader;
-        XSLoader::load('Padre::Util::Win32', $VERSION);
+	require Win32;
+	require XSLoader;
+	XSLoader::load('Padre::Util::Win32', $VERSION);
 } else {
-    TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
+	require Padre::Logger;
+	Padre::Logger::TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
 }
 
 =head2 C<GetLongPathName>
@@ -48,10 +47,9 @@ Returns C<undef> for failure, or the long form of the specified path
 =cut
 
 sub GetLongPathName {
-    # Only for win32
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-    my $path = shift;
-        return Win32::GetLongPathName($path);
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	my $path = shift;
+	return Win32::GetLongPathName($path);
 }
 
 =head2 C<Recycle>
@@ -64,11 +62,9 @@ Returns C<undef> (failed), zero (aborted) or one (success)
 =cut
 
 sub Recycle {
-    # Only for win32
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-
-    my $file_to_recycle = shift;
-        return _recycle_file( $file_to_recycle );
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	my $file_to_recycle = shift;
+	return _recycle_file( $file_to_recycle );
 }
 
 =head2 C<AllowSetForegroundWindow>
@@ -87,22 +83,18 @@ L<http://msdn.microsoft.com/en-us/library/ms633539(VS.85).aspx>
 # via SetForegroundWindow
 #
 sub AllowSetForegroundWindow {
-
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-
-    my $pid = shift;
-        
-        return _allow_set_foreground_window( $pid );
-        
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	my $pid = shift;
+	return _allow_set_foreground_window( $pid );
 }
 
 =head2 C<ExecuteProcessAndWait>
 
   Padre::Util::Win32::ExecuteProcessAndWait(
-    directory  => $directory,
-    file       => $file,
-    parameters => $parameters,
-    show       => $show)
+	directory  => $directory,
+	file       => $file,
+	parameters => $parameters,
+	show       => $show)
 
 Execute a background process named "C<$file> C<$parameters>" with the current
 directory set to C<$directory> and wait for it to end. If you set C<$show> to 0,
@@ -111,13 +103,13 @@ then you have an invisible command line window on win32!
 =cut
 
 sub ExecuteProcessAndWait {
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-    my %params = @_;
-    my $directory = $params{directory} || '.';
-    my $show = ( $params{show} ) ? 1 : 0;
-    my $parameters = $params{parameters} || '';
-    
-    return _execute_process_and_wait ( $params{file}, $parameters, $directory, $show );
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	my %params = @_;
+	my $directory = $params{directory} || '.';
+	my $show = ( $params{show} ) ? 1 : 0;
+	my $parameters = $params{parameters} || '';
+
+	return _execute_process_and_wait ( $params{file}, $parameters, $directory, $show );
 }
 
 =head2 C<GetCurrentProcessMemorySize>
@@ -129,8 +121,8 @@ Returns the current process memory size in bytes
 =cut
 
 sub GetCurrentProcessMemorySize {
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-    return _get_current_process_memory_size();
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	return _get_current_process_memory_size();
 }
 
 =head2 C<GetLastErrorString>
@@ -145,8 +137,8 @@ L<http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx>.
 =cut
 
 sub GetLastError {
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-    return Win32::GetLastError();
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	return Win32::GetLastError();
 }
 
 =head2 C<GetLastErrorString>
@@ -159,8 +151,8 @@ Win32 API call.
 =cut
 
 sub GetLastErrorString {
-    die "Win32 function called!" unless Padre::Constant::WIN32;
-    return Win32::FormatMessage(Win32::GetLastError());
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	return Win32::FormatMessage(Win32::GetLastError());
 }
 
 
