@@ -36,12 +36,6 @@ our $VERSION = '0.87';
 
 my $SPLASH = undef;
 
-use constant AllowSetForeground => <<'END_API';
-BOOL AllowSetForegroundWindow(
-	DWORD dwProcessId
-);
-END_API
-
 
 
 
@@ -86,7 +80,7 @@ sub startup {
 					# Got the single instance PID
 					$pid =~ s/\s+\s//;
 					require Padre::Util::Win32;
-					Padre::Util::Win32::AllowSetForeground($pid);
+					Padre::Util::Win32::AllowSetForegroundWindow($pid);
 				}
 			}
 			foreach my $file (@ARGV) {
