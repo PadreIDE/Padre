@@ -42,6 +42,7 @@ BEGIN {
 
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
+our $DISTRO    = undef;
 
 
 
@@ -71,6 +72,42 @@ our @EXPORT_OK = '_T';
 # The local newline type
 # NOTE: It's now in Padre::Constant, if you miss them, please use it from there
 #use constant NEWLINE => Padre::Constant::WIN32 ? 'WIN' : Padre::Constant::MAC ? 'MAC' : 'UNIX';
+
+# Pulled back from Padre::Constant as it wasn't a constant in the first place
+sub DISTRO {
+	return $DISTRO if defined $DISTRO;
+
+	if ( Padre::Constant::WIN32) {
+
+		# Inherit from the main Windows classification
+		require Win32;
+		$DISTRO = uc Win32::GetOSName();
+
+	} elsif ( Padre::Constant::MAC ) {
+		$DISTRO = 'MAC';
+
+	} else {
+
+		# Try to identify a more specific linux distribution
+		local $@;
+		eval {
+			if ( open my $lsb_file, '<', '/etc/lsb-release' )
+			{
+				while (<$lsb_file>) {
+					next unless /^DISTRIB_ID\=(.+?)[\r\n]/;
+					if ( $1 eq 'Ubuntu' ) {
+						$DISTRO = 'UBUNTU';
+					}
+					last;
+				}
+			}
+		};
+	}
+
+	$DISTRO ||= 'UNKNOWN';
+
+	return $DISTRO;
+}
 
 
 

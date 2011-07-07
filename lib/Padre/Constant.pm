@@ -13,8 +13,6 @@ use File::HomeDir 0.91 ();
 our $VERSION    = '0.87';
 our $COMPATIBLE = '0.57';
 
-our $DISTRO;
-
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
 use constant MAC => !!( $^O eq 'darwin' );
@@ -127,41 +125,6 @@ sub init {
 
 BEGIN {
 	init();
-}
-
-sub DISTRO {
-	return $DISTRO if defined $DISTRO;
-
-	if (WIN32) {
-
-		# Inherit from the main Windows classification
-		require Win32;
-		$DISTRO = uc Win32::GetOSName();
-
-	} elsif (MAC) {
-		$DISTRO = 'MAC';
-
-	} else {
-
-		# Try to identify a more specific linux distribution
-		local $@;
-		eval {
-			if ( open my $lsb_file, '<', '/etc/lsb-release' )
-			{
-				while (<$lsb_file>) {
-					next unless /^DISTRIB_ID\=(.+?)[\r\n]/;
-					if ( $1 eq 'Ubuntu' ) {
-						$DISTRO = 'UBUNTU';
-					}
-					last;
-				}
-			}
-		};
-	}
-
-	$DISTRO ||= 'UNKNOWN';
-
-	return $DISTRO;
 }
 
 
