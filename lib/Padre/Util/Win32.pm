@@ -28,7 +28,7 @@ use Padre::Constant ();
 our $VERSION = '0.87';
 
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
-if (Padre::Constant::WIN32) {
+if ( Padre::Constant::WIN32 ) {
 	require Win32;
 	require XSLoader;
 	XSLoader::load('Padre::Util::Win32', $VERSION);
@@ -46,6 +46,7 @@ Returns C<undef> for failure, or the long form of the specified path
 
 =cut
 
+# Is this still needed?
 sub GetLongPathName {
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 	my $path = shift;

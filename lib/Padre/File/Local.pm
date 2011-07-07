@@ -17,8 +17,8 @@ sub _reformat_filename {
 	if (Padre::Constant::WIN32) {
 
 		# Fixing the case of the filename on Win32.
-		require Padre::Util::Win32;
-		$self->{filename} = Padre::Util::Win32::GetLongPathName( $self->{filename} )
+		require Win32;
+		$self->{filename} = Win32::GetLongPathName( $self->{filename} )
 			|| $self->{filename};
 	}
 
