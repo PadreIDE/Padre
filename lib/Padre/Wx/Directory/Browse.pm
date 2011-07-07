@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use Scalar::Util               ();
 use Padre::Task                ();
+use Padre::Constant            ();
 use Padre::Wx::Directory::Path ();
 use Padre::Logger;
 
@@ -55,13 +56,21 @@ sub new {
 ######################################################################
 # Padre::Task Methods
 
-# If somehow we tried to run with a non-existint root, skip
 sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	return 0 unless defined $self->{root};
 	return 0 unless length $self->{root};
+
+	# You can't opendir a UNC path on Windows,
+	# so any attempt to run this task is pointless.
+	if ( Padre::Constant::WIN32 ) {
+		return 0 if $self->{root} =~ /\\\\/;
+	}
+
+	# Don't run if our root path does not exist any more
 	return 0 unless -d $self->{root};
+
 	return 1;
 }
 
