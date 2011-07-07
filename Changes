@@ -43,6 +43,9 @@ next production release, and synchronise their release to the Padre schedule.
       plugins are no longer forced to have a submenu (ADAMK)
     - Padre::Project::Perl can now do basic intuition of the probable distribution
       name and headline module for a Perl project (ADAMK)
+    - Bump File::HomeDir dependency to 0.98 on Windows to pick up a fix for a bug
+      that caused Padre to hang for several seconds periodically when the user's
+      My Documents directory was on a UNC-addressed network share. UGH! (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
