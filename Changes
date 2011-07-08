@@ -46,6 +46,9 @@ next production release, and synchronise their release to the Padre schedule.
     - Bump File::HomeDir dependency to 0.98 on Windows to pick up a fix for a bug
       that caused Padre to hang for several seconds periodically when the user's
       My Documents directory was on a UNC-addressed network share. UGH! (ADAMK)
+    - Abort directory browse tasks for UNC shares, as opendir() won't work on them
+      anyway so running the task would be pointless. The directory browser still
+      won't work for UNC shares, but at least now it won't work faster (ADAMK)
     - Fixed a global destruction race condition crash in the Win32-only AuiNotebook
       sizing workaround logic (ADAMK)
 
