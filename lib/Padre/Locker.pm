@@ -177,9 +177,11 @@ sub update_decrement {
 		$self->{update_locker} = undef;
 
 		# On Windows, we need to force layouts down to notebooks
-		if ( Wx::wxVERSION() >= 2.008012 and Padre::Constant::WXWIN32 ) {
-			my @notebook = grep { $_->isa('Wx::AuiNotebook') } $self->{owner}->GetChildren;
-			$_->Layout foreach @notebook;
+		if ( Padre::Constant::WXWIN32 ) {
+			if ( Wx::wxVERSION() >= 2.008012 and $self->{owner} ) {
+				my @notebook = grep { $_->isa('Wx::AuiNotebook') } $self->{owner}->GetChildren;
+				$_->Layout foreach @notebook;
+			}
 		}
 	}
 	return;
