@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-05 20:10-0700\n"
+"POT-Creation-Date: 2011-07-09 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "&Enter a position between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:307
+#: lib/Padre/Wx/Menu/File.pm:308
 msgid "&File"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:267
+#: lib/Padre/Wx/Menu/File.pm:268
 msgid "&Recent Files"
 msgstr ""
 
@@ -964,7 +964,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Text.pm:54 lib/Padre/Wx/FBP/Sync.pm:252
-#: lib/Padre/Wx/Menu/File.pm:148 lib/Padre/Wx/Dialog/FilterTool.pm:152
+#: lib/Padre/Wx/Menu/File.pm:149 lib/Padre/Wx/Dialog/FilterTool.pm:152
 #: lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
 msgid "Close"
@@ -2025,7 +2025,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:406
+#: lib/Padre/Wx/Menu/File.pm:407
 #, perl-format
 msgid "File %s not found."
 msgstr ""
@@ -3193,7 +3193,7 @@ msgstr ""
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:407
+#: lib/Padre/Wx/Menu/File.pm:408
 msgid "Open cancelled"
 msgstr ""
 
@@ -3261,7 +3261,7 @@ msgstr ""
 msgid "Open with Default System Editor"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:104
+#: lib/Padre/Wx/Menu/File.pm:105
 msgid "Open..."
 msgstr ""
 
@@ -3810,7 +3810,7 @@ msgstr ""
 msgid "Related editor has been closed"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:192
+#: lib/Padre/Wx/Menu/File.pm:193
 msgid "Reload"
 msgstr ""
 
