@@ -23,7 +23,7 @@ The author was too lazy to write a description.
 
 =cut
 
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 
