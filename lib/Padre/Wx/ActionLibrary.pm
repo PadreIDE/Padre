@@ -1194,7 +1194,12 @@ sub init {
 				$dialog_fif->Destroy;
 				return unless $dialog_fif->{cycle_ctrl_f};
 			} else {
-				$main->findfast->_create_panel;
+				if ( $main->findfast->{panel} ) {
+					$main->findfast->_show_panel;
+				} else {
+					$main->findfast->_create_panel;
+					$main->findfast->_show_panel;
+				}
 			}
 
 			my $current = $main->current;
