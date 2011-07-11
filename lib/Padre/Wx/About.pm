@@ -241,7 +241,7 @@ sub _content_translators {
             Chuanren Wu<br>
             <br>
             <b>$language{'zh-tw'}</b><br>
-            Matthew Lien - 練喆明<br>
+            BlueT - Matthew Lien - 練喆明<br>
             <br>
             <b>$language{'cz'}</b><br>
             Marcela Mašláňová<br>
