@@ -1204,7 +1204,7 @@ sub init {
 			$text = '' if $text =~ /\n/;
 
 			# Clear out and reset the search term box
-			$main->findfast->{entry}->SetValue($text) if length $text;
+			$main->findfast->{entry}->ChangeValue($text) if length $text;
 			$main->findfast->search('next');
 
 			return;
