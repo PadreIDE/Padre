@@ -214,13 +214,13 @@ sub busy_decrement {
 
 sub method_increment {
 	$_[0]->{method_depth}++;
-	$_[0]->{method_pending}->{ $_[1] }++;
+	$_[0]->{method_pending}->{ $_[1] }++ if $_[1];
 	return;
 }
 
 sub method_decrement {
 	my $self = shift;
-	$self->{method_pending}->{ $_[0] }--;
+	$self->{method_pending}->{ $_[0] }-- if $_[0];
 	unless ( --$self->{method_depth} ) {
 
 		# Once we start the shutdown process, don't run anything
