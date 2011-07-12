@@ -120,19 +120,18 @@ sub db_decrement {
 }
 
 sub config_increment {
-	my $self = shift;
-	unless ( $self->{config_depth}++ ) {
-
+	# my $self = shift;
+	# unless ( $self->{config_depth}++ ) {
 		# TO DO: Initiate config locking here
 		# NOTE: Pretty sure we don't need to do anything specific
 		# here for the config file stuff.
-	}
+	# }
 	return;
 }
 
 sub config_decrement {
 	my $self = shift;
-	unless ( $self->{config_depth}-- ) {
+	unless ( --$self->{config_depth} ) {
 
 		# Write the config file here
 		$self->owner->config->write;
@@ -220,7 +219,7 @@ sub method_increment {
 
 sub method_decrement {
 	my $self = shift;
-	$self->{method_pending}->{ $_[0] }-- if $_[0];
+
 	unless ( --$self->{method_depth} ) {
 
 		# Once we start the shutdown process, don't run anything
@@ -240,13 +239,16 @@ sub method_decrement {
 			# to retain the integrity of the locking subsystem
 			# as a whole.
 			local $@;
-			eval { $self->{owner}->$_(); };
+			eval {
+				$self->{owner}->$_();
+			};
 			if ( DEBUG and $@ ) {
 				TRACE("ERROR: '$@'");
 			}
 		}
 		$self->{method_pending} = {};
 	}
+
 	return;
 }
 

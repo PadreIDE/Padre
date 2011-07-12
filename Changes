@@ -45,14 +45,20 @@ next production release, and synchronise their release to the Padre schedule.
       name and headline module for a Perl project (ADAMK)
     - Bump File::HomeDir dependency to 0.98 on Windows to pick up a fix for a bug
       that caused Padre to hang for several seconds periodically when the user's
-      My Documents directory was on a UNC-addressed network share. UGH! (ADAMK)
+      My Documents directory is on a UNC-addressed network share. UGH! (ADAMK)
     - Abort directory browse tasks for UNC shares, as opendir() won't work on them
-      anyway so running the task would be pointless. The directory browser still
+      and thus running the task would be pointless. The directory browser still
       won't work for UNC shares, but at least now it won't work faster (ADAMK)
-    - Fixed a global destruction race condition crash in the Win32-only AuiNotebook
-      sizing workaround logic (ADAMK)
-    - Save the window geometry when maximizing the main window so that we restore
-      to the same geometry across a Padre restart while maximised (ADAMK)
+    - Fixed a race condition crash in the Win32-only AuiNotebook sizing workaround
+      logic during global destruction (ADAMK)
+    - Save the window geometry on Maximize, Iconize or ShowFullScreen so that we
+      retain the same geometry across a Padre restart while in any of the normal
+      non-windowed states (ADAMK)
+    - Adding Padre::Config "locking" to Padre::Locker to enabled automatic
+      write on scope exit in a way that prioritised correctly with the other lock
+      types and shares a single database commit with any database locks (ADAMK)
+    - Tuned the locking implementation to reduce code complexity, reduce
+      lock memory consumption, and make lock releasing slightly faster (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

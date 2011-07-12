@@ -316,26 +316,6 @@ sub Show {
 	return shift->SUPER::Show( $Padre::Test::VERSION ? 0 : @_ );
 }
 
-sub Maximize {
-	my $self   = shift;
-	my $yes    = $_[0] ? 1 : 0;
-	my $lock   = $self->lock('CONFIG');
-	my $config = $self->config;
-
-	if ( $yes ) {
-		# Save the window location as we maximise so we don't
-		# have to do an potentially innacurate save at exit.
-		my ( $main_width, $main_height ) = $self->GetSizeWH;
-		my ( $main_left,  $main_top )    = $self->GetPositionXY;
-		$config->set( main_width  => $main_width );
-		$config->set( main_height => $main_height );
-		$config->set( main_left   => $main_left );
-		$config->set( main_top    => $main_top );
-	}
-
-	$config->set( main_maximized => $yes );
-}
-
 # This is effectively the second half of the constructor, which is delayed
 # until after the window has been shown and the main loop has been started.
 # All loading and initialisation which is expensive or needs a running
@@ -1237,9 +1217,55 @@ sub single_instance_command {
 
 =pod
 
-=head2 Window Methods
+=head2 Window Geometry
 
-Those methods allow to query properties about the main window.
+Those methods allow to query properties about the state and shape of the main window
+
+=cut
+
+# When maximizing the main window, we save the window geometry.
+# If the window is subsequently closed, we retain the last known good
+# geometry for reuse on the next startup.
+sub Maximize {
+	my $self = shift;
+	my $lock = $self->lock('CONFIG');
+
+	# Save the window geometry if needed
+	$self->window_save;
+
+	# Save to configuration so we are sticky across a restart
+	$self->config->set( main_maximized => $_[0] ? 1 : 0 );
+
+	# Pass through to normal behaviour
+	$self->SUPER::Maximize(@_);
+}
+
+# Save the window geometry in a similar manner to Maximize, but because we
+# won't be sticking the iconization state across a restart, we just do a
+# save of the geometry as we Iconize (unless we start Maximized)
+sub Iconize {
+	my $self = shift;
+
+	# Save the window geoemtry if needed
+	$self->window_save;
+
+	# Pass through to normal behaviour
+	$self->SUPER::Iconize(@_);
+}
+
+# Save the window manner in a similar manner to Iconize, but in this case
+# the window might not be shown at all, so do not save in that case.
+sub ShowFullScreen {
+	my $self = shift;
+
+	# Save the window geoemtry if needed
+	$self->window_save;
+
+	# Pass through to normal behaviour
+	$self->SUPER::ShowFullScreen(@_);
+}
+
+=pod
 
 =head3 C<window_width>
 
@@ -1293,6 +1319,47 @@ Return the main window position from the top of the screen.
 
 sub window_top {
 	( $_[0]->GetPositionXY )[1];
+}
+
+=pod
+
+=head2 C<window_save>
+
+    $main->window_save;
+
+Saves the current main window geometry (left, top, width, height).
+
+Called during Maximize, Iconize, ShowFullScreen and Padre shutdown
+so we can restart the next Padre instance at the last good
+non-Maximize/Iconize location.
+
+Saves and returns true if and only the window is currently a regular window.
+
+Skips and returns false if the window is currently hidden, maximized, iconised,
+or full screen.
+
+=cut
+
+sub window_save {
+	my $self   = shift;
+
+	# Handle all the situations we don't want to skip on
+	return 0 unless $self->IsShown;
+	return 0 if     $self->IsMaximized;
+	return 0 if     $self->IsIconized;
+	return 0 if     $self->IsFullScreen;
+
+	# Capture geometry and store in config
+	my $lock   = $self->lock('CONFIG');
+	my $config = $self->config;
+	my ( $width, $height ) = $self->GetSizeWH;
+	my ( $left,  $top    ) = $self->GetPositionXY;
+	$config->set( main_width  => $width  );
+	$config->set( main_height => $height );
+	$config->set( main_left   => $left   );
+	$config->set( main_top    => $top    );
+
+	return 1;
 }
 
 =pod
@@ -3566,15 +3633,7 @@ sub on_close_window {
 	# weak evidence that capturing position while not showing might be
 	# flaky in some situations, and this is pretty cheap so doing it before
 	# rather than after the ->Show(0) shouldn't hurt much.
-	$config->set( main_maximized => $self->IsMaximized );
-	unless ( $self->IsMaximized ) {
-		my ( $main_width, $main_height ) = $self->GetSizeWH;
-		my ( $main_left,  $main_top )    = $self->GetPositionXY;
-		$config->set( main_width  => $main_width );
-		$config->set( main_height => $main_height );
-		$config->set( main_left   => $main_left );
-		$config->set( main_top    => $main_top );
-	}
+	$self->window_save;
 
 	# Hide the window before any of the following slow/intensive stuff so
 	# that the user perceives the application as closing faster. This knocks
