@@ -51,6 +51,8 @@ next production release, and synchronise their release to the Padre schedule.
       won't work for UNC shares, but at least now it won't work faster (ADAMK)
     - Fixed a global destruction race condition crash in the Win32-only AuiNotebook
       sizing workaround logic (ADAMK)
+    - Save the window geometry when maximizing the main window so that we restore
+      to the same geometry across a Padre restart while maximised (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

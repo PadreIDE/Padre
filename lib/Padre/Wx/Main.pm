@@ -149,7 +149,7 @@ sub new {
 	# buggy layout we will unmaximize and remaximize it again later
 	# just before we ->Show the window.
 	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
-		$self->Maximize(1);
+		$self->SUPER::Maximize(1);
 	}
 
 	# Start with a simple placeholder title
@@ -316,6 +316,26 @@ sub Show {
 	return shift->SUPER::Show( $Padre::Test::VERSION ? 0 : @_ );
 }
 
+sub Maximize {
+	my $self   = shift;
+	my $yes    = $_[0] ? 1 : 0;
+	my $lock   = $self->lock('CONFIG');
+	my $config = $self->config;
+
+	if ( $yes ) {
+		# Save the window location as we maximise so we don't
+		# have to do an potentially innacurate save at exit.
+		my ( $main_width, $main_height ) = $self->GetSizeWH;
+		my ( $main_left,  $main_top )    = $self->GetPositionXY;
+		$config->set( main_width  => $main_width );
+		$config->set( main_height => $main_height );
+		$config->set( main_left   => $main_left );
+		$config->set( main_top    => $main_top );
+	}
+
+	$config->set( main_maximized => $yes );
+}
+
 # This is effectively the second half of the constructor, which is delayed
 # until after the window has been shown and the main loop has been started.
 # All loading and initialisation which is expensive or needs a running
@@ -336,9 +356,9 @@ sub timer_start {
 		# This is a hacky workaround for buggy maximise-at-startup
 		# layout generation on windows.
 		my $lock = $self->lock('UPDATE');
-		$self->Maximize(0);
+		$self->SUPER::Maximize(0);
 		$self->Show(1);
-		$self->Maximize(1);
+		$self->SUPER::Maximize(1);
 	} else {
 		$self->Show(1);
 	}
@@ -3546,7 +3566,7 @@ sub on_close_window {
 	# weak evidence that capturing position while not showing might be
 	# flaky in some situations, and this is pretty cheap so doing it before
 	# rather than after the ->Show(0) shouldn't hurt much.
-	$config->set( main_maximized => $self->IsMaximized ? 1 : 0 );
+	$config->set( main_maximized => $self->IsMaximized );
 	unless ( $self->IsMaximized ) {
 		my ( $main_width, $main_height ) = $self->GetSizeWH;
 		my ( $main_left,  $main_top )    = $self->GetPositionXY;
