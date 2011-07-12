@@ -229,6 +229,41 @@ sub new {
 	# serve as the main AUI manager GUI elements.
 	$self->{notebook} = Padre::Wx::Notebook->new($self);
 
+	# Use Padre's icon
+	if (Padre::Constant::WIN32) {
+		# Windows needs its ICO'n file for Padre to look cooler in
+		# the task bar, task switch bar and task manager
+		$self->SetIcons(Padre::Wx::Icon::PADRE_ICON_FILE);
+	} else {
+		$self->SetIcon(Padre::Wx::Icon::PADRE);
+	}
+
+	# Deal with someone closing the window
+	Wx::Event::EVT_CLOSE(
+		$self,
+		sub {
+			shift->on_close_window(@_);
+		},
+	);
+
+	# Save maximize state after it changes
+	Wx::Event::EVT_MAXIMIZE(
+		$self,
+		sub {
+			shift->window_save;
+			shift->Skip(1);
+		},
+	);
+
+	# Save window position whenever the window is moved
+	Wx::Event::EVT_MOVE(
+		$self,
+		sub {
+			shift->window_save;
+			shift->Skip(1);
+		},
+	);
+
 	# Set up the pane close event
 	Wx::Event::EVT_AUI_PANE_CLOSE(
 		$self,
@@ -245,30 +280,12 @@ sub new {
 		},
 	);
 
-	# Deal with someone closing the window
-	Wx::Event::EVT_CLOSE(
-		$self,
-		sub {
-			shift->on_close_window(@_);
-		},
-	);
-
 	# Scintilla Event Hooks
 	Wx::Event::EVT_STC_UPDATEUI( $self, -1, \&on_stc_update_ui );
 	Wx::Event::EVT_STC_CHANGE( $self, -1, \&on_stc_change );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
 	Wx::Event::EVT_STC_CHARADDED( $self, -1, \&on_stc_char_added );
 	Wx::Event::EVT_STC_DWELLSTART( $self, -1, \&on_stc_dwell_start );
-
-	# Use Padre's icon
-	if (Padre::Constant::WIN32) {
-
-		# Windows needs its ICO'n file for Padre to look cooler in
-		# the task bar, task switch bar and task manager
-		$self->SetIcons(Padre::Wx::Icon::PADRE_ICON_FILE);
-	} else {
-		$self->SetIcon(Padre::Wx::Icon::PADRE);
-	}
 
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
@@ -1219,53 +1236,7 @@ sub single_instance_command {
 
 =head2 Window Geometry
 
-Those methods allow to query properties about the state and shape of the main window
-
-=cut
-
-# When maximizing the main window, we save the window geometry.
-# If the window is subsequently closed, we retain the last known good
-# geometry for reuse on the next startup.
-sub Maximize {
-	my $self = shift;
-	my $lock = $self->lock('CONFIG');
-
-	# Save the window geometry if needed
-	$self->window_save;
-
-	# Save to configuration so we are sticky across a restart
-	$self->config->set( main_maximized => $_[0] ? 1 : 0 );
-
-	# Pass through to normal behaviour
-	$self->SUPER::Maximize(@_);
-}
-
-# Save the window geometry in a similar manner to Maximize, but because we
-# won't be sticking the iconization state across a restart, we just do a
-# save of the geometry as we Iconize (unless we start Maximized)
-sub Iconize {
-	my $self = shift;
-
-	# Save the window geoemtry if needed
-	$self->window_save;
-
-	# Pass through to normal behaviour
-	$self->SUPER::Iconize(@_);
-}
-
-# Save the window manner in a similar manner to Iconize, but in this case
-# the window might not be shown at all, so do not save in that case.
-sub ShowFullScreen {
-	my $self = shift;
-
-	# Save the window geoemtry if needed
-	$self->window_save;
-
-	# Pass through to normal behaviour
-	$self->SUPER::ShowFullScreen(@_);
-}
-
-=pod
+Query properties about the state and shape of the main window
 
 =head3 C<window_width>
 
@@ -1327,37 +1298,44 @@ sub window_top {
 
     $main->window_save;
 
-Saves the current main window geometry (left, top, width, height).
+Saves the current main window geometry (left, top, width, height, maximized).
 
 Called during Maximize, Iconize, ShowFullScreen and Padre shutdown
 so we can restart the next Padre instance at the last good
 non-Maximize/Iconize location.
 
-Saves and returns true if and only the window is currently a regular window.
+Saves and returns true if and only the window is regular or maximized.
 
-Skips and returns false if the window is currently hidden, maximized, iconised,
+Skips and returns false if the window is currently hidden, iconised,
 or full screen.
 
 =cut
 
 sub window_save {
-	my $self   = shift;
+	my $self = shift;
 
-	# Handle all the situations we don't want to skip on
+	# Skip situations we can't record anything
 	return 0 unless $self->IsShown;
-	return 0 if     $self->IsMaximized;
 	return 0 if     $self->IsIconized;
 	return 0 if     $self->IsFullScreen;
 
-	# Capture geometry and store in config
+	# Prepare the config "transaction"
 	my $lock   = $self->lock('CONFIG');
 	my $config = $self->config;
-	my ( $width, $height ) = $self->GetSizeWH;
-	my ( $left,  $top    ) = $self->GetPositionXY;
-	$config->set( main_width  => $width  );
-	$config->set( main_height => $height );
-	$config->set( main_left   => $left   );
-	$config->set( main_top    => $top    );
+	if ( $self->IsMaximized ) {
+		# We are maximized, just save that fact
+		$config->set( main_maximized => 1 );
+
+	} else {
+		# We are a regular window, save everything
+		my ( $width, $height ) = $self->GetSizeWH;
+		my ( $left,  $top    ) = $self->GetPositionXY;
+		$config->set( main_width     => $width  );
+		$config->set( main_height    => $height );
+		$config->set( main_left      => $left   );
+		$config->set( main_top       => $top    );
+		$config->set( main_maximized => 0       );
+	}
 
 	return 1;
 }
@@ -3632,7 +3610,7 @@ sub on_close_window {
 	# Save the window geometry before we hide the window. There's some
 	# weak evidence that capturing position while not showing might be
 	# flaky in some situations, and this is pretty cheap so doing it before
-	# rather than after the ->Show(0) shouldn't hurt much.
+	# (rather than after) the ->Show(0) shouldn't hurt much.
 	$self->window_save;
 
 	# Hide the window before any of the following slow/intensive stuff so
@@ -3662,7 +3640,7 @@ sub on_close_window {
 
 	# Write the configuration to disk
 	$ide->save_config;
-	$event->Skip;
+	$event->Skip(1);
 
 	# Stop the task manager.
 	TRACE("Shutting down Task Manager") if DEBUG;
@@ -6632,7 +6610,7 @@ sub key_up {
 		$self->on_autocompletion($event);
 	}
 
-	$event->Skip;
+	$event->Skip(1);
 	return;
 }
 
