@@ -383,6 +383,29 @@ sub get_command {
 	return join ' ', @commands;
 }
 
+=head get_inc
+
+Returns the @INC of the designated perl interpreter - not necessarily our own
+
+=cut
+
+my %inc;
+
+sub get_inc {
+	my $self = shift;
+
+	my $perl = $self->get_interpreter;
+	return if not $perl;
+
+	if ( not $inc{$perl} ) {
+		my $incs = qx{$perl -e "print join ';', \@INC"};
+		chomp $incs;
+		$inc{$perl} = [ split /;/, $incs ];
+	}
+
+	return @{ $inc{$perl} };
+}
+
 =head2 get_interpreter
 
 Returns the Perl interpreter for running the current document.
@@ -1844,11 +1867,9 @@ sub guess_filename_to_open {
 	}
 
 	# Search for a list of possible module locations in the @INC path
-	# TO DO: It should not be our @INC but the @INC of the perl used
-	# for script execution
 	my @files = grep { -e $_ } map { File::Spec->catfile( $_, $module ) } (
 		File::Spec->catdir( $self->project_dir, 'inc' ),
-		@INC,
+		$self->get_inc,
 	);
 	return @files if @files;
 
