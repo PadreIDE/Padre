@@ -149,7 +149,7 @@ sub new {
 	# buggy layout we will unmaximize and remaximize it again later
 	# just before we ->Show the window.
 	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
-		$self->SUPER::Maximize(1);
+		$self->Maximize(1);
 	}
 
 	# Start with a simple placeholder title
@@ -353,9 +353,9 @@ sub timer_start {
 		# This is a hacky workaround for buggy maximise-at-startup
 		# layout generation on windows.
 		my $lock = $self->lock('UPDATE');
-		$self->SUPER::Maximize(0);
+		$self->Maximize(0);
 		$self->Show(1);
-		$self->SUPER::Maximize(1);
+		$self->Maximize(1);
 	} else {
 		$self->Show(1);
 	}
