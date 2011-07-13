@@ -17,14 +17,13 @@ sub new {
 	my $config = 0;
 	my $busy   = 0;
 	my $update = 0;
-	my $method = 0;
 	foreach ( @_ ) {
 		if ( $_ ne uc $_ ) {
 			$locker->method_increment($_);
-			push @$self, $_;
+			push @$self, 'method_decrement';
 
 		} elsif ( $_ eq 'BUSY' ) {
-			$locker->busy_increment;
+			$locker->busy_increment unless $busy;
 			$busy = 1;
 
 		} elsif ( $_ eq 'CONFIG' ) {
@@ -32,21 +31,21 @@ sub new {
 			# that any writes for DB locks opened while the CONFIG
 			# lock is open are aggregated into a single commit with
 			# DB writes from a config unlock.
-			$locker->config_increment;
-			$locker->db_increment;
+			$locker->config_increment unless $config;
+			$locker->db_increment     unless $db;
 			$config = 1;
 			$db     = 1;
 
 		} elsif ( $_ eq 'DB' ) {
-			$locker->db_increment;
+			$locker->db_increment unless $db;
 			$db = 1;
 
 		} elsif ( $_ eq 'REFRESH' ) {
 			$locker->method_increment;
-			$method = 1;
+			push @$self, 'method_decrement';
 
 		} elsif ( $_ eq 'UPDATE' ) {
-			$locker->update_increment;
+			$locker->update_increment unless $update;
 			$update = 1;
 
 		} else {
@@ -66,11 +65,10 @@ sub new {
 	#
 	# Because configuration involves a database write, we always do it
 	# before we release the database lock.
-	push @$self, 'method_decrement' if $method;
 	push @$self, 'busy_decrement'   if $busy;
 	push @$self, 'update_decrement' if $update;
-	push @$self, 'config_decrement' if $config;
 	push @$self, 'db_decrement'     if $db;
+	push @$self, 'config_decrement' if $config;
 
 	return $self;
 }
