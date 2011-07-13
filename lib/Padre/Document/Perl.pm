@@ -396,8 +396,7 @@ sub get_interpreter {
 	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
 	my $trace = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
 
-	my $current = Padre::Current->new( document => $self );
-	my $config = $current->config;
+	my $config = Padre::Current->config;
 
 	# The configuration value is cheaper to get compared to cperl(),
 	# try it first.
