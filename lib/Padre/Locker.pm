@@ -106,7 +106,7 @@ sub db_increment {
 		# database write operations faster, at the risk of config.db
 		# corruption if (and only if) there is a power outage,
 		# operating system crash, or catastrophic hardware failure.
-		Padre::DB->pragma( 'synchronous' => 0 );
+		Padre::DB->pragma( synchronous => 0 );
 	}
 	return;
 }
