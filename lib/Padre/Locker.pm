@@ -222,7 +222,7 @@ sub method_decrement {
 
 	unless ( --$self->{method_depth} ) {
 
-		# Once we start the shutdown process, don't run anything
+		# Once we start the shutdown process, don't refresh anything
 		return if $self->{shutdown};
 
 		# Optimise the refresh methods
