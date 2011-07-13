@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-12 00:10-0700\n"
+"POT-Creation-Date: 2011-07-13 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -531,7 +531,7 @@ msgstr ""
 msgid "All Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:515
+#: lib/Padre/Document/Perl.pm:537
 msgid "All braces appear to be matched"
 msgstr ""
 
@@ -850,7 +850,7 @@ msgid ""
 "files on MS Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1573
+#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1595
 msgid "Change variable style"
 msgstr ""
 
@@ -902,12 +902,12 @@ msgstr ""
 msgid "Characters (including whitespace)"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:516
+#: lib/Padre/Document/Perl.pm:538
 msgid "Check Complete"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:586 lib/Padre/Document/Perl.pm:640
-#: lib/Padre/Document/Perl.pm:675
+#: lib/Padre/Document/Perl.pm:608 lib/Padre/Document/Perl.pm:662
+#: lib/Padre/Document/Perl.pm:697
 msgid "Check cancelled"
 msgstr ""
 
@@ -1279,7 +1279,7 @@ msgstr ""
 msgid "Cu&t"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:674
+#: lib/Padre/Document/Perl.pm:696
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
@@ -1292,16 +1292,16 @@ msgstr ""
 msgid "Current Document"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:639
+#: lib/Padre/Document/Perl.pm:661
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:585 lib/Padre/Document/Perl.pm:619
+#: lib/Padre/Document/Perl.pm:607 lib/Padre/Document/Perl.pm:641
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:863 lib/Padre/Document/Perl.pm:913
-#: lib/Padre/Document/Perl.pm:951
+#: lib/Padre/Document/Perl.pm:885 lib/Padre/Document/Perl.pm:935
+#: lib/Padre/Document/Perl.pm:973
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
@@ -1852,7 +1852,7 @@ msgstr ""
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:474
+#: lib/Padre/Document/Perl.pm:496
 msgid "Error: "
 msgstr ""
 
@@ -2205,7 +2205,7 @@ msgstr ""
 msgid "Find:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1000
+#: lib/Padre/Document/Perl.pm:1022
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
@@ -2915,7 +2915,7 @@ msgstr ""
 msgid "New Module"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:873
+#: lib/Padre/Document/Perl.pm:895
 msgid "New name"
 msgstr ""
 
@@ -2959,11 +2959,11 @@ msgstr ""
 msgid "No Perl 5 file is open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:621
+#: lib/Padre/Document/Perl.pm:643
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:953
+#: lib/Padre/Document/Perl.pm:975
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
@@ -2972,7 +2972,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:476
+#: lib/Padre/Document/Perl.pm:498
 msgid "No errors found."
 msgstr ""
 
@@ -3898,7 +3898,7 @@ msgstr ""
 msgid "Rename Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:864 lib/Padre/Document/Perl.pm:874
+#: lib/Padre/Document/Perl.pm:886 lib/Padre/Document/Perl.pm:896
 msgid "Rename variable"
 msgstr ""
 
@@ -3918,7 +3918,7 @@ msgstr ""
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:959 lib/Padre/Document/Perl.pm:1008
+#: lib/Padre/Document/Perl.pm:981 lib/Padre/Document/Perl.pm:1030
 msgid "Replace Operation Canceled"
 msgstr ""
 
@@ -4159,7 +4159,7 @@ msgstr ""
 msgid "Search &Term:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:627
+#: lib/Padre/Document/Perl.pm:649
 msgid "Search Canceled"
 msgstr ""
 
@@ -4315,7 +4315,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1002
+#: lib/Padre/Document/Perl.pm:1024
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
@@ -5032,8 +5032,8 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:623
-#: lib/Padre/Document/Perl.pm:955 lib/Padre/Document/Perl.pm:1004
+#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:645
+#: lib/Padre/Document/Perl.pm:977 lib/Padre/Document/Perl.pm:1026
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr ""
@@ -5157,7 +5157,7 @@ msgstr ""
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:914
+#: lib/Padre/Document/Perl.pm:936
 msgid "Variable case change"
 msgstr ""
 
