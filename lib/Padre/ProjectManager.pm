@@ -33,7 +33,7 @@ sub project {
 	my $root = shift;
 
 	# Is this root an existing project?
-	if ( $self->{$root} ) {
+	if ( defined $self->{$root} ) {
 		return $self->{$root};
 	}
 
@@ -198,7 +198,6 @@ sub from_file {
 					makefile_pl => $makefile_pl,
 				);
 			} else {
-				$DB::single = 1;
 				require Padre::Project::Perl::EUMM;
 				return $self->{$root} = Padre::Project::Perl::EUMM->new(
 					root        => $root,

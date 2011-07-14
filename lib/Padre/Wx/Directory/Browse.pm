@@ -77,10 +77,11 @@ sub prepare {
 sub run {
 	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
-	my $self  = shift;
-	my $root  = $self->{root};
-	my $list  = $self->{list};
-	my @queue = @$list;
+	my $self   = shift;
+	my $handle = $self->handle;
+	my $root   = $self->{root};
+	my $list   = $self->{list};
+	my @queue  = @$list;
 
 	# Prepare the skip rules
 	my $rule = Module::Manifest->new;
@@ -117,7 +118,6 @@ sub run {
 			next if $file =~ /^\.+\z/;
 
 			# Traverse symlinks
-			my $skip = 0;
 			my $fullname = File::Spec->catdir( $dir, $file );
 			while (1) {
 				my $target;
@@ -134,7 +134,6 @@ sub run {
 					? $target
 					: File::Spec->canonpath( File::Spec->catdir( $dir, $target ) );
 			}
-			next if $skip;
 
 			# File doesn't exist, either a directory error, symlink to nowhere or something unexpected.
 			# Don't worry, just skip, because we can't show it in the dir browser anyway
@@ -189,8 +188,9 @@ sub run {
 
 		# Step 3 - Send the completed directory back to the parent process
 		#          Don't send a response if the directory is empty.
-		if (@objects) {
-			$self->handle->message( OWNER => $request, map { $_->[0] } @objects );
+		#          Also skip if we are running in the parent and have no handle.
+		if ( $handle and @objects ) {
+			$handle->message( OWNER => $request, map { $_->[0] } @objects );
 		}
 	}
 

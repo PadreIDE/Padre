@@ -157,17 +157,15 @@ sub task_request {
 	my $self    = shift;
 	my $current = $self->current;
 	my $project = $current->project;
-	if ($project) {
-		return $self->SUPER::task_request(
-			@_,
-			project => $project,
-		);
-	} else {
-		return $self->SUPER::task_request(
-			@_,
-			root => $current->config->main_directory_root,
+	unless ( defined $project ) {
+		$project = $current->ide->project_manager->project(
+			$current->config->main_directory_root
 		);
 	}
+	return $self->SUPER::task_request(
+		@_,
+		project => $project,
+	);
 }
 
 
@@ -422,7 +420,7 @@ sub refresh {
 
 		# Do we have an (out of date) cached state we can use?
 		# If so, display it immediately and update it later on.
-		if ($project) {
+		if ( defined $project) {
 			require Padre::Cache;
 			my $stash = Padre::Cache->stash(
 				__PACKAGE__ => $project,

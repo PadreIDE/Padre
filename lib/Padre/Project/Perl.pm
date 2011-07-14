@@ -144,7 +144,7 @@ sub ignore_rule {
 		return 0 if $_->{name} =~ /^(?:blib|_build|inc|Makefile|pm_to_blib)\z/;
 
 		# It is fairly common to get bogged down in NYTProf output
-		return 0 if $_->{name} =~ /^nytprof(?:\.out)\z/;
+		return 0 if $_->{name} =~ /^nytprof(?:\.out)?\z/;
 
 		# Everything left, so we show it
 		return 1;
@@ -159,7 +159,7 @@ sub ignore_skip {
 	push @$rule, '(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z';
 
 	# Ignore the enormous NYTProf output
-	push @$rule, '(?:^|\\/)nytprof(?:\.out)\z';
+	push @$rule, '(?:^|\\/)nytprof(?:\.out)?\z';
 
 	return $rule;
 }
