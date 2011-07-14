@@ -18,7 +18,7 @@ our $COMPATIBLE = '0.81';
 
 # NOTE: Wx::ScintillaTextCtrl (Wx::Scintilla) or Wx::StyledTextCtrl (Wx::STC) is added later
 # before object construction
-our @ISA = qw {	Padre::Wx::Role::Main };
+our @ISA = qw { Padre::Wx::Role::Main };
 
 # Convenience colour constants
 use constant {
@@ -36,7 +36,7 @@ use constant {
 #
 # Please note that WIN32 is the API. DO NOT change it to that :)
 #
-my %WXEOL;
+my %WXEOL = ();
 
 # mapping for mime-type to the style name in the share/styles/default.yml file
 # TODO this should be defined in MimeTypes.pm
@@ -1605,7 +1605,8 @@ sub configure_editor {
 	my $self     = shift;
 	my $document = shift or return;
 
-	$self->SetEOLMode( $WXEOL{ $document->newline_type } );
+	my $eol = $WXEOL{ $document->newline_type };
+	$self->SetEOLMode($eol) if defined $eol;
 
 	if ( defined $document->{original_content} ) {
 		$self->SetText( $document->{original_content} );
