@@ -369,13 +369,21 @@ sub refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $current = Padre::Current::_CURRENT(@_);
+	my $manager = $current->ide->project_manager;
 
 	# NOTE: Without a file open, Padre does not consider itself to
 	# have a "current project". We should probably try to find a way
 	# to correct this in future.
+	# NOTE: There's a semi-working hacky fix just for the directory
+	# browser here now, but really it needs to be integrated more deeply.
 	my $config  = $current->config;
 	my $project = $current->project;
 	my $root    = $project ? $project->root : $config->main_directory_root;
+	if ( $root and not $project ) {
+		if ( $manager->project_exists($root) ) {
+			$project = $manager->project($root);
+		}
+	}
 	my @options = (
 		order => $config->main_directory_order,
 	);
