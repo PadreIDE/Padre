@@ -65,6 +65,8 @@ next production release, and synchronise their release to the Padre schedule.
     - When reverting to the default project, the directory browse now uses
       a null project rather than just a plain root path so that the default
       platform-specific ignore/skip rules are used the expected way (ADAMK)
+    - Perl projects now correctly ignore nytprof directories, not just
+      nytprof.out files (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
