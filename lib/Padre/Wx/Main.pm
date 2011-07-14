@@ -231,6 +231,7 @@ sub new {
 
 	# Use Padre's icon
 	if (Padre::Constant::WIN32) {
+
 		# Windows needs its ICO'n file for Padre to look cooler in
 		# the task bar, task switch bar and task manager
 		$self->SetIcons(Padre::Wx::Icon::PADRE_ICON_FILE);
@@ -1316,25 +1317,27 @@ sub window_save {
 
 	# Skip situations we can't record anything
 	return 0 unless $self->IsShown;
-	return 0 if     $self->IsIconized;
-	return 0 if     $self->IsFullScreen;
+	return 0 if $self->IsIconized;
+	return 0 if $self->IsFullScreen;
 
 	# Prepare the config "transaction"
 	my $lock   = $self->lock('CONFIG');
 	my $config = $self->config;
 	if ( $self->IsMaximized ) {
+
 		# We are maximized, just save that fact
 		$config->set( main_maximized => 1 );
 
 	} else {
+
 		# We are a regular window, save everything
 		my ( $width, $height ) = $self->GetSizeWH;
-		my ( $left,  $top    ) = $self->GetPositionXY;
-		$config->set( main_width     => $width  );
+		my ( $left,  $top )    = $self->GetPositionXY;
+		$config->set( main_width     => $width );
 		$config->set( main_height    => $height );
-		$config->set( main_left      => $left   );
-		$config->set( main_top       => $top    );
-		$config->set( main_maximized => 0       );
+		$config->set( main_left      => $left );
+		$config->set( main_top       => $top );
+		$config->set( main_maximized => 0 );
 	}
 
 	return 1;

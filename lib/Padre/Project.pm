@@ -24,7 +24,7 @@ sub new {
 
 	# Flag to indicate this root is specifically provided by a user
 	# and is not intuited.
-	$self->{explicit} = !! $self->{explicit};
+	$self->{explicit} = !!$self->{explicit};
 
 	# Check the root directory
 	unless ( defined $self->root ) {

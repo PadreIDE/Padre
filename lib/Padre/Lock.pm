@@ -10,14 +10,14 @@ our $VERSION = '0.87';
 sub new {
 	my $class  = shift;
 	my $locker = shift;
-	my $self   = bless [ $locker ], $class;
+	my $self   = bless [$locker], $class;
 
 	# Enable the locks
 	my $db     = 0;
 	my $config = 0;
 	my $busy   = 0;
 	my $update = 0;
-	foreach ( @_ ) {
+	foreach (@_) {
 		if ( $_ ne uc $_ ) {
 			$locker->method_increment($_);
 			push @$self, 'method_decrement';
@@ -27,6 +27,7 @@ sub new {
 			$busy = 1;
 
 		} elsif ( $_ eq 'CONFIG' ) {
+
 			# Have CONFIG take an implicit DB lock as well so
 			# that any writes for DB locks opened while the CONFIG
 			# lock is open are aggregated into a single commit with
@@ -77,6 +78,7 @@ sub new {
 sub DESTROY {
 	my $locker = shift @{ $_[0] } or return;
 	foreach ( @{ $_[0] } ) {
+
 		# NOTE: DO NOT CONVERT TO A GREP.
 		#       Depending on what happens in the method call, this
 		#       destroy handler may need to behave reentrantly.

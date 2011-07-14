@@ -64,7 +64,7 @@ sub prepare {
 
 	# You can't opendir a UNC path on Windows,
 	# so any attempt to run this task is pointless.
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 		return 0 if $self->{root} =~ /\\\\/;
 	}
 

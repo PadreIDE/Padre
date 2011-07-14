@@ -743,7 +743,7 @@ sub _update_list {
 		# An empty pattern would use the last successful
 		# regex which means arbitrary filter matching (MARKD)
 		# next if $name !~ /$filter/i
-		next if (length($filter) && $name !~ /$filter/i);
+		next if ( length($filter) && $name !~ /$filter/i );
 
 		# Add the setting to the list control
 		my $pref       = $preferences->{$name};

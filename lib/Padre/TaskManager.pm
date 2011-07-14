@@ -607,8 +607,8 @@ sub run {
 
 		# Find the next/best worker for the task
 		my $worker = $self->best_worker($handle);
-		if ( $worker ) {
-			TRACE("Handle $hid allocated worker " . $worker->wid) if DEBUG;
+		if ($worker) {
+			TRACE( "Handle $hid allocated worker " . $worker->wid ) if DEBUG;
 		} else {
 			TRACE("Handle $hid has no worker") if DEBUG;
 			return;
@@ -659,8 +659,8 @@ sub on_signal {
 	# Find the task handle for the task
 	my $hid    = shift @$message;
 	my $handle = $self->{handles}->{$hid};
-	unless ( $handle ) {
-		TRACE( "Handle $hid does not exist..." ) if DEBUG;
+	unless ($handle) {
+		TRACE("Handle $hid does not exist...") if DEBUG;
 		return;
 	}
 
@@ -672,14 +672,14 @@ sub on_signal {
 	if ( $method eq 'STARTED' ) {
 
 		# Register the task as running
-		TRACE( "Handle $hid added to 'running'..." ) if DEBUG;
+		TRACE("Handle $hid added to 'running'...") if DEBUG;
 		$self->{running}->{$hid} = $handle;
 		return;
 	}
 
 	# Any remaining task should be running
 	unless ( $self->{running}->{$hid} ) {
-		TRACE( "Handle $hid is not running to receive '$method'" ) if DEBUG;
+		TRACE("Handle $hid is not running to receive '$method'") if DEBUG;
 		return;
 	}
 
@@ -688,7 +688,7 @@ sub on_signal {
 
 		# Remove from the running list to guarantee no more events
 		# will be sent to the handle (and thus to the task)
-		TRACE( "Handle $hid removed from 'running'..." ) if DEBUG;
+		TRACE("Handle $hid removed from 'running'...") if DEBUG;
 		delete $self->{running}->{$hid};
 
 		# Free up the worker for other tasks

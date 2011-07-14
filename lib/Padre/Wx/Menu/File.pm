@@ -78,8 +78,8 @@ sub new {
 
 	# Not yet finished
 	# $self->add_menu_action(
-		# $file_new,
-		# 'file.new_p5_modulestarter',
+	# $file_new,
+	# 'file.new_p5_modulestarter',
 	# );
 
 	if ( $main->config->feature_wizard_selector ) {

@@ -120,11 +120,12 @@ sub db_decrement {
 }
 
 sub config_increment {
+
 	# my $self = shift;
 	# unless ( $self->{config_depth}++ ) {
-		# TO DO: Initiate config locking here
-		# NOTE: Pretty sure we don't need to do anything specific
-		# here for the config file stuff.
+	# TO DO: Initiate config locking here
+	# NOTE: Pretty sure we don't need to do anything specific
+	# here for the config file stuff.
 	# }
 	return;
 }
@@ -176,7 +177,7 @@ sub update_decrement {
 		$self->{update_locker} = undef;
 
 		# On Windows, we need to force layouts down to notebooks
-		if ( Padre::Constant::WXWIN32 ) {
+		if (Padre::Constant::WXWIN32) {
 			if ( Wx::wxVERSION() >= 2.008012 and $self->{owner} ) {
 				my @notebook = grep { $_->isa('Wx::AuiNotebook') } $self->{owner}->GetChildren;
 				$_->Layout foreach @notebook;
@@ -239,9 +240,7 @@ sub method_decrement {
 			# to retain the integrity of the locking subsystem
 			# as a whole.
 			local $@;
-			eval {
-				$self->{owner}->$_();
-			};
+			eval { $self->{owner}->$_(); };
 			if ( DEBUG and $@ ) {
 				TRACE("ERROR: '$@'");
 			}

@@ -84,8 +84,8 @@ sub version {
 }
 
 sub module {
-	$_[0]->{module} or
-	$_[0]->{module} = $_[0]->_module;
+	$_[0]->{module}
+		or $_[0]->{module} = $_[0]->_module;
 }
 
 # Attempts to determine a headline module name for the project
@@ -104,7 +104,7 @@ sub _module {
 	my $lines  = 0;
 	my $result = undef;
 	while (<$fh>) {
-		if ( m{^ \s* package \s+ (\w[\w\:\']*) }x ) {
+		if (m{^ \s* package \s+ (\w[\w\:\']*) }x) {
 			$result = $1;
 			last;
 		}

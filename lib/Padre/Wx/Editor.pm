@@ -1602,7 +1602,7 @@ sub fold_pod {
 }
 
 sub configure_editor {
-	my $self     = shift;
+	my $self = shift;
 	my $document = shift or return;
 
 	my $eol = $WXEOL{ $document->newline_type };

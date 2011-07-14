@@ -77,6 +77,7 @@ sub startup {
 				my $pid = '';
 				my $read = $socket->sysread( $pid, 10 );
 				if ( defined $read and $read == 10 ) {
+
 					# Got the single instance PID
 					$pid =~ s/\s+\s//;
 					require Padre::Util::Win32;

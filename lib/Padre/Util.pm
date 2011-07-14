@@ -77,13 +77,13 @@ our $DISTRO    = undef;
 sub DISTRO {
 	return $DISTRO if defined $DISTRO;
 
-	if ( Padre::Constant::WIN32) {
+	if (Padre::Constant::WIN32) {
 
 		# Inherit from the main Windows classification
 		require Win32;
 		$DISTRO = uc Win32::GetOSName();
 
-	} elsif ( Padre::Constant::MAC ) {
+	} elsif (Padre::Constant::MAC) {
 		$DISTRO = 'MAC';
 
 	} else {
