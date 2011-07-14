@@ -246,17 +246,19 @@ sub on_tree_item_menu {
 			}
 		);
 
-		$menu->AppendSeparator;
 
-		# Updates the directory listing
-		Wx::Event::EVT_MENU(
-			$self,
-			$menu->Append( -1, Wx::gettext('Refresh') ),
-			sub {
-				shift->GetParent->rebrowse;
-			}
-		);
 	}
+
+	$menu->AppendSeparator;
+
+	# Updates the directory listing
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append( -1, Wx::gettext('Refresh') ),
+		sub {
+			shift->GetParent->rebrowse;
+		}
+	);
 
 	# Pops up the context menu
 	$self->PopupMenu(
