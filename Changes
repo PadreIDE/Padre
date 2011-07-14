@@ -75,6 +75,7 @@ next production release, and synchronise their release to the Padre schedule.
       thread confused. This hopefully fixes the massive thread leak bug (ADAMK)
     - Update session description. (BOWTIE)
     - In project browser Right click on directories as well. (SZABGAB)
+    - Update German translation (ZENOG)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
