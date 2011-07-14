@@ -81,6 +81,12 @@ sub _on_butsave_clicked {
 			'where session = ?',
 			$session->id
 		);
+
+		# Save Session description:
+		Padre::DB->do(
+			'UPDATE session SET description=? WHERE id=?',
+			{}, $self->_text->GetValue, $session->id
+		);
 	} else {
 
 		# session did not exist, create a new one
