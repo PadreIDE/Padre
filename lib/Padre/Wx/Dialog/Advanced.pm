@@ -740,7 +740,10 @@ sub _update_list {
 	foreach my $name (@preference_names) {
 
 		# Ignore setting if it does not match the filter
-		next if $name !~ /$filter/i;
+		# An empty pattern would use the last successful
+		# regex which means arbitrary filter matching (MARKD)
+		# next if $name !~ /$filter/i
+		next if (length($filter) && $name !~ /$filter/i);
 
 		# Add the setting to the list control
 		my $pref       = $preferences->{$name};
