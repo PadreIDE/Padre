@@ -62,7 +62,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Added Thumbs.db to the files ignored by default on Windows (ADAMK)
     - The project manager now caches null projects correctly (ADAMK)
     - The directory browser now caches null project tree data correctly (ADAMK)
-    - When reverting to the default project, the directory browse now uses
+    - When reverting to the default root path, the directory browse now uses
       a null project rather than just a plain root path so that the default
       platform-specific ignore/skip rules are used the expected way (ADAMK)
     - Perl projects now correctly ignore nytprof directories, not just
