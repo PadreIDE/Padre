@@ -73,6 +73,7 @@ next production release, and synchronise their release to the Padre schedule.
     - TaskWorker objects receiving a 'cancel' message while they are not running
       a task will no longer silently exit their worker loop leaving the parent
       thread confused. This hopefully fixes the massive thread leak bug (ADAMK)
+    - In project browser Right click on directories as well. (SZABGAB)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

@@ -192,65 +192,71 @@ sub on_tree_item_menu {
 	my $item  = $event->GetItem;
 	my $data  = $self->GetPlData($item) or return;
 
-	# Only show the context menu for files (for now)
-	if ( $data->type == Padre::Wx::Directory::Path::DIRECTORY ) {
-		return;
-	}
-
-	# Generate the context menu for this file
+	# Generate the context menu for this file or directory
 	my $menu = Wx::Menu->new;
 	my $file = File::Spec->catfile(
 		$self->GetParent->root,
 		$data->path,
 	);
 
-	# The default action is the same as when it is double-clicked
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Open File') ),
-		sub {
-			shift->on_tree_item_activated($event);
-		}
-	);
+	if ( $data->type == Padre::Wx::Directory::Path::DIRECTORY ) {
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Open in File Browser') ),
+			sub {
+				shift->main->on_open_in_file_browser($file);
+			}
+		);
+	} else {
 
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Open in File Browser') ),
-		sub {
-			shift->main->on_open_in_file_browser($file);
-		}
-	);
+		# The default action is the same as when it is double-clicked
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Open File') ),
+			sub {
+				shift->on_tree_item_activated($event);
+			}
+		);
 
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Delete File') ),
-		sub {
-			my $self = shift;
-			$self->_delete_file($file);
-		}
-	);
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Open in File Browser') ),
+			sub {
+				shift->main->on_open_in_file_browser($file);
+			}
+		);
 
-	$menu->AppendSeparator;
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Delete File') ),
+			sub {
+				my $self = shift;
+				$self->_delete_file($file);
+			}
+		);
 
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Create Directory') ),
-		sub {
-			my $self = shift;
-			$self->_create_directory($file);
-		}
-	);
+		$menu->AppendSeparator;
 
-	$menu->AppendSeparator;
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Create Directory') ),
+			sub {
+				my $self = shift;
+				$self->_create_directory($file);
+			}
+		);
 
-	# Updates the directory listing
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Refresh') ),
-		sub {
-			shift->GetParent->rebrowse;
-		}
-	);
+		$menu->AppendSeparator;
+
+		# Updates the directory listing
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Refresh') ),
+			sub {
+				shift->GetParent->rebrowse;
+			}
+		);
+	}
 
 	# Pops up the context menu
 	$self->PopupMenu(
