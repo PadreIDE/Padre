@@ -9,7 +9,6 @@ use File::Spec        ();
 use File::Basename    ();
 use Params::Util      ();
 use YAML::Tiny        ();
-use Padre::Current    ();
 use Padre::Util       ();
 use Padre::Perl       ();
 use Padre::Document   ();
@@ -329,14 +328,11 @@ Optionally accepts a hash reference with the following boolean arguments:
 =cut
 
 sub get_command {
-	my $self = shift;
+	my $self    = shift;
 	my $arg_ref = shift || {};
-
-	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
-	my $trace = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
-
-	my $current = Padre::Current->new( document => $self );
-	my $config = $current->config;
+	my $debug   = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
+	my $trace   = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
+	my $config  = $self->current->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename =
@@ -413,13 +409,11 @@ Returns the Perl interpreter for running the current document.
 =cut
 
 sub get_interpreter {
-	my $self = shift;
+	my $self    = shift;
 	my $arg_ref = shift || {};
-
-	my $debug = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
-	my $trace = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
-
-	my $config = Padre::Current->config;
+	my $debug   = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
+	my $trace   = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
+	my $config  = $self->current->config;
 
 	# The configuration value is cheaper to get compared to cperl(),
 	# try it first.
