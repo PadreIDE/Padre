@@ -11,6 +11,9 @@ notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
 0.88 TBA
+    - Background worker threads that receive a 'cancel' message while they are
+      not running a task will no longer silently exit their worker loop, which
+      hopefully fixes the massive thread leak bug (ADAMK)
     - Properly enable Perl 6 Wx::Scintilla support (AZAWAWI)
     - Properly handle File/New/Copy of current file when there is no current
       document (AZAWAWI)
@@ -67,6 +70,9 @@ next production release, and synchronise their release to the Padre schedule.
       platform-specific ignore/skip rules are used the expected way (ADAMK)
     - Perl projects now correctly ignore nytprof directories, not just
       nytprof.out files (ADAMK)
+    - TaskWorker objects receiving a 'cancel' message while they are not running
+      a task will no longer silently exit their worker loop leaving the parent
+      thread confused. This hopefully fixes the massive thread leak bug (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

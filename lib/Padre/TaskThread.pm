@@ -165,7 +165,9 @@ sub send {
 	}
 
 	# Add the message to the queue
+	TRACE("Calling enqueue '$method'") if DEBUG;
 	$self->{queue}->enqueue( [ $method, @_ ] );
+	TRACE("Completed enqueue '$method'") if DEBUG;
 
 	return 1;
 }

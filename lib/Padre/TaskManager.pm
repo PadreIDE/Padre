@@ -345,7 +345,7 @@ sub cancel {
 			TRACE("Handle wid = $handle->{worker}") if DEBUG;
 			next unless defined $handle->{worker};
 			next unless $worker->{wid} == $handle->{worker};
-			TRACE("Sending 'cancel' message") if DEBUG;
+			TRACE("Sending 'cancel' message to worker $worker->{wid}") if DEBUG;
 			$worker->send('cancel');
 			return 1;
 		}
@@ -602,10 +602,17 @@ sub run {
 		}
 
 		# Register the handle for child messages
+		TRACE("Handle $hid registered for messages") if DEBUG;
 		$handles->{$hid} = $handle;
 
 		# Find the next/best worker for the task
-		my $worker = $self->best_worker($handle) or return;
+		my $worker = $self->best_worker($handle);
+		if ( $worker ) {
+			TRACE("Handle $hid allocated worker " . $worker->wid) if DEBUG;
+		} else {
+			TRACE("Handle $hid has no worker") if DEBUG;
+			return;
+		}
 
 		# Prepare handle timing
 		$handle->start_time(time);
@@ -649,9 +656,13 @@ sub on_signal {
 		return;
 	}
 
-	# Fine the task handle for the task
-	my $hid = shift @$message;
-	my $handle = $self->{handles}->{$hid} or return;
+	# Find the task handle for the task
+	my $hid    = shift @$message;
+	my $handle = $self->{handles}->{$hid};
+	unless ( $handle ) {
+		TRACE( "Handle $hid does not exist..." ) if DEBUG;
+		return;
+	}
 
 	# Update idle tracking so we don't force-kill this worker
 	$handle->idle_time(time);
@@ -661,14 +672,14 @@ sub on_signal {
 	if ( $method eq 'STARTED' ) {
 
 		# Register the task as running
+		TRACE( "Handle $hid added to 'running'..." ) if DEBUG;
 		$self->{running}->{$hid} = $handle;
 		return;
 	}
 
 	# Any remaining task should be running
 	unless ( $self->{running}->{$hid} ) {
-
-		# warn("Received message for a task that is not running");
+		TRACE( "Handle $hid is not running to receive '$method'" ) if DEBUG;
 		return;
 	}
 
@@ -677,6 +688,7 @@ sub on_signal {
 
 		# Remove from the running list to guarantee no more events
 		# will be sent to the handle (and thus to the task)
+		TRACE( "Handle $hid removed from 'running'..." ) if DEBUG;
 		delete $self->{running}->{$hid};
 
 		# Free up the worker for other tasks
@@ -692,6 +704,7 @@ sub on_signal {
 		$handle->on_stopped(@$message);
 
 		# Remove from the task list to destroy the task
+		TRACE("Handle $hid completed on_stopped...") if DEBUG;
 		delete $self->{handles}->{$hid};
 
 		# This should have released a worker to process

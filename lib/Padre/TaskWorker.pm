@@ -47,6 +47,7 @@ sub send_task {
 	$self->{seen}->{ $handle->class } += 1;
 
 	# Send the message to the child
+	TRACE( "Handle " . $handle->hid . " being sent to worker " . $self->wid ) if DEBUG;
 	$self->send( 'task', $handle->as_array );
 }
 
@@ -76,13 +77,14 @@ sub task {
 	# Execute the task (ignore the result) and signal as we go
 	local $@;
 	eval {
-		TRACE("Calling ->started") if DEBUG;
+		my $hid = $handle->hid;
+		TRACE("Handle $hid calling ->started") if DEBUG;
 		$handle->{child} = 1;
 		$handle->{queue} = $self->queue;
 		$handle->started;
-		TRACE("Calling ->run") if DEBUG;
+		TRACE("Handle $hid calling ->run") if DEBUG;
 		$handle->run;
-		TRACE("Calling ->stopped") if DEBUG;
+		TRACE("Handle $hid calling ->stopped") if DEBUG;
 		$handle->stopped;
 		delete $handle->{queue};
 		delete $handle->{child};
@@ -116,6 +118,7 @@ sub cancel {
 			TRACE("Discarding undefined message");
 		}
 	}
+	return 1;
 }
 
 1;
