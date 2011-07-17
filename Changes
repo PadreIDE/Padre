@@ -77,6 +77,8 @@ next production release, and synchronise their release to the Padre schedule.
     - In project browser Right click on directories as well. (SZABGAB)
     - Allow renaming file and directory in project browser. (SZABGAB)
     - Update German translation (ZENOG)
+    - Stop creating automatic sessions. If no session is defined 
+      while auto-session-save is in effect use padre-last (SZABGAB)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

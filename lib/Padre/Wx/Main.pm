@@ -3126,29 +3126,25 @@ sub save_current_session {
 		$self->{ide}->{session}
 	);
 
-	# TO DO: Understand and rewrite this if to match the logical context of this method
-	if ( defined $session ) {
+	$session ||= Padre::DB::Session->last_padre_session;
 
-		# session exist, remove all files associated to it
-		Padre::DB::SessionFile->delete(
-			'where session = ?',
-			$session->id
-		);
-	} else {
+	if ( not defined $session ) {
 
-		# session did not exist, create a new one
-		$session = Padre::DB::Session->new(
-			name        => 'New session ' . localtime(time),
-			description => 'Auto-created session',
-			last_update => time,
-		);
-		$session->insert;
+		# TO DO: maybe report an error here?
+		return;
 	}
+
+	# session exist, remove all files associated to it
+	Padre::DB::SessionFile->delete(
+		'where session = ?',
+		$session->id
+	);
 
 	# capture session and save it
 	my @session = $self->capture_session;
 	$self->save_session( $session, @session );
 
+	return;
 }
 
 =pod
