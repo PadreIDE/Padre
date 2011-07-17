@@ -352,15 +352,12 @@ sub _content_info {
 
 	my $wx_scintilla_html = '';
 	if (Padre::Util::wx_scintilla_ready) {
-		eval 'use Wx::Scintilla';
-		unless ($@) {
-			$wx_scintilla_html = <<"END_HTML";
+		$wx_scintilla_html = <<"END_HTML";
       <tr>
         <td valign="top">Wx::Scintilla</td>
         <td>$Wx::Scintilla::VERSION</td>
       </tr>
 END_HTML
-		}
 	}
 
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
