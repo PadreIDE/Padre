@@ -213,10 +213,7 @@ sub on_text {
 			# Leaving search mode
 			TRACE("Leaving search mode") if DEBUG;
 			$self->{searching} = 0;
-			$self->task_reset;
-			$self->clear;
-			$self->refill;
-			$self->rebrowse;
+			$self->rere;
 		} else {
 
 			# Changing search term
@@ -755,6 +752,16 @@ sub compare {
 	my $left  = shift;
 	my $right = shift;
 	return ( $right->is_directory <=> $left->is_directory or lc( $left->name ) cmp lc( $right->name ) );
+}
+
+# there are already so many re* functions, I did not have a better name
+sub rere {
+	my $self = shift;
+	$self->task_reset;
+	$self->clear;
+	$self->refill;
+	$self->rebrowse;
+	return;
 }
 
 1;

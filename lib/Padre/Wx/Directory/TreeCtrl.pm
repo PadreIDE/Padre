@@ -168,7 +168,11 @@ sub _rename_file_dir {
 
 	my $path = File::Basename::dirname($file);
 	if ( rename $file, File::Spec->catdir( $path, $new_name ) ) {
-		$self->GetParent->browse;
+
+		# TO DO: probably we don't need to rere here
+		# we just need to remove the old entry from the tree and add a new entry
+		# this is the simple way that hopefull will eliminate the crash #1248
+		$self->GetParent->rere;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not rename: '%s' to '%s': %s)), $file, $path, $! ) );
 	}
@@ -208,7 +212,11 @@ sub _delete_file {
 	File::Path::remove_tree( $file, { error => \$error_ref } );
 
 	if ( scalar @$error_ref == 0 ) {
-		$self->GetParent->browse;
+
+		# TO DO: probably we don't need to rere here
+		# we just need to remove the old entry from the tree and add a new entry
+		# this is the simple way that hopefull will eliminate the crash #1248
+		$self->GetParent->rere;
 	} else {
 		$main->error( sprintf Wx::gettext(q(Could not delete: '%s': %s)), $file, ( join ' ', @$error_ref ) );
 	}
@@ -306,7 +314,10 @@ sub on_tree_item_menu {
 		$self,
 		$menu->Append( -1, Wx::gettext('Refresh') ),
 		sub {
-			shift->GetParent->rebrowse;
+
+			# TO DO: probably something less than rere would be enought
+			# but we now at least eliminate the crash of #1248
+			shift->GetParent->rere;
 		}
 	);
 
