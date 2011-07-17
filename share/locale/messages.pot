@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-17 04:10-0700\n"
+"POT-Creation-Date: 2011-07-17 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -415,7 +415,7 @@ msgstr ""
 msgid "&Value:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:258
+#: lib/Padre/Wx/Menu/View.pm:255
 msgid "&View"
 msgstr ""
 
@@ -1173,12 +1173,12 @@ msgstr ""
 msgid "Copy of current file"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:194
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:198
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:213
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:221
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:173
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:177
 #, perl-format
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr ""
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:292
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:300
 msgid "Create Directory"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:272
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:280
 msgid "Delete File"
 msgstr ""
 
@@ -2230,7 +2230,7 @@ msgstr ""
 msgid "Fold/Unfold this"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:189
+#: lib/Padre/Wx/Menu/View.pm:186
 msgid "Font Size"
 msgstr ""
 
@@ -2576,7 +2576,7 @@ msgstr ""
 msgid "Label One"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:220
+#: lib/Padre/Wx/Menu/View.pm:217
 msgid "Language"
 msgstr ""
 
@@ -3129,7 +3129,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4135 lib/Padre/Wx/Directory/TreeCtrl.pm:256
+#: lib/Padre/Wx/Main.pm:4135 lib/Padre/Wx/Directory/TreeCtrl.pm:264
 msgid "Open File"
 msgstr ""
 
@@ -3218,8 +3218,8 @@ msgstr ""
 msgid "Open in Command Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:236
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:264
+#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:244
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:272
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3665,7 +3665,7 @@ msgstr ""
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:269 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:266 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
@@ -3775,7 +3775,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:205
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:209
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3792,7 +3792,7 @@ msgstr ""
 msgid "Refactor"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:307
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:315
 msgid "Refresh"
 msgstr ""
 
@@ -3908,11 +3908,11 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:244
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:252
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:281
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:289
 msgid "Rename File"
 msgstr ""
 
@@ -4941,7 +4941,7 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:523
+#: lib/Padre/Wx/Directory.pm:520
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
 "save your work and restart Padre."
