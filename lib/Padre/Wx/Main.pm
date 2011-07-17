@@ -3926,6 +3926,56 @@ sub create_tab {
 
 =pod
 
+=head3 C<on_deparse>
+
+Show what perl thinks about your code using L<B::Deparse>
+
+=cut
+
+sub on_deparse {
+	my $self    = shift;
+	my $current = $self->current;
+	my $text    = shift || $current->text;
+	my $editor  = $current->editor or return;
+
+	# get selection, ask for it if needed
+	unless ( length $text ) {
+		$self->error('Currently we require a selection for this to work');
+		return;
+	}
+	use Capture::Tiny qw(capture);
+	use File::Temp qw(tempdir);
+
+	my $dir = tempdir( CLEANUP => 1 );
+	my $file = "$dir/file";
+	if ( open my $fh, '>', $file ) {
+		print $fh $text;
+		close $fh;
+	} else {
+		$self->error('Strange error occured');
+		return;
+	}
+	my $perl = $^X;
+
+	my ( $out, $err ) = capture {
+		system qq{$perl -MO=Deparse,-p $file};
+	};
+
+	if ($out) {
+		$self->message( $out, 'Deparse' );
+	} else {
+		$self->error( 'Deparse failed: ' . $err );
+	}
+
+	# eg, highlight the code part of the following comment:
+	# print ~~ grep { $_ eq 'x' } qw(a b c x);
+
+	return;
+}
+
+
+=pod
+
 =head3 C<on_open_selection>
 
     $main->on_open_selection;

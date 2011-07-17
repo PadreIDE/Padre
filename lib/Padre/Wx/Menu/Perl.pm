@@ -43,6 +43,11 @@ sub new {
 		'perl.beginner_check',
 	);
 
+	$self->{perl_deparse} = $self->add_menu_action(
+		$self,
+		'perl.deparse',
+	);
+
 	$self->AppendSeparator;
 
 	$self->{find_brace} = $self->add_menu_action(

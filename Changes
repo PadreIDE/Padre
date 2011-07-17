@@ -81,6 +81,7 @@ next production release, and synchronise their release to the Padre schedule.
       while auto-session-save is in effect use padre-last (SZABGAB)
     - Fix View/Show Document As menu #1246 (SZABGAB)
     - Eliminate crash caused by directory browser. #1248 (SZABGAB)
+    - Add Perl menu entry to deparse selected code using B::Deparse (SZABGAB)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

@@ -1728,6 +1728,18 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'perl.deparse',
+		need_editor => 1,
+		label       => _T('Deparse selection'),
+		comment     => _T('Show what perl thinks about your code'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$_[0]->on_deparse;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'perl.find_brace',
 		need_editor => 1,
 		label       => _T('Find Unmatched Brace'),
