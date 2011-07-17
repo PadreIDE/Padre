@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-14 12:10-0700\n"
+"POT-Creation-Date: 2011-07-17 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2854,7 +2854,7 @@ msgstr ""
 msgid "Move POD to __END__"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:112
+#: lib/Padre/Wx/Directory.pm:113
 msgid "Move to other panel"
 msgstr ""
 
@@ -3652,7 +3652,7 @@ msgstr ""
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:268 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:269 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
@@ -4147,7 +4147,7 @@ msgstr ""
 msgid "Script arguments"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:81 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
+#: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
 #: lib/Padre/Wx/Dialog/Find.pm:82
 msgid "Search"
 msgstr ""
@@ -4912,7 +4912,7 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:522
+#: lib/Padre/Wx/Directory.pm:523
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
 "save your work and restart Padre."
