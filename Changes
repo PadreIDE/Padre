@@ -79,6 +79,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Update German translation (ZENOG)
     - Stop creating automatic sessions. If no session is defined 
       while auto-session-save is in effect use padre-last (SZABGAB)
+    - Fix View/Show Document As menu #1246 (SZABGAB)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
