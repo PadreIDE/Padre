@@ -3119,6 +3119,8 @@ sub save_session {
 sub save_current_session {
 	my $self = shift;
 
+	return if not $self->ide->{session_autosave};
+
 	my ($session) = Padre::DB::Session->select(
 		'where id = ?',
 		$self->{ide}->{session}
@@ -4070,7 +4072,7 @@ sub on_open_url {
 	}
 	$self->setup_editor($url);
 
-	$self->ide->{session_autosave} and $self->save_current_session;
+	$self->save_current_session;
 
 }
 
@@ -4207,7 +4209,7 @@ sub open_file_dialog {
 
 	my $lock = $self->lock( 'REFRESH', 'DB' );
 	$self->setup_editors(@files) if $#files > -1;
-	$self->save_current_session  if $self->ide->{session_autosave};
+	$self->save_current_session;
 
 	return;
 }
@@ -4842,9 +4844,7 @@ sub on_close {
 	push @methods, 'refresh' unless $self->editors;
 	my $lock = $self->lock( 'DB', @methods );
 
-	if ( $self->ide->{session_autosave} ) {
-		$self->save_current_session;
-	}
+	$self->save_current_session;
 
 	return;
 }
@@ -4957,7 +4957,7 @@ sub close_all {
 
 	my $manager = $self->{ide}->plugin_manager;
 
-	$self->ide->{session_autosave} and $self->save_current_session;
+	$self->save_current_session;
 
 	# Remove current session ID from IDE object
 	# Do this before closing as the session shouldn't be affected by a close-all
