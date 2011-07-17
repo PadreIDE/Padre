@@ -145,6 +145,37 @@ sub key_up {
 
 }
 
+sub _rename_file_dir {
+	my $self = shift;
+	my $file = shift;
+
+	require File::Spec;
+	require File::Basename;
+
+	my $old_name = File::Basename::basename($file);
+	my $main     = $self->main;
+	my $new_name =
+		-d $file
+		? $main->simple_prompt(
+		Wx::gettext('Please type in the new name of the directory'),
+		Wx::gettext('Rename directory'), $old_name
+		)
+		: $main->simple_prompt(
+		Wx::gettext('Please type in the new name of the file'),
+		Wx::gettext('Rename file'), $old_name
+		);
+	return if ( !defined($new_name) || $new_name =~ /^\s*$/ );
+
+	my $path = File::Basename::dirname($file);
+	if ( rename $file, File::Spec->catdir( $path, $new_name ) ) {
+		$self->GetParent->browse;
+	} else {
+		$main->error( sprintf( Wx::gettext(q(Could not rename: '%s' to '%s': %s)), $file, $path, $! ) );
+	}
+	return;
+}
+
+
 sub _create_directory {
 	my $self = shift;
 	my $file = shift;
@@ -207,6 +238,16 @@ sub on_tree_item_menu {
 				shift->main->on_open_in_file_browser($file);
 			}
 		);
+
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Rename Directory') ),
+			sub {
+				my $self = shift;
+				$self->_rename_file_dir($file);
+			}
+		);
+
 	} else {
 
 		# The default action is the same as when it is double-clicked
@@ -232,6 +273,15 @@ sub on_tree_item_menu {
 			sub {
 				my $self = shift;
 				$self->_delete_file($file);
+			}
+		);
+
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Rename File') ),
+			sub {
+				my $self = shift;
+				$self->_rename_file_dir($file);
 			}
 		);
 

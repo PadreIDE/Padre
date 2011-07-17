@@ -3227,6 +3227,29 @@ sub prompt {
 	return $value;
 }
 
+=head3 C<simple_prompt>
+
+    my $value = $main->simple_prompt( $title, $subtitle, $default_text );
+
+Prompt user with a dialog box about the value that C<$key> should have.
+Return this value, or C<undef> if user clicked C<cancel>.
+
+=cut
+
+sub simple_prompt {
+	my $self     = shift;
+	my $title    = shift || 'Prompt';
+	my $subtitle = shift || 'Subtitle';
+	my $value    = shift || '';
+
+	my $dialog = Wx::TextEntryDialog->new( $self, $title, $subtitle, $value );
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $new_value = $dialog->GetValue;
+	return $new_value;
+}
+
 =pod
 
 =head2 Search and Replace
