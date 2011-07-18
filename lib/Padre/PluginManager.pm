@@ -833,21 +833,19 @@ sub plugin_db {
 
 	# Get the plug-in, and from there the config
 	my $plugin = $self->_plugin($module);
-	my $object = Padre::DB::Plugin->load($module);
-	unless ($object) {
-		$object = Padre::DB::Plugin->create(
-			name    => $plugin->class,
+	my @object = Padre::DB::Plugin->select('name = ?', $module);
+	return $object[0] if @object;
+	return Padre::DB::Plugin->create(
+		name    => $plugin->class,
 
-			# Track the last version of the plugin that we were
-			# able to successfully enable (nothing to start with)
-			version => undef,
+		# Track the last version of the plugin that we were
+		# able to successfully enable (nothing to start with)
+		version => undef,
 
-			# Having undef here means no preference yet
-			enabled => undef,
-			config  => undef,
-		);
-	}
-	return $object;
+		# Having undef here means no preference yet
+		enabled => undef,
+		config  => undef,
+	);
 }
 
 # Fire a event on all active plugins
