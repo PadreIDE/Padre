@@ -4,8 +4,6 @@ package Padre::DB;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec      ();
-use File::ShareDir  ();
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Current  ();
@@ -25,21 +23,13 @@ use ORLite 1.48 ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
 use Padre::DB::Migrate {
-	create        => 1,
-	tables        => ['Modules'],
-	file          => Padre::Constant::CONFIG_HOST,
-	user_revision => 11,
-	timeline      => File::Spec->catdir(
-		File::ShareDir::dist_dir('Padre'),
-		'timeline',
-	),
-
-	# Acceleration options (remove these if they cause trouble)
-	array      => 1,
-	xsaccessor => 0, # TODO see t/62-migrate.t for explanation
-
-	# Allow overlay classes to override methods fully
-	shim => 1,
+	create       => 1,
+	tables       => ['Modules'],
+	file         => Padre::Constant::CONFIG_HOST,
+	user_version => 11,
+	array        => 1, # Smaller faster array objects
+	xsaccessor   => 0, # XS acceleration for the generated code
+	shim         => 1, # Overlay classes can fully override
 }; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults

@@ -5,105 +5,29 @@ package Padre::DB::Migrate::Patch;
 use 5.008005;
 use strict;
 use warnings;
-use Exporter    ();
-use DBI         ();
-use DBD::SQLite ();
-
-use vars qw{@ISA @EXPORT $FILE};
+use DBI          ();
+use DBD::SQLite  ();
+use Params::Util ();
 
 our $VERSION = '0.87';
 
-BEGIN {
-	@ISA    = 'Exporter';
-	@EXPORT = qw{
-		file
-		dbh
-		do
-		selectall_arrayref
-		selectall_hashref
-		selectcol_arrayref
-		selectrow_array
-		selectrow_arrayref
-		selectrow_hashref
-		pragma
-		table_exists
-		column_exists
-	};
 
-	# The location of the SQLite database file
-	$FILE = undef;
-}
 
-sub file {
-	unless ($FILE) {
 
-		# The filename is passed on STDIN
-		$FILE = $ARGV[0];
-		chomp($FILE);
-		unless ( -f $FILE and -w $FILE ) {
-			die "SQLite file $FILE does not exist";
-		}
+
+######################################################################
+# Constructor and Destructor
+
+sub new {
+	my $class = shift;
+	my $self  = bless { @_ }, $class;
+
+	# Check filename
+	unless ( Params::Util::_INSTANCE($self->dbh, 'DBI::db') ) {
+		die "Missing or invalid dbh database handle";
 	}
-	return $FILE;
-}
 
-sub dbh {
-	my $file = file();
-	my $dbh  = DBI->connect(
-		"dbi:SQLite:$file",
-		undef, undef,
-		{   RaiseError => 1,
-		}
-	);
-	unless ($dbh) {
-		die "Failed to connect to $file";
-	}
-	return $dbh;
-}
-
-sub do {
-	dbh()->do(@_);
-}
-
-sub selectall_arrayref {
-	dbh()->selectall_arrayref(@_);
-}
-
-sub selectall_hashref {
-	dbh()->selectall_hashref(@_);
-}
-
-sub selectcol_arrayref {
-	dbh()->selectcol_arrayref(@_);
-}
-
-sub selectrow_array {
-	dbh()->selectrow_array(@_);
-}
-
-sub selectrow_arrayref {
-	dbh()->selectrow_arrayref(@_);
-}
-
-sub selectrow_hashref {
-	dbh()->selectrow_hashref(@_);
-}
-
-sub pragma {
-	do("pragma $_[0] = $_[1]") if @_ > 2;
-	selectrow_arrayref("pragma $_[0]")->[0];
-}
-
-sub table_exists {
-	selectrow_array(
-		"select count(*) from sqlite_master where type = 'table' and name = ?",
-		{}, $_[0],
-	);
-}
-
-sub column_exists {
-	table_exists( $_[0] )
-		or selectrow_array( "select count($_[1]) from $_[0]", {} );
+	return $self;
 }
 
 
@@ -111,29 +35,55 @@ sub column_exists {
 
 
 ######################################################################
-# Object Mode
+# Main Methods
 
-sub new {
-	my $class = shift;
-	my $self  = bless {
-		file => shift,
-		dbh  => undef,
-	}, $class;
-
-	# Check filename
-	unless ( -f $self->{file} and -w $self->{file} ) {
-		die "SQLite file $self->{file} does not exist";
-	}
-
-	return $self;
+sub dbh {
+	$_[0]->{dbh};
 }
 
-sub DESTROY {
-	if ( $_[0]->{dbh} ) {
-		$_[0]->{dbh}->rollback;
-		$_[0]->{dbh}->disconnect;
-		$_[0]->{dbh} = undef;
-	}
+sub do {
+	shift->dbh->do(@_);
+}
+
+sub selectall_arrayref {
+	shift->dbh->selectall_arrayref(@_);
+}
+
+sub selectall_hashref {
+	shift->dbh->selectall_hashref(@_);
+}
+
+sub selectcol_arrayref {
+	shift->dbh->selectcol_arrayref(@_);
+}
+
+sub selectrow_array {
+	shift->dbh->selectrow_array(@_);
+}
+
+sub selectrow_arrayref {
+	shift->dbh->selectrow_arrayref(@_);
+}
+
+sub selectrow_hashref {
+	shift->dbh->selectrow_hashref(@_);
+}
+
+sub pragma {
+	$_[0]->do("pragma $_[1] = $_[2]") if @_ > 2;
+	$_[0]->selectrow_arrayref("pragma $_[1]")->[0];
+}
+
+sub table_exists {
+	$_[0]->selectrow_array(
+		"select count(*) from sqlite_master where type = 'table' and name = ?",
+		{}, $_[1],
+	);
+}
+
+sub column_exists {
+	$_[0]->table_exists($_[1]) or
+	$_[0]->selectrow_array( "select count($_[2]) from $_[1]", {} );
 }
 
 1;

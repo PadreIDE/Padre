@@ -53,7 +53,7 @@ CREATE TABLE snippets (
 END_SQL
 
 	# Populate the snippit table
-	my @prepsnips = (
+	my @snippets = (
 		[ 'Char class', '[:alnum:]',  '[:alnum:]'  ],
 		[ 'Char class', '[:alpha:]',  '[:alpha:]'  ],
 		[ 'Char class', '[:ascii:]',  '[:ascii:]'  ],
@@ -116,7 +116,7 @@ END_SQL
 		my $sth = $dbh->prepare(
 			'INSERT INTO snippets ( mimetype, category, name, snippet ) VALUES (?, ?, ?, ?)'
 		);
-		foreach ( @presnips ) {
+		foreach ( @snippets ) {
 			$sth->execute( 'application/x-perl', $_->[1], $_->[2], $_->[3]);
 		}
 		$sth->finish;

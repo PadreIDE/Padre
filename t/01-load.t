@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 44 );
+plan( tests => 36 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -24,6 +24,7 @@ diag( "Tests find Wx: $Wx::VERSION " . Wx::wxVERSION_STRING() );
 use_ok('t::lib::Padre');
 use_ok('Padre::Util');
 use_ok('Padre::Config');
+use_ok('Padre::DB::Migrate::Patch');
 use_ok('Padre::DB');
 use_ok('Padre::Project');
 use_ok('Padre::Wx');
@@ -52,10 +53,6 @@ my $loaded = Padre->import(':everything');
 ok( $loaded, "Loaded the remaining $loaded classes ok" );
 
 script_compiles('script/padre');
-
-foreach ( 1 .. 9 ) {
-	script_compiles("share/timeline/migrate-$_.pl");
-}
 
 foreach (
 	qw{
