@@ -70,9 +70,6 @@ next production release, and synchronise their release to the Padre schedule.
       platform-specific ignore/skip rules are used the expected way (ADAMK)
     - Perl projects now correctly ignore nytprof directories, not just
       nytprof.out files (ADAMK)
-    - TaskWorker objects receiving a 'cancel' message while they are not running
-      a task will no longer silently exit their worker loop leaving the parent
-      thread confused. This hopefully fixes the massive thread leak bug (ADAMK)
     - Update session description. (BOWTIE)
     - In project browser Right click on directories as well. (SZABGAB)
     - Allow renaming file and directory in project browser. (SZABGAB)
