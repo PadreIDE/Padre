@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use File::Path                 ();
 use File::Spec                 ();
+use File::Basename             ();
 use Padre::Constant            ();
 use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
@@ -103,7 +104,7 @@ sub on_tree_item_activated {
 	my $data   = $self->GetPlData($item);
 	my $parent = $self->GetParent;
 
-	# If a folder, toggle the expand/collanse state
+	# If a folder, toggle the expand/collapse state
 	if ( $data->type == 1 ) {
 		$self->Toggle($item);
 		return;
@@ -135,36 +136,32 @@ sub key_up {
 	my $file    = File::Spec->catfile( $project->root, $data->path );
 
 	if ( $code == Wx::WXK_DELETE ) {
-		$self->_delete_file($file);
+		$self->delete_file($file);
 	}
 
 	$event->Skip;
 	return;
 }
 
-sub _rename_file_dir {
+sub rename_file {
 	my $self = shift;
+	my $main = $self->main;
 	my $file = shift;
-
-	require File::Spec;
-	require File::Basename;
-
-	my $old_name = File::Basename::basename($file);
-	my $main     = $self->main;
-	my $new_name =
+	my $old  = File::Basename::basename($file);
+	my $new  =
 		-d $file
 		? $main->simple_prompt(
 		Wx::gettext('Please type in the new name of the directory'),
-		Wx::gettext('Rename directory'), $old_name
+		Wx::gettext('Rename directory'), $old
 		)
 		: $main->simple_prompt(
 		Wx::gettext('Please type in the new name of the file'),
-		Wx::gettext('Rename file'), $old_name
+		Wx::gettext('Rename file'), $old
 		);
-	return if ( !defined($new_name) || $new_name =~ /^\s*$/ );
+	return if ( !defined($new) || $new =~ /^\s*$/ );
 
 	my $path = File::Basename::dirname($file);
-	if ( rename $file, File::Spec->catdir( $path, $new_name ) ) {
+	if ( rename $file, File::Spec->catdir( $path, $new ) ) {
 		$self->GetParent->rebrowse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not rename: '%s' to '%s': %s)), $file, $path, $! ) );
@@ -172,42 +169,53 @@ sub _rename_file_dir {
 	return;
 }
 
-sub _create_directory {
+sub create_directory {
 	my $self = shift;
-	my $file = shift;
-
+	my $path = shift;
 	my $main = $self->main;
-	my $dir_name =
-		$main->prompt( 'Please type in the name of the new directory', 'Create Directory', 'CREATE_DIRECTORY' );
-	return if ( !defined($dir_name) || $dir_name =~ /^\s*$/ );
+	my $name = $main->prompt(
+		'Please type in the name of the new directory',
+		'Create Directory',
+		'CREATE_DIRECTORY',
+	);
+	return if ( !defined($name) || $name =~ /^\s*$/ );
 
-	require File::Spec;
-	require File::Basename;
-	my $path = File::Basename::dirname($file);
-	if ( mkdir File::Spec->catdir( $path, $dir_name ) ) {
-		$self->GetParent->browse;
-	} else {
-		$main->error( sprintf( Wx::gettext(q(Could not create: '%s': %s)), $path, $! ) );
+	unless ( mkdir File::Spec->catdir( $path, $name ) ) {
+		$main->error(
+			sprintf(
+				Wx::gettext(q(Could not create: '%s': %s)),
+				$path,
+				$!,
+			)
+		);
+		return;
 	}
+
+	# 
+	$self->GetParent->rebrowse;
+
 	return;
 }
 
-sub _delete_file {
+sub delete_file {
 	my $self = shift;
 	my $file = shift;
-
 	my $main = $self->main;
+	my $yes  = $main->yes_no(
+		sprintf( Wx::gettext('Really delete the file "%s"?'), $file )
+	);
+	return unless $yes;
 
-	return if not $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
+	# The background task Padre::Task::File already exists specifically
+	# for this kind of thing. Upgrade to use this in future.
+	my $error;
+	File::Path::remove_tree( $file, { error => \$error } );
 
-	my $error_ref;
-	File::Path::remove_tree( $file, { error => \$error_ref } );
-
-	if ( scalar @$error_ref == 0 ) {
+	if ( scalar @$error == 0 ) {
 		# This might be overkill a bit, but it works
 		$self->GetParent->rebrowse;
 	} else {
-		$main->error( sprintf Wx::gettext(q(Could not delete: '%s': %s)), $file, ( join ' ', @$error_ref ) );
+		$main->error( sprintf Wx::gettext(q(Could not delete: '%s': %s)), $file, ( join ' ', @$error ) );
 	}
 }
 
@@ -240,8 +248,17 @@ sub on_tree_item_menu {
 			$self,
 			$menu->Append( -1, Wx::gettext('Rename Directory') ),
 			sub {
-				my $self = shift;
-				$self->_rename_file_dir($file);
+				shift->rename_file($file);
+			}
+		);
+
+		$menu->AppendSeparator;
+
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext('Create Directory') ),
+			sub {
+				shift->create_directory($file);
 			}
 		);
 
@@ -268,8 +285,7 @@ sub on_tree_item_menu {
 			$self,
 			$menu->Append( -1, Wx::gettext('Delete File') ),
 			sub {
-				my $self = shift;
-				$self->_delete_file($file);
+				shift->delete_file($file);
 			}
 		);
 
@@ -277,8 +293,7 @@ sub on_tree_item_menu {
 			$self,
 			$menu->Append( -1, Wx::gettext('Rename File') ),
 			sub {
-				my $self = shift;
-				$self->_rename_file_dir($file);
+				shift->rename_file($file);
 			}
 		);
 
@@ -288,12 +303,10 @@ sub on_tree_item_menu {
 			$self,
 			$menu->Append( -1, Wx::gettext('Create Directory') ),
 			sub {
-				my $self = shift;
-				$self->_create_directory($file);
+				my $dir = File::Basename::dirname($file);
+				shift->create_directory($dir);
 			}
 		);
-
-
 	}
 
 	$menu->AppendSeparator;
