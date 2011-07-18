@@ -3,24 +3,17 @@ package Padre::TaskThread;
 # Cleanly encapsulated object for a thread that does work based
 # on packaged method calls passed via a shared queue.
 
-# NOTE: The TRACE() calls in this class should be commented out unless
-# actively debugging, so that the Padre::Logger class will only be
-# loaded AFTER the threads spawn.
-
 use 5.008005;
 use strict;
 use warnings;
 use Scalar::Util     ();
 use Padre::TaskQueue ();
 
+# NOTE: The TRACE() calls in this class should be commented out unless
+# actively debugging, so that the Padre::Logger class will only be
+# loaded AFTER the threads spawn.
 # use Padre::Logger;
 use constant DEBUG => 0;
-
-# NOTE: Don't use Padre::Wx here, by only loading the Wx core
-# we can have less of Wx loaded when we spawn the master thread.
-# Given that background threads shouldn't be using Wx anyway,
-# loaded less code now cuts the per-thread cost of several meg.
-use Wx ();
 
 our $VERSION = '0.87';
 

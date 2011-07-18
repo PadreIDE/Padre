@@ -117,7 +117,7 @@ sub new {
 	TRACE( $_[0] ) if DEBUG;
 	my $class   = shift;
 	my %param   = @_;
-	my $conduit = delete $param{conduit};
+	my $conduit = delete $param{conduit} or die "Failed to provide event conduit";
 	my $self    = bless {
 		active  => 0, # Are we running at the moment
 		threads => 1, # Are threads enabled
@@ -131,9 +131,6 @@ sub new {
 	}, $class;
 
 	# Do the initialisation needed for the event conduit
-	unless ( Params::Util::_INSTANCE( $conduit, 'Padre::Wx::Role::Conduit' ) ) {
-		die("Failed to provide an event conduit for the TaskManager");
-	}
 	$conduit->conduit_init($self);
 
 	return $self;
@@ -480,7 +477,9 @@ way in which workers are used, such as maximising worker reuse for the same
 type of task, and "specialising" workers for particular types of tasks.
 
 If all existing workers are in use this method may also spawn new workers,
-up to the C<maximum> worker limit.
+up to the C<maximum> worker limit. Without the slave master logic enabled this
+will result in the editor blocking in the foreground briefly, this is something
+we can live with until the slave master feature is working again.
 
 Returns a L<Padre::TaskWorker> object, or C<undef> if there is no worker in
 which the task can be run.
@@ -571,18 +570,16 @@ sub run {
 		# Shortcut if there is nowhere to run the task
 		if ( $self->{threads} ) {
 			if ( scalar keys %$handles >= $self->{maximum} ) {
-				if ( Padre::Current->config->feature_restart_hung_task_manager ) {
-
-					# Restart hung task manager!
-					TRACE('PANIC: Restarting task manager') if DEBUG;
-					$self->stop;
-					$self->start;
-				} else {
-
+				# if ( Padre::Current->config->feature_restart_hung_task_manager ) {
+					# # Restart hung task manager!
+					# TRACE('PANIC: Restarting task manager') if DEBUG;
+					# $self->stop;
+					# $self->start;
+				# } else {
 					# Ignore the problem and hope the user does not notice :)
 					TRACE('No more task handles available. Sorry') if DEBUG;
 					return;
-				}
+				# }
 			}
 		}
 

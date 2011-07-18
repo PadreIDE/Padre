@@ -1257,12 +1257,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
-setting(
-	name    => 'feature_restart_hung_task_manager',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
+# setting(
+	# name    => 'feature_restart_hung_task_manager',
+	# type    => Padre::Constant::BOOLEAN,
+	# store   => Padre::Constant::HUMAN,
+	# default => 0,
+# );
 setting(
 	name    => 'feature_wx_scintilla',
 	type    => Padre::Constant::BOOLEAN,

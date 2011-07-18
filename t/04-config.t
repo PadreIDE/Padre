@@ -91,7 +91,6 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	editor_indentationguides
 
 	feature_wizard_selector
-	feature_restart_hung_task_manager
 	feature_session
 	feature_bookmark
 	feature_debugger

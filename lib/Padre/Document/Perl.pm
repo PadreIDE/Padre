@@ -389,11 +389,9 @@ my %inc;
 
 sub get_inc {
 	my $self = shift;
+	my $perl = $self->get_interpreter or return;
 
-	my $perl = $self->get_interpreter;
-	return if not $perl;
-
-	if ( not $inc{$perl} ) {
+	unless ( $inc{$perl} ) {
 		my $incs = qx{$perl -e "print join ';', \@INC"};
 		chomp $incs;
 		$inc{$perl} = [ split /;/, $incs ];
