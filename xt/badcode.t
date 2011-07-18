@@ -29,7 +29,7 @@ my %modules = map {
 my @t_files = glob "t/*.t";
 
 #map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
-plan( tests => scalar( keys %modules ) * 9 + scalar(@t_files) );
+plan( tests => scalar( keys %modules ) * 10 + scalar(@t_files) );
 
 my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	01-load.t
@@ -97,9 +97,7 @@ my %TODO = map { $_ => 1 } qw(
 	Padre::Plugin::My
 	Padre::PluginManager
 	Padre::Task::LaunchDefaultBrowser
-	Padre::TaskThread
 	Padre::TaskHandle
-	Padre::TaskManager
 );
 
 foreach my $module ( sort keys %modules ) {
@@ -228,6 +226,12 @@ foreach my $module ( sort keys %modules ) {
 			}
 		);
 		ok( $good, "$module: Uses expensive regexp-variable \$&, \$\' or \$`" );
+	}
+
+	# Don't make direct system calls, use a Padre API instead
+	SKIP: {
+		my $good = ! $document->find_any('PPI::Token::QuoteLike::Command');
+		ok( $good, "$module: Makes direct system calls with qx" );
 	}
 }
 
