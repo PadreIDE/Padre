@@ -833,7 +833,7 @@ sub plugin_db {
 
 	# Get the plug-in, and from there the config
 	my $plugin = $self->_plugin($module);
-	my @object = Padre::DB::Plugin->select('name = ?', $module);
+	my @object = Padre::DB::Plugin->select('where name = ?', $module);
 	return $object[0] if @object;
 	return Padre::DB::Plugin->create(
 		name    => $plugin->class,
