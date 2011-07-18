@@ -14,7 +14,6 @@ use vars qw{@ISA @EXPORT $FILE};
 our $VERSION = '0.87';
 
 BEGIN {
-
 	@ISA    = 'Exporter';
 	@EXPORT = qw{
 		file
@@ -105,6 +104,36 @@ sub table_exists {
 sub column_exists {
 	table_exists( $_[0] )
 		or selectrow_array( "select count($_[1]) from $_[0]", {} );
+}
+
+
+
+
+
+######################################################################
+# Object Mode
+
+sub new {
+	my $class = shift;
+	my $self  = bless {
+		file => shift,
+		dbh  => undef,
+	}, $class;
+
+	# Check filename
+	unless ( -f $self->{file} and -w $self->{file} ) {
+		die "SQLite file $self->{file} does not exist";
+	}
+
+	return $self;
+}
+
+sub DESTROY {
+	if ( $_[0]->{dbh} ) {
+		$_[0]->{dbh}->rollback;
+		$_[0]->{dbh}->disconnect;
+		$_[0]->{dbh} = undef;
+	}
 }
 
 1;
