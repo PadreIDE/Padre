@@ -85,7 +85,7 @@ next production release, and synchronise their release to the Padre schedule.
       operating system terms, on Win32 at least to start with (ADAMK)
     - Because the directory tree "Refresh" operation only actually works by
       refreshing the entire tree, move it to the top search box menu (ADAMK)
-    - Padre::DB::Migrate now has class-based migration scripts into of script
+    - Padre::DB::Migrate now has class-based migration scripts instead of file
       based migration scripts. This results in vastly inferior encapsulation,
       but is much more reliable and works from inside PAR and friends (ADAMK)
 
