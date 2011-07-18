@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-18 00:10-0700\n"
+"POT-Creation-Date: 2011-07-18 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -439,7 +439,7 @@ msgstr ""
 msgid "(Since Perl %s)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:919
+#: lib/Padre/PluginManager.pm:928
 msgid "(core)"
 msgstr ""
 
@@ -1219,7 +1219,7 @@ msgstr ""
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1061
+#: lib/Padre/PluginManager.pm:1070
 msgid "Could not locate project directory."
 msgstr ""
 
@@ -1824,7 +1824,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1006
+#: lib/Padre/PluginManager.pm:1015
 msgid "Error when calling menu for plug-in "
 msgstr ""
 
@@ -1974,7 +1974,7 @@ msgstr ""
 msgid "Failed to delete POD fragment"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:327
+#: lib/Padre/PluginHandle.pm:328
 #, perl-format
 msgid "Failed to disable plug-in '%s': %s"
 msgstr ""
@@ -2001,7 +2001,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1083 lib/Padre/PluginManager.pm:1179
+#: lib/Padre/PluginManager.pm:1092 lib/Padre/PluginManager.pm:1188
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -3012,7 +3012,7 @@ msgstr ""
 msgid "No file is open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1058 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/PluginManager.pm:1067 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
@@ -3216,7 +3216,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1133 lib/Padre/Wx/Main.pm:5843
+#: lib/Padre/PluginManager.pm:1142 lib/Padre/Wx/Main.pm:5843
 msgid "Open file"
 msgstr ""
 
@@ -3560,7 +3560,7 @@ msgstr ""
 msgid "Plug-in Tools"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1153
+#: lib/Padre/PluginManager.pm:1162
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
@@ -3569,7 +3569,7 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:930
+#: lib/Padre/PluginManager.pm:939
 #, perl-format
 msgid "Plugin %s"
 msgstr ""
@@ -3589,12 +3589,12 @@ msgstr ""
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:903
+#: lib/Padre/PluginManager.pm:912
 #, perl-format
 msgid "Plugin %s, hook %s returned an emtpy error message"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:874
+#: lib/Padre/PluginManager.pm:883
 #, perl-format
 msgid "Plugin error on event %s: %s"
 msgstr ""
@@ -5085,7 +5085,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:637
+#: lib/Padre/PluginManager.pm:929 lib/Padre/Document/Perl.pm:637
 #: lib/Padre/Document/Perl.pm:969 lib/Padre/Document/Perl.pm:1018
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
