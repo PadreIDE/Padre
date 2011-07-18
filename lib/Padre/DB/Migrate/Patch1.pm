@@ -6,52 +6,50 @@ use Padre::DB::Migrate::Patch ();
 our $VERSION = '0.85';
 our @ISA     = 'Padre::DB::Migrate::Patch';
 
-sub run {
+
+
+
+
+######################################################################
+# Migrate Forwards
+
+sub upgrade {
 	my $self = shift;
 
 	# Create the host settings table
-	$self->do(<<'END_SQL') unless $self->table_exists('hostconf');
-	CREATE TABLE hostconf (
-		name VARCHAR(255) PRIMARY KEY,
-		value VARCHAR(255)
-	)
+	$self->do(<<'END_SQL');
+CREATE TABLE hostconf (
+	name VARCHAR(255) PRIMARY KEY,
+	value VARCHAR(255)
+)
 END_SQL
 
 	# Create the modules table
-	$self->do(<<'END_SQL') unless $self->table_exists('modules');
-	CREATE TABLE modules (
-		id INTEGER PRIMARY KEY,
-		name VARCHAR(255)
-	)
+	$self->do(<<'END_SQL');
+CREATE TABLE modules (
+	id INTEGER PRIMARY KEY,
+	name VARCHAR(255)
+)
 END_SQL
 
 	# Create the history table
-	$self->do(<<'END_SQL') unless $self->table_exists('history');
-	CREATE TABLE history (
-		id INTEGER PRIMARY KEY,
-		type VARCHAR(255),
-		name VARCHAR(255)
-	)
+	$self->do(<<'END_SQL');
+CREATE TABLE history (
+	id INTEGER PRIMARY KEY,
+	type VARCHAR(255),
+	name VARCHAR(255)
+)
 END_SQL
 
-	# Drop old version of the table
-	if (
-		$self->table_exists('snippets')
-		and not
-		$self->column_exists('snippets', 'mimetype')
-	) {
-		$self->do('DROP TABLE snippets');
-	}
-
 	# Create the snippets table
-	$self->do(<<'END_SQL') unless $self->table_exists('snippets');
-	CREATE TABLE snippets (
-		id INTEGER PRIMARY KEY,
-		mimetype VARCHAR(255),
-		category VARCHAR(255),
-		name VARCHAR(255), 
-		snippet TEXT
-	)
+	$self->do(<<'END_SQL');
+CREATE TABLE snippets (
+	id INTEGER PRIMARY KEY,
+	mimetype VARCHAR(255),
+	category VARCHAR(255),
+	name VARCHAR(255), 
+	snippet TEXT
+)
 END_SQL
 
 	# Populate the snippit table
