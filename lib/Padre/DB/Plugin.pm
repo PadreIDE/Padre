@@ -13,15 +13,18 @@ use warnings;
 
 our $VERSION = '0.87';
 
-# Finds and returns a single element by name
-sub fetch_name {
-	return ( $_[0]->select( 'where name = ?', $_[1] ) )[0];
-}
-
 # Set enabled for an object
 sub update_enabled {
 	Padre::DB->do(
 		'update plugin set enabled = ? where name = ?', {},
+		$_[2], $_[1],
+	);
+}
+
+# Set version for an object
+sub update_version {
+	Padre::DB->do(
+		'update plugin set version = ? where name = ?', {},
 		$_[2], $_[1],
 	);
 }

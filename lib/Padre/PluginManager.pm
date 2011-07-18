@@ -531,7 +531,7 @@ sub load_plugin {
 # without regard to the context it is being called from.
 # So this method doesn't do stuff like refresh the plug-in menu.
 #
-# MAINTAINER NOTE: This method looks fairly long, but it's doing
+# NOTE: This method looks fairly long, but it's doing
 # a very specific and controlled series of steps. Splitting this up
 # would just make the process harder to understand, so please don't.
 sub _load_plugin {
@@ -658,7 +658,7 @@ sub _load_plugin {
 	}
 
 	# FINALLY we can enable the plug-in
-	$plugin->enable;
+	$self->plugin_enable($plugin);
 
 	return 1;
 }
@@ -765,9 +765,17 @@ sub _unload_plugin {
 }
 
 sub plugin_enable {
-	my $self = shift;
-	my $handle = $self->_plugin(shift) or return;
-	$handle->enable;
+	my $self   = shift;
+	my $module = shift;
+	my $handle = $self->_plugin($module) or return;
+	my $result = $handle->enable;
+
+	# Update the last-enabled version each time it is enabled
+	Padre::DB::Plugin->update_version(
+		$module => $handle->version,
+	);
+
+	return $result;
 }
 
 sub plugin_disable {
@@ -825,11 +833,14 @@ sub plugin_db {
 
 	# Get the plug-in, and from there the config
 	my $plugin = $self->_plugin($module);
-	my $object = Padre::DB::Plugin->fetch_name($module);
+	my $object = Padre::DB::Plugin->load($module);
 	unless ($object) {
 		$object = Padre::DB::Plugin->create(
 			name    => $plugin->class,
-			version => $plugin->version,
+
+			# Track the last version of the plugin that we were
+			# able to successfully enable (nothing to start with)
+			version => undef,
 
 			# Having undef here means no preference yet
 			enabled => undef,

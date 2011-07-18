@@ -10,7 +10,7 @@ use Padre::Locale  ();
 
 our $VERSION = '0.87';
 
-use overload
+use overload 
 	'bool' => sub () {1},
 	'""' => 'plugin_name',
 	'fallback' => 0;
@@ -306,6 +306,7 @@ sub disable {
 		Carp::croak("Cannot disable plug-in '$self'");
 	}
 
+	# NOTE: Horribly violates encapsulation
 	my $manager = Padre->ide->plugin_manager;
 
 	# If the plugin defines document types, deregister them
@@ -351,6 +352,9 @@ sub disable {
 	# Update the status
 	$self->status('disabled');
 	$self->errstr('');
+
+	# Save the last version we successfully enabled to the database
+	
 
 	return 0;
 }

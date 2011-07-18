@@ -22,7 +22,8 @@ sub select_names {
 	Padre::DB->selectcol_arrayref('select name from bookmark order by name');
 }
 
-# Finds and returns a single element by name
+# Finds and returns a single element by name.
+# NOTE: This is probably broken, since there can be many plugins with one name
 sub fetch_name {
 	return ( $_[0]->select( 'where name = ?', $_[1] ) )[0];
 }
