@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-17 20:10-0700\n"
+"POT-Creation-Date: 2011-07-18 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1173,12 +1173,12 @@ msgstr ""
 msgid "Copy of current file"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:190
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:187
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:210
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:219
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:170
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:168
 #, perl-format
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr ""
@@ -1242,7 +1242,8 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:289
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:277
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:332
 msgid "Create Directory"
 msgstr ""
 
@@ -1408,7 +1409,8 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/Dialog/KeyBindings.pm:100
+#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/Directory/TreeCtrl.pm:362
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
 
@@ -1416,7 +1418,11 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:269
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:255
+msgid "Delete Directory"
+msgstr ""
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:310
 msgid "Delete File"
 msgstr ""
 
@@ -1484,7 +1490,7 @@ msgstr ""
 msgid "Directories Mixed"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:83
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:85
 msgid "Directory"
 msgstr ""
 
@@ -2863,7 +2869,7 @@ msgstr ""
 msgid "Move POD to __END__"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:113
+#: lib/Padre/Wx/Directory.pm:127
 msgid "Move to other panel"
 msgstr ""
 
@@ -2914,6 +2920,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/File.pm:43
 msgid "New"
+msgstr ""
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:364
+msgid "New Folder"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/WhereFrom.pm:26
@@ -3133,7 +3143,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:253
+#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:289
 msgid "Open File"
 msgstr ""
 
@@ -3222,8 +3232,8 @@ msgstr ""
 msgid "Open in Command Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:233
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:261
+#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:243
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:298
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3522,11 +3532,11 @@ msgstr ""
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:157
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:155
 msgid "Please type in the new name of the directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:159
 msgid "Please type in the new name of the file"
 msgstr ""
 
@@ -3669,7 +3679,7 @@ msgstr ""
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:266 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:281 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
@@ -3779,7 +3789,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:201
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:206
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3796,7 +3806,7 @@ msgstr ""
 msgid "Refactor"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:304
+#: lib/Padre/Wx/Directory.pm:114
 msgid "Refresh"
 msgstr ""
 
@@ -3912,11 +3922,16 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:241
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:361
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:363
+msgid "Rename"
+msgstr ""
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:265
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:278
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:320
 msgid "Rename File"
 msgstr ""
 
@@ -3924,11 +3939,11 @@ msgstr ""
 msgid "Rename Variable"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:158
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:156
 msgid "Rename directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:162
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:160
 msgid "Rename file"
 msgstr ""
 
@@ -4949,7 +4964,7 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:520
+#: lib/Padre/Wx/Directory.pm:535
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
 "save your work and restart Padre."
