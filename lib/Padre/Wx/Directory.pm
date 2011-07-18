@@ -754,16 +754,6 @@ sub compare {
 	return ( $right->is_directory <=> $left->is_directory or lc( $left->name ) cmp lc( $right->name ) );
 }
 
-# there are already so many re* functions, I did not have a better name
-sub rere {
-	my $self = shift;
-	$self->task_reset;
-	$self->clear;
-	$self->refill;
-	$self->rebrowse;
-	return;
-}
-
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.

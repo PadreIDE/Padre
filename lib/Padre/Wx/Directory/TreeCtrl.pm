@@ -89,6 +89,9 @@ sub new {
 }
 
 
+
+
+
 ######################################################################
 # Event Handlers
 
@@ -118,9 +121,8 @@ sub on_tree_item_activated {
 sub key_up {
 	my $self  = shift;
 	my $event = shift;
-
-	my $mod = $event->GetModifiers || 0;
-	my $code = $event->GetKeyCode;
+	my $mod   = $event->GetModifiers || 0;
+	my $code  = $event->GetKeyCode;
 
 	# see Padre::Wx::Main::key_up
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
@@ -128,13 +130,9 @@ sub key_up {
 	my $current = $self->current;
 	my $main    = $current->main;
 	my $project = $current->project;
-
 	my $item_id = $self->GetSelection;
-	my $data    = $self->GetPlData($item_id);
-
-	return if not $data;
-
-	my $file = File::Spec->catfile( $project->root, $data->path );
+	my $data    = $self->GetPlData($item_id) or return;
+	my $file    = File::Spec->catfile( $project->root, $data->path );
 
 	if ( $code == Wx::WXK_DELETE ) {
 		$self->_delete_file($file);
@@ -142,7 +140,6 @@ sub key_up {
 
 	$event->Skip;
 	return;
-
 }
 
 sub _rename_file_dir {
@@ -168,17 +165,12 @@ sub _rename_file_dir {
 
 	my $path = File::Basename::dirname($file);
 	if ( rename $file, File::Spec->catdir( $path, $new_name ) ) {
-
-		# TO DO: probably we don't need to rere here
-		# we just need to remove the old entry from the tree and add a new entry
-		# this is the simple way that hopefull will eliminate the crash #1248
-		$self->GetParent->rere;
+		$self->GetParent->rebrowse;
 	} else {
 		$main->error( sprintf( Wx::gettext(q(Could not rename: '%s' to '%s': %s)), $file, $path, $! ) );
 	}
 	return;
 }
-
 
 sub _create_directory {
 	my $self = shift;
@@ -212,11 +204,8 @@ sub _delete_file {
 	File::Path::remove_tree( $file, { error => \$error_ref } );
 
 	if ( scalar @$error_ref == 0 ) {
-
-		# TO DO: probably we don't need to rere here
-		# we just need to remove the old entry from the tree and add a new entry
-		# this is the simple way that hopefull will eliminate the crash #1248
-		$self->GetParent->rere;
+		# This might be overkill a bit, but it works
+		$self->GetParent->rebrowse;
 	} else {
 		$main->error( sprintf Wx::gettext(q(Could not delete: '%s': %s)), $file, ( join ' ', @$error_ref ) );
 	}
@@ -314,10 +303,7 @@ sub on_tree_item_menu {
 		$self,
 		$menu->Append( -1, Wx::gettext('Refresh') ),
 		sub {
-
-			# TO DO: probably something less than rere would be enought
-			# but we now at least eliminate the crash of #1248
-			shift->GetParent->rere;
+			shift->GetParent->rebrowse;
 		}
 	);
 
@@ -330,6 +316,8 @@ sub on_tree_item_menu {
 
 	return;
 }
+
+
 
 
 
