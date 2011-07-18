@@ -98,13 +98,16 @@ sub startup {
 	# NOTE: Replace the following with if ( 0 ) will disable the
 	# slave master quick-spawn optimisation.
 	if ( $setting{threads} ) {
-		# Load a limited subset of Wx early so that we can be
-		# sure that the Wx::PlThreadEvent works in child threads.
+		# Load a limited subset of Wx early so that we can be sure that
+		# the Wx::PlThreadEvent works in child threads. The thread
+		# modules must be loaded before Wx so that threading in Wx works
+		require threads;
+		require threads::shared;
 		require Wx;
 
 		# Second-generation version of the threading optimisation.
-		# This one is much safer because we start with zero existing tasks
-		# and no expectation of existing load behaviour.
+		# This one is much safer because we start with zero existing
+		# tasks and no expectation of existing load behaviour.
 		require Padre::TaskThread;
 		Padre::TaskThread->master;
 	}
