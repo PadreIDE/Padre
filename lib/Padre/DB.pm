@@ -30,6 +30,7 @@ use Padre::DB::Migrate {
 	array        => 1, # Smaller faster array objects
 	xsaccessor   => 0, # XS acceleration for the generated code
 	shim         => 1, # Overlay classes can fully override
+	x_update     => 1,
 }; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults
