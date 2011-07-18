@@ -79,6 +79,12 @@ next production release, and synchronise their release to the Padre schedule.
     - Fix View/Show Document As menu #1246 (SZABGAB)
     - Eliminate crash caused by directory browser. #1248 (SZABGAB)
     - Add Perl menu entry to deparse selected code using B::Deparse (SZABGAB)
+    - Added directory deletion to the file tree, although it doesn't use the
+      file operation task, so it could be slow and block (ADAMK)
+    - Labels for directory tree menu commands are now localised to the prefered
+      operating system terms, on Win32 at least to start with (ADAMK)
+    - Because the directory tree "Refresh" operation only actually works by
+      refreshing the entire tree, move it to the top search box menu (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

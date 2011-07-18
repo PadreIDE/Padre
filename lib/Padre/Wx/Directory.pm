@@ -106,16 +106,31 @@ sub new {
 
 	# Create the search control menu
 	my $menu = Wx::Menu->new;
+
 	Wx::Event::EVT_MENU(
 		$self,
 		$menu->Append(
 			-1,
-			Wx::gettext('Move to other panel')
+			Wx::gettext('Refresh'),
+		),
+		sub {
+			shift->rebrowse;
+		},
+	);
+
+	$menu->AppendSeparator;
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append(
+			-1,
+			Wx::gettext('Move to other panel'),
 		),
 		sub {
 			shift->move;
-		}
+		},
 	);
+
 	$search->SetMenu($menu);
 
 	# Create the tree control

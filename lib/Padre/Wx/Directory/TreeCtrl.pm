@@ -6,6 +6,7 @@ use warnings;
 use File::Path                 ();
 use File::Spec                 ();
 use File::Basename             ();
+use Padre::Util                ('_T');
 use Padre::Constant            ();
 use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
@@ -238,15 +239,31 @@ sub on_tree_item_menu {
 	if ( $data->type == Padre::Wx::Directory::Path::DIRECTORY ) {
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Open in File Browser') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Open in File Browser') ),
+			),
 			sub {
 				shift->main->on_open_in_file_browser($file);
 			}
 		);
 
+		$menu->AppendSeparator;
+
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Rename Directory') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Delete Directory') ),
+			),
+			sub {
+				shift->delete_file($file);
+			}
+		);
+
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1,
+				$self->getlabel( _T('Rename Directory') ),
+			),
 			sub {
 				shift->rename_file($file);
 			}
@@ -256,7 +273,9 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Create Directory') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Create Directory') ),
+			),
 			sub {
 				shift->create_directory($file);
 			}
@@ -275,15 +294,21 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Open in File Browser') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Open in File Browser') ),
+			),
 			sub {
 				shift->main->on_open_in_file_browser($file);
 			}
 		);
 
+		$menu->AppendSeparator;
+
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Delete File') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Delete File') ),
+			),
 			sub {
 				shift->delete_file($file);
 			}
@@ -291,7 +316,9 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Rename File') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Rename File') ),
+			),
 			sub {
 				shift->rename_file($file);
 			}
@@ -301,24 +328,15 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1, Wx::gettext('Create Directory') ),
+			$menu->Append( -1,
+				$self->getlabel( _T('Create Directory') ),
+			),
 			sub {
 				my $dir = File::Basename::dirname($file);
 				shift->create_directory($dir);
 			}
 		);
 	}
-
-	$menu->AppendSeparator;
-
-	# Updates the directory listing
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append( -1, Wx::gettext('Refresh') ),
-		sub {
-			shift->GetParent->rebrowse;
-		}
-	);
 
 	# Pops up the context menu
 	$self->PopupMenu(
@@ -329,6 +347,35 @@ sub on_tree_item_menu {
 
 	return;
 }
+
+
+
+
+
+######################################################################
+# Localisation
+
+my %WIN32 = (
+	'Open in File Browser' => _T('Explore...'),
+	'Delete Directory'     => _T('Delete'),
+	'Rename Directory'     => _T('Rename'),
+	'Delete File'          => _T('Delete'),
+	'Rename File'          => _T('Rename'),
+	'Create Directory'     => _T('New Folder'),
+);
+
+# Improved gettext for the directory tree, which not only applies localisation
+# for languages, but also maps to operating system terms for the appropriate
+# actions.
+sub getlabel {
+	my $self  = shift;
+	my $label = shift;
+	if ( Padre::Constant::WIN32 and $WIN32{$label} ) {
+		$label = $WIN32{$label};
+	}
+	return Wx::gettext($label);
+}
+
 
 
 
