@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-17 16:10-0700\n"
+"POT-Creation-Date: 2011-07-17 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -531,7 +531,7 @@ msgstr ""
 msgid "All Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:531
+#: lib/Padre/Document/Perl.pm:529
 msgid "All braces appear to be matched"
 msgstr ""
 
@@ -850,7 +850,7 @@ msgid ""
 "files on MS Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1589
+#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1587
 msgid "Change variable style"
 msgstr ""
 
@@ -902,12 +902,12 @@ msgstr ""
 msgid "Characters (including whitespace)"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:532
+#: lib/Padre/Document/Perl.pm:530
 msgid "Check Complete"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:602 lib/Padre/Document/Perl.pm:656
-#: lib/Padre/Document/Perl.pm:691
+#: lib/Padre/Document/Perl.pm:600 lib/Padre/Document/Perl.pm:654
+#: lib/Padre/Document/Perl.pm:689
 msgid "Check cancelled"
 msgstr ""
 
@@ -1173,12 +1173,12 @@ msgstr ""
 msgid "Copy of current file"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:198
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:190
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:221
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:210
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:177
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:170
 #, perl-format
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr ""
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:300
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:289
 msgid "Create Directory"
 msgstr ""
 
@@ -1284,7 +1284,7 @@ msgstr ""
 msgid "Cu&t"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:690
+#: lib/Padre/Document/Perl.pm:688
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
@@ -1297,16 +1297,16 @@ msgstr ""
 msgid "Current Document"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:655
+#: lib/Padre/Document/Perl.pm:653
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:601 lib/Padre/Document/Perl.pm:635
+#: lib/Padre/Document/Perl.pm:599 lib/Padre/Document/Perl.pm:633
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:879 lib/Padre/Document/Perl.pm:929
-#: lib/Padre/Document/Perl.pm:967
+#: lib/Padre/Document/Perl.pm:877 lib/Padre/Document/Perl.pm:927
+#: lib/Padre/Document/Perl.pm:965
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:280
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:269
 msgid "Delete File"
 msgstr ""
 
@@ -1861,7 +1861,7 @@ msgstr ""
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:490
+#: lib/Padre/Document/Perl.pm:488
 msgid "Error: "
 msgstr ""
 
@@ -2214,7 +2214,7 @@ msgstr ""
 msgid "Find:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1016
+#: lib/Padre/Document/Perl.pm:1014
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
@@ -2924,7 +2924,7 @@ msgstr ""
 msgid "New Module"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:889
+#: lib/Padre/Document/Perl.pm:887
 msgid "New name"
 msgstr ""
 
@@ -2968,11 +2968,11 @@ msgstr ""
 msgid "No Perl 5 file is open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:637
+#: lib/Padre/Document/Perl.pm:635
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:969
+#: lib/Padre/Document/Perl.pm:967
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
@@ -2981,7 +2981,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:492
+#: lib/Padre/Document/Perl.pm:490
 msgid "No errors found."
 msgstr ""
 
@@ -3133,7 +3133,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:264
+#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:253
 msgid "Open File"
 msgstr ""
 
@@ -3222,8 +3222,8 @@ msgstr ""
 msgid "Open in Command Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:244
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:272
+#: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:233
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:261
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3522,11 +3522,11 @@ msgstr ""
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:160
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:157
 msgid "Please type in the new name of the directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:164
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
 msgid "Please type in the new name of the file"
 msgstr ""
 
@@ -3779,7 +3779,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:209
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:201
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3796,7 +3796,7 @@ msgstr ""
 msgid "Refactor"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:315
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:304
 msgid "Refresh"
 msgstr ""
 
@@ -3912,11 +3912,11 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:252
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:241
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:289
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:278
 msgid "Rename File"
 msgstr ""
 
@@ -3924,15 +3924,15 @@ msgstr ""
 msgid "Rename Variable"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:158
 msgid "Rename directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:165
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:162
 msgid "Rename file"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:880 lib/Padre/Document/Perl.pm:890
+#: lib/Padre/Document/Perl.pm:878 lib/Padre/Document/Perl.pm:888
 msgid "Rename variable"
 msgstr ""
 
@@ -3952,7 +3952,7 @@ msgstr ""
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:975 lib/Padre/Document/Perl.pm:1024
+#: lib/Padre/Document/Perl.pm:973 lib/Padre/Document/Perl.pm:1022
 msgid "Replace Operation Canceled"
 msgstr ""
 
@@ -4193,7 +4193,7 @@ msgstr ""
 msgid "Search &Term:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:643
+#: lib/Padre/Document/Perl.pm:641
 msgid "Search Canceled"
 msgstr ""
 
@@ -4349,7 +4349,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1018
+#: lib/Padre/Document/Perl.pm:1016
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
@@ -5070,8 +5070,8 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:639
-#: lib/Padre/Document/Perl.pm:971 lib/Padre/Document/Perl.pm:1020
+#: lib/Padre/PluginManager.pm:920 lib/Padre/Document/Perl.pm:637
+#: lib/Padre/Document/Perl.pm:969 lib/Padre/Document/Perl.pm:1018
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr ""
@@ -5195,7 +5195,7 @@ msgstr ""
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:930
+#: lib/Padre/Document/Perl.pm:928
 msgid "Variable case change"
 msgstr ""
 
