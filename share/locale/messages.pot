@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-20 04:10-0700\n"
+"POT-Creation-Date: 2011-07-20 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1178,7 +1178,7 @@ msgstr ""
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:219
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:218
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1242,8 +1242,8 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:277
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:332
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:280
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:339
 msgid "Create Directory"
 msgstr ""
 
@@ -1409,7 +1409,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:247 lib/Padre/Wx/Directory/TreeCtrl.pm:362
+#: lib/Padre/Wx/FBP/Sync.pm:247 lib/Padre/Wx/Directory/TreeCtrl.pm:369
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
@@ -1418,11 +1418,11 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:255
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:256
 msgid "Delete Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:310
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:315
 msgid "Delete File"
 msgstr ""
 
@@ -1677,7 +1677,7 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1271
+#: lib/Padre/Config.pm:1272
 msgid ""
 "Enable or disable the newer Wx::Scintilla source code editing component. "
 msgstr ""
@@ -2917,7 +2917,7 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:364
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:371
 msgid "New Folder"
 msgstr ""
 
@@ -3138,7 +3138,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:289
+#: lib/Padre/Wx/Main.pm:4185 lib/Padre/Wx/Directory/TreeCtrl.pm:292
 msgid "Open File"
 msgstr ""
 
@@ -3228,7 +3228,7 @@ msgid "Open in Command Line"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:248 lib/Padre/Wx/Directory/TreeCtrl.pm:243
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:298
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:302
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3784,7 +3784,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:206
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:205
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3917,16 +3917,16 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:361
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:363
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:368
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:370
 msgid "Rename"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:265
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:267
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:320
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:326
 msgid "Rename File"
 msgstr ""
 
@@ -4998,7 +4998,7 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1272
+#: lib/Padre/Config.pm:1273
 msgid "This requires an installed Wx::Scintilla and a Padre restart"
 msgstr ""
 
