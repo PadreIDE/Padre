@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-20 00:10-0700\n"
+"POT-Creation-Date: 2011-07-20 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -387,7 +387,7 @@ msgstr ""
 msgid "&Toggle Comment"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:198
+#: lib/Padre/Wx/Menu/Tools.pm:200
 msgid "&Tools"
 msgstr ""
 
@@ -2848,7 +2848,7 @@ msgstr ""
 msgid "Module Start"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:65
+#: lib/Padre/Wx/Menu/Tools.pm:67
 msgid "Module Tools"
 msgstr ""
 
@@ -3551,7 +3551,7 @@ msgstr ""
 msgid "Plug-in Name"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:103
+#: lib/Padre/Wx/Menu/Tools.pm:105
 msgid "Plug-in Tools"
 msgstr ""
 
