@@ -65,7 +65,7 @@ sub new {
 	# Save cookies for state management from Padre session to session
 	# is this even wanted? remove at padre close?
 	my $ua = LWP::UserAgent->new;
-	push @{ $ua->requests_redirectable }, 'POST';
+	#push @{ $ua->requests_redirectable }, 'POST';
 	$ua->timeout(2);
 	$ua->cookie_jar(
 		HTTP::Cookies->new(
@@ -185,7 +185,8 @@ sub login {
 
 	my $resp = $self->ua->request( POST "$server/login", $params );
 
-	if ( $resp->content !~ /Wrong username or password/i and $resp->code == 200 ) {
+	if ( $resp->content !~ /Wrong username or password/i and
+		( $resp->code == 200 or $resp->code == 302 )) {
 		$self->{state} = 'logged_in';
 		return 'Logged in successfully.';
 	}
@@ -323,14 +324,20 @@ sub server_to_local {
 	# apply each setting to the global config. should only be HUMAN settings
 	delete $c->{Version};
 	delete $c->{version};
+	local $@;
+	my @errors;
 	for my $key ( keys %$c ) {
-		$config->apply( $key, $c->{$key} );
+		eval { $config->apply( $key, $c->{$key} ); };
+		push @errors,$@ if $@;
 	}
 	$config->apply( main_singleinstance => 1 );
 	$config->write;
 
-	if ( $resp->code == 200 ) {
+	if ( $resp->code == 200 && @errors == 0 ) {
 		return 'Configuration downloaded and applied successfully.';
+	} elsif ( $resp->code == 200 && @errors ) {
+		warn @errors;
+		return 'Configuration downloaded successfully, some errors encountered applying to your current configuration.';
 	}
 
 	return 'Failed to download serverside configuration file to local Padre instance.';

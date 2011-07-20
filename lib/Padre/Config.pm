@@ -1422,7 +1422,7 @@ setting(
 	name    => 'config_sync_server',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => 'http://escher.ath.cx:3000',
+	default => 'http://sync.perlide.org/',
 );
 
 setting(
