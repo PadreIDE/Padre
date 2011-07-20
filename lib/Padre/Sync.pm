@@ -148,16 +148,16 @@ sub register {
 	}
 
 	# this crashes if server is unavailable. FIXME
-	my $resp = $self->ua->request(
+	my $response = $self->ua->request(
 		POST "$server/register",
 		'Content-Type' => 'application/json',
 		'Content'      => $self->{json}->encode($params),
 	);
-	if ( $resp->code == 200 ) {
+	if ( $response->code == 200 ) {
 		return 'Account registered successfully. Please log in.';
 	}
 
-	my $h = $self->{json}->decode( $resp->content );
+	my $h = $self->{json}->decode( $response->content );
 
 	return "Registration Failure: $h->{error}" if $h->{error};
 	return "Registration failure.";
@@ -183,10 +183,10 @@ sub login {
 		return 'Failure: cannot log in, user already logged in.';
 	}
 
-	my $resp = $self->ua->request( POST "$server/login", $params );
+	my $response = $self->ua->request( POST "$server/login", $params );
 
-	if ( $resp->content !~ /Wrong username or password/i and
-		( $resp->code == 200 or $resp->code == 302 )) {
+	if ( $response->content !~ /Wrong username or password/i and
+		( $response->code == 200 or $response->code == 302 )) {
 		$self->{state} = 'logged_in';
 		return 'Logged in successfully.';
 	}
@@ -213,9 +213,9 @@ sub logout {
 		return 'Failure: cannot logout, user not logged in.';
 	}
 
-	my $resp = $self->ua->request( GET "$server/logout" );
+	my $response = $self->ua->request( GET "$server/logout" );
 
-	if ( $resp->code == 200 ) {
+	if ( $response->code == 200 ) {
 		$self->{state} = 'not_logged_in';
 		return 'Logged out successfully.';
 	}
@@ -243,9 +243,9 @@ sub server_delete {
 		return 'Failure: user not logged in.';
 	}
 
-	my $resp = $self->ua->request( DELETE "$server/user/config" );
+	my $response = $self->ua->request( DELETE "$server/user/config" );
 
-	if ( $resp->code == 200 ) {
+	if ( $response->code == 200 ) {
 		return 'Configuration deleted successfully.';
 	}
 
@@ -280,12 +280,12 @@ sub local_to_server {
 		$h{$k} = $conf->{$k};
 	}
 
-	my $resp = $self->ua->request(
+	my $response = $self->ua->request(
 		POST "$server/user/config",
 		'Content-Type' => 'application/json',
 		'Content'      => $self->{json}->encode( \%h ),
 	);
-	if ( $resp->code == 200 ) {
+	if ( $response->code == 200 ) {
 		return 'Configuration uploaded successfully.';
 	}
 
@@ -307,35 +307,44 @@ sub server_to_local {
 	my $config = $self->config;
 	my $server = $config->config_sync_server;
 
-	return 'Failure: no server found.' if not $server;
+	return 'Failure: no server found.' unless $server;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
-	my $resp = $self->ua->request( GET "$server/user/config", 'Accept' => 'application/json' );
+	my $response = $self->ua->request(
+		GET "$server/user/config",
+		'Accept' => 'application/json',
+	);
 
-	my $c;
-	eval { $c = $self->{json}->decode( $resp->content ); };
-	if ($@) {
-		return 'Failed to deserialize serverside configuration.';
-	}
-
-	# apply each setting to the global config. should only be HUMAN settings
-	delete $c->{Version};
-	delete $c->{version};
 	local $@;
+	my $json;
+	eval {
+		$json = $self->{json}->decode( $response->content );
+	};
+	return 'Failed to deserialize serverside configuration.' if $@;
+
+	# Apply each setting to the global config. should only be HUMAN settings
+	delete $json->{Version};
+	delete $json->{version};
 	my @errors;
-	for my $key ( keys %$c ) {
-		eval { $config->apply( $key, $c->{$key} ); };
-		push @errors,$@ if $@;
+	for my $key ( keys %$json ) {
+		my $meta = $config->meta($key);
+		unless ( $meta and $meta->store == Padre::Constant::HUMAN ) {
+			# Skip unknown or non-HUMAN settings
+			next;
+		}
+		eval {
+			$config->apply( $key, $json->{$key} );
+		};
+		push @errors, $@ if $@;
 	}
-	$config->apply( main_singleinstance => 1 );
 	$config->write;
 
-	if ( $resp->code == 200 && @errors == 0 ) {
+	if ( $response->code == 200 && @errors == 0 ) {
 		return 'Configuration downloaded and applied successfully.';
-	} elsif ( $resp->code == 200 && @errors ) {
+	} elsif ( $response->code == 200 && @errors ) {
 		warn @errors;
 		return 'Configuration downloaded successfully, some errors encountered applying to your current configuration.';
 	}
