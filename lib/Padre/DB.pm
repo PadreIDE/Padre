@@ -27,9 +27,9 @@ use Padre::DB::Migrate {
 	tables       => ['Modules'],
 	file         => Padre::Constant::CONFIG_HOST,
 	user_version => 11,
-	array        => 1, # Smaller faster array objects
-	xsaccessor   => 0, # XS acceleration for the generated code
-	shim         => 1, # Overlay classes can fully override
+	array        => 1,                           # Smaller faster array objects
+	xsaccessor   => 0,                           # XS acceleration for the generated code
+	shim         => 1,                           # Overlay classes can fully override
 	x_update     => 1,
 }; #, '-DEBUG';
 

@@ -65,6 +65,7 @@ sub new {
 	# Save cookies for state management from Padre session to session
 	# is this even wanted? remove at padre close?
 	my $ua = LWP::UserAgent->new;
+
 	#push @{ $ua->requests_redirectable }, 'POST';
 	$ua->timeout(2);
 	$ua->cookie_jar(
@@ -185,8 +186,9 @@ sub login {
 
 	my $response = $self->ua->request( POST "$server/login", $params );
 
-	if ( $response->content !~ /Wrong username or password/i and
-		( $response->code == 200 or $response->code == 302 )) {
+	if ( $response->content !~ /Wrong username or password/i
+		and ( $response->code == 200 or $response->code == 302 ) )
+	{
 		$self->{state} = 'logged_in';
 		return 'Logged in successfully.';
 	}
@@ -320,9 +322,7 @@ sub server_to_local {
 
 	local $@;
 	my $json;
-	eval {
-		$json = $self->{json}->decode( $response->content );
-	};
+	eval { $json = $self->{json}->decode( $response->content ); };
 	return 'Failed to deserialize serverside configuration.' if $@;
 
 	# Apply each setting to the global config. should only be HUMAN settings
@@ -332,12 +332,11 @@ sub server_to_local {
 	for my $key ( keys %$json ) {
 		my $meta = $config->meta($key);
 		unless ( $meta and $meta->store == Padre::Constant::HUMAN ) {
+
 			# Skip unknown or non-HUMAN settings
 			next;
 		}
-		eval {
-			$config->apply( $key, $json->{$key} );
-		};
+		eval { $config->apply( $key, $json->{$key} ); };
 		push @errors, $@ if $@;
 	}
 	$config->write;

@@ -149,7 +149,7 @@ sub rename_file {
 	my $main = $self->main;
 	my $file = shift;
 	my $old  = File::Basename::basename($file);
-	my $new  =
+	my $new =
 		-d $file
 		? $main->simple_prompt(
 		Wx::gettext('Please type in the new name of the directory'),
@@ -192,7 +192,7 @@ sub create_directory {
 		return;
 	}
 
-	# 
+	#
 	$self->GetParent->rebrowse;
 
 	return;
@@ -202,9 +202,7 @@ sub delete_file {
 	my $self = shift;
 	my $file = shift;
 	my $main = $self->main;
-	my $yes  = $main->yes_no(
-		sprintf( Wx::gettext('Really delete the file "%s"?'), $file )
-	);
+	my $yes  = $main->yes_no( sprintf( Wx::gettext('Really delete the file "%s"?'), $file ) );
 	return unless $yes;
 
 	# The background task Padre::Task::File already exists specifically
@@ -213,6 +211,7 @@ sub delete_file {
 	File::Path::remove_tree( $file, { error => \$error } );
 
 	if ( scalar @$error == 0 ) {
+
 		# This might be overkill a bit, but it works
 		$self->GetParent->rebrowse;
 	} else {
@@ -239,7 +238,8 @@ sub on_tree_item_menu {
 	if ( $data->type == Padre::Wx::Directory::Path::DIRECTORY ) {
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Open in File Browser') ),
 			),
 			sub {
@@ -251,7 +251,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Delete Directory') ),
 			),
 			sub {
@@ -261,7 +262,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Rename Directory') ),
 			),
 			sub {
@@ -273,7 +275,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Create Directory') ),
 			),
 			sub {
@@ -294,7 +297,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Open in File Browser') ),
 			),
 			sub {
@@ -306,7 +310,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Delete File') ),
 			),
 			sub {
@@ -316,7 +321,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Rename File') ),
 			),
 			sub {
@@ -328,7 +334,8 @@ sub on_tree_item_menu {
 
 		Wx::Event::EVT_MENU(
 			$self,
-			$menu->Append( -1,
+			$menu->Append(
+				-1,
 				$self->getlabel( _T('Create Directory') ),
 			),
 			sub {
@@ -375,7 +382,6 @@ sub getlabel {
 	}
 	return Wx::gettext($label);
 }
-
 
 
 

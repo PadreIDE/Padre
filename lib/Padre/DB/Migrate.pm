@@ -5,15 +5,15 @@ package Padre::DB::Migrate;
 use 5.008005;
 use strict;
 use warnings;
-use Carp              ();
-use Class::Unload     ();
+use Carp          ();
+use Class::Unload ();
 use File::Spec 3.2701 ();
-use File::Path   2.04 ();
-use File::Basename    ();
+use File::Path 2.04   ();
+use File::Basename ();
 use Params::Util 0.37 ();
-use DBI          1.58 ();
-use DBD::SQLite  1.21 ();
-use ORLite       1.28 ();
+use DBI 1.58          ();
+use DBD::SQLite 1.21  ();
+use ORLite 1.28       ();
 
 our $VERSION = '0.87';
 our @ISA     = 'ORLite';
@@ -70,6 +70,7 @@ sub import {
 	my $file    = File::Spec->rel2abs( $params{file} );
 	my $created = !-f $params{file};
 	if ($created) {
+
 		# Create the parent directory
 		my $dir = File::Basename::dirname($file);
 		unless ( -d $dir ) {
@@ -89,7 +90,7 @@ sub import {
 	my $want    = $params{user_version};
 
 	# Attempt to roll the schema version forwards
-	while ( 1 ) {
+	while (1) {
 		local $@;
 
 		# Shortcut if we are already at the target version
@@ -99,13 +100,11 @@ sub import {
 
 		# Attempt to load the next patch class, if it exists
 		my $patch = "Padre::DB::Migrate::Patch" . ++$version;
-		Params::Util::_DRIVER($patch, 'Padre::DB::Migrate::Patch') or last;
+		Params::Util::_DRIVER( $patch, 'Padre::DB::Migrate::Patch' ) or last;
 
 		# Run the upgrade
 		print STDERR "Applying schema patch $patch...\n" if $DEBUG;
-		eval {
-			$patch->new( dbh => $dbh )->upgrade;
-		};
+		eval { $patch->new( dbh => $dbh )->upgrade; };
 		die "$patch: Failed to upgrade database schema: $@" if $@;
 
 		# Successfully upgraded the schema

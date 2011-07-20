@@ -20,10 +20,10 @@ sub new {
 	$self->{txt_login}->SetValue( $config->config_sync_username );
 	$self->{txt_password}->SetValue( $config->config_sync_password );
 
-        # registration prefill
-        $self->{txt_username}->SetValue( $config->identity_nickname );
-        $self->{txt_email}->SetValue( $config->identity_email );
-        $self->{txt_email_confirm}->SetValue( $config->identity_email );
+	# registration prefill
+	$self->{txt_username}->SetValue( $config->identity_nickname );
+	$self->{txt_email}->SetValue( $config->identity_email );
+	$self->{txt_email_confirm}->SetValue( $config->identity_email );
 
 	# Create the sync manager
 	$self->{sync} = Padre::Sync->new( $self->ide );
@@ -59,12 +59,12 @@ sub refresh {
 # Event Handlers
 
 sub btn_login {
-	my $self     = shift;
-	my $sync     = $self->{sync};
+	my $self = shift;
+	my $sync = $self->{sync};
 
-        my $server   = $self->{txt_remote}->GetValue;
-        if ( $server ne $self->config->config_sync_server ) {
-	        $self->config->apply( 'config_sync_server' => $server )
+	my $server = $self->{txt_remote}->GetValue;
+	if ( $server ne $self->config->config_sync_server ) {
+		$self->config->apply( 'config_sync_server' => $server );
 	}
 
 	my $username = $self->{txt_login}->GetValue;

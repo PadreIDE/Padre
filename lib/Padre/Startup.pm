@@ -98,6 +98,7 @@ sub startup {
 	# NOTE: Replace the following with if ( 0 ) will disable the
 	# slave master quick-spawn optimisation.
 	if ( $setting{threads} ) {
+
 		# Load a limited subset of Wx early so that we can be sure that
 		# the Wx::PlThreadEvent works in child threads. The thread
 		# modules must be loaded before Wx so that threading in Wx works

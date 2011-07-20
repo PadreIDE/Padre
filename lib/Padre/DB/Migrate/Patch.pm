@@ -20,10 +20,10 @@ our $VERSION = '0.87';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check filename
-	unless ( Params::Util::_INSTANCE($self->dbh, 'DBI::db') ) {
+	unless ( Params::Util::_INSTANCE( $self->dbh, 'DBI::db' ) ) {
 		die "Missing or invalid dbh database handle";
 	}
 
@@ -82,8 +82,8 @@ sub table_exists {
 }
 
 sub column_exists {
-	$_[0]->table_exists($_[1]) or
-	$_[0]->selectrow_array( "select count($_[2]) from $_[1]", {} );
+	$_[0]->table_exists( $_[1] )
+		or $_[0]->selectrow_array( "select count($_[2]) from $_[1]", {} );
 }
 
 1;

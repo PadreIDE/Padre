@@ -10,7 +10,7 @@ use Padre::Locale  ();
 
 our $VERSION = '0.87';
 
-use overload 
+use overload
 	'bool' => sub () {1},
 	'""' => 'plugin_name',
 	'fallback' => 0;
@@ -354,7 +354,7 @@ sub disable {
 	$self->errstr('');
 
 	# Save the last version we successfully enabled to the database
-	
+
 
 	return 0;
 }
