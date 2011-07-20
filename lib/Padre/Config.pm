@@ -1271,6 +1271,12 @@ setting(
 	help    => _T('Enable or disable the newer Wx::Scintilla source code editing component. ')
 		. _T('This requires an installed Wx::Scintilla and a Padre restart'),
 );
+setting(
+	name    => 'feature_sync',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 
 # Window menu list shorten common path
 setting(

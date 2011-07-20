@@ -38,11 +38,13 @@ sub new {
 		'tools.preferences',
 	);
 
-	# TODO Remove comments after 0.69 release
-	#	$self->add_menu_action(
-	#		$self,
-	#		'tools.sync',
-	#	);
+	# Config Sync
+	if ( $main->config->feature_sync ) {
+		$self->add_menu_action(
+			$self,
+			'tools.sync',
+		);
+	}
 
 	# Key bindings
 	$self->add_menu_action(

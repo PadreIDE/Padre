@@ -88,6 +88,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre::DB::Migrate now has class-based migration scripts instead of file
       based migration scripts. This results in vastly inferior encapsulation,
       but is much more reliable and works from inside PAR and friends (ADAMK)
+    - The Padre Preferences Sync client now works, but requires you to enable
+      the config value feature_sync until we work some bugs out of it (BRAMBLE)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
