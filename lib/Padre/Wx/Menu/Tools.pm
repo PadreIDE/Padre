@@ -52,13 +52,13 @@ sub new {
 		'tools.keys',
 	);
 
+	$self->AppendSeparator;
+
 	# Regex Editor
 	$self->add_menu_action(
 		$self,
 		'tools.regex',
 	);
-
-	$self->AppendSeparator;
 
 	# Create the module tools submenu
 	my $modules = Wx::Menu->new;
