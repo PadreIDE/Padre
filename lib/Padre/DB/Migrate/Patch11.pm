@@ -17,7 +17,7 @@ sub upgrade {
 	my $self = shift;
 
 	# Create the recently used table
-	do(<<'END_SQL');
+	$self->do(<<'END_SQL');
 CREATE TABLE recently_used (
 	name      VARCHAR(255) PRIMARY KEY,
 	value     VARCHAR(255) NOT NULL,
