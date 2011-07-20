@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-18 04:10-0700\n"
+"POT-Creation-Date: 2011-07-19 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgstr ""
 msgid "&Brace Matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:78
+#: lib/Padre/Wx/FBP/FindInFiles.pm:80
 msgid "&Browse"
 msgstr ""
 
@@ -130,7 +130,7 @@ msgstr ""
 msgid "&Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:123 lib/Padre/Wx/FBP/Find.pm:85
+#: lib/Padre/Wx/FBP/FindInFiles.pm:125 lib/Padre/Wx/FBP/Find.pm:87
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgstr ""
 msgid "&Debug"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:379 lib/Padre/Wx/FBP/Bookmarks.pm:90
+#: lib/Padre/Wx/ActionLibrary.pm:379 lib/Padre/Wx/FBP/Bookmarks.pm:92
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:126
 #: lib/Padre/Wx/Dialog/SessionManager.pm:302
 msgid "&Delete"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:139 lib/Padre/Wx/Dialog/Replace.pm:148
+#: lib/Padre/Wx/FBP/FindInFiles.pm:141 lib/Padre/Wx/Dialog/Replace.pm:148
 msgid "&Find"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgstr ""
 msgid "&Redo"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:115 lib/Padre/Wx/FBP/Find.pm:69
+#: lib/Padre/Wx/FBP/FindInFiles.pm:117 lib/Padre/Wx/FBP/Find.pm:71
 msgid "&Regular Expression"
 msgstr ""
 
@@ -498,7 +498,7 @@ msgstr ""
 msgid "Action: %s"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:331
+#: lib/Padre/Wx/FBP/Preferences.pm:333
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Advanced Settings"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:889
+#: lib/Padre/Wx/FBP/Preferences.pm:891
 msgid "Advanced..."
 msgstr ""
 
@@ -607,11 +607,11 @@ msgstr ""
 msgid "Apache License"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1122
+#: lib/Padre/Wx/FBP/Preferences.pm:1124
 msgid "Appearance"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:189
+#: lib/Padre/Wx/FBP/Preferences.pm:191
 msgid "Appearance Preview"
 msgstr ""
 
@@ -665,35 +665,35 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:287
+#: lib/Padre/Wx/FBP/Sync.pm:301
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:49 lib/Padre/Wx/Dialog/ModuleStart.pm:58
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:51 lib/Padre/Wx/Dialog/ModuleStart.pm:58
 msgid "Author:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1123
+#: lib/Padre/Wx/FBP/Preferences.pm:1125
 msgid "Auto-Complete"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:356
+#: lib/Padre/Wx/FBP/Preferences.pm:358
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:228
+#: lib/Padre/Wx/FBP/Preferences.pm:230
 msgid "Autocomplete always while typing"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:323
+#: lib/Padre/Wx/FBP/Preferences.pm:325
 msgid "Autocomplete brackets"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:244
+#: lib/Padre/Wx/FBP/Preferences.pm:246
 msgid "Autocomplete new functions in scripts"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:236
+#: lib/Padre/Wx/FBP/Preferences.pm:238
 msgid "Autocomplete new methods in packages"
 msgstr ""
 
@@ -701,11 +701,11 @@ msgstr ""
 msgid "Autocompletion error"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:634
+#: lib/Padre/Wx/FBP/Preferences.pm:636
 msgid "Autoindent"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:582
+#: lib/Padre/Wx/FBP/Preferences.pm:584
 msgid "Automatic indentation style detection"
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1124
+#: lib/Padre/Wx/FBP/Preferences.pm:1126
 msgid "Behaviour"
 msgstr ""
 
@@ -737,7 +737,7 @@ msgstr ""
 msgid "Blue butterfly on a green leaf"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:26
+#: lib/Padre/Wx/FBP/Bookmarks.pm:28
 msgid "Bookmarks"
 msgstr ""
 
@@ -745,7 +745,7 @@ msgstr ""
 msgid "Boolean"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:306
+#: lib/Padre/Wx/FBP/Preferences.pm:308
 msgid "Braces Assist"
 msgstr ""
 
@@ -762,7 +762,7 @@ msgstr ""
 msgid "Browser: no viewer for %s"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:77 lib/Padre/Wx/Dialog/ModuleStart.pm:64
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:79 lib/Padre/Wx/Dialog/ModuleStart.pm:64
 msgid "Builder:"
 msgstr ""
 
@@ -778,9 +778,9 @@ msgstr ""
 msgid "CTRL"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:903 lib/Padre/Wx/FBP/ModuleStarter.pm:146
-#: lib/Padre/Wx/FBP/FindInFiles.pm:146 lib/Padre/Wx/FBP/Bookmarks.pm:118
-#: lib/Padre/Wx/FBP/Find.pm:130 lib/Padre/Wx/FBP/Insert.pm:103
+#: lib/Padre/Wx/FBP/Preferences.pm:905 lib/Padre/Wx/FBP/ModuleStarter.pm:148
+#: lib/Padre/Wx/FBP/FindInFiles.pm:148 lib/Padre/Wx/FBP/Bookmarks.pm:120
+#: lib/Padre/Wx/FBP/Find.pm:132 lib/Padre/Wx/FBP/Insert.pm:105
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -915,7 +915,7 @@ msgstr ""
 msgid "Check for Common (Beginner) Errors"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:457
+#: lib/Padre/Wx/FBP/Preferences.pm:459
 msgid "Check for file updates on disk every (seconds)"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:93
+#: lib/Padre/Wx/FBP/Find.pm:95
 msgid "Cl&ose Window on Hit"
 msgstr ""
 
@@ -951,7 +951,7 @@ msgstr ""
 msgid "Clean Recent Files List"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:380
+#: lib/Padre/Wx/FBP/Preferences.pm:382
 msgid "Clean up file content on saving (for supported document types)"
 msgstr ""
 
@@ -963,7 +963,7 @@ msgstr ""
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Text.pm:54 lib/Padre/Wx/FBP/Sync.pm:252
+#: lib/Padre/Wx/FBP/Text.pm:56 lib/Padre/Wx/FBP/Sync.pm:264
 #: lib/Padre/Wx/Menu/File.pm:149 lib/Padre/Wx/Dialog/FilterTool.pm:152
 #: lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:236
@@ -1034,7 +1034,7 @@ msgstr ""
 msgid "Code Order"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:86
+#: lib/Padre/Wx/FBP/Preferences.pm:88
 msgid "Coloured text in output window (ANSI)"
 msgstr ""
 
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Config:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:143 lib/Padre/Wx/FBP/Sync.pm:171
+#: lib/Padre/Wx/FBP/Sync.pm:147 lib/Padre/Wx/FBP/Sync.pm:175
 msgid "Confirm"
 msgstr ""
 
@@ -1085,7 +1085,7 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:211
+#: lib/Padre/Wx/FBP/Preferences.pm:213
 msgid "Content Assist"
 msgstr ""
 
@@ -1329,7 +1329,7 @@ msgstr ""
 msgid "Current position: %s"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:475
+#: lib/Padre/Wx/FBP/Preferences.pm:477
 msgid "Cursor blink rate (milliseconds - 0 = off, 500 = default)"
 msgstr ""
 
@@ -1385,11 +1385,11 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:763
+#: lib/Padre/Wx/FBP/Preferences.pm:765
 msgid "Default line ending"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:403
+#: lib/Padre/Wx/FBP/Preferences.pm:405
 msgid "Default projects directory"
 msgstr ""
 
@@ -1397,7 +1397,7 @@ msgstr ""
 msgid "Default value:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:755
+#: lib/Padre/Wx/FBP/Preferences.pm:757
 msgid "Default word wrap on for each file"
 msgstr ""
 
@@ -1409,12 +1409,12 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:237 lib/Padre/Wx/Directory/TreeCtrl.pm:362
+#: lib/Padre/Wx/FBP/Sync.pm:247 lib/Padre/Wx/Directory/TreeCtrl.pm:362
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:104
+#: lib/Padre/Wx/FBP/Bookmarks.pm:106
 msgid "Delete &All"
 msgstr ""
 
@@ -1474,7 +1474,7 @@ msgstr ""
 msgid "Diff to Saved Version"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:543
+#: lib/Padre/Wx/FBP/Preferences.pm:545
 msgid "Diff tool"
 msgstr ""
 
@@ -1553,7 +1553,7 @@ msgstr ""
 msgid "Down"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:222
+#: lib/Padre/Wx/FBP/Sync.pm:230
 msgid "Download"
 msgstr ""
 
@@ -1641,27 +1641,27 @@ msgstr ""
 msgid "Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:158
+#: lib/Padre/Wx/FBP/Preferences.pm:160
 msgid "Editor Current Line Background Colour"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:134
+#: lib/Padre/Wx/FBP/Preferences.pm:136
 msgid "Editor Font"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:730
+#: lib/Padre/Wx/FBP/Preferences.pm:732
 msgid "Editor Options"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:52
+#: lib/Padre/Wx/FBP/Preferences.pm:54
 msgid "Editor Style"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:157
+#: lib/Padre/Wx/FBP/Sync.pm:161
 msgid "Email"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:63 lib/Padre/Wx/Dialog/ModuleStart.pm:61
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:65 lib/Padre/Wx/Dialog/ModuleStart.pm:61
 msgid "Email Address:"
 msgstr ""
 
@@ -1673,7 +1673,7 @@ msgstr ""
 msgid "Empty regex"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:489
+#: lib/Padre/Wx/FBP/Preferences.pm:491
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
@@ -1912,7 +1912,7 @@ msgstr ""
 msgid "Exist"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:60
+#: lib/Padre/Wx/FBP/Bookmarks.pm:62
 msgid "Existing Bookmarks:"
 msgstr ""
 
@@ -1945,7 +1945,7 @@ msgid ""
 "and comments"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1125
+#: lib/Padre/Wx/FBP/Preferences.pm:1127
 msgid "External Tools"
 msgstr ""
 
@@ -2045,11 +2045,11 @@ msgstr ""
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:842
+#: lib/Padre/Wx/FBP/Preferences.pm:844
 msgid "File access via FTP"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:818
+#: lib/Padre/Wx/FBP/Preferences.pm:820
 msgid "File access via HTTP"
 msgstr ""
 
@@ -2124,7 +2124,7 @@ msgstr ""
 msgid "Filter through tool"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Insert.pm:35
+#: lib/Padre/Wx/FBP/Insert.pm:37
 msgid "Filter:"
 msgstr ""
 
@@ -2133,15 +2133,15 @@ msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:27 lib/Padre/Wx/Dialog/Replace.pm:216
+#: lib/Padre/Wx/FBP/Find.pm:29 lib/Padre/Wx/Dialog/Replace.pm:216
 msgid "Find"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:124
+#: lib/Padre/Wx/FBP/Find.pm:126
 msgid "Find &All"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:109
+#: lib/Padre/Wx/FBP/Find.pm:111
 msgid "Find &Next"
 msgstr ""
 
@@ -2186,7 +2186,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/FBP/FindInFiles.pm:27
+#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/FBP/FindInFiles.pm:29
 msgid "Find in Files"
 msgstr ""
 
@@ -2216,7 +2216,7 @@ msgid ""
 "there."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:48 lib/Padre/Wx/Dialog/FindFast.pm:144
+#: lib/Padre/Wx/FBP/FindFast.pm:50 lib/Padre/Wx/Dialog/FindFast.pm:144
 msgid "Find:"
 msgstr ""
 
@@ -2351,7 +2351,7 @@ msgstr ""
 msgid "Grouping constructs"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:568
+#: lib/Padre/Wx/FBP/Preferences.pm:570
 msgid "Guess from Current Document"
 msgstr ""
 
@@ -2434,7 +2434,7 @@ msgstr ""
 msgid "Imitate clicking on the right mouse button"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:710
+#: lib/Padre/Wx/FBP/Preferences.pm:712
 msgid ""
 "Include directory:  -I<dir>\n"
 "Enable tainting checks:  -T\n"
@@ -2455,21 +2455,21 @@ msgstr ""
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1126
+#: lib/Padre/Wx/FBP/Preferences.pm:1128
 msgid "Indentation"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:616
+#: lib/Padre/Wx/FBP/Preferences.pm:618
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Insert.pm:96 lib/Padre/Wx/Menu/Edit.pm:121
+#: lib/Padre/Wx/FBP/Insert.pm:98 lib/Padre/Wx/Menu/Edit.pm:121
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:94 lib/Padre/Wx/Dialog/RegexEditor.pm:271
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Insert"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Insert.pm:26
+#: lib/Padre/Wx/FBP/Insert.pm:28
 msgid "Insert Snippit"
 msgstr ""
 
@@ -2505,7 +2505,7 @@ msgstr ""
 msgid "Internal error"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:696
+#: lib/Padre/Wx/FBP/Preferences.pm:698
 msgid "Interpreter arguments"
 msgstr ""
 
@@ -2590,11 +2590,11 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1127
+#: lib/Padre/Wx/FBP/Preferences.pm:1129
 msgid "Language - Perl 5"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:657
+#: lib/Padre/Wx/FBP/Preferences.pm:659
 msgid "Language Integration"
 msgstr ""
 
@@ -2610,7 +2610,7 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:92 lib/Padre/Wx/Dialog/ModuleStart.pm:67
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:94 lib/Padre/Wx/Dialog/ModuleStart.pm:67
 msgid "License:"
 msgstr ""
 
@@ -2677,7 +2677,7 @@ msgstr ""
 msgid "Loaded %s modules"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1128
+#: lib/Padre/Wx/FBP/Preferences.pm:1130
 msgid "Local/Remote File Access"
 msgstr ""
 
@@ -2685,7 +2685,7 @@ msgstr ""
 msgid "Lock User Interface"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:55
+#: lib/Padre/Wx/FBP/Sync.pm:57
 msgid "Logged out"
 msgstr ""
 
@@ -2694,7 +2694,7 @@ msgstr ""
 msgid "Logging into FTP server as %s..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:101
+#: lib/Padre/Wx/FBP/Sync.pm:103
 msgid "Login"
 msgstr ""
 
@@ -2778,7 +2778,7 @@ msgstr ""
 msgid "Match 1 or more times"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:100
+#: lib/Padre/Wx/FBP/FindFast.pm:102
 msgid "Match Case"
 msgstr ""
 
@@ -2813,7 +2813,7 @@ msgstr ""
 msgid "Matched text:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:270
+#: lib/Padre/Wx/FBP/Preferences.pm:272
 msgid "Maximum number of suggestions"
 msgstr ""
 
@@ -2825,15 +2825,15 @@ msgstr ""
 msgid "Methods"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:427
+#: lib/Padre/Wx/FBP/Preferences.pm:429
 msgid "Methods order"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:288
+#: lib/Padre/Wx/FBP/Preferences.pm:290
 msgid "Minimum characters for autocomplete"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:252
+#: lib/Padre/Wx/FBP/Preferences.pm:254
 msgid "Minimum length of suggestions"
 msgstr ""
 
@@ -2845,11 +2845,11 @@ msgstr ""
 msgid "Module"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:35 lib/Padre/Wx/Dialog/ModuleStart.pm:55
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:37 lib/Padre/Wx/Dialog/ModuleStart.pm:55
 msgid "Module Name:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:26 lib/Padre/Wx/Dialog/ModuleStart.pm:97
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:28 lib/Padre/Wx/Dialog/ModuleStart.pm:97
 msgid "Module Start"
 msgstr ""
 
@@ -2926,7 +2926,7 @@ msgstr ""
 msgid "New Folder"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/WhereFrom.pm:26
+#: lib/Padre/Wx/FBP/WhereFrom.pm:28
 msgid "New Installation Survey"
 msgstr ""
 
@@ -2950,7 +2950,7 @@ msgstr ""
 msgid "Newline Same Column"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:71
+#: lib/Padre/Wx/FBP/FindFast.pm:73
 msgid "Next"
 msgstr ""
 
@@ -3098,8 +3098,8 @@ msgstr ""
 msgid "Number of lines"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:139 lib/Padre/Wx/FBP/Bookmarks.pm:83
-#: lib/Padre/Wx/FBP/WhereFrom.pm:58
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:141 lib/Padre/Wx/FBP/Bookmarks.pm:85
+#: lib/Padre/Wx/FBP/WhereFrom.pm:60
 msgid "OK"
 msgstr ""
 
@@ -3220,11 +3220,11 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:388
+#: lib/Padre/Wx/FBP/Preferences.pm:390
 msgid "Open files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:419
+#: lib/Padre/Wx/FBP/Preferences.pm:421
 msgid "Open files in existing Padre"
 msgstr ""
 
@@ -3370,7 +3370,7 @@ msgstr ""
 msgid "PHP Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:339
+#: lib/Padre/Wx/FBP/Preferences.pm:341
 msgid "POD"
 msgstr ""
 
@@ -3404,7 +3404,7 @@ msgstr ""
 msgid "Padre Plugin Wizard"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:27
+#: lib/Padre/Wx/FBP/Preferences.pm:29
 msgid "Padre Preferences"
 msgstr ""
 
@@ -3412,7 +3412,7 @@ msgstr ""
 msgid "Padre Support (English)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:26 lib/Padre/Wx/Dialog/Sync.pm:43
+#: lib/Padre/Wx/FBP/Sync.pm:28 lib/Padre/Wx/Dialog/Sync.pm:43
 msgid "Padre Sync"
 msgstr ""
 
@@ -3430,11 +3430,11 @@ msgstr ""
 msgid "PageUp"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:115 lib/Padre/Wx/Dialog/ModuleStart.pm:70
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:117 lib/Padre/Wx/Dialog/ModuleStart.pm:70
 msgid "Parent Directory:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:86 lib/Padre/Wx/FBP/Sync.pm:129
+#: lib/Padre/Wx/FBP/Sync.pm:88 lib/Padre/Wx/FBP/Sync.pm:133
 msgid "Password"
 msgstr ""
 
@@ -3499,15 +3499,15 @@ msgstr ""
 msgid "Perl Help"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:747
+#: lib/Padre/Wx/FBP/Preferences.pm:749
 msgid "Perl beginner mode"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:793
+#: lib/Padre/Wx/FBP/Preferences.pm:795
 msgid "Perl ctags file"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:674
+#: lib/Padre/Wx/FBP/Preferences.pm:676
 msgid "Perl interpreter"
 msgstr ""
 
@@ -3639,7 +3639,7 @@ msgstr ""
 msgid "Pragmata"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:442
+#: lib/Padre/Wx/FBP/Preferences.pm:444
 msgid "Prefered language for error diagnostics"
 msgstr ""
 
@@ -3659,11 +3659,11 @@ msgstr ""
 msgid "Previ&ous"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Insert.pm:73
+#: lib/Padre/Wx/FBP/Insert.pm:75
 msgid "Preview:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:86
+#: lib/Padre/Wx/FBP/FindFast.pm:88
 msgid "Previous"
 msgstr ""
 
@@ -3810,7 +3810,7 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:513
+#: lib/Padre/Wx/FBP/Preferences.pm:515
 msgid "RegExp for TODO panel"
 msgstr ""
 
@@ -3818,11 +3818,11 @@ msgstr ""
 msgid "Regex Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:185
+#: lib/Padre/Wx/FBP/Sync.pm:189
 msgid "Register"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:314
+#: lib/Padre/Wx/FBP/Sync.pm:328
 msgid "Registration"
 msgstr ""
 
@@ -4142,7 +4142,7 @@ msgstr ""
 msgid "STC Reference"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:882 lib/Padre/Wx/Dialog/SessionSave.pm:235
+#: lib/Padre/Wx/FBP/Preferences.pm:884 lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Save"
 msgstr ""
 
@@ -4191,7 +4191,7 @@ msgstr ""
 msgid "Script Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:716
+#: lib/Padre/Wx/FBP/Preferences.pm:718
 msgid "Script arguments"
 msgstr ""
 
@@ -4200,11 +4200,11 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:77 lib/Padre/Wx/Dialog/Replace.pm:120
+#: lib/Padre/Wx/FBP/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:120
 msgid "Search &Backwards"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:36 lib/Padre/Wx/FBP/Find.pm:36
+#: lib/Padre/Wx/FBP/FindInFiles.pm:38 lib/Padre/Wx/FBP/Find.pm:38
 msgid "Search &Term:"
 msgstr ""
 
@@ -4212,7 +4212,7 @@ msgstr ""
 msgid "Search Canceled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:61
+#: lib/Padre/Wx/FBP/FindInFiles.pm:63
 msgid "Search Directory:"
 msgstr ""
 
@@ -4238,7 +4238,7 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:92
+#: lib/Padre/Wx/FBP/FindInFiles.pm:94
 msgid "Search in Types:"
 msgstr ""
 
@@ -4381,7 +4381,7 @@ msgstr ""
 msgid "Sending HTTP request %s..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:35
+#: lib/Padre/Wx/FBP/Sync.pm:37
 msgid "Server"
 msgstr ""
 
@@ -4397,7 +4397,7 @@ msgstr ""
 msgid "Set Bookmark"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Bookmarks.pm:35
+#: lib/Padre/Wx/FBP/Bookmarks.pm:37
 msgid "Set Bookmark:"
 msgstr ""
 
@@ -4486,7 +4486,7 @@ msgstr ""
 msgid "Shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:497
+#: lib/Padre/Wx/FBP/Preferences.pm:499
 msgid "Shorten the common path in window list"
 msgstr ""
 
@@ -4612,7 +4612,7 @@ msgstr ""
 msgid "Show information about Padre"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:94
+#: lib/Padre/Wx/FBP/Preferences.pm:96
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
@@ -4628,7 +4628,7 @@ msgstr ""
 msgid "Show previous positions"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:102
+#: lib/Padre/Wx/FBP/Preferences.pm:104
 msgid "Show right margin at column"
 msgstr ""
 
@@ -4743,7 +4743,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/WhereFrom.pm:64
+#: lib/Padre/Wx/FBP/WhereFrom.pm:66
 msgid "Skip question without giving feedback"
 msgstr ""
 
@@ -4775,7 +4775,7 @@ msgstr ""
 msgid "Snippets..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Insert.pm:50
+#: lib/Padre/Wx/FBP/Insert.pm:52
 msgid "Snippit:"
 msgstr ""
 
@@ -4830,7 +4830,7 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:49 lib/Padre/Wx/Dialog/PluginManager.pm:68
+#: lib/Padre/Wx/FBP/Sync.pm:51 lib/Padre/Wx/Dialog/PluginManager.pm:68
 #: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
 #: lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
@@ -4903,7 +4903,7 @@ msgstr ""
 msgid "Syntax Check"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:778
+#: lib/Padre/Wx/FBP/Preferences.pm:780
 msgid "Syntax Highlighter"
 msgstr ""
 
@@ -4920,7 +4920,7 @@ msgstr ""
 msgid "Tab"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:598
+#: lib/Padre/Wx/FBP/Preferences.pm:600
 msgid "Tab display size (in spaces)"
 msgstr ""
 
@@ -5011,7 +5011,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:824 lib/Padre/Wx/FBP/Preferences.pm:848
+#: lib/Padre/Wx/FBP/Preferences.pm:826 lib/Padre/Wx/FBP/Preferences.pm:850
 msgid "Timeout (in seconds)"
 msgstr ""
 
@@ -5118,7 +5118,7 @@ msgstr ""
 msgid "Up"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:207
+#: lib/Padre/Wx/FBP/Sync.pm:213
 msgid "Upload"
 msgstr ""
 
@@ -5146,7 +5146,7 @@ msgstr ""
 msgid "Uptime"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:866
+#: lib/Padre/Wx/FBP/Preferences.pm:868
 msgid "Use FTP passive mode"
 msgstr ""
 
@@ -5154,11 +5154,11 @@ msgstr ""
 msgid "Use Perl source as filter"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:590
+#: lib/Padre/Wx/FBP/Preferences.pm:592
 msgid "Use Tabs"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:505
+#: lib/Padre/Wx/FBP/Preferences.pm:507
 msgid "Use X11 middle button paste style"
 msgstr ""
 
@@ -5166,11 +5166,11 @@ msgstr ""
 msgid "Use a filter to select one or more files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:688
+#: lib/Padre/Wx/FBP/Preferences.pm:690
 msgid "Use external window for execution"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:372
+#: lib/Padre/Wx/FBP/Preferences.pm:374
 msgid "Use panel order for Ctrl-Tab (not usage history)"
 msgstr ""
 
@@ -5178,7 +5178,7 @@ msgstr ""
 msgid "Use rege&x"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:527
+#: lib/Padre/Wx/FBP/Preferences.pm:529
 msgid "Use splash screen"
 msgstr ""
 
@@ -5186,7 +5186,7 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:72 lib/Padre/Wx/FBP/Sync.pm:115
+#: lib/Padre/Wx/FBP/Sync.pm:74 lib/Padre/Wx/FBP/Sync.pm:119
 msgid "Username"
 msgstr ""
 
@@ -5300,7 +5300,7 @@ msgstr ""
 msgid "When typing in functions allow showing short examples of the function"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/WhereFrom.pm:35
+#: lib/Padre/Wx/FBP/WhereFrom.pm:37
 msgid "Where did you hear about Padre?"
 msgstr ""
 
@@ -5357,7 +5357,7 @@ msgid ""
 "cpan Wx::Perl::ProcessStream"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:34
+#: lib/Padre/Wx/FBP/FindFast.pm:36
 msgid "X"
 msgstr ""
 
