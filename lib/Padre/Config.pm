@@ -1476,6 +1476,15 @@ setting(
 	default => 0,
 );
 
+# Have we shown the birthday popup this year? (Prevents duplicate popups)
+# Store it on the host, because we can't really sync it properly.
+setting(
+	name    => 'nth_birthday',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
+
 1;
 
 __END__

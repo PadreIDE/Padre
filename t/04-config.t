@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use constant NUMBER_OF_CONFIG_OPTIONS => 129;
+use constant NUMBER_OF_CONFIG_OPTIONS => 130;
 
 # Move of Debug to Run Menu
 use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 27;
@@ -98,6 +98,7 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	file_ftp_passive
 	file_ftp_timeout
 	feature_cursormemory
+	nth_birthday
 	nth_feedback
 	find_nohidden
 	find_case

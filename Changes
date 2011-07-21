@@ -93,6 +93,8 @@ next production release, and synchronise their release to the Padre schedule.
     - The main window search_next method will now explicitly not open a find
       dialog rather than accidentally not open one, and the search_previous
       method now does the same as search_next instead of crashing Padre (ADAMK)
+    - The birthday easter egg now only comes up once a year, and we will never
+      bug the user about any other nth popup on our birthday (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
