@@ -1470,7 +1470,7 @@ setting(
 
 # Save if feedback has been send or not
 setting(
-	name    => 'feedback_done',
+	name    => 'nth_feedback',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,

@@ -98,7 +98,7 @@ my %NOT_IN_PREFERENCES = map { $_ => 1 } qw(
 	file_ftp_passive
 	file_ftp_timeout
 	feature_cursormemory
-	feedback_done
+	nth_feedback
 	find_nohidden
 	find_case
 	find_first

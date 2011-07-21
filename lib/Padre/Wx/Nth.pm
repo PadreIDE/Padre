@@ -27,7 +27,7 @@ sub nth {
 		return 1;
 	}
 
-	#	if ( $nth > 2 and not $config->feedback_done ) {
+	#	if ( $nth > 2 and not $config->nth_feedback ) {
 	#		require Padre::Wx::Dialog::WhereFrom;
 	#		my $dialog = Padre::Wx::Dialog::WhereFrom->new($main);
 	#		$dialog->run;

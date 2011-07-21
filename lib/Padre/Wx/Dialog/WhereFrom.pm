@@ -57,7 +57,7 @@ sub run {
 	}
 
 	# Don't ask again
-	$config->set( feedback_done => 1 );
+	$config->set( nth_feedback => 1 );
 	$config->write;
 
 	return 1;
