@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 00:10-0700\n"
+"POT-Creation-Date: 2011-07-21 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,7 +118,7 @@ msgstr ""
 msgid "&Brace Matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:80
+#: lib/Padre/Wx/FBP/FindInFiles.pm:80 lib/Padre/Wx/FBP/ReplaceInFiles.pm:105
 msgid "&Browse"
 msgstr ""
 
@@ -131,6 +131,7 @@ msgid "&Cancel"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:125 lib/Padre/Wx/FBP/Find.pm:87
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:152
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -319,6 +320,7 @@ msgid "&Redo"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:117 lib/Padre/Wx/FBP/Find.pm:71
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:144
 msgid "&Regular Expression"
 msgstr ""
 
@@ -330,7 +332,7 @@ msgstr ""
 msgid "&Reload selected"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:168
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:168 lib/Padre/Wx/Dialog/Replace.pm:168
 msgid "&Replace"
 msgstr ""
 
@@ -781,6 +783,7 @@ msgstr ""
 #: lib/Padre/Wx/FBP/Preferences.pm:905 lib/Padre/Wx/FBP/ModuleStarter.pm:148
 #: lib/Padre/Wx/FBP/FindInFiles.pm:148 lib/Padre/Wx/FBP/Bookmarks.pm:120
 #: lib/Padre/Wx/FBP/Find.pm:132 lib/Padre/Wx/FBP/Insert.pm:105
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:177
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -1494,6 +1497,10 @@ msgstr ""
 msgid "Directory"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:88
+msgid "Directory:"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Disk"
 msgstr ""
@@ -2038,6 +2045,10 @@ msgstr ""
 #: lib/Padre/Wx/Menu/File.pm:407
 #, perl-format
 msgid "File %s not found."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:121
+msgid "File Types:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:844
@@ -3970,6 +3981,10 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:63
+msgid "Replace With:"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:487
 msgid "Replace all occurrences of the pattern"
 msgstr ""
@@ -3977,6 +3992,10 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:760
 #, perl-format
 msgid "Replace failure in %s:  %s"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:29
+msgid "Replace in Files"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1332
@@ -4200,6 +4219,7 @@ msgid "Search &Backwards"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:38 lib/Padre/Wx/FBP/Find.pm:38
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:38
 msgid "Search &Term:"
 msgstr ""
 
@@ -4279,6 +4299,7 @@ msgid "Select All"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FindInFiles.pm:64
+#: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:58
 msgid "Select Directory"
 msgstr ""
 
