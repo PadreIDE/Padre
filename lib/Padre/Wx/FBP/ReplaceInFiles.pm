@@ -162,14 +162,14 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{find} = Wx::Button->new(
+	$self->{replace} = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("&Replace"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
-	$self->{find}->SetDefault;
+	$self->{replace}->SetDefault;
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
@@ -197,7 +197,7 @@ sub new {
 	$fgSizer2->Add( $self->{find_types}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{find}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{replace}, 0, Wx::wxALL, 5 );
 	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
@@ -243,8 +243,8 @@ sub find_case {
 	$_[0]->{find_case};
 }
 
-sub find {
-	$_[0]->{find};
+sub replace {
+	$_[0]->{replace};
 }
 
 sub refresh {

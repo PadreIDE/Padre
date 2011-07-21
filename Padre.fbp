@@ -3567,7 +3567,7 @@
                                         <property name="label">&amp;Replace</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
-                                        <property name="name">find</property>
+                                        <property name="name">replace</property>
                                         <property name="permission">public</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
