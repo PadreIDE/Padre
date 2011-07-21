@@ -330,7 +330,7 @@ sub server_to_local {
 	delete $json->{version};
 	my @errors;
 	for my $key ( keys %$json ) {
-		my $meta = $config->meta($key);
+		my $meta = eval {  $config->meta($key); };
 		unless ( $meta and $meta->store == Padre::Constant::HUMAN ) {
 
 			# Skip unknown or non-HUMAN settings
