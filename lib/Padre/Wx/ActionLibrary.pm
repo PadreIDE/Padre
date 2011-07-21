@@ -1265,7 +1265,38 @@ sub init {
 		comment     => _T('Repeat the last find, but backwards to find the previous match'),
 		shortcut    => 'Shift-F3',
 		menu_event  => sub {
-			$_[0]->search_previous;
+			my $editor = $_[0]->current->editor or return;
+
+			# Handle the obvious case with nothing selected
+			my ( $position1, $position2 ) = $editor->GetSelection;
+			if ( $position1 == $position2 ) {
+				return $_[0]->search_previous;
+			}
+
+			# Multiple lines are also done the obvious way
+			my $line1 = $editor->LineFromPosition($position1);
+			my $line2 = $editor->LineFromPosition($position2);
+			unless ( $line1 == $line2 ) {
+				return $_[0]->search_previous;
+			}
+
+			# Special case. Make and save a non-regex
+			# case-insensitive search and advance to the next hit.
+			require Padre::Search;
+			my $search = Padre::Search->new(
+				find_case    => 0,
+				find_regex   => 0,
+				find_reverse => 0,
+				find_term    => $editor->GetTextRange(
+					$position1, $position2,
+				),
+			);
+			$_[0]->search_previous($search);
+
+			# If we can't find another match, show a message
+			if ( ( $editor->GetSelection )[0] == $position1 ) {
+				$_[0]->message( Wx::gettext('Failed to find any matches') );
+			}
 		},
 	);
 

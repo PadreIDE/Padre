@@ -3282,8 +3282,6 @@ sub search_next {
 	}
 	if ( $self->search ) {
 		$self->search->search_next($editor);
-	} else {
-		$self->find->find_next;
 	}
 }
 
@@ -3313,8 +3311,6 @@ sub search_previous {
 	}
 	if ( $self->search ) {
 		$self->search->search_previous($editor);
-	} else {
-		$self->find->find;
 	}
 }
 

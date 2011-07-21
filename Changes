@@ -90,6 +90,9 @@ next production release, and synchronise their release to the Padre schedule.
       but is much more reliable and works from inside PAR and friends (ADAMK)
     - The Padre Preferences Sync client now works, but requires you to enable
       the config value feature_sync until we work some bugs out of it (BRAMBLE)
+    - The main window search_next method will now explicitly not open a find
+      dialog rather than accidentally not open one, and the search_previous
+      method now does the same as search_next instead of crashing Padre (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle
