@@ -139,6 +139,7 @@ sub new {
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
+		Wx::wxTE_PASSWORD,
 	);
 
 	my $m_staticText7 = Wx::StaticText->new(
@@ -153,6 +154,7 @@ sub new {
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
+		Wx::wxTE_PASSWORD,
 	);
 
 	my $m_staticText8 = Wx::StaticText->new(
