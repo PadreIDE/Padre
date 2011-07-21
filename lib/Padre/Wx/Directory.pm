@@ -228,7 +228,10 @@ sub on_text {
 			# Leaving search mode
 			TRACE("Leaving search mode") if DEBUG;
 			$self->{searching} = 0;
-			$self->rere;
+			$self->task_reset;
+			$self->clear;
+			$self->refill;
+			$self->rebrowse;
 		} else {
 
 			# Changing search term
