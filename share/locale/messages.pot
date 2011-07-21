@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-20 12:10-0700\n"
+"POT-Creation-Date: 2011-07-20 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -665,7 +665,7 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:301
+#: lib/Padre/Wx/FBP/Sync.pm:303
 msgid "Authentication"
 msgstr ""
 
@@ -963,7 +963,7 @@ msgstr ""
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Text.pm:56 lib/Padre/Wx/FBP/Sync.pm:264
+#: lib/Padre/Wx/FBP/Text.pm:56 lib/Padre/Wx/FBP/Sync.pm:266
 #: lib/Padre/Wx/Menu/File.pm:149 lib/Padre/Wx/Dialog/FilterTool.pm:152
 #: lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:236
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Config:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:147 lib/Padre/Wx/FBP/Sync.pm:175
+#: lib/Padre/Wx/FBP/Sync.pm:148 lib/Padre/Wx/FBP/Sync.pm:177
 msgid "Confirm"
 msgstr ""
 
@@ -1409,7 +1409,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:247 lib/Padre/Wx/Directory/TreeCtrl.pm:369
+#: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:369
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
@@ -1553,7 +1553,7 @@ msgstr ""
 msgid "Down"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:230
+#: lib/Padre/Wx/FBP/Sync.pm:232
 msgid "Download"
 msgstr ""
 
@@ -1657,7 +1657,7 @@ msgstr ""
 msgid "Editor Style"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:161
+#: lib/Padre/Wx/FBP/Sync.pm:163
 msgid "Email"
 msgstr ""
 
@@ -3813,11 +3813,11 @@ msgstr ""
 msgid "Regex Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:189
+#: lib/Padre/Wx/FBP/Sync.pm:191
 msgid "Register"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:328
+#: lib/Padre/Wx/FBP/Sync.pm:330
 msgid "Registration"
 msgstr ""
 
@@ -5113,7 +5113,7 @@ msgstr ""
 msgid "Up"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:213
+#: lib/Padre/Wx/FBP/Sync.pm:215
 msgid "Upload"
 msgstr ""
 
