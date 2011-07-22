@@ -108,7 +108,7 @@ sub _initialize {
 		plx   => \&perl_mime_type,
 		pm    => \&perl_mime_type,
 		pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
-		pod   => \&perl_mime_type,
+		pod   => \&pod_mime_type,
 		psgi  => 'application/x-psgi',
 		sty   => 'application/x-latex',
 		t     => \&perl_mime_type,
@@ -186,6 +186,8 @@ sub _initialize {
 		#       'text/x-perlxs'             => ## ' #'
 		#	'text/x-perltt'             => ## <!-- ... -->
 		'text/x-csharp' => 'DoubleSlashComment',
+
+		'text/x-pod' => 'POD',
 	);
 
 	%HIGHLIGHTER_CONFIG = (
@@ -422,12 +424,12 @@ sub _initialize {
 			name  => 'C#',
 			lexer => Wx::wxSTC_LEX_CPP,
 		},
+		'text/x-pod' => {
+			name  => 'POD',
+			lexer => Wx::wxSTC_LEX_PERL,
+		},
 	);
 
-	# TO DO:
-	# add some mime-type for pod files
-	# or remove the whole Padre::Document::POD class as it is not in use
-	#'text/x-pod'         => 'Padre::Document::POD',
 
 	foreach my $type ( keys %DEFAULT_DOC_CLASS ) {
 		if ( exists $MIME{$type} ) {
@@ -922,6 +924,12 @@ sub guess_mimetype {
 
 	# Fall back to plain text file
 	return 'text/plain';
+}
+
+# currently we only have one pod mime-type but probably we should have
+# two separate ones. One for Perl 5 and one for Perl 6
+sub pod_mime_type {
+	return 'text/x-pod';
 }
 
 sub perl_mime_type {
