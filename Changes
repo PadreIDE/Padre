@@ -100,7 +100,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Adding a preliminary (broken) implementation of Replace in Files, hidden
       behind the feature_replaceinfiles config setting (ADAMK)
     - A significant number of the editor preferences in the view menu can now
-      support for being changed by Preference Sync (ADAMK)
+      support being changed by Preference Sync (ADAMK)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to
