@@ -519,23 +519,24 @@ use Class::XSAccessor {
 	predicates => {
 
 		# Needed for lazily-constructed GUI elements
-		has_about        => 'about',
-		has_left         => 'left',
-		has_right        => 'right',
-		has_bottom       => 'bottom',
-		has_output       => 'output',
-		has_command_line => 'command_line',
-		has_ack          => 'ack',
-		has_syntax       => 'syntax',
-		has_functions    => 'functions',
-		has_todo         => 'todo',
-		has_debugger     => 'debugger',
-		has_find         => 'find',
-		has_findfast     => 'findfast',
-		has_replace      => 'replace',
-		has_outline      => 'outline',
-		has_directory    => 'directory',
-		has_findinfiles  => 'findinfiles',
+		has_about          => 'about',
+		has_left           => 'left',
+		has_right          => 'right',
+		has_bottom         => 'bottom',
+		has_output         => 'output',
+		has_command_line   => 'command_line',
+		has_ack            => 'ack',
+		has_syntax         => 'syntax',
+		has_functions      => 'functions',
+		has_todo           => 'todo',
+		has_debugger       => 'debugger',
+		has_find           => 'find',
+		has_findfast       => 'findfast',
+		has_replace        => 'replace',
+		has_outline        => 'outline',
+		has_directory      => 'directory',
+		has_findinfiles    => 'findinfiles',
+		has_replaceinfiles => 'replaceinfiles',
 	},
 	getters => {
 
@@ -711,6 +712,15 @@ sub findinfiles {
 		$self->{findinfiles} = Padre::Wx::FindInFiles->new($self);
 	}
 	return $self->{findinfiles};
+}
+
+sub replaceinfiles {
+	my $self = shift;
+	unless ( defined $self->{replaceinfiles} ) {
+		require Padre::Wx::ReplaceInFiles;
+		$self->{replaceinfiles} = Padre::Wx::ReplaceInFiles->new($self);
+	}
+	return $self->{replaceinfiles};
 }
 
 sub directory_panel {
@@ -2357,6 +2367,39 @@ sub _show_findinfiles {
 	} elsif ( $self->has_findinfiles ) {
 		$self->bottom->hide( $self->findinfiles );
 		delete $self->{findinfiles};
+	}
+}
+
+=pod
+
+=head3 C<show_replaceinfiles>
+
+    $main->show_replaceinfiles( $visible );
+
+Show the Replace in Files panel at the bottom if C<$visible> is true.
+Hide it otherwise. If C<$visible> is not provided, the method defaults
+to show the panel.
+
+=cut
+
+sub show_replaceinfiles {
+	my $self = shift;
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock('UPDATE');
+	$self->_show_replaceinfiles($on);
+	$self->aui->Update;
+
+	return;
+}
+
+sub _show_replaceinfiles {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->bottom->show( $self->replaceinfiles );
+	} elsif ( $self->has_replaceinfiles ) {
+		$self->bottom->hide( $self->replaceinfiles );
+		delete $self->{replaceinfiles};
 	}
 }
 
