@@ -6645,12 +6645,10 @@ C<Ctrl>+key combinations used within Padre.
 =cut
 
 sub key_up {
-	my $self  = shift;
-	my $event = shift;
-
-	my $mod = $event->GetModifiers || 0;
-	my $code = $event->GetKeyCode;
-
+	my $self   = shift;
+	my $event  = shift;
+	my $mod    = $event->GetModifiers || 0;
+	my $code   = $event->GetKeyCode;
 	my $config = $self->config;
 
 	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
@@ -6715,30 +6713,33 @@ sub key_up {
 
 # TO DO enable/disable menu options
 sub show_as_numbers {
-	my ( $self, $event, $form ) = @_;
-
+	my $self    = shift;
+	my $event   = shift;
+	my $form    = shift;
 	my $current = $self->current;
-	return if not $current->editor;
-	my $text = $current->text;
-	if ($text) {
-		$self->show_output(1);
-		my $output = $self->output;
-		$output->Remove( 0, $output->GetLastPosition );
+	return unless $current->editor;
 
-		# TO DO deal with wide characters ?
-		# TO DO split lines, show location ?
-		foreach my $i ( 0 .. length($text) ) {
-			my $decimal = ord( substr( $text, $i, 1 ) );
-			$output->AppendText(
-				(     $form eq 'decimal'
-					? $decimal
-					: uc( sprintf( '%0.2x', $decimal ) )
-				)
-				. ' '
-			);
-		}
-	} else {
+	my $text = $current->text;
+	unless ( $text ) {
 		$self->message( Wx::gettext('Need to select text in order to translate to hex') );
+		return;
+	}
+
+	$self->show_output(1);
+	my $output = $self->output;
+	$output->Remove( 0, $output->GetLastPosition );
+
+	# TO DO deal with wide characters ?
+	# TO DO split lines, show location ?
+	foreach my $i ( 0 .. length($text) ) {
+		my $decimal = ord( substr( $text, $i, 1 ) );
+		$output->AppendText(
+			(     $form eq 'decimal'
+				? $decimal
+				: uc( sprintf( '%0.2x', $decimal ) )
+			)
+			. ' '
+		);
 	}
 
 	return;
@@ -6748,33 +6749,28 @@ sub show_as_numbers {
 sub help {
 	my $self  = shift;
 	my $param = shift;
+
 	unless ( $self->{help} ) {
 		require Padre::Wx::Browser;
 		$self->{help} = Padre::Wx::Browser->new;
 		Wx::Event::EVT_CLOSE(
 			$self->{help},
-			sub { $self->on_help_close( $_[1] ) },
+			sub {
+				if ( $_[1]->CanVeto ) {
+					$_[0]->{help}->Hide;
+				} else {
+					$_[0]->{help}->Destroy;
+					delete $_[0]->{help};
+				}
+			},
 		);
 	}
+
 	$self->{help}->SetFocus;
 	$self->{help}->Show(1);
-	if ($param) {
-		$self->{help}->help($param);
-	}
+	$self->{help}->help($param) if $param;
+
 	return;
-}
-
-# TO DO - why do we need the Hide/Destroy pair?
-sub on_help_close {
-	my ( $self, $event ) = @_;
-	my $help = $self->{help};
-
-	if ( $event->CanVeto ) {
-		$help->Hide;
-	} else {
-		delete $self->{help};
-		$help->Destroy;
-	}
 }
 
 sub set_mimetype {
