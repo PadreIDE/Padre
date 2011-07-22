@@ -443,7 +443,7 @@ sub timer_nth {
 	# Hand off to the nth start system
 	unless ($Padre::Test::VERSION) {
 		require Padre::Wx::Nth;
-		Padre::Wx::Nth->nth( $self, $self->config->startup_count );
+		Padre::Wx::Nth->nth( $self, $self->config->nth_startup );
 	}
 
 	return 1;
@@ -3699,7 +3699,7 @@ sub on_close_window {
 	TRACE("After plugin manager shutdown") if DEBUG;
 
 	# Increment the startup counter now, so that it is higher next time
-	$config->set( startup_count => $config->startup_count + 1 );
+	$config->set( nth_startup => $config->nth_startup + 1 );
 
 	# Write the configuration to disk
 	$ide->save_config;

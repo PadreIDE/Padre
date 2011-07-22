@@ -61,10 +61,13 @@ sub new {
 		'search.find_in_files',
 	);
 
-	$self->add_menu_action(
-		$self,
-		'search.replace_in_files',
-	);
+	# Recursive Replace
+	if ( $main->config->feature_replaceinfiles ) {
+		$self->add_menu_action(
+			$self,
+			'search.replace_in_files',
+		);
+	}
 
 	$self->AppendSeparator;
 
@@ -87,7 +90,7 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $doc = Padre::Current->editor ? 1 : 0;
+	my $doc  = Padre::Current->editor ? 1 : 0;
 
 	$self->{find}->Enable($doc);
 	$self->{find_next}->Enable($doc);

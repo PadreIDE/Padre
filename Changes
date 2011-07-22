@@ -95,6 +95,10 @@ next production release, and synchronise their release to the Padre schedule.
       method now does the same as search_next instead of crashing Padre (ADAMK)
     - The birthday easter egg now only comes up once a year, and we will never
       bug the user about any other nth popup on our birthday (ADAMK)
+    - Renamed startup_count config setting to nth_startup in line with the
+      other config stuff relating to the Nth start mechanism (ADAMK)
+    - Adding a preliminary (broken) implementation of Replace in Files, hidden
+      behind the feature_replaceinfiles config setting (ADAMK)
 
 0.87 Development version, not released
     - No incompatible API changes during the 0.88 release cycle

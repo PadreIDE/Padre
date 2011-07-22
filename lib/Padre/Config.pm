@@ -465,12 +465,28 @@ setting(
 # Default is 1 and the value is incremented at shutdown rather than
 # startup so that we don't have to write files in the startup sequence.
 setting(
-	name    => 'startup_count',
+	name    => 'nth_startup',
 	type    => Padre::Constant::POSINT,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
 
+# Save if feedback has been send or not
+setting(
+	name    => 'nth_feedback',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Have we shown the birthday popup this year? (Prevents duplicate popups)
+# Store it on the host, because we can't really sync it properly.
+setting(
+	name    => 'nth_birthday',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
 
 
 
@@ -1278,6 +1294,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+setting(
+	name    => 'feature_replaceinfiles',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 
 # Window menu list shorten common path
 setting(
@@ -1466,23 +1488,6 @@ setting(
 	type    => Padre::Constant::PATH,
 	store   => Padre::Constant::PROJECT,
 	default => '',
-);
-
-# Save if feedback has been send or not
-setting(
-	name    => 'nth_feedback',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-
-# Have we shown the birthday popup this year? (Prevents duplicate popups)
-# Store it on the host, because we can't really sync it properly.
-setting(
-	name    => 'nth_birthday',
-	type    => Padre::Constant::INTEGER,
-	store   => Padre::Constant::HOST,
-	default => 0,
 );
 
 1;
