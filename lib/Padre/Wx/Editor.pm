@@ -270,29 +270,32 @@ sub padre_setup {
 
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
-
-	} elsif ( $mimetype eq 'text/plain' ) {
-		$self->padre_setup_plain;
-		my $filename = $self->{Document} ? $self->{Document}->filename : '';
-		$filename ||= '';
-		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
-			my $ext = lc $1;
-
-			# re-setup if file extension is .conf
-			$self->padre_setup_style('conf') if $ext eq 'conf';
-		}
-
-	} elsif ($mimetype) {
-
-		# setup some default coloring
-		# for the time being it is the same as for Perl
-		$self->padre_setup_style('padre');
-	} else {
-
-		# if mimetype is not known, then no coloring for now
-		# but mimimal configuration should apply here too
-		$self->padre_setup_plain;
+		return;
 	}
+
+	# Setup some default colouring.
+	# For the time being it is the same as for Perl.
+	unless ( $mimetype ne 'text/plain' ) {
+		$self->padre_setup_style('padre');
+		return;
+	}
+
+	# For plain text try to guess based on the filename
+	my $filename = $self->{Document} ? $self->{Document}->filename : '';
+	$filename ||= '';
+	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
+		my $ext = lc $1;
+
+		# Resetup if file extension is .conf
+		if ( $ext eq 'conf' ) {
+			$self->padre_setup_style('conf');
+			return;
+		}
+	}
+
+	# if mimetype is not known, then no coloring for now
+	# but mimimal configuration should apply here too
+	$self->padre_setup_plain;
 
 	return;
 }
@@ -344,8 +347,7 @@ sub padre_setup_plain {
 	# Create the right margin if desired
 	if ( $config->editor_right_margin_enable ) {
 		$self->SetEdgeColumn( $config->editor_right_margin_column );
-
-		#$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
+		$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
 	} else {
 		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
 	}
@@ -785,7 +787,7 @@ sub show_folding {
 
 sub set_preferences {
 	my $self   = shift;
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 
 	$self->show_line_numbers( $config->editor_linenumbers );
 	$self->show_folding( $config->editor_folding );

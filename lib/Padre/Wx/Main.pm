@@ -3925,9 +3925,6 @@ sub setup_editor {
 	my $id = $self->create_tab( $editor, $title );
 	$self->notebook->GetPage($id)->SetFocus;
 
-	# no need to call this here as set_preferences already calls padre_setup.
-	# $editor->padre_setup;
-
 	if ( $config->feature_cursormemory ) {
 		$editor->restore_cursor_position;
 	}
