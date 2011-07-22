@@ -741,11 +741,15 @@ setting(
 	name  => 'main_toolbar',
 	type  => Padre::Constant::BOOLEAN,
 	store => Padre::Constant::HUMAN,
+	apply => sub {
+		$_[0]->show_toolbar($_[1]);
+	},
 
 	# Toolbars are not typically used for Mac apps.
 	# Hide it by default so Padre looks "more Mac'ish"
 	# NOTE: Or at least, so we were told. Opinions apparently vary.
 	default => Padre::Constant::MAC ? 0 : 1,
+
 );
 setting(
 	name  => 'main_toolbar_items',
@@ -800,9 +804,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name  => 'default_projects_directory',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -810,9 +814,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name  => 'editor_font',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_font',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => Padre::Util::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
@@ -820,24 +824,36 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
+	apply   => sub {
+		$_[0]->editor_linenumbers($_[1]);
+	},
 );
 setting(
 	name    => 'editor_eol',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		$_[0]->editor_eol($_[1]);
+	},
 );
 setting(
 	name    => 'editor_whitespace',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		$_[0]->editor_whitespace($_[1]);
+	},
 );
 setting(
 	name    => 'editor_indentationguides',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		$_[0]->editor_indentationguides($_[1]);
+	},
 );
 setting(
 	name    => 'editor_calltips',
@@ -861,6 +877,9 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		$_[0]->editor_folding($_[1]);
+	},
 );
 setting(
 	name    => 'editor_fold_pod',
@@ -887,6 +906,9 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
+	apply   => sub {
+		$_[0]->editor_currentline($_[1]);
+	},
 );
 setting(
 	name    => 'editor_currentline_color',
@@ -911,6 +933,9 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+	apply   => sub {
+		$_[0]->editor_rightmargin($_[1]);
+	},
 );
 setting(
 	name    => 'editor_right_margin_column',

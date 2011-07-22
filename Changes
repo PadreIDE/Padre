@@ -99,9 +99,14 @@ next production release, and synchronise their release to the Padre schedule.
       other config stuff relating to the Nth start mechanism (ADAMK)
     - Adding a preliminary (broken) implementation of Replace in Files, hidden
       behind the feature_replaceinfiles config setting (ADAMK)
+    - A significant number of the editor preferences in the view menu can now
+      support for being changed by Preference Sync (ADAMK)
 
 0.87 Development version, not released
-    - No incompatible API changes during the 0.88 release cycle
+    - The majority of the on_toggle_xxxx methods have now been changed to
+      editor_xxxx names to more accurately reflect that they act on the set of
+      open editors. As no plugins should be changing these anyway, the compat
+      version for Padre::Wx::Main will not changed (ADAMK)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty

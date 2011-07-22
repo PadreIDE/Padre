@@ -5542,53 +5542,25 @@ sub on_key_bindings {
 
 =pod
 
-=head3 C<on_toggle_line_numbers>
+=head3 C<editor_linenumbers>
 
-    $main->on_toggle_line_numbers;
+    $main->editor_linenumbers(1);
 
-Toggle visibility of line numbers on the left of the document. No
-return value.
+Set visibility of line numbers on the left of the document.
 
-=cut
-
-sub on_toggle_line_numbers {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-	$config->set( editor_linenumbers => $event->IsChecked ? 1 : 0 );
-
-	foreach my $editor ( $self->editors ) {
-		$editor->show_line_numbers( $config->editor_linenumbers );
-	}
-
-	$config->write;
-
-	return;
-}
-
-=pod
-
-=head3 C<on_toggle_code_folding>
-
-    $main->on_toggle_code_folding;
-
-De/activate code folding. No return value.
+No return value.
 
 =cut
 
-sub on_toggle_code_folding {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-	$config->set( editor_folding => $event->IsChecked ? 1 : 0 );
+sub editor_linenumbers {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_linenumbers => $show );
 
 	foreach my $editor ( $self->editors ) {
-		$editor->show_folding( $config->editor_folding );
-		$editor->fold_pod
-			if ( $config->editor_folding && $config->editor_fold_pod );
+		$editor->show_line_numbers($show);
 	}
-
-	$config->write;
 
 	$self->menu->view->refresh;
 
@@ -5597,139 +5569,169 @@ sub on_toggle_code_folding {
 
 =pod
 
-=head3 C<on_toggle_currentline>
+=head3 C<editor_folding>
 
-    $main->on_toggle_currentline;
+    $main->editor_folding(1);
 
-Toggle background highlighting of current line. No return value.
+Enabled or disables code folding.
 
-=cut
-
-sub on_toggle_currentline {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-	$config->set( editor_currentline => $event->IsChecked ? 1 : 0 );
-
-	foreach my $editor ( $self->editors ) {
-		$editor->SetCaretLineVisible( $config->editor_currentline ? 1 : 0 );
-	}
-
-	$config->write;
-
-	return;
-}
-
-=head3 C<on_toggle_right_margin>
-
-    $main->on_toggle_right_margin;
-
-Toggle display of right margin. No return value.
+No return value.
 
 =cut
 
-sub on_toggle_right_margin {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-	$config->set( editor_right_margin_enable => $event->IsChecked ? 1 : 0 );
-
-	my $enabled = $config->editor_right_margin_enable;
-	my $col     = $config->editor_right_margin_column;
+sub editor_folding {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	my $pod  = $self->config->editor_fold_pod;
+	$self->config->set( editor_folding => $show );
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetEdgeColumn($col);
-		$editor->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
+		$editor->show_folding($show);
+		if ( $show and $pod ) {
+			$editor->fold_pod;
+		}
 	}
 
-	$config->write;
+	$self->menu->view->refresh;
 
 	return;
 }
 
 =pod
 
-=head3 C<on_toggle_indentation_guide>
+=head3 C<editor_currentline>
 
-    $main->on_toggle_indentation_guide;
+    $main->editor_currentline(1);
 
-Toggle visibility of indentation guide. No return value.
+Enable or disable background highlighting of the current line.
+
+No return value.
 
 =cut
 
-sub on_toggle_indentation_guide {
-	my $self  = shift;
-	my $event = shift;
-
-	$self->config->set(
-		'editor_indentationguides',
-		$self->menu->view->{indentation_guide}->IsChecked ? 1 : 0,
-	);
+sub editor_currentline {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_currentline => $show );
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetIndentationGuides( $self->config->editor_indentationguides );
+		$editor->SetCaretLineVisible($show);
 	}
 
-	$self->config->write;
+	$self->menu->view->refresh;
+
+	return;
+}
+
+=head3 C<editor_rightmargin>
+
+    $main->editor_rightmargin(1);
+
+Enable or disable display of the right margin.
+
+No return value.
+
+=cut
+
+sub editor_rightmargin {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_right_margin_enable => $show );
+
+	my $mode   = $show ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE;
+	my $column = $self->config->editor_right_margin_column;
+	foreach my $editor ( $self->editors ) {
+		$editor->SetEdgeColumn($column);
+		$editor->SetEdgeMode($mode);
+	}
+
+	$self->menu->view->refresh;
 
 	return;
 }
 
 =pod
 
-=head3 C<on_toggle_eol>
+=head3 C<editor_indentationguides>
 
-    $main->on_toggle_eol;
+    $main->editor_indentationguides(1);
 
-Toggle visibility of end of line carriage returns. No return value.
+Enable or disable visibility of the indentation guides.
+
+No return value.
 
 =cut
 
-sub on_toggle_eol {
-	my $self   = shift;
-	my $config = $self->config;
-
-	$config->set( 'editor_eol', $self->menu->view->{eol}->IsChecked ? 1 : 0, );
+sub editor_indentationguides {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_indentationguides => $show );
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetViewEOL( $config->editor_eol );
+		$editor->SetIndentationGuides($show);
 	}
 
-	$config->write;
+	$self->menu->view->refresh;
 
 	return;
 }
 
 =pod
 
-=head3 C<on_toggle_whitespaces>
+=head3 C<editor_eol>
 
-    $main->on_toggle_whitespaces;
+    $main->editor_eol(1);
+
+Show or hide end of line carriage return characters.
+
+No return value.
+
+=cut
+
+sub editor_eol {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_eol => $show );
+
+	foreach my $editor ( $self->editors ) {
+		$editor->SetViewEOL($show);
+	}
+
+	$self->menu->view->refresh;
+
+	return;
+}
+
+=pod
+
+=head3 C<editor_whitespace>
+
+    $main->editor_whitespace;
 
 Show/hide spaces and tabs (with dots and arrows respectively). No
 return value.
 
 =cut
 
-sub on_toggle_whitespaces {
-	my ($self) = @_;
+sub editor_whitespace {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( editor_whitespace => $show );
 
-	# check whether we need to show / hide spaces & tabs.
-	my $config = $self->config;
-	$config->set(
-		'editor_whitespace',
-		$self->menu->view->{whitespaces}->IsChecked
-		? Wx::wxSTC_WS_VISIBLEALWAYS
-		: Wx::wxSTC_WS_INVISIBLE
-	);
-
-	# update all open views with the new config.
+	my $mode = $show ? Wx::wxSTC_WS_VISIBLEALWAYS : Wx::wxSTC_WS_INVISIBLE;
 	foreach my $editor ( $self->editors ) {
-		$editor->SetViewWhiteSpace( $config->editor_whitespace );
+		$editor->SetViewWhiteSpace($show);
 	}
 
-	# Save configuration
-	$config->write;
+	$self->menu->view->refresh;
+
+	return;
 }
 
 =pod
@@ -5744,91 +5746,80 @@ Toggle word wrapping for current document. No return value.
 
 sub on_word_wrap {
 	my $self = shift;
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
+	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{word_wrap}->IsChecked ) {
 		$self->menu->view->{word_wrap}->Check($on);
 	}
 
-	my $doc = $self->current->document or return;
-
-	if ($on) {
-		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_WORD);
-	} else {
-		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_NONE);
-	}
+	my $doc  = $self->current->document or return;
+	my $mode = $on ? Wx::wxSTC_WRAP_WORD : Wx::wxSTC_WRAP_NONE;
+	$doc->editor->SetWrapMode($mode);
 }
 
 =pod
 
-=head3 C<on_toggle_toolbar>
+=head3 C<show_toolbar>
 
-    $main->on_toggle_toolbar;
+    $main->show_toolbar;
 
 Toggle toolbar visibility. No return value.
 
 =cut
 
-sub on_toggle_toolbar {
-	my $self   = shift;
-	my $config = $self->config;
+sub show_toolbar {
+	my $self = shift;
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( main_toolbar => $show );
 
-	# Update the configuration
-	$config->set(
-		'main_toolbar',
-		$self->menu->view->{toolbar}->IsChecked ? 1 : 0,
-	);
-
-	if ( $config->main_toolbar ) {
+	if ( $show ) {
+		# Add the toolbar
 		$self->rebuild_toolbar;
 	} else {
 
-		# Update the tool bar
+		# Remove the toolbar
 		my $toolbar = $self->GetToolBar;
-		if ($toolbar) {
+		if ( $toolbar ) {
 			$toolbar->Destroy;
 			$self->SetToolBar(undef);
-		} else {
-			Carp::carp "error finding toolbar";
 		}
 	}
 
-	# Save configuration
-	$config->write;
+	# Explicit refresh of the AUI manager.
+	$self->aui->Update;
+
+	$self->menu->view->refresh;
 
 	return;
 }
 
 =pod
 
-=head3 C<on_toggle_statusbar>
+=head3 C<show_statusbar>
 
-    $main->on_toggle_statusbar;
+    $main->show_statusbar;
 
 Toggle status bar visibility. No return value.
 
 =cut
 
-sub on_toggle_statusbar {
+sub show_statusbar {
 	my $self = shift;
-
-	# Update the configuration
-	$self->config->set(
-		'main_statusbar',
-		$self->menu->view->{statusbar}->IsChecked ? 1 : 0,
-	);
+	my $show = $_[0] ? 1 : 0;
+	my $lock = $self->lock('CONFIG');
+	$self->config->set( main_statusbar => $show );
 
 	# Update the status bar
-	if ( $self->config->main_statusbar ) {
+	if ( $show ) {
 		$self->GetStatusBar->Show;
 	} else {
 		$self->GetStatusBar->Hide;
 	}
 
-	# Save configuration
-	$self->config->write;
-
-	# Refresh. This is needed to show/hide the status bar
+	# Explicit refresh of the AUI manager.
 	$self->aui->Update;
+
+	$self->menu->view->refresh;
 
 	return;
 }

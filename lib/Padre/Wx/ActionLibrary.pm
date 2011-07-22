@@ -1493,7 +1493,7 @@ sub init {
 		comment     => _T('Show/hide the status bar at the bottom of the screen'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_statusbar( $_[1] );
+			$_[0]->show_statusbar( $_[1]->IsChecked );
 		},
 	);
 
@@ -1503,7 +1503,7 @@ sub init {
 		comment     => _T('Show/hide the toolbar at the top of the editor'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_toolbar( $_[1] );
+			$_[0]->show_toolbar( $_[1]->IsChecked );
 		},
 	);
 
@@ -1532,7 +1532,7 @@ sub init {
 		comment     => _T('Show/hide the line numbers of all the documents on the left side of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_line_numbers( $_[1] );
+			$_[0]->editor_linenumbers( $_[1]->IsChecked );
 		},
 	);
 
@@ -1542,7 +1542,7 @@ sub init {
 		comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_code_folding( $_[1] );
+			$_[0]->editor_folding( $_[1]->IsChecked );
 		},
 	);
 
@@ -1596,7 +1596,7 @@ sub init {
 		comment     => _T('Highlight the line where the cursor is'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_currentline( $_[1] );
+			$_[0]->editor_currentline( $_[1]->IsChecked );
 		},
 	);
 
@@ -1606,7 +1606,7 @@ sub init {
 		comment     => _T('Show a vertical line indicating the right margin'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_right_margin( $_[1] );
+			$_[0]->editor_rightmargin( $_[1]->IsChecked );
 		},
 	);
 
@@ -1618,7 +1618,7 @@ sub init {
 		comment     => _T('Show/hide the newlines with special character'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_eol( $_[1] );
+			$_[0]->editor_eol( $_[1]->IsChecked );
 		},
 	);
 
@@ -1628,7 +1628,7 @@ sub init {
 		comment     => _T('Show/hide the tabs and the spaces with special characters'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_whitespaces( $_[1] );
+			$_[0]->editor_whitespace( $_[1]->IsChecked );
 		},
 	);
 
@@ -1638,7 +1638,7 @@ sub init {
 		comment     => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_indentation_guide( $_[1] );
+			$_[0]->editor_indentationguides( $_[1]->IsChecked );
 		},
 	);
 
