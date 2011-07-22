@@ -13,7 +13,7 @@ next production release, and synchronise their release to the Padre schedule.
 0.88 TBA
     - Background worker threads that receive a 'cancel' message while they are
       not running a task will no longer silently exit their worker loop, which
-      hopefully fixes the massive thread leak bug (ADAMK)
+      fixes the massive thread leak we've had since Task 2.0 landed! (ADAMK)
     - Properly enable Perl 6 Wx::Scintilla support (AZAWAWI)
     - Properly handle File/New/Copy of current file when there is no current
       document (AZAWAWI)
