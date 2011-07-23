@@ -30,9 +30,9 @@ BEGIN {
 # Test files
 my %MIMES = (
 	'eg/perl5/hello_world.pl'         => 'application/x-perl',
-	'eg/perl5/perl5.pod'              => 'application/x-perl',
-	'eg/perl5_with_perl6_example.pod' => 'application/x-perl',
-	'eg/perl6/perl6.pod'              => 'application/x-perl6',
+	'eg/perl5/perl5.pod'              => 'text/x-pod',
+	'eg/perl5_with_perl6_example.pod' => 'text/x-pod',
+	'eg/perl6/perl6.pod'              => 'text/x-pod',
 	'eg/perl6/Perl6Class.pm'          => 'application/x-perl6',
 	'eg/xml/xml_example'              => 'text/xml',
 	'eg/tcl/hello_tcl'                => 'application/x-tcl',
