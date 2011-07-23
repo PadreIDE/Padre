@@ -195,7 +195,7 @@ sub editor {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{editor} ) {
 		my $notebook = $self->notebook;
-		if ( defined($notebook) ) {
+		if ( defined $notebook ) {
 			my $selected = $notebook->GetSelection;
 			if ( $selected == -1 ) {
 				$self->{editor} = undef;
@@ -225,13 +225,17 @@ sub notebook {
 # Get the current configuration from the main window (and don't cache).
 sub config {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
-	if ( defined $self->main ) {
-		return $self->main->config;
-	} elsif ( $self->ide ) {
-		return $self->ide->config;
-	} else {
-		return;
-	}
+
+	# Fast shortcut from the main window
+	return $self->{main}->config if defined $self->{main};
+
+	# Get the config from the main window
+	my $main = $self->main;
+	return $main->config if defined $main;
+
+	# Get the config from the IDE
+	my $ide = $self->ide or return;
+	return $ide->config;
 }
 
 # Convenience method
