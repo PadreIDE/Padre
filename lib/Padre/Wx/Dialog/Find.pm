@@ -93,9 +93,8 @@ sub find_next_clicked {
 sub key_up {
 	my $self  = shift;
 	my $event = shift;
-
-	my $mod = $event->GetModifiers || 0;
-	my $code = $event->GetKeyCode;
+	my $mod   = $event->GetModifiers || 0;
+	my $code  = $event->GetKeyCode;
 
 	# A fixed key binding isn't good at all.
 	# TODO: Change this to the action's keybinding
@@ -134,8 +133,7 @@ sub run {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
-	$self->find_term->refresh;
-	$self->find_term->SetValue($text) if length $text;
+	$self->find_term->refresh($text);
 	$self->find_term->SetFocus;
 
 	# Load search preferences
@@ -167,7 +165,7 @@ sub run {
 
 # Ensure the find button is only enabled if the field values are valid
 sub refresh {
-	my $self = shift;
+	my $self   = shift;
 	my $enable = $self->find_term->GetValue ne '';
 	$self->find_next->Enable($enable);
 	$self->find_all->Enable($enable);

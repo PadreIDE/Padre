@@ -86,8 +86,7 @@ sub run {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
-	$self->find_term->refresh;
-	$self->find_term->SetValue($text) if length $text;
+	$self->find_term->refresh($text);
 	$self->find_term->SetFocus;
 
 	# Load search preferences

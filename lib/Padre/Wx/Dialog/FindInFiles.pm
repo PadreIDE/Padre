@@ -95,8 +95,7 @@ sub run {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
-	$self->find_term->refresh;
-	$self->find_term->SetValue($text) if length $text;
+	$self->find_term->refresh($text);
 	$self->find_term->SetFocus;
 
 	# Load search preferences
@@ -173,15 +172,15 @@ sub as_search {
 sub key_up {
 	my $self  = shift;
 	my $event = shift;
-
-	my $mod = $event->GetModifiers || 0;
-	my $code = $event->GetKeyCode;
+	my $mod   = $event->GetModifiers || 0;
+	my $code  = $event->GetKeyCode;
 
 	# A fixed key binding isn't good at all.
 	# TODO: Change this to the action's keybinding
 
 	# Handle Ctrl-F only
-	return unless ( $mod == 2 ) and ( $code == 70 );
+	return unless $mod  == 2;
+	return unless $code == 70;
 
 	$self->{cycle_ctrl_f} = 1;
 

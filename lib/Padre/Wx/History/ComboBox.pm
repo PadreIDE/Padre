@@ -69,12 +69,19 @@ sub new {
 
 sub refresh {
 	my $self = shift;
+	my $text = shift;
 
 	# Refresh the recent values
 	my @recent = Padre::DB::History->recent( $self->{type} );
 
 	# Update the Wx object from the list
 	$self->Clear;
+	if ( defined $text and length $text ) {
+		$self->SetValue($text);
+		unless ( grep { $text eq $_ } @recent ) {
+			$self->Append($text);
+		}
+	}
 	foreach my $option (@recent) {
 		$self->Append($option);
 	}

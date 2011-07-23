@@ -399,15 +399,13 @@ sub find {
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the dialog, then prepare the new find
-	$self->{find_text}->refresh;
+	$self->{find_text}->refresh($text);
 	$self->{replace_text}->refresh;
 	if ( $self->IsShown ) {
 		$self->find_button;
 	} else {
 		if ( length $text ) {
-
 			# Go straight to the replace field
-			$self->{find_text}->SetValue($text);
 			$self->{replace_text}->SetFocus;
 		} else {
 			$self->{find_text}->SetFocus;
