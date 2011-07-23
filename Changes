@@ -103,6 +103,7 @@ next production release, and synchronise their release to the Padre schedule.
       support being changed by Preference Sync (ADAMK)
     - The right margin/edge is now enabled correctly at startup (ADAMK)
     - Ensure the .pod files are recognized as POD documents (SZABGAB)
+    - Update french translation (but still much to do) (DOLMEN)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to
