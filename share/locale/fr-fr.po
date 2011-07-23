@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: padre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-22 08:10-0700\n"
-"PO-Revision-Date: 2011-07-23 17:38+0100\n"
+"POT-Creation-Date: 2011-07-23 08:10-0700\n"
+"PO-Revision-Date: 2011-07-23 17:59+0100\n"
 "Last-Translator: Olivier Mengué <dolmen@cpan.org>\n"
 "Language-Team:  <jquelin@gmail.com>\n"
 "Language: \n"
@@ -3147,8 +3147,8 @@ msgid "No match"
 msgstr "Aucune occurrence trouvée"
 
 #: lib/Padre/Wx/Dialog/Find.pm:79
-#: lib/Padre/Wx/Dialog/Replace.pm:537
-#: lib/Padre/Wx/Dialog/Replace.pm:585
+#: lib/Padre/Wx/Dialog/Replace.pm:535
+#: lib/Padre/Wx/Dialog/Replace.pm:583
 #, fuzzy, perl-format
 msgid "No matches found for \"%s\"."
 msgstr "Aucune occurrence trouvée"
@@ -4171,12 +4171,12 @@ msgstr "Remplacer dans des fichiers"
 msgid "Replace..."
 msgstr "Remplacer..."
 
-#: lib/Padre/Wx/Dialog/Replace.pm:576
+#: lib/Padre/Wx/Dialog/Replace.pm:574
 #, fuzzy, perl-format
 msgid "Replaced %d match"
 msgstr "%d occurrences remplacées"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:576
+#: lib/Padre/Wx/Dialog/Replace.pm:574
 #, perl-format
 msgid "Replaced %d matches"
 msgstr "%d occurrences remplacées"
@@ -4420,9 +4420,9 @@ msgstr "Répertoire parent :"
 msgid "Search Help"
 msgstr "Aide sur la recherche"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:538
-#: lib/Padre/Wx/Dialog/Replace.pm:581
-#: lib/Padre/Wx/Dialog/Replace.pm:586
+#: lib/Padre/Wx/Dialog/Replace.pm:536
+#: lib/Padre/Wx/Dialog/Replace.pm:579
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 msgid "Search and Replace"
 msgstr "Rechercher et remplacer"
 
