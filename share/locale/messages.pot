@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-25 04:10-0700\n"
+"POT-Creation-Date: 2011-07-25 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,7 +328,7 @@ msgstr ""
 msgid "&Regular expression:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4399 lib/Padre/Wx/Main.pm:6374
+#: lib/Padre/Wx/Main.pm:4399 lib/Padre/Wx/Main.pm:6375
 msgid "&Reload selected"
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4398 lib/Padre/Wx/Main.pm:6373
+#: lib/Padre/Wx/Main.pm:4398 lib/Padre/Wx/Main.pm:6374
 msgid "&Select files to reload:"
 msgstr ""
 
@@ -529,7 +529,7 @@ msgid "All"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4218 lib/Padre/Wx/Main.pm:4219
-#: lib/Padre/Wx/Main.pm:4592 lib/Padre/Wx/Main.pm:5872
+#: lib/Padre/Wx/Main.pm:4592 lib/Padre/Wx/Main.pm:5873
 msgid "All Files"
 msgstr ""
 
@@ -1547,7 +1547,7 @@ msgstr ""
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6916
+#: lib/Padre/Wx/Main.pm:6918
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -1701,11 +1701,11 @@ msgstr ""
 msgid "Encode Document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6938
+#: lib/Padre/Wx/Main.pm:6940
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6937
+#: lib/Padre/Wx/Main.pm:6939
 msgid "Encode to:"
 msgstr ""
 
@@ -1812,14 +1812,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6896
+#: lib/Padre/Wx/Main.pm:6898
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6881
+#: lib/Padre/Wx/Main.pm:6883
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -1873,7 +1873,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5977 lib/Padre/Plugin/Devel.pm:334
+#: lib/Padre/Wx/Main.pm:5978 lib/Padre/Plugin/Devel.pm:334
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1994,7 +1994,7 @@ msgstr ""
 msgid "Failed to find any matches"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6507
+#: lib/Padre/Wx/Main.pm:6508
 #, perl-format
 msgid "Failed to find template file '%s'"
 msgstr ""
@@ -2192,7 +2192,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/ReplaceInFiles.pm:260
+#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/ReplaceInFiles.pm:259
 #: lib/Padre/Wx/FBP/FindInFiles.pm:29
 msgid "Find in Files"
 msgstr ""
@@ -2417,7 +2417,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6205
+#: lib/Padre/Wx/Main.pm:6206
 msgid "How many spaces for each tab:"
 msgstr ""
 
@@ -2508,7 +2508,7 @@ msgstr ""
 msgid "Internal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5978
+#: lib/Padre/Wx/Main.pm:5979
 msgid "Internal error"
 msgstr ""
 
@@ -2913,7 +2913,7 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6724
+#: lib/Padre/Wx/Main.pm:6725
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
@@ -3015,7 +3015,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6171 lib/Padre/Plugin/Devel.pm:149
+#: lib/Padre/Wx/Main.pm:6172 lib/Padre/Plugin/Devel.pm:149
 msgid "No file is open"
 msgstr ""
 
@@ -3028,8 +3028,8 @@ msgstr ""
 msgid "No match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:583
+#: lib/Padre/Wx/Dialog/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:536
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -3047,7 +3047,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:217
+#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:216
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -3223,7 +3223,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1142 lib/Padre/Wx/Main.pm:5870
+#: lib/Padre/PluginManager.pm:1142 lib/Padre/Wx/Main.pm:5871
 msgid "Open file"
 msgstr ""
 
@@ -3893,7 +3893,7 @@ msgstr ""
 msgid "Reload some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4397 lib/Padre/Wx/Main.pm:6372
+#: lib/Padre/Wx/Main.pm:4397 lib/Padre/Wx/Main.pm:6373
 msgid "Reload some files"
 msgstr ""
 
@@ -4007,12 +4007,12 @@ msgstr ""
 msgid "Replace..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:574
+#: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:574
+#: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4245,8 +4245,8 @@ msgstr ""
 msgid "Search Help"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:579
-#: lib/Padre/Wx/Dialog/Replace.pm:584
+#: lib/Padre/Wx/Dialog/Replace.pm:537 lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:585
 msgid "Search and Replace"
 msgstr ""
 
@@ -4254,7 +4254,7 @@ msgstr ""
 msgid "Search and replace text in all files below a given directory"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:212 lib/Padre/Wx/ReplaceInFiles.pm:206
+#: lib/Padre/Wx/FindInFiles.pm:212 lib/Padre/Wx/ReplaceInFiles.pm:205
 #, perl-format
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4824,7 +4824,7 @@ msgstr ""
 msgid "Space and tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6199
+#: lib/Padre/Wx/Main.pm:6200
 msgid "Space to Tab"
 msgstr ""
 
@@ -4856,7 +4856,7 @@ msgstr ""
 msgid "Start/Stop sub trace"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6171
+#: lib/Padre/Wx/Main.pm:6172
 msgid "Stats"
 msgstr ""
 
@@ -4954,7 +4954,7 @@ msgstr ""
 msgid "Tab display size (in spaces)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6200
+#: lib/Padre/Wx/Main.pm:6201
 msgid "Tab to Space"
 msgstr ""
 
