@@ -84,7 +84,7 @@ sub new {
 		);
 
 		my %mimes = Padre::MimeTypes::menu_view_mimes();
-		my @names = sort_mimes( \%mimes );
+		my @names = $self->sort_mimes( \%mimes );
 		foreach my $name (@names) {
 			my $radio = $self->add_menu_action(
 				$self->{view_as_highlighting},
@@ -301,7 +301,7 @@ sub refresh {
 		my $has_checked = 0;
 		if ( $document->mimetype ) {
 			my %mimes = Padre::MimeTypes::menu_view_mimes();
-			my @mimes = sort_mimes( \%mimes );
+			my @mimes = $self->sort_mimes( \%mimes );
 			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
 				if ( $document->mimetype eq $mimes[$pos] ) {
@@ -361,12 +361,16 @@ sub gui_element_remove {
 }
 
 sub sort_mimes {
-	my ($mimes) = @_;
+	my $self  = shift;
+	my $mimes = shift;
 
-	return sort {
+	# Can't do "return sort", must sort to a list first
+	my @sorted = sort {
 		( $b eq 'text/plain' ) <=> ( $a eq 'text/plain' )
 			or Wx::gettext( $mimes->{$a} ) cmp Wx::gettext( $mimes->{$b} )
 	} keys %$mimes;
+
+	return @sorted;
 }
 
 1;
