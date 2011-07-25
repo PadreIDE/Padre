@@ -379,7 +379,7 @@ sub get_command {
 	return join ' ', @commands;
 }
 
-=head get_inc
+=head2 get_inc
 
 Returns the @INC of the designated perl interpreter - not necessarily our own
 
@@ -1269,7 +1269,7 @@ sub perltags_parser {
 
 =pod
 
-=head2 C<autocomplete>
+=head2 autocomplete
 
 This method is called on two events:
 
@@ -1760,7 +1760,7 @@ sub menu {
 
 =pod
 
-=head2 C<project_tagsfile>
+=head2 project_tagsfile
 
 No arguments.
 
@@ -1777,7 +1777,7 @@ sub project_tagsfile {
 
 =pod
 
-=head2 C<project_create_tagsfile>
+=head2 project_create_tagsfile
 
 Creates a tags file for the project of the current document. Includes all Perl
 source files within the project excluding F<blib>.
