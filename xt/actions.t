@@ -36,7 +36,7 @@ for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	last;
 }
 
-diag "devpl '$devpl'";
+# diag "devpl '$devpl'";
 
 use_ok('Padre::Perl');
 
@@ -51,10 +51,10 @@ unshift @chances, '' if $^O eq 'linux';
 push @chances, '' if $^O ne 'linux';
 for my $prefix (@chances) {
 	my $try = "$prefix$devpl --help";
-	diag "Try: '$try'";
+	# diag "Try: '$try'";
 	my $res = qx{$try};
 
-	#diag "Result: $res";
+	# diag "Result: $res";
 	next if not defined $res;
 	next unless $res =~ /(run Padre in the command line|\-\-fulltrace|\-\-actionqueue)/;
 	$cmd = $prefix;
@@ -80,10 +80,10 @@ $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=internal.dump_padre,file.quit';
 
-diag "Command is: '$cmd'";
+# diag "Command is: '$cmd'";
 my ( $stdout, $stderr ) = capture { system($cmd); };
-diag $stdout;
-diag $stderr;
+# diag $stdout;
+# diag $stderr;
 
 my $dump_fn = File::Spec->catfile( $dir->dirname, 'padre.dump' );
 
