@@ -2,6 +2,7 @@ package Padre::DB::Migrate::Patch10;
 
 # Changes to the plugin system mean plugins are now tracked by class
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();

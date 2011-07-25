@@ -2,6 +2,7 @@ package Padre::DB::Migrate::Patch8;
 
 # Changes to support upgraded session support
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();

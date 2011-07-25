@@ -5,6 +5,7 @@ package Padre::DB::Migrate::Patch2;
 # state of the plugin, the version, and the config structure for
 # the plugin.
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();

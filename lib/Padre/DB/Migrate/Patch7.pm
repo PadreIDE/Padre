@@ -3,6 +3,7 @@ package Padre::DB::Migrate::Patch7;
 # Add a new table to keep the last position in file
 # NOTE: We're not using the history table, since history can be truncated.
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();

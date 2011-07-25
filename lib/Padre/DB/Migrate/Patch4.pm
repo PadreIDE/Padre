@@ -1,5 +1,6 @@
 package Padre::DB::Migrate::Patch4;
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();
