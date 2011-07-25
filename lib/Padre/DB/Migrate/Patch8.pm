@@ -3,6 +3,7 @@ package Padre::DB::Migrate::Patch8;
 # Changes to support upgraded session support
 
 use strict;
+use warnings;
 use Padre::DB::Migrate::Patch ();
 
 our $VERSION = '0.85';

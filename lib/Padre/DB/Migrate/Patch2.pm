@@ -6,6 +6,7 @@ package Padre::DB::Migrate::Patch2;
 # the plugin.
 
 use strict;
+use warnings;
 use Padre::DB::Migrate::Patch ();
 
 our $VERSION = '0.85';

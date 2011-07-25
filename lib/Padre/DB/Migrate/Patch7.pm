@@ -4,6 +4,7 @@ package Padre::DB::Migrate::Patch7;
 # NOTE: We're not using the history table, since history can be truncated.
 
 use strict;
+use warnings;
 use Padre::DB::Migrate::Patch ();
 
 our $VERSION = '0.85';

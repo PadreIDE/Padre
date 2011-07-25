@@ -1,6 +1,7 @@
 package Padre::DB::Migrate::Patch9;
 
 use strict;
+use warnings;
 use Padre::DB::Migrate::Patch ();
 
 our $VERSION = '0.85';
