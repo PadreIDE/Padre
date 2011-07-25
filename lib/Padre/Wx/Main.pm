@@ -6757,10 +6757,11 @@ sub help {
 			$self->{help},
 			sub {
 				if ( $_[1]->CanVeto ) {
-					$_[0]->{help}->Hide;
+					$_[0]->Hide;
 				} else {
-					$_[0]->{help}->Destroy;
-					delete $_[0]->{help};
+					$_[0]->Destroy;
+					# The first element is the Padre::Wx::Browser object in this call
+					#delete $_[0]->{help};
 				}
 			},
 		);
