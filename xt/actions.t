@@ -51,6 +51,7 @@ unshift @chances, '' if $^O eq 'linux';
 push @chances, '' if $^O ne 'linux';
 for my $prefix (@chances) {
 	my $try = "$prefix$devpl --help";
+
 	# diag "Try: '$try'";
 	my $res = qx{$try};
 
@@ -82,6 +83,7 @@ $cmd .= ' --actionqueue=internal.dump_padre,file.quit';
 
 # diag "Command is: '$cmd'";
 my ( $stdout, $stderr ) = capture { system($cmd); };
+
 # diag $stdout;
 # diag $stderr;
 

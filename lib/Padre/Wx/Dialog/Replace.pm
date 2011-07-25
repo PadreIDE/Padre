@@ -405,6 +405,7 @@ sub find {
 		$self->find_button;
 	} else {
 		if ( length $text ) {
+
 			# Go straight to the replace field
 			$self->{replace_text}->SetFocus;
 		} else {

@@ -5638,7 +5638,7 @@ sub editor_rightmargin {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_right_margin_enable => $show );
 
-	my $mode   = $show ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE;
+	my $mode = $show ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE;
 	my $column = $self->config->editor_right_margin_column;
 	foreach my $editor ( $self->editors ) {
 		$editor->SetEdgeColumn($column);
@@ -5743,12 +5743,12 @@ Toggle word wrapping for current document. No return value.
 
 sub on_word_wrap {
 	my $self = shift;
-	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
+	my $on = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{word_wrap}->IsChecked ) {
 		$self->menu->view->{word_wrap}->Check($on);
 	}
 
-	my $doc  = $self->current->document or return;
+	my $doc = $self->current->document or return;
 	my $mode = $on ? Wx::wxSTC_WRAP_WORD : Wx::wxSTC_WRAP_NONE;
 	$doc->editor->SetWrapMode($mode);
 }
@@ -5769,14 +5769,15 @@ sub show_toolbar {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( main_toolbar => $show );
 
-	if ( $show ) {
+	if ($show) {
+
 		# Add the toolbar
 		$self->rebuild_toolbar;
 	} else {
 
 		# Remove the toolbar
 		my $toolbar = $self->GetToolBar;
-		if ( $toolbar ) {
+		if ($toolbar) {
 			$toolbar->Destroy;
 			$self->SetToolBar(undef);
 		}
@@ -5807,7 +5808,7 @@ sub show_statusbar {
 	$self->config->set( main_statusbar => $show );
 
 	# Update the status bar
-	if ( $show ) {
+	if ($show) {
 		$self->GetStatusBar->Show;
 	} else {
 		$self->GetStatusBar->Hide;
@@ -6720,7 +6721,7 @@ sub show_as_numbers {
 	return unless $current->editor;
 
 	my $text = $current->text;
-	unless ( $text ) {
+	unless ($text) {
 		$self->message( Wx::gettext('Need to select text in order to translate to hex') );
 		return;
 	}
@@ -6760,6 +6761,7 @@ sub help {
 					$_[0]->Hide;
 				} else {
 					$_[0]->Destroy;
+
 					# The first element is the Padre::Wx::Browser object in this call
 					#delete $_[0]->{help};
 				}

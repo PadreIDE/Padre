@@ -20,6 +20,7 @@ sub nth {
 	# Is it Padre's birthday?
 	my @t = localtime time;
 	if ( $t[4] == 6 and $t[3] == 20 ) {
+
 		# If we have already shown the birthday popup this year,
 		# don't show it again. And don't bug the user about anything else
 		# on our birthday so we don't spoil the party.

@@ -115,7 +115,7 @@ END_SQL
 	SCOPE: {
 		my $dbh = $self->dbh;
 		$dbh->begin_work;
-		my $sth = $dbh->prepare( 'INSERT INTO snippets ( mimetype, category, name, snippet ) VALUES (?, ?, ?, ?)' );
+		my $sth = $dbh->prepare('INSERT INTO snippets ( mimetype, category, name, snippet ) VALUES (?, ?, ?, ?)');
 		foreach (@snippets) {
 			$sth->execute( 'application/x-perl', $_->[1], $_->[2], $_->[3] );
 		}

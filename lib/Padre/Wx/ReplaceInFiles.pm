@@ -145,16 +145,15 @@ sub replace_message {
 	my $label =
 		$lines > 1
 		? sprintf(
-			Wx::gettext('%s (%s results)'),
-			$full,
-			$lines,
+		Wx::gettext('%s (%s results)'),
+		$full,
+		$lines,
 		)
 		: $full;
 	my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
 	$self->SetPlData(
 		$file,
-		{
-			dir  => $dir,
+		{   dir  => $dir,
 			file => $name,
 		}
 	);

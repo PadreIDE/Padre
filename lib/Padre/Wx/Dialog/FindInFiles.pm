@@ -179,7 +179,7 @@ sub key_up {
 	# TODO: Change this to the action's keybinding
 
 	# Handle Ctrl-F only
-	return unless $mod  == 2;
+	return unless $mod == 2;
 	return unless $code == 70;
 
 	$self->{cycle_ctrl_f} = 1;
