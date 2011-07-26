@@ -17,18 +17,6 @@ use Padre::Locale            ();
 our $VERSION = '0.87';
 our @ISA     = 'Padre::Wx::Menu';
 
-my @GUI_ELEMENTS = qw{
-	functions
-	todo
-	outline
-	directory
-	output
-	syntaxcheck
-	command_line
-	statusbar
-	toolbar
-};
-
 
 
 
@@ -56,26 +44,55 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
-	foreach my $element (@GUI_ELEMENTS) {
-		next unless defined $element;
+	$self->{functions} = $self->add_menu_action(
+		$self,
+		'view.functions',
+	);
 
-		my $action = 'view.' . $element;
+	$self->{todo} = $self->add_menu_action(
+		$self,
+		'view.todo',
+	);
 
-		if ( ref($element) eq 'ARRAY' ) {
-			( $element, $action ) = @{$element};
-		}
+	$self->{outline} = $self->add_menu_action(
+		$self,
+		'view.outline',
+	);
 
-		$self->{$element} = $self->add_menu_action(
-			$self,
-			$action,
-		);
-	}
+	$self->{directory} = $self->add_menu_action(
+		$self,
+		'view.directory',
+	);
+
+	$self->{output} = $self->add_menu_action(
+		$self,
+		'view.output',
+	);
+
+	$self->{syntaxcheck} = $self->add_menu_action(
+		$self,
+		'view.syntaxcheck',
+	);
+
+	$self->{command_line} = $self->add_menu_action(
+		$self,
+		'view.command_line',
+	);
+
+	$self->{toolbar} = $self->add_menu_action(
+		$self,
+		'view.toolbar',
+	);
+
+	$self->{statusbar} = $self->add_menu_action(
+		$self,
+		'view.statusbar',
+	);
 
 	$self->AppendSeparator;
 
+	# View as (Highlighting File Type)
 	SCOPE: {
-
-		# View as (Highlighting File Type)
 		$self->{view_as_highlighting} = Wx::Menu->new;
 		$self->Append(
 			-1,
@@ -121,9 +138,9 @@ sub new {
 		'view.fold_this',
 	);
 
-	$self->{show_calltips} = $self->add_menu_action(
+	$self->{calltips} = $self->add_menu_action(
 		$self,
-		'view.show_calltips',
+		'view.calltips',
 	);
 
 	$self->{currentline} = $self->add_menu_action(
@@ -159,45 +176,29 @@ sub new {
 		'view.word_wrap',
 	);
 
-	if ( $config->feature_bookmark ) {
-
-		$self->AppendSeparator;
-
-		# Bookmark Support
-		$self->{bookmark_set} = $self->add_menu_action(
-			$self,
-			'view.bookmark_set',
-		);
-
-		$self->{bookmark_goto} = $self->add_menu_action(
-			$self,
-			'view.bookmark_goto',
-		);
-
-		$self->AppendSeparator;
-
-	}
+	$self->AppendSeparator;
 
 	# Font Size
 	if ( $config->feature_fontsize ) {
-		$self->{font_size} = Wx::Menu->new;
+		$self->{fontsize} = Wx::Menu->new;
 		$self->Append(
 			-1,
-			Wx::gettext("Font Size"),
-			$self->{font_size}
+			Wx::gettext('Font Size'),
+			$self->{fontsize}
 		);
+
 		$self->{font_increase} = $self->add_menu_action(
-			$self->{font_size},
+			$self->{fontsize},
 			'view.font_increase',
 		);
 
 		$self->{font_decrease} = $self->add_menu_action(
-			$self->{font_size},
+			$self->{fontsize},
 			'view.font_decrease',
 		);
 
 		$self->{font_reset} = $self->add_menu_action(
-			$self->{font_size},
+			$self->{fontsize},
 			'view.font_reset',
 		);
 	}
@@ -277,7 +278,7 @@ sub refresh {
 	$self->{todo}->Check( $config->main_todo );
 	$self->{lockinterface}->Check( $config->main_lockinterface );
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
-	$self->{show_calltips}->Check( $config->editor_calltips );
+	$self->{calltips}->Check( $config->editor_calltips );
 	$self->{command_line}->Check( $config->main_command_line );
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{toolbar}->Check( $config->main_toolbar );
@@ -317,47 +318,12 @@ sub refresh {
 		}
 	}
 
-	# Disable zooming and bookmarks if there's no current document
+	# Disable zooming if there's no current document
 	$self->{font_increase}->Enable($doc) if defined $self->{font_increase};
 	$self->{font_decrease}->Enable($doc) if defined $self->{font_decrease};
 	$self->{font_reset}->Enable($doc)    if defined $self->{font_reset};
 
-	# You cannot set a bookmark unless the current document is on disk.
-	if ( defined $self->{bookmark_set} ) {
-		my $set = ( $doc and defined $document->filename ) ? 1 : 0;
-		$self->{bookmark_set}->Enable($set);
-	}
-
 	return;
-}
-
-sub gui_element_add {
-	my $self = shift;
-	my $id   = $_[2];
-
-	# Don't add duplicates
-	foreach (@GUI_ELEMENTS) {
-		next unless ref $_ eq 'ARRAY';
-		return 1 if $_->[2] =~ /^\Q$id\E$/;
-	}
-
-	push @GUI_ELEMENTS, [@_];
-
-	return 1;
-}
-
-sub gui_element_remove {
-	my $self = shift;
-	my $id   = shift;
-
-	my @new_gui_elements;
-
-	for (@GUI_ELEMENTS) {
-		next if ( ref($_) eq 'ARRAY' ) and ( $_->[2] eq $id );
-		push @new_gui_elements, $_;
-	}
-
-	return 1;
 }
 
 sub sort_mimes {

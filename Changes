@@ -109,6 +109,8 @@ next production release, and synchronise their release to the Padre schedule.
       was in the visible history of the combo box (ADAMK)
     - Removed the --with-plugin command line option used by one of the author
       tests as the implementation violated encapsulation badly (ADAMK)
+    - Moved Bookmarks from View to Search menu in line with other
+      several other editors (ADAMK)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to

@@ -2743,9 +2743,9 @@ sub on_run_tests {
 		close $tempfile;
 
 		my $things_to_test = $tempfile->filename;
-		$self->run_command(qq{"$prove" - -b < "$things_to_test"});
+		$self->run_command( qq{"$prove" - -b < "$things_to_test"} );
 	} else {
-		$self->run_command("$prove -b $project_dir/t");
+		$self->run_command( "$prove -b $project_dir/t" );
 	}
 	chdir $dir;
 }

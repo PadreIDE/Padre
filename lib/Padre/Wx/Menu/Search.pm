@@ -20,8 +20,9 @@ our @ISA     = 'Padre::Wx::Menu';
 # Padre::Wx::Menu Methods
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
+	my $class  = shift;
+	my $main   = shift;
+	my $config = $main->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -69,6 +70,21 @@ sub new {
 		);
 	}
 
+	if ( $config->feature_bookmark ) {
+		$self->AppendSeparator;
+
+		# Bookmark Support
+		$self->{bookmark_set} = $self->add_menu_action(
+			$self,
+			'view.bookmark_set',
+		);
+
+		$self->{bookmark_goto} = $self->add_menu_action(
+			$self,
+			'view.bookmark_goto',
+		);
+	}
+
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
@@ -89,13 +105,21 @@ sub title {
 }
 
 sub refresh {
-	my $self = shift;
-	my $doc = Padre::Current->editor ? 1 : 0;
+	my $self    = shift;
+	my $current = Padre::Current::_CURRENT(@_);
+	my $editor  = $current->editor ? 1 : 0;
 
-	$self->{find}->Enable($doc);
-	$self->{find_next}->Enable($doc);
-	$self->{find_previous}->Enable($doc);
-	$self->{replace}->Enable($doc);
+	$self->{find}->Enable($editor);
+	$self->{find_next}->Enable($editor);
+	$self->{find_previous}->Enable($editor);
+	$self->{replace}->Enable($editor);
+
+	if ( $current->config->feature_bookmark ) {
+		# Bookmarks can only be placed on files on disk
+		$self->{bookmark_set}->Enable(
+			( $editor and defined $current->filename ) ? 1 : 0
+		);
+	}
 
 	return;
 }

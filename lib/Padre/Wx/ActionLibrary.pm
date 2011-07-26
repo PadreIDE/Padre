@@ -1577,7 +1577,7 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.show_calltips',
+		name        => 'view.calltips',
 		label       => _T('Show Call Tips'),
 		comment     => _T('When typing in functions allow showing short examples of the function'),
 		menu_method => 'AppendCheckItem',
