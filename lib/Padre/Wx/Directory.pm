@@ -75,6 +75,7 @@ sub new {
 		Wx::wxTE_PROCESS_ENTER
 	);
 
+	# Set the descriptive text for the search button.
 	# This line is causing an error on Ubuntu due to some Wx problems.
 	# see https://bugs.launchpad.net/ubuntu/+source/padre/+bug/485012
 	# Supporting Ubuntu seems to be more important than having this text:
@@ -105,33 +106,7 @@ sub new {
 	);
 
 	# Create the search control menu
-	my $menu = Wx::Menu->new;
-
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append(
-			-1,
-			Wx::gettext('Refresh'),
-		),
-		sub {
-			shift->rebrowse;
-		},
-	);
-
-	$menu->AppendSeparator;
-
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append(
-			-1,
-			Wx::gettext('Move to other panel'),
-		),
-		sub {
-			shift->move;
-		},
-	);
-
-	$search->SetMenu($menu);
+	$search->SetMenu( $self->new_menu );
 
 	# Create the tree control
 	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
@@ -160,6 +135,38 @@ sub new {
 	$sizerh->SetSizeHints($self);
 
 	return $self;
+}
+
+# We need to create the menu whenever our locale changes
+sub new_menu {
+	my $self = shift;
+	my $menu = Wx::Menu->new;
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append(
+			-1,
+			Wx::gettext('Refresh'),
+		),
+		sub {
+			$_[0]->rebrowse;
+		},
+	);
+
+	$menu->AppendSeparator;
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append(
+			-1,
+			Wx::gettext('Move to other panel'),
+		),
+		sub {
+			$_[0]->move;
+		},
+	);
+
+	return $menu;
 }
 
 
@@ -464,6 +471,21 @@ sub refresh {
 			$self->browse;
 		}
 	}
+
+	return 1;
+}
+
+sub relocale {
+	my $self   = shift;
+	my $search = $self->{search};
+
+	# Reset the descriptive text
+	if ( Padre::Util::DISTRO() ne 'UBUNTU' ) {
+		$search->SetDescriptiveText( Wx::gettext('Search') );
+	}
+
+	# Rebuild the menu
+	$search->SetMenu( $self->new_menu );
 
 	return 1;
 }

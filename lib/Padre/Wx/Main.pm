@@ -1974,9 +1974,15 @@ sub relocale {
 	$self->ide->plugin_manager->relocale;
 
 	# The menu doesn't support relocale, replace it
-	delete $self->{menu};
-	$self->{menu} = Padre::Wx::Menubar->new($self);
-	$self->SetMenuBar( $self->menu->wx );
+	# I wish this code didn't have to be so ugly, but we want to be
+	# sure we clean up all the menu memory properly.
+	SCOPE: {
+		delete $self->{menu};
+		$self->{menu} = Padre::Wx::Menubar->new($self);
+		my $old = $self->GetMenuBar;
+		$self->SetMenuBar( $self->menu->wx );
+		$old->Destroy;
+	}
 
 	# Refresh the plugins' menu entries
 	$self->refresh_menu_plugins;
@@ -1984,11 +1990,12 @@ sub relocale {
 	# The toolbar doesn't support relocale, replace it
 	$self->rebuild_toolbar;
 
-	# Update window manager captions
+	# Cascade relocation to AUI elements and other tools
 	$self->aui->relocale;
-	$self->left->relocale   if $self->has_left;
-	$self->right->relocale  if $self->has_right;
-	$self->bottom->relocale if $self->has_bottom;
+	$self->left->relocale      if $self->has_left;
+	$self->right->relocale     if $self->has_right;
+	$self->bottom->relocale    if $self->has_bottom;
+	$self->directory->relocale if $self->has_directory;
 
 	# Replace the regex editor, keep the data (if it exists)
 	if ( exists $self->{regex_editor} ) {
