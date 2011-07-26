@@ -77,6 +77,27 @@ sub new {
 
 
 ######################################################################
+# GUI Methods
+
+sub relocale {
+	my $self = shift;
+
+	# Fetch all the titles and overwrite
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		my $editor   = $self->GetPage($i)   or next;
+		my $document = $editor->{Document}  or next;
+		my $title    = $document->get_title or next;
+		$self->SetPageText( $i, $title );
+	}
+
+	return;
+}
+
+
+
+
+
+######################################################################
 # Main Methods
 
 # Search for and display the page for a specified file name.

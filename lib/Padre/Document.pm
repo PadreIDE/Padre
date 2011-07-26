@@ -165,7 +165,7 @@ sub task_syntax {
 # Document Registration
 
 # NOTE: This is probably a bad place to store this
-my $unsaved_number = 0;
+my $UNSAVED = 0;
 
 
 
@@ -176,6 +176,7 @@ my $unsaved_number = 0;
 
 use Class::XSAccessor {
 	getters => {
+		unsaved     => 'unsaved',
 		filename     => 'filename',    # setter is defined as normal function
 		file         => 'file',        # Padre::File - object
 		editor       => 'editor',
@@ -213,7 +214,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -267,7 +268,7 @@ sub new {
 		}
 		$self->load_file;
 	} else {
-		$unsaved_number++;
+		$self->{unsaved}      = ++$UNSAVED;
 		$self->{newline_type} = $self->default_newline_type;
 	}
 
@@ -964,7 +965,11 @@ sub get_title {
 	if ( defined( $self->{file} ) and defined( $self->{file}->filename ) and ( $self->{file}->filename ne '' ) ) {
 		return $self->basename;
 	} else {
-		my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
+		$self->{unsaved} ||= ++$UNSAVED;
+		my $str = sprintf(
+			Wx::gettext("Unsaved %d"),
+			$self->{unsaved},
+		);
 
 		# A bug in Wx requires a space at the front of the title
 		# (For reasons I don't understand yet)

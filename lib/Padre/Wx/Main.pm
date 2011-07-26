@@ -1997,6 +1997,9 @@ sub relocale {
 	$self->bottom->relocale    if $self->has_bottom;
 	$self->directory->relocale if $self->has_directory;
 
+	# Update the document titles (mostly for unnamed documents)
+	$self->notebook->relocale;
+
 	# Replace the regex editor, keep the data (if it exists)
 	if ( exists $self->{regex_editor} ) {
 		my $data_ref    = $self->{regex_editor}->get_data;
