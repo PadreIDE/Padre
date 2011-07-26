@@ -41,7 +41,7 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 
 # Disable overlay scrollbar on Linux.
 # Done ugly this way to satisfy Perl::Critic (grrr)
-local $ENV{LIBOVERLAY_SCROLLBAR} = ($^O eq 'linux') ? 0 : $ENV{LIBOVERLAY_SCROLLBAR};
+local $ENV{LIBOVERLAY_SCROLLBAR} = ( $^O eq 'linux' ) ? 0 : $ENV{LIBOVERLAY_SCROLLBAR};
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
@@ -54,7 +54,7 @@ my $PRELOAD = undef;
 my $DESKTOP = undef;
 my $ACTIONS = undef;
 my $LOCALE  = undef;
-if ( grep { /^-/ } @ARGV ) {
+if ( grep {/^-/} @ARGV ) {
 
 	# Avoid loading Getopt::Long entirely if we can,
 	# sneakily saving a meg or so of RAM.
@@ -68,7 +68,7 @@ if ( grep { /^-/ } @ARGV ) {
 		'desktop'       => \$DESKTOP,
 		'actionqueue=s' => \$ACTIONS,
 		'locale=s'      => \$LOCALE,
-		'preload'       => \$PRELOAD,    # Keep this sekrit for now --ADAMK
+		'preload'       => \$PRELOAD, # Keep this sekrit for now --ADAMK
 	) or $USAGE = 1;
 }
 

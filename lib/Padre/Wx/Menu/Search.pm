@@ -125,10 +125,9 @@ sub refresh {
 	$self->{goto}->Enable($editor);
 
 	if ( $current->config->feature_bookmark ) {
+
 		# Bookmarks can only be placed on files on disk
-		$self->{bookmark_set}->Enable(
-			( $editor and defined $current->filename ) ? 1 : 0
-		);
+		$self->{bookmark_set}->Enable( ( $editor and defined $current->filename ) ? 1 : 0 );
 	}
 
 	return;

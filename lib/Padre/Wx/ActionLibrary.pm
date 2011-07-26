@@ -2628,9 +2628,10 @@ sub init {
 	# Window Navigation
 
 	Padre::Wx::Action->new(
-		name       => 'window.goto_todo_window',
-		label      => _T('Go to Todo Window'),
-		comment    => _T('Set the focus to the "Todo" window'),
+		name    => 'window.goto_todo_window',
+		label   => _T('Go to Todo Window'),
+		comment => _T('Set the focus to the "Todo" window'),
+
 		#shortcut   => 'Alt-T', # conflicts with the Tools menu
 		menu_event => sub {
 			$_[0]->refresh_todo( $_[0]->current );

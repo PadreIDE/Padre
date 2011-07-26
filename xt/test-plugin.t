@@ -11,7 +11,8 @@ unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 	plan skip_all => 'Author tests not required for installation';
 }
-unless ( 0 ) {
+unless (0) {
+
 	# Test disabled as the --with-plugin mechanism was terrible
 	plan skip_all => 'Required mechanism that violated encapsulation';
 }
@@ -83,7 +84,7 @@ my ( $stdout, $stderr ) = Capture::Tiny::capture { system($cmd); };
 diag $stdout;
 diag $stderr;
 
-like( $stdout, qr/\Q[[[TEST_PLUGIN:enable]]]\E/,      'plugin enabled'   );
+like( $stdout, qr/\Q[[[TEST_PLUGIN:enable]]]\E/,      'plugin enabled' );
 like( $stdout, qr/\Q[[[TEST_PLUGIN:before_save]]]\E/, 'before save hook' );
 like( $stdout, qr/\Q[[[TEST_PLUGIN:after_save]]]\E/,  'before save hook' );
 

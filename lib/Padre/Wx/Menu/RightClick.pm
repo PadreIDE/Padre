@@ -44,7 +44,7 @@ sub new {
 
 	$self->AppendSeparator;
 
-	if ( $selection ) {
+	if ($selection) {
 		$self->{open_selection} = $self->add_menu_action(
 			$self,
 			'file.open_selection',
@@ -73,7 +73,7 @@ sub new {
 		'edit.copy',
 	);
 
-	unless ( $selection ) {
+	unless ($selection) {
 		$self->{copy}->Enable(0);
 		$self->{cut}->Enable(0);
 	}
@@ -110,13 +110,10 @@ sub new {
 	);
 
 	my $config = $main->config;
-	if (
-		$event->isa('Wx::MouseEvent')
-		and
-		$config->feature_folding
-		and
-		$config->editor_folding
-	) {
+	if (    $event->isa('Wx::MouseEvent')
+		and $config->feature_folding
+		and $config->editor_folding )
+	{
 		my $position = $event->GetPosition;
 		my $line     = $editor->LineFromPosition( $editor->PositionFromPoint($position) );
 		my $point    = $editor->PointFromPosition( $editor->PositionFromLine($line) );

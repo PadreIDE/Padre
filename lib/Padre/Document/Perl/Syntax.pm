@@ -47,7 +47,7 @@ sub syntax {
 
 		# Create a temporary file with the Perl text
 		require File::Temp;
-		my $file  = File::Temp->new( UNLINK => 1 );
+		my $file = File::Temp->new( UNLINK => 1 );
 		$filename = $file->filename;
 		binmode( $file, ':encoding(UTF-8)' );
 

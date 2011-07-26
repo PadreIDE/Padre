@@ -230,8 +230,8 @@ foreach my $module ( sort keys %modules ) {
 
 	# Don't make direct system calls, use a Padre API instead
 	# SKIP: {
-		# my $good = !$document->find_any('PPI::Token::QuoteLike::Command');
-		# ok( $good, "$module: Makes direct system calls with qx" );
+	# my $good = !$document->find_any('PPI::Token::QuoteLike::Command');
+	# ok( $good, "$module: Makes direct system calls with qx" );
 	# }
 }
 
