@@ -107,6 +107,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Added a slightly odd but working workaround for a bug where
       ->SetValue('foo') would automatically set 'foo bar' instead if 'foo bar'
       was in the visible history of the combo box (ADAMK)
+    - Removed the --with-plugin command line option used by one of the author
+      tests as the implementation violated encapsulation badly (ADAMK)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to

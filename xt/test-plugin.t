@@ -4,20 +4,22 @@ use strict;
 use warnings;
 use Test::More;
 
-use Capture::Tiny qw(capture);
-
-#use Test::NoWarnings;
-use File::Temp ();
-use File::Spec();
-
-plan skip_all => 'Needs DISPLAY'
-	unless $ENV{DISPLAY}
-		or ( $^O eq 'MSWin32' );
-
-# Don't run tests for installs
-unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
-	plan( skip_all => "Author tests not required for installation" );
+# Handle various situations in which we should not run
+unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+	plan skip_all => 'Needs DISPLAY';
 }
+unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
+	plan skip_all => 'Author tests not required for installation';
+}
+unless ( 0 ) {
+	# Test disabled as the --with-plugin mechanism was terrible
+	plan skip_all => 'Required mechanism that violated encapsulation';
+}
+
+# use Test::NoWarnings;
+use File::Temp    ();
+use File::Spec    ();
+use Capture::Tiny ();
 
 plan tests => 5;
 
@@ -26,9 +28,9 @@ my $devpl;
 # Search for dev.pl
 for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
-		next if !-e File::Spec->catfile( $_, 'dev' );
+		next unless -e File::Spec->catfile( $_, 'dev' );
 	} else {
-		next if !-x File::Spec->catfile( $_, 'dev' );
+		next unless -x File::Spec->catfile( $_, 'dev' );
 	}
 	$devpl = File::Spec->catfile( $_, 'dev' );
 	last;
@@ -77,12 +79,11 @@ $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=edit.copy_filename,edit.paste,file.save,file.quit';
 
 diag "Command is: '$cmd'";
-my ( $stdout, $stderr ) = capture { system($cmd); };
+my ( $stdout, $stderr ) = Capture::Tiny::capture { system($cmd); };
 diag $stdout;
 diag $stderr;
 
-like( $stdout, qr/\Q[[[TEST_PLUGIN:enable]]]\E/, 'plugin enabled' );
-
+like( $stdout, qr/\Q[[[TEST_PLUGIN:enable]]]\E/,      'plugin enabled'   );
 like( $stdout, qr/\Q[[[TEST_PLUGIN:before_save]]]\E/, 'before save hook' );
 like( $stdout, qr/\Q[[[TEST_PLUGIN:after_save]]]\E/,  'before save hook' );
 

@@ -43,17 +43,16 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
-my $USAGE       = '';
-my $VERSION     = '';
-my $HOME        = undef;
-my $RESET       = undef;
-my $SESSION     = undef;
-my $PRELOAD     = undef;
-my $DESKTOP     = undef;
-my $ACTIONS     = undef;
-my $LOCALE      = undef;
-my $WITH_PLUGIN = undef;
-if ( grep {/^-/} @ARGV ) {
+my $USAGE   = '';
+my $VERSION = '';
+my $HOME    = undef;
+my $RESET   = undef;
+my $SESSION = undef;
+my $PRELOAD = undef;
+my $DESKTOP = undef;
+my $ACTIONS = undef;
+my $LOCALE  = undef;
+if ( grep { /^-/ } @ARGV ) {
 
 	# Avoid loading Getopt::Long entirely if we can,
 	# sneakily saving a meg or so of RAM.
@@ -68,7 +67,6 @@ if ( grep {/^-/} @ARGV ) {
 		'actionqueue=s' => \$ACTIONS,
 		'locale=s'      => \$LOCALE,
 		'preload'       => \$PRELOAD,    # Keep this sekrit for now --ADAMK
-		'with-plugin=s' => \$WITH_PLUGIN,
 	) or $USAGE = 1;
 }
 
@@ -173,9 +171,6 @@ my $ide = Padre->new(
 	actionqueue    => $ACTIONS,
 	startup_locale => $LOCALE,
 ) or die "Failed to create Padre instance";
-
-$ide->{with_plugin} = {};
-$ide->{with_plugin}->{$WITH_PLUGIN} = 1 if defined($WITH_PLUGIN);
 
 # Start the application
 $ide->run;
