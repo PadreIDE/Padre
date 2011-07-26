@@ -120,6 +120,11 @@ sub new {
 	my $submenu = Wx::Menu->new;
 	$self->{insert_submenu} = $self->AppendSubMenu( $submenu, Wx::gettext('Insert') );
 
+	$self->{insert_from_file} = $self->add_menu_action(
+		$submenu,
+		'edit.insert.from_file',
+	);
+
 	$self->{insert_special} = $self->add_menu_action(
 		$submenu,
 		'edit.insert.insert_special',
@@ -130,18 +135,7 @@ sub new {
 		'edit.insert.snippets',
 	);
 
-	$self->{insert_from_file} = $self->add_menu_action(
-		$submenu,
-		'edit.insert.from_file',
-	);
-
 	$self->AppendSeparator;
-
-	# Miscellaneous Actions
-	$self->{goto} = $self->add_menu_action(
-		$self,
-		'edit.goto',
-	);
 
 	$self->{next_problem} = $self->add_menu_action(
 		$self,

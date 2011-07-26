@@ -768,16 +768,6 @@ sub init {
 	# Miscellaneous Actions
 
 	Padre::Wx::Action->new(
-		name       => 'edit.goto',
-		label      => _T('&Go To...'),
-		comment    => _T('Jump to a specific line number or character position'),
-		shortcut   => 'Ctrl-G',
-		menu_event => sub {
-			shift->on_goto(@_);
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name        => 'edit.next_problem',
 		need_editor => 1,
 		label       => _T('&Next Problem'),
@@ -1368,6 +1358,42 @@ sub init {
 		},
 	);
 
+	# Special Search
+
+	Padre::Wx::Action->new(
+		name       => 'search.goto',
+		label      => _T('&Go To...'),
+		comment    => _T('Jump to a specific line number or character position'),
+		shortcut   => 'Ctrl-G',
+		menu_event => sub {
+			shift->on_goto(@_);
+		},
+	);
+
+	# Bookmark Support
+
+	Padre::Wx::Action->new(
+		name       => 'search.bookmark_set',
+		label      => _T('Set Bookmark'),
+		comment    => _T('Create a bookmark in the current file current row'),
+		shortcut   => 'Ctrl-B',
+		menu_event => sub {
+			require Padre::Wx::Dialog::Bookmarks;
+			Padre::Wx::Dialog::Bookmarks->run_set( $_[0] );
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name       => 'search.bookmark_goto',
+		label      => _T('Go to Bookmark'),
+		comment    => _T('Select a bookmark created earlier and jump to that position'),
+		shortcut   => 'Ctrl-Shift-B',
+		menu_event => sub {
+			require Padre::Wx::Dialog::Bookmarks;
+			Padre::Wx::Dialog::Bookmarks->run_goto( $_[0] );
+		},
+	);
+
 	# Special Search Types
 
 	Padre::Wx::Action->new(
@@ -1387,8 +1413,6 @@ sub init {
 		shortcut   => 'Ctrl-3',
 		toolbar    => 'status/info',
 		menu_event => sub {
-
-			#Create and show the dialog
 			require Padre::Wx::Dialog::QuickMenuAccess;
 			Padre::Wx::Dialog::QuickMenuAccess->new( $_[0] )->ShowModal;
 		},
@@ -1430,7 +1454,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.command_line',
-		label       => _T('Show Command Line window'),
+		label       => _T('Show Command Line'),
 		comment     => _T('Show the command line window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
@@ -1460,8 +1484,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.directory',
-		label       => _T('Show Project Browser/Tree'),
-		comment     => _T('Project Browser - Was known as the Directory Tree.'),
+		label       => _T('Show Project Browser'),
+		comment     => _T('Project Browser - Was known as the Directory Tree'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
@@ -1548,7 +1572,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.fold_all',
-		label       => _T('Fold all'),
+		label       => _T('Fold All'),
 		comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
@@ -1558,7 +1582,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.unfold_all',
-		label       => _T('Unfold all'),
+		label       => _T('Unfold All'),
 		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
@@ -1568,7 +1592,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.fold_this',
-		label       => _T('Fold/Unfold this'),
+		label       => _T('Fold/Unfold Current'),
 		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
@@ -1644,7 +1668,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.word_wrap',
-		label       => _T('Word-Wrap'),
+		label       => _T('Word-Wrap File'),
 		comment     => _T('Wrap long lines'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
@@ -1685,32 +1709,7 @@ sub init {
 		},
 	);
 
-	# Bookmark Support
-
-	Padre::Wx::Action->new(
-		name       => 'view.bookmark_set',
-		label      => _T('Set Bookmark'),
-		comment    => _T('Create a bookmark in the current file current row'),
-		shortcut   => 'Ctrl-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_set( $_[0] );
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name       => 'view.bookmark_goto',
-		label      => _T('Go to Bookmark'),
-		comment    => _T('Select a bookmark created earlier and jump to that position'),
-		shortcut   => 'Ctrl-Shift-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_goto( $_[0] );
-		},
-	);
-
 	# Style Actions
-
 
 	SCOPE: {
 		my @styles = (

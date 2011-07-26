@@ -70,18 +70,27 @@ sub new {
 		);
 	}
 
+	# Special Search
+
+	$self->AppendSeparator;
+
+	$self->{goto} = $self->add_menu_action(
+		$self,
+		'search.goto',
+	);
+
 	if ( $config->feature_bookmark ) {
 		$self->AppendSeparator;
 
 		# Bookmark Support
 		$self->{bookmark_set} = $self->add_menu_action(
 			$self,
-			'view.bookmark_set',
+			'search.bookmark_set',
 		);
 
 		$self->{bookmark_goto} = $self->add_menu_action(
 			$self,
-			'view.bookmark_goto',
+			'search.bookmark_goto',
 		);
 	}
 

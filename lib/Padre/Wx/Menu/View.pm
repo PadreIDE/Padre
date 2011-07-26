@@ -113,12 +113,45 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Editor Functionality
+	# Show or hide editor elements
+	$self->{currentline} = $self->add_menu_action(
+		$self,
+		'view.currentline',
+	);
+
 	$self->{lines} = $self->add_menu_action(
 		$self,
 		'view.lines',
 	);
 
+	$self->{indentation_guide} = $self->add_menu_action(
+		$self,
+		'view.indentation_guide',
+	);
+
+	$self->{whitespaces} = $self->add_menu_action(
+		$self,
+		'view.whitespaces',
+	);
+
+	$self->{calltips} = $self->add_menu_action(
+		$self,
+		'view.calltips',
+	);
+
+	$self->{eol} = $self->add_menu_action(
+		$self,
+		'view.eol',
+	);
+
+	$self->{rightmargin} = $self->add_menu_action(
+		$self,
+		'view.rightmargin',
+	);
+
+	$self->AppendSeparator;
+
+	# Code folding menu entries
 	$self->{folding} = $self->add_menu_action(
 		$self,
 		'view.folding',
@@ -139,38 +172,7 @@ sub new {
 		'view.fold_this',
 	);
 
-	$self->{calltips} = $self->add_menu_action(
-		$self,
-		'view.calltips',
-	);
-
-	$self->{currentline} = $self->add_menu_action(
-		$self,
-		'view.currentline',
-	);
-
-	$self->{rightmargin} = $self->add_menu_action(
-		$self,
-		'view.rightmargin',
-	);
-
 	$self->AppendSeparator;
-
-	# Editor Whitespace Layout
-	$self->{eol} = $self->add_menu_action(
-		$self,
-		'view.eol',
-	);
-
-	$self->{whitespaces} = $self->add_menu_action(
-		$self,
-		'view.whitespaces',
-	);
-
-	$self->{indentation_guide} = $self->add_menu_action(
-		$self,
-		'view.indentation_guide',
-	);
 
 	$self->{word_wrap} = $self->add_menu_action(
 		$self,

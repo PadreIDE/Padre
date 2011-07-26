@@ -58,7 +58,7 @@ $ENV{PADRE_HOME} = $dir->dirname;
 # Complete the dev.pl - command
 $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
-$cmd .= ' --actionqueue=file.new,edit.goto,edit.join_lines,edit.comment_toggle';
+$cmd .= ' --actionqueue=file.new,search.goto,edit.join_lines,edit.comment_toggle';
 $cmd .= ',edit.comment,edit.uncomment,edit.tabs_to_spaces,edit.spaces_to_tabs';
 $cmd .= ',edit.show_as_hex,help.current,help.about,file.quit';
 
