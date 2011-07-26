@@ -46,7 +46,7 @@ use strict;
 use warnings;
 use Padre::Task ();
 
-our $VERSION  = '0.87';
+our $VERSION  = '0.88';
 our @ISA      = 'Padre::Task';
 our $AUTOLOAD = undef;
 

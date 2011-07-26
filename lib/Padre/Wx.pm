@@ -20,7 +20,7 @@ use Wx::DND    ();
 use Wx::AUI    ();
 use Wx::Locale ();
 
-our $VERSION    = '0.87';
+our $VERSION    = '0.88';
 our $COMPATIBLE = '0.43';
 
 # Hard version lock on a new-enough Wx.pm

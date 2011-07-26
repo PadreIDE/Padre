@@ -12,7 +12,7 @@ use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
 use Padre::Wx::Directory::Path ();
 
-our $VERSION = '0.87';
+our $VERSION = '0.88';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Padre::Wx::TreeCtrl

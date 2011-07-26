@@ -10,7 +10,7 @@ use Params::Util ();
 use Padre::Task  ();
 use Padre::Logger;
 
-our $VERSION = '0.87';
+our $VERSION = '0.88';
 our @ISA     = 'Padre::Task';
 
 sub new {

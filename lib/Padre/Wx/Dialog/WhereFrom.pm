@@ -6,7 +6,7 @@ use warnings;
 use Padre::Role::Task         ();
 use Padre::Wx::FBP::WhereFrom ();
 
-our $VERSION = '0.87';
+our $VERSION = '0.88';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::FBP::WhereFrom

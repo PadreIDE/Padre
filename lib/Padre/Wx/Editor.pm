@@ -13,7 +13,7 @@ use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
 use Padre::Logger;
 
-our $VERSION    = '0.87';
+our $VERSION    = '0.88';
 our $COMPATIBLE = '0.81';
 
 # NOTE: Wx::ScintillaTextCtrl (Wx::Scintilla) or Wx::StyledTextCtrl (Wx::STC) is added later

@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.87';
+our $VERSION = '0.88';
 
 sub config_load {
 	my $self   = shift;
