@@ -117,6 +117,9 @@ next production release, and synchronise their release to the Padre schedule.
       editor_xxxx names to more accurately reflect that they act on the set of
       open editors. As no plugins should be changing these anyway, the compat
       version for Padre::Wx::Main will not changed (ADAMK)
+    - Removed unused methods for adding customer view menu elements. If plugins
+      are going to add to the view menu the submenus should be pulled from the
+      plugin and not pushed from the plugin (ADAMK)
 
 0.86 2011.06.18
     - Fix #1124: 'Description' column not displayed when all descriptions empty
