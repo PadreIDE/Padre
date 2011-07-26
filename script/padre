@@ -37,9 +37,11 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 		warn "padre cannot find wxPerl executable (which it requires on OS X)\n";
 	}
 	exit 0;
-} elsif ( $^O eq 'linux' ) {
-	$ENV{LIBOVERLAY_SCROLLBAR} = 0;
 }
+
+# Disable overlay scrollbar on Linux.
+# Done ugly this way to satisfy Perl::Critic (grrr)
+local $ENV{LIBOVERLAY_SCROLLBAR} = ($^O eq 'linux') ? 0 : $ENV{LIBOVERLAY_SCROLLBAR};
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.

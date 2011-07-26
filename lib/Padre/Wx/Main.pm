@@ -1010,13 +1010,14 @@ sub single_instance_address {
 			$config->main_singleinstance_port
 		);
 
-		my $file = File::Spec->catfile(
-			Padre::Constant::CONFIG_DIR,
-			'single_instance.socket',
-		);
-		my $address = Wx::UNIXaddress->new;
-		$address->SetFilename($file);
-		return $address;
+		# TODO: Keep this until someone on Unix has time to test it
+		# my $file = File::Spec->catfile(
+			# Padre::Constant::CONFIG_DIR,
+			# 'single_instance.socket',
+		# );
+		# my $address = Wx::UNIXaddress->new;
+		# $address->SetFilename($file);
+		# return $address;
 	}
 }
 

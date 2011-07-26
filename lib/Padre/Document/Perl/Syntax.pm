@@ -12,8 +12,7 @@ our @ISA     = 'Padre::Task::Syntax';
 
 sub new {
 	my $class = shift;
-
-	my %args = @_;
+	my %args  = @_;
 
 	if ( defined $ENV{PADRE_IS_TEST} ) {
 
@@ -23,7 +22,7 @@ sub new {
 		$args{perl} = Padre::Perl::cperl();
 	} else {
 
-		#Otherwise run with user-preferred interpreter
+		# Otherwise run with user-preferred interpreter
 		$args{perl} = $args{document}->get_interpreter;
 	}
 
@@ -48,9 +47,9 @@ sub syntax {
 
 		# Create a temporary file with the Perl text
 		require File::Temp;
-		my $file = File::Temp->new( UNLINK => 1 );
+		my $file  = File::Temp->new( UNLINK => 1 );
 		$filename = $file->filename;
-		binmode( $file, ':utf8' );
+		binmode( $file, ':encoding(UTF-8)' );
 
 		# If this is a module, we will need to overwrite %INC to avoid the module
 		# loading another module, which loads the system installed equivalent
