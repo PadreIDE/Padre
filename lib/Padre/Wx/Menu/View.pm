@@ -5,7 +5,6 @@ package Padre::Wx::Menu::View;
 use 5.008;
 use strict;
 use warnings;
-use File::Glob               ();
 use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Config::Style     ();

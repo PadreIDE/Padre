@@ -122,6 +122,7 @@ sub refresh {
 	$self->{find_next}->Enable($editor);
 	$self->{find_previous}->Enable($editor);
 	$self->{replace}->Enable($editor);
+	$self->{goto}->Enable($editor);
 
 	if ( $current->config->feature_bookmark ) {
 		# Bookmarks can only be placed on files on disk

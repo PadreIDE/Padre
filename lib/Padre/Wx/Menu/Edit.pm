@@ -351,7 +351,6 @@ sub refresh {
 	my $quickfix = $hasdoc && $document->can('get_quick_fix_provider');
 
 	# Handle the simple cases
-	$self->{goto}->Enable($hasdoc);
 	$self->{next_problem}->Enable($hasdoc);
 	if ( $self->{main}->config->feature_quick_fix ) {
 		$self->{quick_fix}->Enable($quickfix);
