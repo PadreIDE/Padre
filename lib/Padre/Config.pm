@@ -878,6 +878,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
+		$_[0]->feature_folding or return;
 		$_[0]->editor_folding( $_[1] );
 	},
 );
@@ -1264,6 +1265,12 @@ setting(
 );
 setting(
 	name    => 'feature_fontsize',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'feature_folding',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,

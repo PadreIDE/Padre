@@ -390,7 +390,7 @@ sub padre_setup_plain {
 sub padre_setup_style {
 	my $self   = shift;
 	my $name   = shift;
-	my $config = $self->main->ide->config;
+	my $config = $self->main->config;
 
 	$self->padre_setup_plain;
 	for ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
@@ -398,10 +398,11 @@ sub padre_setup_style {
 	}
 	$self->setup_style_from_config($name);
 
-	# if mimetype is known, then it might
-	# be Perl with in-line POD
-	if ( $config->editor_folding and $config->editor_fold_pod ) {
-		$self->fold_pod;
+	# if mimetype is known, then it might be Perl with in-line POD
+	if ( $config->feature_folding and $config->editor_folding ) {
+		if ( $config->editor_fold_pod ) {
+			$self->fold_pod;
+		}
 	}
 
 	return;
@@ -697,10 +698,11 @@ sub select_to_matching_brace {
 # actually I added some improvement allowing a 50% growth in the file
 # and requireing a min of 2 width
 sub show_line_numbers {
-	my ( $self, $on ) = @_;
+	my $self = shift;
+	my $on   = shift;
 
-	# premature optimization, caching the with that was on the 3rd place at load time
-	# as timed my Deve::NYTProf
+	# Premature optimization, caching the with that was on the 3rd place
+	# at load time as timed my Deve::NYTProf
 	$width ||= $self->TextWidth( Wx::wxSTC_STYLE_LINENUMBER, "m" ); # width of a single character
 	if ($on) {
 		my $n = 1 + List::Util::max( 2, length( $self->GetLineCount * 2 ) );
@@ -715,20 +717,9 @@ sub show_line_numbers {
 	return;
 }
 
-# Just a placeholder
-sub show_symbols {
-	my ( $self, $on ) = @_;
-
-	#	$self->SetMarginWidth(1, 0);
-
-	# $self->SetMarginWidth(1, 16);   #margin 1 for symbols, 16 px wide
-	# $self->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL);
-
-	return;
-}
-
 sub show_folding {
-	my ( $self, $on ) = @_;
+	my $self = shift;
+	my $on   = shift;
 
 	if ($on) {
 
@@ -738,7 +729,7 @@ sub show_folding {
 		$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
 		$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
 
-		# define folding markers
+		# Define folding markers
 		my $w = Wx::Colour->new("white");
 		my $b = Wx::Colour->new("black");
 		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEREND,     Wx::wxSTC_MARK_BOXPLUSCONNECTED,  $w, $b );
@@ -789,12 +780,15 @@ sub set_preferences {
 	my $self   = shift;
 	my $config = $self->config;
 
+	$self->SetCaretLineVisible( $config->editor_currentline );
 	$self->show_line_numbers( $config->editor_linenumbers );
-	$self->show_folding( $config->editor_folding );
 	$self->SetIndentationGuides( $config->editor_indentationguides );
 	$self->SetViewEOL( $config->editor_eol );
 	$self->SetViewWhiteSpace( $config->editor_whitespace );
-	$self->SetCaretLineVisible( $config->editor_currentline );
+
+	if ( $config->feature_folding ) {
+		$self->show_folding( $config->editor_folding );
+	}
 
 	$self->padre_setup;
 

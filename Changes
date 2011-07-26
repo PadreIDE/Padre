@@ -111,6 +111,7 @@ next production release, and synchronise their release to the Padre schedule.
       tests as the implementation violated encapsulation badly (ADAMK)
     - Moved Bookmarks from View to Search menu in line with other
       several other editors (ADAMK)
+    - Added feature_folding to allow the removal of code folding support (ADAMK)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to

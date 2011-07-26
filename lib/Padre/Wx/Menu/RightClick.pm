@@ -14,10 +14,8 @@ our @ISA     = 'Padre::Wx::Menu';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $editor = shift;
+	my $editor = shift or return;
 	my $event  = shift;
-
-	return if not $editor;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -25,14 +23,14 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	my $selection_exists = length( $editor->GetSelectedText ) > 0 ? 1 : 0;
+	my $selection = length( $editor->GetSelectedText ) > 0 ? 1 : 0;
 
 	# Undo/Redo
 	$self->{undo} = $self->add_menu_action(
 		$self,
 		'edit.undo',
 	);
-	if ( not $editor->CanUndo ) {
+	unless ( $editor->CanUndo ) {
 		$self->{undo}->Enable(0);
 	}
 
@@ -40,13 +38,13 @@ sub new {
 		$self,
 		'edit.redo',
 	);
-	if ( not $editor->CanRedo ) {
+	unless ( $editor->CanRedo ) {
 		$self->{redo}->Enable(0);
 	}
 
 	$self->AppendSeparator;
 
-	if ($selection_exists) {
+	if ( $selection ) {
 		$self->{open_selection} = $self->add_menu_action(
 			$self,
 			'file.open_selection',
@@ -65,27 +63,27 @@ sub new {
 
 	$self->AppendSeparator;
 
-	$self->{copy} = $self->add_menu_action(
-		$self,
-		'edit.copy',
-	);
 	$self->{cut} = $self->add_menu_action(
 		$self,
 		'edit.cut',
 	);
 
-	if ( not $selection_exists ) {
+	$self->{copy} = $self->add_menu_action(
+		$self,
+		'edit.copy',
+	);
+
+	unless ( $selection ) {
 		$self->{copy}->Enable(0);
 		$self->{cut}->Enable(0);
 	}
-
 
 	$self->{paste} = $self->add_menu_action(
 		$self,
 		'edit.paste',
 	);
-	my $text = $editor->get_text_from_clipboard();
-	if ( not defined($text) or not length($text) or not $editor->CanPaste ) {
+	my $text = $editor->get_text_from_clipboard;
+	unless ( defined $text and length $text and $editor->CanPaste ) {
 		$self->{paste}->Enable(0);
 	}
 
@@ -111,17 +109,19 @@ sub new {
 		'edit.uncomment',
 	);
 
+	my $config = $main->config;
+	if (
+		$event->isa('Wx::MouseEvent')
+		and
+		$config->feature_folding
+		and
+		$config->editor_folding
+	) {
+		my $position = $event->GetPosition;
+		my $line     = $editor->LineFromPosition( $editor->PositionFromPoint($position) );
+		my $point    = $editor->PointFromPosition( $editor->PositionFromLine($line) );
 
-	if (    $event->isa('Wx::MouseEvent')
-		and $editor->main->ide->config->editor_folding )
-	{
-		my $mousePos         = $event->GetPosition;
-		my $line             = $editor->LineFromPosition( $editor->PositionFromPoint($mousePos) );
-		my $firstPointInLine = $editor->PointFromPosition( $editor->PositionFromLine($line) );
-
-		if (   $mousePos->x < $firstPointInLine->x
-			&& $mousePos->x > ( $firstPointInLine->x - 18 ) )
-		{
+		if ( $position->x < $point->x and $position->x > ( $point->x - 18 ) ) {
 			$self->AppendSeparator;
 
 			$self->{fold_all} = $self->add_menu_action(

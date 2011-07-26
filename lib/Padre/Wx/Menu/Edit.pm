@@ -309,7 +309,7 @@ sub new {
 		'edit.filter_tool',
 	);
 
-	$self->{filter_tool} = $self->add_menu_action(
+	$self->{perl_filter} = $self->add_menu_action(
 		$self,
 		'edit.perl_filter',
 	);

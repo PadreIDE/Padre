@@ -148,28 +148,30 @@ sub new {
 		'view.rightmargin',
 	);
 
-	$self->AppendSeparator;
-
 	# Code folding menu entries
-	$self->{folding} = $self->add_menu_action(
-		$self,
-		'view.folding',
-	);
+	if ( $config->feature_folding ) {
+		$self->AppendSeparator;
 
-	$self->{fold_all} = $self->add_menu_action(
-		$self,
-		'view.fold_all',
-	);
+		$self->{folding} = $self->add_menu_action(
+			$self,
+			'view.folding',
+		);
 
-	$self->{unfold_all} = $self->add_menu_action(
-		$self,
-		'view.unfold_all',
-	);
+		$self->{fold_all} = $self->add_menu_action(
+			$self,
+			'view.fold_all',
+		);
 
-	$self->{fold_this} = $self->add_menu_action(
-		$self,
-		'view.fold_this',
-	);
+		$self->{unfold_all} = $self->add_menu_action(
+			$self,
+			'view.unfold_all',
+		);
+
+		$self->{fold_this} = $self->add_menu_action(
+			$self,
+			'view.fold_this',
+		);
+	}
 
 	$self->AppendSeparator;
 
@@ -268,7 +270,6 @@ sub refresh {
 	# Simple check state cases from configuration
 	$self->{statusbar}->Check( $config->main_statusbar );
 	$self->{lines}->Check( $config->editor_linenumbers );
-	$self->{folding}->Check( $config->editor_folding );
 	$self->{currentline}->Check( $config->editor_currentline );
 	$self->{rightmargin}->Check( $config->editor_right_margin_enable );
 	$self->{eol}->Check( $config->editor_eol );
@@ -285,9 +286,13 @@ sub refresh {
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{toolbar}->Check( $config->main_toolbar );
 
-	$self->{fold_all}->Enable( $self->{folding}->IsChecked );
-	$self->{unfold_all}->Enable( $self->{folding}->IsChecked );
-	$self->{fold_this}->Enable( $self->{folding}->IsChecked );
+	if ( $config->feature_folding ) {
+		my $folding = $config->editor_folding;
+		$self->{folding}->Check($folding);
+		$self->{fold_all}->Enable($folding);
+		$self->{unfold_all}->Enable($folding);
+		$self->{fold_this}->Enable($folding);
+	}
 
 	# Check state for word wrap is document-specific
 	if ($document) {
@@ -321,9 +326,11 @@ sub refresh {
 	}
 
 	# Disable zooming if there's no current document
-	$self->{font_increase}->Enable($doc) if defined $self->{font_increase};
-	$self->{font_decrease}->Enable($doc) if defined $self->{font_decrease};
-	$self->{font_reset}->Enable($doc)    if defined $self->{font_reset};
+	if ( $config->feature_folding ) {
+		$self->{font_increase}->Enable($doc);
+		$self->{font_decrease}->Enable($doc);
+		$self->{font_reset}->Enable($doc);
+	}
 
 	return;
 }
