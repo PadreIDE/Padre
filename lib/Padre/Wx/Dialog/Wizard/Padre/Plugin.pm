@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx                     ();
 use Padre::Wx::Dialog::WizardPage ();
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 our @ISA     = qw(Padre::Wx::Dialog::WizardPage);
 
 sub init {

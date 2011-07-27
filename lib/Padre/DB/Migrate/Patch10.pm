@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::DB::Migrate::Patch ();
 
-our $VERSION = '0.85';
+our $VERSION = '0.89';
 our @ISA     = 'Padre::DB::Migrate::Patch';
 
 

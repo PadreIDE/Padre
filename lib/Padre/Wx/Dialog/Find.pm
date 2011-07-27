@@ -6,7 +6,7 @@ use warnings;
 use Padre::Search        ();
 use Padre::Wx::FBP::Find ();
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 our @ISA     = qw{
 	Padre::Wx::FBP::Find
 };
