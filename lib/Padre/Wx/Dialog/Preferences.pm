@@ -16,6 +16,10 @@ our @ISA     = qw{
 	Padre::Wx::FBP::Preferences
 };
 
+
+
+
+
 #####################################################################
 # Class Methods
 
@@ -29,6 +33,10 @@ sub run {
 	# Load preferences from configuration
 	my $config = $main->config;
 	$self->config_load($config);
+
+	# Always show the first tab regardless of which one
+	# was selected in wxFormBuilder.
+	$self->treebook->ChangeSelection(0);
 
 	# Show the dialog
 	$self->Fit;
@@ -45,7 +53,9 @@ sub run {
 	return 1;
 }
 
-# 1234567890123456789012345678901234567890
+
+
+
 
 #####################################################################
 # Constructor and Accessors
@@ -91,6 +101,10 @@ sub new {
 sub names {
 	return @{ $_[0]->{names} };
 }
+
+
+
+
 
 #####################################################################
 # Padre::Wx::Role::Config Methods
@@ -180,6 +194,10 @@ sub config_diff {
 	return \%diff;
 }
 
+
+
+
+
 ######################################################################
 # Event Handlers
 
@@ -264,6 +282,10 @@ sub preview_refresh {
 
 	return;
 }
+
+
+
+
 
 ######################################################################
 # Support Methods
