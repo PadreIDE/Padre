@@ -16,9 +16,10 @@ use Padre::Logger;
 our $VERSION    = '0.88';
 our $COMPATIBLE = '0.81';
 
-# NOTE: Wx::ScintillaTextCtrl (Wx::Scintilla) or Wx::StyledTextCtrl (Wx::STC) is added later
-# before object construction
-our @ISA = qw { Padre::Wx::Role::Main };
+# Allow the use of two different versions of Scintilla
+our @ISA = Padre::Util::wx_scintilla_ready()
+	? qw{ Padre::Wx::Role::Main Wx::ScintillaTextCtrl }
+	: qw{ Padre::Wx::Role::Main Wx::StyledTextCtrl    };
 
 # Convenience colour constants
 use constant {
@@ -80,14 +81,6 @@ sub new {
 	while ( not $main->isa('Padre::Wx::Main') ) {
 		$main = $main->GetParent;
 	}
-
-	# Figure out what to use as this editor instance super class
-	# Wx::ScintillaTextCtrl which needs to be installed (i.e. cpanm Wx::Scintilla),
-	# or Wx::StyledTextCtrl which comes by default with Wx and is very *old*
-	my $editor_super_class = Padre::Util::wx_scintilla_ready() ? 'Wx::ScintillaTextCtrl' : 'Wx::StyledTextCtrl';
-
-	# Push the appropriate editor super class to inheritance list :)
-	push @ISA, $editor_super_class;
 
 	# Initialize variables after loading either Wx::Scintilla or Wx::STC
 	%WXEOL = (
