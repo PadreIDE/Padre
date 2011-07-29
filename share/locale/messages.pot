@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-27 00:10-0700\n"
+"POT-Creation-Date: 2011-07-29 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1672,7 +1672,7 @@ msgstr ""
 msgid "Email Address:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:163
+#: lib/Padre/Wx/Dialog/Sync.pm:162
 msgid "Email and confirmation do not match."
 msgstr ""
 
@@ -1773,11 +1773,11 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
-#: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:100
-#: lib/Padre/Wx/Dialog/Sync.pm:119 lib/Padre/Wx/Dialog/Sync.pm:143
-#: lib/Padre/Wx/Dialog/Sync.pm:154 lib/Padre/Wx/Dialog/Sync.pm:164
-#: lib/Padre/Wx/Dialog/Sync.pm:182 lib/Padre/Wx/Dialog/Sync.pm:193
-#: lib/Padre/Wx/Dialog/Sync.pm:204 lib/Padre/Wx/Dialog/Sync.pm:215
+#: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
+#: lib/Padre/Wx/Dialog/Sync.pm:118 lib/Padre/Wx/Dialog/Sync.pm:142
+#: lib/Padre/Wx/Dialog/Sync.pm:153 lib/Padre/Wx/Dialog/Sync.pm:163
+#: lib/Padre/Wx/Dialog/Sync.pm:183 lib/Padre/Wx/Dialog/Sync.pm:194
+#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
 #: lib/Padre/Wx/Dialog/OpenResource.pm:118
 msgid "Error"
 msgstr ""
@@ -3445,7 +3445,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:153
+#: lib/Padre/Wx/Dialog/Sync.pm:152
 msgid "Password and confirmation do not match."
 msgstr ""
 
@@ -3531,11 +3531,11 @@ msgstr ""
 msgid "Pick parent directory"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:142
+#: lib/Padre/Wx/Dialog/Sync.pm:141
 msgid "Please ensure all inputs have appropriate values."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:99
+#: lib/Padre/Wx/Dialog/Sync.pm:98
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
