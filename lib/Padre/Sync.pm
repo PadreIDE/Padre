@@ -26,7 +26,7 @@ use Params::Util   ();
 use JSON::XS       ();
 use LWP::UserAgent ();
 use HTTP::Cookies  ();
-use HTTP::Request::Common qw/GET POST DELETE/;
+use HTTP::Request::Common qw/GET POST DELETE PUT/;
 use Padre::Util     ();
 use Padre::Current  ();
 use Padre::Constant ();
@@ -67,7 +67,7 @@ sub new {
 	my $ua = LWP::UserAgent->new;
 
 	#push @{ $ua->requests_redirectable }, 'POST';
-	$ua->timeout(2);
+	$ua->timeout(5);
 	$ua->cookie_jar(
 		HTTP::Cookies->new(
 			file => File::Spec->catfile(
@@ -154,14 +154,16 @@ sub register {
 		'Content-Type' => 'application/json',
 		'Content'      => $self->{json}->encode($params),
 	);
-	if ( $response->code == 200 ) {
+	if ( $response->code == 201 ) {
 		return 'Account registered successfully. Please log in.';
 	}
 
-	my $h = $self->{json}->decode( $response->content );
+	local $@;
+	my $h = eval { $self->{json}->decode( $response->content ) };
 
-	return "Registration Failure: $h->{error}" if $h->{error};
-	return "Registration failure.";
+	return "Registration failure(Server): $h->{error}" if $h->{error};
+	return "Registration failure(Padre): $@" if $@;
+        return "Registration failure(unknown)";
 }
 
 =pod
@@ -245,7 +247,7 @@ sub server_delete {
 		return 'Failure: user not logged in.';
 	}
 
-	my $response = $self->ua->request( DELETE "$server/user/config" );
+	my $response = $self->ua->request( DELETE "$server/config" );
 
 	if ( $response->code == 200 ) {
 		return 'Configuration deleted successfully.';
@@ -283,11 +285,11 @@ sub local_to_server {
 	}
 
 	my $response = $self->ua->request(
-		POST "$server/user/config",
+		PUT "$server/config",
 		'Content-Type' => 'application/json',
 		'Content'      => $self->{json}->encode( \%h ),
 	);
-	if ( $response->code == 200 ) {
+	if ( $response->code == 204 ) {
 		return 'Configuration uploaded successfully.';
 	}
 
@@ -316,7 +318,7 @@ sub server_to_local {
 	}
 
 	my $response = $self->ua->request(
-		GET "$server/user/config",
+		GET "$server/config",
 		'Accept' => 'application/json',
 	);
 

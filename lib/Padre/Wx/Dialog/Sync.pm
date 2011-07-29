@@ -90,7 +90,6 @@ sub btn_login {
 		}
 
 		$self->{lbl_status}->SetLabel( $sync->english_status );
-		$self->{lbl_status_info}->SetLabel( $sync->english_status );
 		return;
 	}
 
@@ -106,7 +105,7 @@ sub btn_login {
 
 	# Attempt login
 	my $rc = $sync->login(
-		{   username => $username,
+		{       username => $username,
 			password => $password,
 		}
 	);
@@ -172,7 +171,9 @@ sub btn_register {
 	my $rc = $self->{sync}->register(
 		{   username => $username,
 			password => $pw,
+			password_confirm => $pw_confirm,
 			email    => $email,
+			email_confirm => $email_confirm,
 		}
 	);
 
