@@ -110,7 +110,14 @@ sub new {
 	);
 
 	my $config = $main->config;
-	if (    $event->isa('Wx::MouseEvent')
+	if ( !$config->can('feature_folding') ) {
+		warn "Bug #1268 appeared, please report to the developers at http://padre.perlide.org/trac/ticket/1268\n"
+			. "Bug report info: config is "
+			. $config
+			. ", run time "
+			. ( time - $^T )
+			. " seconds\n";
+	} elsif ( $event->isa('Wx::MouseEvent')
 		and $config->feature_folding
 		and $config->editor_folding )
 	{
