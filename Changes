@@ -14,6 +14,7 @@ next production release, and synchronise their release to the Padre schedule.
     - The directory tree supports relocale correctly (ADAMK)
     - The notebook supports relocale correctly for "Unsaved X" files (ADAMK)
     - Catch a crash (#1268 workaround) (SEWI)
+    - "Run -> Run this test" now use -l as suggested by BOWTIE (SZABGAB).
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

@@ -2807,7 +2807,7 @@ sub on_run_this_test {
 		close $tempfile;
 
 		my $things_to_test = $tempfile->filename;
-		$self->run_command(qq{"$prove" - -bv < "$things_to_test"});
+		$self->run_command(qq{"$prove" - -lv < "$things_to_test"});
 	} else {
 		$self->run_command("$prove -bv $filename");
 	}
