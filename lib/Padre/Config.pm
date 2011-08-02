@@ -57,6 +57,16 @@ use Class::XSAccessor::Array {
 	}
 };
 
+sub wx_scintilla_ready {
+	my $enabled;
+	if ( Padre::Config->read->feature_wx_scintilla ) {
+		eval 'use Wx::Scintilla';
+		$enabled = 1 unless $@;
+	}
+	eval 'use Wx::STC' unless $enabled;
+	return $enabled;
+}
+
 
 
 

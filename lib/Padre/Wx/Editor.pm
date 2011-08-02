@@ -6,6 +6,7 @@ use warnings;
 use YAML::Tiny                ();
 use Time::HiRes               ();
 use Padre::Constant           ();
+use Padre::Config             ();
 use Padre::Util               ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
@@ -17,7 +18,7 @@ our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
 
 # Allow the use of two different versions of Scintilla
-our @ISA = Padre::Util::wx_scintilla_ready()
+our @ISA = Padre::Config::wx_scintilla_ready()
 	? qw{ Padre::Wx::Role::Main Wx::ScintillaTextCtrl }
 	: qw{ Padre::Wx::Role::Main Wx::StyledTextCtrl    };
 

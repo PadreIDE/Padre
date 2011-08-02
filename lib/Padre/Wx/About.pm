@@ -9,6 +9,7 @@ use utf8;
 use Padre::Wx               ();
 use Padre::Wx::HtmlWindow   ();
 use Padre::Wx::Icon         ();
+use Padre::Config           ();
 use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
@@ -351,7 +352,7 @@ sub _content_info {
 	my $alien = Wx::wxVERSION();
 
 	my $wx_scintilla_html = '';
-	if (Padre::Util::wx_scintilla_ready) {
+	if ( Padre::Config::wx_scintilla_ready() ) {
 		$wx_scintilla_html = <<"END_HTML";
       <tr>
         <td valign="top">Wx::Scintilla</td>
