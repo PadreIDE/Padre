@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-02 00:10-0700\n"
+"POT-Creation-Date: 2011-08-02 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:458
+#: lib/Padre/Config.pm:468
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:460
+#: lib/Padre/Config.pm:470
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -136,7 +136,7 @@ msgid "&Case Sensitive"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:294 lib/Padre/Wx/Browser.pm:109
-#: lib/Padre/Wx/About.pm:85 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/Dialog/DocStats.pm:58
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
@@ -471,7 +471,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:454
+#: lib/Padre/Config.pm:464
 msgid "A new empty file"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:25
+#: lib/Padre/Wx/About.pm:26
 msgid "About Padre"
 msgstr ""
 
@@ -545,11 +545,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:602
+#: lib/Padre/Config.pm:612
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:603
+#: lib/Padre/Config.pm:613
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -604,7 +604,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Config.pm:381 lib/Padre/Wx/Dialog/ModuleStart.pm:16
+#: lib/Padre/Config.pm:391 lib/Padre/Wx/Dialog/ModuleStart.pm:16
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:36
 msgid "Apache License"
 msgstr ""
@@ -641,12 +641,12 @@ msgstr ""
 msgid "Arabic"
 msgstr ""
 
-#: lib/Padre/Config.pm:382 lib/Padre/Wx/Dialog/ModuleStart.pm:17
+#: lib/Padre/Config.pm:392 lib/Padre/Wx/Dialog/ModuleStart.pm:17
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:37
 msgid "Artistic License 1.0"
 msgstr ""
 
-#: lib/Padre/Config.pm:383 lib/Padre/Wx/Dialog/ModuleStart.pm:18
+#: lib/Padre/Config.pm:393 lib/Padre/Wx/Dialog/ModuleStart.pm:18
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:38
 msgid "Artistic License 2.0"
 msgstr ""
@@ -735,7 +735,7 @@ msgstr ""
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:105
+#: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
 msgstr ""
 
@@ -1033,7 +1033,7 @@ msgstr ""
 msgid "Close this Project"
 msgstr ""
 
-#: lib/Padre/Config.pm:601
+#: lib/Padre/Config.pm:611
 msgid "Code Order"
 msgstr ""
 
@@ -1067,7 +1067,7 @@ msgid ""
 "output window"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:317
+#: lib/Padre/Wx/About.pm:318
 msgid "Config:"
 msgstr ""
 
@@ -1092,11 +1092,11 @@ msgstr ""
 msgid "Content Assist"
 msgstr ""
 
-#: lib/Padre/Config.pm:517
+#: lib/Padre/Config.pm:527
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:506
+#: lib/Padre/Config.pm:516
 msgid "Contents of the window title"
 msgstr ""
 
@@ -1258,7 +1258,7 @@ msgstr ""
 msgid "Create a bookmark in the current file current row"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:101
+#: lib/Padre/Wx/About.pm:102
 msgid "Created by"
 msgstr ""
 
@@ -1453,7 +1453,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:63
+#: lib/Padre/Wx/About.pm:64
 msgid "Development"
 msgstr ""
 
@@ -1485,11 +1485,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:649
+#: lib/Padre/Config.pm:659
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:650
+#: lib/Padre/Config.pm:660
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1543,7 +1543,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:663
+#: lib/Padre/Config.pm:673
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -1684,7 +1684,7 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1320
+#: lib/Padre/Config.pm:1330
 msgid ""
 "Enable or disable the newer Wx::Scintilla source code editing component. "
 msgstr ""
@@ -1767,7 +1767,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:441 lib/Padre/Wx/Editor.pm:237
+#: lib/Padre/Document.pm:441 lib/Padre/Wx/Editor.pm:238
 #: lib/Padre/Wx/Main.pm:4896 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:185
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
@@ -2231,7 +2231,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1690
+#: lib/Padre/Wx/Editor.pm:1691
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2301,7 +2301,7 @@ msgstr ""
 msgid "Functions"
 msgstr ""
 
-#: lib/Padre/Config.pm:385 lib/Padre/Wx/Dialog/ModuleStart.pm:20
+#: lib/Padre/Config.pm:395 lib/Padre/Wx/Dialog/ModuleStart.pm:20
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:40
 msgid "GPL 2 or later"
 msgstr ""
@@ -2454,11 +2454,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:872
+#: lib/Padre/Config.pm:882
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:871
+#: lib/Padre/Config.pm:881
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2584,7 +2584,7 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: lib/Padre/Config.pm:386 lib/Padre/Wx/Dialog/ModuleStart.pm:21
+#: lib/Padre/Config.pm:396 lib/Padre/Wx/Dialog/ModuleStart.pm:21
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:41
 msgid "LGPL 2.1 or later"
 msgstr ""
@@ -2744,7 +2744,7 @@ msgstr ""
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/Config.pm:387 lib/Padre/Wx/Dialog/ModuleStart.pm:22
+#: lib/Padre/Config.pm:397 lib/Padre/Wx/Dialog/ModuleStart.pm:22
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:42
 msgid "MIT License"
 msgstr ""
@@ -2880,7 +2880,7 @@ msgstr ""
 msgid "Move to other panel"
 msgstr ""
 
-#: lib/Padre/Config.pm:388 lib/Padre/Wx/Dialog/ModuleStart.pm:23
+#: lib/Padre/Config.pm:398 lib/Padre/Wx/Dialog/ModuleStart.pm:23
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:43
 msgid "Mozilla Public License"
 msgstr ""
@@ -2969,7 +2969,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:870
+#: lib/Padre/Config.pm:880
 msgid "No Autoindent"
 msgstr ""
 
@@ -3043,7 +3043,7 @@ msgstr ""
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:455
+#: lib/Padre/Config.pm:465
 msgid "No open files"
 msgstr ""
 
@@ -3254,7 +3254,7 @@ msgstr ""
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:456
+#: lib/Padre/Config.pm:466
 msgid "Open session"
 msgstr ""
 
@@ -3337,11 +3337,11 @@ msgstr ""
 msgid "Other (Please fill in here)"
 msgstr ""
 
-#: lib/Padre/Config.pm:390
+#: lib/Padre/Config.pm:400
 msgid "Other Open Source"
 msgstr ""
 
-#: lib/Padre/Config.pm:391
+#: lib/Padre/Config.pm:401
 msgid "Other Unrestricted"
 msgstr ""
 
@@ -3381,15 +3381,15 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:463 lib/Padre/Config.pm:1105
+#: lib/Padre/MimeTypes.pm:463 lib/Padre/Config.pm:1115
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:468 lib/Padre/Config.pm:1106
+#: lib/Padre/MimeTypes.pm:468 lib/Padre/Config.pm:1116
 msgid "PPI Standard"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:58 lib/Padre/Wx/WizardLibrary.pm:29
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/WizardLibrary.pm:29
 #: lib/Padre/Wx/WizardLibrary.pm:37 lib/Padre/Wx/Dialog/Form.pm:98
 #: lib/Padre/Config/Style.pm:46
 msgid "Padre"
@@ -3423,7 +3423,7 @@ msgstr ""
 msgid "Padre Sync"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:104
+#: lib/Padre/Wx/About.pm:105
 msgid ""
 "Padre is free software; you can redistribute it and/or modify it under the "
 "same terms as Perl 5."
@@ -3678,7 +3678,7 @@ msgstr ""
 msgid "Previous File"
 msgstr ""
 
-#: lib/Padre/Config.pm:453
+#: lib/Padre/Config.pm:463
 msgid "Previous open files"
 msgstr ""
 
@@ -3698,7 +3698,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:662
+#: lib/Padre/Config.pm:672
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -3708,7 +3708,7 @@ msgid ""
 "variable"
 msgstr ""
 
-#: lib/Padre/Config.pm:392
+#: lib/Padre/Config.pm:402
 msgid "Proprietary/Restrictive"
 msgstr ""
 
@@ -4054,7 +4054,7 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
-#: lib/Padre/Config.pm:384 lib/Padre/Wx/Dialog/ModuleStart.pm:19
+#: lib/Padre/Config.pm:394 lib/Padre/Wx/Dialog/ModuleStart.pm:19
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:39
 msgid "Revised BSD License"
 msgstr ""
@@ -4207,7 +4207,7 @@ msgid "Save session as..."
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:447 lib/Padre/MimeTypes.pm:456
-#: lib/Padre/Config.pm:1104
+#: lib/Padre/Config.pm:1114
 msgid "Scintilla"
 msgstr ""
 
@@ -4488,7 +4488,7 @@ msgstr ""
 msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
-#: lib/Padre/Config.pm:506 lib/Padre/Config.pm:517
+#: lib/Padre/Config.pm:516 lib/Padre/Config.pm:527
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4646,11 +4646,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1123
+#: lib/Padre/Config.pm:1133
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:738
+#: lib/Padre/Config.pm:748
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -4749,7 +4749,7 @@ msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:440
+#: lib/Padre/Config.pm:450
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -4941,7 +4941,7 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:73 lib/Padre/Wx/About.pm:316
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:317
 msgid "System Info"
 msgstr ""
 
@@ -4974,11 +4974,11 @@ msgstr ""
 msgid "Text Files"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:102 lib/Padre/Wx/About.pm:134
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:135
 msgid "The Padre Development Team"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:226
+#: lib/Padre/Wx/About.pm:227
 msgid "The Padre Translation Team"
 msgstr ""
 
@@ -5008,7 +5008,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Config.pm:389
+#: lib/Padre/Config.pm:399
 msgid "The same as Perl itself"
 msgstr ""
 
@@ -5033,7 +5033,7 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1321
+#: lib/Padre/Config.pm:1331
 msgid "This requires an installed Wx::Scintilla and a Padre restart"
 msgstr ""
 
@@ -5053,7 +5053,7 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:68
+#: lib/Padre/Wx/About.pm:69
 msgid "Translation"
 msgstr ""
 
@@ -5172,7 +5172,7 @@ msgstr ""
 msgid "Uppercase till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:336
+#: lib/Padre/Wx/About.pm:337
 msgid "Uptime"
 msgstr ""
 
@@ -5395,7 +5395,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1674
+#: lib/Padre/Wx/Editor.pm:1675
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5452,7 +5452,7 @@ msgstr ""
 msgid "restrictive"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:106
+#: lib/Padre/Wx/About.pm:107
 msgid "splash image is based on work by"
 msgstr ""
 
@@ -5464,7 +5464,7 @@ msgstr ""
 msgid "unrestricted"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:341
+#: lib/Padre/Wx/About.pm:342
 msgid "unsupported"
 msgstr ""
 
