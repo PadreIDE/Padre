@@ -87,8 +87,8 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		sprintf( Wx::gettext('wxWidgets %s Reference'), '2.8.10' ) => sub {
-			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.10/');
+		sprintf( Wx::gettext('wxWidgets %s Reference'), '2.8.12' ) => sub {
+			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.12/');
 		},
 		Wx::gettext('STC Reference') => sub {
 			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
@@ -381,11 +381,13 @@ Dumps the %INC hash to Output
 
 =head2 Simulate crash
 
-=head2 wxWidgets 2.8.10 Reference
+=head2 wxWidgets 2.8.12 Reference
 
 =head2 C<STC> reference
 
 Documentation for C<wxStyledTextCtrl>, a control that wraps the Scintilla editor component.
+
+Documentation for C<Wx::Scintilla>, a Scintilla source code editing component for wxWidgets
 
 =head2 C<wxPerl> Live Support
 
