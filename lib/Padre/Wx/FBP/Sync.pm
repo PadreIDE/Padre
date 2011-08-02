@@ -355,9 +355,8 @@ sub new {
 	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	$self->SetSizer($hsizer);
+	$self->SetSizerAndFit($hsizer);
 	$self->Layout;
-	$hsizer->Fit($self);
 
 	return $self;
 }

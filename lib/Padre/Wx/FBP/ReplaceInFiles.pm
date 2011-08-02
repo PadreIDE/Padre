@@ -35,7 +35,7 @@ sub new {
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Search &Term:"),
+		Wx::gettext("Search &Term") . ":",
 	);
 
 	$self->{find_term} = Padre::Wx::History::ComboBox->new(
@@ -60,7 +60,7 @@ sub new {
 	my $m_staticText21 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Replace With:"),
+		Wx::gettext("Replace With") . ":",
 	);
 
 	$self->{replace_term} = Padre::Wx::History::ComboBox->new(
@@ -85,7 +85,7 @@ sub new {
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Directory:"),
+		Wx::gettext("Directory") . ":",
 	);
 
 	$self->{find_directory} = Padre::Wx::History::ComboBox->new(
@@ -118,7 +118,7 @@ sub new {
 	my $m_staticText4 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("File Types:"),
+		Wx::gettext("File Types") . ":",
 	);
 
 	$self->{find_types} = Wx::ComboBox->new(
@@ -212,9 +212,8 @@ sub new {
 	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	$self->SetSizer($hsizer);
+	$self->SetSizerAndFit($hsizer);
 	$self->Layout;
-	$hsizer->Fit($self);
 
 	return $self;
 }
