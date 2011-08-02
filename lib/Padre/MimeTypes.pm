@@ -71,6 +71,7 @@ sub _initialize {
 		bib   => 'application/x-bibtex',
 		bml   => 'application/x-bml',     # dreamwidth file format
 		c     => 'text/x-c',
+		h     => 'text/x-c',
 		cc    => 'text/x-c++src',
 		cpp   => 'text/x-c++src',
 		cxx   => 'text/x-c++src',
