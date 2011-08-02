@@ -39,7 +39,7 @@ sub run {
 	$self->treebook->ChangeSelection(0);
 
 	# Show the dialog
-	$self->Fit;
+	$self->GetSizer->SetSizeHints($self);
 	$self->CentreOnParent;
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
 		return;
