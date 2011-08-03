@@ -177,16 +177,15 @@ sub run {
 
 	TRACE("Padre->run was called version $VERSION") if DEBUG;
 
-	# make WxWidgets translate the default buttons etc.
-	if (Padre::Constant::UNIX) {
-		$ENV{LANGUAGE} = $self->config->locale; ## no critic (RequireLocalizedPunctuationVars)
-	}
+	# Make WxWidgets translate the default buttons
+	local $ENV{LANGUAGE} = Padre::Constant::UNIX
+		? $self->config->locale;
+		: $ENV{LANGUAGE};
 
 	# Clean arguments (with a bad patch for saving URLs)
+	# Windows has trouble deleting the work directory of a process,
+	# so reset file to full path
 	if (Padre::Constant::WIN32) {
-
-		# Windows has trouble deleting the work directory of a process,
-		# so reset file to full path
 		$self->{ARGV} = [
 			map {
 				if (/\:/) { $_; }
