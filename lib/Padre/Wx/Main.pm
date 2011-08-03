@@ -4057,8 +4057,8 @@ sub on_open_selection {
 		return unless length $text;
 	}
 
-	#remove leading and trailing whitespace or newlines
-	#atm, we assume you are opening _one_ file, so newlines in the middle are significant
+	# Remove leading and trailing whitespace or newlines
+	# We assume you are opening _one_ file, so newlines in the middle are significant
 	$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
 
 	my @files;
@@ -4095,10 +4095,11 @@ sub on_open_selection {
 		return;
 	}
 
-	# Pick a file
 	require List::MoreUtils;
 	@files = List::MoreUtils::uniq(@files);
 	if ( @files > 1 ) {
+
+		# Pick a file
 		my $file = $self->single_choice(
 			Wx::gettext('Choose File'),
 			'',
@@ -4106,6 +4107,8 @@ sub on_open_selection {
 		);
 		$self->setup_editors($file) if defined $file;
 	} else {
+
+		# Open the only result without further interaction
 		$self->setup_editors( $files[0] );
 	}
 

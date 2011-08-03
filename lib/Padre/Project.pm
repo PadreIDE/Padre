@@ -49,7 +49,7 @@ sub new {
 ### DEPRECATED
 sub from_file {
 	if ( $VERSION > 0.84 ) {
-		warn "Deprecated Padre::Util::get_project_rcs called by " . scalar caller();
+		warn "Deprecated Padre::Project::from_file called by " . scalar caller();
 	}
 
 	require Padre::Current;

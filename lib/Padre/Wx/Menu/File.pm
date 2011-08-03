@@ -68,20 +68,6 @@ sub new {
 		'file.new_p6_script',
 	);
 
-	# Split projects from files
-	$file_new->AppendSeparator;
-
-	$self->add_menu_action(
-		$file_new,
-		'file.new_p5_distro',
-	);
-
-	# Not yet finished
-	# $self->add_menu_action(
-	# $file_new,
-	# 'file.new_p5_modulestarter',
-	# );
-
 	if ( $main->config->feature_wizard_selector ) {
 		$file_new->AppendSeparator;
 		$self->add_menu_action(

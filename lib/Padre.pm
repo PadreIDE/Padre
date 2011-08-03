@@ -546,10 +546,6 @@ namespace. It is actually a plain subclass of L<Wx::Perl::Dialog>.
 
 Current Find and Replace widget.
 
-=item L<Padre::Wx::Dialog::ModuleStart>
-
-L<Module::Start> integration. Maybe it should be moved to be a plug-in.
-
 =item L<Padre::Wx::Dialog::PluginManager>
 
 =item L<Padre::Wx::Dialog::Preferences>

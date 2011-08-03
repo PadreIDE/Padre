@@ -120,7 +120,6 @@ requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => 0;
 requires 'Module::Manifest'         => '0.07';
 requires 'Module::Refresh'          => '0.13';
-requires 'Module::Starter'          => '1.50';
 requires 'ORLite'                   => '1.48';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.14';

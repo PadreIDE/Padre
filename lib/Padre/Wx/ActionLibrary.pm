@@ -184,28 +184,6 @@ sub init {
 		},
 	);
 
-	# Split projects from files
-
-	Padre::Wx::Action->new(
-		name       => 'file.new_p5_distro',
-		label      => _T('Perl Distribution...'),
-		comment    => _T('Setup a skeleton Perl module distribution'),
-		menu_event => sub {
-			require Padre::Wx::Dialog::ModuleStart;
-			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name       => 'file.new_p5_modulestarter',
-		label      => _T('Perl Distribution (New)...'),
-		comment    => _T('Setup a skeleton Perl distribution'),
-		menu_event => sub {
-			require Padre::Wx::Dialog::ModuleStarter;
-			Padre::Wx::Dialog::ModuleStarter->run( $_[0] );
-		},
-	);
-
 	# The wizard selector feature
 	Padre::Wx::Action->new(
 		name       => 'file.wizard_selector',
