@@ -1869,6 +1869,7 @@ sub guess_filename_to_open {
 	require File::Which;
 	my $filename = File::Which::which($text);
 	return $filename if defined $filename;
+	return;
 }
 
 1;
