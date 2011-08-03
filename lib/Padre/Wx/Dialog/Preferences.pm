@@ -30,17 +30,19 @@ sub run {
 	my $main  = shift;
 	my $self  = $class->new($main);
 
-	# Load preferences from configuration
-	my $config = $main->config;
-	$self->config_load($config);
-
 	# Always show the first tab regardless of which one
 	# was selected in wxFormBuilder.
 	$self->treebook->ChangeSelection(0);
 
-	# Show the dialog
+	# Load preferences from configuration
+	my $config = $main->config;
+	$self->config_load($config);
+
+	# Refresh the sizing, layout and position after the config load
 	$self->GetSizer->SetSizeHints($self);
 	$self->CentreOnParent;
+
+	# Show the dialog
 	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
