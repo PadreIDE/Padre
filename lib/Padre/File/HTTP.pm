@@ -50,19 +50,19 @@ sub _request {
 
 	TRACE( sprintf( Wx::gettext('Sending HTTP request %s...'), $URL ) ) if DEBUG;
 
-	my $HTTP_Req = HTTP::Request->new( $method, $URL, undef, $content );
+	my $HTTP_req = HTTP::Request->new( $method, $URL, undef, $content );
 
-	my $Result = $self->{UA}->request($HTTP_Req);
+	my $result = $self->{UA}->request($HTTP_req);
 
-	if ( $Result->is_success ) {
+	if ( $result->is_success ) {
 		if (wantarray) {
-			return $Result->content, $Result;
+			return $result->content, $result;
 		} else {
-			return $Result->content;
+			return $result->content;
 		}
 	} else {
 		if (wantarray) {
-			return ( undef, $Result );
+			return ( undef, $result );
 		} else {
 			return;
 		}
@@ -75,8 +75,8 @@ sub can_run {
 
 sub size {
 	my $self = shift;
-	my ( $Content, $Result ) = $self->_request('HEAD');
-	return $Result->header('Content-Length');
+	my ( $content, $result ) = $self->_request('HEAD');
+	return $result->header('Content-Length');
 }
 
 sub mode {
@@ -93,9 +93,9 @@ sub mtime {
 	}
 
 	require HTTP::Date; # Part of LWP which is required for this module but not for Padre
-	my ( $Content, $Result ) = $self->_request('HEAD');
+	my ( $content, $result ) = $self->_request('HEAD');
 
-	$self->{_cached_mtime_value} = HTTP::Date::str2time( $Result->header('Last-Modified') );
+	$self->{_cached_mtime_value} = HTTP::Date::str2time( $result->header('Last-Modified') );
 	$self->{_cached_mtime_time}  = time;
 
 	return $self->{_cached_mtime_value};
@@ -103,8 +103,8 @@ sub mtime {
 
 sub exists {
 	my $self = shift;
-	my ( $Content, $Result ) = $self->_request('HEAD');
-	return 1 if $Result->code == 200;
+	my ( $content, $result ) = $self->_request('HEAD');
+	return 1 if $result->code == 200;
 	return ();
 }
 
