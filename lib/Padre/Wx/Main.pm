@@ -26,39 +26,40 @@ use 5.008005;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                       ();
-use Carp                      ();
-use Config                    ();
-use File::Spec                ();
-use File::HomeDir             ();
-use File::Basename            ();
-use File::Temp                ();
-use List::Util                ();
-use Scalar::Util              ();
-use Params::Util              ();
-use Time::HiRes               ();
-use Padre::Wx::Action         ();
-use Padre::Wx::ActionLibrary  ();
-use Padre::Wx::WizardLibrary  ();
-use Padre::Constant           ();
-use Padre::Util               ('_T');
-use Padre::Perl               ();
-use Padre::Locale             ();
-use Padre::Current            ();
-use Padre::Document           ();
-use Padre::DB                 ();
-use Padre::Locker             ();
-use Padre::Wx                 ();
-use Padre::Wx::Icon           ();
-use Padre::Wx::Display        ();
-use Padre::Wx::Editor         ();
-use Padre::Wx::Menubar        ();
-use Padre::Wx::Notebook       ();
-use Padre::Wx::StatusBar      ();
-use Padre::Wx::AuiManager     ();
-use Padre::Wx::FileDropTarget ();
-use Padre::Wx::Role::Conduit  ();
-use Padre::Wx::Role::Dialog   ();
+use Cwd                        ();
+use Carp                       ();
+use Config                     ();
+use File::Spec                 ();
+use File::HomeDir              ();
+use File::Basename             ();
+use File::Temp                 ();
+use List::Util                 ();
+use Scalar::Util               ();
+use Params::Util               ();
+use Time::HiRes                ();
+use Padre::Wx::Action          ();
+use Padre::Wx::ActionLibrary   ();
+use Padre::Wx::WizardLibrary   ();
+use Padre::Constant            ();
+use Padre::Util                ('_T');
+use Padre::Perl                ();
+use Padre::Locale              ();
+use Padre::Current             ();
+use Padre::Document            ();
+use Padre::DB                  ();
+use Padre::Locker              ();
+use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
+use Padre::Wx::Display         ();
+use Padre::Wx::Editor          ();
+use Padre::Wx::Menubar         ();
+use Padre::Wx::Notebook        ();
+use Padre::Wx::StatusBar       ();
+use Padre::Wx::AuiManager      ();
+use Padre::Wx::FileDropTarget  ();
+use Padre::Wx::Role::Conduit   ();
+use Padre::Wx::Role::Dialog    ();
+use Padre::Task::BackupUnsafed ();
 use Padre::Logger;
 
 our $VERSION    = '0.89';
@@ -6731,7 +6732,14 @@ sub key_up {
 		$self->on_autocompletion($event);
 	}
 
+	my $ts = time; # May be faster than two time calls
+	if ( !$self->{last_backup} or $self->{last_backup} < ( $ts - 10 ) ) {
+		Padre::Task::BackupUnsafed->new->schedule;
+		$self->{last_backup} = $ts;
+	}
+
 	$event->Skip(1);
+
 	return;
 }
 
