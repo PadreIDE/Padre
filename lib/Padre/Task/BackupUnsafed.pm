@@ -41,18 +41,9 @@ sub prepare {
 
 	# Save the list of open files
 	require Padre::Current;
-	$self->{changed} = [
-		map {
-			      warn $_->filename . "\t" 
-				. $_->is_modified . "\t"
-				. $_->is_new; ( $_->is_modified and !$_->is_new )
-				? {
-				filename => $_->filename,
-				content  => $_->text_get
-				}
-				: ();
-			} Padre::Current->main->documents
-	];
+	$self->{changed} =
+		[ map { ( $_->is_modified and !$_->is_new ) ? { filename => $_->filename, content => $_->text_get } : (); }
+			Padre::Current->main->documents ];
 
 	return 1;
 }
@@ -61,11 +52,20 @@ sub run {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
+	my $filename = File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'unsafed_' . $$ . '.yml' );
+
+	if ( $#{ $self->{changed} } ) {
+
+		# No changed files, remove backup file
+		unlink $filename;
+		return 1;
+	}
+
 	my $yaml = YAML::Tiny->new;
 
 	push @{$yaml}, @{ $self->{changed} };
 
-	$yaml->write( File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'unsafed.yml' ) );
+	$yaml->write($filename);
 
 	return 1;
 }

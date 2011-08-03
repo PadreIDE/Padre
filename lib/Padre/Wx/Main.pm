@@ -5093,6 +5093,8 @@ sub close_all {
 	# Refresh recent files list
 	$self->refresh_recent;
 
+	unlink File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'unsafed_' . $$ . '.yml' );
+
 	return 1;
 }
 

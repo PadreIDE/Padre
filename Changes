@@ -28,6 +28,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Removed Module::Starter integration, it generates evil distros (ADAMK)
     - Added write/PUT support to Padre::File::HTTP (SEWI)
     - Fix #1244: Refresh recent open files list on close (SEWI)
+    - #105: Backup unsafed files to disk (SEWI)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
