@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-03 08:10-0700\n"
+"POT-Creation-Date: 2011-08-03 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -752,7 +752,7 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:910 lib/Padre/Wx/FBP/FindInFiles.pm:152
 #: lib/Padre/Wx/FBP/Bookmarks.pm:126 lib/Padre/Wx/FBP/Find.pm:136
-#: lib/Padre/Wx/FBP/Special.pm:72 lib/Padre/Wx/FBP/Insert.pm:107
+#: lib/Padre/Wx/FBP/Special.pm:88 lib/Padre/Wx/FBP/Insert.pm:107
 #: lib/Padre/Wx/FBP/ReplaceInFiles.pm:177
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
@@ -2423,7 +2423,7 @@ msgstr ""
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Special.pm:63 lib/Padre/Wx/FBP/Insert.pm:98
+#: lib/Padre/Wx/FBP/Special.pm:71 lib/Padre/Wx/FBP/Insert.pm:98
 #: lib/Padre/Wx/Menu/Edit.pm:121 lib/Padre/Wx/Dialog/PerlFilter.pm:94
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:271
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
