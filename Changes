@@ -18,6 +18,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Header files (.h) are now recognized as a C document (AZAWAWI)
     - Updated wxWidgets documentation links to 2.8.12 in Padre developer tools
       internal plugin (AZAWAWI)
+    - Updated generated Padre::Wx::FBP::* modules to FBP::Perl 0.59, which will
+      hopefully fix Layout/Fit logic on Mac (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
