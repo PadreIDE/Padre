@@ -84,34 +84,16 @@ sub import {
 	$params{prune} = 0;
 
 	# Get the current schema version
-	my $dsn     = "dbi:SQLite(AutoCommit=>1,PrintError=>0):$file";
+	my $dsn     = "dbi:SQLite(AutoCommit=>1,RaiseError=>1,PrintError=>0):$file";
 	my $dbh     = DBI->connect($dsn);
 	my $version = $dbh->selectrow_arrayref('pragma user_version')->[0];
 	my $want    = $params{user_version};
 
 	# Attempt to roll the schema version forwards
-	while (1) {
-		local $@;
-
-		# Shortcut if we are already at the target version
-		if ( $want and $want == $version ) {
-			last;
-		}
-
-		# Attempt to load the next patch class, if it exists
-		my $patch = "Padre::DB::Migrate::Patch" . ++$version;
-		Params::Util::_DRIVER( $patch, 'Padre::DB::Migrate::Patch' ) or last;
-
-		# Run the upgrade
-		print STDERR "Applying schema patch $patch...\n" if $DEBUG;
-		eval { $patch->new( dbh => $dbh )->upgrade; };
-		die "$patch: Failed to upgrade database schema: $@" if $@;
-
-		# Successfully upgraded the schema
-		$dbh->do("pragma user_version = $version");
-
-		# Clean up the patch namespace
-		Class::Unload->unload($patch);
+	if ( $want and $want > $version ) {
+		require Padre::DB::Timeline;
+		Padre::DB::Timeline->new( dbh => $dbh )->upgrade($want);
+		Class::Unload->unload('Padre::DB::Timeline');
 	}
 
 	# We are finished with the database

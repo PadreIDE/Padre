@@ -20,6 +20,9 @@ next production release, and synchronise their release to the Padre schedule.
       internal plugin (AZAWAWI)
     - Updated generated Padre::Wx::FBP::* modules to FBP::Perl 0.59, which will
       hopefully fix Layout/Fit logic on Mac (ADAMK)
+    - Padre::DB::Migrate now has a method-based timeline that is even smaller
+      again than the class-based timeline that replaced the script-based
+      timeline, removing the unsightly Padre::DB::Patch123 modules (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
