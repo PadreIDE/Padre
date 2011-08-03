@@ -186,7 +186,7 @@ sub run {
 
 	# Make WxWidgets translate the default buttons
 	local $ENV{LANGUAGE} = Padre::Constant::UNIX
-		? $self->config->locale;
+		? $self->config->locale
 		: $ENV{LANGUAGE};
 
 	# Clean arguments (with a bad patch for saving URLs)
