@@ -5032,6 +5032,11 @@ sub close {
 		$self->outline->clear;
 	}
 
+	# Release all locks
+	undef $lock;
+
+	$self->refresh_recent;
+
 	return 1;
 }
 
@@ -5082,6 +5087,9 @@ sub close_all {
 	$self->refresh_title;
 
 	$manager->plugin_event('editor_changed');
+
+	# Refresh recent files list
+	$self->refresh_recent;
 
 	return 1;
 }
