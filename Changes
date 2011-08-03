@@ -23,6 +23,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Padre::DB::Migrate now has a method-based timeline that is even smaller
       again than the class-based timeline that replaced the script-based
       timeline, removing the unsightly Padre::DB::Patch123 modules (ADAMK)
+    - Turn off Win32::SetChildShowWindow so that ordinary system() calls 
+      won't generate short-lived command line windows (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
