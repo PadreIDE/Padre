@@ -4969,7 +4969,8 @@ sub close {
 	my $document = $editor->{Document}     or return;
 	my $lock     = $self->lock(
 		qw{
-			REFRESH DB
+			REFRESH
+			DB
 			refresh_directory
 			refresh_menu
 			refresh_windowlist
