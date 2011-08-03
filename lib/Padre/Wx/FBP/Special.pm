@@ -31,14 +31,22 @@ sub new {
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
-	$self->{m_choice9} = Wx::Choice->new(
+	$self->{select} = Wx::Choice->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		[],
 	);
-	$self->{m_choice9}->SetSelection(0);
+	$self->{select}->SetSelection(0);
+
+	Wx::Event::EVT_CHOICE(
+		$self,
+		$self->{select},
+		sub {
+			shift->refresh(@_);
+		},
+	);
 
 	$self->{preview} = Wx::TextCtrl->new(
 		$self,
@@ -57,16 +65,24 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	my $insert = Wx::Button->new(
+	$self->{insert} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Insert"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
-	$insert->SetDefault;
+	$self->{insert}->SetDefault;
 
-	my $cancel = Wx::Button->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{insert},
+		sub {
+			shift->insert_preview(@_);
+		},
+	);
+
+	$self->{cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
@@ -75,12 +91,12 @@ sub new {
 	);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $insert, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{insert}, 0, Wx::wxALL, 5 );
 	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{m_choice9}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{select}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{preview}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{m_staticline221}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
@@ -94,8 +110,28 @@ sub new {
 	return $self;
 }
 
+sub select {
+	$_[0]->{select};
+}
+
 sub preview {
 	$_[0]->{preview};
+}
+
+sub insert {
+	$_[0]->{insert};
+}
+
+sub cancel {
+	$_[0]->{cancel};
+}
+
+sub refresh {
+	$_[0]->main->error('Handler method refresh for event select.OnChoice not implemented');
+}
+
+sub insert_preview {
+	$_[0]->main->error('Handler method insert_preview for event insert.OnButtonClick not implemented');
 }
 
 1;
