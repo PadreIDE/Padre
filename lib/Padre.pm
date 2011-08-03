@@ -521,8 +521,7 @@ Various utility functions.
 =head2 Wx GUI
 
 The C<Padre::Wx::*> namespace is supposed to deal with all the
-Wx related code. Outside of that the code is not supposed to
-know about Wx, but currently it still does.
+Wx related code.
 
 =over 4
 
@@ -532,31 +531,21 @@ know about Wx, but currently it still does.
 
 is the L<Wx::App> subclass. Does not really do much.
 
-=item L<Padre::Wx::Dialog>
-
-is the parent class of all the major dialogs
-that are all implemented in modules in the C<Padre::Wx::Dialog::*>
-namespace. It is actually a plain subclass of L<Wx::Perl::Dialog>.
-
-=over 4
-
 =item L<Padre::Wx::Dialog::Bookmarks>
 
 =item L<Padre::Wx::Dialog::Find>
 
-Current Find and Replace widget.
+This is the main Find dialog
+
+=item L<Padre::Wx::Dialog::FindFast>
+
+This is the newer Firefox like inline search box.
 
 =item L<Padre::Wx::Dialog::PluginManager>
 
 =item L<Padre::Wx::Dialog::Preferences>
 
-=item L<Padre::Wx::Dialog::FindFast>
-
-This is the newer Firefox like search box.
-
 =item L<Padre::Wx::Dialog::Snippets>
-
-=back
 
 =item L<Padre::Wx::FileDropTarget>
 
