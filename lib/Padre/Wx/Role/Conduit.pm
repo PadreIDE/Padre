@@ -4,7 +4,7 @@ package Padre::Wx::Role::Conduit;
 
 =head1 NAME
 
-Padre::Wx::Role::Conduit - Role to allows an object to receive Wx events
+Padre::Wx::Role::Conduit - Role to allow an object to receive Wx events
 
 =head1 DESCRIPTION
 
