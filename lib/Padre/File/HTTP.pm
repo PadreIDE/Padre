@@ -165,7 +165,7 @@ sub write {
 		$WRITE_WARNING_DONE = 1;
 	}
 
-	my ( $content, $result ) = $self->_request( 'PUT', undef, $content );
+	( $content, my $result ) = $self->_request( 'PUT', undef, $content );
 	return 1 if $result->code == 200 or $result->code == 201;
 
 	return 0;
