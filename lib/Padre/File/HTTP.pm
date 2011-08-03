@@ -10,6 +10,8 @@ use Padre::Logger;
 our $VERSION = '0.89';
 our @ISA     = 'Padre::File';
 
+my $WRITE_WARNING_DONE = 0;
+
 sub new {
 	my $class = shift;
 
@@ -41,13 +43,14 @@ sub new {
 }
 
 sub _request {
-	my $self   = shift;
-	my $method = shift || 'GET';
-	my $URL    = shift || $self->{filename};
+	my $self    = shift;
+	my $method  = shift || 'GET';
+	my $URL     = shift || $self->{filename};
+	my $content = shift;
 
 	TRACE( sprintf( Wx::gettext('Sending HTTP request %s...'), $URL ) ) if DEBUG;
 
-	my $HTTP_Req = HTTP::Request->new( $method, $URL );
+	my $HTTP_Req = HTTP::Request->new( $method, $URL, undef, $content );
 
 	my $Result = $self->{UA}->request($HTTP_Req);
 
@@ -147,22 +150,26 @@ sub readonly {
 	return 1;
 }
 
-# TO DO: Maybe use WebDAV to enable writing
-#sub write {
-#	my $self    = shift;
-#	my $content = shift;
-#	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
-#
-#	my $fh;
-#	if ( !open $fh, ">$encode", $self->{filename} ) {
-#		$self->{error} = $!;
-#		return();
-#	}
-#	print {$fh} $content;
-#	close $fh;
-#
-#	return 1;
-#}
+sub write {
+	my $self    = shift;
+	my $content = shift;
+	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
+
+	if ( !$WRITE_WARNING_DONE ) {
+		Padre::Current->main->error(
+			Wx::gettext(
+				      "You're going to write a file using HTTP PUT.\n"
+					. "This is highly experimental and not supported by most servers!"
+			)
+		);
+		$WRITE_WARNING_DONE = 1;
+	}
+
+	my ( $content, $result ) = $self->_request( 'PUT', undef, $content );
+	return 1 if $result->code == 200 or $result->code == 201;
+
+	return 0;
+}
 
 1;
 

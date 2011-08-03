@@ -26,6 +26,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Turn off Win32::SetChildShowWindow so that ordinary system() calls 
       won't generate short-lived command line windows (ADAMK)
     - Removed Module::Starter integration, it generates evil distros (ADAMK)
+    - Added write/PUT support to Padre::File::HTTP (SEWI)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
