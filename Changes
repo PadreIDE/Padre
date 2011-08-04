@@ -36,6 +36,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Upgraded the Insert Snippet dialog to wxFormBuilder (ADAMK)
     - Removing the deprecated Padre::Wx::Dialog now that all dialogs have been
       ported away from it to wxFormBuilder (ADAMK)
+    - Fix #1099: Ctrl-Shift-T to get the last closed tab (ZENOG, AZAWAWI)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
