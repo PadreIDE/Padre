@@ -141,7 +141,7 @@ sub ignore_rule {
 		return 0 unless $super->();
 
 		# In a distribution, we can ignore more things
-		return 0 if $_->{name} =~ /^(?:blib|_build|inc|Makefile|pm_to_blib)\z/;
+		return 0 if $_->{name} =~ /^(?:blib|_build|inc|Makefile(?:\.old)?|pm_to_blib)\z/;
 
 		# It is fairly common to get bogged down in NYTProf output
 		return 0 if $_->{name} =~ /^nytprof(?:\.out)?\z/;
@@ -156,7 +156,7 @@ sub ignore_skip {
 	my $rule = $self->SUPER::ignore_skip();
 
 	# Ignore typical build files
-	push @$rule, '(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z';
+	push @$rule, '(?:^|\\/)(?:blib|_build|inc|Makefile(?:\.old)?|pm_to_blib)\z';
 
 	# Ignore the enormous NYTProf output
 	push @$rule, '(?:^|\\/)nytprof(?:\.out)?\z';
