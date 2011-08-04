@@ -29,82 +29,77 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	$self->{debug_step_in} = $self->add_menu_action(
+	$self->{step_in} = $self->add_menu_action(
 		$self,
 		'debug.step_in',
 	);
 
-	$self->{debug_step_over} = $self->add_menu_action(
+	$self->{step_over} = $self->add_menu_action(
 		$self,
 		'debug.step_over',
 	);
 
-	$self->{debug_step_out} = $self->add_menu_action(
+	$self->{step_out} = $self->add_menu_action(
 		$self,
 		'debug.step_out',
 	);
 
-	$self->{debug_run} = $self->add_menu_action(
+	$self->{run} = $self->add_menu_action(
 		$self,
 		'debug.run',
 	);
 
-	#	$self->{debug_run_to_cursor} = $self->add_menu_action(
-	#		$self,
-	#		'debug.run_to_cursor',
-	#	);
-
 	$self->AppendSeparator;
 
-	$self->{debug_jump_to} = $self->add_menu_action(
+	$self->{jump_to} = $self->add_menu_action(
 		$self,
 		'debug.jump_to',
 	);
 
 	$self->AppendSeparator;
 
-	$self->{debug_set_breakpoint} = $self->add_menu_action(
+	$self->{set_breakpoint} = $self->add_menu_action(
 		$self,
 		'debug.set_breakpoint',
 	);
 
-	$self->{debug_remove_breakpoint} = $self->add_menu_action(
+	$self->{remove_breakpoint} = $self->add_menu_action(
 		$self,
 		'debug.remove_breakpoint',
 	);
 
-	$self->{debug_list_breakpoints} = $self->add_menu_action(
+	$self->{list_breakpoints} = $self->add_menu_action(
 		$self,
 		'debug.list_breakpoints',
 	);
 
 	$self->AppendSeparator;
 
-	$self->{debug_show_stack_trace} = $self->add_menu_action(
+	$self->{show_stack_trace} = $self->add_menu_action(
 		$self,
 		'debug.show_stack_trace',
 	);
 
-	$self->{debug_display_value} = $self->add_menu_action(
+	$self->{display_value} = $self->add_menu_action(
 		$self,
 		'debug.display_value',
 	);
 
 	$self->AppendSeparator;
 
-	$self->{debug_show_value} = $self->add_menu_action(
+	$self->{show_value} = $self->add_menu_action(
 		$self,
 		'debug.show_value',
 	);
 
-	$self->{debug_evaluate_expression} = $self->add_menu_action(
+	$self->{evaluate_expression} = $self->add_menu_action(
 		$self,
 		'debug.evaluate_expression',
 	);
 
 	$self->AppendSeparator;
 
-	$self->{debug_quit} = $self->add_menu_action(
+	$self->{quit} = $self->add_menu_action(
 		$self,
 		'debug.quit',
 	);
@@ -121,18 +116,18 @@ sub refresh {
 	my $document = Padre::Current::_CURRENT(@_)->document;
 	my $hasdoc   = $document ? 1 : 0;
 
-	$self->{debug_step_in}->Enable($hasdoc);
-	$self->{debug_step_over}->Enable($hasdoc);
-	$self->{debug_step_out}->Enable($hasdoc);
-	$self->{debug_run}->Enable($hasdoc);
-	$self->{debug_jump_to}->Enable($hasdoc);
-	$self->{debug_set_breakpoint}->Enable($hasdoc);
-	$self->{debug_remove_breakpoint}->Enable($hasdoc);
-	$self->{debug_list_breakpoints}->Enable($hasdoc);
-	$self->{debug_show_stack_trace}->Enable($hasdoc);
-	$self->{debug_display_value}->Enable($hasdoc);
-	$self->{debug_show_value}->Enable($hasdoc);
-	$self->{debug_evaluate_expression}->Enable($hasdoc);
+	$self->{step_in}->Enable($hasdoc);
+	$self->{step_over}->Enable($hasdoc);
+	$self->{step_out}->Enable($hasdoc);
+	$self->{run}->Enable($hasdoc);
+	$self->{jump_to}->Enable($hasdoc);
+	$self->{set_breakpoint}->Enable($hasdoc);
+	$self->{remove_breakpoint}->Enable($hasdoc);
+	$self->{list_breakpoints}->Enable($hasdoc);
+	$self->{show_stack_trace}->Enable($hasdoc);
+	$self->{display_value}->Enable($hasdoc);
+	$self->{show_value}->Enable($hasdoc);
+	$self->{evaluate_expression}->Enable($hasdoc);
 
 	return 1;
 }
