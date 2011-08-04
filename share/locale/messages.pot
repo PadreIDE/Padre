@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-03 12:10-0700\n"
+"POT-Creation-Date: 2011-08-03 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,7 +487,7 @@ msgstr ""
 msgid "ALT"
 msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:201 lib/Padre/Plugin/Devel.pm:102
+#: lib/Padre/Plugin/PopularityContest.pm:207 lib/Padre/Plugin/Devel.pm:102
 msgid "About"
 msgstr ""
 
@@ -3507,7 +3507,7 @@ msgstr ""
 msgid "Polish"
 msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:305
+#: lib/Padre/Plugin/PopularityContest.pm:311
 msgid "Popularity Contest Report"
 msgstr ""
 
@@ -4070,7 +4070,7 @@ msgstr ""
 msgid "Save Session..."
 msgstr ""
 
-#: lib/Padre/Document.pm:773
+#: lib/Padre/Document.pm:777
 msgid "Save Warning"
 msgstr ""
 
@@ -4506,7 +4506,7 @@ msgstr ""
 msgid "Show as Hexadecimal"
 msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:202
+#: lib/Padre/Plugin/PopularityContest.pm:208
 msgid "Show current report"
 msgstr ""
 
@@ -4657,7 +4657,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1373 lib/Padre/Document.pm:1374
+#: lib/Padre/Document.pm:1377 lib/Padre/Document.pm:1378
 msgid "Skipped for large files"
 msgstr ""
 
@@ -4993,7 +4993,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:970
+#: lib/Padre/Document.pm:974
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5152,7 +5152,7 @@ msgstr ""
 msgid "Visit the PerlMonks"
 msgstr ""
 
-#: lib/Padre/Document.pm:769
+#: lib/Padre/Document.pm:773
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
@@ -5309,7 +5309,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:948
+#: lib/Padre/Document.pm:952
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
