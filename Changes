@@ -34,6 +34,8 @@ next production release, and synchronise their release to the Padre schedule.
     - Perl Projects now ignore Makefile.old files (ADAMK)
     - Upgraded the Insert Special Value dialog to wxFormBuilder (ADAMK)
     - Upgraded the Insert Snippet dialog to wxFormBuilder (ADAMK)
+    - Removing the deprecated Padre::Wx::Dialog now that all dialogs have been
+      ported away from it to wxFormBuilder (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
