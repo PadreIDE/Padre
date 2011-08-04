@@ -194,12 +194,8 @@ sub run {
 	# Loop over inbound requests
 	TRACE("Entering worker run-time loop") if DEBUG;
 	while (1) {
-		TRACE("Attempting to dequeue1") if DEBUG;
 		my $message = $queue->dequeue1;
-		TRACE("Completed the dequeue1") if DEBUG;
-
 		unless ( ref $message eq 'ARRAY' and @$message ) {
-
 			# warn("Message is not an ARRAY reference");
 			next;
 		}

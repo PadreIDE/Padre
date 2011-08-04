@@ -1,31 +1,15 @@
-package Padre::Task::BackupUnsafed;
+package Padre::Task::BackupUnsaved;
 
 use 5.008;
 use strict;
 use warnings;
-
-use YAML::Tiny ();
-use File::Spec ();
-
+use File::Spec      ();
 use Padre::Task     ();
 use Padre::Constant ();
 use Padre::Logger;
 
 our $VERSION = '0.89';
 our @ISA     = 'Padre::Task';
-
-
-
-
-
-######################################################################
-# Constructor
-
-sub new {
-	my $self = shift->SUPER::new(@_);
-
-	return $self;
-}
 
 
 
@@ -41,38 +25,38 @@ sub prepare {
 
 	# Save the list of open files
 	require Padre::Current;
-	$self->{changed} =
-		[ map { ( $_->is_modified and !$_->is_new ) ? { filename => $_->filename, content => $_->text_get } : (); }
-			Padre::Current->main->documents ];
+	$self->{changes} = {
+		map {
+			$_->filename => $_->text_get,
+		} grep {
+			$_->is_unsaved
+		} Padre::Current->main->documents
+	};
 
 	return 1;
 }
 
 sub run {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
+	my $self     = shift;
+	my $filename = File::Spec->catfile(
+		Padre::Constant::CONFIG_DIR,
+		"unsaved_$$.storable",
+	);
 
-	my $filename = File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'unsafed_' . $$ . '.yml' );
+	# Remove the (bulky) changes from the task object so it
+	# won't need to be sent back up to the main thread.
+	my $changes  = delete $self->{changes};
 
-	if ( $#{ $self->{changed} } ) {
-
+	if ( %$changes ) {
+		# Save the content (quickly)
+		require Storable;
+		Storable::lock_nstore( $changes, $filename );
+	} else {
 		# No changed files, remove backup file
-		unlink $filename;
-		return 1;
+		require File::Remove;
+		File::Remove($filename) if -e $filename;
 	}
-
-	my $yaml = YAML::Tiny->new;
-
-	push @{$yaml}, @{ $self->{changed} };
-
-	$yaml->write($filename);
-
-	return 1;
-}
-
-sub finish {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
 
 	return 1;
 }

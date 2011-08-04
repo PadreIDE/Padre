@@ -16,7 +16,7 @@ eval {
 	require Test::NoWarnings;
 	$SIG{__WARN__} = 'DEFAULT';
 };
-
+   
 BEGIN {
 	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
 		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
@@ -58,7 +58,7 @@ if ( '2.009000' eq Alien::wxWidgets->version ) {
 
 
 
-
+ 
 #####################################################################
 # Normal Boring Commands
 
@@ -136,7 +136,7 @@ requires 'PPI'                      => '1.213';
 requires 'PPIx::EditorTools'        => '0.13';
 requires 'PPIx::Regexp'             => '0.011';
 requires 'Probe::Perl'              => '0.01';
-requires 'Storable'                 => '2.15';
+requires 'Storable'                 => '2.16';
 requires 'Template::Tiny'           => '0.11';
 requires 'Term::ReadLine'           => 0;
 requires 'Text::Balanced'           => '2.01';

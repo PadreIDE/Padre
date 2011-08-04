@@ -258,11 +258,6 @@ sub stop {
 	# Clear out the pending queue
 	@{ $self->{queue} } = ();
 
-	# Stop all of our workers
-	foreach ( 0 .. $#{ $self->{workers} } ) {
-		$self->stop_worker($_);
-	}
-
 	# Shut down the master thread
 	# NOTE: Ignore the desires of ENABLE_SLAVE_MASTER here on really only
 	# on the reality of the actual running code.
@@ -270,6 +265,11 @@ sub stop {
 		if ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master->stop;
 		}
+	}
+
+	# Stop all of our workers
+	foreach ( 0 .. $#{ $self->{workers} } ) {
+		$self->stop_worker($_);
 	}
 
 	# Empty task handles
@@ -650,8 +650,12 @@ sub on_signal {
 	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $message = shift;
+	unless ( $self->{active} ) {
+		TRACE("Ignoring message while not active") if DEBUG;
+		return;
+	}
 	unless ( Params::Util::_ARRAY($message) ) {
-		TRACE("Unrecognised non-ARRAY or empty message");
+		TRACE("Unrecognised non-ARRAY or empty message") if DEBUG;
 		return;
 	}
 

@@ -59,7 +59,6 @@ use Padre::Wx::AuiManager      ();
 use Padre::Wx::FileDropTarget  ();
 use Padre::Wx::Role::Conduit   ();
 use Padre::Wx::Role::Dialog    ();
-use Padre::Task::BackupUnsafed ();
 use Padre::Logger;
 
 our $VERSION    = '0.89';
@@ -78,6 +77,9 @@ use constant {
 	TIMER_POSTINIT  => Wx::NewId(),
 	TIMER_NTH       => Wx::NewId(),
 };
+
+# Convenience until we get a config param or something
+use constant BACKUP_INTERVAL => 10;
 
 =pod
 
@@ -210,6 +212,9 @@ sub new {
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
+
+	# Backup time tracking
+	$self->{backup} = 0;
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
@@ -3619,7 +3624,7 @@ sub on_close_window {
 	# just save some basic parts like the last session and so on.
 	# Some of the steps in the shutdown have transactions anyway, but
 	# this will expand them to cover everything.
-	my $transaction = $self->lock('DB');
+	my $transaction = $self->lock('DB', 'refresh_recent');
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up.
@@ -4860,8 +4865,12 @@ sub on_save_all {
 		}
 	}
 
-	# set focus back to the currentDocument
+	# Set focus back to the currentDocument
 	$self->notebook->SetSelection($currentID);
+
+	# Force-refresh backups (i.e. probably delete them)
+	$self->backup(1);
+
 	return 1;
 }
 
@@ -5093,7 +5102,8 @@ sub close_all {
 	# Refresh recent files list
 	$self->refresh_recent;
 
-	unlink File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'unsafed_' . $$ . '.yml' );
+	# Force-refresh backups (i.e. delete them)
+	$self->backup(1);
 
 	return 1;
 }
@@ -6729,16 +6739,15 @@ sub key_up {
 		}
 	}
 
-
 	if ( $config->autocomplete_always and ( !$mod ) and ( $code == 8 ) ) {
 		$self->on_autocompletion($event);
 	}
 
-	my $ts = time; # May be faster than two time calls
-	if ( !$self->{last_backup} or $self->{last_backup} < ( $ts - 10 ) ) {
-		Padre::Task::BackupUnsafed->new->schedule;
-		$self->{last_backup} = $ts;
-	}
+	# Backup unsaved files if needed
+	# NOTE: This should be moved to occur only on the dwell (i.e. at the
+	# same time an undo block is saved) and probably shouldn't HAVE to
+	# rewrite all files when one is changed.
+	$self->backup;
 
 	$event->Skip(1);
 
@@ -6982,6 +6991,26 @@ sub encode_dialog {
 	return;
 }
 
+
+
+
+
+######################################################################
+# Document Backup
+
+sub backup {
+	my $self     = shift;
+	my $force    = shift;
+	my $duration = time - $self->{backup};
+	if ( $duration < BACKUP_INTERVAL and not $force ) {
+		return;
+	}
+
+	# Load and fire the backup task
+	require Padre::Task::BackupUnsaved;
+	Padre::Task::BackupUnsaved->new->schedule;
+	$self->{backup} = time;
+}
 
 1;
 
