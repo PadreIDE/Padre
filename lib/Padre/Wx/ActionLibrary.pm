@@ -875,8 +875,8 @@ sub init {
 		comment     => _T('Select and insert a snippet at the current location'),
 		shortcut    => 'Ctrl-Shift-A',
 		menu_event  => sub {
-			require Padre::Wx::Dialog::Snippets;
-			Padre::Wx::Dialog::Snippets->snippets(@_);
+			require Padre::Wx::Dialog::Snippet;
+			Padre::Wx::Dialog::Snippet->new(@_)->Show;
 		},
 	);
 

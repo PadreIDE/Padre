@@ -277,7 +277,7 @@ CREATE TABLE snippets (
 )
 END_SQL
 
-	# Populate the snippit table
+	# Populate the snippet table
 	my @snippets = (
 		[ 'Char class', '[:alnum:]',                  '[:alnum:]' ],
 		[ 'Char class', '[:alpha:]',                  '[:alpha:]' ],
@@ -340,7 +340,7 @@ END_SQL
 		$dbh->begin_work;
 		my $sth = $dbh->prepare('INSERT INTO snippets ( mimetype, category, name, snippet ) VALUES (?, ?, ?, ?)');
 		foreach (@snippets) {
-			$sth->execute( 'application/x-perl', $_->[1], $_->[2], $_->[3] );
+			$sth->execute( 'application/x-perl', $_->[0], $_->[1], $_->[2] );
 		}
 		$sth->finish;
 		$dbh->commit;

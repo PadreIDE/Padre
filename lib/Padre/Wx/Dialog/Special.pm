@@ -23,7 +23,7 @@ sub new {
 	# Fill the dropbox
 	$select->Clear;
 	foreach my $special ( $self->catalogue ) {
-		$select->Append( $special->[1], $special->[0] );
+		$select->Append( @$special );
 	}
 	$select->SetSelection(0);
 
@@ -63,20 +63,20 @@ sub catalogue {
 	my $date = Wx::gettext('Date/Time');
 	my $file = Wx::gettext('File');
 	return (
-		[ time_now   => "$date - " . Wx::gettext('Now')   ],
-		[ time_today => "$date - " . Wx::gettext('Today') ],
-		[ time_year  => "$date - " . Wx::gettext('Year')  ],
-		[ time_epoch => "$date - " . Wx::gettext('Epoch') ],
-		[ file_name  => "$file - " . Wx::gettext('Name')  ],
-		[ file_size  => "$file - " . Wx::gettext('Size')  ],
-		[ file_lines => "$file - " . Wx::gettext('Lines') ],
+		[ "$date - " . Wx::gettext('Now'),   'time_now'   ],
+		[ "$date - " . Wx::gettext('Today'), 'time_today' ],
+		[ "$date - " . Wx::gettext('Year'),  'time_year'  ],
+		[ "$date - " . Wx::gettext('Epoch'), 'time_epoch' ],
+		[ "$file - " . Wx::gettext('Name'),  'file_name'  ],
+		[ "$file - " . Wx::gettext('Size'),  'file_size'  ],
+		[ "$file - " . Wx::gettext('Lines'), 'file_lines' ],
 	);
 }
 
 sub value {
 	my $self   = shift;
 	my @list   = $self->catalogue;
-	my $method = $list[ $self->select->GetSelection ]->[0];
+	my $method = $list[ $self->select->GetSelection ]->[1];
 	return $self->$method;
 }
 

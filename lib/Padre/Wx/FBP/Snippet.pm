@@ -1,4 +1,4 @@
-package Padre::Wx::FBP::Insert;
+package Padre::Wx::FBP::Snippet;
 
 ## no critic
 
@@ -25,13 +25,13 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::gettext("Insert Snippit"),
+		Wx::gettext("Insert Snippet"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
-	$self->{filter_label} = Wx::StaticText->new(
+	my $filter_label = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Filter") . ":",
@@ -46,22 +46,38 @@ sub new {
 	);
 	$self->{filter}->SetSelection(0);
 
-	$self->{name_label} = Wx::StaticText->new(
+	Wx::Event::EVT_CHOICE(
 		$self,
-		-1,
-		Wx::gettext("Snippit") . ":",
+		$self->{filter},
+		sub {
+			shift->refilter(@_);
+		},
 	);
 
-	$self->{name} = Wx::ComboBox->new(
+	my $name_label = Wx::StaticText->new(
 		$self,
 		-1,
-		"",
+		Wx::gettext("Snippet") . ":",
+	);
+
+	$self->{select} = Wx::Choice->new(
+		$self,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		[],
 	);
+	$self->{select}->SetSelection(0);
 
-	$self->{m_staticline4} = Wx::StaticLine->new(
+	Wx::Event::EVT_CHOICE(
+		$self,
+		$self->{select},
+		sub {
+			shift->refresh(@_);
+		},
+	);
+
+	my $m_staticline4 = Wx::StaticLine->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
@@ -69,7 +85,7 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	$self->{m_staticText11} = Wx::StaticText->new(
+	my $m_staticText11 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Preview") . ":",
@@ -81,7 +97,10 @@ sub new {
 		"",
 		Wx::wxDefaultPosition,
 		[ 300, 200 ],
-		Wx::wxTE_MULTILINE,
+		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
+	);
+	$self->{preview}->SetBackgroundColour(
+		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
@@ -92,16 +111,24 @@ sub new {
 		Wx::wxLI_HORIZONTAL,
 	);
 
-	my $insert = Wx::Button->new(
+	$self->{insert} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Insert"),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
-	$insert->SetDefault;
+	$self->{insert}->SetDefault;
 
-	my $cancel = Wx::Button->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{insert},
+		sub {
+			shift->insert_snippet(@_);
+		},
+	);
+
+	$self->{cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
@@ -113,20 +140,20 @@ sub new {
 	$fgSizer2->AddGrowableCol(1);
 	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer2->Add( $self->{filter_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer2->Add( $filter_label, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer2->Add( $self->{filter}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$fgSizer2->Add( $self->{name_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer2->Add( $self->{name}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer2->Add( $name_label, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$fgSizer2->Add( $self->{select}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $insert, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{insert}, 0, Wx::wxALL, 5 );
 	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $fgSizer2, 1, Wx::wxEXPAND, 5 );
-	$vsizer->Add( $self->{m_staticline4}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
-	$vsizer->Add( $self->{m_staticText11}, 0, Wx::wxLEFT | Wx::wxTOP, 5 );
+	$vsizer->Add( $m_staticline4, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
+	$vsizer->Add( $m_staticText11, 0, Wx::wxLEFT | Wx::wxTOP, 5 );
 	$vsizer->Add( $self->{preview}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
@@ -144,12 +171,32 @@ sub filter {
 	$_[0]->{filter};
 }
 
-sub name {
-	$_[0]->{name};
+sub select {
+	$_[0]->{select};
 }
 
 sub preview {
 	$_[0]->{preview};
+}
+
+sub insert {
+	$_[0]->{insert};
+}
+
+sub cancel {
+	$_[0]->{cancel};
+}
+
+sub refilter {
+	$_[0]->main->error('Handler method refilter for event filter.OnChoice not implemented');
+}
+
+sub refresh {
+	$_[0]->main->error('Handler method refresh for event select.OnChoice not implemented');
+}
+
+sub insert_snippet {
+	$_[0]->main->error('Handler method insert_snippet for event insert.OnButtonClick not implemented');
 }
 
 1;

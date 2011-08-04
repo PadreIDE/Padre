@@ -3680,7 +3680,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="0">
+        <object class="Dialog" expanded="1">
             <property name="bg"></property>
             <property name="center"></property>
             <property name="context_help"></property>
@@ -3694,12 +3694,12 @@
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
             <property name="minimum_size"></property>
-            <property name="name">Padre::Wx::FBP::Insert</property>
+            <property name="name">Padre::Wx::FBP::Snippet</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
-            <property name="title">Insert Snippit</property>
+            <property name="title">Insert Snippet</property>
             <property name="tooltip"></property>
             <property name="validator_data_type"></property>
             <property name="validator_style">wxFILTER_NONE</property>
@@ -3738,16 +3738,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">sizer</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
                     <property name="flag">wxALL|wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxBoxSizer" expanded="0">
+                    <object class="wxBoxSizer" expanded="1">
                         <property name="minimum_size"></property>
                         <property name="name">vsizer</property>
                         <property name="orient">wxVERTICAL</property>
@@ -3785,7 +3785,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">filter_label</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -3855,7 +3855,7 @@
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
                                         <event name="OnChar"></event>
-                                        <event name="OnChoice"></event>
+                                        <event name="OnChoice">refilter</event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>
@@ -3893,11 +3893,11 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Snippit:</property>
+                                        <property name="label">Snippet:</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">name_label</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -3936,11 +3936,11 @@
                                         <event name="OnUpdateUI"></event>
                                     </object>
                                 </object>
-                                <object class="sizeritem" expanded="0">
+                                <object class="sizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="flag">wxALL|wxEXPAND</property>
                                     <property name="proportion">0</property>
-                                    <object class="wxComboBox" expanded="0">
+                                    <object class="wxChoice" expanded="1">
                                         <property name="bg"></property>
                                         <property name="choices"></property>
                                         <property name="context_help"></property>
@@ -3952,23 +3952,22 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
-                                        <property name="name">name</property>
+                                        <property name="name">select</property>
                                         <property name="permission">public</property>
                                         <property name="pos"></property>
+                                        <property name="selection">0</property>
                                         <property name="size"></property>
-                                        <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="tooltip"></property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
                                         <property name="validator_variable"></property>
-                                        <property name="value"></property>
                                         <property name="window_extra_style"></property>
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
                                         <event name="OnChar"></event>
-                                        <event name="OnCombobox"></event>
+                                        <event name="OnChoice">refresh</event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>
@@ -3990,8 +3989,6 @@
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
-                                        <event name="OnText"></event>
-                                        <event name="OnTextEnter"></event>
                                         <event name="OnUpdateUI"></event>
                                     </object>
                                 </object>
@@ -4013,7 +4010,7 @@
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">m_staticline4</property>
-                                <property name="permission">protected</property>
+                                <property name="permission">none</property>
                                 <property name="pos"></property>
                                 <property name="size"></property>
                                 <property name="style">wxLI_HORIZONTAL</property>
@@ -4068,7 +4065,7 @@
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">m_staticText11</property>
-                                <property name="permission">protected</property>
+                                <property name="permission">none</property>
                                 <property name="pos"></property>
                                 <property name="size"></property>
                                 <property name="style"></property>
@@ -4112,7 +4109,7 @@
                             <property name="flag">wxALL|wxEXPAND</property>
                             <property name="proportion">0</property>
                             <object class="wxTextCtrl" expanded="0">
-                                <property name="bg"></property>
+                                <property name="bg">wxSYS_COLOUR_MENU</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
                                 <property name="enabled">1</property>
@@ -4127,7 +4124,7 @@
                                 <property name="permission">public</property>
                                 <property name="pos"></property>
                                 <property name="size">300,200</property>
-                                <property name="style">wxTE_MULTILINE</property>
+                                <property name="style">wxTE_MULTILINE|wxTE_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="tooltip"></property>
                                 <property name="validator_data_type"></property>
@@ -4221,11 +4218,11 @@
                                 <event name="OnUpdateUI"></event>
                             </object>
                         </object>
-                        <object class="sizeritem" expanded="0">
+                        <object class="sizeritem" expanded="1">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
                             <property name="proportion">0</property>
-                            <object class="wxBoxSizer" expanded="0">
+                            <object class="wxBoxSizer" expanded="1">
                                 <property name="minimum_size"></property>
                                 <property name="name">buttons</property>
                                 <property name="orient">wxHORIZONTAL</property>
@@ -4248,7 +4245,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">insert</property>
-                                        <property name="permission">none</property>
+                                        <property name="permission">public</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -4261,7 +4258,7 @@
                                         <property name="window_extra_style"></property>
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
-                                        <event name="OnButtonClick"></event>
+                                        <event name="OnButtonClick">insert_snippet</event>
                                         <event name="OnChar"></event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
@@ -4315,7 +4312,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">cancel</property>
-                                        <property name="permission">none</property>
+                                        <property name="permission">public</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -12771,16 +12768,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="1">
+            <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
                 <property name="name">hsizer</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="1">
+                <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxBoxSizer" expanded="1">
+                    <object class="wxBoxSizer" expanded="0">
                         <property name="minimum_size"></property>
                         <property name="name">vsizer</property>
                         <property name="orient">wxVERTICAL</property>
@@ -12955,11 +12952,11 @@
                                 <event name="OnUpdateUI"></event>
                             </object>
                         </object>
-                        <object class="sizeritem" expanded="1">
+                        <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
                             <property name="proportion">0</property>
-                            <object class="wxBoxSizer" expanded="1">
+                            <object class="wxBoxSizer" expanded="0">
                                 <property name="minimum_size"></property>
                                 <property name="name">buttons</property>
                                 <property name="orient">wxHORIZONTAL</property>
