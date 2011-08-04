@@ -89,7 +89,7 @@ sub filters {
 	my @filters = (
 		[ Wx::gettext('All'), '' ],
 		map {
-			[ $_->[0] => $_->[0] ],
+			[ $_->[0] => $_->[0] ]
 		} @$select
 	);
 	return @filters;
