@@ -479,6 +479,10 @@ sub is_saved {
 	return !!( defined $_[0]->file and not $_[0]->is_modified );
 }
 
+sub is_unsaved {
+	return !!( $_[0]->editor->GetModify and not defined $_[0]->file );
+}
+
 # Returns true if this is a new document that is too insignificant to
 # bother checking with the user before throwing it away.
 # Usually this is because it's empty or just has a space or two in it.
