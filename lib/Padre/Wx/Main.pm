@@ -4367,6 +4367,20 @@ sub on_open_example {
 
 =pod
 
+=head3 C<on_open_last_closed_file_tab>
+
+    $main->on_open_last_closed_file_tab;
+
+Opens the last closed file tab in similar fashion to Chrome and Firefox.
+
+=cut
+
+sub on_open_last_closed_file_tab {
+	print "on_open_last_closed_file_tab\n";
+}
+
+=pod
+
 =head3 C<reload_all>
 
     my $success = $main->reload_all;

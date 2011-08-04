@@ -122,6 +122,11 @@ sub new {
 		'file.open_example',
 	);
 
+	$self->{open_last_closed_file_tab} = $self->add_menu_action(
+		$file_open,
+		'file.open_last_closed_file_tab',
+	);
+
 	$self->{close} = $self->add_menu_action(
 		$self,
 		'file.close',

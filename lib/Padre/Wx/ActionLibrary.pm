@@ -265,6 +265,17 @@ sub init {
 		},
 	);
 
+	# Opens the last closed file tab like Chrome and Firefox
+	Padre::Wx::Action->new(
+		name       => 'file.open_last_closed_file_tab',
+		label      => _T('Open Last Closed File Tab'),
+		shortcut   => 'Ctrl-Shift-T',
+		comment    => _T('Opens the last closed file tab'),
+		menu_event => sub {
+			$_[0]->on_open_last_closed_file_tab;
+		},
+	);
+
 	Padre::Wx::Action->new(
 		name        => 'file.close',
 		id          => Wx::wxID_CLOSE,
