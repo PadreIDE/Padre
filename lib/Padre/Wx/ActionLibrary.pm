@@ -863,10 +863,9 @@ sub init {
 		comment     => _T('Select a date, filename or other value and insert at the current location'),
 		shortcut    => 'Ctrl-Shift-I',
 		menu_event  => sub {
-			require Padre::Wx::Dialog::SpecialValues;
-			Padre::Wx::Dialog::SpecialValues->insert_special(@_);
+			require Padre::Wx::Dialog::Special;
+			Padre::Wx::Dialog::Special->new(@_)->Show;
 		},
-
 	);
 
 	Padre::Wx::Action->new(

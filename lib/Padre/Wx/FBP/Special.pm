@@ -53,8 +53,14 @@ sub new {
 		-1,
 		"",
 		Wx::wxDefaultPosition,
-		[ 300, 200 ],
-		Wx::wxTE_MULTILINE | Wx::wxTE_NO_VSCROLL | Wx::wxTE_READONLY,
+		[ 300, 50 ],
+		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
+	);
+	$self->{preview}->SetBackgroundColour(
+		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )
+	);
+	$self->{preview}->SetFont(
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline221} = Wx::StaticLine->new(

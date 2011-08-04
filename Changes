@@ -32,6 +32,7 @@ next production release, and synchronise their release to the Padre schedule.
     - While closing all files during shutdown, don't spawn a background task
       to update the recent files list (ADAMK)
     - Perl Projects now ignore Makefile.old files (ADAMK)
+    - Upgraded the Insert Special Value dialog to wxFormBuilder (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

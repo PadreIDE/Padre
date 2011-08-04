@@ -1609,7 +1609,6 @@ sub configure_editor {
 sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;
-
 	$self->goto_pos_centerize( $self->GetLineIndentPosition($line) );
 }
 
@@ -1633,18 +1632,14 @@ sub goto_pos_centerize {
 }
 
 sub insert_text {
-	my ( $self, $text ) = @_;
-
-	my $data = Wx::TextDataObject->new;
-	$data->SetText($text);
-	my $length = $data->GetTextLength;
-
+	my $self = shift;
+	my $text = shift;
+	my $size = Wx::TextDataObject->new($text)->GetTextLength;
+	my $pos  = $self->GetCurrentPos;
 	$self->ReplaceSelection('');
-	my $pos = $self->GetCurrentPos;
 	$self->InsertText( $pos, $text );
-	$self->GotoPos( $pos + $length - 1 );
-
-	return;
+	$self->GotoPos( $pos + $size + 1 );
+	return 1;
 }
 
 sub insert_from_file {
