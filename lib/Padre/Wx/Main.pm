@@ -4247,7 +4247,6 @@ sub open_file_dialog {
 	my @filenames = $dialog->GetFilenames;
 	$self->{cwd} = $dialog->GetDirectory;
 
-	#print Data::Dumper::Dumper \@filenames;
 	#print $dialog->GetPath, " <- path\n";
 	#print $dialog->GetFilename, " <- filename\n";
 	#print $dialog->GetDirectory, " <- directory\n";
@@ -4261,9 +4260,6 @@ sub open_file_dialog {
 		my $fullpath = $dialog->GetPath;
 		$self->{cwd} = File::Basename::dirname($fullpath);
 		@filenames = File::Basename::basename($fullpath);
-
-		#print "Dir: $self->{cwd}\n";
-		#print Data::Dumper::Dumper \@filenames;
 	}
 
 	my @files;

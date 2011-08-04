@@ -31,37 +31,6 @@ use Class::XSAccessor {
 
 
 #####################################################################
-# Functions
-
-# This sub calls all the other files which actually create the actions
-sub create {
-	my $main = shift;
-
-	# This is made for usage by the developers to create a complete
-	# list of all actions used in Padre. It outputs some warnings
-	# while dumping, but they're ignored for now as it should never
-	# run within a productional copy.
-	if ( $ENV{PADRE_EXPORT_ACTIONS} ) {
-		require Data::Dumper;
-		require File::Spec;
-		$Data::Dumper::Purity = $Data::Dumper::Purity = 1;
-		open(
-			my $action_export_fh,
-			'>',
-			File::Spec->catfile(
-				Padre::Constant::CONFIG_DIR,
-				'actions.dump',
-			),
-		);
-		print $action_export_fh Data::Dumper::Dumper( $_[0]->ide->actions );
-		close $action_export_fh;
-	}
-
-}
-
-
-
-#####################################################################
 # Constructor
 
 sub new {
