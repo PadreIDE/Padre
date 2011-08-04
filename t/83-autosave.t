@@ -6,7 +6,6 @@ use Test::More tests => 32;
 use FindBin qw($Bin);
 use File::Spec ();
 use File::Temp ();
-use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 
 use Padre::Autosave;

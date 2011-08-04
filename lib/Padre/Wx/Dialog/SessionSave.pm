@@ -196,7 +196,6 @@ sub _create_fields {
 
 		# was $CS->[0]->{name};
 		# but it crashed
-		# print Data::Dumper::Dumper $CS->[0];
 		$Current_Session = $CS->[0]->[1];
 	}
 	$Current_Session ||= ''; # Empty value for combo box, better than undef

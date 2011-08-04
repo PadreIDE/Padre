@@ -6,7 +6,6 @@ use Test::More tests => 2 + 1;
 use FindBin qw($Bin);
 use File::Spec ();
 use File::Temp qw(tempdir);
-use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 
 # Testing the stand-alone Padre::Util::CommandLine

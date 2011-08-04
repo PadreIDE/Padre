@@ -58,7 +58,6 @@ package main;
 use Test::More;
 
 #use Test::NoWarnings;
-use Data::Dumper qw(Dumper);
 use File::Spec ();
 
 # Don't run tests for installs

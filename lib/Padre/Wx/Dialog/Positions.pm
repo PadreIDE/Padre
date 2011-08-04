@@ -88,7 +88,6 @@ sub set_position {
 		line => $line,
 		};
 
-	#print Data::Dumper::Dumper \@positions;
 	return;
 }
 

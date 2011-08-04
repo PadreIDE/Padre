@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use Test::More;
-use Data::Dumper;
 use FindBin qw/$RealBin/;
 
 eval {

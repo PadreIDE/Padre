@@ -1077,9 +1077,6 @@ EOC
 		# and then stick the new subroutine in above where we are.
 		# being above the selected text also means we won't
 		# lose the location when the change is made to the document
-		#require PPI::Dumper;
-		#my $dumper = PPI::Dumper->new( $ppi_doc );
-		#$dumper->print;
 		require PPIx::EditorTools;
 		my $token = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
 		return unless $token;

@@ -69,7 +69,7 @@ SCOPE: {
 		$padre,
 		plugin_dir => $custom_dir,
 	);
-	is( $manager->plugin_dir,        $custom_dir );
+	is( $manager->plugin_dir, $custom_dir );
 	is( keys %{ $manager->plugins }, 0 );
 
 	$manager->load_plugins;
