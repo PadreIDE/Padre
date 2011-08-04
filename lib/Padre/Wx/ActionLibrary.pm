@@ -57,7 +57,7 @@ sub init_language_actions {
 			# With more Padre developers, more countries, and more
 			# people in total British English instead of American
 			# English CLEARLY it is a FAR better default for us to
-			# use.
+			# use British English.
 			# Because it's something of an in-joke to English
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
