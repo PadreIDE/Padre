@@ -43,10 +43,6 @@ sub new {
 		Wx::gettext('New'),
 		$file_new,
 	);
-	$self->{new_copy} = $self->add_menu_action(
-		$file_new,
-		'file.new_copy',
-	);
 	$self->add_menu_action(
 		$file_new,
 		'file.new_p5_script',
@@ -172,11 +168,6 @@ sub new {
 
 	### End of close submenu
 
-	$self->{delete} = $self->add_menu_action(
-		$self,
-		'file.delete',
-	);
-
 	# Reload file(s)
 	my $file_reload = Wx::Menu->new;
 	$self->Append(
@@ -201,6 +192,16 @@ sub new {
 	);
 
 	### End of reload submenu
+
+	$self->{duplicate} = $self->add_menu_action(
+		$self,
+		'file.duplicate',
+	);
+
+	$self->{delete} = $self->add_menu_action(
+		$self,
+		'file.delete',
+	);
 
 	$self->AppendSeparator;
 
@@ -304,7 +305,7 @@ sub refresh {
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
-	$self->{new_copy}->Enable($document);
+	$self->{duplicate}->Enable($document);
 	if (Padre::Constant::WIN32) {
 
 		#Win32

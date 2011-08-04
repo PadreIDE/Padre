@@ -125,14 +125,14 @@ sub new {
 		'edit.insert.from_file',
 	);
 
-	$self->{insert_special} = $self->add_menu_action(
-		$submenu,
-		'edit.insert.insert_special',
-	);
-
 	$self->{snippets} = $self->add_menu_action(
 		$submenu,
 		'edit.insert.snippets',
+	);
+
+	$self->{insert_special} = $self->add_menu_action(
+		$submenu,
+		'edit.insert.insert_special',
 	);
 
 	$self->AppendSeparator;

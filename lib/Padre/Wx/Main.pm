@@ -6518,21 +6518,22 @@ sub on_oldest_visited_pane {
 
 =pod
 
-=head3 C<on_new_from_current>
+=head3 C<on_duplicate>
 
-    $main->on_new_from_current();
+    $main->on_duplicate;
 
 Create a new document and copy the contents of the current file.
 No return value.
 
 =cut
 
-sub on_new_from_current {
-	my $self = shift;
-
+sub on_duplicate {
+	my $self     = shift;
 	my $document = $self->current->document or return;
-
-	return $self->new_document_from_string( $document->text_get, $document->mimetype );
+	return $self->new_document_from_string(
+		$document->text_get,
+		$document->mimetype,
+	);
 }
 
 =pod

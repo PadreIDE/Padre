@@ -137,12 +137,12 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'file.new_copy',
+		name        => 'file.duplicate',
 		need_editor => 1,
-		label       => _T('Copy of current file'),
-		comment     => _T('Open a document and copy the content of the current tab'),
+		label       => _T('Duplicate'),
+		comment     => _T('Copy the current tab into a new document'),
 		menu_event  => sub {
-			$_[0]->on_new_from_current;
+			$_[0]->on_duplicate;
 		},
 	);
 
