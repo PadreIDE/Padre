@@ -145,6 +145,12 @@ sub plugin_name {
 	'Padre Popularity Contest';
 }
 
+# Core plugins may reuse the page icon
+sub plugin_icon {
+	require Padre::Wx::Icon;
+	Padre::Wx::Icon::find('logo');
+}
+
 sub plugin_enable {
 	my $self = shift;
 	$self->SUPER::plugin_enable;

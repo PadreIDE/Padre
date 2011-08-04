@@ -30,7 +30,7 @@ sub plugin_name {
 	Wx::gettext('Padre Developer Tools');
 }
 
-# Reuse the Padre icon
+# Core plugins may reuse the page icon
 sub plugin_icon {
 	require Padre::Wx::Icon;
 	Padre::Wx::Icon::find('logo');
