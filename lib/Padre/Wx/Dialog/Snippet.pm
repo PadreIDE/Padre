@@ -29,9 +29,8 @@ sub new {
 	$filter->Append(@$_) foreach $self->filters;
 	$filter->SetSelection(0);
 
-	# Set the initial preview
+	# Populate the snippet list
 	$self->refilter;
-	$self->refresh;
 
 	# Reflow the layout and prepare to show
 	$self->select->SetFocus;
@@ -55,14 +54,17 @@ sub refresh {
 
 sub refilter {
 	my $self   = shift;
-	my $lock   = $self->main->lock('UPDATE');
+	my $lock   = $self->main->lock('DB', 'UPDATE');
 	my $select = $self->select;
-	my $filter = $select->GetClientData( $select->GetSelection );
+	my $filter = $self->filter->GetClientData(
+		$self->filter->GetSelection
+	);
 	$select->Clear;
 	foreach my $name ( $self->names($filter) ) {
 		$select->Append(@$name);
 	}
 	$select->SetSelection(0);
+	$self->refresh;
 }
 
 sub insert_snippet {
