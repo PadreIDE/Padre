@@ -5,6 +5,7 @@ package Padre::Wx;
 use 5.008;
 use strict;
 use warnings;
+use constant ();
 
 # Threading must be loaded before Wx loads
 use threads;
@@ -28,6 +29,41 @@ BEGIN {
 	unless ( $Wx::VERSION and $Wx::VERSION >= 0.91 ) {
 		die("Your Wx.pm is not new enough (need 0.91, found $Wx::VERSION)");
 	}
+}
+
+sub import {
+	my $class = shift;
+	unless ( $_[0] and $_[0] eq ':api2' ) {
+		return;
+	}
+
+	# Scan for all of the Wx::wxFOO AUTOLOAD functions and
+	# check that we can create Wx::FOO constants.
+	my %constants = ();
+	foreach my $function ( sort grep { s/^wx(?=[A-Z])// } keys %Wx:: ) {
+		next if $function eq 'VERSION';
+		next if $function =~ /^Log[A-Z]/;
+		if ( exists $Wx::{$function} ) {
+			warn "Clash with function Wx::$function";
+			next;
+		}
+		if ( exists $Wx::{"${function}::"} ) {
+			warn "Pseudoclash with namespace Wx::${function}::";
+			next;
+		}
+		my $error = 0;
+		my $value = Wx::constant( "wx$function", 0, $error );
+		next if $error;
+		$constants{$function} = $value;
+	}
+
+	# Convert to proper constants
+	SCOPE: {
+		package Wx;
+		constant::->import(\%constants);
+	}
+
+	return 1;
 }
 
 
