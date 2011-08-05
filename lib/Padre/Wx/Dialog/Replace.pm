@@ -33,6 +33,7 @@ our @ISA     = qw{
 =head2 new
 
   my $find = Padre::Wx::Dialog::Replace->new($main);
+
 Create and return a C<Padre::Wx::Dialog::Replace> search and replace widget.
 
 =cut
@@ -363,12 +364,6 @@ sub new {
 	$self->SetSizer($sizer);
 	$sizer->SetSizeHints($self);
 
-	# Update the dialog from configuration
-	my $config = $self->current->config;
-	$self->{find_case}->SetValue( $config->find_case );
-	$self->{find_regex}->SetValue( $config->find_regex );
-	$self->{find_first}->SetValue( $config->find_first );
-	$self->{find_reverse}->SetValue( $config->find_reverse );
 	return $self;
 }
 
@@ -436,9 +431,8 @@ Performs search on the term specified in the dialog.
 =cut
 
 sub find_button {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $config = $self->save;
+	my $self = shift;
+	my $main = $self->main;
 
 	# Generate the search object
 	my $search = $self->as_search;
@@ -458,6 +452,7 @@ sub find_button {
 	if ( $self->{find_first}->GetValue ) {
 		$self->Hide;
 	}
+
 	return;
 }
 
@@ -475,15 +470,11 @@ sub close {
 	my $self = shift;
 	$self->Hide;
 
-	# Keep any setting changes.
-	$self->save;
-
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ($editor) {
-		$editor->SetFocus;
-	}
+	$editor->SetFocus if $editor;
+
 	return;
 }
 
@@ -509,9 +500,8 @@ again.
 #       Revert this change and restore the independent "Replace All" code, so
 #       that the dialog goes back to acting only as controller.
 sub replace_button {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $config = $self->save;
+	my $self = shift;
+	my $main = $self->main;
 
 	# Generate the search object
 	my $search = $self->as_search;
@@ -557,9 +547,8 @@ Replace all appearances of given string in the current document.
 =cut
 
 sub replace_all {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $config = $self->save;
+	my $self = shift;
+	my $main = $self->main;
 
 	# Generate the search object
 	my $search = $self->as_search;
@@ -625,19 +614,21 @@ sub as_search {
 
 # Adds Ultraedit-like hotkeys for quick find/replace triggering
 sub hotkey {
-	my ( $self, $key_event, $sender ) = @_;
+	my $self   = shift;
+	my $event  = shift;
+	my $sender = shift;
 
-	$self->find_button    if $key_event->GetKeyCode == ord 'F';
-	$self->replace_button if $key_event->GetKeyCode == ord 'R';
-	$self->close          if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	$self->find_button    if $event->GetKeyCode == ord 'F';
+	$self->replace_button if $event->GetKeyCode == ord 'R';
+	$self->close          if $event->GetKeyCode == Wx::WXK_ESCAPE;
 
-	if ( $key_event->GetKeyCode == Wx::WXK_TAB ) {
+	if ( $event->GetKeyCode == Wx::WXK_TAB ) {
 		my $index;
 		$index = 1 if $sender->GetId == $self->{find_button}->GetId;
 		$index = 2 if $sender->GetId == $self->{replace_button}->GetId;
 		$index = 3 if $sender->GetId == $self->{close_button}->GetId;
 
-		if ( $key_event->ShiftDown ) {
+		if ( $event->ShiftDown ) {
 			$index--;
 		} else {
 			$index++;
@@ -648,22 +639,6 @@ sub hotkey {
 	}
 
 	return;
-}
-
-# Save the dialog settings to configuration.
-# Returns the config object as a convenience.
-sub save {
-	my $self    = shift;
-	my $config  = $self->current->config;
-	my $changed = 0;
-	foreach my $name (qw{ find_case find_regex find_first find_reverse }) {
-		my $value = $self->{$name}->GetValue;
-		next if $config->$name() == $value;
-		$config->set( $name => $value );
-		$changed = 1;
-	}
-	$config->write if $changed;
-	return $config;
 }
 
 1;

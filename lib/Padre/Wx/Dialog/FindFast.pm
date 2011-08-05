@@ -253,13 +253,9 @@ sub _show_panel {
 	$auimngr->GetPane('find')->Show(1);
 	$auimngr->Update;
 
-	# Update checkboxes with config values
-	# since they might have been updated by find dialog
-	my $config = Padre->ide->config;
-	$self->{case}->SetValue( $config->find_case   ? 0 : 1 );
-	$self->{regex}->SetValue( $config->find_regex ? 0 : 1 );
-
-	# You probably want to use the Find (and with a fresh term)
+	# Reset the form
+	$self->{case}->SetValue(0);
+	$self->{regex}->SetValue(0);
 	$self->{entry}->SetValue('');
 	$self->{entry}->SetFocus;
 
@@ -273,7 +269,6 @@ sub visible {
 	return $self->{visible} || 0;
 }
 
-
 # -- Event handlers
 
 #
@@ -284,10 +279,6 @@ sub visible {
 #
 sub _on_case_checked {
 	my $self = shift;
-	Padre->ide->config->set(
-		'find_case',
-		$self->{case}->GetValue ? 0 : 1
-	);
 	$self->{restart} = 1;
 	$self->_find;
 	$self->{entry}->SetFocus;
@@ -346,10 +337,6 @@ sub _on_key_pressed {
 #
 sub _on_regex_checked {
 	my $self = shift;
-	Padre->ide->config->set(
-		'find_regex',
-		$self->{regex}->GetValue ? 0 : 1,
-	);
 	$self->{restart} = 1;
 	$self->_find;
 	$self->{entry}->SetFocus;

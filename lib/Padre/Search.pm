@@ -39,10 +39,6 @@ sub new {
 	my $self = bless {@_}, $class;
 
 	# Check params
-	my $config = delete $self->{config};
-	unless ($config) {
-		$config = Padre::Current->config;
-	}
 	unless ( defined $self->find_term ) {
 		die "Did not provide 'find_term' search term";
 	}
@@ -51,15 +47,11 @@ sub new {
 		# Pointless zero-length search
 		return;
 	}
-	unless ( defined $self->find_case ) {
-		$self->{find_case} = $config->find_case;
-	}
-	unless ( defined $self->find_regex ) {
-		$self->{find_regex} = $config->find_regex;
-	}
-	unless ( defined $self->find_reverse ) {
-		$self->{find_reverse} = $config->find_reverse;
-	}
+
+	# Apply defaults
+	$self->{find_case}    ||= 0;
+	$self->{find_regex}   ||= 0;
+	$self->{find_reverse} ||= 0;
 
 	# Pre-compile the search
 	unless ( defined $self->search_regex ) {

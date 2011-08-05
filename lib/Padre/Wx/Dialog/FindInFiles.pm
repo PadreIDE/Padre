@@ -10,10 +10,6 @@ our @ISA     = qw{
 	Padre::Wx::FBP::FindInFiles
 };
 
-use constant CONFIG => qw{
-	find_case
-	find_regex
-};
 
 
 
@@ -85,7 +81,6 @@ sub directory {
 sub run {
 	my $self    = shift;
 	my $current = $self->current;
-	my $config  = $current->config;
 
 	# Clear
 	$self->{cycle_ctrl_f} = 0;
@@ -98,19 +93,11 @@ sub run {
 	$self->find_term->refresh($text);
 	$self->find_term->SetFocus;
 
-	# Load search preferences
-	foreach my $name (CONFIG) {
-		$self->$name()->SetValue( $config->$name() );
-	}
-
 	# Update the user interface
 	$self->refresh;
 
 	# Show the dialog
 	my $result = $self->ShowModal;
-
-	# Save any changed preferences
-	$self->save;
 
 	if ( $result == Wx::wxID_CANCEL ) {
 
@@ -137,25 +124,6 @@ sub run {
 sub refresh {
 	my $self = shift;
 	$self->find->Enable( $self->find_term->GetValue ne '' );
-}
-
-# Save the dialog settings to configuration.
-# Returns the config object as a convenience.
-sub save {
-	my $self    = shift;
-	my $config  = $self->current->config;
-	my $changed = 0;
-
-	foreach my $name (CONFIG) {
-		my $value = $self->$name()->GetValue;
-		next if $config->$name() == $value;
-		$config->set( $name => $value );
-		$changed = 1;
-	}
-
-	$config->write if $changed;
-
-	return $config;
 }
 
 # Generate a search object for the current dialog state
