@@ -93,7 +93,17 @@ sub new {
 
 	# Create the underlying Wx object
 	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
-	my $self = $class->SUPER::new($parent);
+	my $self = $class->SUPER::new(
+		$parent,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxVSCROLL
+		| Wx::wxHSCROLL
+		| Wx::wxWANTS_CHARS
+		| Wx::wxCLIP_CHILDREN
+		| Wx::wxTE_NOHIDESEL,
+	);
 
 	# Integration with the rest of Padre
 	$self->SetDropTarget( Padre::Wx::FileDropTarget->new($main) );
