@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-04 08:10-0700\n"
+"POT-Creation-Date: 2011-08-04 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,7 +138,7 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:139
 #: lib/Padre/Wx/Dialog/SessionManager.pm:303
-#: lib/Padre/Wx/Dialog/Replace.pm:189
+#: lib/Padre/Wx/Dialog/Replace.pm:190
 msgid "&Close"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:143 lib/Padre/Wx/Dialog/Replace.pm:148
+#: lib/Padre/Wx/FBP/FindInFiles.pm:143 lib/Padre/Wx/Dialog/Replace.pm:149
 msgid "&Find"
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 msgid "&Reload selected"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:168 lib/Padre/Wx/Dialog/Replace.pm:168
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:168 lib/Padre/Wx/Dialog/Replace.pm:169
 msgid "&Replace"
 msgstr ""
 
@@ -767,7 +767,7 @@ msgstr ""
 msgid "Case &insensitive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:78
+#: lib/Padre/Wx/Dialog/Replace.pm:79
 msgid "Case &sensitive"
 msgstr ""
 
@@ -931,7 +931,7 @@ msgstr ""
 msgid "Close Files..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:106
+#: lib/Padre/Wx/Dialog/Replace.pm:107
 msgid "Close Window on &Hit"
 msgstr ""
 
@@ -2080,7 +2080,7 @@ msgid ""
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindFast.pm:52 lib/Padre/Wx/FBP/Find.pm:29
-#: lib/Padre/Wx/Dialog/Replace.pm:216
+#: lib/Padre/Wx/Dialog/Replace.pm:217
 msgid "Find"
 msgstr ""
 
@@ -2109,7 +2109,7 @@ msgstr ""
 msgid "Find Results (%s)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:224
+#: lib/Padre/Wx/Dialog/Replace.pm:225
 msgid "Find Text:"
 msgstr ""
 
@@ -2125,7 +2125,7 @@ msgstr ""
 msgid "Find a text and replace it"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:48
+#: lib/Padre/Wx/Dialog/Replace.pm:49
 msgid "Find and Replace"
 msgstr ""
 
@@ -2933,8 +2933,8 @@ msgstr ""
 msgid "No match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:536
-#: lib/Padre/Wx/Dialog/Replace.pm:584
+#: lib/Padre/Wx/Dialog/Find.pm:71 lib/Padre/Wx/Dialog/Replace.pm:526
+#: lib/Padre/Wx/Dialog/Replace.pm:573
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -3221,7 +3221,7 @@ msgstr ""
 msgid "Opens the last closed file tab"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:302
+#: lib/Padre/Wx/Dialog/Replace.pm:303
 msgid "Options"
 msgstr ""
 
@@ -3704,7 +3704,7 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:92
+#: lib/Padre/Wx/Dialog/Replace.pm:93
 msgid "Regular &Expression"
 msgstr ""
 
@@ -3837,11 +3837,11 @@ msgstr ""
 msgid "Repeat the last find, but backwards to find the previous match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:248
+#: lib/Padre/Wx/Dialog/Replace.pm:249
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:134
+#: lib/Padre/Wx/Dialog/Replace.pm:135
 msgid "Replace &All"
 msgstr ""
 
@@ -3849,7 +3849,7 @@ msgstr ""
 msgid "Replace Operation Canceled"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:256
+#: lib/Padre/Wx/Dialog/Replace.pm:257
 msgid "Replace Text:"
 msgstr ""
 
@@ -3874,12 +3874,12 @@ msgstr ""
 msgid "Replace..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:575
+#: lib/Padre/Wx/Dialog/Replace.pm:564
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:575
+#: lib/Padre/Wx/Dialog/Replace.pm:564
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4082,11 +4082,11 @@ msgid "Script arguments"
 msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:83 lib/Padre/Wx/Directory.pm:484
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390 lib/Padre/Wx/Dialog/Find.pm:82
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390 lib/Padre/Wx/Dialog/Find.pm:74
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:120
+#: lib/Padre/Wx/FBP/Find.pm:79 lib/Padre/Wx/Dialog/Replace.pm:121
 msgid "Search &Backwards"
 msgstr ""
 
@@ -4103,8 +4103,8 @@ msgstr ""
 msgid "Search Help"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:537 lib/Padre/Wx/Dialog/Replace.pm:580
-#: lib/Padre/Wx/Dialog/Replace.pm:585
+#: lib/Padre/Wx/Dialog/Replace.pm:527 lib/Padre/Wx/Dialog/Replace.pm:569
+#: lib/Padre/Wx/Dialog/Replace.pm:574
 msgid "Search and Replace"
 msgstr ""
 
@@ -4166,7 +4166,7 @@ msgstr ""
 msgid "Select All"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindInFiles.pm:64
+#: lib/Padre/Wx/Dialog/FindInFiles.pm:60
 #: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:58
 msgid "Select Directory"
 msgstr ""
