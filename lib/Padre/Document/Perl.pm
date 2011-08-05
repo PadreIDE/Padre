@@ -284,10 +284,16 @@ sub guess_subpath {
 my $keywords;
 
 sub keywords {
-	unless ( defined $keywords ) {
-		$keywords = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' ) );
-	}
-	return $keywords;
+	$keywords or
+	$keywords = YAML::Tiny::LoadFile(
+		Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' )
+	);
+}
+
+my $wordchars =  join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z';
+
+sub stc_word_chars {
+	return $wordchars;
 }
 
 # This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without

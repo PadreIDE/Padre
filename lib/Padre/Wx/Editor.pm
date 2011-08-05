@@ -134,10 +134,6 @@ sub new {
 		BLUE,
 	);
 
-	# Set word chars to match Perl variables
-	### This should probably move somewhere Perl-specific
-	$self->SetWordChars( join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z' );
-
 	# No more unsafe CTRL-L for you :)
 	# CTRL-L or line cut should only work when there is no empty line
 	# This prevents the accidental destruction of the clipboard
@@ -244,24 +240,25 @@ sub error {
 # Most of this should be read from some external files
 # but for now we use this if statement
 sub padre_setup {
-	my $self = shift;
+	my $self     = shift;
+	my $document = $self->{Document};
+	my $mimetype = $document ? $document->mimetype : '';
+	my $filename = $document ? $document->filename : '';
 
-	TRACE("before setting the lexer") if DEBUG;
-	if ( $self->{Document} ) {
-		$self->SetLexer( $self->{Document}->lexer );
+	# Configure lexing for the editor based on the document type
+	if ( $document ) {
+		$self->SetLexer( $document->lexer );
+		$self->SetWordChars( $document->stc_word_chars );
+	} else {
+		$self->SetWordChars('');
 	}
-
-	# the next line will change the ESC key to cut the current selection
-	# See: http://www.yellowbrain.com/stc/keymap.html
-	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
 
-	my $mimetype = $self->{Document} ? $self->{Document}->mimetype : '';
+	# Setup the style for the specific mimetype
 	$mimetype ||= 'text/plain';
-
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 		return;
@@ -275,8 +272,6 @@ sub padre_setup {
 	}
 
 	# For plain text try to guess based on the filename
-	my $filename = $self->{Document} ? $self->{Document}->filename : '';
-	$filename ||= '';
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
 

@@ -1319,6 +1319,10 @@ sub get_function_regex {
 	return '';
 }
 
+sub stc_word_chars {
+	return '';
+}
+
 sub pre_process {
 	return 1;
 }
@@ -1389,6 +1393,9 @@ sub stats {
 		$self->{encoding}
 	);
 }
+
+
+
 
 
 #####################################################################
