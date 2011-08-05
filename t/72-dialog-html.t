@@ -15,7 +15,7 @@ BEGIN {
 }
 
 use t::lib::Padre;
-use Padre::Wx::Dialog::HTML ();
+use Padre::Wx::Frame::HTML ();
 
 my $html = <<'END_HTML';
 <html>
@@ -26,9 +26,9 @@ Hello World!
 END_HTML
 
 # Create a new dialog object, but don't show it
-my $dialog = Padre::Wx::Dialog::HTML->new(
+my $dialog = Padre::Wx::Frame::HTML->new(
 	title => 'Test HTML Dialog',
 	size  => [ 200, 200 ],
 	html  => $html,
 );
-isa_ok( $dialog, 'Padre::Wx::Dialog::HTML' );
+isa_ok( $dialog, 'Padre::Wx::Frame::HTML' );

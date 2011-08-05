@@ -576,7 +576,7 @@ of running code using C<F5>.
 
 =item L<Padre::Wx::HtmlWindow>
 
-=item L<Padre::Wx::PodFrame>
+=item L<Padre::Wx::Frame::POD>
 
 =item L<Padre::Wx::Popup>
 

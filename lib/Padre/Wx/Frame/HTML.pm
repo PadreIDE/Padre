@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::HTML;
+package Padre::Wx::Frame::HTML;
 
 # Provides a base class for dialogs that are built using dynamic HTML
 
