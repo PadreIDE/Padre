@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-08 04:10-0700\n"
+"POT-Creation-Date: 2011-08-08 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,7 +340,7 @@ msgstr ""
 msgid "&Result from replace:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Run.pm:74
+#: lib/Padre/Wx/Menu/Run.pm:76
 msgid "&Run"
 msgstr ""
 
@@ -1714,7 +1714,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:441 lib/Padre/Wx/Editor.pm:234
+#: lib/Padre/Document.pm:444 lib/Padre/Wx/Editor.pm:234
 #: lib/Padre/Wx/Main.pm:4979 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
@@ -2172,7 +2172,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1673
+#: lib/Padre/Wx/Editor.pm:1679
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -4048,7 +4048,7 @@ msgstr ""
 msgid "Save Session..."
 msgstr ""
 
-#: lib/Padre/Document.pm:777
+#: lib/Padre/Document.pm:780
 msgid "Save Warning"
 msgstr ""
 
@@ -4635,7 +4635,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1381 lib/Padre/Document.pm:1382
+#: lib/Padre/Document.pm:1384 lib/Padre/Document.pm:1385
 msgid "Skipped for large files"
 msgstr ""
 
@@ -4959,7 +4959,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:974
+#: lib/Padre/Document.pm:977
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5114,7 +5114,7 @@ msgstr ""
 msgid "Visit the PerlMonks"
 msgstr ""
 
-#: lib/Padre/Document.pm:773
+#: lib/Padre/Document.pm:776
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
@@ -5225,7 +5225,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1657
+#: lib/Padre/Wx/Editor.pm:1663
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5271,7 +5271,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:952
+#: lib/Padre/Document.pm:955
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
