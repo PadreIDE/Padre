@@ -12,6 +12,7 @@ BEGIN {
 }
 
 use Test::NoWarnings;
+use t::lib::Padre ();
 use Padre::Config ();
 use Padre::Wx     ();
 
