@@ -83,6 +83,7 @@ perl:
    foreground: 007f7f
   wxSTC_PL_WORD:
    foreground: 00007f
+   bold: 1
   wxSTC_PL_STRING:
    foreground: ff7f00
   wxSTC_PL_CHARACTER:
