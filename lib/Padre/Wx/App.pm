@@ -30,10 +30,10 @@ From the main L<Padre> object, it can be accessed via the C<wx> method.
 use 5.008;
 use strict;
 use warnings;
-use Carp      ();
-use Padre::Wx ();
-
-# use Padre::Logger;
+use threads;
+use threads::shared;
+use Wx ();
+use Padre::Wx::Frame::Null ();
 
 our $VERSION = '0.89';
 our @ISA     = 'Wx::App';
@@ -48,9 +48,12 @@ our @ISA     = 'Wx::App';
 my $SINGLETON = undef;
 
 sub new {
-
-	# TRACE($_[0]) if DEBUG;
-	$SINGLETON or $SINGLETON = shift->SUPER::new;
+	unless ( $SINGLETON ) {
+		$SINGLETON = shift->SUPER::new;
+		$SINGLETON->{conduit} = Padre::Wx::Frame::Null->new;
+		$SINGLETON->{conduit}->conduit_init;
+	}
+	return $SINGLETON;
 }
 
 
@@ -61,8 +64,6 @@ sub new {
 # Constructor and Accessors
 
 sub create {
-
-	# TRACE($_[0]) if DEBUG;
 	my $self = shift->new;
 
 	# Save a link back to the parent ide
@@ -113,8 +114,6 @@ The C<config> accessor returns the L<Padre::Config> for the application.
 =cut
 
 sub config {
-
-	# TRACE($_[0]) if DEBUG;
 	$_[0]->{ide}->config;
 }
 
@@ -130,19 +129,27 @@ sub queue {
 	$_[0]->{queue};
 }
 
+=pod
+
+=head2 C<conduit>
+
+The C<conduit> accessor returns the L<Padre::Wx::Role::Conduit> for the
+application.
+
+=cut
+
+sub conduit {
+	$_[0]->{conduit};
+}
 
 
 
 
-#####################################################################
-# Wx Methods
+
+######################################################################
+# Compulsory Wx Methods
 
 sub OnInit {
-
-	# TRACE($_[0]) if DEBUG;
-	if ( $_[0]->can('conduit_init') ) {
-		$_[0]->conduit_init;
-	}
 	return 1;
 }
 

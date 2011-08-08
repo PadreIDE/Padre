@@ -160,7 +160,7 @@ sub new {
 	require Padre::TaskManager;
 	$self->{task_manager} = Padre::TaskManager->new(
 		threads => 1,
-		conduit => $self->{wx}->{main},
+		conduit => $self->wx->conduit,
 	);
 
 	# Startup completed, let go of the database

@@ -56,7 +56,10 @@ use 5.008005;
 use strict;
 use warnings;
 use Params::Util      ();
+use Padre::Config     ();
+use Padre::Current    ();
 use Padre::TaskHandle ();
+use Padre::TaskThread ();
 use Padre::TaskWorker ();
 use Padre::Logger;
 
@@ -74,7 +77,7 @@ use constant {
 #       Leave this turned off, Adam is using it to temporarily enable it
 #       while he is debugging it. Once fixed, it will stay on permanently
 #       and this flag will go away.
-use constant ENABLE_SLAVE_MASTER => 0;
+use constant MASTERTHREAD => Padre::Current->config->feature_masterthread;
 
 
 
@@ -259,9 +262,9 @@ sub stop {
 	@{ $self->{queue} } = ();
 
 	# Shut down the master thread
-	# NOTE: Ignore the desires of ENABLE_SLAVE_MASTER here on really only
-	# on the reality of the actual running code.
-	if ($Padre::TaskThread::VERSION) {
+	# NOTE: We ignore the status of the thread master settings here and
+	# act only on the basis of whether or not a master thread is running.
+	if ( $Padre::TaskThread::VERSION ) {
 		if ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master->stop;
 		}
@@ -376,15 +379,18 @@ sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-	if (ENABLE_SLAVE_MASTER) {
+	if ( MASTERTHREAD ) {
 
-		# Bootstrap the master thread if it isn't already running
-		require Padre::TaskThread;
-		my $master = Padre::TaskThread->master;
+		# Our startup sequence MUST have already started the master.
+		unless ( Padre::TaskThread->master_running ) {
+			die "Master thread is unexpectedly not running";
+		}
 
 		# Start the worker via the master.
 		my $worker = Padre::TaskWorker->new;
-		$master->send( start_child => $worker );
+		Padre::TaskThread->master->send(
+			start_child => $worker,
+		);
 		push @{ $self->{workers} }, $worker;
 		return $worker;
 

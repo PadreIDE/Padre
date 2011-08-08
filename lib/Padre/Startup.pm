@@ -52,8 +52,9 @@ sub startup {
 	my %setting = (
 		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
-		startup_splash           => 0,
 		threads                  => 1,
+		feature_masterthread     => 0,
+		startup_splash           => 0,
 	);
 
 	# Load and overlay the startup.yml file
@@ -95,10 +96,7 @@ sub startup {
 		}
 	}
 
-	# NOTE: Replace the following with if ( 0 ) will disable the
-	# slave master quick-spawn optimisation.
 	if ( $setting{threads} ) {
-
 		# Load a limited subset of Wx early so that we can be sure that
 		# the Wx::PlThreadEvent works in child threads. The thread
 		# modules must be loaded before Wx so that threading in Wx works
@@ -109,8 +107,10 @@ sub startup {
 		# Second-generation version of the threading optimisation.
 		# This one is much safer because we start with zero existing
 		# tasks and no expectation of existing load behaviour.
-		require Padre::TaskThread;
-		Padre::TaskThread->master;
+		if ( $setting{feature_masterthread} ) {
+			require Padre::TaskThread;
+			Padre::TaskThread->master;
+		}
 	}
 
 	# Show the splash image now we are starting a new instance

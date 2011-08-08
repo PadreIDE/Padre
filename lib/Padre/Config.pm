@@ -1319,8 +1319,9 @@ setting(
 setting(
 	name    => 'feature_masterthread',
 	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HOST,
+	store   => Padre::Constant::HUMAN,
 	default => 0,
+	startup => 1,
 );
 
 # Window menu list shorten common path

@@ -12,8 +12,8 @@ use Padre::TaskQueue ();
 # NOTE: The TRACE() calls in this class should be commented out unless
 # actively debugging, so that the Padre::Logger class will only be
 # loaded AFTER the threads spawn.
-# use Padre::Logger;
-use constant DEBUG => 0;
+use Padre::Logger;
+# use constant DEBUG => 0;
 
 our $VERSION = '0.89';
 
