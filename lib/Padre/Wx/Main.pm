@@ -3320,29 +3320,65 @@ keystroke or menu events.
 
 =head2 C<search_next>
 
-  # Next match for a new search
+  # Next match for a new explicit search
   $main->search_next( $search );
 
-  # Next match on current search (or show Find dialog if none)
+  # Next match on current search
   $main->search_next;
 
-Find the next match for the current search, or spawn the Find dialog.
+Find the next match for the current search.
 
 If no files are open, silently do nothing (don't even remember the new search)
 
 =cut
 
 sub search_next {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor or return;
+	my $search = $self->search;
+
+	# If we are passed an explicit search object,
+	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
-		$self->{search} = shift;
-	} elsif (@_) {
+		$search = $self->{search} = shift;
+		return $search->search_next($editor);
+	} elsif ( @_ ) {
 		die 'Invalid argument to search_next';
 	}
-	if ( $self->search ) {
-		$self->search->search_next($editor);
+
+	# Handle the obvious case with nothing selected
+	my ( $position1, $position2 ) = $editor->GetSelection;
+	if ( $position1 == $position2 ) {
+		return unless $search;
+		return $search->search_next($editor);
 	}
+
+	# Multiple lines are also done the obvious way
+	my $line1 = $editor->LineFromPosition($position1);
+	my $line2 = $editor->LineFromPosition($position2);
+	unless ( $line1 == $line2 ) {
+		return unless $search;
+		return $self->search_next($editor);
+	}
+
+	# Case-specific search for the current selection
+	require Padre::Search;
+	$search = $self->{search} = Padre::Search->new(
+		find_case    => 1,
+		find_regex   => 0,
+		find_reverse => 0,
+		find_term    => $editor->GetTextRange(
+			$position1, $position2,
+		),
+	);
+	$search->search_next($editor);
+
+	# If we can't find another match, show a message
+	if ( ( $editor->GetSelection )[0] == $position1 ) {
+		$self->message( Wx::gettext('Failed to find any matches') );
+	}
+
+	return 1;
 }
 
 =pod
@@ -3362,16 +3398,52 @@ If no files are open, do nothing.
 =cut
 
 sub search_previous {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor or return;
+	my $search = $self->search;
+
+	# If we are passed an explicit search object,
+	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
-		$self->{search} = shift;
-	} elsif (@_) {
-		die("Invalid argument to search_previous");
+		$search = $self->{search} = shift;
+		return $search->search_previous($editor);
+	} elsif ( @_ ) {
+		die 'Invalid argument to search_previous';
 	}
-	if ( $self->search ) {
-		$self->search->search_previous($editor);
+
+	# Handle the obvious case with nothing selected
+	my ( $position1, $position2 ) = $editor->GetSelection;
+	if ( $position1 == $position2 ) {
+		return unless $search;
+		return $search->search_previous($editor);
 	}
+
+	# Multiple lines are also done the obvious way
+	my $line1 = $editor->LineFromPosition($position1);
+	my $line2 = $editor->LineFromPosition($position2);
+	unless ( $line1 == $line2 ) {
+		return unless $search;
+		return $self->search_previous($editor);
+	}
+
+	# Case-specific search for the current selection
+	require Padre::Search;
+	$search = $self->{search} = Padre::Search->new(
+		find_case    => 1,
+		find_regex   => 0,
+		find_reverse => 0,
+		find_term    => $editor->GetTextRange(
+			$position1, $position2,
+		),
+	);
+	$search->search_previous($editor);
+
+	# If we can't find another match, show a message
+	if ( ( $editor->GetSelection )[0] == $position1 ) {
+		$self->message( Wx::gettext('Failed to find any matches') );
+	}
+
+	return 1;
 }
 
 =pod
