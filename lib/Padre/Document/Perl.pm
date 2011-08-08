@@ -1876,8 +1876,9 @@ sub guess_filename_to_open {
 }
 
 sub lexer_keywords {
-	return qw(
-		NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
+	return [
+		# Perl Keywords
+		[ qw(NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
 		BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept
 		alarm and atan2 bind binmode bless caller chdir chmod chomp chop
 		chown chr chroot close closedir cmp connect continue cos crypt
@@ -1903,8 +1904,8 @@ sub lexer_keywords {
 		system syswrite tell telldir tie tied time times truncate
 		uc ucfirst umask undef unless unlink unpack unshift untie until
 		use utime values vec wait waitpid wantarray warn while write
-		xor given when default say state UNITCHECK
-	);
+		xor given when default say state UNITCHECK) ],
+	];
 }
 
 1;

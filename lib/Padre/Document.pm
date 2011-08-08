@@ -338,7 +338,7 @@ sub current {
 }
 
 sub lexer_keywords {
-	return qw();
+	return [];
 }
 
 
