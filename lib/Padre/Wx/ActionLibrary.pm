@@ -575,7 +575,7 @@ sub init {
 		shortcut   => 'Ctrl-Z',
 		toolbar    => 'actions/edit-undo',
 		menu_event => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->Undo;
 		},
 	);
@@ -595,7 +595,7 @@ sub init {
 		shortcut   => 'Ctrl-Y',
 		toolbar    => 'actions/edit-redo',
 		menu_event => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->Redo;
 		},
 	);
@@ -609,7 +609,7 @@ sub init {
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
 		menu_event  => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->SelectAll;
 		},
 	);
@@ -621,7 +621,7 @@ sub init {
 		comment     => _T('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->text_selection_mark_start;
 		},
 	);
@@ -633,7 +633,7 @@ sub init {
 		comment     => _T('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->text_selection_mark_end;
 		},
 	);
@@ -644,8 +644,8 @@ sub init {
 		label       => _T('Clear Selection Marks'),
 		comment     => _T('Remove all the selection marks'),
 		menu_event  => sub {
-			require Padre::Wx::Editor;
-			Padre::Wx::Editor::text_selection_clear_marks(@_);
+			my $editor = $_[0]->current->editor or return;
+			$editor->text_selection_clear;
 		},
 	);
 
@@ -661,7 +661,7 @@ sub init {
 		shortcut       => 'Ctrl-X',
 		toolbar        => 'actions/edit-cut',
 		menu_event     => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->Cut;
 		},
 	);
@@ -676,7 +676,7 @@ sub init {
 		shortcut       => 'Ctrl-C',
 		toolbar        => 'actions/edit-copy',
 		menu_event     => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->Copy;
 		},
 	);
@@ -690,9 +690,10 @@ sub init {
 		label       => _T('Copy Full Filename'),
 		comment     => _T('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
-			my $document = Padre::Current->document;
-			return if !defined( $document->{file} );
-			my $editor = Padre::Current->editor;
+			my $current  = $_[0]->current;
+			my $editor   = $current->editor or return;
+			my $document = $current->document;
+			return unless defined $document->{file};
 			$editor->put_text_to_clipboard( $document->{file}->{filename} );
 		},
 	);
@@ -704,9 +705,10 @@ sub init {
 		label       => _T('Copy Filename'),
 		comment     => _T('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
-			my $document = Padre::Current->document;
-			return if !defined( $document->{file} );
-			my $editor = Padre::Current->editor;
+			my $current  = $_[0]->current;
+			my $editor   = $current->editor or return;
+			my $document = $current->document;
+			return unless defined $document->{file};
 			$editor->put_text_to_clipboard( $document->{file}->basename );
 		},
 	);
@@ -718,9 +720,10 @@ sub init {
 		label       => _T('Copy Directory Name'),
 		comment     => _T('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
-			my $document = Padre::Current->document;
-			return if !defined( $document->{file} );
-			my $editor = Padre::Current->editor;
+			my $current  = $_[0]->current;
+			my $editor   = $current->editor or return;
+			my $document = $current->document;
+			return unless defined $document->{file};
 			$editor->put_text_to_clipboard( $document->{file}->dirname );
 		},
 	);
@@ -731,9 +734,10 @@ sub init {
 		label       => _T('Copy Editor Content'),
 		comment     => _T('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
-			my $document = Padre::Current->document;
-			return if !defined( $document->{file} );
-			my $editor = Padre::Current->editor;
+			my $current  = $_[0]->current;
+			my $editor   = $current->editor or return;
+			my $document = $current->document;
+			return unless defined $document->{file};
 			$editor->put_text_to_clipboard( $document->text_get );
 		},
 	);
@@ -749,7 +753,7 @@ sub init {
 		shortcut    => 'Ctrl-V',
 		toolbar     => 'actions/edit-paste',
 		menu_event  => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = $_[0]->current->editor or return;
 			$editor->Paste;
 		},
 	);
@@ -775,10 +779,11 @@ sub init {
 		shortcut    => 'Ctrl-2',
 		menu_event  => sub {
 			my $main     = shift;
-			my $document = $main->current->document or return;
-			my $editor   = $document->editor;
+			my $current  = $main->current;
+			my $document = $current->document or return;
 			return unless $document->can('get_quick_fix_provider');
 
+			my $editor = $current->editor;
 			$editor->AutoCompSetSeparator( ord '|' );
 			my @list  = ();
 			my @items = ();
@@ -851,7 +856,8 @@ sub init {
 		comment     => _T('Select to the matching opening or closing brace'),
 		shortcut    => 'Ctrl-4',
 		menu_event  => sub {
-			shift->current->editor->select_to_matching_brace;
+			my $editor = $_[0]->current->editor or return;
+			$editor->select_to_matching_brace;
 		}
 	);
 

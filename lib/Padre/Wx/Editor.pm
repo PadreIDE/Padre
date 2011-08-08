@@ -1260,34 +1260,35 @@ sub on_mousewheel {
 }
 
 sub text_selection_mark_start {
-	my ($self) = @_;
-
-	# find positions
+	my $self = shift;
 	$self->{selection_mark_start} = $self->GetCurrentPos;
 
-	# change selection if start and end are defined
-	$self->SetSelection(
-		$self->{selection_mark_start},
-		$self->{selection_mark_end}
-	) if defined $self->{selection_mark_end};
+	# Change selection if start and end are defined
+	if ( defined $self->{selection_mark_end} ) {
+		$self->SetSelection(
+			$self->{selection_mark_start},
+			$self->{selection_mark_end}
+		);
+	}
 }
 
 sub text_selection_mark_end {
-	my ($self) = @_;
-
+	my $self = shift;
 	$self->{selection_mark_end} = $self->GetCurrentPos;
 
-	# change selection if start and end are defined
-	$self->SetSelection(
-		$self->{selection_mark_start},
-		$self->{selection_mark_end}
-	) if defined $self->{selection_mark_start};
+	# Change selection if start and end are defined
+	if ( defined $self->{selection_mark_start} ) {
+		$self->SetSelection(
+			$self->{selection_mark_start},
+			$self->{selection_mark_end}
+		);
+	}
 }
 
-sub text_selection_clear_marks {
-	my $editor = $_[0]->current->editor;
-	undef $editor->{selection_mark_start};
-	undef $editor->{selection_mark_end};
+sub text_selection_clear {
+	my $editor = shift;
+	$editor->{selection_mark_start} = undef;
+	$editor->{selection_mark_end}   = undef;
 }
 
 #
