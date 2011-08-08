@@ -162,6 +162,8 @@ sub _content_developers {
             Chris Dolan<br>
             <br>
             Claudio Ramirez<br>
+            <br>
+            Tom Eliaz<br>
           </p>
         </td>
         <td valign="top">
