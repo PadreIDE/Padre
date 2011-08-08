@@ -249,6 +249,8 @@ sub padre_setup {
 	if ( $document ) {
 		$self->SetLexer( $document->lexer );
 		$self->SetWordChars( $document->stc_word_chars );
+		#TODO this assumes that a lexer has only one keywords list
+		$self->SetKeyWords(0, join(' ', $document->lexer_keywords));
 	} else {
 		$self->SetWordChars('');
 	}

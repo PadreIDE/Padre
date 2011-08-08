@@ -46,6 +46,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Searches done in fast find are now remembered by Padre so they can be
       repeated by F3 with no find dialogs open (ADAMK)
     - Stop Mac OSX crashes on save due to tailing pipe in FileDialog (TOME)
+    - Highlight Perl keywords using Scintilla (AZAWAWI)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

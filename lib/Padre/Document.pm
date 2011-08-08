@@ -337,6 +337,9 @@ sub current {
 	Padre::Current->new( document => $_[0] );
 }
 
+sub lexer_keywords {
+	return qw();
+}
 
 
 
