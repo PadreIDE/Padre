@@ -22,8 +22,8 @@ CPAN spinoff later).
 use 5.008;
 use strict;
 use warnings;
-use Storable  ();
-use Padre::Wx ();
+use Storable ();
+use Wx       ();
 use Padre::Logger;
 
 our $VERSION = '0.89';
