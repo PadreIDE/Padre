@@ -609,8 +609,8 @@ sub init {
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
 		menu_event  => sub {
-			require Padre::Wx::Editor;
-			Padre::Wx::Editor::text_select_all(@_);
+			my $editor = Padre::Current->editor or return;
+			$editor->SelectAll;
 		},
 	);
 

@@ -1259,15 +1259,6 @@ sub on_mousewheel {
 	return;
 }
 
-sub text_select_all {
-	my ( $main, $event ) = @_;
-
-	my $id = $main->notebook->GetSelection;
-	return if $id == -1;
-	$main->notebook->GetPage($id)->SelectAll;
-	return;
-}
-
 sub text_selection_mark_start {
 	my ($self) = @_;
 
