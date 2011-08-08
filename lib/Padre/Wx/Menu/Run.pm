@@ -45,6 +45,8 @@ sub new {
 		'run.run_command',
 	);
 
+	$self->AppendSeparator; 
+
 	$self->{run_tests} = $self->add_menu_action(
 		$self,
 		'run.run_tests',
