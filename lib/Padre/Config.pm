@@ -1216,54 +1216,56 @@ setting(
 # Enable/Disable entire functions that some people dislike.
 # Normally these should be enabled by default (or should be
 # planned to eventually be enabled by default).
-setting(
-	name    => 'feature_config',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
+
+# Disable Bookmark functionality.
+# Reduces code size and menu entries.
 setting(
 	name    => 'feature_bookmark',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
+# Disable convenience font-size changes.
+# Reduces menu entries and prevents accidental font size changes
+# due to Ctrl-MouseWheel mistakes.
 setting(
 	name    => 'feature_fontsize',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
+# Disable code folding.
+# Reduces code bloat and menu entries.
 setting(
 	name    => 'feature_folding',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
+# Disable session support.
+# Reduces code bloat and database operations.
 setting(
 	name    => 'feature_session',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
+# Disable remembering cursor position.
+# Reduces code bloat and database operations.
 setting(
 	name    => 'feature_cursormemory',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
-setting(
-	name    => 'feature_wizard_selector',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'feature_quick_fix',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
+
+# Disable GUI debugger.
+# Reduces code bloat and toolbar/menu entries for people that
+# prefer to use command line debugger (which is also less buggy)
 setting(
 	name    => 'feature_debugger',
 	type    => Padre::Constant::BOOLEAN,
@@ -1271,12 +1273,23 @@ setting(
 	default => 1,
 );
 
-# setting(
-# name    => 'feature_restart_hung_task_manager',
-# type    => Padre::Constant::BOOLEAN,
-# store   => Padre::Constant::HUMAN,
-# default => 0,
-# );
+# Enable experimental wizard system.
+setting(
+	name    => 'feature_wizard_selector',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Enable experimental quick fix system.
+setting(
+	name    => 'feature_quick_fix',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Enable experimental Wx::Scintilla support.
 setting(
 	name    => 'feature_wx_scintilla',
 	type    => Padre::Constant::BOOLEAN,
@@ -1285,16 +1298,28 @@ setting(
 	help    => _T('Enable or disable the newer Wx::Scintilla source code editing component. ')
 		. _T('This requires an installed Wx::Scintilla and a Padre restart'),
 );
+
+# Enable experimental preference sync support.
 setting(
 	name    => 'feature_sync',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+
+# Enable experimental Replace in Files support.
 setting(
 	name    => 'feature_replaceinfiles',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Enable experimental slave mastered threading.
+setting(
+	name    => 'feature_masterthread',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
 	default => 0,
 );
 
