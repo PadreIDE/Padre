@@ -5,6 +5,7 @@ package Padre::Wx::Dialog::FindFast;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current  ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
@@ -43,9 +44,8 @@ sub new {
 sub search {
 	my $self      = shift;
 	my $direction = shift;
-
-	# Avoid crash if no file open
-	return if not Padre->ide->wx->main->current->editor;
+	my $current   = Padre::Current->new;
+	my $editor    = $current->editor or return;
 
 	$self->{backward} = $direction eq 'previous';
 	unless ( $self->{panel} ) {
@@ -53,7 +53,7 @@ sub search {
 	}
 
 	# pane != panel
-	my $pane = Padre->ide->wx->main->aui->GetPane('find');
+	my $pane = $current->main->aui->GetPane('find');
 	if ( $pane->IsShown ) {
 		$self->_find;
 	} else {
@@ -65,52 +65,38 @@ sub search {
 
 sub _find {
 	my $self = shift;
-	my $main = Padre->ide->wx->main;
-	my $page = $main->current->editor or return;
-	my $last = $page->GetLength;
-	my $text = $page->GetTextRange( 0, $last );
+	my $current = Padre::Current->new;
+	my $editor  = $current->editor or return;
+	my $main    = $current->main;
+	my $lock    = $main->lock('UPDATE');
 
-	# build regex depending on what we search for
-	my $what;
-	if ( $self->{regex}->GetValue ) {
+	# Reset the dialog status
+	$self->{entry}->SetBackgroundColour( $self->{default_bgcolour} );
 
-		# regex search, let's validate regex
-		$what = $self->{entry}->GetValue;
-		eval {qr/$what/};
-		if ($@) {
+	# Build the search expression
+	my $find_term = $self->{entry}->GetValue;
+	if ( length $find_term ) {
+		require Padre::Search;
+		my $search = Padre::Search->new(
+			find_case    => $self->{case}->GetValue,
+			find_regex   => 0,
+			find_reverse => 0,
+			find_term    => $find_term,
+		);
 
-			# regex is invalid
-			$self->{entry}->SetBackgroundColour( $self->{error_bgcolour} );
-			return;
-
-		} else {
-
-			# regex is valid
-			$self->{entry}->SetBackgroundColour( $self->{default_bgcolour} );
+		# Handle restarting the search
+		if ( $self->{restart} ) {
+			$editor->SetSelection( 0, 0 );
+			$self->{restart} = 0;
 		}
 
-	} else {
-
-		# plain text search
-		$what = quotemeta $self->{entry}->GetValue;
+		# Run the search
+		unless ( $main->search_next($search) ) {
+			$self->{entry}->SetBackgroundColour( $self->{error_bgcolour} );
+		}
+		$self->{entry}->SetFocus;
 	}
 
-	my $regex = $self->{case}->GetValue ? qr/($what)/im : qr/($what)/m;
-
-	my ( $from, $to ) =
-		$self->{restart}
-		? ( 0, $last )
-		: $page->GetSelection;
-	$self->{restart} = 0;
-
-	# search and highlight
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, $from, $to, $self->{backward} );
-	if ( defined $start ) {
-		$page->SetSelection( $start, $end );
-		$self->{entry}->SetBackgroundColour( $self->{default_bgcolour} );
-	} else {
-		$self->{entry}->SetBackgroundColour( $self->{error_bgcolour} );
-	}
 	return;
 }
 
@@ -123,7 +109,7 @@ sub _find {
 #
 sub _create_panel {
 	my $self = shift;
-	my $main = Padre->ide->wx->main;
+	my $main = Padre::Current->main;
 
 	# The panel and the boxsizer to place controls
 	$self->{outer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -189,10 +175,6 @@ sub _create_panel {
 	$self->{case} = Wx::CheckBox->new( $self->{panel}, -1, Wx::gettext('Case &insensitive') );
 	Wx::Event::EVT_CHECKBOX( $main, $self->{case}, sub { $self->_on_case_checked } );
 
-	# Regex search
-	$self->{regex} = Wx::CheckBox->new( $self->{panel}, -1, Wx::gettext('Use rege&x') );
-	Wx::Event::EVT_CHECKBOX( $main, $self->{regex}, sub { $self->_on_regex_checked } );
-
 	# Place all controls
 	$self->{hbox}->Add( $self->{close},         0, Wx::wxALIGN_CENTER_VERTICAL,              0 );
 	$self->{hbox}->Add( $self->{label},         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT, 10 );
@@ -202,7 +184,6 @@ sub _create_panel {
 	$self->{hbox}->Add( $self->{next},          0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
 	$self->{hbox}->Add( $self->{next_text},     0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
 	$self->{hbox}->Add( $self->{case},          0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{regex},         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
 	$self->{hbox}->Add( 0,                      1, Wx::wxEXPAND,                             5 );
 
 	$self->{panel}->SetSizer( $self->{hbox} );
@@ -240,7 +221,7 @@ sub _hide_panel {
 
 	$self->{visible} = 0;
 
-	Padre->ide->wx->main->current->editor->SetFocus();
+	Padre::Current->editor->SetFocus;
 
 	return 1;
 }
@@ -255,10 +236,8 @@ sub _show_panel {
 
 	# Reset the form
 	$self->{case}->SetValue(0);
-	$self->{regex}->SetValue(0);
 	$self->{entry}->SetValue('');
 	$self->{entry}->SetFocus;
-
 	$self->{visible} = 1;
 
 	return 1;
@@ -327,20 +306,6 @@ sub _on_key_pressed {
 	}
 
 	$event->Skip(1);
-}
-
-#
-# _on_regex_checked()
-#
-# called when the "use regex" checkbox has changed value. in that case,
-# we'll restart searching from the start of the document.
-#
-sub _on_regex_checked {
-	my $self = shift;
-	$self->{restart} = 1;
-	$self->_find;
-	$self->{entry}->SetFocus;
-	return;
 }
 
 1;

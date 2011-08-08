@@ -3341,7 +3341,7 @@ sub search_next {
 	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$search = $self->{search} = shift;
-		return $search->search_next($editor);
+		return !! $search->search_next($editor);
 	} elsif ( @_ ) {
 		die 'Invalid argument to search_next';
 	}
@@ -3350,7 +3350,7 @@ sub search_next {
 	my ( $position1, $position2 ) = $editor->GetSelection;
 	if ( $position1 == $position2 ) {
 		return unless $search;
-		return $search->search_next($editor);
+		return !! $search->search_next($editor);
 	}
 
 	# Multiple lines are also done the obvious way
@@ -3358,7 +3358,7 @@ sub search_next {
 	my $line2 = $editor->LineFromPosition($position2);
 	unless ( $line1 == $line2 ) {
 		return unless $search;
-		return $self->search_next($editor);
+		return !! $self->search_next($editor);
 	}
 
 	# Case-specific search for the current selection
@@ -3371,14 +3371,7 @@ sub search_next {
 			$position1, $position2,
 		),
 	);
-	$search->search_next($editor);
-
-	# If we can't find another match, show a message
-	if ( ( $editor->GetSelection )[0] == $position1 ) {
-		$self->message( Wx::gettext('Failed to find any matches') );
-	}
-
-	return 1;
+	return !! $search->search_next($editor);
 }
 
 =pod
@@ -3406,7 +3399,7 @@ sub search_previous {
 	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$search = $self->{search} = shift;
-		return $search->search_previous($editor);
+		return !! $search->search_previous($editor);
 	} elsif ( @_ ) {
 		die 'Invalid argument to search_previous';
 	}
@@ -3415,7 +3408,7 @@ sub search_previous {
 	my ( $position1, $position2 ) = $editor->GetSelection;
 	if ( $position1 == $position2 ) {
 		return unless $search;
-		return $search->search_previous($editor);
+		return !! $search->search_previous($editor);
 	}
 
 	# Multiple lines are also done the obvious way
@@ -3423,7 +3416,7 @@ sub search_previous {
 	my $line2 = $editor->LineFromPosition($position2);
 	unless ( $line1 == $line2 ) {
 		return unless $search;
-		return $self->search_previous($editor);
+		return !! $self->search_previous($editor);
 	}
 
 	# Case-specific search for the current selection
@@ -3436,14 +3429,7 @@ sub search_previous {
 			$position1, $position2,
 		),
 	);
-	$search->search_previous($editor);
-
-	# If we can't find another match, show a message
-	if ( ( $editor->GetSelection )[0] == $position1 ) {
-		$self->message( Wx::gettext('Failed to find any matches') );
-	}
-
-	return 1;
+	return !! $search->search_previous($editor);
 }
 
 =pod

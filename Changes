@@ -41,6 +41,10 @@ next production release, and synchronise their release to the Padre schedule.
       ported away from it to wxFormBuilder (ADAMK)
     - Fix #1099: Ctrl-Shift-T to get the last closed tab (ZENOG, AZAWAWI)
     - Scintilla word characters are now set up per document type (ADAMK)
+    - Removed the regex option in fast find as it doesn't make much sense to
+      incrementally fast type a regexp (ADAMK)
+    - Searches done in fast find are now remembered by Padre so they can be
+      repeated by F3 with no find dialogs open (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

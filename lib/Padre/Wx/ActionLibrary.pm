@@ -1178,17 +1178,15 @@ sub init {
 					$main->findfast->_create_panel;
 					$main->findfast->_show_panel;
 				}
+
+				# Do they have a specific search term in mind?
+				my $text = $main->current->text;
+				$text = '' if $text =~ /\n/;
+
+				# Clear out and reset the search term box
+				$main->findfast->{entry}->ChangeValue($text);
+				$main->findfast->search('next');
 			}
-
-			my $current = $main->current;
-
-			# Do they have a specific search term in mind?
-			my $text = $current->text;
-			$text = '' if $text =~ /\n/;
-
-			# Clear out and reset the search term box
-			$main->findfast->{entry}->ChangeValue($text) if length $text;
-			$main->findfast->search('next');
 
 			return;
 		},
@@ -1201,7 +1199,12 @@ sub init {
 		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
-			$_[0]->search_next;
+			my $found = $_[0]->search_next;
+
+			# If we can't find another match, show a message
+			if ( defined $found and not $found ) {
+				$_[0]->message( Wx::gettext('Failed to find any matches') );
+			}
 		},
 	);
 
@@ -1212,7 +1215,12 @@ sub init {
 		comment     => _T('Repeat the last find, but backwards to find the previous match'),
 		shortcut    => 'Shift-F3',
 		menu_event  => sub {
-			$_[0]->search_previous;
+			my $found = $_[0]->search_previous;
+
+			# If we can't find another match, show a message
+			if ( defined $found and not $found ) {
+				$_[0]->message( Wx::gettext('Failed to find any matches') );
+			}
 		},
 	);
 

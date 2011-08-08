@@ -259,8 +259,6 @@ sub run {
 	# All shutdown procedures complete.
 	# Do some final cleaning up.
 	$self->{wx} = undef;
-
-	return;
 }
 
 # Save the YAML configuration file
