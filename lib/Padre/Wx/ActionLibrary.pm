@@ -1156,45 +1156,48 @@ sub init {
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
-			my $main  = shift;
-			my $event = shift;
+			my $main     = shift;
+			my $findfast = $main->findfast;
 
-			if ( $main->findfast->visible ) {
-				require Padre::Wx::Dialog::Find;
-				my $dialog_find = Padre::Wx::Dialog::Find->new($main);
-				$dialog_find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
-				$dialog_find->find_term->SetValue( $main->findfast->{entry}->GetValue );
-				$main->findfast->_hide_panel;
-				$dialog_find->run;
-				my $term = $dialog_find->find_term->GetValue;
-				$dialog_find->Destroy;
-				return unless $dialog_find->{cycle_ctrl_f};
-
-				# Ctrl-F in find dialog: Show find in files
-				require Padre::Wx::Dialog::FindInFiles;
-				my $dialog_fif = Padre::Wx::Dialog::FindInFiles->new($main);
-				$dialog_fif->find_term->SetValue($term);
-				$dialog_fif->run;
-				$dialog_fif->Destroy;
-				return unless $dialog_fif->{cycle_ctrl_f};
-			} else {
-				if ( $main->findfast->{panel} ) {
-					$main->findfast->_show_panel;
-				} else {
-					$main->findfast->_create_panel;
-					$main->findfast->_show_panel;
+			# Ctrl-F first press, show fast find
+			unless ( $findfast->visible ) {
+				unless ( $findfast->{panel} ) {
+					$findfast->_create_panel;
 				}
+				$findfast->_show_panel;
 
 				# Do they have a specific search term in mind?
 				my $text = $main->current->text;
 				$text = '' if $text =~ /\n/;
 
 				# Clear out and reset the search term box
-				$main->findfast->{entry}->ChangeValue($text);
-				$main->findfast->search('next');
+				$findfast->{entry}->ChangeValue($text);
+				$findfast->{entry}->SelectAll;
+				if ( length $text ) {
+					$findfast->search('next');
+				}
+				return;
 			}
 
-			return;
+			# Ctrl-F second press, show full find dialog
+			require Padre::Wx::Dialog::Find;
+			my $find = Padre::Wx::Dialog::Find->new($main);
+			$find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
+			$find->find_term->SetValue( $main->findfast->{entry}->GetValue );
+			$main->findfast->_hide_panel;
+			$find->run;
+			my $term = $find->find_term->GetValue;
+			$find->Destroy;
+			return unless $find->{cycle_ctrl_f};
+
+			# Ctrl-F this press, show find in files dialog
+			require Padre::Wx::Dialog::FindInFiles;
+			my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
+			findinfiles->find_term->SetValue($term);
+			findinfiles->run;
+			findinfiles->Destroy;
+
+			return
 		},
 	);
 
