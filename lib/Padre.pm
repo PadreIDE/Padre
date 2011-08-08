@@ -16,6 +16,7 @@ use File::HomeDir ();
 use List::Util    ();
 use Scalar::Util  ();
 use YAML::Tiny    ();
+use Class::Unload ();
 use DBI           ();
 use DBD::SQLite   ();
 
@@ -232,12 +233,13 @@ sub run {
 	#       that are throw silent exceptions.
 	# local $SIG{__DIE__} = sub { print @_; die $_[0] };
 
-	TRACE("Kill the splash screen") if DEBUG;
+	TRACE("Killing the splash screen") if DEBUG;
 	if ($Padre::Startup::VERSION) {
 		Padre::Startup->destroy_splash;
+		Class::Unload->unload('Padre::Startup');
 	}
 
-	TRACE("Process the action queue") if DEBUG;
+	TRACE("Processing the action queue") if DEBUG;
 	if ( defined $self->opts->{actionqueue} ) {
 		foreach my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
 			next if $action eq ''; # Skip empty action names
@@ -251,7 +253,7 @@ sub run {
 		}
 	}
 
-	TRACE("Switch into runtime mode") if DEBUG;
+	TRACE("Switching into runtime mode") if DEBUG;
 	$self->wx->MainLoop;
 
 	# All shutdown procedures complete.
