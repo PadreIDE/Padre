@@ -32,7 +32,7 @@ use strict;
 use warnings;
 use threads;
 use threads::shared;
-use Wx ();
+use Wx                     ();
 use Padre::Wx::Frame::Null ();
 
 our $VERSION = '0.89';

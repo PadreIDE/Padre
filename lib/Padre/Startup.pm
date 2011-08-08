@@ -53,7 +53,6 @@ sub startup {
 		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
 		threads                  => 1,
-		feature_masterthread     => 0,
 		startup_splash           => 0,
 	);
 
@@ -104,13 +103,15 @@ sub startup {
 		require threads::shared;
 		require Wx;
 
-		# Second-generation version of the threading optimisation.
-		# This one is much safer because we start with zero existing
-		# tasks and no expectation of existing load behaviour.
-		if ( $setting{feature_masterthread} ) {
-			require Padre::TaskThread;
-			Padre::TaskThread->master;
-		}
+		# Second-generation version of the threading optimisation, with
+		# worker threads spawned of a single initial early spawned
+		# "slave master" thread. This dramatically reduces the overhead
+		# of spawning a thread, because it doesn't need to copy all the
+		# stuff in the parent thread.
+		require Padre::Wx::App;
+		require Padre::TaskThread;
+		Padre::Wx::App->new;
+		Padre::TaskThread->master;
 	}
 
 	# Show the splash image now we are starting a new instance

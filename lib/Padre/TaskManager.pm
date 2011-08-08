@@ -72,13 +72,6 @@ use constant {
 	MAX_IDLE_TIMEOUT  => 30,
 };
 
-# HACK: Temporary flag to control whether or not we are spawning from
-#       the task master or whether we are spawning directly from the parent.
-#       Leave this turned off, Adam is using it to temporarily enable it
-#       while he is debugging it. Once fixed, it will stay on permanently
-#       and this flag will go away.
-use constant MASTERTHREAD => Padre::Current->config->feature_masterthread;
-
 
 
 
@@ -379,7 +372,7 @@ sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-	if ( MASTERTHREAD ) {
+	if ( 1 ) {
 
 		# Our startup sequence MUST have already started the master.
 		unless ( Padre::TaskThread->master_running ) {

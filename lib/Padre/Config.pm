@@ -1315,15 +1315,6 @@ setting(
 	default => 0,
 );
 
-# Enable experimental slave mastered threading.
-setting(
-	name    => 'feature_masterthread',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-	startup => 1,
-);
-
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
