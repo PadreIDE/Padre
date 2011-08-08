@@ -222,6 +222,12 @@ sub start {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	if ( $self->{threads} ) {
+		# Start the master if it wasn't pre-launched for some reason
+		unless ( Padre::TaskThread->master_running ) {
+			Padre::TaskThread->master;
+		}
+
+		# Start the workers
 		foreach ( 0 .. $self->{minimum} - 1 ) {
 			$self->start_worker;
 		}
@@ -371,46 +377,17 @@ B<Padre::TaskManager>.
 sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-
-	if ( 1 ) {
-
-		# Our startup sequence MUST have already started the master.
-		unless ( Padre::TaskThread->master_running ) {
-			die "Master thread is unexpectedly not running";
-		}
-
-		# Start the worker via the master.
-		my $worker = Padre::TaskWorker->new;
-		Padre::TaskThread->master->send(
-			start_child => $worker,
-		);
-		push @{ $self->{workers} }, $worker;
-		return $worker;
-
-	} else {
-
-		# Create the worker as normal
-		my $worker = Padre::TaskWorker->new;
-
-		# DBI goes nasty if you have a connection open at the moment
-		# the thread is spawned, which we can have if we are in the
-		# middle of a "DB" lock.
-		# To correct this, we need to anti-lock the database and
-		# get rid of the connection temporarily while the spawn is
-		# being done, then restore the database connection afterwards.
-		if ( $Padre::DB::VERSION and Padre::DB->connected ) {
-			Padre::DB->commit;
-			$worker->spawn;
-			Padre::DB->begin;
-			Padre::DB->pragma( 'synchronous' => 0 );
-		} else {
-			$worker->spawn;
-		}
-
-		# Continue as normal
-		push @{ $self->{workers} }, $worker;
-		return $worker;
+	unless ( Padre::TaskThread->master_running ) {
+		die "Master thread is unexpectedly not running";
 	}
+
+	# Start the worker via the master.
+	my $worker = Padre::TaskWorker->new;
+	Padre::TaskThread->master->send(
+		start_child => $worker,
+	);
+	push @{ $self->{workers} }, $worker;
+	return $worker;
 }
 
 =pod

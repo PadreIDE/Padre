@@ -16,7 +16,7 @@ BEGIN {
 		exit 0;
 	}
 
-	plan tests => 17;
+	plan tests => 16;
 }
 
 use Padre::Logger;
@@ -51,7 +51,7 @@ SCOPE: {
 	# Run the startup process
 	ok( $manager->start, '->start ok' );
 	Time::HiRes::sleep(0.1);
-	is( scalar( threads->list ), 0, 'Three threads exists' );
+	is( scalar( threads->list ), 1, 'The master threads exists' );
 
 	# Create the sample task
 	my $addition = Padre::Task::Addition->new(
@@ -73,7 +73,3 @@ SCOPE: {
 	Time::HiRes::sleep(0.1);
 	is( scalar( threads->list ), 0, 'No threads' );
 }
-
-# Do we start with no threads as expected
-is( scalar( threads->list ), 0, 'No threads' );
-
