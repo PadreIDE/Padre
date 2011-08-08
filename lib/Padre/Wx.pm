@@ -40,7 +40,7 @@ sub import {
 	# Scan for all of the Wx::wxFOO AUTOLOAD functions and
 	# check that we can create Wx::FOO constants.
 	my %constants = ();
-	foreach my $function ( sort grep { s/^wx(?=[A-Z])// } keys %Wx:: ) {
+	foreach my $function ( sort map { /^wx([A-Z].+)$/ ? $1 : () } keys %Wx:: ) {
 		next if $function eq 'VERSION';
 		next if $function =~ /^Log[A-Z]/;
 		if ( exists $Wx::{$function} ) {
@@ -59,7 +59,7 @@ sub import {
 
 	# Convert to proper constants
 	SCOPE: {
-		package Wx;
+		package Wx; ## no critic
 		constant::->import(\%constants);
 	}
 
