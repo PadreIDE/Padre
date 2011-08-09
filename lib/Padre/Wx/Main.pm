@@ -291,7 +291,22 @@ sub new {
 	);
 
 	# Scintilla Event Hooks
-	Wx::Event::EVT_STC_UPDATEUI( $self, -1, \&on_stc_update_ui );
+        # We delay per-stc-update processing until idle.
+        # This is primarily due to a defect http://trac.wxwidgets.org/ticket/4272:
+        # No status bar updates during STC_PAINTED, which we appear to hit on UPDATEUI.
+	Wx::Event::EVT_STC_UPDATEUI( 
+                $self, -1, sub { 
+                  shift->{_do_update_ui} = 1;
+                } );
+        Wx::Event::EVT_IDLE(
+                $self, sub { 
+                  my $self = shift;
+                  if($self->{_do_update_ui}) {
+                    $self->{_do_update_ui} = undef;
+                    $self->on_stc_update_ui();
+                  }
+                });
+
 	Wx::Event::EVT_STC_CHANGE( $self, -1, \&on_stc_change );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
 	Wx::Event::EVT_STC_CHARADDED( $self, -1, \&on_stc_char_added );
