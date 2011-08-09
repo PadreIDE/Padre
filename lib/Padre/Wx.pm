@@ -59,7 +59,8 @@ sub import {
 
 	# Convert to proper constants
 	SCOPE: {
-		package Wx; ## no critic
+		package ## no critic
+		Wx; 
 		constant::->import(\%constants);
 	}
 
