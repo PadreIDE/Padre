@@ -259,12 +259,12 @@ sub init {
 
 	# Opens the last closed file tab like Chrome and Firefox
 	Padre::Wx::Action->new(
-		name       => 'file.open_last_closed_file_tab',
-		label      => _T('Open Last Closed File Tab'),
+		name       => 'file.open_last_closed_file',
+		label      => _T('Open Last Closed File'),
 		shortcut   => 'Ctrl-Shift-T',
-		comment    => _T('Opens the last closed file tab'),
+		comment    => _T('Opens the last closed file'),
 		menu_event => sub {
-			$_[0]->on_open_last_closed_file_tab;
+			$_[0]->on_open_last_closed_file;
 		},
 	);
 

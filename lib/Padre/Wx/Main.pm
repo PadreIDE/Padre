@@ -4393,15 +4393,15 @@ sub on_open_example {
 
 =pod
 
-=head3 C<on_open_last_closed_file_tab>
+=head3 C<on_open_last_closed_file>
 
-    $main->on_open_last_closed_file_tab;
+    $main->on_open_last_closed_file;
 
-Opens the last closed file tab in similar fashion to Chrome and Firefox.
+Opens the last closed file in similar fashion to Chrome and Firefox.
 
 =cut
 
-sub on_open_last_closed_file_tab {
+sub on_open_last_closed_file {
 	my $self = shift;
 
 	my $last_closed_file = $self->{_last_closed_file} or return;

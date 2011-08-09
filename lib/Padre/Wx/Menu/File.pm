@@ -118,9 +118,9 @@ sub new {
 		'file.open_example',
 	);
 
-	$self->{open_last_closed_file_tab} = $self->add_menu_action(
+	$self->{open_last_closed_file} = $self->add_menu_action(
 		$file_open,
-		'file.open_last_closed_file_tab',
+		'file.open_last_closed_file',
 	);
 
 	$self->{close} = $self->add_menu_action(
@@ -356,7 +356,7 @@ sub refill_recent {
 	foreach my $i ( 1 .. 9 ) {
 		my $file = $files->[ $i - 1 ] or last;
 
-		# Store last closed file for the "Open Last Closed File" feature
+		# Store last closed file for the 'Open Last Closed File' feature
 		unless ($last_closed_file_found) {
 			$self->{main}->{_last_closed_file} = $file;
 			$last_closed_file_found = 1;
@@ -369,6 +369,9 @@ sub refill_recent {
 			},
 		);
 	}
+
+	# Enable/disable 'Open Last Closed File' menu item
+	$self->{open_last_closed_file}->Enable($last_closed_file_found ? 1 : 0);
 
 	return;
 }
