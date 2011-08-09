@@ -22,10 +22,7 @@ sub run {
 
 	# Pull the text off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
-	my $text = delete $self->{text};
-
-	# Get the function list
-	my @functions = $self->find($text);
+	my @functions = $self->find( delete $self->{text} );
 
 	# Sort it appropriately
 	my $order = $self->{order} || '';
