@@ -111,14 +111,7 @@ sub new {
 	);
 
 	my $config = $main->config;
-	if ( !$config->can('feature_folding') ) {
-		warn "Bug #1268 appeared, please report to the developers at http://padre.perlide.org/trac/ticket/1268\n"
-			. "Bug report info: config is "
-			. $config
-			. ", run time "
-			. ( time - $^T )
-			. " seconds\n";
-	} elsif (
+	if (
 		Padre::Feature::FOLDING
 		and
 		$event->isa('Wx::MouseEvent')
@@ -136,23 +129,27 @@ sub new {
 				$self,
 				'view.fold_all',
 			);
+
 			$self->{unfold_all} = $self->add_menu_action(
 				$self,
 				'view.unfold_all',
 			);
 
-			$self->AppendSeparator;
 		}
 	}
 
-	my $doc = $editor->{Document};
-	if ($doc) {
-		if ( $doc->can('event_on_right_down') ) {
-			$doc->event_on_right_down( $editor, $self, $event );
+	my $document = $editor->{Document};
+	if ( $document ) {
+		$self->AppendSeparator;
+
+		if ( $document->can('event_on_right_down') ) {
+			$document->event_on_right_down( $editor, $self, $event );
 		}
 
 		# Let the plugins have a go
-		$editor->main->ide->plugin_manager->on_context_menu( $doc, $editor, $self, $event );
+		$editor->main->ide->plugin_manager->on_context_menu(
+			$document, $editor, $self, $event,
+		);
 	}
 
 	return $self;

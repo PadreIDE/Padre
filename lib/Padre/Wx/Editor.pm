@@ -1735,37 +1735,39 @@ sub needs_manual_colorize {
 ######################################################################
 # Cursor Memory
 
-#
-# $doc->store_cursor_position()
-#
-# store document's current cursor position in padre's db.
-# no params, no return value.
-#
-sub store_cursor_position {
-	my $self     = shift;
-	my $document = $self->{Document} or return;
-	my $file     = $document->{file} or return;
-	Padre::DB::LastPositionInFile->set_last_pos(
-		$file->filename,
-		$self->GetCurrentPos,
-	);
-}
+BEGIN {
+	#
+	# $doc->store_cursor_position()
+	#
+	# store document's current cursor position in padre's db.
+	# no params, no return value.
+	#
+	*store_cursor_position = sub {
+		my $self     = shift;
+		my $document = $self->{Document} or return;
+		my $file     = $document->{file} or return;
+		Padre::DB::LastPositionInFile->set_last_pos(
+			$file->filename,
+			$self->GetCurrentPos,
+		);
+	} if Padre::Feature::CURSORMEMORY;
 
-#
-# $doc->restore_cursor_position()
-#
-# restore document's cursor position from padre's db.
-# no params, no return value.
-#
-sub restore_cursor_position {
-	my $self     = shift;
-	my $document = $self->{Document} or return;
-	my $file     = $document->{file} or return;
-	my $filename = $file->filename;
-	my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
-	return unless defined $position;
-	$self->SetCurrentPos($position);
-	$self->SetSelection( $position, $position );
+	#
+	# $doc->restore_cursor_position()
+	#
+	# restore document's cursor position from padre's db.
+	# no params, no return value.
+	#
+	*restore_cursor_position = sub {
+		my $self     = shift;
+		my $document = $self->{Document} or return;
+		my $file     = $document->{file} or return;
+		my $filename = $file->filename;
+		my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
+		return unless defined $position;
+		$self->SetCurrentPos($position);
+		$self->SetSelection( $position, $position );
+	} if Padre::Feature::CURSORMEMORY;
 }
 
 1;

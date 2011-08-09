@@ -138,16 +138,6 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'file.duplicate',
-		need_editor => 1,
-		label       => _T('Duplicate'),
-		comment     => _T('Copy the current tab into a new document'),
-		menu_event  => sub {
-			$_[0]->on_duplicate;
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name       => 'file.new_p5_script',
 		label      => _T('Perl 5 Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
@@ -366,6 +356,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'file.duplicate',
+		need_editor => 1,
+		label       => _T('Duplicate'),
+		comment     => _T('Copy the current tab into a new document'),
+		menu_event  => sub {
+			$_[0]->on_duplicate;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name        => 'file.delete',
 		need_editor => 1,
 		label       => _T('&Delete'),
@@ -470,27 +470,29 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name       => 'file.open_session',
-		label      => _T('Open Session...'),
-		comment    => _T('Select a session. Close all the files currently open and open all the listed in the session'),
-		shortcut   => 'Ctrl-Alt-O',
-		menu_event => sub {
-			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
-		},
-	);
+	if ( Padre::Feature::SESSION ) {
+		Padre::Wx::Action->new(
+			name       => 'file.open_session',
+			label      => _T('Open Session...'),
+			comment    => _T('Select a session. Close all the files currently open and open all the listed in the session'),
+			shortcut   => 'Ctrl-Alt-O',
+			menu_event => sub {
+				require Padre::Wx::Dialog::SessionManager;
+				Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name       => 'file.save_session',
-		label      => _T('Save Session...'),
-		comment    => _T('Ask for a session name and save the list of files currently opened'),
-		shortcut   => 'Ctrl-Alt-S',
-		menu_event => sub {
-			require Padre::Wx::Dialog::SessionSave;
-			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
-		},
-	);
+		Padre::Wx::Action->new(
+			name       => 'file.save_session',
+			label      => _T('Save Session...'),
+			comment    => _T('Ask for a session name and save the list of files currently opened'),
+			shortcut   => 'Ctrl-Alt-S',
+			menu_event => sub {
+				require Padre::Wx::Dialog::SessionSave;
+				Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
+			},
+		);
+	}
 
 	# Print files
 
@@ -1292,19 +1294,21 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name       => 'search.replace_in_files',
-		label      => _T('Re&place in Files...'),
-		comment    => _T('Search and replace text in all files below a given directory'),
-		shortcut   => 'Ctrl-Alt-R',
-		menu_event => sub {
-			require Padre::Wx::Dialog::ReplaceInFiles;
-			my $dialog = Padre::Wx::Dialog::ReplaceInFiles->new( $_[0] );
-			$dialog->run;
-			$dialog->Destroy;
-			return;
-		},
-	);
+	if ( Padre::Feature::REPLACEINFILES ) {
+		Padre::Wx::Action->new(
+			name       => 'search.replace_in_files',
+			label      => _T('Re&place in Files...'),
+			comment    => _T('Search and replace text in all files below a given directory'),
+			shortcut   => 'Ctrl-Alt-R',
+			menu_event => sub {
+				require Padre::Wx::Dialog::ReplaceInFiles;
+				my $dialog = Padre::Wx::Dialog::ReplaceInFiles->new( $_[0] );
+				$dialog->run;
+				$dialog->Destroy;
+				return;
+			},
+		);
+	}
 
 	# Special Search
 
@@ -1320,27 +1324,29 @@ sub init {
 
 	# Bookmark Support
 
-	Padre::Wx::Action->new(
-		name       => 'search.bookmark_set',
-		label      => _T('Set Bookmark'),
-		comment    => _T('Create a bookmark in the current file current row'),
-		shortcut   => 'Ctrl-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_set( $_[0] );
-		},
-	);
+	if ( Padre::Feature::BOOKMARK ) {
+		Padre::Wx::Action->new(
+			name       => 'search.bookmark_set',
+			label      => _T('Set Bookmark'),
+			comment    => _T('Create a bookmark in the current file current row'),
+			shortcut   => 'Ctrl-B',
+			menu_event => sub {
+				require Padre::Wx::Dialog::Bookmarks;
+				Padre::Wx::Dialog::Bookmarks->run_set( $_[0] );
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name       => 'search.bookmark_goto',
-		label      => _T('Go to Bookmark'),
-		comment    => _T('Select a bookmark created earlier and jump to that position'),
-		shortcut   => 'Ctrl-Shift-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->run_goto( $_[0] );
-		},
-	);
+		Padre::Wx::Action->new(
+			name       => 'search.bookmark_goto',
+			label      => _T('Go to Bookmark'),
+			comment    => _T('Select a bookmark created earlier and jump to that position'),
+			shortcut   => 'Ctrl-Shift-B',
+			menu_event => sub {
+				require Padre::Wx::Dialog::Bookmarks;
+				Padre::Wx::Dialog::Bookmarks->run_goto( $_[0] );
+			},
+		);
+	}
 
 	# Special Search Types
 
@@ -1509,45 +1515,47 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name        => 'view.folding',
-		label       => _T('Show Code Folding'),
-		comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
-		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
-			$_[0]->editor_folding( $_[1]->IsChecked );
-		},
-	);
+	if ( Padre::Feature::FOLDING ) {
+		Padre::Wx::Action->new(
+			name        => 'view.folding',
+			label       => _T('Show Code Folding'),
+			comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+			menu_method => 'AppendCheckItem',
+			menu_event  => sub {
+				$_[0]->editor_folding( $_[1]->IsChecked );
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name        => 'view.fold_all',
-		label       => _T('Fold All'),
-		comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
-		need_editor => 1,
-		menu_event  => sub {
-			$_[0]->current->editor->fold_all;
-		},
-	);
+		Padre::Wx::Action->new(
+			name        => 'view.fold_all',
+			label       => _T('Fold All'),
+			comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
+			need_editor => 1,
+			menu_event  => sub {
+				$_[0]->current->editor->fold_all;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name        => 'view.unfold_all',
-		label       => _T('Unfold All'),
-		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
-		need_editor => 1,
-		menu_event  => sub {
-			$_[0]->current->editor->unfold_all;
-		},
-	);
+		Padre::Wx::Action->new(
+			name        => 'view.unfold_all',
+			label       => _T('Unfold All'),
+			comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
+			need_editor => 1,
+			menu_event  => sub {
+				$_[0]->current->editor->unfold_all;
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name        => 'view.fold_this',
-		label       => _T('Fold/Unfold Current'),
-		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
-		need_editor => 1,
-		menu_event  => sub {
-			$_[0]->current->editor->fold_this;
-		},
-	);
+		Padre::Wx::Action->new(
+			name        => 'view.fold_this',
+			label       => _T('Fold/Unfold Current'),
+			comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
+			need_editor => 1,
+			menu_event  => sub {
+				$_[0]->current->editor->fold_this;
+			},
+		);
+	}
 
 	Padre::Wx::Action->new(
 		name        => 'view.calltips',
@@ -1627,36 +1635,38 @@ sub init {
 
 	# Font Size
 
-	Padre::Wx::Action->new(
-		name       => 'view.font_increase',
-		label      => _T('Increase Font Size'),
-		comment    => _T('Make the letters bigger in the editor window'),
-		shortcut   => 'Ctrl-+',
-		menu_event => sub {
-			$_[0]->zoom(+1);
-		},
-	);
+	if ( Padre::Feature::FONTSIZE ) {
+		Padre::Wx::Action->new(
+			name       => 'view.font_increase',
+			label      => _T('Increase Font Size'),
+			comment    => _T('Make the letters bigger in the editor window'),
+			shortcut   => 'Ctrl-+',
+			menu_event => sub {
+				$_[0]->zoom(+1);
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name       => 'view.font_decrease',
-		label      => _T('Decrease Font Size'),
-		comment    => _T('Make the letters smaller in the editor window'),
-		shortcut   => 'Ctrl--',
-		menu_event => sub {
-			$_[0]->zoom(-1);
-		},
-	);
+		Padre::Wx::Action->new(
+			name       => 'view.font_decrease',
+			label      => _T('Decrease Font Size'),
+			comment    => _T('Make the letters smaller in the editor window'),
+			shortcut   => 'Ctrl--',
+			menu_event => sub {
+				$_[0]->zoom(-1);
+			},
+		);
 
-	Padre::Wx::Action->new(
-		name       => 'view.font_reset',
-		label      => _T('Reset Font Size'),
-		comment    => _T('Reset the size of the letters to the default in the editor window'),
-		shortcut   => 'Ctrl-0',
-		menu_event => sub {
-			my $editor = $_[0]->current->editor or return;
-			$_[0]->zoom( -1 * $editor->GetZoom );
-		},
-	);
+		Padre::Wx::Action->new(
+			name       => 'view.font_reset',
+			label      => _T('Reset Font Size'),
+			comment    => _T('Reset the size of the letters to the default in the editor window'),
+			shortcut   => 'Ctrl-0',
+			menu_event => sub {
+				my $editor = $_[0]->current->editor or return;
+				$_[0]->zoom( -1 * $editor->GetZoom );
+			},
+		);
+	}
 
 	# Style Actions
 
@@ -2286,15 +2296,17 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name       => 'tools.sync',
-		label      => _T('Preferences Sync'),
-		comment    => _T('Share your preferences between multiple computers'),
-		menu_event => sub {
-			require Padre::Wx::Dialog::Sync;
-			Padre::Wx::Dialog::Sync->new( $_[0] )->ShowModal;
-		},
-	);
+	if ( Padre::Feature::SYNC ) {
+		Padre::Wx::Action->new(
+			name       => 'tools.sync',
+			label      => _T('Preferences Sync'),
+			comment    => _T('Share your preferences between multiple computers'),
+			menu_event => sub {
+				require Padre::Wx::Dialog::Sync;
+				Padre::Wx::Dialog::Sync->new( $_[0] )->ShowModal;
+			},
+		);
+	}
 
 	Padre::Wx::Action->new(
 		name       => 'tools.keys',
