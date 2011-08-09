@@ -39,7 +39,6 @@ use Params::Util              ();
 use Time::HiRes               ();
 use Padre::Wx::Action         ();
 use Padre::Wx::ActionLibrary  ();
-use Padre::Wx::WizardLibrary  ();
 use Padre::Constant           ();
 use Padre::Util               ('_T');
 use Padre::Perl               ();
@@ -201,7 +200,10 @@ sub new {
 	Padre::Wx::ActionLibrary->init($self);
 
 	# Bootstrap the wizard system
-	Padre::Wx::WizardLibrary->init($self);
+	if ( Padre::Feature::WIZARD_SELECTOR ) {
+		require Padre::Wx::WizardLibrary;
+		Padre::Wx::WizardLibrary->init($self);
+	}
 
 	# Temporary store for the notebook tab history
 	# TO DO: Storing this here (might) violate encapsulation.
@@ -311,8 +313,10 @@ sub new {
 
 	# This require is only here so it can follow this constructor
 	# when it moves to being created on demand.
-	require Padre::Wx::Debugger;
-	$self->{debugger} = Padre::Wx::Debugger->new;
+	if ( Padre::Feature::DEBUGGER ) {
+		require Padre::Wx::Debugger;
+		$self->{debugger} = Padre::Wx::Debugger->new;
+	}
 
 	# We need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did
@@ -514,12 +518,6 @@ Accessors to operating data:
 
 Accessors that may not belong to this class:
 
-=over 4
-
-=item * C<ack>
-
-=back
-
 =cut
 
 use Class::XSAccessor {
@@ -532,7 +530,6 @@ use Class::XSAccessor {
 		has_bottom         => 'bottom',
 		has_output         => 'output',
 		has_command_line   => 'command_line',
-		has_ack            => 'ack',
 		has_syntax         => 'syntax',
 		has_functions      => 'functions',
 		has_todo           => 'todo',
@@ -685,13 +682,15 @@ sub syntax {
 	return $self->{syntax};
 }
 
-sub debugger {
-	my $self = shift;
-	unless ( defined $self->{debug} ) {
-		require Padre::Wx::Debug;
-		$self->{debug} = Padre::Wx::Debug->new($self);
-	}
-	return $self->{debug};
+BEGIN {
+	*debugger = sub {
+		my $self = shift;
+		unless ( defined $self->{debug} ) {
+			require Padre::Wx::Debug;
+			$self->{debug} = Padre::Wx::Debug->new($self);
+		}
+		return $self->{debug};
+	} if Padre::Feature::DEBUGGER;
 }
 
 sub outline {
@@ -2027,53 +2026,6 @@ sub relocale {
 
 =pod
 
-=head3 C<reconfig>
-
-    $main->reconfig( $config );
-
-The term and method C<reconfig> is reserved for functionality intended to
-run when Padre's underlying configuration is updated by an external
-actor at run-time. The primary use cases for this method are when the
-user configuration file is synced from a remote network location.
-
-Note: This method is highly experimental and subject to change.
-
-=cut
-
-sub reconfig {
-	my $self   = shift;
-	my $config = shift;
-
-	# Do everything inside a freeze
-	my $lock = $self->lock('UPDATE');
-
-	# The biggest potential change is that the user may have a
-	# different forced locale.
-	# TO DO - This could get subtle (we have to not only know
-	# what the current locale is, but also if it was derived from
-	# the system default or not)
-
-	# Rebuild the toolbar if the lockinterface status has changed
-	# TO DO - Implement this
-
-	# Show or hide all the main gui elements
-	# TO DO - Move this into the config ->apply logic
-	$self->show_functions( $config->main_functions );
-	$self->show_todo( $config->main_todo );
-	$self->show_outline( $config->main_outline );
-	$self->show_directory( $config->main_directory );
-	$self->show_output( $config->main_output );
-	$self->show_command_line( $config->main_command_line );
-	$self->show_syntaxcheck( $config->main_syntaxcheck );
-
-	# Finally refresh the menu to clean it up
-	$self->menu->refresh;
-
-	return 1;
-}
-
-=pod
-
 =head3 C<rebuild_toolbar>
 
     $main->rebuild_toolbar;
@@ -2236,26 +2188,28 @@ sub _show_outline {
 
 =cut
 
-sub show_debug {
-	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
-	$self->_show_debug($on);
-	$self->aui->Update;
-	return;
-}
+BEGIN {
+	*show_debug = sub {
+		my $self = shift;
+		my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+		my $lock = $self->lock('UPDATE');
+		$self->_show_debug($on);
+		$self->aui->Update;
+		return;
+	} if Padre::Feature::DEBUGGER;
 
-sub _show_debug {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		my $debugger = $self->debugger;
-		$self->right->show($debugger);
-	} elsif ( $self->has_debugger ) {
-		my $debugger = $self->debugger;
-		$self->right->hide($debugger);
-	}
-	return 1;
+	*_show_debug = sub {
+		my $self = shift;
+		my $lock = $self->lock('UPDATE');
+		if ( $_[0] ) {
+			my $debugger = $self->debugger;
+			$self->right->show($debugger);
+		} elsif ( $self->has_debugger ) {
+			my $debugger = $self->debugger;
+			$self->right->hide($debugger);
+		}
+		return 1;
+	} if Padre::Feature::DEBUGGER;
 }
 
 =pod
@@ -3674,8 +3628,10 @@ sub on_close_window {
 
 	# Terminate any currently running debugger session before we start
 	# to do anything significant.
-	if ( $self->{debugger} ) {
-		$self->{debugger}->quit;
+	if ( Padre::Feature::DEBUGGER ) {
+		if ( $self->{debugger} ) {
+			$self->{debugger}->quit;
+		}
 	}
 
 	# Wrap one big database transaction around this entire shutdown process.

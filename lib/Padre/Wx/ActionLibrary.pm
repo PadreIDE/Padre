@@ -79,9 +79,8 @@ sub init_language_actions {
 }
 
 sub init {
-	my $class  = shift;
-	my $main   = shift;
-	my $config = $main->config;
+	my $class = shift;
+	my $main  = shift;
 
 	# Script Execution
 

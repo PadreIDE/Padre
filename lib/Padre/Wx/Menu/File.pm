@@ -67,6 +67,7 @@ sub new {
 
 	if ( Padre::Feature::WIZARD_SELECTOR ) {
 		$file_new->AppendSeparator;
+
 		$self->add_menu_action(
 			$file_new,
 			'file.wizard_selector',
