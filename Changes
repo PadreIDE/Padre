@@ -47,6 +47,9 @@ next production release, and synchronise their release to the Padre schedule.
       repeated by F3 with no find dialogs open (ADAMK)
     - Stop Mac OSX crashes on save due to tailing pipe in FileDialog (TOME)
     - Highlight Perl keywords using Scintilla (AZAWAWI)
+    - Optional feature configuration settings are now compiled into the new
+      dedicated namespace Padre::Feature so feature code can be compiled out
+      entirely rather than just being skipped (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

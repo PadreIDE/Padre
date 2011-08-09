@@ -535,8 +535,8 @@ setting(
 		# TO DO: Review this assumption
 
 		# (Ticket #668)
-
-		if ($Padre::Wx::ToolBar::DOCKABLE) {
+		no warnings;
+		if ( $Padre::Wx::ToolBar::DOCKABLE ) {
 			$main->rebuild_toolbar;
 		}
 
