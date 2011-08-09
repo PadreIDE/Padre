@@ -62,6 +62,7 @@ sub run {
 
 	} elsif ( $order eq 'alphabetical_private_last' ) {
 
+		# As above, but with private functions last
 		my @expected = ();
 		my @unknown  = ();
 		foreach my $function ( @functions ) {
