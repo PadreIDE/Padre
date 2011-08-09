@@ -50,6 +50,9 @@ next production release, and synchronise their release to the Padre schedule.
     - Optional feature configuration settings are now compiled into the new
       dedicated namespace Padre::Feature so feature code can be compiled out
       entirely rather than just being skipped (ADAMK)
+    - The Function List now recognises *function = sub { } in Perl code (ADAMK)
+    - The Function List will interleave private methods with public ones
+      when set to "Alphaetical" sort (ADAMK)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.84 release cycle

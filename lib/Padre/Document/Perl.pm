@@ -300,7 +300,9 @@ sub stc_word_chars {
 # triggering a "Variable length lookbehind not implemented" error.
 # return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
 sub get_function_regex {
-	qr/(?:^|[^# \t-])[ \t]*((?:sub|func|method)\s+$_[1])\b/;
+	my $self = shift;
+	my $name = shift;
+	return qr/(?:^|[^# \t-])[ \t]*((?:sub|func|method)\s+$name\b|\*$name\s*=\s*sub\b)/;
 }
 
 sub get_functions {
@@ -311,11 +313,16 @@ sub find_functions {
 	my $n = "\\cM?\\cJ";
 	return grep { defined $_ } $_[1] =~ m/
 		(?:
-		${n}__(?:DATA|END)__\b.*
-		|
-		$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?$n)
-		|
-		(?:^|$n)\s*(?:sub|func|method)\s+(\w+(?:::\w+)*)
+			${n}__(?:DATA|END)__\b.*
+			|
+			$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?(?:$n){1,2})
+			|
+			(?:^|$n)\s*
+			(?:
+				(?:sub|func|method)\s+(\w+(?:::\w+)*)
+				|
+				\* (\w+(?:::\w+)*) \s* = \s* sub \b
+			)
 		)
 	/sgx;
 }

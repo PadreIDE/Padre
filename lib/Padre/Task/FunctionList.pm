@@ -28,16 +28,67 @@ sub run {
 	my @functions = $self->find($text);
 
 	# Sort it appropriately
-	if ( $self->{order} eq 'alphabetical' ) {
+	my $order = $self->{order} || '';
+	if ( $order eq 'alphabetical' ) {
 
 		# Alphabetical (aka 'abc')
-		@functions = sort { lc($a) cmp lc($b) } @functions;
-	} elsif ( $self->{order} eq 'alphabetical_private_last' ) {
+		# Ignore case and leading non-word characters
+		my @expected = ();
+		my @unknown  = ();
+		foreach my $function ( @functions ) {
+			if ( $function =~ /^([^a-zA-Z0-9]*)(.*)$/ ) {
+				push @expected, [ $function, $1, lc($2) ];
+			} else {
+				push @unknown, $function;
+			}
+		}
+		@expected = map {
+			$_->[0]
+		} sort {
+			$a->[2] cmp $b->[2]
+			||
+			length($a) <=> length($b)
+			||
+			$a->[1] cmp $b->[1]
+			||
+			$a->[0] cmp $b->[0]
+		} @expected;
+		@unknown = sort {
+			lc($a) cmp lc($b)
+			||
+			$a cmp $b
+		} @unknown;
+		@functions = ( @expected, @unknown );
 
-		# ~ comes after \w
-		tr/_/~/ foreach @functions;
-		@functions = sort { lc($a) cmp lc($b) } @functions;
-		tr/~/_/ foreach @functions;
+	} elsif ( $order eq 'alphabetical_private_last' ) {
+
+		my @expected = ();
+		my @unknown  = ();
+		foreach my $function ( @functions ) {
+			if ( $function =~ /^([^a-zA-Z0-9]*)(.*)$/ ) {
+				push @expected, [ $function, $1, lc($2) ];
+			} else {
+				push @unknown, $function;
+			}
+		}
+		@expected = map {
+			$_->[0]
+		} sort {
+			length($a) <=> length($b)
+			||
+			$a->[1] cmp $b->[1]
+			||
+			$a->[2] cmp $b->[2]
+			||
+			$a->[0] cmp $b->[0]
+		} @expected;
+		@unknown = sort {
+			lc($a) cmp lc($b)
+			||
+			$a cmp $b
+		} @unknown;
+		@functions = ( @expected, @unknown );
+
 	}
 
 	$self->{list} = \@functions;
