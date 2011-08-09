@@ -847,7 +847,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
-		if ( $Padre::Feature::VERSION ) ) {
+		if ( $Padre::Feature::VERSION ) {
 			Padre::Feature::FOLDING() or return;
 		} else {
 			$_[0]->feature_folding or return;
