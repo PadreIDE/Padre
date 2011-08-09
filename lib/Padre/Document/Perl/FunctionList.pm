@@ -27,7 +27,7 @@ our $sub_search_re = qr/
 			(?:
 				(?:sub|func|method)\s+(\w+(?:::\w+)*)
 				|
-				\* (\w+(?:::\w+)*) \s*=\s*sub\b
+				\* (\w+(?:::\w+)*) \s*=\s* (?: sub\b | \\\& )
 			)
 		)
 	/sx;
