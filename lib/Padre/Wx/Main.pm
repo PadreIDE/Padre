@@ -4402,9 +4402,10 @@ Opens the last closed file tab in similar fashion to Chrome and Firefox.
 =cut
 
 sub on_open_last_closed_file_tab {
-	require Padre::DB;
-	my $last_closed_file = Padre::DB::History->previous('files');
-	$_[0]->setup_editor($last_closed_file) if defined $last_closed_file;
+	my $self = shift;
+
+	my $last_closed_file = $self->{_last_closed_file} or return;
+	$self->setup_editor($last_closed_file);
 }
 
 =pod

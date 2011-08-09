@@ -352,8 +352,15 @@ sub refill_recent {
 	}
 
 	# Repopulate with the new files
+	my $last_closed_file_found;
 	foreach my $i ( 1 .. 9 ) {
 		my $file = $files->[ $i - 1 ] or last;
+
+		# Store last closed file for the "Open Last Closed File" feature
+		unless ($last_closed_file_found) {
+			$self->{main}->{_last_closed_file} = $file;
+			$last_closed_file_found = 1;
+		}
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$recentfiles->Append( -1, "&$i. $file" ),
