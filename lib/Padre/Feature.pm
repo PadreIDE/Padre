@@ -27,7 +27,12 @@ compilation is done in a single place, and provides a module dependency target
 for modules that use this system.
 
 =cut
- 
+
+# NOTE: Do not move this to Padre::Constant.
+# This module depends on Padre::Config, which depends on Padre::Constant,
+# so putting these constants in Padre::Constant would create a circular
+# dependency.
+
 use 5.008;
 use strict;
 use warnings;
