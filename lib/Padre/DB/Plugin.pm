@@ -11,7 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 
 # Set enabled for an object
 sub update_enabled {

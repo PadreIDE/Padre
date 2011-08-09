@@ -97,7 +97,7 @@ use Params::Util      ();
 use Padre::Current    ();
 use Padre::Role::Task ();
 
-our $VERSION    = '0.88';
+our $VERSION    = '0.89';
 our $COMPATIBLE = '0.65';
 
 sub new {

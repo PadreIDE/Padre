@@ -37,7 +37,7 @@ use Padre::Wx::Frame::Null ();
 
 # use Padre::Logger;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 our @ISA     = 'Wx::App';
 
 

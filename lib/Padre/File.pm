@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 
 # a list of registered protocol handlers. Structure:
 # regexp => [handler1, handler2, ...]

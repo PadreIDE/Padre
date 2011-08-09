@@ -15,7 +15,7 @@ use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
 use Padre::Logger;
 
-our $VERSION    = '0.88';
+our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
 
 # Allow the use of two different versions of Scintilla

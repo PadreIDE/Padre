@@ -16,7 +16,7 @@ use Padre::Constant ();
 use Padre::Util     ('_T');
 use Padre::Logger;
 
-our $VERSION    = '0.88';
+our $VERSION    = '0.89';
 our $COMPATIBLE = '0.79';
 
 

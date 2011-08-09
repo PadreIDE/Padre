@@ -63,7 +63,7 @@ use Padre::TaskThread ();
 use Padre::TaskWorker ();
 use Padre::Logger;
 
-our $VERSION    = '0.88';
+our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
 
 # Timeout values

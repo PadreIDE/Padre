@@ -15,7 +15,7 @@ use Padre::TaskQueue ();
 use Padre::Logger;
 # use constant DEBUG => 0;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 
 # Worker id sequence, so identifiers will be available in objects
 # across all instances and threads before the thread has been spawned.

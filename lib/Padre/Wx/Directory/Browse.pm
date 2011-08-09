@@ -12,7 +12,7 @@ use Padre::Constant            ();
 use Padre::Wx::Directory::Path ();
 use Padre::Logger;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 our @ISA     = 'Padre::Task';
 
 use constant NO_WARN => 1;
