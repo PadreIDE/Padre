@@ -11,6 +11,12 @@ notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
 
+0.90 TBA
+
+0.89 Development version, not released
+    - No incompatible API changes during the 0.84 release cycle
+
+
 0.88 2011.08.09
     - Thread Slave Mastering now works for Task 2.0. This removes thread spawn
       foreground blocking, reducing per-thread costs by at least 10meg, and can
