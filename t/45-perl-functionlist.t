@@ -29,6 +29,7 @@ sub  foo4 {
 sub foo5 :tag {
 }
 *backwards = sub { };
+*_backwards = \&backwards;
 END_PERL
 
 
@@ -58,6 +59,7 @@ SCOPE: {
 			foo4
 			foo5
 			backwards
+			_backwards
 		} ],
 		'Found expected functions',
 	);
@@ -85,6 +87,7 @@ SCOPE: {
 		$task->{list},
 		[ qw{
 			backwards
+			_backwards
 			_bar
 			foo1
 			foo2
@@ -123,6 +126,7 @@ SCOPE: {
 			foo3
 			foo4
 			foo5
+			_backwards
 			_bar
 		} ],
 		'Found expected functions',
