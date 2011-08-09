@@ -63,7 +63,7 @@ sub import {
 	#       are trying to claim ownership of Wx.pm
 	SCOPE: {
 		package ## no critic
-		Wx; 
+		Wx;
 		constant::->import(\%constants);
 	}
 
