@@ -5642,23 +5642,25 @@ No return value.
 
 =cut
 
-sub editor_folding {
-	my $self = shift;
-	my $show = $_[0] ? 1 : 0;
-	my $lock = $self->lock('CONFIG');
-	my $pod  = $self->config->editor_fold_pod;
-	$self->config->set( editor_folding => $show );
+BEGIN {
+	*editor_folding = sub {
+		my $self = shift;
+		my $show = $_[0] ? 1 : 0;
+		my $lock = $self->lock('CONFIG');
+		my $pod  = $self->config->editor_fold_pod;
+		$self->config->set( editor_folding => $show );
 
-	foreach my $editor ( $self->editors ) {
-		$editor->show_folding($show);
-		if ( $show and $pod ) {
-			$editor->fold_pod;
+		foreach my $editor ( $self->editors ) {
+			$editor->show_folding($show);
+			if ( $show and $pod ) {
+				$editor->fold_pod;
+			}
 		}
-	}
 
-	$self->menu->view->refresh;
+		$self->menu->view->refresh;
 
-	return;
+		return;
+	};
 }
 
 =pod

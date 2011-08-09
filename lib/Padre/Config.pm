@@ -847,12 +847,14 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
-		if ( Padre::Feature->can('FOLDING') ) {
+		if ( $Padre::Feature::VERSION ) ) {
 			Padre::Feature::FOLDING() or return;
 		} else {
 			$_[0]->feature_folding or return;
 		}
-		$_[0]->editor_folding( $_[1] );
+		if ( $_[0]->can('editor_folding') ) {
+			$_[0]->editor_folding( $_[1] );
+		}
 	},
 );
 setting(
