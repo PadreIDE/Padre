@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Params::Util              ();
 use Padre::Current            ();
+use Padre::Feature            ();
 use Padre::Util               ();
 use Padre::Wx                 ();
 use Padre::Wx::Menu::File     ();
@@ -52,7 +53,6 @@ use Class::XSAccessor {
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $debug = $main->config->feature_debugger;
 
 	# Create the basic object
 	my $self = bless {
@@ -68,7 +68,7 @@ sub new {
 	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
-	if ($debug) {
+	if ( Padre::Feature::DEBUGGER ) {
 		require Padre::Wx::Menu::Debug;
 		$self->{debug} = Padre::Wx::Menu::Debug->new($main);
 	}
@@ -116,7 +116,6 @@ sub refresh {
 	my $plugins = shift;
 	my $current = Padre::Current::_CURRENT(@_);
 	my $menu    = $self->wx->GetMenuCount ne $self->{default};
-	my $debug   = $current->config->feature_debugger;
 	my $perl    = !!(
 		   Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' )
 		or Params::Util::_INSTANCE( $current->project, 'Padre::Project::Perl' )
@@ -126,11 +125,15 @@ sub refresh {
 	if ( $perl and not $menu ) {
 		$self->insert( 4, $self->perl );
 		$self->insert( 5, $self->refactor );
-		$self->insert( 7, $self->debug ) if $debug;
+		if ( Padre::Feature::DEBUGGER ) {
+			$self->insert( 7, $self->debug );
+		}
 	} elsif ( $menu and not $perl ) {
-		$self->remove(7) if $debug; # debug
-		$self->remove(5);           # refactor
-		$self->remove(4);           # perl
+		if ( Padre::Feature::DEBUGGER ) {
+			$self->remove(7); # debug
+		}
+		$self->remove(5);         # refactor
+		$self->remove(4);         # perl
 	}
 
 	# Refresh individual menus
@@ -145,7 +148,9 @@ sub refresh {
 	if ($perl) {
 		$self->perl->refresh($current);
 		$self->refactor->refresh($current);
-		$self->debug->refresh($current) if $debug;
+		if ( Padre::Feature::DEBUGGER ) {
+			$self->debug->refresh($current);
+		}
 	}
 
 	$self->plugins->refresh($current);

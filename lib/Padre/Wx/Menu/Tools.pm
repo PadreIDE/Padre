@@ -8,6 +8,7 @@ use warnings;
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Config   ();
+use Padre::Feature  ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ();
@@ -39,7 +40,7 @@ sub new {
 	);
 
 	# Config Sync
-	if ( $main->config->feature_sync ) {
+	if ( Padre::Feature::SYNC ) {
 		$self->add_menu_action(
 			$self,
 			'tools.sync',

@@ -8,6 +8,7 @@ use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ();
+use Padre::Feature  ();
 
 our $VERSION = '0.89';
 our @ISA     = 'Padre::Wx::Menu';
@@ -63,7 +64,7 @@ sub new {
 	);
 
 	# Recursive Replace
-	if ( $main->config->feature_replaceinfiles ) {
+	if ( Padre::Feature::REPLACEINFILES ) {
 		$self->add_menu_action(
 			$self,
 			'search.replace_in_files',
@@ -79,10 +80,10 @@ sub new {
 		'search.goto',
 	);
 
-	if ( $config->feature_bookmark ) {
+	# Bookmark Support
+	if ( Padre::Feature::BOOKMARK ) {
 		$self->AppendSeparator;
 
-		# Bookmark Support
 		$self->{bookmark_set} = $self->add_menu_action(
 			$self,
 			'search.bookmark_set',
@@ -124,7 +125,7 @@ sub refresh {
 	$self->{replace}->Enable($editor);
 	$self->{goto}->Enable($editor);
 
-	if ( $current->config->feature_bookmark ) {
+	if ( Padre::Feature::BOOKMARK ) {
 
 		# Bookmarks can only be placed on files on disk
 		$self->{bookmark_set}->Enable( ( $editor and defined $current->filename ) ? 1 : 0 );

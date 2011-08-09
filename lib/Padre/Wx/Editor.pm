@@ -7,6 +7,7 @@ use YAML::Tiny                ();
 use Time::HiRes               ();
 use Padre::Constant           ();
 use Padre::Config             ();
+use Padre::Feature            ();
 use Padre::Util               ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
@@ -394,7 +395,7 @@ sub padre_setup_style {
 	$self->setup_style_from_config($name);
 
 	# if mimetype is known, then it might be Perl with in-line POD
-	if ( $config->feature_folding and $config->editor_folding ) {
+	if ( Padre::Feature::FOLDING and $config->editor_folding ) {
 		if ( $config->editor_fold_pod ) {
 			$self->fold_pod;
 		}
@@ -781,7 +782,7 @@ sub set_preferences {
 	$self->SetViewEOL( $config->editor_eol );
 	$self->SetViewWhiteSpace( $config->editor_whitespace );
 
-	if ( $config->feature_folding ) {
+	if ( Padre::Feature::FOLDING ) {
 		$self->show_folding( $config->editor_folding );
 	}
 
@@ -1252,7 +1253,7 @@ sub on_mousewheel {
 		return;
 	}
 
-	if ( $self->config->feature_fontsize ) {
+	if ( Padre::Feature::FONTSIZE ) {
 
 		# The default handler zooms in the wrong direction
 		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );

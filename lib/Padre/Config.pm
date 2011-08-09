@@ -57,6 +57,10 @@ use Class::XSAccessor::Array {
 	}
 };
 
+
+# NOTE: Do not convert the ->feature_wx_scintilla call here to use
+# Padre::Feature as it would result in a cicular dependency between
+# Padre::Config and Padre::Feature.
 sub wx_scintilla_ready {
 	my $enabled;
 	if ( Padre::Config->read->feature_wx_scintilla ) {
@@ -769,9 +773,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name  => 'default_projects_directory',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -779,9 +783,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name  => 'editor_font',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_font',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => Padre::Util::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
@@ -843,7 +847,11 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
-		$_[0]->feature_folding or return;
+		if ( Padre::Feature->can('FOLDING') ) {
+			Padre::Feature::FOLDING() or return;
+		} else {
+			$_[0]->feature_folding or return;
+		}
 		$_[0]->editor_folding( $_[1] );
 	},
 );
@@ -916,10 +924,10 @@ setting(
 	default => 1,
 );
 setting(
-	name  => 'editor_cursor_blink',
-	type  => Padre::Constant::INTEGER,
-	store => Padre::Constant::HUMAN,
-	default => 500, # milliseconds - this is the actual default for the wxStyledTextCtrl - set to 0 to turn off
+	name    => 'editor_cursor_blink',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HUMAN,
+	default => 500, # milliseconds
 );
 setting(
 	name    => 'find_case',

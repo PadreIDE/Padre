@@ -9,6 +9,7 @@ use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Constant ();
 use Padre::Current  ();
+use Padre::Feature  ();
 use Padre::Logger;
 
 our $VERSION = '0.89';
@@ -64,7 +65,7 @@ sub new {
 		'file.new_p6_script',
 	);
 
-	if ( $main->config->feature_wizard_selector ) {
+	if ( Padre::Feature::WIZARD_SELECTOR ) {
 		$file_new->AppendSeparator;
 		$self->add_menu_action(
 			$file_new,
@@ -226,7 +227,7 @@ sub new {
 		'file.save_all',
 	);
 
-	if ( $main->config->feature_session ) {
+	if ( Padre::Feature::SESSION ) {
 
 		$self->AppendSeparator;
 
@@ -301,7 +302,7 @@ sub title {
 }
 
 sub refresh {
-	my $self = shift;
+	my $self     = shift;
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);

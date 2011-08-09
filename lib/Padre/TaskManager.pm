@@ -546,18 +546,8 @@ sub run {
 		# Shortcut if there is nowhere to run the task
 		if ( $self->{threads} ) {
 			if ( scalar keys %$handles >= $self->{maximum} ) {
-
-				# if ( Padre::Current->config->feature_restart_hung_task_manager ) {
-				# # Restart hung task manager!
-				# TRACE('PANIC: Restarting task manager') if DEBUG;
-				# $self->stop;
-				# $self->start;
-				# } else {
-				# Ignore the problem and hope the user does not notice :)
-				TRACE('No more task handles available. Sorry') if DEBUG;
+				TRACE('No more task handles available') if DEBUG;
 				return;
-
-				# }
 			}
 		}
 

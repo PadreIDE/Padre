@@ -6,6 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Current  ();
+use Padre::Feature  ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -142,10 +143,12 @@ sub new {
 		'edit.next_problem',
 	);
 
-	$self->{quick_fix} = $self->add_menu_action(
-		$self,
-		'edit.quick_fix',
-	);
+	if ( Padre::Feature::QUICK_FIX ) {
+		$self->{quick_fix} = $self->add_menu_action(
+			$self,
+			'edit.quick_fix',
+		);
+	}
 
 	$self->{autocomp} = $self->add_menu_action(
 		$self,
@@ -352,7 +355,7 @@ sub refresh {
 
 	# Handle the simple cases
 	$self->{next_problem}->Enable($hasdoc);
-	if ( $self->{main}->config->feature_quick_fix ) {
+	if ( Padre::Feature::QUICK_FIX ) {
 		$self->{quick_fix}->Enable($quickfix);
 	}
 	$self->{autocomp}->Enable($hasdoc);

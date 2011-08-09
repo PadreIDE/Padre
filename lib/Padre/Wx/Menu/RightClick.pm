@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
+use Padre::Feature  ();
 
 our $VERSION = '0.89';
 our @ISA     = 'Padre::Wx::Menu';
@@ -117,10 +118,13 @@ sub new {
 			. ", run time "
 			. ( time - $^T )
 			. " seconds\n";
-	} elsif ( $event->isa('Wx::MouseEvent')
-		and $config->feature_folding
-		and $config->editor_folding )
-	{
+	} elsif (
+		Padre::Feature::FOLDING
+		and
+		$event->isa('Wx::MouseEvent')
+		and
+		$config->editor_folding
+	) {
 		my $position = $event->GetPosition;
 		my $line     = $editor->LineFromPosition( $editor->PositionFromPoint($position) );
 		my $point    = $editor->PointFromPosition( $editor->PositionFromLine($line) );

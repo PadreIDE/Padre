@@ -10,6 +10,7 @@ use warnings;
 use File::Spec           ();
 use Params::Util         ();
 use Padre::Util          ('_T');
+use Padre::Feature       ();
 use Padre::Config::Style ();
 use Padre::Current       ();
 use Padre::Constant      ();
@@ -185,14 +186,16 @@ sub init {
 	);
 
 	# The wizard selector feature
-	Padre::Wx::Action->new(
-		name       => 'file.wizard_selector',
-		label      => _T('Wizard Selector...'),
-		comment    => _T('Selects and opens a wizard'),
-		menu_event => sub {
-			$_[0]->wizard_selector->show;
-		},
-	) if $config->feature_wizard_selector;
+	if ( Padre::Feature::WIZARD_SELECTOR ) {
+		Padre::Wx::Action->new(
+			name       => 'file.wizard_selector',
+			label      => _T('Wizard Selector...'),
+			comment    => _T('Selects and opens a wizard'),
+			menu_event => sub {
+				$_[0]->wizard_selector->show;
+			},
+		);
+	}
 
 	### NOTE: Add support for plugins here
 
@@ -771,61 +774,63 @@ sub init {
 		},
 	);
 
-	Padre::Wx::Action->new(
-		name        => 'edit.quick_fix',
-		need_editor => 1,
-		label       => _T('&Quick Fix'),
-		comment     => _T('Apply one of the quick fixes for the current document'),
-		shortcut    => 'Ctrl-2',
-		menu_event  => sub {
-			my $main     = shift;
-			my $current  = $main->current;
-			my $document = $current->document or return;
-			return unless $document->can('get_quick_fix_provider');
+	if ( Padre::Feature::QUICK_FIX ) {
+		Padre::Wx::Action->new(
+			name        => 'edit.quick_fix',
+			need_editor => 1,
+			label       => _T('&Quick Fix'),
+			comment     => _T('Apply one of the quick fixes for the current document'),
+			shortcut    => 'Ctrl-2',
+			menu_event  => sub {
+				my $main     = shift;
+				my $current  = $main->current;
+				my $document = $current->document or return;
+				return unless $document->can('get_quick_fix_provider');
 
-			my $editor = $current->editor;
-			$editor->AutoCompSetSeparator( ord '|' );
-			my @list  = ();
-			my @items = ();
-			eval {
+				my $editor = $current->editor;
+				$editor->AutoCompSetSeparator( ord '|' );
+				my @list  = ();
+				my @items = ();
+				eval {
 
-				# Find available quick fixes from provider
-				my $provider = $document->get_quick_fix_provider;
-				@items = $provider->quick_fix_list( $document, $editor );
+					# Find available quick fixes from provider
+					my $provider = $document->get_quick_fix_provider;
+					@items = $provider->quick_fix_list( $document, $editor );
 
-				# Add quick list items from document's quick fix provider
-				foreach my $item (@items) {
-					push @list, $item->{text};
-				}
-			};
-			TRACE("Error while calling get_quick_fix_provider: $@\n") if $@;
-			my $empty_list = ( scalar @list == 0 );
-			if ($empty_list) {
-				@list = ( Wx::gettext('No suggestions') );
-			}
-			my $words = join( '|', @list );
-
-			Wx::Event::EVT_STC_USERLISTSELECTION(
-				$main, $editor,
-				sub {
-					return if $empty_list;
-					my $text = $_[1]->GetText;
-					my $selection;
+					# Add quick list items from document's quick fix provider
 					foreach my $item (@items) {
-						if ( $item->{text} eq $text ) {
-							$selection = $item;
-							last;
+						push @list, $item->{text};
+					}
+				};
+				TRACE("Error while calling get_quick_fix_provider: $@\n") if $@;
+				my $empty_list = ( scalar @list == 0 );
+				if ($empty_list) {
+					@list = ( Wx::gettext('No suggestions') );
+				}
+				my $words = join( '|', @list );
+
+				Wx::Event::EVT_STC_USERLISTSELECTION(
+					$main, $editor,
+					sub {
+						return if $empty_list;
+						my $text = $_[1]->GetText;
+						my $selection;
+						foreach my $item (@items) {
+							if ( $item->{text} eq $text ) {
+								$selection = $item;
+								last;
+							}
 						}
-					}
-					if ($selection) {
-						eval { &{ $selection->{listener} }(); };
-						warn "Failed while calling Quick fix $selection->{text}\n" if $@;
-					}
-				},
-			);
-			$editor->UserListShow( 1, $words );
-		},
-	) if $config->feature_quick_fix;
+						if ($selection) {
+							eval { &{ $selection->{listener} }(); };
+							warn "Failed while calling Quick fix $selection->{text}\n" if $@;
+						}
+					},
+				);
+				$editor->UserListShow( 1, $words );
+			},
+		);
+	}
 
 	Padre::Wx::Action->new(
 		name        => 'edit.autocomp',
@@ -2045,7 +2050,7 @@ sub init {
 
 	# Debugging
 
-	if ( $config->feature_debugger ) {
+	if ( Padre::Feature::DEBUGGER ) {
 
 		Padre::Wx::Action->new(
 			name         => 'debug.step_in',

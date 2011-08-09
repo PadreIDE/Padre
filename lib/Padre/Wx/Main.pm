@@ -47,6 +47,7 @@ use Padre::Locale             ();
 use Padre::Current            ();
 use Padre::Document           ();
 use Padre::DB                 ();
+use Padre::Feature            ();
 use Padre::Locker             ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
@@ -4000,7 +4001,7 @@ sub setup_editor {
 	my $id = $self->create_tab( $editor, $title );
 	$self->notebook->GetPage($id)->SetFocus;
 
-	if ( $config->feature_cursormemory ) {
+	if ( Padre::Feature::CURSORMEMORY ) {
 		$editor->restore_cursor_position;
 	}
 
@@ -4554,12 +4555,15 @@ sub reload_file {
 		$editor = $document->editor;
 	}
 
-	my $pos = $self->config->feature_cursormemory;
-	$editor->store_cursor_position if $pos;
+	if ( Padre::Feature::CURSORMEMORY ) {
+		$editor->store_cursor_position;
+	}
 	if ( $document->reload ) {
 		$editor = $document->editor;
 		$editor->configure_editor($document);
-		$editor->restore_cursor_position if $pos;
+		if ( Padre::Feature::CURSORMEMORY ) {
+			$editor->restore_cursor_position;
+		}
 	} else {
 		$self->error(
 			sprintf(
@@ -5092,7 +5096,7 @@ sub close {
 		} @{ $self->{on_close_watchers}->{$fn} };
 	}
 
-	if ( $self->config->feature_cursormemory ) {
+	if ( Padre::Feature::CURSORMEMORY ) {
 		$editor->store_cursor_position;
 	}
 	if ( $document->tempfile ) {
