@@ -47,7 +47,7 @@ sub run {
 		} sort {
 			$a->[2] cmp $b->[2]
 			||
-			length($a) <=> length($b)
+			length($a->[1]) <=> length($b->[1])
 			||
 			$a->[1] cmp $b->[1]
 			||
@@ -74,7 +74,7 @@ sub run {
 		@expected = map {
 			$_->[0]
 		} sort {
-			length($a) <=> length($b)
+			length($a->[1]) <=> length($b->[1])
 			||
 			$a->[1] cmp $b->[1]
 			||
