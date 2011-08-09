@@ -50,7 +50,7 @@ SCOPE: {
 
 	# Run the startup process
 	ok( $manager->start, '->start ok' );
-	Time::HiRes::sleep(0.1);
+	Time::HiRes::sleep(1);
 	is( scalar( threads->list ), 1, 'The master threads exists' );
 
 	# Create the sample task
@@ -70,6 +70,6 @@ SCOPE: {
 
 	# Run the shutdown process
 	ok( $manager->stop, '->stop ok' );
-	Time::HiRes::sleep(0.1);
+	Time::HiRes::sleep(5);
 	is( scalar( threads->list ), 0, 'No threads' );
 }
