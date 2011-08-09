@@ -58,6 +58,9 @@ sub import {
 	}
 
 	# Convert to proper constants
+	# NOTE: This completes the conversion of Wx::wxFoo constants to Wx::Foo.
+	# NOTE: On separate lines to prevent the PAUSE indexer thingkng that we
+	#       are trying to claim ownership of Wx.pm
 	SCOPE: {
 		package ## no critic
 		Wx; 
