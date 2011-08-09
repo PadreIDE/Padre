@@ -5,6 +5,7 @@ package Padre::Wx::Menu;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current    ();
 use Padre::Wx::Action ();
 use Padre::Wx         ();
 
@@ -52,7 +53,7 @@ sub add_menu_action {
 	my $self    = shift;
 	my $menu    = shift;
 	my $name    = shift;
-	my $actions = Padre->ide->actions;
+	my $actions = Padre::Current->ide->actions;
 	my $action  = $actions->{$name} or return 0;
 	my $method  = $action->menu_method || 'Append';
 
@@ -62,9 +63,7 @@ sub add_menu_action {
 	);
 
 	my $comment = $action->comment;
-	if ($comment) {
-		$item->SetHelp($comment);
-	}
+	$item->SetHelp($comment) if $comment;
 
 	Wx::Event::EVT_MENU(
 		$self->{main},
