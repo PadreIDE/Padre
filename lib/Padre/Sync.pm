@@ -249,7 +249,7 @@ sub server_delete {
 
 	my $response = $self->ua->request( DELETE "$server/config" );
 
-	if ( $response->code == 200 ) {
+	if ( $response->code == 204 ) {
 		return 'Configuration deleted successfully.';
 	}
 
