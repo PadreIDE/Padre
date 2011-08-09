@@ -39,34 +39,28 @@ sub new {
 
 	# Perl-Specific Searches
 	$self->{beginner_check} = $self->add_menu_action(
-		$self,
 		'perl.beginner_check',
 	);
 
 	$self->{perl_deparse} = $self->add_menu_action(
-		$self,
 		'perl.deparse',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{find_brace} = $self->add_menu_action(
-		$self,
 		'perl.find_brace',
 	);
 
 	$self->{find_variable} = $self->add_menu_action(
-		$self,
 		'perl.find_variable',
 	);
 
 	$self->{find_method} = $self->add_menu_action(
-		$self,
 		'perl.find_method',
 	);
 
 	$self->{create_tagsfile} = $self->add_menu_action(
-		$self,
 		'perl.create_tagsfile',
 	);
 
@@ -74,12 +68,10 @@ sub new {
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
-		$self,
 		'perl.vertically_align_selected',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'perl.newline_keep_column',
 	);
 

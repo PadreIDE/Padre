@@ -32,22 +32,18 @@ sub new {
 
 	# Add the POD-based help launchers
 	$self->add_menu_action(
-		$self,
 		'help.help'
 	);
 
 	$self->add_menu_action(
-		$self,
 		'help.context_help',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'help.search',
 	);
 
 	$self->{current} = $self->add_menu_action(
-		$self,
 		'help.current',
 	);
 
@@ -84,7 +80,6 @@ sub new {
 
 	# Add interesting and helpful websites
 	$self->add_menu_action(
-		$self,
 		'help.visit_perlmonks',
 	);
 
@@ -92,17 +87,14 @@ sub new {
 
 	# Add Padre website tools
 	$self->add_menu_action(
-		$self,
 		'help.report_a_bug',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'help.view_all_open_bugs',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'help.translate_padre',
 	);
 
@@ -110,7 +102,6 @@ sub new {
 
 	# Add the About
 	$self->add_menu_action(
-		$self,
 		'help.about',
 	);
 

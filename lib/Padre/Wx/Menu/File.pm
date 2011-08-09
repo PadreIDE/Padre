@@ -34,7 +34,6 @@ sub new {
 
 	# Create new things
 	$self->{new} = $self->add_menu_action(
-		$self,
 		'file.new',
 	);
 
@@ -79,7 +78,6 @@ sub new {
 	# Open things
 
 	$self->add_menu_action(
-		$self,
 		'file.open',
 	);
 
@@ -126,7 +124,6 @@ sub new {
 	);
 
 	$self->{close} = $self->add_menu_action(
-		$self,
 		'file.close',
 	);
 
@@ -196,12 +193,10 @@ sub new {
 	### End of reload submenu
 
 	$self->{duplicate} = $self->add_menu_action(
-		$self,
 		'file.duplicate',
 	);
 
 	$self->{delete} = $self->add_menu_action(
-		$self,
 		'file.delete',
 	);
 
@@ -209,22 +204,18 @@ sub new {
 
 	# Save files
 	$self->{save} = $self->add_menu_action(
-		$self,
 		'file.save',
 	);
 
 	$self->{save_as} = $self->add_menu_action(
-		$self,
 		'file.save_as',
 	);
 
 	$self->{save_intuition} = $self->add_menu_action(
-		$self,
 		'file.save_intuition',
 	);
 
 	$self->{save_all} = $self->add_menu_action(
-		$self,
 		'file.save_all',
 	);
 
@@ -234,12 +225,10 @@ sub new {
 
 		# Session operations
 		$self->{open_session} = $self->add_menu_action(
-			$self,
 			'file.open_session',
 		);
 
 		$self->{save_session} = $self->add_menu_action(
-			$self,
 			'file.save_session',
 		);
 
@@ -249,7 +238,6 @@ sub new {
 
 	# Print files
 	$self->{print} = $self->add_menu_action(
-		$self,
 		'file.print',
 	);
 
@@ -283,7 +271,6 @@ sub new {
 
 	# Word Stats
 	$self->{docstat} = $self->add_menu_action(
-		$self,
 		'file.doc_stat',
 	);
 
@@ -291,7 +278,6 @@ sub new {
 
 	# Exiting
 	$self->add_menu_action(
-		$self,
 		'file.quit',
 	);
 

@@ -31,41 +31,34 @@ sub new {
 
 	# Script Execution
 	$self->{run_document} = $self->add_menu_action(
-		$self,
 		'run.run_document',
 	);
 
 	$self->{run_document_debug} = $self->add_menu_action(
-		$self,
 		'run.run_document_debug',
 	);
 
 	$self->{run_command} = $self->add_menu_action(
-		$self,
 		'run.run_command',
 	);
 
 	$self->AppendSeparator; 
 
 	$self->{run_tests} = $self->add_menu_action(
-		$self,
 		'run.run_tests',
 	);
 
 	$self->{run_tdd_tests} = $self->add_menu_action(
-		$self,
 		'run.run_tdd_tests',
 	);
 
 	$self->{run_this_test} = $self->add_menu_action(
-		$self,
 		'run.run_this_test',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{stop} = $self->add_menu_action(
-		$self,
 		'run.stop',
 	);
 

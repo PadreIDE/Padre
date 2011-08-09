@@ -30,77 +30,64 @@ sub new {
 	$self->{main} = $main;
 
 	$self->{step_in} = $self->add_menu_action(
-		$self,
 		'debug.step_in',
 	);
 
 	$self->{step_over} = $self->add_menu_action(
-		$self,
 		'debug.step_over',
 	);
 
 	$self->{step_out} = $self->add_menu_action(
-		$self,
 		'debug.step_out',
 	);
 
 	$self->{run} = $self->add_menu_action(
-		$self,
 		'debug.run',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{jump_to} = $self->add_menu_action(
-		$self,
 		'debug.jump_to',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{set_breakpoint} = $self->add_menu_action(
-		$self,
 		'debug.set_breakpoint',
 	);
 
 	$self->{remove_breakpoint} = $self->add_menu_action(
-		$self,
 		'debug.remove_breakpoint',
 	);
 
 	$self->{list_breakpoints} = $self->add_menu_action(
-		$self,
 		'debug.list_breakpoints',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{show_stack_trace} = $self->add_menu_action(
-		$self,
 		'debug.show_stack_trace',
 	);
 
 	$self->{display_value} = $self->add_menu_action(
-		$self,
 		'debug.display_value',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{show_value} = $self->add_menu_action(
-		$self,
 		'debug.show_value',
 	);
 
 	$self->{evaluate_expression} = $self->add_menu_action(
-		$self,
 		'debug.evaluate_expression',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{quit} = $self->add_menu_action(
-		$self,
 		'debug.quit',
 	);
 

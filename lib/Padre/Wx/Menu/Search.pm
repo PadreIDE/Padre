@@ -33,17 +33,14 @@ sub new {
 
 	# Search
 	$self->{find} = $self->add_menu_action(
-		$self,
 		'search.find',
 	);
 
 	$self->{find_next} = $self->add_menu_action(
-		$self,
 		'search.find_next',
 	);
 
 	$self->{find_previous} = $self->add_menu_action(
-		$self,
 		'search.find_previous',
 	);
 
@@ -51,7 +48,6 @@ sub new {
 
 	# Search and Replace
 	$self->{replace} = $self->add_menu_action(
-		$self,
 		'search.replace',
 	);
 
@@ -59,14 +55,12 @@ sub new {
 
 	# Recursive Search
 	$self->add_menu_action(
-		$self,
 		'search.find_in_files',
 	);
 
 	# Recursive Replace
 	if ( Padre::Feature::REPLACEINFILES ) {
 		$self->add_menu_action(
-			$self,
 			'search.replace_in_files',
 		);
 	}
@@ -76,7 +70,6 @@ sub new {
 	$self->AppendSeparator;
 
 	$self->{goto} = $self->add_menu_action(
-		$self,
 		'search.goto',
 	);
 
@@ -85,12 +78,10 @@ sub new {
 		$self->AppendSeparator;
 
 		$self->{bookmark_set} = $self->add_menu_action(
-			$self,
 			'search.bookmark_set',
 		);
 
 		$self->{bookmark_goto} = $self->add_menu_action(
-			$self,
 			'search.bookmark_goto',
 		);
 	}
@@ -98,12 +89,10 @@ sub new {
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
-		$self,
 		'search.open_resource',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'search.quick_menu_access',
 	);
 
@@ -125,9 +114,8 @@ sub refresh {
 	$self->{replace}->Enable($editor);
 	$self->{goto}->Enable($editor);
 
+	# Bookmarks can only be placed on files on disk
 	if ( Padre::Feature::BOOKMARK ) {
-
-		# Bookmarks can only be placed on files on disk
 		$self->{bookmark_set}->Enable( ( $editor and defined $current->filename ) ? 1 : 0 );
 	}
 

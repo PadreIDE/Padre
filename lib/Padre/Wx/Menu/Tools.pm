@@ -35,21 +35,18 @@ sub new {
 
 	# User Preferences
 	$self->add_menu_action(
-		$self,
 		'tools.preferences',
 	);
 
 	# Config Sync
 	if ( Padre::Feature::SYNC ) {
 		$self->add_menu_action(
-			$self,
 			'tools.sync',
 		);
 	}
 
 	# Key bindings
 	$self->add_menu_action(
-		$self,
 		'tools.keys',
 	);
 
@@ -57,7 +54,6 @@ sub new {
 
 	# Regex Editor
 	$self->add_menu_action(
-		$self,
 		'tools.regex',
 	);
 
@@ -95,7 +91,6 @@ sub new {
 
 	# Link to the Plugin Manager
 	$self->add_menu_action(
-		$self,
 		'plugins.plugin_manager',
 	);
 

@@ -28,7 +28,6 @@ sub new {
 
 	# Undo/Redo
 	$self->{undo} = $self->add_menu_action(
-		$self,
 		'edit.undo',
 	);
 	unless ( $editor->CanUndo ) {
@@ -36,7 +35,6 @@ sub new {
 	}
 
 	$self->{redo} = $self->add_menu_action(
-		$self,
 		'edit.redo',
 	);
 	unless ( $editor->CanRedo ) {
@@ -47,30 +45,25 @@ sub new {
 
 	if ($selection) {
 		$self->{open_selection} = $self->add_menu_action(
-			$self,
 			'file.open_selection',
 		);
 	}
 
 	$self->{open_in_file_browser} = $self->add_menu_action(
-		$self,
 		'file.open_in_file_browser',
 	);
 
 	$self->{find_in_files} = $self->add_menu_action(
-		$self,
 		'search.find_in_files',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{cut} = $self->add_menu_action(
-		$self,
 		'edit.cut',
 	);
 
 	$self->{copy} = $self->add_menu_action(
-		$self,
 		'edit.copy',
 	);
 
@@ -80,7 +73,6 @@ sub new {
 	}
 
 	$self->{paste} = $self->add_menu_action(
-		$self,
 		'edit.paste',
 	);
 	my $text = $editor->get_text_from_clipboard;
@@ -89,24 +81,20 @@ sub new {
 	}
 
 	$self->{select_all} = $self->add_menu_action(
-		$self,
 		'edit.select_all',
 	);
 
 	$self->AppendSeparator;
 
 	$self->{comment_toggle} = $self->add_menu_action(
-		$self,
 		'edit.comment_toggle',
 	);
 
 	$self->{comment} = $self->add_menu_action(
-		$self,
 		'edit.comment',
 	);
 
 	$self->{uncomment} = $self->add_menu_action(
-		$self,
 		'edit.uncomment',
 	);
 
@@ -126,12 +114,10 @@ sub new {
 			$self->AppendSeparator;
 
 			$self->{fold_all} = $self->add_menu_action(
-				$self,
 				'view.fold_all',
 			);
 
 			$self->{unfold_all} = $self->add_menu_action(
-				$self,
 				'view.unfold_all',
 			);
 

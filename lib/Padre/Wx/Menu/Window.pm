@@ -31,44 +31,36 @@ sub new {
 
 	# File Navigation
 	$self->{window_last_visited_file} = $self->add_menu_action(
-		$self,
 		'window.last_visited_file',
 	);
 
 	$self->{window_oldest_visited_file} = $self->add_menu_action(
-		$self,
 		'window.oldest_visited_file',
 	);
 
 	$self->{window_next_file} = $self->add_menu_action(
-		$self,
 		'window.next_file',
 	);
 
 	$self->{window_previous_file} = $self->add_menu_action(
-		$self,
 		'window.previous_file',
 	);
 
 	# TODO: Remove this and the menu option as soon as #750 is fixed
 	#       as it's the same like Ctrl-Tab
 	$self->add_menu_action(
-		$self,
 		'window.last_visited_file_old',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'window.goto_previous_position',
 	);
 
 	$self->add_menu_action(
-		$self,
 		'window.show_previous_positions',
 	);
 
 	$self->{window_right_click} = $self->add_menu_action(
-		$self,
 		'window.right_click',
 	);
 
@@ -76,27 +68,22 @@ sub new {
 
 	# Window Navigation
 	$self->{window_goto_functions_window} = $self->add_menu_action(
-		$self,
 		'window.goto_functions_window',
 	);
 
 	$self->{window_goto_outline_window} = $self->add_menu_action(
-		$self,
 		'window.goto_outline_window',
 	);
 
 	$self->{window_goto_syntax_check_window} = $self->add_menu_action(
-		$self,
 		'window.goto_syntax_check_window',
 	);
 
 	$self->{window_goto_command_line_window} = $self->add_menu_action(
-		$self,
 		'window.goto_command_line_window',
 	);
 
 	$self->{window_goto_main_window} = $self->add_menu_action(
-		$self,
 		'window.goto_main_window',
 	);
 
