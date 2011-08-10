@@ -342,18 +342,17 @@ sub refresh {
 	# Allows us to check when an empty or unsaved document is open
 	my $filename = defined( $document->filename ) ? $document->filename : '';
 
-	my $length = $document->text_length;
-
+	my $text = $document->text_get or return;
+	require Digest::JHash;
+	my $digest = Digest::JHash::jhash($text);
 	if ( $filename eq $self->{document} ) {
 
 		# Shortcut if nothing has changed.
-		# NOTE: Given the speed at which the timer fires a cheap
-		# length check is better than an expensive MD5 check.
-		return if ( $length eq $self->{length} );
+		return if $digest == $self->{digest};
 	}
 
 	$self->{document} = $filename;
-	$self->{length}   = $length;
+	$self->{digest}   = $digest;
 
 	# Fire the background task discarding old results
 	$self->task_reset;

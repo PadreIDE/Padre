@@ -85,6 +85,7 @@ requires 'Debug::Client'            => '0.11';
 requires 'Devel::Dumpvar'           => '0.04';
 requires 'Devel::Refactor'          => '0.05';
 requires 'Digest::MD5'              => '2.38';
+requires 'Digest::JHash'            => '0.07';
 requires 'Encode'                   => '2.26';
 requires 'ExtUtils::MakeMaker'      => '6.56';
 requires 'ExtUtils::Manifest'       => '1.56';

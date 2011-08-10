@@ -23,6 +23,7 @@ next production release, and synchronise their release to the Padre schedule.
       functions method which does the work via the task class (ADAMK)
     - The functions and syntax check windows needs to be cleared when the
       document does not provide any functions or syntax checker tasks (AZAWAWI)
+    - The syntax checker is now more accurate when typing faster (AZAWAWI)
 
 0.88 2011.08.09
     - Thread Slave Mastering now works for Task 2.0. This removes thread spawn
