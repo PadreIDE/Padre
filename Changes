@@ -11,12 +11,12 @@ notably for plugins. This allows plugins to update compatibility before the
 next production release, and synchronise their release to the Padre schedule.
 
 0.90 TBA
+
+0.89 Development version, not released
     - Added feature_devel_endstats (default: false) which makes Padre run
       scripts with Devel::EndStats=verbose,1 to show various statistics when it
       terminates (AZAWAWI)
     - Fixed "Open in File Browser" under Windows 7 (AZAWAWI)
-
-0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
       Moved named function location to Padre::Editor with find_function,
       has_function and goto_function. Padre::Document just has a single 
