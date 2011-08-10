@@ -303,28 +303,6 @@ sub get_function_regex {
 	return qr/(?:^|[^# \t-])[ \t]*((?:sub|func|method)\s+$_[1]\b|\*$_[1]\s*=\s*(?:sub\b|\\\&))/;
 }
 
-sub get_functions {
-	$_[0]->find_functions( $_[0]->text_get );
-}
-
-sub find_functions {
-	my $n = "\\cM?\\cJ";
-	return grep { defined $_ } $_[1] =~ m/
-		(?:
-			${n}__(?:DATA|END)__\b.*
-			|
-			$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?(?:$n){1,2})
-			|
-			(?:^|$n)\s*
-			(?:
-				(?:sub|func|method)\s+(\w+(?:::\w+)*)
-				|
-				\* (\w+(?:::\w+)*) \s* = \s* (?: sub \b | \\\& )
-			)
-		)
-	/sgx;
-}
-
 =pod
 
 =head2 get_command
@@ -752,7 +730,7 @@ sub _find_method {
 
 		# Consume the basic function list
 		my $filename = $self->filename;
-		$self->{_methods_}->{$_} = $filename for $self->get_functions;
+		$self->{_methods_}->{$_} = $filename foreach $self->functions;
 
 		# Scan for declarations in all module files.
 		# TODO: This is horrendously slow to be running in the foreground.
@@ -984,7 +962,7 @@ EOC
 
 	# we want to get a list of the subroutines to pick where to place
 	# the new sub
-	my @functions = $self->get_functions;
+	my @functions = $self->functions;
 
 	# need to check there are functions already defined
 	if ( scalar(@functions) == 0 ) {

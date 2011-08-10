@@ -168,7 +168,7 @@ SCOPE: {
 	}
 }
 
-# Regression test for get_functions
+# Regression test for functions
 SCOPE: {
 	my $editor = t::lib::Padre::Editor->new;
 	my $file   = catfile( $files, 'perl_functions.pl' );
@@ -178,7 +178,7 @@ SCOPE: {
 	$doc->set_editor($editor);
 	$editor->configure_editor($doc);
 
-	my @functions = $doc->get_functions;
+	my @functions = $doc->functions;
 	is_deeply(
 		\@functions,
 		[   qw{
@@ -194,7 +194,7 @@ SCOPE: {
 	);
 }
 
-# Regression test for get_functions on Method::Signatures-style method declarators
+# Regression test for functions on Method::Signatures-style method declarators
 SCOPE: {
 	my @test_files = (
 		{   'filename' => 'method_declarator_1.pm',
@@ -231,7 +231,7 @@ SCOPE: {
 		$doc->set_editor($editor);
 		$editor->configure_editor($doc);
 
-		my @functions = $doc->get_functions;
+		my @functions = $doc->functions;
 		is_deeply(
 			\@functions,
 			$test_file->{'methods'},

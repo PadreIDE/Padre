@@ -1307,15 +1307,17 @@ sub guess_subpath {
 	return ();
 }
 
+sub functions {
+	my $self = shift;
+	my $task = Params::Util::_DRIVER( $self->task_functions, 'Padre::Task' ) or return;
+	$task->find( $self->text_get );
+}
+
 # Abstract methods, each subclass should implement it
 # TO DO: Clearly this isn't ACTUALLY abstract (since they exist)
 
 sub keywords {
 	return {};
-}
-
-sub get_functions {
-	return ();
 }
 
 sub get_function_regex {
