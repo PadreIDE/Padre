@@ -12,8 +12,8 @@ next production release, and synchronise their release to the Padre schedule.
 
 0.90 TBA
     - Added feature_devel_endstats (default: false) which makes Padre run
-    scripts with Devel::EndStats=verbose,1 to show various statistics when it terminates
-    (AZAWAWI)
+    scripts with Devel::EndStats=verbose,1 to show various statistics when it
+    terminates (AZAWAWI)
 
 0.89 Development version, not released
     - No incompatible API changes during the 0.90 release cycle
