@@ -1560,6 +1560,28 @@ sub configure_editor {
 	return;
 }
 
+sub goto_function {
+	my $self     = shift;
+	my $name     = shift;
+	my $document = $self->{Document}                    or return;
+	my $regex    = $document->get_function_regex($name) or return;
+
+	# Run the search
+	my ( $start, $end ) = Padre::Util::get_matches(
+		$self->GetText,
+		$regex,
+		$self->GetSelection, # Provides two params
+	);
+
+	# Move the selection to the sub if we found it
+	if ( defined $start ) {
+		$self->goto_pos_centerize($start);
+		return 1;
+	}
+
+	return;
+}
+
 sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;

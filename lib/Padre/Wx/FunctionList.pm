@@ -189,31 +189,15 @@ sub view_close {
 # Event Handlers
 
 sub on_list_item_activated {
-	my $self  = shift;
-	my $event = shift;
+	my $self   = shift;
+	my $event  = shift;
+	my $editor = $self->current->editor or return;
 
 	# Which sub did they click
-	my $subname = $self->{list}->GetStringSelection;
-	unless ( defined Params::Util::_STRING($subname) ) {
-		return;
+	my $name = $self->{list}->GetStringSelection;
+	if ( defined Params::Util::_STRING($name) ) {
+		$editor->goto_function($name);
 	}
-
-	# Locate the function
-	my $document = $self->current->document or return;
-	my $editor = $document->editor;
-	my ( $start, $end ) = Padre::Util::get_matches(
-		$editor->GetText,
-		$document->get_function_regex($subname),
-		$editor->GetSelection, # Provides two params
-	);
-	unless ( defined $start ) {
-
-		# Couldn't find it
-		return;
-	}
-
-	# Move the selection to the sub location
-	$editor->goto_pos_centerize($start);
 
 	return;
 }
