@@ -288,7 +288,7 @@ sub on_key_up {
 
 	# The new behavior for a non-destructive CTRL-L
 	if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
-		my $line = $self->GetLine( $self->GetCurrentLine() );
+		my $line = $self->GetLine( $self->GetCurrentLine );
 		if ( $line !~ /^\s*$/ ) {
 
 			# Only cut on non-blank lines
@@ -303,7 +303,7 @@ sub on_key_up {
 	}
 
 	# Apply smart highlighting when the shift key is down
-	if ( $self->main->ide->config->editor_smart_highlight_enable && $event->ShiftDown ) {
+	if ( $self->config->editor_smart_highlight_enable && $event->ShiftDown ) {
 		$self->on_smart_highlight_begin($event);
 	}
 
@@ -313,13 +313,14 @@ sub on_key_up {
 		$doc->event_key_up( $self, $event );
 	}
 
-	$event->Skip(1); # we need to keep processing this event
+	# We need to keep processing this event
+	$event->Skip(1);
 
 }
 
 sub padre_setup_plain {
 	my $self   = shift;
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 
 	# Code always lays out left to right
 	if ( $self->can('SetLayoutDirection') ) {
@@ -770,7 +771,7 @@ sub set_preferences {
 
 sub show_calltip {
 	my $self   = shift;
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 	return unless $config->editor_calltips;
 
 	my $pos    = $self->GetCurrentPos;
@@ -807,7 +808,7 @@ sub show_calltip {
 sub autoindent {
 	my ( $self, $mode ) = @_;
 
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 	return unless $config->editor_autoindent;
 	return if $config->editor_autoindent eq 'no';
 
@@ -1106,7 +1107,7 @@ sub on_smart_highlight_end {
 sub on_left_up {
 	my ( $self, $event ) = @_;
 
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 
 	my $text = $self->GetSelectedText;
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
@@ -1151,7 +1152,7 @@ sub on_mouse_moving {
 sub on_middle_up {
 	my ( $self, $event ) = @_;
 
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 
 	# TO DO: Sometimes there are unexpected effects when using the middle button.
 	# It seems that another event is doing something but not within this module.
@@ -1393,7 +1394,7 @@ sub put_text_to_clipboard {
 
 	return if $text eq '';
 
-	my $config = $self->main->ide->config;
+	my $config = $self->config;
 
 	$clipboard ||= 0;
 

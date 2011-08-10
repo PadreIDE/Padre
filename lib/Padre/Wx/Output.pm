@@ -200,7 +200,7 @@ sub gettext_label {
 # Tweaked to avoid strings copying as much as possible.
 sub AppendText {
 	my $self     = shift;
-	my $use_ansi = $self->main->ide->config->main_output_ansi;
+	my $use_ansi = $self->main->config->main_output_ansi;
 	if ( utf8::is_utf8( $_[0] ) ) {
 		if ($use_ansi) {
 			$self->_handle_ansi_escapes( $_[0] );
