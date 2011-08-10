@@ -832,6 +832,8 @@ sub _auto_indent {
 	my $indent_style = $self->{Document}->get_indentation_style;
 
 	my $content = $self->GetLine($prev_line);
+	my $eol = $self->{Document}->newline;
+	$content =~ s/$eol$//;
 	my $indent = ( $content =~ /^(\s+)/ ? $1 : '' );
 
 	if ( $config->editor_autoindent eq 'deep' and $content =~ /\{\s*$/ ) {
