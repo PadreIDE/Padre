@@ -491,15 +491,14 @@ sub beginner_check {
 		document => $self,
 		editor   => $self->editor
 	);
-
 	$beginner->check( $self->text_get );
 
+	# Report any errors
 	my $error = $beginner->error;
-
-	if ($error) {
-		Padre->ide->wx->main->error( Wx::gettext('Error: ') . $error );
+	if ( $error ) {
+		$self->main->error( Wx::gettext('Error: ') . $error );
 	} else {
-		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
+		$self->main->message( Wx::gettext('No errors found.') );
 	}
 
 	return 1;
@@ -541,7 +540,7 @@ sub find_unmatched_brace_response {
 		Wx::gettext("All braces appear to be matched"),
 		Wx::gettext("Check Complete"),
 		Wx::wxOK,
-		$self->current->main,
+		$self->main,
 	);
 }
 
@@ -550,9 +549,8 @@ sub find_unmatched_brace_response {
 # to what PPI considers a PPI::Token::Symbol, but since we're doing
 # it the manual, stupid way, this may also work within quotelikes and regexes.
 sub get_current_symbol {
-	my $self = shift;
-	my $pos  = shift;
-
+	my $self   = shift;
+	my $pos    = shift;
 	my $editor = $self->editor;
 	$pos = $editor->GetCurrentPos if not defined $pos;
 
@@ -657,7 +655,9 @@ sub find_variable_declaration_response {
 }
 
 sub find_method_declaration {
-	my ($self) = @_;
+	my $self   = shift;
+	my $main   = $self->current->main;
+	my $editor = $self->editor;
 
 	my ( $location, $token ) = $self->get_current_symbol;
 	unless ( defined $location ) {
@@ -665,42 +665,26 @@ sub find_method_declaration {
 			Wx::gettext("Current cursor does not seem to point at a method"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main
+			$main
 		);
 		return ();
 	}
-	if ( $token =~ /^\w+$/ ) {
-
-		# check if there is -> before or (  after or shall we look it up in the list of existing methods?
-		# search for sub someting in
-		#    current file
-		#    all the files in the project directory (if in project)
-		# cache the list of methods found
-	}
-
-	#	Wx::MessageBox(
-	#		Wx::gettext("Current '$token' $location"),
-	#		Wx::gettext("Check cancelled"),
-	#		Wx::wxOK,
-	#		Padre->ide->wx->main
-	#	);
 
 	# Try to extract class methods' class name
-	my $editor       = $self->editor;
 	my $line         = $location->[0] - 1;
 	my $col          = $location->[1] - 1;
 	my $line_start   = $editor->PositionFromLine($line);
 	my $token_end    = $line_start + $col + 1 + length($token);
 	my $line_content = $editor->GetTextRange( $line_start, $token_end );
-	my ($class) = $line_content =~ /(?:^|[^\w:\$])(\w+(?:::\w+)*)\s*->\s*\Q$token\E$/;
+	my ($class)      = $line_content =~ /(?:^|[^\w:\$])(\w+(?:::\w+)*)\s*->\s*\Q$token\E$/;
 
 	my ( $found, $filename ) = $self->_find_method( $token, $class );
-	if ( not $found ) {
+	unless ( $found ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Current '%s' not found"), $token ),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main
+			$main
 		);
 		return;
 	}
@@ -715,17 +699,12 @@ sub find_method_declaration {
 	}
 
 	# Open or switch to file
-	my $main = $self->current->main;
-	my $id   = $main->editor_of_file($filename);
-	if ( not defined $id ) {
+	my $id = $main->editor_of_file($filename);
+	unless ( defined $id ) {
 		$id = $main->setup_editor($filename);
 	}
+	return unless defined $id;
 
-	#print "Filename '$filename' id '$id'\n";
-	# goto $line in that file
-	return if not defined $id;
-
-	#print "ID $id\n";
 	SCOPE: {
 		my $editor = $main->notebook->GetPage($id) or return;
 		$editor->goto_function($token);
@@ -804,28 +783,6 @@ sub _find_method {
 
 	if ( $self->{_methods_}{$name} ) {
 		return ( 1, $self->{_methods_}{$name} );
-	}
-
-	return;
-}
-
-# Check the outline data to see if we have a particular sub
-sub has_sub {
-	my $self = shift;
-	my $name = shift;
-	return $self->get_sub_line_number($name) ? 1 : 0;
-}
-
-# Returns the line number of a sub (or undef if it doesn't exist) based on the outline data
-sub get_sub_line_number {
-	my $self = shift;
-	my $name = shift or return;
-	my $data = $self->outline_data or return;
-
-	foreach my $package (@$data) {
-		foreach my $method ( @{ $package->{methods} } ) {
-			return $method->{line} if $method->{name} eq $name;
-		}
 	}
 
 	return;
@@ -914,7 +871,6 @@ sub change_variable_style {
 
 	return;
 }
-
 
 sub rename_variable_response {
 	my $self = shift;
@@ -1008,7 +964,7 @@ sub extract_subroutine {
 	my $editor = $self->editor;
 
 	# get the selected code
-	my $code = $editor->GetSelectedText();
+	my $code = $editor->GetSelectedText;
 
 	#print "startlocation: " . join(", ", @$start_position) . "\n";
 	# this could be configurable
@@ -1617,17 +1573,17 @@ sub event_on_left_up {
 
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
-			$self->find_variable_declaration();
+			$self->find_variable_declaration;
 		}
 
 		# Does it look like a function?
-		elsif ( defined $location && $self->has_sub($token) ) {
+		elsif ( defined $location and $editor->has_function($token) ) {
 			$editor->goto_function($token);
 		}
 
 		# Does it look like a path or module?
-		elsif ( defined($token) and ( $token =~ /(?:\/|\:\:)/ ) ) {
-			$self->current->main->on_open_selection($token);
+		elsif ( defined $token and $token =~ /(?:\/|\:\:)/ ) {
+			$self->main->on_open_selection($token);
 		}
 	}
 }
@@ -1637,24 +1593,27 @@ sub event_mouse_moving {
 	my $editor = shift;
 	my $event  = shift;
 
-	if ( $event->Moving && $event->ControlDown ) {
+	if ( $event->Moving and $event->ControlDown ) {
 
-		# Mouse is moving with ctrl pressed. If anything under the cursor looks like it can be
-		#  clicked on to take us somewhere, highlight it.
-		# TODO: currently only supports subs/methods in the same file
-		my $point = $event->GetPosition();
+		# Mouse is moving with ctrl pressed. If anything under the
+		# cursor looks like it can be clicked on to take us somewhere,
+		# highlight it.
+		# TODO: Currently only supports subs/methods in the same file
+		my $point = $event->GetPosition;
 		my $pos   = $editor->PositionFromPoint($point);
 		my ( $location, $token ) = $self->get_current_symbol($pos);
 
 		$token ||= '';
 
-		if ( $self->{last_highlight} && $token ne $self->{last_highlight}{token} ) {
+		if ( $self->{last_highlight} and $token ne $self->{last_highlight}->{token} ) {
 
-			# No longer mousing over the same token, so un-highlight it
+			# No longer mousing over the same token so un-highlight it
 			$self->_clear_highlight($editor);
+			$self->{last_highlight} = undef;
 		}
 
-		return unless $self->has_sub($token);
+		return unless length $token;
+		return unless $editor->has_function($token);
 
 		$editor->StartStyling( $location->[2], Wx::wxSTC_INDICS_MASK );
 		$editor->SetStyling( length($token), Wx::wxSTC_INDIC2_MASK );

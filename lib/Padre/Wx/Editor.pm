@@ -1410,15 +1410,13 @@ sub put_text_to_clipboard {
 }
 
 sub get_text_from_clipboard {
-
 	my $self = shift;
-
 	my $text = '';
 	Wx::wxTheClipboard->Open;
 	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
 		if ( Wx::wxTheClipboard->GetData($data) ) {
-			$text = $data->GetText if defined($data);
+			$text = $data->GetText if defined $data;
 		}
 	}
 	if ( $text eq $self->GetSelectedText ) {
@@ -1560,7 +1558,7 @@ sub configure_editor {
 	return;
 }
 
-sub goto_function {
+sub find_function {
 	my $self     = shift;
 	my $name     = shift;
 	my $document = $self->{Document}                    or return;
@@ -1573,22 +1571,29 @@ sub goto_function {
 		$self->GetSelection, # Provides two params
 	);
 
-	# Move the selection to the sub if we found it
-	if ( defined $start ) {
-		$self->goto_pos_centerize($start);
-		return 1;
-	}
+	return $start;
+}
 
-	return;
+sub has_function {
+	defined shift->find_function(@_);
+}
+
+sub goto_function {
+	my $self  = shift;
+	my $start = $self->find_function(shift);
+	return unless defined $start;
+	$self->goto_pos_centerize($start);
 }
 
 sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;
-	$self->goto_pos_centerize( $self->GetLineIndentPosition($line) );
+	$self->goto_pos_centerize(
+		$self->GetLineIndentPosition($line)
+	);
 }
 
-# borrowed from Kephra
+# CREDIT: Borrowed from Kephra
 sub goto_pos_centerize {
 	my $self = shift;
 	my $pos  = shift;
@@ -1605,6 +1610,8 @@ sub goto_pos_centerize {
 	$self->EnsureCaretVisible;
 	$self->SetSelection( $pos, $pos );
 	$self->SetFocus;
+
+	return 1;
 }
 
 sub insert_text {
