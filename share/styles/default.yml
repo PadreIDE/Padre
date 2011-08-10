@@ -211,13 +211,13 @@ diff:
   wxSTC_DIFF_COMMAND:
    foreground: 7f7f00
   wxSTC_DIFF_HEADER:
-   foreground: 7f0000
+   background: ffff80
   wxSTC_DIFF_POSITION:
    foreground: 7f007f
   wxSTC_DIFF_DELETED:
-   foreground: 007f7f
+   background: ff8080
   wxSTC_DIFF_ADDED:
-   foreground: 00007f
+   background: 80ff80
 
 #
 # text/x-makefile
