@@ -79,7 +79,7 @@ use constant {
 };
 
 # Convenience until we get a config param or something
-use constant BACKUP_INTERVAL => 10;
+use constant BACKUP_INTERVAL => 30;
 
 =pod
 
