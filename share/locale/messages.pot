@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-10 00:10-0700\n"
+"POT-Creation-Date: 2011-08-10 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -525,7 +525,7 @@ msgstr ""
 msgid "All Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:540
+#: lib/Padre/Document/Perl.pm:518
 msgid "All braces appear to be matched"
 msgstr ""
 
@@ -811,7 +811,7 @@ msgid ""
 "files on MS Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1554
+#: lib/Padre/Wx/Menu/Refactor.pm:49 lib/Padre/Document/Perl.pm:1489
 msgid "Change variable style"
 msgstr ""
 
@@ -863,12 +863,12 @@ msgstr ""
 msgid "Characters (including whitespace)"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:541
+#: lib/Padre/Document/Perl.pm:519
 msgid "Check Complete"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:611 lib/Padre/Document/Perl.pm:665
-#: lib/Padre/Document/Perl.pm:700
+#: lib/Padre/Document/Perl.pm:588 lib/Padre/Document/Perl.pm:644
+#: lib/Padre/Document/Perl.pm:663
 msgid "Check cancelled"
 msgstr ""
 
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "Cu&t"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:699
+#: lib/Padre/Document/Perl.pm:662
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
@@ -1255,16 +1255,16 @@ msgstr ""
 msgid "Current Document"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:664
+#: lib/Padre/Document/Perl.pm:643
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:610 lib/Padre/Document/Perl.pm:644
+#: lib/Padre/Document/Perl.pm:587 lib/Padre/Document/Perl.pm:621
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:847 lib/Padre/Document/Perl.pm:897
-#: lib/Padre/Document/Perl.pm:935
+#: lib/Padre/Document/Perl.pm:783 lib/Padre/Document/Perl.pm:833
+#: lib/Padre/Document/Perl.pm:870
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
@@ -1631,6 +1631,10 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
+#: lib/Padre/Config.pm:1334
+msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
+msgstr ""
+
 #: lib/Padre/Config.pm:1308
 msgid ""
 "Enable or disable the newer Wx::Scintilla source code editing component. "
@@ -1815,7 +1819,7 @@ msgstr ""
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:499
+#: lib/Padre/Document/Perl.pm:477
 msgid "Error: "
 msgstr ""
 
@@ -2168,11 +2172,11 @@ msgstr ""
 msgid "Find:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:984
+#: lib/Padre/Document/Perl.pm:919
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1655
+#: lib/Padre/Wx/Editor.pm:1664
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2846,7 +2850,7 @@ msgstr ""
 msgid "New Module"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:857
+#: lib/Padre/Document/Perl.pm:793
 msgid "New name"
 msgstr ""
 
@@ -2890,11 +2894,11 @@ msgstr ""
 msgid "No Perl 5 file is open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:646
+#: lib/Padre/Document/Perl.pm:623
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:937
+#: lib/Padre/Document/Perl.pm:872
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
@@ -2903,7 +2907,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:501
+#: lib/Padre/Document/Perl.pm:479
 msgid "No errors found."
 msgstr ""
 
@@ -3825,7 +3829,7 @@ msgstr ""
 msgid "Rename file"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:848 lib/Padre/Document/Perl.pm:858
+#: lib/Padre/Document/Perl.pm:784 lib/Padre/Document/Perl.pm:794
 msgid "Rename variable"
 msgstr ""
 
@@ -3845,7 +3849,7 @@ msgstr ""
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:943 lib/Padre/Document/Perl.pm:992
+#: lib/Padre/Document/Perl.pm:878 lib/Padre/Document/Perl.pm:927
 msgid "Replace Operation Canceled"
 msgstr ""
 
@@ -4095,7 +4099,7 @@ msgstr ""
 msgid "Search &Term"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:652
+#: lib/Padre/Document/Perl.pm:629
 msgid "Search Canceled"
 msgstr ""
 
@@ -4256,7 +4260,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:986
+#: lib/Padre/Document/Perl.pm:921
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
@@ -4635,7 +4639,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1384 lib/Padre/Document.pm:1385
+#: lib/Padre/Document.pm:1386 lib/Padre/Document.pm:1387
 msgid "Skipped for large files"
 msgstr ""
 
@@ -4867,6 +4871,10 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
+#: lib/Padre/Config.pm:1335
+msgid "This requires an installed Devel::EndStats and a Padre restart"
+msgstr ""
+
 #: lib/Padre/Config.pm:1309
 msgid "This requires an installed Wx::Scintilla and a Padre restart"
 msgstr ""
@@ -4949,8 +4957,8 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:929 lib/Padre/Document/Perl.pm:648
-#: lib/Padre/Document/Perl.pm:939 lib/Padre/Document/Perl.pm:988
+#: lib/Padre/PluginManager.pm:929 lib/Padre/Document/Perl.pm:625
+#: lib/Padre/Document/Perl.pm:874 lib/Padre/Document/Perl.pm:923
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr ""
@@ -5070,7 +5078,7 @@ msgstr ""
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:898
+#: lib/Padre/Document/Perl.pm:834
 msgid "Variable case change"
 msgstr ""
 
@@ -5225,7 +5233,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1639
+#: lib/Padre/Wx/Editor.pm:1648
 msgid "You must select a range of lines"
 msgstr ""
 
