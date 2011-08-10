@@ -478,10 +478,6 @@ sub remove_color {
 	return;
 }
 
-
-
-
-
 =head2 get_brace_info
 
 Look at a given position in the editor if there is a brace (according to the
@@ -507,7 +503,6 @@ It always look first at the character after the position.
 
 =cut
 
-
 sub get_brace_info {
 	my ( $self, $pos ) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
@@ -524,7 +519,6 @@ sub get_brace_info {
 	my $is_opening = $is_brace % 2; # odd values are opening
 	return [ $pos, $brace, $is_after, $is_opening ];
 }
-
 
 =head2 get_brace_type
 
@@ -643,7 +637,6 @@ will be inside too, same it is outside.
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
 
-
 =cut
 
 sub goto_matching_brace {
@@ -659,8 +652,6 @@ will be inside too, same it is outside.
 
 	Params:
 		pos - the cursor position in the editor [defaults to cursor position) : int
-
-
 
 =cut
 
@@ -694,63 +685,64 @@ sub show_line_numbers {
 	return;
 }
 
-sub show_folding {
-	my $self = shift;
-	my $on   = shift;
+BEGIN {
+	*show_folding = sub {
+		my $self = shift;
+		my $on   = shift;
 
-	if ($on) {
+		if ($on) {
+			# Setup a margin to hold fold markers
+			$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
+			$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
+			$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
+			$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
 
-		# Setup a margin to hold fold markers
-		$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
-		$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
-		$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
-		$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
+			# Define folding markers
+			my $w = Wx::Colour->new("white");
+			my $b = Wx::Colour->new("black");
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEREND,     Wx::wxSTC_MARK_BOXPLUSCONNECTED,  $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPENMID, Wx::wxSTC_MARK_BOXMINUSCONNECTED, $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERMIDTAIL, Wx::wxSTC_MARK_TCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERTAIL,    Wx::wxSTC_MARK_LCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERSUB,     Wx::wxSTC_MARK_VLINE,             $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDER,        Wx::wxSTC_MARK_BOXPLUS,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPEN,    Wx::wxSTC_MARK_BOXMINUS,          $w, $b );
 
-		# Define folding markers
-		my $w = Wx::Colour->new("white");
-		my $b = Wx::Colour->new("black");
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEREND,     Wx::wxSTC_MARK_BOXPLUSCONNECTED,  $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPENMID, Wx::wxSTC_MARK_BOXMINUSCONNECTED, $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERMIDTAIL, Wx::wxSTC_MARK_TCORNER,           $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERTAIL,    Wx::wxSTC_MARK_LCORNER,           $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERSUB,     Wx::wxSTC_MARK_VLINE,             $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDER,        Wx::wxSTC_MARK_BOXPLUS,           $w, $b );
-		$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPEN,    Wx::wxSTC_MARK_BOXMINUS,          $w, $b );
+			# This would be nice but the color used for drawing the lines is
+			# Wx::wxSTC_STYLE_DEFAULT, i.e. usually black and therefore quite
+			# obtrusive...
+			# $self->SetFoldFlags( Wx::wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | Wx::wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
 
-		# This would be nice but the color used for drawing the lines is
-		# Wx::wxSTC_STYLE_DEFAULT, i.e. usually black and therefore quite
-		# obtrusive...
-		# $self->SetFoldFlags( Wx::wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | Wx::wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
+			# Activate
+			$self->SetProperty( 'fold' => 1 );
 
-		# activate
-		$self->SetProperty( 'fold' => 1 );
+			Wx::Event::EVT_STC_MARGINCLICK(
+				$self, -1,
+				sub {
+					my ( $editor, $event ) = @_;
+					if ( $event->GetMargin() == 2 ) {
+						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition() );
+						my $level_clicked = $editor->GetFoldLevel($line_clicked);
 
-		Wx::Event::EVT_STC_MARGINCLICK(
-			$self, -1,
-			sub {
-				my ( $editor, $event ) = @_;
-				if ( $event->GetMargin() == 2 ) {
-					my $line_clicked  = $editor->LineFromPosition( $event->GetPosition() );
-					my $level_clicked = $editor->GetFoldLevel($line_clicked);
+						# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
+						#if ( $level_clicked && wxSTC_FOLDLEVELHEADERFLAG) > 0) {
+						$editor->ToggleFold($line_clicked);
 
-					# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
-					#if ( $level_clicked && wxSTC_FOLDLEVELHEADERFLAG) > 0) {
-					$editor->ToggleFold($line_clicked);
-
-					#}
+						#}
+					}
 				}
-			}
-		);
-	} else {
-		$self->SetMarginSensitive( 2, 0 );
-		$self->SetMarginWidth( 2, 0 );
+			);
+		} else {
+			$self->SetMarginSensitive( 2, 0 );
+			$self->SetMarginWidth( 2, 0 );
 
-		# deactivate
-		$self->SetProperty( 'fold' => 1 );
-		$self->unfold_all;
-	}
+			# Deactivate
+			$self->SetProperty( 'fold' => 1 );
+			$self->unfold_all;
+		}
 
-	return;
+		return;
+	} if Padre::Feature::FOLDING;
 }
 
 sub set_preferences {
@@ -1530,25 +1522,27 @@ sub uncomment_lines {
 	return;
 }
 
-sub fold_pod {
-	my $self        = shift;
-	my $currentLine = 0;
-	my $lastLine    = $self->GetLineCount;
+BEGIN {
+	*fold_pod = sub {
+		my $self        = shift;
+		my $currentLine = 0;
+		my $lastLine    = $self->GetLineCount;
 
-	while ( $currentLine <= $lastLine ) {
-		if ( $self->GetLine($currentLine) =~ /^=(pod|head)/ ) {
-			if ( $self->GetFoldExpanded($currentLine) ) {
-				$self->ToggleFold($currentLine);
-				my $foldLevel = $self->GetFoldLevel($currentLine);
-				$currentLine = $self->GetLastChild( $currentLine, $foldLevel );
+		while ( $currentLine <= $lastLine ) {
+			if ( $self->GetLine($currentLine) =~ /^=(pod|head)/ ) {
+				if ( $self->GetFoldExpanded($currentLine) ) {
+					$self->ToggleFold($currentLine);
+					my $foldLevel = $self->GetFoldLevel($currentLine);
+					$currentLine = $self->GetLastChild( $currentLine, $foldLevel );
+				}
+				$currentLine++;
+			} else {
+				$currentLine++;
 			}
-			$currentLine++;
-		} else {
-			$currentLine++;
 		}
-	}
 
-	return;
+		return;
+	} if Padre::Feature::FOLDING;
 }
 
 sub configure_editor {

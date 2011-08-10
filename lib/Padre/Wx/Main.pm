@@ -5676,7 +5676,7 @@ BEGIN {
 		$self->menu->view->refresh;
 
 		return;
-	};
+	} if Padre::Feature::FOLDING;
 }
 
 =pod
