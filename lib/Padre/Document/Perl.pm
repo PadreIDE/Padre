@@ -725,8 +725,10 @@ sub find_method_declaration {
 	return if not defined $id;
 
 	#print "ID $id\n";
-	my $editor = $main->notebook->GetPage($id);
-	$editor->goto_function($token);
+	SCOPE: {
+		my $editor = $main->notebook->GetPage($id) or return;
+		$editor->goto_function($token);
+	}
 
 	return ();
 }
@@ -804,26 +806,6 @@ sub _find_method {
 	}
 
 	return;
-}
-
-#scan text for sub declaration
-sub _find_sub_decl_line_number {
-	my $name  = shift;
-	my $text  = shift;
-	my @lines = split /\n/, $text;
-
-	foreach my $i ( 0 .. $#lines ) {
-		if ($lines[$i] =~ /sub \s+ $name\b
-		 (?!;)
-		 (?! \([\$;\@\%\\]+ \);)
-		 /x
-			)
-		{
-			return $i;
-		}
-	}
-
-	return -1;
 }
 
 # Check the outline data to see if we have a particular sub
