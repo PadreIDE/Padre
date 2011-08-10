@@ -205,19 +205,21 @@ diff:
    foreground: 007f00
    background: eeeeee
    bold:       1
-   italic:     1
    eolfilled:  1
-   underline:  1
   wxSTC_DIFF_COMMAND:
-   foreground: 7f7f00
+   foreground: 808080
+   bold: 1
   wxSTC_DIFF_HEADER:
    background: ffff80
   wxSTC_DIFF_POSITION:
    foreground: 7f007f
+   bold: 1
   wxSTC_DIFF_DELETED:
    background: ff8080
+   bold: 1
   wxSTC_DIFF_ADDED:
    background: 80ff80
+   bold: 1
 
 #
 # text/x-makefile
