@@ -175,7 +175,7 @@ sub init {
 	);
 
 	# The wizard selector feature
-	if ( Padre::Feature::WIZARD_SELECTOR ) {
+	if (Padre::Feature::WIZARD_SELECTOR) {
 		Padre::Wx::Action->new(
 			name       => 'file.wizard_selector',
 			label      => _T('Wizard Selector...'),
@@ -469,11 +469,12 @@ sub init {
 		},
 	);
 
-	if ( Padre::Feature::SESSION ) {
+	if (Padre::Feature::SESSION) {
 		Padre::Wx::Action->new(
-			name       => 'file.open_session',
-			label      => _T('Open Session...'),
-			comment    => _T('Select a session. Close all the files currently open and open all the listed in the session'),
+			name  => 'file.open_session',
+			label => _T('Open Session...'),
+			comment =>
+				_T('Select a session. Close all the files currently open and open all the listed in the session'),
 			shortcut   => 'Ctrl-Alt-O',
 			menu_event => sub {
 				require Padre::Wx::Dialog::SessionManager;
@@ -775,7 +776,7 @@ sub init {
 		},
 	);
 
-	if ( Padre::Feature::QUICK_FIX ) {
+	if (Padre::Feature::QUICK_FIX) {
 		Padre::Wx::Action->new(
 			name        => 'edit.quick_fix',
 			need_editor => 1,
@@ -1199,11 +1200,11 @@ sub init {
 			# Ctrl-F this press, show find in files dialog
 			require Padre::Wx::Dialog::FindInFiles;
 			my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
-			findinfiles->find_term->SetValue($term);
-			findinfiles->run;
-			findinfiles->Destroy;
+			$findinfiles->find_term->SetValue($term);
+			$findinfiles->run;
+			$findinfiles->Destroy;
 
-			return
+			return;
 		},
 	);
 
@@ -1293,7 +1294,7 @@ sub init {
 		},
 	);
 
-	if ( Padre::Feature::REPLACEINFILES ) {
+	if (Padre::Feature::REPLACEINFILES) {
 		Padre::Wx::Action->new(
 			name       => 'search.replace_in_files',
 			label      => _T('Re&place in Files...'),
@@ -1323,7 +1324,7 @@ sub init {
 
 	# Bookmark Support
 
-	if ( Padre::Feature::BOOKMARK ) {
+	if (Padre::Feature::BOOKMARK) {
 		Padre::Wx::Action->new(
 			name       => 'search.bookmark_set',
 			label      => _T('Set Bookmark'),
@@ -1514,7 +1515,7 @@ sub init {
 		},
 	);
 
-	if ( Padre::Feature::FOLDING ) {
+	if (Padre::Feature::FOLDING) {
 		Padre::Wx::Action->new(
 			name        => 'view.folding',
 			label       => _T('Show Code Folding'),
@@ -1634,7 +1635,7 @@ sub init {
 
 	# Font Size
 
-	if ( Padre::Feature::FONTSIZE ) {
+	if (Padre::Feature::FONTSIZE) {
 		Padre::Wx::Action->new(
 			name       => 'view.font_increase',
 			label      => _T('Increase Font Size'),
@@ -2059,7 +2060,7 @@ sub init {
 
 	# Debugging
 
-	if ( Padre::Feature::DEBUGGER ) {
+	if (Padre::Feature::DEBUGGER) {
 
 		Padre::Wx::Action->new(
 			name         => 'debug.step_in',
@@ -2295,7 +2296,7 @@ sub init {
 		},
 	);
 
-	if ( Padre::Feature::SYNC ) {
+	if (Padre::Feature::SYNC) {
 		Padre::Wx::Action->new(
 			name       => 'tools.sync',
 			label      => _T('Preferences Sync'),

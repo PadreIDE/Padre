@@ -169,6 +169,7 @@ next production release, and synchronise their release to the Padre schedule.
     - Moved Bookmarks from View to Search menu in line with other
       several other editors (ADAMK)
     - Added feature_folding to allow the removal of code folding support (ADAMK)
+    - Fixed #1287: Find in files crashing (SEWI)
 
 0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to
