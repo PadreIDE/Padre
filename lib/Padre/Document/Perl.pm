@@ -379,6 +379,7 @@ sub get_command {
 	my @commands = (qq{"$perl"});
 	push @commands, '-d'                        if $debug;
 	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
+	push @commands, '-MDevel::EndStats=verbose,1' if $config->feature_devel_endstats;
 	push @commands, "$run_args{interpreter}";
 	if (Padre::Constant::WIN32) {
 		push @commands, qq{"$shortname"$script_args};
