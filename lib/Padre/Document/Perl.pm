@@ -829,25 +829,28 @@ sub _find_sub_decl_line_number {
 # Check the outline data to see if we have a particular sub
 sub has_sub {
 	my $self = shift;
-	my $sub  = shift;
-
-	return $self->get_sub_line_number($sub) ? 1 : 0;
+	my $name = shift;
+	return $self->get_sub_line_number($name) ? 1 : 0;
 }
 
 # Returns the line number of a sub (or undef if it doesn't exist) based on the outline data
 sub get_sub_line_number {
 	my $self = shift;
-	my $sub  = shift or return;
+	my $name = shift or return;
 	my $data = $self->outline_data or return;
 
 	foreach my $package (@$data) {
 		foreach my $method ( @{ $package->{methods} } ) {
-			return $method->{line} if $method->{name} eq $sub;
+			return $method->{line} if $method->{name} eq $name;
 		}
 	}
 
 	return;
 }
+
+
+
+
 
 #####################################################################
 # Padre::Document Document Manipulation
