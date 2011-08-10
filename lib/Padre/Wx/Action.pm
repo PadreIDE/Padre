@@ -139,9 +139,10 @@ sub label_menu {
 
 	my $shortcut = $self->shortcut;
 
-	if ( $shortcut
-		and ( ( $shortcut eq 'F12' ) 
-			or ( $self->id == -1 or Padre::Constant::WIN32() or Padre::Constant::MAC()) ) )
+	if ($shortcut
+		and (  ( $shortcut eq 'F12' )
+			or ( $self->id == -1 or Padre::Constant::WIN32() or Padre::Constant::MAC() ) )
+		)
 	{
 		$label .= "\t" . $shortcut;
 	}

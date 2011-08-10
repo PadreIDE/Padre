@@ -23,8 +23,10 @@ BEGIN {
 }
 
 # need to skip share, t/files and t/collection
-all_critic_ok( qw{
-	blib/script
-	blib/lib/Padre.pm
-	blib/lib/Padre
-} );
+all_critic_ok(
+	qw{
+		blib/script
+		blib/lib/Padre.pm
+		blib/lib/Padre
+		}
+);

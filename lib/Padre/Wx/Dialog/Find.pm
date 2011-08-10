@@ -43,8 +43,8 @@ sub new {
 # Event Handlers
 
 sub find_next_clicked {
-	my $self   = shift;
-	my $main   = $self->main;
+	my $self = shift;
+	my $main = $self->main;
 
 	# Generate the search object
 	my $search = $self->as_search;

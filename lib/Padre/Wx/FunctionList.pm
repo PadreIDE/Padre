@@ -249,7 +249,7 @@ sub refresh {
 
 	# Nothing to do if there is no content
 	my $task = $document->task_functions;
-	if ( $document->is_unused or not $task) {
+	if ( $document->is_unused or not $task ) {
 		$list->Clear;
 		return 1;
 	}

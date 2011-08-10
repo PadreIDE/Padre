@@ -68,7 +68,7 @@ sub new {
 	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
-	if ( Padre::Feature::DEBUGGER ) {
+	if (Padre::Feature::DEBUGGER) {
 		require Padre::Wx::Menu::Debug;
 		$self->{debug} = Padre::Wx::Menu::Debug->new($main);
 	}
@@ -125,15 +125,15 @@ sub refresh {
 	if ( $perl and not $menu ) {
 		$self->insert( 4, $self->perl );
 		$self->insert( 5, $self->refactor );
-		if ( Padre::Feature::DEBUGGER ) {
+		if (Padre::Feature::DEBUGGER) {
 			$self->insert( 7, $self->debug );
 		}
 	} elsif ( $menu and not $perl ) {
-		if ( Padre::Feature::DEBUGGER ) {
+		if (Padre::Feature::DEBUGGER) {
 			$self->remove(7); # debug
 		}
-		$self->remove(5);         # refactor
-		$self->remove(4);         # perl
+		$self->remove(5);     # refactor
+		$self->remove(4);     # perl
 	}
 
 	# Refresh individual menus
@@ -148,7 +148,7 @@ sub refresh {
 	if ($perl) {
 		$self->perl->refresh($current);
 		$self->refactor->refresh($current);
-		if ( Padre::Feature::DEBUGGER ) {
+		if (Padre::Feature::DEBUGGER) {
 			$self->debug->refresh($current);
 		}
 	}

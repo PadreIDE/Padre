@@ -40,10 +40,13 @@ END_PERL
 # Basic Parsing
 
 SCOPE: {
+
 	# Create the function list parser
-	my $task = new_ok( 'Padre::Document::Perl::FunctionList', [
-		text => $code,
-	] );
+	my $task = new_ok(
+		'Padre::Document::Perl::FunctionList',
+		[   text => $code,
+		]
+	);
 
 	# Executing the parsing job
 	ok( $task->run, '->run ok' );
@@ -51,16 +54,17 @@ SCOPE: {
 	# Check the result of the parsing
 	is_deeply(
 		$task->{list},
-		[ qw{
-			_bar
-			foo1
-			foo3
-			foo2
-			foo4
-			foo5
-			backwards
-			_backwards
-		} ],
+		[   qw{
+				_bar
+				foo1
+				foo3
+				foo2
+				foo4
+				foo5
+				backwards
+				_backwards
+				}
+		],
 		'Found expected functions',
 	);
 }
@@ -73,11 +77,14 @@ SCOPE: {
 # Alphabetical Ordering
 
 SCOPE: {
+
 	# Create the function list parser
-	my $task = new_ok( 'Padre::Document::Perl::FunctionList', [
-		text  => $code,
-		order => 'alphabetical',
-	] );
+	my $task = new_ok(
+		'Padre::Document::Perl::FunctionList',
+		[   text  => $code,
+			order => 'alphabetical',
+		]
+	);
 
 	# Executing the parsing job
 	ok( $task->run, '->run ok' );
@@ -85,16 +92,17 @@ SCOPE: {
 	# Check the result of the parsing
 	is_deeply(
 		$task->{list},
-		[ qw{
-			backwards
-			_backwards
-			_bar
-			foo1
-			foo2
-			foo3
-			foo4
-			foo5
-		} ],
+		[   qw{
+				backwards
+				_backwards
+				_bar
+				foo1
+				foo2
+				foo3
+				foo4
+				foo5
+				}
+		],
 		'Found expected functions',
 	);
 }
@@ -107,11 +115,14 @@ SCOPE: {
 # Alphabetical Ordering (Private Last)
 
 SCOPE: {
+
 	# Create the function list parser
-	my $task = new_ok( 'Padre::Document::Perl::FunctionList', [
-		text  => $code,
-		order => 'alphabetical_private_last',
-	] );
+	my $task = new_ok(
+		'Padre::Document::Perl::FunctionList',
+		[   text  => $code,
+			order => 'alphabetical_private_last',
+		]
+	);
 
 	# Executing the parsing job
 	ok( $task->run, '->run ok' );
@@ -119,16 +130,17 @@ SCOPE: {
 	# Check the result of the parsing
 	is_deeply(
 		$task->{list},
-		[ qw{
-			backwards
-			foo1
-			foo2
-			foo3
-			foo4
-			foo5
-			_backwards
-			_bar
-		} ],
+		[   qw{
+				backwards
+				foo1
+				foo2
+				foo3
+				foo4
+				foo5
+				_backwards
+				_bar
+				}
+		],
 		'Found expected functions',
 	);
 }

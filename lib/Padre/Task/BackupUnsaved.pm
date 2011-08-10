@@ -23,16 +23,17 @@ sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-warn 1;
+	warn 1;
+
 	# Save the list of open files
 	require Padre::Current;
 	$self->{changes} = {
 		map {
 			warn $_->filename;
 			$_->filename => $_->text_get,
-		} grep {
- 			$_->is_unsaved
-		} Padre::Current->main->documents
+			} grep {
+			$_->is_unsaved
+			} Padre::Current->main->documents
 	};
 
 	return 1;
@@ -48,13 +49,15 @@ sub run {
 
 	# Remove the (bulky) changes from the task object so it
 	# won't need to be sent back up to the main thread.
-	my $changes  = delete $self->{changes};
+	my $changes = delete $self->{changes};
 
-	if ( %$changes ) {
+	if (%$changes) {
+
 		# Save the content (quickly)
 		require Storable;
 		Storable::lock_nstore( $changes, $filename );
 	} else {
+
 		# No changed files, remove backup file
 		require File::Remove;
 		File::Remove::remove($filename) if -e $filename;

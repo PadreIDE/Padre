@@ -50,7 +50,7 @@ our @ISA     = 'Wx::App';
 my $SINGLETON = undef;
 
 sub new {
-	unless ( $SINGLETON ) {
+	unless ($SINGLETON) {
 		$SINGLETON = shift->SUPER::new;
 		$SINGLETON->{conduit} = Padre::Wx::Frame::Null->new;
 		$SINGLETON->{conduit}->conduit_init;

@@ -284,13 +284,11 @@ sub guess_subpath {
 my $keywords;
 
 sub keywords {
-	$keywords or
-	$keywords = YAML::Tiny::LoadFile(
-		Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' )
-	);
+	$keywords
+		or $keywords = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' ) );
 }
 
-my $wordchars =  join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z';
+my $wordchars = join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z';
 
 sub stc_word_chars {
 	return $wordchars;
@@ -355,8 +353,8 @@ sub get_command {
 	my $shortname = File::Basename::basename($filename);
 
 	my @commands = (qq{"$perl"});
-	push @commands, '-d'                        if $debug;
-	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
+	push @commands, '-d'                          if $debug;
+	push @commands, '-Mdiagnostics(-traceonly)'   if $trace;
 	push @commands, '-MDevel::EndStats=verbose,1' if $config->feature_devel_endstats;
 	push @commands, "$run_args{interpreter}";
 	if (Padre::Constant::WIN32) {
@@ -473,7 +471,7 @@ sub beginner_check {
 
 	# Report any errors
 	my $error = $beginner->error;
-	if ( $error ) {
+	if ($error) {
 		$self->main->error( Wx::gettext('Error: ') . $error );
 	} else {
 		$self->main->message( Wx::gettext('No errors found.') );
@@ -654,10 +652,10 @@ sub find_method_declaration {
 	my $line_start   = $editor->PositionFromLine($line);
 	my $token_end    = $line_start + $col + 1 + length($token);
 	my $line_content = $editor->GetTextRange( $line_start, $token_end );
-	my ($class)      = $line_content =~ /(?:^|[^\w:\$])(\w+(?:::\w+)*)\s*->\s*\Q$token\E$/;
+	my ($class) = $line_content =~ /(?:^|[^\w:\$])(\w+(?:::\w+)*)\s*->\s*\Q$token\E$/;
 
 	my ( $found, $filename ) = $self->_find_method( $token, $class );
-	unless ( $found ) {
+	unless ($found) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Current '%s' not found"), $token ),
 			Wx::gettext("Check cancelled"),
@@ -671,7 +669,7 @@ sub find_method_declaration {
 	Padre::Wx::Dialog::Positions->set_position;
 
 	# Go to function in current file
-	unless ( $filename ) {
+	unless ($filename) {
 		$editor->goto_function($token);
 		return ();
 	}
@@ -1038,7 +1036,7 @@ EOC
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
 		$self->get_function_regex($subname),
-		$editor->GetSelection,  # Provides two params
+		$editor->GetSelection, # Provides two params
 	);
 	unless ( defined $start ) {
 
@@ -1779,34 +1777,36 @@ sub guess_filename_to_open {
 
 sub lexer_keywords {
 	return [
+
 		# Perl Keywords
-		[ qw(NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
-		BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept
-		alarm and atan2 bind binmode bless caller chdir chmod chomp chop
-		chown chr chroot close closedir cmp connect continue cos crypt
-		dbmclose dbmopen defined delete die do dump each else elsif endgrent
-		endhostent endnetent endprotoent endpwent endservent eof eq eval
-		exec exists exit exp fcntl fileno flock for foreach fork format
-		formline ge getc getgrent getgrgid getgrnam gethostbyaddr gethostbyname
-		gethostent getlogin getnetbyaddr getnetbyname getnetent getpeername
-		getpgrp getppid getpriority getprotobyname getprotobynumber getprotoent
-		getpwent getpwnam getpwuid getservbyname getservbyport getservent
-		getsockname getsockopt glob gmtime goto grep gt hex if index
-		int ioctl join keys kill last lc lcfirst le length link listen
-		local localtime lock log lstat lt map mkdir msgctl msgget msgrcv
-		msgsnd my ne next no not oct open opendir or ord our pack package
-		pipe pop pos print printf prototype push quotemeta qu
-		rand read readdir readline readlink readpipe recv redo
-		ref rename require reset return reverse rewinddir rindex rmdir
-		scalar seek seekdir select semctl semget semop send setgrent
-		sethostent setnetent setpgrp setpriority setprotoent setpwent
-		setservent setsockopt shift shmctl shmget shmread shmwrite shutdown
-		sin sleep socket socketpair sort splice split sprintf sqrt srand
-		stat study sub substr symlink syscall sysopen sysread sysseek
-		system syswrite tell telldir tie tied time times truncate
-		uc ucfirst umask undef unless unlink unpack unshift untie until
-		use utime values vec wait waitpid wantarray warn while write
-		xor given when default say state UNITCHECK) ],
+		[   qw(NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
+				BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept
+				alarm and atan2 bind binmode bless caller chdir chmod chomp chop
+				chown chr chroot close closedir cmp connect continue cos crypt
+				dbmclose dbmopen defined delete die do dump each else elsif endgrent
+				endhostent endnetent endprotoent endpwent endservent eof eq eval
+				exec exists exit exp fcntl fileno flock for foreach fork format
+				formline ge getc getgrent getgrgid getgrnam gethostbyaddr gethostbyname
+				gethostent getlogin getnetbyaddr getnetbyname getnetent getpeername
+				getpgrp getppid getpriority getprotobyname getprotobynumber getprotoent
+				getpwent getpwnam getpwuid getservbyname getservbyport getservent
+				getsockname getsockopt glob gmtime goto grep gt hex if index
+				int ioctl join keys kill last lc lcfirst le length link listen
+				local localtime lock log lstat lt map mkdir msgctl msgget msgrcv
+				msgsnd my ne next no not oct open opendir or ord our pack package
+				pipe pop pos print printf prototype push quotemeta qu
+				rand read readdir readline readlink readpipe recv redo
+				ref rename require reset return reverse rewinddir rindex rmdir
+				scalar seek seekdir select semctl semget semop send setgrent
+				sethostent setnetent setpgrp setpriority setprotoent setpwent
+				setservent setsockopt shift shmctl shmget shmread shmwrite shutdown
+				sin sleep socket socketpair sort splice split sprintf sqrt srand
+				stat study sub substr symlink syscall sysopen sysread sysseek
+				system syswrite tell telldir tie tied time times truncate
+				uc ucfirst umask undef unless unlink unpack unshift untie until
+				use utime values vec wait waitpid wantarray warn while write
+				xor given when default say state UNITCHECK)
+		],
 	];
 }
 

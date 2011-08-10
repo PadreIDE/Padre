@@ -64,7 +64,7 @@ sub new {
 		'file.new_p6_script',
 	);
 
-	if ( Padre::Feature::WIZARD_SELECTOR ) {
+	if (Padre::Feature::WIZARD_SELECTOR) {
 		$file_new->AppendSeparator;
 
 		$self->add_menu_action(
@@ -219,7 +219,7 @@ sub new {
 		'file.save_all',
 	);
 
-	if ( Padre::Feature::SESSION ) {
+	if (Padre::Feature::SESSION) {
 
 		$self->AppendSeparator;
 
@@ -289,7 +289,7 @@ sub title {
 }
 
 sub refresh {
-	my $self     = shift;
+	my $self = shift;
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
@@ -371,7 +371,7 @@ sub refill_recent {
 	}
 
 	# Enable/disable 'Open Last Closed File' menu item
-	$self->{open_last_closed_file}->Enable($last_closed_file_found ? 1 : 0);
+	$self->{open_last_closed_file}->Enable( $last_closed_file_found ? 1 : 0 );
 
 	return;
 }

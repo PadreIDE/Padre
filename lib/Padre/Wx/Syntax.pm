@@ -333,7 +333,7 @@ sub refresh {
 
 	# If the document is unused, shortcut to avoid pointless tasks
 	my $task = $document->task_syntax;
-	if ( $document->is_unused or not $task) {
+	if ( $document->is_unused or not $task ) {
 		my $lock = $self->main->lock('UPDATE');
 		$self->clear;
 		return;

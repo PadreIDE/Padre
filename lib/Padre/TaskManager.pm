@@ -222,6 +222,7 @@ sub start {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	if ( $self->{threads} ) {
+
 		# Start the master if it wasn't pre-launched for some reason
 		unless ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master;
@@ -263,7 +264,7 @@ sub stop {
 	# Shut down the master thread
 	# NOTE: We ignore the status of the thread master settings here and
 	# act only on the basis of whether or not a master thread is running.
-	if ( $Padre::TaskThread::VERSION ) {
+	if ($Padre::TaskThread::VERSION) {
 		if ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master->stop;
 		}

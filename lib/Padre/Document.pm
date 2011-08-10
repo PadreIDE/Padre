@@ -177,7 +177,7 @@ my $UNSAVED = 0;
 
 use Class::XSAccessor {
 	getters => {
-		unsaved     => 'unsaved',
+		unsaved      => 'unsaved',
 		filename     => 'filename',    # setter is defined as normal function
 		file         => 'file',        # Padre::File - object
 		editor       => 'editor',
@@ -215,7 +215,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before

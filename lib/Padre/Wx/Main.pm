@@ -200,7 +200,7 @@ sub new {
 	Padre::Wx::ActionLibrary->init($self);
 
 	# Bootstrap the wizard system
-	if ( Padre::Feature::WIZARD_SELECTOR ) {
+	if (Padre::Feature::WIZARD_SELECTOR) {
 		require Padre::Wx::WizardLibrary;
 		Padre::Wx::WizardLibrary->init($self);
 	}
@@ -291,21 +291,25 @@ sub new {
 	);
 
 	# Scintilla Event Hooks
-        # We delay per-stc-update processing until idle.
-        # This is primarily due to a defect http://trac.wxwidgets.org/ticket/4272:
-        # No status bar updates during STC_PAINTED, which we appear to hit on UPDATEUI.
-	Wx::Event::EVT_STC_UPDATEUI( 
-                $self, -1, sub { 
-                  shift->{_do_update_ui} = 1;
-                } );
-        Wx::Event::EVT_IDLE(
-                $self, sub { 
-                  my $self = shift;
-                  if($self->{_do_update_ui}) {
-                    $self->{_do_update_ui} = undef;
-                    $self->on_stc_update_ui;
-                  }
-                });
+	# We delay per-stc-update processing until idle.
+	# This is primarily due to a defect http://trac.wxwidgets.org/ticket/4272:
+	# No status bar updates during STC_PAINTED, which we appear to hit on UPDATEUI.
+	Wx::Event::EVT_STC_UPDATEUI(
+		$self, -1,
+		sub {
+			shift->{_do_update_ui} = 1;
+		}
+	);
+	Wx::Event::EVT_IDLE(
+		$self,
+		sub {
+			my $self = shift;
+			if ( $self->{_do_update_ui} ) {
+				$self->{_do_update_ui} = undef;
+				$self->on_stc_update_ui;
+			}
+		}
+	);
 
 	Wx::Event::EVT_STC_CHANGE( $self, -1, \&on_stc_change );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
@@ -328,7 +332,7 @@ sub new {
 
 	# This require is only here so it can follow this constructor
 	# when it moves to being created on demand.
-	if ( Padre::Feature::DEBUGGER ) {
+	if (Padre::Feature::DEBUGGER) {
 		require Padre::Wx::Debugger;
 		$self->{debugger} = Padre::Wx::Debugger->new;
 	}
@@ -705,7 +709,8 @@ BEGIN {
 			$self->{debug} = Padre::Wx::Debug->new($self);
 		}
 		return $self->{debug};
-	} if Padre::Feature::DEBUGGER;
+		}
+		if Padre::Feature::DEBUGGER;
 }
 
 sub outline {
@@ -2211,7 +2216,8 @@ BEGIN {
 		$self->_show_debug($on);
 		$self->aui->Update;
 		return;
-	} if Padre::Feature::DEBUGGER;
+		}
+		if Padre::Feature::DEBUGGER;
 
 	*_show_debug = sub {
 		my $self = shift;
@@ -2224,7 +2230,8 @@ BEGIN {
 			$self->right->hide($debugger);
 		}
 		return 1;
-	} if Padre::Feature::DEBUGGER;
+		}
+		if Padre::Feature::DEBUGGER;
 }
 
 =pod
@@ -3311,8 +3318,8 @@ sub search_next {
 	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$search = $self->{search} = shift;
-		return !! $search->search_next($editor);
-	} elsif ( @_ ) {
+		return !!$search->search_next($editor);
+	} elsif (@_) {
 		die 'Invalid argument to search_next';
 	}
 
@@ -3320,7 +3327,7 @@ sub search_next {
 	my ( $position1, $position2 ) = $editor->GetSelection;
 	if ( $position1 == $position2 ) {
 		return unless $search;
-		return !! $search->search_next($editor);
+		return !!$search->search_next($editor);
 	}
 
 	# Multiple lines are also done the obvious way
@@ -3328,7 +3335,7 @@ sub search_next {
 	my $line2 = $editor->LineFromPosition($position2);
 	unless ( $line1 == $line2 ) {
 		return unless $search;
-		return !! $self->search_next($editor);
+		return !!$self->search_next($editor);
 	}
 
 	# Case-specific search for the current selection
@@ -3341,7 +3348,7 @@ sub search_next {
 			$position1, $position2,
 		),
 	);
-	return !! $search->search_next($editor);
+	return !!$search->search_next($editor);
 }
 
 =pod
@@ -3369,8 +3376,8 @@ sub search_previous {
 	# shortcut special logic and run that search immediately.
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$search = $self->{search} = shift;
-		return !! $search->search_previous($editor);
-	} elsif ( @_ ) {
+		return !!$search->search_previous($editor);
+	} elsif (@_) {
 		die 'Invalid argument to search_previous';
 	}
 
@@ -3378,7 +3385,7 @@ sub search_previous {
 	my ( $position1, $position2 ) = $editor->GetSelection;
 	if ( $position1 == $position2 ) {
 		return unless $search;
-		return !! $search->search_previous($editor);
+		return !!$search->search_previous($editor);
 	}
 
 	# Multiple lines are also done the obvious way
@@ -3386,7 +3393,7 @@ sub search_previous {
 	my $line2 = $editor->LineFromPosition($position2);
 	unless ( $line1 == $line2 ) {
 		return unless $search;
-		return !! $self->search_previous($editor);
+		return !!$self->search_previous($editor);
 	}
 
 	# Case-specific search for the current selection
@@ -3399,7 +3406,7 @@ sub search_previous {
 			$position1, $position2,
 		),
 	);
-	return !! $search->search_previous($editor);
+	return !!$search->search_previous($editor);
 }
 
 =pod
@@ -3643,7 +3650,7 @@ sub on_close_window {
 
 	# Terminate any currently running debugger session before we start
 	# to do anything significant.
-	if ( Padre::Feature::DEBUGGER ) {
+	if (Padre::Feature::DEBUGGER) {
 		if ( $self->{debugger} ) {
 			$self->{debugger}->quit;
 		}
@@ -3654,7 +3661,7 @@ sub on_close_window {
 	# just save some basic parts like the last session and so on.
 	# Some of the steps in the shutdown have transactions anyway, but
 	# this will expand them to cover everything.
-	my $transaction = $self->lock('DB', 'refresh_recent');
+	my $transaction = $self->lock( 'DB', 'refresh_recent' );
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up.
@@ -3972,7 +3979,7 @@ sub setup_editor {
 	my $id = $self->create_tab( $editor, $title );
 	$self->notebook->GetPage($id)->SetFocus;
 
-	if ( Padre::Feature::CURSORMEMORY ) {
+	if (Padre::Feature::CURSORMEMORY) {
 		$editor->restore_cursor_position;
 	}
 
@@ -4527,13 +4534,13 @@ sub reload_file {
 		$editor = $document->editor;
 	}
 
-	if ( Padre::Feature::CURSORMEMORY ) {
+	if (Padre::Feature::CURSORMEMORY) {
 		$editor->store_cursor_position;
 	}
 	if ( $document->reload ) {
 		$editor = $document->editor;
 		$editor->configure_editor($document);
-		if ( Padre::Feature::CURSORMEMORY ) {
+		if (Padre::Feature::CURSORMEMORY) {
 			$editor->restore_cursor_position;
 		}
 	} else {
@@ -5068,7 +5075,7 @@ sub close {
 		} @{ $self->{on_close_watchers}->{$fn} };
 	}
 
-	if ( Padre::Feature::CURSORMEMORY ) {
+	if (Padre::Feature::CURSORMEMORY) {
 		$editor->store_cursor_position;
 	}
 	if ( $document->tempfile ) {
@@ -5676,7 +5683,8 @@ BEGIN {
 		$self->menu->view->refresh;
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 }
 
 =pod
@@ -6560,7 +6568,7 @@ No return value.
 =cut
 
 sub on_duplicate {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 	return $self->new_document_from_string(
 		$document->text_get,

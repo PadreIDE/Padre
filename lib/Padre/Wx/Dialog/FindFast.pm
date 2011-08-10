@@ -64,7 +64,7 @@ sub search {
 # -- Private methods
 
 sub _find {
-	my $self = shift;
+	my $self    = shift;
 	my $current = Padre::Current->new;
 	my $editor  = $current->editor or return;
 	my $main    = $current->main;

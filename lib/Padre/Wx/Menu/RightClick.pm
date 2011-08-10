@@ -99,13 +99,10 @@ sub new {
 	);
 
 	my $config = $main->config;
-	if (
-		Padre::Feature::FOLDING
-		and
-		$event->isa('Wx::MouseEvent')
-		and
-		$config->editor_folding
-	) {
+	if (    Padre::Feature::FOLDING
+		and $event->isa('Wx::MouseEvent')
+		and $config->editor_folding )
+	{
 		my $position = $event->GetPosition;
 		my $line     = $editor->LineFromPosition( $editor->PositionFromPoint($position) );
 		my $point    = $editor->PointFromPosition( $editor->PositionFromLine($line) );
@@ -125,7 +122,7 @@ sub new {
 	}
 
 	my $document = $editor->{Document};
-	if ( $document ) {
+	if ($document) {
 		$self->AppendSeparator;
 
 		if ( $document->can('event_on_right_down') ) {

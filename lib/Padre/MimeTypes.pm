@@ -801,6 +801,7 @@ sub guess_mimetype {
 			# of bits and Padre/Perl simply has the wrong point of view (UTF-8),
 			# so we drop these warnings:
 			local $SIG{__WARN__} = sub {
+
 				# Die if we throw a bad codepoint - this is a binary file.
 				if ( $_[0] =~ /Code point .* is not Unicode/ ) {
 					die $_[0];

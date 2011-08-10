@@ -23,7 +23,7 @@ sub new {
 	# Fill the dropbox
 	$select->Clear;
 	foreach my $special ( $self->catalogue ) {
-		$select->Append( @$special );
+		$select->Append(@$special);
 	}
 	$select->SetSelection(0);
 
@@ -47,7 +47,7 @@ sub refresh {
 }
 
 sub insert_preview {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	$editor->insert_text( $self->value );
 }
@@ -63,12 +63,12 @@ sub catalogue {
 	my $date = Wx::gettext('Date/Time');
 	my $file = Wx::gettext('File');
 	return (
-		[ "$date - " . Wx::gettext('Now'),   'time_now'   ],
+		[ "$date - " . Wx::gettext('Now'),   'time_now' ],
 		[ "$date - " . Wx::gettext('Today'), 'time_today' ],
-		[ "$date - " . Wx::gettext('Year'),  'time_year'  ],
+		[ "$date - " . Wx::gettext('Year'),  'time_year' ],
 		[ "$date - " . Wx::gettext('Epoch'), 'time_epoch' ],
-		[ "$file - " . Wx::gettext('Name'),  'file_name'  ],
-		[ "$file - " . Wx::gettext('Size'),  'file_size'  ],
+		[ "$file - " . Wx::gettext('Name'),  'file_name' ],
+		[ "$file - " . Wx::gettext('Size'),  'file_size' ],
 		[ "$file - " . Wx::gettext('Lines'), 'file_lines' ],
 	);
 }
@@ -99,7 +99,7 @@ sub time_epoch {
 }
 
 sub file_name {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return '';
 	if ( $document->file ) {
 		return $document->{file}->filename;
@@ -113,7 +113,7 @@ sub file_name {
 
 sub file_size {
 	my $self     = shift;
-	my $document = $self->current->document                   or return 0;
+	my $document = $self->current->document or return 0;
 	my $filename = $document->filename || $document->tempfile or return 0;
 	return -s $filename;
 }

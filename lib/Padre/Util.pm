@@ -295,7 +295,7 @@ sub get_matches {
 	die 'missing parameters' if @_ < 4;
 
 	require Encode;
-	$text  = Encode::encode( 'utf-8', $text  );
+	$text  = Encode::encode( 'utf-8', $text );
 	$regex = Encode::encode( 'utf-8', $regex );
 
 	my @matches = ();

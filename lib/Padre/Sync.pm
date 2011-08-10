@@ -163,7 +163,7 @@ sub register {
 
 	return "Registration failure(Server): $h->{error}" if $h->{error};
 	return "Registration failure(Padre): $@" if $@;
-        return "Registration failure(unknown)";
+	return "Registration failure(unknown)";
 }
 
 =pod

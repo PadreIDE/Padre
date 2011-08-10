@@ -22,7 +22,7 @@ sub new {
 	my $self   = $class->SUPER::new(@_);
 	my $filter = $self->filter;
 	my $select = $self->select;
-	my $lock   = $self->main->lock('DB', 'UPDATE');
+	my $lock   = $self->main->lock( 'DB', 'UPDATE' );
 
 	# Fill the filter
 	$filter->Clear;
@@ -54,11 +54,9 @@ sub refresh {
 
 sub refilter {
 	my $self   = shift;
-	my $lock   = $self->main->lock('DB', 'UPDATE');
+	my $lock   = $self->main->lock( 'DB', 'UPDATE' );
 	my $select = $self->select;
-	my $filter = $self->filter->GetClientData(
-		$self->filter->GetSelection
-	);
+	my $filter = $self->filter->GetClientData( $self->filter->GetSelection );
 	$select->Clear;
 	foreach my $name ( $self->names($filter) ) {
 		$select->Append(@$name);
@@ -82,15 +80,11 @@ sub insert_snippet {
 # Support Methods
 
 sub filters {
-	my $self   = shift;
-	my $select = Padre::DB->selectall_arrayref(
-		'SELECT DISTINCT category FROM snippets ORDER BY category'
-	);
+	my $self    = shift;
+	my $select  = Padre::DB->selectall_arrayref( 'SELECT DISTINCT category FROM snippets ORDER BY category' );
 	my @filters = (
 		[ Wx::gettext('All'), '' ],
-		map {
-			[ $_->[0] => $_->[0] ]
-		} @$select
+		map { [ $_->[0] => $_->[0] ] } @$select
 	);
 	return @filters;
 }
@@ -99,11 +93,9 @@ sub names {
 	my $self   = shift;
 	my $filter = shift;
 	my $where  = $filter ? 'WHERE category = ?' : '';
-	my @param  = $filter ? ( $filter ) : ( );
+	my @param  = $filter ? ($filter) : ();
 	my @names  = (
-		map {
-			[ $_->name => $_->id ]
-		} Padre::DB::Snippets->select(
+		map { [ $_->name => $_->id ] } Padre::DB::Snippets->select(
 			"$where ORDER BY category, name",
 			@param,
 		)

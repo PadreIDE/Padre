@@ -39,7 +39,7 @@ sub new {
 	);
 
 	# Config Sync
-	if ( Padre::Feature::SYNC ) {
+	if (Padre::Feature::SYNC) {
 		$self->add_menu_action(
 			'tools.sync',
 		);

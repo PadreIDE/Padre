@@ -59,7 +59,7 @@ sub new {
 	);
 
 	# Recursive Replace
-	if ( Padre::Feature::REPLACEINFILES ) {
+	if (Padre::Feature::REPLACEINFILES) {
 		$self->add_menu_action(
 			'search.replace_in_files',
 		);
@@ -74,7 +74,7 @@ sub new {
 	);
 
 	# Bookmark Support
-	if ( Padre::Feature::BOOKMARK ) {
+	if (Padre::Feature::BOOKMARK) {
 		$self->AppendSeparator;
 
 		$self->{bookmark_set} = $self->add_menu_action(
@@ -115,7 +115,7 @@ sub refresh {
 	$self->{goto}->Enable($editor);
 
 	# Bookmarks can only be placed on files on disk
-	if ( Padre::Feature::BOOKMARK ) {
+	if (Padre::Feature::BOOKMARK) {
 		$self->{bookmark_set}->Enable( ( $editor and defined $current->filename ) ? 1 : 0 );
 	}
 

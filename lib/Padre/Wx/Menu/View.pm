@@ -133,7 +133,7 @@ sub new {
 	);
 
 	# Code folding menu entries
-	if ( Padre::Feature::FOLDING ) {
+	if (Padre::Feature::FOLDING) {
 		$self->AppendSeparator;
 
 		$self->{folding} = $self->add_menu_action(
@@ -162,7 +162,7 @@ sub new {
 	$self->AppendSeparator;
 
 	# Font Size
-	if ( Padre::Feature::FONTSIZE ) {
+	if (Padre::Feature::FONTSIZE) {
 		$self->{fontsize} = Wx::Menu->new;
 		$self->Append(
 			-1,
@@ -264,7 +264,7 @@ sub refresh {
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{toolbar}->Check( $config->main_toolbar );
 
-	if ( Padre::Feature::FOLDING ) {
+	if (Padre::Feature::FOLDING) {
 		my $folding = $config->editor_folding;
 		$self->{folding}->Check($folding);
 		$self->{fold_all}->Enable($folding);
@@ -304,7 +304,7 @@ sub refresh {
 	}
 
 	# Disable zooming if there's no current document
-	if ( Padre::Feature::FONTSIZE ) {
+	if (Padre::Feature::FONTSIZE) {
 		$self->{font_increase}->Enable($doc);
 		$self->{font_decrease}->Enable($doc);
 		$self->{font_reset}->Enable($doc);
