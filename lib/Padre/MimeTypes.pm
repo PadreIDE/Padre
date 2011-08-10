@@ -779,6 +779,8 @@ sub guess_mimetype {
 	}
 
 	# Try derive the mime type from the basename
+	# Makefile is now highlighted as a Makefile
+	# Changelog files are now displayed as text files
 	if ($filename) {
 		my $basename = File::Basename::basename($filename);
 		if ($basename) {
