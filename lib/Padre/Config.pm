@@ -1325,6 +1325,16 @@ setting(
 	default => 0,
 );
 
+# Enable experimental Run with Devel::EndStats support.
+setting(
+	name    => 'feature_devel_endstats',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Enable or disable the Run with Devel::EndStats if it is installed. ')
+		. _T('This requires an installed Devel::EndStats and a Padre restart'),
+);
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
