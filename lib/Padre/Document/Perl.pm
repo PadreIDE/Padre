@@ -705,32 +705,28 @@ sub find_method_declaration {
 	}
 
 	require Padre::Wx::Dialog::Positions;
-	Padre::Wx::Dialog::Positions->set_position();
+	Padre::Wx::Dialog::Positions->set_position;
 
-	if ( not $filename ) {
-
-		#print "No filename\n";
-		# goto $line in current file
-
-		$self->goto_sub($token);
-	} else {
-		my $main = Padre->ide->wx->main;
-
-		# open or switch to file
-		my $id = $main->editor_of_file($filename);
-		if ( not defined $id ) {
-			$id = $main->setup_editor($filename);
-		}
-
-		#print "Filename '$filename' id '$id'\n";
-		# goto $line in that file
-		return if not defined $id;
-
-		#print "ID $id\n";
-		my $editor = $main->notebook->GetPage($id);
-		$editor->{Document}->goto_sub($token);
+	# Go to function in current file
+	unless ( $filename ) {
+		$editor->goto_function($token);
+		return ();
 	}
 
+	# Open or switch to file
+	my $main = $self->current->main;
+	my $id   = $main->editor_of_file($filename);
+	if ( not defined $id ) {
+		$id = $main->setup_editor($filename);
+	}
+
+	#print "Filename '$filename' id '$id'\n";
+	# goto $line in that file
+	return if not defined $id;
+
+	#print "ID $id\n";
+	my $editor = $main->notebook->GetPage($id);
+	$editor->goto_function($token);
 
 	return ();
 }
@@ -828,28 +824,6 @@ sub _find_sub_decl_line_number {
 	}
 
 	return -1;
-}
-
-# Go to the named subroutine
-# Uses the outline if there is one (if the user has opened the outline tree)
-# If not, falls back to a regex, which is pretty basic at the moment
-# Perhaps we could always run the outline task, even if the tree is not open?
-sub goto_sub {
-	my ( $self, $name ) = @_;
-
-	if ( my $line = $self->get_sub_line_number($name) ) {
-		$self->editor->goto_line_centerize($line);
-		return;
-	}
-
-	# Fall back to regexs if there's no outline
-	my $line = _find_sub_decl_line_number( $name, $self->text_get );
-	if ( $line > -1 ) {
-		$self->editor->goto_line_centerize($line);
-		return 1;
-	}
-
-	return;
 }
 
 # Check the outline data to see if we have a particular sub
@@ -1662,12 +1636,12 @@ sub event_on_left_up {
 
 		# Does it look like a function?
 		elsif ( defined $location && $self->has_sub($token) ) {
-			$self->goto_sub($token);
+			$editor->goto_function($token);
 		}
 
 		# Does it look like a path or module?
 		elsif ( defined($token) and ( $token =~ /(?:\/|\:\:)/ ) ) {
-			Padre->ide->wx->main->on_open_selection($token);
+			$self->current->main->on_open_selection($token);
 		}
 	}
 }
