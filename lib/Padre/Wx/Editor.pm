@@ -19,7 +19,8 @@ our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
 
 # Allow the use of two different versions of Scintilla
-our @ISA = Padre::Config::wx_scintilla_ready()
+our @ISA =
+	Padre::Config::wx_scintilla_ready()
 	? qw{ Padre::Wx::Role::Main Wx::ScintillaTextCtrl }
 	: qw{ Padre::Wx::Role::Main Wx::StyledTextCtrl    };
 
@@ -233,14 +234,14 @@ sub padre_setup {
 	my $filename = $document ? $document->filename : '';
 
 	# Configure lexing for the editor based on the document type
-	if ( $document ) {
+	if ($document) {
 		$self->SetLexer( $document->lexer );
 		$self->SetWordChars( $document->stc_word_chars );
 
 		# Set all the lexer keywords lists that the document provides
 		my @lexer_keywords = @{ $document->lexer_keywords };
 		for my $i ( 0 .. $#lexer_keywords ) {
-			$self->SetKeyWords($i, join(' ', @{$lexer_keywords[$i]}));
+			$self->SetKeyWords( $i, join( ' ', @{ $lexer_keywords[$i] } ) );
 		}
 	} else {
 		$self->SetWordChars('');
@@ -692,6 +693,7 @@ BEGIN {
 		my $on   = shift;
 
 		if ($on) {
+
 			# Setup a margin to hold fold markers
 			$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
 			$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
@@ -743,7 +745,8 @@ BEGIN {
 		}
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 }
 
 sub set_preferences {
@@ -756,7 +759,7 @@ sub set_preferences {
 	$self->SetViewEOL( $config->editor_eol );
 	$self->SetViewWhiteSpace( $config->editor_whitespace );
 
-	if ( Padre::Feature::FOLDING ) {
+	if (Padre::Feature::FOLDING) {
 		$self->show_folding( $config->editor_folding );
 	}
 
@@ -833,7 +836,7 @@ sub _auto_indent {
 	my $indent_style = $self->{Document}->get_indentation_style;
 
 	my $content = $self->GetLine($prev_line);
-	my $eol = $self->{Document}->newline;
+	my $eol     = $self->{Document}->newline;
 	$content =~ s/$eol$//;
 	my $indent = ( $content =~ /^(\s+)/ ? $1 : '' );
 
@@ -948,7 +951,8 @@ BEGIN {
 		}
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 
 	*fold_all = sub {
 		my $self        = shift;
@@ -969,7 +973,8 @@ BEGIN {
 		}
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 
 	*unfold_all = sub {
 		my $self        = shift;
@@ -984,7 +989,8 @@ BEGIN {
 		}
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 }
 
 # When the focus is received by the editor
@@ -1218,7 +1224,7 @@ sub on_mousewheel {
 		return;
 	}
 
-	if ( Padre::Feature::FONTSIZE ) {
+	if (Padre::Feature::FONTSIZE) {
 
 		# The default handler zooms in the wrong direction
 		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
@@ -1543,7 +1549,8 @@ BEGIN {
 		}
 
 		return;
-	} if Padre::Feature::FOLDING;
+		}
+		if Padre::Feature::FOLDING;
 }
 
 sub configure_editor {
@@ -1564,7 +1571,7 @@ sub configure_editor {
 sub find_function {
 	my $self     = shift;
 	my $name     = shift;
-	my $document = $self->{Document}                    or return;
+	my $document = $self->{Document} or return;
 	my $regex    = $document->get_function_regex($name) or return;
 
 	# Run the search
@@ -1591,9 +1598,7 @@ sub goto_function {
 sub goto_line_centerize {
 	my $self = shift;
 	my $line = shift;
-	$self->goto_pos_centerize(
-		$self->GetLineIndentPosition($line)
-	);
+	$self->goto_pos_centerize( $self->GetLineIndentPosition($line) );
 }
 
 # CREDIT: Borrowed from Kephra
@@ -1721,6 +1726,7 @@ sub needs_manual_colorize {
 # Cursor Memory
 
 BEGIN {
+
 	#
 	# $doc->store_cursor_position
 	#
@@ -1735,7 +1741,8 @@ BEGIN {
 			$file->filename,
 			$self->GetCurrentPos,
 		);
-	} if Padre::Feature::CURSORMEMORY;
+		}
+		if Padre::Feature::CURSORMEMORY;
 
 	#
 	# $doc->restore_cursor_position
@@ -1752,7 +1759,8 @@ BEGIN {
 		return unless defined $position;
 		$self->SetCurrentPos($position);
 		$self->SetSelection( $position, $position );
-	} if Padre::Feature::CURSORMEMORY;
+		}
+		if Padre::Feature::CURSORMEMORY;
 }
 
 1;
