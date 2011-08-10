@@ -42,7 +42,7 @@ B<NOTE:> I think all the method names are wrong. Blast it.
 =head1 SYNOPSIS
 
   # Does perlish things by default via 'Padre::Browser::POD'
-  my $browser = Padre::Browser->new();
+  my $browser = Padre::Browser->new;
   my $source = Padre::Document->new( filename=>'source/Package.pm' );
 
   my $docs = $browser->docs( $source );
@@ -116,7 +116,7 @@ Accepts a URI or scalar
       # that was easy :)
 
       # You know your own output type, be explicit
-      my $response = Padre::Document->new();
+      my $response = Padre::Document->new;
       $response->{original_content} = $doxygen->output;
       $response->set_mimetype( 'text/x-doxygen' );
       return $response;
@@ -131,7 +131,7 @@ Accepts a URI or scalar
       #  ...
       #
 
-      my $response = Padre::Document->new();
+      my $response = Padre::Document->new;
       $response->{original_content} = $doxy2html->output;
       $response->set_mimetype( 'text/x-html' );
       return $response;

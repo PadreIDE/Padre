@@ -283,8 +283,8 @@ sub _create_controls {
 	$buttons->AddStretchSpacer;
 
 	# Modifiers
-	my %m = $self->_modifiers();
-	foreach my $name ( $self->_modifier_keys() ) {
+	my %m = $self->_modifiers;
+	foreach my $name ( $self->_modifier_keys ) {
 		$self->{$name} = Wx::CheckBox->new(
 			$self,
 			-1,
@@ -607,7 +607,7 @@ sub set_data {
 	}
 
 	my $modifier_string = $data_ref->{modifiers}->[0];
-	my %modifiers       = $self->_modifiers();
+	my %modifiers       = $self->_modifiers;
 	foreach my $name ( keys %modifiers ) {
 		$self->{$name}->SetValue(1) if $modifier_string =~ s/$modifiers{$name}{mod}//;
 	}
@@ -625,7 +625,7 @@ sub _get_modifier_settings {
 
 	my $active_modifiers   = '';
 	my $inactive_modifiers = '';
-	my %modifiers          = $self->_modifiers();
+	my %modifiers          = $self->_modifiers;
 	foreach my $name ( keys %modifiers ) {
 		if ( $self->{$name}->IsChecked ) {
 			$active_modifiers .= $modifiers{$name}{mod};
@@ -771,7 +771,7 @@ sub replace {
 
 sub box_clicked {
 	my $self = shift;
-	$self->run();
+	$self->run;
 	return;
 }
 

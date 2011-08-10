@@ -712,7 +712,7 @@ sub _find_method {
 						or not $tag->{extension}{class} eq $class;
 				last;
 			} continue {
-				$tag = $parser->findNextTag();
+				$tag = $parser->findNextTag;
 			}
 
 			# fall back to the first method name match (bad idea?)
@@ -985,10 +985,10 @@ EOC
 		require PPIx::EditorTools;
 		my $token = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
 		return unless $token;
-		my $statement = $token->statement();
+		my $statement = $token->statement;
 		my $parent    = $statement;
 
-		#print "The statement is: " . $statement->statement() . "\n";
+		#print "The statement is: " . $statement->statement . "\n";
 		my $last_location; # use this to get the last point before the PPI::Document
 		while ( !$parent->isa('PPI::Document') ) {
 
@@ -1007,10 +1007,10 @@ EOC
 		#print "Document start location is: $doc_start_location\n";
 
 		# make the change to the selected text
-		$editor->BeginUndoAction(); # do the edit atomically
+		$editor->BeginUndoAction; # do the edit atomically
 		$editor->ReplaceSelection($new_sub_call);
 		$editor->InsertText( $insert_start_location, $data->GetText );
-		$editor->EndUndoAction();
+		$editor->EndUndoAction;
 
 		return;
 	}
@@ -1018,19 +1018,19 @@ EOC
 	# Show a list of functions
 	require Padre::Wx::Dialog::RefactorSelectFunction;
 	my $dialog = Padre::Wx::Dialog::RefactorSelectFunction->new( $editor->main, \@functions );
-	$dialog->show();
+	$dialog->show;
 	if ( $dialog->{cancelled} ) {
 
-		#$dialog->Destroy();
+		#$dialog->Destroy;
 		return ();
 	}
 
 	my $subname = $dialog->get_function_name;
 
-	#$dialog->Destroy();
+	#$dialog->Destroy;
 
 	# make the change to the selected text
-	$editor->BeginUndoAction(); # do the edit atomically
+	$editor->BeginUndoAction; # do the edit atomically
 	$editor->ReplaceSelection($new_sub_call);
 
 	# with the change made
@@ -1044,8 +1044,8 @@ EOC
 
 		# This needs to now rollback the
 		# the changes made with the editor
-		$editor->Undo();
-		$editor->EndUndoAction();
+		$editor->Undo;
+		$editor->EndUndoAction;
 
 		# Couldn't find it
 		# should be dialog
@@ -1055,7 +1055,7 @@ EOC
 
 	# now insert the text into the right location
 	$editor->InsertText( $start, $data->GetText );
-	$editor->EndUndoAction();
+	$editor->EndUndoAction;
 
 	return ();
 
@@ -1241,7 +1241,7 @@ sub autocomplete {
 	# check for variables
 	my $parser = $self->perltags_parser;
 
-	my $last = $editor->GetLength();
+	my $last = $editor->GetLength;
 
 	my $pre_text  = $editor->GetTextRange( 0,    $first );
 	my $post_text = $editor->GetTextRange( $pos, $last );
@@ -1261,7 +1261,7 @@ sub autocomplete {
 	my @ret = $ac->run($parser);
 	return @ret if @ret;
 
-	return $ac->auto();
+	return $ac->auto;
 }
 
 sub newline_keep_column {

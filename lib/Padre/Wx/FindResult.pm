@@ -93,7 +93,7 @@ sub gettext_label {
 
 =head3 C<set_column_widths>
 
-   $self->set_column_widths()
+   $self->set_column_widths
 
 Works out the correct column widths for the list columns.
 
@@ -165,7 +165,7 @@ sub select_line {
 
 =head3 C<_get_title>
 
-   $self->_get_title();
+   $self->_get_title;
 
 Set the column headings to the list.
 
@@ -184,7 +184,7 @@ sub _get_title {
 
 =head3 C<relocale>
 
-   $self->relocale();
+   $self->relocale;
 
 Reset the column headings if locales are changed.
 
@@ -234,9 +234,9 @@ sub on_right_down {
 					$msg = "$text\n";
 
 					# And copy it to clipboard
-					if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
+					if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open ) {
 						Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-						Wx::wxTheClipboard->Close();
+						Wx::wxTheClipboard->Close;
 					}
 				}
 			}
@@ -258,9 +258,9 @@ sub on_right_down {
 			}
 
 			# And copy it to clipboard
-			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
+			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open ) {
 				Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-				Wx::wxTheClipboard->Close();
+				Wx::wxTheClipboard->Close;
 			}
 		}
 	);

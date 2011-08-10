@@ -1371,8 +1371,8 @@ sub stats {
 	my $editor = $self->editor;
 	my $text   = $self->text_get;
 
-	my $lines            = $editor->GetLineCount();
-	my $chars_with_space = $editor->GetTextLength();
+	my $lines            = $editor->GetLineCount;
+	my $chars_with_space = $editor->GetTextLength;
 
 	# TODO: Remove this limit? Right now, it is greater than the default file size limit.
 	if ( length $text < 2_500_000 ) {
@@ -1441,7 +1441,7 @@ sub autocomplete {
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
 	$prefix =~ s{^.*?(\w+)$}{$1};
-	my $last = $editor->GetLength();
+	my $last = $editor->GetLength;
 	my $text = $editor->GetTextRange( 0, $last );
 	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
 	my $post = $editor->GetTextRange( $first, $last );

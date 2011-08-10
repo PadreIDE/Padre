@@ -126,7 +126,7 @@ sub _on_butopen_clicked {
 
 	# Open session
 	$main->open_session( $self->_current_session, $self->{autosave}->GetValue ? 1 : 0 );
-	$self->Destroy();
+	$self->Destroy;
 }
 
 #
@@ -177,7 +177,7 @@ sub _on_list_item_activated {
 	my ( $self, $event ) = @_;
 
 	$self->_on_list_item_selected($event);
-	$self->_on_butopen_clicked();
+	$self->_on_butopen_clicked;
 }
 
 # -- private methods

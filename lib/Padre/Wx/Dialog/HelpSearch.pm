@@ -71,7 +71,7 @@ sub _display_help_in_viewer {
 	my $self = shift;
 
 	my ( $html, $location );
-	my $selection = $self->_list->GetSelection();
+	my $selection = $self->_list->GetSelection;
 	if ( $selection != -1 ) {
 		my $topic = $self->_list->GetClientData($selection);
 
@@ -195,7 +195,7 @@ sub _create_controls {
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
 	);
 
-	$self->_setup_events();
+	$self->_setup_events;
 
 	return;
 }
@@ -214,7 +214,7 @@ sub _setup_events {
 			my $code  = $event->GetKeyCode;
 
 			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_PAGEDOWN ) {
-				$self->_list->SetFocus();
+				$self->_list->SetFocus;
 			}
 
 			$event->Skip(1);
@@ -279,7 +279,7 @@ sub show {
 					$self->_search_text->Enable(1);
 					$self->_topic_selector->Enable(1);
 					$self->_list->Enable(1);
-					$self->_search_text->SetFocus();
+					$self->_search_text->SetFocus;
 				} else {
 					$self->_search_text->ChangeValue('');
 				}
@@ -287,7 +287,7 @@ sub show {
 			}
 		);
 	}
-	$self->_search_text->SetFocus();
+	$self->_search_text->SetFocus;
 
 	return;
 }
@@ -368,14 +368,14 @@ sub _update_list_box {
 	my $self = shift;
 
 	# Clear the list and status
-	$self->_list->Clear();
+	$self->_list->Clear;
 	$self->_status->SetLabel('');
 
 	# Try to fetch a help index and return nothing if otherwise
 	$self->_search unless $self->_index;
 	return unless $self->_index;
 
-	my $search_expr = $self->_search_text->GetValue();
+	my $search_expr = $self->_search_text->GetValue;
 	$search_expr = quotemeta $search_expr;
 
 	#Populate the list box now

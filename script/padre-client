@@ -219,7 +219,7 @@ if (ref $socket) {
 require Padre;
 
 # Build the application
-my $app = Padre->new();
+my $app = Padre->new;
 unless ( $app ) {
 	die "Failed to create Padre instance";
 }

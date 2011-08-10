@@ -273,7 +273,7 @@ sub run {
 	$task->{handle} = $self;
 
 	# Call the task's run method
-	eval { $task->run(); };
+	eval { $task->run; };
 
 	# Clean up the temps
 	delete $task->{handle};

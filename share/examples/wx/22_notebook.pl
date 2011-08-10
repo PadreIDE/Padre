@@ -81,5 +81,5 @@ sub new {
 sub on_listbox_double_click {
 	my ( $self, $event ) = @_;
 
-	Wx::MessageBox( "Double clicked: '" . $event->GetString() . "'", '', Wx::wxOK | Wx::wxCENTRE, $self );
+	Wx::MessageBox( "Double clicked: '" . $event->GetString . "'", '', Wx::wxOK | Wx::wxCENTRE, $self );
 }

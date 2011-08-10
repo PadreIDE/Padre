@@ -69,7 +69,7 @@ sub run {
 						push @words, $tag->{name};
 					}
 				}
-				$tag = $parser->findNextTag();
+				$tag = $parser->findNextTag;
 			}
 			return ( length($prefix), @words );
 		}
@@ -106,7 +106,7 @@ sub run {
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
 		if ( defined $parser ) {
-			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
+			my $tag = ( $prefix eq '' ) ? $parser->firstTag : $parser->findTag( $prefix, partial => 1 );
 			my @words;
 
 			# TO DO: INHERITANCE!
@@ -120,7 +120,7 @@ sub run {
 				{
 					push @words, $tag->{name};
 				}
-				$tag = ( $prefix eq '' ) ? $parser->nextTag() : $parser->findNextTag();
+				$tag = ( $prefix eq '' ) ? $parser->nextTag : $parser->findNextTag;
 			}
 			return ( length($prefix), @words );
 		}
@@ -147,7 +147,7 @@ sub run {
 						push @words, $tag->{name};
 					}
 				}
-				$tag = $parser->findNextTag();
+				$tag = $parser->findNextTag;
 			}
 			return ( length($prefix), @words );
 		}

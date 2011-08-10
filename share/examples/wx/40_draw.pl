@@ -144,10 +144,10 @@ sub OnButton {
 	if ( $event->LeftUp ) {
 		push @{ $this->{CURRENT_LINE} }, [ $x, $y ];
 		push @{ $this->{LINES} }, $this->{CURRENT_LINE};
-		$this->ReleaseMouse();
+		$this->ReleaseMouse;
 	} else {
 		$this->{CURRENT_LINE} = [ [ $x, $y ] ];
-		$this->CaptureMouse();
+		$this->CaptureMouse;
 	}
 
 	$dc->SetPen( Wx::Pen->new( wxRED, 5, 0 ) );

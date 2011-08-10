@@ -236,7 +236,7 @@ sub parse_variable {
 				BEGIN { eval {
 					# Ensure any version() routine which might have leaked
 					# into this package has been deleted.  Interferes with
-					# version->import()
+					# version->import
 					undef *version;
 					require version;
 					"version"->import;

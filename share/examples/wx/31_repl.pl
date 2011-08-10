@@ -133,7 +133,7 @@ sub key_up {
 
 	#$self->outn($mod);
 	#$self->outn($code);
-	my $lang = $self->_get_language();
+	my $lang = $self->_get_language;
 	return if not @{ $self->{_history_}{$lang} };
 	if ( $mod == 0 and $code == 317 ) { # Down
 		$self->{_history_pointer_}{$lang}++;
@@ -273,7 +273,7 @@ sub on_save {
 	if ( $nb{$id}{filename} ) {
 		$self->_save_buffer($id);
 	} else {
-		$self->on_save_as();
+		$self->on_save_as;
 	}
 	return;
 }

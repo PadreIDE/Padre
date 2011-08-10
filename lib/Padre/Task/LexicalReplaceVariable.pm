@@ -21,7 +21,7 @@ Padre::Task::LexicalReplaceVariable - Lexically variable replace using L<PPI>
           location    => [ $line, $column ], # the position of *any* occurrence of the variable
           replacement => '$foo',
   );
-  $replacer->schedule();
+  $replacer->schedule;
 
 =head1 DESCRIPTION
 

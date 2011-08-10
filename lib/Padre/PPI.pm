@@ -81,7 +81,7 @@ sub get_all_variable_declarations {
 		{
 
 			# do it the low-tech way
-			my $string   = $decl->content();
+			my $string   = $decl->content;
 			my $location = $decl->location;
 
 			my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
@@ -204,7 +204,7 @@ sub find_variable_declaration {
 				{
 
 					# do it the low-tech way
-					my $string = $elem->content();
+					my $string = $elem->content;
 					my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
 					if ( grep { $varname eq $_ } @vars ) {
 						$declaration = $elem;
@@ -217,7 +217,7 @@ sub find_variable_declaration {
 		}
 
 		# this is for "foreach my $i ..."
-		elsif ( $cursor->isa("PPI::Statement::Compound") and $cursor->type() =~ /^for/ ) {
+		elsif ( $cursor->isa("PPI::Statement::Compound") and $cursor->type =~ /^for/ ) {
 			my @elems = $cursor->elements;
 			foreach my $elem (@elems) {
 
@@ -225,11 +225,11 @@ sub find_variable_declaration {
 				# from. This is to ignore declarations later in the block.
 				last if $elem == $prev_cursor;
 
-				if ( $elem->isa("PPI::Token::Word") and $elem->content() =~ /^(?:my|our)$/ ) {
-					my $nelem = $elem->snext_sibling();
+				if ( $elem->isa("PPI::Token::Word") and $elem->content =~ /^(?:my|our)$/ ) {
+					my $nelem = $elem->snext_sibling;
 					if (    defined $nelem
 						and $nelem->isa("PPI::Token::Symbol")
-						and $nelem->symbol() eq $varname || $nelem->content() eq $token_str )
+						and $nelem->symbol eq $varname || $nelem->content eq $token_str )
 					{
 						$declaration = $nelem;
 						last;

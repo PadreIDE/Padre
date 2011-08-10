@@ -27,7 +27,7 @@ sub help_init {
 		return;
 	}
 
-	my @index = $self->_collect_perldoc();
+	my @index = $self->_collect_perldoc;
 
 	# Add Installed modules
 	push @index, $self->_find_installed_modules;

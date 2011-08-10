@@ -132,7 +132,7 @@ sub _on_tree_selection_changed {
 		$self->next_wizard(undef);
 		$self->status('');
 	}
-	$self->refresh();
+	$self->refresh;
 }
 
 # Private method to update the tree by using the filter

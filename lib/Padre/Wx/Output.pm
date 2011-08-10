@@ -219,7 +219,7 @@ sub AppendText {
 	# Scroll down to the latest position
 	# Maybe we should check for a setting
 	# so user can set if they want scroll
-	$self->ShowPosition( $self->GetLastPosition() );
+	$self->ShowPosition( $self->GetLastPosition );
 	return ();
 }
 

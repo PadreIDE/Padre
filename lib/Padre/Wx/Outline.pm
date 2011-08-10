@@ -270,7 +270,7 @@ sub on_tree_item_activated {
 sub on_tree_item_set_focus {
 	my $self      = shift;
 	my $event     = shift;
-	my $selection = $self->GetSelection();
+	my $selection = $self->GetSelection;
 	if ( $selection and $selection->IsOk ) {
 		my $item = $self->GetPlData($selection);
 		if ( defined $item ) {
@@ -378,7 +378,7 @@ sub add_subtree {
 			$type_caption,
 			-1,
 			-1,
-			Wx::TreeItemData->new()
+			Wx::TreeItemData->new
 		);
 
 		my @sorted_entries = ();

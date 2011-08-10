@@ -42,7 +42,7 @@ Example:
 
 Every file/URL opened through C<Padre::File> which starts with C<nfs://> is now
 handled through C<Padre::Plugin::NFS>.
-C<< Padre::File->new() >> will respect this and call C<< Padre::Plugin::NFS->new() >> to
+C<< Padre::File->new >> will respect this and call C<< Padre::Plugin::NFS->new >> to
 handle such URLs.
 
 Returns true on success or false on error.

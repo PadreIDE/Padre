@@ -24,7 +24,7 @@ sub new {
 		return;
 	}
 
-	my $self = bless { filename => $_[0], UA => LWP::UserAgent->new() }, $class;
+	my $self = bless { filename => $_[0], UA => LWP::UserAgent->new }, $class;
 
 	# Using the config is optional, tests and other usages should run without
 	my $config = eval { return Padre->ide->config; };
@@ -143,7 +143,7 @@ sub servername {
 
 sub read {
 	my $self = shift;
-	return scalar( $self->_request() );
+	return scalar( $self->_request );
 }
 
 sub readonly {

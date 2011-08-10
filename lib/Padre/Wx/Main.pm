@@ -303,7 +303,7 @@ sub new {
                   my $self = shift;
                   if($self->{_do_update_ui}) {
                     $self->{_do_update_ui} = undef;
-                    $self->on_stc_update_ui();
+                    $self->on_stc_update_ui;
                   }
                 });
 
@@ -1452,12 +1452,12 @@ sub refresh {
 
 =head3 C<add_refresh_listener>
 
-Adds an object which will have its C<< ->refresh() >> method
+Adds an object which will have its C<< ->refresh >> method
 called whenever the main refresh event is triggered. The
 refresh listener is stored as a weak reference so make sure
 that you keep the listener alive elsewhere.
 
-If your object does not have a C<< ->refresh() >> method, pass in
+If your object does not have a C<< ->refresh >> method, pass in
 a code reference - it will be called instead.
 
 Note that this method must return really quick. If you plan to
@@ -2932,7 +2932,7 @@ sub run_command {
 		$self->error( sprintf( Wx::gettext("Failed to start '%s' command"), $cmd ) );
 		$self->menu->run->enable;
 	}
-	$self->current->editor->SetFocus();
+	$self->current->editor->SetFocus;
 	return;
 }
 
@@ -5351,7 +5351,7 @@ sub on_nth_pane {
 
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
-		$page->{Document}->set_indentation_style(); # TO DO: encapsulation?
+		$page->{Document}->set_indentation_style; # TO DO: encapsulation?
 		$page->SetFocus;
 
 		$manager->plugin_event('editor_changed');
@@ -5359,7 +5359,7 @@ sub on_nth_pane {
 		return 1;
 	}
 
-	$self->current->editor->SetFocus();
+	$self->current->editor->SetFocus;
 
 	return;
 }
@@ -5388,7 +5388,7 @@ sub on_next_pane {
 		$self->on_nth_pane(0);
 	}
 
-	$self->current->editor->SetFocus();
+	$self->current->editor->SetFocus;
 
 	return;
 }
@@ -5417,7 +5417,7 @@ sub on_prev_pane {
 		$self->on_nth_pane( $count - 1 );
 	}
 
-	$self->current->editor->SetFocus();
+	$self->current->editor->SetFocus;
 
 	return;
 }
@@ -6504,7 +6504,7 @@ sub on_last_visited_pane {
 		$self->refresh_toolbar( $self->current );
 	}
 
-	$self->current->editor->SetFocus();
+	$self->current->editor->SetFocus;
 
 }
 
@@ -6710,7 +6710,7 @@ sub change_highlighter {
 		TRACE("Editor $editor focused $focused lexer: $lexer") if DEBUG;
 		if ( $editor eq $focused ) {
 			$editor->needs_manual_colorize(0);
-			$document->colourize();
+			$document->colourize;
 		} else {
 			$editor->needs_manual_colorize(1);
 		}

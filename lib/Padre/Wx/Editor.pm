@@ -660,7 +660,7 @@ sub select_to_matching_brace {
 	my ( $self, $pos ) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
 	my $pos2 = $self->find_matching_brace($pos) or return;
-	my $start = ( $pos < $pos2 ) ? $self->GetSelectionStart() : $self->GetSelectionEnd();
+	my $start = ( $pos < $pos2 ) ? $self->GetSelectionStart : $self->GetSelectionEnd;
 	$self->SetSelection( $start, $pos2 );
 
 }
@@ -721,8 +721,8 @@ BEGIN {
 				$self, -1,
 				sub {
 					my ( $editor, $event ) = @_;
-					if ( $event->GetMargin() == 2 ) {
-						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition() );
+					if ( $event->GetMargin == 2 ) {
+						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition );
 						my $level_clicked = $editor->GetFoldLevel($line_clicked);
 
 						# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
@@ -793,7 +793,7 @@ sub show_calltip {
 		$tip = "$z->{cmd}\n$z->{exp}";
 	}
 	if ($tip) {
-		$self->CallTipShow( $self->CallTipPosAtStart() + 1, $tip );
+		$self->CallTipShow( $self->CallTipPosAtStart + 1, $tip );
 	}
 	return;
 }
@@ -913,8 +913,8 @@ sub _auto_deindent {
 
 		# replace indentation of the current line
 		$self->GotoPos( $pos - 1 );
-		$self->DelLineLeft();
-		$pos = $self->GetCurrentPos();
+		$self->DelLineLeft;
+		$pos = $self->GetCurrentPos;
 		$self->InsertText( $pos, $indent );
 		$self->GotoPos( $self->GetLineEndPosition($line) );
 	}
@@ -1347,7 +1347,7 @@ sub _convert_paste_eols {
 	my ( $self, $paste ) = @_;
 
 	my $newline_type = Padre::Util::newline_type($paste);
-	my $eol_mode     = $self->GetEOLMode();
+	my $eol_mode     = $self->GetEOLMode;
 
 	# Handle the 'None' one-liner case
 	if ( $newline_type eq 'None' ) {
@@ -1722,7 +1722,7 @@ sub needs_manual_colorize {
 
 BEGIN {
 	#
-	# $doc->store_cursor_position()
+	# $doc->store_cursor_position
 	#
 	# store document's current cursor position in padre's db.
 	# no params, no return value.
@@ -1738,7 +1738,7 @@ BEGIN {
 	} if Padre::Feature::CURSORMEMORY;
 
 	#
-	# $doc->restore_cursor_position()
+	# $doc->restore_cursor_position
 	#
 	# restore document's cursor position from padre's db.
 	# no params, no return value.

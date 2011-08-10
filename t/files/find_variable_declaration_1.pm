@@ -150,7 +150,7 @@ sub reap {
 		#}
 	}
 
-	$self->setup_workers();
+	$self->setup_workers;
 
 	return 1;
 }

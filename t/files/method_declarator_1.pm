@@ -30,7 +30,7 @@ class Holiday::California {
     }
     method is_holiday_or_weekend  ( $dt ) {
         confess if (! $dt->isa('DateTime') );
-        if ( $dt->day_abbr() =~ /sun|sat/isxm ) {
+        if ( $dt->day_abbr =~ /sun|sat/isxm ) {
             return 1;
         }
         elsif (

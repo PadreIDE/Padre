@@ -151,7 +151,7 @@ sub OnButton {
 
 
 	if ( $event->LeftUp ) {
-		$this->ReleaseMouse();
+		$this->ReleaseMouse;
 		$this->{_grab} = 0;
 	} else {
 		if (    $x >= $this->{_bitmap_x}
@@ -161,7 +161,7 @@ sub OnButton {
 		{
 			$this->{_grab} = 1;
 		}
-		$this->CaptureMouse();
+		$this->CaptureMouse;
 	}
 }
 

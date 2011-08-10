@@ -22,7 +22,7 @@ sub new {
 
 sub OnPrintPage {
 	my ( $self, $page ) = @_;
-	my $dc = $self->GetDC();
+	my $dc = $self->GetDC;
 
 	return 0 unless defined $dc;
 
@@ -83,7 +83,7 @@ sub GetPageInfo {
 		$self->{PRINTED} = $self->{EDITOR}->FormatRange(
 			0,
 			$self->{PRINTED},
-			$self->{EDITOR}->GetLength(),
+			$self->{EDITOR}->GetLength,
 			$dc,
 			$dc,
 			$self->{printRect},

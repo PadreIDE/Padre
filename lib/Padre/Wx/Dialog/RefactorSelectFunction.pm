@@ -211,7 +211,7 @@ sub _on_butselect_clicked {
 	# item and tries to click buttons
 	#$self->_butdelete->Disable;
 	$self->_butselect->Disable;
-	$self->Destroy();
+	$self->Destroy;
 }
 
 #
@@ -260,7 +260,7 @@ sub _on_list_item_activated {
 	my ( $self, $event ) = @_;
 
 	$self->_on_list_item_selected($event);
-	$self->_on_butselect_clicked();
+	$self->_on_butselect_clicked;
 }
 
 

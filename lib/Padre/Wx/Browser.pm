@@ -379,7 +379,7 @@ sub show_page {
 
 	# not sure if I can do this:
 	# yep seems I can!
-	$self->{search}->SetFocus();
+	$self->{search}->SetFocus;
 
 }
 

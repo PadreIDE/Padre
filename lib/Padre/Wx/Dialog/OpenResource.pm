@@ -389,7 +389,7 @@ sub _setup_events {
 		$self,
 		$self->{copy_button},
 		sub {
-			my @matches      = $self->{matches_list}->GetSelections();
+			my @matches      = $self->{matches_list}->GetSelections;
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
 				if ( Wx::wxTheClipboard->Open ) {

@@ -76,7 +76,7 @@ foreach my $module ( sort keys %modules ) {
 
 	# Padre::DB::Migrate is fatal if called without import params
 	unless ( $module eq 'Padre::DB::Migrate' ) {
-		$module->import();
+		$module->import;
 	}
 
 	ok( $module->VERSION, "$module: Found \$VERSION" );

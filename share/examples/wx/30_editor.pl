@@ -214,7 +214,7 @@ sub on_save {
 	if ( $nb{$id}{filename} ) {
 		$self->_save_buffer($id);
 	} else {
-		$self->on_save_as();
+		$self->on_save_as;
 	}
 	return;
 }
@@ -303,7 +303,7 @@ sub new {
 	$self->SetFont($font);
 
 	$self->StyleSetFont( wxSTC_STYLE_DEFAULT, $font );
-	$self->StyleClearAll();
+	$self->StyleClearAll;
 
 	$self->StyleSetForeground( 0,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
 	$self->StyleSetForeground( 1,  Wx::Colour->new( 0xff, 0x00, 0x00 ) );

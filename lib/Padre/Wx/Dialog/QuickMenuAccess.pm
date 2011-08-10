@@ -242,7 +242,7 @@ sub _setup_events {
 		sub {
 
 			if ( not $self->_matched_results ) {
-				$self->_search();
+				$self->_search;
 			}
 			$self->_update_list_box;
 
@@ -266,7 +266,7 @@ sub _setup_events {
 		$self,
 		$self->_list,
 		sub {
-			$self->_on_ok_button_clicked();
+			$self->_on_ok_button_clicked;
 			$self->EndModal(0);
 		}
 	);

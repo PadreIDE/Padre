@@ -100,7 +100,7 @@ sub new {
 	$this->{_bitmap}   = Wx::Bitmap->new($image);
 	$this->{_bitmap_x} = 20;
 	$this->{_bitmap_y} = 30;
-	$this->{_backup}   = Wx::MemoryDC->new();
+	$this->{_backup}   = Wx::MemoryDC->new;
 	$this->{_backup}->SelectObject( Wx::Bitmap->new( $image->GetWidth, $image->GetHeight ) );
 
 	return $this;
@@ -176,7 +176,7 @@ sub OnButton {
 
 
 	if ( $event->LeftUp ) {
-		$this->ReleaseMouse();
+		$this->ReleaseMouse;
 		$this->{_grab} = 0;
 	} else {
 		if (    $x >= $this->{_bitmap_x}
@@ -187,7 +187,7 @@ sub OnButton {
 			$this->{_grab} = 1;
 
 		}
-		$this->CaptureMouse();
+		$this->CaptureMouse;
 	}
 }
 

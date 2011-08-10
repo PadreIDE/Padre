@@ -38,9 +38,9 @@ sub new {
 	#           "and more\n"
 	#           , [10, 10], [-1, -1]);
 	#print "zz $st\n";
-	#    my $sz = $st->GetBestSize();
-	#    $self->SetSize( ($sz->GetWidth()+20, $sz->GetHeight()+20) );
-	#$self->SetSize( $panel->GetSize());
+	#    my $sz = $st->GetBestSize;
+	#    $self->SetSize( ($sz->GetWidth+20, $sz->GetHeight+20) );
+	#$self->SetSize( $panel->GetSize );
 
 	return $self;
 }

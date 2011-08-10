@@ -65,7 +65,7 @@ sub resolve {
 	SCOPE: {
 		local *STDERR = IO::Scalar->new;
 		local *STDOUT = IO::Scalar->new;
-		eval { $pd->process() };
+		eval { $pd->process };
 	}
 
 	return unless -s $tempfile;

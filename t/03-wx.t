@@ -211,7 +211,7 @@ my @events = (
 			my $main = $ide->wx->main;
 			$main->close_all;
 			$T->diag("create a new editor");
-			$main->on_new();
+			$main->on_new;
 			my @editors = $main->pages;
 			$T->is_num( scalar(@editors), 1, 'one new editor' );
 			my $doc    = $main->current->document;
@@ -222,7 +222,7 @@ my @events = (
 				my $path = catfile( $home, 'cyrillic_test.pl' );
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
-				$main->on_open_selection();
+				$main->on_open_selection;
 				$T->is_num( scalar( $main->pages ), 2, 'new and abs cyrillic_test open' );
 
 			}
@@ -234,7 +234,7 @@ my @events = (
 				my $path = catfile( './eg/perl5/', 'cyrillic_test.pl' );
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
-				$main->on_open_selection();
+				$main->on_open_selection;
 				$T->is_num( scalar( $main->pages ), 2, 'new and relative cyrillic_test open' );
 			}
 			$main->close;
@@ -245,7 +245,7 @@ my @events = (
 				my $path = catfile( './eg/perl5/', 'cyrillic_test.pl' ) . "\n";
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
-				$main->on_open_selection();
+				$main->on_open_selection;
 				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 			$main->close;
@@ -256,7 +256,7 @@ my @events = (
 				my $path = "\n" . catfile( './eg/perl5/', 'cyrillic_test.pl' ) . "\n";
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
-				$main->on_open_selection();
+				$main->on_open_selection;
 				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 			$main->close;
@@ -270,7 +270,7 @@ my @events = (
 				$editor->SetSelection( 0, length($path) );
 
 				#$T->diag("selected : ".$main->current->text);
-				$main->on_open_selection();
+				$main->on_open_selection;
 				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 
