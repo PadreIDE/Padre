@@ -484,7 +484,7 @@ sub is_saved {
 }
 
 sub is_unsaved {
-	return !!( $_[0]->editor->GetModify and not defined $_[0]->file );
+	return !!( $_[0]->editor->GetModify and defined $_[0]->file );
 }
 
 # Returns true if this is a new document that is too insignificant to

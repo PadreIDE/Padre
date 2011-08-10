@@ -23,13 +23,15 @@ sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
+warn 1;
 	# Save the list of open files
 	require Padre::Current;
 	$self->{changes} = {
 		map {
+			warn $_->filename;
 			$_->filename => $_->text_get,
 		} grep {
-			$_->is_unsaved
+ 			$_->is_unsaved
 		} Padre::Current->main->documents
 	};
 
@@ -55,7 +57,7 @@ sub run {
 	} else {
 		# No changed files, remove backup file
 		require File::Remove;
-		File::Remove($filename) if -e $filename;
+		File::Remove::remove($filename) if -e $filename;
 	}
 
 	return 1;
