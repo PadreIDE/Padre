@@ -332,7 +332,8 @@ sub refresh {
 	my $document = $self->current->document or return;
 
 	# If the document is unused, shortcut to avoid pointless tasks
-	if ( $document->is_unused ) {
+	my $task = $document->task_syntax;
+	if ( $document->is_unused or not $task) {
 		my $lock = $self->main->lock('UPDATE');
 		$self->clear;
 		return;
@@ -357,7 +358,7 @@ sub refresh {
 	# Fire the background task discarding old results
 	$self->task_reset;
 	$self->task_request(
-		task     => $document->task_syntax,
+		task     => $task,
 		document => $document,
 	);
 }

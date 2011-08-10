@@ -21,6 +21,8 @@ next production release, and synchronise their release to the Padre schedule.
       Moved named function location to Padre::Editor with find_function,
       has_function and goto_function. Padre::Document just has a single 
       functions method which does the work via the task class (ADAMK)
+    - The functions and syntax check windows was not being cleared properly
+      when a document does not provide task_functions or task_syntax (AZAWAWI)
 
 0.88 2011.08.09
     - Thread Slave Mastering now works for Task 2.0. This removes thread spawn

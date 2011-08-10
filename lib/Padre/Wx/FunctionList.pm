@@ -248,13 +248,13 @@ sub refresh {
 	}
 
 	# Nothing to do if there is no content
-	if ( $document->is_unused ) {
+	my $task = $document->task_functions;
+	if ( $document->is_unused or not $task) {
 		$list->Clear;
 		return 1;
 	}
 
 	# Launch the background task
-	my $task = $document->task_functions or return;
 	$self->task_request(
 		task  => $task,
 		text  => $document->text_get,
