@@ -328,7 +328,7 @@ sub relocale {
 }
 
 sub refresh {
-	my $self = shift;
+	my $self     = shift;
 	my $document = $self->current->document or return;
 
 	# If the document is unused, shortcut to avoid pointless tasks
@@ -341,14 +341,16 @@ sub refresh {
 
 	# Allows us to check when an empty or unsaved document is open
 	my $filename = defined( $document->filename ) ? $document->filename : '';
+	my $text     = $document->text_get or return;
 
-	my $text = $document->text_get or return;
 	require Digest::JHash;
 	my $digest = Digest::JHash::jhash($text);
 	if ( $filename eq $self->{document} ) {
 
 		# Shortcut if nothing has changed.
-		return if $digest == $self->{digest};
+		if ( $self->{digest} and $self->{digest} == $digest ) {
+			return;
+		}
 	}
 
 	$self->{document} = $filename;
