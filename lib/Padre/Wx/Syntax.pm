@@ -191,7 +191,7 @@ sub view_stop {
 		$editor->SetMarginWidth( 1, 0 );
 	}
 
-	return; 
+	return;
 }
 
 
@@ -218,9 +218,9 @@ sub on_tree_item_selection_changed {
 sub on_tree_item_activated {
 	my $self   = shift;
 	my $event  = shift;
-	my $item   = $event->GetItem                 or return;
+	my $item   = $event->GetItem or return;
 	my $issue  = $self->{tree}->GetPlData($item) or return;
-	my $editor = $self->current->editor          or return;
+	my $editor = $self->current->editor or return;
 	my $line   = $issue->{line};
 
 	# Does it point to somewhere valid?
@@ -280,7 +280,7 @@ sub relocale {
 }
 
 sub refresh {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 
 	# If the document is unused, shortcut to avoid pointless tasks
@@ -292,7 +292,7 @@ sub refresh {
 
 	# Allows us to check when an empty or unsaved document is open
 	my $filename = defined( $document->filename ) ? $document->filename : '';
-	my $text     = $document->text_get or return;
+	my $text = $document->text_get or return;
 
 	# Fire the background task discarding old results
 	$self->task_reset;
@@ -320,7 +320,7 @@ sub render {
 
 	# Clear all indicators. 0xE0 is the mask for all indicators
 	$editor->StartStyling( 0, 0xE0 );
-	$editor->SetStyling($editor->GetTextLength - 1, 0);
+	$editor->SetStyling( $editor->GetTextLength - 1, 0 );
 
 	# Flush old results
 	$self->clear;
@@ -367,16 +367,16 @@ sub render {
 			next ISSUE;
 		}
 
-		my $line = $issue->{line} - 1;
-		my $type = $issue->{type};
-		my $marker = $MESSAGE{$type}{marker};
+		my $line       = $issue->{line} - 1;
+		my $type       = $issue->{type};
+		my $marker     = $MESSAGE{$type}{marker};
 		my $is_warning = $marker == Padre::Wx::MarkWarn();
 		$editor->MarkerAdd( $line, $marker );
 
 		# Underline the syntax warning/error line with an orange or red squiggle indicator
 		my $start = $editor->PositionFromLine($line);
 
-		$editor->StartStyling( $start, 0xE0 );   # Change only the indicators (3 bits)
+		$editor->StartStyling( $start, 0xE0 ); # Change only the indicators (3 bits)
 		$editor->SetStyling( $editor->GetLineEndPosition($line) - $start, $is_warning ? 0x40 : 0x80 );
 
 		my $item = $self->{tree}->AppendItem(

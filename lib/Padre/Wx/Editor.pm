@@ -30,6 +30,7 @@ our @ISA        = (
 );
 
 use constant {
+
 	# Convenience colour constants
 	# NOTE: DO NOT USE "orange" string since it is actually red on win32
 	ORANGE => Wx::Colour->new( 255, 165, 0 ),
@@ -39,8 +40,8 @@ use constant {
 
 	# Indicators
 	INDICATOR_SMART_HIGHLIGHT => 0,
-	INDICATOR_WARNING 	  => 1,
-	INDICATOR_ERROR 	  => 2,
+	INDICATOR_WARNING         => 1,
+	INDICATOR_ERROR           => 2,
 };
 
 # End-Of-Line modes:
@@ -177,7 +178,7 @@ sub new {
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them
-	$self->{styles} = [ ];
+	$self->{styles} = [];
 
 	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
@@ -318,7 +319,7 @@ sub on_change {
 	my $event = shift;
 
 	# Fire or update the dwell timer
-	$self->dwell_start('on_change_dwell', 500);
+	$self->dwell_start( 'on_change_dwell', 500 );
 
 	# Keep processing
 	$event->Skip(1);
@@ -371,7 +372,7 @@ sub on_mousewheel {
 		return;
 	}
 
-	if ( Padre::Feature::FONTSIZE ) {
+	if (Padre::Feature::FONTSIZE) {
 
 		# The default handler zooms in the wrong direction
 		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
@@ -793,7 +794,7 @@ sub error {
 
 sub _color {
 	my $rgb = shift;
-	my @c   = ( 0xFF, 0xFF, 0xFF );
+	my @c = ( 0xFF, 0xFF, 0xFF );
 	if ( not defined $rgb ) {
 
 		#Carp::cluck("undefined color");
@@ -890,7 +891,7 @@ sub get_brace_type {
 my $previous_expr_hiliting_style;
 
 sub highlight_braces {
-	my $self = shift;
+	my $self                    = shift;
 	my $expression_highlighting = $self->config->editor_brace_expression_highlighting;
 
 	# remove current highlighting if any
