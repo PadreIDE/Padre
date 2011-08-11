@@ -2274,7 +2274,7 @@ the panel.
 sub show_output {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE', 'CONFIG');
+	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
@@ -2311,7 +2311,7 @@ to show the panel.
 
 sub show_findfast {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	return;
 }
 
@@ -2394,7 +2394,7 @@ the panel.
 sub show_command_line {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE', 'CONFIG');
+	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
 	unless ( $on == $self->menu->view->{command_line}->IsChecked ) {
 		$self->menu->view->{command_line}->Check($on);
 	}
@@ -2446,12 +2446,12 @@ sub show_syntaxcheck {
 }
 
 sub _show_syntaxcheck {
-	my $self   = shift;
-	my $lock   = $self->lock('UPDATE');
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->bottom->show($self->syntax);
+		$self->bottom->show( $self->syntax );
 	} elsif ( $self->has_syntax ) {
-		$self->bottom->hide($self->syntax);
+		$self->bottom->hide( $self->syntax );
 		delete $self->{syntax};
 	}
 }
@@ -5268,7 +5268,7 @@ sub delete {
 	my $document = $editor->{Document}     or return;
 
 	# We need those even when the document is already closed:
-	my $file     = $document->file;
+	my $file = $document->file;
 	my $filename = $document->filename or return;
 
 	if ( !$file->can_delete ) {
@@ -6760,11 +6760,7 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	} elsif ( !$mod and $code == 27 ) { # ESC
-		if ( $self->findfast->visible ) {
-			$self->findfast->_hide_panel;
-		} elsif ( $self->has_output ) {
-			$self->show_output(0);
-		}
+		&{ $self->ide->actions->{'view.close_panel'}->menu_event }( $self, $event );
 	}
 
 	if ( $config->autocomplete_always and ( !$mod ) and ( $code == 8 ) ) {

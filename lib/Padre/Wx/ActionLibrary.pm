@@ -106,6 +106,15 @@ sub init {
 	# Delay the action queue
 
 	Padre::Wx::Action->new(
+		name       => 'internal.wait1',
+		label      => _T('Delay the action queue for 1 seconds'),
+		comment    => _T('Stops processing of other action queue items for 1 second'),
+		menu_event => sub {
+			sleep 10;
+		},
+	);
+
+	Padre::Wx::Action->new(
 		name       => 'internal.wait10',
 		label      => _T('Delay the action queue for 10 seconds'),
 		comment    => _T('Stops processing of other action queue items for 10 seconds'),
@@ -1712,6 +1721,25 @@ sub init {
 					1,
 					Wx::wxFULLSCREEN_NOCAPTION | Wx::wxFULLSCREEN_NOBORDER
 				);
+			}
+			return;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name => 'view.close_panel',
+
+		# label       => _T('&Full Screen'),
+		comment => _T('Close the highest priority panel (usually using ESC key)'),
+
+		# shortcut    => 'ESC', # handled by Padre::Wx::Main
+		menu_event => sub {
+			my $main = shift;
+
+			if ( $main->findfast->visible ) {
+				$main->findfast->_hide_panel;
+			} elsif ( $main->has_output ) {
+				$main->show_output(0);
 			}
 			return;
 		},
