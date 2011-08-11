@@ -29,6 +29,7 @@ the even version for the release, even during development.
     - Auto-backup is working again #105 (SEWI)
     - Fixed #1286: Too many newlines being inserted (SEWI)
     - Only allow PNG and ICO images by default, saving 4meg of RAM (ADAMK)
+    - Handle crash when File/Delete is called on an Unsaved document (AZAWAWI)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.

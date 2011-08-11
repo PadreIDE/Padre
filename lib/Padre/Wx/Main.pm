@@ -5295,7 +5295,7 @@ sub delete {
 
 	# We need those even when the document is already closed:
 	my $file     = $document->file;
-	my $filename = $document->filename;
+	my $filename = $document->filename or return;
 
 	if ( !$file->can_delete ) {
 		$self->error( Wx::gettext('This type of file (URL) is missing delete support.') );
