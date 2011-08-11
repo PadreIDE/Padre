@@ -24,9 +24,9 @@ the even version for the release, even during development.
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
-      Moved named function location to Padre::Editor with find_function,
-      has_function and goto_function. Padre::Document just has a single 
-      functions method which does the work via the task class (ADAMK)
+      Moved function locating code to Padre::Editor as find_function,
+      has_function and goto_function. Padre::Document now just has a single 
+      "functions" method which does the work via the task class (ADAMK)
 
 0.88 2011.08.09
     - Thread Slave Mastering now works for Task 2.0. This removes thread spawn
