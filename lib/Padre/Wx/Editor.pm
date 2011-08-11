@@ -424,7 +424,7 @@ sub on_middle_up {
 		Wx::wxTheClipboard->UsePrimarySelection(1);
 	}
 
-	if ( Padre::Constant::WIN32 or not $config->mid_button_paste ) ) {
+	if ( Padre::Constant::WIN32 or not $config->mid_button_paste ) {
 		$self->Paste;
 	}
 
