@@ -22,7 +22,7 @@ use constant WX_SCINTILLA => Padre::Config::wx_scintilla_ready()
 	: 'Wx::StyledTextCtrl';
 
 our $VERSION    = '0.89';
-our $COMPATIBLE = '0.81';
+our $COMPATIBLE = '0.89';
 our @ISA        = (
 	'Padre::Wx::Role::Main',
 	'Padre::Wx::Role::Dwell',
