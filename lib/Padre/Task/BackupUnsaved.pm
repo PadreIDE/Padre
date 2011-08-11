@@ -23,8 +23,6 @@ sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-	warn 1;
-
 	# Save the list of open files
 	require Padre::Current;
 	$self->{changes} = {
