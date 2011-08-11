@@ -185,7 +185,7 @@ sub new {
 		'file.reload_all',
 	);
 
-	$self->{reload_all} = $self->add_menu_action(
+	$self->{reload_some} = $self->add_menu_action(
 		$file_reload,
 		'file.reload_some',
 	);
@@ -312,6 +312,7 @@ sub refresh {
 	$self->{close_all_but_current}->Enable($document);
 	$self->{reload_file}->Enable($document);
 	$self->{reload_all}->Enable($document);
+	$self->{reload_some}->Enable($document);
 	$self->{save}->Enable($document);
 	$self->{save_as}->Enable($document);
 	$self->{save_intuition}->Enable($document);
