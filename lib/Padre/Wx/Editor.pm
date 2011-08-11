@@ -238,7 +238,7 @@ sub on_kill_focus {
 sub on_key_down {
 	my $self  = shift;
 	my $event = shift;
-	$self->smart_highlight_end;
+	$self->smart_highlight_hide;
 
 	# Keep processing
 	$event->Skip(1);
@@ -267,7 +267,7 @@ sub on_key_up {
 
 	# Apply smart highlighting when the shift key is down
 	if ( $self->config->editor_smart_highlight_enable and $event->ShiftDown ) {
-		$self->smart_highlight_begin($event);
+		$self->smart_highlight_show;
 	}
 
 	# Doc specific processing
@@ -289,8 +289,6 @@ sub on_char {
 	if ( $document->can('event_on_char') ) {
 		$document->event_on_char( $self, $event );
 	}
-
-	$document->{last_char_time} = Time::HiRes::time();
 
 	# Keep processing
 	$event->Skip(1);
@@ -344,7 +342,6 @@ sub on_mouse_moving {
 
 	# Keep processing
 	$event->Skip(1);
-
 }
 
 # Convert the Ctrl-Scroll behaviour of changing the font size
@@ -375,7 +372,7 @@ sub on_mousewheel {
 sub on_left_down {
 	my $self  = shift;
 	my $event = shift;
-	$self->smart_highlight_end;
+	$self->smart_highlight_hide;
 
 	# Keep processing
 	$event->Skip(1);
@@ -390,14 +387,11 @@ sub on_left_up {
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
-		# Wx::wxTheClipboard->UsePrimarySelection(1);
 		if ( $config->mid_button_paste ) {
 			$self->put_text_to_clipboard( $text, 1 );
 		} else {
 			$self->put_text_to_clipboard($text);
 		}
-
-		# Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
 	my $doc = $self->{Document};
@@ -412,7 +406,7 @@ sub on_left_up {
 sub on_left_double {
 	my $self  = shift;
 	my $event = shift;
-	$self->smart_highlight_begin;
+	$self->smart_highlight_show;
 
 	# Keep processing
 	$event->Skip(1);
@@ -426,14 +420,12 @@ sub on_middle_up {
 	# TO DO: Sometimes there are unexpected effects when using the middle button.
 	# It seems that another event is doing something but not within this module.
 	# Please look at ticket #390 for details!
+	if ( $config->mid_button_paste ) {
+		Wx::wxTheClipboard->UsePrimarySelection(1);
+	}
 
-	Wx::wxTheClipboard->UsePrimarySelection(1)
-		if $config->mid_button_paste;
-
-	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
-
-		# NOTE: Editor->Current->Editor? Circular loop?
-		$self->current->editor->Paste;
+	if ( Padre::Constant::WIN32 or not $config->mid_button_paste ) ) {
+		$self->Paste;
 	}
 
 	my $doc = $self->{Document};
@@ -441,10 +433,8 @@ sub on_middle_up {
 		$doc->event_on_middle_up( $self, $event );
 	}
 
-	Wx::wxTheClipboard->UsePrimarySelection(0)
-		if $config->mid_button_paste;
-
-	if ( $config->mid_button_paste ) {
+	if ( $config->mod_button_paste ) {
+		Wx::wxTheClipboard->UsePrimarySelection(0);
 		$event->Skip(1);
 	} else {
 		$event->Skip(0);
@@ -455,14 +445,13 @@ sub on_right_down {
 	my $self  = shift;
 	my $event = shift;
 	my $main  = $self->main;
-	my $pos   = $self->GetCurrentPos;
 
 	require Padre::Wx::Menu::RightClick;
 	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
-	} else { #Wx::CommandEvent
+	} else { # Wx::CommandEvent
 		$self->PopupMenu( $menu->wx, 50, 50 ); # TO DO better location
 	}
 }
@@ -1001,7 +990,6 @@ sub show_line_numbers {
 
 	return;
 }
-
 
 sub show_calltip {
 	my $self   = shift;
@@ -1611,7 +1599,7 @@ sub needs_manual_colorize {
 ######################################################################
 # Smart Highlighting
 
-sub smart_highlight_begin {
+sub smart_highlight_show {
 	my $self             = shift;
 	my $selection        = $self->GetSelectedText;
 	my $selection_length = length $selection;
@@ -1628,7 +1616,7 @@ sub smart_highlight_begin {
 	my $to        = ( $line_count <= $line_num + $NUM_LINES ) ? $line_count : $line_num + $NUM_LINES;
 
 	# Clear previous smart highlights
-	$self->smart_highlight_end;
+	$self->smart_highlight_hide;
 
 	# find matching occurrences
 	foreach my $i ( $from .. $to ) {
@@ -1656,7 +1644,7 @@ sub smart_highlight_begin {
 
 }
 
-sub smart_highlight_end {
+sub smart_highlight_hide {
 	my $self = shift;
 
 	my @styles = @{ $self->{styles} };
