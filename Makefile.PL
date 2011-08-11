@@ -73,6 +73,7 @@ requires 'perl' => '5.008005';
 # General dependencies
 requires 'App::cpanminus'           => '0.9923';
 requires 'B::Deparse'               => 0;
+requires 'Capture::Tiny'            => '0.06';
 requires 'Class::Adapter'           => '1.05';
 requires 'Class::Inspector'         => '1.22';
 requires 'Class::Unload'            => '0.03';
@@ -153,7 +154,6 @@ requires 'Win32::TieRegistry' => '0.26' if win32;
 requires 'Wx' => ( win32 and $] >= 5.01 ) ? '0.9901' : '0.91';
 requires 'Wx::Perl::ProcessStream' => '0.29';
 requires 'YAML::Tiny'              => '1.32';
-test_requires 'Capture::Tiny'      => '0.06';
 test_requires 'Test::More'         => '0.88';
 test_requires 'Test::MockObject'   => '1.09';
 test_requires 'Test::Script'       => '1.07';
