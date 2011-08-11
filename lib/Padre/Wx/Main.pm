@@ -1655,7 +1655,7 @@ sub refresh_syntaxcheck {
 	return unless $self->has_syntax;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{syntaxcheck}->IsChecked;
-	$self->syntax->on_timer( undef, 1 );
+	$self->syntax->refresh;
 	return;
 }
 
@@ -1750,10 +1750,8 @@ Force a refresh of Padre's toolbar.
 sub refresh_toolbar {
 	my $self = shift;
 	return if $self->locked('REFRESH');
-	my $toolbar = $self->GetToolBar;
-	if ($toolbar) {
-		$toolbar->refresh( $_[0] or $self->current );
-	}
+	my $toolbar = $self->GetToolBar or return;
+	$toolbar->refresh( $_[0] or $self->current );
 }
 
 =pod
@@ -1809,6 +1807,7 @@ sub refresh_rdstatus {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->GetStatusBar->is_read_only( $_[0] or $self->current );
+	return;
 }
 
 =pod
@@ -1823,13 +1822,10 @@ Force a refresh of the function list on the right.
 
 sub refresh_functions {
 	my $self = shift;
-
 	return unless $self->has_functions;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
-
 	$self->functions->refresh( $_[0] or $self->current );
-
 	return;
 }
 
@@ -1845,13 +1841,10 @@ Force a refresh of the TODO list on the right.
 
 sub refresh_todo {
 	my $self = shift;
-
 	return unless $self->has_todo;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{todo}->IsChecked;
-
 	$self->todo->refresh(@_);
-
 	return;
 }
 
@@ -1865,12 +1858,9 @@ Force a refresh of the directory tree
 
 sub refresh_directory {
 	my $self = shift;
-
 	return unless $self->has_directory;
 	return if $self->locked('REFRESH');
-
 	$self->directory->refresh( $_[0] or $self->current );
-
 	return;
 }
 
@@ -1918,6 +1908,7 @@ sub change_style {
 	# Save editor style configuration
 	$self->config->set( editor_style => $name );
 	$self->config->write;
+
 	return;
 }
 
@@ -1948,7 +1939,8 @@ sub change_locale {
 	delete $self->{locale};
 	$self->{locale} = Padre::Locale::object();
 
-	if (Padre::Constant::UNIX) { # make WxWidgets translate the default buttons etc.
+	# Make WxWidgets translate the default buttons etc.
+	if (Padre::Constant::UNIX) {
 		## no critic (RequireLocalizedPunctuationVars)
 		$ENV{LANGUAGE} = $name;
 		## use critic
@@ -2055,6 +2047,7 @@ recreate it from scratch.
 
 sub rebuild_toolbar {
 	my $self    = shift;
+	my $lock    = $self->lock('UPDATE');
 	my $toolbar = $self->GetToolBar;
 	$toolbar->Destroy if $toolbar;
 
@@ -2092,7 +2085,7 @@ the panel.
 sub show_functions {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'refresh_functions' );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_functions' );
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
@@ -2100,7 +2093,6 @@ sub show_functions {
 	$self->config->set( main_functions => $on );
 	$self->_show_functions($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2129,7 +2121,7 @@ the panel.
 sub show_todo {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'refresh_todo' );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_todo' );
 	unless ( $on == $self->menu->view->{todo}->IsChecked ) {
 		$self->menu->view->{todo}->Check($on);
 	}
@@ -2137,7 +2129,6 @@ sub show_todo {
 	$self->config->set( main_todo => $on );
 	$self->_show_todo($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2169,7 +2160,7 @@ the panel.
 sub show_outline {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'refresh_outline' );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_outline' );
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($on);
 	}
@@ -2177,7 +2168,6 @@ sub show_outline {
 	$self->config->set( main_outline => $on );
 	$self->_show_outline($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2246,7 +2236,7 @@ the panel.
 sub show_directory {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'refresh_directory' );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_directory' );
 	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
 		$self->menu->view->{directory}->Check($on);
 	}
@@ -2254,7 +2244,6 @@ sub show_directory {
 	$self->config->set( main_directory => $on );
 	$self->_show_directory($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2285,7 +2274,7 @@ the panel.
 sub show_output {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
+	my $lock = $self->lock('UPDATE', 'CONFIG');
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
@@ -2293,7 +2282,6 @@ sub show_output {
 	$self->config->set( main_output => $on );
 	$self->_show_output($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2323,8 +2311,7 @@ to show the panel.
 
 sub show_findfast {
 	my $self = shift;
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	return;
 }
 
@@ -2346,7 +2333,6 @@ sub show_findinfiles {
 	my $lock = $self->lock('UPDATE');
 	$self->_show_findinfiles($on);
 	$self->aui->Update;
-
 	return;
 }
 
@@ -2379,7 +2365,6 @@ sub show_replaceinfiles {
 	my $lock = $self->lock('UPDATE');
 	$self->_show_replaceinfiles($on);
 	$self->aui->Update;
-
 	return;
 }
 
@@ -2409,7 +2394,7 @@ the panel.
 sub show_command_line {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
+	my $lock = $self->lock('UPDATE', 'CONFIG');
 	unless ( $on == $self->menu->view->{command_line}->IsChecked ) {
 		$self->menu->view->{command_line}->Check($on);
 	}
@@ -2417,7 +2402,6 @@ sub show_command_line {
 	$self->config->set( main_command_line => $on );
 	$self->_show_command_line($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
@@ -2449,7 +2433,7 @@ the panel.
 sub show_syntaxcheck {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'refresh_syntaxcheck' );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_syntaxcheck' );
 	unless ( $on == $self->menu->view->{syntaxcheck}->IsChecked ) {
 		$self->menu->view->{syntaxcheck}->Check($on);
 	}
@@ -2457,27 +2441,17 @@ sub show_syntaxcheck {
 	$self->config->set( main_syntaxcheck => $on );
 	$self->_show_syntaxcheck($on);
 	$self->aui->Update;
-	$self->ide->save_config;
 
 	return;
 }
 
 sub _show_syntaxcheck {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
+	my $self   = shift;
+	my $lock   = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		my $syntax = $self->syntax;
-		$self->bottom->show(
-			$syntax,
-			sub {
-				$self->show_syntaxcheck(0);
-			},
-		);
-		$syntax->start unless $syntax->running;
+		$self->bottom->show($self->syntax);
 	} elsif ( $self->has_syntax ) {
-		my $syntax = $self->syntax;
-		$self->bottom->hide($syntax);
-		$syntax->stop if $syntax->running;
+		$self->bottom->hide($self->syntax);
 		delete $self->{syntax};
 	}
 }

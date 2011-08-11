@@ -75,6 +75,16 @@ on the main window that the menu itself calls.
 This method should return a valid Wx bitmap to be used as the icon for
 a notebook page (displayed alongside C<view_label>).
 
+=head2 view_start
+
+Called immediately after the view has been displayed, to allow the view
+to kick off any timers or do additional post-creation setup.
+
+=head2 view_stop
+
+Called immediately before the view is hidden, to allow the view to cancel
+any timers, cancel tasks or do pre-destruction teardown.
+
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2011 The Padre development team as listed in Padre.pm.

@@ -21,8 +21,6 @@ our @ISA     = qw{
 	Wx::Panel
 };
 
-use constant TIMER => Wx::NewId();
-
 # perldiag error message classification
 my %MESSAGE = (
 
@@ -69,14 +67,11 @@ my %MESSAGE = (
 	},
 );
 
-
 sub new {
 	my $class = shift;
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
-
-	# Create the parent panel which will contain the search and tree
-	my $self = $class->SUPER::new($panel);
+	my $self  = $class->SUPER::new($panel);
 
 	# Create the underlying object
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
@@ -102,9 +97,8 @@ sub new {
 	$self->SetSizer($sizer);
 
 	# Additional properties
-	$self->{model}    = [];
-	$self->{document} = '';
-	$self->{length}   = -1;
+	$self->{model}  = [];
+	$self->{length} = -1;
 
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -166,21 +160,11 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->task_reset;
 	$_[0]->main->show_syntaxcheck(0);
 }
 
-
-
-
-
-#####################################################################
-# Timer Control
-
-sub start {
+sub view_start {
 	my $self = shift;
-	$self->running and return;
-	TRACE('Starting the syntax checker') if DEBUG;
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
@@ -191,47 +175,23 @@ sub start {
 		# Set margin 1 16 px wide
 		$editor->SetMarginWidth( 1, 16 );
 	}
-
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->on_timer( undef, 1 );
-	} else {
-		TRACE('Creating new timer') if DEBUG;
-		$self->{timer} = Wx::Timer->new( $self, TIMER );
-		Wx::Event::EVT_TIMER(
-			$self, TIMER,
-			sub {
-				$self->on_timer( $_[1], $_[2] );
-			},
-		);
-	}
-	$self->{timer}->Start( 1000, 0 );
-
-	return;
 }
 
-sub stop {
+sub view_stop {
 	my $self = shift;
-	$self->running or return;
-	TRACE('Stopping the syntax checker') if DEBUG;
+	my $main = $self->main;
+	my $lock = $main->lock('UPDATE');
 
-	# Stop the timer
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->{timer}->Stop;
-	}
+	# Clear out any state and tasks
+	$self->task_reset;
+	$self->clear;
 
-	# Remove the editor margin
-	foreach my $editor ( $self->main->editors ) {
+	# Remove the editor margins
+	foreach my $editor ( $main->editors ) {
 		$editor->SetMarginWidth( 1, 0 );
 	}
 
-	# Clear out the existing data
-	$self->clear;
-
-	return;
-}
-
-sub running {
-	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
+	return; 
 }
 
 
@@ -242,12 +202,12 @@ sub running {
 # Event Handlers
 
 sub on_tree_item_selection_changed {
-	my ( $self, $event ) = @_;
-
-	my $item = $event->GetItem or return;
+	my $self  = shift;
+	my $event = shift;
+	my $item  = $event->GetItem or return;
 	my $issue = $self->{tree}->GetPlData($item);
 
-	if ( $issue && $issue->{diagnostics} ) {
+	if ( $issue and $issue->{diagnostics} ) {
 		my $diag = $issue->{diagnostics};
 		$self->_update_help_page($diag);
 	} else {
@@ -256,17 +216,17 @@ sub on_tree_item_selection_changed {
 }
 
 sub on_tree_item_activated {
-	my ( $self, $event ) = @_;
-
+	my $self   = shift;
+	my $event  = shift;
 	my $item   = $event->GetItem                 or return;
 	my $issue  = $self->{tree}->GetPlData($item) or return;
 	my $editor = $self->current->editor          or return;
 	my $line   = $issue->{line};
 
-	return
-		if not defined($line)
-			or $line !~ /^\d+$/o
-			or $editor->GetLineCount < $line;
+	# Does it point to somewhere valid?
+	return unless defined $line;
+	return if $line !~ /^\d+$/o;
+	return if $editor->GetLineCount < $line;
 
 	# Select the problem after the event has finished
 	Wx::Event::EVT_IDLE(
@@ -276,13 +236,6 @@ sub on_tree_item_activated {
 			Wx::Event::EVT_IDLE( $self, undef );
 		},
 	);
-}
-
-sub on_timer {
-	my $self  = shift;
-	my $event = shift;
-	$event->Skip(0) if defined $event;
-	$self->refresh;
 }
 
 
@@ -321,9 +274,8 @@ sub clear {
 	return;
 }
 
+# Nothing to implement here
 sub relocale {
-
-	# Nothing to implement here
 	return;
 }
 
@@ -334,7 +286,6 @@ sub refresh {
 	# If the document is unused, shortcut to avoid pointless tasks
 	my $task = $document->task_syntax;
 	if ( $document->is_unused or not $task ) {
-		my $lock = $self->main->lock('UPDATE');
 		$self->clear;
 		return;
 	}
@@ -342,19 +293,6 @@ sub refresh {
 	# Allows us to check when an empty or unsaved document is open
 	my $filename = defined( $document->filename ) ? $document->filename : '';
 	my $text     = $document->text_get or return;
-
-	require Digest::JHash;
-	my $digest = Digest::JHash::jhash($text);
-	if ( $filename eq $self->{document} ) {
-
-		# Shortcut if nothing has changed.
-		if ( $self->{digest} and $self->{digest} == $digest ) {
-			return;
-		}
-	}
-
-	$self->{document} = $filename;
-	$self->{digest}   = $digest;
 
 	# Fire the background task discarding old results
 	$self->task_reset;
@@ -487,7 +425,7 @@ sub _update_help_page {
 		$help->Hide;
 	}
 
-	#Sticky note light-yellow background
+	# Sticky note light-yellow background
 	$self->{help}->SetBackgroundColour( Wx::Colour->new( 0xFD, 0xFC, 0xBB ) );
 
 	# Relayout to actually hide/show the help page

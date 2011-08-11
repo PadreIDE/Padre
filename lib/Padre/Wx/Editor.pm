@@ -308,7 +308,7 @@ sub on_change {
 	my $event = shift;
 
 	# Fire or update the dwell timer
-	$self->dwell_start('on_change_dwell', 1000);
+	$self->dwell_start('on_change_dwell', 500);
 
 	# Keep processing
 	$event->Skip(1);
@@ -322,10 +322,9 @@ sub on_change_dwell {
 
 	# Only trigger tool refresh actions if we are the active document
 	if ( $editor and $self->GetId == $editor->GetId ) {
-		# Refresh the function list whenever they stop typing
-		# NOTE: Expand this to other tools like the syntax checker once
-		#       we are sure this works safely.
+		my $lock = $main->lock('UPDATE');
 		$main->refresh_functions;
+		$main->refresh_syntaxcheck;
 	}
 
 	return;

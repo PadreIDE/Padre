@@ -23,8 +23,10 @@ the even version for the release, even during development.
     - The syntax checker is now more accurate when typing faster (AZAWAWI)
     - Added a change dwell mechanism to the editor panels, which gives any tools
       based on editor content an opportunity to auto-refresh (ADAMK)
-    - Added change dwell auto-refresh to the function list, so new functions are
-      added as they are being typed or pasted (ADAMK)
+    - Added dwell-refresh to the function list, so new functions are added as
+      they are being typed or pasted (ADAMK)
+    - Converted syntax checker from timer polling with hash shortcutting to the
+      new dwell-refresh mechanism (ADAMK)
     - Fixed #1287: Find in files crashing (SEWI)
     - Auto-backup is working again #105 (SEWI)
     - Fixed #1286: Too many newlines being inserted (SEWI)
