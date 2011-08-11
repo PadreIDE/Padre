@@ -369,12 +369,15 @@ sub render {
 
 		my $line = $issue->{line} - 1;
 		my $type = $issue->{type};
-		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
+		my $marker = $MESSAGE{$type}{marker};
+		my $is_warning = $marker == Padre::Wx::MarkWarn();
+		$editor->MarkerAdd( $line, $marker );
 
-		# Underline the syntax error line with a red squiggle indicator
+		# Underline the syntax warning/error line with an orange or red squiggle indicator
 		my $start = $editor->PositionFromLine($line);
-		$editor->StartStyling( $start, 0x50 );
-		$editor->SetStyling( $editor->GetLineEndPosition($line) - $start, Wx::wxSTC_STYLE_DEFAULT | 0x40 );
+
+		$editor->StartStyling( $start, 0xE0 );   # Change only the indicators (3 bits)
+		$editor->SetStyling( $editor->GetLineEndPosition($line) - $start, $is_warning ? 0x40 : 0x80 );
 
 		my $item = $self->{tree}->AppendItem(
 			$root,
@@ -384,7 +387,7 @@ sub render {
 				$MESSAGE{$type}{label},
 				$issue->{message}
 			),
-			$MESSAGE{$type}{marker} == Padre::Wx::MarkWarn() ? $self->{images}{warning} : $self->{images}{error}
+			$is_warning ? $self->{images}{warning} : $self->{images}{error}
 		);
 		$self->{tree}->SetPlData( $item, $issue );
 	}
