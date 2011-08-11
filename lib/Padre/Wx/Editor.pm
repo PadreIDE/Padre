@@ -15,14 +15,18 @@ use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
 use Padre::Logger;
 
+# Allow the use of two different versions of Scintilla
+use constant WX_SCINTILLA => Padre::Config::wx_scintilla_ready()
+	? 'Wx::ScintillaTextCtrl'
+	: 'Wx::StyledTextCtrl';
+
 our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
-
-# Allow the use of two different versions of Scintilla
-our @ISA =
-	Padre::Config::wx_scintilla_ready()
-	? qw{ Padre::Wx::Role::Main Wx::ScintillaTextCtrl }
-	: qw{ Padre::Wx::Role::Main Wx::StyledTextCtrl    };
+our @ISA        = (
+	'Padre::Wx::Role::Main',
+	'Padre::Wx::Role::Dwell',
+	WX_SCINTILLA,
+);
 
 # Convenience colour constants
 # NOTE: DO NOT USE "orange" string since it is actually red on win32
@@ -67,6 +71,13 @@ our %MIME_STYLE = (
 my $data;
 my $data_name;
 my $data_private;
+
+
+
+
+
+######################################################################
+# Constructor and Accessors
 
 sub new {
 	my $class  = shift;
@@ -143,87 +154,319 @@ sub new {
 	$self->SetCaretPeriod( $config->editor_cursor_blink );
 
 	# Generate event bindings
-	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
-	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
+	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
+	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
+	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
+	Wx::Event::EVT_KEY_DOWN( $self, \&on_key_down );
+	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
-	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
-	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 	Wx::Event::EVT_MOTION( $self, \&on_mouse_moving );
 	Wx::Event::EVT_MOUSEWHEEL( $self, \&on_mousewheel );
+	Wx::Event::EVT_LEFT_DOWN( $self, \&on_left_down );
+	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
+	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_left_double );
+	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
+	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them
-	my @styles = ();
-	$self->{styles} = \@styles;
+	$self->{styles} = [ ];
 	$self->IndicatorSetStyle( 0, 7 );
-	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_smart_highlight_begin );
-	Wx::Event::EVT_LEFT_DOWN( $self, \&on_smart_highlight_end );
-	Wx::Event::EVT_KEY_DOWN( $self, \&on_smart_highlight_end );
-
-	# Setup EVT_KEY_UP for smart highlighting and non-destructive CTRL-L
-	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
 
 	return $self;
 }
 
-# convenience methods
-# return the character at a given position as a perl string
-sub get_character_at {
-	return chr $_[0]->GetCharAt( $_[1] );
-}
 
-# private is undefined if we don't know and need to search for it
-# private is 0 if this is a standard style
-# private is 1 if this is a private style
-sub data {
-	my $name    = shift;
-	my $private = shift;
 
-	return $data if not defined $name;
-	return $data if defined $data and $name eq $data_name;
 
-	my $private_file = File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'styles', "$name.yml" );
-	my $standard_file = Padre::Util::sharefile( 'styles', "$name.yml" );
 
-	if ( not defined $private ) {
-		if ( -e $private_file ) {
-			$private = 1;
-		} elsif ( -e $standard_file ) {
-			$private = 0;
+######################################################################
+# Event Handlers
+
+# When the focus is received by the editor
+sub on_set_focus {
+	my $self     = shift;
+	my $event    = shift;
+	my $main     = $self->main;
+	my $document = $main->current->document;
+	TRACE( "Focus received file: " . ( $document->filename || '' ) ) if DEBUG;
+
+	# NOTE: The editor focus event fires a LOT, even for trivial things
+	# like changing focus to another application and immediately back again,
+	# or switching between tools in Padre.
+	# Don't do any refreshing here, it is an excessive waste of resources.
+	# Instead, put them in the events that ACTUALLY change application state.
+
+	# TO DO
+	# This is called even if the mouse is moved away from padre and back again
+	# we should restrict some of the updates to cases when we switch from one file to
+	# another
+	if ( $self->needs_manual_colorize ) {
+		TRACE("needs_manual_colorize") if DEBUG;
+		my $lock  = $main->lock('UPDATE');
+		my $lexer = $self->GetLexer;
+		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
+			$document->colorize;
 		} else {
-			warn "style $name could not be found in either places: '$standard_file' and '$private_file'\n";
-			return $data;
+			$self->remove_color;
+			$self->Colourise( 0, $self->GetLength );
 		}
+		$self->needs_manual_colorize(0);
 	}
 
-	my $file =
-		  $private
-		? $private_file
-		: $standard_file;
-	my $tdata;
-	eval { $tdata = YAML::Tiny::LoadFile($file); };
-	if ($@) {
-		warn $@;
-	} else {
-		$data_name    = $name;
-		$data_private = $private;
-		$data         = $tdata;
-	}
-	return $data;
+	# Keep processing
+	$event->Skip(1);
+
+	return;
 }
 
-# Error Message
-sub error {
+# When the focus is leaving the editor
+sub on_kill_focus {
+	my $self  = shift;
+	my $event = shift;
+
+	# Squelch the change dwell timer
+	$self->dwell_stop('on_change_dwell');
+
+	# Keep processing
+	$self->Skip(1);
+}
+
+# Called when a key is pressed
+sub on_key_down {
+	my $self  = shift;
+	my $event = shift;
+	$self->smart_highlight_end;
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+# Called when a key is released
+sub on_key_up {
+	my $self  = shift;
+	my $event = shift;
+
+	# The new behavior for a non-destructive CTRL-L
+	if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
+		my $line = $self->GetLine( $self->GetCurrentLine );
+		if ( $line !~ /^\s*$/ ) {
+
+			# Only cut on non-blank lines
+			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+		} else {
+
+			# Otherwise delete the line
+			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
+		}
+		$event->Skip(0); # done processing this nothing more to do
+		return;
+	}
+
+	# Apply smart highlighting when the shift key is down
+	if ( $self->config->editor_smart_highlight_enable and $event->ShiftDown ) {
+		$self->smart_highlight_begin($event);
+	}
+
+	# Doc specific processing
+	my $doc = $self->{Document} or return;
+	if ( $doc->can('event_key_up') ) {
+		$doc->event_key_up( $self, $event );
+	}
+
+	# Keep processing
+	$event->Skip(1);
+
+}
+
+# Called when a character is added or changed in the editor
+sub on_char {
+	my $self     = shift;
+	my $event    = shift;
+	my $document = $self->{Document} or return;
+	if ( $document->can('event_on_char') ) {
+		$document->event_on_char( $self, $event );
+	}
+
+	$document->{last_char_time} = Time::HiRes::time();
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+# Called on any change to text
+# NOTE: Not sure if/when this includes char events, so it might cause two
+#       calls to dwell_start for each key press, but this is ok for now.
+sub on_change {
+	my $self  = shift;
+	my $event = shift;
+
+	# Fire or update the dwell timer
+	$self->dwell_start('on_change_dwell', 1000);
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+# Fires 1 second after the user stops typing
+sub on_change_dwell {
 	my $self = shift;
-	my $text = shift;
-	Wx::MessageBox(
-		$text,
-		Wx::gettext("Error"),
-		Wx::wxOK,
-		$self->main
-	);
+
+	# Refresh the function list whenever they stop typing
+	# NOTE: Expand this to other tools like the syntax checker once
+	#       we are sure this works safely.
+	$self->main->refresh_functions;
+
+	return 1;
 }
+
+# Called while the mouse is moving
+sub on_mouse_moving {
+	my $self  = shift;
+	my $event = shift;
+
+	if ( $event->Moving ) {
+		my $doc = $self->{Document} or return;
+		if ( $doc->can('event_mouse_moving') ) {
+			$doc->event_mouse_moving( $self, $event );
+		}
+	} else {
+
+		# For a drag event...
+	}
+
+	# Keep processing
+	$event->Skip(1);
+
+}
+
+# Convert the Ctrl-Scroll behaviour of changing the font size
+# to the non-Ctrl behaviour of scrolling.
+sub on_mousewheel {
+	my $self  = shift;
+	my $event = shift;
+
+	# Ignore this handler if it's a normal wheel movement
+	unless ( $event->ControlDown ) {
+		$event->Skip(1);
+		return;
+	}
+
+	if ( Padre::Feature::FONTSIZE ) {
+
+		# The default handler zooms in the wrong direction
+		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
+	} else {
+
+		# Behave as if Ctrl wasn't down
+		$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
+	}
+
+	return;
+}
+
+sub on_left_down {
+	my $self  = shift;
+	my $event = shift;
+	$self->smart_highlight_end;
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+sub on_left_up {
+	my $self   = shift;
+	my $event  = shift;
+	my $config = $self->config;
+	my $text   = $self->GetSelectedText;
+
+	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
+
+		# Only on X11 based platforms
+		# Wx::wxTheClipboard->UsePrimarySelection(1);
+		if ( $config->mid_button_paste ) {
+			$self->put_text_to_clipboard( $text, 1 );
+		} else {
+			$self->put_text_to_clipboard($text);
+		}
+
+		# Wx::wxTheClipboard->UsePrimarySelection(0);
+	}
+
+	my $doc = $self->{Document};
+	if ( $doc and $doc->can('event_on_left_up') ) {
+		$doc->event_on_left_up( $self, $event );
+	}
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+sub on_left_double {
+	my $self  = shift;
+	my $event = shift;
+	$self->smart_highlight_begin;
+
+	# Keep processing
+	$event->Skip(1);
+}
+
+sub on_middle_up {
+	my $self   = shift;
+	my $event  = shift;
+	my $config = $self->config;
+
+	# TO DO: Sometimes there are unexpected effects when using the middle button.
+	# It seems that another event is doing something but not within this module.
+	# Please look at ticket #390 for details!
+
+	Wx::wxTheClipboard->UsePrimarySelection(1)
+		if $config->mid_button_paste;
+
+	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
+
+		# NOTE: Editor->Current->Editor? Circular loop?
+		$self->current->editor->Paste;
+	}
+
+	my $doc = $self->{Document};
+	if ( $doc->can('event_on_middle_up') ) {
+		$doc->event_on_middle_up( $self, $event );
+	}
+
+	Wx::wxTheClipboard->UsePrimarySelection(0)
+		if $config->mid_button_paste;
+
+	if ( $config->mid_button_paste ) {
+		$event->Skip(1);
+	} else {
+		$event->Skip(0);
+	}
+}
+
+sub on_right_down {
+	my $self  = shift;
+	my $event = shift;
+	my $main  = $self->main;
+	my $pos   = $self->GetCurrentPos;
+
+	require Padre::Wx::Menu::RightClick;
+	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
+
+	if ( $event->isa('Wx::MouseEvent') ) {
+		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
+	} else { #Wx::CommandEvent
+		$self->PopupMenu( $menu->wx, 50, 50 ); # TO DO better location
+	}
+}
+
+
+
+
+
+######################################################################
+# Setup and Preferences Methods
 
 # Most of this should be read from some external files
 # but for now we use this if statement
@@ -281,42 +524,6 @@ sub padre_setup {
 	$self->padre_setup_plain;
 
 	return;
-}
-
-# Called when a key is released in the editor
-sub on_key_up {
-	my ( $self, $event ) = @_;
-
-	# The new behavior for a non-destructive CTRL-L
-	if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
-		my $line = $self->GetLine( $self->GetCurrentLine );
-		if ( $line !~ /^\s*$/ ) {
-
-			# Only cut on non-blank lines
-			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
-		} else {
-
-			# Otherwise delete the line
-			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
-		}
-		$event->Skip(0); # done processing this nothing more to do
-		return;
-	}
-
-	# Apply smart highlighting when the shift key is down
-	if ( $self->config->editor_smart_highlight_enable && $event->ShiftDown ) {
-		$self->on_smart_highlight_begin($event);
-	}
-
-	# Doc specific processing
-	my $doc = $self->{Document} or return;
-	if ( $doc->can('event_key_up') ) {
-		$doc->event_key_up( $self, $event );
-	}
-
-	# We need to keep processing this event
-	$event->Skip(1);
-
 }
 
 sub padre_setup_plain {
@@ -452,9 +659,131 @@ sub setup_style_from_config {
 	}
 }
 
+sub set_preferences {
+	my $self   = shift;
+	my $config = $self->config;
+
+	$self->SetCaretLineVisible( $config->editor_currentline );
+	$self->show_line_numbers( $config->editor_linenumbers );
+	$self->SetIndentationGuides( $config->editor_indentationguides );
+	$self->SetViewEOL( $config->editor_eol );
+	$self->SetViewWhiteSpace( $config->editor_whitespace );
+
+	if (Padre::Feature::FOLDING) {
+		$self->show_folding( $config->editor_folding );
+	}
+
+	$self->padre_setup;
+
+	if ( $self->{Document} ) {
+		$self->{Document}->set_indentation_style;
+	}
+
+	return;
+}
+
+sub configure_editor {
+	my $self     = shift;
+	my $document = shift or return;
+	my $eol      = $WXEOL{ $document->newline_type };
+	$self->SetEOLMode($eol) if defined $eol;
+
+	if ( defined $document->{original_content} ) {
+		$self->SetText( $document->{original_content} );
+	}
+
+	$self->EmptyUndoBuffer;
+
+	return;
+}
+
+# some uncorrect behaviour (| is the cursor)
+# {} : never highlighted
+# { } : always correct
+#
+#
+
+sub apply_style {
+	my $self           = shift;
+	my $style_info     = shift;
+	my %previous_style = %$style_info;
+	$previous_style{style} = $self->GetStyleAt( $style_info->{start} );
+
+	$self->StartStyling( $style_info->{start}, 0xFF );
+	$self->SetStyling( $style_info->{len}, $style_info->{style} );
+
+	return \%previous_style;
+}
+
+
+
+
+
+######################################################################
+# General Methods
+
+# convenience methods
+# return the character at a given position as a perl string
+sub get_character_at {
+	return chr $_[0]->GetCharAt( $_[1] );
+}
+
+# private is undefined if we don't know and need to search for it
+# private is 0 if this is a standard style
+# private is 1 if this is a private style
+sub data {
+	my $name    = shift;
+	my $private = shift;
+
+	return $data if not defined $name;
+	return $data if defined $data and $name eq $data_name;
+
+	my $private_file = File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'styles', "$name.yml" );
+	my $standard_file = Padre::Util::sharefile( 'styles', "$name.yml" );
+
+	if ( not defined $private ) {
+		if ( -e $private_file ) {
+			$private = 1;
+		} elsif ( -e $standard_file ) {
+			$private = 0;
+		} else {
+			warn "style $name could not be found in either places: '$standard_file' and '$private_file'\n";
+			return $data;
+		}
+	}
+
+	my $file =
+		  $private
+		? $private_file
+		: $standard_file;
+	my $tdata;
+	eval { $tdata = YAML::Tiny::LoadFile($file); };
+	if ($@) {
+		warn $@;
+	} else {
+		$data_name    = $name;
+		$data_private = $private;
+		$data         = $tdata;
+	}
+	return $data;
+}
+
+# Error Message
+sub error {
+	my $self = shift;
+	my $text = shift;
+	Wx::MessageBox(
+		$text,
+		Wx::gettext("Error"),
+		Wx::wxOK,
+		$self->main
+	);
+}
+
+
 sub _color {
 	my $rgb = shift;
-	my @c = ( 0xFF, 0xFF, 0xFF );
+	my @c   = ( 0xFF, 0xFF, 0xFF );
 	if ( not defined $rgb ) {
 
 		#Carp::cluck("undefined color");
@@ -538,7 +867,8 @@ Tell if a character is a brace, and if it is an opening or a closing one
 my %_cached_braces;
 
 sub get_brace_type {
-	my ( $self, $char ) = @_;
+	my $self = shift;
+	my $char = shift;
 	unless (%_cached_braces) {
 		my $i = 1; # start from one so that all values are true
 		$_cached_braces{$_} = $i++ foreach ( split //, '{}[]()' );
@@ -547,31 +877,10 @@ sub get_brace_type {
 	return $v;
 }
 
-
-
-# some uncorrect behaviour (| is the cursor)
-# {} : never highlighted
-# { } : always correct
-#
-#
-
-sub apply_style {
-	my ( $self, $style_info ) = @_;
-	my %previous_style = %$style_info;
-	$previous_style{style} = $self->GetStyleAt( $style_info->{start} );
-
-	$self->StartStyling( $style_info->{start}, 0xFF );
-	$self->SetStyling( $style_info->{len}, $style_info->{style} );
-
-	return \%previous_style;
-}
-
-
 my $previous_expr_hiliting_style;
 
 sub highlight_braces {
-	my ($self) = @_;
-
+	my $self = shift;
 	my $expression_highlighting = $self->config->editor_brace_expression_highlighting;
 
 	# remove current highlighting if any
@@ -687,90 +996,6 @@ sub show_line_numbers {
 	return;
 }
 
-BEGIN {
-	*show_folding = sub {
-		my $self = shift;
-		my $on   = shift;
-
-		if ($on) {
-
-			# Setup a margin to hold fold markers
-			$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
-			$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
-			$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
-			$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
-
-			# Define folding markers
-			my $w = Wx::Colour->new("white");
-			my $b = Wx::Colour->new("black");
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEREND,     Wx::wxSTC_MARK_BOXPLUSCONNECTED,  $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPENMID, Wx::wxSTC_MARK_BOXMINUSCONNECTED, $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERMIDTAIL, Wx::wxSTC_MARK_TCORNER,           $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERTAIL,    Wx::wxSTC_MARK_LCORNER,           $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERSUB,     Wx::wxSTC_MARK_VLINE,             $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDER,        Wx::wxSTC_MARK_BOXPLUS,           $w, $b );
-			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPEN,    Wx::wxSTC_MARK_BOXMINUS,          $w, $b );
-
-			# This would be nice but the color used for drawing the lines is
-			# Wx::wxSTC_STYLE_DEFAULT, i.e. usually black and therefore quite
-			# obtrusive...
-			# $self->SetFoldFlags( Wx::wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | Wx::wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
-
-			# Activate
-			$self->SetProperty( 'fold' => 1 );
-
-			Wx::Event::EVT_STC_MARGINCLICK(
-				$self, -1,
-				sub {
-					my ( $editor, $event ) = @_;
-					if ( $event->GetMargin == 2 ) {
-						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition );
-						my $level_clicked = $editor->GetFoldLevel($line_clicked);
-
-						# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
-						#if ( $level_clicked && wxSTC_FOLDLEVELHEADERFLAG) > 0) {
-						$editor->ToggleFold($line_clicked);
-
-						#}
-					}
-				}
-			);
-		} else {
-			$self->SetMarginSensitive( 2, 0 );
-			$self->SetMarginWidth( 2, 0 );
-
-			# Deactivate
-			$self->SetProperty( 'fold' => 1 );
-			$self->unfold_all;
-		}
-
-		return;
-		}
-		if Padre::Feature::FOLDING;
-}
-
-sub set_preferences {
-	my $self   = shift;
-	my $config = $self->config;
-
-	$self->SetCaretLineVisible( $config->editor_currentline );
-	$self->show_line_numbers( $config->editor_linenumbers );
-	$self->SetIndentationGuides( $config->editor_indentationguides );
-	$self->SetViewEOL( $config->editor_eol );
-	$self->SetViewWhiteSpace( $config->editor_whitespace );
-
-	if (Padre::Feature::FOLDING) {
-		$self->show_folding( $config->editor_folding );
-	}
-
-	$self->padre_setup;
-
-	if ( $self->{Document} ) {
-		$self->{Document}->set_indentation_style;
-	}
-
-	return;
-}
 
 sub show_calltip {
 	my $self   = shift;
@@ -926,312 +1151,6 @@ sub _auto_deindent {
 	elsif ( $config->editor_autoindent eq 'deep' and $content =~ /\}\s*$/ ) {
 
 		# TO DO: What should happen in this case?
-	}
-
-	return;
-}
-
-BEGIN {
-	*fold_this = sub {
-		my $self        = shift;
-		my $currentLine = $self->GetCurrentLine;
-
-		unless ( $self->GetFoldExpanded($currentLine) ) {
-			$self->ToggleFold($currentLine);
-			return;
-		}
-
-		while ( $currentLine >= 0 ) {
-			if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
-				$self->ToggleFold($parentLine);
-				return;
-			} else {
-				$currentLine--;
-			}
-		}
-
-		return;
-		}
-		if Padre::Feature::FOLDING;
-
-	*fold_all = sub {
-		my $self        = shift;
-		my $lineCount   = $self->GetLineCount;
-		my $currentLine = $lineCount;
-
-		while ( $currentLine >= 0 ) {
-			if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
-				if ( $self->GetFoldExpanded($parentLine) ) {
-					$self->ToggleFold($parentLine);
-					$currentLine = $parentLine;
-				} else {
-					$currentLine--;
-				}
-			} else {
-				$currentLine--;
-			}
-		}
-
-		return;
-		}
-		if Padre::Feature::FOLDING;
-
-	*unfold_all = sub {
-		my $self        = shift;
-		my $lineCount   = $self->GetLineCount;
-		my $currentLine = 0;
-
-		while ( $currentLine <= $lineCount ) {
-			if ( !$self->GetFoldExpanded($currentLine) ) {
-				$self->ToggleFold($currentLine);
-			}
-			$currentLine++;
-		}
-
-		return;
-		}
-		if Padre::Feature::FOLDING;
-}
-
-# When the focus is received by the editor
-sub on_focus {
-	my $self     = shift;
-	my $event    = shift;
-	my $main     = $self->main;
-	my $document = $main->current->document;
-	TRACE( "Focus received file: " . ( $document->filename || '' ) ) if DEBUG;
-
-	# NOTE: The editor focus event fires a LOT, even for trivial things
-	# like changing focus to another application and immediately back again,
-	# or switching between tools in Padre.
-	# Don't do any refreshing here, it is an excessive waste of resources.
-	# Instead, put them in the events that ACTUALLY change application state.
-
-	# TO DO
-	# This is called even if the mouse is moved away from padre and back again
-	# we should restrict some of the updates to cases when we switch from one file to
-	# another
-	if ( $self->needs_manual_colorize ) {
-		TRACE("needs_manual_colorize") if DEBUG;
-		my $lock  = $main->lock('UPDATE');
-		my $lexer = $self->GetLexer;
-		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
-			$document->colorize;
-		} else {
-			$self->remove_color;
-			$self->Colourise( 0, $self->GetLength );
-		}
-		$self->needs_manual_colorize(0);
-	}
-
-	# NOTE: This is so the cursor will show up
-	$event->Skip(1);
-
-	return;
-}
-
-sub on_char {
-	my $self     = shift;
-	my $event    = shift;
-	my $document = $self->{Document} or return;
-	if ( $document->can('event_on_char') ) {
-		$document->event_on_char( $self, $event );
-	}
-
-	$document->{last_char_time} = Time::HiRes::time();
-
-	$event->Skip;
-	return;
-}
-
-sub clear_smart_highlight {
-	my $self = shift;
-
-	my @styles = @{ $self->{styles} };
-	if ( scalar @styles ) {
-		foreach my $style (@styles) {
-			$self->StartStyling( $style->{start}, 0xFF );
-			$self->SetStyling( $style->{len}, $style->{style} );
-		}
-		$#{ $self->{styles} } = -1;
-	}
-}
-
-sub on_smart_highlight_begin {
-	my ( $self, $event ) = @_;
-
-	my $selection        = $self->GetSelectedText;
-	my $selection_length = length $selection;
-	return if $selection_length == 0;
-
-	my $selection_re = quotemeta $selection;
-	my $line_count   = $self->GetLineCount;
-	my $line_num     = $self->GetCurrentLine;
-
-	# Limits search to C+N..C-N from current line respecting limits ofcourse
-	# to optimize CPU usage
-	my $NUM_LINES = 400;
-	my $from      = ( $line_num - $NUM_LINES <= 0 ) ? 0 : $line_num - $NUM_LINES;
-	my $to        = ( $line_count <= $line_num + $NUM_LINES ) ? $line_count : $line_num + $NUM_LINES;
-
-	# Clear previous smart highlights
-	$self->clear_smart_highlight;
-
-	# find matching occurrences
-	foreach my $i ( $from .. $to ) {
-		my $line_start = $self->PositionFromLine($i);
-		my $line       = $self->GetLine($i);
-		while ( $line =~ /$selection_re/g ) {
-			my $start = $line_start + pos($line) - $selection_length;
-
-			push @{ $self->{styles} },
-				{
-				start => $start,
-				len   => $selection_length,
-				style => $self->GetStyleAt($start)
-				};
-		}
-	}
-
-	# smart highlight if there are more than one occurrence...
-	if ( scalar @{ $self->{styles} } > 1 ) {
-		foreach my $style ( @{ $self->{styles} } ) {
-			$self->StartStyling( $style->{start}, 0xFF );
-			$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
-		}
-	}
-
-}
-
-sub on_smart_highlight_end {
-	my ( $self, $event ) = @_;
-
-	$self->clear_smart_highlight;
-	$event->Skip;
-}
-
-sub on_left_up {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-
-	my $text = $self->GetSelectedText;
-	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
-
-		# Only on X11 based platforms
-		#		Wx::wxTheClipboard->UsePrimarySelection(1);
-		if ( $config->mid_button_paste ) {
-			$self->put_text_to_clipboard( $text, 1 );
-		} else {
-			$self->put_text_to_clipboard($text);
-		}
-
-		#		Wx::wxTheClipboard->UsePrimarySelection(0);
-	}
-
-	my $doc = $self->{Document};
-	if ( $doc and $doc->can('event_on_left_up') ) {
-		$doc->event_on_left_up( $self, $event );
-	}
-
-	$event->Skip;
-	return;
-}
-
-sub on_mouse_moving {
-	my ( $self, $event ) = @_;
-
-	if ( $event->Moving ) {
-		my $doc = $self->{Document} or return;
-		if ( $doc->can('event_mouse_moving') ) {
-			$doc->event_mouse_moving( $self, $event );
-		}
-	} else {
-
-		# For a drag event...
-	}
-
-	$event->Skip;
-
-}
-
-sub on_middle_up {
-	my ( $self, $event ) = @_;
-
-	my $config = $self->config;
-
-	# TO DO: Sometimes there are unexpected effects when using the middle button.
-	# It seems that another event is doing something but not within this module.
-	# Please look at ticket #390 for details!
-
-	Wx::wxTheClipboard->UsePrimarySelection(1)
-		if $config->mid_button_paste;
-
-	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
-
-		# NOTE: Editor->Current->Editor? Circular loop?
-		$self->current->editor->Paste;
-	}
-
-	my $doc = $self->{Document};
-	if ( $doc->can('event_on_middle_up') ) {
-		$doc->event_on_middle_up( $self, $event );
-	}
-
-	Wx::wxTheClipboard->UsePrimarySelection(0)
-		if $config->mid_button_paste;
-
-	if ( $config->mid_button_paste ) {
-		$event->Skip;
-	} else {
-		$event->Skip(0);
-	}
-	return;
-}
-
-
-sub on_right_down {
-	my $self  = shift;
-	my $event = shift;
-	my $main  = $self->main;
-	my $pos   = $self->GetCurrentPos;
-
-	#my $line  = $self->LineFromPosition($pos);
-	#print "right down: $pos\n"; # this is the position of the cursor and not that of the mouse!
-	#my $p = $event->GetLogicalPosition;
-	#print "x: ", $p->x, "\n";
-
-	require Padre::Wx::Menu::RightClick;
-	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
-
-	if ( $event->isa('Wx::MouseEvent') ) {
-		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
-	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu->wx, 50, 50 ); # TO DO better location
-	}
-}
-
-
-# Convert the Ctrl-Scroll behaviour of changing the font size
-# to the non-Ctrl behaviour of scrolling.
-sub on_mousewheel {
-	my $self  = shift;
-	my $event = shift;
-
-	# Ignore this handler if it's a normal wheel movement
-	unless ( $event->ControlDown ) {
-		$event->Skip(1);
-		return;
-	}
-
-	if (Padre::Feature::FONTSIZE) {
-
-		# The default handler zooms in the wrong direction
-		$self->SetZoom( $self->GetZoom + int( $event->GetWheelRotation / $event->GetWheelDelta ) );
-	} else {
-
-		# Behave as if Ctrl wasn't down
-		$self->ScrollLines( $event->GetLinesPerAction * int( $event->GetWheelRotation / $event->GetWheelDelta * -1 ) );
 	}
 
 	return;
@@ -1529,45 +1448,6 @@ sub uncomment_lines {
 	return;
 }
 
-BEGIN {
-	*fold_pod = sub {
-		my $self        = shift;
-		my $currentLine = 0;
-		my $lastLine    = $self->GetLineCount;
-
-		while ( $currentLine <= $lastLine ) {
-			if ( $self->GetLine($currentLine) =~ /^=(pod|head)/ ) {
-				if ( $self->GetFoldExpanded($currentLine) ) {
-					$self->ToggleFold($currentLine);
-					my $foldLevel = $self->GetFoldLevel($currentLine);
-					$currentLine = $self->GetLastChild( $currentLine, $foldLevel );
-				}
-				$currentLine++;
-			} else {
-				$currentLine++;
-			}
-		}
-
-		return;
-		}
-		if Padre::Feature::FOLDING;
-}
-
-sub configure_editor {
-	my $self     = shift;
-	my $document = shift or return;
-	my $eol      = $WXEOL{ $document->newline_type };
-	$self->SetEOLMode($eol) if defined $eol;
-
-	if ( defined $document->{original_content} ) {
-		$self->SetText( $document->{original_content} );
-	}
-
-	$self->EmptyUndoBuffer;
-
-	return;
-}
-
 sub find_function {
 	my $self     = shift;
 	my $name     = shift;
@@ -1716,6 +1596,222 @@ sub needs_manual_colorize {
 		$_[0]->{needs_manual_colorize} = $_[1];
 	}
 	return $_[0]->{needs_manual_colorize};
+}
+
+
+
+
+
+######################################################################
+# Smart Highlighting
+
+sub smart_highlight_begin {
+	my $self             = shift;
+	my $selection        = $self->GetSelectedText;
+	my $selection_length = length $selection;
+	return if $selection_length == 0;
+
+	my $selection_re = quotemeta $selection;
+	my $line_count   = $self->GetLineCount;
+	my $line_num     = $self->GetCurrentLine;
+
+	# Limits search to C+N..C-N from current line respecting limits ofcourse
+	# to optimize CPU usage
+	my $NUM_LINES = 400;
+	my $from      = ( $line_num - $NUM_LINES <= 0 ) ? 0 : $line_num - $NUM_LINES;
+	my $to        = ( $line_count <= $line_num + $NUM_LINES ) ? $line_count : $line_num + $NUM_LINES;
+
+	# Clear previous smart highlights
+	$self->smart_highlight_end;
+
+	# find matching occurrences
+	foreach my $i ( $from .. $to ) {
+		my $line_start = $self->PositionFromLine($i);
+		my $line       = $self->GetLine($i);
+		while ( $line =~ /$selection_re/g ) {
+			my $start = $line_start + pos($line) - $selection_length;
+
+			push @{ $self->{styles} },
+				{
+				start => $start,
+				len   => $selection_length,
+				style => $self->GetStyleAt($start)
+				};
+		}
+	}
+
+	# smart highlight if there are more than one occurrence...
+	if ( scalar @{ $self->{styles} } > 1 ) {
+		foreach my $style ( @{ $self->{styles} } ) {
+			$self->StartStyling( $style->{start}, 0xFF );
+			$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
+		}
+	}
+
+}
+
+sub smart_highlight_end {
+	my $self = shift;
+
+	my @styles = @{ $self->{styles} };
+	if ( scalar @styles ) {
+		foreach my $style (@styles) {
+			$self->StartStyling( $style->{start}, 0xFF );
+			$self->SetStyling( $style->{len}, $style->{style} );
+		}
+		$#{ $self->{styles} } = -1;
+	}
+}
+
+
+
+
+
+######################################################################
+# Code Folding
+
+BEGIN {
+	*show_folding = sub {
+		my $self = shift;
+		my $on   = shift;
+
+		if ($on) {
+
+			# Setup a margin to hold fold markers
+			$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
+			$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
+			$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
+			$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
+
+			# Define folding markers
+			my $w = Wx::Colour->new("white");
+			my $b = Wx::Colour->new("black");
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEREND,     Wx::wxSTC_MARK_BOXPLUSCONNECTED,  $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPENMID, Wx::wxSTC_MARK_BOXMINUSCONNECTED, $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERMIDTAIL, Wx::wxSTC_MARK_TCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERTAIL,    Wx::wxSTC_MARK_LCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDERSUB,     Wx::wxSTC_MARK_VLINE,             $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDER,        Wx::wxSTC_MARK_BOXPLUS,           $w, $b );
+			$self->MarkerDefine( Wx::wxSTC_MARKNUM_FOLDEROPEN,    Wx::wxSTC_MARK_BOXMINUS,          $w, $b );
+
+			# This would be nice but the color used for drawing the lines is
+			# Wx::wxSTC_STYLE_DEFAULT, i.e. usually black and therefore quite
+			# obtrusive...
+			# $self->SetFoldFlags( Wx::wxSTC_FOLDFLAG_LINEBEFORE_CONTRACTED | Wx::wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED );
+
+			# Activate
+			$self->SetProperty( 'fold' => 1 );
+
+			Wx::Event::EVT_STC_MARGINCLICK(
+				$self, -1,
+				sub {
+					my ( $editor, $event ) = @_;
+					if ( $event->GetMargin == 2 ) {
+						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition );
+						my $level_clicked = $editor->GetFoldLevel($line_clicked);
+
+						# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
+						#if ( $level_clicked && wxSTC_FOLDLEVELHEADERFLAG) > 0) {
+						$editor->ToggleFold($line_clicked);
+
+						#}
+					}
+				}
+			);
+		} else {
+			$self->SetMarginSensitive( 2, 0 );
+			$self->SetMarginWidth( 2, 0 );
+
+			# Deactivate
+			$self->SetProperty( 'fold' => 1 );
+			$self->unfold_all;
+		}
+
+		return;
+		}
+		if Padre::Feature::FOLDING;
+
+	*fold_this = sub {
+		my $self        = shift;
+		my $currentLine = $self->GetCurrentLine;
+
+		unless ( $self->GetFoldExpanded($currentLine) ) {
+			$self->ToggleFold($currentLine);
+			return;
+		}
+
+		while ( $currentLine >= 0 ) {
+			if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
+				$self->ToggleFold($parentLine);
+				return;
+			} else {
+				$currentLine--;
+			}
+		}
+
+		return;
+		}
+		if Padre::Feature::FOLDING;
+
+	*fold_all = sub {
+		my $self        = shift;
+		my $lineCount   = $self->GetLineCount;
+		my $currentLine = $lineCount;
+
+		while ( $currentLine >= 0 ) {
+			if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
+				if ( $self->GetFoldExpanded($parentLine) ) {
+					$self->ToggleFold($parentLine);
+					$currentLine = $parentLine;
+				} else {
+					$currentLine--;
+				}
+			} else {
+				$currentLine--;
+			}
+		}
+
+		return;
+		}
+		if Padre::Feature::FOLDING;
+
+	*unfold_all = sub {
+		my $self        = shift;
+		my $lineCount   = $self->GetLineCount;
+		my $currentLine = 0;
+
+		while ( $currentLine <= $lineCount ) {
+			if ( !$self->GetFoldExpanded($currentLine) ) {
+				$self->ToggleFold($currentLine);
+			}
+			$currentLine++;
+		}
+
+		return;
+		}
+		if Padre::Feature::FOLDING;
+
+	*fold_pod = sub {
+		my $self        = shift;
+		my $currentLine = 0;
+		my $lastLine    = $self->GetLineCount;
+
+		while ( $currentLine <= $lastLine ) {
+			if ( $self->GetLine($currentLine) =~ /^=(pod|head)/ ) {
+				if ( $self->GetFoldExpanded($currentLine) ) {
+					$self->ToggleFold($currentLine);
+					my $foldLevel = $self->GetFoldLevel($currentLine);
+					$currentLine = $self->GetLastChild( $currentLine, $foldLevel );
+				}
+				$currentLine++;
+			} else {
+				$currentLine++;
+			}
+		}
+
+		return;
+		}
+		if Padre::Feature::FOLDING;
 }
 
 

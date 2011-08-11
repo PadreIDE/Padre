@@ -1829,9 +1829,7 @@ sub refresh_functions {
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
 
-	my @windows = @_;
-	push @windows, $self->current unless @windows;
-	$self->functions->refresh(@windows);
+	$self->functions->refresh( $_[0] or $self->current );
 
 	return;
 }

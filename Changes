@@ -21,6 +21,10 @@ the even version for the release, even during development.
     - The functions and syntax check windows needs to be cleared when the
       document does not provide any functions or syntax checker tasks (AZAWAWI)
     - The syntax checker is now more accurate when typing faster (AZAWAWI)
+    - Added a change dwell mechanism to the editor panels, which gives any tools
+      based on editor content an opportunity to auto-refresh (ADAMK)
+    - Added change dwell auto-refresh to the function list, so new functions are
+      added as they are being typed or pasted (ADAMK)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
