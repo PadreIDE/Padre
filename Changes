@@ -31,7 +31,7 @@ the even version for the release, even during development.
       Moved function locating code to Padre::Editor as find_function,
       has_function and goto_function. Padre::Document now just has a single 
       "functions" method which does the work via the task class (ADAMK)
-    - In Padre::Editor the smart highligh methods are how smart_highlight_show
+    - In Padre::Editor the smart highlight methods are how smart_highlight_show
       and smart_highlight_hide (ADAMK)
 
 0.88 2011.08.09
