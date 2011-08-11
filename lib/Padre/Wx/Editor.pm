@@ -13,6 +13,7 @@ use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
+use Padre::Wx::Role::Dwell    ();
 use Padre::Logger;
 
 # Allow the use of two different versions of Scintilla
