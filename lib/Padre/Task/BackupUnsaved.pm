@@ -27,11 +27,11 @@ sub prepare {
 	require Padre::Current;
 	$self->{changes} = {
 		map {
-			warn $_->filename;
+			# warn $_->filename;
 			$_->filename => $_->text_get,
-			} grep {
+		} grep {
 			$_->is_unsaved
-			} Padre::Current->main->documents
+		} Padre::Current->main->documents
 	};
 
 	return 1;
