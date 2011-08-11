@@ -173,7 +173,13 @@ sub new {
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them
 	$self->{styles} = [ ];
-	$self->IndicatorSetStyle( 0, 7 );
+
+	# Indicator #0: Green round box indicator for smart highlighting
+	$self->IndicatorSetStyle( 0, Wx::wxSTC_INDIC_ROUNDBOX );
+
+	# Indicator #1, Red squiggle for error highlighting
+	$self->IndicatorSetForeground( 1, RED );
+	$self->IndicatorSetStyle( 1, Wx::wxSTC_INDIC_SQUIGGLE );
 
 	return $self;
 }

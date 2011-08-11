@@ -380,6 +380,10 @@ sub render {
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
 
+	# Clear all indicators. 0xE0 is the mask for all indicators
+	$editor->StartStyling( 0, 0xE0 );
+	$editor->SetStyling($editor->GetTextLength - 1, 0);
+
 	# Flush old results
 	$self->clear;
 
@@ -428,6 +432,11 @@ sub render {
 		my $line = $issue->{line} - 1;
 		my $type = $issue->{type};
 		$editor->MarkerAdd( $line, $MESSAGE{$type}{marker} );
+
+		# Underline the syntax error line with a red squiggle indicator
+		my $start = $editor->PositionFromLine($line);
+		$editor->StartStyling( $start, 0x50 );
+		$editor->SetStyling( $editor->GetLineEndPosition($line) - $start, Wx::wxSTC_STYLE_DEFAULT | 0x40 );
 
 		my $item = $self->{tree}->AppendItem(
 			$root,
