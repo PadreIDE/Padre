@@ -74,6 +74,7 @@ requires 'perl' => '5.008005';
 requires 'App::cpanminus'           => '0.9923';
 requires 'B::Deparse'               => 0;
 requires 'Capture::Tiny'            => '0.06';
+requires 'CGI'                      => '3.47';
 requires 'Class::Adapter'           => '1.05';
 requires 'Class::Inspector'         => '1.22';
 requires 'Class::Unload'            => '0.03';
