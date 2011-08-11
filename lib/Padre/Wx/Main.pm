@@ -113,7 +113,6 @@ sub new {
 
 	# Bootstrap some Wx internals
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-	Wx::InitAllImageHandlers();
 
 	# Initialise the style and position
 	my $config   = $ide->config;

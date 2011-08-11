@@ -24,11 +24,17 @@ use Wx::Locale ();
 our $VERSION    = '0.89';
 our $COMPATIBLE = '0.43';
 
-# Hard version lock on a new-enough Wx.pm
 BEGIN {
+	# Hard version lock on a new-enough Wx.pm
 	unless ( $Wx::VERSION and $Wx::VERSION >= 0.91 ) {
 		die("Your Wx.pm is not new enough (need 0.91, found $Wx::VERSION)");
 	}
+
+	# Load all the image handlers that we support by default in Padre.
+	# Don't load all of them with Wx::InitAllImageHandlers, it wastes memory.
+	Wx::Image::AddHandler( Wx::PNGHandler->new );
+	Wx::Image::AddHandler( Wx::ICOHandler->new );
+	Wx::InitAllImageHandlers();
 }
 
 sub import {
