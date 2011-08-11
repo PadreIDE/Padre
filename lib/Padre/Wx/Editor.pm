@@ -29,13 +29,18 @@ our @ISA        = (
 	WX_SCINTILLA,
 );
 
-# Convenience colour constants
-# NOTE: DO NOT USE "orange" string since it is actually red on win32
 use constant {
+	# Convenience colour constants
+	# NOTE: DO NOT USE "orange" string since it is actually red on win32
 	ORANGE => Wx::Colour->new( 255, 165, 0 ),
 	RED    => Wx::Colour->new("red"),
 	GREEN  => Wx::Colour->new("green"),
 	BLUE   => Wx::Colour->new("blue"),
+
+	# Indicators
+	INDICATOR_SMART_HIGHLIGHT => 0,
+	INDICATOR_WARNING 	  => 1,
+	INDICATOR_ERROR 	  => 2,
 };
 
 # End-Of-Line modes:
@@ -174,12 +179,17 @@ sub new {
 	# with a round box around each of them
 	$self->{styles} = [ ];
 
+	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
-	$self->IndicatorSetStyle( 0, Wx::wxSTC_INDIC_ROUNDBOX );
+	$self->IndicatorSetStyle( INDICATOR_SMART_HIGHLIGHT, Wx::wxSTC_INDIC_ROUNDBOX );
 
-	# Indicator #1, Red squiggle for error highlighting
-	$self->IndicatorSetForeground( 1, RED );
-	$self->IndicatorSetStyle( 1, Wx::wxSTC_INDIC_SQUIGGLE );
+	# Indicator #1, Orange squiggle for warning highlighting
+	$self->IndicatorSetForeground( INDICATOR_WARNING, ORANGE );
+	$self->IndicatorSetStyle( INDICATOR_WARNING, Wx::wxSTC_INDIC_SQUIGGLE );
+
+	# Indicator #2, Red squiggle for error highlighting
+	$self->IndicatorSetForeground( INDICATOR_ERROR, RED );
+	$self->IndicatorSetStyle( INDICATOR_ERROR, Wx::wxSTC_INDIC_SQUIGGLE );
 
 	return $self;
 }
