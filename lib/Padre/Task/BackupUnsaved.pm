@@ -27,7 +27,6 @@ sub prepare {
 	require Padre::Current;
 	$self->{changes} = {
 		map {
-			# warn $_->filename;
 			$_->filename => $_->text_get,
 		} grep {
 			$_->is_unsaved
