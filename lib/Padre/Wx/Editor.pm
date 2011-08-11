@@ -231,7 +231,7 @@ sub on_kill_focus {
 	$self->dwell_stop('on_change_dwell');
 
 	# Keep processing
-	$self->Skip(1);
+	$event->Skip(1);
 }
 
 # Called when a key is pressed
@@ -312,14 +312,19 @@ sub on_change {
 
 # Fires 1 second after the user stops typing
 sub on_change_dwell {
-	my $self = shift;
+	my $self   = shift;
+	my $main   = $self->main;
+	my $editor = $main->current->editor;
 
-	# Refresh the function list whenever they stop typing
-	# NOTE: Expand this to other tools like the syntax checker once
-	#       we are sure this works safely.
-	$self->main->refresh_functions;
+	# Only trigger tool refresh actions if we are the active document
+	if ( $editor and $self->GetId == $editor->GetId ) {
+		# Refresh the function list whenever they stop typing
+		# NOTE: Expand this to other tools like the syntax checker once
+		#       we are sure this works safely.
+		$main->refresh_functions;
+	}
 
-	return 1;
+	return;
 }
 
 # Called while the mouse is moving
