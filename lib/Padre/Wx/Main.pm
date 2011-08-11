@@ -2763,7 +2763,7 @@ sub on_run_this_test {
 		my $things_to_test = $tempfile->filename;
 		$self->run_command(qq{"$prove" - -lv < "$things_to_test"});
 	} else {
-		$self->run_command("$prove -bv $filename");
+		$self->run_command("$prove -lv $filename");
 	}
 	chdir $dir;
 }
