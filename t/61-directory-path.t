@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 25;
+use Test::More tests => 27;
 use Test::NoWarnings;
 use Storable                   ();
 use File::Spec                 ();
@@ -59,6 +59,10 @@ SCOPE: {
 	my $string = Storable::freeze($file);
 	ok( length $string, 'Got a string' );
 	my $round = Storable::thaw($string);
+	is_deeply( $file, $round, 'File round-trips ok' );
+	$string = Storable::nfreeze($file);
+	ok( length $string, 'Got a string' );
+	$round = Storable::thaw($string);
 	is_deeply( $file, $round, 'File round-trips ok' );
 }
 
