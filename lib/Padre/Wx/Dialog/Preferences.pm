@@ -246,6 +246,19 @@ sub guess {
 	return;
 }
 
+# Generate a config object that we won't ultimately save, but can be used
+# when tailoring the editor preview to new settings.
+sub preview_config {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $diff   = $self->config_diff;
+	my $config = $self->config->clone;
+	foreach my $key ( %$diff ) {
+		$config->set( $key => $diff->{$key} );
+	}
+	return $config;
+}
+
 # We do this the long-hand way for now, as we don't have a suitable
 # method for generating proper logical style objects.
 sub preview_refresh {
