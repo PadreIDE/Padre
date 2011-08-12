@@ -255,7 +255,7 @@ sub refresh {
 	my $task = $document->task_functions;
 	if ( $document->is_unused or not $task ) {
 		$list->Clear;
-		return 1;
+		return;
 	}
 
 	# Launch the background task
@@ -264,8 +264,6 @@ sub refresh {
 		text  => $document->text_get,
 		order => $current->config->main_functions_order,
 	);
-
-	return 1;
 }
 
 # Set an updated method list from the task

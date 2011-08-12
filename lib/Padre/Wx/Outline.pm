@@ -243,21 +243,28 @@ sub clear {
 
 sub refresh {
 	TRACE( $_[0] ) if DEBUG;
-	my $self     = shift;
-	my $document = $self->current->document;
+	my $self = shift;
 
 	# Cancel any existing outline task
 	$self->task_reset;
 
 	# Shortcut if the document is empty
+	my $document = $self->current->document;
 	unless ( $document and not $document->is_unused ) {
 		$self->clear;
 		return 1;
 	}
 
+	# Is there an outline task for this document type
+	my $task = $document->task_outline;
+	unless ( $task ) {
+		$self->clear;
+		return;
+	}
+
 	# Trigger the task to fetch the refresh data
 	$self->task_request(
-		task     => $document->task_outline,
+		task     => $task,
 		document => $document,
 	);
 }
