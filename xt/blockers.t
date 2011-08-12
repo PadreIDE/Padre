@@ -20,9 +20,8 @@ $ua->env_proxy;
 my $response = $ua->get(
 	'http://padre.perlide.org/trac/query?priority=blocker&status=accepted&status=assigned&status=new&status=reopened&col=id&order=priority'
 );
-
 ok( $response->is_success, 'Got HTTP status OK' );
-unlike(
-	$response->decoded_content, qr/<a href="?\/trac\/ticket\/(\d+)"?[^>]*>\#\1<\/a/,
-	'Check for open blocker tickets'
-); # or whatever
+
+# Count the number of blockers
+my $tickets =()= $response->decoded_content, qr/<a href="?\/trac\/ticket\/(\d+)"?[^>]*>\#\1<\/a/;
+is( $tickets, 0, 'No open blocker tickets' );
