@@ -40,6 +40,8 @@ the even version for the release, even during development.
       indicator (AZAWAWI)
     - TRACE() calls now use epoch microsecond timestamps instead of localtime
       to make subsecond temporal relationships more obvious (ADAMK)
+    - When the syntax checker is rescanning after a document change, clear the
+      window but do not change the margin (ADAMK)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.

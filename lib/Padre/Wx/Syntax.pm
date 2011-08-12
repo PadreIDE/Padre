@@ -300,6 +300,12 @@ sub refresh {
 		task     => $task,
 		document => $document,
 	);
+
+	# Clear out the syntax check window, leaving the margin as is
+	$self->{tree}->DeleteAllItems;
+	$self->_update_help_page;
+
+	return 1;
 }
 
 sub task_finish {
