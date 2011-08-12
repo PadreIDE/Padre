@@ -50,7 +50,7 @@ sub read {
 sub clone {
 	my $self  = shift;
 	my $class = Scalar::Util::blessed($self);
-	return bless { %$self }, $class;
+	return bless {%$self}, $class;
 }
 
 #

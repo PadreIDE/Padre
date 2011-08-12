@@ -59,7 +59,7 @@ sub import {
 	}
 
 	# Find the location of Padre.pm
-	my $padre  = $INC{'Padre.pm'};
+	my $padre = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version,
@@ -74,11 +74,11 @@ sub import {
 
 	# Load all of them (ignoring errors)
 	my $loaded = 0;
-	my %skip   = map { $_ => 1 } qw{
+	my %skip = map { $_ => 1 } qw{
 		Padre/CPAN.pm
 		Padre/Test.pm
 	};
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 		$skip{'Padre/Util/Win32.pm'} = 1;
 	}
 	foreach my $child (@children) {

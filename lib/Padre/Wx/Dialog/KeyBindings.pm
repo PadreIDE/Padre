@@ -500,13 +500,13 @@ sub _update_list {
 	$list->DeleteAllItems;
 
 	my $actions         = $self->ide->actions;
-        my $real_color      = Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_WINDOW ); 
+	my $real_color      = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
 	my $alternate_color = Wx::Colour->new(
-		int( $real_color->Red   * 0.9),
-		int( $real_color->Green * 0.9),
+		int( $real_color->Red * 0.9 ),
+		int( $real_color->Green * 0.9 ),
 		$real_color->Blue,
 	);
-	my $index           = 0;
+	my $index = 0;
 
 	my @action_names = sort { $a cmp $b } keys %$actions;
 	if ( $self->{sortcolumn} == 1 ) {

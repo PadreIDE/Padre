@@ -25,6 +25,7 @@ our $VERSION    = '0.89';
 our $COMPATIBLE = '0.43';
 
 BEGIN {
+
 	# Hard version lock on a new-enough Wx.pm
 	unless ( $Wx::VERSION and $Wx::VERSION >= 0.91 ) {
 		die("Your Wx.pm is not new enough (need 0.91, found $Wx::VERSION)");

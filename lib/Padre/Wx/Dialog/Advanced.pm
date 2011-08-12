@@ -708,15 +708,16 @@ sub _update_list {
 	# Recalculate sizers
 	$self->Layout;
 
-	my $index          = -1;
-	my $preferences    = $self->{preferences};
+	my $index       = -1;
+	my $preferences = $self->{preferences};
 
 	# Try to derive an alternate row colour based on the current system colour
-	my $realColor      = Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_WINDOW );
+	my $realColor = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
+
 	# Alternate candystripe is slightly darker and blueish
 	my $alternateColor = Wx::Colour->new(
-		int($realColor->Red*0.9),
-		int($realColor->Green*0.9),
+		int( $realColor->Red * 0.9 ),
+		int( $realColor->Green * 0.9 ),
 		$realColor->Blue,
 	);
 

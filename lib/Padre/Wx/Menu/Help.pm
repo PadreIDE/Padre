@@ -31,7 +31,7 @@ sub new {
 	$self->{main} = $main;
 
 	# Add the POD-based help launchers
-	$self->add_menu_action( 'help.help' );
+	$self->add_menu_action('help.help');
 
 	$self->add_menu_action(
 		'help.context_help',

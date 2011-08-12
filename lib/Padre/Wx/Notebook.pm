@@ -125,10 +125,10 @@ sub show_file {
 # Event Handlers
 
 sub on_auinotebook_page_changed {
-	my $self    = shift;
-	my $main    = $self->main;
-	my $lock    = $main->lock( 'UPDATE', 'refresh', 'refresh_outline' );
-	my $editor  = $self->current->editor;
+	my $self   = shift;
+	my $main   = $self->main;
+	my $lock   = $main->lock( 'UPDATE', 'refresh', 'refresh_outline' );
+	my $editor = $self->current->editor;
 
 	if ($editor) {
 		my $page_history = $main->{page_history};

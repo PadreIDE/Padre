@@ -2176,9 +2176,9 @@ sub _show_outline {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->right->show($self->outline);
+		$self->right->show( $self->outline );
 	} elsif ( $self->has_outline ) {
-		$self->right->hide($self->outline);
+		$self->right->hide( $self->outline );
 		delete $self->{outline};
 	}
 }
@@ -3889,7 +3889,7 @@ sub setup_editor {
 
 	TRACE("Document created for '$file'") if DEBUG;
 
-	my $lock   = $self->lock('REFRESH', 'update_last_session', 'refresh_menu');
+	my $lock = $self->lock( 'REFRESH', 'update_last_session', 'refresh_menu' );
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $document;
 	$document->set_editor($editor);
@@ -3916,7 +3916,7 @@ sub setup_editor {
 	} else {
 		TRACE( "Adding new file to history: " . $document->filename ) if DEBUG;
 
-		my $history = $self->lock('DB', 'refresh_recent');
+		my $history = $self->lock( 'DB', 'refresh_recent' );
 		Padre::DB::History->create(
 			type => 'files',
 			name => $document->filename,
@@ -3924,7 +3924,7 @@ sub setup_editor {
 	}
 
 	my $title = $editor->{Document}->get_title;
-	my $id    = $self->create_tab( $editor, $title );
+	my $id = $self->create_tab( $editor, $title );
 	$self->notebook->GetPage($id)->SetFocus;
 
 	if (Padre::Feature::CURSORMEMORY) {
@@ -5297,7 +5297,7 @@ sub on_nth_pane {
 	my $self = shift;
 	my $id   = shift;
 	my $page = $self->notebook->GetPage($id);
-	unless ( $page ) {
+	unless ($page) {
 		$self->current->editor->SetFocus;
 		return;
 	}

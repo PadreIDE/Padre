@@ -25,13 +25,8 @@ sub prepare {
 
 	# Save the list of open files
 	require Padre::Current;
-	$self->{changes} = {
-		map {
-			$_->filename => $_->text_get,
-		} grep {
-			$_->is_unsaved
-		} Padre::Current->main->documents
-	};
+	$self->{changes} =
+		{ map { $_->filename => $_->text_get, } grep { $_->is_unsaved } Padre::Current->main->documents };
 
 	return 1;
 }

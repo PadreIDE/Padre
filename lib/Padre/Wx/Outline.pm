@@ -257,7 +257,7 @@ sub refresh {
 
 	# Is there an outline task for this document type
 	my $task = $document->task_outline;
-	unless ( $task ) {
+	unless ($task) {
 		$self->clear;
 		return;
 	}

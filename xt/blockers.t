@@ -23,5 +23,5 @@ my $response = $ua->get(
 ok( $response->is_success, 'Got HTTP status OK' );
 
 # Count the number of blockers
-my $tickets =()= $response->decoded_content, qr/<a href="?\/trac\/ticket\/(\d+)"?[^>]*>\#\1<\/a/;
+my $tickets = () = $response->decoded_content, qr/<a href="?\/trac\/ticket\/(\d+)"?[^>]*>\#\1<\/a/;
 is( $tickets, 0, 'No open blocker tickets' );

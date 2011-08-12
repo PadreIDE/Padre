@@ -294,7 +294,7 @@ sub refresh {
 
 	# Is there a syntax check task for this document type
 	my $task = $document->task_syntax;
-	unless ( $task ) {
+	unless ($task) {
 		$self->clear;
 		return;
 	}

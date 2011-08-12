@@ -20,14 +20,14 @@ our $VERSION = '0.89';
 
 sub new {
 	my $class = shift;
-	
-	my $default_bg = Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_WINDOW );
-	my $error_bg = Wx::Colour->new(
+
+	my $default_bg = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
+	my $error_bg   = Wx::Colour->new(
 		$default_bg->Red,
-		int($default_bg->Green * 0.5),
-		int($default_bg->Blue  * 0.5)
+		int( $default_bg->Green * 0.5 ),
+		int( $default_bg->Blue * 0.5 )
 	);
-	my $self  = bless {
+	my $self = bless {
 		restart          => 1,
 		backward         => 0,
 		default_bgcolour => $default_bg,

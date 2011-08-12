@@ -57,7 +57,7 @@ sub read {
 sub clone {
 	my $self  = shift;
 	my $class = Scalar::Util::blessed($self);
-	return $class->new( %$self );
+	return $class->new(%$self);
 }
 
 # NOTE: Once we add the ability to edit the project settings, make sure

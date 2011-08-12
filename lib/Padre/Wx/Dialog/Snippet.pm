@@ -81,7 +81,7 @@ sub insert_snippet {
 
 sub filters {
 	my $self    = shift;
-	my $select  = Padre::DB->selectall_arrayref( 'SELECT DISTINCT category FROM snippets ORDER BY category' );
+	my $select  = Padre::DB->selectall_arrayref('SELECT DISTINCT category FROM snippets ORDER BY category');
 	my @filters = (
 		[ Wx::gettext('All'), '' ],
 		map { [ $_->[0] => $_->[0] ] } @$select

@@ -108,7 +108,7 @@ sub new {
 
 	# Code always lays out left to right
 	if ( $self->can('SetLayoutDirection') ) {
-		$self->SetLayoutDirection( Wx::wxLayout_LeftToRight );
+		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
 	}
 
 	# Integration with the rest of Padre
@@ -185,12 +185,8 @@ sub new {
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
 	$self->SetModEventMask(
-		Wx::wxSTC_PERFORMED_USER
-		| Wx::wxSTC_PERFORMED_UNDO
-		| Wx::wxSTC_PERFORMED_REDO
-		| Wx::wxSTC_MOD_INSERTTEXT
-		| Wx::wxSTC_MOD_DELETETEXT
-	);
+		Wx::wxSTC_PERFORMED_USER | Wx::wxSTC_PERFORMED_UNDO | Wx::wxSTC_PERFORMED_REDO | Wx::wxSTC_MOD_INSERTTEXT
+			| Wx::wxSTC_MOD_DELETETEXT );
 	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
 
 	# Smart highlighting:
@@ -549,7 +545,7 @@ sub configure_editor {
 }
 
 sub set_preferences {
-	my $self   = shift;
+	my $self = shift;
 	my $config = shift || $self->config;
 
 	# (Re)apply general configuration settings
@@ -727,7 +723,6 @@ sub setup_style_from_config {
 		}
 	}
 }
-
 
 
 

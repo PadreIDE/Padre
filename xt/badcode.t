@@ -241,7 +241,7 @@ foreach my $module ( sort keys %modules ) {
 		my $tokens = $document->find(
 			sub {
 				$_[1]->isa('PPI::Token::Word') or return '';
-				_IDENTIFIER($_[1]->content) or return '';
+				_IDENTIFIER( $_[1]->content )  or return '';
 
 				# Is it a method
 				my $operator = $_[1]->sprevious_sibling or return '';
@@ -258,19 +258,13 @@ foreach my $module ( sort keys %modules ) {
 		# Filter the tokens to get the method list
 		my %seen = ();
 		my @bad  = ();
-		if ( $tokens ) {
-			@bad = grep {
-				not $module->can($_)
-			} grep {
-				not $seen{$_}
-			} map {
-				$_->content
-			} @$tokens;
+		if ($tokens) {
+			@bad = grep { not $module->can($_) } grep { not $seen{$_} } map { $_->content } @$tokens;
 		}
 
 		# There should be no missing methods
 		is( scalar(@bad), 0, 'No missing methods' );
-		foreach my $method ( @bad ) {
+		foreach my $method (@bad) {
 			diag("$module: Cannot resolve method \$self->$method");
 		}
 	}
