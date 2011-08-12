@@ -251,12 +251,13 @@ sub guess {
 sub preview_config {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
-	my $diff   = $self->config_diff;
-	my $config = $self->config->clone;
-	foreach my $key ( %$diff ) {
-		$config->set( $key => $diff->{$key} );
+	my $config = $self->config;
+	my $diff   = $self->config_diff($config);
+	my $custom = $config->clone;
+	foreach my $key ( sort keys %$diff ) {
+		$custom->set( $key => $diff->{$key} );
 	}
-	return $config;
+	return $custom;
 }
 
 # We do this the long-hand way for now, as we don't have a suitable
@@ -264,35 +265,19 @@ sub preview_config {
 sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
-	my $config  = $self->config;
+	my $main    = $self->main;
+	my $lock    = $main->lock('UPDATE');
 	my $preview = $self->preview;
-
-	# Set the colour of the current line (if visible)
-	if ( $config->editor_currentline ) {
-		$preview->SetCaretLineBackground( $self->editor_currentline_color->GetColour );
-	}
-
-	# Set the font for the editor
-	my $font = $self->editor_font->GetSelectedFont;
-	$preview->SetFont($font);
-	$preview->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
-
-	# Set the right margin if applicable
-	if ( $self->editor_right_margin_enable->GetValue ) {
-		$preview->SetEdgeColumn( $self->editor_right_margin_column );
-		$preview->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
-	} else {
-		$preview->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
-	}
 
 	# Apply the style (but only if we can do so safely)
 	if ( $self->{original_style} ) {
-		my $style = $self->choice('editor_style');
-
+		my $config = $self->preview_config;
+		my $style  = $self->choice('editor_style');
+		
 		# Removed for RELEAES_TESTING=1 pass
 		#Padre::Current->main->action("view.style.$style");
 		$self->current->main->action("view.style.$style");
-		$preview->set_preferences;
+		$preview->set_preferences($config);
 	}
 
 	return;

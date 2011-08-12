@@ -106,6 +106,11 @@ sub new {
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
 
+	# Code always lays out left to right
+	if ( $self->can('SetLayoutDirection') ) {
+		$self->SetLayoutDirection( Wx::wxLayout_LeftToRight );
+	}
+
 	# Integration with the rest of Padre
 	$self->SetDropTarget( Padre::Wx::FileDropTarget->new($main) );
 
@@ -158,10 +163,7 @@ sub new {
 
 	# Apply settings based on configuration
 	# TO DO: Make this suck less (because it really does suck a lot)
-	$self->SetCaretPeriod( $config->editor_cursor_blink );
-	if ( $config->editor_wordwrap ) {
-		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
-	}
+	$self->apply_config($config);
 
 	# Load the style data in the legacy evil way
 	$data = data( $config->editor_style );
@@ -361,9 +363,6 @@ sub on_mouse_moving {
 		if ( $doc->can('event_mouse_moving') ) {
 			$doc->event_mouse_moving( $self, $event );
 		}
-	} else {
-
-		# For a drag event...
 	}
 
 	# Keep processing
@@ -489,13 +488,90 @@ sub on_right_down {
 ######################################################################
 # Setup and Preferences Methods
 
+# Apply global configuration settings to the editor
+sub apply_config {
+	my $self   = shift;
+	my $config = shift;
+
+	# Apply various settings that largely map directly
+	$self->SetCaretPeriod( $config->editor_cursor_blink );
+	$self->SetCaretLineVisible( $config->editor_currentline );
+	$self->SetViewEOL( $config->editor_eol );
+	$self->SetViewWhiteSpace( $config->editor_whitespace );
+	$self->show_line_numbers( $config->editor_linenumbers );
+	$self->SetIndentationGuides( $config->editor_indentationguides );
+
+	# Enable or disable word wrapping
+	if ( $config->editor_wordwrap ) {
+		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
+	} else {
+		$self->SetWrapMode(Wx::wxSTC_WRAP_NONE);
+	}
+
+	# Enable or disable the right hand margin guideline
+	if ( $config->editor_right_margin_enable ) {
+		$self->SetEdgeColumn( $config->editor_right_margin_column );
+		$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
+	} else {
+		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
+	}
+
+	# Set the font
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	if ( defined $config->editor_font and length $config->editor_font > 0 ) {
+		$font->SetNativeFontInfoUserDesc( $config->editor_font );
+	}
+	$self->SetFont($font);
+	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+
+	# Enable or disable folding (if folding is turned on)
+	if (Padre::Feature::FOLDING) {
+		$self->show_folding( $config->editor_folding );
+	}
+
+	return;
+}
+
+# Applys the document content to the editor before plugins get notified
+sub configure_editor {
+	my $self     = shift;
+	my $document = shift or return;
+	my $eol      = $WXEOL{ $document->newline_type };
+	$self->SetEOLMode($eol) if defined $eol;
+
+	if ( defined $document->{original_content} ) {
+		$self->SetText( $document->{original_content} );
+	}
+
+	$self->EmptyUndoBuffer;
+
+	return;
+}
+
+sub set_preferences {
+	my $self   = shift;
+	my $config = shift || $self->config;
+
+	# (Re)apply general configuration settings
+	$self->apply_config($config);
+
+	# Apply type-specific settings
+	$self->padre_setup;
+
+	if ( $self->{Document} ) {
+		$self->{Document}->set_indentation_style;
+	}
+
+	return;
+}
+
 # Most of this should be read from some external files
 # but for now we use this if statement
 sub padre_setup {
 	my $self     = shift;
 	my $document = $self->{Document};
-	my $mimetype = $document ? $document->mimetype : '';
 	my $filename = $document ? $document->filename : '';
+	my $mimetype = $document ? $document->mimetype : 'text/plain';
 
 	# Configure lexing for the editor based on the document type
 	if ($document) {
@@ -511,8 +587,10 @@ sub padre_setup {
 		$self->SetWordChars('');
 	}
 
+	# Apply the blanket plain styling to everything first
+	$self->padre_setup_plain;
+
 	# Setup the style for the specific mimetype
-	$mimetype ||= 'text/plain';
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 		return;
@@ -536,37 +614,12 @@ sub padre_setup {
 		}
 	}
 
-	# if mimetype is not known, then no coloring for now
-	# but mimimal configuration should apply here too
-	$self->padre_setup_plain;
-
 	return;
 }
 
 sub padre_setup_plain {
 	my $self   = shift;
 	my $config = $self->config;
-
-	# Code always lays out left to right
-	if ( $self->can('SetLayoutDirection') ) {
-		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
-	}
-
-	# Create the right margin if desired
-	if ( $config->editor_right_margin_enable ) {
-		$self->SetEdgeColumn( $config->editor_right_margin_column );
-		$self->SetEdgeMode(Wx::wxSTC_EDGE_LINE);
-	} else {
-		$self->SetEdgeMode(Wx::wxSTC_EDGE_NONE);
-	}
-
-	# Set the font
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) {
-		$font->SetNativeFontInfoUserDesc( $config->editor_font );
-	}
-	$self->SetFont($font);
-	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
 
 	# Flush the style colouring and apply from scratch
 	$self->StyleClearAll;
@@ -600,7 +653,6 @@ sub padre_setup_style {
 	my $name   = shift;
 	my $config = $self->main->config;
 
-	$self->padre_setup_plain;
 	for ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
 		$self->StyleSetBackground( $_, _color( $data->{$name}->{background} ) );
 	}
@@ -676,61 +728,6 @@ sub setup_style_from_config {
 	}
 }
 
-sub set_preferences {
-	my $self   = shift;
-	my $config = $self->config;
-
-	$self->SetCaretLineVisible( $config->editor_currentline );
-	$self->show_line_numbers( $config->editor_linenumbers );
-	$self->SetIndentationGuides( $config->editor_indentationguides );
-	$self->SetViewEOL( $config->editor_eol );
-	$self->SetViewWhiteSpace( $config->editor_whitespace );
-
-	if (Padre::Feature::FOLDING) {
-		$self->show_folding( $config->editor_folding );
-	}
-
-	$self->padre_setup;
-
-	if ( $self->{Document} ) {
-		$self->{Document}->set_indentation_style;
-	}
-
-	return;
-}
-
-sub configure_editor {
-	my $self     = shift;
-	my $document = shift or return;
-	my $eol      = $WXEOL{ $document->newline_type };
-	$self->SetEOLMode($eol) if defined $eol;
-
-	if ( defined $document->{original_content} ) {
-		$self->SetText( $document->{original_content} );
-	}
-
-	$self->EmptyUndoBuffer;
-
-	return;
-}
-
-# some uncorrect behaviour (| is the cursor)
-# {} : never highlighted
-# { } : always correct
-#
-#
-
-sub apply_style {
-	my $self           = shift;
-	my $style_info     = shift;
-	my %previous_style = %$style_info;
-	$previous_style{style} = $self->GetStyleAt( $style_info->{start} );
-
-	$self->StartStyling( $style_info->{start}, 0xFF );
-	$self->SetStyling( $style_info->{len}, $style_info->{style} );
-
-	return \%previous_style;
-}
 
 
 
@@ -930,6 +927,23 @@ sub highlight_braces {
 	return;
 }
 
+# some uncorrect behaviour (| is the cursor)
+# {} : never highlighted
+# { } : always correct
+#
+#
+
+sub apply_style {
+	my $self           = shift;
+	my $style_info     = shift;
+	my %previous_style = %$style_info;
+	$previous_style{style} = $self->GetStyleAt( $style_info->{start} );
+
+	$self->StartStyling( $style_info->{start}, 0xFF );
+	$self->SetStyling( $style_info->{len}, $style_info->{style} );
+
+	return \%previous_style;
+}
 
 =head2 find_matching_brace
 

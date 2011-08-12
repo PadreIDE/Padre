@@ -125,23 +125,19 @@ sub show_file {
 # Event Handlers
 
 sub on_auinotebook_page_changed {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $lock   = $main->lock( 'UPDATE', 'refresh', 'refresh_outline' );
-	my $editor = $self->current->editor;
+	my $self    = shift;
+	my $main    = $self->main;
+	my $lock    = $main->lock( 'UPDATE', 'refresh', 'refresh_outline' );
+	my $editor  = $self->current->editor;
 
 	if ($editor) {
 		my $page_history = $main->{page_history};
 		my $current      = Scalar::Util::refaddr($editor);
 		@$page_history = grep { $_ != $current } @$page_history;
 		push @$page_history, $current;
-
-		# Update indentation in case auto-update is on
-		# TO DO: Violates encapsulation
-		$editor->{Document}->set_indentation_style;
 	}
 
-	$main->{ide}->plugin_manager->plugin_event('editor_changed');
+	$main->ide->plugin_manager->plugin_event('editor_changed');
 }
 
 

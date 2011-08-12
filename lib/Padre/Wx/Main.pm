@@ -3865,17 +3865,6 @@ sub setup_editor {
 			}
 		}
 
-		# Scheduled for removal: This is done by document->new later and should be
-		# in only one place, please re-enable it and remove this comment if you think
-		# it should stay:
-		# if file does not exist, create it so that future access
-		# (such as size checking) won't warn / blow up padre
-		#		if ( not -f $file ) {
-		#			open my $fh, '>', $file;
-		#			close $fh;
-		#		}
-
-
 		#not sure where the best place for this checking is..
 		#I'd actually like to make it recursivly open files
 		#(but that will require a dialog listing them to avoid opening an infinite number of files)
@@ -3891,15 +3880,8 @@ sub setup_editor {
 		}
 	}
 
-	my $lock = $self->lock('REFRESH');
-	my $document = Padre::Document->new( filename => $file, );
-
-	# Catch critical errors:
-	unless ( defined $document ) {
-		return;
-	}
-
-	$file ||= ''; #to avoid warnings
+	my $document = Padre::Document->new( filename => $file ) or return;
+	$file ||= ''; # to avoid warnings
 	if ( $document->errstr ) {
 		warn $document->errstr . " when trying to open '$file'";
 		return;
@@ -3907,14 +3889,13 @@ sub setup_editor {
 
 	TRACE("Document created for '$file'") if DEBUG;
 
+	my $lock   = $self->lock('REFRESH', 'update_last_session', 'refresh_menu');
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $document;
 	$document->set_editor($editor);
 	$editor->configure_editor($document);
 
 	$plugins->editor_enable($editor);
-
-	my $title = $editor->{Document}->get_title;
 
 	$editor->set_preferences;
 
@@ -3934,24 +3915,21 @@ sub setup_editor {
 			: $config->default_projects_directory;
 	} else {
 		TRACE( "Adding new file to history: " . $document->filename ) if DEBUG;
+
+		my $history = $self->lock('DB', 'refresh_recent');
 		Padre::DB::History->create(
 			type => 'files',
 			name => $document->filename,
 		);
-
-		# Call the method immediately if not locked
-		$self->lock('refresh_recent');
 	}
 
-	my $id = $self->create_tab( $editor, $title );
+	my $title = $editor->{Document}->get_title;
+	my $id    = $self->create_tab( $editor, $title );
 	$self->notebook->GetPage($id)->SetFocus;
 
 	if (Padre::Feature::CURSORMEMORY) {
 		$editor->restore_cursor_position;
 	}
-
-	# Update and refresh immediately if not locked
-	$self->lock( 'update_last_session', 'refresh_menu' );
 
 	# Notify plugins
 	$plugins->plugin_event('editor_changed');
@@ -5319,23 +5297,17 @@ sub on_nth_pane {
 	my $self = shift;
 	my $id   = shift;
 	my $page = $self->notebook->GetPage($id);
-	if ($page) {
-
-		my $manager = $self->{ide}->plugin_manager;
-
-		$self->notebook->SetSelection($id);
-		$self->refresh_status( $self->current );
-		$page->{Document}->set_indentation_style; # TO DO: encapsulation?
-		$page->SetFocus;
-
-		$manager->plugin_event('editor_changed');
-
-		return 1;
+	unless ( $page ) {
+		$self->current->editor->SetFocus;
+		return;
 	}
 
-	$self->current->editor->SetFocus;
+	$self->notebook->SetSelection($id);
+	$self->refresh_status;
+	$page->SetFocus;
+	$self->ide->plugin_manager->plugin_event('editor_changed');
 
-	return;
+	return 1;
 }
 
 =pod
