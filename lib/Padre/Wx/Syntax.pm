@@ -281,18 +281,13 @@ sub relocale {
 
 sub refresh {
 	my $self = shift;
-	my $document = $self->current->document or return;
 
-	# If the document is unused, shortcut to avoid pointless tasks
-	my $task = $document->task_syntax;
-	if ( $document->is_unused or not $task ) {
-		$self->clear;
-		return;
-	}
+	# Abort any in-flight checks
+	$self->task_reset;
 
-	# Allows us to check when an empty or unsaved document is open
-	my $filename = defined( $document->filename ) ? $document->filename : '';
-	my $text = $document->text_get or return;
+	# Do we have what we need to run the check
+	my $document = $self->current->document or return $self->clear;
+	my $task     = $document->task_syntax   or return $self->clear;
 
 	# Fire the background task discarding old results
 	$self->task_reset;
@@ -380,10 +375,13 @@ sub render {
 		$editor->MarkerAdd( $line, $marker );
 
 		# Underline the syntax warning/error line with an orange or red squiggle indicator
-		my $start = $editor->PositionFromLine($line);
+		my $start  = $editor->PositionFromLine($line);
+		my $indent = $editor->GetLineIndentPosition($line);
+		my $end    = $editor->GetLineEndPosition($line);
 
-		$editor->StartStyling( $start, 0xE0 ); # Change only the indicators (3 bits)
-		$editor->SetStyling( $editor->GetLineEndPosition($line) - $start, $is_warning ? 0x40 : 0x80 );
+		# Change only the indicators (3 bits)
+		$editor->StartStyling( $indent, 0xE0 );
+		$editor->SetStyling( $end - $indent, $is_warning ? 0x40 : 0x80 );
 
 		my $item = $self->{tree}->AppendItem(
 			$root,
