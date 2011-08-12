@@ -190,7 +190,15 @@ sub dump_padre {
 # Copy %INC and @INC before passing them to _dump,
 # so changes during the _dump process aren't in the output.
 sub dump_inc {
-	$_[0]->_dump( {%INC}, [@INC] );
+	no strict;
+	my @modules = map {
+		$m = $_;
+		s!/!::!g; s!\.pm\z!!;
+		$v = ${"$_\::VERSION"}; $v = 'undef' unless defined $v;
+		"$_, $v, $INC{$m}"
+	} sort keys %INC;
+
+	$_[0]->_dump({ '%INC' => \@modules, '@INC' => \@INC });
 }
 
 sub dump_display {
