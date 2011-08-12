@@ -20,6 +20,7 @@ use vars qw{
 	$PLUGINS
 	$FULLTRACE
 	$INVISIBLE
+	$USE
 	@INCLUDE
 };
 
@@ -39,6 +40,7 @@ BEGIN {
 		'fulltrace'   => \$FULLTRACE,
 		'invisible'   => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
+		'use:s'       => \$USE,
 		'trace:s'     => sub {
 			$ENV{PADRE_DEBUG} = $_[1] || '1';
 		},
@@ -80,6 +82,7 @@ my @cmd = (
 	qq[-I$FindBin::Bin/blib/arch],
 	qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
+push @cmd, '-d:TraceUse'.($USE ? "=$USE" : '') if defined $USE;
 push @cmd, '-MPadre::Test' if $INVISIBLE;
 push @cmd, '-d'            if $DEBUG;
 push @cmd, '-dt:NYTProf'   if $PROFILE;
@@ -148,6 +151,8 @@ Usage: $0
         -a          load all plugins in the svn checkout
         --die       add DIE handler
         --fulltrace full sourcecode trace to STDERR
+        --use       list loaded modules with Devel::TraceUse
+        --use=<opt> same with <opt> given as D::TU options
 
        LIST OF FILES    list of files to open
 
