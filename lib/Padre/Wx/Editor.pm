@@ -1684,6 +1684,8 @@ sub smart_highlight_hide {
 ######################################################################
 # Code Folding
 
+no warnings 'once';
+
 BEGIN {
 	*show_folding = sub {
 		my $self = shift;

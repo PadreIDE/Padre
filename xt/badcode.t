@@ -16,6 +16,8 @@ BEGIN {
 		exit(0);
 	}
 }
+
+use Params::Util ':ALL';
 use File::Find::Rule;
 use PPI::Document;
 
@@ -29,7 +31,7 @@ my %modules = map {
 my @t_files = glob "t/*.t";
 
 #map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
-plan( tests => scalar( keys %modules ) * 9 + scalar(@t_files) );
+plan( tests => scalar( keys %modules ) * 10 + scalar(@t_files) );
 
 my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	01-load.t
@@ -226,6 +228,51 @@ foreach my $module ( sort keys %modules ) {
 			}
 		);
 		ok( $good, "$module: Uses expensive regexp-variable \$&, \$\' or \$`" );
+	}
+
+	# Check for method calls that don't exist
+	SKIP: {
+		if ( $module =~ /\bRole\b/ ) {
+			skip( 'Ignoring role $module', 1 );
+		}
+		if ( $module eq 'Padre::Autosave' ) {
+			skip( 'Ignoring flaky ORLite usage in Padre::Autosave', 1 );
+		}
+		my $tokens = $document->find(
+			sub {
+				$_[1]->isa('PPI::Token::Word') or return '';
+				_IDENTIFIER($_[1]->content) or return '';
+
+				# Is it a method
+				my $operator = $_[1]->sprevious_sibling or return '';
+				$operator->isa('PPI::Token::Operator') or return '';
+				$operator->content eq '->' or return '';
+
+				# Get the method name
+				my $object = $operator->sprevious_sibling or return '';
+				$object->isa('PPI::Token::Symbol') or return '';
+				$object->content eq '$self' or return '';
+			}
+		);
+
+		# Filter the tokens to get the method list
+		my %seen = ();
+		my @bad  = ();
+		if ( $tokens ) {
+			@bad = grep {
+				not $module->can($_)
+			} grep {
+				not $seen{$_}
+			} map {
+				$_->content
+			} @$tokens;
+		}
+
+		# There should be no missing methods
+		is( scalar(@bad), 0, 'No missing methods' );
+		foreach my $method ( @bad ) {
+			diag("$module: Cannot resolve method \$self->$method");
+		}
 	}
 
 	# Don't make direct system calls, use a Padre API instead
