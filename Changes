@@ -14,6 +14,7 @@ Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
 0.90 TBA
+    - Improved preferences colours for 'dark' themed desktops #1290 (BRAMBLE)
     - Added feature_devel_endstats (default: false) which makes Padre run
       scripts with Devel::EndStats=verbose,1 to show various statistics when it
       terminates (AZAWAWI)
