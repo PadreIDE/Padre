@@ -36,6 +36,8 @@ the even version for the release, even during development.
     - Add a xt test for open blocker tickets (SEWI)
     - Underline the syntax warning/error line with an orange or red squiggle
       indicator (AZAWAWI)
+    - TRACE() calls now use epoch microsecond timestamps instead of localtime
+      to make subsecond temporal relationships more obvious (ADAMK)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
