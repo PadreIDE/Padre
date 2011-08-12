@@ -178,8 +178,11 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->task_reset;
 	$_[0]->main->show_functions(0);
+}
+
+sub view_stop {
+	$_[0]->task_reset;
 }
 
 
