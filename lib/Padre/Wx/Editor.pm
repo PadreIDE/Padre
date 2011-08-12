@@ -98,8 +98,13 @@ sub new {
 	}
 
 	# Create the underlying Wx object
-	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
-	my $self = $class->SUPER::new($parent);
+	my $lock   = $main->lock( 'UPDATE', 'refresh_windowlist' );
+	my $self   = $class->SUPER::new($parent);
+	my $config = $main->config;
+
+	# This is supposed to be Wx::wxSTC_CP_UTF8
+	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
+	$self->SetCodePage(65001);
 
 	# Integration with the rest of Padre
 	$self->SetDropTarget( Padre::Wx::FileDropTarget->new($main) );
@@ -153,12 +158,13 @@ sub new {
 
 	# Apply settings based on configuration
 	# TO DO: Make this suck less (because it really does suck a lot)
-	my $config = $main->config;
-	$data = data( $config->editor_style );
+	$self->SetCaretPeriod( $config->editor_cursor_blink );
 	if ( $config->editor_wordwrap ) {
 		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
 	}
-	$self->SetCaretPeriod( $config->editor_cursor_blink );
+
+	# Load the style data in the legacy evil way
+	$data = data( $config->editor_style );
 
 	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
@@ -504,10 +510,6 @@ sub padre_setup {
 	} else {
 		$self->SetWordChars('');
 	}
-
-	# This is supposed to be Wx::wxSTC_CP_UTF8
-	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
-	$self->SetCodePage(65001);
 
 	# Setup the style for the specific mimetype
 	$mimetype ||= 'text/plain';
