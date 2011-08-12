@@ -160,10 +160,9 @@ sub new {
 	}
 	$self->SetCaretPeriod( $config->editor_cursor_blink );
 
-	# Generate event bindings
+	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
 	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
-	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
 	Wx::Event::EVT_KEY_DOWN( $self, \&on_key_down );
 	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
@@ -174,6 +173,17 @@ sub new {
 	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_left_double );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
+
+	# Capture change events that result in an actual change to the text
+	# of the document, so we can refire content-dependent editor tools.
+	$self->SetModEventMask(
+		Wx::wxSTC_PERFORMED_USER
+		| Wx::wxSTC_PERFORMED_UNDO
+		| Wx::wxSTC_PERFORMED_REDO
+		| Wx::wxSTC_MOD_INSERTTEXT
+		| Wx::wxSTC_MOD_DELETETEXT
+	);
+	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
@@ -204,11 +214,12 @@ sub new {
 
 # When the focus is received by the editor
 sub on_set_focus {
+	TRACE() if DEBUG;
 	my $self     = shift;
 	my $event    = shift;
 	my $main     = $self->main;
-	my $document = $main->current->document;
-	TRACE( "Focus received file: " . ( $document->filename || '' ) ) if DEBUG;
+	my $document = $self->{Document} or return;
+	TRACE( "Focus received file:" . $document->get_title ) if DEBUG;
 
 	# NOTE: The editor focus event fires a LOT, even for trivial things
 	# like changing focus to another application and immediately back again,
@@ -311,21 +322,13 @@ sub on_char {
 	$event->Skip(1);
 }
 
-# Called on any change to text
-# NOTE: Not sure if/when this includes char events, so it might cause two
-#       calls to dwell_start for each key press, but this is ok for now.
+# Called on any change to text.
+# NOTE: This gets called twice for every change, it may be a bug.
 sub on_change {
-	my $self  = shift;
-	my $event = shift;
-
-	# Fire or update the dwell timer
-	$self->dwell_start( 'on_change_dwell', 500 );
-
-	# Keep processing
-	$event->Skip(1);
+	$_[0]->dwell_start( 'on_change_dwell', 500 );
 }
 
-# Fires 1 second after the user stops typing
+# Fires half a second after the user stops typing or otherwise stops changing
 sub on_change_dwell {
 	my $self   = shift;
 	my $main   = $self->main;
@@ -335,6 +338,7 @@ sub on_change_dwell {
 	if ( $editor and $self->GetId == $editor->GetId ) {
 		my $lock = $main->lock('UPDATE');
 		$main->refresh_functions;
+		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
 	}
 

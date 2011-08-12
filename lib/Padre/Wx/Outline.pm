@@ -20,10 +20,6 @@ our @ISA     = qw{
 };
 
 
-# Wx timer ids
-use constant {
-	TIMER_OUTLINE => Wx::NewId(),
-};
 
 
 
@@ -62,10 +58,6 @@ sub new {
 
 	$self->Hide;
 
-	# Track state so we can do shortcutting
-	$self->{document} = '';
-	$self->{length}   = -1;
-
 	# Cache document metadata for use when changing documents.
 	# By substituting old metadata before we scan for new metadata,
 	# we can make the widget APPEAR to be faster than it is and
@@ -73,138 +65,6 @@ sub new {
 	# $self->{cache} = {};
 
 	return $self;
-}
-
-
-
-
-
-######################################################################
-# Padre::Wx::Role::View Methods
-
-sub view_panel {
-	return 'right';
-}
-
-sub view_label {
-	shift->gettext_label;
-}
-
-sub view_close {
-	$_[0]->task_reset;
-	$_[0]->main->show_outline(0);
-}
-
-
-
-
-
-######################################################################
-# Padre::Role::Task Methods
-
-sub task_finish {
-	TRACE( $_[1] ) if DEBUG;
-	my $self = shift;
-	my $task = shift;
-	my $data = Params::Util::_ARRAY( $task->{data} ) or return;
-	my $lock = $self->main->lock('UPDATE');
-
-	# Add the hidden unused root
-	my $root = $self->AddRoot(
-		Wx::gettext('Outline'),
-		-1,
-		-1,
-		Wx::TreeItemData->new('')
-	);
-
-	# Add the package trees
-	foreach my $pkg (@$data) {
-		my $branch = $self->AppendItem(
-			$root,
-			$pkg->{name},
-			-1, -1,
-			Wx::TreeItemData->new(
-				{   line => $pkg->{line},
-					name => $pkg->{name},
-					type => 'package',
-				}
-			)
-		);
-		my @types = qw(classes grammars packages pragmata modules
-			attributes methods events roles regexes);
-		foreach my $type (@types) {
-			$self->add_subtree( $pkg, $type, $branch );
-		}
-		$self->Expand($branch);
-	}
-
-	# Set MIME type specific event handler
-	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
-		$self, $self,
-		sub {
-			$_[0]->on_tree_item_right_click( $_[1] );
-		},
-	);
-
-	# TO DO Expanding all is not acceptable: We need to keep the state
-	# (i.e., keep the pragmata subtree collapsed if it was collapsed
-	# by the user)
-	#$self->ExpandAll;
-	$self->GetBestSize;
-
-	# Disable caching for the moment
-	# $self->store_in_cache( $filename, [ $data, $right_click_handler ] );
-
-	return 1;
-}
-
-
-
-
-
-#####################################################################
-# Timer Control
-
-sub running {
-	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
-}
-
-sub start {
-	my $self = shift;
-	TRACE("Starting Outline timer") if DEBUG;
-
-	# Set up or reinitialise the timer
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->{timer}->Stop if $self->{timer}->IsRunning;
-	} else {
-		$self->{timer} = Wx::Timer->new(
-			$self,
-			TIMER_OUTLINE
-		);
-		Wx::Event::EVT_TIMER(
-			$self,
-			TIMER_OUTLINE,
-			sub {
-				$_[1]->Skip(0);
-				$_[0]->refresh;
-			},
-		);
-	}
-	$self->{timer}->Start(5000);
-
-	return;
-}
-
-sub stop {
-	my $self = shift;
-	TRACE("Stopping Outline timer") if DEBUG;
-
-	# Stop the timer
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->{timer}->Stop if $self->{timer}->IsRunning;
-	}
-
-	return;
 }
 
 
@@ -284,26 +144,87 @@ sub on_tree_item_set_focus {
 
 
 
-################################################################
-# Cache routines
+######################################################################
+# Padre::Wx::Role::View Methods
 
-# sub store_in_cache {
-# my ( $self, $cache_key, $content ) = @_;
-#
-# if ( defined $cache_key ) {
-# $self->{cache}->{$cache_key} = $content;
-# }
-# return;
-# }
-#
-# sub get_from_cache {
-# my ( $self, $cache_key ) = @_;
-#
-# if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
-# return $self->{cache}->{$cache_key};
-# }
-# return;
-# }
+sub view_panel {
+	return 'right';
+}
+
+sub view_label {
+	shift->gettext_label;
+}
+
+sub view_close {
+	$_[0]->main->show_outline(0);
+}
+
+sub view_stop {
+	$_[0]->task_reset;
+}
+
+
+
+
+
+######################################################################
+# Padre::Role::Task Methods
+
+sub task_finish {
+	TRACE( $_[1] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+	my $data = Params::Util::_ARRAY( $task->{data} ) or return;
+	my $lock = $self->main->lock('UPDATE');
+
+	# Clear any old content
+	$self->clear;
+
+	# Add the hidden unused root
+	my $root = $self->AddRoot(
+		Wx::gettext('Outline'),
+		-1,
+		-1,
+		Wx::TreeItemData->new('')
+	);
+
+	# Add the package trees
+	foreach my $pkg (@$data) {
+		my $branch = $self->AppendItem(
+			$root,
+			$pkg->{name},
+			-1, -1,
+			Wx::TreeItemData->new(
+				{   line => $pkg->{line},
+					name => $pkg->{name},
+					type => 'package',
+				}
+			)
+		);
+		my @types = qw(classes grammars packages pragmata modules
+			attributes methods events roles regexes);
+		foreach my $type (@types) {
+			$self->add_subtree( $pkg, $type, $branch );
+		}
+		$self->Expand($branch);
+	}
+
+	# Set MIME type specific event handler
+	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
+		$self, $self,
+		sub {
+			$_[0]->on_tree_item_right_click( $_[1] );
+		},
+	);
+
+	# TO DO Expanding all is not acceptable: We need to keep the state
+	# (i.e., keep the pragmata subtree collapsed if it was collapsed
+	# by the user)
+	#$self->ExpandAll;
+	$self->GetBestSize;
+
+	return 1;
+}
 
 
 
@@ -323,35 +244,22 @@ sub clear {
 sub refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self     = shift;
-	my $document = $self->current->document or return;
-	my $length   = $document->text_length;
+	my $document = $self->current->document;
 
-	# Shortcut if nothing has changed.
-	# NOTE: Given the speed at which the timer fires a cheap
-	# length check is better than an expensive MD5 check.
-	return if ( $document eq $self->{document} ) and ( $length eq $self->{length} );
-
-	# Clear the outline tree before starting a refresh
-	$self->clear;
-
-	$self->{document} = $document;
-	$self->{length}   = $length;
-
-	# Old task responses are useless now
+	# Cancel any existing outline task
 	$self->task_reset;
 
 	# Shortcut if the document is empty
-	if ( $document->is_unused ) {
+	unless ( $document and not $document->is_unused ) {
+		$self->clear;
 		return 1;
 	}
 
-	# Trigger the full task
+	# Trigger the task to fetch the refresh data
 	$self->task_request(
 		task     => $document->task_outline,
 		document => $document,
 	);
-
-	return 1;
 }
 
 sub add_subtree {

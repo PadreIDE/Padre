@@ -3,6 +3,7 @@ package Padre::Wx::FunctionList;
 use 5.008005;
 use strict;
 use warnings;
+use Carp                  ();
 use Scalar::Util          ();
 use Params::Util          ();
 use Padre::Role::Task     ();

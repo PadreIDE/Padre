@@ -2176,13 +2176,9 @@ sub _show_outline {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		my $outline = $self->outline;
-		$self->right->show($outline);
-		$outline->start;
+		$self->right->show($self->outline);
 	} elsif ( $self->has_outline ) {
-		my $outline = $self->outline;
-		$self->right->hide($outline);
-		$outline->stop;
+		$self->right->hide($self->outline);
 		delete $self->{outline};
 	}
 }
