@@ -5,6 +5,7 @@ package Padre::Config::Host;
 use 5.008;
 use strict;
 use warnings;
+use Scalar::Util   ();
 use Padre::Current ();
 
 our $VERSION = '0.89';
@@ -40,6 +41,15 @@ sub read {
 }
 
 # -- public methods
+
+#
+# my $new = $config->clone;
+#
+sub clone {
+	my $self  = shift;
+	my $class = Scalar::Util::blessed($self);
+	return bless { %$self }, $class;
+}
 
 #
 # my $revision = $config->version;

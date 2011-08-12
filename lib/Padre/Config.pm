@@ -11,6 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                   ();
+use Scalar::Util           ();
 use Params::Util           ();
 use Padre::Constant        ();
 use Padre::Util            ('_T');
@@ -191,6 +192,19 @@ sub write {
 	close $FILE or return 1;
 
 	return 1;
+}
+
+sub clone {
+	my $self  = shift;
+	my $class = Scalar::Util::blessed($self);
+	my $host  = $self->host->clone;
+	my $human = $self->human->clone;
+	if ( $self->project ) {
+		my $project = $self->project->clone;
+		return $class->new( $host, $human, $project );
+	} else {
+		return $class->new( $host, $human );
+	}
 }
 
 
