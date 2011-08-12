@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-12 04:10-0700\n"
+"POT-Creation-Date: 2011-08-12 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1726,7 +1726,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:791
+#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:786
 #: lib/Padre/Wx/Main.pm:4907 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
@@ -2184,7 +2184,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1580
+#: lib/Padre/Wx/Editor.pm:1575
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2361,7 +2361,7 @@ msgid ""
 "Scintilla highlighter."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:818
+#: lib/Padre/Wx/Dialog/Advanced.pm:819
 msgid "Host"
 msgstr ""
 
@@ -5062,7 +5062,7 @@ msgstr ""
 msgid "Use splash screen"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:818
+#: lib/Padre/Wx/Dialog/Advanced.pm:819
 msgid "User"
 msgstr ""
 
@@ -5245,7 +5245,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1564
+#: lib/Padre/Wx/Editor.pm:1559
 msgid "You must select a range of lines"
 msgstr ""
 
