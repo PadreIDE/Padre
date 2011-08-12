@@ -454,7 +454,7 @@ sub on_middle_up {
 		$doc->event_on_middle_up( $self, $event );
 	}
 
-	if ( $config->mod_button_paste ) {
+	if ( $config->mid_button_paste ) {
 		Wx::wxTheClipboard->UsePrimarySelection(0);
 		$event->Skip(1);
 	} else {
