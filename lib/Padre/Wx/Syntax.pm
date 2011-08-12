@@ -285,12 +285,21 @@ sub refresh {
 	# Abort any in-flight checks
 	$self->task_reset;
 
-	# Do we have what we need to run the check
-	my $document = $self->current->document or return $self->clear;
-	my $task     = $document->task_syntax   or return $self->clear;
+	# Do we have a document with something in it?
+	my $document = $self->current->document;
+	unless ( $document and not $document->is_unused ) {
+		$self->clear;
+		return;
+	}
+
+	# Is there a syntax check task for this document type
+	my $task = $document->task_syntax;
+	unless ( $task ) {
+		$self->clear;
+		return;
+	}
 
 	# Fire the background task discarding old results
-	$self->task_reset;
 	$self->task_request(
 		task     => $task,
 		document => $document,
