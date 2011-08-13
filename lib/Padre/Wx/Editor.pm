@@ -298,7 +298,7 @@ sub on_key_up {
 	}
 
 	# Apply smart highlighting when the shift key is down
-	if ( $self->config->editor_smart_highlight_enable and $event->ShiftDown ) {
+	if ( $event->ShiftDown and $self->config->editor_smart_highlight_enable ) {
 		$self->smart_highlight_show;
 	}
 
@@ -545,7 +545,7 @@ sub configure_editor {
 }
 
 sub set_preferences {
-	my $self = shift;
+	my $self   = shift;
 	my $config = shift || $self->config;
 
 	# (Re)apply general configuration settings
@@ -565,6 +565,7 @@ sub set_preferences {
 # but for now we use this if statement
 sub padre_setup {
 	my $self     = shift;
+	my $config   = shift || $self->config;
 	my $document = $self->{Document};
 	my $filename = $document ? $document->filename : '';
 	my $mimetype = $document ? $document->mimetype : 'text/plain';
@@ -616,28 +617,37 @@ sub padre_setup {
 sub padre_setup_plain {
 	my $self   = shift;
 	my $config = $self->config;
+	my $plain  = $data->{plain};
 
 	# Flush the style colouring and apply from scratch
 	$self->StyleClearAll;
 
-	if ( defined $data->{plain}->{current_line_foreground} ) {
-		$self->SetCaretForeground( _color( $data->{plain}->{current_line_foreground} ) );
+	if ( defined $plain->{current_line_foreground} ) {
+		$self->SetCaretForeground(
+			Padre::Wx::color( $plain->{current_line_foreground} )
+		);
 	}
-	if ( defined $data->{plain}->{currentline} ) {
+	if ( defined $plain->{currentline} ) {
 		if ( defined $config->editor_currentline_color ) {
-			if ( $data->{plain}->{currentline} ne $config->editor_currentline_color ) {
-				$data->{plain}->{currentline} = $config->editor_currentline_color;
+			if ( $plain->{currentline} ne $config->editor_currentline_color ) {
+				$plain->{currentline} = $config->editor_currentline_color;
 			}
 		}
-		$self->SetCaretLineBackground( _color( $data->{plain}->{currentline} ) );
+		$self->SetCaretLineBackground(
+			Padre::Wx::color( $plain->{currentline} )
+		);
 	} elsif ( defined $config->editor_currentline_color ) {
-		$self->SetCaretLineBackground( _color( $config->editor_currentline_color ) );
+		$self->SetCaretLineBackground(
+			Padre::Wx::color( $config->editor_currentline_color )
+		);
 	}
 
-	foreach my $k ( keys %{ $data->{plain}->{foregrounds} } ) {
-		$self->StyleSetForeground( $k, _color( $data->{plain}->{foregrounds}->{$k} ) );
+	my $foregrounds = $plain->{foregrounds};
+	foreach my $k ( keys %$foregrounds ) {
+		$self->StyleSetForeground(
+			$k => Padre::Wx::color( $plain->{foregrounds}->{$k} )
+		);
 	}
-
 
 	$self->setup_style_from_config('plain');
 
@@ -649,8 +659,10 @@ sub padre_setup_style {
 	my $name   = shift;
 	my $config = $self->main->config;
 
-	for ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
-		$self->StyleSetBackground( $_, _color( $data->{$name}->{background} ) );
+	foreach ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
+		$self->StyleSetBackground(
+			$_ => Padre::Wx::color( $data->{$name}->{background} )
+		);
 	}
 	$self->setup_style_from_config($name);
 
@@ -673,10 +685,14 @@ sub setup_style_from_config {
 	# The selection background (if applicable)
 	# (The Scintilla official selection background colour is cc0000)
 	if ( $style->{selection_background} ) {
-		$self->SetSelBackground( 1, _color( $style->{selection_background} ) );
+		$self->SetSelBackground(
+			1 => Padre::Wx::color( $style->{selection_background} ),
+		);
 	}
 	if ( $style->{selection_foreground} ) {
-		$self->SetSelForeground( 1, _color( $style->{selection_foreground} ) );
+		$self->SetSelForeground(
+			1 => Padre::Wx::color( $style->{selection_foreground} ),
+		);
 	}
 
 	# Set the styles
@@ -704,10 +720,14 @@ sub setup_style_from_config {
 
 		my $color = $data->{$name}->{colors}->{$k};
 		if ( exists $color->{foreground} ) {
-			$self->StyleSetForeground( $v, _color( $color->{foreground} ) );
+			$self->StyleSetForeground(
+				$v => Padre::Wx::color( $color->{foreground} )
+			);
 		}
 		if ( exists $color->{background} ) {
-			$self->StyleSetBackground( $v, _color( $color->{background} ) );
+			$self->StyleSetBackground(
+				$v => Padre::Wx::color( $color->{background} )
+			);
 		}
 		if ( exists $color->{bold} ) {
 			$self->StyleSetBold( $v, $color->{bold} );
@@ -787,22 +807,6 @@ sub error {
 		Wx::wxOK,
 		$self->main
 	);
-}
-
-
-sub _color {
-	my $rgb = shift;
-	my @c = ( 0xFF, 0xFF, 0xFF );
-	if ( not defined $rgb ) {
-
-		#Carp::cluck("undefined color");
-	} elsif ( $rgb =~ /^(..)(..)(..)$/ ) {
-		@c = map { hex($_) } ( $1, $2, $3 );
-	} else {
-
-		#Carp::cluck("invalid color '$rgb'");
-	}
-	return Wx::Colour->new(@c);
 }
 
 sub remove_color {
