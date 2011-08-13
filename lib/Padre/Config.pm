@@ -1230,11 +1230,21 @@ setting(
 	store   => Padre::Constant::HOST,
 	default => 1,
 );
+
+# External tool integration
+
 setting(
-	name    => 'external_diff_tool',
-	type    => Padre::Constant::ASCII,
+	name    => 'bin_diff',
+	type    => Padre::Constant::PATH,
 	store   => Padre::Constant::HOST,
 	default => '',
+);
+
+setting(
+	name    => 'bin_shell',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
+	default => Padre::Constant::WIN32 ? 'cmd.exe' : '',
 );
 
 # Enable/Disable entire functions that some people dislike.

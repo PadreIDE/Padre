@@ -544,7 +544,7 @@ sub new {
 		Wx::gettext("Diff tool"),
 	);
 
-	$self->{external_diff_tool} = Wx::FilePickerCtrl->new(
+	$self->{bin_diff} = Wx::FilePickerCtrl->new(
 		$m_panel6,
 		-1,
 		"",
@@ -1041,7 +1041,7 @@ sub new {
 	$fgSizer6->SetFlexibleDirection(Wx::wxBOTH);
 	$fgSizer6->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer6->Add( $m_staticText25, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$fgSizer6->Add( $self->{external_diff_tool}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$fgSizer6->Add( $self->{bin_diff}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$m_panel6->SetSizerAndFit($fgSizer6);
 	$m_panel6->Layout;
@@ -1276,8 +1276,8 @@ sub startup_splash {
 	$_[0]->{startup_splash};
 }
 
-sub external_diff_tool {
-	$_[0]->{external_diff_tool};
+sub bin_diff {
+	$_[0]->{bin_diff};
 }
 
 sub editor_indent_auto {
