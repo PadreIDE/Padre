@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-12 20:10-0700\n"
+"POT-Creation-Date: 2011-08-13 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,8 +98,12 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2816
+#: lib/Padre/Plugin/Devel.pm:102
 msgid "&About"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2816
+msgid "&About..."
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:849
@@ -164,8 +168,24 @@ msgstr ""
 msgid "&Disable"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:554
+msgid "&Document Statistics"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:71
+msgid "&Dump"
+msgstr ""
+
 #: lib/Padre/Wx/Menu/Edit.pm:330
 msgid "&Edit"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2398
+msgid "&Edit My Plug-in"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2360
+msgid "&Edit with Regex Editor..."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:117
@@ -220,8 +240,20 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:2464
+msgid "&Install CPAN Module"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:884
 msgid "&Join Lines"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2341
+msgid "&Key Bindings..."
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:83
+msgid "&Load All Padre Modules"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:153
@@ -234,6 +266,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:183
 msgid "&Matching Menu Items:"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Tools.pm:64
+msgid "&Module Tools"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:139
@@ -283,8 +319,16 @@ msgstr ""
 msgid "&Perl filter source:"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:2373
+msgid "&Plug-in Manager..."
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/PluginManager.pm:131
 msgid "&Preferences"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2319
+msgid "&Preferences..."
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:513
@@ -311,6 +355,10 @@ msgstr ""
 msgid "&Redo"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:2350
+msgid "&Regex Editor..."
+msgstr ""
+
 #: lib/Padre/Wx/FBP/FindInFiles.pm:119 lib/Padre/Wx/FBP/Find.pm:71
 #: lib/Padre/Wx/FBP/ReplaceInFiles.pm:144
 msgid "&Regular Expression"
@@ -318,6 +366,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:169
 msgid "&Regular expression:"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2415
+msgid "&Reload My Plug-in"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4414 lib/Padre/Wx/Main.pm:6406
@@ -342,6 +394,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Run.pm:69
 msgid "&Run"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:93
+msgid "&STC Reference"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:423
@@ -375,6 +431,10 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:489
 #: lib/Padre/Wx/Dialog/PluginManager.pm:501
 msgid "&Show error message"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:79
+msgid "&Start/Stop sub trace"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:932
@@ -417,6 +477,11 @@ msgstr ""
 msgid "&Window"
 msgstr ""
 
+#: lib/Padre/Plugin/Devel.pm:90
+#, perl-format
+msgid "&wxWidgets %s Reference"
+msgstr ""
+
 #: lib/Padre/Wx/Debugger.pm:407
 #, perl-format
 msgid ""
@@ -425,7 +490,7 @@ msgid ""
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2455
-msgid "(Re)load Current Plug-in"
+msgid "(Re)load &Current Plug-in"
 msgstr ""
 
 #: lib/Padre/Document/Perl/Help.pm:310
@@ -479,7 +544,7 @@ msgstr ""
 msgid "ALT"
 msgstr ""
 
-#: lib/Padre/Plugin/PopularityContest.pm:207 lib/Padre/Plugin/Devel.pm:102
+#: lib/Padre/Plugin/PopularityContest.pm:207
 msgid "About"
 msgstr ""
 
@@ -928,7 +993,15 @@ msgid "Close"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:359
-msgid "Close Files..."
+msgid "Close &Files..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:339
+msgid "Close &all Files"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:298
+msgid "Close &this Project"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Replace.pm:107
@@ -939,12 +1012,8 @@ msgstr ""
 msgid "Close all"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:339
-msgid "Close all Files"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:349
-msgid "Close all other Files"
+msgid "Close all &other Files"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:299
@@ -972,7 +1041,7 @@ msgid "Close current document and remove the file from disk"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:319
-msgid "Close other Projects"
+msgid "Close other &Projects"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:5142
@@ -985,10 +1054,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1733
 msgid "Close the highest priority panel (usually using ESC key)"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:298
-msgid "Close this Project"
 msgstr ""
 
 #: lib/Padre/Config.pm:584
@@ -1304,6 +1369,10 @@ msgstr ""
 msgid "Czech"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:369
+msgid "D&uplicate"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/WindowList.pm:356
 msgid "DELETED"
 msgstr ""
@@ -1494,7 +1563,7 @@ msgstr ""
 msgid "Document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:554 lib/Padre/Wx/Dialog/DocStats.pm:31
+#: lib/Padre/Wx/Dialog/DocStats.pm:31
 msgid "Document Statistics"
 msgstr ""
 
@@ -1523,36 +1592,32 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:71
-msgid "Dump"
-msgstr ""
-
 #: lib/Padre/Plugin/Devel.pm:77
-msgid "Dump %INC and @INC"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:73
-msgid "Dump Current Document"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:76
-msgid "Dump Current PPI Tree"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:78
-msgid "Dump Display Geometry"
+msgid "Dump %&INC and @INC"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:72
-msgid "Dump Expression..."
+msgid "Dump &Expression..."
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:74
-msgid "Dump Task Manager"
+msgid "Dump &Task Manager"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:73
+msgid "Dump Current &Document"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:76
+msgid "Dump Current &PPI Tree"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:78
+msgid "Dump Display &Geometry"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:75
-msgid "Dump Top IDE Object"
+msgid "Dump Top &IDE Object"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:89
@@ -1561,10 +1626,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:90
 msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:369
-msgid "Duplicate"
 msgstr ""
 
 #: lib/Padre/Locale.pm:350
@@ -1591,16 +1652,8 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2398
-msgid "Edit My Plug-in"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:2320
 msgid "Edit user and host preferences"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2360
-msgid "Edit with Regex Editor"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:225
@@ -2263,7 +2316,7 @@ msgid "Global (&g)"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1350
-msgid "Go to Bookmark"
+msgid "Go to Bookmark..."
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2667
@@ -2433,16 +2486,16 @@ msgstr ""
 msgid "Insert Special Values"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2464
-msgid "Install CPAN Module"
-msgstr ""
-
-#: lib/Padre/CPAN.pm:133 lib/Padre/Wx/ActionLibrary.pm:2477
-msgid "Install Local Distribution"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:2487
-msgid "Install Remote Distribution"
+msgid "Install &Remote Distribution"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2477
+msgid "Install L&ocal Distribution"
+msgstr ""
+
+#: lib/Padre/CPAN.pm:133
+msgid "Install Local Distribution"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2465
@@ -2513,7 +2566,7 @@ msgstr ""
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2341 lib/Padre/Wx/Dialog/KeyBindings.pm:29
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:29
 msgid "Key Bindings"
 msgstr ""
 
@@ -2613,10 +2666,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Help.pm:54
 msgid "Live Support"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:83
-msgid "Load All Padre Modules"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:331
@@ -2785,10 +2834,6 @@ msgstr ""
 
 #: lib/Padre/Wx/WizardLibrary.pm:20
 msgid "Module"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Tools.pm:64
-msgid "Module Tools"
 msgstr ""
 
 #: lib/Padre/Util/Template.pm:53
@@ -3018,6 +3063,10 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
+#: lib/Padre/Wx/Menu/File.pm:87
+msgid "O&pen"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/Bookmarks.pm:85 lib/Padre/Wx/FBP/WhereFrom.pm:60
 msgid "OK"
 msgstr ""
@@ -3038,6 +3087,10 @@ msgstr ""
 msgid "Only one POD fragment, will not try to merge"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:2497
+msgid "Open &CPAN Config File"
+msgstr ""
+
 #: lib/Padre/Wx/Outline.pm:99
 msgid "Open &Documentation"
 msgstr ""
@@ -3048,10 +3101,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:533
 msgid "Open All Recent Files"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2497
-msgid "Open CPAN Config File"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2498
@@ -3079,12 +3128,12 @@ msgstr ""
 msgid "Open Resources..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:473 lib/Padre/Wx/Main.pm:4081
-msgid "Open Selection"
+#: lib/Padre/Wx/ActionLibrary.pm:484
+msgid "Open S&ession..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:484
-msgid "Open Session..."
+#: lib/Padre/Wx/ActionLibrary.pm:473 lib/Padre/Wx/Main.pm:4081
+msgid "Open Selection"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenURL.pm:37
@@ -3196,10 +3245,6 @@ msgstr ""
 msgid "Open with Default System Editor"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:87
-msgid "Open..."
-msgstr ""
-
 #: lib/Padre/Wx/Main.pm:3060
 #, perl-format
 msgid "Opening session %s..."
@@ -3275,6 +3320,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:392
 msgid "Override Shortcut"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Tools.pm:101
+msgid "P&lug-in Tools"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4203
@@ -3435,19 +3484,15 @@ msgid "Please wait..."
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2389
-msgid "Plug-in List (CPAN)"
+msgid "Plug-in &List (CPAN)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2373 lib/Padre/Wx/Dialog/PluginManager.pm:35
+#: lib/Padre/Wx/Dialog/PluginManager.pm:35
 msgid "Plug-in Manager"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:102
 msgid "Plug-in Name"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Tools.pm:101
-msgid "Plug-in Tools"
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:1162
@@ -3537,12 +3582,8 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2319
-msgid "Preferences"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:2330
-msgid "Preferences Sync"
+msgid "Preferences &Sync..."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FindFast.pm:156
@@ -3659,8 +3700,20 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
+#: lib/Padre/Wx/Menu/File.pm:174
+msgid "Re&load"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2446
+msgid "Re&load All Plug-ins"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:1309
 msgid "Re&place in Files..."
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2424
+msgid "Re&set My plug-in"
 msgstr ""
 
 #: lib/Padre/Wx/StatusBar.pm:435
@@ -3704,7 +3757,7 @@ msgstr ""
 msgid "RegExp for TODO panel"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2350 lib/Padre/Wx/Dialog/RegexEditor.pm:33
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:33
 msgid "Regex Editor"
 msgstr ""
 
@@ -3728,24 +3781,12 @@ msgstr ""
 msgid "Related editor has been closed"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:174
-msgid "Reload"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:399
 msgid "Reload All"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2446
-msgid "Reload All Plug-ins"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:389
 msgid "Reload File"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:2415
-msgid "Reload My Plug-in"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:409
@@ -3761,7 +3802,7 @@ msgid "Reload all files currently open"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2447
-msgid "Reload all plug-ins from disk"
+msgid "Reload all plug-ins from &disk"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:390
@@ -3909,7 +3950,7 @@ msgstr ""
 msgid "Reset Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2424 lib/Padre/Wx/ActionLibrary.pm:2431
+#: lib/Padre/Wx/ActionLibrary.pm:2431
 msgid "Reset My plug-in"
 msgstr ""
 
@@ -4036,10 +4077,6 @@ msgstr ""
 msgid "SQL Files"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:93
-msgid "STC Reference"
-msgstr ""
-
 #: lib/Padre/Wx/FBP/Preferences.pm:885 lib/Padre/Wx/Dialog/SessionSave.pm:234
 msgid "Save"
 msgstr ""
@@ -4057,7 +4094,7 @@ msgid "Save Intuition"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:496
-msgid "Save Session..."
+msgid "Save Sess&ion..."
 msgstr ""
 
 #: lib/Padre/Document.pm:762
@@ -4516,8 +4553,12 @@ msgstr ""
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2579 lib/Padre/Wx/Dialog/Positions.pm:107
+#: lib/Padre/Wx/Dialog/Positions.pm:107
 msgid "Show previous positions"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2579
+msgid "Show previous positions..."
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:103
@@ -4616,15 +4657,15 @@ msgid "Showing the splash image during start-up"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:86
-msgid "Simulate Background Crash"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:85
-msgid "Simulate Background Exception"
+msgid "Simulate &Background Crash"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:84
-msgid "Simulate Crash"
+msgid "Simulate &Crash"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:85
+msgid "Simulate Background &Exception"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:473
@@ -4700,10 +4741,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2151
 msgid "Start running and/or continue running till next breakpoint or watch"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:79
-msgid "Start/Stop sub trace"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:6203
@@ -5313,10 +5350,5 @@ msgid "unsupported"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:96
-msgid "wxPerl Live Support"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:90
-#, perl-format
-msgid "wxWidgets %s Reference"
+msgid "wxPerl &Live Support"
 msgstr ""
