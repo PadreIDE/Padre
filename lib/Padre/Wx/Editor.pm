@@ -100,7 +100,7 @@ sub new {
 	# Create the underlying Wx object
 	my $lock   = $main->lock( 'UPDATE', 'refresh_windowlist' );
 	my $self   = $class->SUPER::new($parent);
-	my $config = $main->config;
+	my $config = $self->config;
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
@@ -1313,7 +1313,7 @@ sub _convert_paste_eols {
 
 	# Handle the 'None' one-liner case
 	if ( $newline_type eq 'None' ) {
-		$newline_type = $self->main->config->default_line_ending;
+		$newline_type = $self->config->default_line_ending;
 	}
 
 	#line endings
