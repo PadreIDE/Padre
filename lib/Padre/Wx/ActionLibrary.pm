@@ -295,7 +295,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.close_current_project',
 		need_editor => 1,
-		label       => _T('Close this Project'),
+		label       => _T('Close &this Project'),
 		comment     => _T('Close all the files belonging to the current project'),
 		shortcut    => 'Ctrl-Shift-W',
 		menu_event  => sub {
@@ -316,7 +316,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.close_other_projects',
 		need_editor => 1,
-		label       => _T('Close other Projects'),
+		label       => _T('Close other &Projects'),
 		comment     => _T('Close all the files that do not belong to the current project'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
@@ -336,7 +336,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.close_all',
 		need_editor => 1,
-		label       => _T('Close all Files'),
+		label       => _T('Close &all Files'),
 		comment     => _T('Close all the files open in the editor'),
 		menu_event  => sub {
 			$_[0]->close_all;
@@ -346,7 +346,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.close_all_but_current',
 		need_editor => 1,
-		label       => _T('Close all other Files'),
+		label       => _T('Close all &other Files'),
 		comment     => _T('Close all the files except the current one'),
 		menu_event  => sub {
 			$_[0]->close_all( $_[0]->notebook->GetSelection );
@@ -356,7 +356,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.close_some',
 		need_editor => 1,
-		label       => _T('Close Files...'),
+		label       => _T('Close &Files...'),
 		comment     => _T('Select some open files for closing'),
 		menu_event  => sub {
 			$_[0]->on_close_some;
@@ -366,7 +366,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.duplicate',
 		need_editor => 1,
-		label       => _T('Duplicate'),
+		label       => _T('D&uplicate'),
 		comment     => _T('Copy the current tab into a new document'),
 		menu_event  => sub {
 			$_[0]->on_duplicate;
@@ -481,7 +481,7 @@ sub init {
 	if (Padre::Feature::SESSION) {
 		Padre::Wx::Action->new(
 			name  => 'file.open_session',
-			label => _T('Open Session...'),
+			label => _T('Open S&ession...'),
 			comment =>
 				_T('Select a session. Close all the files currently open and open all the listed in the session'),
 			shortcut   => 'Ctrl-Alt-O',
@@ -493,7 +493,7 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name       => 'file.save_session',
-			label      => _T('Save Session...'),
+			label      => _T('Save Sess&ion...'),
 			comment    => _T('Ask for a session name and save the list of files currently opened'),
 			shortcut   => 'Ctrl-Alt-S',
 			menu_event => sub {
@@ -551,7 +551,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'file.doc_stat',
-		label       => _T('Document Statistics'),
+		label       => _T('&Document Statistics'),
 		comment     => _T('Word count and other statistics of the current document'),
 		need_editor => 1,
 		toolbar     => 'actions/document-properties',
@@ -1347,7 +1347,7 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name       => 'search.bookmark_goto',
-			label      => _T('Go to Bookmark'),
+			label      => _T('Go to Bookmark...'),
 			comment    => _T('Select a bookmark created earlier and jump to that position'),
 			shortcut   => 'Ctrl-Shift-B',
 			menu_event => sub {
@@ -2316,7 +2316,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.preferences',
-		label      => _T('Preferences'),
+		label      => _T('&Preferences...'),
 		comment    => _T('Edit user and host preferences'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::Preferences;
@@ -2327,7 +2327,7 @@ sub init {
 	if (Padre::Feature::SYNC) {
 		Padre::Wx::Action->new(
 			name       => 'tools.sync',
-			label      => _T('Preferences Sync'),
+			label      => _T('Preferences &Sync...'),
 			comment    => _T('Share your preferences between multiple computers'),
 			menu_event => sub {
 				require Padre::Wx::Dialog::Sync;
@@ -2338,7 +2338,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.keys',
-		label      => _T('Key Bindings'),
+		label      => _T('&Key Bindings...'),
 		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
 		menu_event => sub {
 			$_[0]->on_key_bindings;
@@ -2347,7 +2347,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.regex',
-		label      => _T('Regex Editor'),
+		label      => _T('&Regex Editor...'),
 		comment    => _T('Open the regular expression editing window'),
 		menu_event => sub {
 			shift->open_regex_editor(@_);
@@ -2357,7 +2357,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'perl.edit_with_regex_editor',
 		need_editor => 1,
-		label       => _T('Edit with Regex Editor'),
+		label       => _T('&Edit with Regex Editor...'),
 		comment     => _T('Open the selected text in the Regex Editor'),
 		menu_event  => sub {
 			my $document = Padre::Current->document or return;
@@ -2370,7 +2370,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.plugin_manager',
-		label      => _T('Plug-in Manager'),
+		label      => _T('&Plug-in Manager...'),
 		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
@@ -2386,7 +2386,7 @@ sub init {
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Padre::Wx::Action->new(
 		name       => 'plugins.plugin_list',
-		label      => _T('Plug-in List (CPAN)'),
+		label      => _T('Plug-in &List (CPAN)'),
 		comment    => _T('Open browser to a CPAN search showing the Padre::Plugin packages'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
@@ -2395,7 +2395,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.edit_my_plugin',
-		label      => _T('Edit My Plug-in'),
+		label      => _T('&Edit My Plug-in'),
 		comment    => _T('My Plug-in is a plug-in where developers could extend their Padre installation'),
 		menu_event => sub {
 			my $file = File::Spec->catfile(
@@ -2412,7 +2412,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.reload_my_plugin',
-		label      => _T('Reload My Plug-in'),
+		label      => _T('&Reload My Plug-in'),
 		comment    => _T('This function reloads the My plug-in without restarting Padre'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
@@ -2421,7 +2421,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.reset_my_plugin',
-		label      => _T('Reset My plug-in'),
+		label      => _T('Re&set My plug-in'),
 		comment    => _T('Reset the My plug-in to the default'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
@@ -2443,8 +2443,8 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.reload_all_plugins',
-		label      => _T('Reload All Plug-ins'),
-		comment    => _T('Reload all plug-ins from disk'),
+		label      => _T('Re&load All Plug-ins'),
+		comment    => _T('Reload all plug-ins from &disk'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_plugins;
 		},
@@ -2452,7 +2452,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.reload_current_plugin',
-		label      => _T('(Re)load Current Plug-in'),
+		label      => _T('(Re)load &Current Plug-in'),
 		comment    => _T('Reloads (or initially loads) the current plug-in'),
 		menu_event => sub {
 			$_[0]->ide->plugin_manager->reload_current_plugin;
@@ -2461,7 +2461,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.install_cpan',
-		label      => _T("Install CPAN Module"),
+		label      => _T("&Install CPAN Module"),
 		comment    => _T('Install a Perl module from CPAN'),
 		menu_event => sub {
 			require Padre::CPAN;
@@ -2474,7 +2474,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.install_local',
-		label      => _T("Install Local Distribution"),
+		label      => _T("Install L&ocal Distribution"),
 		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),
 		menu_event => sub {
 			require Padre::CPAN;
@@ -2484,7 +2484,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.install_remote',
-		label      => _T("Install Remote Distribution"),
+		label      => _T("Install &Remote Distribution"),
 		comment    => _T('Using pip to download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			require Padre::CPAN;
@@ -2494,7 +2494,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.cpan_config',
-		label      => _T("Open CPAN Config File"),
+		label      => _T("Open &CPAN Config File"),
 		comment    => _T('Open CPAN::MyConfig.pm for manual editing by experts'),
 		menu_event => sub {
 			require Padre::CPAN;
@@ -2576,7 +2576,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name    => 'window.show_previous_positions',
-		label   => _T('Show previous positions'),
+		label   => _T('Show previous positions...'),
 		comment => _T('Show the list of positions recently visited'),
 
 		#shortcut    => '',
@@ -2813,7 +2813,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
-		label      => _T('&About'),
+		label      => _T('&About...'),
 		comment    => _T('Show information about Padre'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;

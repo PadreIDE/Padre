@@ -84,7 +84,7 @@ sub new {
 	my $file_open = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Open...'),
+		Wx::gettext('O&pen'),
 		$file_open,
 	);
 
@@ -171,7 +171,7 @@ sub new {
 	my $file_reload = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Reload'),
+		Wx::gettext('Re&load'),
 		$file_reload,
 	);
 

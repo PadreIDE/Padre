@@ -68,38 +68,38 @@ sub menu_plugins_simple {
 		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
 		'---'               => undef,
-		Wx::gettext('Dump') => [
-			Wx::gettext('Dump Expression...')    => 'dump_expression',
-			Wx::gettext('Dump Current Document') => 'dump_document',
-			Wx::gettext('Dump Task Manager')     => 'dump_taskmanager',
-			Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
-			Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
-			Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
-			Wx::gettext('Dump Display Geometry') => 'dump_display',
-			Wx::gettext('Start/Stop sub trace')  => 'trace_sub_startstop',
+		Wx::gettext('&Dump') => [
+			Wx::gettext('Dump &Expression...')    => 'dump_expression',
+			Wx::gettext('Dump Current &Document') => 'dump_document',
+			Wx::gettext('Dump &Task Manager')     => 'dump_taskmanager',
+			Wx::gettext('Dump Top &IDE Object')   => 'dump_padre',
+			Wx::gettext('Dump Current &PPI Tree') => 'dump_ppi',
+			Wx::gettext('Dump %&INC and @INC')    => 'dump_inc',
+			Wx::gettext('Dump Display &Geometry') => 'dump_display',
+			Wx::gettext('&Start/Stop sub trace')  => 'trace_sub_startstop',
 		],
 		'---' => undef,
 
-		Wx::gettext('Load All Padre Modules')        => 'load_everything',
-		Wx::gettext('Simulate Crash')                => 'simulate_crash',
-		Wx::gettext('Simulate Background Exception') => 'simulate_task_exception',
-		Wx::gettext('Simulate Background Crash')     => 'simulate_task_crash',
+		Wx::gettext('&Load All Padre Modules')        => 'load_everything',
+		Wx::gettext('Simulate &Crash')                => 'simulate_crash',
+		Wx::gettext('Simulate Background &Exception') => 'simulate_task_exception',
+		Wx::gettext('Simulate &Background Crash')     => 'simulate_task_crash',
 
 		'---' => undef,
 
-		sprintf( Wx::gettext('wxWidgets %s Reference'), '2.8.12' ) => sub {
+		sprintf( Wx::gettext('&wxWidgets %s Reference'), '2.8.12' ) => sub {
 			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.12/');
 		},
-		Wx::gettext('STC Reference') => sub {
+		Wx::gettext('&STC Reference') => sub {
 			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
 		},
-		Wx::gettext('wxPerl Live Support') => sub {
+		Wx::gettext('wxPerl &Live Support') => sub {
 			Padre::Wx::launch_irc('wxperl');
 		},
 
 		'---' => undef,
 
-		Wx::gettext('About') => 'show_about',
+		Wx::gettext('&About') => 'show_about',
 	];
 }
 

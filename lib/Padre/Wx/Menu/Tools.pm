@@ -61,7 +61,7 @@ sub new {
 	my $modules = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Module Tools'),
+		Wx::gettext('&Module Tools'),
 		$modules,
 	);
 
@@ -98,7 +98,7 @@ sub new {
 	my $tools = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Plug-in Tools'),
+		Wx::gettext('P&lug-in Tools'),
 		$tools,
 	);
 
