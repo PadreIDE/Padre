@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-12 08:10-0700\n"
+"POT-Creation-Date: 2011-08-12 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -467,7 +467,7 @@ msgstr ""
 msgid "A new empty file"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:291
+#: lib/Padre/Plugin/Devel.pm:299
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 
@@ -1639,11 +1639,11 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1348
+#: lib/Padre/Config.pm:1358
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1322
+#: lib/Padre/Config.pm:1332
 msgid ""
 "Enable or disable the newer Wx::Scintilla source code editing component. "
 msgstr ""
@@ -1726,7 +1726,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:786
+#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:814
 #: lib/Padre/Wx/Main.pm:4907 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
@@ -1806,7 +1806,7 @@ msgstr ""
 msgid "Error while loading %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:248
+#: lib/Padre/Plugin/Devel.pm:256
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
@@ -1831,7 +1831,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6009 lib/Padre/Plugin/Devel.pm:334
+#: lib/Padre/Wx/Main.pm:6009 lib/Padre/Plugin/Devel.pm:342
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -2184,7 +2184,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1575
+#: lib/Padre/Wx/Editor.pm:1587
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2229,7 +2229,7 @@ msgstr ""
 msgid "Found %s help topic(s)\n"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:311
+#: lib/Padre/Plugin/Devel.pm:319
 #, perl-format
 msgid "Found %s unloaded modules"
 msgstr ""
@@ -2619,7 +2619,7 @@ msgstr ""
 msgid "Load All Padre Modules"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:323
+#: lib/Padre/Plugin/Devel.pm:331
 #, perl-format
 msgid "Loaded %s modules"
 msgstr ""
@@ -4752,11 +4752,11 @@ msgstr ""
 msgid "String"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:260
+#: lib/Padre/Plugin/Devel.pm:268
 msgid "Sub-tracing started"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:242
+#: lib/Padre/Plugin/Devel.pm:250
 msgid "Sub-tracing stopped"
 msgstr ""
 
@@ -4883,11 +4883,11 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1349
+#: lib/Padre/Config.pm:1359
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1323
+#: lib/Padre/Config.pm:1333
 msgid "This requires an installed Wx::Scintilla and a Padre restart"
 msgstr ""
 
@@ -5245,7 +5245,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1559
+#: lib/Padre/Wx/Editor.pm:1571
 msgid "You must select a range of lines"
 msgstr ""
 
