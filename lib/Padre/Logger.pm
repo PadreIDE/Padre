@@ -8,10 +8,10 @@ Padre::Logger - Compile-time logging library for Padre
 
 =head1 SYNOPSIS
 
-  # In the launch/dev.pl script
-  BEGIN {
-      $Padre::Logger::DEBUG = 1;
-  }
+  # In the launcher script
+  $ENV{PADRE_DEBUG} = 1;
+
+
 
   use Padre;
 

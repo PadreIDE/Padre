@@ -43,7 +43,7 @@ MYMETA\.(?:yml|json)$
 
 # Avoid Padre development files
 \B\.padre
-dev.pl
+^dev$
 \bprivlib
 ^padre(?:\.exe)?$
 padre-splash-original.xcf
