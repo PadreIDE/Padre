@@ -46,6 +46,7 @@ the even version for the release, even during development.
       window but do not change the margin (ADAMK)
     - Add _ shortcuts in menus. Still to do. Sorry to translators (DOLMEN)
     - Add ... to menus leading to dialogs. Sorry to translators (DOLMEN)
+    - Fix blurry app icon on Ubuntu with Unity desktop (DOLMEN)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.

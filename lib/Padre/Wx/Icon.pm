@@ -50,7 +50,7 @@ our $DEFAULT_ICON;
 
 # Convenience access to the official Padre icon
 sub PADRE {
-	return icon('logo');
+	return icon('logo', { size => '64x64' });
 }
 
 # On windows, you actually need to provide it with a native icon file that
