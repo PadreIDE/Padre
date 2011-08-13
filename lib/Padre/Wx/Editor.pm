@@ -250,8 +250,6 @@ sub on_set_focus {
 
 	# Keep processing
 	$event->Skip(1);
-
-	return;
 }
 
 # When the focus is leaving the editor
@@ -552,7 +550,7 @@ sub set_preferences {
 	$self->apply_config($config);
 
 	# Apply type-specific settings
-	$self->padre_setup;
+	$self->padre_setup($config);
 
 	if ( $self->{Document} ) {
 		$self->{Document}->set_indentation_style;
@@ -585,18 +583,18 @@ sub padre_setup {
 	}
 
 	# Apply the blanket plain styling to everything first
-	$self->padre_setup_plain;
+	$self->padre_setup_plain($config);
 
 	# Setup the style for the specific mimetype
 	if ( $MIME_STYLE{$mimetype} ) {
-		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
+		$self->padre_setup_style( $MIME_STYLE{$mimetype}, $config );
 		return;
 	}
 
 	# Setup some default colouring.
 	# For the time being it is the same as for Perl.
 	unless ( $mimetype ne 'text/plain' ) {
-		$self->padre_setup_style('padre');
+		$self->padre_setup_style('padre', $config);
 		return;
 	}
 
@@ -606,7 +604,7 @@ sub padre_setup {
 
 		# Resetup if file extension is .conf
 		if ( $ext eq 'conf' ) {
-			$self->padre_setup_style('conf');
+			$self->padre_setup_style('conf', $config);
 			return;
 		}
 	}
@@ -616,7 +614,7 @@ sub padre_setup {
 
 sub padre_setup_plain {
 	my $self   = shift;
-	my $config = $self->config;
+	my $config = shift || $self->config;
 	my $plain  = $data->{plain};
 
 	# Flush the style colouring and apply from scratch
@@ -649,7 +647,7 @@ sub padre_setup_plain {
 		);
 	}
 
-	$self->setup_style_from_config('plain');
+	$self->setup_style_from_config('plain', $config);
 
 	return;
 }
@@ -657,14 +655,15 @@ sub padre_setup_plain {
 sub padre_setup_style {
 	my $self   = shift;
 	my $name   = shift;
-	my $config = $self->main->config;
+	my $config = shift || $self->config;
 
-	foreach ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
+	foreach my $i ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
 		$self->StyleSetBackground(
-			$_ => Padre::Wx::color( $data->{$name}->{background} )
+			$i => Padre::Wx::color( $data->{$name}->{background} )
 		);
 	}
-	$self->setup_style_from_config($name);
+
+	$self->setup_style_from_config($name, $config);
 
 	# if mimetype is known, then it might be Perl with in-line POD
 	if ( Padre::Feature::FOLDING and $config->editor_folding ) {
@@ -679,6 +678,7 @@ sub padre_setup_style {
 sub setup_style_from_config {
 	my $self   = shift;
 	my $name   = shift;
+	my $config = shift || $self->config; # Unused but leave it here for now
 	my $style  = $data->{$name};
 	my $colors = $style->{colors};
 
