@@ -32,7 +32,7 @@ distribution created for Padre by the development team.
 In addition, there are some additional scripts that are for development
 purposes and are not part of the releases themselves.
 
-F<Padre/dev.pl>
+F<Padre/dev>
 
 This is a launch script used to start Padre in developer mode. This mainly
 automates a couple of conveniences, such as using a local .padre directory
@@ -366,17 +366,17 @@ Run the following to set up Padre:
 
 =item *
 
-Run F<dev.pl> to start Padre from your checkout.
+Run F<dev> to start Padre from your checkout.
 
-  perl dev.pl
+  perl dev
 
 or with all plugins loaded:
 
-  perl dev.pl -h
+  perl dev -h
 
 or with the Perl debugger:
 
-  perl dev.pl -d
+  perl dev -d
 
 =item *
 
