@@ -482,6 +482,14 @@ sub on_right_down {
 ######################################################################
 # Setup and Preferences Methods
 
+# Allow projects to override editor preferences
+sub config {
+	my $self    = shift;
+	my $project = $self->current->project;
+	return $project->config if $project;
+	return $self->SUPER::config;
+}
+
 # Apply global configuration settings to the editor
 sub apply_config {
 	my $self   = shift;
