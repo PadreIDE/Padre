@@ -1359,6 +1359,25 @@ setting(
 		. _T('This requires an installed Devel::EndStats and a Padre restart'),
 );
 
+# Enable experimental Run with Devel::TraceUse support.
+setting(
+	name    => 'feature_devel_traceuse',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Enable or disable the Run with Devel::TraceUse if it is installed. ')
+		. _T('This requires an installed Devel::TraceUse and a Padre restart'),
+);
+
+# Specify Devel::TraceUse options for experimental Run with Devel::TraceUse support
+setting(
+	name    => 'feature_devel_traceuse_options',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+	help    => _T('Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled.'),
+);
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
