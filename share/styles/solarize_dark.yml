@@ -1,0 +1,413 @@
+---
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+# Items of colors support following properties:
+#   - foreground: color
+#   - background: color
+#   - bold:       0 or 1
+#   - italic:     0 or 1
+#   - eolfilled:  0 or 1
+#   - underline:  0 or 1
+
+#
+# base style
+#
+plain:
+ foregrounds:
+  0: 93a1a1
+# backgrounds:
+#  0: 002b36
+ current_line_foreground: 586e75
+ currentline: 586e75
+ colors:
+  wxSTC_STYLE_DEFAULT:
+  wxSTC_STYLE_LINENUMBER:
+   background: 073642
+   foreground: 586e75
+  wxSTC_STYLE_BRACELIGHT:
+  wxSTC_STYLE_BRACEBAD:
+  wxSTC_STYLE_CONTROLCHAR:
+  wxSTC_STYLE_INDENTGUIDE:
+   foreground: 859900
+  wxSTC_STYLE_CALLTIP:
+  wxSTC_STYLE_LASTPREDEFINED:
+
+#
+# default style (load after plain)
+#
+padre:
+ background:  002b36
+ colors:
+  PADRE_BLACK:
+   foreground: 93a1a1
+  PADRE_BLUE:
+   foreground: 268bd2
+  PADRE_RED:
+   foreground: dc322f
+  PADRE_GREEN:
+   foreground: 859900
+  PADRE_MAGENTA:
+   foreground: d33682
+  PADRE_ORANGE:
+   foreground: cb4b16
+  PADRE_CRIMSON:
+   foreground: 6c71c4
+  PADRE_BROWN:
+   foreground: b58900
+
+#
+# application/x-perl
+#
+perl:
+ background: 002b36
+ colors:
+# highlight two braces
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: eee8d5
+# ??
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+# ??
+  wxSTC_PL_DEFAULT:
+   foreground: 000000
+# ??
+  wxSTC_PL_ERROR:
+   foreground: ff0000
+# comment
+  wxSTC_PL_COMMENTLINE:
+   foreground: 586e75
+# pod
+  wxSTC_PL_POD:
+   foreground: 657b83
+# pod
+  wxSTC_PL_POD_VERB:
+   foreground: 657b83
+# number
+  wxSTC_PL_NUMBER:
+   foreground: cb4b16
+# -d -f
+  wxSTC_PL_WORD:
+   foreground: 859900
+# ??
+  wxSTC_PL_STRING:
+   foreground: 2aa198
+# ??
+  wxSTC_PL_CHARACTER:
+   foreground: 6c71c4
+# ??
+  wxSTC_PL_PUNCTUATION:
+   foreground: 000000
+# ??
+  wxSTC_PL_PREPROCESSOR:
+   foreground: 657b83
+# {} [] etc  
+  wxSTC_PL_OPERATOR:
+   foreground: 268bd2
+# all words like qw(sub for first)
+  wxSTC_PL_IDENTIFIER:
+   foreground: 839496
+# $scalar
+  wxSTC_PL_SCALAR:
+   foreground: b58900
+# @arr
+  wxSTC_PL_ARRAY:
+   foreground: dc322f
+# %hash
+  wxSTC_PL_HASH:
+   foreground: dc322f
+# *{symbol}
+  wxSTC_PL_SYMBOLTABLE:
+   foreground: eee8d5
+# missing SCE_PL_VARIABLE_INDEXER (16)
+  wxSTC_PL_REGEX:
+   foreground: d33682
+# s/// tr///
+  wxSTC_PL_REGSUBST:
+   foreground: 93a1a1
+# ??
+  wxSTC_PL_LONGQUOTE:
+   foreground: 2aa198
+# `cmd`
+  wxSTC_PL_BACKTICKS:
+   foreground: cb4b16
+# _DATA_ ??
+  wxSTC_PL_DATASECTION:
+   foreground: 2aa198
+# ??
+  wxSTC_PL_HERE_DELIM:
+   foreground: 2aa198
+# '' ??
+  wxSTC_PL_HERE_Q:
+   foreground: 6c71c4
+# "" ??
+  wxSTC_PL_HERE_QQ:
+   foreground: 2aa198
+# `` ??
+  wxSTC_PL_HERE_QX:
+   foreground: cb4b16
+# q()
+  wxSTC_PL_STRING_Q:
+   foreground: 6c71c4
+# qq()
+  wxSTC_PL_STRING_QQ:
+   foreground: 2aa198
+# qx()
+  wxSTC_PL_STRING_QX:
+   foreground: cb4b16
+# qr()
+  wxSTC_PL_STRING_QR:
+   foreground: d33682
+# qw()
+  wxSTC_PL_STRING_QW:
+   foreground: 6c71c4
+# missing:
+#define SCE_PL_SUB_PROTOTYPE 40
+#define SCE_PL_FORMAT_IDENT 41
+#define SCE_PL_FORMAT 42
+
+#
+# If you want to support another file type
+# then refer wxWidget's include/wx-2.8/wx/stc/stc.h file
+#
+
+#
+# text/x-perlxs
+#
+xs:
+ background: 002b36
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: eee8d5
+  wxSTC_STYLE_BRACEBAD:
+   foreground: dc322f
+  wxSTC_C_DEFAULT:
+   foreground: 657b83
+  wxSTC_C_COMMENT:
+   foreground: 586e75
+  wxSTC_C_COMMENTLINE:
+   foreground: 586e75
+  wxSTC_C_COMMENTDOC:
+   foreground: 586e75
+  wxSTC_C_NUMBER:
+   foreground: 2aa198
+  wxSTC_C_WORD:
+   foreground: 6c71c4
+  wxSTC_C_STRING:
+   foreground: ff7f00
+  wxSTC_C_CHARACTER:
+   foreground: 6c71c4
+  wxSTC_C_UUID:
+   foreground: 6c71c4
+  wxSTC_C_PREPROCESSOR:
+   foreground: 93a1a1
+   bold: 1
+  wxSTC_C_OPERATOR:
+   foreground: 268bd2
+  wxSTC_C_IDENTIFIER:
+   foreground: 859900
+  wxSTC_C_STRINGEOL:
+   foreground: dc322f
+  wxSTC_C_VERBATIM:
+   foreground: 6c71c4
+  wxSTC_C_REGEX:
+   foreground: ff007f
+  wxSTC_C_COMMENTLINEDOC:
+   foreground: 586e75
+  wxSTC_C_WORD2:
+   foreground: 6c71c4
+   bold: 1
+  wxSTC_C_COMMENTDOCKEYWORD:
+   foreground: 657b83
+   background: dc322f
+  wxSTC_C_COMMENTDOCKEYWORDERROR:
+   foreground: 657b83
+   background: dc322f
+  wxSTC_C_GLOBALCLASS:
+   foreground: 6c71c4
+
+#
+# text/x-patch
+#
+diff:
+ background: 002b36
+ colors:
+  wxSTC_DIFF_DEFAULT:
+   foreground: 657b83
+  wxSTC_DIFF_COMMENT:
+   foreground: 586e75
+   bold:       1
+   italic:     1
+   eolfilled:  1
+   underline:  1
+  wxSTC_DIFF_COMMAND:
+   foreground: 93a1a1
+  wxSTC_DIFF_HEADER:
+   foreground: 859900
+  wxSTC_DIFF_POSITION:
+   foreground: 268bd2
+  wxSTC_DIFF_DELETED:
+   foreground: dc322f
+  wxSTC_DIFF_ADDED:
+   foreground: 2aa198
+
+#
+# text/x-makefile
+#
+make:
+ colors:
+  wxSTC_MAKE_DEFAULT:
+   foreground: 657b83
+  wxSTC_MAKE_COMMENT:
+   foreground: 586e75
+  wxSTC_MAKE_PREPROCESSOR:
+   foreground: 93a1a1
+  wxSTC_MAKE_IDENTIFIER:
+   foreground: 859900
+  wxSTC_MAKE_OPERATOR:
+   foreground: 268bd2
+  wxSTC_MAKE_TARGET:
+   foreground: dc322f
+  wxSTC_MAKE_IDEOL:
+   foreground: 2aa198
+
+#
+# text/x-yaml
+#
+yaml:
+ background: 002b36
+ colors:
+  wxSTC_YAML_DEFAULT:
+   foreground: 859900
+  wxSTC_YAML_COMMENT:
+   foreground: 586e75
+  wxSTC_YAML_IDENTIFIER:
+   foreground: 268bd2
+   bold:       1
+  wxSTC_YAML_KEYWORD:
+   foreground: 6c71c4
+  wxSTC_YAML_NUMBER:
+   foreground: dc322f
+  wxSTC_YAML_REFERENCE:
+   foreground: 2aa198
+  wxSTC_YAML_DOCUMENT:
+   foreground: 859900
+   background: eee8d5
+   bold:       1
+   eolfilled:  1
+  wxSTC_YAML_TEXT:
+   foreground: 333366
+  wxSTC_YAML_ERROR:
+   foreground: 859900
+   background: eee8d5
+   bold:       1
+   eolfilled:  1
+
+#
+# text/css1
+#
+css:
+ background:  002b36
+ colors:
+  wxSTC_CSS_DEFAULT:
+   foreground: 657b83
+  wxSTC_CSS_TAG:
+   foreground: 6c71c4
+   bold:       1
+  wxSTC_CSS_CLASS:
+   foreground: 268bd2
+   bold:       1
+  wxSTC_CSS_PSEUDOCLASS:
+   foreground: 839496
+  wxSTC_CSS_UNKNOWN_PSEUDOCLASS:
+   foreground: 839496
+   bold:       1
+  wxSTC_CSS_OPERATOR:
+   foreground: cb4b16
+   bold:       1
+  wxSTC_CSS_IDENTIFIER:
+   foreground: d33682
+  wxSTC_CSS_UNKNOWN_IDENTIFIER:
+   foreground: 839496
+   bold:       1
+  wxSTC_CSS_VALUE:
+   foreground: 859900
+  wxSTC_CSS_COMMENT:
+   foreground: 586e75
+  wxSTC_CSS_ID:
+   foreground: 2aa198
+   bold:       1
+  wxSTC_CSS_IMPORTANT:
+   foreground: 839496
+  wxSTC_CSS_DIRECTIVE:
+   foreground: 839496
+  wxSTC_CSS_DOUBLESTRING:
+   foreground: 839496
+  wxSTC_CSS_SINGLESTRING:
+   foreground: 839496
+  wxSTC_CSS_IDENTIFIER2:
+   foreground: 839496
+  wxSTC_CSS_ATTRIBUTE:
+   foreground: 839496
+
+#
+# conf: text/plain
+#
+conf:
+ background: 002b36
+ colors:
+  wxSTC_CONF_DEFAULT:
+   foreground: 657b83
+  wxSTC_CONF_COMMENT:
+   foreground: 586e75
+  wxSTC_CONF_NUMBER:
+   foreground: 2aa198
+  wxSTC_CONF_IDENTIFIER:
+   foreground: b58900
+  wxSTC_CONF_EXTENSION:
+   foreground: 839496
+  wxSTC_CONF_PARAMETER:
+   foreground: d33682
+  wxSTC_CONF_STRING:
+   foreground: cb4b16
+  wxSTC_CONF_OPERATOR:
+   foreground: 93a1a1
+  wxSTC_CONF_IP:
+   foreground: 859900
+  wxSTC_CONF_DIRECTIVE:
+   foreground: 839496
+
+#
+# javascript
+#
+javascript:
+ background: 002b36
+ colors:
+  wxSTC_HJA_COMMENT:
+   foreground: 586e75
+  wxSTC_HJA_COMMENTDOC:
+   foreground: 586e75
+  wxSTC_HJA_COMMENTLINE:
+   foreground: 586e75
+  wxSTC_HJA_DEFAULT:
+   foreground: 657b83
+  wxSTC_HJA_DOUBLESTRING:
+   foreground: 2aa198
+  wxSTC_HJA_KEYWORD:
+   foreground: 859900
+  wxSTC_HJA_NUMBER:
+   foreground: cb4b16
+  wxSTC_HJA_REGEX:
+   foreground: d33682
+  wxSTC_HJA_SINGLESTRING:
+   foreground: 6c71c4
+  wxSTC_HJA_START:
+   foreground: eee8d5
+  wxSTC_HJA_STRINGEOL:
+   foreground: dc322f
+  wxSTC_HJA_SYMBOLS:
+   foreground: cb4b16
+  wxSTC_HJA_WORD:
+   foreground: 93a1a1

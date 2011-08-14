@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 33 );
+plan( tests => 40 );
 
 
 my $dir = catdir( 'share', 'styles' );
@@ -29,6 +29,7 @@ my @styles = qw{
 	night
 	notepad
 	ultraedit
+	solarize_dark
 };
 
 
@@ -40,7 +41,7 @@ my @styles = qw{
 
 use_ok('Padre::Config::Style');
 my $hash = Padre::Config::Style->core_styles;
-is( scalar( keys %$hash ), 5, 'Found 5 core styles' );
+is( scalar( keys %$hash ), 6, 'Found 6 core styles' );
 my @user = Padre::Config::Style->user_styles;
 
 
