@@ -152,7 +152,7 @@ Usage: $0
         --die       add DIE handler
         --fulltrace full sourcecode trace to STDERR
         --use       list loaded modules with Devel::TraceUse
-        --use=<opt> same with <opt> given as D::TU options
+        --use=<opt> same with <opt> given as Devel::TraceUse options
 
        LIST OF FILES    list of files to open
 
