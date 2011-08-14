@@ -299,7 +299,7 @@ sub new {
 }
 
 sub rebless {
-	my ($self) = @_;
+	my $self = shift;
 
 	# Rebless as either to a subclass if there is a mime-type or
 	# to the the base class,
@@ -505,7 +505,7 @@ sub is_unused {
 # 2) when we try to save the file (gvim)
 # 3) every time we type something ????
 sub has_changed_on_disk {
-	my ($self) = @_;
+	my $self = shift;
 	return 0 unless defined $self->file;
 	return 0 unless defined $self->timestamp;
 
@@ -850,8 +850,7 @@ TO DO: In the future it should backup the changes in case the user regrets the a
 =cut
 
 sub reload {
-	my ($self) = @_;
-
+	my $self = shift;
 	my $file = $self->file or return;
 	return $self->load_file;
 }
@@ -1331,10 +1330,8 @@ sub is_readonly {
 }
 
 sub selection_stats {
-	my ($self) = @_;
-
-	my $text = $self->editor->GetSelectedText;
-
+	my $self    = shift;
+	my $text    = $self->editor->GetSelectedText;
 	my $words   = 0;
 	my $newline = $self->newline;
 	my $lines   = 1;
@@ -1349,15 +1346,13 @@ sub selection_stats {
 }
 
 sub stats {
-	my ($self) = @_;
-
-	my ( $chars_without_space, $words ) = (0) x 2;
-
-	my $editor = $self->editor;
-	my $text   = $self->text_get;
-
-	my $lines            = $editor->GetLineCount;
-	my $chars_with_space = $editor->GetTextLength;
+	my $self                = shift;
+	my $chars_without_space = 0;
+	my $words               = 0;
+	my $editor              = $self->editor;
+	my $text                = $self->text_get;
+	my $lines               = $editor->GetLineCount;
+	my $chars_with_space    = $editor->GetTextLength;
 
 	# TODO: Remove this limit? Right now, it is greater than the default file size limit.
 	if ( length $text < 2_500_000 ) {
