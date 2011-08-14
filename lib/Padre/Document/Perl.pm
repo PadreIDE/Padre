@@ -480,9 +480,9 @@ sub beginner_check {
 	# Report any errors
 	my $error = $beginner->error;
 	if ($error) {
-		$self->main->error( Wx::gettext('Error: ') . $error );
+		$self->current->main->error( Wx::gettext('Error: ') . $error );
 	} else {
-		$self->main->message( Wx::gettext('No errors found.') );
+		$self->current->main->message( Wx::gettext('No errors found.') );
 	}
 
 	return 1;
@@ -524,7 +524,7 @@ sub find_unmatched_brace_response {
 		Wx::gettext("All braces appear to be matched"),
 		Wx::gettext("Check Complete"),
 		Wx::wxOK,
-		$self->main,
+		$self->current->main,
 	);
 }
 
@@ -1567,7 +1567,7 @@ sub event_on_left_up {
 
 		# Does it look like a path or module?
 		elsif ( defined $token and $token =~ /(?:\/|\:\:)/ ) {
-			$self->main->on_open_selection($token);
+			$self->current->main->on_open_selection($token);
 		}
 	}
 }

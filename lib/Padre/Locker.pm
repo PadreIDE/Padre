@@ -134,7 +134,7 @@ sub config_decrement {
 	unless ( --$self->{config_depth} ) {
 
 		# Write the config file here
-		$self->owner->config->write;
+		$self->{owner}->config->write;
 	}
 	return;
 }

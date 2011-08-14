@@ -380,9 +380,9 @@ sub _refresh_list {
 # update the current row and name selection to undef.
 #
 sub _select_first_item {
-	my ($self) = @_;
+	my $self = shift;
 
-	# select first item in the list
+	# Select first item in the list
 	my $list = $self->_list;
 
 	if ( $list->GetItemCount ) {
@@ -391,9 +391,11 @@ sub _select_first_item {
 		$list->SetItem($item);
 	} else {
 
-		# remove current selection
-		$self->_currow(undef)  if $self->can('_currow');
-		$self->_curname(undef) if $self->can('_curname');
+		# Remove current selection
+		foreach my $method ( qw{ _currow _curname } ) {
+			next unless $self->can($method);
+			$self->$method(undef);
+		}
 	}
 }
 

@@ -336,16 +336,15 @@ sub cancel {
 sub dequeue {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $handle = $self->handle or return 0;
 
 	# Pull from the inbox first
-	my $inbox = $handle->inbox or return 0;
+	my $inbox = $self->inbox or return 0;
 	if (@$inbox) {
 		return shift @$inbox;
 	}
 
 	# Pull off the queue
-	my $queue = $handle->queue or return 0;
+	my $queue = $self->queue or return 0;
 	foreach my $message ( $queue->dequeue ) {
 		if ( $message->[0] eq 'cancel' ) {
 			$self->{cancel} = 1;
@@ -371,16 +370,15 @@ sub dequeue {
 sub dequeue_nb {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $handle = $self->handle or return 0;
 
 	# Pull from the inbox first
-	my $inbox = $handle->inbox or return 0;
+	my $inbox = $self->inbox or return 0;
 	if (@$inbox) {
 		return shift @$inbox;
 	}
 
 	# Pull off the queue, non-blocking
-	my $queue = $handle->queue or return 0;
+	my $queue = $self->queue or return 0;
 	foreach my $message ( $queue->dequeue ) {
 		if ( $message->[0] eq 'cancel' ) {
 			$self->{cancel} = 1;

@@ -317,7 +317,7 @@ sub rebless {
 	}
 
 	my $module   = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
-	my $filename = '';                                                                # Not undef
+	my $filename = ''; # Not undef
 	$filename = $self->{file}->filename
 		if defined( $self->{file} )
 			and defined( $self->{file}->{filename} );
@@ -725,10 +725,12 @@ sub autoclean {
 }
 
 sub save_file {
-	my $self = shift;
-
-	my $manager = $self->current->ide->plugin_manager;
-	return unless $manager->hook( 'before_save', $self );
+	my $self    = shift;
+	my $current = shift;
+	my $manager = $current->ide->plugin_manager;
+	unless ( $manager->hook('before_save', $self) ) {
+		return;
+	}
 
 	# Show the file-changed-dialog again after the file was saved:
 	delete $self->{_already_popup_file_changed};
@@ -740,7 +742,9 @@ sub save_file {
 	$config = $self->project->config if $self->project;
 	$self->set_errstr('');
 
-	$self->autoclean if $config && $config->save_autoclean;
+	if ( $config and $config->save_autoclean ) {
+		$self->autoclean;
+	}
 
 	my $content = $self->text_get;
 	my $file    = $self->file;
@@ -761,7 +765,7 @@ sub save_file {
 			),
 			Wx::gettext("Save Warning"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
-			$self->main,
+			$current->main,
 		);
 
 		return 0 if $ret == Wx::wxYES;

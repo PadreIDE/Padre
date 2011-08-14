@@ -82,7 +82,7 @@ sub on_list_item_activated {
 		return;
 	}
 
-	$self->select_problem( $line - 1 );
+	# $self->select_problem( $line - 1 );
 
 	return;
 }

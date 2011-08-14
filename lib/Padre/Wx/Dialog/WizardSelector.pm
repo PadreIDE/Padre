@@ -3,17 +3,22 @@ package Padre::Wx::Dialog::WizardSelector;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Params::Util          ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
+use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
 our $VERSION = '0.89';
-our @ISA     = qw{ Wx::Dialog };
+our @ISA     = qw{
+	Padre::Wx::Role::Main
+	Wx::Dialog
+};
 
 # Generate faster accessors
 use Class::XSAccessor {
 	accessors => {
-		current => 'current',
+		current_page => 'current_page',
 	},
 };
 
@@ -41,10 +46,9 @@ Returns a new C<Padre::Wx::Dialog::WizardSelector> instance
 
 # Creates the wizard dialog and returns the instance
 sub new {
-	my ( $class, $parent ) = @_;
-
-	# Create the Wx wizard dialog
-	my $self = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector') );
+	my $class  = shift;
+	my $parent = shift;
+	my $self   = $class->SUPER::new( $parent, -1, Wx::gettext('Wizard Selector') );
 
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -142,7 +146,7 @@ sub _on_button_back {
 	$self->{button_back}->SetFocus;
 
 	# Show the back wizard page if it is valid
-	my $wizard = $self->{current}->back_wizard;
+	my $wizard = $self->{current_page}->back_wizard;
 	if ($wizard) {
 		$self->_try_to_show_page( $wizard->class );
 	} else {
@@ -158,7 +162,7 @@ sub _on_button_next {
 	$self->{button_next}->SetFocus;
 
 	# Show the next wizard page if it is valid
-	my $wizard = $self->{current}->next_wizard or return;
+	my $wizard = $self->{current_page}->next_wizard or return;
 	$self->_try_to_show_page( $wizard->class );
 }
 
@@ -186,8 +190,8 @@ sub _show_page {
 	my ( $self, $page ) = @_;
 
 	# Hide the old one and then show the new one
-	$self->current->Hide if $self->current;
-	$self->current($page);
+	$self->current_page->Hide if $self->current_page;
+	$self->current_page($page);
 	$page->Show(1);
 
 	$self->refresh;
@@ -226,12 +230,12 @@ sub show {
 sub refresh {
 	my $self = shift;
 
-	my $current = $self->current or return;
-	$self->SetLabel( $current->title );
-	$self->{title}->SetLabel( $current->name );
-	$self->{status}->SetLabel( $current->status );
-	$self->{button_back}->Enable( defined( $current->back_wizard ) ? 1 : 0 );
-	$self->{button_next}->Enable( defined( $current->next_wizard ) ? 1 : 0 );
+	my $current_page = $self->current_page or return;
+	$self->SetLabel( $current_page->title );
+	$self->{title}->SetLabel( $current_page->name );
+	$self->{status}->SetLabel( $current_page->status );
+	$self->{button_back}->Enable( defined( $current_page->back_wizard ) ? 1 : 0 );
+	$self->{button_next}->Enable( defined( $current_page->next_wizard ) ? 1 : 0 );
 }
 
 1;
