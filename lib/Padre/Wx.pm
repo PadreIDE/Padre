@@ -5,7 +5,8 @@ package Padre::Wx;
 use 5.008;
 use strict;
 use warnings;
-use constant ();
+use constant     ();
+use Params::Util ();
 
 # Threading must be loaded before Wx loads
 use threads;
@@ -143,6 +144,18 @@ sub aui_pane_info {
 		$info->$method(shift);
 	}
 	return $info;
+}
+
+# Allow objects to capture the mouse when over them, so you can scroll
+# lists and such without focusing on them.
+sub capture_mouse {
+	my $window = Params::Util::_INSTANCE(shift, 'Wx::Window') or return;
+	Wx::Event::EVT_ENTER_WINDOW( $window, sub {
+		$window->CaptureMouse;
+	} );
+	Wx::Event::EVT_LEAVE_WINDOW( $window, sub {
+		$window->ReleaseMouse;
+	} );
 }
 
 
