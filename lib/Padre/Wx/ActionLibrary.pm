@@ -1402,7 +1402,7 @@ sub init {
 		comment     => _T('Show the window displaying the standard output and standard error of the running scripts'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_output( $_[1]->IsChecked );
+			$_[0]->show_output( $_[0]->menu->view->{output}->IsChecked );
 		},
 	);
 
@@ -1412,7 +1412,7 @@ sub init {
 		comment     => _T('Show a window listing all the functions in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_functions( $_[1]->IsChecked );
+			$_[0]->show_functions( $_[0]->menu->view->{functions}->IsChecked );
 		},
 	);
 
@@ -1422,7 +1422,7 @@ sub init {
 		comment     => _T('Show the command line window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_command_line( $_[1]->IsChecked );
+			$_[0]->show_command_line( $_[0]->menu->view->{command_line}->IsChecked );
 		},
 	);
 
@@ -1432,7 +1432,7 @@ sub init {
 		comment     => _T('Show a window listing all todo items in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_todo( $_[1]->IsChecked );
+			$_[0]->show_todo( $_[0]->menu->view->{todo}->IsChecked );
 		},
 	);
 
@@ -1442,7 +1442,7 @@ sub init {
 		comment     => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_outline( $_[1]->IsChecked );
+			$_[0]->show_outline( $_[0]->menu->view->{outline}->IsChecked );
 		},
 	);
 
@@ -1452,7 +1452,7 @@ sub init {
 		comment     => _T('Project Browser - Was known as the Directory Tree'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_directory( $_[1]->IsChecked );
+			$_[0]->show_directory( $_[0]->menu->view->{directory}->IsChecked );
 		},
 	);
 
@@ -1462,7 +1462,7 @@ sub init {
 		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_syntaxcheck( $_[1]->IsChecked );
+			$_[0]->show_syntaxcheck( $_[0]->menu->view->{syntaxcheck}->IsChecked );
 		},
 	);
 
@@ -1481,7 +1481,7 @@ sub init {
 		comment     => _T('Show/hide the status bar at the bottom of the screen'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_statusbar( $_[1]->IsChecked );
+			$_[0]->show_statusbar( $_[0]->menu->view->{statusbar}->IsChecked );
 		},
 	);
 
@@ -1491,7 +1491,7 @@ sub init {
 		comment     => _T('Show/hide the toolbar at the top of the editor'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_toolbar( $_[1]->IsChecked );
+			$_[0]->show_toolbar( $_[0]->menu->view->{toolbar}->IsChecked );
 		},
 	);
 
@@ -1520,7 +1520,7 @@ sub init {
 		comment     => _T('Show/hide the line numbers of all the documents on the left side of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_linenumbers( $_[1]->IsChecked );
+			$_[0]->editor_linenumbers( $_[0]->menu->view->{lines}->IsChecked );
 		},
 	);
 
@@ -1531,7 +1531,7 @@ sub init {
 			comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 			menu_method => 'AppendCheckItem',
 			menu_event  => sub {
-				$_[0]->editor_folding( $_[1]->IsChecked );
+				$_[0]->editor_folding( $_[0]->menu->view->{folding}->IsChecked );
 			},
 		);
 
@@ -1574,7 +1574,7 @@ sub init {
 		menu_event  => sub {
 			$_[0]->config->set(
 				'editor_calltips',
-				$_[1]->IsChecked ? 1 : 0,
+				$_[0]->menu->view->{calltips}->IsChecked ? 1 : 0,
 			);
 			$_[0]->config->write;
 		},
@@ -1586,7 +1586,7 @@ sub init {
 		comment     => _T('Highlight the line where the cursor is'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_currentline( $_[1]->IsChecked );
+			$_[0]->editor_currentline( $_[0]->menu->view->{currentline}->IsChecked );
 		},
 	);
 
@@ -1596,7 +1596,7 @@ sub init {
 		comment     => _T('Show a vertical line indicating the right margin'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_rightmargin( $_[1]->IsChecked );
+			$_[0]->editor_rightmargin( $_[0]->menu->view->{rightmargin}->IsChecked );
 		},
 	);
 
@@ -1608,7 +1608,7 @@ sub init {
 		comment     => _T('Show/hide the newlines with special character'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_eol( $_[1]->IsChecked );
+			$_[0]->editor_eol( $_[0]->menu->view->{eol}->IsChecked );
 		},
 	);
 
@@ -1618,7 +1618,7 @@ sub init {
 		comment     => _T('Show/hide the tabs and the spaces with special characters'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_whitespace( $_[1]->IsChecked );
+			$_[0]->editor_whitespace( $_[0]->menu->view->{whitespaces}->IsChecked );
 		},
 	);
 
@@ -1628,7 +1628,7 @@ sub init {
 		comment     => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->editor_indentationguides( $_[1]->IsChecked );
+			$_[0]->editor_indentationguides( $_[0]->menu->view->{indentation_guide}->IsChecked );
 		},
 	);
 
@@ -1638,7 +1638,7 @@ sub init {
 		comment     => _T('Wrap long lines'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_word_wrap( $_[1]->IsChecked );
+			$_[0]->on_word_wrap( $_[0]->menu->view->{word_wrap}->IsChecked );
 		},
 	);
 

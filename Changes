@@ -48,9 +48,12 @@ the even version for the release, even during development.
     - Add _ shortcuts in menus. Still to do. Sorry to translators (DOLMEN)
     - Add ... to menus leading to dialogs. Sorry to translators (DOLMEN)
     - Fix blurry app icon on Ubuntu with Unity desktop (DOLMEN)
+    - Fixed failing thread test (SEWI)
     - Added feature_devel_traceuse (disabled by default) which makes Padre
       run scripts with -d:TraceUse=<feature_devel_traceuse_options>
       to show the modules that your program loads recursively (AZAWAWI)
+    - Checked menu actions may be called form other events but the menu
+      event (SEWI)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
