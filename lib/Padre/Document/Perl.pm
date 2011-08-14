@@ -356,7 +356,10 @@ sub get_command {
 	my @commands = (qq{"$perl"});
 	push @commands, '-d'                          if $debug;
 	push @commands, '-Mdiagnostics(-traceonly)'   if $trace;
-	push @commands, '-MDevel::EndStats=verbose,1' if Padre::Feature::DEVEL_ENDSTATS;
+	if(Padre::Feature::DEVEL_ENDSTATS) {
+		my $devel_endstats_options = $config->feature_devel_endstats_options;
+		push @commands, '-MDevel::EndStats'. ($devel_endstats_options ne '' ? "=$devel_endstats_options" : '');
+	}
 	if(Padre::Feature::DEVEL_TRACEUSE) {
 		my $devel_traceuse_options = $config->feature_devel_traceuse_options;
 		push @commands, '-d:TraceUse'. ($devel_traceuse_options ne '' ? "=$devel_traceuse_options" : '');

@@ -1359,6 +1359,15 @@ setting(
 		. _T('This requires an installed Devel::EndStats and a Padre restart'),
 );
 
+# Specify Devel::EndStats options for experimental Run with Devel::EndStats support
+setting(
+	name    => 'feature_devel_endstats_options',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'verbose,1',
+	help    => _T(q{Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled.}),
+);
+
 # Enable experimental Run with Devel::TraceUse support.
 setting(
 	name    => 'feature_devel_traceuse',
