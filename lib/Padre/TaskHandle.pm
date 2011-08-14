@@ -379,7 +379,7 @@ sub dequeue_nb {
 
 	# Pull off the queue, non-blocking
 	my $queue = $self->queue or return 0;
-	foreach my $message ( $queue->dequeue ) {
+	foreach my $message ( $queue->dequeue_nb ) {
 		if ( $message->[0] eq 'cancel' ) {
 			$self->{cancel} = 1;
 			next;

@@ -120,12 +120,11 @@ sub new {
 			unless ( Params::Util::_IDENTIFIER( $self->{on_finish} ) ) {
 				die "Task 'on_finish' must be a method name";
 			}
+			my $method = $self->on_finish;
+			unless ( $self->{owner}->can($method) ) {
+				die "Task on_finish '$method' is not implemented";
+			}
 		}
-		my $method = $self->on_finish;
-		unless ( $self->{owner}->can($method) ) {
-			die "Task on_finish '$method' is not implemented";
-		}
-
 		# Save the numeric identifier of our owner
 		$self->{owner} = $self->{owner}->task_revision;
 	}
