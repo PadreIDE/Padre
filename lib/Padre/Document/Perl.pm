@@ -14,6 +14,7 @@ use Padre::Perl       ();
 use Padre::Document   ();
 use Padre::File       ();
 use Padre::Role::Task ();
+use Padre::Feature    ();
 use Padre::Logger;
 
 our $VERSION = '0.89';
@@ -355,9 +356,11 @@ sub get_command {
 	my @commands = (qq{"$perl"});
 	push @commands, '-d'                          if $debug;
 	push @commands, '-Mdiagnostics(-traceonly)'   if $trace;
-	push @commands, '-MDevel::EndStats=verbose,1' if $config->feature_devel_endstats;
-	my $devel_traceuse_options = $config->feature_devel_traceuse_options;
-	push @commands, '-d:TraceUse'. ($devel_traceuse_options ne '' ? "=$devel_traceuse_options" : '') if $config->feature_devel_traceuse;
+	push @commands, '-MDevel::EndStats=verbose,1' if Padre::Feature::DEVEL_ENDSTATS;
+	if(Padre::Feature::DEVEL_TRACEUSE) {
+		my $devel_traceuse_options = $config->feature_devel_traceuse_options;
+		push @commands, '-d:TraceUse'. ($devel_traceuse_options ne '' ? "=$devel_traceuse_options" : '');
+	}
 	push @commands, "$run_args{interpreter}";
 	if (Padre::Constant::WIN32) {
 		push @commands, qq{"$shortname"$script_args};
