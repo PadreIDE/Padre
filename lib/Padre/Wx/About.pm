@@ -351,7 +351,8 @@ sub _content_info {
 	# How many threads are running
 	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : 'disabled';
 
-	my $alien = Wx::wxVERSION();
+	eval { require Alien::wxWidgets };
+	my $alien = $Alien::wxWidgets::VERSION;
 
 	my $wx_scintilla_html = '';
 	if ( Padre::Config::wx_scintilla_ready() ) {
