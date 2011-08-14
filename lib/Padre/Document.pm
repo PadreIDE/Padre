@@ -726,7 +726,7 @@ sub autoclean {
 
 sub save_file {
 	my $self    = shift;
-	my $current = shift;
+	my $current = $self->current;
 	my $manager = $current->ide->plugin_manager;
 	unless ( $manager->hook('before_save', $self) ) {
 		return;
