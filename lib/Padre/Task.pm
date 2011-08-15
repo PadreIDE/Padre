@@ -6,6 +6,57 @@ package Padre::Task;
 
 Padre::Task - Padre Task API 2.0
 
+=head1 SYNOPSIS
+
+  # Fire a task that will communicate back to an owner object
+  My::Task->new( 
+      owner      => $padre_role_task_object,
+      on_message => 'owner_message_method',
+      on_finish  => 'owner_finish_method',
+      my_param1  => 123,
+      my_param2  => 'abc',
+  )->schedule;
+  
+  
+  
+  package My::Task;
+  
+  sub new {
+      my $class = shift;
+      my $self  = $class->SUPER::new(@_);
+  
+      # Check params and validate the task
+  
+      return $self;
+  }
+  
+  sub prepare {
+      my $self = shift;
+  
+      # Run after scheduling immediately before serialised to a worker
+
+      return 0 if $self->my_last_second_abort_check;
+      return 1; # Continue and run
+  }
+  
+  sub run {
+      my $self = shift;
+  
+      # Called in child, do the work here
+  
+      return 1;
+  }
+  
+  sub finish {
+      my $self = shift;
+  
+      # Called in parent after successful completion
+  
+      return 1;
+  }
+  
+  1;
+
 =head1 DESCRIPTION
 
 The Padre Task API implements support for background and parallel
@@ -84,7 +135,20 @@ be available automatically in the parent.
 
 =head3 4. Cleanup
 
-TO BE COMPLETED
+When the execution phase of the task is completed, the task object will be
+serialised for transport back up to the parent thread.
+
+On arrival, the instance of the task in the parent will be gutted and its
+contents replaced with the contents of the version arriving from the child
+thread.
+
+Once this is complete, the task object will fire a "finish" handler allowing
+it to take action in the parent thread based on the work done in the child.
+
+This can include having the task contact any "owner" object that had
+commissioned the task in the first place.
+
+=head1 METHODS
 
 =cut
 
@@ -100,9 +164,61 @@ use Padre::Role::Task ();
 our $VERSION    = '0.89';
 our $COMPATIBLE = '0.65';
 
+=pod
+
+=head2 new
+
+  My::Task->new( 
+      owner      => $padre_role_task_object,
+      on_message => 'owner_message_method',
+      on_finish  => 'owner_finish_method',
+      my_param1  => 123,
+      my_param2  => 'abc',
+  );
+
+The C<new> method creates a new "task", a self-contained object that represents
+a unit of work to be done in the background (although not required to be done
+in the background).
+
+In addition to defining a set of method for you to provide as the task
+implementer, the base class also provides implements a "task ownership" system
+in the base class that you may use for nearly no cost in terms of code.
+
+This task owner system will consume three paramters.
+
+The optional C<owner> parameter should be an object that inherits from the role
+L<Padre::Role::Task>. Message and finish events for this task will be forwarded
+on to handlers on the owner, if they are defined.
+
+The optional C<on_message> parameter should be the name of a method that can be
+called on the owner object, to be called when a message arrives from the child
+object during its execution.
+
+The required (if C<owner> was provided) C<on_finish> parameter should be the
+name of a method that can be called on the owner object, to be called when the
+task has completed and returns to the parent from the child object.
+
+When implementing your own task, you should always call the C<SUPER::new>
+method first, to ensure that integration with the task owner system is done.
+
+You can then check any other parameters, capture additional information from
+the IDE, and validate that the task is correctly requested and should go ahead.
+
+The creation of a task object does NOT imply that it will be executed, merely
+that the require for work to be done is validly formed. A task object may never
+execute, or may only execute significantly later than it was created.
+
+Anything that the task needs to do once it is certain that the task will be
+run should be done in the C<prepare> method (see below).
+
+Returns a new task object if the request is valid, or throws an exception if
+the request is invalid.
+
+=cut
+
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless {@_}, $class;
 
 	if ( exists $self->{owner} ) {
 
@@ -125,11 +241,57 @@ sub new {
 				die "Task on_finish '$method' is not implemented";
 			}
 		}
+
 		# Save the numeric identifier of our owner
 		$self->{owner} = $self->{owner}->task_revision;
 	}
 
 	return $self;
+}
+
+=pod
+
+=head2 owner
+
+The C<owner> method returns the owner object for the task, if one was defined
+and the owner still exists and considers the answer for the task to be relevant.
+
+Returns C<undef> if the task was not created with an owner.
+
+Returns C<undef> if the owner object has been destroyed since a task was made.
+
+Returns C<undef> if the owner has abandoned this task since it was made.
+
+=cut
+
+sub owner {
+	Padre::Role::Task->task_owner( $_[0]->{owner} );
+}
+
+=pod
+
+=head2 on_message
+
+The C<on_message> accessor returns the name of the owner's message handler
+method, if one was defined.
+
+=cut
+
+sub on_message {
+	$_[0]->{on_message};
+}
+
+=pod
+
+=head2 on_finish
+
+The C<on_finish> accessor returns the name of the owner's finish handler
+method, if one was defined.
+
+=cut
+
+sub on_finish {
+	$_[0]->{on_finish} || 'task_finish';
 }
 
 sub handle {
@@ -140,17 +302,6 @@ sub running {
 	defined $_[0]->{handle};
 }
 
-sub owner {
-	Padre::Role::Task->task_owner( $_[0]->{owner} );
-}
-
-sub on_message {
-	$_[0]->{on_message};
-}
-
-sub on_finish {
-	$_[0]->{on_finish} || 'task_finish';
-}
 
 
 
@@ -159,12 +310,40 @@ sub on_finish {
 ######################################################################
 # Serialization - Based on Process::Serializable and Process::Storable
 
-# my $string = $task->as_string;
+=pod
+
+=head2 as_string
+
+The C<as_string> method is used to serialise the task into a string for
+transmission between the parent and the child (in both directions).
+
+By default your task will be serialised using L<Storable>'s C<nfreeze> method,
+which is suitable for transmission between threads or processes running the
+same instance of Perl with the same module search path.
+
+This should be sufficient in most situations.
+
+=cut
+
 sub as_string {
 	Storable::nfreeze( $_[0] );
 }
 
-# my $task = Class::Name->from_string($string);
+=pod
+
+=head2 from_string
+
+The C<from_string> method is used to deserialise the task from a string after
+transmission between the parent and the child (in both directions).
+
+By default your task will be deserialised using L<Storable>'s C<thaw> method,
+which is suitable for transmission between threads or processes running the
+same instance of Perl with the same module search path.
+
+This should be sufficient in most situations.
+
+=cut
+
 sub from_string {
 	my $class = shift;
 	my $self  = Storable::thaw( $_[0] );
@@ -184,25 +363,100 @@ sub from_string {
 ######################################################################
 # Task API - Based on Process.pm
 
-# Send the task to the task manager to be executed
+=pod
+
+=head2 schedule
+
+  $task->schedule;
+
+The C<schedule> method is used to trigger the sending of the task to a worker
+for processing at whatever time the Task Manager deems it appropriate.
+
+This could be immediately, with the task sent before the call returns, or it
+may be delayed indefinately or never run at all.
+
+Returns true if the task was dispatched immediately.
+
+Returns false if the task was queued for later dispatch.
+
+=cut
+
 sub schedule {
 	Padre::Current->ide->task_manager->schedule(@_);
 }
 
-# Called in the parent thread immediately before being passed
-# to the worker thread. This method should compensate for
-# potential time difference between when C<new> is original
-# called, and when the Task is actually run.
-# Returns true if the task should continue and be run.
-# Returns false if the task is irrelevant and should be aborted.
+=pod
+
+=head2 prepare
+
+The optional C<prepare> method will be called by the task manager on your task
+object while still in the parent thread, immediately before being serialised to
+pass to the worker thread.
+
+This method should be used to compensate for the potential time difference
+between when C<new> is oridinally called and when the task will actually be run.
+
+For example, a GUI element may indicate the need to run a background task on
+the visible document but does not care that it is the literally "current"
+document at the time the task was spawned.
+
+By capturing the contents of the current document during C<prepare> rather than
+C<new> the task object is able to apply the task to the most up to date
+information at the time we are able to do the work, rather than at the time
+we know we need to do the work.
+
+The C<prepare> method can take a relatively heavy parameter such as a
+reference to a Wx element, and flatten it to the widget ID or contents of the
+widget instead.
+
+The C<prepare> method also gives your task object a chance to determine whether
+or not it is still necesary. In some situations the delay between C<new> and
+C<prepare> may be long enough that the task is no longer relevant, and so by
+the use of C<prepare> you can indicate execution should be aborted.
+
+Returns true if the task is stil valid, and so the task should be executed.
+
+Returns false if the task is no longer valid, and the task should be aborted.
+
+=cut
+
 sub prepare {
 	return 1;
 }
 
-# Called in the worker thread, and should continue the main body
-# of code that needs to run in the background.
-# Variables saved to the object in the C<prepare> method will be
-# available in the C<run> method.
+=pod
+
+=head2 run
+
+The C<run> method is called on the object in the worker thread immediately
+after deserialisation. It is where the actual computations and work for the
+task occurs.
+
+In many situations the implementation of run is simple and procedural, doing
+work based on input parameters stored on the object, blocking if necesary,
+and storing the results of the computation on the object for transmission
+back to the parent thread.
+
+In more complex scenarios, you may wish to do a series of tasks or a recursive
+set of tasks in a loop with a check on the C<cancel> method periodically to
+allow the aborting of the task if requested by the parent.
+
+In even more advanced situations, you may embed and launch an entire event loop
+such as L<POE> or L<AnyEvent> inside the C<run> method so that long running or
+complex functionality can be run in the background.
+
+Once inside of C<run> your task is in complete control and the task manager
+cannot interupt the execution of your code short of killing the thread
+entirely. The standard C<cancel> method to check for a request from the parent
+to abort your task is cooperative and entirely voluntary.
+
+Returns true if the computation was completed successfully.
+
+Returns false if the computation was not completed successfully, and so the
+parent should not run any post-task logic.
+
+=cut
+
 sub run {
 	my $self = shift;
 
@@ -215,17 +469,29 @@ sub run {
 	return 1;
 }
 
-# Called in the parent thread immediately after the task has
-# completed and been passed back to the parent.
-# Variables saved to the object in the C<run> method will be
-# available in the C<finish> method.
-# The object may be destroyed at any time after this method
-# has been completed.
+=pod
+
+=head2 finish
+
+The C<finish> method is called on the object in the parent thread once it has
+been passed back up to the parent, if C<run> completed successfully.
+
+It is responsible for cleaning up the task and taking any actions based on the
+result of the computation.
+
+If your task is fire-and-forget or void and you don't care about when the
+task completes, you do not need to implement this method.
+
+The default implementation of C<finish> implements redirection to the
+C<on_finish> handler of the task owner object, if one has been defined.
+
+=cut
+
 sub finish {
 	my $self = shift;
 
 	if ( $self->{owner} ) {
-		my $owner = $self->owner or return;
+		my $owner  = $self->owner or return;
 		my $method = $self->on_finish;
 		$owner->$method($self);
 	}
@@ -240,15 +506,37 @@ sub finish {
 ######################################################################
 # Birectional Communication
 
+=pod
+
+=head2 cancel
+
+  sub run {
+      my $self = shift;
+  
+      # Abort a long task if we are no longer wanted
+      foreach my $thing ( @{$self->{lots_of_stuff}} ) {
+          return if $self->cancel;
+  
+          # Do something expensive
+      }
+  
+      return 1;
+  }
+
+The C<cancel> method can be used in the worker thread by your task during the
+execution of C<run>.
+
+=cut
+
+sub cancel {
+	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
+}
+
 # Send a message to the child (if running) if called in the parent.
 # Send a message to the parent if called in the child.
 sub message {
 	return unless defined $_[0]->{handle};
 	return shift->{handle}->message(@_);
-}
-
-sub cancel {
-	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
 }
 
 sub dequeue {
