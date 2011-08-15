@@ -180,7 +180,7 @@ sub run {
 	# calls to system() or qx() won't spawn visible command line windows.
 	if (Padre::Constant::WIN32) {
 		require Win32;
-		Win32::SetChildShowWindow(Win32::SW_HIDE);
+		Win32::SetChildShowWindow( Win32::SW_HIDE() );
 	}
 
 	# Allow scripts to detect that they are being executed within Padre
