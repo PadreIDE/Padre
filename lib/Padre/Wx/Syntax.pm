@@ -328,8 +328,8 @@ sub render {
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
 
-	# Clear all indicators. 0xE0 is the mask for all indicators
-	$editor->StartStyling( 0, 0xE0 );
+	# Clear all indicators
+	$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
 	$editor->SetStyling( $editor->GetTextLength - 1, 0 );
 
 	# Flush old results
@@ -383,7 +383,7 @@ sub render {
 		my $end    = $editor->GetLineEndPosition($line);
 
 		# Change only the indicators (3 bits)
-		$editor->StartStyling( $indent, 0xE0 );
+		$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
 		$editor->SetStyling( $end - $indent, $is_warning ? 0x40 : 0x80 );
 
 		my $item = $self->{tree}->AppendItem(
