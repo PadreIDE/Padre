@@ -114,7 +114,7 @@ sub run {
 			if ( $object->name =~ $filter ) {
 
 				# Send the matching file to the parent thread
-				$self->handle->message( OWNER => $object );
+				$self->message( OWNER => $object );
 			}
 			next;
 		}

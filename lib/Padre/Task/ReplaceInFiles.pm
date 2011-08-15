@@ -164,7 +164,7 @@ sub run {
 			next unless @lines;
 
 			# Found results, inform our owner
-			$self->handle->message( OWNER => $object, @lines );
+			$self->message( OWNER => $object, @lines );
 		}
 		unshift @queue, @children;
 	}

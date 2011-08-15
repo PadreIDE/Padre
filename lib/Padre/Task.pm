@@ -240,6 +240,13 @@ sub finish {
 ######################################################################
 # Birectional Communication
 
+# Send a message to the child (if running) if called in the parent.
+# Send a message to the parent if called in the child.
+sub message {
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->message(@_);
+}
+
 sub cancel {
 	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
 }
