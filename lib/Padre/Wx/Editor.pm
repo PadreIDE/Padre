@@ -327,7 +327,7 @@ sub on_char {
 # Called on any change to text.
 # NOTE: This gets called twice for every change, it may be a bug.
 sub on_change {
-	$_[0]->dwell_start( 'on_change_dwell', 500 );
+	$_[0]->dwell_start( 'on_change_dwell', $_[0]->config->editor_dwell );
 }
 
 # Fires half a second after the user stops typing or otherwise stops changing

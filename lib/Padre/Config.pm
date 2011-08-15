@@ -946,6 +946,12 @@ setting(
 	default => 500,                     # milliseconds
 );
 setting(
+	name    => 'editor_dwell',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HUMAN,
+	default => 500,
+);
+setting(
 	name    => 'find_case',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
