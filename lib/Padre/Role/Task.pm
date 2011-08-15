@@ -81,7 +81,7 @@ will need to be interacted with over time.
   
       # In this example our task sends an empty message to indicate "started"
       unless ( @_ ) {
-          $self->{service} = $task;
+          $self->{my_service} = $task;
           return;
       }
   
