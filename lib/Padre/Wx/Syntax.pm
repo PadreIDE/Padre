@@ -386,9 +386,9 @@ sub render {
 		my $indent = $editor->GetLineIndentPosition($line);
 		my $end    = $editor->GetLineEndPosition($line);
 
-		# Change only the indicators (3 bits)
+		# Change only the indicators
 		$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
-		$editor->SetStyling( $end - $indent, $is_warning ? 0x40 : 0x80 );
+		$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
 
 		my $item = $self->{tree}->AppendItem(
 			$root,
