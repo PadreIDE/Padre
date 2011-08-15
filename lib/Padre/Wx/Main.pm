@@ -701,6 +701,7 @@ sub syntax {
 }
 
 BEGIN {
+	no warnings 'once';
 	*debugger = sub {
 		my $self = shift;
 		unless ( defined $self->{debug} ) {
@@ -2192,6 +2193,7 @@ sub _show_outline {
 =cut
 
 BEGIN {
+	no warnings 'once';
 	*show_debug = sub {
 		my $self = shift;
 		my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
@@ -5605,6 +5607,7 @@ No return value.
 =cut
 
 BEGIN {
+	no warnings 'once';
 	*editor_folding = sub {
 		my $self = shift;
 		my $show = $_[0] ? 1 : 0;
