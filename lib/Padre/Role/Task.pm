@@ -91,7 +91,14 @@ sub task_request {
 
 	# Create and start the task with ourself as the owner
 	TRACE("Creating and scheduling task $class") if DEBUG;
-	$class->new( owner => $self, %param )->schedule;
+	my $task_instance = $class->new( owner => $self, %param );
+	
+	# Hand back the scheduled task object if successful
+	if ($task_instance->schedule) {
+		return $task_instance;
+	} else {
+		return;
+	}
 }
 
 # By default explode to highlight task requesters that
