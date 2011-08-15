@@ -18,6 +18,11 @@ use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
 use constant MAC => !!( $^O eq 'darwin' );
 use constant UNIX => !( WIN32 or MAC );
 
+# Ensure the Win32 constants are available if on Windows
+BEGIN {
+	require Win32 if WIN32;
+}
+
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
 # 2. Mac OS X Native
