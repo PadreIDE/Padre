@@ -270,6 +270,7 @@ sub run {
 	$self->{inbox} = [];
 
 	# Create a circular reference back from the task
+	# HACK: This is pretty damned evil, find a better way
 	$task->{handle} = $self;
 
 	# Call the task's run method
