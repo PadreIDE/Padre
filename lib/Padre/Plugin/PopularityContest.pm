@@ -195,7 +195,7 @@ sub plugin_disable {
 	# Make sure our task class is unloaded
 	$self->unload('Padre::Plugin::PopularityContext::Ping');
 
-	$self->SUPER::plugin_disable;
+	return 1;
 }
 
 sub menu_plugins_simple {

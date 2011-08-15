@@ -58,6 +58,12 @@ sub plugin_disable {
 		$self->config_write( { foo => 1 } );
 	}
 
+	# Unload our dialog classes
+	$self->unload( qw{
+		Padre::Wx::Dialog::Expression
+		Padre::Wx::FBP::Expression
+	} );
+
 	return 1;
 }
 
