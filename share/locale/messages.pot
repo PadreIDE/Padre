@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 08:10-0700\n"
+"POT-Creation-Date: 2011-08-15 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:108
+#: lib/Padre/Plugin/Devel.pm:109
 msgid "&About"
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 msgid "&Key Bindings..."
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:89
+#: lib/Padre/Plugin/Devel.pm:90
 msgid "&Load All Padre Modules"
 msgstr ""
 
@@ -396,7 +396,7 @@ msgstr ""
 msgid "&Run"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:99
+#: lib/Padre/Plugin/Devel.pm:100
 msgid "&STC Reference"
 msgstr ""
 
@@ -477,7 +477,7 @@ msgstr ""
 msgid "&Window"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:96
+#: lib/Padre/Plugin/Devel.pm:97
 #, perl-format
 msgid "&wxWidgets %s Reference"
 msgstr ""
@@ -532,7 +532,7 @@ msgstr ""
 msgid "A new empty file"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:305
+#: lib/Padre/Plugin/Devel.pm:317
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 
@@ -1600,7 +1600,7 @@ msgstr ""
 msgid "Dump %&INC and @INC"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:78
+#: lib/Padre/Plugin/Devel.pm:78 lib/Padre/Plugin/Devel.pm:87
 msgid "Dump &Expression..."
 msgstr ""
 
@@ -1867,7 +1867,7 @@ msgstr ""
 msgid "Error while loading %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:262
+#: lib/Padre/Plugin/Devel.pm:274
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
@@ -1892,7 +1892,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6014 lib/Padre/Plugin/Devel.pm:348
+#: lib/Padre/Wx/Main.pm:6014 lib/Padre/Plugin/Devel.pm:360
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1909,7 +1909,7 @@ msgstr ""
 msgid "Escape characters"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Expression.pm:45
+#: lib/Padre/Wx/FBP/Expression.pm:62
 msgid "Evaluate"
 msgstr ""
 
@@ -1956,7 +1956,7 @@ msgstr ""
 msgid "Expr"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:126 lib/Padre/Plugin/Devel.pm:127
+#: lib/Padre/Plugin/Devel.pm:127 lib/Padre/Plugin/Devel.pm:128
 msgid "Expression"
 msgstr ""
 
@@ -2298,7 +2298,7 @@ msgstr ""
 msgid "Found %s help topic(s)\n"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:325
+#: lib/Padre/Plugin/Devel.pm:337
 #, perl-format
 msgid "Found %s unloaded modules"
 msgstr ""
@@ -2684,7 +2684,7 @@ msgstr ""
 msgid "Live Support"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:337
+#: lib/Padre/Plugin/Devel.pm:349
 #, perl-format
 msgid "Loaded %s modules"
 msgstr ""
@@ -2959,7 +2959,7 @@ msgstr ""
 msgid "No Help found"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:176
+#: lib/Padre/Plugin/Devel.pm:188
 msgid "No Perl 5 file is open"
 msgstr ""
 
@@ -2993,7 +2993,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6208 lib/Padre/Plugin/Devel.pm:155
+#: lib/Padre/Wx/Main.pm:6208 lib/Padre/Plugin/Devel.pm:167
 msgid "No file is open"
 msgstr ""
 
@@ -4672,15 +4672,15 @@ msgstr ""
 msgid "Showing the splash image during start-up"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:92
+#: lib/Padre/Plugin/Devel.pm:93
 msgid "Simulate &Background Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:90
+#: lib/Padre/Plugin/Devel.pm:91
 msgid "Simulate &Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:91
+#: lib/Padre/Plugin/Devel.pm:92
 msgid "Simulate Background &Exception"
 msgstr ""
 
@@ -4819,11 +4819,11 @@ msgstr ""
 msgid "String"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:274
+#: lib/Padre/Plugin/Devel.pm:286
 msgid "Sub-tracing started"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:256
+#: lib/Padre/Plugin/Devel.pm:268
 msgid "Sub-tracing stopped"
 msgstr ""
 
@@ -5383,6 +5383,6 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:102
+#: lib/Padre/Plugin/Devel.pm:103
 msgid "wxPerl &Live Support"
 msgstr ""
