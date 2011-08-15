@@ -255,10 +255,8 @@ sub task_request {
 	# Support a convenience shortcut where a false value
 	# for task means don't run a task at all.
 	my $name   = delete $param{task} or return;
-	my $driver = Params::Util::_DRIVER(
-		delete($param{task}),
-		'Padre::Task',
-	) or die "Invalid task class '$name'";
+	my $driver = Params::Util::_DRIVER($name, 'Padre::Task');
+	die "Invalid task class '$name'" unless $driver;
 
 	# Create and start the task with ourself as the owner
 	TRACE("Creating and scheduling task $driver") if DEBUG;
