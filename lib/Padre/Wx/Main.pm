@@ -2085,14 +2085,14 @@ the panel.
 
 sub show_functions {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_functions' );
-	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
-		$self->menu->view->{functions}->Check($on);
+	unless ( $show == $self->menu->view->{functions}->IsChecked ) {
+		$self->menu->view->{functions}->Check($show);
 	}
 
-	$self->config->set( main_functions => $on );
-	$self->_show_functions($on);
+	$self->config->set( main_functions => $show );
+	$self->_show_functions($show);
 	$self->aui->Update;
 
 	return;
@@ -2121,14 +2121,14 @@ the panel.
 
 sub show_todo {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_todo' );
-	unless ( $on == $self->menu->view->{todo}->IsChecked ) {
-		$self->menu->view->{todo}->Check($on);
+	unless ( $show == $self->menu->view->{todo}->IsChecked ) {
+		$self->menu->view->{todo}->Check($show);
 	}
 
-	$self->config->set( main_todo => $on );
-	$self->_show_todo($on);
+	$self->config->set( main_todo => $show );
+	$self->_show_todo($show);
 	$self->aui->Update;
 
 	return;
@@ -2160,14 +2160,14 @@ the panel.
 
 sub show_outline {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_outline' );
-	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
-		$self->menu->view->{outline}->Check($on);
+	unless ( $show == $self->menu->view->{outline}->IsChecked ) {
+		$self->menu->view->{outline}->Check($show);
 	}
 
-	$self->config->set( main_outline => $on );
-	$self->_show_outline($on);
+	$self->config->set( main_outline => $show );
+	$self->_show_outline($show);
 	$self->aui->Update;
 
 	return;
@@ -2196,9 +2196,9 @@ BEGIN {
 	no warnings 'once';
 	*show_debug = sub {
 		my $self = shift;
-		my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+		my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 		my $lock = $self->lock('UPDATE');
-		$self->_show_debug($on);
+		$self->_show_debug($show);
 		$self->aui->Update;
 		return;
 		}
@@ -2233,14 +2233,14 @@ the panel.
 
 sub show_directory {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_directory' );
-	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
-		$self->menu->view->{directory}->Check($on);
+	unless ( $show == $self->menu->view->{directory}->IsChecked ) {
+		$self->menu->view->{directory}->Check($show);
 	}
 
-	$self->config->set( main_directory => $on );
-	$self->_show_directory($on);
+	$self->config->set( main_directory => $show );
+	$self->_show_directory($show);
 	$self->aui->Update;
 
 	return;
@@ -2271,14 +2271,14 @@ the panel.
 
 sub show_output {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
-	unless ( $on == $self->menu->view->{output}->IsChecked ) {
-		$self->menu->view->{output}->Check($on);
+	unless ( $show == $self->menu->view->{output}->IsChecked ) {
+		$self->menu->view->{output}->Check($show);
 	}
 
-	$self->config->set( main_output => $on );
-	$self->_show_output($on);
+	$self->config->set( main_output => $show );
+	$self->_show_output($show);
 	$self->aui->Update;
 
 	return;
@@ -2309,7 +2309,7 @@ to show the panel.
 
 sub show_findfast {
 	my $self = shift;
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	return;
 }
 
@@ -2327,9 +2327,9 @@ to show the panel.
 
 sub show_findinfiles {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock('UPDATE');
-	$self->_show_findinfiles($on);
+	$self->_show_findinfiles($show);
 	$self->aui->Update;
 	return;
 }
@@ -2359,9 +2359,9 @@ to show the panel.
 
 sub show_replaceinfiles {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock('UPDATE');
-	$self->_show_replaceinfiles($on);
+	$self->_show_replaceinfiles($show);
 	$self->aui->Update;
 	return;
 }
@@ -2391,14 +2391,14 @@ the panel.
 
 sub show_command_line {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
-	unless ( $on == $self->menu->view->{command_line}->IsChecked ) {
-		$self->menu->view->{command_line}->Check($on);
+	unless ( $show == $self->menu->view->{command_line}->IsChecked ) {
+		$self->menu->view->{command_line}->Check($show);
 	}
 
-	$self->config->set( main_command_line => $on );
-	$self->_show_command_line($on);
+	$self->config->set( main_command_line => $show );
+	$self->_show_command_line($show);
 	$self->aui->Update;
 
 	return;
@@ -2430,14 +2430,14 @@ the panel.
 
 sub show_syntaxcheck {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_syntaxcheck' );
-	unless ( $on == $self->menu->view->{syntaxcheck}->IsChecked ) {
-		$self->menu->view->{syntaxcheck}->Check($on);
+	unless ( $show == $self->menu->view->{syntaxcheck}->IsChecked ) {
+		$self->menu->view->{syntaxcheck}->Check($show);
 	}
 
-	$self->config->set( main_syntaxcheck => $on );
-	$self->_show_syntaxcheck($on);
+	$self->config->set( main_syntaxcheck => $show );
+	$self->_show_syntaxcheck($show);
 	$self->aui->Update;
 
 	return;
@@ -5479,13 +5479,15 @@ positive or negative.
 =cut
 
 sub zoom {
-	my ( $self, $factor ) = @_;
+	my $self = shift;
 	my $page = $self->current->editor or return;
+	my $zoom = $page->GetZoom + shift;
 
-	my $zoom = $page->GetZoom + $factor;
 	foreach my $page ( $self->editors ) {
 		$page->SetZoom($zoom);
 	}
+
+	return 1;
 }
 
 
@@ -5777,13 +5779,13 @@ Toggle word wrapping for current document. No return value.
 
 sub on_word_wrap {
 	my $self = shift;
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->view->{word_wrap}->IsChecked ) {
-		$self->menu->view->{word_wrap}->Check($on);
+	my $show = @_ ? $_[0] ? 1 : 0 : 1;
+	unless ( $show == $self->menu->view->{word_wrap}->IsChecked ) {
+		$self->menu->view->{word_wrap}->Check($show);
 	}
 
 	my $doc = $self->current->document or return;
-	my $mode = $on ? Wx::wxSTC_WRAP_WORD : Wx::wxSTC_WRAP_NONE;
+	my $mode = $show ? Wx::wxSTC_WRAP_WORD : Wx::wxSTC_WRAP_NONE;
 	$doc->editor->SetWrapMode($mode);
 }
 
