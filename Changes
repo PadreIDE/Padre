@@ -15,7 +15,7 @@ the even version for the release, even during development.
 
 0.90 TBA
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)
-    - Add solarize theme contributed by 'sugar' on irc (BRAMBLE)
+    - Add solarize theme contributed by Anton Ukolov ('sugar' on irc) (BRAMBLE)
     - Improved fast find text entry colours #1290 (BRAMBLE)
     - Improved preferences colours for 'dark' themed desktops #1290 (BRAMBLE)
     - Added feature_devel_endstats (disabled by default) which makes Padre
