@@ -246,6 +246,14 @@ sub on_set_focus {
 			$self->Colourise( 0, $self->GetLength );
 		}
 		$self->needs_manual_colorize(0);
+	} else {
+		# Even if we don't need a full manual colourise, when we use the
+		# default Scintilla lexer do a tiny one to nudge any outstanding
+		# bits of the document to be colourised.
+		my $lexer = $self->GetLexer;
+		unless ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
+			$self->Colourise( 0, 1 );
+		}
 	}
 
 	# Keep processing
