@@ -368,7 +368,7 @@ sub colourize {
 	my $lexer  = $self->lexer;
 	my $editor = $self->editor;
 	$editor->SetLexer($lexer);
-	TRACE("coloUrize called") if DEBUG;
+	TRACE("colourize called") if DEBUG;
 
 	$editor->remove_color;
 	if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
