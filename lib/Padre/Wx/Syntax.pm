@@ -332,6 +332,10 @@ sub render {
 	$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
 	$editor->SetStyling( $editor->GetTextLength - 1, 0 );
 
+	# NOTE: Recolor the document to make sure we do not accidentally
+	# remove syntax highlighting while syntax checking
+	$document->colourize;
+
 	# Flush old results
 	$self->clear;
 
