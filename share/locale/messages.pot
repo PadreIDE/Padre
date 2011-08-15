@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-14 08:10-0700\n"
+"POT-Creation-Date: 2011-08-14 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:102
+#: lib/Padre/Plugin/Devel.pm:108
 msgid "&About"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgstr ""
 msgid "&Document Statistics"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:71
+#: lib/Padre/Plugin/Devel.pm:77
 msgid "&Dump"
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 msgid "&Key Bindings..."
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:83
+#: lib/Padre/Plugin/Devel.pm:89
 msgid "&Load All Padre Modules"
 msgstr ""
 
@@ -396,7 +396,7 @@ msgstr ""
 msgid "&Run"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:93
+#: lib/Padre/Plugin/Devel.pm:99
 msgid "&STC Reference"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgstr ""
 msgid "&Show error message"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:79
+#: lib/Padre/Plugin/Devel.pm:85
 msgid "&Start/Stop sub trace"
 msgstr ""
 
@@ -477,7 +477,7 @@ msgstr ""
 msgid "&Window"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:90
+#: lib/Padre/Plugin/Devel.pm:96
 #, perl-format
 msgid "&wxWidgets %s Reference"
 msgstr ""
@@ -532,7 +532,7 @@ msgstr ""
 msgid "A new empty file"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:299
+#: lib/Padre/Plugin/Devel.pm:305
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 
@@ -1596,31 +1596,31 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:77
+#: lib/Padre/Plugin/Devel.pm:83
 msgid "Dump %&INC and @INC"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:72
+#: lib/Padre/Plugin/Devel.pm:78
 msgid "Dump &Expression..."
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:74
+#: lib/Padre/Plugin/Devel.pm:80
 msgid "Dump &Task Manager"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:73
+#: lib/Padre/Plugin/Devel.pm:79
 msgid "Dump Current &Document"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:76
+#: lib/Padre/Plugin/Devel.pm:82
 msgid "Dump Current &PPI Tree"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:78
+#: lib/Padre/Plugin/Devel.pm:84
 msgid "Dump Display &Geometry"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:75
+#: lib/Padre/Plugin/Devel.pm:81
 msgid "Dump Top &IDE Object"
 msgstr ""
 
@@ -1787,7 +1787,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:814
+#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:822
 #: lib/Padre/Wx/Main.pm:4907 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
@@ -1867,7 +1867,7 @@ msgstr ""
 msgid "Error while loading %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:256
+#: lib/Padre/Plugin/Devel.pm:262
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
@@ -1892,7 +1892,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6009 lib/Padre/Plugin/Devel.pm:342
+#: lib/Padre/Wx/Main.pm:6009 lib/Padre/Plugin/Devel.pm:348
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1907,6 +1907,14 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:139
 msgid "Escape characters"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Expression.pm:45
+msgid "Evaluate"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Expression.pm:28
+msgid "Evaluate Expression"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2287
@@ -1948,7 +1956,7 @@ msgstr ""
 msgid "Expr"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:120 lib/Padre/Plugin/Devel.pm:121
+#: lib/Padre/Plugin/Devel.pm:126 lib/Padre/Plugin/Devel.pm:127
 msgid "Expression"
 msgstr ""
 
@@ -2245,7 +2253,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1587
+#: lib/Padre/Wx/Editor.pm:1595
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2290,7 +2298,7 @@ msgstr ""
 msgid "Found %s help topic(s)\n"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:319
+#: lib/Padre/Plugin/Devel.pm:325
 #, perl-format
 msgid "Found %s unloaded modules"
 msgstr ""
@@ -2676,7 +2684,7 @@ msgstr ""
 msgid "Live Support"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:331
+#: lib/Padre/Plugin/Devel.pm:337
 #, perl-format
 msgid "Loaded %s modules"
 msgstr ""
@@ -2951,7 +2959,7 @@ msgstr ""
 msgid "No Help found"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:170
+#: lib/Padre/Plugin/Devel.pm:176
 msgid "No Perl 5 file is open"
 msgstr ""
 
@@ -2985,7 +2993,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6203 lib/Padre/Plugin/Devel.pm:149
+#: lib/Padre/Wx/Main.pm:6203 lib/Padre/Plugin/Devel.pm:155
 msgid "No file is open"
 msgstr ""
 
@@ -4007,7 +4015,7 @@ msgstr ""
 msgid "Run Command"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:67
+#: lib/Padre/Plugin/Devel.pm:73
 msgid "Run Document inside Padre"
 msgstr ""
 
@@ -4019,7 +4027,7 @@ msgstr ""
 msgid "Run Script (Debug Info)"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:68
+#: lib/Padre/Plugin/Devel.pm:74
 msgid "Run Selection inside Padre"
 msgstr ""
 
@@ -4664,15 +4672,15 @@ msgstr ""
 msgid "Showing the splash image during start-up"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:86
+#: lib/Padre/Plugin/Devel.pm:92
 msgid "Simulate &Background Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:84
+#: lib/Padre/Plugin/Devel.pm:90
 msgid "Simulate &Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:85
+#: lib/Padre/Plugin/Devel.pm:91
 msgid "Simulate Background &Exception"
 msgstr ""
 
@@ -4811,11 +4819,11 @@ msgstr ""
 msgid "String"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:268
+#: lib/Padre/Plugin/Devel.pm:274
 msgid "Sub-tracing started"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:250
+#: lib/Padre/Plugin/Devel.pm:256
 msgid "Sub-tracing stopped"
 msgstr ""
 
@@ -5308,7 +5316,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1571
+#: lib/Padre/Wx/Editor.pm:1579
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5375,6 +5383,6 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:96
+#: lib/Padre/Plugin/Devel.pm:102
 msgid "wxPerl &Live Support"
 msgstr ""
