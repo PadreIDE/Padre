@@ -84,6 +84,7 @@ sub menu_plugins_simple {
 			Wx::gettext('Dump Display &Geometry') => 'dump_display',
 			Wx::gettext('&Start/Stop sub trace')  => 'trace_sub_startstop',
 		],
+		Wx::gettext('Dump &Expression...') => 'dump_expression2',
 		'---' => undef,
 
 		Wx::gettext('&Load All Padre Modules')        => 'load_everything',
@@ -133,6 +134,17 @@ sub dump_expression {
 
 	# Evaluate it
 	return $self->_dump_eval($perl);
+}
+
+sub dump_expression2 {
+	my $self = shift;
+	my $main = $self->main;
+
+	# Load and show the expression dialog
+	require Padre::Wx::Dialog::Expression;
+	Padre::Wx::Dialog::Expression->new($main)->ShowModal;
+
+	return;
 }
 
 sub eval_document {

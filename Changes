@@ -59,6 +59,9 @@ the even version for the release, even during development.
     - The editor change dwell time (the time between when you stop typing and
       when tools like function list and syntax update) is now configurable as
       editor_dwell in Advanced Preferences (ADAMK)
+    - Added an Expression Tool to the Developer plugin so you can explore the
+      internals of Padre incrementally instead of having to spawn a new dialog
+      every time (ADAMK)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
