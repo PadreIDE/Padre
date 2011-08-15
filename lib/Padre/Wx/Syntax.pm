@@ -371,14 +371,8 @@ sub render {
 	ISSUE:
 	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @$model ) {
 
-		if ( not exists $issue->{type} ) {
-			require Data::Dumper;
-			TRACE( "Cannot handle issue:\n" . Data::Dumper::Dumper($issue) ) if DEBUG;
-			next ISSUE;
-		}
-
 		my $line       = $issue->{line} - 1;
-		my $type       = $issue->{type};
+		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
 		my $marker     = $MESSAGE{$type}{marker};
 		my $is_warning = $marker == Padre::Wx::MarkWarn();
 		$editor->MarkerAdd( $line, $marker );

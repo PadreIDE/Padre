@@ -55,6 +55,7 @@ the even version for the release, even during development.
       to show the modules that your program loads recursively (AZAWAWI)
     - Checked menu actions may be called form other events but the menu
       event (SEWI)
+    - Stop ignoring syntax checking errors without an actual type (AZAWAWI)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
