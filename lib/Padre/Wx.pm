@@ -22,7 +22,7 @@ use Wx::DND    ();
 use Wx::AUI    ();
 use Wx::Locale ();
 
-our $VERSION    = '0.89';
+our $VERSION    = '0.90';
 our $COMPATIBLE = '0.43';
 
 BEGIN {

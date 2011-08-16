@@ -8,7 +8,7 @@ use warnings;
 use Padre::Wx         ();
 use Padre::Wx::Wizard ();
 
-our $VERSION = '0.89';
+our $VERSION = '0.90';
 
 ######################################################################
 # Wizard Database

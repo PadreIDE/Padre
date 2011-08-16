@@ -9,7 +9,7 @@ use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
-our $VERSION = '0.89';
+our $VERSION = '0.90';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
