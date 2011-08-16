@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use File::Spec      ();
 use Padre::Constant ();
+use Padre::Current  ();
 
 our $VERSION    = '0.89';
 our $COMPATIBLE = '0.81';
@@ -91,10 +92,15 @@ sub documents {
 
 sub config {
 	my $self = shift;
-	unless ( $self->{config} ) {
 
-		# Get the default config object
+	# We only need our own config file if we have a padre.yml file
+	unless ( defined $self->{padre_yml} ) {
 		require Padre::Current;
+		return Padre::Current->config;
+	}
+
+	unless ( $self->{config} ) {
+		# Get the default config object
 		my $config = Padre::Current->config;
 
 		# If we have a padre.yml file create a custom config object
@@ -116,6 +122,7 @@ sub config {
 			);
 		}
 	}
+
 	return $self->{config};
 }
 
