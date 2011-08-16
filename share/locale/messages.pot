@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 20:10-0700\n"
+"POT-Creation-Date: 2011-08-16 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:109
+#: lib/Padre/Plugin/Devel.pm:107
 msgid "&About"
 msgstr ""
 
@@ -170,10 +170,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:554
 msgid "&Document Statistics"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:77
-msgid "&Dump"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:330
@@ -252,7 +248,7 @@ msgstr ""
 msgid "&Key Bindings..."
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:90
+#: lib/Padre/Plugin/Devel.pm:87
 msgid "&Load All Padre Modules"
 msgstr ""
 
@@ -396,7 +392,7 @@ msgstr ""
 msgid "&Run"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:100
+#: lib/Padre/Plugin/Devel.pm:98
 msgid "&STC Reference"
 msgstr ""
 
@@ -433,7 +429,7 @@ msgstr ""
 msgid "&Show error message"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:85
+#: lib/Padre/Plugin/Devel.pm:91
 msgid "&Start/Stop sub trace"
 msgstr ""
 
@@ -477,7 +473,7 @@ msgstr ""
 msgid "&Window"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:97
+#: lib/Padre/Plugin/Devel.pm:95
 #, perl-format
 msgid "&wxWidgets %s Reference"
 msgstr ""
@@ -532,7 +528,7 @@ msgstr ""
 msgid "A new empty file"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:317
+#: lib/Padre/Plugin/Devel.pm:201
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 
@@ -1596,34 +1592,6 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:83
-msgid "Dump %&INC and @INC"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:78 lib/Padre/Plugin/Devel.pm:87
-msgid "Dump &Expression..."
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:80
-msgid "Dump &Task Manager"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:79
-msgid "Dump Current &Document"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:82
-msgid "Dump Current &PPI Tree"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:84
-msgid "Dump Display &Geometry"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:81
-msgid "Dump Top &IDE Object"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:89
 msgid "Dump the Padre object to STDOUT"
 msgstr ""
@@ -1867,7 +1835,7 @@ msgstr ""
 msgid "Error while loading %s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:274
+#: lib/Padre/Plugin/Devel.pm:158
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
@@ -1892,7 +1860,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6014 lib/Padre/Plugin/Devel.pm:360
+#: lib/Padre/Wx/Main.pm:6014 lib/Padre/Plugin/Devel.pm:244
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1909,8 +1877,12 @@ msgstr ""
 msgid "Escape characters"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Expression.pm:62
+#: lib/Padre/Wx/FBP/Expression.pm:71
 msgid "Evaluate"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:78
+msgid "Evaluate &Expression"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Expression.pm:28
@@ -1954,10 +1926,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Debugger.pm:440
 msgid "Expr"
-msgstr ""
-
-#: lib/Padre/Plugin/Devel.pm:127 lib/Padre/Plugin/Devel.pm:128
-msgid "Expression"
 msgstr ""
 
 #: lib/Padre/Wx/Debugger.pm:439
@@ -2298,7 +2266,7 @@ msgstr ""
 msgid "Found %s help topic(s)\n"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:337
+#: lib/Padre/Plugin/Devel.pm:221
 #, perl-format
 msgid "Found %s unloaded modules"
 msgstr ""
@@ -2684,7 +2652,7 @@ msgstr ""
 msgid "Live Support"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:349
+#: lib/Padre/Plugin/Devel.pm:233
 #, perl-format
 msgid "Loaded %s modules"
 msgstr ""
@@ -2864,7 +2832,7 @@ msgstr ""
 msgid "Move POD to __END__"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:166
+#: lib/Padre/Wx/Directory.pm:167
 msgid "Move to other panel"
 msgstr ""
 
@@ -2959,10 +2927,6 @@ msgstr ""
 msgid "No Help found"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:188
-msgid "No Perl 5 file is open"
-msgstr ""
-
 #: lib/Padre/Document/Perl.pm:636
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
@@ -2993,7 +2957,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6208 lib/Padre/Plugin/Devel.pm:167
+#: lib/Padre/Wx/Main.pm:6208
 msgid "No file is open"
 msgstr ""
 
@@ -3626,7 +3590,7 @@ msgstr ""
 msgid "Print the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:295 lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Directory.pm:296 lib/Padre/Wx/Dialog/WindowList.pm:223
 msgid "Project"
 msgstr ""
 
@@ -3765,7 +3729,7 @@ msgstr ""
 msgid "Refactor"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:153
+#: lib/Padre/Wx/Directory.pm:154
 msgid "Refresh"
 msgstr ""
 
@@ -4015,7 +3979,7 @@ msgstr ""
 msgid "Run Command"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:73
+#: lib/Padre/Plugin/Devel.pm:82
 msgid "Run Document inside Padre"
 msgstr ""
 
@@ -4027,7 +3991,7 @@ msgstr ""
 msgid "Run Script (Debug Info)"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:74
+#: lib/Padre/Plugin/Devel.pm:83
 msgid "Run Selection inside Padre"
 msgstr ""
 
@@ -4146,7 +4110,7 @@ msgstr ""
 msgid "Script arguments"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:83 lib/Padre/Wx/Directory.pm:516
+#: lib/Padre/Wx/Directory.pm:84 lib/Padre/Wx/Directory.pm:517
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390 lib/Padre/Wx/Dialog/Find.pm:74
 msgid "Search"
 msgstr ""
@@ -4672,15 +4636,15 @@ msgstr ""
 msgid "Showing the splash image during start-up"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:93
+#: lib/Padre/Plugin/Devel.pm:90
 msgid "Simulate &Background Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:91
+#: lib/Padre/Plugin/Devel.pm:88
 msgid "Simulate &Crash"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:92
+#: lib/Padre/Plugin/Devel.pm:89
 msgid "Simulate Background &Exception"
 msgstr ""
 
@@ -4819,11 +4783,11 @@ msgstr ""
 msgid "String"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:286
+#: lib/Padre/Plugin/Devel.pm:170
 msgid "Sub-tracing started"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:268
+#: lib/Padre/Plugin/Devel.pm:152
 msgid "Sub-tracing stopped"
 msgstr ""
 
@@ -4915,7 +4879,7 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:592
+#: lib/Padre/Wx/Directory.pm:593
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
 "save your work and restart Padre."
@@ -5383,6 +5347,6 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:103
+#: lib/Padre/Plugin/Devel.pm:101
 msgid "wxPerl &Live Support"
 msgstr ""
