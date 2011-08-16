@@ -60,6 +60,13 @@ sub ppi_get {
 	PPI::Document->new( \$text );
 }
 
+sub ppi_dump {
+	my $self = shift;
+	my $ppi  = $self->ppi_get;
+	require PPI::Dumper;
+	PPI::Dumper->new( to => 'return' )->dump($ppi);
+}
+
 sub ppi_set {
 	my $self = shift;
 	my $document = Params::Util::_INSTANCE( shift, 'PPI::Document' );
