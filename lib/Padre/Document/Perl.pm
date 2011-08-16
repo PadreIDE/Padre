@@ -306,7 +306,8 @@ sub stc_word_chars {
 # triggering a "Variable length lookbehind not implemented" error.
 # return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
 sub get_function_regex {
-	return qr/(?:^|[^# \t-])[ \t]*((?:sub|func|method)\s+$_[1]\b|\*$_[1]\s*=\s*(?:sub\b|\\\&))/;
+	my $name = quotemeta $_[1];
+	return qr/(?:^|[^# \t-])[ \t]*((?:sub|func|method)\s+$name\b|\*$name\s*=\s*(?:sub\b|\\\&))/;
 }
 
 =pod
