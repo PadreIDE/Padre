@@ -36,7 +36,7 @@ use Padre::Constant (); ### NO other Padre:: dependencies
 use vars qw{ $VERSION $COMPATIBLE };
 
 BEGIN {
-	$VERSION    = '0.90';
+	$VERSION    = '0.91';
 	$COMPATIBLE = '0.81';
 }
 

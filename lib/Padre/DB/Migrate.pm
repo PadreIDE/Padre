@@ -15,7 +15,7 @@ use DBI 1.58          ();
 use DBD::SQLite 1.21  ();
 use ORLite 1.28       ();
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 our @ISA     = 'ORLite';
 
 sub import {

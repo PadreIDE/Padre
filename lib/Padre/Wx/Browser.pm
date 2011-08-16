@@ -35,7 +35,7 @@ use Padre::Wx::AuiManager ();
 use Padre::Role::Task     ();
 use Padre::Logger;
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Wx::Dialog

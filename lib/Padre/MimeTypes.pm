@@ -25,7 +25,7 @@ use Padre::Util    ('_T');
 use Padre::Wx      ();
 use Padre::DB      ();
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 
 # Binary file extensions, which we don't support loading at all
 my %EXT_BINARY = ();

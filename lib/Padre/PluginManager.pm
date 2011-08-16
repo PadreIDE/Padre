@@ -39,7 +39,7 @@ use Padre::PluginHandle    ();
 use Padre::Wx              ();
 use Padre::Wx::Menu::Tools ();
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 
 
 

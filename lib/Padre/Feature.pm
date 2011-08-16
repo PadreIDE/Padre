@@ -39,7 +39,7 @@ use warnings;
 use constant      ();
 use Padre::Config ();
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 
 my $config = Padre::Config->read;
 
