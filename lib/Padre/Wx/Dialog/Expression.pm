@@ -17,11 +17,7 @@ our @ISA     = 'Padre::Wx::FBP::Expression';
 # Event Handlers
 
 sub on_combobox {
-	my $self  = shift;
-	my $event = shift;
-	$self->run;
-	$self->Refresh;
-	$event->Skip(1);
+	return 1;
 }
 
 sub on_text {

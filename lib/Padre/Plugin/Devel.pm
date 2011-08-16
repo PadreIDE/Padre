@@ -58,6 +58,11 @@ sub plugin_disable {
 		$self->config_write( { foo => 1 } );
 	}
 
+	# Close the introspection tool
+	if ( $self->{expression} ) {
+		delete($self->{expression})->Destroy;
+	}
+
 	# Unload our dialog classes
 	$self->unload( qw{
 		Padre::Wx::Dialog::Expression
@@ -70,7 +75,7 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		Wx::gettext('Dump &Expression...') => 'dump_expression',
+		Wx::gettext('Evaluate &Expression') . '...' => 'expression',
 
 		'---' => undef,
 
@@ -110,13 +115,17 @@ sub menu_plugins_simple {
 #####################################################################
 # Plugin Methods
 
-sub dump_expression {
+sub expression {
 	my $self = shift;
 	my $main = $self->main;
 
-	# Load and show the expression dialog
-	require Padre::Wx::Dialog::Expression;
-	Padre::Wx::Dialog::Expression->new($main)->ShowModal;
+	unless ( $self->{expression} ) {
+		# Load and show the expression dialog
+		require Padre::Wx::Dialog::Expression;
+		$self->{expression} = Padre::Wx::Dialog::Expression->new($main);
+	}
+	$self->{expression}->Show;
+	$self->{expression}->SetFocus;
 
 	return;
 }
