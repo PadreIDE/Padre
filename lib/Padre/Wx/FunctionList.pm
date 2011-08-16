@@ -6,6 +6,7 @@ use warnings;
 use Carp                  ();
 use Scalar::Util          ();
 use Params::Util          ();
+use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
@@ -159,6 +160,10 @@ sub new {
 		}
 	);
 
+	if ( Padre::Feature::STYLE_GUI ) {
+		$self->recolour;
+	}
+
 	return $self;
 }
 
@@ -220,6 +225,34 @@ sub focus_on_search {
 
 sub gettext_label {
 	Wx::gettext('Functions');
+}
+
+# Pick up colouring from the current editor style
+sub recolour {
+	my $self   = shift;
+	my $config = $self->config;
+
+	# Load the editor style
+	require Padre::Wx::Editor;
+	my $data = Padre::Wx::Editor::data( $config->editor_style ) or return;
+
+	# Find the colours we need
+	my $foreground = $data->{padre}->{colors}->{PADRE_BLACK}->{foreground};
+	my $background = $data->{padre}->{background};
+
+	# Apply them to the widgets
+	if ( defined $foreground and defined $background ) {
+		$foreground = Padre::Wx::color($foreground);
+		$background = Padre::Wx::color($background);
+
+		$self->{list}->SetForegroundColour($foreground);
+		$self->{list}->SetBackgroundColour($background);
+
+		# $self->{search}->SetForegroundColour($foreground);
+		# $self->{search}->SetBackgroundColour($background);
+	}
+
+	return 1;
 }
 
 sub refresh {
