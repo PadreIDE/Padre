@@ -8,11 +8,11 @@ use Padre::Current                 ();
 use Padre::Util                    ();
 use Padre::Feature                 ();
 use Padre::Role::Task              ();
+use Padre::Wx                      ();
 use Padre::Wx::Role::Dwell         ();
 use Padre::Wx::Role::View          ();
 use Padre::Wx::Role::Main          ();
 use Padre::Wx::Directory::TreeCtrl ();
-use Padre::Wx                      ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -52,8 +52,8 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main->directory_panel,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	# Where is the current root directory of the tree
@@ -71,9 +71,9 @@ sub new {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxTE_PROCESS_ENTER
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_PROCESS_ENTER
 	);
 
 	# Set the descriptive text for the search button.
@@ -125,11 +125,11 @@ sub new {
 	);
 
 	# Fill the panel
-	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerv->Add( $self->{tree},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerh->Add( $sizerv,         1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	my $sizerv = Wx::BoxSizer->new(Wx::VERTICAL);
+	my $sizerh = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizerv->Add( $self->{search}, 0, Wx::ALL | Wx::EXPAND, 0 );
+	$sizerv->Add( $self->{tree},   1, Wx::ALL | Wx::EXPAND, 0 );
+	$sizerh->Add( $sizerv,         1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);

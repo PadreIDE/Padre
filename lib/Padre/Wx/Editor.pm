@@ -551,7 +551,7 @@ sub configure_editor {
 }
 
 sub set_preferences {
-	my $self = shift;
+	my $self   = shift;
 	my $config = shift || $self->config;
 
 	# (Re)apply general configuration settings
@@ -562,6 +562,13 @@ sub set_preferences {
 
 	if ( $self->{Document} ) {
 		$self->{Document}->set_indentation_style;
+	}
+
+	if ( $config->main_syntaxcheck ) {
+		if ( $self->GetMarginWidth(1) == 0 ) {
+			$self->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 1 for symbols
+			$self->SetMarginWidth( 1, 16 );                     # set margin 1 16 px wide
+		}
 	}
 
 	return;
