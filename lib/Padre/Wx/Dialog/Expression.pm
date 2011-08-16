@@ -23,9 +23,7 @@ sub on_combobox {
 sub on_text {
 	my $self  = shift;
 	my $event = shift;
-	$self->{code}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_WINDOW )
-	);
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW) );
 	$self->Refresh;
 	$event->Skip(1);
 }
@@ -59,23 +57,19 @@ sub run {
 
 	# Reset the expression and blank old output
 	$self->{output}->SetValue('');
-	$self->{code}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_WINDOW )
-	);
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW) );
 
 	# Execute the code and handle errors
 	local $@;
 	my @rv = eval $code;
-	if ( $@ ) {
+	if ($@) {
 		$self->error($@);
 		return;
 	}
 
 	# Dump to the output window
 	require Devel::Dumpvar;
-	$self->{output}->SetValue(
-		Devel::Dumpvar->new( to => 'return' )->dump(@rv)
-	);
+	$self->{output}->SetValue( Devel::Dumpvar->new( to => 'return' )->dump(@rv) );
 	$self->{output}->SetSelection( 0, 0 );
 
 	# Success
@@ -85,7 +79,7 @@ sub run {
 }
 
 sub error {
-	$_[0]->{output}->SetValue($_[1]);
+	$_[0]->{output}->SetValue( $_[1] );
 	$_[0]->{code}->SetBackgroundColour( Wx::Colour->new('#FFCCCC') );
 }
 

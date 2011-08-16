@@ -142,7 +142,7 @@ sub new {
 
 	$self->Hide;
 
-	if ( Padre::Feature::STYLE_GUI ) {
+	if (Padre::Feature::STYLE_GUI) {
 		$self->recolour;
 	}
 

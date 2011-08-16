@@ -392,7 +392,7 @@ sub _select_first_item {
 	} else {
 
 		# Remove current selection
-		foreach my $method ( qw{ _currow _curname } ) {
+		foreach my $method (qw{ _currow _curname }) {
 			next unless $self->can($method);
 			$self->$method(undef);
 		}

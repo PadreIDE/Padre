@@ -27,8 +27,8 @@ ok( $response->is_success, 'Got HTTP status OK' );
 # my $tickets = () = $response->decoded_content, qr/<a href="?\/trac\/ticket\/(\d+)"?[^>]*>\#\1<\/a/;
 #is( $tickets, 0, 'No open blocker tickets' );
 
-$response->content =~ m!(No tickets found)!; 
+$response->content =~ m!(No tickets found)!;
 my $tickets = $1;
 
-is( $tickets, "No tickets found", 'No open blocker tickets');
+is( $tickets, "No tickets found", 'No open blocker tickets' );
 

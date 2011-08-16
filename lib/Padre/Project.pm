@@ -100,6 +100,7 @@ sub config {
 	}
 
 	unless ( $self->{config} ) {
+
 		# Get the default config object
 		my $config = Padre::Current->config;
 
@@ -216,7 +217,7 @@ sub launch_shell {
 	my $config = $self->config;
 	my $shell  = $config->bin_shell or return;
 
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 		require Win32;
 		require Padre::Util::Win32;
 		Win32::SetChildShowWindow( Win32::SW_SHOWNORMAL() );

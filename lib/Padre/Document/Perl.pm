@@ -64,7 +64,7 @@ sub ppi_dump {
 	require PPI::Dumper;
 	my $self = shift;
 	my $ppi  = $self->ppi_get;
-	PPI::Dumper->new( $ppi, locations => 1, indent => 4 )->string
+	PPI::Dumper->new( $ppi, locations => 1, indent => 4 )->string;
 }
 
 sub ppi_set {

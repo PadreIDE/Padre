@@ -149,13 +149,19 @@ sub aui_pane_info {
 # Allow objects to capture the mouse when over them, so you can scroll
 # lists and such without focusing on them.
 sub capture_mouse {
-	my $window = Params::Util::_INSTANCE(shift, 'Wx::Window') or return;
-	Wx::Event::EVT_ENTER_WINDOW( $window, sub {
-		$window->CaptureMouse;
-	} );
-	Wx::Event::EVT_LEAVE_WINDOW( $window, sub {
-		$window->ReleaseMouse;
-	} );
+	my $window = Params::Util::_INSTANCE( shift, 'Wx::Window' ) or return;
+	Wx::Event::EVT_ENTER_WINDOW(
+		$window,
+		sub {
+			$window->CaptureMouse;
+		}
+	);
+	Wx::Event::EVT_LEAVE_WINDOW(
+		$window,
+		sub {
+			$window->ReleaseMouse;
+		}
+	);
 }
 
 

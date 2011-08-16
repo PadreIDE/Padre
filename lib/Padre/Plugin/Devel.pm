@@ -60,14 +60,16 @@ sub plugin_disable {
 
 	# Close the introspection tool
 	if ( $self->{expression} ) {
-		delete($self->{expression})->Destroy;
+		delete( $self->{expression} )->Destroy;
 	}
 
 	# Unload our dialog classes
-	$self->unload( qw{
-		Padre::Wx::Dialog::Expression
-		Padre::Wx::FBP::Expression
-	} );
+	$self->unload(
+		qw{
+			Padre::Wx::Dialog::Expression
+			Padre::Wx::FBP::Expression
+			}
+	);
 
 	return 1;
 }
@@ -120,6 +122,7 @@ sub expression {
 	my $main = $self->main;
 
 	unless ( $self->{expression} ) {
+
 		# Load and show the expression dialog
 		require Padre::Wx::Dialog::Expression;
 		$self->{expression} = Padre::Wx::Dialog::Expression->new($main);

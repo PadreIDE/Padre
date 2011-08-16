@@ -551,7 +551,7 @@ sub configure_editor {
 }
 
 sub set_preferences {
-	my $self   = shift;
+	my $self = shift;
 	my $config = shift || $self->config;
 
 	# (Re)apply general configuration settings
@@ -602,7 +602,7 @@ sub padre_setup {
 	# Setup some default colouring.
 	# For the time being it is the same as for Perl.
 	unless ( $mimetype ne 'text/plain' ) {
-		$self->padre_setup_style('padre', $config);
+		$self->padre_setup_style( 'padre', $config );
 		return;
 	}
 
@@ -612,7 +612,7 @@ sub padre_setup {
 
 		# Resetup if file extension is .conf
 		if ( $ext eq 'conf' ) {
-			$self->padre_setup_style('conf', $config);
+			$self->padre_setup_style( 'conf', $config );
 			return;
 		}
 	}
@@ -629,9 +629,7 @@ sub padre_setup_plain {
 	$self->StyleClearAll;
 
 	if ( defined $plain->{current_line_foreground} ) {
-		$self->SetCaretForeground(
-			Padre::Wx::color( $plain->{current_line_foreground} )
-		);
+		$self->SetCaretForeground( Padre::Wx::color( $plain->{current_line_foreground} ) );
 	}
 	if ( defined $plain->{currentline} ) {
 		if ( defined $config->editor_currentline_color ) {
@@ -639,23 +637,17 @@ sub padre_setup_plain {
 				$plain->{currentline} = $config->editor_currentline_color;
 			}
 		}
-		$self->SetCaretLineBackground(
-			Padre::Wx::color( $plain->{currentline} )
-		);
+		$self->SetCaretLineBackground( Padre::Wx::color( $plain->{currentline} ) );
 	} elsif ( defined $config->editor_currentline_color ) {
-		$self->SetCaretLineBackground(
-			Padre::Wx::color( $config->editor_currentline_color )
-		);
+		$self->SetCaretLineBackground( Padre::Wx::color( $config->editor_currentline_color ) );
 	}
 
 	my $foregrounds = $plain->{foregrounds};
 	foreach my $k ( keys %$foregrounds ) {
-		$self->StyleSetForeground(
-			$k => Padre::Wx::color( $plain->{foregrounds}->{$k} )
-		);
+		$self->StyleSetForeground( $k => Padre::Wx::color( $plain->{foregrounds}->{$k} ) );
 	}
 
-	$self->setup_style_from_config('plain', $config);
+	$self->setup_style_from_config( 'plain', $config );
 
 	return;
 }
@@ -666,12 +658,10 @@ sub padre_setup_style {
 	my $config = shift || $self->config;
 
 	foreach my $i ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
-		$self->StyleSetBackground(
-			$i => Padre::Wx::color( $data->{$name}->{background} )
-		);
+		$self->StyleSetBackground( $i => Padre::Wx::color( $data->{$name}->{background} ) );
 	}
 
-	$self->setup_style_from_config($name, $config);
+	$self->setup_style_from_config( $name, $config );
 
 	# if mimetype is known, then it might be Perl with in-line POD
 	if ( Padre::Feature::FOLDING and $config->editor_folding ) {
@@ -728,14 +718,10 @@ sub setup_style_from_config {
 
 		my $color = $data->{$name}->{colors}->{$k};
 		if ( exists $color->{foreground} ) {
-			$self->StyleSetForeground(
-				$v => Padre::Wx::color( $color->{foreground} )
-			);
+			$self->StyleSetForeground( $v => Padre::Wx::color( $color->{foreground} ) );
 		}
 		if ( exists $color->{background} ) {
-			$self->StyleSetBackground(
-				$v => Padre::Wx::color( $color->{background} )
-			);
+			$self->StyleSetBackground( $v => Padre::Wx::color( $color->{background} ) );
 		}
 		if ( exists $color->{bold} ) {
 			$self->StyleSetBold( $v, $color->{bold} );

@@ -1247,9 +1247,9 @@ setting(
 );
 
 setting(
-	name    => 'bin_shell',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
+	name  => 'bin_shell',
+	type  => Padre::Constant::PATH,
+	store => Padre::Constant::HOST,
 	default => Padre::Constant::WIN32 ? 'cmd.exe' : '',
 );
 

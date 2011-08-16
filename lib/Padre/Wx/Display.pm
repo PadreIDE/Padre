@@ -129,13 +129,13 @@ sub dump {
 		my $display = Wx::Display->new($_);
 		push @displays,
 			{
-			Primary     => $display->IsPrimary,
+			Primary    => $display->IsPrimary,
 			Geometry   => $self->dump_rect( $display->GetGeometry ),
 			ClientArea => $self->dump_rect( $display->GetClientArea ),
 			};
 	}
 	return {
-		Count    => $count,
+		Count       => $count,
 		DisplayList => \@displays,
 	};
 }
@@ -144,7 +144,7 @@ sub dump_rect {
 	my $self = shift;
 	my $rect = shift;
 	my %hash = ();
-	foreach ( qw{ Top Bottom Left Right Height Width } ) {
+	foreach (qw{ Top Bottom Left Right Height Width }) {
 		my $method = "Get$_";
 		$hash{$_} = $rect->$method();
 	}

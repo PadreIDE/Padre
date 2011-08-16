@@ -218,7 +218,7 @@ the request is invalid.
 
 sub new {
 	my $class = shift;
-	my $self  = bless {@_}, $class;
+	my $self = bless {@_}, $class;
 
 	if ( exists $self->{owner} ) {
 
@@ -301,7 +301,6 @@ sub handle {
 sub running {
 	defined $_[0]->{handle};
 }
-
 
 
 
@@ -491,7 +490,7 @@ sub finish {
 	my $self = shift;
 
 	if ( $self->{owner} ) {
-		my $owner  = $self->owner or return;
+		my $owner = $self->owner or return;
 		my $method = $self->on_finish;
 		$owner->$method($self);
 	}

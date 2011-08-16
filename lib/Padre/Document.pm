@@ -317,7 +317,7 @@ sub rebless {
 	}
 
 	my $module   = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
-	my $filename = ''; # Not undef
+	my $filename = '';                                                                # Not undef
 	$filename = $self->{file}->filename
 		if defined( $self->{file} )
 			and defined( $self->{file}->{filename} );
@@ -728,7 +728,7 @@ sub save_file {
 	my $self    = shift;
 	my $current = $self->current;
 	my $manager = $current->ide->plugin_manager;
-	unless ( $manager->hook('before_save', $self) ) {
+	unless ( $manager->hook( 'before_save', $self ) ) {
 		return;
 	}
 

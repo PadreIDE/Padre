@@ -126,7 +126,7 @@ sub _CURRENT {
 
 sub new {
 	my $class = shift;
-	bless { @_ }, $class;
+	bless {@_}, $class;
 }
 
 

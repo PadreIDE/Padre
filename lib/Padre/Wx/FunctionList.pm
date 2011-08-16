@@ -160,7 +160,7 @@ sub new {
 		}
 	);
 
-	if ( Padre::Feature::STYLE_GUI ) {
+	if (Padre::Feature::STYLE_GUI) {
 		$self->recolour;
 	}
 
