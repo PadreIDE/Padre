@@ -187,7 +187,7 @@ sub init {
 	if (Padre::Feature::WIZARD_SELECTOR) {
 		Padre::Wx::Action->new(
 			name       => 'file.wizard_selector',
-			label      => _T('Wizard Selector...'),
+			label      => _T('Wizard Selector'),
 			comment    => _T('Selects and opens a wizard'),
 			menu_event => sub {
 				$_[0]->wizard_selector->show;
@@ -2316,7 +2316,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.preferences',
-		label      => _T('&Preferences...'),
+		label      => _T('&Preferences'),
 		comment    => _T('Edit user and host preferences'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::Preferences;
@@ -2338,7 +2338,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.keys',
-		label      => _T('&Key Bindings...'),
+		label      => _T('&Key Bindings'),
 		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
 		menu_event => sub {
 			$_[0]->on_key_bindings;
@@ -2347,7 +2347,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'tools.regex',
-		label      => _T('&Regex Editor...'),
+		label      => _T('&Regex Editor'),
 		comment    => _T('Open the regular expression editing window'),
 		menu_event => sub {
 			shift->open_regex_editor(@_);
@@ -2370,7 +2370,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'plugins.plugin_manager',
-		label      => _T('&Plug-in Manager...'),
+		label      => _T('&Plug-in Manager'),
 		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
