@@ -23,7 +23,7 @@ my $FAIL_COLOUR = Wx::Colour->new('#FFCCCC');
 sub on_text {
 	my $self  = shift;
 	my $event = shift;
-	$self->clear;
+	$self->code->SetBackgroundColour($BASE_COLOUR);
 	$self->Refresh;
 	$event->Skip(1);
 }
@@ -55,8 +55,9 @@ sub run {
 	my $self = shift;
 	my $code = $self->code->GetValue;
 
-	# Reset the expression colour
-	$self->clear;
+	# Reset the expression and blank old output
+	$self->output->SetValue('');
+	$self->code->SetBackgroundColour($BASE_COLOUR);
 
 	# Execute the code and handle errors
 	local $@;
@@ -77,11 +78,6 @@ sub run {
 	$self->code->SetBackgroundColour($EVAL_COLOUR);
 
 	return;
-}
-
-sub clear {
-	$_[0]->output->SetValue('');
-	$_[0]->code->SetBackgroundColour($BASE_COLOUR);
 }
 
 sub error {
