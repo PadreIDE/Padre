@@ -38,12 +38,8 @@ BEGIN {
 	Wx::Image::AddHandler( Wx::ICOHandler->new );
 }
 
-sub import {
-	my $class = shift;
-	unless ( $_[0] and $_[0] eq ':api2' ) {
-		return;
-	}
-
+# Enable the second-generation API
+if ( 1 ) {
 	# Scan for all of the Wx::wxFOO AUTOLOAD functions and
 	# check that we can create Wx::FOO constants.
 	my %constants = ();
