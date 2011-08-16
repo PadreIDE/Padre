@@ -6,6 +6,7 @@ use warnings;
 use Params::Util                   ();
 use Padre::Current                 ();
 use Padre::Util                    ();
+use Padre::Feature                 ();
 use Padre::Role::Task              ();
 use Padre::Wx::Role::Dwell         ();
 use Padre::Wx::Role::View          ();
