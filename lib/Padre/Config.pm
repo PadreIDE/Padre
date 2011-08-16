@@ -1355,6 +1355,14 @@ setting(
 	default => 0,
 );
 
+# Enable experimental expanded style support
+setting(
+	name    => 'feature_style_gui',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Enable experimental Run with Devel::EndStats support.
 setting(
 	name    => 'feature_devel_endstats',
