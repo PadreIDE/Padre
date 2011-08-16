@@ -117,6 +117,40 @@ sub primary_default {
 	);
 }
 
+sub dump {
+	my $self     = shift;
+	my @displays = ();
+
+	# Due to the way it is mapped into Wx.pm
+	# this must NOT be called as a method.
+	my $count = Wx::Display::GetCount();
+
+	foreach ( 0 .. $count - 1 ) {
+		my $display = Wx::Display->new($_);
+		push @displays,
+			{
+			Primary     => $display->IsPrimary,
+			Geometry   => $self->dump_rect( $display->GetGeometry ),
+			ClientArea => $self->dump_rect( $display->GetClientArea ),
+			};
+	}
+	return {
+		Count    => $count,
+		DisplayList => \@displays,
+	};
+}
+
+sub dump_rect {
+	my $self = shift;
+	my $rect = shift;
+	my %hash = ();
+	foreach ( qw{ Top Bottom Left Right Height Width } ) {
+		my $method = "Get$_";
+		$hash{$_} = $rect->$method();
+	}
+	return \%hash;
+}
+
 
 
 

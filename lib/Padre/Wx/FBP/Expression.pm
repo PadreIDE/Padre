@@ -31,12 +31,21 @@ sub new {
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
-	$self->{code} = Wx::TextCtrl->new(
+	$self->{code} = Wx::ComboBox->new(
 		$self,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
+		[
+			"Padre::Current->config",
+			"Padre::Current->editor",
+			"Padre::Current->document",
+			"Padre::Current->ide",
+			"Padre::Current->ide->task_manager",
+			"Padre::Wx::Display->dump",
+			"\\\@INC, \\%INC",
+		],
 		Wx::wxTE_PROCESS_ENTER,
 	);
 
@@ -86,7 +95,7 @@ sub new {
 	);
 
 	my $bSizer36 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bSizer36->Add( $self->{code}, 1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 3 );
+	$bSizer36->Add( $self->{code}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$bSizer36->Add( $self->{evaluate}, 0, Wx::wxALL, 3 );
 
 	my $bSizer35 = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -97,18 +106,6 @@ sub new {
 	$self->Layout;
 
 	return $self;
-}
-
-sub code {
-	$_[0]->{code};
-}
-
-sub evaluate {
-	$_[0]->{evaluate};
-}
-
-sub output {
-	$_[0]->{output};
 }
 
 sub on_text {

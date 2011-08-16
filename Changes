@@ -59,9 +59,9 @@ the even version for the release, even during development.
     - The editor change dwell time (the time between when you stop typing and
       when tools like function list and syntax update) is now configurable as
       editor_dwell in Advanced Preferences (ADAMK)
-    - Added an Expression Tool to the Developer plugin so you can explore the
-      internals of Padre incrementally instead of having to spawn a new dialog
-      every time (ADAMK)
+    - Replaced Dump... menu in the Developer Plugin with a more general Dump
+      Expression tool so you can explore the internals of Padre incrementally
+      instead of selecting a menu every time (ADAMK)
     - Added experimental config setting feature_style_gui to allow major GUI
       tools such as the function list and directory tree to inherit their
       foreground and background colouring from the active editor style (ADAMK)

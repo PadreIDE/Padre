@@ -54,17 +54,17 @@ sub task_syntax {
 # (Ballpark: Around 1 Gigahertz-second of *BLOCKING* CPU per 1000 lines)
 # Check out Padre::Task::PPI and children instead!
 sub ppi_get {
+	require PPI::Document;
 	my $self = shift;
 	my $text = $self->text_get;
-	require PPI::Document;
 	PPI::Document->new( \$text );
 }
 
 sub ppi_dump {
+	require PPI::Dumper;
 	my $self = shift;
 	my $ppi  = $self->ppi_get;
-	require PPI::Dumper;
-	PPI::Dumper->new( to => 'return' )->dump($ppi);
+	PPI::Dumper->new( $ppi, locations => 1, indent => 4 )->string
 }
 
 sub ppi_set {
