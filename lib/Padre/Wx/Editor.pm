@@ -586,6 +586,7 @@ sub padre_setup {
 	# Configure lexing for the editor based on the document type
 	if ($document) {
 		$self->SetLexer( $document->lexer );
+		$self->SetStyleBits($self->GetStyleBitsNeeded);
 		$self->SetWordChars( $document->stc_word_chars );
 
 		# Set all the lexer keywords lists that the document provides
