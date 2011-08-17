@@ -169,6 +169,7 @@ sub run {
 			};
 			if ( $@ ) {
 				TRACE("Replace crashed in $fullname") if DEBUG;
+				$self->message( OWNER => $object, -1 );
 				next;
 			}
 			next unless $count;

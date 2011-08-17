@@ -107,13 +107,13 @@ sub replace {
 
 	# Kick off the replace task
 	$self->task_reset;
-	$self->clear;
 	$self->task_request(
 		task       => 'Padre::Task::ReplaceInFiles',
 		on_message => 'replace_message',
 		on_finish  => 'replace_finish',
 		%param,
 	);
+	$self->clear;
 
 	my $root = $self->AddRoot('Root');
 	$self->SetItemText(
