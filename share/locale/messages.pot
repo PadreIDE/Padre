@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-16 12:10-0700\n"
+"POT-Creation-Date: 2011-08-17 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,9 +43,19 @@ msgid ""
 "# Output goes to $_\n"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:155 lib/Padre/Wx/ReplaceInFiles.pm:148
+#: lib/Padre/Wx/ReplaceInFiles.pm:144
+#, perl-format
+msgid "%s (%s changed)"
+msgstr ""
+
+#: lib/Padre/Wx/FindInFiles.pm:155
 #, perl-format
 msgid "%s (%s results)"
+msgstr ""
+
+#: lib/Padre/Wx/ReplaceInFiles.pm:152
+#, perl-format
+msgid "%s (crashed)"
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:614
@@ -2178,7 +2188,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/ReplaceInFiles.pm:259
+#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/ReplaceInFiles.pm:232
 #: lib/Padre/Wx/FBP/FindInFiles.pm:29
 msgid "Find in Files"
 msgstr ""
@@ -2985,7 +2995,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:216
+#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:189
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -3890,6 +3900,11 @@ msgstr ""
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
+#: lib/Padre/Wx/ReplaceInFiles.pm:178
+#, perl-format
+msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:760
 #, perl-format
 msgid "Replace failure in %s:  %s"
@@ -3913,7 +3928,7 @@ msgstr ""
 msgid "Replaced %d matches"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:121
+#: lib/Padre/Wx/ReplaceInFiles.pm:119
 #, perl-format
 msgid "Replacing '%s' in '%s'..."
 msgstr ""
@@ -4137,7 +4152,7 @@ msgstr ""
 msgid "Search and replace text in all files below a given directory"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:212 lib/Padre/Wx/ReplaceInFiles.pm:205
+#: lib/Padre/Wx/FindInFiles.pm:212
 #, perl-format
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4192,7 +4207,7 @@ msgid "Select All"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FindInFiles.pm:60
-#: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:58
+#: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:53
 msgid "Select Directory"
 msgstr ""
 
