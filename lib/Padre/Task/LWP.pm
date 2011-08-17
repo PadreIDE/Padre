@@ -146,7 +146,7 @@ sub run {
 	# we just do the heavy lifting of the request itself.
 	$self->status(
 		join ' ', $method, $url, '...',
-	) if $self->running;
+	);
 
 	$self->{response} = $useragent->request($request);
 
@@ -154,7 +154,7 @@ sub run {
 		join ' ', $method, $url, '-->',
 		$self->{response}->code,
 		$self->{response}->message,
-	) if $self->running;
+	);
 
 	# Remove the CODE references from the response.
 	# They aren't needed any more, and they won't survive

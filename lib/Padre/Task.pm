@@ -294,10 +294,6 @@ sub on_finish {
 	$_[0]->{on_finish} || 'task_finish';
 }
 
-sub running {
-	defined $_[0]->{handle};
-}
-
 
 
 
@@ -492,6 +488,32 @@ sub finish {
 	}
 
 	return 1;
+}
+
+=pod
+
+=head2 is_parent
+
+The C<is_parent> method returns true if the task object is in the parent thread,
+or false if it is in the child thread.
+
+=cut
+
+sub is_parent {
+	not defined $_[0]->{handle};
+}
+
+=pod
+
+=head2 is_child
+
+The C<is_child> method returns true if the task object is in the child thread,
+or false if it is in the parent thread.
+
+=cut
+
+sub is_child {
+	defined $_[0]->{handle};
 }
 
 
