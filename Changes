@@ -14,6 +14,7 @@ Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
 0.92 TBA
+    - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)
     - Added Replace in Files using matching logic to Find in Files (ADAMK)
     - Added plugin compatibility tracking to Padre::Search (ADAMK)
     - Wx doesn't seem to let us change the PaneBorder setting after pane
