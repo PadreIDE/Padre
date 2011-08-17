@@ -59,21 +59,6 @@ use Class::XSAccessor::Array {
 };
 
 
-# NOTE: Do not convert the ->feature_wx_scintilla call here to use
-# Padre::Feature as it would result in a cicular dependency between
-# Padre::Config and Padre::Feature.
-sub wx_scintilla_ready {
-	my $enabled;
-	if ( Padre::Config->read->feature_wx_scintilla ) {
-		eval 'use Wx::Scintilla';
-		$enabled = 1 unless $@;
-		TRACE("Wx::Scintilla error: $@") if DEBUG;
-	}
-	eval 'use Wx::STC' unless $enabled;
-	return $enabled;
-}
-
-
 
 
 
@@ -1328,16 +1313,6 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-);
-
-# Enable experimental Wx::Scintilla support.
-setting(
-	name    => 'feature_wx_scintilla',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-	help    => _T('Enable or disable the newer Wx::Scintilla source code editing component. ')
-		. _T('This requires an installed Wx::Scintilla and a Padre restart'),
 );
 
 # Enable experimental preference sync support.

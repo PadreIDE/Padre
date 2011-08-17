@@ -118,14 +118,14 @@ sub new {
 	my $config   = $ide->config;
 	my $size     = [ $config->main_width, $config->main_height ];
 	my $position = [ $config->main_left, $config->main_top ];
-	my $style    = Wx::DEFAULT_FRAME_STYLE;
+	my $style    = Wx::wxDEFAULT_FRAME_STYLE;
 
 	# If we closed while maximized on the previous run,
 	# the previous size is completely suspect.
 	# This doesn't work on Windows,
 	# so we use a different mechanism for it.
 	if ( not Padre::Constant::WXWIN32 and $config->main_maximized ) {
-		$style |= Wx::MAXIMIZE;
+		$style |= Wx::wxMAXIMIZE;
 	}
 
 	# Generate a smarter default size than Wx does
@@ -2594,7 +2594,7 @@ sub on_run_command {
 		Wx::gettext("Run setup"),
 		"run_command",
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $command = $dialog->GetValue;
@@ -2971,14 +2971,14 @@ sub run_document {
 				$self->run_command($cmd);
 			}
 		} else {
-			my $styles = Wx::CENTRE | Wx::ICON_HAND | Wx::YES_NO;
+			my $styles = Wx::wxCENTRE | Wx::wxICON_HAND | Wx::wxYES_NO;
 			my $ret    = Wx::MessageBox(
 				$document->errstr . "\n" . Wx::gettext('Do you want to continue?'),
 				Wx::gettext("Warning"),
 				$styles,
 				$self,
 			);
-			if ( $ret == Wx::YES ) {
+			if ( $ret == Wx::wxYES ) {
 				SCOPE: {
 					require File::pushd;
 					File::pushd::pushd( $document->project_dir ) if -e $document->project_dir;
@@ -3223,7 +3223,7 @@ sub prompt {
 	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$self, $title, $subtitle, $key,
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $value = $dialog->GetValue;
@@ -3247,7 +3247,7 @@ sub simple_prompt {
 	my $value    = shift || '';
 
 	my $dialog = Wx::TextEntryDialog->new( $self, $title, $subtitle, $value );
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $new_value = $dialog->GetValue;
@@ -3665,11 +3665,11 @@ sub on_close_window {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("You still have a running process. Do you want to kill it and exit?"),
 				Wx::gettext("Warning"),
-				Wx::YES_NO | Wx::CENTRE,
+				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
 
-			if ( $ret == Wx::YES ) {
+			if ( $ret == Wx::wxYES ) {
 				if ( $self->{command} ) {
 					if (Padre::Constant::WIN32) {
 						$self->{command}->KillProcess;
@@ -4033,7 +4033,7 @@ sub on_open_selection {
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
 			Wx::gettext("Open selection"), ''
 		);
-		return if $dialog->ShowModal == Wx::ID_CANCEL;
+		return if $dialog->ShowModal == Wx::wxID_CANCEL;
 
 		$text = $dialog->GetValue;
 		$dialog->Destroy;
@@ -4216,9 +4216,9 @@ sub open_file_dialog {
 		: Wx::gettext('All Files') . '|*|' . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self, Wx::gettext('Open File'),
-		$self->cwd, '', $wildcards, Wx::FD_MULTIPLE,
+		$self->cwd, '', $wildcards, Wx::wxFD_MULTIPLE,
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my @filenames = $dialog->GetFilenames;
@@ -4252,11 +4252,11 @@ sub open_file_dialog {
 					$filename
 				),
 				Wx::gettext("Open Warning"),
-				Wx::YES_NO | Wx::CENTRE,
+				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
 
-			next if $ret == Wx::YES;
+			next if $ret == Wx::wxYES;
 		}
 
 		my $FN = File::Spec->catfile( $self->cwd, $filename );
@@ -4272,11 +4272,11 @@ sub open_file_dialog {
 					$FN
 				),
 				Wx::gettext("Open Warning"),
-				Wx::YES_NO | Wx::CENTRE,
+				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
 
-			next if $ret == Wx::YES;
+			next if $ret == Wx::wxYES;
 		}
 
 		push @files, $FN;
@@ -4603,9 +4603,9 @@ sub on_save_as {
 			$self->{cwd},
 			$filename,
 			Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
-			Wx::FD_SAVE,
+			Wx::wxFD_SAVE,
 		);
-		if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 			return;
 		}
 
@@ -4621,7 +4621,6 @@ sub on_save_as {
 		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
 		my $saveto = $dialog->GetPath;
-
 
 		# PJL - waxhead 10/02/2011
 		# commenting out the file extension check
@@ -4659,26 +4658,25 @@ sub on_save_as {
 		#					$ext_string
 		#				),
 		#				Wx::gettext("File extension missing warning..."),
-		#				Wx::YES_NO | Wx::CENTRE,
+		#				Wx::wxYES_NO | Wx::wxCENTRE,
 		#				$self,
 		#			);
 		#
 		#
 		#			# return back to the save as dialog when we click No.
-		#			if( $ret == Wx::NO ) {
+		#			if( $ret == Wx::wxNO ) {
 		#				next; # because we are in a while(1) loop
 		#			}
 		#		}
-
 
 		#my $path = File::Spec->catfile( $self->cwd, $filename );
 		my $path = File::Spec->catfile($saveto);
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
-				Wx::gettext("Exist"), Wx::YES_NO, $self,
+				Wx::gettext("Exist"), Wx::wxYES_NO, $self,
 			);
-			if ( $response == Wx::YES ) {
+			if ( $response == Wx::wxYES ) {
 				$document->set_filename($path);
 				$document->save_file;
 				$document->set_newline_type(Padre::Constant::NEWLINE);
@@ -4890,10 +4888,10 @@ sub _save_buffer {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed on disk since last saved. Do you want to overwrite it?"),
 			$doc->filename || Wx::gettext("File not in sync"),
-			Wx::YES_NO | Wx::CENTRE,
+			Wx::wxYES_NO | Wx::wxCENTRE,
 			$self,
 		);
-		return if $ret != Wx::YES;
+		return if $ret != Wx::wxYES;
 	}
 
 	unless ( $doc->save_file ) {
@@ -4985,17 +4983,17 @@ sub close {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
 			$document->filename || Wx::gettext("Unsaved File"),
-			Wx::YES_NO | Wx::CANCEL | Wx::CENTRE,
+			Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
 			$self,
 		);
-		if ( $ret == Wx::YES ) {
+		if ( $ret == Wx::wxYES ) {
 			$self->on_save($document);
-		} elsif ( $ret == Wx::NO ) {
+		} elsif ( $ret == Wx::wxNO ) {
 
 			# just close it
 		} else {
 
-			# Wx::CANCEL, or when clicking on [x]
+			# Wx::wxCANCEL, or when clicking on [x]
 			return 0;
 		}
 	}
@@ -5255,10 +5253,10 @@ sub delete {
 			Wx::gettext("Do you really want to close and delete %s from disk?"),
 			$filename
 		),
-		Wx::YES_NO | Wx::CANCEL | Wx::CENTRE,
+		Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
 		$self,
 	);
-	return 1 unless $ret == Wx::YES;
+	return 1 unless $ret == Wx::wxYES;
 
 	TRACE( join ' ', "Deleting ", ref $document, $filename || 'Unknown' ) if DEBUG;
 
@@ -5900,9 +5898,9 @@ sub on_insert_from_file {
 		$self,      Wx::gettext('Open file'),
 		$self->cwd, '',
 		Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
-		Wx::FD_OPEN,
+		Wx::wxFD_OPEN,
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $filename = $dialog->GetFilename;
@@ -6235,7 +6233,7 @@ sub on_tab_and_space {
 		Wx::gettext('How many spaces for each tab:'),
 		$title, $type,
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $space_num = $dialog->GetValue;
@@ -6324,7 +6322,7 @@ sub on_delete_leading_space {
 		'Delete Leading Space',
 		'fay_delete_leading_space',
 	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $space_num = $dialog->GetValue;
@@ -6377,10 +6375,10 @@ sub timer_check_overwrite {
 	#	my $ret = Wx::MessageBox(
 	#		$Text,
 	#		$doc->filename || Wx::gettext("File not in sync"),
-	#		Wx::YES_NO | Wx::CENTRE, $self,
+	#		Wx::wxYES_NO | Wx::wxCENTRE, $self,
 	#	);
 	#
-	#	if ( $ret == Wx::YES ) {
+	#	if ( $ret == Wx::wxYES ) {
 	#		unless ( $doc->reload ) {
 	#			$self->error(
 	#				sprintf(
@@ -6682,12 +6680,12 @@ sub key_up {
 	my $code   = $event->GetKeyCode;
 	my $config = $self->config;
 
-	# Remove the bit ( Wx::MOD_META) set by Num Lock being pressed on Linux
+	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
-	$mod = $mod & ( Wx::MOD_ALT() + Wx::MOD_CMD() + Wx::MOD_SHIFT() );
-	if ( $mod == Wx::MOD_CMD ) { # Ctrl
-		                           # Ctrl-TAB  #TO DO it is already in the menu
+	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
+	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		                       # Ctrl-TAB TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
@@ -6696,9 +6694,9 @@ sub key_up {
 				&{ $self->ide->actions->{'window.last_visited_file'}->menu_event }( $self, $event );
 			}
 		}
-	} elsif ( $mod == Wx::MOD_CMD() + Wx::MOD_SHIFT() ) { # Ctrl-Shift
-		                                                      # Ctrl-Shift-TAB
-		                                                      # TODO it is already in the menu
+	} elsif ( $mod == Wx::wxMOD_CMD + Wx::wxMOD_SHIFT ) { # Ctrl-Shift
+		                                              # Ctrl-Shift-TAB
+		                                              # TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
@@ -6707,12 +6705,12 @@ sub key_up {
 				&{ $self->ide->actions->{'window.oldest_visited_file'}->menu_event }( $self, $event );
 			}
 		}
-	} elsif ( $mod == Wx::MOD_ALT() ) {
+	} elsif ( $mod == Wx::wxMOD_ALT ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		TRACE("Current focus: $current_focus") if DEBUG;
 		#		# TO DO this should be fine tuned later
-		#		if ($code == Wx::K_UP) {
+		#		if ($code == Wx::wxK_UP) {
 		#			# TO DO get the list of panels at the bottom from some other place
 		#			if (my $editor = $self->current->editor) {
 		#				if ($current_focus->isa('Padre::Wx::Output') or

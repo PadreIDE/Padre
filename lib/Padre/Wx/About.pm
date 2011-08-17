@@ -344,25 +344,15 @@ sub _content_info {
 	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
 
 	# Yes, THIS variable should have this upper case char :-)
-	my $Perl_version = $^V || $];
-	$Perl_version = "$Perl_version";
-	$Perl_version =~ s/^v//;
+	my $perl_version = $^V || $];
+	$perl_version = "$perl_version";
+	$perl_version =~ s/^v//;
 
 	# How many threads are running
 	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : 'disabled';
 
 	eval { require Alien::wxWidgets };
 	my $alien = $Alien::wxWidgets::VERSION;
-
-	my $wx_scintilla_html = '';
-	if ( Padre::Config::wx_scintilla_ready() ) {
-		$wx_scintilla_html = <<"END_HTML";
-      <tr>
-        <td valign="top">Wx::Scintilla</td>
-        <td>$Wx::Scintilla::VERSION</td>
-      </tr>
-END_HTML
-	}
 
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -374,7 +364,7 @@ END_HTML
         Perl
         </td>
         <td>
-        $Perl_version
+        $perl_version
         </td>
       </tr>
       <tr>
@@ -401,7 +391,10 @@ END_HTML
         $Wx::Perl::ProcessStream::VERSION
         </td>
       </tr>
-      $wx_scintilla_html
+      <tr>
+        <td valign="top">Wx::Scintilla</td>
+        <td>$Wx::Scintilla::VERSION</td>
+      </tr>
       <tr>
         <td valign="top">
         PPI
@@ -411,7 +404,8 @@ END_HTML
         </td>
       </tr>
       <tr>
-        <td valign="top">$config_dir_txt</td><td>$config_dir</td>
+        <td valign="top">$config_dir_txt</td>
+        <td>$config_dir</td>
       </tr>
       <tr>
         <td valign="top">

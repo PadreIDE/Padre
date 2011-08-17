@@ -5,8 +5,9 @@ package Padre::Wx;
 use 5.008;
 use strict;
 use warnings;
-use constant     ();
-use Params::Util ();
+use constant       ();
+use Params::Util   ();
+use Padre::Current ();
 
 # Threading must be loaded before Wx loads
 use threads;
@@ -15,12 +16,12 @@ use threads::shared;
 # Load every exportable constant into here, so that they come into
 # existence in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-use Wx         (':everything');
-use Wx         ('wxTheClipboard');
-use Wx::Event  (':everything');
-use Wx::DND    ();
-use Wx::AUI    ();
-use Wx::Locale ();
+# use Wx          (':everything');
+use Wx            ('wxTheClipboard');
+use Wx::Event     (':everything');
+use Wx::DND       ();
+use Wx::AUI       ();
+use Wx::Scintilla ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
@@ -153,7 +154,7 @@ sub launch_irc {
 
 	# Generate the (long) chat URL
 	my $url = "http://padre.perlide.org/irc.html?channel=$channel";
-	if ( my $locale = Padre->ide->config->locale ) {
+	if ( my $locale = Padre::Current->config->locale ) {
 		$url .= "&locale=$locale";
 	}
 

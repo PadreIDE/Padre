@@ -8,6 +8,7 @@ use File::Spec                 ();
 use File::Basename             ();
 use Padre::Util                ('_T');
 use Padre::Constant            ();
+use Padre::Wx                  ();
 use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
 use Padre::Wx::Directory::Path ();
@@ -127,7 +128,7 @@ sub key_up {
 	my $code  = $event->GetKeyCode;
 
 	# see Padre::Wx::Main::key_up
-	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
+	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
 
 	my $current = $self->current;
 	my $main    = $current->main;
