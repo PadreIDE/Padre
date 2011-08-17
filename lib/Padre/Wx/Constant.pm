@@ -100,7 +100,10 @@ use Wx ( qw{
 	:window
 	:wizard
 } );
+
 use constant TAGS => qw{
+	wxDefaultSize
+	wxDefaultPosition
 };
 
 BEGIN {
