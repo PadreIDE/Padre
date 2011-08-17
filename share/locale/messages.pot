@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 08:10-0700\n"
+"POT-Creation-Date: 2011-08-17 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:442
+#: lib/Padre/Config.pm:427
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:444
+#: lib/Padre/Config.pm:429
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -374,7 +374,7 @@ msgstr ""
 msgid "&Reload My Plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4409 lib/Padre/Wx/Main.pm:6404
+#: lib/Padre/Wx/Main.pm:4409 lib/Padre/Wx/Main.pm:6402
 msgid "&Reload selected"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4408 lib/Padre/Wx/Main.pm:6403
+#: lib/Padre/Wx/Main.pm:4408 lib/Padre/Wx/Main.pm:6401
 msgid "&Select files to reload:"
 msgstr ""
 
@@ -530,7 +530,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:438
+#: lib/Padre/Config.pm:423
 msgid "A new empty file"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgid "All"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4215 lib/Padre/Wx/Main.pm:4216
-#: lib/Padre/Wx/Main.pm:4605 lib/Padre/Wx/Main.pm:5902
+#: lib/Padre/Wx/Main.pm:4605 lib/Padre/Wx/Main.pm:5900
 msgid "All Files"
 msgstr ""
 
@@ -604,11 +604,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:586
+#: lib/Padre/Config.pm:571
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:587
+#: lib/Padre/Config.pm:572
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -817,7 +817,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5384
+#: lib/Padre/Wx/Main.pm:5382
 msgid "Cannot diff if file was never saved"
 msgstr ""
 
@@ -1010,7 +1010,7 @@ msgstr ""
 msgid "Close Window on &Hit"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5075
+#: lib/Padre/Wx/Main.pm:5073
 msgid "Close all"
 msgstr ""
 
@@ -1046,11 +1046,11 @@ msgstr ""
 msgid "Close other &Projects"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5137
+#: lib/Padre/Wx/Main.pm:5135
 msgid "Close some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5121
+#: lib/Padre/Wx/Main.pm:5119
 msgid "Close some files"
 msgstr ""
 
@@ -1058,7 +1058,7 @@ msgstr ""
 msgid "Close the highest priority panel (usually using ESC key)"
 msgstr ""
 
-#: lib/Padre/Config.pm:585
+#: lib/Padre/Config.pm:570
 msgid "Code Order"
 msgstr ""
 
@@ -1117,11 +1117,11 @@ msgstr ""
 msgid "Content Assist"
 msgstr ""
 
-#: lib/Padre/Config.pm:501
+#: lib/Padre/Config.pm:486
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:490
+#: lib/Padre/Config.pm:475
 msgid "Contents of the window title"
 msgstr ""
 
@@ -1201,12 +1201,12 @@ msgstr ""
 msgid "Copy the current tab into a new document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:187
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:188
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:218
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:219
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1256,12 +1256,12 @@ msgstr ""
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:168
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:169
 #, perl-format
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4901
+#: lib/Padre/Wx/Main.pm:4899
 msgid "Could not save file: "
 msgstr ""
 
@@ -1270,8 +1270,8 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:280
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:339
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:281
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:340
 msgid "Create Directory"
 msgstr ""
 
@@ -1449,7 +1449,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:369
+#: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:370
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
@@ -1458,11 +1458,11 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:256
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:257
 msgid "Delete Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:315
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:316
 msgid "Delete File"
 msgstr ""
 
@@ -1522,16 +1522,16 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:633
+#: lib/Padre/Config.pm:618
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:634
+#: lib/Padre/Config.pm:619
 msgid "Directories Mixed"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:63 lib/Padre/Wx/FBP/ReplaceInFiles.pm:88
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:85
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:86
 msgid "Directory"
 msgstr ""
 
@@ -1552,7 +1552,7 @@ msgstr ""
 msgid "Do not show this again"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5255
+#: lib/Padre/Wx/Main.pm:5253
 #, perl-format
 msgid "Do you really want to close and delete %s from disk?"
 msgstr ""
@@ -1577,11 +1577,11 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:647
+#: lib/Padre/Config.pm:632
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6950
+#: lib/Padre/Wx/Main.pm:6948
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -1670,17 +1670,12 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1365
+#: lib/Padre/Config.pm:1340
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1384
+#: lib/Padre/Config.pm:1359
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
-msgstr ""
-
-#: lib/Padre/Config.pm:1339
-msgid ""
-"Enable or disable the newer Wx::Scintilla source code editing component. "
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:970
@@ -1695,11 +1690,11 @@ msgstr ""
 msgid "Encode Document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6972
+#: lib/Padre/Wx/Main.pm:6970
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6971
+#: lib/Padre/Wx/Main.pm:6969
 msgid "Encode to:"
 msgstr ""
 
@@ -1761,8 +1756,8 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:812
-#: lib/Padre/Wx/Main.pm:4902 lib/Padre/Wx/Role/Dialog.pm:95
+#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:807
+#: lib/Padre/Wx/Main.pm:4900 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
@@ -1780,14 +1775,14 @@ msgstr ""
 msgid "Error connecting to %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5271
+#: lib/Padre/Wx/Main.pm:5269
 #, perl-format
 msgid ""
 "Error deleting %s:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5535
+#: lib/Padre/Wx/Main.pm:5533
 msgid "Error loading perl filter dialog."
 msgstr ""
 
@@ -1796,7 +1791,7 @@ msgstr ""
 msgid "Error loading pod for class '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5506
+#: lib/Padre/Wx/Main.pm:5504
 msgid "Error loading regex editor."
 msgstr ""
 
@@ -1805,14 +1800,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6930
+#: lib/Padre/Wx/Main.pm:6928
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6915
+#: lib/Padre/Wx/Main.pm:6913
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -1866,7 +1861,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6007 lib/Padre/Plugin/Devel.pm:247
+#: lib/Padre/Wx/Main.pm:6005 lib/Padre/Plugin/Devel.pm:247
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -1915,7 +1910,7 @@ msgid ""
 "returned. (Start debugger if it is not yet running)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4679
+#: lib/Padre/Wx/Main.pm:4677
 msgid "Exist"
 msgstr ""
 
@@ -1964,7 +1959,7 @@ msgstr ""
 msgid "FTP Password"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4796
+#: lib/Padre/Wx/Main.pm:4794
 #, perl-format
 msgid "Failed to create path '%s'"
 msgstr ""
@@ -1995,7 +1990,7 @@ msgstr ""
 msgid "Failed to find any matches"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6538
+#: lib/Padre/Wx/Main.pm:6536
 #, perl-format
 msgid "Failed to find template file '%s'"
 msgstr ""
@@ -2024,7 +2019,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:448 lib/Padre/MimeTypes.pm:457
+#: lib/Padre/MimeTypes.pm:447 lib/Padre/MimeTypes.pm:456
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2054,19 +2049,19 @@ msgstr ""
 msgid "File access via HTTP"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4782
+#: lib/Padre/Wx/Main.pm:4780
 msgid "File already exists"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4678
+#: lib/Padre/Wx/Main.pm:4676
 msgid "File already exists. Overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4891
+#: lib/Padre/Wx/Main.pm:4889
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4986
+#: lib/Padre/Wx/Main.pm:4984
 msgid "File changed. Do you want to save it?"
 msgstr ""
 
@@ -2085,11 +2080,11 @@ msgstr ""
 msgid "File name %s does not exist on disk. Skip?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4892
+#: lib/Padre/Wx/Main.pm:4890
 msgid "File not in sync"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5249
+#: lib/Padre/Wx/Main.pm:5247
 msgid "File was never saved and has no filename - can't delete from disk"
 msgstr ""
 
@@ -2226,7 +2221,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1585
+#: lib/Padre/Wx/Editor.pm:1580
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2397,7 +2392,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:469
+#: lib/Padre/MimeTypes.pm:468
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -2407,7 +2402,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6235
+#: lib/Padre/Wx/Main.pm:6233
 msgid "How many spaces for each tab:"
 msgstr ""
 
@@ -2444,11 +2439,11 @@ msgstr ""
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Config.pm:856
+#: lib/Padre/Config.pm:841
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:855
+#: lib/Padre/Config.pm:840
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -2499,7 +2494,7 @@ msgstr ""
 msgid "Internal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6008
+#: lib/Padre/Wx/Main.pm:6006
 msgid "Internal error"
 msgstr ""
 
@@ -2707,17 +2702,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:523
+#: lib/Padre/MimeTypes.pm:522
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:512 lib/Padre/MimeTypes.pm:545
+#: lib/Padre/MimeTypes.pm:511 lib/Padre/MimeTypes.pm:544
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:494
+#: lib/Padre/MimeTypes.pm:493
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -2864,7 +2859,7 @@ msgstr ""
 msgid "Name for the new subroutine"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6757
+#: lib/Padre/Wx/Main.pm:6755
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
@@ -2880,7 +2875,7 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:371
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:372
 msgid "New Folder"
 msgstr ""
 
@@ -2920,7 +2915,7 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Config.pm:854
+#: lib/Padre/Config.pm:839
 msgid "No Autoindent"
 msgstr ""
 
@@ -2962,7 +2957,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6201
+#: lib/Padre/Wx/Main.pm:6199
 msgid "No file is open"
 msgstr ""
 
@@ -2990,7 +2985,7 @@ msgstr ""
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:439
+#: lib/Padre/Config.pm:424
 msgid "No open files"
 msgstr ""
 
@@ -3096,7 +3091,7 @@ msgstr ""
 msgid "Open Example"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4218 lib/Padre/Wx/Directory/TreeCtrl.pm:292
+#: lib/Padre/Wx/Main.pm:4218 lib/Padre/Wx/Directory/TreeCtrl.pm:293
 msgid "Open File"
 msgstr ""
 
@@ -3165,7 +3160,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:1142 lib/Padre/Wx/Main.pm:5900
+#: lib/Padre/PluginManager.pm:1142 lib/Padre/Wx/Main.pm:5898
 msgid "Open file"
 msgstr ""
 
@@ -3181,8 +3176,8 @@ msgstr ""
 msgid "Open in Command Line"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:227 lib/Padre/Wx/Directory/TreeCtrl.pm:243
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:302
+#: lib/Padre/Wx/ActionLibrary.pm:227 lib/Padre/Wx/Directory/TreeCtrl.pm:244
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:303
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3196,7 +3191,7 @@ msgstr ""
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:440
+#: lib/Padre/Config.pm:425
 msgid "Open session"
 msgstr ""
 
@@ -3319,11 +3314,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:463 lib/Padre/Config.pm:1101
+#: lib/Padre/MimeTypes.pm:462 lib/Padre/Config.pm:1086
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:468 lib/Padre/Config.pm:1102
+#: lib/Padre/MimeTypes.pm:467 lib/Padre/Config.pm:1087
 msgid "PPI Standard"
 msgstr ""
 
@@ -3456,11 +3451,11 @@ msgstr ""
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:155
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:156
 msgid "Please type in the new name of the directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:159
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:160
 msgid "Please type in the new name of the file"
 msgstr ""
 
@@ -3587,7 +3582,7 @@ msgstr ""
 msgid "Previous File"
 msgstr ""
 
-#: lib/Padre/Config.pm:437
+#: lib/Padre/Config.pm:422
 msgid "Previous open files"
 msgstr ""
 
@@ -3607,7 +3602,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:646
+#: lib/Padre/Config.pm:631
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -3717,7 +3712,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:205
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:206
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3798,7 +3793,7 @@ msgstr ""
 msgid "Reload some"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4407 lib/Padre/Wx/Main.pm:6402
+#: lib/Padre/Wx/Main.pm:4407 lib/Padre/Wx/Main.pm:6400
 msgid "Reload some files"
 msgstr ""
 
@@ -3838,16 +3833,16 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:368
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:370
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:369
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:371
 msgid "Rename"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:267
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:268
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:326
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:327
 msgid "Rename File"
 msgstr ""
 
@@ -3855,11 +3850,11 @@ msgstr ""
 msgid "Rename Variable"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:156
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:157
 msgid "Rename directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:160
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
 msgid "Rename file"
 msgstr ""
 
@@ -4107,8 +4102,8 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:447 lib/Padre/MimeTypes.pm:456
-#: lib/Padre/Config.pm:1100
+#: lib/Padre/MimeTypes.pm:446 lib/Padre/MimeTypes.pm:455
+#: lib/Padre/Config.pm:1085
 msgid "Scintilla"
 msgstr ""
 
@@ -4261,7 +4256,7 @@ msgstr ""
 msgid "Select distribution to install"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5122
+#: lib/Padre/Wx/Main.pm:5120
 msgid "Select files to close:"
 msgstr ""
 
@@ -4377,7 +4372,7 @@ msgstr ""
 msgid "Set the focus to the main editor window"
 msgstr ""
 
-#: lib/Padre/Config.pm:490 lib/Padre/Config.pm:501
+#: lib/Padre/Config.pm:475 lib/Padre/Config.pm:486
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4393,7 +4388,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:305
+#: lib/Padre/MimeTypes.pm:304
 msgid "Shell Script"
 msgstr ""
 
@@ -4535,11 +4530,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1119
+#: lib/Padre/Config.pm:1104
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:722
+#: lib/Padre/Config.pm:707
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -4642,7 +4637,7 @@ msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:424
+#: lib/Padre/Config.pm:409
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -4682,7 +4677,7 @@ msgstr ""
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:464
+#: lib/Padre/MimeTypes.pm:463
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -4713,7 +4708,7 @@ msgstr ""
 msgid "Space and tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6229
+#: lib/Padre/Wx/Main.pm:6227
 msgid "Space to Tab"
 msgstr ""
 
@@ -4733,12 +4728,12 @@ msgstr ""
 msgid "Special Value..."
 msgstr ""
 
-#: lib/Padre/Config.pm:1375
+#: lib/Padre/Config.pm:1350
 msgid ""
 "Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled."
 msgstr ""
 
-#: lib/Padre/Config.pm:1394
+#: lib/Padre/Config.pm:1369
 msgid ""
 "Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled."
 msgstr ""
@@ -4747,7 +4742,7 @@ msgstr ""
 msgid "Start running and/or continue running till next breakpoint or watch"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6201
+#: lib/Padre/Wx/Main.pm:6199
 msgid "Stats"
 msgstr ""
 
@@ -4849,7 +4844,7 @@ msgstr ""
 msgid "Tab display size (in spaces)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6230
+#: lib/Padre/Wx/Main.pm:6228
 msgid "Tab to Space"
 msgstr ""
 
@@ -4861,7 +4856,7 @@ msgstr ""
 msgid "Tabs to Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:409
+#: lib/Padre/MimeTypes.pm:408
 msgid "Text"
 msgstr ""
 
@@ -4908,7 +4903,7 @@ msgstr ""
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:5408
+#: lib/Padre/Wx/Main.pm:5406
 msgid "There are no differences\n"
 msgstr ""
 
@@ -4924,19 +4919,15 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1366
+#: lib/Padre/Config.pm:1341
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1385
+#: lib/Padre/Config.pm:1360
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1340
-msgid "This requires an installed Wx::Scintilla and a Padre restart"
-msgstr ""
-
-#: lib/Padre/Wx/Main.pm:5244
+#: lib/Padre/Wx/Main.pm:5242
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
@@ -4981,7 +4972,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:704
+#: lib/Padre/MimeTypes.pm:703
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5029,7 +5020,7 @@ msgstr ""
 msgid "Unsaved %d"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4987
+#: lib/Padre/Wx/Main.pm:4985
 msgid "Unsaved File"
 msgstr ""
 
@@ -5286,7 +5277,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1569
+#: lib/Padre/Wx/Editor.pm:1564
 msgid "You must select a range of lines"
 msgstr ""
 
