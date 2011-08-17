@@ -113,9 +113,7 @@ sub new {
 
 	# Allow scrolling past the end of the document for those of us
 	# used to Ultraedit where you can type into a relaxing clear space.
-	if ( $self->can('SetEndAtLastLine') ) {
-		$self->SetEndAtLastLine(0);
-	}
+	$self->SetEndAtLastLine(0);
 
 	# Integration with the rest of Padre
 	$self->SetDropTarget( Padre::Wx::FileDropTarget->new($main) );

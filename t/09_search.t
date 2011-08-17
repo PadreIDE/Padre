@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 10;
+use Test::More tests => 11;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use Padre::Search ();
@@ -14,6 +14,7 @@ ok( -f $FILENAME, "Test file $FILENAME exists" );
 
 my $SAMPLE = <<'END_TEXT';
 foo
+
 foo
 foobar
 foo bar
@@ -38,6 +39,21 @@ SCOPE: {
 	# Find a count of matches
 	my $count = $search->count_all(\$SAMPLE);
 	is( $count, 9, '->count_all ok' );
+
+	# Find the list of matches
+	my @lines = $search->match_lines( $SAMPLE, $search->search_regex );
+	is_deeply(
+		\@lines,
+		[
+			[ 1, 'foo' ],
+			[ 3, 'foo' ],
+			[ 4, 'foobar' ],
+			[ 5, 'foo bar' ],
+			[ 6, 'barfoo' ],
+			[ 7, 'bar foo' ],
+			[ 8, 'foofoofoo' ],
+		],
+	);
 }
 
 SCOPE: {

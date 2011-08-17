@@ -459,7 +459,7 @@ sub match_lines {
 		[ $_ + 1, $lines[$_] ]
 	} grep {
 		$lines[$_] =~ /$regex/
-	} @lines;
+	} ( 0 .. $#lines );
 }
 
 sub match_count {
