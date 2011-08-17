@@ -192,6 +192,8 @@ sub replace_all {
 	my $self = shift;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace_all(@_);
+	} elsif ( Params::Util::_SCALAR0($_[0]) ) {
+		return $self->scalar_replace_all(@_);
 	}
 	die "Missing or invalid content object to search in";
 }
@@ -200,6 +202,8 @@ sub count_all {
 	my $self = shift;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_count_all(@_);
+	} elsif ( Params::Util::_SCALAR0($_[0]) ) {
+		return $self->scalar_replace_all(@_);
 	}
 	die "Missing or invalid content object to search in";
 }
@@ -344,6 +348,34 @@ sub editor_replace_all {
 
 #####################################################################
 # Scalar Interaction
+
+sub scalar_replace_all {
+	my $self   = shift;
+	my $scalar = shift;
+	unless ( Params::Util::_SCALAR0($scalar) ) {
+		die "Failed to provide SCALAR to count in";
+	}
+
+	# Execute the search for all matches
+	my ( undef, undef, @matches ) = $self->matches(
+		$$scalar,
+		$self->search_regex,
+	);
+
+	# Replace the matches
+	my $replace = $self->replace_term;
+	foreach my $match ( reverse @matches ) {
+		substr(
+			$$scalar,
+			$match->[0],
+			$match->[1] - $match->[0],
+			$replace,
+		);
+	}
+
+	# Return the number of matches we replaced
+	return scalar @matches;
+}
 
 sub scalar_count_all {
 	my $self   = shift;

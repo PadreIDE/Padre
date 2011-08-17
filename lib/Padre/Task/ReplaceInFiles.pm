@@ -50,6 +50,9 @@ sub new {
 		) or return;
 	}
 
+	# Always a dry-run for now
+	$self->{dryrun} = 1;
+
 	return $self;
 }
 
@@ -134,6 +137,10 @@ sub run {
 				warn "Unknown or unsupported file type for $fullname";
 				next;
 			}
+			unless ( -w _ ) {
+				warn "No write permissions for $fullname";
+				next;
+			}
 
 			# This is a file
 			my $object = Padre::Wx::Directory::Path->file( @path, $file );
@@ -155,16 +162,25 @@ sub run {
 			my $buffer = do { local $/; <$fh> };
 			close $fh;
 
-			# Hand off to the compiled search object
-			my @lines = $self->{search}->match_lines(
-				$buffer,
-				$self->{search}->search_regex,
-			);
-			TRACE( "Found " . scalar(@lines) . " matches in " . $fullname ) if DEBUG;
-			next unless @lines;
+			# Allow the search object to do the main work
+			local $@;
+			my $count = eval {
+				$self->{search}->replace_all( \$buffer )
+			};
+			if ( $@ ) {
+				TRACE("Replace crashed in $fullname") if DEBUG;
+				next;
+			}
+			next unless $count;
 
-			# Found results, inform our owner
-			$self->message( OWNER => $object, @lines );
+			# Save the changed file
+			TRACE( "Replaced $count matches in $fullname" ) if DEBUG;
+			unless ( $self->{dryrun} ) {
+				die "Save not implemented";
+			}
+
+			# Made changes, inform out owner
+			$self->message( OWNER => $object, $count );
 		}
 		unshift @queue, @children;
 	}
