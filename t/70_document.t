@@ -59,7 +59,7 @@ use Padre::Document::Perl;
 use Padre::MimeTypes;
 use Padre::Locale ();
 
-my $config = PadreTest::Config->new();
+my $config = PadreTest::Config->new;
 
 # Fake that Perl 6 support is enabled
 Padre::MimeTypes->add_mime_class( 'application/x-perl6', 'Padre::Document::Perl' );
