@@ -293,6 +293,20 @@ sub editor_replace {
 	$self->search_next($editor);
 }
 
+sub editor_count_all {
+	my $self   = shift;
+	my $editor = shift;
+	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
+		die "Failed to provide editor object to count in";
+	}
+
+	# Execute the regex search for all matches
+	$self->match_count(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+	);
+}
+
 sub editor_replace_all {
 	my $self   = shift;
 	my $editor = shift;
@@ -323,21 +337,25 @@ sub editor_replace_all {
 	return scalar @matches;
 }
 
-sub editor_count_all {
+
+
+
+
+#####################################################################
+# Scalar Interaction
+
+sub scalar_count_all {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die "Failed to provide editor object to replace in";
+	my $scalar = shift;
+	unless ( Params::Util::_SCALAR0($scalar) ) {
+		die "Failed to provide SCALAR to count in";
 	}
 
-	# Execute the search for all matches
-	my ( undef, undef, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
+	# Execute the regex search for all matches
+	$self->match_count(
+		$$scalar,
 		$self->search_regex,
-		$editor->GetSelection,
 	);
-
-	return scalar @matches;
 }
 
 
@@ -345,7 +363,7 @@ sub editor_count_all {
 
 
 #####################################################################
-# Core Search
+# Core Search Methods
 
 =pod
 
@@ -407,20 +425,26 @@ sub matches {
 	return ( @$pair, @matches );
 }
 
-# NOTE: This current fails to work with multi-line searche expressions
+# NOTE: This current fails to work with multi-line search expressions
 sub match_lines {
-	my ( $self, $selected_text, $regex ) = @_;
+	my $self  = shift;
+	my @lines = split /\n/, Encode::encode( 'utf-8', shift );
+	my $regex = shift;
 
-	# Searches run in unicode
-	my $text = Encode::encode( 'utf-8', $selected_text );
-	my @lines = split( /\n/, $text );
+	# Apply the search regex as a filter
+	return map {
+		[ $_ + 1, $lines[$_] ]
+	} grep {
+		$lines[$_] =~ /$regex/
+	} @lines;
+}
 
-	my @matches = ();
-	foreach my $i ( 0 .. $#lines ) {
-		next unless $lines[$i] =~ /$regex/;
-		push @matches, [ $i + 1, $lines[$i] ];
-	}
-	return @matches;
+sub match_count {
+	my $self  = shift;
+	my $text  = Encode::encode( 'utf-8', shift );
+	my $regex = shift;
+	my $count =()= $text =~ /$regex/;
+	return $count;
 }
 
 1;
