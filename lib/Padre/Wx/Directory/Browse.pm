@@ -78,7 +78,6 @@ sub run {
 	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
 	my $self   = shift;
-	my $handle = $self->handle;
 	my $root   = $self->{root};
 	my $list   = $self->{list};
 	my @queue  = @$list;
@@ -189,8 +188,8 @@ sub run {
 		# Step 3 - Send the completed directory back to the parent process
 		#          Don't send a response if the directory is empty.
 		#          Also skip if we are running in the parent and have no handle.
-		if ( $handle and @objects ) {
-			$handle->message( OWNER => $request, map { $_->[0] } @objects );
+		if ( $self->is_child and @objects ) {
+			$self->message( OWNER => $request, map { $_->[0] } @objects );
 		}
 	}
 
