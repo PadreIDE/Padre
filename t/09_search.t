@@ -7,7 +7,8 @@ use warnings;
 use Test::More tests => 11;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
-use Padre::Search ();
+use t::lib::Padre;
+use Padre::Search;
 
 my $FILENAME = catfile('lib', 'Padre.pm');
 ok( -f $FILENAME, "Test file $FILENAME exists" );
