@@ -6,14 +6,12 @@ package Padre::Wx::ReplaceInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Basename        ();
 use File::Spec            ();
-use Params::Util          ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx             ();
 use Padre::Wx::TreeCtrl   ();
+use Padre::Wx             ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -141,50 +139,25 @@ sub replace_message {
 	my $name  = $path->name;
 	my $dir   = File::Spec->catfile( $task->root, $path->dirs );
 	my $full  = File::Spec->catfile( $task->root, $path->path );
-	my $lines = scalar @_;
-	my $label =
-		$lines > 1
-		? sprintf(
-		Wx::gettext('%s (%s results)'),
-		$full,
-		$lines,
-		)
-		: $full;
-	my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
-	$self->SetPlData(
-		$file,
-		{   dir  => $dir,
-			file => $name,
-		}
-	);
+	my $count = shift or next;
+	if ( $count > 0 ) {
+		my $label = sprintf( Wx::gettext('%s (%s changed)'), $full, $count );
+		my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+		$self->SetPlData( $file, { dir => $dir, file => $name } );
 
-	# Add the lines nodes to the tree
-	foreach my $row (@_) {
-
-		# Tabs don't display properly
-		$row->[1] =~ s/\t/    /g;
-		my $line = $self->AppendItem(
-			$file,
-			$row->[0] . ': ' . $row->[1],
-			$self->{images}->{result},
-		);
-		$self->SetPlData(
-			$line,
-			{   dir  => $dir,
-				file => $name,
-				line => $row->[0],
-				msg  => $row->[1],
-			}
-		);
+		# Update statistics
+		$self->{matches} += $count;
+		$self->{files}   += 1;
+	} else {
+		my $label = sprintf( Wx::gettext('%s (crashed)'), $full );
+		my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+		$self->SetItemTextColour( $file => Padre::Wx::color('990000') );
+		$self->SetItemBold( $file => 1 );
+		$self->SetPlData( $file => { dir => $dir, file => $name } );
 	}
 
-	# Update statistics
-	$self->{matches} += $lines;
-	$self->{files}   += 1;
-
-	# Ensure both the root and the new file are expanded
+	# Ensure the root is expanded
 	$self->Expand($root);
-	$self->Expand($file);
 
 	return 1;
 }
@@ -202,7 +175,7 @@ sub replace_finish {
 		$self->SetItemText(
 			$root,
 			sprintf(
-				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
+				Wx::gettext(q{Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
 				$term,
 				$self->{matches},
 				$self->{files},

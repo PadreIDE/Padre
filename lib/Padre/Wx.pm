@@ -42,12 +42,9 @@ BEGIN {
 # Enable the second-generation API
 BEGIN {
 	if ( 1 ) {
-		$DB::single = 1;
-
-		my $n = 0;
-
 		# Scan for all of the Wx::wxFOO AUTOLOAD functions and
 		# check that we can create Wx::FOO constants.
+		my $n         = 0;
 		my %constants = ();
 		foreach my $function ( sort map { /^wx([A-Z].+)$/ ? $1 : () } keys %Wx:: ) {
 			next if $function eq 'VERSION';
