@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 04:10-0700\n"
+"POT-Creation-Date: 2011-08-17 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgid ""
 "# Output goes to $_\n"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:144
+#: lib/Padre/Wx/ReplaceInFiles.pm:145
 #, perl-format
 msgid "%s (%s changed)"
 msgstr ""
@@ -53,7 +53,7 @@ msgstr ""
 msgid "%s (%s results)"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:152
+#: lib/Padre/Wx/ReplaceInFiles.pm:153
 #, perl-format
 msgid "%s (crashed)"
 msgstr ""
@@ -1761,7 +1761,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:808
+#: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:812
 #: lib/Padre/Wx/Main.pm:4902 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:274
@@ -2226,7 +2226,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1581
+#: lib/Padre/Wx/Editor.pm:1585
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2994,7 +2994,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:189
+#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:190
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -3899,7 +3899,7 @@ msgstr ""
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:178
+#: lib/Padre/Wx/ReplaceInFiles.pm:179
 #, perl-format
 msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -3909,7 +3909,7 @@ msgstr ""
 msgid "Replace failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:232 lib/Padre/Wx/FBP/ReplaceInFiles.pm:29
+#: lib/Padre/Wx/ReplaceInFiles.pm:233 lib/Padre/Wx/FBP/ReplaceInFiles.pm:29
 msgid "Replace in Files"
 msgstr ""
 
@@ -3927,7 +3927,7 @@ msgstr ""
 msgid "Replaced %d matches"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:119
+#: lib/Padre/Wx/ReplaceInFiles.pm:120
 #, perl-format
 msgid "Replacing '%s' in '%s'..."
 msgstr ""
@@ -5286,7 +5286,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1565
+#: lib/Padre/Wx/Editor.pm:1569
 msgid "You must select a range of lines"
 msgstr ""
 
