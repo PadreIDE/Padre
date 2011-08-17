@@ -44,9 +44,10 @@ sub new {
 	# Create the embedded search object
 	unless ( $self->{search} ) {
 		$self->{search} = Padre::Search->new(
-			find_term  => $self->{find_term},
-			find_case  => $self->{find_case},
-			find_regex => $self->{find_regex},
+			find_term    => $self->{find_term},
+			find_case    => $self->{find_case},
+			find_regex   => $self->{find_regex},
+			replace_term => $self->{replace_term},
 		) or return;
 	}
 

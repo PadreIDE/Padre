@@ -59,11 +59,9 @@ sub new {
 	);
 
 	# Recursive Replace
-	if (Padre::Feature::REPLACEINFILES) {
-		$self->add_menu_action(
-			'search.replace_in_files',
-		);
-	}
+	$self->add_menu_action(
+		'search.replace_in_files',
+	);
 
 	# Special Search
 

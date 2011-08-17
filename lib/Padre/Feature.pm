@@ -56,7 +56,6 @@ constant->import(
 
 		# Experimental features users can enable
 		QUICK_FIX       => $config->feature_quick_fix,
-		REPLACEINFILES  => $config->feature_replaceinfiles,
 		SYNC            => $config->feature_sync,
 		STYLE_GUI       => $config->feature_style_gui,
 		WIZARD_SELECTOR => $config->feature_wizard_selector,

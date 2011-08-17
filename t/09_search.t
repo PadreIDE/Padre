@@ -4,10 +4,13 @@
 
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::More tests => 10;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use Padre::Search ();
+
+my $FILENAME = catfile('lib', 'Padre.pm');
+ok( -f $FILENAME, "Test file $FILENAME exists" );
 
 my $SAMPLE = <<'END_TEXT';
 foo
@@ -54,4 +57,32 @@ SCOPE: {
 		find_term => 'abc',
 	)->count_all(\$copy);
 	is( $abc, 9, 'Found 9 copies of the replace_term' );
+}
+
+
+
+
+
+######################################################################
+# Regression Tests
+
+SCOPE: {
+	my $replace = new_ok( 'Padre::Search' => [
+		find_term    => 'Padre',
+		replace_term => 'Padre2',
+	] );
+
+	# Load a known-bad file
+	open( my $fh, '<', $FILENAME ) or die "open: $!";
+	my $buffer = do { local $/; <$fh> };
+	close $fh;
+
+	# Apply the replace
+	local $@;
+	my $count = eval {
+		$replace->replace_all(\$buffer);
+	};
+	is( $@, '', '->replace_all in unicode file does not crash' );
+	diag($@) if $@;
+	ok( $count, 'Replaced ok' );
 }

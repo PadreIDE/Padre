@@ -122,9 +122,10 @@ sub as_search {
 	my $self = shift;
 	require Padre::Search;
 	Padre::Search->new(
-		find_term  => $self->find_term->SaveValue,
-		find_case  => $self->find_case->GetValue,
-		find_regex => $self->find_regex->GetValue,
+		find_term    => $self->find_term->SaveValue,
+		find_case    => $self->find_case->GetValue,
+		find_regex   => $self->find_regex->GetValue,
+		replace_term => $self->replace_term->GetValue,
 	);
 }
 

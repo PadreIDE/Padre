@@ -1348,14 +1348,6 @@ setting(
 	default => 0,
 );
 
-# Enable experimental Replace in Files support.
-setting(
-	name    => 'feature_replaceinfiles',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-
 # Enable experimental expanded style support
 setting(
 	name    => 'feature_style_gui',

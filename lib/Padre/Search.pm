@@ -356,26 +356,15 @@ sub scalar_replace_all {
 		die "Failed to provide SCALAR to count in";
 	}
 
-	# Execute the search for all matches
-	my ( undef, undef, @matches ) = $self->matches(
-		$$scalar,
-		$self->search_regex,
-		-1, -1, # Null selection
-	);
-
-	# Replace the matches
+	# Prepare the search and replace
+	my $search  = $self->search_regex;
 	my $replace = $self->replace_term;
-	foreach my $match ( reverse @matches ) {
-		substr(
-			$$scalar,
-			$match->[0],
-			$match->[1] - $match->[0],
-			$replace,
-		);
-	}
 
-	# Return the number of matches we replaced
-	return scalar @matches;
+	# Do the replacement
+	my $count = $$scalar =~ s/$search/$replace/g;
+
+	# Return the replace count
+	return $count;
 }
 
 sub scalar_count_all {

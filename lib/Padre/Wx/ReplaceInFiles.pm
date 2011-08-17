@@ -229,7 +229,7 @@ sub bottom {
 }
 
 sub gettext_label {
-	Wx::gettext('Find in Files');
+	Wx::gettext('Replace in Files');
 }
 
 sub select {
