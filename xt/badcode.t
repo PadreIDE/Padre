@@ -34,27 +34,27 @@ my @t_files = glob "t/*.t";
 plan( tests => scalar( keys %modules ) * 10 + scalar(@t_files) );
 
 my %SKIP = map { ( "t/$_" => 1 ) } qw(
-	01-load.t
-	06-utils.t
-	07-version.t
-	08-style.t
-	14-warnings.t
+	01_load.t
+	06_utils.t
+	07_version.t
+	08_style.t
+	14_warnings.t
 	21_task_thread.t
 	22_task_worker.t
 	23_task_chain.t
 	24_task_master.t
 	25_task_handle.t
 	26_task_eval.t
-	41-perl-project.t
-	42-perl-project-temp.t
-	61-directory-path.t
-	62-directory-task.t
-	63-directory-project.t
-	83-autosave.t
-	85-commandline.t
-	92-padre-file.t
-	93-padre-filename-win.t
-	94-padre-file-remote.t
+	41_perl_project.t
+	42_perl_project_temp.t
+	61_directory_path.t
+	62_directory_task.t
+	63_directory_project.t
+	83_autosave.t
+	85_commandline.t
+	92_padre_file.t
+	93_padre_filename_win.t
+	94_padre_file_remote.t
 );
 
 # A pathetic way to try to avoid tests that would use the real ~/.padre of the user
