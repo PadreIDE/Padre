@@ -267,21 +267,18 @@ sub run {
 	my $task = $self->task;
 
 	# Create the inbox for the handle
-	$self->{inbox} = [];
+	local $self->{inbox} = [];
 
 	# Create a circular reference back from the task
 	# HACK: This is pretty damned evil, find a better way
-	$task->{handle} = $self;
+	local $task->{handle} = $self;
 
 	# Call the task's run method
-	eval { $task->run; };
-
-	# Clean up the temps
-	delete $task->{handle};
-	delete $self->{inbox};
-
-	# Save the exception if thrown
+	eval {
+		$task->run;
+	};
 	if ($@) {
+		# Save the exception
 		TRACE("Exception in task during 'run': $@") if DEBUG;
 		$self->{exception} = $@;
 		return !1;
