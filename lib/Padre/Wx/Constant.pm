@@ -91,6 +91,7 @@ use Wx ( qw{
 	:staticline
 	:statusbar
 	:stc
+	:systemsettings
 	:textctrl
 	:timer
 	:toolbar
