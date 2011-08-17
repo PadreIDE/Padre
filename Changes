@@ -22,6 +22,8 @@ the even version for the release, even during development.
       double-width border (ADAMK)
     - Wx constants are now Wx::FOO instead of Wx::wxFOO... and these ones are
       actually constants instead of strange AUTOLOAD weirdness (ADAMK)
+    - We now SetEndAtLastLine(0) on editor panels so you can scroll one page
+      past the end of the document and type into relaxing clear space (ADAMK)
 
 0.91 Development version, not released
     - Padre::Task objects are no longer aware they are being surrounded by a
