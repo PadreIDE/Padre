@@ -1445,9 +1445,9 @@ sub refresh {
 		if ( defined $id and $id >= 0 ) {
 			$notebook->GetPage($id)->SetFocus;
 		}
-		$self->aui->GetPane('notebook')->PaneBorder(0);
-	} else {
-		$self->aui->GetPane('notebook')->PaneBorder(1);
+		# $self->aui->GetPane('notebook')->PaneBorder(0);
+	# } else {
+		# $self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
 	return;

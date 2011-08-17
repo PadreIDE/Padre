@@ -15,6 +15,9 @@ the even version for the release, even during development.
 
 0.92 TBA
     - Added plugin compatibility tracking to Padre::Search (ADAMK)
+    - Wx doesn't seem to let us change the PaneBorder setting after pane
+      creation, so leave it off and have an empty area rather than have a
+      double-width border (ADAMK)
 
 0.91 Development version, not released
     - Padre::Task objects are no longer aware they are being surrounded by a

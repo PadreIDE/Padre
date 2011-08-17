@@ -49,7 +49,7 @@ sub new {
 			Floatable      => 1,
 			Dockable       => 1,
 			Layer          => 1,
-			)->CenterPane,
+			)->Center,
 	);
 	$aui->caption(
 		'notebook' => Wx::gettext('Files'),
