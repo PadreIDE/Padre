@@ -17,7 +17,12 @@ the even version for the release, even during development.
 0.92 TBA
 
 0.91 Development version, not released
-
+    - Padre::Task objects are no longer aware they are being surrounded by a
+      Padre::TaskHandle, breaking compatibility for much cleaner encapsulation.
+      The ->handle method has been removed. Status messages now go via
+      Padre::Task::status and messages go via Padre::Task::message, both of
+      which have been moved down into the task class from the task handle
+      class (ADAMK)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)

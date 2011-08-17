@@ -84,7 +84,7 @@ sub run {
 sub stdout {
 	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
-	$self->handle->status( $_[0] ) if $self->running;
+	$self->status( $_[0] ) if $self->running;
 	return 1;
 }
 

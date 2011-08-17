@@ -302,13 +302,6 @@ sub stopped {
 	$_[0]->message( 'STOPPED', $_[0]->{task} );
 }
 
-# Set the parent status bar to some string (or blank if null)
-sub status {
-	my $self = shift;
-	my $string = @_ ? shift : '';
-	$self->message( STATUS => $string );
-}
-
 # Has this task been cancelled by the parent?
 sub cancel {
 	my $self = shift;

@@ -162,7 +162,7 @@ use Padre::Current    ();
 use Padre::Role::Task ();
 
 our $VERSION    = '0.91';
-our $COMPATIBLE = '0.65';
+our $COMPATIBLE = '0.91';
 
 =pod
 
@@ -292,10 +292,6 @@ method, if one was defined.
 
 sub on_finish {
 	$_[0]->{on_finish} || 'task_finish';
-}
-
-sub handle {
-	$_[0]->{handle};
 }
 
 sub running {
@@ -529,6 +525,40 @@ execution of C<run>.
 
 sub cancel {
 	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
+}
+
+=pod
+
+=head2 status
+
+  # Indicate we are waiting, but only while we are waiting
+  $task->status('Waiting...');
+  sleep 5
+  $task->status;
+
+The C<status> method allows a task to trickle informative status messages up to
+the parent thread. These messages serve a dual purpose.
+
+Firstly, the messages will (or at least I<may>) be displayed to the user to
+indicate progress through a long asynchronous background task. For example, a
+filesystem search task might send a status message for each directory that it
+examines, so that the user can monitor the task speed and level of completion.
+
+Secondly, the regular flow of messages from the task indicates to the
+L<Padre::TaskManager> that the task is running correctly, making progress
+through its assigned workload, and has probably not crashed or hung.
+
+While the task manager does not currently kill hanging threads, it will almost
+certainly do so in the future. And so it may even be worth sending a periodic
+null status message every few seconds just to assure the task manager that your
+long-running task is still alive.
+
+=cut
+
+sub status {
+	my $self   = shift;
+	my $string = @_ ? shift : '';
+	$self->message( STATUS => $string );
 }
 
 # Send a message to the child (if running) if called in the parent.

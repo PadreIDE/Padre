@@ -81,7 +81,7 @@ sub run {
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			$self->handle->status;
+			$self->status;
 			return 1;
 
 		}
@@ -98,7 +98,7 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->handle->status( "Searching... " . $parent->unix );
+		$self->status( "Searching... " . $parent->unix );
 
 		my @children = ();
 		foreach my $file (@list) {
@@ -110,7 +110,7 @@ sub run {
 			# Abort the task if we've been cancelled
 			if ( $self->cancel ) {
 				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-				$self->handle->status;
+				$self->status;
 				return 1;
 			}
 
@@ -170,7 +170,7 @@ sub run {
 	}
 
 	# Notify our parent we are finished searching
-	$self->handle->status;
+	$self->status;
 
 	return 1;
 }

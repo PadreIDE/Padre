@@ -102,7 +102,7 @@ sub run {
 		# Abort the task if we've been cancelled
 		if ( $self->cancel ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			$self->handle->status;
+			$self->status;
 			return 1;
 		}
 
@@ -129,7 +129,7 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->handle->status( "Searching... " . $object->unix );
+		$self->status( "Searching... " . $object->unix );
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
@@ -139,7 +139,7 @@ sub run {
 			# Abort the task if we've been cancelled
 			if ( $self->cancel ) {
 				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-				$self->handle->status;
+				$self->status;
 				return 1;
 			}
 
@@ -228,7 +228,7 @@ sub run {
 	}
 
 	# Notify our parent we are finished searching
-	$self->handle->status;
+	$self->status;
 
 	return 1;
 }

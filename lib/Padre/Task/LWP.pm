@@ -144,13 +144,13 @@ sub run {
 	# Execute the request.
 	# It's not up to us to judge success or failure at this point,
 	# we just do the heavy lifting of the request itself.
-	$self->handle->status(
+	$self->status(
 		join ' ', $method, $url, '...',
 	) if $self->running;
 
 	$self->{response} = $useragent->request($request);
 
-	$self->handle->status(
+	$self->status(
 		join ' ', $method, $url, '-->',
 		$self->{response}->code,
 		$self->{response}->message,
