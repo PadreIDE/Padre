@@ -67,6 +67,7 @@ sub wx_scintilla_ready {
 	if ( Padre::Config->read->feature_wx_scintilla ) {
 		eval 'use Wx::Scintilla';
 		$enabled = 1 unless $@;
+		TRACE("Wx::Scintilla error: $@") if DEBUG;
 	}
 	eval 'use Wx::STC' unless $enabled;
 	return $enabled;
