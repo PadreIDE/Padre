@@ -21,7 +21,6 @@ use Wx::Event  (':everything');
 use Wx::DND    ();
 use Wx::AUI    ();
 use Wx::Locale ();
-use Wx::STC    ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
