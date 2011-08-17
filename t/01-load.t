@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 37 );
+plan( tests => 36 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -45,7 +45,6 @@ use_ok('Padre::Task');
 use_ok('Padre::TaskThread');
 use_ok('Padre::TaskHandle');
 use_ok('Padre::TaskManager');
-use_ok('Padre::TaskProcess');
 use_ok('Padre::TaskWorker');
 use_ok('Padre::Role::Task');
 
