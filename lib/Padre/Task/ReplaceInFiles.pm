@@ -30,6 +30,9 @@ sub new {
 	}
 
 	# Property defaults
+	unless ( defined $self->{dryrun} ) {
+		$self->{dryrun} = 0;
+	}
 	unless ( defined $self->{binary} ) {
 		$self->{binary} = 0;
 	}
@@ -50,9 +53,6 @@ sub new {
 			replace_term => $self->{replace_term},
 		) or return;
 	}
-
-	# Always a dry-run for now
-	$self->{dryrun} = 1;
 
 	return $self;
 }
@@ -178,7 +178,10 @@ sub run {
 			# Save the changed file
 			TRACE( "Replaced $count matches in $fullname" ) if DEBUG;
 			unless ( $self->{dryrun} ) {
-				die "Save not implemented";
+				open( my $fh, '>', $fullname ) or next;
+				local $/;
+				$fh->print($buffer);
+				close $fh;
 			}
 
 			# Made changes, inform out owner

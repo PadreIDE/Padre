@@ -109,6 +109,7 @@ sub replace {
 		task       => 'Padre::Task::ReplaceInFiles',
 		on_message => 'replace_message',
 		on_finish  => 'replace_finish',
+		dryrun     => 0,
 		%param,
 	);
 	$self->clear;
