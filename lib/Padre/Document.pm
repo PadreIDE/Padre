@@ -421,7 +421,7 @@ sub default_newline_type {
 	my $self = shift;
 
 	# Very ugly hack to make the test script work
-	if ( $0 =~ /t.70\-document\.t/ ) {
+	if ( $0 =~ /t.70_document\.t/ ) {
 		return Padre::Constant::NEWLINE;
 	}
 
