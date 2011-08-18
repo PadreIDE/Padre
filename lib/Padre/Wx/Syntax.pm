@@ -92,9 +92,9 @@ sub new {
 	);
 	$self->{help}->Hide;
 
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer->Add( $self->{tree}, 3, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$sizer->Add( $self->{help}, 2, Wx::wxALL | Wx::wxEXPAND, 2 );
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 2 );
+	$sizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 2 );
 	$self->SetSizer($sizer);
 
 	# Additional properties

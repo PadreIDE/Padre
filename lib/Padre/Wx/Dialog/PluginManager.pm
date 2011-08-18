@@ -155,35 +155,35 @@ sub new {
 	# Dialog Layout
 
 	# Horizontal button sizer
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_main},        0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{button_preferences}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{button_main},        0, Wx::ALL, 1 );
+	$buttons->Add( $self->{button_preferences}, 0, Wx::ALL, 1 );
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{button_close}, 0, Wx::ALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Horizontal plug-in name positioning
-	my $header = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $header = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$header->AddStretchSpacer;
-	$header->Add( $self->{label}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
+	$header->Add( $self->{label}, 0, Wx::EXPAND | Wx::ALIGN_CENTER, 1 );
 	$header->AddStretchSpacer;
 
 	# Vertical layout of the right hand side
 	my $right = Wx::BoxSizer->new(Wx::VERTICAL);
-	$right->Add( $header, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$right->Add( $header, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$right->Add(
 		$self->{whtml},
 		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		Wx::ALL | Wx::ALIGN_TOP | Wx::ALIGN_CENTER_HORIZONTAL | Wx::EXPAND,
 		1
 	);
-	$right->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$right->Add( $buttons, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Main sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$sizer->Add( $right,        1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizer->Add( $self->{list}, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$sizer->Add( $right,        1, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Tune the size and position it appears
 	$self->SetSizer($sizer);
@@ -358,7 +358,7 @@ sub show_error_message {
 	# @INC gets printed out between () remove that for now
 	$message =~ s/\(\@INC.*\)//;
 
-	Wx::MessageBox( $message, $title, Wx::OK | Wx::wxCENTER, $self );
+	Wx::MessageBox( $message, $title, Wx::OK | Wx::CENTRE, $self );
 }
 
 #

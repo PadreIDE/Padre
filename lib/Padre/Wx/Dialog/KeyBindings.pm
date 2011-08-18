@@ -40,7 +40,7 @@ sub new {
 	$self->SetMinSize( [ 770, 550 ] );
 
 	# Create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	# Create the controls
 	$self->_create_controls($sizer);
@@ -144,46 +144,46 @@ sub _create_controls {
 	#
 
 	# Filter sizer
-	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $filter_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$filter_sizer->Add( $filter_label,   0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$filter_sizer->Add( $self->{filter}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	# Ctrl/Alt Modifier sizer
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$modifier_sizer->AddSpacer(3);
-	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{alt}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	# Value setter sizer
-	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $shortcut_label, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $value_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$value_sizer->Add( $shortcut_label, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
-	$value_sizer->Add( $modifier_sizer, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $modifier_sizer, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $plus_label_1, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $plus_label_1, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $self->{shift}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{shift}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $plus_label_2, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $plus_label_2, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $self->{key}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
-	$value_sizer->Add( $self->{button_set},    0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{button_delete}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{button_reset},  0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_set},    0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_delete}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_reset},  0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $self->{button_close}, 1, Wx::wxLEFT, 5 );
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{button_close}, 1, Wx::LEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_sizer, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $value_sizer,  0, Wx::ALL | Wx::EXPAND, 3 );
 	$vsizer->AddSpacer(5);
-	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->Add( $button_sizer, 0, Wx::ALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
 	# Hide value and info sizer at startup
@@ -194,7 +194,7 @@ sub _create_controls {
 	$self->{vsizer} = $vsizer;
 
 	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	return;
 }

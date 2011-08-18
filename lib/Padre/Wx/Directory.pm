@@ -126,10 +126,10 @@ sub new {
 
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new(Wx::VERTICAL);
-	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerv->Add( $self->{tree},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerh->Add( $sizerv,         1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	my $sizerh = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizerv->Add( $self->{search}, 0, Wx::ALL | Wx::EXPAND, 0 );
+	$sizerv->Add( $self->{tree},   1, Wx::ALL | Wx::EXPAND, 0 );
+	$sizerh->Add( $sizerv,         1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);

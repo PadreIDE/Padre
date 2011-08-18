@@ -79,12 +79,12 @@ sub new {
 	$self->{sizer} = Wx::FlexGridSizer->new( 1, 1, 10, 10 );
 	$self->{sizer}->AddGrowableCol(0);
 	$self->{sizer}->AddGrowableRow(0);
-	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
+	$self->{sizer}->Add( $self->{notebook}, 0, Wx::GROW | Wx::EXPAND, 0 );
 
 	# Hide the dialog when the user presses the ESCape key or clicks Close button
 	# Please see ticket:573
 	my $button = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
-	$self->{sizer}->Add( $button, 0, Wx::wxALIGN_CENTER, 0 );
+	$self->{sizer}->Add( $button, 0, Wx::ALIGN_CENTER, 0 );
 	$self->{sizer}->AddSpacer(0);
 	$self->SetSizer( $self->{sizer} );
 

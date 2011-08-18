@@ -41,7 +41,7 @@ sub new {
 	$self->SetMinSize( [ 380, 500 ] );
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{sizer} = $sizer;
 
 	# Create the controls
@@ -276,10 +276,10 @@ sub _create_controls {
 		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{insert_button}, 0, Wx::ALL, 1 );
+	$buttons->Add( $self->{close_button},  0, Wx::ALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Modifiers
@@ -296,55 +296,55 @@ sub _create_controls {
 
 	# Dialog Layout
 
-	my $modifiers = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $modifiers = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$modifiers->AddStretchSpacer;
-	$modifiers->Add( $self->{ignore_case}, 0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{single_line}, 0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{global},      0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{ignore_case}, 0, Wx::ALL, 1 );
+	$modifiers->Add( $self->{single_line}, 0, Wx::ALL, 1 );
+	$modifiers->Add( $self->{multi_line},  0, Wx::ALL, 1 );
+	$modifiers->Add( $self->{extended},    0, Wx::ALL, 1 );
+	$modifiers->Add( $self->{global},      0, Wx::ALL, 1 );
 
 	$modifiers->AddStretchSpacer;
 
 	my $regex = Wx::BoxSizer->new(Wx::VERTICAL);
-	$regex->Add( $self->{regex}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$regex->Add( $self->{regex}, 1, Wx::ALL | Wx::EXPAND, 1 );
 
 	my $regex_groups = Wx::BoxSizer->new(Wx::VERTICAL);
 	foreach my $code ( sort keys %regex_groups ) {
 		my $button_name = $code . '_button';
-		$regex_groups->Add( $self->{$button_name}, 0, Wx::wxEXPAND, 1 );
+		$regex_groups->Add( $self->{$button_name}, 0, Wx::EXPAND, 1 );
 	}
 
-	my $combined = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$combined->Add( $regex,        2, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$combined->Add( $regex_groups, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	my $combined = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$combined->Add( $regex,        2, Wx::ALL | Wx::EXPAND, 0 );
+	$combined->Add( $regex_groups, 0, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
-	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $modifiers, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$left->AddSpacer(5);
-	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $regex_label, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $combined,    0, Wx::ALL | Wx::EXPAND, 2 );
 
-	$left->Add( $self->{description_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{description_text},     2, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{description_checkbox}, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{description_text},     2, Wx::ALL | Wx::EXPAND, 1 );
 
-	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $matched_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{matched_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $original_label,        0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $matched_label,         0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{matched_text},  1, Wx::ALL | Wx::EXPAND, 1 );
 
-	$left->Add( $self->{replace_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{replace_label},    0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{replace_text},     1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_label},     0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text},      1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace_checkbox}, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{replace_label},    0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{replace_text},     1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{result_label},     0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{result_text},      1, Wx::ALL | Wx::EXPAND, 1 );
 
 	$left->AddSpacer(5);
-	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $buttons, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Main sizer
-	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $left, 1, Wx::ALL | Wx::EXPAND, 5 );
 }
 
 sub _bind_events {

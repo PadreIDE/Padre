@@ -53,7 +53,7 @@ sub new {
 	$self->{sizer}->Add(
 		$self->{renderer},
 		1, # Growth proportion
-		Wx::wxEXPAND,
+		Wx::EXPAND,
 		5, # Border size
 	);
 

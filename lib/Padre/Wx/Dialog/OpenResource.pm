@@ -184,11 +184,11 @@ sub _create_buttons {
 		Wx::gettext('&Cancel'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	$buttons->Add( $self->{ok_button},     0, Wx::ALL | Wx::EXPAND, 5 );
+	$buttons->Add( $self->{cancel_button}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$self->{sizer}->Add( $buttons, 0, Wx::ALL | Wx::EXPAND | Wx::ALIGN_CENTER, 5 );
 
 	Wx::Event::EVT_BUTTON( $self, Wx::ID_OK, \&ok_button );
 }
@@ -276,22 +276,22 @@ sub _create_controls {
 
 	my $hb;
 	$self->{sizer}->AddSpacer(10);
-	$self->{sizer}->Add( $search_label, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$hb = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{sizer}->Add( $search_label, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$hb = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$hb->AddSpacer(2);
-	$hb->Add( $self->{search_text},  1, Wx::wxALIGN_CENTER_VERTICAL, 2 );
-	$hb->Add( $self->{popup_button}, 0, Wx::wxALL | Wx::wxEXPAND,    2 );
+	$hb->Add( $self->{search_text},  1, Wx::ALIGN_CENTER_VERTICAL, 2 );
+	$hb->Add( $self->{popup_button}, 0, Wx::ALL | Wx::EXPAND,    2 );
 	$hb->AddSpacer(1);
-	$self->{sizer}->Add( $hb,                   0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$self->{sizer}->Add( $matches_label,        0, Wx::wxALL | Wx::wxEXPAND,    2 );
-	$self->{sizer}->Add( $self->{matches_list}, 1, Wx::wxALL | Wx::wxEXPAND,    2 );
-	$hb = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{sizer}->Add( $hb,                   0, Wx::BOTTOM | Wx::EXPAND, 5 );
+	$self->{sizer}->Add( $matches_label,        0, Wx::ALL | Wx::EXPAND,    2 );
+	$self->{sizer}->Add( $self->{matches_list}, 1, Wx::ALL | Wx::EXPAND,    2 );
+	$hb = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$hb->AddSpacer(2);
-	$hb->Add( $folder_image,        0, Wx::wxALL | Wx::wxEXPAND,    1 );
-	$hb->Add( $self->{status_text}, 1, Wx::wxALIGN_CENTER_VERTICAL, 1 );
-	$hb->Add( $self->{copy_button}, 0, Wx::wxALL | Wx::wxEXPAND,    1 );
+	$hb->Add( $folder_image,        0, Wx::ALL | Wx::EXPAND,    1 );
+	$hb->Add( $self->{status_text}, 1, Wx::ALIGN_CENTER_VERTICAL, 1 );
+	$hb->Add( $self->{copy_button}, 0, Wx::ALL | Wx::EXPAND,    1 );
 	$hb->AddSpacer(1);
-	$self->{sizer}->Add( $hb, 0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$self->{sizer}->Add( $hb, 0, Wx::BOTTOM | Wx::EXPAND, 5 );
 	$self->_setup_events;
 
 	return;

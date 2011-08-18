@@ -155,11 +155,11 @@ sub _create_buttons {
 		$self, Wx::ID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$sizer->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	$buttons->Add( $self->{ok_button},     0, Wx::ALL | Wx::EXPAND, 5 );
+	$buttons->Add( $self->{cancel_button}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$sizer->Add( $buttons, 0, Wx::ALL | Wx::EXPAND | Wx::ALIGN_CENTER, 5 );
 
 	Wx::Event::EVT_BUTTON( $self, Wx::ID_OK, \&_on_ok_button_clicked );
 }
@@ -202,11 +202,11 @@ sub _create_controls {
 	);
 
 	$self->_sizer->AddSpacer(10);
-	$self->_sizer->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_status_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $search_label,       0, Wx::ALL | Wx::EXPAND, 2 );
+	$self->_sizer->Add( $self->_search_text, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$self->_sizer->Add( $matches_label,      0, Wx::ALL | Wx::EXPAND, 2 );
+	$self->_sizer->Add( $self->_list,        1, Wx::ALL | Wx::EXPAND, 2 );
+	$self->_sizer->Add( $self->_status_text, 0, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->_setup_events;
 

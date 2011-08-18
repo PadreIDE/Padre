@@ -210,7 +210,7 @@ sub _create_list {
 		$self, -1,
 		$self->{list_title} || Wx::gettext('List of open files')
 	);
-	$vbox->Add( $label, 0, Wx::wxALL, 5 );
+	$vbox->Add( $label, 0, Wx::ALL, 5 );
 
 	# create list
 	my $list = Wx::ListCtrl->new(
@@ -232,7 +232,7 @@ sub _create_list {
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
-	$vbox->Add( $list, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vbox->Add( $list, 1, Wx::ALL | Wx::EXPAND, 5 );
 }
 
 #
@@ -248,8 +248,8 @@ sub _create_options {
 	my $config = Padre->ide->config;
 
 	# the hbox
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $hbox = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	# CheckBox
 	#	$self->{autosave} = Wx::CheckBox->new(
@@ -259,7 +259,7 @@ sub _create_options {
 	#	);
 	#	$self->{autosave}->SetValue( $config->session_autosave ? 1 : 0 );
 	#
-	#	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
+	#	$hbox->Add( $self->{autosave}, 0, Wx::ALL, 5 );
 }
 
 #
@@ -273,8 +273,8 @@ sub _create_buttons {
 	my $self = shift;
 
 	# the hbox
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $hbox = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	# the buttons
 	my $bc = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('Close') );
@@ -288,10 +288,10 @@ sub _create_buttons {
 		my $button = $self->{buttons}->[$button_no];
 		$button->[2] = Wx::Button->new( $self, -1, $button->[0] );
 		Wx::Event::EVT_BUTTON( $self, $button->[2], $self->{button_clicks}->[$button_no] );
-		$hbox->Add( $button->[2], 0, Wx::wxALL, 5 );
+		$hbox->Add( $button->[2], 0, Wx::ALL, 5 );
 	}
 	$hbox->AddStretchSpacer;
-	$hbox->Add( $bc, 0, Wx::wxALL, 5 );
+	$hbox->Add( $bc, 0, Wx::ALL, 5 );
 }
 
 #

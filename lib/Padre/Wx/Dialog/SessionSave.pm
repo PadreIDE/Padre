@@ -158,7 +158,7 @@ sub _create {
 	my $box = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
-	$box->Add( $sizer, 1, Wx::wxEXPAND | Wx::wxALL, 5 );
+	$box->Add( $sizer, 1, Wx::EXPAND | Wx::ALL, 5 );
 	$self->_sizer($sizer);
 
 	$self->_create_fields;
@@ -205,7 +205,7 @@ sub _create_fields {
 	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
 	my $combo = Wx::ComboBox->new( $self, -1, $Current_Session );
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
-	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
+	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::EXPAND );
 	$self->_combo($combo);
 	Wx::Event::EVT_COMBOBOX( $self, $combo, \&_on_combo_item_selected );
 	Wx::Event::EVT_TEXT( $self, $combo, \&_on_combo_text_changed );
@@ -214,7 +214,7 @@ sub _create_fields {
 	my $lab2 = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
 	my $text = Wx::TextCtrl->new( $self, -1, '' );
 	$sizer->Add( $lab2, Wx::GBPosition->new( 1, 0 ) );
-	$sizer->Add( $text, Wx::GBPosition->new( 1, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
+	$sizer->Add( $text, Wx::GBPosition->new( 1, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::EXPAND );
 	$self->_text($text);
 }
 

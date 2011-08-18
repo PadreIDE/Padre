@@ -4664,7 +4664,7 @@ sub on_save_as {
 		#
 		#
 		#			# return back to the save as dialog when we click No.
-		#			if( $ret == Wx::wxNO ) {
+		#			if( $ret == Wx::NO ) {
 		#				next; # because we are in a while(1) loop
 		#			}
 		#		}
@@ -4988,7 +4988,7 @@ sub close {
 		);
 		if ( $ret == Wx::YES ) {
 			$self->on_save($document);
-		} elsif ( $ret == Wx::wxNO ) {
+		} elsif ( $ret == Wx::NO ) {
 
 			# just close it
 		} else {

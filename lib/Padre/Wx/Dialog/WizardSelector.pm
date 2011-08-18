@@ -80,9 +80,9 @@ sub _add_controls {
 	$header_sizer->Add( $self->{title},  0, 0, 0 );
 	$header_sizer->Add( $self->{status}, 0, 0, 0 );
 
-	my $top_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$top_sizer->Add( $header_sizer, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$top_sizer->Add( $banner,       0, Wx::wxALIGN_RIGHT,        0 );
+	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$top_sizer->Add( $header_sizer, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$top_sizer->Add( $banner,       0, Wx::ALIGN_RIGHT,        0 );
 
 	require Padre::Wx::Dialog::Wizard::Select;
 	$self->{select_page} = Padre::Wx::Dialog::Wizard::Select->new($self);
@@ -91,17 +91,17 @@ sub _add_controls {
 	$self->{button_next}   = Wx::Button->new( $self, -1,              Wx::gettext('&Next') );
 	$self->{button_cancel} = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Cancel') );
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_sizer->Add( $self->{button_back}, 0, 0, 0 );
 	$button_sizer->Add( $self->{button_next}, 0, 0, 0 );
 	$button_sizer->AddSpacer(10);
 	$button_sizer->Add( $self->{button_cancel}, 0, 0, 0 );
 
 	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$sizer->Add( $top_sizer,           0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$sizer->Add( $self->{select_page}, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $top_sizer,           0, Wx::ALL | Wx::EXPAND, 2 );
+	$sizer->Add( $self->{select_page}, 1, Wx::ALL | Wx::EXPAND, 2 );
 	$sizer->AddSpacer(2);
-	$sizer->Add( $button_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->SetSizer($sizer);
 	$self->Fit;

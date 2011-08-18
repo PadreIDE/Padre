@@ -96,19 +96,19 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{insert}, 0, Wx::wxALL, 5 );
-	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$buttons->Add( $self->{insert}, 0, Wx::ALL, 5 );
+	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( $self->{cancel}, 0, Wx::ALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{select}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $self->{preview}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$vsizer->Add( $self->{m_staticline221}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
-	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{select}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$vsizer->Add( $self->{preview}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$vsizer->Add( $self->{m_staticline221}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$vsizer->Add( $buttons, 0, Wx::EXPAND, 5 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::wxEXPAND, 5 );
+	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$hsizer->Add( $vsizer, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizerAndFit($hsizer);
 	$self->Layout;

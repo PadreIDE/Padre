@@ -66,10 +66,10 @@ sub new {
 
 	# Create a sizer
 	my $sizerv = Wx::BoxSizer->new(Wx::VERTICAL);
-	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
-	$sizerv->Add( $self->{list},   1, Wx::wxALL | Wx::wxEXPAND );
-	$sizerh->Add( $sizerv,         1, Wx::wxALL | Wx::wxEXPAND );
+	my $sizerh = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizerv->Add( $self->{search}, 0, Wx::ALL | Wx::EXPAND );
+	$sizerv->Add( $self->{list},   1, Wx::ALL | Wx::EXPAND );
+	$sizerh->Add( $sizerv,         1, Wx::ALL | Wx::EXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);

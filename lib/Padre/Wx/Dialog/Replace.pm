@@ -225,19 +225,19 @@ sub new {
 			Wx::gettext('Find Text:'),
 		),
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		Wx::ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,
 		5,
 	);
 	$find->Add(
 		$self->{find_text},
 		3,
-		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		Wx::GROW | Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,
 		5,
 	);
 	$find->Add(
 		$self->{find_regex},
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		Wx::ALIGN_LEFT | Wx::LEFT | Wx::RIGHT | Wx::TOP,
 		5,
 	);
 
@@ -257,13 +257,13 @@ sub new {
 			Wx::gettext('Replace Text:'),
 		),
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		Wx::ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,
 		5,
 	);
 	$replace->Add(
 		$self->{replace_text},
 		3,
-		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		Wx::GROW | Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,
 		5,
 	);
 
@@ -273,25 +273,25 @@ sub new {
 	$grid->Add(
 		$self->{find_case},
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		Wx::ALIGN_LEFT | Wx::LEFT | Wx::RIGHT | Wx::TOP,
 		5,
 	);
 	$grid->Add(
 		$self->{find_reverse},
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		Wx::ALIGN_LEFT | Wx::LEFT | Wx::RIGHT | Wx::TOP,
 		5,
 	);
 	$grid->Add(
 		$self->{find_first},
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		Wx::ALIGN_LEFT | Wx::LEFT | Wx::RIGHT | Wx::TOP,
 		5,
 	);
 	$grid->Add(
 		$self->{replace_all},
 		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		Wx::ALIGN_LEFT | Wx::LEFT | Wx::RIGHT | Wx::TOP,
 		5,
 	);
 
@@ -307,28 +307,28 @@ sub new {
 	$options->Add(
 		$grid,
 		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		Wx::ALIGN_CENTER_HORIZONTAL | Wx::GROW | Wx::ALL,
 		0,
 	);
 
 	# Sizer for the buttons
-	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $bottom = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bottom->Add(
 		$self->{find_button},
 		0,
-		Wx::wxGROW | Wx::wxRIGHT,
+		Wx::GROW | Wx::RIGHT,
 		5,
 	);
 	$bottom->Add(
 		$self->{replace_button},
 		0,
-		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT,
+		Wx::GROW | Wx::LEFT | Wx::RIGHT,
 		5,
 	);
 	$bottom->Add(
 		$self->{close_button},
 		0,
-		Wx::wxGROW | Wx::wxLEFT,
+		Wx::GROW | Wx::LEFT,
 		5,
 	);
 
@@ -338,25 +338,25 @@ sub new {
 	$sizer->Add(
 		$find,
 		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		Wx::ALIGN_CENTER_HORIZONTAL | Wx::GROW | Wx::ALL,
 		5,
 	);
 	$sizer->Add(
 		$replace,
 		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		Wx::ALIGN_CENTER_HORIZONTAL | Wx::GROW | Wx::ALL,
 		5,
 	);
 	$sizer->Add(
 		$options,
 		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		Wx::ALIGN_CENTER_HORIZONTAL | Wx::GROW | Wx::ALL,
 		5,
 	);
 	$sizer->Add(
 		$bottom,
 		0,
-		Wx::wxALIGN_RIGHT | Wx::wxALL,
+		Wx::ALIGN_RIGHT | Wx::ALL,
 		5,
 	);
 

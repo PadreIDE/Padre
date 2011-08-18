@@ -66,22 +66,22 @@ sub new {
 		Wx::gettext("Skip question without giving feedback"),
 	);
 
-	my $question = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$question->Add( $label, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$question->Add( $from, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	my $question = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$question->Add( $label, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$question->Add( $from, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $ok, 0, Wx::wxALL, 5 );
-	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$buttons->Add( $ok, 0, Wx::ALL, 5 );
+	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( $cancel, 0, Wx::ALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $question, 1, Wx::wxALIGN_RIGHT, 0 );
-	$vsizer->Add( $line, 0, Wx::wxEXPAND | Wx::wxLEFT | Wx::wxRIGHT, 5 );
-	$vsizer->Add( $buttons, 1, Wx::wxALIGN_RIGHT | Wx::wxEXPAND, 0 );
+	$vsizer->Add( $question, 1, Wx::ALIGN_RIGHT, 0 );
+	$vsizer->Add( $line, 0, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
+	$vsizer->Add( $buttons, 1, Wx::ALIGN_RIGHT | Wx::EXPAND, 0 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::wxEXPAND, 5 );
+	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$hsizer->Add( $vsizer, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizer($hsizer);
 	$self->Layout;

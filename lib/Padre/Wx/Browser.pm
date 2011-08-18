@@ -72,7 +72,7 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	my $top_s = Wx::BoxSizer->new(Wx::VERTICAL);
-	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $but_s = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	$self->{notebook} = Wx::AuiNotebook->new(
 		$self,
@@ -102,19 +102,19 @@ sub new {
 	my $label = Wx::StaticText->new(
 		$self, -1, Wx::gettext('Search:'),
 		Wx::DefaultPosition, [ 50, -1 ],
-		Wx::wxALIGN_RIGHT
+		Wx::ALIGN_RIGHT
 	);
 	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	my $close_button = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 
-	$but_s->Add( $label,          0, Wx::wxALIGN_CENTER_VERTICAL );
-	$but_s->Add( $self->{search}, 1, Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->Add( $label,          0, Wx::ALIGN_CENTER_VERTICAL );
+	$but_s->Add( $self->{search}, 1, Wx::ALIGN_LEFT | Wx::ALIGN_CENTER_VERTICAL );
 	$but_s->AddStretchSpacer(2);
-	$but_s->Add( $close_button, 0, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->Add( $close_button, 0, Wx::ALIGN_RIGHT | Wx::ALIGN_CENTER_VERTICAL );
 
-	$top_s->Add( $but_s,            0, Wx::wxEXPAND );
-	$top_s->Add( $self->{notebook}, 1, Wx::wxGROW );
+	$top_s->Add( $but_s,            0, Wx::EXPAND );
+	$top_s->Add( $self->{notebook}, 1, Wx::GROW );
 	$self->SetSizer($top_s);
 
 	#$self->_setup_welcome;

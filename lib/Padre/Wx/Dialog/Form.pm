@@ -99,27 +99,27 @@ sub new {
 	$combo_box_1->SetSelection(-1);
 	$choice_1->SetSelection(0);
 	$self->{ok}->SetDefault;
-	my $sizer_7 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer_7 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	my $sizer_8 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$self->{button_sizer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{button_sizer} = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{form_sizer}   = Wx::GridSizer->new(
 		3,
 		2,
 		5,
 		5,
 	);
-	$self->{form_sizer}->Add( $label_1,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $label_1,     0, Wx::ALIGN_CENTER_VERTICAL, 0 );
 	$self->{form_sizer}->Add( $text_ctrl_1, 0, 0,                           0 );
-	$self->{form_sizer}->Add( $label_2,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $label_2,     0, Wx::ALIGN_CENTER_VERTICAL, 0 );
 	$self->{form_sizer}->Add( $combo_box_1, 0, 0,                           0 );
-	$self->{form_sizer}->Add( $label_3,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $label_3,     0, Wx::ALIGN_CENTER_VERTICAL, 0 );
 	$self->{form_sizer}->Add( $choice_1,    0, 0,                           0 );
-	$sizer_8->Add( $self->{form_sizer}, 1, Wx::wxEXPAND, 0 );
-	$sizer_8->Add( $static_line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$sizer_8->Add( $self->{form_sizer}, 1, Wx::EXPAND, 0 );
+	$sizer_8->Add( $static_line_1, 0, Wx::TOP | Wx::BOTTOM | Wx::EXPAND, 5 );
 	$self->{button_sizer}->Add( $self->{ok},     1, 0,          0 );
-	$self->{button_sizer}->Add( $self->{cancel}, 1, Wx::wxLEFT, 5 );
-	$sizer_8->Add( $self->{button_sizer}, 0, Wx::wxALIGN_RIGHT,        5 );
-	$sizer_7->Add( $sizer_8,              1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$self->{button_sizer}->Add( $self->{cancel}, 1, Wx::LEFT, 5 );
+	$sizer_8->Add( $self->{button_sizer}, 0, Wx::ALIGN_RIGHT,        5 );
+	$sizer_7->Add( $sizer_8,              1, Wx::ALL | Wx::EXPAND, 5 );
 	$self->SetSizer($sizer_7);
 	$sizer_7->Fit($self);
 

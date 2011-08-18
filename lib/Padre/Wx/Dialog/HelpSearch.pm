@@ -106,7 +106,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	$self->_hbox( Wx::BoxSizer->new(Wx::wxHORIZONTAL) );
+	$self->_hbox( Wx::BoxSizer->new(Wx::HORIZONTAL) );
 
 	# create the controls
 	$self->_create_controls;
@@ -181,18 +181,18 @@ sub _create_controls {
 
 	my $vbox = Wx::BoxSizer->new(Wx::VERTICAL);
 
-	$vbox->Add( $topic_label,           0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_topic_selector, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $search_label,          0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_search_text,    0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $matches_label,         0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_list,           1, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_status,         0, Wx::wxALL | Wx::wxEXPAND,     0 );
-	$vbox->Add( $close_button,          0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
-	$self->_hbox->Add( $vbox, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $topic_label,           0, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $self->_topic_selector, 0, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $search_label,          0, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $self->_search_text,    0, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $matches_label,         0, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $self->_list,           1, Wx::ALL | Wx::EXPAND,     2 );
+	$vbox->Add( $self->_status,         0, Wx::ALL | Wx::EXPAND,     0 );
+	$vbox->Add( $close_button,          0, Wx::ALL | Wx::ALIGN_LEFT, 0 );
+	$self->_hbox->Add( $vbox, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$self->_hbox->Add(
 		$self->_help_viewer,                                                        1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
+		Wx::ALL | Wx::ALIGN_TOP | Wx::ALIGN_CENTER_HORIZONTAL | Wx::EXPAND, 1
 	);
 
 	$self->_setup_events;

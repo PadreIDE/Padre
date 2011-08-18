@@ -41,7 +41,7 @@ sub new {
 	$self->SetMinSize( [ 380, 500 ] );
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{sizer} = $sizer;
 
 	# Create the controls
@@ -99,11 +99,11 @@ sub _create_controls {
 		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{run_button},    0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{run_button},    0, Wx::ALL, 1 );
+	$buttons->Add( $self->{insert_button}, 0, Wx::ALL, 1 );
+	$buttons->Add( $self->{close_button},  0, Wx::ALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Dialog Layout
@@ -111,18 +111,18 @@ sub _create_controls {
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
 
-	$left->Add( $source_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{source}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $source_label,   0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{source}, 1, Wx::ALL | Wx::EXPAND, 1 );
 
-	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $original_label,        0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $result_label,          0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{result_text},   1, Wx::ALL | Wx::EXPAND, 1 );
 	$left->AddSpacer(5);
-	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $buttons, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Main sizer
-	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $left, 1, Wx::ALL | Wx::EXPAND, 5 );
 }
 
 sub _bind_events {

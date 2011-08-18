@@ -58,7 +58,7 @@ sub new {
 	$self->{main} = $main;
 
 	my $top_s = Wx::BoxSizer->new(Wx::VERTICAL);
-	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $but_s = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	my $entry = Wx::TextCtrl->new(
 		$self, -1,
@@ -80,15 +80,15 @@ sub new {
 	my $label = Wx::StaticText->new(
 		$self,                 -1, 'Filter',
 		Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxALIGN_RIGHT
+		Wx::ALIGN_RIGHT
 	);
-	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
-	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->Add( $label, 2, Wx::ALIGN_RIGHT | Wx::ALIGN_CENTER_VERTICAL );
+	$but_s->Add( $entry, 1, Wx::ALIGN_RIGHT | Wx::ALIGN_CENTER_VERTICAL );
 
 	my $listview = Padre::Wx::CPAN::Listview->new($self);
 	$self->{listview} = $listview;
-	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
-	$top_s->Add( $listview, 1, Wx::wxGROW );
+	$top_s->Add( $but_s,    0, Wx::EXPAND );
+	$top_s->Add( $listview, 1, Wx::GROW );
 
 	$self->SetSizer($top_s);
 	$self->SetAutoLayout(1);

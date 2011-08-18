@@ -279,22 +279,22 @@ sub new {
 	my $fgSizer3 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$fgSizer3->AddGrowableCol(1);
 	$fgSizer3->SetFlexibleDirection(Wx::BOTH);
-	$fgSizer3->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer3->Add( $m_staticText12, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer3->Add( $self->{txt_remote}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer3->Add( $m_staticText13, 0, Wx::wxALL, 3 );
-	$fgSizer3->Add( $self->{lbl_status}, 1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxEXPAND, 3 );
+	$fgSizer3->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$fgSizer3->Add( $m_staticText12, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer3->Add( $self->{txt_remote}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer3->Add( $m_staticText13, 0, Wx::ALL, 3 );
+	$fgSizer3->Add( $self->{lbl_status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 3 );
 
 	my $fgSizer1 = Wx::FlexGridSizer->new( 3, 2, 0, 0 );
 	$fgSizer1->AddGrowableCol(1);
-	$fgSizer1->SetFlexibleDirection(Wx::wxHORIZONTAL);
-	$fgSizer1->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer1->Add( $m_staticText2, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer1->Add( $self->{txt_login}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer1->Add( $m_staticText3, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer1->Add( $self->{txt_password}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer1->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer1->Add( $self->{btn_login}, 0, Wx::wxALIGN_RIGHT | Wx::wxALL, 3 );
+	$fgSizer1->SetFlexibleDirection(Wx::HORIZONTAL);
+	$fgSizer1->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$fgSizer1->Add( $m_staticText2, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer1->Add( $self->{txt_login}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer1->Add( $m_staticText3, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer1->Add( $self->{txt_password}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer1->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$fgSizer1->Add( $self->{btn_login}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 3 );
 
 	my $sbSizer1 = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -304,24 +304,24 @@ sub new {
 		),
 		Wx::VERTICAL,
 	);
-	$sbSizer1->Add( $fgSizer1, 0, Wx::wxEXPAND, 5 );
+	$sbSizer1->Add( $fgSizer1, 0, Wx::EXPAND, 5 );
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 6, 2, 0, 0 );
 	$fgSizer2->AddGrowableCol(1);
-	$fgSizer2->SetFlexibleDirection(Wx::wxHORIZONTAL);
-	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$fgSizer2->Add( $m_staticText5, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer2->Add( $self->{txt_username}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer2->Add( $m_staticText6, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer2->Add( $self->{txt_pw}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer2->Add( $m_staticText7, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer2->Add( $self->{txt_pw_confirm}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer2->Add( $m_staticText8, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer2->Add( $self->{txt_email}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer2->Add( $m_staticText9, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
-	$fgSizer2->Add( $self->{txt_email_confirm}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$fgSizer2->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
-	$fgSizer2->Add( $self->{btn_register}, 0, Wx::wxALIGN_RIGHT | Wx::wxALL, 3 );
+	$fgSizer2->SetFlexibleDirection(Wx::HORIZONTAL);
+	$fgSizer2->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$fgSizer2->Add( $m_staticText5, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_username}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText6, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_pw}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText7, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_pw_confirm}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText8, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_email}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText9, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_email_confirm}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$fgSizer2->Add( $self->{btn_register}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 3 );
 
 	my $sbSizer2 = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -331,29 +331,29 @@ sub new {
 		),
 		Wx::VERTICAL,
 	);
-	$sbSizer2->Add( $fgSizer2, 1, Wx::wxEXPAND, 5 );
+	$sbSizer2->Add( $fgSizer2, 1, Wx::EXPAND, 5 );
 
-	my $bSizer7 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bSizer7->Add( $sbSizer1, 1, Wx::wxEXPAND, 5 );
-	$bSizer7->Add( 10, 0, 0, Wx::wxEXPAND, 5 );
-	$bSizer7->Add( $sbSizer2, 1, Wx::wxEXPAND, 5 );
+	my $bSizer7 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer7->Add( $sbSizer1, 1, Wx::EXPAND, 5 );
+	$bSizer7->Add( 10, 0, 0, Wx::EXPAND, 5 );
+	$bSizer7->Add( $sbSizer2, 1, Wx::EXPAND, 5 );
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{btn_local}, 0, Wx::wxALL, 3 );
-	$buttons->Add( $self->{btn_remote}, 0, Wx::wxALL, 3 );
-	$buttons->Add( $self->{btn_delete}, 0, Wx::wxALL, 3 );
-	$buttons->Add( 50, 0, 1, Wx::wxEXPAND, 3 );
-	$buttons->Add( $self->{btn_ok}, 0, Wx::wxALL, 3 );
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$buttons->Add( $self->{btn_local}, 0, Wx::ALL, 3 );
+	$buttons->Add( $self->{btn_remote}, 0, Wx::ALL, 3 );
+	$buttons->Add( $self->{btn_delete}, 0, Wx::ALL, 3 );
+	$buttons->Add( 50, 0, 1, Wx::EXPAND, 3 );
+	$buttons->Add( $self->{btn_ok}, 0, Wx::ALL, 3 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $fgSizer3, 0, Wx::wxEXPAND, 5 );
-	$vsizer->Add( $line1, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
-	$vsizer->Add( $bSizer7, 1, Wx::wxEXPAND, 5 );
-	$vsizer->Add( $line, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
-	$vsizer->Add( $buttons, 0, Wx::wxALIGN_RIGHT | Wx::wxEXPAND, 0 );
+	$vsizer->Add( $fgSizer3, 0, Wx::EXPAND, 5 );
+	$vsizer->Add( $line1, 0, Wx::BOTTOM | Wx::EXPAND | Wx::TOP, 5 );
+	$vsizer->Add( $bSizer7, 1, Wx::EXPAND, 5 );
+	$vsizer->Add( $line, 0, Wx::BOTTOM | Wx::EXPAND | Wx::TOP, 5 );
+	$vsizer->Add( $buttons, 0, Wx::ALIGN_RIGHT | Wx::EXPAND, 0 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$hsizer->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizerAndFit($hsizer);
 	$self->Layout;

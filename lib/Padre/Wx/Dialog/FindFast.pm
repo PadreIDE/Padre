@@ -119,9 +119,9 @@ sub _create_panel {
 	my $main = Padre::Current->main;
 
 	# The panel and the boxsizer to place controls
-	$self->{outer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{outer} = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{panel} = Wx::Panel->new( $main, -1, Wx::DefaultPosition, Wx::DefaultSize );
-	$self->{hbox}  = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{hbox}  = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	# Close button
 	$self->{close} = Wx::BitmapButton->new(
@@ -183,21 +183,21 @@ sub _create_panel {
 	Wx::Event::EVT_CHECKBOX( $main, $self->{case}, sub { $self->_on_case_checked } );
 
 	# Place all controls
-	$self->{hbox}->Add( $self->{close},         0, Wx::wxALIGN_CENTER_VERTICAL,              0 );
-	$self->{hbox}->Add( $self->{label},         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT, 10 );
-	$self->{hbox}->Add( $self->{entry},         0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{previous},      0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{previous_text}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{next},          0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{next_text},     0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( $self->{case},          0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,  5 );
-	$self->{hbox}->Add( 0,                      1, Wx::wxEXPAND,                             5 );
+	$self->{hbox}->Add( $self->{close},         0, Wx::ALIGN_CENTER_VERTICAL,              0 );
+	$self->{hbox}->Add( $self->{label},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT, 10 );
+	$self->{hbox}->Add( $self->{entry},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( $self->{previous},      0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( $self->{previous_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( $self->{next},          0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( $self->{next_text},     0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( $self->{case},          0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
+	$self->{hbox}->Add( 0,                      1, Wx::EXPAND,                             5 );
 
 	$self->{panel}->SetSizer( $self->{hbox} );
 	$self->{panel}->Layout;
 	$self->{hbox}->Fit( $self->{panel} );
 
-	$self->{outer}->Add( $self->{panel}, 1, Wx::wxALIGN_LEFT | Wx::wxALL | Wx::wxEXPAND, 5 );
+	$self->{outer}->Add( $self->{panel}, 1, Wx::ALIGN_LEFT | Wx::ALL | Wx::EXPAND, 5 );
 
 	my $width  = $main->current->editor->GetSize->GetWidth;
 	my $height = $self->{panel}->GetSize->GetHeight;

@@ -113,13 +113,13 @@ sub new {
 	my $sizer = Wx::FlexGridSizer->new( 1, 6, 0, 0 );
 	$sizer->AddGrowableRow(0);
 	$sizer->SetFlexibleDirection(Wx::BOTH);
-	$sizer->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
-	$sizer->Add( $self->{cancel}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$sizer->Add( $self->{find_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$sizer->Add( $self->{find_text}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$sizer->Add( $self->{find_next}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$sizer->Add( $self->{find_previous}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
-	$sizer->Add( $self->{find_case}, 1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$sizer->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->Add( $self->{find_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->Add( $self->{find_case}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 
 	$self->SetSizerAndFit($sizer);
 	$self->Layout;

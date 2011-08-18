@@ -104,7 +104,7 @@ sub _create {
 	my $box = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
-	$box->Add( $sizer, 1, Wx::wxEXPAND | Wx::wxALL, 5 );
+	$box->Add( $sizer, 1, Wx::EXPAND | Wx::ALL, 5 );
 	$self->_sizer($sizer);
 
 	$self->_create_fields;
@@ -130,7 +130,7 @@ sub _create_fields {
 	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Filter command:') );
 	my $combo = Wx::ComboBox->new( $self, -1, '' );
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
-	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
+	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::EXPAND );
 	$self->_combo($combo);
 
 }

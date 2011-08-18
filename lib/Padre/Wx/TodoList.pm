@@ -66,8 +66,8 @@ sub new {
 
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$sizer->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
-	$sizer->Add( $self->{list},   1, Wx::wxALL | Wx::wxEXPAND );
+	$sizer->Add( $self->{search}, 0, Wx::ALL | Wx::EXPAND );
+	$sizer->Add( $self->{list},   1, Wx::ALL | Wx::EXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);

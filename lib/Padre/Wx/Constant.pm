@@ -106,6 +106,7 @@ use constant TAGS => qw{
 	:dialog
 	:id
 	:frame
+	:sizer
 	:textctrl
 };
 

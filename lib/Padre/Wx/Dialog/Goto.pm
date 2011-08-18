@@ -46,7 +46,7 @@ sub new {
 	$self->SetMinSize( [ 330, 180 ] );
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	# Create the controls
 	$self->_create_controls($sizer);
@@ -103,24 +103,24 @@ sub _create_controls {
 	#----- Dialog Layout
 
 	# Main button sizer
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
-	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
+	$button_sizer->Add( $self->{button_cancel}, 1, Wx::LEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{line_mode},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{current},     0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{goto_label},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{goto_text},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{status_line}, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vsizer->Add( $self->{line_mode},   0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{current},     0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{goto_label},  0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{goto_text},   0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{status_line}, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$vsizer->AddSpacer(5);
-	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->Add( $button_sizer, 0, Wx::ALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
 	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	return;
 

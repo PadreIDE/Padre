@@ -73,7 +73,7 @@ sub new {
 	$self->SetMinSize( [ 750, 550 ] );
 
 	# Create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 
 	# Create the controls
 	$self->_create_controls($sizer);
@@ -195,55 +195,55 @@ sub _create_controls {
 	#
 
 	# Filter sizer
-	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $filter_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$filter_sizer->Add( $filter_label,   0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$filter_sizer->Add( $self->{filter}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	# Boolean sizer
-	my $boolean_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $boolean_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$boolean_sizer->AddStretchSpacer;
-	$boolean_sizer->Add( $self->{true},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$boolean_sizer->Add( $self->{false}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$boolean_sizer->Add( $self->{true},  1, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$boolean_sizer->Add( $self->{false}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$boolean_sizer->AddStretchSpacer;
 
 	# Store boolean sizer reference for later usage
 	$self->{boolean} = $boolean_sizer;
 
 	# Value setter sizer
-	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $boolean_sizer,        1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
-	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	my $value_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$value_sizer->Add( $value_label,          0, Wx::ALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{value},        1, Wx::ALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $boolean_sizer,        1, Wx::ALIGN_CENTER_VERTICAL | Wx::EXPAND, 5 );
+	$value_sizer->Add( $self->{button_set},   0, Wx::ALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{button_reset}, 0, Wx::ALIGN_CENTER_VERTICAL,                5 );
 
 	# Default value and options sizer
-	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $info_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$info_sizer->Add( $default_label,         0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $self->{default_value}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->AddSpacer(5);
-	$info_sizer->Add( $options_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $options_label,   0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $self->{options}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
-	my $help_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$help_sizer->Add( $help_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$help_sizer->Add( $self->{help}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $help_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$help_sizer->Add( $help_label,   0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$help_sizer->Add( $self->{help}, 1, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
-	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
+	$button_sizer->Add( $self->{button_cancel}, 1, Wx::LEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $info_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $help_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_sizer, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $value_sizer,  0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $info_sizer,   0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $help_sizer,   0, Wx::ALL | Wx::EXPAND, 3 );
 	$vsizer->AddSpacer(5);
-	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->Add( $button_sizer, 0, Wx::ALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
 	# Hide value and info sizer at startup
@@ -255,7 +255,7 @@ sub _create_controls {
 	$self->{vsizer} = $vsizer;
 
 	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	return;
 }

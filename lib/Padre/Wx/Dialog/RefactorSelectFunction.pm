@@ -91,7 +91,7 @@ sub _create_list {
 		$self, -1,
 		Wx::gettext("Select which subroutine you want the new subroutine\ninserted before.")
 	);
-	$vbox->Add( $label, 0, Wx::wxALL, 5 );
+	$vbox->Add( $label, 0, Wx::ALL, 5 );
 
 	# create list
 	my $list = Wx::ListView->new(
@@ -110,7 +110,7 @@ sub _create_list {
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
-	$vbox->Add( $list, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vbox->Add( $list, 1, Wx::ALL | Wx::EXPAND, 5 );
 }
 
 
@@ -118,8 +118,8 @@ sub _create_buttons {
 	my $self = shift;
 
 	# the hbox
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	my $hbox = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	# the buttons
 	my $bs = Wx::Button->new( $self, -1, Wx::gettext('Select') );
@@ -127,9 +127,9 @@ sub _create_buttons {
 	$self->_butselect($bs);
 	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butselect_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
-	$hbox->Add( $bs, 0, Wx::wxALL, 5 );
+	$hbox->Add( $bs, 0, Wx::ALL, 5 );
 	$hbox->AddStretchSpacer;
-	$hbox->Add( $bc, 0, Wx::wxALL, 5 );
+	$hbox->Add( $bc, 0, Wx::ALL, 5 );
 }
 
 sub _refresh_list {
