@@ -234,9 +234,9 @@ sub on_right_down {
 					$msg = "$text\n";
 
 					# And copy it to clipboard
-					if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open ) {
-						Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-						Wx::wxTheClipboard->Close;
+					if ( ( length $msg > 0 ) and Wx::TheClipboard->Open ) {
+						Wx::TheClipboard->SetData( Wx::TextDataObject->new($msg) );
+						Wx::TheClipboard->Close;
 					}
 				}
 			}
@@ -258,9 +258,9 @@ sub on_right_down {
 			}
 
 			# And copy it to clipboard
-			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open ) {
-				Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-				Wx::wxTheClipboard->Close;
+			if ( ( length $msg > 0 ) and Wx::TheClipboard->Open ) {
+				Wx::TheClipboard->SetData( Wx::TextDataObject->new($msg) );
+				Wx::TheClipboard->Close;
 			}
 		}
 	);

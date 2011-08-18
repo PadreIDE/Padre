@@ -392,10 +392,10 @@ sub _setup_events {
 			my @matches      = $self->{matches_list}->GetSelections;
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				if ( Wx::wxTheClipboard->Open ) {
-					Wx::wxTheClipboard->SetData(
+				if ( Wx::TheClipboard->Open ) {
+					Wx::TheClipboard->SetData(
 						Wx::TextDataObject->new( $self->{matches_list}->GetClientData( $matches[0] ) ) );
-					Wx::wxTheClipboard->Close;
+					Wx::TheClipboard->Close;
 				}
 			}
 		}

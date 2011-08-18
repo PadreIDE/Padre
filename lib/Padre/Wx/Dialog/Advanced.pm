@@ -415,9 +415,9 @@ sub _on_copy_to_clipboard {
 	} elsif ( $action == COPY_VALUE ) {
 		$text = $pref->{value};
 	}
-	if ( $text and Wx::wxTheClipboard->Open ) {
-		Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
-		Wx::wxTheClipboard->Close;
+	if ( $text and Wx::TheClipboard->Open ) {
+		Wx::TheClipboard->SetData( Wx::TextDataObject->new($text) );
+		Wx::TheClipboard->Close;
 	}
 
 	return;

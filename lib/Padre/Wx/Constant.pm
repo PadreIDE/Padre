@@ -102,6 +102,7 @@ use Wx ( qw{
 use constant TAGS => qw{
 	wxDefaultSize
 	wxDefaultPosition
+	:clipboard
 	:id
 	:textctrl
 };

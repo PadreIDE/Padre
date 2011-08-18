@@ -439,7 +439,7 @@ sub on_middle_up {
 	# It seems that another event is doing something but not within this module.
 	# Please look at ticket #390 for details!
 	if ( $config->mid_button_paste ) {
-		Wx::wxTheClipboard->UsePrimarySelection(1);
+		Wx::TheClipboard->UsePrimarySelection(1);
 	}
 
 	if ( Padre::Constant::WIN32 or not $config->mid_button_paste ) {
@@ -452,7 +452,7 @@ sub on_middle_up {
 	}
 
 	if ( $config->mid_button_paste ) {
-		Wx::wxTheClipboard->UsePrimarySelection(0);
+		Wx::TheClipboard->UsePrimarySelection(0);
 		$event->Skip(1);
 	} else {
 		$event->Skip(0);
@@ -1358,11 +1358,11 @@ sub put_text_to_clipboard {
 
 	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
-	Wx::wxTheClipboard->Open;
-	Wx::wxTheClipboard->UsePrimarySelection($clipboard)
+	Wx::TheClipboard->Open;
+	Wx::TheClipboard->UsePrimarySelection($clipboard)
 		if $config->mid_button_paste;
-	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
-	Wx::wxTheClipboard->Close;
+	Wx::TheClipboard->SetData( Wx::TextDataObject->new($text) );
+	Wx::TheClipboard->Close;
 
 	return;
 }
@@ -1370,10 +1370,10 @@ sub put_text_to_clipboard {
 sub get_text_from_clipboard {
 	my $self = shift;
 	my $text = '';
-	Wx::wxTheClipboard->Open;
-	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
+	Wx::TheClipboard->Open;
+	if ( Wx::TheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
-		if ( Wx::wxTheClipboard->GetData($data) ) {
+		if ( Wx::TheClipboard->GetData($data) ) {
 			$text = $data->GetText if defined $data;
 		}
 	}
@@ -1381,7 +1381,7 @@ sub get_text_from_clipboard {
 		$text = $self->{Clipboard_Old};
 	}
 
-	Wx::wxTheClipboard->Close;
+	Wx::TheClipboard->Close;
 	return $text;
 }
 
