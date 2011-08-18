@@ -79,7 +79,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxAUI_NB_DEFAULT_STYLE
+		Wx::AUI_NB_DEFAULT_STYLE
 	);
 
 	$self->{search} = Wx::TextCtrl->new(

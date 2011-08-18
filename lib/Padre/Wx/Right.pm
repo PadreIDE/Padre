@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::Size->new( 160, 500 ), # Used when floating
-		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE | Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
+		Wx::AUI_NB_SCROLL_BUTTONS | Wx::AUI_NB_TOP | Wx::wxBORDER_NONE | Wx::AUI_NB_CLOSE_ON_ACTIVE_TAB
 	);
 
 	# Add ourself to the window manager

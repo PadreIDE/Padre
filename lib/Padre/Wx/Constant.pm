@@ -112,6 +112,7 @@ use constant TAGS => qw{
 	wxNOT_FOUND
 	wxDefaultSize
 	wxDefaultPosition
+	:aui
 	:clipboard
 	:dialog
 	:id
