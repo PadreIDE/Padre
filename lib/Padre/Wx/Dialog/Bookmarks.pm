@@ -52,7 +52,7 @@ sub run_set {
 
 	# Show the dialog
 	$self->refresh;
-	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $self->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 
@@ -86,7 +86,7 @@ sub run_goto {
 
 	# Show the dialog
 	$self->refresh;
-	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $self->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 

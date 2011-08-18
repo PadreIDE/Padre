@@ -181,13 +181,13 @@ sub _create_controls {
 
 	# Save button
 	$self->{button_save} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext('S&ave'),
+		$self, Wx::ID_OK, Wx::gettext('S&ave'),
 	);
 	$self->{button_save}->SetDefault;
 
 	# Cancel button
 	$self->{button_cancel} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
 	#
@@ -392,7 +392,7 @@ sub _bind_events {
 		$self,
 		$self->{button_cancel},
 		sub {
-			shift->EndModal(Wx::wxID_CANCEL);
+			shift->EndModal(Wx::ID_CANCEL);
 		}
 	);
 
@@ -686,7 +686,7 @@ sub _on_save_button {
 	$config->write;
 
 	# Bye bye dialog
-	$self->EndModal(Wx::wxID_OK);
+	$self->EndModal(Wx::ID_OK);
 
 	return;
 }

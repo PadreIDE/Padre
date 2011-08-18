@@ -96,7 +96,7 @@ sub _create_controls {
 
 	# Close button
 	$self->{close_button} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);

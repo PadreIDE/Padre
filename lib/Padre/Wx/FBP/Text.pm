@@ -51,7 +51,7 @@ sub new {
 
 	$self->{close} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Close"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

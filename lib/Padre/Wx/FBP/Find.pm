@@ -107,7 +107,7 @@ sub new {
 
 	$self->{find_next} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("Find &Next"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -124,7 +124,7 @@ sub new {
 
 	$self->{find_all} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("Find &All"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -132,7 +132,7 @@ sub new {
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

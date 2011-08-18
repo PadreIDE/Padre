@@ -55,7 +55,7 @@ sub new {
 	$self->{encoding}     = $self->label(' ');
 	$self->{doc_type}     = $self->label( ' ' x 15 );
 
-	$self->{close_button} = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+	$self->{close_button} = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 
 	my $update_button = Wx::Button->new( $self, -1, Wx::gettext('&Update') );
 	$update_button->SetDefault;

@@ -148,11 +148,11 @@ sub _create_buttons {
 	my $sizer = $self->_sizer;
 
 	$self->{ok_button} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext('&OK'),
+		$self, Wx::ID_OK, Wx::gettext('&OK'),
 	);
 	$self->{ok_button}->SetDefault;
 	$self->{cancel_button} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -161,7 +161,7 @@ sub _create_buttons {
 	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$sizer->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
 
-	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button_clicked );
+	Wx::Event::EVT_BUTTON( $self, Wx::ID_OK, \&_on_ok_button_clicked );
 }
 
 #

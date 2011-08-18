@@ -148,8 +148,8 @@ sub _create_buttons {
 	my $sizer = $self->_sizer;
 
 	# the buttons
-	my $bs = Wx::Button->new( $self, Wx::wxID_OK,     Wx::gettext('Run') );
-	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
+	my $bs = Wx::Button->new( $self, Wx::ID_OK,     Wx::gettext('Run') );
+	my $bc = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butrun_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 	$sizer->Add( $bs, Wx::GBPosition->new( 2, 2 ) );

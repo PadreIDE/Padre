@@ -113,7 +113,7 @@ sub new {
 	# Enable/Disable Button
 	$self->{button_main} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext('&Enable'),
 	);
 	Wx::Event::EVT_BUTTON(
@@ -141,7 +141,7 @@ sub new {
 	# Close Button
 	$self->{button_close} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext('&Close'),
 	);
 	Wx::Event::EVT_BUTTON(

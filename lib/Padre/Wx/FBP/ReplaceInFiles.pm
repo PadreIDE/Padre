@@ -164,7 +164,7 @@ sub new {
 
 	$self->{replace} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("&Replace"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -173,7 +173,7 @@ sub new {
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

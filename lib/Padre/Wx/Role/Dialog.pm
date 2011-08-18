@@ -115,7 +115,7 @@ sub password {
 	my $dialog = Wx::PasswordEntryDialog->new( $self, @_ );
 	my $result = undef;
 	$dialog->CenterOnParent;
-	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	unless ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		$result = $dialog->GetValue;
 	}
 	$dialog->Destroy;
@@ -146,7 +146,7 @@ sub yes_no {
 		Wx::wxYES_NO | Wx::wxYES_DEFAULT | Wx::wxICON_QUESTION,
 	);
 	$dialog->CenterOnParent;
-	my $result = ( $dialog->ShowModal == Wx::wxID_YES ) ? 1 : 0;
+	my $result = ( $dialog->ShowModal == Wx::ID_YES ) ? 1 : 0;
 	$dialog->Destroy;
 	return $result;
 }
@@ -177,7 +177,7 @@ sub single_choice {
 	my $dialog = Wx::SingleChoiceDialog->new( $self, @_ );
 	my $result = undef;
 	$dialog->CenterOnParent;
-	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	unless ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		$result = $_[2]->[ $dialog->GetSelection ];
 	}
 	$dialog->Destroy;
@@ -208,7 +208,7 @@ sub multi_choice {
 	my $dialog = Wx::MultiChoiceDialog->new( $self, @_ );
 	my @result = ();
 	$dialog->CenterOnParent;
-	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	unless ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		@result = map { $_[2]->[$_] } $dialog->GetSelections;
 	}
 	$dialog->Destroy;

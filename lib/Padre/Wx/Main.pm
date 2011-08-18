@@ -2594,7 +2594,7 @@ sub on_run_command {
 		Wx::gettext("Run setup"),
 		"run_command",
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $command = $dialog->GetValue;
@@ -3223,7 +3223,7 @@ sub prompt {
 	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$self, $title, $subtitle, $key,
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $value = $dialog->GetValue;
@@ -3247,7 +3247,7 @@ sub simple_prompt {
 	my $value    = shift || '';
 
 	my $dialog = Wx::TextEntryDialog->new( $self, $title, $subtitle, $value );
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $new_value = $dialog->GetValue;
@@ -4033,7 +4033,7 @@ sub on_open_selection {
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
 			Wx::gettext("Open selection"), ''
 		);
-		return if $dialog->ShowModal == Wx::wxID_CANCEL;
+		return if $dialog->ShowModal == Wx::ID_CANCEL;
 
 		$text = $dialog->GetValue;
 		$dialog->Destroy;
@@ -4218,7 +4218,7 @@ sub open_file_dialog {
 		$self, Wx::gettext('Open File'),
 		$self->cwd, '', $wildcards, Wx::wxFD_MULTIPLE,
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my @filenames = $dialog->GetFilenames;
@@ -4605,7 +4605,7 @@ sub on_save_as {
 			Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
 			Wx::wxFD_SAVE,
 		);
-		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 			return;
 		}
 
@@ -5420,7 +5420,7 @@ sub on_diff {
 
     $main->on_join_lines;
 
-Join current line with next one (Ã  la B<vi> with C<Ctrl+J>). No return value.
+Join current line with next one (à la B<vi> with C<Ctrl+J>). No return value.
 
 =cut
 
@@ -5900,7 +5900,7 @@ sub on_insert_from_file {
 		Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
 		Wx::wxFD_OPEN,
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $filename = $dialog->GetFilename;
@@ -6233,7 +6233,7 @@ sub on_tab_and_space {
 		Wx::gettext('How many spaces for each tab:'),
 		$title, $type,
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $space_num = $dialog->GetValue;
@@ -6322,7 +6322,7 @@ sub on_delete_leading_space {
 		'Delete Leading Space',
 		'fay_delete_leading_space',
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $space_num = $dialog->GetValue;

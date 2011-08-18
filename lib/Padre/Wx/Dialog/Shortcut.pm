@@ -101,12 +101,12 @@ sub new {
 	);
 	$self->{ok} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		"",
 	);
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		"",
 	);
 	Wx::Event::EVT_CHECKBOX( $self, $self->{shift_checkbox}->GetId, \&foo );

@@ -277,7 +277,7 @@ sub _create_buttons {
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# the buttons
-	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
+	my $bc = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 
 	foreach my $button_no ( 0 .. $#{ $self->{buttons} || [] } ) {

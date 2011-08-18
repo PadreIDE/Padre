@@ -58,7 +58,7 @@ sub new {
 	);
 	$self->{ok_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		"",
 	);
 	$self->SetTitle( Wx::gettext("Warning") );

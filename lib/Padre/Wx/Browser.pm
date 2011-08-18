@@ -106,7 +106,7 @@ sub new {
 	);
 	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
-	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+	my $close_button = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 
 	$but_s->Add( $label,          0, Wx::wxALIGN_CENTER_VERTICAL );
 	$but_s->Add( $self->{search}, 1, Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL );

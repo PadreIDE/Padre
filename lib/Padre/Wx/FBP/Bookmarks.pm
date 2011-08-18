@@ -81,7 +81,7 @@ sub new {
 
 	$self->{ok} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("OK"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -122,7 +122,7 @@ sub new {
 
 	my $cancel = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

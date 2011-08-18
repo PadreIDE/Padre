@@ -262,7 +262,7 @@ sub new {
 
 	$self->{btn_ok} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("Close"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

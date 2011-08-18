@@ -44,7 +44,7 @@ sub run {
 	my $config = $self->config;
 
 	# Show the dialog
-	if ( $self->ShowModal == Wx::wxID_OK ) {
+	if ( $self->ShowModal == Wx::ID_OK ) {
 
 		# Fire and forget the HTTP request to the server
 		$self->task_request(

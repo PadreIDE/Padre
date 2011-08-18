@@ -138,7 +138,7 @@ sub run {
 	# Show the dialog
 	my $result = $self->ShowModal;
 
-	if ( $result == Wx::wxID_CANCEL ) {
+	if ( $result == Wx::ID_CANCEL ) {
 
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.

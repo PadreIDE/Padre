@@ -87,12 +87,12 @@ sub new {
 	);
 	$self->{ok} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		"",
 	);
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		"",
 	);
 	$self->SetTitle( Wx::gettext("Padre") );

@@ -56,13 +56,13 @@ sub new {
 
 	my $ok = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("OK"),
 	);
 
 	my $cancel = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Skip question without giving feedback"),
 	);
 

@@ -201,7 +201,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.open',
-		id         => Wx::wxID_OPEN,
+		id         => Wx::ID_OPEN,
 		label      => _T('&Open'),
 		comment    => _T('Browse directory of the current document to open one or several files'),
 		shortcut   => 'Ctrl-O',
@@ -279,7 +279,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'file.close',
-		id          => Wx::wxID_CLOSE,
+		id          => Wx::ID_CLOSE,
 		need_editor => 1,
 		label       => _T('&Close'),
 		comment     => _T('Close current document'),
@@ -417,7 +417,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name          => 'file.save',
-		id            => Wx::wxID_SAVE,
+		id            => Wx::ID_SAVE,
 		need_editor   => 1,
 		need_modified => 1,
 		label         => _T('&Save'),
@@ -431,7 +431,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'file.save_as',
-		id          => Wx::wxID_SAVEAS,
+		id          => Wx::ID_SAVEAS,
 		need_editor => 1,
 		label       => _T('Save &As...'),
 		comment     => _T('Allow the selection of another name to save the current document'),
@@ -509,7 +509,7 @@ sub init {
 		name => 'file.print',
 
 		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
-		id         => Wx::wxID_PRINT,
+		id         => Wx::ID_PRINT,
 		label      => _T('&Print...'),
 		comment    => _T('Print the current document'),
 		shortcut   => 'Ctrl-P',
@@ -576,7 +576,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'edit.undo',
-		id          => Wx::wxID_UNDO,
+		id          => Wx::ID_UNDO,
 		need_editor => 1,
 
 		# need => sub {
@@ -596,7 +596,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'edit.redo',
-		id          => Wx::wxID_REDO,
+		id          => Wx::ID_REDO,
 		need_editor => 1,
 
 		# need => sub {
@@ -616,7 +616,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'edit.select_all',
-		id          => Wx::wxID_SELECTALL,
+		id          => Wx::ID_SELECTALL,
 		need_editor => 1,
 		label       => _T('Select All'),
 		comment     => _T('Select all the text in the current document'),
@@ -667,7 +667,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name           => 'edit.cut',
-		id             => Wx::wxID_CUT,
+		id             => Wx::ID_CUT,
 		need_editor    => 1,
 		need_selection => 1,
 		label          => _T('Cu&t'),
@@ -682,7 +682,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name           => 'edit.copy',
-		id             => Wx::wxID_COPY,
+		id             => Wx::ID_COPY,
 		need_editor    => 1,
 		need_selection => 1,
 		label          => _T('&Copy'),
@@ -761,7 +761,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.paste',
 		need_editor => 1,
-		id          => Wx::wxID_PASTE,
+		id          => Wx::ID_PASTE,
 		label       => _T('&Paste'),
 		comment     => _T('Paste the clipboard to the current location'),
 		shortcut    => 'Ctrl-V',
@@ -1165,7 +1165,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'search.find',
-		id          => Wx::wxID_FIND,
+		id          => Wx::ID_FIND,
 		need_editor => 1,
 		label       => _T('&Find...'),
 		comment     => _T('Find text or regular expressions using a traditional dialog'),
@@ -1936,7 +1936,7 @@ sub init {
 				Wx::gettext('Extract Subroutine'),
 				'$foo',
 			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			return if $dialog->ShowModal == Wx::ID_CANCEL;
 			my $newname = $dialog->GetValue;
 			$dialog->Destroy;
 			return unless defined $newname;
@@ -1959,7 +1959,7 @@ sub init {
 				Wx::gettext('Introduce Temporary Variable'),
 				'$tmp',
 			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			return if $dialog->ShowModal == Wx::ID_CANCEL;
 			my $replacement = $dialog->GetValue;
 			$dialog->Destroy;
 			return unless defined $replacement;
@@ -2688,7 +2688,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'help.help',
-		id         => Wx::wxID_HELP,
+		id         => Wx::ID_HELP,
 		label      => _T('Help'),
 		comment    => _T('Show the Padre help'),
 		menu_event => sub {
@@ -2812,7 +2812,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'help.about',
-		id         => Wx::wxID_ABOUT,
+		id         => Wx::ID_ABOUT,
 		label      => _T('&About...'),
 		comment    => _T('Show information about Padre'),
 		menu_event => sub {

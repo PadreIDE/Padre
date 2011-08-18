@@ -808,7 +808,7 @@ sub rename_variable {
 		Wx::gettext('Rename variable'),
 		$token,
 	);
-	return if $dialog->ShowModal == Wx::wxID_CANCEL;
+	return if $dialog->ShowModal == Wx::ID_CANCEL;
 	my $replacement = $dialog->GetValue;
 	$dialog->Destroy;
 

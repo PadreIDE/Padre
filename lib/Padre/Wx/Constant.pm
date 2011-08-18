@@ -3,8 +3,6 @@ package Padre::Wx::Constant;
 use 5.008;
 use strict;
 use warnings;
-use constant ();
-use Wx       ();
 
 our $VERSION = '0.91';
 
@@ -104,6 +102,7 @@ use Wx ( qw{
 use constant TAGS => qw{
 	wxDefaultSize
 	wxDefaultPosition
+	:id
 	:textctrl
 };
 
@@ -148,6 +147,7 @@ sub load {
 	#       are trying to claim ownership of Wx.pm
 	package ## no critic
 		Wx;
+	require constant;
 	constant::->import( \%constants );
 
 	# Aliases for other things that aren't actual constants
@@ -155,9 +155,7 @@ sub load {
 	*Wx::TheApp = *Wx::wxTheApp;
 }
 
-BEGIN {
-	load();
-}
+load();
 
 1;
 

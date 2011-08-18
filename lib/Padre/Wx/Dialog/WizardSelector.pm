@@ -89,7 +89,7 @@ sub _add_controls {
 
 	$self->{button_back}   = Wx::Button->new( $self, -1,              Wx::gettext('&Back') );
 	$self->{button_next}   = Wx::Button->new( $self, -1,              Wx::gettext('&Next') );
-	$self->{button_cancel} = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Cancel') );
+	$self->{button_cancel} = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Cancel') );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_back}, 0, 0, 0 );

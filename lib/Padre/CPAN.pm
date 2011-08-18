@@ -109,7 +109,7 @@ sub install_file {
 		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST
 	);
 	$dialog->CentreOnParent;
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $string = $dialog->GetPath;
@@ -133,7 +133,7 @@ sub install_url {
 		Wx::gettext('Install Local Distribution'),
 		'',
 	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $string = $dialog->GetValue;

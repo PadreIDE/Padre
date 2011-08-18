@@ -1144,7 +1144,7 @@ sub test_a_plugin {
 	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");
 	}
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 	my $filename = $dialog->GetFilename;

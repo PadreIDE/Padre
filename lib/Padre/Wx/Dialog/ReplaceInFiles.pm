@@ -57,7 +57,7 @@ sub directory {
 	$dialog->Destroy;
 
 	# Update the dialog
-	unless ( $result == Wx::wxID_CANCEL ) {
+	unless ( $result == Wx::ID_CANCEL ) {
 		$self->find_directory->SetValue( $dialog->GetPath );
 	}
 
@@ -89,7 +89,7 @@ sub run {
 
 	# Show the dialog
 	my $result = $self->ShowModal;
-	if ( $result == Wx::wxID_CANCEL ) {
+	if ( $result == Wx::ID_CANCEL ) {
 
 		# As we leave the dialog return the user to the current editor
 		# window so they don't need to click it.

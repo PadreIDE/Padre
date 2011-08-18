@@ -43,7 +43,7 @@ sub run {
 	$self->CentreOnParent;
 
 	# Show the dialog
-	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+	if ( $self->ShowModal == Wx::ID_CANCEL ) {
 		return;
 	}
 
@@ -212,7 +212,7 @@ sub cancel {
 	$self->main->action("view.style.$style");
 
 	# Cancel the preferences dialog in Wx
-	$self->EndModal(Wx::wxID_CANCEL);
+	$self->EndModal(Wx::ID_CANCEL);
 
 	return;
 }

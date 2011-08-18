@@ -881,7 +881,7 @@ sub new {
 
 	$self->{save} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("Save"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,

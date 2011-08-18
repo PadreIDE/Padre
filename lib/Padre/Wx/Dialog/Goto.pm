@@ -90,14 +90,14 @@ sub _create_controls {
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext('&OK'),
+		$self, Wx::ID_OK, Wx::gettext('&OK'),
 	);
 	$self->{button_ok}->SetDefault;
 	$self->{button_ok}->Enable(0);
 
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
 	#----- Dialog Layout

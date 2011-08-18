@@ -145,7 +145,7 @@ sub new {
 	# The "Find" button
 	$self->{find_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_FIND,
+		Wx::ID_FIND,
 		Wx::gettext('&Find'),
 	);
 	Wx::Event::EVT_BUTTON(
@@ -165,7 +165,7 @@ sub new {
 	# The "Replace" button
 	$self->{replace_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_REPLACE,
+		Wx::ID_REPLACE,
 		Wx::gettext('&Replace'),
 	);
 	Wx::Event::EVT_BUTTON(
@@ -186,7 +186,7 @@ sub new {
 	# The "Close" button
 	$self->{close_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext('&Close'),
 	);
 	Wx::Event::EVT_BUTTON(
@@ -221,7 +221,7 @@ sub new {
 	$find->Add(
 		Wx::StaticText->new(
 			$self,
-			Wx::wxID_STATIC,
+			Wx::ID_STATIC,
 			Wx::gettext('Find Text:'),
 		),
 		0,
@@ -253,7 +253,7 @@ sub new {
 	$replace->Add(
 		Wx::StaticText->new(
 			$self,
-			Wx::wxID_STATIC,
+			Wx::ID_STATIC,
 			Wx::gettext('Replace Text:'),
 		),
 		0,

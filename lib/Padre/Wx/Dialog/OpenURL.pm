@@ -58,7 +58,7 @@ sub new {
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("&OK"),
 	);
 	$self->{button_ok}->SetDefault;
@@ -66,7 +66,7 @@ sub new {
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("&Cancel"),
 	);
 
@@ -137,7 +137,7 @@ sub modal {
 	my $self  = $class->new(@_);
 	my $ok    = $self->ShowModal;
 	my $rv =
-		( $ok == Wx::wxID_OK )
+		( $ok == Wx::ID_OK )
 		? $self->{openurl_text}->GetValue
 		: undef;
 	$self->Destroy;

@@ -136,7 +136,7 @@ sub _create_controls {
 
 	# Close button
 	$self->{button_close} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
 	#
@@ -486,7 +486,7 @@ sub _on_close_button {
 	$main->SetMenuBar( $main->menu->wx );
 	$main->refresh;
 
-	$self->EndModal(Wx::wxID_CLOSE);
+	$self->EndModal(Wx::ID_CLOSE);
 	return;
 }
 

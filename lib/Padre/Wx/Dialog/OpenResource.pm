@@ -174,13 +174,13 @@ sub _create_buttons {
 
 	$self->{ok_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext('&OK'),
 	);
 	$self->{ok_button}->SetDefault;
 	$self->{cancel_button} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext('&Cancel'),
 	);
 
@@ -190,7 +190,7 @@ sub _create_buttons {
 	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
 
-	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&ok_button );
+	Wx::Event::EVT_BUTTON( $self, Wx::ID_OK, \&ok_button );
 }
 
 #

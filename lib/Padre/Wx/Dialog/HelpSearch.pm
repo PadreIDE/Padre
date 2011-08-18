@@ -176,7 +176,7 @@ sub _create_controls {
 	);
 	$self->_help_viewer->SetPage('');
 
-	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+	my $close_button = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 	$self->_status( Wx::StaticText->new( $self, -1, '' ) );
 
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);

@@ -139,7 +139,7 @@ sub new {
 
 	$self->{find} = Wx::Button->new(
 		$self,
-		Wx::wxID_OK,
+		Wx::ID_OK,
 		Wx::gettext("&Find"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -148,7 +148,7 @@ sub new {
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::wxID_CANCEL,
+		Wx::ID_CANCEL,
 		Wx::gettext("Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
