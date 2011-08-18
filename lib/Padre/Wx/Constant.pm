@@ -103,6 +103,7 @@ use constant TAGS => qw{
 	wxDefaultSize
 	wxDefaultPosition
 	:clipboard
+	:dialog
 	:id
 	:frame
 	:textctrl
