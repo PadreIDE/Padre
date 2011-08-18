@@ -73,7 +73,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PROCESS_ENTER
+		Wx::TE_PROCESS_ENTER
 	);
 
 	# Set the descriptive text for the search button.

@@ -245,7 +245,7 @@ sub _create_controls {
 		Wx::gettext('Current Directory: ') . $self->{directory},
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_READONLY,
+		Wx::TE_READONLY,
 	);
 
 	my $folder_image = Wx::StaticBitmap->new(

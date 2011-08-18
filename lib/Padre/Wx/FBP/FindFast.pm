@@ -58,7 +58,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_NO_VSCROLL,
+		Wx::TE_NO_VSCROLL,
 	);
 
 	Wx::Event::EVT_TEXT(

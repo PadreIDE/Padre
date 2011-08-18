@@ -139,7 +139,7 @@ sub _create_controls {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_READONLY
+		Wx::TE_READONLY
 	);
 	$self->{default_value}->Enable(0);
 
@@ -151,7 +151,7 @@ sub _create_controls {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_READONLY
+		Wx::TE_READONLY
 	);
 	$self->{options}->Enable(0);
 
@@ -162,7 +162,7 @@ sub _create_controls {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{help}->Enable(0);

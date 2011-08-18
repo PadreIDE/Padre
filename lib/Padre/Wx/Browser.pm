@@ -87,7 +87,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PROCESS_ENTER
+		Wx::TE_PROCESS_ENTER
 	);
 	$self->{search}->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 

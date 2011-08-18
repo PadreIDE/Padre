@@ -97,7 +97,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		[ 300, 200 ],
-		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
+		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 	$self->{preview}->SetBackgroundColour(
 		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )

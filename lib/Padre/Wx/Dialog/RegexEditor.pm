@@ -219,7 +219,7 @@ sub _create_controls {
 	# Describe-the-regex text field
 	$self->{description_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Description is hidden by default
@@ -229,7 +229,7 @@ sub _create_controls {
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
@@ -250,7 +250,7 @@ sub _create_controls {
 	$self->{replace_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
 	$self->{replace_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{replace_label}->Hide;

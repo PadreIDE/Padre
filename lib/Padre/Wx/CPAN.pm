@@ -65,7 +65,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PROCESS_ENTER
+		Wx::TE_PROCESS_ENTER
 	);
 	$self->{entry} = $entry;
 	Wx::Event::EVT_TEXT( $self, $entry, \&on_key_pressed );

@@ -43,9 +43,9 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_READONLY
-			| Wx::wxTE_MULTILINE
-			| Wx::wxTE_DONTWRAP
+		Wx::TE_READONLY
+			| Wx::TE_MULTILINE
+			| Wx::TE_DONTWRAP
 			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 

@@ -39,12 +39,12 @@ sub new {
 
 	my $output = Wx::TextCtrl->new(
 		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	my $input = Wx::TextCtrl->new(
 		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxTE_PROCESS_ENTER
+		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::TE_PROCESS_ENTER
 	);
 
 	$self->{_output_} = $output;

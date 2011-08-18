@@ -51,7 +51,7 @@ sub new {
 		$self, -1, '',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PROCESS_ENTER | Wx::wxSIMPLE_BORDER,
+		Wx::TE_PROCESS_ENTER | Wx::wxSIMPLE_BORDER,
 	);
 
 	# Create the functions list

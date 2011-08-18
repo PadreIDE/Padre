@@ -46,7 +46,7 @@ sub new {
 			"Padre::Wx::Display->dump",
 			"\\\@INC, \\%INC",
 		],
-		Wx::wxTE_PROCESS_ENTER,
+		Wx::TE_PROCESS_ENTER,
 	);
 
 	Wx::Event::EVT_TEXT(
@@ -87,7 +87,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
+		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 	$self->{output}->SetMinSize( [ 500, 400 ] );
 	$self->{output}->SetFont(

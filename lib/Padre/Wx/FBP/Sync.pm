@@ -94,7 +94,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PASSWORD,
+		Wx::TE_PASSWORD,
 	);
 
 	$self->{btn_login} = Wx::Button->new(
@@ -139,7 +139,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PASSWORD,
+		Wx::TE_PASSWORD,
 	);
 
 	my $m_staticText7 = Wx::StaticText->new(
@@ -154,7 +154,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_PASSWORD,
+		Wx::TE_PASSWORD,
 	);
 
 	my $m_staticText8 = Wx::StaticText->new(

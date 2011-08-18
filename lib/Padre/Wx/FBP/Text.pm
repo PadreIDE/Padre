@@ -37,7 +37,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTE_MULTILINE,
+		Wx::TE_MULTILINE,
 	);
 	$self->{text}->SetMinSize( [ 250, 250 ] );
 

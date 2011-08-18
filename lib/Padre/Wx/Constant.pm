@@ -104,9 +104,10 @@ use Wx ( qw{
 use constant TAGS => qw{
 	wxDefaultSize
 	wxDefaultPosition
+	:textctrl
 };
 
-BEGIN {
+sub load {
 	my %constants = (
 		THREADS => Wx::wxTHREADS,
 		MOTIF   => Wx::wxMOTIF,
@@ -115,7 +116,7 @@ BEGIN {
 		MAC     => Wx::wxMAC,
 		X11     => Wx::wxX11,
 	);
-	foreach my $function ( map { /:/ ? @{$Wx::EXPORT_TAGS{$_}} : $_ } TAGS ) {
+	foreach my $function ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } TAGS ) {
 		next if defined $constants{$function};
 		next unless $function =~ s/^wx//i;
 		if ( exists $Wx::{$function} ) {
@@ -132,7 +133,7 @@ BEGIN {
 			&{"Wx::wx$function"}();
 		};
 		if ( $@ ) {
-			print "# Wx::wx$function failed to load\n";
+			# print "# Wx::wx$function failed to load\n";
 			next;
 		}
 		unless ( defined $value ) {
@@ -152,6 +153,10 @@ BEGIN {
 	# Aliases for other things that aren't actual constants
 	no warnings 'once';
 	*Wx::TheApp = *Wx::wxTheApp;
+}
+
+BEGIN {
+	load();
 }
 
 1;
