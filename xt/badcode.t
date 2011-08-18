@@ -34,7 +34,7 @@ my @t_files = glob "t/*.t";
 plan( tests => scalar( keys %modules ) * 10 + scalar(@t_files) );
 
 my %SKIP = map { ( "t/$_" => 1 ) } qw(
-	01_load.t
+	01_compile.t
 	06_utils.t
 	07_version.t
 	08_style.t
