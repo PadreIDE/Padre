@@ -76,7 +76,7 @@ sub _add_controls {
 	$title_font->SetPointSize( $title_font->GetPointSize + 2 );
 	$self->{title}->SetFont($title_font);
 
-	my $header_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $header_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$header_sizer->Add( $self->{title},  0, 0, 0 );
 	$header_sizer->Add( $self->{status}, 0, 0, 0 );
 
@@ -97,7 +97,7 @@ sub _add_controls {
 	$button_sizer->AddSpacer(10);
 	$button_sizer->Add( $self->{button_cancel}, 0, 0, 0 );
 
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$sizer->Add( $top_sizer,           0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$sizer->Add( $self->{select_page}, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$sizer->AddSpacer(2);

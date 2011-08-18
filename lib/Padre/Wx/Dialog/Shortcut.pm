@@ -32,7 +32,7 @@ sub new {
 		Wx::gettext('A Dialog'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU
 	);
 
 	$self->{action_label} = Wx::StaticText->new(
@@ -113,7 +113,7 @@ sub new {
 	$self->SetTitle( Wx::gettext("Shortcut") );
 	$self->{key_box}->SetSelection(-1);
 	my $sizer_1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	my $sizer_2 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer_2 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->{button_sizer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	my $sizer_8 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizer_2->Add( $self->{action_label},   0, Wx::wxEXPAND,                                           0 );

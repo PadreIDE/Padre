@@ -32,7 +32,7 @@ sub add_controls {
 	#my $generate_boilerplate;
 
 	# Main vertical sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	$self->SetSizer($sizer);
 	$self->Fit;

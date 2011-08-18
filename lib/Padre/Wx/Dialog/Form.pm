@@ -32,7 +32,7 @@ sub new {
 		Wx::gettext('A Dialog'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU
 	);
 
 	my $label_1 = Wx::StaticText->new(
@@ -100,7 +100,7 @@ sub new {
 	$choice_1->SetSelection(0);
 	$self->{ok}->SetDefault;
 	my $sizer_7 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	my $sizer_8 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer_8 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->{button_sizer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$self->{form_sizer}   = Wx::GridSizer->new(
 		3,

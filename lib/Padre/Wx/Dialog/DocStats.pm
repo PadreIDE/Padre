@@ -31,7 +31,7 @@ sub new {
 		Wx::gettext('Document Statistics'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU
 	);
 
 	$self->{main} = $main;

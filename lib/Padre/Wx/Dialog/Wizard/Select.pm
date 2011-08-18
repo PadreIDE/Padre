@@ -44,7 +44,7 @@ sub add_controls {
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Main vertical sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$sizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$sizer->Add( $self->{tree}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 

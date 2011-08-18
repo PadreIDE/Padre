@@ -37,7 +37,7 @@ sub new {
 		Wx::gettext('Session Manager'),
 		Wx::DefaultPosition,
 		Wx::Size->new( 480, 300 ),
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -194,7 +194,7 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vbox = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->SetSizer($vbox);
 	$self->CenterOnParent;
 

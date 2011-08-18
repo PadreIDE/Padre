@@ -28,7 +28,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		[ 300, 300 ],
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
+		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{text} = Wx::TextCtrl->new(
@@ -62,7 +62,7 @@ sub new {
 	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{close}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{text}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );

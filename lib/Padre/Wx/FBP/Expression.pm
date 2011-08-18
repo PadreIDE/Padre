@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Evaluate Expression"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
+		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{code} = Wx::ComboBox->new(
@@ -98,7 +98,7 @@ sub new {
 	$bSizer36->Add( $self->{code}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$bSizer36->Add( $self->{evaluate}, 0, Wx::wxALL, 3 );
 
-	my $bSizer35 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $bSizer35 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer35->Add( $bSizer36, 0, Wx::wxEXPAND, 3 );
 	$bSizer35->Add( $self->{output}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 

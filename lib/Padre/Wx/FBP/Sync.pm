@@ -278,7 +278,7 @@ sub new {
 
 	my $fgSizer3 = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$fgSizer3->AddGrowableCol(1);
-	$fgSizer3->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer3->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer3->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer3->Add( $m_staticText12, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 3 );
 	$fgSizer3->Add( $self->{txt_remote}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
@@ -302,7 +302,7 @@ sub new {
 			-1,
 			Wx::gettext("Authentication"),
 		),
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 	);
 	$sbSizer1->Add( $fgSizer1, 0, Wx::wxEXPAND, 5 );
 
@@ -329,7 +329,7 @@ sub new {
 			-1,
 			Wx::gettext("Registration"),
 		),
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 	);
 	$sbSizer2->Add( $fgSizer2, 1, Wx::wxEXPAND, 5 );
 
@@ -345,7 +345,7 @@ sub new {
 	$buttons->Add( 50, 0, 1, Wx::wxEXPAND, 3 );
 	$buttons->Add( $self->{btn_ok}, 0, Wx::wxALL, 3 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $fgSizer3, 0, Wx::wxEXPAND, 5 );
 	$vsizer->Add( $line1, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
 	$vsizer->Add( $bSizer7, 1, Wx::wxEXPAND, 5 );

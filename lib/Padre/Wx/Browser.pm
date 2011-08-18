@@ -63,7 +63,7 @@ sub new {
 		Wx::gettext('Help'),
 		Wx::DefaultPosition,
 		[ 750, 700 ],
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	$self->{provider} = Padre::Browser->new;
@@ -71,7 +71,7 @@ sub new {
 	# Until we get a real icon use the same one as the others
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $top_s = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	$self->{notebook} = Wx::AuiNotebook->new(

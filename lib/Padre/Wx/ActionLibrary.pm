@@ -1719,7 +1719,7 @@ sub init {
 			} else {
 				$_[0]->ShowFullScreen(
 					1,
-					Wx::wxFULLSCREEN_NOCAPTION | Wx::wxFULLSCREEN_NOBORDER
+					Wx::FULLSCREEN_NOCAPTION | Wx::FULLSCREEN_NOBORDER
 				);
 			}
 			return;

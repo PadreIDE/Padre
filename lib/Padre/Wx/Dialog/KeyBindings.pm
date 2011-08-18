@@ -29,7 +29,7 @@ sub new {
 		Wx::gettext('Key Bindings'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set some internal parameters
@@ -149,7 +149,7 @@ sub _create_controls {
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Ctrl/Alt Modifier sizer
-	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $modifier_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$modifier_sizer->AddSpacer(3);
 	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
@@ -178,7 +178,7 @@ sub _create_controls {
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );

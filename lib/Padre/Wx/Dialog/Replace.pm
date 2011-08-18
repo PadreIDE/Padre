@@ -49,7 +49,7 @@ sub new {
 		Wx::gettext('Find and Replace'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU | Wx::RESIZE_BORDER
 	);
 
 	# The text to search for
@@ -216,7 +216,7 @@ sub new {
 			-1,
 			Wx::gettext('Find'),
 		),
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 	);
 	$find->Add(
 		Wx::StaticText->new(
@@ -248,7 +248,7 @@ sub new {
 			-1,
 			Wx::gettext('Replace'),
 		),
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 	);
 	$replace->Add(
 		Wx::StaticText->new(
@@ -302,7 +302,7 @@ sub new {
 			-1,
 			Wx::gettext('Options')
 		),
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 	);
 	$options->Add(
 		$grid,

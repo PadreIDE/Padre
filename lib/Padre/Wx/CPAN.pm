@@ -57,7 +57,7 @@ sub new {
 	$self->{cpan} = $cpan;
 	$self->{main} = $main;
 
-	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $top_s = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	my $entry = Wx::TextCtrl->new(

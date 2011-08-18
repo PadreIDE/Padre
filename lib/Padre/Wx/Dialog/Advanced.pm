@@ -62,7 +62,7 @@ sub new {
 		Wx::gettext('Advanced Settings'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set some internal parameters
@@ -236,7 +236,7 @@ sub _create_controls {
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );

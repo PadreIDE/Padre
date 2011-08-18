@@ -39,7 +39,7 @@ sub new {
 		Wx::gettext('Help Search'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->_main($main);
@@ -179,7 +179,7 @@ sub _create_controls {
 	my $close_button = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 	$self->_status( Wx::StaticText->new( $self, -1, '' ) );
 
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vbox = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	$vbox->Add( $topic_label,           0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $self->_topic_selector, 0, Wx::wxALL | Wx::wxEXPAND,     2 );

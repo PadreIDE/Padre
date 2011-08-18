@@ -118,14 +118,14 @@ sub new {
 	my $config   = $ide->config;
 	my $size     = [ $config->main_width, $config->main_height ];
 	my $position = [ $config->main_left, $config->main_top ];
-	my $style    = Wx::wxDEFAULT_FRAME_STYLE;
+	my $style    = Wx::DEFAULT_FRAME_STYLE;
 
 	# If we closed while maximized on the previous run,
 	# the previous size is completely suspect.
 	# This doesn't work on Windows,
 	# so we use a different mechanism for it.
 	if ( not Padre::Constant::WXWIN32 and $config->main_maximized ) {
-		$style |= Wx::wxMAXIMIZE;
+		$style |= Wx::MAXIMIZE;
 	}
 
 	# Generate a smarter default size than Wx does

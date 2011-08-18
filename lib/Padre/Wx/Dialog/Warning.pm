@@ -32,7 +32,7 @@ sub new {
 		Wx::gettext('A Dialog'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU
 	);
 
 	$self->{warning_label} = Wx::StaticText->new(
@@ -63,7 +63,7 @@ sub new {
 	);
 	$self->SetTitle( Wx::gettext("Warning") );
 	my $sizer_4 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	my $sizer_5 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer_5 = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizer_6 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizer_5->Add( $self->{warning_label},    0, 0,                                       0 );
 	$sizer_5->Add( $self->{warning_checkbox}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );

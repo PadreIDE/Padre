@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxNO_BORDER | Wx::wxTAB_TRAVERSAL,
+		Wx::NO_BORDER | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->{cancel} = Wx::Button->new(
@@ -112,7 +112,7 @@ sub new {
 
 	my $sizer = Wx::FlexGridSizer->new( 1, 6, 0, 0 );
 	$sizer->AddGrowableRow(0);
-	$sizer->SetFlexibleDirection(Wx::wxBOTH);
+	$sizer->SetFlexibleDirection(Wx::BOTH);
 	$sizer->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$sizer->Add( $self->{cancel}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$sizer->Add( $self->{find_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );

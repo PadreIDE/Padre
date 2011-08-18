@@ -65,7 +65,7 @@ sub new {
 	);
 
 	# Create a sizer
-	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizerv = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
 	$sizerv->Add( $self->{list},   1, Wx::wxALL | Wx::wxEXPAND );

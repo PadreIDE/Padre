@@ -29,7 +29,7 @@ sub new {
 		Wx::gettext("Padre Preferences"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
+		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{treebook} = Wx::Treebook->new(
@@ -921,7 +921,7 @@ sub new {
 	);
 
 	my $fgSizer91 = Wx::FlexGridSizer->new( 1, 2, 0, 0 );
-	$fgSizer91->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer91->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer91->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer91->Add( $self->{m_staticText341}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer91->Add( $self->{editor_style}, 0, Wx::wxALL, 5 );
@@ -929,7 +929,7 @@ sub new {
 	my $fgSizer4 = Wx::FlexGridSizer->new( 6, 2, 0, 10 );
 	$fgSizer4->AddGrowableCol(0);
 	$fgSizer4->AddGrowableCol(1);
-	$fgSizer4->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer4->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer4->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer4->Add( $self->{main_output_ansi}, 0, Wx::wxALL, 5 );
 	$fgSizer4->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -942,7 +942,7 @@ sub new {
 	$fgSizer4->Add( $m_staticText18, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	my $bSizer4 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $bSizer4 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer4->Add( $fgSizer91, 0, Wx::wxEXPAND, 5 );
 	$bSizer4->Add( $self->{m_staticline21}, 0, Wx::wxBOTTOM | Wx::wxEXPAND | Wx::wxTOP, 5 );
 	$bSizer4->Add( $fgSizer4, 0, Wx::wxEXPAND, 0 );
@@ -954,7 +954,7 @@ sub new {
 	$m_panel3->Layout;
 
 	my $fgSizer411 = Wx::FlexGridSizer->new( 6, 2, 0, 0 );
-	$fgSizer411->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer411->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer411->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer411->Add( $self->{autocomplete_always}, 0, Wx::wxALL, 5 );
 	$fgSizer411->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -972,20 +972,20 @@ sub new {
 	$fgSizer411->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 
 	my $fgSizer412 = Wx::FlexGridSizer->new( 2, 1, 0, 0 );
-	$fgSizer412->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer412->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer412->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer412->Add( $self->{autocomplete_brackets}, 0, Wx::wxALL, 5 );
 	$fgSizer412->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer412->Add( $self->{autocomplete_multiclosebracket}, 0, Wx::wxALL, 5 );
 
 	my $fgSizer413 = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
-	$fgSizer413->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer413->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer413->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer413->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$fgSizer413->Add( $self->{editor_fold_pod}, 0, Wx::wxALL, 5 );
 	$fgSizer413->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 
-	my $bSizer41 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $bSizer41 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer41->Add( $self->{m_staticText36111}, 0, Wx::wxALL, 5 );
 	$bSizer41->Add( $self->{m_staticline411}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
 	$bSizer41->Add( $fgSizer411, 0, Wx::wxEXPAND, 5 );
@@ -1002,7 +1002,7 @@ sub new {
 	my $fgSizer3 = Wx::FlexGridSizer->new( 14, 2, 0, 0 );
 	$fgSizer3->AddGrowableCol(0);
 	$fgSizer3->AddGrowableCol(1);
-	$fgSizer3->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer3->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer3->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_NONE);
 	$fgSizer3->Add( $self->{swap_ctrl_tab_alt_right}, 0, Wx::wxALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -1038,7 +1038,7 @@ sub new {
 
 	my $fgSizer6 = Wx::FlexGridSizer->new( 1, 2, 0, 0 );
 	$fgSizer6->AddGrowableCol(1);
-	$fgSizer6->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer6->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer6->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer6->Add( $m_staticText25, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer6->Add( $self->{bin_diff}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -1047,7 +1047,7 @@ sub new {
 	$m_panel6->Layout;
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 6, 2, 0, 0 );
-	$fgSizer2->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer2->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
 	$fgSizer2->Add( $self->{editor_indent_guess}, 0, Wx::wxALL, 5 );
 	$fgSizer2->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -1066,7 +1066,7 @@ sub new {
 	$m_panel1->Layout;
 
 	my $fgSizer71 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
-	$fgSizer71->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer71->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer71->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
 	$fgSizer71->Add( $m_staticText34, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer71->Add( $self->{run_perl_cmd}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -1081,7 +1081,7 @@ sub new {
 	$fgSizer71->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 
 	my $fgSizer72 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
-	$fgSizer72->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer72->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer72->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_ALL);
 	$fgSizer72->Add( $self->{lang_perl5_beginner}, 0, Wx::wxALL, 5 );
 	$fgSizer72->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -1094,7 +1094,7 @@ sub new {
 	$fgSizer72->Add( $m_staticText26, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$fgSizer72->Add( $self->{lang_perl5_tags_file}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
-	my $bSizer71 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $bSizer71 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer71->Add( $self->{m_staticText39}, 0, Wx::wxALL, 5 );
 	$bSizer71->Add( $self->{m_staticline10}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
 	$bSizer71->Add( $fgSizer71, 0, 0, 5 );
@@ -1106,7 +1106,7 @@ sub new {
 	$m_panel7->Layout;
 
 	my $fgSizer8 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
-	$fgSizer8->SetFlexibleDirection(Wx::wxBOTH);
+	$fgSizer8->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer8->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
 	$fgSizer8->Add( $m_staticText30, 0, Wx::wxALL, 5 );
 	$fgSizer8->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
@@ -1134,7 +1134,7 @@ sub new {
 	$buttons->Add( $self->{advanced}, 0, Wx::wxALL, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{treebook}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::wxALIGN_RIGHT, 5 );

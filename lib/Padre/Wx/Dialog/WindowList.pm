@@ -35,7 +35,7 @@ sub new {
 		Wx::gettext( $args{title} || Wx::gettext('Window list') ),
 		Wx::DefaultPosition,
 		Wx::Size->new( 480, 300 ),
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	foreach ( keys %args ) {
@@ -181,7 +181,7 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vbox = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->SetSizer($vbox);
 	$self->CenterOnParent;
 

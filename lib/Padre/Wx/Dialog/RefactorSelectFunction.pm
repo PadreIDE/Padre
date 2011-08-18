@@ -38,7 +38,7 @@ sub new {
 		Wx::gettext('Select Function'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->{cancelled} = 0;
@@ -70,7 +70,7 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vbox = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->SetSizer($vbox);
 	$self->CenterOnParent;
 

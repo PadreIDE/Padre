@@ -33,7 +33,7 @@ sub new {
 		Wx::gettext('Perl Filter'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set basic dialog properties
@@ -109,7 +109,7 @@ sub _create_controls {
 	# Dialog Layout
 
 	# Vertical layout of the left hand side
-	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	$left->Add( $source_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{source}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );

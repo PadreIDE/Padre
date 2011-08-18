@@ -138,7 +138,7 @@ sub new {
 	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{set_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
 	$vsizer->Add( $self->{set}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{set_line}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );

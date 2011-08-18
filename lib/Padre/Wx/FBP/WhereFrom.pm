@@ -75,7 +75,7 @@ sub new {
 	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $question, 1, Wx::wxALIGN_RIGHT, 0 );
 	$vsizer->Add( $line, 0, Wx::wxEXPAND | Wx::wxLEFT | Wx::wxRIGHT, 5 );
 	$vsizer->Add( $buttons, 1, Wx::wxALIGN_RIGHT | Wx::wxEXPAND, 0 );

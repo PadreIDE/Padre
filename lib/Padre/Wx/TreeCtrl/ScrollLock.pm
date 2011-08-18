@@ -64,7 +64,7 @@ sub new {
 	# Create the object and record the scroll position
 	return bless {
 		tree    => $tree,
-		scrolly => $tree->GetScrollPos(Wx::wxVERTICAL),
+		scrolly => $tree->GetScrollPos(Wx::VERTICAL),
 		locker  => Wx::WindowUpdateLocker->new($tree),
 	}, $class;
 }
@@ -74,7 +74,7 @@ sub DESTROY {
 	# Return the scroll position to the previous position
 	### NOTE: This just sets it to the top for now.
 	$_[0]->{tree}->SetScrollPos(
-		Wx::wxVERTICAL,
+		Wx::VERTICAL,
 		$_[0]->{scrolly},
 		0,
 	);

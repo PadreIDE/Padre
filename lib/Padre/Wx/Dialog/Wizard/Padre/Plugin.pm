@@ -24,7 +24,7 @@ sub add_controls {
 	my $self = shift;
 
 	# Main vertical sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	$self->SetSizer($sizer);
 	$self->Fit;

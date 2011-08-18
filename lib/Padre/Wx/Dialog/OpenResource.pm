@@ -30,7 +30,7 @@ sub new {
 		Wx::gettext('Open Resources'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->init_search;
@@ -151,7 +151,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	$self->{sizer} = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$self->{sizer} = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	# create the controls
 	$self->_create_controls;

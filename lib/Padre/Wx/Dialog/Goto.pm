@@ -39,7 +39,7 @@ sub new {
 		Wx::gettext('Goto'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxRESIZE_BORDER | Wx::wxSYSTEM_MENU | Wx::wxCAPTION | Wx::wxCLOSE_BOX
+		Wx::RESIZE_BORDER | Wx::SYSTEM_MENU | Wx::CAPTION | Wx::CLOSE_BOX
 	);
 
 	# Minimum dialog size
@@ -109,7 +109,7 @@ sub _create_controls {
 	$button_sizer->AddSpacer(5);
 
 	# Create the main vertical sizer
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{line_mode},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{current},     0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{goto_label},  0, Wx::wxALL | Wx::wxEXPAND, 3 );

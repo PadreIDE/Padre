@@ -40,7 +40,7 @@ sub new {
 		Wx::gettext('Quick Menu Access'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
 	# Dialog's icon as is the same as Padre
@@ -124,7 +124,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$self->_sizer($sizer);
 
 	# create the controls

@@ -18,7 +18,7 @@ sub new {
 	my %param = (
 		parent => undef,
 		id     => -1,
-		style  => Wx::wxDEFAULT_FRAME_STYLE,
+		style  => Wx::DEFAULT_FRAME_STYLE,
 		title  => '',
 		pos    => [ -1, -1 ],
 		size   => [ -1, -1 ],

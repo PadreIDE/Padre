@@ -31,7 +31,7 @@ my %modules = map {
 my @t_files = glob "t/*.t";
 
 #map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
-plan( tests => scalar( keys %modules ) * 10 + scalar(@t_files) );
+plan( tests => scalar( keys %modules ) * 11 + scalar(@t_files) );
 
 my %SKIP = map { ( "t/$_" => 1 ) } qw(
 	01_compile.t
@@ -233,11 +233,12 @@ foreach my $module ( sort keys %modules ) {
 	# Check for method calls that don't exist
 	SKIP: {
 		if ( $module =~ /\bRole\b/ ) {
-			skip( 'Ignoring role $module', 1 );
+			skip( "Ignoring module $module", 1 );
 		}
 		if ( $module eq 'Padre::Autosave' ) {
 			skip( 'Ignoring flaky ORLite usage in Padre::Autosave', 1 );
 		}
+
 		my $tokens = $document->find(
 			sub {
 				$_[1]->isa('PPI::Token::Word') or return '';
@@ -245,13 +246,15 @@ foreach my $module ( sort keys %modules ) {
 
 				# Is it a method
 				my $operator = $_[1]->sprevious_sibling or return '';
-				$operator->isa('PPI::Token::Operator') or return '';
-				$operator->content eq '->' or return '';
+				$operator->isa('PPI::Token::Operator')  or return '';
+				$operator->content eq '->'              or return '';
 
 				# Get the method name
 				my $object = $operator->sprevious_sibling or return '';
-				$object->isa('PPI::Token::Symbol') or return '';
-				$object->content eq '$self' or return '';
+				$object->isa('PPI::Token::Symbol')        or return '';
+				$object->content eq '$self'               or return '';
+
+				return 1;
 			}
 		);
 
@@ -266,6 +269,47 @@ foreach my $module ( sort keys %modules ) {
 		is( scalar(@bad), 0, 'No missing methods' );
 		foreach my $method (@bad) {
 			diag("$module: Cannot resolve method \$self->$method");
+		}
+	}
+
+	# Check for Wx::wxFOO constants that should be Wx::FOO
+	SKIP: {
+		if ( $module eq 'Padre::Wx::Constant' ) {
+			skip( "Ignoring role $module", 1 );
+		}
+
+		my %seen   = ();
+		my $tokens = $document->find(
+			sub {
+				$_[1]->isa('PPI::Token::Word')       or return '';
+				$_[1]->content =~ /^Wx::wx([A-Z].+)/ or return '';
+
+				# Is this a new one?
+				my $name = $1;
+				return '' if $seen{$name}++;
+
+				# Does the original and shortened forms of the
+				# constant actually exist?
+				Wx->can("wx$name") or return '';
+				Wx->can($name)     or return '';
+
+				# wxVERSION is a special case
+				$name eq 'VERSION' and return '';
+
+				return 1;
+			}
+		);
+
+		# Filter for the constant list
+		my @bad = ();
+		if ( $tokens ) {
+			@bad = map { $_->content } @$tokens;
+		}
+
+		# There should be no unconverted wxCONSTANTS
+		is( scalar(@bad), 0, 'No uncoverted wxCONSTANTS' );
+		foreach my $name ( @bad ) {
+			diag("$module: Unconverted constant $name");
 		}
 	}
 

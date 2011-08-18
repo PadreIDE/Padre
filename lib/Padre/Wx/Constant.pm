@@ -104,6 +104,7 @@ use constant TAGS => qw{
 	wxDefaultPosition
 	:clipboard
 	:id
+	:frame
 	:textctrl
 };
 

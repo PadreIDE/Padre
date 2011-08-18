@@ -37,7 +37,7 @@ sub new {
 		Wx::gettext('Open URL'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::CAPTION | Wx::CLOSE_BOX | Wx::SYSTEM_MENU
 	);
 
 	# Form Components
@@ -95,7 +95,7 @@ sub new {
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 
 	# The main layout for the dialog is vertical
-	my $sizer_2 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer_2 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$sizer_2->Add( $openurl_label,        0, 0,                                       0 );
 	$sizer_2->Add( $self->{openurl_text}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
 	$sizer_2->Add( $line_1,               0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
@@ -109,7 +109,7 @@ sub new {
 	# and tell the window and the sizer to alter size to fit
 	# to each other correctly, regardless of the platform.
 	# This type of sizing is NOT adaptive, so we must not use
-	# Wx::wxRESIZE_BORDER with this dialog.
+	# Wx::RESIZE_BORDER with this dialog.
 	$self->SetSizer($sizer_1);
 	$sizer_1->Fit($self);
 	$self->Layout;

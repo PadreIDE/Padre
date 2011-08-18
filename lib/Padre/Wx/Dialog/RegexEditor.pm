@@ -33,7 +33,7 @@ sub new {
 		Wx::gettext('Regex Editor'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set basic dialog properties
@@ -306,10 +306,10 @@ sub _create_controls {
 
 	$modifiers->AddStretchSpacer;
 
-	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $regex = Wx::BoxSizer->new(Wx::VERTICAL);
 	$regex->Add( $self->{regex}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
-	my $regex_groups = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $regex_groups = Wx::BoxSizer->new(Wx::VERTICAL);
 	foreach my $code ( sort keys %regex_groups ) {
 		my $button_name = $code . '_button';
 		$regex_groups->Add( $self->{$button_name}, 0, Wx::wxEXPAND, 1 );
@@ -320,7 +320,7 @@ sub _create_controls {
 	$combined->Add( $regex_groups, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Vertical layout of the left hand side
-	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );

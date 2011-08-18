@@ -35,7 +35,7 @@ sub new {
 		Wx::gettext('Plug-in Manager'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set some internal parameters
@@ -170,7 +170,7 @@ sub new {
 	$header->AddStretchSpacer;
 
 	# Vertical layout of the right hand side
-	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $right = Wx::BoxSizer->new(Wx::VERTICAL);
 	$right->Add( $header, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$right->Add(
 		$self->{whtml},

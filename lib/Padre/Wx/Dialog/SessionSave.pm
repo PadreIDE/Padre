@@ -31,7 +31,7 @@ sub new {
 		Wx::gettext('Save session as...'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
@@ -155,7 +155,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	my $box = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $box = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
 	$box->Add( $sizer, 1, Wx::wxEXPAND | Wx::wxALL, 5 );

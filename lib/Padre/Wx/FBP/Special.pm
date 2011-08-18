@@ -101,7 +101,7 @@ sub new {
 	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{select}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{preview}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$vsizer->Add( $self->{m_staticline221}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
