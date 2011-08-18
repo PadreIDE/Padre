@@ -1371,7 +1371,7 @@ sub get_text_from_clipboard {
 	my $self = shift;
 	my $text = '';
 	Wx::TheClipboard->Open;
-	if ( Wx::TheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
+	if ( Wx::TheClipboard->IsSupported(Wx::DF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
 		if ( Wx::TheClipboard->GetData($data) ) {
 			$text = $data->GetText if defined $data;
