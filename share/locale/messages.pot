@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-18 04:10-0700\n"
+"POT-Creation-Date: 2011-08-18 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:208
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:211
 msgid ""
 "# Input is in $_\n"
 "$_ = $_;\n"
@@ -148,7 +148,7 @@ msgstr ""
 #: lib/Padre/Wx/ActionLibrary.pm:284 lib/Padre/Wx/Browser.pm:109
 #: lib/Padre/Wx/About.pm:86 lib/Padre/Wx/Dialog/DocStats.pm:58
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:99
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:102
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:139
 #: lib/Padre/Wx/Dialog/SessionManager.pm:303
@@ -305,7 +305,7 @@ msgstr ""
 msgid "&Original text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:81
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:84
 msgid "&Output text:"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "&Perl"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:67
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:70
 msgid "&Perl filter source:"
 msgstr ""
 
@@ -1759,7 +1759,7 @@ msgstr ""
 #: lib/Padre/Document.pm:445 lib/Padre/Wx/Editor.pm:807
 #: lib/Padre/Wx/Main.pm:4900 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:274
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:277
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
 #: lib/Padre/Wx/Dialog/Sync.pm:118 lib/Padre/Wx/Dialog/Sync.pm:142
@@ -2456,7 +2456,7 @@ msgid "Indentation width (in columns)"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:117 lib/Padre/Wx/FBP/Special.pm:77
-#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/PerlFilter.pm:94
+#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/PerlFilter.pm:97
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:271
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Insert"
@@ -3266,7 +3266,7 @@ msgstr ""
 msgid "Options:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:74
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:77
 msgid "Or&iginal text:"
 msgstr ""
 
@@ -3419,7 +3419,7 @@ msgstr ""
 msgid "Perl Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:33
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:36
 msgid "Perl Filter"
 msgstr ""
 
@@ -3899,7 +3899,7 @@ msgstr ""
 msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:760
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:759
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""
@@ -4014,7 +4014,7 @@ msgid ""
 "the output panel."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:89
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:92
 msgid "Run filter"
 msgstr ""
 
