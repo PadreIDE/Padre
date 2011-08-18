@@ -33,7 +33,7 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext( $args{title} || Wx::gettext('Window list') ),
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		Wx::Size->new( 480, 300 ),
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
@@ -216,8 +216,8 @@ sub _create_list {
 	my $list = Wx::ListCtrl->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLC_REPORT,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Project') );

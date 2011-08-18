@@ -78,16 +78,16 @@ sub new {
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
 	);
 
 	$self->{help} = Padre::Wx::HtmlWindow->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxBORDER_STATIC,
 	);
 	$self->{help}->Hide;

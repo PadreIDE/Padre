@@ -41,8 +41,8 @@ sub new {
 		$panel,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_READONLY
 			| Wx::wxTE_MULTILINE
 			| Wx::wxTE_DONTWRAP

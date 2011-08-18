@@ -36,8 +36,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Select Function'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -97,8 +97,8 @@ sub _create_list {
 	my $list = Wx::ListView->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Function') );

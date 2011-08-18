@@ -30,8 +30,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('A Dialog'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
@@ -39,63 +39,63 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Action: %s"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $line_1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{ctrl_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("CTRL"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $label_3 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("+"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{alt_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("ALT"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $label_2 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("+"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{shift_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("SHIFT"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $label_1 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("+"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{key_box} = Wx::ComboBox->new(
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 		Wx::wxCB_DROPDOWN,
 	);
@@ -129,8 +129,8 @@ sub new {
 	my $line_2 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$sizer_2->Add( $line_2, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
 	$self->{button_sizer}->Add( $self->{ok},     1, 0,          0 );

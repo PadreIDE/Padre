@@ -26,8 +26,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Bookmarks"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
@@ -42,16 +42,16 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{set}->Hide;
 
 	$self->{set_line} = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 	$self->{set_line}->Hide;
@@ -65,8 +65,8 @@ sub new {
 	$self->{list} = Wx::ListBox->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 		Wx::wxLB_NEEDED_SB | Wx::wxLB_SINGLE,
 	);
@@ -74,8 +74,8 @@ sub new {
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -83,8 +83,8 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("OK"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{ok}->SetDefault;
 
@@ -92,8 +92,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("&Delete"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -108,8 +108,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Delete &All"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -124,8 +124,8 @@ sub new {
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $existing = Wx::BoxSizer->new(Wx::wxHORIZONTAL);

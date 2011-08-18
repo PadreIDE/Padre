@@ -25,8 +25,8 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxNO_BORDER | Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -34,8 +34,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("X"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -56,8 +56,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_NO_VSCROLL,
 	);
 
@@ -73,8 +73,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Next"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{find_next}->SetDefault;
 
@@ -90,8 +90,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Previous"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -106,8 +106,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Match Case"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $sizer = Wx::FlexGridSizer->new( 1, 6, 0, 0 );

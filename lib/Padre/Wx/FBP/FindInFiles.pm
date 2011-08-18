@@ -27,8 +27,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Find in Files"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
@@ -42,8 +42,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[
 			"search",
 		],
@@ -67,7 +67,7 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 250, -1 ],
 		[
 			"find_directory",
@@ -78,7 +78,7 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("&Browse"),
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 50, -1 ],
 	);
 
@@ -100,16 +100,16 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 
 	my $m_staticline2 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -117,23 +117,23 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("&Regular Expression"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("&Case Sensitive"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -141,8 +141,8 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("&Find"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{find}->SetDefault;
 
@@ -150,8 +150,8 @@ sub new {
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $bSizer4 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);

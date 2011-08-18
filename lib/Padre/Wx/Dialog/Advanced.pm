@@ -60,8 +60,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Advanced Settings'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
@@ -103,8 +103,8 @@ sub _create_controls {
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name') );
@@ -137,8 +137,8 @@ sub _create_controls {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_READONLY
 	);
 	$self->{default_value}->Enable(0);
@@ -149,8 +149,8 @@ sub _create_controls {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_READONLY
 	);
 	$self->{options}->Enable(0);
@@ -160,8 +160,8 @@ sub _create_controls {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 

@@ -27,23 +27,23 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Padre Preferences"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
 	$self->{treebook} = Wx::Treebook->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_panel3 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -59,8 +59,8 @@ sub new {
 	$self->{editor_style} = Wx::Choice->new(
 		$m_panel3,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{editor_style}->SetSelection(0);
@@ -76,8 +76,8 @@ sub new {
 	$self->{m_staticline21} = Wx::StaticLine->new(
 		$m_panel3,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -85,24 +85,24 @@ sub new {
 		$m_panel3,
 		-1,
 		Wx::gettext("Coloured text in output window (ANSI)"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{info_on_statusbar} = Wx::CheckBox->new(
 		$m_panel3,
 		-1,
 		Wx::gettext("Show low priority info messages on status bar (not in a popup)"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{editor_right_margin_enable} = Wx::CheckBox->new(
 		$m_panel3,
 		-1,
 		Wx::gettext("Show right margin at column"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_CHECKBOX(
@@ -117,8 +117,8 @@ sub new {
 		$m_panel3,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_TEXT(
@@ -139,8 +139,8 @@ sub new {
 		$m_panel3,
 		-1,
 		Wx::wxNullFont,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxFNTP_DEFAULT_STYLE,
 	);
 	$self->{editor_font}->SetMaxPointSize(100);
@@ -163,8 +163,8 @@ sub new {
 		$m_panel3,
 		-1,
 		Wx::Colour->new( 0, 0, 0 ),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxCLRP_DEFAULT_STYLE,
 	);
 
@@ -179,8 +179,8 @@ sub new {
 	$self->{m_staticline2} = Wx::StaticLine->new(
 		$m_panel3,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -201,8 +201,8 @@ sub new {
 	my $m_panel4 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -218,8 +218,8 @@ sub new {
 	$self->{m_staticline411} = Wx::StaticLine->new(
 		$m_panel4,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -227,24 +227,24 @@ sub new {
 		$m_panel4,
 		-1,
 		Wx::gettext("Autocomplete always while typing"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{autocomplete_method} = Wx::CheckBox->new(
 		$m_panel4,
 		-1,
 		Wx::gettext("Autocomplete new methods in packages"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{autocomplete_subroutine} = Wx::CheckBox->new(
 		$m_panel4,
 		-1,
 		Wx::gettext("Autocomplete new functions in scripts"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText271 = Wx::StaticText->new(
@@ -257,8 +257,8 @@ sub new {
 		$m_panel4,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		1,
 		64,
@@ -275,8 +275,8 @@ sub new {
 		$m_panel4,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		5,
 		256,
@@ -293,8 +293,8 @@ sub new {
 		$m_panel4,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		1,
 		16,
@@ -313,8 +313,8 @@ sub new {
 	$self->{m_staticline4111} = Wx::StaticLine->new(
 		$m_panel4,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -322,16 +322,16 @@ sub new {
 		$m_panel4,
 		-1,
 		Wx::gettext("Autocomplete brackets"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{autocomplete_multiclosebracket} = Wx::CheckBox->new(
 		$m_panel4,
 		-1,
 		Wx::gettext("Add another closing bracket if there already is one"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{m_staticText35111} = Wx::StaticText->new(
@@ -346,8 +346,8 @@ sub new {
 	$self->{m_staticline41111} = Wx::StaticLine->new(
 		$m_panel4,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -355,15 +355,15 @@ sub new {
 		$m_panel4,
 		-1,
 		Wx::gettext("Auto-fold POD markup when code folding enabled"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_panel2 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -371,16 +371,16 @@ sub new {
 		$m_panel2,
 		-1,
 		Wx::gettext("Use panel order for Ctrl-Tab (not usage history)"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{save_autoclean} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
 		Wx::gettext("Clean up file content on saving (for supported document types)"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText41 = Wx::StaticText->new(
@@ -392,8 +392,8 @@ sub new {
 	$self->{startup_files} = Wx::Choice->new(
 		$m_panel2,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{startup_files}->SetSelection(0);
@@ -409,8 +409,8 @@ sub new {
 		-1,
 		"",
 		Wx::gettext("Select a folder"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDIRP_DEFAULT_STYLE,
 	);
 
@@ -418,8 +418,8 @@ sub new {
 		$m_panel2,
 		-1,
 		Wx::gettext("Open files in existing Padre"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText6 = Wx::StaticText->new(
@@ -431,8 +431,8 @@ sub new {
 	$self->{main_functions_order} = Wx::Choice->new(
 		$m_panel2,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{main_functions_order}->SetSelection(0);
@@ -446,8 +446,8 @@ sub new {
 	$self->{locale_perldiag} = Wx::Choice->new(
 		$m_panel2,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{locale_perldiag}->SetSelection(0);
@@ -462,8 +462,8 @@ sub new {
 		$m_panel2,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		0,
 		10,
@@ -480,32 +480,32 @@ sub new {
 		$m_panel2,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{editor_smart_highlight_enable} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
 		Wx::gettext("Enable Smart highlighting while typing"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{window_list_shorten_path} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
 		Wx::gettext("Shorten the common path in window list"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{mid_button_paste} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
 		Wx::gettext("Use X11 middle button paste style"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText11 = Wx::StaticText->new(
@@ -518,23 +518,23 @@ sub new {
 		$m_panel2,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{startup_splash} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
 		Wx::gettext("Use splash screen"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_panel6 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -550,16 +550,16 @@ sub new {
 		"",
 		Wx::gettext("Select a file"),
 		"*.*",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxFLP_DEFAULT_STYLE,
 	);
 
 	my $m_panel1 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -567,8 +567,8 @@ sub new {
 		$m_panel1,
 		-1,
 		Wx::gettext("Guess from Current Document"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -583,16 +583,16 @@ sub new {
 		$m_panel1,
 		-1,
 		Wx::gettext("Automatic indentation style detection"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{editor_indent_tab} = Wx::CheckBox->new(
 		$m_panel1,
 		-1,
 		Wx::gettext("Use Tabs"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText2 = Wx::StaticText->new(
@@ -605,8 +605,8 @@ sub new {
 		$m_panel1,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		1,
 		16,
@@ -623,8 +623,8 @@ sub new {
 		$m_panel1,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		1,
 		10,
@@ -640,8 +640,8 @@ sub new {
 	$self->{editor_autoindent} = Wx::Choice->new(
 		$m_panel1,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{editor_autoindent}->SetSelection(0);
@@ -649,8 +649,8 @@ sub new {
 	my $m_panel7 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -666,8 +666,8 @@ sub new {
 	$self->{m_staticline10} = Wx::StaticLine->new(
 		$m_panel7,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -681,16 +681,16 @@ sub new {
 		$m_panel7,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{run_use_external_window} = Wx::CheckBox->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Use external window for execution"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText35 = Wx::StaticText->new(
@@ -703,8 +703,8 @@ sub new {
 		$m_panel7,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText36 = Wx::StaticText->new(
@@ -723,8 +723,8 @@ sub new {
 		$m_panel7,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{m_staticText351} = Wx::StaticText->new(
@@ -739,8 +739,8 @@ sub new {
 	$self->{m_staticline11} = Wx::StaticLine->new(
 		$m_panel7,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -748,16 +748,16 @@ sub new {
 		$m_panel7,
 		-1,
 		Wx::gettext("Perl beginner mode"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{editor_wordwrap} = Wx::CheckBox->new(
 		$m_panel7,
 		-1,
 		Wx::gettext("Default word wrap on for each file"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText8 = Wx::StaticText->new(
@@ -769,8 +769,8 @@ sub new {
 	$self->{default_line_ending} = Wx::Choice->new(
 		$m_panel7,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{default_line_ending}->SetSelection(0);
@@ -784,8 +784,8 @@ sub new {
 	$self->{lang_perl5_lexer} = Wx::Choice->new(
 		$m_panel7,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{lang_perl5_lexer}->SetSelection(0);
@@ -802,16 +802,16 @@ sub new {
 		"",
 		Wx::gettext("Select a file"),
 		"*.*",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxFLP_DEFAULT_STYLE,
 	);
 
 	my $m_panel8 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -831,8 +831,8 @@ sub new {
 		$m_panel8,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		10,
 		900,
@@ -855,8 +855,8 @@ sub new {
 		$m_panel8,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxSP_ARROW_KEYS,
 		10,
 		900,
@@ -867,15 +867,15 @@ sub new {
 		$m_panel8,
 		-1,
 		Wx::gettext("Use FTP passive mode"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -883,8 +883,8 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("Save"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{save}->SetDefault;
 
@@ -892,8 +892,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Advanced..."),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -908,8 +908,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Cancel"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(

@@ -120,7 +120,7 @@ sub _create_panel {
 
 	# The panel and the boxsizer to place controls
 	$self->{outer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->{panel} = Wx::Panel->new( $main, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize );
+	$self->{panel} = Wx::Panel->new( $main, -1, Wx::DefaultPosition, Wx::DefaultSize );
 	$self->{hbox}  = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	# Close button

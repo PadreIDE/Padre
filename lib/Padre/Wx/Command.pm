@@ -33,17 +33,17 @@ sub new {
 	my $panel = shift || $main->bottom;
 
 	my $self = $class->SUPER::new(
-		$panel, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$panel, -1, Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxCLIP_CHILDREN
 	);
 
 	my $output = Wx::TextCtrl->new(
-		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	my $input = Wx::TextCtrl->new(
-		$self, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxTE_PROCESS_ENTER
 	);
 

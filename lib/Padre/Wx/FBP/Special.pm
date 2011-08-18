@@ -26,16 +26,16 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Insert Special Values"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{select} = Wx::Choice->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{select}->SetSelection(0);
@@ -52,7 +52,7 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 300, 50 ],
 		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
 	);
@@ -66,8 +66,8 @@ sub new {
 	$self->{m_staticline221} = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -75,8 +75,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Insert"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{insert}->SetDefault;
 
@@ -92,8 +92,8 @@ sub new {
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);

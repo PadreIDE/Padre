@@ -32,8 +32,8 @@ sub add_controls {
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
 			| Wx::wxTR_LINES_AT_ROOT
 	);

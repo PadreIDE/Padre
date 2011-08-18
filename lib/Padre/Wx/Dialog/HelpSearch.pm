@@ -37,8 +37,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Help Search'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -132,8 +132,8 @@ sub _create_controls {
 	$self->_topic_selector(
 		Wx::Choice->new(
 			$self, -1,
-			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
+			Wx::DefaultPosition,
+			Wx::DefaultSize,
 			\@topics,
 		)
 	);
@@ -156,7 +156,7 @@ sub _create_controls {
 		Wx::ListBox->new(
 			$self,
 			-1,
-			Wx::wxDefaultPosition,
+			Wx::DefaultPosition,
 			[ 180, -1 ],
 			[],
 			Wx::wxLB_SINGLE
@@ -169,8 +169,8 @@ sub _create_controls {
 		Padre::Wx::HtmlWindow->new(
 			$self,
 			-1,
-			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
+			Wx::DefaultPosition,
+			Wx::DefaultSize,
 			Wx::wxBORDER_STATIC
 		)
 	);

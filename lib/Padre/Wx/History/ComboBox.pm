@@ -12,8 +12,8 @@ Padre::Wx::History::ComboBox - A history-enabled Wx combobox
       $self,
       -1,
       '', # Use the last history value
-      Wx::wxDefaultPosition,
-      Wx::wxDefaultSize,
+      Wx::DefaultPosition,
+      Wx::DefaultSize,
       [ 'search' ], # The history queue to read from
   );
 

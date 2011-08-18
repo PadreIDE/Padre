@@ -37,8 +37,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Goto'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxRESIZE_BORDER | Wx::wxSYSTEM_MENU | Wx::wxCAPTION | Wx::wxCLOSE_BOX
 	);
 
@@ -84,7 +84,7 @@ sub _create_controls {
 	# Line or position choice
 	$self->{line_mode} = Wx::RadioBox->new(
 		$self,                 -1, Wx::gettext('Position type'),
-		Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::DefaultPosition, Wx::DefaultSize,
 		[ Wx::gettext('Line number'), Wx::gettext('Character position') ]
 	);
 

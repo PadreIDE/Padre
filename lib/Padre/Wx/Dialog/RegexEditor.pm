@@ -31,8 +31,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Regex Editor'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
@@ -168,7 +168,7 @@ sub _create_controls {
 	# Regex text field
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
 	$self->{regex} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
@@ -218,7 +218,7 @@ sub _create_controls {
 
 	# Describe-the-regex text field
 	$self->{description_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
@@ -228,14 +228,14 @@ sub _create_controls {
 	# Original input text field
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
@@ -249,7 +249,7 @@ sub _create_controls {
 	# Replace regex text field
 	$self->{replace_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
 	$self->{replace_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
@@ -259,7 +259,7 @@ sub _create_controls {
 	# Result from replace text field
 	$self->{result_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 

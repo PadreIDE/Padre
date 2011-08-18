@@ -27,8 +27,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Key Bindings'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
@@ -70,8 +70,8 @@ sub _create_controls {
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	my @titles = qw(Action Description Shortcut);
@@ -107,8 +107,8 @@ sub _create_controls {
 	my @translated_keys = map { Wx::gettext($_) } @keys;
 	$self->{key} = Wx::Choice->new(
 		$self, -1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		\@translated_keys,
 	);
 	$self->{key}->SetSelection(0);

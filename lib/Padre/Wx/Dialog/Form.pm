@@ -30,8 +30,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('A Dialog'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
@@ -39,29 +39,29 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Label One"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $text_ctrl_1 = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $label_2 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Second Label"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $combo_box_1 = Wx::ComboBox->new(
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 		Wx::wxCB_DROPDOWN,
 	);
@@ -69,21 +69,21 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Whatever"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $choice_1 = Wx::Choice->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	my $static_line_1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{ok} = Wx::Button->new(
 		$self,

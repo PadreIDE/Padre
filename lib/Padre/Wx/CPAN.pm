@@ -51,7 +51,7 @@ sub new {
 		undef,
 		-1,
 		'CPAN',
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 750, 700 ],
 	);
 	$self->{cpan} = $cpan;
@@ -63,8 +63,8 @@ sub new {
 	my $entry = Wx::TextCtrl->new(
 		$self, -1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
 	$self->{entry} = $entry;
@@ -79,7 +79,7 @@ sub new {
 
 	my $label = Wx::StaticText->new(
 		$self,                 -1, 'Filter',
-		Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::wxALIGN_RIGHT
 	);
 	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );

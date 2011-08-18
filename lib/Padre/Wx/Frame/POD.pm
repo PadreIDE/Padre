@@ -47,7 +47,7 @@ sub new {
 		undef,
 		-1,
 		'POD Viewer',
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 500, 500 ],
 	);
 

@@ -29,8 +29,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Document Statistics'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
@@ -153,12 +153,12 @@ sub new {
 
 sub horizontal_line {
 	my ($self) = @_;
-	return Wx::StaticLine->new( $self, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize );
+	return Wx::StaticLine->new( $self, -1, Wx::DefaultPosition, Wx::DefaultSize );
 }
 
 sub label {
 	my ( $self, $caption ) = @_;
-	return Wx::StaticText->new( $self, -1, $caption, Wx::wxDefaultPosition, Wx::wxDefaultSize );
+	return Wx::StaticText->new( $self, -1, $caption, Wx::DefaultPosition, Wx::DefaultSize );
 }
 
 sub update_document {

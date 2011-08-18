@@ -38,8 +38,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Quick Menu Access'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -184,7 +184,7 @@ sub _create_controls {
 	);
 	$self->_list(
 		Wx::ListBox->new(
-			$self, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize, [],
+			$self, -1, Wx::DefaultPosition, Wx::DefaultSize, [],
 			Wx::wxLB_SINGLE
 		)
 	);
@@ -195,7 +195,7 @@ sub _create_controls {
 		Padre::Wx::HtmlWindow->new(
 			$self,
 			-1,
-			Wx::wxDefaultPosition,
+			Wx::DefaultPosition,
 			[ -1, 70 ],
 			Wx::wxBORDER_STATIC
 		)

@@ -26,8 +26,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Padre Sync"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
@@ -41,8 +41,8 @@ sub new {
 		$self,
 		-1,
 		"http://sync.perlide.org/",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText13 = Wx::StaticText->new(
@@ -63,8 +63,8 @@ sub new {
 	my $line1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -78,8 +78,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText3 = Wx::StaticText->new(
@@ -92,8 +92,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PASSWORD,
 	);
 
@@ -101,8 +101,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Login"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -123,8 +123,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText6 = Wx::StaticText->new(
@@ -137,8 +137,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PASSWORD,
 	);
 
@@ -152,8 +152,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PASSWORD,
 	);
 
@@ -167,8 +167,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticText9 = Wx::StaticText->new(
@@ -181,16 +181,16 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{btn_register} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Register"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -204,8 +204,8 @@ sub new {
 	my $line = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -213,8 +213,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Upload"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{btn_local}->Disable;
 
@@ -230,8 +230,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Download"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{btn_remote}->Disable;
 
@@ -247,8 +247,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Delete"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{btn_delete}->Disable;
 
@@ -264,8 +264,8 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("Close"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(

@@ -26,7 +26,7 @@ sub new {
 		$parent,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 300, 300 ],
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
@@ -35,8 +35,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_MULTILINE,
 	);
 	$self->{text}->SetMinSize( [ 250, 250 ] );
@@ -44,8 +44,8 @@ sub new {
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -53,8 +53,8 @@ sub new {
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Close"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{close}->SetDefault;
 

@@ -33,8 +33,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Plug-in Manager'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
@@ -58,8 +58,8 @@ sub new {
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLC_REPORT
 			| Wx::wxLC_SINGLE_SEL,
 	);

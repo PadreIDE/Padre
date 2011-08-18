@@ -28,8 +28,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('Open Resources'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
@@ -209,8 +209,8 @@ sub _create_controls {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{search_text}->SetToolTip( Wx::gettext('Enter parts of the resource name to find it') );
 
@@ -231,8 +231,8 @@ sub _create_controls {
 	$self->{matches_list} = Wx::ListBox->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 		Wx::wxLB_EXTENDED,
 	);
@@ -243,8 +243,8 @@ sub _create_controls {
 		$self,
 		-1,
 		Wx::gettext('Current Directory: ') . $self->{directory},
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_READONLY,
 	);
 

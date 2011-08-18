@@ -36,8 +36,8 @@ sub new {
 	my $self = $class->SUPER::new(
 		$panel,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	# Temporary store for the function list.
@@ -49,8 +49,8 @@ sub new {
 	# Create the search control
 	$self->{search} = Wx::TextCtrl->new(
 		$self, -1, '',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PROCESS_ENTER | Wx::wxSIMPLE_BORDER,
 	);
 
@@ -58,8 +58,8 @@ sub new {
 	$self->{list} = Wx::ListBox->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 		Wx::wxLB_SINGLE | Wx::wxBORDER_NONE
 	);

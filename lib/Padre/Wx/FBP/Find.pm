@@ -27,8 +27,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Find"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
@@ -42,8 +42,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[
 			"search",
 		],
@@ -60,8 +60,8 @@ sub new {
 	my $m_staticline2 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -69,39 +69,39 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("&Regular Expression"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{find_reverse} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("Search &Backwards"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("&Case Sensitive"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{find_first} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("Cl&ose Window on Hit"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxLI_HORIZONTAL,
 	);
 
@@ -109,8 +109,8 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("Find &Next"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{find_next}->SetDefault;
 
@@ -126,16 +126,16 @@ sub new {
 		$self,
 		Wx::wxID_OK,
 		Wx::gettext("Find &All"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 2, 2, 0, 10 );

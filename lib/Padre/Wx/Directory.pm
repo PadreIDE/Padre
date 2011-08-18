@@ -52,8 +52,8 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main->directory_panel,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	# Where is the current root directory of the tree
@@ -71,8 +71,8 @@ sub new {
 		$self,
 		-1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
 

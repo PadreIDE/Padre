@@ -61,7 +61,7 @@ sub new {
 		undef,
 		-1,
 		Wx::gettext('Help'),
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 750, 700 ],
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
@@ -77,16 +77,16 @@ sub new {
 	$self->{notebook} = Wx::AuiNotebook->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxAUI_NB_DEFAULT_STYLE
 	);
 
 	$self->{search} = Wx::TextCtrl->new(
 		$self, -1,
 		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
 	$self->{search}->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
@@ -101,7 +101,7 @@ sub new {
 
 	my $label = Wx::StaticText->new(
 		$self, -1, Wx::gettext('Search:'),
-		Wx::wxDefaultPosition, [ 50, -1 ],
+		Wx::DefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
 	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );

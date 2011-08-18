@@ -30,8 +30,8 @@ sub new {
 		$main,
 		-1,
 		Wx::gettext('A Dialog'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
@@ -39,22 +39,22 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("See http://padre.perlide.org/ for update information"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxALIGN_CENTRE,
 	);
 	$self->{warning_checkbox} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("Do not show this again"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	my $line_1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{ok_button} = Wx::Button->new(
 		$self,

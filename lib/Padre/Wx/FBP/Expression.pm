@@ -26,8 +26,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Evaluate Expression"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
@@ -35,8 +35,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[
 			"Padre::Current->config",
 			"Padre::Current->editor",
@@ -69,8 +69,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Evaluate"),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -85,8 +85,8 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
 	);
 	$self->{output}->SetMinSize( [ 500, 400 ] );

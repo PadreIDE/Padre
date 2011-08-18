@@ -24,7 +24,7 @@ sub new {
 		undef,
 		-1,
 		Wx::gettext('About Padre'),
-		Wx::wxDefaultPosition,
+		Wx::DefaultPosition,
 		[ 700, 600 ],
 	);
 
@@ -50,8 +50,8 @@ sub new {
 	$self->{notebook} = Wx::AuiNotebook->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 	$self->{notebook}->AddPage(
