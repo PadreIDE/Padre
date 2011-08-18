@@ -21,7 +21,7 @@ use Wx            ('wxTheClipboard');
 use Wx::Event     (':everything');
 use Wx::DND       ();
 use Wx::AUI       ();
-use Wx::HTML      ();
+use Wx::Html      ();
 use Wx::RichText  ();
 use Wx::Scintilla ();
 
