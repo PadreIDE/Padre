@@ -197,7 +197,7 @@ sub _create_controls {
 			-1,
 			Wx::DefaultPosition,
 			[ -1, 70 ],
-			Wx::wxBORDER_STATIC
+			Wx::BORDER_STATIC
 		)
 	);
 

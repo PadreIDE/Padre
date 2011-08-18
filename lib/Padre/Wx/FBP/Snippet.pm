@@ -82,7 +82,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	my $m_staticText11 = Wx::StaticText->new(
@@ -108,7 +108,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{insert} = Wx::Button->new(

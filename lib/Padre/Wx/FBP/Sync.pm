@@ -65,7 +65,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	my $m_staticText2 = Wx::StaticText->new(
@@ -206,7 +206,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{btn_local} = Wx::Button->new(

@@ -70,21 +70,21 @@ sub _create_controls {
 	my $source_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Perl filter source:') );
 	$self->{source} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS
+		Wx::wxRE_MULTILINE | Wx::WANTS_CHARS
 	);
 
 	# Input text
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('Or&iginal text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Output text:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Run the filter

@@ -169,7 +169,7 @@ sub _create_controls {
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
 	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::wxRE_MULTILINE | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	my %regex_groups = $self->_regex_groups;
@@ -219,7 +219,7 @@ sub _create_controls {
 	# Describe-the-regex text field
 	$self->{description_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Description is hidden by default
@@ -229,14 +229,14 @@ sub _create_controls {
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Toggle the visibility of the replace (substitution) fields
@@ -250,7 +250,7 @@ sub _create_controls {
 	$self->{replace_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
 	$self->{replace_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{replace_label}->Hide;
@@ -260,7 +260,7 @@ sub _create_controls {
 	$self->{result_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	$self->{result_label}->Hide;

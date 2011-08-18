@@ -155,12 +155,23 @@ use constant TAGS => qw{
 	:grid
 	:id
 	:frame
+	:sashwindow
+	:scrollbar
+	:scrolledwindow
 	:sizer
+	:slider
+	:socket
+	:spinbutton
+	:splitterwindow
+	:staticline
+	:statusbar
 	:systemsettings
 	:textctrl
+	:timer
 	:toolbar
 	:toolbook
 	:treectrl
+	:window
 };
 
 sub load {

@@ -88,7 +88,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxBORDER_STATIC,
+		Wx::BORDER_STATIC,
 	);
 	$self->{help}->Hide;
 

@@ -52,7 +52,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 	$self->{set_line}->Hide;
 
@@ -76,7 +76,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{ok} = Wx::Button->new(

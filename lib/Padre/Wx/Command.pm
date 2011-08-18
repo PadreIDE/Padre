@@ -34,17 +34,17 @@ sub new {
 
 	my $self = $class->SUPER::new(
 		$panel, -1, Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::wxCLIP_CHILDREN
+		Wx::NO_FULL_REPAINT_ON_RESIZE | Wx::CLIP_CHILDREN
 	);
 
 	my $output = Wx::TextCtrl->new(
 		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	my $input = Wx::TextCtrl->new(
 		$self, -1, "", Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxNO_FULL_REPAINT_ON_RESIZE | Wx::TE_PROCESS_ENTER
+		Wx::NO_FULL_REPAINT_ON_RESIZE | Wx::TE_PROCESS_ENTER
 	);
 
 	$self->{_output_} = $output;

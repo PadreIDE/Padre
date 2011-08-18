@@ -88,7 +88,7 @@ sub dwell_start {
 	}
 
 	# Start (or restart) the dwell timer.
-	$self->{$method}->Start( $msec, Wx::wxTIMER_ONE_SHOT );
+	$self->{$method}->Start( $msec, Wx::TIMER_ONE_SHOT );
 }
 
 =pod

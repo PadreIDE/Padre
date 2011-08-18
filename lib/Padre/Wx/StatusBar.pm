@@ -92,7 +92,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE
+		Wx::ST_SIZEGRIP | Wx::FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{main} = $main;

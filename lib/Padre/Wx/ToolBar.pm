@@ -37,7 +37,7 @@ sub new {
 	my $config = $main->config;
 
 	# Prepare the style
-	my $style = Wx::TB_HORIZONTAL | Wx::TB_FLAT | Wx::TB_NODIVIDER | Wx::wxBORDER_NONE;
+	my $style = Wx::TB_HORIZONTAL | Wx::TB_FLAT | Wx::TB_NODIVIDER | Wx::BORDER_NONE;
 	if ( DOCKABLE and not $config->main_lockinterface ) {
 		$style = $style | Wx::TB_DOCKABLE;
 	}

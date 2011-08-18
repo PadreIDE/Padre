@@ -129,7 +129,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/x-document-close'),
 		Wx::Point->new( -1, -1 ),
 		Wx::Size->new( -1, -1 ),
-		Wx::wxBORDER_NONE,
+		Wx::BORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON( $main, $self->{close}, sub { $self->_hide_panel } );
 
@@ -146,7 +146,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/go-previous'),
 		Wx::Point->new( -1, -1 ),
 		Wx::Size->new( -1, -1 ),
-		Wx::wxBORDER_NONE
+		Wx::BORDER_NONE
 	);
 
 	#$self->{previous}->SetLabel("Next"); # TO DO: should be better but does not work
@@ -156,7 +156,7 @@ sub _create_panel {
 		Wx::gettext('Previ&ous'),
 		Wx::Point->new( -1, -1 ),
 		Wx::Size->new( -1, -1 ),
-		Wx::wxBORDER_NONE,
+		Wx::BORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON( $main, $self->{previous_text}, sub { $self->search('previous') } );
 
@@ -166,7 +166,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/go-next'),
 		Wx::Point->new( -1, -1 ),
 		Wx::Size->new( -1, -1 ),
-		Wx::wxBORDER_NONE,
+		Wx::BORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON( $main, $self->{next}, sub { $self->search('next') } );
 	$self->{next_text} = Wx::Button->new(
@@ -174,7 +174,7 @@ sub _create_panel {
 		Wx::gettext('&Next'),
 		Wx::Point->new( -1, -1 ),
 		Wx::Size->new( -1, -1 ),
-		Wx::wxBORDER_NONE,
+		Wx::BORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON( $main, $self->{next_text}, sub { $self->search('next') } );
 

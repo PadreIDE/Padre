@@ -51,7 +51,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	my $ok = Wx::Button->new(

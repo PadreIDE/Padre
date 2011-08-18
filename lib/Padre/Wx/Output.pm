@@ -46,7 +46,7 @@ sub new {
 		Wx::TE_READONLY
 			| Wx::TE_MULTILINE
 			| Wx::TE_DONTWRAP
-			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+			| Wx::NO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom start-up stuff here

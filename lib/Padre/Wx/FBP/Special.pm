@@ -68,7 +68,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{insert} = Wx::Button->new(

@@ -171,7 +171,7 @@ sub _create_controls {
 			-1,
 			Wx::DefaultPosition,
 			Wx::DefaultSize,
-			Wx::wxBORDER_STATIC
+			Wx::BORDER_STATIC
 		)
 	);
 	$self->_help_viewer->SetPage('');

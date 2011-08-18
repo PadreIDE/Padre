@@ -51,7 +51,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_PROCESS_ENTER | Wx::wxSIMPLE_BORDER,
+		Wx::TE_PROCESS_ENTER | Wx::SIMPLE_BORDER,
 	);
 
 	# Create the Todo list
@@ -61,7 +61,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxLB_SINGLE | Wx::wxBORDER_NONE
+		Wx::wxLB_SINGLE | Wx::BORDER_NONE
 	);
 
 	# Create a sizer

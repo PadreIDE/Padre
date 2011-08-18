@@ -31,7 +31,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::AUI_NB_TOP | Wx::wxBORDER_NONE | Wx::AUI_NB_SCROLL_BUTTONS | Wx::AUI_NB_TAB_MOVE
+		Wx::AUI_NB_TOP | Wx::BORDER_NONE | Wx::AUI_NB_SCROLL_BUTTONS | Wx::AUI_NB_TAB_MOVE
 			| Wx::AUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::AUI_NB_WINDOWLIST_BUTTON
 	);
 

@@ -35,7 +35,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::TR_HIDE_ROOT | Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS
-			| Wx::TR_LINES_AT_ROOT | Wx::wxBORDER_NONE | Wx::wxCLIP_CHILDREN
+			| Wx::TR_LINES_AT_ROOT | Wx::BORDER_NONE | Wx::CLIP_CHILDREN
 	);
 
 	# Create the image list

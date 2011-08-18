@@ -162,7 +162,7 @@ sub _create_controls {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	$self->{help}->Enable(0);

@@ -52,7 +52,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::AUI_NB_TOP | Wx::wxBORDER_NONE
+		Wx::AUI_NB_TOP | Wx::BORDER_NONE
 	);
 	$self->{notebook}->AddPage(
 		$self->{about},

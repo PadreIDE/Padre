@@ -78,7 +78,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{main_output_ansi} = Wx::CheckBox->new(
@@ -181,7 +181,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{m_staticText331} = Wx::StaticText->new(
@@ -220,7 +220,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{autocomplete_always} = Wx::CheckBox->new(
@@ -259,7 +259,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		1,
 		64,
 		1,
@@ -277,7 +277,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		5,
 		256,
 		5,
@@ -295,7 +295,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		1,
 		16,
 		1,
@@ -315,7 +315,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{autocomplete_brackets} = Wx::CheckBox->new(
@@ -348,7 +348,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{editor_fold_pod} = Wx::CheckBox->new(
@@ -464,7 +464,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		0,
 		10,
 		0,
@@ -607,7 +607,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		1,
 		16,
 		8,
@@ -625,7 +625,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		1,
 		10,
 		8,
@@ -668,7 +668,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	my $m_staticText34 = Wx::StaticText->new(
@@ -741,7 +741,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{lang_perl5_beginner} = Wx::CheckBox->new(
@@ -833,7 +833,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		10,
 		900,
 		10,
@@ -857,7 +857,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxSP_ARROW_KEYS,
+		Wx::SP_ARROW_KEYS,
 		10,
 		900,
 		10,
@@ -876,7 +876,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLI_HORIZONTAL,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{save} = Wx::Button->new(
