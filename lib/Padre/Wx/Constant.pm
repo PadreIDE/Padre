@@ -53,14 +53,11 @@ use constant WANT => qw{
 	:comboctrl
 	:constraints
 	:control
-	:cursor
-	:datepicker
 	:dc
 	:dialog
 	:dirctrl
 	:dirdialog
 	:dnd
-	:filectrl
 	:filedialog
 	:font
 	:frame
@@ -133,7 +130,7 @@ sub load {
 			# We don't need event constants in Perl
 			next;
 		}
-		if ( exists $Wx::{$name} ) {
+		if ( Wx->can($name) ) {
 			warn "Clash with function Wx::$name";
 			next;
 		}
