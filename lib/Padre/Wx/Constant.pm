@@ -65,7 +65,6 @@ use constant WANT => qw{
 	:font
 	:frame
 	:gauge
-	:grid
 	:html
 	:hyperlink
 	:icon
@@ -108,11 +107,9 @@ use constant WANT => qw{
 	:textctrl
 	:timer
 	:toolbar
-	:toolbook
 	:toplevelwindow
 	:treectrl
 	:window
-	:wizard
 };
 
 # Read the sets of constants we care about

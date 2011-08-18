@@ -24,6 +24,7 @@ use Wx::AUI       ();
 use Wx::Html      ();
 use Wx::RichText  ();
 use Wx::Scintilla ();
+use Wx::Socket    ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
