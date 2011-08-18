@@ -181,7 +181,7 @@ sub plugin_icon {
 	my $file  = File::Spec->catfile( $share, 'icons', '16x16', 'logo.png' );
 	return unless -f $file;
 	return unless -r $file;
-	return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
+	return Wx::Bitmap->new( $file, Wx::BITMAP_TYPE_PNG );
 }
 
 =pod

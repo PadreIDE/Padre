@@ -50,7 +50,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxCB_DROPDOWN
+		Wx::CB_DROPDOWN
 	);
 	$self->{openurl_text}->SetSelection(-1);
 	$self->{openurl_text}->SetFocus;

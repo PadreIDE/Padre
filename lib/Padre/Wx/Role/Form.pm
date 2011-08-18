@@ -28,7 +28,7 @@ sub form {
 		} elsif ( $control->isa('Wx::Choice') ) {
 			$hash{$name} = $control->GetSelection;
 		} elsif ( $control->isa('Wx::ColourPickerControl') ) {
-			$hash{$name} = $control->GetColour->GetAsString(Wx::wxC2S_HTML_SYNTAX);
+			$hash{$name} = $control->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);
 		} elsif ( $control->isa('Wx::FontPickerControl') ) {
 			$hash{$name} = $control->GetSelectedFont->GetNativeFontInfoUserDesc;
 		} else {

@@ -97,7 +97,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxCB_DROPDOWN,
+		Wx::CB_DROPDOWN,
 	);
 	$self->{ok} = Wx::Button->new(
 		$self,

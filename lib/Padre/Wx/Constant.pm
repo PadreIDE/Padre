@@ -113,7 +113,15 @@ use constant TAGS => qw{
 	wxDefaultSize
 	wxDefaultPosition
 	:aui
+	:bitmap
+	:button
+	:checkbox
+	:choicebook
 	:clipboard
+	:colour
+	:combobox
+	:comboctrl
+	:control
 	:dialog
 	:id
 	:frame

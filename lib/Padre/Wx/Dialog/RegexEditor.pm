@@ -645,7 +645,7 @@ sub run {
 
 	# TODO what about white space only regexes?
 	if ( $regex eq '' ) {
-		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->BeginTextColour(Wx::RED);
 		$self->{matched_text}->SetValue( Wx::gettext('Empty regex') );
 		$self->{matched_text}->EndTextColour;
 		return;
@@ -655,7 +655,7 @@ sub run {
 
 	$self->{matched_text}->Clear;
 
-	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
+	$self->{matched_text}->BeginTextColour(Wx::BLACK);
 
 	my $match;
 	my $match_start;
@@ -671,7 +671,7 @@ sub run {
 	my $code = "\$result = \$original_text =~ /\$regex/$active; (\$match_start, \$match_end) = (\$-[0], \$+[0])";
 	eval $code;
 	if ($@) {
-		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->BeginTextColour(Wx::RED);
 		$self->{matched_text}->SetValue( sprintf( Wx::gettext('Match failure in %s:  %s'), $regex, $@ ) );
 		$self->{matched_text}->EndTextColour;
 		return;
@@ -682,7 +682,7 @@ sub run {
 	}
 
 	if ($warning) {
-		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->BeginTextColour(Wx::RED);
 		$self->{matched_text}->SetValue( sprintf( Wx::gettext('Match warning in %s:  %s'), $regex, $warning ) );
 		$self->{matched_text}->EndTextColour;
 		return;
@@ -690,7 +690,7 @@ sub run {
 
 	if ( defined $match ) {
 		if ( $match_start == $match_end ) {
-			$self->{matched_text}->BeginTextColour(Wx::wxRED);
+			$self->{matched_text}->BeginTextColour(Wx::RED);
 			$self->{matched_text}
 				->SetValue( sprintf( Wx::gettext('Match with 0 width at character %s'), $match_start ) );
 			$self->{matched_text}->EndTextColour;
@@ -699,7 +699,7 @@ sub run {
 			my $pos = 0;
 			foreach my $char (@chars) {
 				if ( $pos == $match_start ) {
-					$self->{matched_text}->BeginTextColour(Wx::wxRED);
+					$self->{matched_text}->BeginTextColour(Wx::RED);
 					$self->{matched_text}->BeginUnderline;
 				} elsif ( $pos == $match_end ) {
 					$self->{matched_text}->EndTextColour;
@@ -710,7 +710,7 @@ sub run {
 			}
 		}
 	} else {
-		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->BeginTextColour(Wx::RED);
 		$self->{matched_text}->SetValue( Wx::gettext('No match') );
 		$self->{matched_text}->EndTextColour;
 	}
@@ -726,7 +726,7 @@ sub run {
 	#	foreach my $element (@elements) {
 	#		my $class_name = $element->element->class;
 	#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
-	#			$self->{regex}->BeginTextColour(Wx::wxRED);
+	#			$self->{regex}->BeginTextColour(Wx::RED);
 	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Quantifier') {
 	#			$self->{regex}->BeginTextColour(Wx::wxBLUE);
 	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Operator') {
@@ -756,7 +756,7 @@ sub replace {
 	my $code = "\$result_text =~ s{\$regex}{$replace}$active";
 	eval $code;
 	if ($@) {
-		$self->{result_text}->BeginTextColour(Wx::wxRED);
+		$self->{result_text}->BeginTextColour(Wx::RED);
 		$self->{result_text}->AppendText( sprintf( Wx::gettext('Replace failure in %s:  %s'), $regex, $@ ) );
 		$self->{result_text}->EndTextColour;
 		return;

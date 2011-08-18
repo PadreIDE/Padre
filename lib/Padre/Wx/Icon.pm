@@ -102,7 +102,7 @@ sub find {
 			( split /\//, $hinted )
 		) . $pref{ext};
 		next unless -f $file;
-		return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
+		return Wx::Bitmap->new( $file, Wx::BITMAP_TYPE_PNG );
 	}
 
 	if ( defined $DEFAULT_ICON ) {

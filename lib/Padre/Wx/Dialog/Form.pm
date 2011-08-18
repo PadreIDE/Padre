@@ -63,7 +63,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxCB_DROPDOWN,
+		Wx::CB_DROPDOWN,
 	);
 	my $label_3 = Wx::StaticText->new(
 		$self,

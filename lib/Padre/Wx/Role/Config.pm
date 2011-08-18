@@ -126,7 +126,7 @@ sub config_diff {
 			$value = $ctrl->GetValue;
 
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-			$value = $ctrl->GetColour->GetAsString(Wx::wxC2S_HTML_SYNTAX);
+			$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);
 			$value =~ s/^#// if defined $value;
 
 		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
