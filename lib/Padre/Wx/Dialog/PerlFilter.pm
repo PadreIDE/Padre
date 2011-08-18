@@ -135,7 +135,7 @@ sub _bind_events {
 	# $self,
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -149,7 +149,7 @@ sub _bind_events {
 	# $self->{source},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -158,7 +158,7 @@ sub _bind_events {
 	# $self->{original_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -167,7 +167,7 @@ sub _bind_events {
 	# $self->{result_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );

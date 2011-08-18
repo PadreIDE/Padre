@@ -6686,7 +6686,7 @@ sub key_up {
 	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 	if ( $mod == Wx::MOD_CMD ) { # Ctrl
 		                       # Ctrl-TAB TO DO it is already in the menu
-		if ( $code == Wx::WXK_TAB ) {
+		if ( $code == Wx::K_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
 				&{ $self->ide->actions->{'window.next_file'}->menu_event }( $self, $event );
@@ -6697,7 +6697,7 @@ sub key_up {
 	} elsif ( $mod == Wx::MOD_CMD + Wx::MOD_SHIFT ) { # Ctrl-Shift
 		                                              # Ctrl-Shift-TAB
 		                                              # TODO it is already in the menu
-		if ( $code == Wx::WXK_TAB ) {
+		if ( $code == Wx::K_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
 				&{ $self->ide->actions->{'window.previous_file'}->menu_event }( $self, $event );

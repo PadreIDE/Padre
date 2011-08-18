@@ -303,11 +303,11 @@ sub _on_key_pressed {
 	# Remove the bit ( Wx::MOD_META) set by Num Lock being pressed on Linux
 	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 
-	if ( $code == Wx::WXK_ESCAPE ) {
+	if ( $code == Wx::K_ESCAPE ) {
 		$self->_hide_panel;
 		return;
 	}
-	if ( $code == Wx::WXK_RETURN ) {
+	if ( $code == Wx::K_RETURN ) {
 		$self->_find;
 		return;
 	}

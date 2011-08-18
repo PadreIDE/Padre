@@ -159,7 +159,7 @@ sub _create_controls {
 			Wx::DefaultPosition,
 			[ 180, -1 ],
 			[],
-			Wx::wxLB_SINGLE
+			Wx::LB_SINGLE
 		)
 	);
 
@@ -213,7 +213,7 @@ sub _setup_events {
 			my $event = shift;
 			my $code  = $event->GetKeyCode;
 
-			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_PAGEDOWN ) {
+			if ( $code == Wx::K_DOWN || $code == Wx::K_PAGEDOWN ) {
 				$self->_list->SetFocus;
 			}
 

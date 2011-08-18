@@ -234,7 +234,7 @@ sub _create_controls {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxLB_EXTENDED,
+		Wx::LB_EXTENDED,
 	);
 	$self->{matches_list}->SetToolTip( Wx::gettext('Select one or more resources to open') );
 
@@ -311,12 +311,12 @@ sub _setup_events {
 			my $code  = $event->GetKeyCode;
 
 			$self->{matches_list}->SetFocus
-				if ( $code == Wx::WXK_DOWN )
-				or ( $code == Wx::WXK_UP )
-				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-				or ( $code == Wx::WXK_PAGEDOWN )
-				or ( $code == Wx::WXK_NUMPAD_PAGEUP )
-				or ( $code == Wx::WXK_PAGEUP );
+				if ( $code == Wx::K_DOWN )
+				or ( $code == Wx::K_UP )
+				or ( $code == Wx::K_NUMPAD_PAGEDOWN )
+				or ( $code == Wx::K_PAGEDOWN )
+				or ( $code == Wx::K_NUMPAD_PAGEUP )
+				or ( $code == Wx::K_PAGEUP );
 
 
 			$event->Skip(1);
@@ -331,12 +331,12 @@ sub _setup_events {
 			my $code  = $event->GetKeyCode;
 
 			$self->{search_text}->SetFocus
-				unless ( $code == Wx::WXK_DOWN )
-				or ( $code == Wx::WXK_UP )
-				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-				or ( $code == Wx::WXK_PAGEDOWN )
-				or ( $code == Wx::WXK_NUMPAD_PAGEUP )
-				or ( $code == Wx::WXK_PAGEUP );
+				unless ( $code == Wx::K_DOWN )
+				or ( $code == Wx::K_UP )
+				or ( $code == Wx::K_NUMPAD_PAGEDOWN )
+				or ( $code == Wx::K_PAGEDOWN )
+				or ( $code == Wx::K_NUMPAD_PAGEUP )
+				or ( $code == Wx::K_PAGEUP );
 
 			$event->Skip(1);
 		}

@@ -68,7 +68,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxLB_NEEDED_SB | Wx::wxLB_SINGLE,
+		Wx::LB_NEEDED_SB | Wx::LB_SINGLE,
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(

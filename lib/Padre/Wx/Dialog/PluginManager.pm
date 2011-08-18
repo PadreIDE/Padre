@@ -60,8 +60,8 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLC_REPORT
-			| Wx::wxLC_SINGLE_SEL,
+		Wx::LC_REPORT
+			| Wx::LC_SINGLE_SEL,
 	);
 	$self->{list}->InsertColumn( 0, Wx::gettext('Name') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Version') );
@@ -92,7 +92,7 @@ sub new {
 	$self->{imagelist} = Wx::ImageList->new( 16, 16 );
 	$self->{list}->AssignImageList(
 		$self->{imagelist},
-		Wx::wxIMAGE_LIST_SMALL,
+		Wx::IMAGE_LIST_SMALL,
 	);
 
 	# Plug-in Name Header
@@ -206,7 +206,7 @@ sub show {
 	# there's at least a plug-in, since there will always be
 	# 'my plug-in'
 	my $item = $self->{list}->GetItem(0);
-	$item->SetState(Wx::wxLIST_STATE_SELECTED);
+	$item->SetState(Wx::LIST_STATE_SELECTED);
 	$self->{list}->SetItem($item);
 
 	$self->Show;
@@ -452,7 +452,7 @@ sub _update_list {
 
 	# Auto-resize columns
 	foreach ( 0 .. 2 ) {
-		$self->{list}->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		$self->{list}->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
 	}
 
 	# Making sure the list can show all columns

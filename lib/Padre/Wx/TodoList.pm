@@ -61,7 +61,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
-		Wx::wxLB_SINGLE | Wx::BORDER_NONE
+		Wx::LB_SINGLE | Wx::BORDER_NONE
 	);
 
 	# Create a sizer
@@ -96,9 +96,9 @@ sub new {
 			my ( $this, $event ) = @_;
 
 			my $code = $event->GetKeyCode;
-			if ( $code == Wx::WXK_RETURN ) {
+			if ( $code == Wx::K_RETURN ) {
 				$self->on_list_item_activated($event);
-			} elsif ( $code == Wx::WXK_ESCAPE ) {
+			} elsif ( $code == Wx::K_ESCAPE ) {
 
 				# Escape key clears search and returns focus
 				# to the editor
@@ -120,7 +120,7 @@ sub new {
 			my $event = shift;
 			my $code  = $event->GetKeyCode;
 
-			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_UP || $code == Wx::WXK_RETURN ) {
+			if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
 
 				# Up/Down and return keys focus on the functions lists
 				$self->{list}->SetFocus;
@@ -130,7 +130,7 @@ sub new {
 				}
 				$self->{list}->Select($selection);
 
-			} elsif ( $code == Wx::WXK_ESCAPE ) {
+			} elsif ( $code == Wx::K_ESCAPE ) {
 
 				# Escape key clears search and returns the
 				# focus to the editor.

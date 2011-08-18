@@ -105,7 +105,7 @@ sub _create_controls {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
@@ -452,9 +452,9 @@ sub _on_char {
 	my $code  = $event->GetKeyCode;
 
 	$self->{list}->SetFocus
-		if ( $code == Wx::WXK_DOWN )
-		or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-		or ( $code == Wx::WXK_PAGEDOWN );
+		if ( $code == Wx::K_DOWN )
+		or ( $code == Wx::K_NUMPAD_PAGEDOWN )
+		or ( $code == Wx::K_PAGEDOWN );
 
 	$event->Skip(1);
 
@@ -840,7 +840,7 @@ sub _resize_columns {
 	# Resize all columns but the last to their biggest item width
 	my $list = $self->{list};
 	for ( 0 .. 2 ) {
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
 	}
 
 	# some columns can have a bold font

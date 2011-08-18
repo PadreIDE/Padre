@@ -33,7 +33,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL
 	);
 
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 1;

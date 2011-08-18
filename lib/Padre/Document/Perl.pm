@@ -1622,7 +1622,7 @@ sub event_key_up {
 	my $editor = shift;
 	my $event  = shift;
 
-	if ( $event->GetKeyCode == Wx::WXK_CONTROL ) {
+	if ( $event->GetKeyCode == Wx::K_CONTROL ) {
 
 		# Ctrl key has been released, clear any highlighting
 		$self->_clear_highlight($editor);

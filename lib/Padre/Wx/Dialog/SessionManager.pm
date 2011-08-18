@@ -232,7 +232,7 @@ sub _create_list {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
 	$list->InsertColumn( 1, Wx::gettext('Description') );
@@ -405,8 +405,8 @@ sub _refresh_list {
 	# auto-resize columns
 	my $flag =
 		$list->GetItemCount
-		? Wx::wxLIST_AUTOSIZE
-		: Wx::wxLIST_AUTOSIZE_USEHEADER;
+		? Wx::LIST_AUTOSIZE
+		: Wx::LIST_AUTOSIZE_USEHEADER;
 	$list->SetColumnWidth( $_, $flag ) for 0 .. 2;
 
 	# making sure the list can show all columns
@@ -429,7 +429,7 @@ sub _select_first_item {
 
 	if ( $list->GetItemCount ) {
 		my $item = $list->GetItem(0);
-		$item->SetState(Wx::wxLIST_STATE_SELECTED);
+		$item->SetState(Wx::LIST_STATE_SELECTED);
 		$list->SetItem($item);
 	} else {
 

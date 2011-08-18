@@ -197,31 +197,33 @@ sub load {
 		MAC     => Wx::wxMAC,
 		X11     => Wx::wxX11,
 	);
-	foreach my $function ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } TAGS ) {
-		next if defined $constants{$function};
-		next unless $function =~ s/^wx//i;
-		if ( exists $Wx::{$function} ) {
-			warn "Clash with function Wx::$function";
+	foreach ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } TAGS ) {
+		next if defined $constants{$_};
+		next unless s/^(wx)(.+)//i;
+		my $wx   = $1;
+		my $name = $2;
+		if ( exists $Wx::{$name} ) {
+			warn "Clash with function Wx::$name";
 			next;
 		}
-		if ( exists $Wx::{"${function}::"} ) {
-			warn "Pseudoclash with namespace Wx::${function}::";
+		if ( exists $Wx::{"$name\::"} ) {
+			warn "Pseudoclash with namespace Wx::$name\::";
 			next;
 		}
 		no strict 'refs';
 		local $@;
 		my $value = eval {
-			&{"Wx::wx$function"}();
+			&{"Wx::$wx$name"}();
 		};
 		if ( $@ ) {
-			# print "# Wx::wx$function failed to load\n";
+			# print "# Wx::wx$name failed to load\n";
 			next;
 		}
 		unless ( defined $value ) {
-			print "# Wx::wx$function is undefined\n";
+			print "# Wx::$wx$name is undefined\n";
 			next;
 		}
-		$constants{$function} = $value;
+		$constants{$name} = $value;
 	}
 
 	# NOTE: This completes the conversion of Wx::wxFoo constants to Wx::Foo.

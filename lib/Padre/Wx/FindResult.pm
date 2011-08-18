@@ -51,7 +51,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL
 	);
 
 	$self->set_column_widths;
@@ -102,8 +102,8 @@ Works out the correct column widths for the list columns.
 sub set_column_widths {
 	my $self = shift;
 
-	$self->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
-	$self->SetColumnWidth( 1, Wx::wxLIST_AUTOSIZE );
+	$self->SetColumnWidth( 0, Wx::LIST_AUTOSIZE );
+	$self->SetColumnWidth( 1, Wx::LIST_AUTOSIZE );
 
 	return;
 }

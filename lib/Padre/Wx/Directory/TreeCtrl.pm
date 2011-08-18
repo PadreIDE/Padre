@@ -137,7 +137,7 @@ sub key_up {
 	my $data    = $self->GetPlData($item_id) or return;
 	my $file    = File::Spec->catfile( $project->root, $data->path );
 
-	if ( $code == Wx::WXK_DELETE ) {
+	if ( $code == Wx::K_DELETE ) {
 		$self->delete_file($file);
 	}
 

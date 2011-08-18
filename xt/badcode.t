@@ -275,7 +275,10 @@ foreach my $module ( sort keys %modules ) {
 	# Check for Wx::wxFOO constants that should be Wx::FOO
 	SKIP: {
 		if ( $module eq 'Padre::Wx::Constant' ) {
-			skip( "Ignoring role $module", 1 );
+			skip( "Ignoring module $module", 1 );
+		}
+		if ( $module eq 'Padre::Startup' ) {
+			skip( "Ignoring module $module", 1 );
 		}
 
 		my %seen   = ();

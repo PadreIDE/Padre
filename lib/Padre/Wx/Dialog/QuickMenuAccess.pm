@@ -185,7 +185,7 @@ sub _create_controls {
 	$self->_list(
 		Wx::ListBox->new(
 			$self, -1, Wx::DefaultPosition, Wx::DefaultSize, [],
-			Wx::wxLB_SINGLE
+			Wx::LB_SINGLE
 		)
 	);
 
@@ -227,10 +227,10 @@ sub _setup_events {
 			my $code  = $event->GetKeyCode;
 
 			$self->_list->SetFocus
-				if ( $code == Wx::WXK_DOWN )
-				or ( $code == Wx::WXK_UP )
-				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-				or ( $code == Wx::WXK_PAGEDOWN );
+				if ( $code == Wx::K_DOWN )
+				or ( $code == Wx::K_UP )
+				or ( $code == Wx::K_NUMPAD_PAGEDOWN )
+				or ( $code == Wx::K_PAGEDOWN );
 
 			$event->Skip(1);
 		}

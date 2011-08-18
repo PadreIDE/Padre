@@ -100,9 +100,9 @@ sub _on_char {
 	my $code  = $event->GetKeyCode;
 
 	$self->{tree}->SetFocus
-		if ( $code == Wx::WXK_DOWN )
-		or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-		or ( $code == Wx::WXK_PAGEDOWN );
+		if ( $code == Wx::K_DOWN )
+		or ( $code == Wx::K_NUMPAD_PAGEDOWN )
+		or ( $code == Wx::K_PAGEDOWN );
 
 	$event->Skip(1);
 }

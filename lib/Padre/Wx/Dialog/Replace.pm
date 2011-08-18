@@ -620,9 +620,9 @@ sub hotkey {
 
 	$self->find_button    if $event->GetKeyCode == ord 'F';
 	$self->replace_button if $event->GetKeyCode == ord 'R';
-	$self->close          if $event->GetKeyCode == Wx::WXK_ESCAPE;
+	$self->close          if $event->GetKeyCode == Wx::K_ESCAPE;
 
-	if ( $event->GetKeyCode == Wx::WXK_TAB ) {
+	if ( $event->GetKeyCode == Wx::K_TAB ) {
 		my $index;
 		$index = 1 if $sender->GetId == $self->{find_button}->GetId;
 		$index = 2 if $sender->GetId == $self->{replace_button}->GetId;
