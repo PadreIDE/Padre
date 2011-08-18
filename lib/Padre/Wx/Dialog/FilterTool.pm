@@ -30,7 +30,7 @@ sub new {
 		Wx::gettext('Filter through tool'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 

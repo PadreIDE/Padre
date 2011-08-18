@@ -154,7 +154,21 @@ use constant TAGS => qw{
 	:gauge
 	:grid
 	:id
-	:frame
+	:image
+	:keycode
+	:listbook
+	:listbox
+	:listctrl
+	:locale
+	:misc
+	:menu
+	:notebook
+	:palette
+	:panel
+	:pen
+	:progressdialog
+	:radiobox
+	:richtextctrl
 	:sashwindow
 	:scrollbar
 	:scrolledwindow

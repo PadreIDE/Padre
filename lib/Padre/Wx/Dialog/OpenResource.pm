@@ -30,7 +30,7 @@ sub new {
 		Wx::gettext('Open Resources'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 
 	$self->init_search;

@@ -87,8 +87,8 @@ sub _create_progress {
 	my $self = shift;
 
 	# Add some default flags:
-	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
-	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
+	my $flags = Wx::PD_ELAPSED_TIME | Wx::PD_ESTIMATED_TIME | Wx::PD_REMAINING_TIME | Wx::PD_AUTO_HIDE;
+	$flags |= Wx::PD_APP_MODAL if $self->{modal};
 
 	# Create the progress bar dialog:
 	$self->{dialog} = Wx::ProgressDialog->new(

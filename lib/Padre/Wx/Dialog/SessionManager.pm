@@ -37,7 +37,7 @@ sub new {
 		Wx::gettext('Session Manager'),
 		Wx::DefaultPosition,
 		Wx::Size->new( 480, 300 ),
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);

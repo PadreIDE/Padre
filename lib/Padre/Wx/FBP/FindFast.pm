@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::NO_BORDER | Wx::wxTAB_TRAVERSAL,
+		Wx::NO_BORDER | Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{cancel} = Wx::Button->new(

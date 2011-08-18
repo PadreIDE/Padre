@@ -44,7 +44,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{m_staticText341} = Wx::StaticText->new(
@@ -203,7 +203,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{m_staticText36111} = Wx::StaticText->new(
@@ -364,7 +364,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{swap_ctrl_tab_alt_right} = Wx::CheckBox->new(
@@ -535,7 +535,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	my $m_staticText25 = Wx::StaticText->new(
@@ -560,7 +560,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{editor_indent_guess} = Wx::Button->new(
@@ -651,7 +651,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{m_staticText39} = Wx::StaticText->new(
@@ -812,7 +812,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTAB_TRAVERSAL,
+		Wx::TAB_TRAVERSAL,
 	);
 
 	my $m_staticText30 = Wx::StaticText->new(

@@ -31,7 +31,7 @@ sub new {
 		Wx::gettext('Save session as...'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 

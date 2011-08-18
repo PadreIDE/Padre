@@ -35,7 +35,7 @@ sub new {
 		Wx::gettext( $args{title} || Wx::gettext('Window list') ),
 		Wx::DefaultPosition,
 		Wx::Size->new( 480, 300 ),
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 
 	foreach ( keys %args ) {

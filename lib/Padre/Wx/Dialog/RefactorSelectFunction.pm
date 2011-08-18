@@ -38,7 +38,7 @@ sub new {
 		Wx::gettext('Select Function'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::DEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
+		Wx::DEFAULT_FRAME_STYLE | Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{cancelled} = 0;
