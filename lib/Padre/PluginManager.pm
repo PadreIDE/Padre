@@ -1139,7 +1139,7 @@ sub test_a_plugin {
 		$default_dir = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
-		$main, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
+		$main, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::FD_OPEN,
 	);
 	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");

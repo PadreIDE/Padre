@@ -1,7 +1,7 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
+
 use strict;
 use warnings;
-
 
 #############################################################################
 ##
@@ -14,9 +14,10 @@ use warnings;
 my $app = Demo::ListView->new;
 $app->MainLoop;
 
-
 #####################
+
 package Demo::ListView;
+
 use strict;
 use warnings;
 
@@ -28,10 +29,11 @@ sub OnInit {
 }
 
 #####################
+
 package Demo::Frame;
+
 use strict;
 use warnings;
-
 
 use Wx ':everything';
 use Wx::Event ':everything';
@@ -39,9 +41,8 @@ use Wx::Event ':everything';
 use base 'Wx::Frame';
 
 sub new {
-	my ($class) = @_;
-
-	my $self = $class->SUPER::new(
+	my $class = shift;
+	my $self  = $class->SUPER::new(
 		undef,
 		-1,
 		'Notebook ',
@@ -55,7 +56,6 @@ sub new {
 		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN
 	);
 
-
 	# creating the content of the first tab
 	my $editor = Wx::TextCtrl->new(
 		$nb, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
@@ -65,7 +65,6 @@ sub new {
 	# add first tab
 	$nb->AddPage( $editor, 'Editor', 1 );
 
-
 	my $choices = [
 		'This example', 'was borrowed',
 		'from an example', 'of the Wx::Demo', 'written by Mattia Barbon'
@@ -74,12 +73,16 @@ sub new {
 	$nb->AddPage( $listbox, 'Listbox', 1 );
 	EVT_LISTBOX_DCLICK( $self, $listbox, \&on_listbox_double_click );
 
-
 	return $self;
 }
 
 sub on_listbox_double_click {
-	my ( $self, $event ) = @_;
-
-	Wx::MessageBox( "Double clicked: '" . $event->GetString . "'", '', Wx::OK | Wx::CENTRE, $self );
+	my $self  = shift;
+	my $event = shift;
+	Wx::MessageBox(
+		"Double clicked: '" . $event->GetString . "'",
+		'',
+		Wx::wxOK | Wx::wxCENTRE,
+		$self,
+	);
 }

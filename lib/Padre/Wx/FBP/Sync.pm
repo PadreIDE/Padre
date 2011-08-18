@@ -57,7 +57,7 @@ sub new {
 		Wx::gettext("Logged out"),
 	);
 	$self->{lbl_status}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	my $line1 = Wx::StaticLine->new(

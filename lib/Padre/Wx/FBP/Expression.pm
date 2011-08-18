@@ -91,7 +91,7 @@ sub new {
 	);
 	$self->{output}->SetMinSize( [ 500, 400 ] );
 	$self->{output}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
 	);
 
 	my $bSizer36 = Wx::BoxSizer->new(Wx::HORIZONTAL);

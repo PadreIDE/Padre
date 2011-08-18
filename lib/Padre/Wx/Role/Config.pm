@@ -37,10 +37,10 @@ sub config_load {
 			$ctrl->SetColour( Padre::Wx::color($value) );
 
 		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			my $font = Wx::Font->new(Wx::wxNullFont);
+			my $font = Wx::Font->new(Wx::NullFont);
 			local $@;
 			eval { $font->SetNativeFontInfoUserDesc($value); };
-			$font = Wx::Font->new(Wx::wxNullFont) if $@;
+			$font = Wx::Font->new(Wx::NullFont) if $@;
 
 			# SetSelectedFont(wxNullFont) doesn't work on
 			# Linux, so we only do it if the font is valid

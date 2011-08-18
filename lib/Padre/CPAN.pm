@@ -106,7 +106,7 @@ sub install_file {
 		'',                                  # Default directory
 		'',                                  # Default file
 		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
-		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST
+		Wx::FD_OPEN | Wx::FD_FILE_MUST_EXIST
 	);
 	$dialog->CentreOnParent;
 	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {

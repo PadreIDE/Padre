@@ -280,19 +280,19 @@ SCOPE: {
 						$style->SetTextColour( $fg_colors->[9] );       # reset text color
 						$style->SetBackgroundColour( $bg_colors->[9] ); # reset bg color
 						                                                # reset bold/italic/underlined state
-						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
+						$font->SetWeight(Wx::FONTWEIGHT_NORMAL);
 						$font->SetUnderlined(0);
-						$font->SetStyle(Wx::wxFONTSTYLE_NORMAL);
+						$font->SetStyle(Wx::FONTSTYLE_NORMAL);
 					} elsif ( $cmd == 1 ) {                             # bold
-						$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+						$font->SetWeight(Wx::FONTWEIGHT_BOLD);
 					} elsif ( $cmd == 2 ) {                             # faint
-						$font->SetWeight(Wx::wxFONTWEIGHT_LIGHT);
+						$font->SetWeight(Wx::FONTWEIGHT_LIGHT);
 					} elsif ( $cmd == 3 ) {                             # italic
-						$font->SetStyle(Wx::wxFONTSTYLE_ITALIC);
+						$font->SetStyle(Wx::FONTSTYLE_ITALIC);
 					} elsif ( $cmd == 4 || $cmd == 21 ) {               # underline (21==double, but we can't do that)
 						$font->SetUnderlined(1);
 					} elsif ( $cmd == 22 ) {                            # reset bold and faint
-						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
+						$font->SetWeight(Wx::FONTWEIGHT_NORMAL);
 					} elsif ( $cmd == 24 ) {                            # reset underline
 						$font->SetUnderlined(0);
 					}
@@ -420,7 +420,7 @@ sub style_busy {
 
 sub set_font {
 	my $self = shift;
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 	my $name = $self->config->editor_font;
 	if ( defined $name and length $name ) {
 		$font->SetNativeFontInfoUserDesc($name);

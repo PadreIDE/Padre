@@ -103,7 +103,7 @@ sub new {
 
 	# Code always lays out left to right
 	if ( $self->can('SetLayoutDirection') ) {
-		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
+		$self->SetLayoutDirection( Wx::Layout_LeftToRight );
 	}
 
 	# Allow scrolling past the end of the document for those of us
@@ -518,7 +518,7 @@ sub apply_config {
 	}
 
 	# Set the font
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 	if ( defined $config->editor_font and length $config->editor_font > 0 ) {
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}

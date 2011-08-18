@@ -72,9 +72,9 @@ sub new {
 	$self->{filename}->SetFont(
 		Wx::Font->new(
 			9, # TODO: size should depend on theme
-			Wx::wxDEFAULT,
-			Wx::wxNORMAL,
-			Wx::wxBOLD,
+			Wx::DEFAULT,
+			Wx::NORMAL,
+			Wx::BOLD,
 			0,
 			''
 		)

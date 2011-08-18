@@ -100,6 +100,30 @@ use Wx ( qw{
 } );
 
 use constant TAGS => qw{
+	wxCLRP_SHOW_LABEL
+	wxCLRP_USE_TEXTCTRL
+	wxCLRP_DEFAULT_STYLE
+	wxDefaultSize
+	wxDefaultPosition
+	wxDIRP_DIR_MUST_EXIST
+	wxDIRP_CHANGE_DIR
+	wxDIRP_USE_TEXTCTRL
+	wxDIRP_DEFAULT_STYLE
+	wxFLP_OPEN
+	wxFLP_SAVE
+	wxFLP_OVERWRITE_PROMPT
+	wxFLP_FILE_MUST_EXIST
+	wxFLP_CHANGE_DIR
+	wxFLP_DEFAULT_STYLE
+	wxFLP_USE_TEXTCTRL
+	wxFNTP_USE_TEXTCTRL
+	wxFNTP_DEFAULT_STYLE
+	wxFNTP_FONTDESC_AS_LABEL
+	wxFNTP_USEFONT_FOR_LABEL
+	wxFNTP_MAXPOINT_SIZE
+	wxLayout_Default
+	wxLayout_LeftToRight
+	wxLayout_RightToLeft
 	wxMOD_NONE
 	wxMOD_ALT
 	wxMOD_CONTROL
@@ -110,8 +134,6 @@ use constant TAGS => qw{
 	wxMOD_CMD
 	wxMOD_ALL
 	wxNOT_FOUND
-	wxDefaultSize
-	wxDefaultPosition
 	:aui
 	:bitmap
 	:button
@@ -122,7 +144,15 @@ use constant TAGS => qw{
 	:combobox
 	:comboctrl
 	:control
+	:datepicker
 	:dialog
+	:dirctrl
+	:dnd
+	:filedialog
+	:font
+	:frame
+	:gauge
+	:grid
 	:id
 	:frame
 	:sizer

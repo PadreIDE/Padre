@@ -4216,7 +4216,7 @@ sub open_file_dialog {
 		: Wx::gettext('All Files') . '|*|' . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self, Wx::gettext('Open File'),
-		$self->cwd, '', $wildcards, Wx::wxFD_MULTIPLE,
+		$self->cwd, '', $wildcards, Wx::FD_MULTIPLE,
 	);
 	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;
@@ -4603,7 +4603,7 @@ sub on_save_as {
 			$self->{cwd},
 			$filename,
 			Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
-			Wx::wxFD_SAVE,
+			Wx::FD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 			return;
@@ -5898,7 +5898,7 @@ sub on_insert_from_file {
 		$self,      Wx::gettext('Open file'),
 		$self->cwd, '',
 		Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*' : '|*' ),
-		Wx::wxFD_OPEN,
+		Wx::FD_OPEN,
 	);
 	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
 		return;

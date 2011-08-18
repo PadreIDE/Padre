@@ -72,7 +72,7 @@ sub _add_controls {
 	my $banner = Wx::StaticBitmap->new( $self, -1, Padre::Wx::Icon::find("places/stock_folder") );
 
 	my $title_font = $self->{title}->GetFont;
-	$title_font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+	$title_font->SetWeight(Wx::FONTWEIGHT_BOLD);
 	$title_font->SetPointSize( $title_font->GetPointSize + 2 );
 	$self->{title}->SetFont($title_font);
 

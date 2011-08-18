@@ -102,7 +102,7 @@ sub new {
 		Wx::gettext('Plug-in Name'),
 	);
 	my $font = $self->{label}->GetFont;
-	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+	$font->SetWeight(Wx::FONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 4 );
 	$self->{label}->SetFont($font);
 

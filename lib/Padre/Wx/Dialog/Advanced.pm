@@ -781,7 +781,7 @@ sub _set_item_bold_font {
 	my $list = $self->{list};
 	my $item = $list->GetItem($index);
 	my $font = $item->GetFont;
-	$font->SetWeight( $bold ? Wx::wxFONTWEIGHT_BOLD : Wx::wxFONTWEIGHT_NORMAL );
+	$font->SetWeight( $bold ? Wx::FONTWEIGHT_BOLD : Wx::FONTWEIGHT_NORMAL );
 	$item->SetFont($font);
 	$list->SetItem($item);
 

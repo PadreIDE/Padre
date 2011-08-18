@@ -53,7 +53,7 @@ sub new {
 		Wx::gettext("Editor Style"),
 	);
 	$self->{m_staticText341}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{editor_style} = Wx::Choice->new(
@@ -138,10 +138,10 @@ sub new {
 	$self->{editor_font} = Wx::FontPickerCtrl->new(
 		$m_panel3,
 		-1,
-		Wx::wxNullFont,
+		Wx::NullFont,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxFNTP_DEFAULT_STYLE,
+		Wx::FNTP_DEFAULT_STYLE,
 	);
 	$self->{editor_font}->SetMaxPointSize(100);
 
@@ -165,7 +165,7 @@ sub new {
 		Wx::Colour->new( 0, 0, 0 ),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxCLRP_DEFAULT_STYLE,
+		Wx::CLRP_DEFAULT_STYLE,
 	);
 
 	Wx::Event::EVT_COLOURPICKER_CHANGED(
@@ -190,7 +190,7 @@ sub new {
 		Wx::gettext("Appearance Preview"),
 	);
 	$self->{m_staticText331}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{preview} = Padre::Wx::Editor->new(
@@ -212,7 +212,7 @@ sub new {
 		Wx::gettext("Content Assist"),
 	);
 	$self->{m_staticText36111}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline411} = Wx::StaticLine->new(
@@ -307,7 +307,7 @@ sub new {
 		Wx::gettext("Braces Assist"),
 	);
 	$self->{m_staticText3511}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline4111} = Wx::StaticLine->new(
@@ -340,7 +340,7 @@ sub new {
 		Wx::gettext("POD"),
 	);
 	$self->{m_staticText35111}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline41111} = Wx::StaticLine->new(
@@ -411,7 +411,7 @@ sub new {
 		Wx::gettext("Select a folder"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDIRP_DEFAULT_STYLE,
+		Wx::DIRP_DEFAULT_STYLE,
 	);
 
 	$self->{main_singleinstance} = Wx::CheckBox->new(
@@ -552,7 +552,7 @@ sub new {
 		"*.*",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxFLP_DEFAULT_STYLE,
+		Wx::FLP_DEFAULT_STYLE,
 	);
 
 	my $m_panel1 = Wx::Panel->new(
@@ -660,7 +660,7 @@ sub new {
 		Wx::gettext("Language Integration"),
 	);
 	$self->{m_staticText39}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline10} = Wx::StaticLine->new(
@@ -733,7 +733,7 @@ sub new {
 		Wx::gettext("Editor Options"),
 	);
 	$self->{m_staticText351}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline11} = Wx::StaticLine->new(
@@ -804,7 +804,7 @@ sub new {
 		"*.*",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxFLP_DEFAULT_STYLE,
+		Wx::FLP_DEFAULT_STYLE,
 	);
 
 	my $m_panel8 = Wx::Panel->new(

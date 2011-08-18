@@ -60,7 +60,7 @@ sub new {
 		Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_MENU )
 	);
 	$self->{preview}->SetFont(
-		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline221} = Wx::StaticLine->new(
