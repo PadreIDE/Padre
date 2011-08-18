@@ -255,7 +255,7 @@ sub _setup_events {
 		$self->_list,
 		sub {
 			my $selection = $self->_list->GetSelection;
-			if ( $selection != Wx::wxNOT_FOUND ) {
+			if ( $selection != Wx::NOT_FOUND ) {
 				my $action = $self->_list->GetClientData($selection);
 				$self->_status_text->SetPage( $self->_label( $action->{value}, $action->{name} ) );
 			}

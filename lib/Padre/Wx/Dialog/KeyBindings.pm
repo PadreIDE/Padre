@@ -500,7 +500,7 @@ sub _update_list {
 	$list->DeleteAllItems;
 
 	my $actions         = $self->ide->actions;
-	my $real_color      = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
+	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 	my $alternate_color = Wx::Colour->new(
 		int( $real_color->Red * 0.9 ),
 		int( $real_color->Green * 0.9 ),

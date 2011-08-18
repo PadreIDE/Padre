@@ -92,7 +92,7 @@ sub run_goto {
 
 	# Was a bookmark selected
 	my $id = $self->list->GetSelection;
-	if ( $id == Wx::wxNOT_FOUND ) {
+	if ( $id == Wx::NOT_FOUND ) {
 		$self->main->error( Wx::gettext('Did not select a bookmark') );
 		return;
 	}
@@ -229,7 +229,7 @@ sub refresh {
 	# When in goto mode, the OK button should only be enabled if
 	# there is something selected to goto.
 	unless ( $self->set->IsShown ) {
-		if ( $self->list->GetSelection == Wx::wxNOT_FOUND ) {
+		if ( $self->list->GetSelection == Wx::NOT_FOUND ) {
 			$self->ok->Disable;
 		} else {
 			$self->ok->Enable;
@@ -237,7 +237,7 @@ sub refresh {
 	}
 
 	# The Delete button should only be enabled if a bookmark is selected.
-	if ( $self->list->GetSelection == Wx::wxNOT_FOUND ) {
+	if ( $self->list->GetSelection == Wx::NOT_FOUND ) {
 		$self->delete->Disable;
 	} else {
 		$self->delete->Enable;

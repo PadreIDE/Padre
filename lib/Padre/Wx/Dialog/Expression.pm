@@ -23,7 +23,7 @@ sub on_combobox {
 sub on_text {
 	my $self  = shift;
 	my $event = shift;
-	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW) );
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
 	$self->Refresh;
 	$event->Skip(1);
 }
@@ -57,7 +57,7 @@ sub run {
 
 	# Reset the expression and blank old output
 	$self->{output}->SetValue('');
-	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW) );
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
 
 	# Execute the code and handle errors
 	local $@;

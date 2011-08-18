@@ -100,7 +100,7 @@ sub new {
 		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 	$self->{preview}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )
+		Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_MENU )
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(

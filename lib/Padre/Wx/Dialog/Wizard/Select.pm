@@ -34,8 +34,8 @@ sub add_controls {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
-			| Wx::wxTR_LINES_AT_ROOT
+		Wx::TR_HIDE_ROOT | Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS
+			| Wx::TR_LINES_AT_ROOT
 	);
 
 	# Filter sizer

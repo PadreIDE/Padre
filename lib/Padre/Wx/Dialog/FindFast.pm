@@ -21,7 +21,7 @@ our $VERSION = '0.91';
 sub new {
 	my $class = shift;
 
-	my $default_bg = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
+	my $default_bg = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 	my $error_bg   = Wx::Colour->new(
 		$default_bg->Red,
 		int( $default_bg->Green * 0.5 ),
@@ -300,8 +300,8 @@ sub _on_key_pressed {
 	my $mod   = $event->GetModifiers || 0;
 	my $code  = $event->GetKeyCode;
 
-	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
-	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
+	# Remove the bit ( Wx::MOD_META) set by Num Lock being pressed on Linux
+	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 
 	if ( $code == Wx::WXK_ESCAPE ) {
 		$self->_hide_panel;

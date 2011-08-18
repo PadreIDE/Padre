@@ -100,6 +100,16 @@ use Wx ( qw{
 } );
 
 use constant TAGS => qw{
+	wxMOD_NONE
+	wxMOD_ALT
+	wxMOD_CONTROL
+	wxMOD_SHIFT
+	wxMOD_WIN
+	wxMOD_ALTGR
+	wxMOD_META
+	wxMOD_CMD
+	wxMOD_ALL
+	wxNOT_FOUND
 	wxDefaultSize
 	wxDefaultPosition
 	:clipboard
@@ -107,7 +117,11 @@ use constant TAGS => qw{
 	:id
 	:frame
 	:sizer
+	:systemsettings
 	:textctrl
+	:toolbar
+	:toolbook
+	:treectrl
 };
 
 sub load {

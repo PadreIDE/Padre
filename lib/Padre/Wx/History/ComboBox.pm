@@ -96,7 +96,7 @@ sub SaveValue {
 
 	# If this is a value is not in our existing recent list, save it
 	if ( defined $value and length $value ) {
-		if ( $self->FindString($value) == Wx::wxNOT_FOUND ) {
+		if ( $self->FindString($value) == Wx::NOT_FOUND ) {
 			Padre::DB::History->create(
 				type => $self->{type},
 				name => $value,

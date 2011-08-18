@@ -275,7 +275,6 @@ BEGIN {
 		},
 
 		'fr-fr' => {
-
 			# Simplify until there's another French
 			# gettext   => 'French (France)',
 			# utf8text  => 'Français (France)',

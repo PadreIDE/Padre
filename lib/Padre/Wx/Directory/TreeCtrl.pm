@@ -34,8 +34,8 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
-			| Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE | Wx::wxCLIP_CHILDREN
+		Wx::TR_HIDE_ROOT | Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS
+			| Wx::TR_LINES_AT_ROOT | Wx::wxBORDER_NONE | Wx::wxCLIP_CHILDREN
 	);
 
 	# Create the image list
@@ -128,7 +128,7 @@ sub key_up {
 	my $code  = $event->GetKeyCode;
 
 	# see Padre::Wx::Main::key_up
-	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
+	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 
 	my $current = $self->current;
 	my $main    = $current->main;

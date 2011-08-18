@@ -6680,11 +6680,11 @@ sub key_up {
 	my $code   = $event->GetKeyCode;
 	my $config = $self->config;
 
-	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
+	# Remove the bit ( Wx::MOD_META) set by Num Lock being pressed on Linux
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
-	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
-	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
+	if ( $mod == Wx::MOD_CMD ) { # Ctrl
 		                       # Ctrl-TAB TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
@@ -6694,7 +6694,7 @@ sub key_up {
 				&{ $self->ide->actions->{'window.last_visited_file'}->menu_event }( $self, $event );
 			}
 		}
-	} elsif ( $mod == Wx::wxMOD_CMD + Wx::wxMOD_SHIFT ) { # Ctrl-Shift
+	} elsif ( $mod == Wx::MOD_CMD + Wx::MOD_SHIFT ) { # Ctrl-Shift
 		                                              # Ctrl-Shift-TAB
 		                                              # TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
@@ -6705,7 +6705,7 @@ sub key_up {
 				&{ $self->ide->actions->{'window.oldest_visited_file'}->menu_event }( $self, $event );
 			}
 		}
-	} elsif ( $mod == Wx::wxMOD_ALT ) {
+	} elsif ( $mod == Wx::MOD_ALT ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		TRACE("Current focus: $current_focus") if DEBUG;

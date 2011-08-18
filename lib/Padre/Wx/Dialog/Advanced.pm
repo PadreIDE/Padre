@@ -712,7 +712,7 @@ sub _update_list {
 	my $preferences = $self->{preferences};
 
 	# Try to derive an alternate row colour based on the current system colour
-	my $realColor = Wx::SystemSettings::GetColour(Wx::wxSYS_COLOUR_WINDOW);
+	my $realColor = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 
 	# Alternate candystripe is slightly darker and blueish
 	my $alternateColor = Wx::Colour->new(

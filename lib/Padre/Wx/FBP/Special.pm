@@ -57,7 +57,7 @@ sub new {
 		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 	$self->{preview}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )
+		Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_MENU )
 	);
 	$self->{preview}->SetFont(
 		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )

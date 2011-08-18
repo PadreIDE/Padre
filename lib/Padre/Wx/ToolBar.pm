@@ -37,9 +37,9 @@ sub new {
 	my $config = $main->config;
 
 	# Prepare the style
-	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
+	my $style = Wx::TB_HORIZONTAL | Wx::TB_FLAT | Wx::TB_NODIVIDER | Wx::wxBORDER_NONE;
 	if ( DOCKABLE and not $config->main_lockinterface ) {
-		$style = $style | Wx::wxTB_DOCKABLE;
+		$style = $style | Wx::TB_DOCKABLE;
 	}
 
 	# Create the parent Wx object
