@@ -160,6 +160,7 @@ sub run {
 
 			# Read the entire file
 			open( my $fh, '<', $fullname ) or next;
+			binmode($fh);
 			my $buffer = do { local $/; <$fh> };
 			close $fh;
 
@@ -179,6 +180,7 @@ sub run {
 			TRACE( "Replaced $count matches in $fullname" ) if DEBUG;
 			unless ( $self->{dryrun} ) {
 				open( my $fh, '>', $fullname ) or next;
+				binmode($fh);
 				local $/;
 				$fh->print($buffer);
 				close $fh;
