@@ -169,7 +169,7 @@ sub _create_controls {
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
 	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::RE_MULTILINE | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	my %regex_groups = $self->_regex_groups;
@@ -236,7 +236,7 @@ sub _create_controls {
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Toggle the visibility of the replace (substitution) fields
@@ -260,7 +260,7 @@ sub _create_controls {
 	$self->{result_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	$self->{result_label}->Hide;
@@ -716,7 +716,6 @@ sub run {
 	}
 	$self->{matched_text}->EndTextColour;
 
-
 	$self->replace;
 
 	$self->{description_text}->SetValue( $self->_dump_regex($regex) ) if $self->{description_text}->IsShown;
@@ -728,11 +727,11 @@ sub run {
 	#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
 	#			$self->{regex}->BeginTextColour(Wx::RED);
 	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Quantifier') {
-	#			$self->{regex}->BeginTextColour(Wx::wxBLUE);
+	#			$self->{regex}->BeginTextColour(Wx::BLUE);
 	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Operator') {
-	#			$self->{regex}->BeginTextColour(Wx::wxLIGHT_GREY);
+	#			$self->{regex}->BeginTextColour(Wx::LIGHT_GREY);
 	#		} elsif( $class_name eq 'PPIx::Regexp::Structure::Capture') {
-	#			$self->{regex}->BeginTextColour(Wx::wxCYAN);
+	#			$self->{regex}->BeginTextColour(Wx::CYAN);
 	#		}
 	#		$self->{regex}->AppendText($element->content);
 	#	$self->{regex}->EndTextColour;

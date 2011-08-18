@@ -402,7 +402,7 @@ sub on_left_up {
 	my $config = $self->config;
 	my $text   = $self->GetSelectedText;
 
-	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
+	if ( Wx::GTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
 		if ( $config->mid_button_paste ) {

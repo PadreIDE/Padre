@@ -6,8 +6,7 @@ use warnings;
 
 our $VERSION = '0.91';
 
-# Read the sets of constants we care about
-use Wx ( qw{
+use constant WANT => qw{
 	wxCLRP_SHOW_LABEL
 	wxCLRP_USE_TEXTCTRL
 	wxCLRP_DEFAULT_STYLE
@@ -43,17 +42,25 @@ use Wx ( qw{
 	:aui
 	:bitmap
 	:button
+	:bookctrl
+	:brush
 	:checkbox
 	:choicebook
 	:clipboard
+	:collapsiblepane
 	:colour
 	:combobox
 	:comboctrl
+	:constraints
 	:control
+	:cursor
 	:datepicker
+	:dc
 	:dialog
 	:dirctrl
+	:dirdialog
 	:dnd
+	:filectrl
 	:filedialog
 	:font
 	:frame
@@ -64,19 +71,26 @@ use Wx ( qw{
 	:icon
 	:id
 	:image
+	:imagelist
 	:keycode
+	:layout
 	:listbook
 	:listbox
 	:listctrl
 	:locale
-	:misc
 	:menu
+	:miniframe
+	:misc
 	:notebook
+	:ownerdrawncombobox
 	:palette
 	:panel
 	:pen
+	:power
+	:process
 	:progressdialog
 	:radiobox
+	:radiobutton
 	:richtextctrl
 	:sashwindow
 	:scrollbar
@@ -85,108 +99,24 @@ use Wx ( qw{
 	:slider
 	:socket
 	:spinbutton
+	:spinctrl
 	:splitterwindow
 	:staticline
+	:statictext
 	:statusbar
-	:stc
 	:systemsettings
 	:textctrl
 	:timer
 	:toolbar
 	:toolbook
+	:toplevelwindow
 	:treectrl
 	:window
 	:wizard
-} );
-
-use constant TAGS => qw{
-	wxCLRP_SHOW_LABEL
-	wxCLRP_USE_TEXTCTRL
-	wxCLRP_DEFAULT_STYLE
-	wxDefaultSize
-	wxDefaultPosition
-	wxDIRP_DIR_MUST_EXIST
-	wxDIRP_CHANGE_DIR
-	wxDIRP_USE_TEXTCTRL
-	wxDIRP_DEFAULT_STYLE
-	wxFLP_OPEN
-	wxFLP_SAVE
-	wxFLP_OVERWRITE_PROMPT
-	wxFLP_FILE_MUST_EXIST
-	wxFLP_CHANGE_DIR
-	wxFLP_DEFAULT_STYLE
-	wxFLP_USE_TEXTCTRL
-	wxFNTP_USE_TEXTCTRL
-	wxFNTP_DEFAULT_STYLE
-	wxFNTP_FONTDESC_AS_LABEL
-	wxFNTP_USEFONT_FOR_LABEL
-	wxFNTP_MAXPOINT_SIZE
-	wxLayout_Default
-	wxLayout_LeftToRight
-	wxLayout_RightToLeft
-	wxMOD_NONE
-	wxMOD_ALT
-	wxMOD_CONTROL
-	wxMOD_SHIFT
-	wxMOD_WIN
-	wxMOD_ALTGR
-	wxMOD_META
-	wxMOD_CMD
-	wxMOD_ALL
-	wxNOT_FOUND
-	:aui
-	:bitmap
-	:button
-	:checkbox
-	:choicebook
-	:clipboard
-	:colour
-	:combobox
-	:comboctrl
-	:control
-	:datepicker
-	:dialog
-	:dirctrl
-	:dnd
-	:filedialog
-	:font
-	:frame
-	:gauge
-	:grid
-	:id
-	:image
-	:keycode
-	:listbook
-	:listbox
-	:listctrl
-	:locale
-	:misc
-	:menu
-	:notebook
-	:palette
-	:panel
-	:pen
-	:progressdialog
-	:radiobox
-	:richtextctrl
-	:sashwindow
-	:scrollbar
-	:scrolledwindow
-	:sizer
-	:slider
-	:socket
-	:spinbutton
-	:splitterwindow
-	:staticline
-	:statusbar
-	:systemsettings
-	:textctrl
-	:timer
-	:toolbar
-	:toolbook
-	:treectrl
-	:window
 };
+
+# Read the sets of constants we care about
+use Wx WANT, ':stc';
 
 sub load {
 	my %constants = (
@@ -197,11 +127,15 @@ sub load {
 		MAC     => Wx::wxMAC,
 		X11     => Wx::wxX11,
 	);
-	foreach ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } TAGS ) {
+	foreach ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } WANT ) {
 		next if defined $constants{$_};
 		next unless s/^(wx)(.+)//i;
 		my $wx   = $1;
 		my $name = $2;
+		if ( $name =~ /^EVT_/ ) {
+			# We don't need event constants in Perl
+			next;
+		}
 		if ( exists $Wx::{$name} ) {
 			warn "Clash with function Wx::$name";
 			next;

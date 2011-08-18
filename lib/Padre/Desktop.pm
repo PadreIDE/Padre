@@ -39,7 +39,7 @@ Returns C<undef> if not found.
 =cut
 
 sub find_padre_exe {
-	return unless Padre::Constant::WXWIN32;
+	return unless Padre::Constant::WIN32;
 
 	require File::Which;
 	my $padre_exe = File::Which::which('padre.exe');
@@ -55,7 +55,7 @@ sub find_padre_exe {
 }
 
 sub desktop {
-	if (Padre::Constant::WXWIN32) {
+	if (Padre::Constant::WIN32) {
 
 		#TODO Support Vista/Win7 UAC (User Account Control)
 
@@ -102,7 +102,7 @@ sub desktop {
 }
 
 sub quicklaunch {
-	if (Padre::Constant::WXWIN32) {
+	if (Padre::Constant::WIN32) {
 
 		# Find Padre's executable
 		my ( $padre_exe, $padre_exe_dir ) = find_padre_exe();

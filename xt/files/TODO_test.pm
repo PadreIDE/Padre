@@ -88,7 +88,7 @@ sub new {
 	# the previous size is completely suspect.
 	# This doesn't work on Windows,
 	# so we use a different mechanism for it.
-	if ( not Padre::Constant::WXWIN32 and $config->main_maximized ) {
+	if ( not Padre::Constant::WIN32 and $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
 	}
 
@@ -114,7 +114,7 @@ sub new {
 	# wrong, but at least it has the correct proportions. To fix the
 	# buggy layout we will unmaximize and remaximize it again later
 	# just before we ->Show the window.
-	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+	if ( Padre::Constant::WIN32 and $config->main_maximized ) {
 		$self->Maximize(1);
 	}
 

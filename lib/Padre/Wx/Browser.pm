@@ -441,7 +441,7 @@ sub not_found {
 		$self,
 		sprintf( Wx::gettext("Searched for '%s' and failed..."), $query ),
 		Wx::gettext('Help not found.'),
-		Wx::OK | Wx::CENTRE | Wx::wxICON_INFORMATION
+		Wx::OK | Wx::CENTRE | Wx::ICON_INFORMATION
 	);
 
 	$dialog->ShowModal;

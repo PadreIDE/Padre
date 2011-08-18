@@ -93,7 +93,7 @@ sub error {
 	Wx::MessageBox(
 		$message,
 		Wx::gettext('Error'),
-		Wx::OK | Wx::CENTRE | Wx::wxICON_HAND,
+		Wx::OK | Wx::CENTRE | Wx::ICON_HAND,
 		$self,
 	);
 	return;
@@ -143,7 +143,7 @@ sub yes_no {
 		$self,
 		$message,
 		$title,
-		Wx::YES_NO | Wx::YES_DEFAULT | Wx::wxICON_QUESTION,
+		Wx::YES_NO | Wx::YES_DEFAULT | Wx::ICON_QUESTION,
 	);
 	$dialog->CenterOnParent;
 	my $result = ( $dialog->ShowModal == Wx::ID_YES ) ? 1 : 0;

@@ -70,7 +70,7 @@ sub _create_controls {
 	my $source_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Perl filter source:') );
 	$self->{source} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::WANTS_CHARS
+		Wx::RE_MULTILINE | Wx::WANTS_CHARS
 	);
 
 	# Input text
@@ -84,7 +84,7 @@ sub _create_controls {
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Output text:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Run the filter

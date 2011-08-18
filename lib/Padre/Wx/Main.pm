@@ -124,7 +124,7 @@ sub new {
 	# the previous size is completely suspect.
 	# This doesn't work on Windows,
 	# so we use a different mechanism for it.
-	if ( not Padre::Constant::WXWIN32 and $config->main_maximized ) {
+	if ( not Padre::Constant::WIN32 and $config->main_maximized ) {
 		$style |= Wx::MAXIMIZE;
 	}
 
@@ -150,7 +150,7 @@ sub new {
 	# wrong, but at least it has the correct proportions. To fix the
 	# buggy layout we will unmaximize and remaximize it again later
 	# just before we ->Show the window.
-	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+	if ( Padre::Constant::WIN32 and $config->main_maximized ) {
 		$self->Maximize(1);
 	}
 
@@ -378,7 +378,7 @@ sub timer_start {
 	# render pass.
 	# This gives us an optimum compromise between being PERCEIVED
 	# to start-up quickly, and ACTUALLY starting up quickly.
-	if ( Padre::Constant::WXWIN32 and $config->main_maximized ) {
+	if ( Padre::Constant::WIN32 and $config->main_maximized ) {
 
 		# This is a hacky workaround for buggy maximise-at-startup
 		# layout generation on windows.
@@ -1015,7 +1015,7 @@ sub single_instance_address {
 	my $config = $self->config;
 
 	require Wx::Socket;
-	if (Padre::Constant::WXWIN32) {
+	if (Padre::Constant::WIN32) {
 
 		# Since using a Wx::IPv4address doesn't seem to work,
 		# for now just return the two-value host/port list.
@@ -2971,7 +2971,7 @@ sub run_document {
 				$self->run_command($cmd);
 			}
 		} else {
-			my $styles = Wx::CENTRE | Wx::wxICON_HAND | Wx::YES_NO;
+			my $styles = Wx::CENTRE | Wx::ICON_HAND | Wx::YES_NO;
 			my $ret    = Wx::MessageBox(
 				$document->errstr . "\n" . Wx::gettext('Do you want to continue?'),
 				Wx::gettext("Warning"),
@@ -6710,7 +6710,7 @@ sub key_up {
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		TRACE("Current focus: $current_focus") if DEBUG;
 		#		# TO DO this should be fine tuned later
-		#		if ($code == Wx::wxK_UP) {
+		#		if ($code == Wx::K_UP) {
 		#			# TO DO get the list of panels at the bottom from some other place
 		#			if (my $editor = $self->current->editor) {
 		#				if ($current_focus->isa('Padre::Wx::Output') or

@@ -26,8 +26,8 @@ sub new {
 
 	#    my $panel =  Wx::Panel->new( $self, -1 );
 	#print "panel $panel\n";
-	#$panel->SetBackgroundColour(Wx::wxWHITE);
-	#    $self->SetBackgroundColour(Wx::wxWHITE);
+	#$panel->SetBackgroundColour(Wx::WHITE);
+	#    $self->SetBackgroundColour(Wx::WHITE);
 	#print "aa\n";
 	#    my $dialog = Wx::Dialog->new( $self, -1, "", [-1, -1], [550, 200]);
 	#print "d $dialog\n";

@@ -18,19 +18,6 @@ use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
 use constant MAC => !!( $^O eq 'darwin' );
 use constant UNIX => !( WIN32 or MAC );
 
-# Padre targets the three largest Wx backends
-# 1. Win32 Native
-# 2. Mac OS X Native
-# 3. Unix GTK
-# The following defined reusable constants for these platforms,
-# suitable for use in Wx platform-specific adaptation code.
-# Currently (and a bit naively) we align these to the platforms.
-use constant {
-	WXWIN32 => WIN32,
-	WXMAC   => MAC,
-	WXGTK   => UNIX,
-};
-
 # The local newline type
 use constant {
 	NEWLINE => {
@@ -184,19 +171,6 @@ is defined in this module.
 =head2 C<WIN32>, C<MAC>, C<UNIX>
 
 Operating Systems.
-
-=head2 C<WXWIN32>, C<WXMAC>, C<WXGTK>
-
-Padre targets the three largest Wx back-ends and maps to the OS constants.
-
-These are superficially identical to the current operation system constants,
-but are reserved to specifically differentiate between the operating system
-in general and the Wx backend implementation, in case the distinction becomes
-important at some point in the future.
-
-    WXWIN32 => WIN32,
-    WXMAC   => MAC,
-    WXGTK   => UNIX,
 
 =head2 C<BOOLEAN>, C<POSINT>, C<INTEGER>, C<ASCII>, C<PATH>
 

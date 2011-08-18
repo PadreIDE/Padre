@@ -57,18 +57,6 @@ our $DISTRO    = undef;
 #use constant MAC   => !!( $^O eq 'darwin' );
 #use constant UNIX => !( WIN32 or MAC );
 
-# Padre targets the three largest Wx backends
-# 1. Win32 Native
-# 2. Mac OS X Native
-# 3. Unix GTK
-# The following defined reusable constants for these platforms,
-# suitable for use in Wx platform-specific adaptation code.
-# Currently (and a bit naively) we align these to the platforms.
-# NOTE: They're now in Padre::Constant, if you miss them, please use them from there
-#use constant WXWIN32 => WIN32;
-#use constant WXMAC   => MAC;
-#use constant WXGTK   => UNIX;
-
 # The local newline type
 # NOTE: It's now in Padre::Constant, if you miss them, please use it from there
 #use constant NEWLINE => Padre::Constant::WIN32 ? 'WIN' : Padre::Constant::MAC ? 'MAC' : 'UNIX';

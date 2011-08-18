@@ -21,6 +21,8 @@ use Wx            ('wxTheClipboard');
 use Wx::Event     (':everything');
 use Wx::DND       ();
 use Wx::AUI       ();
+use Wx::HTML      ();
+use Wx::RichText  ();
 use Wx::Scintilla ();
 
 our $VERSION    = '0.91';

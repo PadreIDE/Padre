@@ -22,7 +22,7 @@ our @ISA     = qw{
 
 # NOTE: Something is wrong with dockable toolbars on Windows
 #       so disable them for now.
-use constant DOCKABLE => !Padre::Constant::WXWIN32;
+use constant DOCKABLE => !Padre::Constant::WIN32;
 
 
 

@@ -46,7 +46,7 @@ sub new {
 		-1,
 		[ -1, -1 ],
 		[ -1, -1 ],
-		Wx::wxHW_NO_SELECTION,
+		Wx::HW_NO_SELECTION,
 	);
 	$self->{renderer}->SetBorders(0);
 
