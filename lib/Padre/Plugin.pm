@@ -367,7 +367,7 @@ sub highlighting_mime_types {
     Wx::Event::EVT_MENU(
         $self->main,
         $item,
-        sub { Wx::MessageBox('sh sh sh sh', 'Mutley', Wx::wxOK, shift) },
+        sub { Wx::MessageBox('sh sh sh sh', 'Mutley', Wx::OK, shift) },
     );
   }
 

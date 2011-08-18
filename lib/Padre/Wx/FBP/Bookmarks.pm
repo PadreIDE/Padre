@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Bookmarks"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{set_label} = Wx::StaticText->new(

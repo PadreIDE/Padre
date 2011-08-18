@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Evaluate Expression"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{code} = Wx::ComboBox->new(

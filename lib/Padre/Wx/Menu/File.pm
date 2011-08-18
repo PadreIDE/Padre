@@ -397,7 +397,7 @@ sub on_recent {
 	Wx::MessageBox(
 		sprintf( Wx::gettext('File %s not found.'), $file ),
 		Wx::gettext('Open cancelled'),
-		Wx::wxOK,
+		Wx::OK,
 		$self->{main},
 	);
 }

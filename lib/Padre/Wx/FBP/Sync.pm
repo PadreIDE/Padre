@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Padre Sync"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	my $m_staticText12 = Wx::StaticText->new(

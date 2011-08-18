@@ -531,7 +531,7 @@ sub find_unmatched_brace_response {
 	Wx::MessageBox(
 		Wx::gettext("All braces appear to be matched"),
 		Wx::gettext("Check Complete"),
-		Wx::wxOK,
+		Wx::OK,
 		$self->current->main,
 	);
 }
@@ -600,7 +600,7 @@ sub find_variable_declaration {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
-			Wx::wxOK,
+			Wx::OK,
 			$self->current->main,
 		);
 		return;
@@ -641,7 +641,7 @@ sub find_variable_declaration_response {
 	Wx::MessageBox(
 		$text,
 		Wx::gettext("Search Canceled"),
-		Wx::wxOK,
+		Wx::OK,
 		$self->current->main,
 	);
 }
@@ -656,7 +656,7 @@ sub find_method_declaration {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a method"),
 			Wx::gettext("Check cancelled"),
-			Wx::wxOK,
+			Wx::OK,
 			$main
 		);
 		return ();
@@ -675,7 +675,7 @@ sub find_method_declaration {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Current '%s' not found"), $token ),
 			Wx::gettext("Check cancelled"),
-			Wx::wxOK,
+			Wx::OK,
 			$main
 		);
 		return;
@@ -796,7 +796,7 @@ sub rename_variable {
 		Wx::MessageBox(
 			Wx::gettext('Current cursor does not seem to point at a variable.'),
 			Wx::gettext('Rename variable'),
-			Wx::wxOK,
+			Wx::OK,
 			$self->current->main,
 		);
 		return;
@@ -846,7 +846,7 @@ sub change_variable_style {
 		Wx::MessageBox(
 			Wx::gettext('Current cursor does not seem to point at a variable.'),
 			Wx::gettext('Variable case change'),
-			Wx::wxOK,
+			Wx::OK,
 			$self->current->main,
 		);
 		return;
@@ -890,7 +890,7 @@ sub rename_variable_response {
 	Wx::MessageBox(
 		$text,
 		Wx::gettext("Replace Operation Canceled"),
-		Wx::wxOK,
+		Wx::OK,
 		$self->current->main,
 	);
 }
@@ -939,7 +939,7 @@ sub introduce_temporary_variable_response {
 	Wx::MessageBox(
 		$text,
 		Wx::gettext("Replace Operation Canceled"),
-		Wx::wxOK,
+		Wx::OK,
 		$self->current->main,
 	);
 }

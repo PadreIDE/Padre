@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Insert Special Values"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{select} = Wx::Choice->new(

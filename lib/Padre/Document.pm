@@ -259,10 +259,10 @@ sub new {
 						_commafy( $config->editor_file_size_limit )
 					),
 					Wx::gettext("Warning"),
-					Wx::wxYES_NO | Wx::wxCENTRE,
+					Wx::YES_NO | Wx::CENTRE,
 					$self->current->main,
 				);
-				if ( $ret != Wx::wxYES ) {
+				if ( $ret != Wx::YES ) {
 					return;
 				}
 			}
@@ -764,11 +764,11 @@ sub save_file {
 				$file->{filename}
 			),
 			Wx::gettext("Save Warning"),
-			Wx::wxYES_NO | Wx::wxCENTRE,
+			Wx::YES_NO | Wx::CENTRE,
 			$current->main,
 		);
 
-		return 0 if $ret == Wx::wxYES;
+		return 0 if $ret == Wx::YES;
 	}
 
 	# Not set when first time to save

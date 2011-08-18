@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("New Installation Survey"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	my $label = Wx::StaticText->new(

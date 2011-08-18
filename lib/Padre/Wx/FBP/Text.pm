@@ -28,7 +28,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		[ 300, 300 ],
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{text} = Wx::TextCtrl->new(

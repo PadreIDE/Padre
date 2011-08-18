@@ -109,7 +109,7 @@ if ($VERSION) {
 		Wx::MessageBox(
 			$msg,
 			Wx::gettext("Version"),
-			Wx::wxOK(),
+			Wx::OK(),
 		);
 	} else {
 		print $msg;

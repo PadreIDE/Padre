@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("Insert Snippet"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	my $filter_label = Wx::StaticText->new(

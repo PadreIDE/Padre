@@ -358,7 +358,7 @@ sub show_error_message {
 	# @INC gets printed out between () remove that for now
 	$message =~ s/\(\@INC.*\)//;
 
-	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
+	Wx::MessageBox( $message, $title, Wx::OK | Wx::wxCENTER, $self );
 }
 
 #

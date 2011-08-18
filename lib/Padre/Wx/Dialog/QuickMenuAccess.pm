@@ -88,7 +88,7 @@ sub _on_ok_button_clicked {
 				Wx::MessageBox(
 					sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $error ),
 					Wx::gettext('Error'),
-					Wx::wxOK,
+					Wx::OK,
 					$main,
 				);
 				TRACE("Error while trying to perform Padre action: $error") if DEBUG;

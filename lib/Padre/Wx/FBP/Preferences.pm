@@ -29,7 +29,7 @@ sub new {
 		Wx::gettext("Padre Preferences"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{treebook} = Wx::Treebook->new(

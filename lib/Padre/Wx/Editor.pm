@@ -805,7 +805,7 @@ sub error {
 	Wx::MessageBox(
 		$text,
 		Wx::gettext("Error"),
-		Wx::wxOK,
+		Wx::OK,
 		$self->main
 	);
 }

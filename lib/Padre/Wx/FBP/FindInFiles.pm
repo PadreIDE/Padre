@@ -29,7 +29,7 @@ sub new {
 		Wx::gettext("Find in Files"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::wxDEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	my $m_staticText2 = Wx::StaticText->new(

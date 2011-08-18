@@ -2971,14 +2971,14 @@ sub run_document {
 				$self->run_command($cmd);
 			}
 		} else {
-			my $styles = Wx::wxCENTRE | Wx::wxICON_HAND | Wx::wxYES_NO;
+			my $styles = Wx::CENTRE | Wx::wxICON_HAND | Wx::YES_NO;
 			my $ret    = Wx::MessageBox(
 				$document->errstr . "\n" . Wx::gettext('Do you want to continue?'),
 				Wx::gettext("Warning"),
 				$styles,
 				$self,
 			);
-			if ( $ret == Wx::wxYES ) {
+			if ( $ret == Wx::YES ) {
 				SCOPE: {
 					require File::pushd;
 					File::pushd::pushd( $document->project_dir ) if -e $document->project_dir;
@@ -3665,11 +3665,11 @@ sub on_close_window {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("You still have a running process. Do you want to kill it and exit?"),
 				Wx::gettext("Warning"),
-				Wx::wxYES_NO | Wx::wxCENTRE,
+				Wx::YES_NO | Wx::CENTRE,
 				$self,
 			);
 
-			if ( $ret == Wx::wxYES ) {
+			if ( $ret == Wx::YES ) {
 				if ( $self->{command} ) {
 					if (Padre::Constant::WIN32) {
 						$self->{command}->KillProcess;
@@ -4252,11 +4252,11 @@ sub open_file_dialog {
 					$filename
 				),
 				Wx::gettext("Open Warning"),
-				Wx::wxYES_NO | Wx::wxCENTRE,
+				Wx::YES_NO | Wx::CENTRE,
 				$self,
 			);
 
-			next if $ret == Wx::wxYES;
+			next if $ret == Wx::YES;
 		}
 
 		my $FN = File::Spec->catfile( $self->cwd, $filename );
@@ -4272,11 +4272,11 @@ sub open_file_dialog {
 					$FN
 				),
 				Wx::gettext("Open Warning"),
-				Wx::wxYES_NO | Wx::wxCENTRE,
+				Wx::YES_NO | Wx::CENTRE,
 				$self,
 			);
 
-			next if $ret == Wx::wxYES;
+			next if $ret == Wx::YES;
 		}
 
 		push @files, $FN;
@@ -4658,7 +4658,7 @@ sub on_save_as {
 		#					$ext_string
 		#				),
 		#				Wx::gettext("File extension missing warning..."),
-		#				Wx::wxYES_NO | Wx::wxCENTRE,
+		#				Wx::YES_NO | Wx::CENTRE,
 		#				$self,
 		#			);
 		#
@@ -4674,9 +4674,9 @@ sub on_save_as {
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
-				Wx::gettext("Exist"), Wx::wxYES_NO, $self,
+				Wx::gettext("Exist"), Wx::YES_NO, $self,
 			);
-			if ( $response == Wx::wxYES ) {
+			if ( $response == Wx::YES ) {
 				$document->set_filename($path);
 				$document->save_file;
 				$document->set_newline_type(Padre::Constant::NEWLINE);
@@ -4888,10 +4888,10 @@ sub _save_buffer {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed on disk since last saved. Do you want to overwrite it?"),
 			$doc->filename || Wx::gettext("File not in sync"),
-			Wx::wxYES_NO | Wx::wxCENTRE,
+			Wx::YES_NO | Wx::CENTRE,
 			$self,
 		);
-		return if $ret != Wx::wxYES;
+		return if $ret != Wx::YES;
 	}
 
 	unless ( $doc->save_file ) {
@@ -4983,17 +4983,17 @@ sub close {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
 			$document->filename || Wx::gettext("Unsaved File"),
-			Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
+			Wx::YES_NO | Wx::CANCEL | Wx::CENTRE,
 			$self,
 		);
-		if ( $ret == Wx::wxYES ) {
+		if ( $ret == Wx::YES ) {
 			$self->on_save($document);
 		} elsif ( $ret == Wx::wxNO ) {
 
 			# just close it
 		} else {
 
-			# Wx::wxCANCEL, or when clicking on [x]
+			# Wx::CANCEL, or when clicking on [x]
 			return 0;
 		}
 	}
@@ -5253,10 +5253,10 @@ sub delete {
 			Wx::gettext("Do you really want to close and delete %s from disk?"),
 			$filename
 		),
-		Wx::wxYES_NO | Wx::wxCANCEL | Wx::wxCENTRE,
+		Wx::YES_NO | Wx::CANCEL | Wx::CENTRE,
 		$self,
 	);
-	return 1 unless $ret == Wx::wxYES;
+	return 1 unless $ret == Wx::YES;
 
 	TRACE( join ' ', "Deleting ", ref $document, $filename || 'Unknown' ) if DEBUG;
 
@@ -6375,10 +6375,10 @@ sub timer_check_overwrite {
 	#	my $ret = Wx::MessageBox(
 	#		$Text,
 	#		$doc->filename || Wx::gettext("File not in sync"),
-	#		Wx::wxYES_NO | Wx::wxCENTRE, $self,
+	#		Wx::YES_NO | Wx::CENTRE, $self,
 	#	);
 	#
-	#	if ( $ret == Wx::wxYES ) {
+	#	if ( $ret == Wx::YES ) {
 	#		unless ( $doc->reload ) {
 	#			$self->error(
 	#				sprintf(

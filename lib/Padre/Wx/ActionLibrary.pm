@@ -2429,10 +2429,10 @@ sub init {
 					"Warning! This will delete all the changes you made to 'My plug-in' and replace it with the default code that comes with your installation of Padre"
 				),
 				Wx::gettext("Reset My plug-in"),
-				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
+				Wx::OK | Wx::CANCEL | Wx::CENTRE,
 				$main,
 			);
-			if ( $ret == Wx::wxOK ) {
+			if ( $ret == Wx::OK ) {
 				my $manager = $_[0]->ide->plugin_manager;
 				$manager->unload_plugin('Padre::Plugin::My');
 				$manager->reset_my_plugin(1);

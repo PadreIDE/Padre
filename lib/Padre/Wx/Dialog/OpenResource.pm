@@ -116,7 +116,7 @@ sub ok_button {
 			Wx::MessageBox(
 				Wx::gettext('Error while trying to perform Padre action'),
 				Wx::gettext('Error'),
-				Wx::wxOK,
+				Wx::OK,
 				$main,
 			);
 		} else {

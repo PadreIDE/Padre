@@ -1163,7 +1163,7 @@ sub test_a_plugin {
 				$plugin_folder_name
 			),
 			'Error loading plug-in',
-			Wx::wxOK, $main
+			Wx::OK, $main
 		);
 		return;
 	}
