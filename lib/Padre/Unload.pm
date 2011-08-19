@@ -14,6 +14,8 @@ sub unload {
 	require Class::Inspector;
 	return unless Class::Inspector->loaded($module);
 
+	no strict 'refs';
+
 	# Flush inheritance caches
 	@{$module . '::ISA'} = ();
 
