@@ -584,6 +584,7 @@ sub load_file {
 	$self->{encoding} = Padre::Locale::encoding_from_string($content);
 
 	#warn $self->{encoding};
+	require Encode;
 	$content = Encode::decode( $self->{encoding}, $content );
 
 	# Determine new line type using file content.
