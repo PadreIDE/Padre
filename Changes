@@ -26,6 +26,7 @@ the even version for the release, even during development.
       past the end of the document and type into relaxing clear space (ADAMK)
 
 0.91 Development version, not released
+    - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
     - Padre::Task objects are no longer aware they are being surrounded by a
       Padre::TaskHandle, breaking compatibility for much cleaner encapsulation.
       The ->handle method has been removed. Status messages now go via
