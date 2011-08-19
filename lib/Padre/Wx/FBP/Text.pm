@@ -26,49 +26,49 @@ sub new {
 		$parent,
 		-1,
 		'',
-		Wx::DefaultPosition,
+		Wx::wxDefaultPosition,
 		[ 300, 300 ],
-		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
 	$self->{text} = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_MULTILINE,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE,
 	);
 	$self->{text}->SetMinSize( [ 250, 250 ] );
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
 	);
 
 	$self->{close} = Wx::Button->new(
 		$self,
-		Wx::ID_CANCEL,
+		Wx::wxID_CANCEL,
 		Wx::gettext("Close"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 	$self->{close}->SetDefault;
 
-	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$buttons->Add( 20, 0, 1, Wx::EXPAND, 5 );
-	$buttons->Add( $self->{close}, 0, Wx::ALL, 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
+	$buttons->Add( $self->{close}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{text}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $m_staticline1, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $buttons, 0, Wx::EXPAND, 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{text}, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
+	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$hsizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$self->SetSizer($hsizer);
 	$self->Layout;

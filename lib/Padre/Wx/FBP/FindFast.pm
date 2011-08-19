@@ -25,17 +25,17 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::NO_BORDER | Wx::TAB_TRAVERSAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxNO_BORDER | Wx::wxTAB_TRAVERSAL,
 	);
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("X"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -56,9 +56,9 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_NO_VSCROLL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_NO_VSCROLL,
 	);
 
 	Wx::Event::EVT_TEXT(
@@ -73,8 +73,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Next"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 	$self->{find_next}->SetDefault;
 
@@ -90,8 +90,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Previous"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -106,20 +106,20 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Match Case"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	my $sizer = Wx::FlexGridSizer->new( 1, 6, 0, 0 );
 	$sizer->AddGrowableRow(0);
-	$sizer->SetFlexibleDirection(Wx::BOTH);
-	$sizer->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$sizer->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_case}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$sizer->SetFlexibleDirection(Wx::wxBOTH);
+	$sizer->SetNonFlexibleGrowMode(Wx::wxFLEX_GROWMODE_SPECIFIED);
+	$sizer->Add( $self->{cancel}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->Add( $self->{find_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->Add( $self->{find_text}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->Add( $self->{find_next}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->Add( $self->{find_previous}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+	$sizer->Add( $self->{find_case}, 1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 
 	$self->SetSizerAndFit($sizer);
 	$self->Layout;

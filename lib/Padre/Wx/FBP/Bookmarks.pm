@@ -26,9 +26,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Bookmarks"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::DEFAULT_DIALOG_STYLE,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{set_label} = Wx::StaticText->new(
@@ -42,17 +42,17 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 	$self->{set}->Hide;
 
 	$self->{set_line} = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
 	);
 	$self->{set_line}->Hide;
 
@@ -65,26 +65,26 @@ sub new {
 	$self->{list} = Wx::ListBox->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 		[],
-		Wx::LB_NEEDED_SB | Wx::LB_SINGLE,
+		Wx::wxLB_NEEDED_SB | Wx::wxLB_SINGLE,
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
 	);
 
 	$self->{ok} = Wx::Button->new(
 		$self,
-		Wx::ID_OK,
+		Wx::wxID_OK,
 		Wx::gettext("OK"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 	$self->{ok}->SetDefault;
 
@@ -92,8 +92,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("&Delete"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -108,8 +108,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Delete &All"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -122,33 +122,33 @@ sub new {
 
 	my $cancel = Wx::Button->new(
 		$self,
-		Wx::ID_CANCEL,
+		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
-	my $existing = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$existing->Add( $self->{m_staticText2}, 0, Wx::ALL, 5 );
+	my $existing = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$existing->Add( $self->{m_staticText2}, 0, Wx::wxALL, 5 );
 
-	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$buttons->Add( $self->{ok}, 0, Wx::ALL, 5 );
-	$buttons->Add( $self->{delete}, 0, Wx::ALL, 5 );
-	$buttons->Add( $self->{delete_all}, 0, Wx::ALL, 5 );
-	$buttons->Add( 20, 0, 1, Wx::EXPAND, 5 );
-	$buttons->Add( $cancel, 0, Wx::ALL, 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->Add( $self->{ok}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{delete}, 0, Wx::wxALL, 5 );
+	$buttons->Add( $self->{delete_all}, 0, Wx::wxALL, 5 );
+	$buttons->Add( 20, 0, 1, Wx::wxEXPAND, 5 );
+	$buttons->Add( $cancel, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{set_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
-	$vsizer->Add( $self->{set}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $self->{set_line}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $existing, 1, Wx::EXPAND, 5 );
-	$vsizer->Add( $self->{list}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $m_staticline1, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $buttons, 0, Wx::EXPAND, 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{set_label}, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP, 5 );
+	$vsizer->Add( $self->{set}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{set_line}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $existing, 1, Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $m_staticline1, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
 
-	$self->{sizer} = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$self->{sizer}->Add( $vsizer, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$self->{sizer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->{sizer}->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	$self->SetSizerAndFit($self->{sizer});
 	$self->Layout;

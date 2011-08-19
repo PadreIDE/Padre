@@ -26,17 +26,17 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Evaluate Expression"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_DIALOG_STYLE | Wx::wxRESIZE_BORDER,
 	);
 
 	$self->{code} = Wx::ComboBox->new(
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 		[
 			"Padre::Current->config",
 			"Padre::Current->editor",
@@ -46,7 +46,7 @@ sub new {
 			"Padre::Wx::Display->dump",
 			"\\\@INC, \\%INC",
 		],
-		Wx::TE_PROCESS_ENTER,
+		Wx::wxTE_PROCESS_ENTER,
 	);
 
 	Wx::Event::EVT_TEXT(
@@ -69,8 +69,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Evaluate"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -85,22 +85,22 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::TE_READONLY,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
 	);
 	$self->{output}->SetMinSize( [ 500, 400 ] );
 	$self->{output}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
 	);
 
-	my $bSizer36 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer36->Add( $self->{code}, 1, Wx::ALL | Wx::EXPAND, 3 );
-	$bSizer36->Add( $self->{evaluate}, 0, Wx::ALL, 3 );
+	my $bSizer36 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$bSizer36->Add( $self->{code}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$bSizer36->Add( $self->{evaluate}, 0, Wx::wxALL, 3 );
 
-	my $bSizer35 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer35->Add( $bSizer36, 0, Wx::EXPAND, 3 );
-	$bSizer35->Add( $self->{output}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	my $bSizer35 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$bSizer35->Add( $bSizer36, 0, Wx::wxEXPAND, 3 );
+	$bSizer35->Add( $self->{output}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 
 	$self->SetSizerAndFit($bSizer35);
 	$self->Layout;

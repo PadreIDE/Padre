@@ -16,6 +16,11 @@ use Padre::Wx::Role::Main     ();
 use Padre::Wx::Role::Dwell    ();
 use Padre::Logger;
 
+# Allow the use of two different versions of Scintilla
+use constant WX_SCINTILLA => Padre::Config::wx_scintilla_ready()
+	? 'Wx::ScintillaTextCtrl'
+	: 'Wx::StyledTextCtrl';
+
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.89';
 our @ISA        = (

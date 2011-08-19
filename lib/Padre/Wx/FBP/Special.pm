@@ -26,16 +26,16 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Insert Special Values"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::DEFAULT_DIALOG_STYLE,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{select} = Wx::Choice->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 		[],
 	);
 	$self->{select}->SetSelection(0);
@@ -52,31 +52,31 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition,
+		Wx::wxDefaultPosition,
 		[ 300, 50 ],
-		Wx::TE_MULTILINE | Wx::TE_READONLY,
+		Wx::wxTE_MULTILINE | Wx::wxTE_READONLY,
 	);
 	$self->{preview}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_MENU )
+		Wx::SystemSettings::GetColour( Wx::wxSYS_COLOUR_MENU )
 	);
 	$self->{preview}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::Font->new( Wx::wxNORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
 	$self->{m_staticline221} = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLI_HORIZONTAL,
 	);
 
 	$self->{insert} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Insert"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 	$self->{insert}->SetDefault;
 
@@ -90,25 +90,25 @@ sub new {
 
 	$self->{cancel} = Wx::Button->new(
 		$self,
-		Wx::ID_CANCEL,
+		Wx::wxID_CANCEL,
 		Wx::gettext("Cancel"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$buttons->Add( $self->{insert}, 0, Wx::ALL, 5 );
-	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$buttons->Add( $self->{cancel}, 0, Wx::ALL, 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->Add( $self->{insert}, 0, Wx::wxALL, 5 );
+	$buttons->Add( 0, 0, 1, Wx::wxEXPAND, 5 );
+	$buttons->Add( $self->{cancel}, 0, Wx::wxALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{select}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $self->{preview}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( $self->{m_staticline221}, 0, Wx::EXPAND | Wx::ALL, 5 );
-	$vsizer->Add( $buttons, 0, Wx::EXPAND, 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{select}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{preview}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$vsizer->Add( $self->{m_staticline221}, 0, Wx::wxEXPAND | Wx::wxALL, 5 );
+	$vsizer->Add( $buttons, 0, Wx::wxEXPAND, 5 );
 
-	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$hsizer->Add( $vsizer, 1, Wx::EXPAND, 5 );
+	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$hsizer->Add( $vsizer, 1, Wx::wxEXPAND, 5 );
 
 	$self->SetSizerAndFit($hsizer);
 	$self->Layout;
