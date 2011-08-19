@@ -25,7 +25,6 @@ our $VERSION = '0.91';
 
 
 
-
 ######################################################################
 # Action Database
 
@@ -2813,7 +2812,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name       => 'help.about',
 		id         => Wx::ID_ABOUT,
-		label      => _T('&About...'),
+		label      => _T('&About'),
 		comment    => _T('Show information about Padre'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;
