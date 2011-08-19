@@ -77,7 +77,6 @@ requires 'Capture::Tiny'            => '0.06';
 requires 'CGI'                      => '3.47';
 requires 'Class::Adapter'           => '1.05';
 requires 'Class::Inspector'         => '1.22';
-requires 'Class::Unload'            => '0.03';
 requires 'Class::XSAccessor'        => '1.05';
 requires 'Cwd'                      => '3.2701';
 requires 'Data::Dumper'             => '2.101';

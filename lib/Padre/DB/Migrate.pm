@@ -6,7 +6,6 @@ use 5.008005;
 use strict;
 use warnings;
 use Carp          ();
-use Class::Unload ();
 use File::Spec 3.2701 ();
 use File::Path 2.04   ();
 use File::Basename ();
@@ -93,7 +92,9 @@ sub import {
 	if ( $want and $want > $version ) {
 		require Padre::DB::Timeline;
 		Padre::DB::Timeline->new( dbh => $dbh )->upgrade($want);
-		Class::Unload->unload('Padre::DB::Timeline');
+
+		require Padre::Unload;
+		Padre::Unload::unload('Padre::DB::Timeline');
 	}
 
 	# We are finished with the database

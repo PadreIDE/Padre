@@ -754,8 +754,7 @@ sub _unload_plugin {
 	}
 
 	# Unload the plug-in class itself
-	require Class::Unload;
-	Class::Unload->unload($module);
+	Padre::Unload::unload($module);
 
 	# Finally, remove the handle (and flush the sort order)
 	delete $self->{plugins}->{$module};

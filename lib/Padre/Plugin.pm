@@ -52,6 +52,7 @@ use Params::Util   ();
 use YAML::Tiny     ();
 use Padre::DB      ();
 use Padre::Wx      ();
+use Padre::Unload  ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
@@ -239,10 +240,9 @@ disabled unless the user has specifically allowed experimental plug-ins.
 
 # Convenience integration with Class::Unload
 sub unload {
-	require Class::Unload;
 	my $either = shift;
-	foreach my $package (@_) {
-		Class::Unload->unload($package);
+	foreach my $package ( @_ ) {
+		Padre::Unload::unload($package);
 	}
 	return 1;
 }
@@ -429,18 +429,17 @@ Most often, this will be when Padre itself is shutting down. Other uses may
 be when the user wishes to disable the plug-in, when the plug-in is being
 reloaded, or if the plug-in is about to be upgraded.
 
-If you have any private classes other than the standard C<Padre::Plugin::Foo>, you
-should unload them as well as the plug-in may be in the process of upgrading
+If you have any private classes other than the standard C<Padre::Plugin::Foo>,
+you should unload them as well as the plug-in may be in the process of upgrading
 and will want those classes freed up for use by the new version.
 
-The recommended way of unloading your extra classes is using
-L<Class::Unload>. Suppose you have C<My::Extra::Class> and want to unload it,
+The recommended way of unloading your extra classes is using the built in
+C<unload> method. Suppose you have C<My::Extra::Class> and want to unload it,
 simply do this in C<plugin_disable>:
 
-  require Class::Unload;
-  Class::Unload->unload('My::Extra::Class');
+  $plugin->unload('My::Extra::Class');
 
-Class::Unload takes care of all the tedious bits for you. Note that you
+The C<unload> method takes care of all the tedious bits for you. Note that you
 should B<not> unload any external C<CPAN> dependencies, as these may be needed
 by other plug-ins or Padre itself. Only classes that are part of your plug-in
 should be unloaded.

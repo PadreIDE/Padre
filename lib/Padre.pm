@@ -16,7 +16,6 @@ use File::HomeDir ();
 use List::Util    ();
 use Scalar::Util  ();
 use YAML::Tiny    ();
-use Class::Unload ();
 use DBI           ();
 use DBD::SQLite   ();
 
@@ -239,8 +238,9 @@ sub run {
 
 	TRACE("Killing the splash screen") if DEBUG;
 	if ($Padre::Startup::VERSION) {
+		require Padre::Unload;
 		Padre::Startup->destroy_splash;
-		Class::Unload->unload('Padre::Startup');
+		Padre::Unload::unload('Padre::Startup');
 	}
 
 	TRACE("Processing the action queue") if DEBUG;
