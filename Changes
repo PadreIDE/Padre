@@ -28,7 +28,7 @@ the even version for the release, even during development.
       past the end of the document and type into relaxing clear space (ADAMK)
 
 0.91 Development version, not released
-    - Task 3.0 breaks all task code that called ->message or ->status (ADAMK)
+    - Task 3.0 breaks almost all task code (ADAMK)
     - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
     - Padre::Task objects are no longer aware they are being surrounded by a
       Padre::TaskHandle, breaking compatibility for much cleaner encapsulation.
