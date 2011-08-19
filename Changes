@@ -88,7 +88,6 @@ the even version for the release, even during development.
     - Added experimental config setting feature_style_gui to allow major GUI
       tools such as the function list and directory tree to inherit their
       foreground and background colouring from the active editor style (ADAMK)
-    - Update German translation (ZENOG)
 
 0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
