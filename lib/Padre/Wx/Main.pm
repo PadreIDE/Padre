@@ -1072,7 +1072,7 @@ sub single_instance_start {
 	require Wx::Socket;
 	$self->{single_instance} = Wx::SocketServer->new(
 		$self->single_instance_address,
-		Wx::wxSOCKET_NOWAIT | Wx::wxSOCKET_REUSEADDR,
+		Wx::SOCKET_NOWAIT | Wx::SOCKET_REUSEADDR,
 	);
 	unless ( $self->{single_instance}->Ok ) {
 		delete $self->{single_instance_server};

@@ -83,9 +83,9 @@ sub run {
 	while (@queue) {
 
 		# Abort the task if we've been cancelled
-		if ( $self->cancel ) {
+		if ( $self->cancelled ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			$self->status;
+			$self->tell_status;
 			return 1;
 
 		}
@@ -102,7 +102,7 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->status( "Searching... " . $parent->unix );
+		$self->tell_status( "Searching... " . $parent->unix );
 
 		my @children = ();
 		foreach my $file (@list) {
@@ -112,9 +112,9 @@ sub run {
 			next if $file =~ /^\.git$/;
 
 			# Abort the task if we've been cancelled
-			if ( $self->cancel ) {
+			if ( $self->cancelled ) {
 				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-				$self->status;
+				$self->tell_status;
 				return 1;
 			}
 
@@ -171,7 +171,7 @@ sub run {
 			};
 			if ( $@ ) {
 				TRACE("Replace crashed in $fullname") if DEBUG;
-				$self->message( OWNER => $object, -1 );
+				$self->tell_owner( $object, -1 );
 				next;
 			}
 			next unless $count;
@@ -187,13 +187,13 @@ sub run {
 			}
 
 			# Made changes, inform out owner
-			$self->message( OWNER => $object, $count );
+			$self->tell_owner( $object, $count );
 		}
 		unshift @queue, @children;
 	}
 
 	# Notify our parent we are finished searching
-	$self->status;
+	$self->tell_status;
 
 	return 1;
 }

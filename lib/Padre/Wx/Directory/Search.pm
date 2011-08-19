@@ -100,9 +100,9 @@ sub run {
 	while (@queue) {
 
 		# Abort the task if we've been cancelled
-		if ( $self->cancel ) {
+		if ( $self->cancelled ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-			$self->status;
+			$self->tell_status;
 			return 1;
 		}
 
@@ -114,7 +114,7 @@ sub run {
 			if ( $object->name =~ $filter ) {
 
 				# Send the matching file to the parent thread
-				$self->message( OWNER => $object );
+				$self->tell_owner($object);
 			}
 			next;
 		}
@@ -129,7 +129,7 @@ sub run {
 		closedir DIRECTORY;
 
 		# Notify our parent we are working on this directory
-		$self->status( "Searching... " . $object->unix );
+		$self->tell_status( "Searching... " . $object->unix );
 
 		# Step 1 - Map the files into path objects
 		my @objects = ();
@@ -137,9 +137,9 @@ sub run {
 			next if $file =~ /^\.+\z/;
 
 			# Abort the task if we've been cancelled
-			if ( $self->cancel ) {
+			if ( $self->cancelled ) {
 				TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
-				$self->status;
+				$self->tell_status;
 				return 1;
 			}
 
@@ -228,7 +228,7 @@ sub run {
 	}
 
 	# Notify our parent we are finished searching
-	$self->status;
+	$self->tell_status;
 
 	return 1;
 }

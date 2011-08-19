@@ -376,6 +376,7 @@ sub colourize {
 	} else {
 		TRACE("Colourize is being called") if DEBUG;
 		$editor->Colourise( 0, $editor->GetLength );
+		TRACE("Colourize completed") if DEBUG;
 	}
 }
 

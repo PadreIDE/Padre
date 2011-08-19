@@ -68,7 +68,7 @@ sub run {
 		TRACE("Checking $file\n") if DEBUG;
 
 		# Abort the task if we've been cancelled
-		if ( $self->cancel ) {
+		if ( $self->cancelled ) {
 			TRACE( __PACKAGE__ . ' task cancelled' ) if DEBUG;
 			return 1;
 		}

@@ -23,34 +23,25 @@ our $SEQUENCE = 0;
 
 sub new {
 	TRACE( $_[0] ) if DEBUG;
-	return bless {
+	bless {
 		hid  => ++$SEQUENCE,
 		task => $_[1],
-		},
-		$_[0];
+	}, $_[0];
 }
 
 sub hid {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{hid};
 }
 
 sub task {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{task};
 }
 
 sub child {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{child};
 }
 
 sub class {
-
-	# TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
 }
 
@@ -62,15 +53,7 @@ sub worker {
 }
 
 sub queue {
-
-	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->{queue};
-}
-
-sub inbox {
-
-	# TRACE( $_[0] ) if DEBUG;
-	$_[0]->{inbox};
 }
 
 sub start_time {
@@ -299,96 +282,77 @@ sub stopped {
 	$_[0]->message( 'STOPPED', $_[0]->{task} );
 }
 
-# Has this task been cancelled by the parent?
-sub cancel {
-	my $self = shift;
-
-	# Have we been cancelled but forgot to check till now?
-	return 1 if $self->{cancel};
-
-	# Without an inbox or queue we aren't running properly,
-	# so the question of whether we have been cancelled is moot.
+# Poll the inbound queue and process them
+sub poll {
+	my $self  = shift;
 	my $inbox = $self->{inbox} or return;
 	my $queue = $self->{queue} or return;
 
-	# Fetch any new messages from the queue, scanning for cancel
-	foreach my $message ( $queue->dequeue_nb ) {
+	# Fetch from the queue until we run out of messages or get a cancel
+	while ( my $message = $queue->dequeue1_nb ) {
 		if ( $message->[0] eq 'cancel' ) {
-			$self->{cancel} = 1;
+			# Once we have a cancel message stop processing all
+			# other inbound messages as they aren't for us.
+			$self->{cancelled} = 1;
+			delete $self->{queue};
 			next;
 		}
 		push @$inbox, $message;
 	}
 
-	return !!$self->{cancel};
+	return;
 }
 
-# Blocking check for inbound messages from the parent
-sub dequeue {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
+# Block until we have an inbox message or have been cancelled
+sub wait {
+	my $self  = shift;
+	my $inbox = $self->{inbox} or return;
+	my $queue = $self->{queue} or return;
 
-	# Pull from the inbox first
-	my $inbox = $self->inbox or return 0;
-	if (@$inbox) {
-		return shift @$inbox;
-	}
+	# If something is in our inbox we don't need to wait
+	return if @$inbox;
 
-	# Pull off the queue
-	my $queue = $self->queue or return 0;
-	foreach my $message ( $queue->dequeue ) {
-		if ( $message->[0] eq 'cancel' ) {
-			$self->{cancel} = 1;
-			next;
-		}
+	# Fetch the next message from the queue, blocking if needed
+	my $message = $queue->dequeue1;
+	if ( $message->[0] eq 'cancel' ) {
+		# Once we have a cancel message stop processing all
+		# other inbound messages as they aren't for us.
+		$self->{cancelled} = 1;
+		delete $self->{queue};
+		next;
 	}
+	push @$inbox, $message;
 
-	# Check the message for valid structure
-	my $message = shift @$inbox or return 0;
-	unless ( Params::Util::_ARRAY($message) ) {
-		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
-		return 0;
-	}
-	unless ( Params::Util::_IDENTIFIER( $message->[0] ) ) {
-		TRACE('Non-method message received by worker thread') if DEBUG;
-		return 0;
-	}
-
-	return $message;
+	return;
 }
 
-# Non-blocking check for inbound messages from our parent
-sub dequeue_nb {
-	TRACE( $_[0] ) if DEBUG;
+# Has this task been cancelled by the parent?
+sub cancelled {
 	my $self = shift;
 
-	# Pull from the inbox first
-	my $inbox = $self->inbox or return 0;
-	if (@$inbox) {
-		return shift @$inbox;
-	}
+	# Shortcut if we can to avoid queue locking
+	return 1 if $self->{cancelled};
 
-	# Pull off the queue, non-blocking
-	my $queue = $self->queue or return 0;
-	foreach my $message ( $queue->dequeue_nb ) {
-		if ( $message->[0] eq 'cancel' ) {
-			$self->{cancel} = 1;
-			next;
-		}
-	}
+	# Poll for new input
+	$self->poll;
 
-	# Check the message for valid structure
-	my $message = shift @$inbox or return 0;
-	unless ( Params::Util::_ARRAY($message) ) {
-		TRACE('Non-ARRAY message received by a worker thread') if DEBUG;
-		return 0;
-	}
-	unless ( Params::Util::_IDENTIFIER( $message->[0] ) ) {
-		TRACE('Non-method message received by worker thread') if DEBUG;
-		return 0;
-	}
+	# Check again now we have polled for new messages
+	return !! $self->{cancelled};
+}
 
-	return $message;
+# Fetch the next message from our inbox
+sub inbox {
+	my $self  = shift;
+	my $inbox = $self->{inbox} or return undef;
+
+	# Shortcut if we can to avoid queue locking
+	return shift @$inbox if @$inbox;
+
+	# Poll for new messages
+	$self->poll;
+
+	# Check again now we have polled for new messages
+	return shift @$inbox;
 }
 
 1;

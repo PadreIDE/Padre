@@ -94,7 +94,7 @@ sub run {
 	while (@queue) {
 
 		# Abort the task if we've been cancelled
-		if ( $self->cancel ) {
+		if ( $self->cancelled ) {
 			TRACE('Padre::Wx::Directory::Search task has been cancelled') if DEBUG;
 			return 1;
 		}
@@ -189,7 +189,7 @@ sub run {
 		#          Don't send a response if the directory is empty.
 		#          Also skip if we are running in the parent and have no handle.
 		if ( $self->is_child and @objects ) {
-			$self->message( OWNER => $request, map { $_->[0] } @objects );
+			$self->tell_owner( $request, map { $_->[0] } @objects );
 		}
 	}
 

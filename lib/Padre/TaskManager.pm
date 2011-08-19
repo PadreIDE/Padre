@@ -315,11 +315,11 @@ sub schedule {
 
 =pod
 
-=head2 cancel
+=head2 cancelled
 
-  $manager->cancel( $owner );
+  $manager->cancelled( $owner );
 
-The C<cancel> method is used with the "task ownership" feature of the
+The C<cancelled> method is used with the "task ownership" feature of the
 L<Padre::Task> 2.0 API to signal tasks running in the background that
 were created by a particular object that they should voluntarily abort as
 their results are no longer wanted.

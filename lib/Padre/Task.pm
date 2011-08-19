@@ -4,7 +4,7 @@ package Padre::Task;
 
 =head1 NAME
 
-Padre::Task - Padre Task API 2.0
+Padre::Task - Padre Task API 3.0
 
 =head1 SYNOPSIS
 
@@ -429,7 +429,7 @@ and storing the results of the computation on the object for transmission
 back to the parent thread.
 
 In more complex scenarios, you may wish to do a series of tasks or a recursive
-set of tasks in a loop with a check on the C<cancel> method periodically to
+set of tasks in a loop with a check on the C<cancelled> method periodically to
 allow the aborting of the task if requested by the parent.
 
 In even more advanced situations, you may embed and launch an entire event loop
@@ -438,8 +438,8 @@ complex functionality can be run in the background.
 
 Once inside of C<run> your task is in complete control and the task manager
 cannot interupt the execution of your code short of killing the thread
-entirely. The standard C<cancel> method to check for a request from the parent
-to abort your task is cooperative and entirely voluntary.
+entirely. The standard C<cancelled> method to check for a request from the
+parent to abort your task is cooperative and entirely voluntary.
 
 Returns true if the computation was completed successfully.
 
@@ -525,14 +525,14 @@ sub is_child {
 
 =pod
 
-=head2 cancel
+=head2 cancelled
 
   sub run {
       my $self = shift;
   
       # Abort a long task if we are no longer wanted
       foreach my $thing ( @{$self->{lots_of_stuff}} ) {
-          return if $self->cancel;
+          return if $self->cancelled;
   
           # Do something expensive
       }
@@ -540,26 +540,64 @@ sub is_child {
       return 1;
   }
 
-The C<cancel> method can be used in the worker thread by your task during the
-execution of C<run>.
+The C<cancelled> method should be called in the child worker, and allows the
+task to be cooperatively aborted before it has completed.
+
+The abort mechanism is cooperative. Tasks that do not periodically check the
+C<cancelled> method will continue until they are complete regardless of the
+desires of the task manager.
 
 =cut
 
-sub cancel {
-	return !!( defined $_[0]->{handle} and $_[0]->{handle}->cancel );
+sub cancelled {
+	return 1 unless defined $_[0]->{handle};
+	return shift->{handle}->cancelled;
+}
+
+# Fetch the next message from our inbox
+sub inbox {
+	return undef unless defined $_[0]->{handle};
+	return shift->{handle}->inbox;
+}
+
+# Block until we are cancelled or there is a message from our parent
+sub wait {
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->wait;
+}
+
+sub tell_parent {
+	my $self   = shift;
+	my $string = @_ ? shift : '';
+	return unless defined $self->{handle};
+	return $self->{handle}->message( $string );
+}
+
+sub tell_child {
+	my $self   = shift;
+	my $string = @_ ? shift : '';
+	return unless defined $self->{handle};
+	return $self->{handle}->message( $string );
+}
+
+sub tell_owner {
+	my $self   = shift;
+	my $string = @_ ? shift : '';
+	return unless defined $self->{handle};
+	return $self->{handle}->message( OWNER => $string );
 }
 
 =pod
 
-=head2 status
+=head2 tell_status
 
   # Indicate we are waiting, but only while we are waiting
-  $task->status('Waiting...');
+  $task->tell_status('Waiting...');
   sleep 5
-  $task->status;
+  $task->tell_status;
 
-The C<status> method allows a task to trickle informative status messages up to
-the parent thread. These messages serve a dual purpose.
+The C<tell_status> method allows a task to trickle informative status messages
+up to the parent thread. These messages serve a dual purpose.
 
 Firstly, the messages will (or at least I<may>) be displayed to the user to
 indicate progress through a long asynchronous background task. For example, a
@@ -577,27 +615,11 @@ long-running task is still alive.
 
 =cut
 
-sub status {
+sub tell_status {
 	my $self   = shift;
 	my $string = @_ ? shift : '';
-	$self->message( STATUS => $string );
-}
-
-# Send a message to the child (if running) if called in the parent.
-# Send a message to the parent if called in the child.
-sub message {
-	return unless defined $_[0]->{handle};
-	return shift->{handle}->message(@_);
-}
-
-sub dequeue {
-	return unless defined $_[0]->{handle};
-	return $_[0]->{handle}->dequeue;
-}
-
-sub dequeue_nb {
-	return unless defined $_[0]->{handle};
-	return $_[0]->{handle}->dequeue_nb;
+	return unless defined $self->{handle};
+	return $self->{handle}->message( STATUS => $string );
 }
 
 1;
