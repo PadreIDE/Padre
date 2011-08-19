@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 
-out $VERSION = '0.91';
+our $VERSION = '0.91';
 
 sub unload {
 	my $module = shift;
