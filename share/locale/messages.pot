@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-18 16:10-0700\n"
+"POT-Creation-Date: 2011-08-18 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -684,7 +684,7 @@ msgstr ""
 msgid "Apply one of the quick fixes for the current document"
 msgstr ""
 
-#: lib/Padre/Locale.pm:157
+#: lib/Padre/Locale.pm:156
 msgid "Arabic"
 msgstr ""
 
@@ -951,15 +951,15 @@ msgstr ""
 msgid "Check the current file for common beginner errors"
 msgstr ""
 
-#: lib/Padre/Locale.pm:430
+#: lib/Padre/Locale.pm:429
 msgid "Chinese"
 msgstr ""
 
-#: lib/Padre/Locale.pm:440
+#: lib/Padre/Locale.pm:439
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:450
+#: lib/Padre/Locale.pm:449
 msgid "Chinese (Traditional)"
 msgstr ""
 
@@ -1367,7 +1367,7 @@ msgid ""
 "is added in the place where the selection was."
 msgstr ""
 
-#: lib/Padre/Locale.pm:167
+#: lib/Padre/Locale.pm:166
 msgid "Czech"
 msgstr ""
 
@@ -1379,7 +1379,7 @@ msgstr ""
 msgid "DELETED"
 msgstr ""
 
-#: lib/Padre/Locale.pm:177
+#: lib/Padre/Locale.pm:176
 msgid "Danish"
 msgstr ""
 
@@ -1606,11 +1606,11 @@ msgstr ""
 msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
 msgstr ""
 
-#: lib/Padre/Locale.pm:350
+#: lib/Padre/Locale.pm:349
 msgid "Dutch"
 msgstr ""
 
-#: lib/Padre/Locale.pm:360
+#: lib/Padre/Locale.pm:359
 msgid "Dutch (Belgium)"
 msgstr ""
 
@@ -1714,27 +1714,27 @@ msgstr ""
 msgid "End of line"
 msgstr ""
 
-#: lib/Padre/Locale.pm:197
+#: lib/Padre/Locale.pm:196
 msgid "English"
 msgstr ""
 
-#: lib/Padre/Locale.pm:125
+#: lib/Padre/Locale.pm:124
 msgid "English (Australia)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:206
+#: lib/Padre/Locale.pm:205
 msgid "English (Canada)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:215
+#: lib/Padre/Locale.pm:214
 msgid "English (New Zealand)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:86
+#: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:226
+#: lib/Padre/Locale.pm:225
 msgid "English (United States)"
 msgstr ""
 
@@ -2271,11 +2271,11 @@ msgstr ""
 msgid "Found %s unloaded modules"
 msgstr ""
 
-#: lib/Padre/Locale.pm:282
+#: lib/Padre/Locale.pm:281
 msgid "French"
 msgstr ""
 
-#: lib/Padre/Locale.pm:269
+#: lib/Padre/Locale.pm:268
 msgid "French (Canada)"
 msgstr ""
 
@@ -2291,7 +2291,7 @@ msgstr ""
 msgid "Functions"
 msgstr ""
 
-#: lib/Padre/Locale.pm:187
+#: lib/Padre/Locale.pm:186
 msgid "German"
 msgstr ""
 
@@ -2347,7 +2347,7 @@ msgstr ""
 msgid "Guess from Current Document"
 msgstr ""
 
-#: lib/Padre/Locale.pm:292
+#: lib/Padre/Locale.pm:291
 msgid "Hebrew"
 msgstr ""
 
@@ -2406,7 +2406,7 @@ msgstr ""
 msgid "How many spaces for each tab:"
 msgstr ""
 
-#: lib/Padre/Locale.pm:302
+#: lib/Padre/Locale.pm:301
 msgid "Hungarian"
 msgstr ""
 
@@ -2510,11 +2510,11 @@ msgstr ""
 msgid "Introduce Temporary Variable..."
 msgstr ""
 
-#: lib/Padre/Locale.pm:316
+#: lib/Padre/Locale.pm:315
 msgid "Italian"
 msgstr ""
 
-#: lib/Padre/Locale.pm:326
+#: lib/Padre/Locale.pm:325
 msgid "Japanese"
 msgstr ""
 
@@ -2562,11 +2562,11 @@ msgstr ""
 msgid "Kilobytes (kB)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:464
+#: lib/Padre/Locale.pm:463
 msgid "Klingon"
 msgstr ""
 
-#: lib/Padre/Locale.pm:336
+#: lib/Padre/Locale.pm:335
 msgid "Korean"
 msgstr ""
 
@@ -3015,7 +3015,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Locale.pm:370
+#: lib/Padre/Locale.pm:369
 msgid "Norwegian"
 msgstr ""
 
@@ -3439,7 +3439,7 @@ msgstr ""
 msgid "Perl interpreter"
 msgstr ""
 
-#: lib/Padre/Locale.pm:259
+#: lib/Padre/Locale.pm:258
 msgid "Persian (Iran)"
 msgstr ""
 
@@ -3518,7 +3518,7 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: lib/Padre/Locale.pm:380
+#: lib/Padre/Locale.pm:379
 msgid "Polish"
 msgstr ""
 
@@ -3526,11 +3526,11 @@ msgstr ""
 msgid "Popularity Contest Report"
 msgstr ""
 
-#: lib/Padre/Locale.pm:390
+#: lib/Padre/Locale.pm:389
 msgid "Portuguese (Brazil)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:400
+#: lib/Padre/Locale.pm:399
 msgid "Portuguese (Portugal)"
 msgstr ""
 
@@ -4046,7 +4046,7 @@ msgstr ""
 msgid "Runs the current document and shows its output in the output panel."
 msgstr ""
 
-#: lib/Padre/Locale.pm:410
+#: lib/Padre/Locale.pm:409
 msgid "Russian"
 msgstr ""
 
@@ -4716,11 +4716,11 @@ msgstr ""
 msgid "Spaces to Tabs..."
 msgstr ""
 
-#: lib/Padre/Locale.pm:249
+#: lib/Padre/Locale.pm:248
 msgid "Spanish"
 msgstr ""
 
-#: lib/Padre/Locale.pm:235
+#: lib/Padre/Locale.pm:234
 msgid "Spanish (Argentina)"
 msgstr ""
 
@@ -4951,7 +4951,7 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#: lib/Padre/Locale.pm:420
+#: lib/Padre/Locale.pm:419
 msgid "Turkish"
 msgstr ""
 
@@ -5001,7 +5001,7 @@ msgstr ""
 msgid "Unicode character 'name'"
 msgstr ""
 
-#: lib/Padre/Locale.pm:143 lib/Padre/Wx/Main.pm:3949
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3949
 msgid "Unknown"
 msgstr ""
 
