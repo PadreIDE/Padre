@@ -32,6 +32,7 @@ TO BE COMPLETED
 =cut
 
 use 5.008;
+use utf8;  # Encoding of this source code
 use strict;
 use warnings;
 use List::Util ();
@@ -66,8 +67,7 @@ my %RFC4646;
 
 sub label {
 	my $name = shift;
-	require Encode;
-	return $RFC4646{$name}{utf8text} ? Encode::decode( 'utf8', $RFC4646{$name}{utf8text} ) : $name;
+	return $RFC4646{$name}{utf8text} ? $RFC4646{$name}{utf8text} : $name;
 }
 
 BEGIN {
