@@ -40,7 +40,7 @@ sub new {
 	my $file_new = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('New'),
+		Wx::gettext('Ne&w'),
 		$file_new,
 	);
 	$self->add_menu_action(

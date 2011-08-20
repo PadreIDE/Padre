@@ -146,7 +146,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.new_p5_script',
-		label      => _T('Perl 5 Script'),
+		label      => _T('Perl 5 &Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
@@ -155,7 +155,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.new_p5_module',
-		label      => _T('Perl 5 Module'),
+		label      => _T('Perl 5 &Module'),
 		comment    => _T('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
@@ -164,7 +164,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.new_p5_test',
-		label      => _T('Perl 5 Test'),
+		label      => _T('Perl 5 &Test'),
 		comment    => _T('Open a document with a skeleton Perl 5 test  script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('t');
@@ -175,7 +175,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.new_p6_script',
-		label      => _T('Perl 6 Script'),
+		label      => _T('Perl &6 Script'),
 		comment    => _T('Open a document with a skeleton Perl 6 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
@@ -186,7 +186,7 @@ sub init {
 	if (Padre::Feature::WIZARD_SELECTOR) {
 		Padre::Wx::Action->new(
 			name       => 'file.wizard_selector',
-			label      => _T('Wizard Selector'),
+			label      => _T('&Wizard Selector'),
 			comment    => _T('Selects and opens a wizard'),
 			menu_event => sub {
 				$_[0]->wizard_selector->show;
@@ -223,7 +223,7 @@ sub init {
 		name        => 'file.open_in_file_browser',
 		need_editor => 1,
 		need_file   => 1,
-		label       => _T('Open in File Browser'),
+		label       => _T('Open in File &Browser'),
 		comment     => _T('Opens the current document using the file browser'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
@@ -233,7 +233,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'file.open_with_default_system_editor',
-		label       => _T('Open with Default System Editor'),
+		label       => _T('Open with Default &System Editor'),
 		need_editor => 1,
 		need_file   => 1,
 		comment     => _T('Opens the file with the default system editor'),
@@ -247,7 +247,7 @@ sub init {
 		name        => 'file.open_in_command_line',
 		need_editor => 1,
 		need_file   => 1,
-		label       => _T('Open in Command Line'),
+		label       => _T('Open in &Command Line'),
 		comment     => _T('Opens a command line using the current document folder'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
@@ -257,7 +257,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.open_example',
-		label      => _T('Open Example'),
+		label      => _T('Open &Example'),
 		comment    => _T('Browse the directory of the installed examples to open one file'),
 		toolbar    => 'stock/generic/stock_example',
 		menu_event => sub {
@@ -268,7 +268,7 @@ sub init {
 	# Opens the last closed file tab like Chrome and Firefox
 	Padre::Wx::Action->new(
 		name       => 'file.open_last_closed_file',
-		label      => _T('Open Last Closed File'),
+		label      => _T('Open &Last Closed File'),
 		shortcut   => 'Ctrl-Shift-T',
 		comment    => _T('Opens the last closed file'),
 		menu_event => sub {
@@ -385,7 +385,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.reload_file',
 		need_editor => 1,
-		label       => _T('Reload File'),
+		label       => _T('Reload &File'),
 		comment     => _T('Reload current file from disk'),
 		menu_event  => sub {
 			$_[0]->on_reload_file;
@@ -395,7 +395,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.reload_all',
 		need_editor => 1,
-		label       => _T('Reload All'),
+		label       => _T('Reload &All'),
 		comment     => _T('Reload all files currently open'),
 		menu_event  => sub {
 			$_[0]->on_reload_all;
@@ -405,7 +405,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'file.reload_some',
 		need_editor => 1,
-		label       => _T('Reload Some...'),
+		label       => _T('Reload &Some...'),
 		comment     => _T('Select some open files for reload'),
 		menu_event  => sub {
 			$_[0]->on_reload_some;
@@ -469,7 +469,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.open_selection',
-		label      => _T('Open Selection'),
+		label      => _T('Open &Selection'),
 		comment    => _T('List the files that match the current selection and let the user pick one to open'),
 		shortcut   => 'Ctrl-Shift-O',
 		menu_event => sub {
@@ -529,7 +529,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.open_recent_files',
-		label      => _T('Open All Recent Files'),
+		label      => _T('&Open All Recent Files'),
 		comment    => _T('Open all the files listed in the recent files list'),
 		menu_event => sub {
 			$_[0]->on_open_all_recent_files;
@@ -538,7 +538,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'file.clean_recent_files',
-		label      => _T('Clean Recent Files List'),
+		label      => _T('&Clean Recent Files List'),
 		comment    => _T('Remove the entries from the recent files list'),
 		menu_event => sub {
 			my $lock = Padre::Current->main->lock( 'UPDATE', 'DB', 'refresh_recent' );
