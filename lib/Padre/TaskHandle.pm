@@ -26,7 +26,8 @@ sub new {
 	bless {
 		hid  => ++$SEQUENCE,
 		task => $_[1],
-	}, $_[0];
+		},
+		$_[0];
 }
 
 sub hid {
@@ -213,22 +214,19 @@ sub on_stopped {
 
 	# If the task has an owner it will get the finish method instead.
 	my $owner = $self->{task}->{owner};
-	if ( $owner ) {
+	if ($owner) {
 		require Padre::Role::Task;
-		my $owner  = Padre::Role::Task->task_owner($owner) or return;
+		my $owner = Padre::Role::Task->task_owner($owner) or return;
 		my $method = $self->on_finish;
 
 		local $@;
-		eval {
-			$owner->$method( $self->{task} );
-		};
+		eval { $owner->$method( $self->{task} ); };
 
 	} else {
+
 		# Execute the finish method in the updated Task object
 		local $@;
-		eval {
-			$self->{task}->finish;
-		};
+		eval { $self->{task}->finish; };
 	}
 
 	return;
@@ -266,10 +264,9 @@ sub run {
 	local $task->{handle} = $self;
 
 	# Call the task's run method
-	eval {
-		$task->run;
-	};
+	eval { $task->run; };
 	if ($@) {
+
 		# Save the exception
 		TRACE("Exception in task during 'run': $@") if DEBUG;
 		$self->{exception} = $@;
@@ -300,6 +297,7 @@ sub poll {
 	# Fetch from the queue until we run out of messages or get a cancel
 	while ( my $message = $queue->dequeue1_nb ) {
 		if ( $message->[0] eq 'cancel' ) {
+
 			# Once we have a cancel message stop processing all
 			# other inbound messages as they aren't for us.
 			$self->{cancelled} = 1;
@@ -324,6 +322,7 @@ sub wait {
 	# Fetch the next message from the queue, blocking if needed
 	my $message = $queue->dequeue1;
 	if ( $message->[0] eq 'cancel' ) {
+
 		# Once we have a cancel message stop processing all
 		# other inbound messages as they aren't for us.
 		$self->{cancelled} = 1;
@@ -350,12 +349,12 @@ sub cancelled {
 	$self->poll;
 
 	# Check again now we have polled for new messages
-	return !! $self->{cancelled};
+	return !!$self->{cancelled};
 }
 
 # Fetch the next message from our inbox
 sub inbox {
-	my $self  = shift;
+	my $self = shift;
 	my $inbox = $self->{inbox} or return undef;
 
 	# Shortcut if we can to avoid queue locking
