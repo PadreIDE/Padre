@@ -336,12 +336,13 @@ sub _content_info {
 		$uptime -= $uptime_parts[1] * 60;
 	}
 	$uptime_parts[2] = $uptime;
-	my $uptime_text = Wx::gettext('Uptime');
+	my $uptime_text = Wx::gettext('Uptime:');
 	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
 	# Calculate the current memory in use across all threads
+	my $RAM_text = Wx::gettext('RAM:');
 	my $ram = Padre::Util::humanbytes( Padre::Util::process_memory() ) || '0';
-	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
+	$ram = Wx::gettext('(unsupported)') if $ram eq '0';
 
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
@@ -349,7 +350,8 @@ sub _content_info {
 	$perl_version =~ s/^v//;
 
 	# How many threads are running
-	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : 'disabled';
+	my $threads_text = Wx::gettext('Threads:');
+	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : Wx::gettext('(disabled)');
 
 	eval { require Alien::wxWidgets };
 	my $alien = $Alien::wxWidgets::VERSION;
@@ -409,7 +411,7 @@ sub _content_info {
       </tr>
       <tr>
         <td valign="top">
-        $uptime_text:
+        $uptime_text
         </td>
         <td>
         $uptime
@@ -417,7 +419,7 @@ sub _content_info {
       </tr>
       <tr>
         <td valign="top">
-        RAM:
+        $RAM_text
         </td>
         <td>
         $ram
@@ -425,7 +427,7 @@ sub _content_info {
       </tr>
       <tr>
         <td valign="top">
-        Threads:
+        $threads_text
         </td>
         <td>
         $threads
