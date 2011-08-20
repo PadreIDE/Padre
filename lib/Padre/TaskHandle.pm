@@ -334,6 +334,10 @@ sub wait {
 	return;
 }
 
+sub cancel {
+	$_[0]->{cancelled} = 1;
+}
+
 # Has this task been cancelled by the parent?
 sub cancelled {
 	my $self = shift;

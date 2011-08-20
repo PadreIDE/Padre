@@ -340,6 +340,7 @@ sub cancel {
 		my $task = $handle->{task} or next;
 		next unless $task->{owner};
 		next unless $task->{owner} == $owner;
+		$handle->cancel;
 		foreach my $worker ( grep { defined $_ } @{ $self->{workers} } ) {
 			TRACE("Worker wid = $worker->{wid}")    if DEBUG;
 			TRACE("Handle wid = $handle->{worker}") if DEBUG;
