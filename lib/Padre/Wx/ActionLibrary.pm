@@ -617,7 +617,7 @@ sub init {
 		name        => 'edit.select_all',
 		id          => Wx::ID_SELECTALL,
 		need_editor => 1,
-		label       => _T('Select All'),
+		label       => _T('Select &All'),
 		comment     => _T('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
@@ -630,7 +630,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
-		label       => _T('Mark Selection Start'),
+		label       => _T('Mark Selection &Start'),
 		comment     => _T('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
@@ -642,7 +642,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
-		label       => _T('Mark Selection End'),
+		label       => _T('Mark Selection &End'),
 		comment     => _T('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
@@ -654,7 +654,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
-		label       => _T('Clear Selection Marks'),
+		label       => _T('&Clear Selection Marks'),
 		comment     => _T('Remove all the selection marks'),
 		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
@@ -700,7 +700,7 @@ sub init {
 		name        => 'edit.copy_filename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => _T('Copy Full Filename'),
+		label       => _T('Copy Full &Filename'),
 		comment     => _T('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $current  = $_[0]->current;
@@ -715,7 +715,7 @@ sub init {
 		name        => 'edit.copy_basename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => _T('Copy Filename'),
+		label       => _T('Copy F&ilename'),
 		comment     => _T('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
 			my $current  = $_[0]->current;
@@ -730,7 +730,7 @@ sub init {
 		name        => 'edit.copy_dirname',
 		need_file   => 1,
 		need_editor => 1,
-		label       => _T('Copy Directory Name'),
+		label       => _T('Copy &Directory Name'),
 		comment     => _T('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
 			my $current  = $_[0]->current;
@@ -744,7 +744,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.copy_content',
 		need_editor => 1,
-		label       => _T('Copy Editor Content'),
+		label       => _T('Copy Editor &Content'),
 		comment     => _T('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
 			my $current  = $_[0]->current;
@@ -891,7 +891,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.insert.insert_special',
 		need_editor => 1,
-		label       => _T('Special Value...'),
+		label       => _T('Special &Value...'),
 		comment     => _T('Select a date, filename or other value and insert at the current location'),
 		shortcut    => 'Ctrl-Shift-I',
 		menu_event  => sub {
@@ -903,7 +903,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.insert.snippets',
 		need_editor => 1,
-		label       => _T('Snippets...'),
+		label       => _T('&Snippets...'),
 		comment     => _T('Select and insert a snippet at the current location'),
 		shortcut    => 'Ctrl-Shift-A',
 		menu_event  => sub {
@@ -915,7 +915,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.insert.from_file',
 		need_editor => 1,
-		label       => _T('File...'),
+		label       => _T('&File...'),
 		comment     => _T('Select a file and insert its content at the current location'),
 		menu_event  => sub {
 			$_[0]->on_insert_from_file(@_);
@@ -966,7 +966,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
-		label       => _T('Encode Document to System Default'),
+		label       => _T('Encode Document to &System Default'),
 		comment     => _T('Change the encoding of the current document to the default of the operating system'),
 		menu_event  => sub {
 			$_[0]->encode_default;
@@ -976,7 +976,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
-		label       => _T('Encode Document to utf-8'),
+		label       => _T('Encode Document to &utf-8'),
 		comment     => _T('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
 			$_[0]->encode_utf8;
@@ -986,7 +986,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_encoding_to',
 		need_editor => 1,
-		label       => _T('Encode Document to...'),
+		label       => _T('Encode Document &to...'),
 		comment     => _T('Select an encoding and encode the document to that'),
 		menu_event  => sub {
 			$_[0]->encode_dialog;
@@ -996,7 +996,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
-		label       => _T('EOL to Windows'),
+		label       => _T('EOL to &Windows'),
 		comment => _T('Change the end of line character of the current document to those used in files on MS Windows'),
 		menu_event => sub {
 			$_[0]->convert_to('WIN');
@@ -1006,7 +1006,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
-		label       => _T('EOL to Unix'),
+		label       => _T('EOL to &Unix'),
 		comment => _T('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
 		menu_event => sub {
 			$_[0]->convert_to('UNIX');
@@ -1016,7 +1016,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
-		label       => _T('EOL to Mac Classic'),
+		label       => _T('EOL to &Mac Classic'),
 		comment     => _T('Change the end of line character of the current document to that used on Mac Classic'),
 		menu_event  => sub {
 			$_[0]->convert_to('MAC');
@@ -1028,7 +1028,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.tabs_to_spaces',
 		need_editor => 1,
-		label       => _T('Tabs to Spaces...'),
+		label       => _T('Tabs to &Spaces...'),
 		comment     => _T('Convert all tabs to spaces in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Tab_to_Space');
@@ -1038,7 +1038,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.spaces_to_tabs',
 		need_editor => 1,
-		label       => _T('Spaces to Tabs...'),
+		label       => _T('Spaces to &Tabs...'),
 		comment     => _T('Convert all the spaces to tabs in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Space_to_Tab');
@@ -1048,7 +1048,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.delete_trailing',
 		need_editor => 1,
-		label       => _T('Delete Trailing Spaces'),
+		label       => _T('&Delete Trailing Spaces'),
 		comment     => _T('Remove the spaces from the end of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_ending_space;
@@ -1058,7 +1058,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.delete_leading',
 		need_editor => 1,
-		label       => _T('Delete Leading Spaces'),
+		label       => _T('Delete &Leading Spaces'),
 		comment     => _T('Remove the spaces from the beginning of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_leading_space;
@@ -1070,7 +1070,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.case_upper',
 		need_editor => 1,
-		label       => _T('Upper All'),
+		label       => _T('&Upper All'),
 		comment     => _T('Change the current selection to upper case'),
 		shortcut    => 'Ctrl-Shift-U',
 		menu_event  => sub {
@@ -1081,7 +1081,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.case_lower',
 		need_editor => 1,
-		label       => _T('Lower All'),
+		label       => _T('&Lower All'),
 		comment     => _T('Change the current selection to lower case'),
 		shortcut    => 'Ctrl-U',
 		menu_event  => sub {
@@ -1092,7 +1092,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.diff2saved',
 		need_editor => 1,
-		label       => _T('Diff to Saved Version'),
+		label       => _T('Diff to &Saved Version'),
 		comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
 		menu_event  => sub {
 			shift->on_diff(@_);
@@ -1102,7 +1102,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
-		label       => _T('Apply Diff to File'),
+		label       => _T('Apply Diff to &File'),
 		comment     => _T('Apply a patch file to the current document'),
 		menu_event  => sub {
 			shift->on_diff(@_);
@@ -1112,7 +1112,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
-		label       => _T('Apply Diff to Project'),
+		label       => _T('Apply Diff to &Project'),
 		comment     => _T('Apply a patch file to the current project'),
 		menu_event  => sub {
 			shift->on_diff(@_);
@@ -1143,7 +1143,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
-		label       => _T('Show as Hexadecimal'),
+		label       => _T('Show as &Hexadecimal'),
 		comment     => _T('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
 		menu_event  => sub {
 			shift->show_as_numbers( @_, 'hex' );
@@ -1153,7 +1153,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
-		label       => _T('Show as Decimal'),
+		label       => _T('Show as &Decimal'),
 		comment     => _T('Show the ASCII values of the selected text in decimal numbers in the output window'),
 		menu_event  => sub {
 			shift->show_as_numbers( @_, 'decimal' );
