@@ -251,25 +251,6 @@ sub new {
 
 =pod
 
-=head2 owner
-
-The C<owner> method returns the owner object for the task, if one was defined
-and the owner still exists and considers the answer for the task to be relevant.
-
-Returns C<undef> if the task was not created with an owner.
-
-Returns C<undef> if the owner object has been destroyed since a task was made.
-
-Returns C<undef> if the owner has abandoned this task since it was made.
-
-=cut
-
-sub owner {
-	Padre::Role::Task->task_owner( $_[0]->{owner} );
-}
-
-=pod
-
 =head2 on_message
 
 The C<on_message> accessor returns the name of the owner's message handler
@@ -449,14 +430,6 @@ parent should not run any post-task logic.
 =cut
 
 sub run {
-	my $self = shift;
-
-	# If we have an owner, and it has moved on to a different state
-	# while we have been waiting to be executed abort the run.
-	if ( $self->{owner} ) {
-		$self->owner or return 0;
-	}
-
 	return 1;
 }
 
@@ -479,14 +452,6 @@ C<on_finish> handler of the task owner object, if one has been defined.
 =cut
 
 sub finish {
-	my $self = shift;
-
-	if ( $self->{owner} ) {
-		my $owner = $self->owner or return;
-		my $method = $self->on_finish;
-		$owner->$method($self);
-	}
-
 	return 1;
 }
 
@@ -555,13 +520,13 @@ sub cancelled {
 }
 
 # Fetch the next message from our inbox
-sub inbox {
+sub child_inbox {
 	return undef unless defined $_[0]->{handle};
 	return shift->{handle}->inbox;
 }
 
 # Block until we are cancelled or there is a message from our parent
-sub wait {
+sub child_wait {
 	return unless defined $_[0]->{handle};
 	return shift->{handle}->wait;
 }

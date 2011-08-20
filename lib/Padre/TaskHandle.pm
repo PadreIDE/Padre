@@ -210,16 +210,24 @@ sub on_stopped {
 	%$task = %$new;
 	%$new  = ();
 
-	# Execute the finish method in the updated Task object
-	local $@;
-	eval { $self->{task}->finish; };
-	if ($@) {
+	# If the task has an owner it will get the finish method instead.
+	my $owner = $self->{task}->{owner};
+	if ( $owner ) {
+		require Padre::Role::Task;
+		my $owner  = Padre::Role::Task->task_owner($owner) or return;
+		my $method = $self->on_finish;
 
-		# A method in the main thread blew up.
-		# Beyond catching it and preventing it killing
-		# Padre entirely, I'm not sure what else we can
-		# really do about it at this point.
-		return;
+		local $@;
+		eval {
+			$owner->$method($self);
+		};
+
+	} else {
+		# Execute the finish method in the updated Task object
+		local $@;
+		eval {
+			$self->{task}->finish;
+		};
 	}
 
 	return;
