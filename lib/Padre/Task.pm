@@ -567,24 +567,18 @@ sub wait {
 }
 
 sub tell_parent {
-	my $self   = shift;
-	my $string = @_ ? shift : '';
-	return unless defined $self->{handle};
-	return $self->{handle}->message( $string );
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->message(@_);
 }
 
 sub tell_child {
-	my $self   = shift;
-	my $string = @_ ? shift : '';
-	return unless defined $self->{handle};
-	return $self->{handle}->message( $string );
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->message(@_);
 }
 
 sub tell_owner {
-	my $self   = shift;
-	my $string = @_ ? shift : '';
-	return unless defined $self->{handle};
-	return $self->{handle}->message( OWNER => $string );
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->message( OWNER => @_ );
 }
 
 =pod
@@ -616,10 +610,8 @@ long-running task is still alive.
 =cut
 
 sub tell_status {
-	my $self   = shift;
-	my $string = @_ ? shift : '';
-	return unless defined $self->{handle};
-	return $self->{handle}->message( STATUS => $string );
+	return unless defined $_[0]->{handle};
+	return shift->{handle}->message( STATUS => @_ ? @_ : '' );
 }
 
 1;
