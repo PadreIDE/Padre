@@ -23,10 +23,14 @@ sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
+	my $new_count;
+
 	# Save the list of open files
 	require Padre::Current;
-	$self->{changes} =
-		{ map { $_->filename => $_->text_get, } grep { $_->is_unsaved } Padre::Current->main->documents };
+	$self->{changes} = {
+		map { ( $_->filename || 'NEW' . ( ++$new_count ) ) => $_->text_get, }
+		grep { $_->is_modified } Padre::Current->main->documents
+	};
 
 	return 1;
 }

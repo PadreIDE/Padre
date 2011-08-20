@@ -26,6 +26,7 @@ the even version for the release, even during development.
       actually constants instead of strange AUTOLOAD weirdness (ADAMK)
     - We now SetEndAtLastLine(0) on editor panels so you can scroll one page
       past the end of the document and type into relaxing clear space (ADAMK)
+    - Tabs without filename are also backuped now (SEWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
