@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: padre\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-08-20 04:10-0700\n"
-"PO-Revision-Date: 2011-08-20 13:46+0100\n"
+"PO-Revision-Date: 2011-08-20 14:52+0100\n"
 "Last-Translator: Olivier Mengué <dolmen@cpan.org>\n"
 "Language-Team: Jérôme Quelin <jquelin@cpan.org>\n"
 "Language: \n"
@@ -652,7 +652,7 @@ msgstr "Permettre l'enregistrement du document courant sous un autre nom"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:84
 msgid "Alphabetic characters"
-msgstr "Ordre alphabétique"
+msgstr "Alphabétique"
 
 #: lib/Padre/Config.pm:571
 msgid "Alphabetical Order"
@@ -664,11 +664,11 @@ msgstr "Ordre alphabétique (privé en dernier)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:85
 msgid "Alphanumeric characters"
-msgstr "Caractères Alpha-numériques"
+msgstr "Alphanumérique"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:96
 msgid "Alphanumeric characters plus \"_\""
-msgstr "Alphanumériques et \"_\""
+msgstr "Alphanumérique ou \"_\""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:90
 msgid "Alt"
@@ -1048,7 +1048,7 @@ msgstr "Fermer tous les fichiers"
 
 #: lib/Padre/Wx/ActionLibrary.pm:297
 msgid "Close &this Project"
-msgstr "Fermer ce projet"
+msgstr "Fermer ce &projet"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:107
 msgid "Close Window on &Hit"
@@ -1064,11 +1064,11 @@ msgstr "Fermer tous les autres fichiers"
 
 #: lib/Padre/Wx/ActionLibrary.pm:298
 msgid "Close all the files belonging to the current project"
-msgstr "Fermer touts les fichiers appartenant au projet courant"
+msgstr "Fermer tous les fichiers appartenant au projet courant"
 
 #: lib/Padre/Wx/ActionLibrary.pm:349
 msgid "Close all the files except the current one"
-msgstr "Femer tous les fichiers sauf le document courant"
+msgstr "Fermer tous les fichiers sauf le document courant"
 
 #: lib/Padre/Wx/ActionLibrary.pm:339
 msgid "Close all the files open in the editor"
@@ -1088,7 +1088,7 @@ msgstr "Ferme le document et supprime le fichier"
 
 #: lib/Padre/Wx/ActionLibrary.pm:318
 msgid "Close other &Projects"
-msgstr "Fermer les autres projets"
+msgstr "Fermer les &autres projets"
 
 #: lib/Padre/Wx/Main.pm:5135
 msgid "Close some"
@@ -1681,7 +1681,7 @@ msgstr "Editer les préférences utilisateur"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:225
 msgid "Editor"
-msgstr "Editeur"
+msgstr "Éditeur"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:159
 msgid "Editor Current Line Background Colour"
@@ -3686,7 +3686,7 @@ msgstr "Demande un nom de remplacement et remplace toutes les occurrences de cet
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:93
 msgid "Punctuation characters"
-msgstr "Caractères de ponctuation"
+msgstr "Ponctuation"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2520
 msgid "Put focus on tab visited the longest time ago."
@@ -3811,7 +3811,7 @@ msgstr "RegExp pour la vue TODO"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:33
 msgid "Regex Editor"
-msgstr "Editeur d'expressions régulières"
+msgstr "Éditeur d'expressions régulières"
 
 #: lib/Padre/Wx/FBP/Sync.pm:191
 msgid "Register"
@@ -5233,7 +5233,7 @@ msgstr "Caractères visibles"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:92
 msgid "Visible characters and spaces"
-msgstr "Caratères visibles et espaces"
+msgstr "Caractères visibles et espaces"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2774
 msgid "Visit the PerlMonks"
