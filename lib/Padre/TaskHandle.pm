@@ -219,7 +219,7 @@ sub on_stopped {
 
 		local $@;
 		eval {
-			$owner->$method($self);
+			$owner->$method( $self->{task} );
 		};
 
 	} else {
