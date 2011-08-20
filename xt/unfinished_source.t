@@ -12,3 +12,8 @@ unlike(
 	read_file('lib/Padre/TaskHandle.pm'), qr/sub\s*on_finish\s*\{\s*\}/,
 	'Padre::TaskHandle has empty on_finish method'
 );
+
+unlike(
+	read_file('lib/Padre/Task.pm'), qr/sub\s*owner\s*\{\s*\}/,
+	'Padre::Task has empty owner method'
+);

@@ -275,6 +275,7 @@ sub on_finish {
 	$_[0]->{on_finish} || 'task_finish';
 }
 
+sub owner { }
 
 
 
