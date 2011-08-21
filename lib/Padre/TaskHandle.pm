@@ -76,6 +76,31 @@ sub idle_time {
 
 
 ######################################################################
+# Setup and teardown
+
+# Signal the task has started
+sub start {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	$self->{child} = 1;
+	$self->{queue} = shift;
+	$self->signal( 'STARTED' );
+}
+
+# Signal the task has stopped
+sub stop {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	$self->{child} = undef;
+	$self->{queue} = undef;
+	$self->signal( 'STOPPED' => $self->{task} );
+}
+
+
+
+
+
+######################################################################
 # Serialisation
 
 sub as_array {
@@ -112,14 +137,42 @@ sub from_array {
 ######################################################################
 # Biderectional Communication
 
-# Parent: Push into worker's thread queue
-# Child:  Serialize and pass-through to the Wx signal dispatch
-sub message {
+sub signal {
 	TRACE( $_[0] ) if DEBUG;
-	if ( $_[0]->child ) {
-		Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid, @_ ] ) );
+	Padre::Wx::Role::Conduit->signal(
+		Storable::freeze( [ shift->hid => @_ ] )
+	);
+}
+
+sub tell_manager {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( MANAGER => @_ );
+}
+
+sub tell_parent {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( PARENT => @_ );
+}
+
+sub tell_owner {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( OWNER => @_ );
+}
+
+sub tell_status {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( STATUS => @_ ? @_ : '' );
+}
+
+sub tell_child {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	if ( $self->child ) {
+		# Add the message directly to the inbox
+		my $inbox = $self->{inbox} or next;
+		push @$inbox, [ @_ ];
 	} else {
-		shift->worker->send( 'message', @_ );
+		self->worker->send( 'message', @_ );
 	}
 	return 1;
 }
@@ -143,8 +196,11 @@ sub on_message {
 		# Special case for routing messages to the owner of a task
 		# rather than to the task itself.
 		if ( $method eq 'OWNER' ) {
-			my $owner  = $task->owner      or return;
+			$DB::single = 1;
+			require Padre::Role::Task;
+			my $id     = $task->{owner}    or return;
 			my $method = $task->on_message or return;
+			my $owner  = Padre::Role::Task->task_owner($id) or return;
 			$owner->$method( $task, @_ );
 			return;
 		}
@@ -217,7 +273,7 @@ sub on_stopped {
 	if ($owner) {
 		require Padre::Role::Task;
 		my $owner = Padre::Role::Task->task_owner($owner) or return;
-		my $method = $self->on_finish;
+		my $method = $self->{task}->on_finish;
 
 		local $@;
 		eval { $owner->$method( $self->{task} ); };
@@ -274,18 +330,6 @@ sub run {
 	}
 
 	return 1;
-}
-
-# Signal the task has started
-sub started {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->message('STARTED');
-}
-
-# Signal the task has stopped
-sub stopped {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->message( 'STOPPED', $_[0]->{task} );
 }
 
 # Poll the inbound queue and process them

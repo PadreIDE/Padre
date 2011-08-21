@@ -56,6 +56,7 @@ sub signal {
 	} elsif (DEBUG) {
 		TRACE("Cannot send Wx::PlThreadEvent as \$CONDUIT is undef");
 	}
+	return 1;
 }
 
 # Pass the event through to the event handler

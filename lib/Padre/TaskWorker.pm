@@ -77,26 +77,19 @@ sub task {
 	# Execute the task (ignore the result) and signal as we go
 	local $@;
 	eval {
-		my $hid = $handle->hid;
-		TRACE("Handle $hid calling ->started") if DEBUG;
-		$handle->{child} = 1;
-		$handle->{queue} = $self->queue;
-		$handle->started;
-		TRACE("Handle $hid calling ->run") if DEBUG;
+		TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
+		$handle->start($self->queue);
+		TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
 		$handle->run;
-		TRACE("Handle $hid calling ->stopped") if DEBUG;
-		$handle->stopped;
-		delete $handle->{queue};
-		delete $handle->{child};
+		TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
+		$handle->stop;
 	};
-	delete $handle->{child};
 	if ($@) {
 		delete $handle->{queue};
 		delete $handle->{child};
 		TRACE($@) if DEBUG;
 	}
 
-	# Continue to the next task
 	return 1;
 }
 

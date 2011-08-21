@@ -534,17 +534,17 @@ sub child_wait {
 
 sub tell_parent {
 	return unless defined $_[0]->{handle};
-	return shift->{handle}->message(@_);
+	return shift->{handle}->tell_parent(@_);
 }
 
 sub tell_child {
 	return unless defined $_[0]->{handle};
-	return shift->{handle}->message(@_);
+	return shift->{handle}->tell_child(@_);
 }
 
 sub tell_owner {
 	return unless defined $_[0]->{handle};
-	return shift->{handle}->message( OWNER => @_ );
+	return shift->{handle}->tell_owner(@_);
 }
 
 =pod
@@ -577,7 +577,7 @@ long-running task is still alive.
 
 sub tell_status {
 	return unless defined $_[0]->{handle};
-	return shift->{handle}->message( STATUS => @_ ? @_ : '' );
+	return shift->{handle}->tell_status(@_);
 }
 
 1;
