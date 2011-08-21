@@ -172,7 +172,7 @@ sub tell_child {
 		my $inbox = $self->{inbox} or next;
 		push @$inbox, [ @_ ];
 	} else {
-		self->worker->send( 'message', @_ );
+		$self->worker->send( 'message', @_ );
 	}
 	return 1;
 }
