@@ -43,11 +43,16 @@ sub child {
 }
 
 sub class {
+	TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
 }
 
+sub owner {
+	require Padre::Role::Task;
+	Padre::Role::Task->task_owner( $_[0]->{owner} );
+}
+
 sub worker {
-	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	$self->{worker} = shift if @_;
 	$self->{worker};
@@ -58,14 +63,12 @@ sub queue {
 }
 
 sub start_time {
-	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	$self->{start_time} = $self->{idle_time} = shift if @_;
 	$self->{start_time};
 }
 
 sub idle_time {
-	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	$self->{idle_time} = shift if @_;
 	$self->{idle_time};
@@ -197,9 +200,8 @@ sub on_message {
 		# rather than to the task itself.
 		if ( $method eq 'OWNER' ) {
 			require Padre::Role::Task;
-			my $id     = $task->{owner}    or return;
+			my $owner  = $self->owner      or return;
 			my $method = $task->on_message or return;
-			my $owner  = Padre::Role::Task->task_owner($id) or return;
 			$owner->$method( $task, @_ );
 			return;
 		}
@@ -267,22 +269,17 @@ sub on_stopped {
 	%$task = %$new;
 	%$new  = ();
 
+	# Execute the finish method in the updated Task object first, before
+	# the task owner is passed to the task owner (if any)
+	$self->finish;
+
 	# If the task has an owner it will get the finish method instead.
-	my $owner = $self->{task}->{owner};
-	if ($owner) {
-		require Padre::Role::Task;
-		my $owner = Padre::Role::Task->task_owner($owner) or return;
-		my $method = $self->{task}->on_finish;
-
-		local $@;
-		eval { $owner->$method( $self->{task} ); };
-
-	} else {
-
-		# Execute the finish method in the updated Task object
-		local $@;
-		eval { $self->{task}->finish; };
-	}
+	my $owner  = $self->owner or return;
+	my $method = $self->{task}->on_finish;
+	local $@;
+	eval {
+		$owner->$method( $self->{task} );
+	};
 
 	return;
 }

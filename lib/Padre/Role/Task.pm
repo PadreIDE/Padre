@@ -132,7 +132,7 @@ revision since the original owner id was issued.
 
 sub task_owner {
 	TRACE( $_[0] ) if DEBUG;
-	$INDEX{ $_[1] };
+	$INDEX{ $_[1] || 0 };
 }
 
 =pod

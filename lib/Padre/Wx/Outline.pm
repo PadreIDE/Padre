@@ -242,23 +242,36 @@ sub clear {
 }
 
 sub refresh {
+	$DB::single = 1;
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
+	my $self     = shift;
+	my $current  = shift or return;
+	my $document = $current->document;
+	my $lock     = $self->main->lock('UPDATE');
 
 	# Cancel any existing outline task
 	$self->task_reset;
 
-	# Shortcut if the document is empty
-	my $document = $self->current->document;
-	unless ( $document and not $document->is_unused ) {
+	# Hide the widgets when no files are open
+	unless ($document) {
 		$self->clear;
-		return 1;
+		$self->Hide;
+		return;
 	}
 
 	# Is there an outline task for this document type
 	my $task = $document->task_outline;
 	unless ($task) {
 		$self->clear;
+		$self->Hide;
+		return;
+	}
+
+	# Ensure the widget is visible
+	$self->Show(1);
+
+	# Shortcut if there is nothing to search for
+	if ( $document->is_unused ) {
 		return;
 	}
 

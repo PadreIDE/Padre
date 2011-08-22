@@ -279,7 +279,7 @@ sub refresh {
 
 	# Nothing to do if there is no content
 	my $task = $document->task_functions;
-	unless ( $task ) {
+	unless ($task) {
 		$self->disable;
 		return;
 	}
