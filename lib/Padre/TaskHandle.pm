@@ -196,7 +196,6 @@ sub on_message {
 		# Special case for routing messages to the owner of a task
 		# rather than to the task itself.
 		if ( $method eq 'OWNER' ) {
-			$DB::single = 1;
 			require Padre::Role::Task;
 			my $id     = $task->{owner}    or return;
 			my $method = $task->on_message or return;
