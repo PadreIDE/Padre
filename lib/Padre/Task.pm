@@ -218,32 +218,20 @@ the request is invalid.
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
+	# Check parameters relevant to our optional owner
 	if ( exists $self->{owner} ) {
-
-		# Check parameters relevant to our optional owner
 		if ( exists $self->{on_message} ) {
-			my $method = Params::Util::_IDENTIFIER( $self->{on_message} );
-			unless ($method) {
+			unless ( Params::Util::_IDENTIFIER( $self->{on_message} ) ) {
 				die "Task 'on_message' must be a method name";
-			}
-			unless ( $self->{owner}->can($method) ) {
-				die "The on_message handler '$method' is not implemented";
 			}
 		}
 		if ( exists $self->{on_finish} ) {
 			unless ( Params::Util::_IDENTIFIER( $self->{on_finish} ) ) {
 				die "Task 'on_finish' must be a method name";
 			}
-			my $method = $self->on_finish;
-			unless ( $self->{owner}->can($method) ) {
-				die "Task on_finish '$method' is not implemented";
-			}
 		}
-
-		# Save the numeric identifier of our owner
-		$self->{owner} = $self->{owner}->task_revision;
 	}
 
 	return $self;
@@ -275,7 +263,6 @@ sub on_finish {
 	$_[0]->{on_finish} || 'task_finish';
 }
 
-sub owner { }
 
 
 
@@ -323,7 +310,7 @@ sub from_string {
 	unless ( Scalar::Util::blessed($self) eq $class ) {
 
 		# Because this is an internal API we can be brutally
-		# unforgiving is we aren't use the right way.
+		# unforgiving if we aren't use the right way.
 		die("Task unexpectedly did not deserialize as a $class");
 	}
 	return $self;

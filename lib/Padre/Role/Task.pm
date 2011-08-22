@@ -254,13 +254,31 @@ sub task_request {
 	# Check and load the task
 	# Support a convenience shortcut where a false value
 	# for task means don't run a task at all.
-	my $name = delete $param{task} or return;
+	my $name   = delete $param{task} or return;
 	my $driver = Params::Util::_DRIVER( $name, 'Padre::Task' );
 	die "Invalid task class '$name'" unless $driver;
 
 	# Create and start the task with ourself as the owner
 	TRACE("Creating and scheduling task $driver") if DEBUG;
-	$driver->new( owner => $self, %param )->schedule;
+	my $task = $driver->new(
+		owner => $self->task_revision,
+		%param,
+	);
+
+	# Check the message event handler
+	my $on_message = $task->on_message;
+	if ( $on_message and not $self->can($on_message) ) {
+		die "The on_message handler '$on_message' is not implemented";
+	}
+
+	# Check the finish event handler
+	my $on_finish = $task->on_message;
+	if ( $on_finish and not $self->can($on_finish) ) {
+		die "The on_message handler '$on_finish' is not implemented";
+	}
+
+	# Send the task for execution
+	$task->schedule;
 }
 
 =pod

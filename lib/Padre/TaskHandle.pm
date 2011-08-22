@@ -43,7 +43,6 @@ sub child {
 }
 
 sub class {
-	TRACE( $_[0] ) if DEBUG;
 	Scalar::Util::blessed( $_[0]->{task} );
 }
 
@@ -81,7 +80,7 @@ sub idle_time {
 ######################################################################
 # Setup and teardown
 
-# Signal the task has started
+# Called in the child thread to set the task and handle up for processing.
 sub start {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
