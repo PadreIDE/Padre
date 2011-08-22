@@ -40,9 +40,8 @@ the even version for the release, even during development.
     - Padre::Task objects are no longer aware they are being surrounded by a
       Padre::TaskHandle, breaking compatibility for much cleaner encapsulation.
       The ->handle method has been removed. Status messages now go via
-      Padre::Task::status and messages go via Padre::Task::message, both of
-      which have been moved down into the task class from the task handle
-      class (ADAMK)
+      Padre::Task::status and messages go via Padre::Task::message both of whom
+      have been moved into the task class from the task handle class (ADAMK)
     - Padre::Task::running is now Padre::Task::is_child, which is what it really
       meant in the first place (ADAMK)
 
