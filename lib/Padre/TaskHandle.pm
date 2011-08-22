@@ -137,46 +137,36 @@ sub from_array {
 
 
 ######################################################################
-# Biderectional Communication
+# Parent-Only Methods
 
-sub signal {
-	TRACE( $_[0] ) if DEBUG;
-	Padre::Wx::Role::Conduit->signal(
-		Storable::freeze( [ shift->hid => @_ ] )
-	);
-}
-
-sub tell_manager {
-	TRACE( $_[0] ) if DEBUG;
-	shift->signal( MANAGER => @_ );
-}
-
-sub tell_parent {
-	TRACE( $_[0] ) if DEBUG;
-	shift->signal( PARENT => @_ );
-}
-
-sub tell_owner {
-	TRACE( $_[0] ) if DEBUG;
-	shift->signal( OWNER => @_ );
-}
-
-sub tell_status {
-	TRACE( $_[0] ) if DEBUG;
-	shift->signal( STATUS => @_ ? @_ : '' );
-}
-
-sub tell_child {
+sub prepare {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	if ( $self->child ) {
-		# Add the message directly to the inbox
-		my $inbox = $self->{inbox} or next;
-		push @$inbox, [ @_ ];
-	} else {
-		$self->worker->send( 'message', @_ );
+	my $task = $self->{task};
+
+	unless ( defined $task ) {
+		TRACE("Exception: task not defined") if DEBUG;
+		return !1;
 	}
-	return 1;
+
+	my $rv = eval { $task->prepare; };
+	if ($@) {
+		TRACE("Exception in task during 'prepare': $@") if DEBUG;
+		return !1;
+	}
+	return !!$rv;
+}
+
+sub on_started {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = $self->{task};
+
+	# Does the task have an owner and can we call it
+	my $owner  = $self->owner  or return;
+	my $method = $task->on_run or return;
+	$owner->$method( $task => @_ );
+	return
 }
 
 sub on_message {
@@ -201,7 +191,7 @@ sub on_message {
 			require Padre::Role::Task;
 			my $owner  = $self->owner      or return;
 			my $method = $task->on_message or return;
-			$owner->$method( $task, @_ );
+			$owner->$method( $task => @_ );
 			return;
 		}
 	}
@@ -228,31 +218,6 @@ sub on_message {
 	}
 
 	return;
-}
-
-
-
-
-
-######################################################################
-# Parent-Only Methods
-
-sub prepare {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = $self->{task};
-
-	unless ( defined $task ) {
-		TRACE("Exception: task not defined") if DEBUG;
-		return !1;
-	}
-
-	my $rv = eval { $task->prepare; };
-	if ($@) {
-		TRACE("Exception in task during 'prepare': $@") if DEBUG;
-		return !1;
-	}
-	return !!$rv;
 }
 
 sub on_stopped {
@@ -403,6 +368,48 @@ sub inbox {
 
 	# Check again now we have polled for new messages
 	return shift @$inbox;
+}
+
+
+
+
+
+######################################################################
+# Bidirectional Communication
+
+sub signal {
+	TRACE( $_[0] ) if DEBUG;
+	Padre::Wx::Role::Conduit->signal(
+		Storable::freeze( [ shift->hid => @_ ] )
+	);
+}
+
+sub tell_parent {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( PARENT => @_ );
+}
+
+sub tell_child {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	if ( $self->child ) {
+		# Add the message directly to the inbox
+		my $inbox = $self->{inbox} or next;
+		push @$inbox, [ @_ ];
+	} else {
+		$self->worker->send( 'message', @_ );
+	}
+	return 1;
+}
+
+sub tell_owner {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( OWNER => @_ );
+}
+
+sub tell_status {
+	TRACE( $_[0] ) if DEBUG;
+	shift->signal( STATUS => @_ ? @_ : '' );
 }
 
 1;

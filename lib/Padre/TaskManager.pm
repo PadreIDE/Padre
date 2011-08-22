@@ -645,6 +645,11 @@ sub on_signal {
 		# Register the task as running
 		TRACE("Handle $hid added to 'running'...") if DEBUG;
 		$self->{running}->{$hid} = $handle;
+
+		# Fire the task startup handler so the parent instance of the
+		# task (or our owner) knows they can send messages to it now.
+		$handle->on_started(@$message);
+
 		return;
 	}
 

@@ -140,12 +140,10 @@ sub new {
 	# Load (and sync if needed) the configuration
 	$self->{config} = Padre::Config->read;
 
-	# Actions and keyboard shortcuts registries
-	$self->actions(   {} );
-	$self->shortcuts( {} );
-
-	# Wizard registry
+	# Initialise our registries
+	$self->actions( {} );
 	$self->wizards( {} );
+	$self->shortcuts( {} );
 
 	# Create the project manager
 	require Padre::ProjectManager;

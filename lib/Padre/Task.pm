@@ -11,6 +11,7 @@ Padre::Task - Padre Task API 3.0
   # Fire a task that will communicate back to an owner object
   My::Task->new( 
       owner      => $padre_role_task_object,
+      on_run     => 'owner_run_method',
       on_message => 'owner_message_method',
       on_finish  => 'owner_finish_method',
       my_param1  => 123,
@@ -170,6 +171,7 @@ our $COMPATIBLE = '0.91';
 
   My::Task->new( 
       owner      => $padre_role_task_object,
+      on_run     => 'owner_run_method',
       on_message => 'owner_message_method',
       on_finish  => 'owner_finish_method',
       my_param1  => 123,
@@ -189,6 +191,10 @@ This task owner system will consume three paramters.
 The optional C<owner> parameter should be an object that inherits from the role
 L<Padre::Role::Task>. Message and finish events for this task will be forwarded
 on to handlers on the owner, if they are defined.
+
+The optional C<on_run> parameter should be the name of a method that can be
+called on the owner object, to be called once the task has started running and
+control of the worker message queue has been handed over to the task.
 
 The optional C<on_message> parameter should be the name of a method that can be
 called on the owner object, to be called when a message arrives from the child
@@ -222,6 +228,11 @@ sub new {
 
 	# Check parameters relevant to our optional owner
 	if ( exists $self->{owner} ) {
+		if ( exists $self->{on_run} ) {
+			unless ( Params::Util::_IDENTIFIER( $self->{on_run} ) ) {
+				die "Task 'on_run' method be a method name";
+			}
+		}
 		if ( exists $self->{on_message} ) {
 			unless ( Params::Util::_IDENTIFIER( $self->{on_message} ) ) {
 				die "Task 'on_message' must be a method name";
@@ -235,6 +246,19 @@ sub new {
 	}
 
 	return $self;
+}
+
+=pod
+
+=head2 on_run
+
+The C<on_run> accessor returns the name of the owner's C<run> notification
+handler method, if one was defined.
+
+=cut
+
+sub on_run {
+	$_[0]->{on_run};
 }
 
 =pod

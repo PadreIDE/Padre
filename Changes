@@ -31,6 +31,8 @@ the even version for the release, even during development.
       STDIN rather than by filename. This seems to make things that rely on
       FindBin like Module::Install Makefile.PL files work properly (ADAMK)
     - Some tools are more thorough about indicating they are not used (ADAMK)
+    - Added support for task parents and owners being notified when a task has
+      started running in the background (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
