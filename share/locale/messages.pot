@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-21 20:10-0700\n"
+"POT-Creation-Date: 2011-08-22 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -740,7 +740,7 @@ msgstr ""
 msgid "Assign the selected expression to a newly declared variable"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:279
+#: lib/Padre/Wx/Outline.pm:292
 msgid "Attributes"
 msgstr ""
 
@@ -2816,7 +2816,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:278
+#: lib/Padre/Wx/Outline.pm:291
 msgid "Methods"
 msgstr ""
 
@@ -2844,7 +2844,7 @@ msgstr ""
 msgid "Module name:"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:277
+#: lib/Padre/Wx/Outline.pm:290
 msgid "Modules"
 msgstr ""
 
@@ -3574,7 +3574,7 @@ msgstr ""
 msgid "Positive lookbehind assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:276
+#: lib/Padre/Wx/Outline.pm:289
 msgid "Pragmata"
 msgstr ""
 
