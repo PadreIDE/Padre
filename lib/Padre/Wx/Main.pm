@@ -1656,7 +1656,7 @@ sub refresh_syntaxcheck {
 	return unless $self->has_syntax;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{syntaxcheck}->IsChecked;
-	$self->syntax->refresh;
+	$self->syntax->refresh( $_[0] or $self->current );
 	return;
 }
 
@@ -1675,7 +1675,7 @@ sub refresh_outline {
 	return unless $self->has_outline;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{outline}->IsChecked;
-	$self->outline->refresh;
+	$self->outline->refresh( $_[0] or $self->current );
 	return;
 }
 

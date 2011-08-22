@@ -92,7 +92,6 @@ sub syntax {
 		my $cmd = join ' ', @cmd;
 
 		# Make sure we execute from the correct directory
-		print STDERR $cmd . "\n";
 		if (Padre::Constant::WIN32) {
 			require Padre::Util::Win32;
 			Padre::Util::Win32::ExecuteProcessAndWait(

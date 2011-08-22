@@ -313,15 +313,19 @@ sub relocale {
 }
 
 sub refresh {
-	my $self = shift;
+	my $self     = shift;
+	my $current  = shift or return;
+	my $document = $current->document;
+	my $tree     = $self->{tree};
+	my $lock     = $self->main->lock('UPDATE');
 
 	# Abort any in-flight checks
 	$self->task_reset;
 
-	# Do we have a document with something in it?
-	my $document = $self->current->document;
-	unless ( $document and not $document->is_unused ) {
+	# Hide the widgets when no files are open
+	unless ( $document ) {
 		$self->clear;
+		$tree->Hide;
 		return;
 	}
 
@@ -329,6 +333,19 @@ sub refresh {
 	my $task = $document->task_syntax;
 	unless ($task) {
 		$self->clear;
+		$tree->Hide;
+		return;
+	}
+
+	# Ensure the widget is visible
+	$tree->Show(1);
+
+	# Clear out the syntax check window, leaving the margin as is
+	$self->{tree}->DeleteAllItems;
+	$self->_update_help_page;
+
+	# Shortcut if there is nothing in the document to compile
+	if ( $document->is_unused ) {
 		return;
 	}
 
@@ -337,10 +354,6 @@ sub refresh {
 		task     => $task,
 		document => $document,
 	);
-
-	# Clear out the syntax check window, leaving the margin as is
-	$self->{tree}->DeleteAllItems;
-	$self->_update_help_page;
 
 	return 1;
 }

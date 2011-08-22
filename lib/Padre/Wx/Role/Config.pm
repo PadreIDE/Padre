@@ -33,6 +33,12 @@ sub config_load {
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$ctrl->SetValue($value);
 
+		} elsif ( $ctrl->isa('Wx::FilePickerCtrl' ) ) {
+			$ctrl->SetPath($value);
+
+		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
+			$ctrl->SetPath($value);
+
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$ctrl->SetColour( Padre::Wx::color($value) );
 
@@ -124,6 +130,12 @@ sub config_diff {
 
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$value = $ctrl->GetValue;
+
+		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
+			$value = $ctrl->GetPath;
+
+		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
+			$value = $ctrl->GetPath;
 
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);

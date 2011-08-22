@@ -64,12 +64,13 @@ sub run {
 
 sub new {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift->SUPER::new(@_);
+	my $self    = shift->SUPER::new(@_);
 
 	# Set the content of the editor preview
-	$self->preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
-	$self->preview->{Document}->set_editor( $self->preview );
-	$self->preview->SetText(
+	my $preview = $self->preview;
+	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
+	$preview->{Document}->set_editor( $self->preview );
+	$preview->SetText(
 		join '',
 		map {"$_\n"} "#!/usr/bin/perl",
 		"",
@@ -166,6 +167,12 @@ sub config_diff {
 
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$value = $ctrl->GetValue;
+
+		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
+			$value = $ctrl->GetPath;
+
+		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
+			$value = $ctrl->GetPath;
 
 		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
 			$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);

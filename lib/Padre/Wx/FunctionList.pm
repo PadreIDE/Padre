@@ -259,35 +259,36 @@ sub refresh {
 	my $self     = shift;
 	my $current  = shift or return;
 	my $document = $current->document;
-	my $search   = $self->{search};
-	my $list     = $self->{list};
-	my $lock     = $self->main->lock('UPDATE');
+
+	# Abort any in-flight checks
+	$self->task_reset;
 
 	# Hide the widgets when no files are open
 	unless ($document) {
-		$search->Hide;
-		$list->Hide;
-		$list->Clear;
-		$self->{model}    = [];
 		$self->{document} = '';
+		$self->disable;
 		return;
 	}
-
-	# Ensure the widget is visible
-	$search->Show(1);
-	$list->Show(1);
 
 	# Clear search when it is a different document
 	my $id = Scalar::Util::refaddr($document);
 	if ( $id ne $self->{document} ) {
-		$search->ChangeValue('');
+		$self->{search}->ChangeValue('');
 		$self->{document} = $id;
 	}
 
 	# Nothing to do if there is no content
 	my $task = $document->task_functions;
-	if ( $document->is_unused or not $task ) {
-		$list->Clear;
+	unless ( $task ) {
+		$self->disable;
+		return;
+	}
+
+	# Ensure the widget is visible
+	$self->enable;
+
+	# Shortcut if there is nothing to search for
+	if ( $document->is_unused ) {
 		return;
 	}
 
@@ -297,6 +298,23 @@ sub refresh {
 		text  => $document->text_get,
 		order => $current->config->main_functions_order,
 	);
+
+}
+
+sub enable {
+	my $self = shift;
+	my $lock = $self->main->lock('UPDATE');
+	$self->{search}->Show(1);
+	$self->{list}->Show(1);
+}
+
+sub disable {
+	my $self = shift;
+	my $lock = $self->main->lock('UPDATE');
+	$self->{search}->Hide;
+	$self->{list}->Hide;
+	$self->{list}->Clear;
+	$self->{model}    = [];
 }
 
 # Set an updated method list from the task
