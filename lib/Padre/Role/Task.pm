@@ -131,7 +131,7 @@ revision since the original owner id was issued.
 =cut
 
 sub task_owner {
-	TRACE( $_[0] ) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	$INDEX{ $_[1] || 0 };
 }
 

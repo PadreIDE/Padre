@@ -49,7 +49,7 @@ sub class {
 
 sub owner {
 	require Padre::Role::Task;
-	Padre::Role::Task->task_owner( $_[0]->{owner} );
+	Padre::Role::Task->task_owner( $_[0]->{task}->{owner} );
 }
 
 sub worker {
