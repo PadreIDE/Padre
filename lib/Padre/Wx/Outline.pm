@@ -242,7 +242,6 @@ sub clear {
 }
 
 sub refresh {
-	$DB::single = 1;
 	TRACE( $_[0] ) if DEBUG;
 	my $self     = shift;
 	my $current  = shift or return;
