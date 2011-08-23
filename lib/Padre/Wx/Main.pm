@@ -3738,6 +3738,10 @@ sub on_close_window {
 	undef $transaction;
 	Padre::DB->vacuum;
 
+	# Yield to allow any final task manager messages to flush out
+	TRACE("Yielding before closing") if DEBUG;
+	$self->ide->wx->Yield;
+
 	TRACE("Closing Padre") if DEBUG;
 
 	return;
