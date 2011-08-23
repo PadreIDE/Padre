@@ -232,7 +232,8 @@ sub run {
 
 # Spawn a worker object off the current thread
 sub start_child {
-	TRACE(shift) if DEBUG;
+	TRACE($_[0]) if DEBUG;
+	shift;
 
 	# HACK: This is pretty darned evil, but the slave master thread won't
 	# have Padre::ThreadWorker loaded, so it can't invoke ->spawn as a
