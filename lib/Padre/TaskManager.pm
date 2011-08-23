@@ -572,7 +572,7 @@ sub run {
 		TRACE("Handle $hid registered for messages") if DEBUG;
 		$handles->{$hid} = $handle;
 
-		if ( $self->threads ) {
+		if ( $self->{threads} ) {
 			# Find the next/best worker for the task
 			my $worker = $self->best_worker($handle);
 			if ($worker) {
@@ -610,7 +610,6 @@ sub run {
 		};
 	}
 
-	# All pending dispatched
 	return 1;
 }
 
