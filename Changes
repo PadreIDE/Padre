@@ -38,7 +38,7 @@ the even version for the release, even during development.
       every task will block the foreground and makes Padre unusable, so this
       feature is reserved for profiling Padre's performance (ADAMK)
     - The setting threads_stacksize config options allows the tuning of the
-      thread stack size. On Win32 the default is halved to 8meg (ADAMK)
+      thread stack size. On Win32 the default is dropped to 4meg (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
