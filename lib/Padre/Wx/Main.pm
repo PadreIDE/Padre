@@ -3703,6 +3703,7 @@ sub on_close_window {
 	# It probably also makes it shut actually faster as well, as Wx won't
 	# try to do any updates or painting as we shut things down.
 	$self->Show(0);
+	TRACE("MAIN WINDOW HIDDEN. PADRE APPEARS TO BE CLOSED TO USER") if DEBUG;
 
 	# Clean up our secondary windows
 	if ( $self->has_about ) {
@@ -3727,7 +3728,7 @@ sub on_close_window {
 
 	# Stop the task manager.
 	TRACE("Shutting down Task Manager") if DEBUG;
-	$self->ide->task_manager->stop;
+	$ide->task_manager->stop;
 
 	# The AUI manager requires a manual UnInit. The documentation for it
 	# says that if we don't do this it may segfault the process on exit.
@@ -3735,15 +3736,20 @@ sub on_close_window {
 
 	# Vacuum database on exit so that it does not grow.
 	# Since you can't VACUUM inside a transaction, end it first.
+	# Doing the vacuum here, which can take several 10ths of a second,
+	# gives the child threads a chance to clean up and exit.
 	undef $transaction;
 	Padre::DB->vacuum;
 
 	# Yield to allow any final task manager messages to flush out
-	TRACE("Yielding before closing") if DEBUG;
-	$self->ide->wx->Yield;
+	TRACE("Yielding to allow final plthreadevent handling") if DEBUG;
+	$ide->wx->Yield;
+
+	# Clean up the shut down (unjoined) threads
+	TRACE("Waiting to join final threads") if DEBUG;
+	$ide->task_manager->waitjoin;
 
 	TRACE("Closing Padre") if DEBUG;
-
 	return;
 }
 

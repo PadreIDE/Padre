@@ -676,6 +676,35 @@ sub on_signal {
 	$handle->on_message( $method, @$message );
 }
 
+sub waitjoin {
+	TRACE( $_[0] ) if DEBUG;
+
+	foreach ( 0 .. 9 ) {
+		my $more = 0;
+
+		# Close the threads in LIFO order, just in case it matters
+		foreach my $thread ( reverse threads->list ) {
+			if ( $thread->is_joinable ) {
+				TRACE("Thread " . $thread->tid . " joining...") if DEBUG;
+				$thread->join;
+			} else {
+				TRACE("Thread " . $thread->tid . " not joinable") if DEBUG;
+				$more++;
+			}
+		}
+		unless ( $more ) {
+			TRACE("All threads joined") if DEBUG;
+			last;
+		}
+
+		# Wait a short time to let the other thread exit
+		require Time::HiRes;
+		Time::HiRes::sleep(0.1);
+	}
+
+	return 1;
+}
+
 1;
 
 =pod

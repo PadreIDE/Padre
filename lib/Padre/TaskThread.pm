@@ -179,10 +179,9 @@ sub stop {
 	my $self   = shift;
 	my $thread = $self->thread;
 	if ( defined $thread ) {
-		TRACE("Found thread object, detaching...") if DEBUG;
-		$self->thread->detach;
+		TRACE("Thread is still alive") if DEBUG;
 	} else {
-		TRACE("No thead object...?") if DEBUG;
+		TRACE("No thread object...?") if DEBUG;
 	}
 	$self->send('stop_child');
 }
@@ -220,7 +219,7 @@ sub run {
 		$self->$method(@$message) or last;
 	}
 
-	TRACE("Exited worker run-time loop") if DEBUG;
+	TRACE("Exiting worker run-time loop") if DEBUG;
 	return;
 }
 
