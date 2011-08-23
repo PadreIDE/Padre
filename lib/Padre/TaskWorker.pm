@@ -77,10 +77,20 @@ sub task {
 	# Execute the task (ignore the result) and signal as we go
 	local $@;
 	eval {
+		# Tell our parent we are starting
 		TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
 		$handle->start($self->queue);
+
+		# Set up to receive thread kill signals
+		local $SIG{STOP} = sub {
+			die "Task aborted due to SIGSTOP from parent thread";
+		};
+
+		# Call the handle's run method
 		TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
 		$handle->run;
+
+		# Tell our parent we completed successfully
 		TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
 		$handle->stop;
 	};
