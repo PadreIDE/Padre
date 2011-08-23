@@ -152,6 +152,10 @@ sub conduit {
 # Compulsory Wx Methods
 
 sub OnInit {
+	# Bootstrap some Wx internals
+	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
+
+	# Return true to continue
 	return 1;
 }
 

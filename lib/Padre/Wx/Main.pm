@@ -111,9 +111,6 @@ sub new {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
-	# Bootstrap some Wx internals
-	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-
 	# Initialise the style and position
 	my $config   = $ide->config;
 	my $size     = [ $config->main_width, $config->main_height ];
