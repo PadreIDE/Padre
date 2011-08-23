@@ -174,10 +174,16 @@ sub start {
 
 # Immediately detach and terminate when queued jobs are completed
 sub stop {
-	TRACE( $_[0] )            if DEBUG;
-	TRACE("Detaching thread") if DEBUG;
-	$_[0]->thread->detach     if defined( $_[0]->thread );
-	$_[0]->send('stop_child');
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $thread = $self->thread;
+	if ( defined $thread ) {
+		TRACE("Found thread object, detaching...") if DEBUG;
+		$self->thread->detach;
+	} else {
+		TRACE("No thead object...?") if DEBUG;
+	}
+	$self->send('stop_child');
 }
 
 
@@ -197,8 +203,6 @@ sub run {
 	while (1) {
 		my $message = $queue->dequeue1;
 		unless ( ref $message eq 'ARRAY' and @$message ) {
-
-			# warn("Message is not an ARRAY reference");
 			next;
 		}
 
@@ -206,8 +210,6 @@ sub run {
 		TRACE("Worker received message '$message->[0]'") if DEBUG;
 		my $method = shift @$message;
 		unless ( _CAN( $self, $method ) ) {
-
-			# warn("Illegal message type");
 			next;
 		}
 
