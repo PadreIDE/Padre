@@ -104,6 +104,13 @@ sub startup {
 		require threads::shared;
 		require Wx;
 
+		# Allowing custom tuning of the stack size
+		my $size = $setting{threads_stacksize};
+		if ( $size ) {
+			my $old = threads->set_stack_size($size);
+			print STDERR "Change thread stack size from $old to $size\n";
+		}
+
 		# Second-generation version of the threading optimisation, with
 		# worker threads spawned of a single initial early spawned
 		# "slave master" thread. This dramatically reduces the overhead

@@ -17,7 +17,7 @@ BEGIN {
 		exit 0;
 	}
 
-	plan tests => 15;
+	plan tests => 16;
 }
 
 use Padre::Logger;
@@ -112,7 +112,7 @@ sub timeout {
 	$timer1 = undef;
 	$timer2 = undef;
 	ok( $manager->stop, '->stop ok' );
-	sleep(1);
+	ok( $manager->waitjoin, '->waitjoin ok' );
 
 	# $window->Show(0) if $window;
 	$wxapp->ExitMainLoop;

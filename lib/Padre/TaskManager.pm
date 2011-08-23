@@ -554,19 +554,24 @@ sub run {
 			# Prepare handle timing
 			$handle->start_time(time);
 
+			# Clone the handle so we don't impact the original
+			my $copy = Padre::TaskHandle->from_array(
+				$handle->as_array
+			);
+
 			# Execute the task (ignore the result) and signal as we go
 			local $@;
 			eval {
-				TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
-				$handle->start($self->queue);
-				TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
-				$handle->run;
-				TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
-				$handle->stop;
+				TRACE("Handle " . $copy->hid . " calling ->start") if DEBUG;
+				$copy->start([]);
+				TRACE("Handle " . $copy->hid . " calling ->run") if DEBUG;
+				$copy->run;
+				TRACE("Handle " . $copy->hid . " calling ->stop") if DEBUG;
+				$copy->stop;
 			};
 			if ($@) {
-				delete $handle->{queue};
-				delete $handle->{child};
+				delete $copy->{queue};
+				delete $copy->{child};
 				TRACE($@) if DEBUG;
 			}
 		};

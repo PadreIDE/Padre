@@ -19,7 +19,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 19;
+	plan tests => 22;
 }
 use Test::NoWarnings;
 use Padre::TaskThread ();
@@ -68,6 +68,12 @@ SCOPE: {
 	ok( $thread->stop, '->stop ok' );
 	TRACE("Pausing to allow clean thread stop...") if DEBUG;
 	sleep 0.1;
+	ok( !$thread->is_running,  'Thread is not is_running' );
+	ok( $thread->is_joinable,  'Thread is_joinable' );
+	ok( !$thread->is_detached, 'Thread is not is_detached' );
+
+	# Join the thread
+	$thread->thread->join;
 	ok( !$thread->thread, '->thread no longer exists' );
 }
 

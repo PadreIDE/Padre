@@ -70,6 +70,9 @@ SCOPE: {
 	ok( $master->is_running,   'Master is_running' );
 	ok( !$master->is_joinable, 'Master is not is_joinable' );
 	ok( !$master->is_detached, 'Master is not is_detached' );
+
+	# Join the thread
+	$worker->thread->join;
 	ok( !$worker->thread,      'Worker thread has ended' );
 }
 
