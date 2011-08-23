@@ -117,7 +117,6 @@ sub new {
 	my $self    = bless {
 		active  => 0, # Are we running at the moment
 		threads => 1, # Are threads enabled
-		minimum => 0, # Workers to launch at startup
 		maximum => 5, # The most workers we should use
 		%param,
 		workers => [], # List of all workers
@@ -150,43 +149,6 @@ sub active {
 
 =pod
 
-=head2 threads
-
-The C<threads> accessor returns true if the Task Manager requires the use of
-Perl L<threads>, or false if not. This method is provided to notionally
-allow support for alternative task implementations that use processes rather
-than threads, however during the upgrade to the L<Padre::Task> 2.0 API only
-a threading backend was implemented.
-
-A future Task 2.0 backend implementation that uses processes instead of threads
-should be possible, but nobody on the current Padre team has plans to implement
-this alternative at this time. Contact the Padre team if you are interested in
-implementing the alternative backend.
-
-=cut 
-
-sub threads {
-	$_[0]->{threads};
-}
-
-=pod
-
-=head2 minimum
-
-The C<minimum> accessor returns the minimum number of workers that the task
-manager will keep spawned. This value is typically set to zero if some use
-cases of the application will not need to run tasks at all and we wish to reduce
-memory and startup time, or a small number (one or two) if startup time of the
-first few tasks is important.
-
-=cut
-
-sub minimum {
-	$_[0]->{minimum};
-}
-
-=pod
-
 =head2 maximum
 
 The C<maximum> accessor returns the maximum quantity of worker threads that the
@@ -213,26 +175,22 @@ sub maximum {
 
   $manager->start;
 
-The C<start> method bootstraps the task manager, creating C<minimum> workers
-immediately if needed.
+The C<start> method bootstraps the task manager, creating the master thread.
 
 =cut
 
 sub start {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	if ( $self->{threads} ) {
 
-		# Start the master if it wasn't pre-launched for some reason
+	# Start the master if it wasn't pre-launched
+	if ( $self->{threads} ) {
 		unless ( Padre::TaskThread->master_running ) {
 			Padre::TaskThread->master;
 		}
-
-		# Start the workers
-		foreach ( 0 .. $self->{minimum} - 1 ) {
-			$self->start_worker;
-		}
 	}
+
+	# We are now active
 	$self->{active} = 1;
 
 	# Take one initial spin through the dispatch loop to run anything
@@ -255,11 +213,9 @@ sub stop {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-	# Flag as disabled
+	# Disable and clear pending tasks
 	$self->{active} = 0;
-
-	# Clear out the pending queue
-	@{ $self->{queue} } = ();
+	$self->{queue}  = [ ];
 
 	# Shut down the master thread
 	# NOTE: We ignore the status of the thread master settings here and
@@ -320,7 +276,7 @@ sub schedule {
   $manager->cancelled( $owner );
 
 The C<cancelled> method is used with the "task ownership" feature of the
-L<Padre::Task> 2.0 API to signal tasks running in the background that
+L<Padre::Task> 3.0 API to signal tasks running in the background that
 were created by a particular object that they should voluntarily abort as
 their results are no longer wanted.
 
@@ -330,10 +286,12 @@ sub cancel {
 	TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
 	my $owner = shift;
+	my $queue = $self->{queue};
 
 	# Remove any tasks from the pending queue
-	@{ $self->{queue} } =
-		grep { not defined $_->{owner} or $_->{owner} != $owner } @{ $self->{queue} };
+	@$queue = grep {
+		! defined $_->{owner} or $_->{owner} != $owner
+	} @$queue;
 
 	# Signal any active tasks to cooperatively abort themselves
 	foreach my $handle ( values %{ $self->{handles} } ) {
@@ -437,8 +395,12 @@ ability to forcefully terminate workers.>
 
 sub kill_worker {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	die "TO BE COMPLETED";
+	my $self   = shift;
+	my $worker = delete $self->{workers}->[ $_[0] ] or return;
+
+	# Send a sigstop to the worker thread, if it is running
+	my $thread = $worker->thread or return;
+	$thread->kill('STOP');
 }
 
 =pod
