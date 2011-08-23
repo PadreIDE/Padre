@@ -572,23 +572,45 @@ sub run {
 		TRACE("Handle $hid registered for messages") if DEBUG;
 		$handles->{$hid} = $handle;
 
-		# Find the next/best worker for the task
-		my $worker = $self->best_worker($handle);
-		if ($worker) {
-			TRACE( "Handle $hid allocated worker " . $worker->wid ) if DEBUG;
+		if ( $self->threads ) {
+			# Find the next/best worker for the task
+			my $worker = $self->best_worker($handle);
+			if ($worker) {
+				TRACE( "Handle $hid allocated worker " . $worker->wid ) if DEBUG;
+			} else {
+				TRACE("Handle $hid has no worker") if DEBUG;
+				return;
+			}
+
+			# Prepare handle timing
+			$handle->start_time(time);
+
+			# Send the task to the worker for execution
+			$worker->send_task($handle);
+
 		} else {
-			TRACE("Handle $hid has no worker") if DEBUG;
-			return;
-		}
+			# Prepare handle timing
+			$handle->start_time(time);
 
-		# Prepare handle timing
-		$handle->start_time(time);
-
-		# Send the task to the worker for execution
-		$worker->send_task($handle);
+			# Execute the task (ignore the result) and signal as we go
+			local $@;
+			eval {
+				TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
+				$handle->start($self->queue);
+				TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
+				$handle->run;
+				TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
+				$handle->stop;
+			};
+			if ($@) {
+				delete $handle->{queue};
+				delete $handle->{child};
+				TRACE($@) if DEBUG;
+			}
+		};
 	}
 
-	# All pending tasks were dispatched
+	# All pending dispatched
 	return 1;
 }
 

@@ -20,10 +20,10 @@ Padre::Plugin - Padre plug-in API 2.2
 
   # Declare the Padre interfaces this plug-in uses
   sub padre_interfaces {
-      'Padre::Plugin'         => 0.29,
-      'Padre::Document::Perl' => 0.29,
-      'Padre::Wx::Main'       => 0.29,
-      'Padre::DB'             => 0.29,
+      'Padre::Plugin'         => 0.91,
+      'Padre::Document::Perl' => 0.91,
+      'Padre::Wx::Main'       => 0.91,
+      'Padre::DB'             => 0.91,
   }
 
   # The command structure to show in the Plug-ins menu

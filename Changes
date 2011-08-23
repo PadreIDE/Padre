@@ -34,6 +34,9 @@ the even version for the release, even during development.
     - Added support for task parents and owners being notified when a task has
       started running in the background (ADAMK)
     - Task owners can now hijack status bar messages if they wish to (ADAMK)
+    - The task manager can now run without the need for threads. However,
+      every task will block the foreground and makes Padre unusable, so this
+      feature is reserved for profiling Padre's performance (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

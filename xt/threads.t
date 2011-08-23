@@ -70,6 +70,5 @@ SCOPE: {
 
 	# Run the shutdown process
 	ok( $manager->stop, '->stop ok' );
-	Time::HiRes::sleep(1);
 	is( scalar( threads->list ), 0, 'No threads' );
 }
