@@ -12,6 +12,7 @@ Padre::Task - Padre Task API 3.0
   My::Task->new( 
       owner      => $padre_role_task_object,
       on_run     => 'owner_run_method',
+      on_status  => 'owner_status_method',
       on_message => 'owner_message_method',
       on_finish  => 'owner_finish_method',
       my_param1  => 123,
@@ -172,6 +173,7 @@ our $COMPATIBLE = '0.91';
   My::Task->new( 
       owner      => $padre_role_task_object,
       on_run     => 'owner_run_method',
+      on_status  => 'owner_status_method',
       on_message => 'owner_message_method',
       on_finish  => 'owner_finish_method',
       my_param1  => 123,
@@ -233,6 +235,11 @@ sub new {
 				die "Task 'on_run' method be a method name";
 			}
 		}
+		if ( exists $self->{on_status} ) {
+			unless ( Params::Util::_IDENTIFIER( $self->{on_status} ) ) {
+				die "Task 'on_status' must be a method name";
+			}
+		}
 		if ( exists $self->{on_message} ) {
 			unless ( Params::Util::_IDENTIFIER( $self->{on_message} ) ) {
 				die "Task 'on_message' must be a method name";
@@ -259,6 +266,19 @@ handler method, if one was defined.
 
 sub on_run {
 	$_[0]->{on_run};
+}
+
+=pod
+
+=head2 on_status
+
+The C<on_status> accessor returns the name of the owner's status handler
+method, if one was defined.
+
+=cut
+
+sub on_status {
+	$_[0]->{on_status};
 }
 
 =pod

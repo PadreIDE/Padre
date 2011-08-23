@@ -46,6 +46,10 @@ sub class {
 	Scalar::Util::blessed( $_[0]->{task} );
 }
 
+sub has_owner {
+	!! $_[0]->{task}->{owner};
+}
+
 sub owner {
 	require Padre::Role::Task;
 	Padre::Role::Task->task_owner( $_[0]->{task}->{owner} );
@@ -180,9 +184,7 @@ sub on_message {
 		# Special case for printing a simple message to the main window
 		# status bar, without needing to pollute the task classes.
 		if ( $method eq 'STATUS' ) {
-			require Padre::Current;
-			Padre::Current->main->status(@_);
-			return;
+			return $self->on_status(@_);
 		}
 
 		# Special case for routing messages to the owner of a task
@@ -217,6 +219,32 @@ sub on_message {
 		return;
 	}
 
+	return;
+}
+
+sub on_status {
+	TRACE( $_[1] ) if DEBUG;
+	my $self = shift;
+
+	# If we don't have an owner, use the general status bar
+	unless ( $self->has_owner ) {
+		require Padre::Current;
+		Padre::Current->main->status(@_);
+		return;
+	}
+
+	# If we have an owner that is within the main window show normally
+	my $owner  = $self->owner or return;
+	my $method = $self->{task}->on_status;
+	return $owner->$method(@_) if $method;
+
+	# Pass status messages up to the main window status if possible
+	if ( $owner->isa('Padre::Wx::Role::Main') ) {
+		$owner->main->status(@_);
+		return;
+	}
+
+	# Nothing else to do
 	return;
 }
 

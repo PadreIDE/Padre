@@ -33,6 +33,7 @@ the even version for the release, even during development.
     - Some tools are more thorough about indicating they are not used (ADAMK)
     - Added support for task parents and owners being notified when a task has
       started running in the background (ADAMK)
+    - Task owners can now hijack status bar messages if they wish to (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

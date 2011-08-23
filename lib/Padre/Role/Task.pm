@@ -265,6 +265,18 @@ sub task_request {
 		%param,
 	);
 
+	# Check the run event handler
+	my $on_run = $task->on_run;
+	if ( $on_run and not $self->can($on_run) ) {
+		die "The on_run handler '$on_run' is not implemented";
+	}
+
+	# Check the status event handler
+	my $on_status = $task->on_status;
+	if ( $on_status and not $self->can($on_status) ) {
+		die "The on_status handler '$on_status' is not implemented";
+	}
+
 	# Check the message event handler
 	my $on_message = $task->on_message;
 	if ( $on_message and not $self->can($on_message) ) {
