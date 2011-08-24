@@ -81,6 +81,34 @@ sub OnInit {
 	return 1;
 }
 
+# Clean up in reverse order
+sub OnExit {
+	my $self = shift;
+
+	# Action queue
+	if ( defined $self->{queue} ) {
+		delete $self->{queue};
+	}
+
+	# Main window
+	if ( defined $self->{main} ) {
+		delete $self->{main};
+	}
+
+	# PlThreadEvent conduit
+	if ( defined $self->{conduit} ) {
+		$self->{conduit}->Destroy;
+		delete $self->{conduit};
+	}
+
+	# IDE object
+	if ( defined $self->{ide} ) {
+		delete $self->{ide};
+	}
+
+	return 1;
+}
+
 =pod
 
 =head2 C<ide>
