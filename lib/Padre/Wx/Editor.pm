@@ -1639,7 +1639,12 @@ sub smart_highlight_show {
 	my $self             = shift;
 	my $selection        = $self->GetSelectedText;
 	my $selection_length = length $selection;
+
+	# Zero length selection should be ignored
 	return if $selection_length == 0;
+
+	# Whitespace should be ignored
+	return if $selection =~ /^\s+$/;
 
 	my $selection_re = quotemeta $selection;
 	my $line_count   = $self->GetLineCount;
