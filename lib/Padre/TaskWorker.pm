@@ -58,14 +58,17 @@ sub new {
 }
 
 sub wid {
-	TRACE( $_[0] ) if DEBUG;
 	$_[0]->{wid};
 }
 
 sub queue {
-	TRACE( $_[0] ) if DEBUG;
-	TRACE( $_[0]->{queue} ) if DEBUG;
 	$_[0]->{queue};
+}
+
+sub handle {
+	my $self = shift;
+	$self->{handle} = shift if @_;
+	return $self->{handle};
 }
 
 
@@ -92,7 +95,6 @@ sub spawn {
 }
 
 sub tid {
-	TRACE( $_[0] ) if DEBUG;
 	$WID2TID{ $_[0]->{wid} };
 }
 
@@ -137,12 +139,6 @@ sub send_task {
 	# Send the message to the child
 	TRACE( "Handle " . $handle->hid . " being sent to worker " . $self->wid ) if DEBUG;
 	$self->send( 'task', $handle->as_array );
-}
-
-sub handle {
-	my $self = shift;
-	$self->{handle} = shift if @_;
-	return $self->{handle};
 }
 
 # Add a worker object to the pool, spawning it from the master
@@ -258,6 +254,7 @@ sub task {
 sub message {
 	TRACE( $_[0] ) if DEBUG;
 	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
+	return 1;
 }
 
 # A cancel request that arrives when we are NOT actively running a task
