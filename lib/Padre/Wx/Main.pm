@@ -310,7 +310,6 @@ sub new {
 	Wx::Event::EVT_STC_CHANGE( $self, -1, \&on_stc_change );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
 	Wx::Event::EVT_STC_CHARADDED( $self, -1, \&on_stc_char_added );
-	Wx::Event::EVT_STC_DWELLSTART( $self, -1, \&on_stc_dwell_start );
 
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
@@ -6143,31 +6142,6 @@ sub on_stc_char_added {
 	} elsif ( $key == 125 ) { # Closing brace
 		$self->current->editor->autoindent('deindent');
 	}
-	return;
-}
-
-=pod
-
-=head3 C<on_stc_dwell_start>
-
-    $main->on_stc_dwell_start( $event );
-
-Handler of the C<DWELLSTART> C<$event>. This event is sent when the mouse
-has not moved in a given amount of time. Doesn't do anything by now. No
-return value.
-
-=cut
-
-sub on_stc_dwell_start {
-	my ( $self, $event ) = @_;
-
-	my $editor = $self->current->editor;
-
-	# print "dwell: ", $event->GetPosition, "\n";
-	# $editor->show_tooltip;
-	# print Wx::GetMousePosition, "\n";
-	# print Wx::GetMousePositionXY, "\n";
-
 	return;
 }
 
