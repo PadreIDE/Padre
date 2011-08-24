@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 36 );
+plan( tests => 35 );
 
 use Test::Script;
 use Test::NoWarnings;
