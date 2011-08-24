@@ -53,6 +53,7 @@ sub startup {
 		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
 		threads                  => 1,
+		threads_stacksize        => 0,
 		startup_splash           => 0,
 	);
 
@@ -106,10 +107,7 @@ sub startup {
 
 		# Allowing custom tuning of the stack size
 		my $size = $setting{threads_stacksize};
-		if ( $size ) {
-			my $old = threads->set_stack_size($size);
-			print STDERR "Change thread stack size from $old to $size\n";
-		}
+		threads->set_stack_size($size) if $size;
 
 		# Second-generation version of the threading optimisation, with
 		# worker threads spawned of a single initial early spawned

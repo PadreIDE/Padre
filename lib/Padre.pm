@@ -39,7 +39,6 @@ use Class::XSAccessor 1.05 {
 		original_cwd    => 'original_cwd',
 		opts            => 'opts',
 		config          => 'config',
-		wx              => 'wx',
 		task_manager    => 'task_manager',
 		plugin_manager  => 'plugin_manager',
 		project_manager => 'project_manager',
@@ -155,20 +154,25 @@ sub new {
 
 	# Create the main window
 	require Padre::Wx::App;
-	$self->{wx} = Padre::Wx::App->create($self);
+	my $wx = Padre::Wx::App->create($self);
 
 	# Create the task manager
 	require Padre::TaskManager;
 	$self->{task_manager} = Padre::TaskManager->new(
 		threads => 1,
-		maximum => $self->{config}->threads_maximum,
-		conduit => $self->wx->conduit,
+		maximum => $self->config->threads_maximum,
+		conduit => $wx->conduit,
 	);
 
 	# Startup completed, let go of the database
 	Padre::DB->commit;
 
 	return $self;
+}
+
+sub wx {
+	no warnings 'once';
+	$Wx::wxTheApp;
 }
 
 sub run {
@@ -258,10 +262,6 @@ sub run {
 
 	TRACE("Switching into runtime mode") if DEBUG;
 	$self->wx->MainLoop;
-
-	# All shutdown procedures complete.
-	# Do some final cleaning up.
-	$self->{wx} = undef;
 }
 
 # Save the YAML configuration file

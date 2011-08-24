@@ -41,6 +41,8 @@ the even version for the release, even during development.
       thread stack size. On Win32 the default is dropped to 4meg (ADAMK)
     - The advanced setting threads_maximum allows the tuning of the
       maximum number of background worker threads (ADAMK)
+    - Padre::Wx::App will use Wx internal singleton logic instead of duplicating
+      it again for itself (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
