@@ -921,7 +921,7 @@ sub load_files {
 
 =pod
 
-=head2 C<lock>
+=head3 C<lock>
 
   my $lock = $main->lock('UPDATE', 'BUSY', 'refresh_toolbar');
 
@@ -981,7 +981,7 @@ sub lock {
 
 =pod
 
-=head2 locked
+=head3 C<locked>
 
 This method provides the ability to check if a resource is currently locked.
 
@@ -1329,7 +1329,7 @@ sub window_top {
 
 =pod
 
-=head2 C<window_save>
+=head3 C<window_save>
 
     $main->window_save;
 
@@ -1659,7 +1659,7 @@ sub refresh_syntaxcheck {
 
 =pod
 
-=head2 C<refresh_outline>
+=head3 C<refresh_outline>
 
     $main->refresh_outline;
 
@@ -1864,7 +1864,7 @@ sub refresh_directory {
 
 =pod
 
-=head2 C<refresh_aui>
+=head3 C<refresh_aui>
 
 This is a refresh method wrapper around the C<AUI> C<Update> method so
 that it can be lock-managed by the existing locking system.
@@ -2294,7 +2294,7 @@ sub _show_output {
 
 =pod
 
-=head2 C<show_findfast>
+=head3 C<show_findfast>
 
     $main->show_findfast( $visible );
 
@@ -2455,7 +2455,7 @@ sub _show_syntaxcheck {
 
 =head2 Search and Replace
 
-=head2 find_dialog
+=head3 C<find_dialog>
 
     $main->find_dialog;
 
@@ -3158,7 +3158,7 @@ Various methods to help send information to user.
 
 Some methods are inherited from L<Padre::Wx::Role::Dialog>.
 
-=head2 C<status>
+=head3 C<status>
 
     $main->status( $msg );
 
@@ -3261,7 +3261,7 @@ search and replace functions and dialogs.
 However, they still represent abstract logic and should NOT be tied directly to
 keystroke or menu events.
 
-=head2 C<search_next>
+=head3 C<search_next>
 
   # Next match for a new explicit search
   $main->search_next( $search );
@@ -3319,7 +3319,7 @@ sub search_next {
 
 =pod
 
-=head2 C<search_previous>
+=head3 C<search_previous>
 
   # Previous match for a new search
   $main->search_previous( $search );
@@ -3377,7 +3377,7 @@ sub search_previous {
 
 =pod
 
-=head2 C<replace_next>
+=head3 C<replace_next>
 
   # Next replace for a new search
   $main->replace_next( $search );
@@ -3408,7 +3408,7 @@ sub replace_next {
 
 =pod
 
-=head2 C<replace_all>
+=head3 C<replace_all>
 
   # Replace all for a new search
   $main->replace_all( $search );
@@ -6567,7 +6567,7 @@ sub on_new_from_template {
 
 Various methods that did not fit exactly in above categories...
 
-=head2 C<action>
+=head3 C<action>
 
   Padre::Current->main->action('help.about');
 
