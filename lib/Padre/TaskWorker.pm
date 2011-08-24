@@ -145,7 +145,7 @@ sub send {
 	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $method = shift;
-	unless ( _CAN( $self, $method ) ) {
+	unless ( $self->can($method) ) {
 		die("Attempted to send message to non-existant method '$method'");
 	}
 
@@ -220,9 +220,7 @@ sub run {
 		# Check the message type
 		TRACE("Worker received message '$message->[0]'") if DEBUG;
 		my $method = shift @$message;
-		unless ( _CAN( $self, $method ) ) {
-			next;
-		}
+		next unless $self->can($method);
 
 		# Hand off to the appropriate method.
 		# Methods must return true, otherwise the thread
@@ -307,17 +305,6 @@ sub cancel {
 		}
 	}
 	return 1;
-}
-
-
-
-
-
-######################################################################
-# Support Methods
-
-sub _CAN {
-	( Scalar::Util::blessed( $_[0] ) and $_[0]->can( $_[1] ) ) ? $_[0] : undef;
 }
 
 1;
