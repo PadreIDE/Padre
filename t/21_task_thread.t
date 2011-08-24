@@ -11,6 +11,7 @@
 use strict;
 use warnings;
 use Test::More;
+# use DB ();
 
 ######################################################################
 # This test requires a DISPLAY to run

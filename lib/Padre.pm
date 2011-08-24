@@ -161,6 +161,7 @@ sub new {
 	require Padre::TaskManager;
 	$self->{task_manager} = Padre::TaskManager->new(
 		threads => 1,
+		maximum => $self->{config}->threads_maximum,
 		conduit => $self->wx->conduit,
 	);
 

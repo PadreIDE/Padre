@@ -1149,6 +1149,12 @@ setting(
 	startup => 1,
 );
 setting(
+	name    => 'threads_maximum',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HOST,
+	default => 9,
+);
+setting(
 	name    => 'threads_stacksize',
 	type    => Padre::Constant::INTEGER,
 	store   => Padre::Constant::HOST,
