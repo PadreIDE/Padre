@@ -1,4 +1,4 @@
-package Padre::TaskThread;
+package Padre::TaskWorker;
 
 # Cleanly encapsulated object for a thread that does work based
 # on packaged method calls passed via a shared queue.
@@ -10,11 +10,10 @@ use Scalar::Util     ();
 use Padre::TaskQueue ();
 
 # NOTE: The TRACE() calls in this class should be commented out unless
-# actively debugging, so that the Padre::Logger class will only be
-# loaded AFTER the threads spawn.
-use Padre::Logger;
-
-# use constant DEBUG => 0;
+# actively debugging, so that the Padre::Logger class will only be loaded in
+# the parent thread AFTER the threads spawn.
+# use Padre::Logger;
+use constant DEBUG => 0;
 
 our $VERSION = '0.91';
 
@@ -92,17 +91,7 @@ sub spawn {
 	$WID2TID{$wid} = threads->create(
 		{ context => 'void' },
 		sub {
-			# We need to load the worker class even though we
-			# already have an instance of it.
-			my $worker = Scalar::Util::blessed($_[0]);
-			SCOPE: {
-				local $@;
-				eval "require $worker;";
-				die $@ if $@;
-			}
-
-			# Start the worker runloop
-			$_[0]->run;
+			shift->run;
 		},
 		$self,
 	)->tid;
@@ -249,16 +238,7 @@ sub run {
 sub start_child {
 	TRACE($_[0]) if DEBUG;
 	shift;
-
-	# HACK: This is pretty darned evil, but the slave master thread won't
-	# have Padre::ThreadWorker loaded, so it can't invoke ->spawn as a
-	# method. As long as Padre::ThreadWorker never implements it's own
-	# overridden ->spawn method, this hack is valid. We use the fully
-	# resolved function name even though we're in the same class just to
-	# make it clear we're doing something pretty evil.
-	# $_[1]->spawn;
-	Padre::TaskThread::spawn(shift);
-
+	shift->spawn;
 	return 1;
 }
 
@@ -308,14 +288,14 @@ sub task {
 	return 1;
 }
 
-# Any messages that arrive when we are NOT actively running a task
-# should be discarded with no consequence.
+# A message for the active task that arrive when we are NOT actively running a
+# task should be discarded with no consequence.
 sub message {
 	TRACE( $_[0] ) if DEBUG;
 	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
 }
 
-# A cancel request that arrives when we are NOT active running a task
+# A cancel request that arrives when we are NOT actively running a task
 # should be discarded with no consequence.
 sub cancel {
 	if (DEBUG) {

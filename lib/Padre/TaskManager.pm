@@ -59,7 +59,6 @@ use Params::Util      ();
 use Padre::Config     ();
 use Padre::Current    ();
 use Padre::TaskHandle ();
-use Padre::TaskThread ();
 use Padre::TaskWorker ();
 use Padre::Logger;
 
@@ -185,8 +184,8 @@ sub start {
 
 	# Start the master if it wasn't pre-launched
 	if ( $self->{threads} ) {
-		unless ( Padre::TaskThread->master_running ) {
-			Padre::TaskThread->master;
+		unless ( Padre::TaskWorker->master_running ) {
+			Padre::TaskWorker->master;
 		}
 	}
 
@@ -220,9 +219,9 @@ sub stop {
 	# Shut down the master thread
 	# NOTE: We ignore the status of the thread master settings here and
 	# act only on the basis of whether or not a master thread is running.
-	if ($Padre::TaskThread::VERSION) {
-		if ( Padre::TaskThread->master_running ) {
-			Padre::TaskThread->master->stop;
+	if ($Padre::TaskWorker::VERSION) {
+		if ( Padre::TaskWorker->master_running ) {
+			Padre::TaskWorker->master->stop;
 		}
 	}
 
@@ -337,13 +336,13 @@ B<Padre::TaskManager>.
 sub start_worker {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	unless ( Padre::TaskThread->master_running ) {
+	unless ( Padre::TaskWorker->master_running ) {
 		die "Master thread is unexpectedly not running";
 	}
 
 	# Start the worker via the master.
 	my $worker = Padre::TaskWorker->new;
-	Padre::TaskThread->master->send(
+	Padre::TaskWorker->master->send(
 		start_child => $worker,
 	);
 	push @{ $self->{workers} }, $worker;

@@ -115,9 +115,9 @@ sub startup {
 		# of spawning a thread, because it doesn't need to copy all the
 		# stuff in the parent thread.
 		require Padre::Wx::App;
-		require Padre::TaskThread;
+		require Padre::TaskWorker;
 		Padre::Wx::App->new;
-		Padre::TaskThread->master;
+		Padre::TaskWorker->master;
 	}
 
 	# Show the splash image now we are starting a new instance

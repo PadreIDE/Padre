@@ -4,7 +4,7 @@
 
 # BEGIN {
 # $Padre::Logger::DEBUG = 1;
-# $Padre::TaskThread::DEBUG = 1;
+# $Padre::TaskWorker::DEBUG = 1;
 # $Padre::TaskWorker::DEBUG = 1;
 # }
 
@@ -22,7 +22,7 @@ BEGIN {
 }
 use Time::HiRes 'sleep';
 use Padre::Logger;
-use Padre::TaskThread ();
+use Padre::TaskWorker ();
 use Padre::TaskWorker ();
 
 
@@ -42,8 +42,8 @@ is( scalar( threads->list ), 0, 'One thread exists' );
 SCOPE: {
 
 	# Create the master thread
-	my $master = Padre::TaskThread->new->spawn;
-	isa_ok( $master, 'Padre::TaskThread' );
+	my $master = Padre::TaskWorker->new->spawn;
+	isa_ok( $master, 'Padre::TaskWorker' );
 	is( scalar( threads->list ), 1, 'Found 1 thread' );
 	ok( $master->is_running, 'Master is_running' );
 
