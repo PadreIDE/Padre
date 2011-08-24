@@ -116,12 +116,12 @@ sub reap {
 	my @active_or_waiting;
 	warn "No. worker threads before reaping: ".scalar (@$workers);
 
-	foreach my $thread (@$workers) {
-		if ($thread->is_joinable()) {
-			my $tmp = $thread->join();
+	foreach my $worker (@$workers) {
+		if ($worker->thread->is_joinable) {
+			my $tmp = $worker->thread->join;
 		}
 		else {
-			push @active_or_waiting, $thread;
+			push @active_or_waiting, $worker;
 		}
 	}
 	$self->{workers} = \@active_or_waiting;

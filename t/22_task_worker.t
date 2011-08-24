@@ -53,24 +53,24 @@ SCOPE: {
 	is( $threads[0]->tid, $tid, 'Found the expected thread id' );
 
 	# Initially, the thread should be running
-	ok( $thread->is_running,   'Thread is_running' );
-	ok( !$thread->is_joinable, 'Thread is not is_joinable' );
-	ok( !$thread->is_detached, 'Thread is not is_detached' );
+	ok( $thread->thread->is_running,   'Thread is_running' );
+	ok( !$thread->thread->is_joinable, 'Thread is not is_joinable' );
+	ok( !$thread->thread->is_detached, 'Thread is not is_detached' );
 
 	# It should stay running
 	TRACE("Pausing to allow clean thread startup...") if DEBUG;
 	sleep 0.1;
-	ok( $thread->is_running,   'Thread is_running' );
-	ok( !$thread->is_joinable, 'Thread is not is_joinable' );
-	ok( !$thread->is_detached, 'Thread is not is_detached' );
+	ok( $thread->thread->is_running,   'Thread is_running' );
+	ok( !$thread->thread->is_joinable, 'Thread is not is_joinable' );
+	ok( !$thread->thread->is_detached, 'Thread is not is_detached' );
 
 	# Instruct the master to stop, and give it a brief time to do so.
 	ok( $thread->stop, '->stop ok' );
 	TRACE("Pausing to allow clean thread stop...") if DEBUG;
 	sleep 1;
-	ok( !$thread->is_running,  'Thread is not is_running' );
-	ok( $thread->is_joinable,  'Thread is_joinable' );
-	ok( !$thread->is_detached, 'Thread is not is_detached' );
+	ok( !$thread->thread->is_running,  'Thread is not is_running' );
+	ok( $thread->thread->is_joinable,  'Thread is_joinable' );
+	ok( !$thread->thread->is_detached, 'Thread is not is_detached' );
 
 	# Join the thread
 	$thread->thread->join;

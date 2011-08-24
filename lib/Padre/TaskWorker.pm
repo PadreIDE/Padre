@@ -78,10 +78,9 @@ sub queue {
 sub spawn {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $wid  = $self->{wid};
 
 	# Spawn the object into the thread and enter the main runloop
-	$WID2TID{$wid} = threads->create(
+	$WID2TID{ $self->{wid} } = threads->create(
 		{ context => 'void' },
 		sub {
 			shift->run;
@@ -100,31 +99,6 @@ sub tid {
 sub thread {
 	TRACE( $_[0] ) if DEBUG;
 	threads->object( $_[0]->tid );
-}
-
-sub join {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->thread->join;
-}
-
-sub is_thread {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->tid == threads->self->tid;
-}
-
-sub is_running {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->thread->is_running;
-}
-
-sub is_joinable {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->thread->is_joinable;
-}
-
-sub is_detached {
-	TRACE( $_[0] ) if DEBUG;
-	$_[0]->thread->is_detached;
 }
 
 
