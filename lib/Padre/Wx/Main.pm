@@ -1897,6 +1897,7 @@ sub change_style {
 	my $self    = shift;
 	my $name    = shift;
 	my $private = shift;
+	my $lock    = $self->lock('CONFIG');
 	Padre::Wx::Editor::data( $name, $private );
 	foreach my $editor ( $self->editors ) {
 		$editor->padre_setup;
@@ -1904,7 +1905,6 @@ sub change_style {
 
 	# Save editor style configuration
 	$self->config->set( editor_style => $name );
-	$self->config->write;
 
 	return;
 }
@@ -1923,6 +1923,7 @@ the new locale.
 sub change_locale {
 	my $self = shift;
 	my $name = shift;
+	my $lock = $self->lock('CONFIG');
 	unless ( defined $name ) {
 		$name = Padre::Locale::system_rfc4646 || Padre::Locale::last_resort_rfc4646;
 	}
@@ -1930,7 +1931,6 @@ sub change_locale {
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );
-	$self->config->write;
 
 	# Reset the locale
 	delete $self->{locale};
@@ -5866,14 +5866,13 @@ return value.
 
 sub on_toggle_lockinterface {
 	my $self   = shift;
-	my $config = $self->config;
+	my $lock   = $self->lock('CONFIG');
 
-	# Update and save configuration
-	$config->apply(
+	# Update setting
+	$self->config->apply(
 		'main_lockinterface',
 		$self->menu->view->{lockinterface}->IsChecked ? 1 : 0,
 	);
-	$config->write;
 
 	return;
 }
