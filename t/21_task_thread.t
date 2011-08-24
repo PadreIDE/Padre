@@ -68,7 +68,7 @@ SCOPE: {
 	# Instruct the master to shutdown, and give it a brief time to do so.
 	ok( $thread->stop, '->stop ok' );
 	TRACE("Pausing to allow clean thread shutdown...") if DEBUG;
-	sleep 0.1;
+	sleep 0.5;
 	ok( !$thread->is_running,  'Thread is not is_running' );
 	ok( $thread->is_joinable,  'Thread is_joinable' );
 	ok( !$thread->is_detached, 'Thread is not is_detached' );
