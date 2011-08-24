@@ -2453,33 +2453,6 @@ sub _show_syntaxcheck {
 
 =pod
 
-=head2 Search and Replace
-
-=head3 C<find_dialog>
-
-    $main->find_dialog;
-
-Show the find dialog, escalating from the fast find if needed
-
-=cut
-
-sub find_dialog {
-	my $self = shift;
-	my $term = '';
-
-	# Close the fast find panel if it was open
-	if ( $self->has_findfast ) {
-
-	}
-
-	# Create the find dialog.
-	my $find = $self->find;
-
-
-}
-
-=pod
-
 =head2 Introspection
 
 The following methods allow to poke into Padre's internals.
@@ -3260,6 +3233,31 @@ search and replace functions and dialogs.
 
 However, they still represent abstract logic and should NOT be tied directly to
 keystroke or menu events.
+
+=head3 C<find_dialog>
+
+    $main->find_dialog;
+
+Show the find dialog, escalating from the fast find if needed
+
+=cut
+
+sub find_dialog {
+	my $self = shift;
+	my $term = '';
+
+	# Close the fast find panel if it was open
+	if ( $self->has_findfast ) {
+
+	}
+
+	# Create the find dialog.
+	my $find = $self->find;
+
+
+}
+
+=pod
 
 =head3 C<search_next>
 
