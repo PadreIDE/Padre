@@ -40,13 +40,6 @@ sub master_running {
 	!!$SINGLETON;
 }
 
-# Handle master initialisation
-sub import {
-	if ( defined $_[1] and $_[1] eq ':master' ) {
-		$_[0]->master;
-	}
-}
-
 
 
 
@@ -299,7 +292,7 @@ sub cancel {
 	if (DEBUG) {
 		TRACE( $_[0] );
 		if ( defined $_[1]->[0] ) {
-			TRACE("Discarding message '$_[1]->[0]'");
+			TRACE("Discarding cancel '$_[1]->[0]'");
 		} else {
 			TRACE("Discarding undefined message");
 		}

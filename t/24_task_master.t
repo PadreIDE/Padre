@@ -21,14 +21,11 @@ BEGIN {
 		exit 0;
 	}
 }
-plan tests => 7;
+plan tests => 8;
 
 use_ok('Test::NoWarnings');
-use_ok( 'Padre::TaskWorker', ':master' );
-
-# Do we start with one thread as expected
-sleep 0.1;
-is( scalar( threads->list ), 1, 'One thread exists' );
+use_ok('Padre::TaskWorker');
+is( scalar( threads->list ), 0, 'No threads exists' );
 
 # Fetch the master, is it the existing one?
 my $master1 = Padre::TaskWorker->master;
@@ -36,3 +33,6 @@ my $master2 = Padre::TaskWorker->master;
 isa_ok( $master1, 'Padre::TaskWorker' );
 isa_ok( $master2, 'Padre::TaskWorker' );
 is( $master1->wid, $master2->wid, 'Masters match' );
+
+sleep 0.1;
+is( scalar( threads->list ), 1, 'One thread exists' );
