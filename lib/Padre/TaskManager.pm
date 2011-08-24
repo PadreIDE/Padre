@@ -221,7 +221,7 @@ sub stop {
 	# act only on the basis of whether or not a master thread is running.
 	if ($Padre::TaskWorker::VERSION) {
 		if ( Padre::TaskWorker->master_running ) {
-			Padre::TaskWorker->master->stop;
+			Padre::TaskWorker->master->send_stop;
 		}
 	}
 
@@ -304,7 +304,7 @@ sub cancel {
 			next unless defined $handle->{worker};
 			next unless $worker->{wid} == $handle->{worker};
 			TRACE("Sending 'cancel' message to worker $worker->{wid}") if DEBUG;
-			$worker->send('cancel');
+			$worker->send_cancel;
 			return 1;
 		}
 	}
@@ -342,9 +342,7 @@ sub start_worker {
 
 	# Start the worker via the master.
 	my $worker = Padre::TaskWorker->new;
-	Padre::TaskWorker->master->send(
-		start_child => $worker,
-	);
+	Padre::TaskWorker->master->send_child($worker);
 	push @{ $self->{workers} }, $worker;
 	return $worker;
 }
@@ -365,15 +363,14 @@ sub stop_worker {
 	my $self   = shift;
 	my $worker = delete $self->{workers}->[ $_[0] ];
 	if ( $worker->handle ) {
-
-		# Tell the worker to abandon what it is doing if it can
+		# Tell the worker to abandon what it is doing
 		if (DEBUG) {
 			my $tid = $worker->tid;
 			TRACE("Sending 'cancel' message to thread '$tid' before stopping");
 		}
-		$worker->send('cancel');
+		$worker->send_cancel;
 	}
-	$worker->stop;
+	$worker->send_stop;
 	return 1;
 }
 

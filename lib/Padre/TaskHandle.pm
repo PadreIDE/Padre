@@ -326,16 +326,22 @@ sub poll {
 	my $queue = $self->{queue} or return;
 
 	# Fetch from the queue until we run out of messages or get a cancel
-	while ( my $message = $queue->dequeue1_nb ) {
-		if ( $message->[0] eq 'cancel' ) {
+	while ( my $item = $queue->dequeue1_nb ) {
+		# Handle a valid parent -> task message
+		if ( $item->[0] eq 'message' ) {
+			my $message = Storable::thaw($item->[1]);
+			push @$inbox, $message;
+			next;
+		}
 
-			# Once we have a cancel message stop processing all
-			# other inbound messages as they aren't for us.
+		# Handle aborting the task
+		if ( $item->[0] eq 'cancel' ) {
 			$self->{cancelled} = 1;
 			delete $self->{queue};
 			next;
 		}
-		push @$inbox, $message;
+
+		die "Unknown or unexpected message type '$item->[0]'";
 	}
 
 	return;
@@ -351,18 +357,23 @@ sub wait {
 	return if @$inbox;
 
 	# Fetch the next message from the queue, blocking if needed
-	my $message = $queue->dequeue1;
-	if ( $message->[0] eq 'cancel' ) {
+	my $item = $queue->dequeue1;
 
-		# Once we have a cancel message stop processing all
-		# other inbound messages as they aren't for us.
+	# Handle a valid parent -> task message
+	if ( $item->[0] eq 'message' ) {
+		my $message = Storable::thaw($item->[1]);
+		push @$inbox, $message;
+		return;
+	}
+
+	# Handle aborting the task
+	if ( $item->[0] eq 'cancel' ) {
 		$self->{cancelled} = 1;
 		delete $self->{queue};
-		next;
+		return;
 	}
-	push @$inbox, $message;
 
-	return;
+	die "Unknown or unexpected message type '$item->[0]'";
 }
 
 sub cancel {
@@ -420,13 +431,15 @@ sub tell_parent {
 sub tell_child {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
+
 	if ( $self->child ) {
 		# Add the message directly to the inbox
 		my $inbox = $self->{inbox} or next;
 		push @$inbox, [ @_ ];
 	} else {
-		$self->worker->send( 'message', @_ );
+		$self->worker->send_message(@_);
 	}
+
 	return 1;
 }
 

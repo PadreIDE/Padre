@@ -64,7 +64,7 @@ SCOPE: {
 	ok( !$worker->thread->is_detached, 'Worker is not is_detached' );
 
 	# Shut down the worker but leave the master running
-	ok( $worker->stop, '->stop ok' );
+	ok( $worker->send_stop, '->send_stop ok' );
 	TRACE("Pausing to allow worker thread shutdown...") if DEBUG;
 	sleep 0.1;
 	ok( $master->thread->is_running,   'Master is_running' );

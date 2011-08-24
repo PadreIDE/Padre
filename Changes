@@ -54,6 +54,9 @@ the even version for the release, even during development.
       have been moved into the task class from the task handle class (ADAMK)
     - Padre::Task::running is now Padre::Task::is_child, which is what it really
       meant in the first place (ADAMK)
+    - Padre::TaskThread was folded down into Padre::TaskWorker (ADAMK)
+    - Padre::TaskWorker::send split into specialised methods (ADAMK)
+    - Task child to parent messaging now unified as tell_**** (ADAMK)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)

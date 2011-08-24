@@ -65,7 +65,7 @@ SCOPE: {
 	ok( !$thread->thread->is_detached, 'Thread is not is_detached' );
 
 	# Instruct the master to stop, and give it a brief time to do so.
-	ok( $thread->stop, '->stop ok' );
+	ok( $thread->send_stop, '->send_stop ok' );
 	TRACE("Pausing to allow clean thread stop...") if DEBUG;
 	sleep 1;
 	ok( !$thread->thread->is_running,  'Thread is not is_running' );

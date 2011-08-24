@@ -15,7 +15,8 @@ use Padre::TaskQueue ();
 # use Padre::Logger;
 use constant DEBUG => 0;
 
-our $VERSION = '0.91';
+our $VERSION    = '0.91';
+our $COMPATIBLE = '0.91';
 
 # Worker id sequence, so identifiers will be available in objects
 # across all instances and threads before the thread has been spawned.
@@ -110,24 +111,14 @@ sub thread {
 ######################################################################
 # Parent Thread Methods
 
-sub send {
-	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
-	my $method = shift;
-	unless ( $self->can($method) ) {
-		die("Attempted to send message to non-existant method '$method'");
-	}
-
-	# Add the message to the queue
-	TRACE("Calling enqueue '$method'") if DEBUG;
-	$self->{queue}->enqueue( [ $method, @_ ] );
-	TRACE("Completed enqueue '$method'") if DEBUG;
-
-	return 1;
+# Send the worker down to (presumably) the slave master
+sub send_child {
+	TRACE( $_[1] ) if DEBUG;
+	shift->{queue}->enqueue( [ 'child' => shift ] );
 }
 
 sub send_task {
-	TRACE( $_[0] ) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	my $self   = shift;
 	my $handle = shift;
 
@@ -138,26 +129,29 @@ sub send_task {
 
 	# Send the message to the child
 	TRACE( "Handle " . $handle->hid . " being sent to worker " . $self->wid ) if DEBUG;
-	$self->send( 'task', $handle->as_array );
+	$self->{queue}->enqueue( [ 'task' => $handle->as_array ] );
 }
 
-# Add a worker object to the pool, spawning it from the master
-sub start {
+sub send_message {
+	TRACE( $_[1] ) if DEBUG;
+	my $self = shift;
+
+	# Freeze the who-knows-what-it-contains message for transport
+	require Storable;
+	my $message = Storable::nfreeze( \@_ );
+
+	$self->{queue}->enqueue( [ 'message' => $message ] );
+}
+
+sub send_cancel {
 	TRACE( $_[0] ) if DEBUG;
-	shift->send( 'start_child', @_ );
+	shift->{queue}->enqueue( [ 'cancel' ] );
 }
 
 # Immediately detach and terminate when queued jobs are completed
-sub stop {
+sub send_stop {
 	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
-	my $thread = $self->thread;
-	if ( defined $thread ) {
-		TRACE("Thread is still alive") if DEBUG;
-	} else {
-		TRACE("No thread object...?") if DEBUG;
-	}
-	$self->send('stop_child');
+	shift->{queue}->enqueue( [ 'stop' ] );
 }
 
 
@@ -195,18 +189,19 @@ sub run {
 	return;
 }
 
+
+
+
+
+######################################################################
+# Child Thread Message Handlers
+
 # Spawn a worker object off the current thread
-sub start_child {
+sub child {
 	TRACE($_[0]) if DEBUG;
 	shift;
 	shift->spawn;
 	return 1;
-}
-
-# Stop the current child
-sub stop_child {
-	TRACE( $_[0] ) if DEBUG;
-	return 0;
 }
 
 # Execute a task
@@ -253,7 +248,7 @@ sub task {
 # task should be discarded with no consequence.
 sub message {
 	TRACE( $_[0] ) if DEBUG;
-	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
+	TRACE("Discarding unexpected message") if DEBUG;
 	return 1;
 }
 
@@ -269,6 +264,12 @@ sub cancel {
 		}
 	}
 	return 1;
+}
+
+# Stop the current child
+sub stop {
+	TRACE( $_[0] ) if DEBUG;
+	return 0;
 }
 
 1;
