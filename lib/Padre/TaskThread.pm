@@ -60,6 +60,7 @@ sub new {
 	bless {
 		wid   => ++$SEQUENCE,
 		queue => Padre::TaskQueue->new,
+		seen  => { },
 		},
 		$_[0];
 }
@@ -167,6 +168,27 @@ sub send {
 	return 1;
 }
 
+sub send_task {
+	TRACE( $_[0] ) if DEBUG;
+	my $self   = shift;
+	my $handle = shift;
+
+	# Tracking for the relationship between the worker and task handle
+	$handle->worker( $self->wid );
+	$self->{handle} = $handle->hid;
+	$self->{seen}->{ $handle->class } += 1;
+
+	# Send the message to the child
+	TRACE( "Handle " . $handle->hid . " being sent to worker " . $self->wid ) if DEBUG;
+	$self->send( 'task', $handle->as_array );
+}
+
+sub handle {
+	my $self = shift;
+	$self->{handle} = shift if @_;
+	return $self->{handle};
+}
+
 # Add a worker object to the pool, spawning it from the master
 sub start {
 	TRACE( $_[0] ) if DEBUG;
@@ -223,13 +245,6 @@ sub run {
 	return;
 }
 
-
-
-
-
-######################################################################
-# Message Handlers
-
 # Spawn a worker object off the current thread
 sub start_child {
 	TRACE($_[0]) if DEBUG;
@@ -256,8 +271,62 @@ sub stop_child {
 # Execute a task
 sub task {
 	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+
+	# Deserialize the task handle
+	TRACE("Loading Padre::TaskHandle") if DEBUG;
 	require Padre::TaskHandle;
-	Padre::TaskHandle->from_array( $_[1] );
+	TRACE("Inflating handle object") if DEBUG;
+	my $handle = Padre::TaskHandle->from_array(shift);
+
+	# Execute the task (ignore the result) and signal as we go
+	local $@;
+	eval {
+		# Tell our parent we are starting
+		TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
+		$handle->start($self->queue);
+
+		# Set up to receive thread kill signals
+		local $SIG{STOP} = sub {
+			die "Task aborted due to SIGSTOP from parent thread";
+		};
+
+		# Call the handle's run method
+		TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
+		$handle->run;
+
+		# Tell our parent we completed successfully
+		TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
+		$handle->stop;
+	};
+	if ($@) {
+		delete $handle->{queue};
+		delete $handle->{child};
+		TRACE($@) if DEBUG;
+	}
+
+	return 1;
+}
+
+# Any messages that arrive when we are NOT actively running a task
+# should be discarded with no consequence.
+sub message {
+	TRACE( $_[0] ) if DEBUG;
+	TRACE("Discarding message '$_[1]->[0]'") if DEBUG;
+}
+
+# A cancel request that arrives when we are NOT active running a task
+# should be discarded with no consequence.
+sub cancel {
+	if (DEBUG) {
+		TRACE( $_[0] );
+		if ( defined $_[1]->[0] ) {
+			TRACE("Discarding message '$_[1]->[0]'");
+		} else {
+			TRACE("Discarding undefined message");
+		}
+	}
+	return 1;
 }
 
 
