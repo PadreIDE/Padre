@@ -5865,8 +5865,8 @@ return value.
 =cut
 
 sub on_toggle_lockinterface {
-	my $self   = shift;
-	my $lock   = $self->lock('CONFIG');
+	my $self = shift;
+	my $lock = $self->lock('CONFIG');
 
 	# Update setting
 	$self->config->apply(
