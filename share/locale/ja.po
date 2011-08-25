@@ -1810,7 +1810,7 @@ msgid ""
 "Error deleting %s:\n"
 "%s"
 msgstr ""
-%sを削除できません:\n"
+"%sを削除できません:\n"
 "%s"
 
 #: lib/Padre/Wx/Main.pm:5540
