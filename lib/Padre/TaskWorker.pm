@@ -120,6 +120,7 @@ sub is_thread {
 sub send_child {
 	TRACE( $_[1] ) if DEBUG;
 	shift->{queue}->enqueue( [ 'child' => shift ] );
+	return 1;
 }
 
 sub send_task {
@@ -135,6 +136,7 @@ sub send_task {
 	# Send the message to the child
 	TRACE( "Handle " . $handle->hid . " being sent to worker " . $self->wid ) if DEBUG;
 	$self->{queue}->enqueue( [ 'task' => $handle->as_array ] );
+	return 1;
 }
 
 sub send_message {
@@ -146,17 +148,20 @@ sub send_message {
 	my $message = Storable::nfreeze( \@_ );
 
 	$self->{queue}->enqueue( [ 'message' => $message ] );
+	return 1;
 }
 
 sub send_cancel {
 	TRACE( $_[0] ) if DEBUG;
 	shift->{queue}->enqueue( [ 'cancel' ] );
+	return 1;
 }
 
 # Immediately detach and terminate when queued jobs are completed
 sub send_stop {
 	TRACE( $_[0] ) if DEBUG;
 	shift->{queue}->enqueue( [ 'stop' ] );
+	return 1;
 }
 
 
