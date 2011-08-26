@@ -12,7 +12,7 @@ use t::lib::Padre;
 # See ticket #1132
 my @strings = (
 	q(msgid "Open in File Browser"),               # File/Open/
-	q(msgid "Clear Selection Marks"),              # Edit/Select/
+	q(msgid "&Clear Selection Marks"),             # Edit/Select/
 	q(msgid "&Full Screen"),                       # View/
 	q(msgid "Quick Menu Access..."),               # Search/
 	q(msgid "Check for Common (Beginner) Errors"), # Perl/
