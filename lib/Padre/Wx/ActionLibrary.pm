@@ -201,7 +201,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name       => 'file.open',
 		id         => Wx::ID_OPEN,
-		label      => _T('&Open'),
+		label      => _T('&Open...'),
 		comment    => _T('Browse directory of the current document to open one or several files'),
 		shortcut   => 'Ctrl-O',
 		toolbar    => 'actions/document-open',
@@ -1850,7 +1850,7 @@ sub init {
 	Padre::Wx::Action->new(
 		name        => 'perl.rename_variable',
 		need_editor => 1,
-		label       => _T('&Rename Variable'),
+		label       => _T('&Rename Variable...'),
 		comment     => _T('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		shortcut    => 'Shift-Alt-R',
 		menu_event  => sub {
