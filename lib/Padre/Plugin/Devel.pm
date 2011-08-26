@@ -81,8 +81,8 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		Wx::gettext('Run Document inside Padre')  => 'eval_document',
-		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
+		Wx::gettext('Run &Document inside Padre')  => 'eval_document',
+		Wx::gettext('Run &Selection inside Padre') => 'eval_selection',
 
 		'---' => undef,
 

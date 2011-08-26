@@ -45,7 +45,7 @@ sub new {
 	my $edit_select = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Select'),
+		Wx::gettext('&Select'),
 		$edit_select
 	);
 
@@ -84,7 +84,7 @@ sub new {
 	my $edit_copy = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Copy Specials'),
+		Wx::gettext('Cop&y Specials'),
 		$edit_copy
 	);
 
@@ -183,7 +183,7 @@ sub new {
 	$self->{convert_encoding} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Convert Encoding'),
+		Wx::gettext('Convert &Encoding'),
 		$self->{convert_encoding}
 	);
 
@@ -205,7 +205,7 @@ sub new {
 	$self->{convert_nl} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Convert Line Endings'),
+		Wx::gettext('Convert &Line Endings'),
 		$self->{convert_nl}
 	);
 
@@ -228,7 +228,7 @@ sub new {
 	$self->{tabs} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Tabs and Spaces'),
+		Wx::gettext('Tabs and S&paces'),
 		$self->{tabs},
 	);
 
@@ -258,7 +258,7 @@ sub new {
 	$self->{case} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Upper/Lower Case'),
+		Wx::gettext('Upper/Lo&wer Case'),
 		$self->{case},
 	);
 
@@ -278,7 +278,7 @@ sub new {
 	$self->{diff} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Diff Tools'),
+		Wx::gettext('Di&ff Tools'),
 		$self->{diff},
 	);
 

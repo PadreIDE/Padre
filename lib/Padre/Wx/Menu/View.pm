@@ -87,7 +87,7 @@ sub new {
 		$self->{view_as_highlighting} = Wx::Menu->new;
 		$self->Append(
 			-1,
-			Wx::gettext("View Document As..."),
+			Wx::gettext("&View Document As..."),
 			$self->{view_as_highlighting}
 		);
 
@@ -166,7 +166,7 @@ sub new {
 		$self->{fontsize} = Wx::Menu->new;
 		$self->Append(
 			-1,
-			Wx::gettext('Font Size'),
+			Wx::gettext('Font Si&ze'),
 			$self->{fontsize}
 		);
 
@@ -198,7 +198,7 @@ sub new {
 	$self->{language} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Language'),
+		Wx::gettext('Lan&guage'),
 		$self->{language}
 	);
 

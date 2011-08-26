@@ -51,7 +51,7 @@ sub new {
 	$self->{live} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Live Support"),
+		Wx::gettext("&Live Support"),
 		$self->{live}
 	);
 
