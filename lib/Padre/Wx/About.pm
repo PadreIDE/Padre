@@ -252,7 +252,7 @@ sub _content_translators {
             <b>$language{'nl-nl'}</b><br>
             Dirk De Nijs<br>
             <br>
-            <b>$language{'fr-fr'}</b><br>
+            <b>$language{'fr'}</b><br>
             Jérôme Quelin<br>
             Olivier Mengué<br>
           </p>

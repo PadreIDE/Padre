@@ -270,18 +270,18 @@ BEGIN {
 			iso639    => 'fr',
 			iso3166   => 'CA',
 			wxid      => Wx::LANGUAGE_FRENCH_CANADIAN,
-			fallback  => ['fr-fr'],
+			fallback  => ['fr'],
 			supported => 0,
 		},
 
-		'fr-fr' => {
+		'fr' => {
 			# Simplify until there's another French
 			# gettext   => 'French (France)',
 			# utf8text  => 'Français (France)',
 			gettext   => _T('French'),
 			utf8text  => 'Français',
 			iso639    => 'fr',
-			iso3166   => 'FR',
+			iso3166   => undef,
 			wxid      => Wx::LANGUAGE_FRENCH,
 			fallback  => [],
 			supported => 1,
