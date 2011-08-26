@@ -104,6 +104,11 @@ sub thread {
 	threads->object( $_[0]->tid );
 }
 
+sub is_thread {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->tid == threads->self->tid;
+}
+
 
 
 
