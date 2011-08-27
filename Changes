@@ -48,16 +48,6 @@ the even version for the release, even during development.
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
     - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
-    - Padre::Task objects are no longer aware they are being surrounded by a
-      Padre::TaskHandle, breaking compatibility for much cleaner encapsulation.
-      The ->handle method has been removed. Status messages now go via
-      Padre::Task::status and messages go via Padre::Task::message both of whom
-      have been moved into the task class from the task handle class (ADAMK)
-    - Padre::Task::running is now Padre::Task::is_child, which is what it really
-      meant in the first place (ADAMK)
-    - Padre::TaskThread was folded down into Padre::TaskWorker (ADAMK)
-    - Padre::TaskWorker::send split into specialised methods (ADAMK)
-    - Task child to parent messaging now unified as tell_**** (ADAMK)
     - Rename internal language code 'fr-fr' to 'fr' (and .po files) for
       consistency with other softwares, breaking old fr-fr files (DOLMEN)
 
