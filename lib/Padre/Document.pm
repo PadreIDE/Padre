@@ -1076,13 +1076,14 @@ Returns nothing.
 
 Cf. C<Padre::Document::Perl> for an example.
 
-=head2 C<event_on_right_down>
+=head2 C<event_on_context_menu>
 
 NOT IMPLEMENTED IN THE BASE CLASS
 
-This method - if implemented - is called when a user right-clicks in an
-editor to open a context menu and after the standard context menu was
-created and populated in the C<Padre::Wx::Editor> class.
+This method - if implemented - is called when a user triggers the context menu
+(either by right-click or the context menu key or Shift+F10) in an editor after
+the standard context menu was created and populated in the C<Padre::Wx::Editor>
+class.
 By manipulating the menu document classes may provide the user with
 additional options.
 

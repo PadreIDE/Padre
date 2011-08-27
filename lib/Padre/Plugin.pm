@@ -374,11 +374,12 @@ sub highlighting_mime_types {
 
 If implemented in a plug-in, this method will be called when a
 context menu is about to be displayed either because the user
-pressed the right mouse button in the editor window (C<Wx::MouseEvent>)
-or because the C<Right-click> menu entry was selected in the C<Window>
-menu (C<Wx::CommandEvent>). The context menu object was created
-and populated by the Editor and then possibly augmented by the
-C<Padre::Document> type (see L<Padre::Document/event_on_right_down>).
+triggered the event right in the editor window (with a right click
+or Shift+F10 or the context menu key) or because the C<Context Menu>
+menu entry was selected in the C<Window> menu (C<Wx::CommandEvent>).
+The context menu object was created and populated by the Editor and
+then possibly augmented by the C<Padre::Document> type
+(see L<Padre::Document/event_on_context_menu>).
 
 Parameters retrieved are the objects for the document, the editor, the
 context menu (C<Wx::Menu>) and the event.

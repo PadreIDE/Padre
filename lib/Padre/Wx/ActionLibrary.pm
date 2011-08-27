@@ -2587,6 +2587,7 @@ sub init {
 	);
 
 
+	# FIXME change "right click" into "context menu"
 	Padre::Wx::Action->new(
 		name        => 'window.right_click',
 		label       => _T('Right Click'),
@@ -2595,7 +2596,7 @@ sub init {
 		need_editor => 1,
 		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
-			$editor->on_right_down( $_[1] );
+			$editor->on_context_menu( $_[1] );
 		},
 	);
 

@@ -125,8 +125,8 @@ sub new {
 	if ($document) {
 		$self->AppendSeparator;
 
-		if ( $document->can('event_on_right_down') ) {
-			$document->event_on_right_down( $editor, $self, $event );
+		if ( $document->can('event_on_context_menu') ) {
+			$document->event_on_context_menu( $editor, $self, $event );
 		}
 
 		# Let the plugins have a go

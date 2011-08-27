@@ -63,8 +63,10 @@ sub new {
 			$self->on_list_item_activated( $_[1], $main, $editor );
 		},
 	);
-	Wx::Event::EVT_RIGHT_DOWN(
-		$self, \&on_right_down,
+	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
+	Wx::Event::EVT_CONTEXT_MENU(
+	#Wx::Event::EVT_CONTEXT_MENU(
+		$self, \&on_context_menu,
 	);
 
 	$self->{line_count} = scalar(@$lines);
@@ -204,13 +206,14 @@ sub relocale {
 
 =pod
 
-=head3 C<on_right_down>
+=head3 C<on_context_menu>
 
-Called when the user presses a right click or a context menu key (on Win32).
+Called when the user ask for the context menu (either a right click
+or the context menu key (Win32, GTK), or Shift+F10).
 
 =cut
 
-sub on_right_down {
+sub on_context_menu {
 	my ( $self, $event ) = @_;
 
 	return if $self->GetItemCount == 0;

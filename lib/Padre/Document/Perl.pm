@@ -1466,7 +1466,7 @@ sub _pod {
 # Our opportunity to implement a context-sensitive right-click menu
 # This would be a lot more powerful if we used PPI, but since that would
 # slow things down beyond recognition, we use heuristics for now.
-sub event_on_right_down {
+sub event_on_context_menu {
 	my $self   = shift;
 	my $editor = shift;
 	my $menu   = shift;

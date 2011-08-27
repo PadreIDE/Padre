@@ -179,7 +179,9 @@ sub new {
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_left_double );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
-	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
+	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
+	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_context_menu );
+	#Wx::Event::EVT_CONTEXT_MENU( $self, \&on_context_menu );
 
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
@@ -459,7 +461,7 @@ sub on_middle_up {
 	}
 }
 
-sub on_right_down {
+sub on_context_menu {
 	my $self  = shift;
 	my $event = shift;
 	my $main  = $self->main;
