@@ -46,6 +46,7 @@ the even version for the release, even during development.
     - Add more _ shortcuts in menus. Sorry to translators (DOLMEN)
     - on_right_click becomes on_context_menu as a first step to support the
       context menu key or Shift+F10 as alternatives (DOLMEN)
+    - Only show the GTL splash screen once per version change on GTK (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

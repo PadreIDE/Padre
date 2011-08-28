@@ -172,7 +172,10 @@ sub write {
 	# NOTE: Use a hyper-minimalist listified key/value file format
 	# so that we don't need to load YAML::Tiny before the thread fork.
 	# This should save around 400k of memory per background thread.
-	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
+	my %startup = (
+		VERSION => $VERSION,
+		map { $_ => $self->$_() } sort keys %STARTUP
+	);
 	open( my $FILE, '>', Padre::Constant::CONFIG_STARTUP ) or return 1;
 	print $FILE map {"$_\n$startup{$_}\n"} sort keys %startup or return 1;
 	close $FILE or return 1;

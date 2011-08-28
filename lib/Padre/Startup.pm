@@ -30,6 +30,7 @@ writing the F<startup.yml> file.
 use 5.008005;
 use strict;
 use warnings;
+use File::Spec      ();
 use Padre::Constant ();
 
 our $VERSION = '0.91';
@@ -55,6 +56,7 @@ sub startup {
 		threads                  => 1,
 		threads_stacksize        => 0,
 		startup_splash           => 0,
+		VERSION                  => 0,
 	);
 
 	# Load and overlay the startup.yml file
@@ -86,7 +88,6 @@ sub startup {
 				}
 			}
 			foreach my $file (@ARGV) {
-				require File::Spec;
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -120,60 +121,67 @@ sub startup {
 		Padre::TaskWorker->master;
 	}
 
+	# Don't show the splash screen if they user doesn't want it
+	return 1 unless $setting{startup_splash};
+
+	# Don't show the splash screen during testing otherwise
+	# it will spoil the flashy surprise when they upgrade.
+	if ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
+		return 1;
+	}
+
+	# The splash screen seems to be unusually slow on GTK
+	# and significantly slows down startup. So on this platform
+	# we only show the splash screen once when the version changes.
+	if ( Padre::Constant::UNIX and $setting{VERSION} eq $VERSION ) {
+		return 1;
+	}
+
 	# Show the splash image now we are starting a new instance
 	# Shows Padre's splash screen if this is the first time
 	# It is saved as BMP as it seems (from wxWidgets documentation)
 	# that it is the most portable format (and we don't need to
 	# call Wx::InitAllImageHeaders() or whatever)
-	if ( $setting{startup_splash} ) {
-
-		# Don't show the splash screen during testing otherwise
-		# it will spoil the flashy surprise when they upgrade.
-		unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
-			require File::Spec;
-
-			# Find the base share directory
-			my $share = undef;
-			if ( $ENV{PADRE_DEV} ) {
-				require FindBin;
-				no warnings;
-				$share = File::Spec->catdir(
-					$FindBin::Bin,
-					File::Spec->updir,
-					'share',
-				);
-			} else {
-				require File::ShareDir;
-				$share = File::ShareDir::dist_dir('Padre');
-			}
-
-			# Locate the splash image without resorting to the use
-			# of any Padre::Util functions whatsoever.
-			my $splash = File::Spec->catfile( $share, 'padre-splash-ccnc.bmp' );
-
-			# Use CCNC-licensed version if it exists and fallback
-			# to the boring splash so that we can bundle it in
-			# Debian without their packaging team needing to apply
-			# any custom patches to the code, just delete the file.
-			unless ( -f $splash ) {
-				$splash = File::Spec->catfile(
-					$share, 'padre-splash.bmp',
-				);
-			}
-
-			# Load just enough modules to get Wx bootstrapped
-			# to the point it can show the splash screen.
-			require Wx;
-			$SPLASH = Wx::SplashScreen->new(
-				Wx::Bitmap->new(
-					$splash,
-					Wx::wxBITMAP_TYPE_BMP()
-				),
-				Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
-				3500, undef, -1
-			);
-		}
+	# Start by finding the base share directory.
+	my $share = undef;
+	if ( $ENV{PADRE_DEV} ) {
+		require FindBin;
+		no warnings;
+		$share = File::Spec->catdir(
+			$FindBin::Bin,
+			File::Spec->updir,
+			'share',
+		);
+	} else {
+		require File::ShareDir;
+		$share = File::ShareDir::dist_dir('Padre');
 	}
+
+	# Locate the splash image without resorting to the use
+	# of any Padre::Util functions whatsoever.
+	my $splash = File::Spec->catfile( $share, 'padre-splash-ccnc.bmp' );
+
+	# Use CCNC-licensed version if it exists and fallback
+	# to the boring splash so that we can bundle it in
+	# Debian without their packaging team needing to apply
+	# any custom patches to the code, just delete the file.
+	unless ( -f $splash ) {
+		$splash = File::Spec->catfile(
+			$share, 'padre-splash.bmp',
+		);
+	}
+
+	# Load just enough modules to get Wx bootstrapped
+	# to the point it can show the splash screen.
+	require Wx;
+	$SPLASH = Wx::SplashScreen->new(
+		Wx::Bitmap->new(
+			$splash,
+			Wx::wxBITMAP_TYPE_BMP()
+		),
+		Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
+		3500, undef, -1
+	);
 
 	return 1;
 }
