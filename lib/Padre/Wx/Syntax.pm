@@ -377,9 +377,12 @@ sub render {
 	my $text_length = $editor->GetTextLength;
 	if($text_length > 0) {
 		# Clear all indicators...
-		if($editor->can('IndicatorClearRange')) {
+		if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange')) {
 			# Using modern indicator API if available
-			$editor->IndicatorClearRange( 0, $text_length - 1);
+			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
+			$editor->IndicatorClearRange( 0, $text_length);
+			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->IndicatorClearRange( 0, $text_length);
 		} else {
 			# Or revert to the old deprecated method
 			$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
