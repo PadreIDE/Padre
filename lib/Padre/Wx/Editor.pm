@@ -1691,8 +1691,15 @@ sub smart_highlight_show {
 	# smart highlight if there are more than one occurrence...
 	if ( scalar @{ $self->{styles} } > 1 ) {
 		foreach my $style ( @{ $self->{styles} } ) {
-			$self->StartStyling( $style->{start}, 0xFF );
-			$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
+			if($self->can('SetIndicatorCurrent') and $self->can('IndicatorFillRange')) {
+				# New modern way of using indicators
+				$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+				$self->IndicatorFillRange($style->{start}, $style->{len});
+			} else {
+				# Old deprecated method of using indicators. TODO remove once stable
+				$self->StartStyling( $style->{start}, 0xFF );
+				$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
+			}
 		}
 	}
 
@@ -1703,9 +1710,16 @@ sub smart_highlight_hide {
 
 	my @styles = @{ $self->{styles} };
 	if ( scalar @styles ) {
-		foreach my $style (@styles) {
-			$self->StartStyling( $style->{start}, 0xFF );
-			$self->SetStyling( $style->{len}, $style->{style} );
+		if($self->can('SetIndicatorCurrent') and $self->can('IndicatorClearRange')) {
+			# New modern way of using indicators
+			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+			my $text_length = $self->GetTextLength - 1;
+			$self->IndicatorClearRange(0, $text_length) if $text_length > 0;
+		} else {
+			foreach my $style (@styles) {
+				$self->StartStyling( $style->{start}, 0xFF );
+				$self->SetStyling( $style->{len}, $style->{style} );
+			}
 		}
 		$#{ $self->{styles} } = -1;
 	}
