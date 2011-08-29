@@ -53,7 +53,7 @@ need to be delayed until a new background worker can be spawned, or for longer
 if the maximum background worker limit has been reached.
 
 The solution is provided by the C<on_message> handler, which is passed the
-parent task object as its first paramater.
+parent task object as its first parameter.
 
 Tasks which expect to be sent messages from their owner should send the owner
 a greeting message as soon as they have started. Not only does this let the

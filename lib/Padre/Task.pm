@@ -188,7 +188,7 @@ In addition to defining a set of method for you to provide as the task
 implementer, the base class also provides implements a "task ownership" system
 in the base class that you may use for nearly no cost in terms of code.
 
-This task owner system will consume three paramters.
+This task owner system will consume three parameters.
 
 The optional C<owner> parameter should be an object that inherits from the role
 L<Padre::Role::Task>. Message and finish events for this task will be forwarded
@@ -414,7 +414,7 @@ reference to a Wx element, and flatten it to the widget ID or contents of the
 widget instead.
 
 The C<prepare> method also gives your task object a chance to determine whether
-or not it is still necesary. In some situations the delay between C<new> and
+or not it is still necessary. In some situations the delay between C<new> and
 C<prepare> may be long enough that the task is no longer relevant, and so by
 the use of C<prepare> you can indicate execution should be aborted.
 
@@ -437,7 +437,7 @@ after deserialisation. It is where the actual computations and work for the
 task occurs.
 
 In many situations the implementation of run is simple and procedural, doing
-work based on input parameters stored on the object, blocking if necesary,
+work based on input parameters stored on the object, blocking if necessary,
 and storing the results of the computation on the object for transmission
 back to the parent thread.
 
