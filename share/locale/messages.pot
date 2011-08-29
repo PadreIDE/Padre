@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-29 04:10-0700\n"
+"POT-Creation-Date: 2011-08-29 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2299,12 +2299,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:425
+#: lib/Padre/Wx/Syntax.pm:428
 #, perl-format
 msgid "Found %d issue(s)"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:424
+#: lib/Padre/Wx/Syntax.pm:427
 #, perl-format
 msgid "Found %d issue(s) in %s"
 msgstr ""
@@ -2656,7 +2656,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:459
+#: lib/Padre/Wx/Syntax.pm:462
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -2980,12 +2980,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:412
+#: lib/Padre/Wx/Syntax.pm:415
 #, perl-format
 msgid "No errors or warnings found in %s."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:415
+#: lib/Padre/Wx/Syntax.pm:418
 msgid "No errors or warnings found."
 msgstr ""
 
