@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 04:10-0700\n"
+"POT-Creation-Date: 2011-08-28 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2071,7 +2071,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:447 lib/Padre/MimeTypes.pm:456
+#: lib/Padre/MimeTypes.pm:436 lib/Padre/MimeTypes.pm:445
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2440,7 +2440,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:468
+#: lib/Padre/MimeTypes.pm:457
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -2742,17 +2742,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:522
+#: lib/Padre/MimeTypes.pm:511
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:511 lib/Padre/MimeTypes.pm:544
+#: lib/Padre/MimeTypes.pm:500 lib/Padre/MimeTypes.pm:533
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:493
+#: lib/Padre/MimeTypes.pm:482
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3354,11 +3354,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:462 lib/Padre/Config.pm:1089
+#: lib/Padre/MimeTypes.pm:451 lib/Padre/Config.pm:1089
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:467 lib/Padre/Config.pm:1090
+#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1090
 msgid "PPI Standard"
 msgstr ""
 
@@ -4142,7 +4142,7 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:446 lib/Padre/MimeTypes.pm:455
+#: lib/Padre/MimeTypes.pm:435 lib/Padre/MimeTypes.pm:444
 #: lib/Padre/Config.pm:1088
 msgid "Scintilla"
 msgstr ""
@@ -4427,7 +4427,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:304
+#: lib/Padre/MimeTypes.pm:293
 msgid "Shell Script"
 msgstr ""
 
@@ -4716,7 +4716,7 @@ msgstr ""
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:463
+#: lib/Padre/MimeTypes.pm:452
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -4891,7 +4891,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:408
+#: lib/Padre/MimeTypes.pm:397
 msgid "Text"
 msgstr ""
 
@@ -5011,7 +5011,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:703
+#: lib/Padre/MimeTypes.pm:692
 msgid "UNKNOWN"
 msgstr ""
 
