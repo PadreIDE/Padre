@@ -1713,7 +1713,7 @@ sub smart_highlight_hide {
 		if($self->can('SetIndicatorCurrent') and $self->can('IndicatorClearRange')) {
 			# New modern way of using indicators
 			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
-			my $text_length = $self->GetTextLength - 1;
+			my $text_length = $self->GetTextLength;
 			$self->IndicatorClearRange(0, $text_length) if $text_length > 0;
 		} else {
 			foreach my $style (@styles) {
