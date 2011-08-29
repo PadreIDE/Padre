@@ -142,53 +142,53 @@ sub _initialize {
 	%DEFAULT_DOC_CLASS = (
 
 		#	'text/x-abc'                => ## \
-		'text/x-adasrc' => 'DoubleDashComment',
-		'text/x-asm'    => 'HashComment',
+		'text/x-adasrc' => 'Padre::Document::DoubleDashComment',
+		'text/x-asm'    => 'Padre::Document::HashComment',
 
 		#	'text/x-bat'                => ## REM
-		'application/x-bibtex' => 'PercentComment',
-		'text/x-c'             => 'DoubleSlashComment',
-		'text/x-c++src'        => 'DoubleSlashComment',
+		'application/x-bibtex' => 'Padre::Document::PercentComment',
+		'text/x-c'             => 'Padre::Document::DoubleSlashComment',
+		'text/x-c++src'        => 'Padre::Document::DoubleSlashComment',
 
 		#	'text/css'                  => ## /* ... */
-		'text/x-eiffel' => 'DoubleDashComment',
+		'text/x-eiffel' => 'Padre::Document::DoubleDashComment',
 
 		#	'text/x-forth'              => ## \
 		#	'text/x-fortran'            => ## !
 		#	'text/html'                 => ## <!-- ... -->
-		'application/javascript' => 'DoubleSlashComment',
-		'application/x-latex'    => 'PercentComment',
+		'application/javascript' => 'Padre::Document::DoubleSlashComment',
+		'application/x-latex'    => 'Padre::Document::PercentComment',
 
 		#	'application/x-lisp'        => ## ;
-		'application/x-shellscript' => 'HashComment',
-		'text/x-java-source'        => 'DoubleSlashComment',
-		'text/x-lua'                => 'DoubleDashComment',
-		'text/x-makefile'           => 'HashComment',
-		'text/x-matlab'             => 'PercentComment',
+		'application/x-shellscript' => 'Padre::Document::HashComment',
+		'text/x-java-source'        => 'Padre::Document::DoubleSlashComment',
+		'text/x-lua'                => 'Padre::Document::DoubleDashComment',
+		'text/x-makefile'           => 'Padre::Document::HashComment',
+		'text/x-matlab'             => 'Padre::Document::PercentComment',
 
 		#	'text/x-pascal'             => ## { ... }
-		'application/x-perl' => 'Perl',
+		'application/x-perl' => 'Padre::Document::Perl',
 
 		#	'application/x-psgi'        => ## Perl or HashComment or something else?
-		'text/x-python' => 'HashComment',
+		'text/x-python' => 'Padre::Document::HashComment',
 
-		'application/x-php'  => 'HashComment',
-		'application/x-ruby' => 'HashComment',
+		'application/x-php'  => 'Padre::Document::HashComment',
+		'application/x-ruby' => 'Padre::Document::HashComment',
 
-		'text/x-sql' => 'DoubleDashComment',
+		'text/x-sql' => 'Padre::Document::DoubleDashComment',
 
 		#	'text/vbscript'             => ## '
-		'text/x-config' => 'HashComment',
+		'text/x-config' => 'Padre::Document::HashComment',
 
 		#	'text/xml'                  => ## <!-- ... -->
-		'text/x-yaml'         => 'HashComment',
-		'application/x-perl6' => 'HashComment',
+		'text/x-yaml'         => 'Padre::Document::HashComment',
+		'application/x-perl6' => 'Padre::Document::HashComment',
 
 		#       'text/x-perlxs'             => ## ' #'
 		#	'text/x-perltt'             => ## <!-- ... -->
-		'text/x-csharp' => 'DoubleSlashComment',
+		'text/x-csharp' => 'Padre::Document::DoubleSlashComment',
 
-		'text/x-pod' => 'POD',
+		'text/x-pod' => 'Padre::Document::POD',
 	);
 
 	%HIGHLIGHTER_CONFIG = (
@@ -433,7 +433,7 @@ sub _initialize {
 
 	foreach my $type ( keys %DEFAULT_DOC_CLASS ) {
 		if ( exists $MIME{$type} ) {
-			$MIME{$type}->{class} = 'Padre::Document::' . $DEFAULT_DOC_CLASS{$type};
+			$MIME{$type}->{class} = $DEFAULT_DOC_CLASS{$type};
 		} else {
 			warn "Unknown MIME type: $type\n";
 		}
@@ -528,7 +528,7 @@ sub reset_mime_class {
 	}
 
 	if ( exists $DEFAULT_DOC_CLASS{$type} ) {
-		$MIME{$type}->{class} = 'Padre::Document::' . $DEFAULT_DOC_CLASS{$type};
+		$MIME{$type}->{class} = $DEFAULT_DOC_CLASS{$type};
 	} else {
 		delete $MIME{$type}->{class};
 	}
