@@ -47,6 +47,8 @@ the even version for the release, even during development.
     - on_right_click becomes on_context_menu as a first step to support the
       context menu key or Shift+F10 as alternatives (DOLMEN)
     - Only show the GTL splash screen once per version change on GTK (ADAMK)
+    - Fix freeze when opening an empty *saved* Perl script while the syntax
+      checker is active (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
