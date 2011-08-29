@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 20:10-0700\n"
+"POT-Creation-Date: 2011-08-29 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1808,7 +1808,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:446 lib/Padre/Wx/Editor.pm:809
+#: lib/Padre/Document.pm:446 lib/Padre/Wx/Editor.pm:820
 #: lib/Padre/Wx/Main.pm:4904 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:277
@@ -2269,7 +2269,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1582
+#: lib/Padre/Wx/Editor.pm:1593
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2299,12 +2299,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:416
+#: lib/Padre/Wx/Syntax.pm:425
 #, perl-format
 msgid "Found %d issue(s)"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:415
+#: lib/Padre/Wx/Syntax.pm:424
 #, perl-format
 msgid "Found %d issue(s) in %s"
 msgstr ""
@@ -2656,7 +2656,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:442
+#: lib/Padre/Wx/Syntax.pm:459
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -2980,12 +2980,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:403
+#: lib/Padre/Wx/Syntax.pm:412
 #, perl-format
 msgid "No errors or warnings found in %s."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:406
+#: lib/Padre/Wx/Syntax.pm:415
 msgid "No errors or warnings found."
 msgstr ""
 
@@ -5308,7 +5308,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1566
+#: lib/Padre/Wx/Editor.pm:1577
 msgid "You must select a range of lines"
 msgstr ""
 
