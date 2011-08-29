@@ -190,6 +190,17 @@ sub new {
 			| Wx::wxSTC_MOD_DELETETEXT );
 	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
 
+	if($self->can('SetIndicatorCurrent')) {
+		# Hook up with scintilla modern indicator API
+		Wx::Event::EVT_STC_INDICATOR_CLICK( $self, $self, sub {
+			#print "EVT_STC_INDICATOR_CLICK triggered\n";
+		} );
+
+		Wx::Event::EVT_STC_INDICATOR_RELEASE( $self, $self, sub {
+			#print "EVT_STC_INDICATOR_RELEASE triggered\n";
+		} );
+	}
+
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them

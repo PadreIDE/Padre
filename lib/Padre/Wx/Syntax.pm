@@ -376,9 +376,15 @@ sub render {
 
 	my $text_length = $editor->GetTextLength;
 	if($text_length > 0) {
-		# Clear all indicators
-		$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
-		$editor->SetStyling( $text_length - 1, 0 );
+		# Clear all indicators...
+		if($editor->can('IndicatorClearRange')) {
+			# Using modern indicator API if available
+			$editor->IndicatorClearRange( 0, $text_length - 1);
+		} else {
+			# Or revert to the old deprecated method
+			$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
+			$editor->SetStyling( $text_length - 1, 0 );
+		}
 	}
 
 	# NOTE: Recolor the document to make sure we do not accidentally
@@ -436,8 +442,16 @@ sub render {
 		my $end    = $editor->GetLineEndPosition($line);
 
 		# Change only the indicators
-		$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
-		$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
+		if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorFillRange')) {
+			# Using modern indicator API if available
+			$editor->SetIndicatorCurrent( $is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->IndicatorFillRange( $indent, $end - $indent );
+		} else {
+			# Or revert to the old deprecated method
+			print "You shouldnt be here\n";
+			$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
+			$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
+		}
 
 		my $item = $self->{tree}->AppendItem(
 			$root,
