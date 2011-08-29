@@ -374,9 +374,12 @@ sub render {
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
 
-	# Clear all indicators
-	$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
-	$editor->SetStyling( $editor->GetTextLength - 1, 0 );
+	my $text_length = $editor->GetTextLength;
+	if($text_length > 0) {
+		# Clear all indicators
+		$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
+		$editor->SetStyling( $text_length - 1, 0 );
+	}
 
 	# NOTE: Recolor the document to make sure we do not accidentally
 	# remove syntax highlighting while syntax checking
