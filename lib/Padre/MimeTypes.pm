@@ -140,55 +140,44 @@ sub _initialize {
 	);
 
 	%DEFAULT_DOC_CLASS = (
-
-		#	'text/x-abc'                => ## \
-		'text/x-adasrc' => 'Padre::Document::DoubleDashComment',
-		'text/x-asm'    => 'Padre::Document::HashComment',
-
-		#	'text/x-bat'                => ## REM
-		'application/x-bibtex' => 'Padre::Document::PercentComment',
-		'text/x-c'             => 'Padre::Document::DoubleSlashComment',
-		'text/x-c++src'        => 'Padre::Document::DoubleSlashComment',
-
-		#	'text/css'                  => ## /* ... */
-		'text/x-eiffel' => 'Padre::Document::DoubleDashComment',
-
-		#	'text/x-forth'              => ## \
-		#	'text/x-fortran'            => ## !
-		#	'text/html'                 => ## <!-- ... -->
-		'application/javascript' => 'Padre::Document::DoubleSlashComment',
-		'application/x-latex'    => 'Padre::Document::PercentComment',
-
-		#	'application/x-lisp'        => ## ;
+		'text/x-adasrc'             => 'Padre::Document::DoubleDashComment',
+		'text/x-asm'                => 'Padre::Document::HashComment',
+		'application/x-bibtex'      => 'Padre::Document::PercentComment',
+		'text/x-c'                  => 'Padre::Document::DoubleSlashComment',
+		'text/x-c++src'             => 'Padre::Document::DoubleSlashComment',
+		'text/x-eiffel'             => 'Padre::Document::DoubleDashComment',
+		'application/javascript'    => 'Padre::Document::DoubleSlashComment',
+		'application/x-latex'       => 'Padre::Document::PercentComment',
 		'application/x-shellscript' => 'Padre::Document::HashComment',
 		'text/x-java-source'        => 'Padre::Document::DoubleSlashComment',
 		'text/x-lua'                => 'Padre::Document::DoubleDashComment',
 		'text/x-makefile'           => 'Padre::Document::HashComment',
 		'text/x-matlab'             => 'Padre::Document::PercentComment',
+		'application/x-perl'        => 'Padre::Document::Perl',
+		'text/x-python'             => 'Padre::Document::HashComment',
+		'application/x-php'         => 'Padre::Document::HashComment',
+		'application/x-ruby'        => 'Padre::Document::HashComment',
+		'text/x-sql'                => 'Padre::Document::DoubleDashComment',
+		'text/x-config'             => 'Padre::Document::HashComment',
+		'text/x-yaml'               => 'Padre::Document::HashComment',
+		'application/x-perl6'       => 'Padre::Document::HashComment',
+		'text/x-csharp'             => 'Padre::Document::DoubleSlashComment',
+		'text/x-pod'                => 'Padre::Document::POD',
 
-		#	'text/x-pascal'             => ## { ... }
-		'application/x-perl' => 'Padre::Document::Perl',
-
-		#	'application/x-psgi'        => ## Perl or HashComment or something else?
-		'text/x-python' => 'Padre::Document::HashComment',
-
-		'application/x-php'  => 'Padre::Document::HashComment',
-		'application/x-ruby' => 'Padre::Document::HashComment',
-
-		'text/x-sql' => 'Padre::Document::DoubleDashComment',
-
-		#	'text/vbscript'             => ## '
-		'text/x-config' => 'Padre::Document::HashComment',
-
-		#	'text/xml'                  => ## <!-- ... -->
-		'text/x-yaml'         => 'Padre::Document::HashComment',
-		'application/x-perl6' => 'Padre::Document::HashComment',
-
-		#       'text/x-perlxs'             => ## ' #'
-		#	'text/x-perltt'             => ## <!-- ... -->
-		'text/x-csharp' => 'Padre::Document::DoubleSlashComment',
-
-		'text/x-pod' => 'Padre::Document::POD',
+		# Unimplemented special comment types
+		# 'text/x-abc'                => ## \
+		# 'text/x-bat'                => ## REM
+		# 'text/css'                  => ## /* ... */
+		# 'text/x-forth'              => ## \
+		# 'text/x-fortran'            => ## !
+		# 'text/html'                 => ## <!-- ... -->
+		# 'application/x-lisp'        => ## ;
+		# 'text/x-pascal'             => ## { ... }
+		# 'application/x-psgi'        => ## Perl or HashComment or something else?
+		# 'text/vbscript'             => ## '
+		# 'text/x-perlxs'             => ## ' #'
+		# 'text/x-perltt'             => ## <!-- ... -->
+		# 'text/xml'                  => ## <!-- ... -->
 	);
 
 	%HIGHLIGHTER_CONFIG = (
