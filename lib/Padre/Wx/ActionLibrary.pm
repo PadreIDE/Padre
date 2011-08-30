@@ -2590,7 +2590,7 @@ sub init {
 	# FIXME change "right click" into "context menu"
 	Padre::Wx::Action->new(
 		name        => 'window.right_click',
-		label       => _T('Right Click'),
+		label       => _T('&Right Click'),
 		comment     => _T('Imitate clicking on the right mouse button'),
 		shortcut    => 'Alt-/',
 		need_editor => 1,
@@ -2604,7 +2604,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',
-		label      => _T('Go to Functions Window'),
+		label      => _T('Go to &Functions Window'),
 		comment    => _T('Set the focus to the "Functions" window'),
 		shortcut   => 'Alt-N',
 		menu_event => sub {
@@ -2618,7 +2618,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name    => 'window.goto_todo_window',
-		label   => _T('Go to Todo Window'),
+		label   => _T('Go to &Todo Window'),
 		comment => _T('Set the focus to the "Todo" window'),
 
 		#shortcut   => 'Alt-T', # conflicts with the Tools menu
@@ -2631,7 +2631,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_outline_window',
-		label      => _T('Go to Outline Window'),
+		label      => _T('Go to O&utline Window'),
 		comment    => _T('Set the focus to the "Outline" window'),
 		shortcut   => 'Alt-L',
 		menu_event => sub {
@@ -2642,7 +2642,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_output_window',
-		label      => _T('Go to Output Window'),
+		label      => _T('Go to Ou&tput Window'),
 		comment    => _T('Set the focus to the "Output" window'),
 		shortcut   => 'Alt-O',
 		menu_event => sub {
@@ -2653,7 +2653,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_syntax_check_window',
-		label      => _T('Go to Syntax Check Window'),
+		label      => _T('Go to S&yntax Check Window'),
 		comment    => _T('Set the focus to the "Syntax Check" window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
@@ -2664,7 +2664,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_command_line_window',
-		label      => _T('Go to Command Line Window'),
+		label      => _T('Go to &Command Line Window'),
 		comment    => _T('Set the focus to the "Command Line" window'),
 		shortcut   => 'Alt-Z',
 		menu_event => sub {
@@ -2675,7 +2675,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_main_window',
-		label      => _T('Go to Main Window'),
+		label      => _T('Go to &Main Window'),
 		comment    => _T('Set the focus to the main editor window'),
 		shortcut   => 'Alt-M',
 		menu_event => sub {
@@ -2758,7 +2758,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name    => 'help.win32_questions',
-		label   => _T('Win32 Questions (English)'),
+		label   => _T('&Win32 Questions (English)'),
 		comment => _T(
 			      'Open the Perl/Win32 live support chat in your web browser '
 				. 'and talk to others who may help you with your problem'
