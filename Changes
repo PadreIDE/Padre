@@ -50,6 +50,7 @@ the even version for the release, even during development.
     - Fix freeze when opening an empty *saved* Perl script while the syntax
       checker is active (AZAWAWI)
     - #1207: PluginHooks not removed after plugin reload/disable (mj41)
+    - Padre::File::HTTP: less colloquial English (ZENOG)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
