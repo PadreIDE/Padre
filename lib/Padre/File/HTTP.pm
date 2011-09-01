@@ -158,8 +158,8 @@ sub write {
 	if ( !$WRITE_WARNING_DONE ) {
 		Padre::Current->main->error(
 			Wx::gettext(
-				      "You're going to write a file using HTTP PUT.\n"
-					. "This is highly experimental and not supported by most servers!"
+				      "You are going to write a file using HTTP PUT.\n"
+					. "This is highly experimental and not supported by most servers."
 			)
 		);
 		$WRITE_WARNING_DONE = 1;
