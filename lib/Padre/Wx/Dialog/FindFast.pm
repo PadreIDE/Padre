@@ -87,7 +87,7 @@ sub _find {
 		my $search = Padre::Search->new(
 			find_case    => $self->{case}->GetValue,
 			find_regex   => 0,
-			find_reverse => 0,
+			find_reverse => $self->{backward},
 			find_term    => $find_term,
 		);
 
