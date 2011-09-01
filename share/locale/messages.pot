@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-30 16:10-0700\n"
+"POT-Creation-Date: 2011-09-01 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5316,18 +5316,18 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
+#: lib/Padre/File/HTTP.pm:161
+msgid ""
+"You are going to write a file using HTTP PUT.\n"
+"This is highly experimental and not supported by most servers."
+msgstr ""
+
 #: lib/Padre/Wx/Editor.pm:1577
 msgid "You must select a range of lines"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3660
 msgid "You still have a running process. Do you want to kill it and exit?"
-msgstr ""
-
-#: lib/Padre/File/HTTP.pm:161
-msgid ""
-"You're going to write a file using HTTP PUT.\n"
-"This is highly experimental and not supported by most servers!"
 msgstr ""
 
 #: lib/Padre/CPAN.pm:185
