@@ -346,7 +346,7 @@ sub disable {
 			next if $hook->[0] eq $self->object;
 			push @new_list, $hook;
 		}
-		$self->{hooks}->{$hookname} = \@new_list;
+		$manager->{hooks}->{$hookname} = \@new_list;
 	}
 
 	# Update the status
