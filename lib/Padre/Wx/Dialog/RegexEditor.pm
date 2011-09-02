@@ -454,7 +454,11 @@ sub _insert_regex {
 	my ($modifiers) = $self->_get_modifier_settings;
 
 	my $editor = $self->current->editor or return;
-	$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$modifiers" );
+	if ( $self->{replace_checkbox}->IsChecked ) {
+		$editor->InsertText( $editor->GetCurrentPos, "s/$match_part/$replace_part/$modifiers" );
+	} else {
+		$editor->InsertText( $editor->GetCurrentPos, "m/$match_part/$modifiers" );
+	}
 
 	return;
 }

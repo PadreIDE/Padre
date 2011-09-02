@@ -56,6 +56,7 @@ the even version for the release, even during development.
     - update_pot_file.pl: add --verbose and --nocleanup for easier debugging
       (ZENOG)
     - #1313: Search previous button acts as next (KAARE)
+    - regex editor: insert m// operator when replace field is not visible (ZENOG)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
