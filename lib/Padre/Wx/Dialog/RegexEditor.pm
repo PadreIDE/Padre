@@ -260,13 +260,13 @@ sub _create_controls {
 	$self->{result_label} = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # otherwise arrows will not work on win32
 	);
 
 	$self->{result_label}->Hide;
 	$self->{result_text}->Hide;
 
-	# Insert regex into current document button_name
+	# Insert regex into current document
 	$self->{insert_button} = Wx::Button->new(
 		$self, -1, Wx::gettext('Insert'),
 	);
