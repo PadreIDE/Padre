@@ -285,7 +285,6 @@ sub refresh {
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
-	$self->{duplicate}->Enable($document);
 	if (Padre::Constant::WIN32) {
 
 		#Win32
@@ -299,7 +298,6 @@ sub refresh {
 		$self->{open_in_command_line}->Enable(0);
 	}
 	$self->{close}->Enable($document);
-	$self->{delete}->Enable($document);
 	$self->{close_all}->Enable($document);
 	$self->{close_all_but_current}->Enable($document);
 	$self->{reload_file}->Enable($document);
