@@ -44,8 +44,6 @@ the even version for the release, even during development.
     - Padre::Wx::App will use Wx internal singleton logic instead of duplicating
       it again for itself (ADAMK)
     - Add more _ shortcuts in menus. Sorry to translators (DOLMEN)
-    - on_right_click becomes on_context_menu as a first step to support the
-      context menu key or Shift+F10 as alternatives (DOLMEN)
     - Only show the GTL splash screen once per version change on GTK (ADAMK)
     - Fix freeze when opening an empty *saved* Perl script while the syntax
       checker is active (AZAWAWI)
@@ -65,6 +63,8 @@ the even version for the release, even during development.
     - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
     - Rename internal language code 'fr-fr' to 'fr' (and .po files) for
       consistency with other softwares, breaking old fr-fr files (DOLMEN)
+    - on_right_click becomes on_context_menu as a first step to support the
+      context menu key or Shift+F10 as alternatives (DOLMEN)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)
