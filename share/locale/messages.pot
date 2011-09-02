@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 00:10-0700\n"
+"POT-Creation-Date: 2011-09-02 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:474
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:478
 msgid "\".\" also matches newline"
 msgstr ""
 
@@ -32,7 +32,7 @@ msgid ""
 "and open the same files next time you launch Padre."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:478
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:482
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
 msgstr ""
 
@@ -1002,7 +1002,7 @@ msgstr ""
 msgid "Case &sensitive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:470
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:474
 msgid "Case-insensitive matching"
 msgstr ""
 
@@ -1794,7 +1794,7 @@ msgstr ""
 msgid "Email and confirmation do not match."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:649
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:653
 msgid "Empty regex"
 msgstr ""
 
@@ -2065,11 +2065,11 @@ msgstr ""
 msgid "Expression:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:481
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:485
 msgid "Extended (&x)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:483
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:487
 msgid ""
 "Extended regular expressions allow free formatting (whitespace is ignored) "
 "and comments"
@@ -2164,7 +2164,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:390
+#: lib/Padre/Wx/Menu/File.pm:388
 #, perl-format
 msgid "File %s not found."
 msgstr ""
@@ -2416,7 +2416,7 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:486
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:490
 msgid "Global (&g)"
 msgstr ""
 
@@ -2530,7 +2530,7 @@ msgstr ""
 msgid "If within a subroutine, run till return is called and then stop."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:469
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:473
 msgid "Ignore case (&i)"
 msgstr ""
 
@@ -2869,17 +2869,17 @@ msgstr ""
 msgid "Match exactly m times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:675
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:679
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:686
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:690
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:695
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:699
 #, perl-format
 msgid "Match with 0 width at character %s"
 msgstr ""
@@ -2932,7 +2932,7 @@ msgstr ""
 msgid "Move to other panel"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:477
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:481
 msgid "Multi-line (&m)"
 msgstr ""
 
@@ -3054,7 +3054,7 @@ msgstr ""
 msgid "No filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:714
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:718
 msgid "No match"
 msgstr ""
 
@@ -3240,7 +3240,7 @@ msgstr ""
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:391
+#: lib/Padre/Wx/Menu/File.pm:389
 msgid "Open cancelled"
 msgstr ""
 
@@ -3966,7 +3966,7 @@ msgstr ""
 msgid "Replace With"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:487
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:491
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
@@ -3975,7 +3975,7 @@ msgstr ""
 msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:759
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:763
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""
@@ -4712,7 +4712,7 @@ msgstr ""
 msgid "Simulate Background &Exception"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:473
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:477
 msgid "Single-line (&s)"
 msgstr ""
 
