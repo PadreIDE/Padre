@@ -703,7 +703,7 @@ sub run {
 			my $pos = 0;
 			foreach my $char (@chars) {
 				if ( $pos == $match_start ) {
-					$self->{matched_text}->BeginTextColour(Wx::RED);
+					$self->{matched_text}->BeginTextColour(Wx::BLUE);
 					$self->{matched_text}->BeginUnderline;
 				} elsif ( $pos == $match_end ) {
 					$self->{matched_text}->EndTextColour;
