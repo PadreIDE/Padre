@@ -11,15 +11,15 @@ use t::lib::Padre;
 # a few sample strings some of them disappeard from messages.pot during the release of 0.82
 # See ticket #1132
 my @strings = (
-	q(msgid "Open in File Browser"),               # File/Open/
-	q(msgid "&Clear Selection Marks"),             # Edit/Select/
-	q(msgid "&Full Screen"),                       # View/
-	q(msgid "Quick Menu Access..."),               # Search/
-	q(msgid "Check for Common (Beginner) Errors"), # Perl/
-	q(msgid "Find Unmatched Brace"),               # Perl/
-	q(msgid "Move POD to __END__"),                # Refactor/
-	q(msgid "Run Script"),                         # Run/
-	q(msgid "Dump the Padre object to STDOUT"),    # internal
+	q(msgid "Open in File Browser"),                # File/Open/
+	q(msgid "&Clear Selection Marks"),              # Edit/Select/
+	q(msgid "Full Sc&reen"),                        # View/
+	q(msgid "&Quick Menu Access..."),               # Search/
+	q(msgid "&Check for Common (Beginner) Errors"), # Perl/
+	q(msgid "Find Unmatched &Brace"),               # Perl/
+	q(msgid "&Move POD to __END__"),                # Refactor/
+	q(msgid "&Run Script"),                         # Run/
+	q(msgid "Dump the Padre object to STDOUT"),     # internal
 
 	q("The file %s you are trying to open is %s bytes large. It is over the "), # Padre::Document
 	q("arbitrary file size limit of Padre which is currently %s. Opening this file "),
