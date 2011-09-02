@@ -192,14 +192,6 @@ sub new {
 
 	### End of reload submenu
 
-	$self->{duplicate} = $self->add_menu_action(
-		'file.duplicate',
-	);
-
-	$self->{delete} = $self->add_menu_action(
-		'file.delete',
-	);
-
 	$self->AppendSeparator;
 
 	# Save files
