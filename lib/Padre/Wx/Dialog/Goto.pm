@@ -197,7 +197,7 @@ sub _on_ok_button {
 	$self->Hide;
 
 	if ( $value !~ m{^\d+$} ) {
-		Padre::Current::_CURRENT->main->error( Wx::gettext('Not a positive number!') );
+		Padre::Current::_CURRENT->main->error( Wx::gettext('Not a positive number.') );
 		return;
 	}
 
@@ -260,7 +260,7 @@ sub _validate {
 
 	# Should be an integer number
 	if ( $value !~ /^\d+$/ ) {
-		$self->{status_line}->SetLabel( Wx::gettext('Not a positive number!') );
+		$self->{status_line}->SetLabel( Wx::gettext('Not a positive number.') );
 		$self->{button_ok}->Enable(0);
 		return;
 	}
@@ -269,7 +269,7 @@ sub _validate {
 	my $editor = $self->current->editor;
 	my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
 	if ( $value == 0 or $value > $max_value ) {
-		$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
+		$self->{status_line}->SetLabel( Wx::gettext('Out of range.') );
 		$self->{button_ok}->Enable(0);
 
 		return;
