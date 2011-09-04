@@ -36,7 +36,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Goto'),
+		Wx::gettext('Go to'),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::RESIZE_BORDER | Wx::SYSTEM_MENU | Wx::CAPTION | Wx::CLOSE_BOX
@@ -83,7 +83,7 @@ sub _create_controls {
 
 	# Line or position choice
 	$self->{line_mode} = Wx::RadioBox->new(
-		$self,                 -1, Wx::gettext('Position type'),
+		$self,               -1, Wx::gettext('Position type'),
 		Wx::DefaultPosition, Wx::DefaultSize,
 		[ Wx::gettext('Line number'), Wx::gettext('Character position') ]
 	);
@@ -104,7 +104,7 @@ sub _create_controls {
 
 	# Main button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
+	$button_sizer->Add( $self->{button_ok},     1, 0,        0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::LEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
