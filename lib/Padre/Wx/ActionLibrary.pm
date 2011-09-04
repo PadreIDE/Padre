@@ -445,7 +445,7 @@ sub init {
 		name        => 'file.save_intuition',
 		id          => -1,
 		need_editor => 1,
-		label       => _T('Save Intuition'),
+		label       => _T('Save &Intuition'),
 		comment     => _T('For new document try to guess the filename based on the file content and offer to save it.'),
 		shortcut    => 'Ctrl-Shift-S',
 		menu_event  => sub {
@@ -929,7 +929,7 @@ sub init {
 		need_editor    => 1,
 		need_selection => 0,
 		label          => _T('&Toggle Comment'),
-		comment        => _T('Comment out or remove comment out of selected lines in the document'),
+		comment        => _T('Comment out/remove comment for selected lines or the current line'),
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
@@ -941,8 +941,8 @@ sub init {
 		name           => 'edit.comment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => _T('&Comment Selected Lines'),
-		comment        => _T('Comment out selected lines in the document'),
+		label          => _T('&Comment Out'),
+		comment        => _T('Comment out selected lines or the current line'),
 		shortcut       => 'Ctrl-M',
 		menu_event     => sub {
 			$_[0]->on_comment_block('COMMENT');
@@ -953,8 +953,8 @@ sub init {
 		name           => 'edit.uncomment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => _T('&Uncomment Selected Lines'),
-		comment        => _T('Remove comment out of selected lines in the document'),
+		label          => _T('&Uncomment'),
+		comment        => _T('Remove comment for selected lines or the current line'),
 		shortcut       => 'Ctrl-Shift-M',
 		menu_event     => sub {
 			$_[0]->on_comment_block('UNCOMMENT');
