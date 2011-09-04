@@ -179,11 +179,11 @@ sub _create_panel {
 	Wx::Event::EVT_BUTTON( $main, $self->{next_text}, sub { $self->search('next') } );
 
 	# Case sensitivity
-	$self->{case} = Wx::CheckBox->new( $self->{panel}, -1, Wx::gettext('Case &insensitive') );
+	$self->{case} = Wx::CheckBox->new( $self->{panel}, -1, Wx::gettext('Case &sensitive') );
 	Wx::Event::EVT_CHECKBOX( $main, $self->{case}, sub { $self->_on_case_checked } );
 
 	# Place all controls
-	$self->{hbox}->Add( $self->{close},         0, Wx::ALIGN_CENTER_VERTICAL,              0 );
+	$self->{hbox}->Add( $self->{close},         0, Wx::ALIGN_CENTER_VERTICAL,            0 );
 	$self->{hbox}->Add( $self->{label},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT, 10 );
 	$self->{hbox}->Add( $self->{entry},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
 	$self->{hbox}->Add( $self->{previous},      0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
@@ -191,7 +191,7 @@ sub _create_panel {
 	$self->{hbox}->Add( $self->{next},          0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
 	$self->{hbox}->Add( $self->{next_text},     0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
 	$self->{hbox}->Add( $self->{case},          0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
-	$self->{hbox}->Add( 0,                      1, Wx::EXPAND,                             5 );
+	$self->{hbox}->Add( 0,                      1, Wx::EXPAND,                           5 );
 
 	$self->{panel}->SetSizer( $self->{hbox} );
 	$self->{panel}->Layout;
