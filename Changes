@@ -60,6 +60,7 @@ the even version for the release, even during development.
     - improved messages in Menu/File.pm, Goto.pm and ActionLibrary.pm (ZENOG)
     - FindFast.pm: 'Case insensitive'->'Case sensitive' to match actual behavior
       of the checkbox (ZENOG)
+    - Update German translation (ZENOG)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
