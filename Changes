@@ -55,8 +55,9 @@ the even version for the release, even during development.
       (ZENOG)
     - #1313: Search previous button acts as next (KAARE)
     - regex editor: insert m// operator when replace field is not visible (ZENOG)
-    - regex editor: highlight matched text in blue instead of read, not avoid
+    - regex editor: highlight matched text in blue instead of red, not avoid
       confusion with warnings (ZENOG)
+    - improved messages in Goto.pm and ActionLibrary.pm (ZENOG)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
