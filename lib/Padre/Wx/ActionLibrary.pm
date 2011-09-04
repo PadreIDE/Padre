@@ -2562,7 +2562,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name    => 'window.goto_previous_position',
-		label   => _T('&Goto previous position'),
+		label   => _T('&Go to previous position'),
 		comment => _T('Jump to the last position saved in memory'),
 
 		#shortcut    => '',
