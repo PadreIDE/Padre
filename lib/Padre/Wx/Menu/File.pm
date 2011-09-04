@@ -132,7 +132,7 @@ sub new {
 	my $file_close = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Close'),
+		Wx::gettext('&Close'),
 		$file_close,
 	);
 
