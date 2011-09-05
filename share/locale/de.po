@@ -998,7 +998,7 @@ msgstr "&Abbrechen"
 
 #: lib/Padre/Wx/Main.pm:5387
 msgid "Cannot diff if file was never saved"
-msgstr "Vergleich nicht möglich ohne vorheriges speichern"
+msgstr "Vergleich nicht möglich ohne vorheriges Speichern"
 
 #: lib/Padre/Wx/Main.pm:3882
 #, perl-format
@@ -1007,7 +1007,7 @@ msgstr "Verzeichnis kann nicht geöffnet werden: %s"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:27
 msgid "Cannot set bookmark in unsaved document"
-msgstr "Kann Lesezeichen nicht setzen in ungespeichertem Dokument"
+msgstr "Lesezeichen können in ungespeicherten Dokumenten nicht gesetzt werden"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:79 lib/Padre/Wx/Dialog/FindFast.pm:182
 msgid "Case &sensitive"
