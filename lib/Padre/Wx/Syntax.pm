@@ -93,8 +93,8 @@ sub new {
 	$self->{help}->Hide;
 
 	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$sizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 2 );
-	$sizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 2 );
+	$sizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 0 );
+	$sizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 0 );
 	$self->SetSizer($sizer);
 
 	# Additional properties
@@ -128,7 +128,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->on_tree_item_activated( $_[1] );
+			shift->on_tree_item_activated(@_);
 		},
 	);
 
@@ -136,7 +136,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->on_tree_item_selection_changed( $_[1] );
+			shift->on_tree_item_selection_changed(@_);
 		},
 	);
 
