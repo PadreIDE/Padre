@@ -1441,8 +1441,9 @@ sub refresh {
 		if ( defined $id and $id >= 0 ) {
 			$notebook->GetPage($id)->SetFocus;
 		}
+
 		# $self->aui->GetPane('notebook')->PaneBorder(0);
-	# } else {
+		# } else {
 		# $self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
@@ -5398,7 +5399,7 @@ sub on_diff {
 		return $self->error( Wx::gettext("Cannot diff if file was never saved") );
 	}
 
-	my $external_diff = $self->config->external_diff_tool;
+	my $external_diff = $self->config->bin_diff;
 	if ($external_diff) {
 		my $dir = File::Temp::tempdir( CLEANUP => 1 );
 		my $filename = File::Spec->catdir(
@@ -6675,7 +6676,7 @@ sub key_up {
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 	if ( $mod == Wx::MOD_CMD ) { # Ctrl
-		                       # Ctrl-TAB TO DO it is already in the menu
+		                         # Ctrl-TAB TO DO it is already in the menu
 		if ( $code == Wx::K_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
