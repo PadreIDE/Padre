@@ -61,6 +61,10 @@ the even version for the release, even during development.
     - FindFast.pm: 'Case insensitive'->'Case sensitive' to match actual behavior
       of the checkbox (ZENOG)
     - Update German translation (ZENOG)
+    - Directory tree search result rendering is now throttled to four updates
+      per second. This prevents tree updates exhausting all resources and
+      strangling user input, and seems to actually get the results onto screen
+      faster because there's less lock/render passes (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

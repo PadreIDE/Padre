@@ -24,8 +24,6 @@ our @ISA     = qw{
 	Wx::Panel
 };
 
-use constant TIMER_DIRECTORY => Wx::NewId();
-
 use Class::XSAccessor {
 	getters => {
 		root   => 'root',
@@ -106,6 +104,20 @@ sub new {
 		},
 	);
 
+	# Create the render interval timer when searching
+	$self->{find_timer_id} = Wx::NewId();
+	$self->{find_timer}    = Wx::Timer->new(
+		$self,
+		$self->{find_timer_id},
+	);
+	Wx::Event::EVT_TIMER(
+		$self,
+		$self->{find_timer_id},
+		sub {
+			$self->find_timer( $_[1], $_[2] );
+		},
+	);
+
 	# Create the search control menu
 	$search->SetMenu( $self->new_menu );
 
@@ -180,6 +192,16 @@ sub new_menu {
 
 ######################################################################
 # Padre::Role::Task Methods
+
+sub task_reset {
+	my $self = shift;
+
+	# As a convenience, reset any timers used by task message processing
+	$self->{find_timer}->Stop;
+
+	# Reset normally as well
+	$self->SUPER::task_reset(@_);
+}
 
 sub task_request {
 	my $self    = shift;
@@ -678,19 +700,11 @@ sub find {
 		filter     => $self->term,
 	);
 
-	# Create the find timer
-	$self->{find_timer} = Wx::Timer->new(
-		$self,
-		TIMER_DIRECTORY
-	);
-	Wx::Event::EVT_TIMER(
-		$self,
-		TIMER_DIRECTORY,
-		sub {
-			$self->find_timer( $_[1], $_[2] );
-		},
-	);
-	$self->{find_timer}->Start(1000);
+	# Set up the queue for result messages
+	$self->{find_queue} = [ ];
+
+	# Start the find render timer
+	$self->{find_timer}->Start(250);
 
 	# Make sure no existing files are listed
 	$self->{tree}->DeleteChildren( $self->{tree}->GetRootItem );
@@ -698,73 +712,18 @@ sub find {
 	return;
 }
 
+sub find_message {
+	TRACE( $_[2]->unix ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+	my $path = Params::Util::_INSTANCE( shift, 'Padre::Wx::Directory::Path' ) or return;
+	push @{$self->{find_queue}}, $path;
+}
+
 # We have hit a find_message render interval
 sub find_timer {
 	TRACE( $_[0] ) if DEBUG;
-}
-
-# Add any matching file to the tree
-sub find_message {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $task = shift;
-	my $file = Params::Util::_INSTANCE( shift, 'Padre::Wx::Directory::Path' ) or return;
-
-	# Find where we need to start creating nodes from
-	my $tree   = $self->tree;
-	my $cursor = $tree->GetRootItem;
-	my @base   = ();
-	my @dirs   = $file->path;
-	pop @dirs;
-	while (@dirs) {
-		my $name  = shift @dirs;
-		my $child = $tree->GetLastChild($cursor);
-		if ( $child->IsOk and $tree->GetPlData($child)->name eq $name ) {
-			$cursor = $child;
-			push @base, $name;
-		} else {
-			unshift @dirs, $name;
-			last;
-		}
-	}
-
-	# Will we need to expand anything at the end?
-	my $expand = @dirs ? $cursor : undef;
-
-	# Because this should never be called from inside some larger
-	# update locker, lets risk the use of our own more targetted locking
-	# instead of using the official main->lock functionality.
-	# Allow the lock to release naturally at the end of the method.
-	my $lock = $tree->scroll_lock;
-
-	# Create any new child directories
-	while (@dirs) {
-		my $name = shift @dirs;
-		my $path = Padre::Wx::Directory::Path->directory( @base, $name );
-		my $item = $tree->AppendItem(
-			$cursor,                      # Parent
-			$path->name,                  # Label
-			$tree->{images}->{folder},    # Icon
-			-1,                           # Wx identifier
-			Wx::TreeItemData->new($path), # Embedded data
-		);
-		$cursor = $item;
-		push @base, $name;
-	}
-
-	# Create the file itself
-	$tree->AppendItem(
-		$cursor,
-		$file->name,
-		$tree->{images}->{package},
-		-1,
-		Wx::TreeItemData->new($file),
-	);
-
-	# Expand anything we created.
-	$tree->ExpandAllChildren($expand) if $expand;
-
-	return 1;
+	$_[0]->find_render;
 }
 
 sub find_finish {
@@ -772,7 +731,79 @@ sub find_finish {
 	my $self = shift;
 	my $task = shift;
 
-	# Done... but we don't need to do anything
+	# Halt the render timer
+	$self->{find_timer}->Stop;
+
+	# Render any final results
+	$self->find_render;
+}
+
+# Add any matching file to the tree
+sub find_render {
+	TRACE( $_[0] ) if DEBUG;
+	my $self  = shift;
+	my $queue = $self->{find_queue};
+	return unless @$queue;
+
+	# Because this should never be called from inside some larger
+	# update locker, lets risk the use of our own more targetted locking
+	# instead of using the official main->lock functionality.
+	# Allow the lock to release naturally at the end of the method.
+	my $tree = $self->tree;
+	my $lock = $tree->scroll_lock;
+
+	# Add all outstanding files
+	foreach my $file ( @$queue  ) {
+		# Find where we need to start creating nodes from
+		my $cursor = $tree->GetRootItem;
+		my @base   = ();
+		my @dirs   = $file->path;
+		pop @dirs;
+		while (@dirs) {
+			my $name  = shift @dirs;
+			my $child = $tree->GetLastChild($cursor);
+			if ( $child->IsOk and $tree->GetPlData($child)->name eq $name ) {
+				$cursor = $child;
+				push @base, $name;
+			} else {
+				unshift @dirs, $name;
+				last;
+			}
+		}
+
+		# Will we need to expand anything at the end?
+		my $expand = @dirs ? $cursor : undef;
+
+		# Create any new child directories
+		while (@dirs) {
+			my $name = shift @dirs;
+			my $path = Padre::Wx::Directory::Path->directory( @base, $name );
+			my $item = $tree->AppendItem(
+				$cursor,                      # Parent
+				$path->name,                  # Label
+				$tree->{images}->{folder},    # Icon
+				-1,                           # Wx identifier
+				Wx::TreeItemData->new($path), # Embedded data
+			);
+			$cursor = $item;
+			push @base, $name;
+		}
+
+		# Create the file itself
+		$tree->AppendItem(
+			$cursor,
+			$file->name,
+			$tree->{images}->{package},
+			-1,
+			Wx::TreeItemData->new($file),
+		);
+
+		# Expand anything we created.
+		$tree->ExpandAllChildren($expand) if $expand;
+	}
+
+	# Reset the message queue
+	$self->{find_queue} = [ ];
 }
 
 
