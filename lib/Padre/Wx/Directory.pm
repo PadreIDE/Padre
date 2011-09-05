@@ -232,10 +232,13 @@ sub view_label {
 }
 
 sub view_close {
+	shift->main->show_directory(0);
+}
+
+sub view_stop {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->task_reset;
 	$_[0]->dwell_stop('on_text'); # Just in case
-	$_[0]->main->show_directory(0);
 }
 
 

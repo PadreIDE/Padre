@@ -3703,6 +3703,18 @@ sub on_close_window {
 	TRACE("MAIN WINDOW HIDDEN. PADRE APPEARS TO BE CLOSED TO USER") if DEBUG;
 
 	# Clean up our secondary windows
+	if ( $self->has_directory ) {
+		$self->directory->view_stop;
+	}
+	if ( $self->has_functions ) {
+		$self->functions->view_stop;
+	}
+	if ( $self->has_outline ) {
+		$self->outline->view_stop;
+	}
+	if ( $self->has_syntax ) {
+		$self->syntax->view_stop;
+	}
 	if ( $self->has_about ) {
 		$self->about->Destroy;
 	}
