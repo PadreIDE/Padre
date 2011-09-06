@@ -451,7 +451,6 @@ sub render {
 			$editor->IndicatorFillRange( $indent, $end - $indent );
 		} else {
 			# Or revert to the old deprecated method
-			print "You shouldnt be here\n";
 			$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
 			$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
 		}
