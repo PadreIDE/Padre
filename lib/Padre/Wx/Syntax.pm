@@ -316,9 +316,6 @@ sub recolour {
 
 		$self->{tree}->SetForegroundColour($foreground);
 		$self->{tree}->SetBackgroundColour($background);
-
-		# $self->{search}->SetForegroundColour($foreground);
-		# $self->{search}->SetBackgroundColour($background);
 	}
 
 	return 1;
