@@ -114,6 +114,7 @@ sub syntax {
 
 	# Shortcut: Handle the "no errors or warnings" case
 	if ( $stderr =~ /(.+?)\s+syntax OK\s+$/s ) {
+
 		# TODO pass $1 as a compile-time error?
 		return [];
 	}

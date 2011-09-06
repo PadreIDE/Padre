@@ -270,14 +270,16 @@ sub clear {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 
 		my $len = $editor->GetTextLength;
-		if($len > 0) {
-			if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange')) {
+		if ( $len > 0 ) {
+			if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange') ) {
+
 				# Using modern indicator API if available
 				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
-				$editor->IndicatorClearRange( 0, $len);
+				$editor->IndicatorClearRange( 0, $len );
 				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
-				$editor->IndicatorClearRange( 0, $len);
+				$editor->IndicatorClearRange( 0, $len );
 			} else {
+
 				# Or revert to the old deprecated method
 				$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
 				$editor->SetStyling( $len - 1, 0 );
@@ -338,7 +340,7 @@ sub refresh {
 	$self->task_reset;
 
 	# Hide the widgets when no files are open
-	unless ( $document ) {
+	unless ($document) {
 		$self->clear;
 		$tree->Hide;
 		return;
@@ -444,11 +446,14 @@ sub render {
 		my $end    = $editor->GetLineEndPosition($line);
 
 		# Change only the indicators
-		if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorFillRange')) {
+		if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorFillRange') ) {
+
 			# Using modern indicator API if available
-			$editor->SetIndicatorCurrent( $is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->SetIndicatorCurrent(
+				$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
 			$editor->IndicatorFillRange( $indent, $end - $indent );
 		} else {
+
 			# Or revert to the old deprecated method
 			$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
 			$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
