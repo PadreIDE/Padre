@@ -374,9 +374,9 @@ sub render {
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
 
+	# Clear out the warning and error indicators for a non-empty editor
 	my $text_length = $editor->GetTextLength;
 	if($text_length > 0) {
-		# Clear all indicators...
 		if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange')) {
 			# Using modern indicator API if available
 			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
