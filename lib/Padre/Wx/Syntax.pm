@@ -491,7 +491,6 @@ sub render {
 
 	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 		# Add annotations
-		use Data::Dumper; print Dumper(%annotations);
 		foreach my $line (sort keys %annotations) {
 			if($editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyle')) {
 				$editor->AnnotationSetText($line, $annotations{$line}{message});
