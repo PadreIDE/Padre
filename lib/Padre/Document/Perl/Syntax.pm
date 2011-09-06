@@ -112,13 +112,6 @@ sub syntax {
 		close $fh;
 	}
 
-	# Shortcut: Handle the "no errors or warnings" case
-	if ( $stderr =~ /(.+?)\s+syntax OK\s+$/s ) {
-
-		# TODO pass $1 as a compile-time error?
-		return [];
-	}
-
 	# Since we're not going to use -Mdiagnostics,
 	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
 	my @issues = Parse::ErrorString::Perl->new->parse_string($stderr);
