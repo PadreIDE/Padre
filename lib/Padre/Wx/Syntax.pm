@@ -465,14 +465,16 @@ sub render {
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
 		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+			my $message = $issue->message;
+			my $char_style = $is_warning ? sprintf('%c', Wx::wxSTC_PL_STRING) : sprintf('%c', Wx::wxSTC_PL_ERROR);
 			unless($annotations{$line}) {
 				$annotations{$line} = {
-					message => $issue->message,
-					#TODO add more proper styles for annotations instead of reusing stuff
-					style => $is_warning ? Wx::wxSTC_PL_STRING : Wx::wxSTC_PL_ERROR,
+					message => $message,
+					style => $char_style x  length($message),
 				};
 			} else {
-				$annotations{$line}{message} = $annotations{$line}{message} . "\n$issue->message";
+				$annotations{$line}{message} .= "\n$message";
+				$annotations{$line}{style} .= $char_style x (length($message) + 1);
 			}
 		}
 
@@ -492,9 +494,10 @@ sub render {
 	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 		# Add annotations
 		foreach my $line (sort keys %annotations) {
-			if($editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyle')) {
-				$editor->AnnotationSetText($line, $annotations{$line}{message});
-				$editor->AnnotationSetStyle($line, $annotations{$line}{style});
+			if($editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyles')) {
+				my $annotation = $annotations{$line};
+				$editor->AnnotationSetText($line, $annotation->{message});
+				$editor->AnnotationSetStyles($line, $annotation->{style});
 			}
 		}
 
