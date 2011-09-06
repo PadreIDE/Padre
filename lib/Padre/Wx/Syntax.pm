@@ -264,10 +264,25 @@ sub clear {
 	my $self = shift;
 	my $lock = $self->main->lock('UPDATE');
 
-	# Remove the margins for the syntax markers
+	# Remove the margins and indicators for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
+
+		my $len = $editor->GetTextLength;
+		if($len > 0) {
+			if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange')) {
+				# Using modern indicator API if available
+				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
+				$editor->IndicatorClearRange( 0, $len);
+				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
+				$editor->IndicatorClearRange( 0, $len);
+			} else {
+				# Or revert to the old deprecated method
+				$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
+				$editor->SetStyling( $len - 1, 0 );
+			}
+		}
 	}
 
 	# Remove all items from the tool
@@ -373,22 +388,6 @@ sub render {
 	my $document = $current->document;
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
-
-	# Clear out the warning and error indicators for a non-empty editor
-	my $text_length = $editor->GetTextLength;
-	if($text_length > 0) {
-		if($editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange')) {
-			# Using modern indicator API if available
-			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
-			$editor->IndicatorClearRange( 0, $text_length);
-			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
-			$editor->IndicatorClearRange( 0, $text_length);
-		} else {
-			# Or revert to the old deprecated method
-			$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
-			$editor->SetStyling( $text_length - 1, 0 );
-		}
-	}
 
 	# NOTE: Recolor the document to make sure we do not accidentally
 	# remove syntax highlighting while syntax checking
