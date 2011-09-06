@@ -68,6 +68,8 @@ the even version for the release, even during development.
     - During shutdown, call view_stop early on all tools that support it so they
       won't waste time rendering after we have hidden the main window (ADAMK)
     - #1317 'Padre 0.90 hangs and then segfaults on i .t file' (AZAWAWI)
+    - Find in Files search result rendering is now throttled to four updates
+      per second, for similar reasons as with the directory tree search (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

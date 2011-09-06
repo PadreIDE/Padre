@@ -87,11 +87,47 @@ sub new {
 		}
 	);
 
-	# Inialise statistics
+	# Create the render data store and timer
+	$self->{search_task}     = undef;
+	$self->{search_queue}    = [ ];
+	$self->{search_timer_id} = Wx::NewId();
+	$self->{search_timer}    = Wx::Timer->new(
+		$self,
+		$self->{search_timer_id},
+	);
+	Wx::Event::EVT_TIMER(
+		$self,
+		$self->{search_timer_id},
+		sub {
+			$self->search_timer( $_[1], $_[2] );
+		},
+	);
+
+	# Initialise statistics
 	$self->{files}   = 0;
 	$self->{matches} = 0;
 
 	return $self;
+}
+
+
+
+
+
+######################################################################
+# Padre::Role::Task Methods
+
+sub task_reset {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+
+	# As a convenience, reset any timers used by task message processing
+	$self->{search_task}  = undef;
+	$self->{search_queue} = [ ];
+	$self->{search_timer}->Stop;
+
+	# Reset normally as well
+	$self->SUPER::task_reset(@_);
 }
 
 
@@ -118,6 +154,7 @@ sub search {
 	$self->clear;
 	$self->task_request(
 		task       => 'Padre::Task::FindInFiles',
+		on_run     => 'search_run',
 		on_message => 'search_message',
 		on_finish  => 'search_finish',
 		%param,
@@ -126,84 +163,50 @@ sub search {
 	my $root = $self->AddRoot('Root');
 	$self->SetItemText(
 		$root,
-		sprintf( Wx::gettext(q{Searching for '%s' in '%s'...}), $param{search}->find_term, $param{root} )
+		sprintf(
+			Wx::gettext(q{Searching for '%s' in '%s'...}),
+			$param{search}->find_term,
+			$param{root},
+		)
 	);
 	$self->SetItemImage( $root, $self->{images}->{root} );
 
+	# Start the render timer
+	$self->{search_timer}->Start(250);
+
 	return 1;
+}
+
+sub search_run {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+	$self->{search_task} = $task;
 }
 
 sub search_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	my $path = shift;
-	my $root = $self->GetRootItem;
+	push @{$self->{search_queue}}, [ @_ ];
+}
 
-	# Lock the tree to reduce flicker and prevent auto-scrolling
-	my $lock = $self->scroll_lock;
-
-	# Add the file node to the tree
-	require Padre::Wx::Directory::Path; # added to avoid crash in next line
-	my $name  = $path->name;
-	my $dir   = File::Spec->catfile( $task->root, $path->dirs );
-	my $full  = File::Spec->catfile( $task->root, $path->path );
-	my $lines = scalar @_;
-	my $label =
-		$lines > 1
-		? sprintf(
-		Wx::gettext('%s (%s results)'),
-		$full,
-		$lines,
-		)
-		: $full;
-	my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
-	$self->SetPlData(
-		$file,
-		{   dir  => $dir,
-			file => $name,
-		}
-	);
-
-	# Add the lines nodes to the tree
-	foreach my $row (@_) {
-
-		# Tabs don't display properly
-		$row->[1] =~ s/\t/    /g;
-		my $line = $self->AppendItem(
-			$file,
-			$row->[0] . ': ' . $row->[1],
-			$self->{images}->{result},
-		);
-		$self->SetPlData(
-			$line,
-			{   dir  => $dir,
-				file => $name,
-				line => $row->[0],
-				msg  => $row->[1],
-			}
-		);
-	}
-
-	# Update statistics
-	$self->{matches} += $lines;
-	$self->{files}   += 1;
-
-	# Ensure both the root and the new file are expanded
-	$self->Expand($root);
-	$self->Expand($file);
-
-	return 1;
+sub search_timer {
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->search_render;
 }
 
 sub search_finish {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $task = shift;
-	my $term = $task->{search}->find_term;
-	my $dir  = $task->{root};
+
+	# Render any final results
+	$self->search_render;
 
 	# Display the summary
+	my $task = delete $self->{search_task} or return;
+	my $term = $task->{search}->find_term;
+	my $dir  = $task->{root};
 	my $root = $self->GetRootItem;
 	if ( $self->{files} ) {
 		$self->SetItemText(
@@ -226,6 +229,83 @@ sub search_finish {
 			)
 		);
 	}
+
+	# Clear support variables
+	$self->task_reset;
+
+	return 1;
+}
+
+sub search_render {
+	TRACE( $_[0] ) if DEBUG;
+	my $self  = shift;
+	my $root  = $self->GetRootItem;
+	my $task  = $self->{search_task} or return;
+	my $queue = $self->{search_queue};
+	return unless @$queue;
+
+	# Lock the tree to reduce flicker and prevent auto-scrolling
+	my $lock = $self->scroll_lock;
+
+	# Ensure the root is expanded
+	$self->Expand($root);
+
+	# Added to avoid crashes when calling methods on path objects
+	require Padre::Wx::Directory::Path;
+
+	# Add the file nodes to the tree
+	foreach my $entry ( @$queue ) {
+		my $path  = shift @$entry;
+		my $name  = $path->name;
+		my $dir   = File::Spec->catfile( $task->root, $path->dirs );
+		my $full  = File::Spec->catfile( $task->root, $path->path );
+		my $lines = scalar @_;
+		my $label =
+			$lines > 1
+			? sprintf(
+			Wx::gettext('%s (%s results)'),
+			$full,
+			$lines,
+			)
+			: $full;
+		my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
+		$self->SetPlData(
+			$file,
+			{   dir  => $dir,
+				file => $name,
+			}
+		);
+
+		# Add the lines nodes to the tree
+		foreach my $row ( @$entry ) {
+
+			# Tabs don't display properly
+			$row->[1] =~ s/\t/    /g;
+			my $line = $self->AppendItem(
+				$file,
+				$row->[0] . ': ' . $row->[1],
+				$self->{images}->{result},
+			);
+			$self->SetPlData(
+				$line,
+				{   dir  => $dir,
+					file => $name,
+					line => $row->[0],
+					msg  => $row->[1],
+				}
+			);
+		}
+
+		# Update statistics
+		$self->{matches} += $lines;
+		$self->{files}   += 1;
+
+		# Ensure both the root and the new file are expanded
+		$self->Expand($file);
+	}
+
+	# Flush the pending queue
+	$self->{search_queue} = [ ];
 
 	return 1;
 }
