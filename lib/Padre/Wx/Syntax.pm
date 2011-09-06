@@ -285,6 +285,11 @@ sub clear {
 				$editor->SetStyling( $len - 1, 0 );
 			}
 		}
+
+		# Clear all annotations if it is available and the feature is enabled
+		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS && $editor->can('AnnotationClearAll')) {
+			$editor->AnnotationClearAll;
+		}
 	}
 
 	# Remove all items from the tool
@@ -427,6 +432,7 @@ sub render {
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
+	my %annotations = ();
 	my $i = 0;
 	ISSUE:
 	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @$model ) {
@@ -456,6 +462,20 @@ sub render {
 			$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
 		}
 
+		# Collect annotations for later display
+		# One annotated line contains multiple errors/warnings
+		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+			unless($annotations{$line}) {
+				$annotations{$line} = {
+					message => $issue->message,
+					#TODO add more proper styles for annotations instead of reusing stuff
+					style => $is_warning ? Wx::wxSTC_PL_STRING : Wx::wxSTC_PL_ERROR,
+				};
+			} else {
+				$annotations{$line}{message} = $annotations{$line}{message} . "\n$issue->message";
+			}
+		}
+
 		my $item = $self->{tree}->AppendItem(
 			$root,
 			sprintf(
@@ -467,6 +487,21 @@ sub render {
 			$is_warning ? $self->{images}{warning} : $self->{images}{error}
 		);
 		$self->{tree}->SetPlData( $item, $issue );
+	}
+
+	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		# Add annotations
+		use Data::Dumper; print Dumper(%annotations);
+		foreach my $line (sort keys %annotations) {
+			if($editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyle')) {
+				$editor->AnnotationSetText($line, $annotations{$line}{message});
+				$editor->AnnotationSetStyle($line, $annotations{$line}{style});
+			}
+		}
+
+		# Show Annotations
+		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+		$editor->AnnotationSetVisible( $wxSTC_ANNOTATION_BOXED );
 	}
 
 	$self->{tree}->Expand($root);
