@@ -501,10 +501,22 @@ sub render {
 			}
 		}
 
-		# Show Annotations
-		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
-		$editor->AnnotationSetVisible( $wxSTC_ANNOTATION_BOXED );
 	}
+
+	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS and $editor->can('SetIndicatorCurrent')) {
+		# Annotations are now shown when an indicator is clicked
+		Wx::Event::EVT_STC_INDICATOR_CLICK( $editor, $editor, sub {
+			my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+			$editor->AnnotationSetVisible( $wxSTC_ANNOTATION_BOXED );
+		} );
+
+		# Annotations are now hidden when an indicator is released
+		Wx::Event::EVT_STC_INDICATOR_RELEASE( $editor, $editor, sub {
+			my $wxSTC_ANNOTATION_HIDDEN = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
+			$editor->AnnotationSetVisible( $wxSTC_ANNOTATION_HIDDEN );
+		} );
+	}
+
 
 	$self->{tree}->Expand($root);
 	$self->{tree}->EnsureVisible($root);
