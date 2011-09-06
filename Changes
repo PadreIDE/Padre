@@ -65,7 +65,7 @@ the even version for the release, even during development.
       per second. This prevents tree updates exhausting all resources and
       strangling user input, and seems to actually get the results onto screen
       faster because there's less lock/render passes (ADAMK)
-    - During shutdown, call view_stop earlt on all tools that support it so they
+    - During shutdown, call view_stop early on all tools that support it so they
       won't waste time rendering after we have hidden the main window (ADAMK)
 
 0.91 Development version, not released
