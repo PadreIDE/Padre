@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-06 08:10-0700\n"
+"POT-Creation-Date: 2011-09-06 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "%s (%s changed)"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:155
+#: lib/Padre/Wx/FindInFiles.pm:266
 #, perl-format
 msgid "%s (%s results)"
 msgstr ""
@@ -1344,12 +1344,12 @@ msgstr ""
 msgid "Copy the current tab into a new document"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:188
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:193
 #, perl-format
 msgid "Could not create: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:219
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:224
 #, perl-format
 msgid "Could not delete: '%s': %s"
 msgstr ""
@@ -1399,7 +1399,7 @@ msgstr ""
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:169
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:174
 #, perl-format
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr ""
@@ -1413,8 +1413,8 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:281
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:340
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:286
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:345
 msgid "Create Directory"
 msgstr ""
 
@@ -1584,7 +1584,7 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:370
+#: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:375
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:100
 msgid "Delete"
 msgstr ""
@@ -1597,11 +1597,11 @@ msgstr ""
 msgid "Delete &Leading Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:257
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:262
 msgid "Delete Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:316
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:321
 msgid "Delete File"
 msgstr ""
 
@@ -1662,7 +1662,7 @@ msgid "Directories Mixed"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:63 lib/Padre/Wx/FBP/ReplaceInFiles.pm:88
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:86
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:91
 msgid "Directory"
 msgstr ""
 
@@ -2311,7 +2311,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:320 lib/Padre/Wx/FBP/FindInFiles.pm:29
+#: lib/Padre/Wx/FindInFiles.pm:400 lib/Padre/Wx/FBP/FindInFiles.pm:29
 msgid "Find in Files"
 msgstr ""
 
@@ -2974,7 +2974,7 @@ msgstr ""
 msgid "Negative lookbehind assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:372
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:377
 msgid "New Folder"
 msgstr ""
 
@@ -3080,7 +3080,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:223 lib/Padre/Wx/ReplaceInFiles.pm:190
+#: lib/Padre/Wx/FindInFiles.pm:226 lib/Padre/Wx/ReplaceInFiles.pm:190
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -3186,7 +3186,7 @@ msgstr ""
 msgid "Open CPAN::MyConfig.pm for manual editing by experts"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4235 lib/Padre/Wx/Directory/TreeCtrl.pm:293
+#: lib/Padre/Wx/Main.pm:4235 lib/Padre/Wx/Directory/TreeCtrl.pm:298
 msgid "Open File"
 msgstr ""
 
@@ -3267,8 +3267,8 @@ msgstr ""
 msgid "Open in File &Browser"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:244
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:303
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:249
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:308
 msgid "Open in File Browser"
 msgstr ""
 
@@ -3538,11 +3538,11 @@ msgstr ""
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:156
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
 msgid "Please type in the new name of the directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:160
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:165
 msgid "Please type in the new name of the file"
 msgstr ""
 
@@ -3795,7 +3795,7 @@ msgstr ""
 msgid "Reading items. Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:206
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:211
 #, perl-format
 msgid "Really delete the file \"%s\"?"
 msgstr ""
@@ -3916,24 +3916,24 @@ msgstr ""
 msgid "Remove the spaces from the end of the selected lines"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:369
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:371
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:374
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:376
 msgid "Rename"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:268
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:273
 msgid "Rename Directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:327
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:332
 msgid "Rename File"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:157
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:162
 msgid "Rename directory"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:161
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:166
 msgid "Rename file"
 msgstr ""
 
@@ -4205,7 +4205,7 @@ msgstr ""
 msgid "Search and replace text in all files below a given directory"
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:212
+#: lib/Padre/Wx/FindInFiles.pm:215
 #, perl-format
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4237,7 +4237,7 @@ msgid ""
 "part."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:129
+#: lib/Padre/Wx/FindInFiles.pm:167
 #, perl-format
 msgid "Searching for '%s' in '%s'..."
 msgstr ""
