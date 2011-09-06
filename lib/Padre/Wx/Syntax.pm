@@ -398,7 +398,7 @@ sub render {
 
 	my $root = $self->{tree}->AddRoot('Root');
 
-	# If there are no errors clear the synax checker pane
+	# If there are no errors or warnings, clear the syntax checker pane
 	unless ( Params::Util::_ARRAY($model) ) {
 
 		# Relative-to-the-project filename.
