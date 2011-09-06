@@ -80,7 +80,12 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_KEY_UP( $self, \&key_up );
+	Wx::Event::EVT_KEY_UP(
+		$self,
+		sub {
+			shift->key_up(@_);
+		},
+	);
 
 	# Set up the root
 	$self->AddRoot( Wx::gettext('Directory'), -1, -1 );
