@@ -437,8 +437,10 @@ sub render {
 	my $ERROR_STYLE = $WARNING_STYLE + 1;
 	$editor->StyleSetForeground( $WARNING_STYLE, Wx::Colour->new(0xAF, 0x80, 0x00) );
 	$editor->StyleSetBackground( $WARNING_STYLE, Wx::Colour->new(0xFF, 0xFF, 0xF0) );
+	$editor->StyleSetItalic( $WARNING_STYLE, 1 );
 	$editor->StyleSetForeground( $ERROR_STYLE, Wx::Colour->new(0xAF, 0x00, 0x00) );
 	$editor->StyleSetBackground( $ERROR_STYLE, Wx::Colour->new(0xFF, 0xF0, 0xF0) );
+	$editor->StyleSetItalic( $ERROR_STYLE, 1 );
 
 	my %annotations = ();
 	my $i = 0;
