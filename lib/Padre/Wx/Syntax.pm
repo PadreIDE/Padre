@@ -387,11 +387,13 @@ sub task_finish {
 		# We are using the new syntax object model
 	} else {
 		# Warn about the old array object from syntax task in debug mode
-		warn <<WARN;
-Syntax checker tasks should now return a hash containing an 'issues' array reference
-and 'stderr' string keys instead of the old issues array reference
-WARN
-		return;
+		TRACE q{Syntax checker tasks should now return a hash containing an 'issues' array reference and 'stderr' string keys instead of the old issues array reference} if DEBUG;
+
+		# TODO remove compatibility for older syntax checker model
+		$self->{model} = {
+			issues => $self->{model},
+			stderr => undef,
+		};
 	}
 
 	$self->render;
