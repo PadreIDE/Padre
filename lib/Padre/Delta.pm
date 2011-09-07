@@ -108,6 +108,21 @@ sub from_diff {
 	return $class->new( 'line', @targets );
 }
 
+sub from_scalars {
+	my $self = shift;
+
+	# Split the scalar refs into lines
+	my @from = split /\n/, ${shift()};
+	my @to   = split /\n/, ${shift()};
+
+	# Diff the two line sets
+	require Algorithm::Diff;
+	my @diff = Algorithm::Diff::diff( \@from => \@to );
+
+	# Hand off to the diff-based constructor
+	return $self->from_diff(@diff);
+}
+
 
 
 
