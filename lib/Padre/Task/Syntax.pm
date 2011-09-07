@@ -51,7 +51,7 @@ sub run {
 	# it back up to the parent Wx thread at the end of the task.
 	my $text = delete $self->{text};
 
-	# Get the function list
+	# Get the syntax model object
 	$self->{model} = $self->syntax($text);
 
 	return 1;
