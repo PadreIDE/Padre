@@ -58,7 +58,7 @@ sub run {
 }
 
 sub syntax {
-	return [];
+	return {};
 }
 
 1;

@@ -126,8 +126,10 @@ sub syntax {
 		}
 	}
 
-	#TODO pass stderr to syntax checker
-	return \@issues;
+	return {
+		issues => \@issues,
+		stderr => $stderr,
+	};
 }
 
 1;

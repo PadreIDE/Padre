@@ -98,7 +98,7 @@ sub new {
 	$self->SetSizer($sizer);
 
 	# Additional properties
-	$self->{model}  = [];
+	$self->{model}  = {};
 	$self->{length} = -1;
 
 	# Prepare the available images
@@ -381,12 +381,25 @@ sub task_finish {
 	my $self = shift;
 	my $task = shift;
 	$self->{model} = $task->{model};
+
+	# Properly validate and warn about older deprecated syntax models
+	if(Params::Util::_HASH0($self->{model})) {
+		# We are using the new syntax object model
+	} else {
+		# Warn about the old array object from syntax task in debug mode
+		warn <<WARN;
+Syntax checker tasks should now return a hash containing an 'issues' array reference
+and 'stderr' string keys instead of the old issues array reference
+WARN
+		return;
+	}
+
 	$self->render;
 }
 
 sub render {
 	my $self     = shift;
-	my $model    = $self->{model} || [];
+	my $model    = $self->{model} || {};
 	my $current  = $self->current;
 	my $editor   = $current->editor;
 	my $document = $current->document;
@@ -403,7 +416,7 @@ sub render {
 	my $root = $self->{tree}->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
-	unless ( Params::Util::_ARRAY($model) ) {
+	unless ( Params::Util::_HASH($model) ) {
 
 		# Relative-to-the-project filename.
 		# Check that the document has been saved.
@@ -427,8 +440,8 @@ sub render {
 	$self->{tree}->SetItemText(
 		$root,
 		defined $filename
-		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @$model, $filename )
-		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @$model )
+		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{$model->{issues}}, $filename )
+		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{$model->{issues}} )
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
@@ -445,7 +458,7 @@ sub render {
 	my %annotations = ();
 	my $i = 0;
 	ISSUE:
-	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @$model ) {
+	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{$model->{issues}} ) {
 
 		my $line       = $issue->{line} - 1;
 		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
