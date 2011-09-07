@@ -170,7 +170,6 @@ sub new {
 	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
 	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
-	Wx::Event::EVT_KEY_DOWN( $self, \&on_key_down );
 	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_MOTION( $self, \&on_mouse_moving );
@@ -265,16 +264,6 @@ sub on_kill_focus {
 	$event->Skip(1);
 }
 
-# Called when a key is pressed
-sub on_key_down {
-	my $self  = shift;
-	my $event = shift;
-	$self->smart_highlight_hide;
-
-	# Keep processing
-	$event->Skip(1);
-}
-
 # Called when a key is released
 sub on_key_up {
 	my $self  = shift;
@@ -316,6 +305,11 @@ sub on_key_up {
 sub on_char {
 	my $self     = shift;
 	my $event    = shift;
+
+	# Hide the smart highlight when a character is added or changed
+	# in the editor
+	$self->smart_highlight_hide;
+
 	my $document = $self->{Document} or return;
 	if ( $document->can('event_on_char') ) {
 		$document->event_on_char( $self, $event );

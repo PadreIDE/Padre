@@ -73,6 +73,8 @@ the even version for the release, even during development.
     - 'Open in Command line' is now shown in the right click menu in win32 (AZAWAWI)
     - 'Open in Command line' and 'Open in default system editor' are only shown
       on win32 (AZAWAWI)
+    - Smart highlight is now hidden when a printable character is added or changed
+      in the editor (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
