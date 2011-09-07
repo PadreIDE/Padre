@@ -78,6 +78,7 @@ the even version for the release, even during development.
     - Syntax checker tasks should now return a hash containing an issues array
       reference and stderr string keys instead of the old issues array reference
       (AZAWAWI)
+    - Fix TODO list double click not working regression on win32 (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

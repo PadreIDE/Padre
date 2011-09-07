@@ -82,12 +82,17 @@ sub new {
 		}
 	);
 
-	# Handle double click on list
-	# overwrite this handler to avoid stealing the focus back from the editor
-	Wx::Event::EVT_LEFT_DCLICK(
-		$self->{list},
-		sub { return; }
-	);
+	# Handle double click on list.
+	# Overwrite to avoid stealing the focus back from the editor.
+	# On Windows this appears to kill the double-click feature entirely.
+	unless (Padre::Constant::WIN32) {
+		Wx::Event::EVT_LEFT_DCLICK(
+			$self->{list},
+			sub {
+				return;
+			}
+		);
+	}
 
 	# Handle key events
 	Wx::Event::EVT_KEY_UP(
