@@ -484,7 +484,7 @@ sub render {
 		# One annotated line contains multiple errors/warnings
 		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $message = $issue->message;
-			my $char_style = $is_warning ? sprintf('%c', Padre::Constant::WARNING_STYLE()) : sprintf('%c', Padre::Constant::ERROR_STYLE());
+			my $char_style = $is_warning ? sprintf('%c', Padre::Constant::PADRE_WARNING()) : sprintf('%c', Padre::Constant::PADRE_ERROR());
 			unless($annotations{$line}) {
 				$annotations{$line} = {
 					message => $message,

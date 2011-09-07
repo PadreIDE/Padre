@@ -187,7 +187,7 @@ Settings storage back-ends.
 The SVN Revision (when running a development build).
 
 =head2 C<PADRE_BLACK>, C<PADRE_BLUE>, C<PADRE_RED>, C<PADRE_GREEN>, C<PADRE_MAGENTA>, C<PADRE_ORANGE>,
-C<PADRE_DIM_GRAY>, C<PADRE_CRIMSON>, C<PADRE_BROWN>
+C<PADRE_DIM_GRAY>, C<PADRE_CRIMSON>, C<PADRE_BROWN>, C<PADRE_WARNING>, C<PADRE_ERROR>
 
 Core supported colours.
 
