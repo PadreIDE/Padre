@@ -103,15 +103,17 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
-	$self->{open_with_default_system_editor} = $self->add_menu_action(
-		$file_open,
-		'file.open_with_default_system_editor',
-	);
+	if(Padre::Constant::WIN32) {
+		$self->{open_with_default_system_editor} = $self->add_menu_action(
+			$file_open,
+			'file.open_with_default_system_editor',
+		);
 
-	$self->{open_in_command_line} = $self->add_menu_action(
-		$file_open,
-		'file.open_in_command_line',
-	);
+		$self->{open_in_command_line} = $self->add_menu_action(
+			$file_open,
+			'file.open_in_command_line',
+		);
+	}
 
 	$self->{open_example} = $self->add_menu_action(
 		$file_open,
@@ -286,16 +288,8 @@ sub refresh {
 
 	$self->{open_in_file_browser}->Enable($document);
 	if (Padre::Constant::WIN32) {
-
-		#Win32
 		$self->{open_with_default_system_editor}->Enable($document);
 		$self->{open_in_command_line}->Enable($document);
-	} else {
-
-		#Disabled until a unix implementation is actually working
-		#TODO remove once the unix implementation is done (see Padre::Util::FileBrowser)
-		$self->{open_with_default_system_editor}->Enable(0);
-		$self->{open_in_command_line}->Enable(0);
 	}
 	$self->{close}->Enable($document);
 	$self->{close_all}->Enable($document);
