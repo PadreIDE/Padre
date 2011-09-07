@@ -115,7 +115,7 @@ sub from_diff {
 ######################################################################
 # Main Methods
 
-sub apply {
+sub to_editor {
 	my $self    = shift;
 	my $editor  = shift;
 	my $mode    = $self->{mode};
