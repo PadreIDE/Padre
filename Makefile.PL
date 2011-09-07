@@ -71,6 +71,7 @@ all_from 'lib/Padre.pm';
 requires 'perl' => '5.008005';
 
 # General dependencies
+requires 'Algorithm::Diff'          => '1.19';
 requires 'App::cpanminus'           => '0.9923';
 requires 'B::Deparse'               => 0;
 requires 'Capture::Tiny'            => '0.06';
