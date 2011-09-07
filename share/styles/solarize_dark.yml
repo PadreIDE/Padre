@@ -57,6 +57,14 @@ padre:
    foreground: 6c71c4
   PADRE_BROWN:
    foreground: b58900
+  PADRE_WARNING:
+   foreground: af8000
+   background: fffff0
+   italic: 1
+  PADRE_ERROR:
+   foreground: af0000
+   background: fff0f0
+   italic: 1
 
 #
 # application/x-perl
