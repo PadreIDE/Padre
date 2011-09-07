@@ -73,6 +73,8 @@ use constant {
 	PADRE_DIM_GRAY => 6,
 	PADRE_CRIMSON  => 7,
 	PADRE_BROWN    => 8,
+	PADRE_WARNING  => 126,
+	PADRE_ERROR    => 127,
 };
 
 # Portable Perl Support

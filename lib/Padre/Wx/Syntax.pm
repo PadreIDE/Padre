@@ -448,16 +448,6 @@ sub render {
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
-	# TODO no hardcoding this should configurable in default.yml
-	my $WARNING_STYLE = 126;
-	my $ERROR_STYLE = $WARNING_STYLE + 1;
-	$editor->StyleSetForeground( $WARNING_STYLE, Wx::Colour->new(0xAF, 0x80, 0x00) );
-	$editor->StyleSetBackground( $WARNING_STYLE, Wx::Colour->new(0xFF, 0xFF, 0xF0) );
-	$editor->StyleSetItalic( $WARNING_STYLE, 1 );
-	$editor->StyleSetForeground( $ERROR_STYLE, Wx::Colour->new(0xAF, 0x00, 0x00) );
-	$editor->StyleSetBackground( $ERROR_STYLE, Wx::Colour->new(0xFF, 0xF0, 0xF0) );
-	$editor->StyleSetItalic( $ERROR_STYLE, 1 );
-
 	my %annotations = ();
 	my $i = 0;
 	ISSUE:
@@ -494,7 +484,7 @@ sub render {
 		# One annotated line contains multiple errors/warnings
 		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $message = $issue->message;
-			my $char_style = $is_warning ? sprintf('%c', $WARNING_STYLE) : sprintf('%c', $ERROR_STYLE);
+			my $char_style = $is_warning ? sprintf('%c', Padre::Constant::WARNING_STYLE()) : sprintf('%c', Padre::Constant::ERROR_STYLE());
 			unless($annotations{$line}) {
 				$annotations{$line} = {
 					message => $message,
