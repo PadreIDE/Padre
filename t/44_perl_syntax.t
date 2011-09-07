@@ -33,7 +33,7 @@ $ENV{PADRE_IS_TEST} = 1;
 # Check the null case
 my $null = execute('');
 isa_ok( $null, 'Padre::Task::Syntax' );
-is_deeply( $null->{model}, [], 'Null syntax returns null model' );
+is_deeply( $null->{model}, {}, 'Null syntax returns null model' );
 
 # A simple, correct, one line script
 my $hello = execute( <<'END_PERL' );
@@ -41,13 +41,13 @@ my $hello = execute( <<'END_PERL' );
 
 print "Hello World!\n";
 END_PERL
-is_deeply( $null->{model}, [], 'Trivial script returns null model' );
+is_deeply( $null->{model}, {}, 'Trivial script returns null model' );
 
 # A simple, correct, one line package
 my $package = execute( <<'END_PERL' );
 package Foo;
 END_PERL
-is_deeply( $null->{model}, [], 'Trivial module returns null model' );
+is_deeply( $null->{model}, {}, 'Trivial module returns null model' );
 
 
 
