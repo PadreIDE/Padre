@@ -53,6 +53,14 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
+	if(Padre::Constant::WIN32) {
+			$self->{open_in_command_line} = $self->add_menu_action(
+				'file.open_in_command_line',
+			);
+	}
+
+	$self->AppendSeparator;
+
 	$self->{find_in_files} = $self->add_menu_action(
 		'search.find_in_files',
 	);
