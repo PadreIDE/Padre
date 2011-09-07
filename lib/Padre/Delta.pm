@@ -1,0 +1,170 @@
+package Padre::Delta;
+
+=pod
+
+=head1 NAME
+
+Padre::Delta - A very simple diff object that can be applied to editors fast
+
+=head1 DESCRIPTION
+
+As a refactoring IDE many different modules and tools may wish to calculate
+changes to a document in the background and then apply the changes in the
+foreground.
+
+B<Padre::Delta> objects provide a mechanism for defining change to an editor,
+with the representation stored in a way that is extremely well aligned with the
+Padre::Wx::Editor API.
+
+By doing as much preliminary calculations as possible in the background and
+passing a Padre::Delta back to the parent, the amount of time spent blocking in
+the foreground is kept to an absolute minimum.
+
+=cut
+
+use 5.008;
+use strict;
+use warnings;
+
+our $VERSION = '0.91';
+
+
+
+
+
+######################################################################
+# Constructor
+
+sub new {
+	my $class = shift;
+	my $self  = bless {
+		mode    => shift,
+		targets => [ @_ ],
+	}, $class;
+
+}
+
+sub mode {
+	$_[0]->{mode};
+}
+
+sub from_diff {
+	my $class   = shift;
+	my @targets = ();
+
+	# Build the series of target replacements
+	while ( @_ ) {
+		my $target = {
+			start => 0,
+			end   => 0,
+			lines => 0,
+			text  => '',
+		};
+
+		if ( $_[0]->[0] eq '+' ) {
+			# The start and end of the target is the beginning of
+			# the insertion record.
+			my $change = shift;
+			my $mode   = $change->[0];
+			my $line   = $change->[1];
+			my $text   = $change->[2];
+			$target->{start} = $line;
+			$target->{end}   = $line;
+			$target->{lines} = 1;
+			$target->{text}  = $text . "\n";
+
+		} else {
+			# The change starts with a removal block
+			my $change = shift;
+			my $mode   = $change->[0];
+			my $line   = $change->[1];
+			my $text   = $change->[2];
+			$target->{start} = $line;
+			$target->{end}   = $line + 1;
+
+			# Append any additional removal rows
+			while ( @_ and $_[0]->[0] eq '-' ) {
+				unless ( $_[0]->[1] == $target->{end} ) {
+					last;
+				}
+				shift;
+				$target->{end}++;
+			}
+		}
+
+		# Append any additional addition rows
+		while ( @_ and $_[0]->[0] eq '+' ) {
+			unless ( $_[0]->[1] == $target->{end} + $target->{lines} ) {
+				last;
+			}
+			$target->{lines}++;
+			$target->{text} .= shift->[2] . "\n";
+		}
+
+		# This completes one entire target replace unit
+		push @targets, $target;
+	}
+
+	return $class->new( 'line', @targets );
+}
+
+
+
+
+
+######################################################################
+# Main Methods
+
+sub apply {
+	my $self    = shift;
+	my $editor  = shift;
+	my $mode    = $self->{mode};
+	my $targets = $self->{targets};
+
+	# Apply positions based on raw positions
+	if ( $mode eq 'position' ) {
+		foreach my $target ( @$targets ) {
+			$editor->SetTargetStart($target->{start});
+			$editor->SetTargetEnd($target->{end});
+			$editor->ReplaceTarget($target->{text});
+		}
+		return;
+	}
+
+	# Apply positions based on lines
+	if ( $mode eq 'line' ) {
+		foreach my $target ( @$targets ) {
+			$editor->SetTargetStart(
+				$editor->PositionFromLine($target->{start})
+			);
+			$editor->SetTargetEnd(
+				$editor->PositionFromLine($target->{end})
+			);
+			$editor->ReplaceText($target->{text});
+		}
+		return;
+	}
+
+	die "Unexpected delta mode '$mode'";
+}
+
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
+
+1;
+
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
