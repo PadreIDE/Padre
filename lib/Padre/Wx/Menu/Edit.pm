@@ -273,7 +273,14 @@ sub new {
 	);
 
 	$self->AppendSeparator;
-
+	
+	# Add Patch
+	$self->add_menu_action(
+		'edit.patch_diff',
+	);
+	
+	$self->AppendSeparator;
+	
 	# Diff tools
 	$self->{diff} = Wx::Menu->new;
 	$self->Append(

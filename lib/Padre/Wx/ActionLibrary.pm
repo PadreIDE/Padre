@@ -1088,6 +1088,22 @@ sub init {
 			$_[0]->current->editor->LowerCase;
 		},
 	);
+	
+	# start or edit.patch_diff
+		Padre::Wx::Action->new(
+		name       => 'edit.patch_diff',
+		label      => _T('Patch-2...'),
+		comment    => _T('Simplistic Patch only works on saved files'),
+		# shortcut   => 'Ctrl-Shift-F',
+		menu_event => sub {
+			require Padre::Wx::Dialog::Patch;
+			my $dialog = Padre::Wx::Dialog::Patch->new( $_[0] );
+			$dialog->run;
+			$dialog->Destroy;
+			return;
+		},
+	);
+	
 
 	Padre::Wx::Action->new(
 		name        => 'edit.diff2saved',
