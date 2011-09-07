@@ -32,8 +32,9 @@ $ENV{PADRE_IS_TEST} = 1;
 
 # Check the null case
 my $null = execute('');
+my $null_model = {issues => [], stderr=> "- syntax OK\n"};
 isa_ok( $null, 'Padre::Task::Syntax' );
-is_deeply( $null->{model}, {}, 'Null syntax returns null model' );
+is_deeply( $null->{model}, $null_model, 'Null syntax returns null model' );
 
 # A simple, correct, one line script
 my $hello = execute( <<'END_PERL' );
@@ -41,13 +42,13 @@ my $hello = execute( <<'END_PERL' );
 
 print "Hello World!\n";
 END_PERL
-is_deeply( $null->{model}, {}, 'Trivial script returns null model' );
+is_deeply( $null->{model}, $null_model, 'Trivial script returns null model' );
 
 # A simple, correct, one line package
 my $package = execute( <<'END_PERL' );
 package Foo;
 END_PERL
-is_deeply( $null->{model}, {}, 'Trivial module returns null model' );
+is_deeply( $null->{model}, $null_model, 'Trivial module returns null model' );
 
 
 
@@ -209,12 +210,12 @@ sub execute {
 
 sub is_model_ok {
 	my %arg   = @_;
-	my $model = $arg{model};
+	my $issues = $arg{model}->{issues};
 
-	is( $model->[0]->{message}, $arg{message}, "message match in '$arg{test_name}'" );
-	is( scalar @$model,         1,             "model has only one message in '$arg{test_name}'" );
-	is( $model->[0]->{line},    $arg{line},    "line match in '$arg{test_name}'" );
-	is( $model->[0]->{type},    $arg{type},    "type match in '$arg{test_name}'" );
+	is( $issues->[0]->{message}, $arg{message}, "message match in '$arg{test_name}'" );
+	is( scalar @$issues,         1,             "model has only one message in '$arg{test_name}'" );
+	is( $issues->[0]->{line},    $arg{line},    "line match in '$arg{test_name}'" );
+	is( $issues->[0]->{type},    $arg{type},    "type match in '$arg{test_name}'" );
 }
 
 CLASS: {
