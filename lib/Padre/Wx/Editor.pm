@@ -1687,6 +1687,7 @@ sub smart_highlight_hide {
 
 	my @styles = @{ $self->{styles} };
 	if ( scalar @styles ) {
+
 		# Clear indicators for all available text
 		$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
 		my $text_length = $self->GetTextLength;

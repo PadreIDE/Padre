@@ -272,6 +272,7 @@ sub clear {
 		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $len = $editor->GetTextLength;
 			if ( $len > 0 ) {
+
 				# Clear out all indicators
 				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
 				$editor->IndicatorClearRange( 0, $len );
