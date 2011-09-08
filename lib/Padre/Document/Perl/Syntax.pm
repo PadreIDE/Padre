@@ -112,6 +112,9 @@ sub syntax {
 		close $fh;
 	}
 
+	# Short circuit if the syntax is OK and no other errors/warnings are present
+	return [] if $stderr eq "- syntax OK\n";
+
 	# Since we're not going to use -Mdiagnostics,
 	# we will simply reuse Padre::ErrorString::Perl for Perl error parsing
 	my @issues = Parse::ErrorString::Perl->new->parse_string($stderr);
