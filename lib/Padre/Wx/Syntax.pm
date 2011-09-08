@@ -451,19 +451,20 @@ sub render {
 		require Padre::Wx::Editor;
 		my $data = Padre::Wx::Editor::data( $self->config->editor_style ) or return;
 
-		for my $color qw(PADRE_WARNING PADRE_ERROR) {
+		# Apply the padre warning and error styles to the current editor
+		# Please note that eol-filled and underline do not work well with annotations
+		for my $padre_color qw(PADRE_WARNING PADRE_ERROR) {
+			my $color = $data->{padre}->{colors}->{$padre_color};
 
-			# Apply the padre warning and error styles to the current editor
-			my $foreground = $data->{padre}->{colors}->{$color}->{foreground};
-			my $background = $data->{padre}->{colors}->{$color}->{background};
-
-			# Evil but cool :)
-			if ( defined $foreground and defined $background ) {
-				my $style = eval "Padre::Constant::$color";
-				next if $@;
-				$editor->StyleSetForeground( $style, Padre::Wx::color($foreground) );
-				$editor->StyleSetBackground( $style, Padre::Wx::color($background) );
-			}
+			no strict 'refs';
+			my $style_num = eval "Padre::Constant::$padre_color";
+			next if $@;
+			$editor->StyleSetForeground( $style_num, Padre::Wx::color( $color->{foreground} ) )
+				if exists $color->{foreground};
+			$editor->StyleSetBackground( $style_num, Padre::Wx::color( $color->{background} ) )
+				if exists $color->{background};
+			$editor->StyleSetBold( $style_num, $color->{bold} ) if exists $color->{bold};
+			$editor->StyleSetItalic( $style_num, $color->{italic} ) if exists $color->{italic};
 		}
 	}
 
