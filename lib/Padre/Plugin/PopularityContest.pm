@@ -133,11 +133,11 @@ our %ACTION = ();
 
 sub padre_interfaces {
 	return (
-		'Padre::Plugin'           => 0.66,
-		'Padre::Task'             => 0.66,
-		'Padre::Task::LWP'        => 0.66,
-		'Padre::Util::SVN'        => 0.66,
-		'Padre::Wx::Dialog::Text' => 0.66,
+		'Padre::Plugin'           => '0.91',
+		'Padre::Task'             => '0.91',
+		'Padre::Task::LWP'        => '0.91',
+		'Padre::Util::SVN'        => '0.91',
+		'Padre::Wx::Dialog::Text' => '0.91',
 	);
 }
 
