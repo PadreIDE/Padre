@@ -314,7 +314,7 @@ sub disable {
 	$self->{search}->Hide;
 	$self->{list}->Hide;
 	$self->{list}->Clear;
-	$self->{model}    = [];
+	$self->{model} = [];
 }
 
 # Set an updated method list from the task

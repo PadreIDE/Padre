@@ -121,12 +121,13 @@ sub load {
 		MAC     => Wx::wxMAC,
 		X11     => Wx::wxX11,
 	);
-	foreach ( map { s/^:// ? @{$Wx::EXPORT_TAGS{$_}} : $_ } WANT ) {
+	foreach ( map { s/^:// ? @{ $Wx::EXPORT_TAGS{$_} } : $_ } WANT ) {
 		next if defined $constants{$_};
 		next unless s/^(wx)(.+)//i;
 		my $wx   = $1;
 		my $name = $2;
 		if ( $name =~ /^EVT_/ ) {
+
 			# We don't need event constants in Perl
 			next;
 		}
@@ -140,10 +141,9 @@ sub load {
 		}
 		no strict 'refs';
 		local $@;
-		my $value = eval {
-			&{"Wx::$wx$name"}();
-		};
-		if ( $@ ) {
+		my $value = eval { &{"Wx::$wx$name"}(); };
+		if ($@) {
+
 			# print "# Wx::wx$name failed to load\n";
 			next;
 		}

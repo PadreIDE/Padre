@@ -246,13 +246,13 @@ foreach my $module ( sort keys %modules ) {
 
 				# Is it a method
 				my $operator = $_[1]->sprevious_sibling or return '';
-				$operator->isa('PPI::Token::Operator')  or return '';
-				$operator->content eq '->'              or return '';
+				$operator->isa('PPI::Token::Operator') or return '';
+				$operator->content eq '->' or return '';
 
 				# Get the method name
 				my $object = $operator->sprevious_sibling or return '';
-				$object->isa('PPI::Token::Symbol')        or return '';
-				$object->content eq '$self'               or return '';
+				$object->isa('PPI::Token::Symbol') or return '';
+				$object->content eq '$self' or return '';
 
 				return 1;
 			}
@@ -284,7 +284,7 @@ foreach my $module ( sort keys %modules ) {
 		my %seen   = ();
 		my $tokens = $document->find(
 			sub {
-				$_[1]->isa('PPI::Token::Word')       or return '';
+				$_[1]->isa('PPI::Token::Word') or return '';
 				$_[1]->content =~ /^Wx::wx([A-Z].+)/ or return '';
 
 				# Is this a new one?
@@ -294,7 +294,7 @@ foreach my $module ( sort keys %modules ) {
 				# Does the original and shortened forms of the
 				# constant actually exist?
 				Wx->can("wx$name") or return '';
-				Wx->can($name)     or return '';
+				Wx->can($name) or return '';
 
 				# wxVERSION is a special case
 				$name eq 'VERSION' and return '';
@@ -305,13 +305,13 @@ foreach my $module ( sort keys %modules ) {
 
 		# Filter for the constant list
 		my @bad = ();
-		if ( $tokens ) {
+		if ($tokens) {
 			@bad = map { $_->content } @$tokens;
 		}
 
 		# There should be no unconverted wxCONSTANTS
 		is( scalar(@bad), 0, 'No uncoverted wxCONSTANTS' );
-		foreach my $name ( @bad ) {
+		foreach my $name (@bad) {
 			diag("$module: Unconverted constant $name");
 		}
 	}

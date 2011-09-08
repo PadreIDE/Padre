@@ -445,22 +445,24 @@ sub render {
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
-	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+
 		# Load the editor style from Padre's configuration
 		require Padre::Wx::Editor;
 		my $data = Padre::Wx::Editor::data( $self->config->editor_style ) or return;
 
 		for my $color qw(PADRE_WARNING PADRE_ERROR) {
+
 			# Apply the padre warning and error styles to the current editor
 			my $foreground = $data->{padre}->{colors}->{$color}->{foreground};
 			my $background = $data->{padre}->{colors}->{$color}->{background};
-			
+
 			# Evil but cool :)
 			if ( defined $foreground and defined $background ) {
 				my $style = eval "Padre::Constant::$color";
 				next if $@;
-				$editor->StyleSetForeground($style, Padre::Wx::color($foreground));
-				$editor->StyleSetBackground($style, Padre::Wx::color($background));
+				$editor->StyleSetForeground( $style, Padre::Wx::color($foreground) );
+				$editor->StyleSetBackground( $style, Padre::Wx::color($background) );
 			}
 		}
 	}

@@ -211,11 +211,11 @@ sub _create_controls {
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$value_sizer->Add( $value_label,          0, Wx::ALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{value},        1, Wx::ALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $value_label,          0, Wx::ALIGN_CENTER_VERTICAL,              5 );
+	$value_sizer->Add( $self->{value},        1, Wx::ALIGN_CENTER_VERTICAL,              5 );
 	$value_sizer->Add( $boolean_sizer,        1, Wx::ALIGN_CENTER_VERTICAL | Wx::EXPAND, 5 );
-	$value_sizer->Add( $self->{button_set},   0, Wx::ALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{button_reset}, 0, Wx::ALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{button_set},   0, Wx::ALIGN_CENTER_VERTICAL,              5 );
+	$value_sizer->Add( $self->{button_reset}, 0, Wx::ALIGN_CENTER_VERTICAL,              5 );
 
 	# Default value and options sizer
 	my $info_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -231,7 +231,7 @@ sub _create_controls {
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
+	$button_sizer->Add( $self->{button_save},   1, 0,        0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::LEFT, 5 );
 	$button_sizer->AddSpacer(5);
 

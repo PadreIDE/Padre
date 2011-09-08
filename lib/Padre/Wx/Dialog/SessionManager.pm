@@ -298,8 +298,8 @@ sub _create_buttons {
 	$self->_vbox->Add( $hbox, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	# the buttons
-	my $bo = Wx::Button->new( $self, -1,              Wx::gettext('&Open') );
-	my $bd = Wx::Button->new( $self, -1,              Wx::gettext('&Delete') );
+	my $bo = Wx::Button->new( $self, -1,            Wx::gettext('&Open') );
+	my $bd = Wx::Button->new( $self, -1,            Wx::gettext('&Delete') );
 	my $bc = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Close') );
 	$self->_butopen($bo);
 	$self->_butdelete($bd);

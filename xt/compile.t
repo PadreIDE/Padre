@@ -27,6 +27,7 @@ local $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 
 plan( tests => 2 * @files + 1 );
+
 # diag( "Locale: " . setlocale(LC_CTYPE) );
 
 my $out = File::Spec->catfile( $ENV{PADRE_HOME}, 'out.txt' );

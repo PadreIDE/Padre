@@ -3,8 +3,8 @@ package Padre::Wx::Dialog::Patch;
 use 5.008;
 use strict;
 use warnings;
-use File::Slurp                       ();
-use Padre::Wx                         ();
+use File::Slurp           ();
+use Padre::Wx             ();
 use Padre::Wx::FBP::Patch ();
 use Padre::Current;
 use Padre::Logger;
@@ -27,6 +27,7 @@ sub new {
 	$self->CenterOnParent;
 	$self->{action_request} = 'Patch';
 	$self->{selection}      = 0;
+
 	# $self->set_up;
 	return $self;
 }
@@ -47,10 +48,10 @@ sub run {
 	$self->file2_list_type();
 
 	$self->against->SetSelection(0);
-	
+
 	# Show the dialog
 	my $result = $self->ShowModal;
-	
+
 	return;
 }
 
@@ -338,8 +339,8 @@ sub apply_patch {
 
 	my ( $source, $diff );
 
-	my $file1_url = $self->filename_url( $file1_name );
-	my $file2_url = $self->filename_url( $file2_name );
+	my $file1_url = $self->filename_url($file1_name);
+	my $file2_url = $self->filename_url($file2_name);
 
 	if ( -e $file1_url ) {
 		TRACE("found file1 => $file1_name: $file1_url") if DEBUG;
@@ -386,8 +387,8 @@ sub make_patch_diff {
 	my $file2_name = shift;
 	my $main       = $self->main;
 
-	my $file1_url = $self->filename_url( $file1_name );
-	my $file2_url = $self->filename_url( $file2_name );
+	my $file1_url = $self->filename_url($file1_name);
+	my $file2_url = $self->filename_url($file2_name);
 
 	if ( -e $file1_url ) {
 		TRACE("found file1 => $file1_name: $file1_url") if DEBUG;
@@ -430,7 +431,7 @@ sub make_patch_svn {
 	my $file1_name = shift;
 	my $main       = $self->main;
 
-	my $file1_url = $self->filename_url( $file1_name );
+	my $file1_url = $self->filename_url($file1_name);
 
 	TRACE("file1_url to svn: $file1_url") if DEBUG;
 

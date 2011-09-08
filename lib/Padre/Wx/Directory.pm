@@ -704,7 +704,7 @@ sub find {
 	);
 
 	# Set up the queue for result messages
-	$self->{find_queue} = [ ];
+	$self->{find_queue} = [];
 
 	# Start the find render timer
 	$self->{find_timer}->Start(250);
@@ -720,7 +720,7 @@ sub find_message {
 	my $self = shift;
 	my $task = shift;
 	my $path = Params::Util::_INSTANCE( shift, 'Padre::Wx::Directory::Path' ) or return;
-	push @{$self->{find_queue}}, $path;
+	push @{ $self->{find_queue} }, $path;
 }
 
 # We have hit a find_message render interval
@@ -756,7 +756,8 @@ sub find_render {
 	my $lock = $tree->scroll_lock;
 
 	# Add all outstanding files
-	foreach my $file ( @$queue  ) {
+	foreach my $file (@$queue) {
+
 		# Find where we need to start creating nodes from
 		my $cursor = $tree->GetRootItem;
 		my @base   = ();
@@ -806,7 +807,7 @@ sub find_render {
 	}
 
 	# Reset the message queue
-	$self->{find_queue} = [ ];
+	$self->{find_queue} = [];
 }
 
 

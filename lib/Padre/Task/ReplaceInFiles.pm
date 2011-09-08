@@ -166,10 +166,8 @@ sub run {
 
 			# Allow the search object to do the main work
 			local $@;
-			my $count = eval {
-				$self->{search}->replace_all( \$buffer )
-			};
-			if ( $@ ) {
+			my $count = eval { $self->{search}->replace_all( \$buffer ) };
+			if ($@) {
 				TRACE("Replace crashed in $fullname") if DEBUG;
 				$self->tell_owner( $object, -1 );
 				next;
@@ -177,7 +175,7 @@ sub run {
 			next unless $count;
 
 			# Save the changed file
-			TRACE( "Replaced $count matches in $fullname" ) if DEBUG;
+			TRACE("Replaced $count matches in $fullname") if DEBUG;
 			unless ( $self->{dryrun} ) {
 				open( my $fh, '>', $fullname ) or next;
 				binmode($fh);

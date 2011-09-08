@@ -82,13 +82,13 @@ sub _add_controls {
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$top_sizer->Add( $header_sizer, 1, Wx::ALL | Wx::EXPAND, 0 );
-	$top_sizer->Add( $banner,       0, Wx::ALIGN_RIGHT,        0 );
+	$top_sizer->Add( $banner,       0, Wx::ALIGN_RIGHT,      0 );
 
 	require Padre::Wx::Dialog::Wizard::Select;
 	$self->{select_page} = Padre::Wx::Dialog::Wizard::Select->new($self);
 
-	$self->{button_back}   = Wx::Button->new( $self, -1,              Wx::gettext('&Back') );
-	$self->{button_next}   = Wx::Button->new( $self, -1,              Wx::gettext('&Next') );
+	$self->{button_back}   = Wx::Button->new( $self, -1,            Wx::gettext('&Back') );
+	$self->{button_next}   = Wx::Button->new( $self, -1,            Wx::gettext('&Next') );
 	$self->{button_cancel} = Wx::Button->new( $self, Wx::ID_CANCEL, Wx::gettext('&Cancel') );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);

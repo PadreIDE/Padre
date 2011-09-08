@@ -64,7 +64,7 @@ sub run {
 
 sub new {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift->SUPER::new(@_);
+	my $self = shift->SUPER::new(@_);
 
 	# Set the content of the editor preview
 	my $preview = $self->preview;

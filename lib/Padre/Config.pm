@@ -1158,9 +1158,9 @@ setting(
 	default => 9,
 );
 setting(
-	name    => 'threads_stacksize',
-	type    => Padre::Constant::INTEGER,
-	store   => Padre::Constant::HOST,
+	name  => 'threads_stacksize',
+	type  => Padre::Constant::INTEGER,
+	store => Padre::Constant::HOST,
 	default => Padre::Constant::WIN32 ? 4194304 : 0,
 	startup => 1,
 );

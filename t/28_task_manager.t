@@ -111,7 +111,7 @@ sub timeout {
 	# Run the shutdown process
 	$timer1 = undef;
 	$timer2 = undef;
-	ok( $manager->stop, '->stop ok' );
+	ok( $manager->stop,     '->stop ok' );
 	ok( $manager->waitjoin, '->waitjoin ok' );
 
 	# $window->Show(0) if $window;

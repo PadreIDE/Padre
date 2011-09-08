@@ -32,7 +32,7 @@ TO BE COMPLETED
 =cut
 
 use 5.008;
-use utf8;  # Encoding of this source code
+use utf8; # Encoding of this source code
 use strict;
 use warnings;
 use List::Util ();
@@ -141,7 +141,7 @@ BEGIN {
 		'x-unknown' => {
 			gettext  => _T('Unknown'),
 			utf8text => 'Unknown',
-			iso639   => 'en',                  # For convenience
+			iso639   => 'en',                # For convenience
 			iso3166  => undef,
 			wxid     => Wx::LANGUAGE_UNKNOWN,
 			fallback => [],
@@ -275,6 +275,7 @@ BEGIN {
 		},
 
 		'fr' => {
+
 			# Simplify until there's another French
 			# gettext   => 'French (France)',
 			# utf8text  => 'Français (France)',

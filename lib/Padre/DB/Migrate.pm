@@ -5,7 +5,7 @@ package Padre::DB::Migrate;
 use 5.008005;
 use strict;
 use warnings;
-use Carp          ();
+use Carp ();
 use File::Spec 3.2701 ();
 use File::Path 2.04   ();
 use File::Basename ();

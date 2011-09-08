@@ -47,7 +47,7 @@ sub class {
 }
 
 sub has_owner {
-	!! $_[0]->{task}->{owner};
+	!!$_[0]->{task}->{owner};
 }
 
 sub owner {
@@ -90,7 +90,7 @@ sub start {
 	my $self = shift;
 	$self->{child} = 1;
 	$self->{queue} = shift;
-	$self->signal( 'STARTED' );
+	$self->signal('STARTED');
 }
 
 # Signal the task has stopped
@@ -170,7 +170,7 @@ sub on_started {
 	my $owner  = $self->owner  or return;
 	my $method = $task->on_run or return;
 	$owner->$method( $task => @_ );
-	return
+	return;
 }
 
 sub on_message {
@@ -234,7 +234,7 @@ sub on_status {
 	}
 
 	# If we have an owner that is within the main window show normally
-	my $owner  = $self->owner or return;
+	my $owner = $self->owner or return;
 	my $method = $self->{task}->on_status;
 	return $owner->$method(@_) if $method;
 
@@ -265,12 +265,10 @@ sub on_stopped {
 	$self->finish;
 
 	# If the task has an owner it will get the finish method instead.
-	my $owner  = $self->owner or return;
+	my $owner = $self->owner or return;
 	my $method = $self->{task}->on_finish;
 	local $@;
-	eval {
-		$owner->$method( $self->{task} );
-	};
+	eval { $owner->$method( $self->{task} ); };
 
 	return;
 }
@@ -327,9 +325,10 @@ sub poll {
 
 	# Fetch from the queue until we run out of messages or get a cancel
 	while ( my $item = $queue->dequeue1_nb ) {
+
 		# Handle a valid parent -> task message
 		if ( $item->[0] eq 'message' ) {
-			my $message = Storable::thaw($item->[1]);
+			my $message = Storable::thaw( $item->[1] );
 			push @$inbox, $message;
 			next;
 		}
@@ -361,7 +360,7 @@ sub wait {
 
 	# Handle a valid parent -> task message
 	if ( $item->[0] eq 'message' ) {
-		my $message = Storable::thaw($item->[1]);
+		my $message = Storable::thaw( $item->[1] );
 		push @$inbox, $message;
 		return;
 	}
@@ -418,9 +417,7 @@ sub inbox {
 
 sub signal {
 	TRACE( $_[0] ) if DEBUG;
-	Padre::Wx::Role::Conduit->signal(
-		Storable::freeze( [ shift->hid => @_ ] )
-	);
+	Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid => @_ ] ) );
 }
 
 sub tell_parent {
@@ -433,9 +430,10 @@ sub tell_child {
 	my $self = shift;
 
 	if ( $self->child ) {
+
 		# Add the message directly to the inbox
 		my $inbox = $self->{inbox} or next;
-		push @$inbox, [ @_ ];
+		push @$inbox, [@_];
 	} else {
 		$self->worker->send_message(@_);
 	}

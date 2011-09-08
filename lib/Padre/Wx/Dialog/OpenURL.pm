@@ -91,15 +91,15 @@ sub new {
 
 	# Main button cluster
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
+	$button_sizer->Add( $self->{button_ok},     1, 0,        0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::LEFT, 5 );
 
 	# The main layout for the dialog is vertical
 	my $sizer_2 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$sizer_2->Add( $openurl_label,        0, 0,                                       0 );
-	$sizer_2->Add( $self->{openurl_text}, 0, Wx::TOP | Wx::EXPAND,                5 );
+	$sizer_2->Add( $openurl_label,        0, 0,                                 0 );
+	$sizer_2->Add( $self->{openurl_text}, 0, Wx::TOP | Wx::EXPAND,              5 );
 	$sizer_2->Add( $line_1,               0, Wx::TOP | Wx::BOTTOM | Wx::EXPAND, 5 );
-	$sizer_2->Add( $button_sizer,         1, Wx::ALIGN_RIGHT,                       5 );
+	$sizer_2->Add( $button_sizer,         1, Wx::ALIGN_RIGHT,                   5 );
 
 	# Wrap it in a horizontal to create an top level border
 	my $sizer_1 = Wx::BoxSizer->new(Wx::HORIZONTAL);

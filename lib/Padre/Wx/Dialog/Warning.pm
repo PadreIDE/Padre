@@ -65,12 +65,12 @@ sub new {
 	my $sizer_4 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	my $sizer_5 = Wx::BoxSizer->new(Wx::VERTICAL);
 	my $sizer_6 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$sizer_5->Add( $self->{warning_label},    0, 0,                                       0 );
-	$sizer_5->Add( $self->{warning_checkbox}, 0, Wx::TOP | Wx::EXPAND,                5 );
+	$sizer_5->Add( $self->{warning_label},    0, 0,                                 0 );
+	$sizer_5->Add( $self->{warning_checkbox}, 0, Wx::TOP | Wx::EXPAND,              5 );
 	$sizer_5->Add( $line_1,                   0, Wx::TOP | Wx::BOTTOM | Wx::EXPAND, 5 );
-	$sizer_6->Add( $self->{ok_button},        0, 0,                                       0 );
-	$sizer_5->Add( $sizer_6,                  1, Wx::ALIGN_CENTER_HORIZONTAL,           5 );
-	$sizer_4->Add( $sizer_5,                  1, Wx::ALL | Wx::EXPAND,                5 );
+	$sizer_6->Add( $self->{ok_button},        0, 0,                                 0 );
+	$sizer_5->Add( $sizer_6,                  1, Wx::ALIGN_CENTER_HORIZONTAL,       5 );
+	$sizer_4->Add( $sizer_5,                  1, Wx::ALL | Wx::EXPAND,              5 );
 	$self->SetSizer($sizer_4);
 	$sizer_4->Fit($self);
 

@@ -77,10 +77,10 @@ sub prepare {
 sub run {
 	TRACE( $_[0] ) if DEBUG;
 	require Module::Manifest;
-	my $self   = shift;
-	my $root   = $self->{root};
-	my $list   = $self->{list};
-	my @queue  = @$list;
+	my $self  = shift;
+	my $root  = $self->{root};
+	my $list  = $self->{list};
+	my @queue = @$list;
 
 	# Prepare the skip rules
 	my $rule = Module::Manifest->new;

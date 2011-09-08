@@ -226,7 +226,7 @@ the request is invalid.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check parameters relevant to our optional owner
 	if ( exists $self->{owner} ) {

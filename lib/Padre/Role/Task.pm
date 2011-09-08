@@ -253,7 +253,7 @@ sub task_request {
 	# Check and load the task
 	# Support a convenience shortcut where a false value
 	# for task means don't run a task at all.
-	my $name   = delete $param{task} or return;
+	my $name = delete $param{task} or return;
 	my $driver = Params::Util::_DRIVER( $name, 'Padre::Task' );
 	die "Invalid task class '$name'" unless $driver;
 

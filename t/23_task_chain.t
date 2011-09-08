@@ -73,7 +73,7 @@ SCOPE: {
 
 	# Join the thread
 	$worker->thread->join;
-	ok( !$worker->thread,      'Worker thread has ended' );
+	ok( !$worker->thread, 'Worker thread has ended' );
 }
 
 is( scalar( threads->list ), 1, 'Thread is gone' );

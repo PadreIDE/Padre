@@ -140,8 +140,8 @@ sub new {
 	$self->{config} = Padre::Config->read;
 
 	# Initialise our registries
-	$self->actions( {} );
-	$self->wizards( {} );
+	$self->actions(   {} );
+	$self->wizards(   {} );
 	$self->shortcuts( {} );
 
 	# Create the project manager

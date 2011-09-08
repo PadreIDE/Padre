@@ -53,7 +53,7 @@ sub new {
 	bless {
 		wid   => ++$SEQUENCE,
 		queue => Padre::TaskQueue->new,
-		seen  => { },
+		seen  => {},
 		},
 		$_[0];
 }
@@ -153,14 +153,14 @@ sub send_message {
 
 sub send_cancel {
 	TRACE( $_[0] ) if DEBUG;
-	shift->{queue}->enqueue( [ 'cancel' ] );
+	shift->{queue}->enqueue( ['cancel'] );
 	return 1;
 }
 
 # Immediately detach and terminate when queued jobs are completed
 sub send_stop {
 	TRACE( $_[0] ) if DEBUG;
-	shift->{queue}->enqueue( [ 'stop' ] );
+	shift->{queue}->enqueue( ['stop'] );
 	return 1;
 }
 
@@ -208,7 +208,7 @@ sub run {
 
 # Spawn a worker object off the current thread
 sub child {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	shift;
 	shift->spawn;
 	return 1;
@@ -228,9 +228,10 @@ sub task {
 	# Execute the task (ignore the result) and signal as we go
 	local $@;
 	eval {
+
 		# Tell our parent we are starting
-		TRACE("Handle " . $handle->hid . " calling ->start") if DEBUG;
-		$handle->start($self->queue);
+		TRACE( "Handle " . $handle->hid . " calling ->start" ) if DEBUG;
+		$handle->start( $self->queue );
 
 		# Set up to receive thread kill signals
 		local $SIG{STOP} = sub {
@@ -238,11 +239,11 @@ sub task {
 		};
 
 		# Call the handle's run method
-		TRACE("Handle " . $handle->hid . " calling ->run") if DEBUG;
+		TRACE( "Handle " . $handle->hid . " calling ->run" ) if DEBUG;
 		$handle->run;
 
 		# Tell our parent we completed successfully
-		TRACE("Handle " . $handle->hid . " calling ->stop") if DEBUG;
+		TRACE( "Handle " . $handle->hid . " calling ->stop" ) if DEBUG;
 		$handle->stop;
 	};
 	if ($@) {

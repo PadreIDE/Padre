@@ -78,7 +78,7 @@ sub new {
 	#
 
 	my $label = Wx::StaticText->new(
-		$self,                 -1, 'Filter',
+		$self,               -1, 'Filter',
 		Wx::DefaultPosition, Wx::DefaultSize,
 		Wx::ALIGN_RIGHT
 	);

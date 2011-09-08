@@ -63,9 +63,11 @@ sub new {
 			$self->on_list_item_activated( $_[1], $main, $editor );
 		},
 	);
+
 	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
 	Wx::Event::EVT_CONTEXT_MENU(
-	#Wx::Event::EVT_CONTEXT_MENU(
+
+		#Wx::Event::EVT_CONTEXT_MENU(
 		$self, \&on_context_menu,
 	);
 

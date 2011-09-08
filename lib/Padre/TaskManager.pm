@@ -214,7 +214,7 @@ sub stop {
 
 	# Disable and clear pending tasks
 	$self->{active} = 0;
-	$self->{queue}  = [ ];
+	$self->{queue}  = [];
 
 	# Shut down the master thread
 	# NOTE: We ignore the status of the thread master settings here and
@@ -288,9 +288,7 @@ sub cancel {
 	my $queue = $self->{queue};
 
 	# Remove any tasks from the pending queue
-	@$queue = grep {
-		! defined $_->{owner} or $_->{owner} != $owner
-	} @$queue;
+	@$queue = grep { !defined $_->{owner} or $_->{owner} != $owner } @$queue;
 
 	# Signal any active tasks to cooperatively abort themselves
 	foreach my $handle ( values %{ $self->{handles} } ) {
@@ -361,6 +359,7 @@ sub stop_worker {
 	my $self   = shift;
 	my $worker = delete $self->{workers}->[ $_[0] ];
 	if ( $worker->handle ) {
+
 		# Tell the worker to abandon what it is doing
 		if (DEBUG) {
 			my $tid = $worker->tid;
@@ -389,7 +388,7 @@ ability to forcefully terminate workers.>
 
 sub kill_worker {
 	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
+	my $self = shift;
 	my $worker = delete $self->{workers}->[ $_[0] ] or return;
 
 	# Send a sigstop to the worker thread, if it is running
@@ -529,6 +528,7 @@ sub run {
 		$handles->{$hid} = $handle;
 
 		if ( $self->{threads} ) {
+
 			# Find the next/best worker for the task
 			my $worker = $self->best_worker($handle);
 			if ($worker) {
@@ -545,22 +545,21 @@ sub run {
 			$worker->send_task($handle);
 
 		} else {
+
 			# Prepare handle timing
 			$handle->start_time(time);
 
 			# Clone the handle so we don't impact the original
-			my $copy = Padre::TaskHandle->from_array(
-				$handle->as_array
-			);
+			my $copy = Padre::TaskHandle->from_array( $handle->as_array );
 
 			# Execute the task (ignore the result) and signal as we go
 			local $@;
 			eval {
-				TRACE("Handle " . $copy->hid . " calling ->start") if DEBUG;
-				$copy->start([]);
-				TRACE("Handle " . $copy->hid . " calling ->run") if DEBUG;
+				TRACE( "Handle " . $copy->hid . " calling ->start" ) if DEBUG;
+				$copy->start( [] );
+				TRACE( "Handle " . $copy->hid . " calling ->run" ) if DEBUG;
 				$copy->run;
-				TRACE("Handle " . $copy->hid . " calling ->stop") if DEBUG;
+				TRACE( "Handle " . $copy->hid . " calling ->stop" ) if DEBUG;
 				$copy->stop;
 			};
 			if ($@) {
@@ -568,7 +567,7 @@ sub run {
 				delete $copy->{child};
 				TRACE($@) if DEBUG;
 			}
-		};
+		}
 	}
 
 	return 1;
@@ -684,14 +683,14 @@ sub waitjoin {
 		# Close the threads in LIFO order, just in case it matters
 		foreach my $thread ( reverse threads->list ) {
 			if ( $thread->is_joinable ) {
-				TRACE("Thread " . $thread->tid . " joining...") if DEBUG;
+				TRACE( "Thread " . $thread->tid . " joining..." ) if DEBUG;
 				$thread->join;
 			} else {
-				TRACE("Thread " . $thread->tid . " not joinable") if DEBUG;
+				TRACE( "Thread " . $thread->tid . " not joinable" ) if DEBUG;
 				$more++;
 			}
 		}
-		unless ( $more ) {
+		unless ($more) {
 			TRACE("All threads joined") if DEBUG;
 			last;
 		}

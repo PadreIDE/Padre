@@ -80,7 +80,7 @@ use constant {
 # Portable Perl Support
 use constant PORTABLE => do {
 	no warnings 'once';
-	$Portable::ENABLED and Portable->default->dist_root
+	$Portable::ENABLED and Portable->default->dist_root;
 };
 
 # Padre's home dir

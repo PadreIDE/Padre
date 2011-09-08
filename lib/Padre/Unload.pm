@@ -17,7 +17,7 @@ sub unload {
 	no strict 'refs';
 
 	# Flush inheritance caches
-	@{$module . '::ISA'} = ();
+	@{ $module . '::ISA' } = ();
 
 	# Delete all symbols except other namespaces
 	my $symtab = $module . '::';
@@ -27,7 +27,7 @@ sub unload {
 	}
 
 	my $inc_file = join( '/', split /(?:'|::)/, $module ) . '.pm';
-	delete $INC{ $inc_file };
+	delete $INC{$inc_file};
 
 	return 1;
 }

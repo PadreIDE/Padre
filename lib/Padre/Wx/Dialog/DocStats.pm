@@ -95,19 +95,19 @@ sub new {
 	$data_sizer->Add( $self->label( Wx::gettext('Document') ), 0, 0, 0 );
 	$data_sizer->Add( $self->{selection},                      0, 0, 0 );
 
-	$data_sizer->Add( $self->label( Wx::gettext('Lines') ), 0, 0,                 0 );
+	$data_sizer->Add( $self->label( Wx::gettext('Lines') ), 0, 0,               0 );
 	$data_sizer->Add( $self->{lines_1},                     0, Wx::ALIGN_RIGHT, 0 );
 	$data_sizer->Add( $self->{lines_2},                     0, Wx::ALIGN_RIGHT, 0 );
 
-	$data_sizer->Add( $self->label( Wx::gettext('Words') ), 0, 0,                 0 );
+	$data_sizer->Add( $self->label( Wx::gettext('Words') ), 0, 0,               0 );
 	$data_sizer->Add( $self->{words_1},                     0, Wx::ALIGN_RIGHT, 0 );
 	$data_sizer->Add( $self->{words_2},                     0, Wx::ALIGN_RIGHT, 0 );
 
-	$data_sizer->Add( $self->label( Wx::gettext('Characters (including whitespace)') ), 0, 0,                 0 );
+	$data_sizer->Add( $self->label( Wx::gettext('Characters (including whitespace)') ), 0, 0,               0 );
 	$data_sizer->Add( $self->{chars_1},                                                 0, Wx::ALIGN_RIGHT, 0 );
 	$data_sizer->Add( $self->{chars_2},                                                 0, Wx::ALIGN_RIGHT, 0 );
 
-	$data_sizer->Add( $self->label( Wx::gettext('Non-whitespace characters') ), 0, 0,                 0 );
+	$data_sizer->Add( $self->label( Wx::gettext('Non-whitespace characters') ), 0, 0,               0 );
 	$data_sizer->Add( $self->{nwcs_1},                                          0, Wx::ALIGN_RIGHT, 0 );
 	$data_sizer->Add( $self->{nwcs_2},                                          0, Wx::ALIGN_RIGHT, 0 );
 
@@ -122,22 +122,22 @@ sub new {
 	my $main_sizer = Wx::FlexGridSizer->new( 5, 1, $vertical_grid_margin * 2, 0 );
 	$main_sizer->AddGrowableCol(0);
 
-	$main_sizer->Add( $self->{filename}, 0, 0,            $border_margin );
+	$main_sizer->Add( $self->{filename}, 0, 0,          $border_margin );
 	$main_sizer->Add( $data_sizer,       1, Wx::EXPAND, $border_margin );
 
 	my $type_sizer = Wx::FlexGridSizer->new( 6, 2, $vertical_grid_margin, $horizontal_grid_margin );
-	$type_sizer->Add( $self->label( Wx::gettext('Line break mode') ), 0, 0,            0 );
-	$type_sizer->Add( $self->{newline_type},                          0, 0,            0 );
-	$type_sizer->Add( $self->label( Wx::gettext('Encoding') ),        0, 0,            0 );
-	$type_sizer->Add( $self->{encoding},                              0, 0,            0 );
-	$type_sizer->Add( $self->label( Wx::gettext('Document type') ),   0, 0,            0 );
-	$type_sizer->Add( $self->{doc_type},                              0, 0,            0 );
+	$type_sizer->Add( $self->label( Wx::gettext('Line break mode') ), 0, 0,          0 );
+	$type_sizer->Add( $self->{newline_type},                          0, 0,          0 );
+	$type_sizer->Add( $self->label( Wx::gettext('Encoding') ),        0, 0,          0 );
+	$type_sizer->Add( $self->{encoding},                              0, 0,          0 );
+	$type_sizer->Add( $self->label( Wx::gettext('Document type') ),   0, 0,          0 );
+	$type_sizer->Add( $self->{doc_type},                              0, 0,          0 );
 	$main_sizer->Add( $type_sizer,                                    1, Wx::EXPAND, 0 );
 
 	$main_sizer->Add( $self->horizontal_line, 1, Wx::EXPAND, 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$buttons->Add( $update_button,        0, 0,          $border_margin );
+	$buttons->Add( $update_button,        0, 0,        $border_margin );
 	$buttons->Add( $self->{close_button}, 0, Wx::LEFT, $border_margin );
 	$main_sizer->Add( $buttons, 0, Wx::ALIGN_RIGHT | Wx::ALL, $border_margin );
 

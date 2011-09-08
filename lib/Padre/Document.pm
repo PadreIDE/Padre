@@ -940,7 +940,7 @@ sub text_patch {
 	my @targets = ();
 
 	# Build the series of target replacements
-	while ( @_ ) {
+	while (@_) {
 		my $target = {
 			start => 0,
 			end   => 0,
@@ -949,6 +949,7 @@ sub text_patch {
 		};
 
 		if ( $_[0]->[0] eq '+' ) {
+
 			# The start and end of the target is the beginning of
 			# the insertion record.
 			my $change = shift;
@@ -961,6 +962,7 @@ sub text_patch {
 			$target->{text}  = $text . "\n";
 
 		} else {
+
 			# The change starts with a removal block
 			my $change = shift;
 			my $mode   = $change->[0];
@@ -994,23 +996,19 @@ sub text_patch {
 
 	# Replace the targets in reverse order so we don't have to
 	# recalculate any of the positions as the content above it changes.
-	while ( @targets ) {
+	while (@targets) {
 		my $target = pop @targets;
-		$editor->SetTargetStart(
-			$editor->PositionFromLine( $target->{start} )
-		);
-		$editor->SetTargetEnd(
-			$editor->PositionFromLine( $target->{end} )
-		);
-		$editor->ReplaceTarget($target->{text});
+		$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
+		$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
+		$editor->ReplaceTarget( $target->{text} );
 	}
 
 	return;
 }
 
 sub text_delta {
-	my $self  = shift;
-	my $delta = Params::Util::_INSTANCE(shift, 'Padre::Delta') or return;
+	my $self = shift;
+	my $delta = Params::Util::_INSTANCE( shift, 'Padre::Delta' ) or return;
 	$delta->apply( $self->editor );
 }
 

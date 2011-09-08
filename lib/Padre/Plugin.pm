@@ -241,7 +241,7 @@ disabled unless the user has specifically allowed experimental plug-ins.
 # Convenience integration with Class::Unload
 sub unload {
 	my $either = shift;
-	foreach my $package ( @_ ) {
+	foreach my $package (@_) {
 		Padre::Unload::unload($package);
 	}
 	return 1;

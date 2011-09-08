@@ -39,7 +39,7 @@ sub new {
 	my $class = shift;
 	my $self  = bless {
 		mode    => shift,
-		targets => [ @_ ],
+		targets => [@_],
 	}, $class;
 
 }
@@ -53,7 +53,7 @@ sub from_diff {
 	my @targets = ();
 
 	# Build the series of target replacements
-	while ( @_ ) {
+	while (@_) {
 		my $target = {
 			start => 0,
 			end   => 0,
@@ -62,6 +62,7 @@ sub from_diff {
 		};
 
 		if ( $_[0]->[0] eq '+' ) {
+
 			# The start and end of the target is the beginning of
 			# the insertion record.
 			my $change = shift;
@@ -74,6 +75,7 @@ sub from_diff {
 			$target->{text}  = $text . "\n";
 
 		} else {
+
 			# The change starts with a removal block
 			my $change = shift;
 			my $mode   = $change->[0];
@@ -112,8 +114,8 @@ sub from_scalars {
 	my $self = shift;
 
 	# Split the scalar refs into lines
-	my @from = split /\n/, ${shift()};
-	my @to   = split /\n/, ${shift()};
+	my @from = split /\n/, ${ shift() };
+	my @to   = split /\n/, ${ shift() };
 
 	# Diff the two line sets
 	require Algorithm::Diff;
@@ -138,24 +140,20 @@ sub to_editor {
 
 	# Apply positions based on raw positions
 	if ( $mode eq 'position' ) {
-		foreach my $target ( @$targets ) {
-			$editor->SetTargetStart($target->{start});
-			$editor->SetTargetEnd($target->{end});
-			$editor->ReplaceTarget($target->{text});
+		foreach my $target (@$targets) {
+			$editor->SetTargetStart( $target->{start} );
+			$editor->SetTargetEnd( $target->{end} );
+			$editor->ReplaceTarget( $target->{text} );
 		}
 		return;
 	}
 
 	# Apply positions based on lines
 	if ( $mode eq 'line' ) {
-		foreach my $target ( @$targets ) {
-			$editor->SetTargetStart(
-				$editor->PositionFromLine($target->{start})
-			);
-			$editor->SetTargetEnd(
-				$editor->PositionFromLine($target->{end})
-			);
-			$editor->ReplaceText($target->{text});
+		foreach my $target (@$targets) {
+			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
+			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
+			$editor->ReplaceText( $target->{text} );
 		}
 		return;
 	}

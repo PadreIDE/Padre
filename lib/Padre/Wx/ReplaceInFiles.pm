@@ -143,7 +143,7 @@ sub replace_message {
 	my $count = shift or next;
 	if ( $count > 0 ) {
 		my $label = sprintf( Wx::gettext('%s (%s changed)'), $full, $count );
-		my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+		my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
 		$self->SetPlData( $file, { dir => $dir, file => $name } );
 
 		# Update statistics
@@ -151,7 +151,7 @@ sub replace_message {
 		$self->{files}   += 1;
 	} else {
 		my $label = sprintf( Wx::gettext('%s (crashed)'), $full );
-		my $file  = $self->AppendItem( $root, $label, $self->{images}->{file} );
+		my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
 		$self->SetItemTextColour( $file => Padre::Wx::color('990000') );
 		$self->SetItemBold( $file => 1 );
 		$self->SetPlData( $file => { dir => $dir, file => $name } );

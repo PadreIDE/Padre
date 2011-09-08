@@ -192,7 +192,7 @@ sub replace_all {
 	my $self = shift;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace_all(@_);
-	} elsif ( Params::Util::_SCALAR0($_[0]) ) {
+	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
 		return $self->scalar_replace_all(@_);
 	}
 	die "Missing or invalid content object to search in";
@@ -202,7 +202,7 @@ sub count_all {
 	my $self = shift;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_count_all(@_);
-	} elsif ( Params::Util::_SCALAR0($_[0]) ) {
+	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
 		return $self->scalar_count_all(@_);
 	}
 	die "Missing or invalid content object to search in";
@@ -455,18 +455,14 @@ sub match_lines {
 	my $regex = shift;
 
 	# Apply the search regex as a filter
-	return map {
-		[ $_ + 1, $lines[$_] ]
-	} grep {
-		$lines[$_] =~ /$regex/
-	} ( 0 .. $#lines );
+	return map { [ $_ + 1, $lines[$_] ] } grep { $lines[$_] =~ /$regex/ } ( 0 .. $#lines );
 }
 
 sub match_count {
 	my $self  = shift;
 	my $text  = Encode::encode( 'utf-8', shift );
 	my $regex = shift;
-	my $count =()= $text =~ /$regex/g;
+	my $count = () = $text =~ /$regex/g;
 	return $count;
 }
 

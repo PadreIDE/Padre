@@ -191,7 +191,7 @@ sub _create_controls {
 	$vbox->Add( $close_button,          0, Wx::ALL | Wx::ALIGN_LEFT, 0 );
 	$self->_hbox->Add( $vbox, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$self->_hbox->Add(
-		$self->_help_viewer,                                                        1,
+		$self->_help_viewer,                                                1,
 		Wx::ALL | Wx::ALIGN_TOP | Wx::ALIGN_CENTER_HORIZONTAL | Wx::EXPAND, 1
 	);
 

@@ -89,7 +89,7 @@ sub new {
 
 	# Create the render data store and timer
 	$self->{search_task}     = undef;
-	$self->{search_queue}    = [ ];
+	$self->{search_queue}    = [];
 	$self->{search_timer_id} = Wx::NewId();
 	$self->{search_timer}    = Wx::Timer->new(
 		$self,
@@ -123,7 +123,7 @@ sub task_reset {
 
 	# As a convenience, reset any timers used by task message processing
 	$self->{search_task}  = undef;
-	$self->{search_queue} = [ ];
+	$self->{search_queue} = [];
 	$self->{search_timer}->Stop;
 
 	# Reset normally as well
@@ -188,7 +188,7 @@ sub search_message {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	push @{$self->{search_queue}}, [ @_ ];
+	push @{ $self->{search_queue} }, [@_];
 }
 
 sub search_timer {
@@ -254,7 +254,7 @@ sub search_render {
 	require Padre::Wx::Directory::Path;
 
 	# Add the file nodes to the tree
-	foreach my $entry ( @$queue ) {
+	foreach my $entry (@$queue) {
 		my $path  = shift @$entry;
 		my $name  = $path->name;
 		my $dir   = File::Spec->catfile( $task->root, $path->dirs );
@@ -277,7 +277,7 @@ sub search_render {
 		);
 
 		# Add the lines nodes to the tree
-		foreach my $row ( @$entry ) {
+		foreach my $row (@$entry) {
 
 			# Tabs don't display properly
 			$row->[1] =~ s/\t/    /g;
@@ -305,7 +305,7 @@ sub search_render {
 	}
 
 	# Flush the pending queue
-	$self->{search_queue} = [ ];
+	$self->{search_queue} = [];
 
 	return 1;
 }

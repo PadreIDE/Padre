@@ -33,7 +33,7 @@ sub config_load {
 		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
 			$ctrl->SetValue($value);
 
-		} elsif ( $ctrl->isa('Wx::FilePickerCtrl' ) ) {
+		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
 			$ctrl->SetPath($value);
 
 		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
