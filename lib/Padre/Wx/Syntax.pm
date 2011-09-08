@@ -272,26 +272,16 @@ sub clear {
 		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $len = $editor->GetTextLength;
 			if ( $len > 0 ) {
-				if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange') ) {
-
-					# Using modern indicator API if available
-					$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
-					$editor->IndicatorClearRange( 0, $len );
-					$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
-					$editor->IndicatorClearRange( 0, $len );
-				} else {
-
-					# Or revert to the old deprecated method
-					$editor->StartStyling( 0, Wx::wxSTC_INDICS_MASK );
-					$editor->SetStyling( $len - 1, 0 );
-				}
+				# Clear out all indicators
+				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
+				$editor->IndicatorClearRange( 0, $len );
+				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
+				$editor->IndicatorClearRange( 0, $len );
 			}
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		if ( Padre::Feature::SYNTAX_CHECK_ANNOTATIONS && $editor->can('AnnotationClearAll') ) {
-			$editor->AnnotationClearAll;
-		}
+		$editor->AnnotationClearAll if Padre::Feature::SYNTAX_CHECK_ANNOTATIONS;
 	}
 
 	# Remove all items from the tool
@@ -473,18 +463,9 @@ sub render {
 		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 
 			# Change only the indicators
-			if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorFillRange') ) {
-
-				# Using modern indicator API if available
-				$editor->SetIndicatorCurrent(
-					$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
-				$editor->IndicatorFillRange( $indent, $end - $indent );
-			} else {
-
-				# Or revert to the old deprecated method
-				$editor->StartStyling( $indent, Wx::wxSTC_INDICS_MASK );
-				$editor->SetStyling( $end - $indent, $is_warning ? Wx::wxSTC_INDIC1_MASK : Wx::wxSTC_INDIC2_MASK );
-			}
+			$editor->SetIndicatorCurrent(
+				$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->IndicatorFillRange( $indent, $end - $indent );
 		}
 
 		# Collect annotations for later display
@@ -523,11 +504,9 @@ sub render {
 
 		# Add annotations
 		foreach my $line ( sort keys %annotations ) {
-			if ( $editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyles') ) {
-				my $annotation = $annotations{$line};
-				$editor->AnnotationSetText( $line, $annotation->{message} );
-				$editor->AnnotationSetStyles( $line, $annotation->{style} );
-			}
+			my $annotation = $annotations{$line};
+			$editor->AnnotationSetText( $line, $annotation->{message} );
+			$editor->AnnotationSetStyles( $line, $annotation->{style} );
 		}
 
 		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
