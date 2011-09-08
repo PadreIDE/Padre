@@ -746,7 +746,7 @@ sub setup_style_from_config {
 	# Please note that eol-filled and underline do not work well with annotations
 	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 
-		for my $padre_color qw(PADRE_WARNING PADRE_ERROR) {
+		for my $padre_color (qw(PADRE_WARNING PADRE_ERROR)) {
 			my $color = $data->{padre}->{colors}->{$padre_color};
 
 			no strict 'refs';
