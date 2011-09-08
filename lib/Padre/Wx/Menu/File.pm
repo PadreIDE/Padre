@@ -103,7 +103,7 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
-	if(Padre::Constant::WIN32) {
+	if (Padre::Constant::WIN32) {
 		$self->{open_with_default_system_editor} = $self->add_menu_action(
 			$file_open,
 			'file.open_with_default_system_editor',

@@ -103,7 +103,7 @@ sub new {
 
 	# Code always lays out left to right
 	if ( $self->can('SetLayoutDirection') ) {
-		$self->SetLayoutDirection( Wx::Layout_LeftToRight );
+		$self->SetLayoutDirection(Wx::Layout_LeftToRight);
 	}
 
 	# Allow scrolling past the end of the document for those of us
@@ -178,8 +178,10 @@ sub new {
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_left_double );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
+
 	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_context_menu );
+
 	#Wx::Event::EVT_CONTEXT_MENU( $self, \&on_context_menu );
 
 	# Capture change events that result in an actual change to the text
@@ -303,8 +305,8 @@ sub on_key_up {
 
 # Called when a character is added or changed in the editor
 sub on_char {
-	my $self     = shift;
-	my $event    = shift;
+	my $self  = shift;
+	my $event = shift;
 
 	# Hide the smart highlight when a character is added or changed
 	# in the editor
@@ -546,7 +548,7 @@ sub configure_editor {
 }
 
 sub set_preferences {
-	my $self   = shift;
+	my $self = shift;
 	my $config = shift || $self->config;
 
 	# (Re)apply general configuration settings
@@ -581,7 +583,7 @@ sub padre_setup {
 	# Configure lexing for the editor based on the document type
 	if ($document) {
 		$self->SetLexer( $document->lexer );
-		$self->SetStyleBits($self->GetStyleBitsNeeded);
+		$self->SetStyleBits( $self->GetStyleBitsNeeded );
 		$self->SetWordChars( $document->stc_word_chars );
 
 		# Set all the lexer keywords lists that the document provides
@@ -1674,11 +1676,13 @@ sub smart_highlight_show {
 	# smart highlight if there are more than one occurrence...
 	if ( scalar @{ $self->{styles} } > 1 ) {
 		foreach my $style ( @{ $self->{styles} } ) {
-			if($self->can('SetIndicatorCurrent') and $self->can('IndicatorFillRange')) {
+			if ( $self->can('SetIndicatorCurrent') and $self->can('IndicatorFillRange') ) {
+
 				# New modern way of using indicators
 				$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
-				$self->IndicatorFillRange($style->{start}, $style->{len});
+				$self->IndicatorFillRange( $style->{start}, $style->{len} );
 			} else {
+
 				# Old deprecated method of using indicators. TODO remove once stable
 				$self->StartStyling( $style->{start}, 0xFF );
 				$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
@@ -1693,11 +1697,12 @@ sub smart_highlight_hide {
 
 	my @styles = @{ $self->{styles} };
 	if ( scalar @styles ) {
-		if($self->can('SetIndicatorCurrent') and $self->can('IndicatorClearRange')) {
+		if ( $self->can('SetIndicatorCurrent') and $self->can('IndicatorClearRange') ) {
+
 			# New modern way of using indicators
 			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
 			my $text_length = $self->GetTextLength;
-			$self->IndicatorClearRange(0, $text_length) if $text_length > 0;
+			$self->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
 		} else {
 			foreach my $style (@styles) {
 				$self->StartStyling( $style->{start}, 0xFF );

@@ -205,7 +205,7 @@ sub execute {
 }
 
 sub is_model_ok {
-	my %arg   = @_;
+	my %arg    = @_;
 	my $issues = $arg{model}->{issues};
 
 	is( $issues->[0]->{message}, $arg{message}, "message match in '$arg{test_name}'" );

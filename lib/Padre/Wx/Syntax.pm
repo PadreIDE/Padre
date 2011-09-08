@@ -269,7 +269,7 @@ sub clear {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 
-		unless(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $len = $editor->GetTextLength;
 			if ( $len > 0 ) {
 				if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorClearRange') ) {
@@ -289,7 +289,7 @@ sub clear {
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS && $editor->can('AnnotationClearAll')) {
+		if ( Padre::Feature::SYNTAX_CHECK_ANNOTATIONS && $editor->can('AnnotationClearAll') ) {
 			$editor->AnnotationClearAll;
 		}
 	}
@@ -385,13 +385,15 @@ sub task_finish {
 	$self->{model} = $task->{model};
 
 	# Properly validate and warn about older deprecated syntax models
-	if(Params::Util::_ARRAY0($self->{model})) {
+	if ( Params::Util::_ARRAY0( $self->{model} ) ) {
+
 		# Warn about the old array object from syntax task in debug mode
-		TRACE(q{Syntax checker tasks should now return a hash containing an 'issues' array reference} .
-			q{ and 'stderr' string keys instead of the old issues array reference}) if DEBUG;
+		TRACE(    q{Syntax checker tasks should now return a hash containing an 'issues' array reference}
+				. q{ and 'stderr' string keys instead of the old issues array reference} )
+			if DEBUG;
 
 		# TODO remove compatibility for older syntax checker model
-		if(scalar @{$self->{model}} == 0) {
+		if ( scalar @{ $self->{model} } == 0 ) {
 			$self->{model} = {};
 		} else {
 			$self->{model} = {
@@ -447,15 +449,15 @@ sub render {
 	$self->{tree}->SetItemText(
 		$root,
 		defined $filename
-		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{$model->{issues}}, $filename )
-		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{$model->{issues}} )
+		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{ $model->{issues} }, $filename )
+		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{ $model->{issues} } )
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
 	my %annotations = ();
-	my $i = 0;
+	my $i           = 0;
 	ISSUE:
-	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{$model->{issues}} ) {
+	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{ $model->{issues} } ) {
 
 		my $line       = $issue->{line} - 1;
 		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
@@ -468,7 +470,8 @@ sub render {
 		my $indent = $editor->GetLineIndentPosition($line);
 		my $end    = $editor->GetLineEndPosition($line);
 
-		unless(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+
 			# Change only the indicators
 			if ( $editor->can('SetIndicatorCurrent') and $editor->can('IndicatorFillRange') ) {
 
@@ -486,17 +489,20 @@ sub render {
 
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
-		if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
 			my $message = $issue->message;
-			my $char_style = $is_warning ? sprintf('%c', Padre::Constant::PADRE_WARNING()) : sprintf('%c', Padre::Constant::PADRE_ERROR());
-			unless($annotations{$line}) {
+			my $char_style =
+				$is_warning
+				? sprintf( '%c', Padre::Constant::PADRE_WARNING() )
+				: sprintf( '%c', Padre::Constant::PADRE_ERROR() );
+			unless ( $annotations{$line} ) {
 				$annotations{$line} = {
 					message => $message,
-					style => $char_style x  length($message),
+					style   => $char_style x length($message),
 				};
 			} else {
 				$annotations{$line}{message} .= "\n$message";
-				$annotations{$line}{style} .= $char_style x (length($message) + 1);
+				$annotations{$line}{style} .= $char_style x ( length($message) + 1 );
 			}
 		}
 
@@ -513,18 +519,19 @@ sub render {
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	if(Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+
 		# Add annotations
-		foreach my $line (sort keys %annotations) {
-			if($editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyles')) {
+		foreach my $line ( sort keys %annotations ) {
+			if ( $editor->can('AnnotationSetText') and $editor->can('AnnotationSetStyles') ) {
 				my $annotation = $annotations{$line};
-				$editor->AnnotationSetText($line, $annotation->{message});
-				$editor->AnnotationSetStyles($line, $annotation->{style});
+				$editor->AnnotationSetText( $line, $annotation->{message} );
+				$editor->AnnotationSetStyles( $line, $annotation->{style} );
 			}
 		}
 
 		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
-		$editor->AnnotationSetVisible( $wxSTC_ANNOTATION_BOXED );
+		$editor->AnnotationSetVisible($wxSTC_ANNOTATION_BOXED);
 	}
 
 	$self->{tree}->Expand($root);
