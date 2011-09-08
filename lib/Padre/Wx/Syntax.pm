@@ -385,16 +385,20 @@ sub task_finish {
 	$self->{model} = $task->{model};
 
 	# Properly validate and warn about older deprecated syntax models
-	unless(Params::Util::_HASH0($self->{model})) {
+	if(Params::Util::_ARRAY0($self->{model})) {
 		# Warn about the old array object from syntax task in debug mode
 		TRACE(q{Syntax checker tasks should now return a hash containing an 'issues' array reference} .
 			q{ and 'stderr' string keys instead of the old issues array reference}) if DEBUG;
 
 		# TODO remove compatibility for older syntax checker model
-		$self->{model} = {
-			issues => $self->{model},
-			stderr => undef,
-		};
+		if(scalar @{$self->{model}} == 0) {
+			$self->{model} = {};
+		} else {
+			$self->{model} = {
+				issues => $self->{model},
+				stderr => undef,
+			};
+		}
 	}
 
 	$self->render;
