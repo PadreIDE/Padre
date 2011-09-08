@@ -741,6 +741,27 @@ sub setup_style_from_config {
 			$self->StyleSetUnderline( $v, $color->{underline} );
 		}
 	}
+
+	# Apply the padre warning and error styles to the current editor
+	# Please note that eol-filled and underline do not work well with annotations
+	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+
+		for my $padre_color qw(PADRE_WARNING PADRE_ERROR) {
+			my $color = $data->{padre}->{colors}->{$padre_color};
+
+			no strict 'refs';
+			my $style_num = eval "Padre::Constant::$padre_color";
+			next if $@;
+			$self->StyleSetForeground( $style_num, Padre::Wx::color( $color->{foreground} ) )
+				if exists $color->{foreground};
+			$self->StyleSetBackground( $style_num, Padre::Wx::color( $color->{background} ) )
+				if exists $color->{background};
+			$self->StyleSetBold( $style_num, $color->{bold} ) if exists $color->{bold};
+			$self->StyleSetItalic( $style_num, $color->{italic} ) if exists $color->{italic};
+		}
+	}
+
+
 }
 
 
