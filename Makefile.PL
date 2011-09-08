@@ -154,7 +154,7 @@ requires 'Win32::Shortcut'    => '0.07' if win32;
 requires 'Win32::TieRegistry' => '0.26' if win32;
 requires 'Wx' => ( win32 and $] >= 5.01 ) ? '0.9901' : '0.91';
 requires 'Wx::Perl::ProcessStream' => '0.29';
-requires 'Wx::Scintilla'           => '0.25_03';
+requires 'Wx::Scintilla'           => '0.24';
 requires 'YAML::Tiny'              => '1.32';
 test_requires 'Test::More'         => '0.88';
 test_requires 'Test::MockObject'   => '1.09';
