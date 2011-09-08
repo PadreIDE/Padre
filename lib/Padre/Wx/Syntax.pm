@@ -74,7 +74,15 @@ sub new {
 	my $panel = shift || $main->bottom;
 	my $self  = $class->SUPER::new($panel);
 
-	# Create the underlying object
+	# Create the underlying widgets
+
+	# "Show standard error" button
+	$self->{show_stderr} = Wx::Button->new(
+		$self, -1, Wx::gettext('&Show Standard Error'),
+	);
+	$self->{show_stderr}->Hide;
+
+	# Parsed syntax checker issues tree control
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
 		$self,
 		-1,
@@ -83,6 +91,7 @@ sub new {
 		Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS
 	);
 
+	# Syntax check diagnotics help page
 	$self->{help} = Padre::Wx::HtmlWindow->new(
 		$self,
 		-1,
@@ -92,10 +101,13 @@ sub new {
 	);
 	$self->{help}->Hide;
 
-	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$sizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 0 );
-	$sizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 0 );
-	$self->SetSizer($sizer);
+	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$hsizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 0 );
+	$hsizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 0 );
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$vsizer->Add( $self->{show_stderr}, 0, Wx::ALL, 0 );
+	$vsizer->Add( $hsizer, 3, Wx::ALL | Wx::EXPAND, 0 );
+	$self->SetSizer($vsizer);
 
 	# Additional properties
 	$self->{model}  = {};
@@ -123,6 +135,15 @@ sub new {
 		),
 	};
 	$self->{tree}->AssignImageList($images);
+
+	# Show standard error output
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{show_stderr},
+		sub {
+			shift->_on_show_stderr(@_);
+		}
+	);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self,
@@ -243,7 +264,18 @@ sub on_tree_item_activated {
 	);
 }
 
+sub _on_show_stderr {
+	my $self  = shift;
+	my $event = shift;
 
+	my $stderr = $self->{model}->{stderr};
+	if ( defined $stderr ) {
+		my $main = $self->main;
+		$main->output->SetValue($stderr);
+		$main->output->SetSelection( 0, 0 );
+		$main->show_output(1);
+	}
+}
 
 
 
@@ -287,6 +319,9 @@ sub clear {
 
 	# Remove all items from the tool
 	$self->{tree}->DeleteAllItems;
+
+	# Hide "Show Standard Error"
+	$self->{show_stderr}->Hide;
 
 	# Clear the help page
 	$self->_update_help_page;
@@ -535,6 +570,12 @@ sub render {
 
 		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
 		$editor->AnnotationSetVisible($wxSTC_ANNOTATION_BOXED);
+	}
+
+	# Enable standard error output display button
+	unless ( $self->{show_stderr}->IsShown ) {
+		$self->{show_stderr}->Show(1);
+		$self->Layout;
 	}
 
 	$self->{tree}->Expand($root);
