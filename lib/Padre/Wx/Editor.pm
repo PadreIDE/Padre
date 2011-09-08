@@ -731,7 +731,7 @@ sub setup_style_from_config {
 		if ( exists $color->{bold} ) {
 			$self->StyleSetBold( $v, $color->{bold} );
 		}
-		if ( exists $color->{italics} ) {
+		if ( exists $color->{italic} ) {
 			$self->StyleSetItalic( $v, $color->{italic} );
 		}
 		if ( exists $color->{eolfilled} ) {

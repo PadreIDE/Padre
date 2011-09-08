@@ -165,7 +165,7 @@ sub hash2set {
 		if ( defined $color->{bold} ) {
 			push @set, StyleSetBold => $id, $color->{bold};
 		}
-		if ( defined $color->{italics} ) {
+		if ( defined $color->{italic} ) {
 			push @set, StyleSetItalic => $id, $color->{italic};
 		}
 		if ( defined $color->{eolfilled} ) {
