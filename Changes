@@ -80,6 +80,8 @@ the even version for the release, even during development.
       (AZAWAWI)
     - Fix TODO list double click not working regression on win32 (AZAWAWI)
     - Italic text was not being set correctly in a Padre style (AZAWAWI)
+    - "Show Standard Error" in Syntax check pane now displays in output
+      pane the syntax checker results (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
