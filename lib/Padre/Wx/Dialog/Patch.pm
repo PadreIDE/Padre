@@ -234,7 +234,8 @@ sub file_lists_saved {
 	$self->file1->Clear;
 	$self->file1->Append( \@file_lists_saved );
 	$self->{file1_list_ref} = \@file_lists_saved;
-	$self->set_selection();
+	# $self->set_selection();
+	$self->set_selection( $self->{file1_list_ref} );
 	$self->file1->SetSelection( $self->{selection} );
 
 	$self->file2->Clear;
@@ -250,6 +251,7 @@ sub file_lists_saved {
 #######
 sub file2_list_patch {
 	my $self = shift;
+	
 	my @file2_list_patch;
 	for ( 0 .. $self->{tab_cardinality} ) {
 		if ( $self->{open_file_info}->{$_}->{'filename'} =~ /(patch|diff)$/sxm ) {
@@ -259,18 +261,23 @@ sub file2_list_patch {
 
 	TRACE("file2_list_patch: @file2_list_patch") if DEBUG;
 
+	# $self->file2->Clear;
+	# $self->file2->Append( \@file2_list_patch );
+	# # $self->file2->SetSelection(0);
+	# $self->set_selection( $self->{file2_list_ref} );
+	# $self->{file2_list_ref} = \@file2_list_patch;
 	$self->file2->Clear;
 	$self->file2->Append( \@file2_list_patch );
-	$self->file2->SetSelection(0);
 	$self->{file2_list_ref} = \@file2_list_patch;
-
+	$self->set_selection( $self->{file2_list_ref} );
+	$self->file2->SetSelection( $self->{selection} );
+	
 	return;
 }
 
 #######
 # Composed Method file1_list_svn
 #######
-
 sub file1_list_svn {
 	my $self = shift;
 
@@ -288,7 +295,7 @@ sub file1_list_svn {
 
 	$self->file1->Clear;
 	$self->file1->Append( $self->{file1_list_ref} );
-	$self->set_selection();
+	$self->set_selection( $self->{file1_list_ref} );
 	$self->file1->SetSelection( $self->{selection} );
 
 	return;
@@ -299,16 +306,21 @@ sub file1_list_svn {
 # Composed Method set_selection
 #######
 sub set_selection {
-	my $self = shift;
-	my $main = $self->main;
+	my $self          = shift;
+	my $file_list_ref = shift;
+	my $main          = $self->main;
+
+	$self->{selection} = 0;
 
 	# SetSelection should be current file
-	foreach ( 0 .. $#{ $self->{file1_list_ref} } ) {
+	foreach ( 0 .. $#{ $file_list_ref } ) {
 
-		if ( @{ $self->{file1_list_ref} }[$_] eq $main->current->title ) {
+		if ( @{ $file_list_ref }[$_] eq $main->current->title ) {
 			$self->{selection} = $_;
+			return;
 		}
 	}
+
 	return;
 }
 

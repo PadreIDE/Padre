@@ -94,6 +94,13 @@ sub new {
 
 	$self->AppendSeparator;
 
+	if ( Padre::Current->filename =~ /(patch|diff)$/sxm ) {
+		$self->{patch_diff} = $self->add_menu_action(
+			'edit.patch_diff',
+		);
+		$self->AppendSeparator;
+	}
+
 	$self->{comment_toggle} = $self->add_menu_action(
 		'edit.comment_toggle',
 	);
