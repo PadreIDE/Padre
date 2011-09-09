@@ -499,6 +499,18 @@ sub is_unused {
 	return '';
 }
 
+sub is_readonly {
+	my $self = shift;
+
+	my $file = $self->file;
+	return 0 unless defined($file);
+
+	# Fill the cache if it's empty and assume read-write as a default
+	$self->{readonly} ||= $self->file->readonly || 0;
+
+	return $self->{readonly};
+}
+
 # Returns true if file has changed on the disk
 # since load time or the last time we saved it.
 # Check if the file on the disk has changed
@@ -1409,18 +1421,6 @@ sub stc_word_chars {
 
 sub pre_process {
 	return 1;
-}
-
-sub is_readonly {
-	my $self = shift;
-
-	my $file = $self->file;
-	return 0 unless defined($file);
-
-	# Fill the cache if it's empty and assume read-write as a default
-	$self->{readonly} ||= $self->file->readonly || 0;
-
-	return $self->{readonly};
 }
 
 sub selection_stats {
