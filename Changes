@@ -82,6 +82,8 @@ the even version for the release, even during development.
     - Italic text was not being set correctly in a Padre style (AZAWAWI)
     - "Show Standard Error" in Syntax check pane now displays in output
       pane the syntax checker results (AZAWAWI)
+    - Moved Ctrl-Shift-R shortcut from Open Resource to Replace in Files to
+      provide symmetry with the Find in Files shortcut (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

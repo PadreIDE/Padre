@@ -1325,7 +1325,7 @@ sub init {
 		name       => 'search.replace_in_files',
 		label      => _T('Re&place in Files...'),
 		comment    => _T('Search and replace text in all files below a given directory'),
-		shortcut   => 'Ctrl-Alt-R',
+		shortcut   => 'Ctrl-Shift-R',
 		menu_event => sub {
 			require Padre::Wx::Dialog::ReplaceInFiles;
 			my $dialog = Padre::Wx::Dialog::ReplaceInFiles->new( $_[0] );
@@ -1380,7 +1380,6 @@ sub init {
 		label      => _T('Open &Resources...'),
 		comment    => _T('Use a filter to select one or more files'),
 		toolbar    => 'places/folder-saved-search',
-		shortcut   => 'Ctrl-Shift-R',
 		menu_event => sub {
 			$_[0]->open_resource->show;
 		},
