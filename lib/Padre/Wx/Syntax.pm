@@ -3,23 +3,20 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util          ();
-use Padre::Feature        ();
-use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
-use Padre::Wx             ();
-use Padre::Wx::Icon       ();
-use Padre::Wx::TreeCtrl   ();
-use Padre::Wx::HtmlWindow ();
+use Params::Util           ();
+use Padre::Feature         ();
+use Padre::Role::Task      ();
+use Padre::Wx::Role::View  ();
+use Padre::Wx              ();
+use Padre::Wx::Icon        ();
+use Padre::Wx::FBP::Syntax ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
-	Padre::Wx::Role::Main
-	Wx::Panel
+	Padre::Wx::FBP::Syntax
 };
 
 # perldiag error message classification
@@ -74,40 +71,9 @@ sub new {
 	my $panel = shift || $main->bottom;
 	my $self  = $class->SUPER::new($panel);
 
-	# Create the underlying widgets
-
-	# "Show standard error" button
-	$self->{show_stderr} = Wx::Button->new(
-		$self, -1, Wx::gettext('&Show Standard Error'),
-	);
-	$self->{show_stderr}->Hide;
-
-	# Parsed syntax checker issues tree control
-	$self->{tree} = Padre::Wx::TreeCtrl->new(
-		$self,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS
-	);
-
-	# Syntax check diagnotics help page
-	$self->{help} = Padre::Wx::HtmlWindow->new(
-		$self,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::BORDER_STATIC,
-	);
+	# Hide the entries not visible by default
 	$self->{help}->Hide;
-
-	my $hsizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$hsizer->Add( $self->{tree}, 3, Wx::ALL | Wx::EXPAND, 0 );
-	$hsizer->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 0 );
-	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $self->{show_stderr}, 0, Wx::ALL, 0 );
-	$vsizer->Add( $hsizer, 3, Wx::ALL | Wx::EXPAND, 0 );
-	$self->SetSizer($vsizer);
+	$self->{show_stderr}->Hide;
 
 	# Additional properties
 	$self->{model}  = {};
@@ -135,31 +101,6 @@ sub new {
 		),
 	};
 	$self->{tree}->AssignImageList($images);
-
-	# Show standard error output
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{show_stderr},
-		sub {
-			shift->_on_show_stderr(@_);
-		}
-	);
-
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self->{tree},
-		sub {
-			shift->on_tree_item_activated(@_);
-		},
-	);
-
-	Wx::Event::EVT_TREE_SEL_CHANGED(
-		$self,
-		$self->{tree},
-		sub {
-			shift->on_tree_item_selection_changed(@_);
-		},
-	);
 
 	$self->Hide;
 
@@ -264,7 +205,7 @@ sub on_tree_item_activated {
 	);
 }
 
-sub _on_show_stderr {
+sub show_stderr {
 	my $self  = shift;
 	my $event = shift;
 
@@ -276,6 +217,8 @@ sub _on_show_stderr {
 		$main->show_output(1);
 	}
 }
+
+
 
 
 

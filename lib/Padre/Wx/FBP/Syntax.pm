@@ -86,11 +86,11 @@ sub new {
 	$bSizer38->Add( $self->{help}, 2, Wx::ALL | Wx::EXPAND, 0 );
 
 	my $bSizer39 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer39->Add( $self->{show_stderr}, 0, Wx::ALL, 0 );
+	$bSizer39->Add( $self->{show_stderr}, 0, Wx::ALL | Wx::BOTTOM | Wx::TOP, 2 );
 
 	my $bSizer37 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer37->Add( $bSizer38, 1, Wx::EXPAND, 0 );
-	$bSizer37->Add( $bSizer39, 0, Wx::EXPAND | Wx::TOP, 3 );
+	$bSizer37->Add( $bSizer39, 0, Wx::EXPAND, 0 );
 
 	$self->SetSizer($bSizer37);
 	$self->Layout;
