@@ -6849,7 +6849,7 @@ sub new_document_from_string {
 	$document->rebless;
 	$document->colourize;
 
-	return 1;
+	return $document;
 }
 
 sub filter_tool {
