@@ -421,7 +421,7 @@ sub apply_patch {
 			$output->AppendText("Your requested Action Patch, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
 			$output->AppendText("File-2: $file2_url \n");
-			$output->AppendText("What follows is the error I received if any: \n");
+			$output->AppendText("What follows is the error I received, if any: \n");
 			$output->AppendText($@);
 
 			$main->info(
@@ -472,6 +472,14 @@ sub make_patch_diff {
 			$main->info( Wx::gettext("Diff Succesful, you should see a new tab in editor called $patch_file") );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
+			
+			$output->AppendText("Patch Dialog failed to Complete.\n");
+			$output->AppendText("Your requested Action Diff, with following parameters.\n");
+			$output->AppendText("File-1: $file1_url \n");
+			$output->AppendText("File-2: $file2_url \n");
+			$output->AppendText("What follows is the error I received, if any: \n");
+			$output->AppendText($@);
+			
 			$main->info(
 				Wx::gettext('Sorry Diff Failed, are you sure your choice of files was correct for this action') );
 			return;
