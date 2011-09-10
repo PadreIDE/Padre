@@ -1573,30 +1573,70 @@ sub insert_from_file {
 	$self->insert_text($text);
 }
 
+sub delete_trailing_spaces {
+	my $self    = shift;
+	my $lines   = $self->GetLineCount;
+	my $changed = 0;
+
+	foreach my $i ( 1 .. $self->GetLineCount ) {
+		my $line = $self->GetLine($i);
+		unless ( $line =~ /\a(.*?)([ \t]+)([\015\012]*)\z/ ) {
+			next;
+		}
+		my $start = $self->PositionFromLine($i) + length $1;
+		$self->SetTargetStart( $start );
+		$self->SetTargetEnd( $start + length $2 );
+		$self->ReplaceTarget('');
+		$changed++;
+	}
+
+	return $changed;
+}
+
+sub delete_leading_spaces {
+	my $self    = shift;
+	my $lines   = $self->GetLineCount;
+	my $changed = 0;
+
+	foreach my $i ( 1 .. $self->GetLineCount ) {
+		my $line = $self->GetLine($i);
+		unless ( $line =~ /\a([ \t]+)/ ) {
+			next;
+		}
+		my $start = $self->PositionFromLine($i);
+		$self->SetTargetStart( $start );
+		$self->SetTargetEnd( $start + length $1 );
+		$self->ReplaceTarget('');
+		$changed++;
+	}
+
+	return $changed;
+}
+
 sub vertically_align {
-	my $editor = shift;
+	my $self = shift;
 
 	# Get the selected lines
-	my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
-	my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd );
+	my $begin = $self->LineFromPosition( $self->GetSelectionStart );
+	my $end   = $self->LineFromPosition( $self->GetSelectionEnd );
 	if ( $begin == $end ) {
-		$editor->error( Wx::gettext("You must select a range of lines") );
+		$self->error( Wx::gettext("You must select a range of lines") );
 		return;
 	}
 	my @line = ( $begin .. $end );
 	my @text = ();
 	foreach (@line) {
-		my $x = $editor->PositionFromLine($_);
-		my $y = $editor->GetLineEndPosition($_);
-		push @text, $editor->GetTextRange( $x, $y );
+		my $x = $self->PositionFromLine($_);
+		my $y = $self->GetLineEndPosition($_);
+		push @text, $self->GetTextRange( $x, $y );
 	}
 
 	# Get the align character from the selection start
 	# (which must be a non-whitespace non-word character)
-	my $start = $editor->GetSelectionStart;
-	my $c = $editor->GetTextRange( $start, $start + 1 );
+	my $start = $self->GetSelectionStart;
+	my $c = $self->GetTextRange( $start, $start + 1 );
 	unless ( defined $c and $c =~ /^[^\s\w]$/ ) {
-		$editor->error( Wx::gettext("First character of selection must be a non-word character to align") );
+		$self->error( Wx::gettext("First character of selection must be a non-word character to align") );
 	}
 
 	# Locate the position of the align character,
@@ -1617,25 +1657,25 @@ sub vertically_align {
 	my $longest = List::Util::max map { $_->[0] } grep {$_} @position;
 
 	# Now lets line them up
-	$editor->BeginUndoAction;
+	$self->BeginUndoAction;
 	foreach ( 0 .. $#line ) {
 		next unless $position[$_];
 		my $spaces = $longest - $position[$_]->[0] - $position[$_]->[1] + 1;
 		if ( $_ == 0 ) {
 			$start = $start + $spaces;
 		}
-		my $insert = $editor->PositionFromLine( $line[$_] ) + $position[$_]->[0];
+		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0];
 		if ( $spaces > 0 ) {
-			$editor->InsertText( $insert, ' ' x $spaces );
+			$self->InsertText( $insert, ' ' x $spaces );
 		} elsif ( $spaces < 0 ) {
-			$editor->SetSelection( $insert, $insert - $spaces );
-			$editor->ReplaceSelection('');
+			$self->SetSelection( $insert, $insert - $spaces );
+			$self->ReplaceSelection('');
 		}
 	}
-	$editor->EndUndoAction;
+	$self->EndUndoAction;
 
 	# Move the selection to the new position
-	$editor->SetSelection( $start, $start );
+	$self->SetSelection( $start, $start );
 
 	return;
 }
