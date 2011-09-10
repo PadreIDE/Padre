@@ -137,28 +137,33 @@ sub to_editor {
 	my $editor  = shift;
 	my $mode    = $self->{mode};
 	my $targets = $self->{targets};
+	my $changed = 0;
 
 	# Apply positions based on raw positions
 	if ( $mode eq 'position' ) {
 		foreach my $target (@$targets) {
 			$editor->SetTargetStart( $target->{start} );
 			$editor->SetTargetEnd( $target->{end} );
+			$editor->BeginUndoAction unless $changed++;
 			$editor->ReplaceTarget( $target->{text} );
 		}
-		return;
-	}
 
 	# Apply positions based on lines
-	if ( $mode eq 'line' ) {
+	} elsif ( $mode eq 'line' ) {
+
 		foreach my $target (@$targets) {
 			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
 			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
+			$editor->BeginUndoAction unless $changed++;
 			$editor->ReplaceText( $target->{text} );
 		}
-		return;
+	} else {
+		die "Unexpected delta mode '$mode'";
 	}
 
-	die "Unexpected delta mode '$mode'";
+	$editor->EndUndoAction if $changed;
+
+	return;
 }
 
 =pod
