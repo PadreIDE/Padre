@@ -421,7 +421,7 @@ sub apply_patch {
 			$output->AppendText("Your requested Action Patch, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
 			$output->AppendText("File-2: $file2_url \n");
-			$output->AppendText("What follows is the error I received, if any: \n");
+			$output->AppendText("What follows is the error I received from Text::Patch::patch, if any: \n");
 			$output->AppendText($@);
 
 			$main->info(
@@ -477,7 +477,7 @@ sub make_patch_diff {
 			$output->AppendText("Your requested Action Diff, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
 			$output->AppendText("File-2: $file2_url \n");
-			$output->AppendText("What follows is the error I received, if any: \n");
+			$output->AppendText("What follows is the error I received from Text::Diff::diff, if any: \n");
 			$output->AppendText($@);
 
 			$main->info(
@@ -533,11 +533,11 @@ sub make_patch_svn {
 			$output->AppendText("Patch Dialog failed to Complete.\n");
 			$output->AppendText("Your requested Action Diff against SVN, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
-			$output->AppendText("What follows is the error I received, if any: \n");
+			$output->AppendText("What follows is the error I received from SVN::Class, if any: \n");
 			$output->AppendText($@);
 
 			$main->info(
-				Wx::gettext('Sorry Diff Failed, are you sure your have access to the repository for this action') );
+				Wx::gettext('Sorry SVN Diff Failed, are you sure your have access to the repository for this action') );
 			return;
 		}
 	}
