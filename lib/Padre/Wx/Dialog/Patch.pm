@@ -380,6 +380,10 @@ sub apply_patch {
 	my $file2_name = shift;
 	my $main       = $self->main;
 
+	$main->show_output(1);
+	my $output = $main->output;
+	$output->clear;
+
 	my ( $source, $diff );
 
 	my $file1_url = $self->filename_url($file1_name);
@@ -412,6 +416,14 @@ sub apply_patch {
 			$main->info( Wx::gettext('Patch Succesful, you should see a new tab in editor called Unsaved #') );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
+
+			$output->AppendText("Patch Dialog failed to Complete.\n");
+			$output->AppendText("Your requested Action Patch, with following parameters.\n");
+			$output->AppendText("File-1: $file1_url \n");
+			$output->AppendText("File-2: $file2_url \n");
+			$output->AppendText("What follows is the error I received if any: \n");
+			$output->AppendText($@);
+
 			$main->info(
 				Wx::gettext('Sorry Patch Failed, are you sure your choice of files was correct for this action') );
 			return;
@@ -429,6 +441,10 @@ sub make_patch_diff {
 	my $file1_name = shift;
 	my $file2_name = shift;
 	my $main       = $self->main;
+
+	$main->show_output(1);
+	my $output = $main->output;
+	$output->clear;
 
 	my $file1_url = $self->filename_url($file1_name);
 	my $file2_url = $self->filename_url($file2_name);
@@ -473,6 +489,10 @@ sub make_patch_svn {
 	my $self       = shift;
 	my $file1_name = shift;
 	my $main       = $self->main;
+
+	$main->show_output(1);
+	my $output = $main->output;
+	$output->clear;
 
 	my $file1_url = $self->filename_url($file1_name);
 
