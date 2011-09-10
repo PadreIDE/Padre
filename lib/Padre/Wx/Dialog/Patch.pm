@@ -472,14 +472,14 @@ sub make_patch_diff {
 			$main->info( Wx::gettext("Diff Succesful, you should see a new tab in editor called $patch_file") );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
-			
+
 			$output->AppendText("Patch Dialog failed to Complete.\n");
 			$output->AppendText("Your requested Action Diff, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
 			$output->AppendText("File-2: $file2_url \n");
 			$output->AppendText("What follows is the error I received, if any: \n");
 			$output->AppendText($@);
-			
+
 			$main->info(
 				Wx::gettext('Sorry Diff Failed, are you sure your choice of files was correct for this action') );
 			return;
@@ -529,6 +529,13 @@ sub make_patch_svn {
 			$main->info( Wx::gettext("SVN Diff Succesful, you should see a new tab in editor called $patch_file") );
 		} else {
 			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
+
+			$output->AppendText("Patch Dialog failed to Complete.\n");
+			$output->AppendText("Your requested Action Diff against SVN, with following parameters.\n");
+			$output->AppendText("File-1: $file1_url \n");
+			$output->AppendText("What follows is the error I received, if any: \n");
+			$output->AppendText($@);
+
 			$main->info(
 				Wx::gettext('Sorry Diff Failed, are you sure your have access to the repository for this action') );
 			return;
