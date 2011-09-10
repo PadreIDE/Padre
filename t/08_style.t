@@ -30,6 +30,7 @@ my @styles = qw{
 	notepad
 	ultraedit
 	solarized_dark
+	solarized_light
 };
 
 

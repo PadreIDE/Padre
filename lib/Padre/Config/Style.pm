@@ -48,7 +48,8 @@ BEGIN {
 		night         => _T('Night'),
 		ultraedit     => _T('Ultraedit'),
 		notepad       => _T('Notepad++'),
-		solarize_dark => _T('Solarized') . ' ' . _T('Dark'),
+		solarized_dark => _T('Solarized') . ' ' . _T('Dark'),
+		solarized_light => _T('Solarized') . ' ' . _T('Light'),
 	);
 
 	# Locate any custom user styles
