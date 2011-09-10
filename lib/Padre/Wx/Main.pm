@@ -6255,83 +6255,63 @@ sub on_tab_and_space {
 
 =pod
 
-=head3 C<on_delete_ending_space>
+=head3 C<on_delete_trailing_spaces>
 
-    $main->on_delete_ending_space;
+    $main->on_delete_trailing_spaces;
 
 Trim all ending spaces in current selection, or document if no text is
 selected. No return value.
 
 =cut
 
-sub on_delete_ending_space {
+sub on_delete_trailing_spaces {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document or return;
-	my $src      = $current->text;
-	my $code     = ( defined($src) && length($src) > 0 ) ? $src : $document->text_get;
-
-	# Remove ending space
-	$code =~ s/([^\n\S]+)$//mg;
-
-	if ($src) {
-		my $editor = $current->editor;
-		$editor->ReplaceSelection($code);
-	} else {
-		my $editor      = $current->editor;
-		my $line_number = $editor->GetCurrentLine;
-
-		$document->text_set($code);
-
-		$editor->GotoLine($line_number);
+	my $selected = $current->text;
+	unless ( length $selected ) {
+		return $document->delete_trailing_spaces;
 	}
+
+	# Remove trailing space from selected text
+	$selected =~ s/([^\n\S]+)$//mg;
+
+	# Replace only if the selection is changed
+	unless ( $selected eq $current->text ) {
+		$current->editor->ReplaceSelection($selected);
+	}
+
+	return;
 }
 
 =pod
 
-=head3 C<on_delete_leading_space>
+=head3 C<on_delete_leading_spaces>
 
-    $main->on_delete_leading_space;
+    $main->on_delete_leading_spaces;
 
 Trim all leading spaces in current selection. No return value.
 
 =cut
 
-sub on_delete_leading_space {
-	my $self    = shift;
-	my $current = $self->current;
-	my $src     = $current->text;
-	unless ($src) {
-		$self->message('No selection');
-		return;
+sub on_delete_leading_spaces {
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document or return;
+	my $selected = $current->text;
+	unless ( length $selected ) {
+		return $document->delete_leading_spaces;
 	}
 
-	require Padre::Wx::History::TextEntryDialog;
-	my $dialog = Padre::Wx::History::TextEntryDialog->new(
-		$self,
-		'How many leading spaces to delete(1 tab == 4 spaces):',
-		'Delete Leading Space',
-		'fay_delete_leading_space',
-	);
-	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
-		return;
-	}
-	my $space_num = $dialog->GetValue;
-	$dialog->Destroy;
-	unless ( defined $space_num and $space_num =~ /^\d+$/ ) {
-		return;
+	# Remove trailing space from selected text
+	$selected =~ s/^[ \t]+//mg;
+
+	# Replace only if the selection is changed
+	unless ( $selected eq $current->text ) {
+		$current->editor->ReplaceSelection($selected);
 	}
 
-	my $code           = $src;
-	my $spaces         = ' ' x $space_num;
-	my $tab_num        = int( $space_num / 4 );
-	my $space_num_left = $space_num - 4 * $tab_num;
-	my $tabs           = "\t" x $tab_num;
-	$tabs .= '' x $space_num_left if ($space_num_left);
-	$code =~ s/^($spaces|$tabs)//mg;
-
-	my $editor = $current->editor;
-	$editor->ReplaceSelection($code);
+	return;
 }
 
 =pod

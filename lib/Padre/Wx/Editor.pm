@@ -1573,26 +1573,7 @@ sub insert_from_file {
 	$self->insert_text($text);
 }
 
-sub delete_trailing_spaces {
-	my $self    = shift;
-	my $lines   = $self->GetLineCount;
-	my $changed = 0;
-
-	foreach my $i ( 1 .. $self->GetLineCount ) {
-		my $line = $self->GetLine($i);
-		unless ( $line =~ /\a(.*?)([ \t]+)([\015\012]*)\z/ ) {
-			next;
-		}
-		my $start = $self->PositionFromLine($i) + length $1;
-		$self->SetTargetStart( $start );
-		$self->SetTargetEnd( $start + length $2 );
-		$self->ReplaceTarget('');
-		$changed++;
-	}
-
-	return $changed;
-}
-
+# Default (fast) method for deleting all leading spaces
 sub delete_leading_spaces {
 	my $self    = shift;
 	my $lines   = $self->GetLineCount;
@@ -1600,15 +1581,38 @@ sub delete_leading_spaces {
 
 	foreach my $i ( 1 .. $self->GetLineCount ) {
 		my $line = $self->GetLine($i);
-		unless ( $line =~ /\a([ \t]+)/ ) {
+		unless ( $line =~ /\A([ \t]+)/ ) {
 			next;
 		}
 		my $start = $self->PositionFromLine($i);
 		$self->SetTargetStart( $start );
 		$self->SetTargetEnd( $start + length $1 );
+		$self->BeginUndoAction unless $changed++;
 		$self->ReplaceTarget('');
-		$changed++;
 	}
+	$self->EndUndoAction if $changed;
+
+	return $changed;
+}
+
+# Default (fast) method for deleting all trailing spaces
+sub delete_trailing_spaces {
+	my $self    = shift;
+	my $lines   = $self->GetLineCount;
+	my $changed = 0;
+
+	foreach my $i ( 1 .. $self->GetLineCount ) {
+		my $line = $self->GetLine($i);
+		unless ( $line =~ /\A(.*?)([ \t]+)([\015\012]*)\z/ ) {
+			next;
+		}
+		my $start = $self->PositionFromLine($i) + length $1;
+		$self->SetTargetStart( $start );
+		$self->SetTargetEnd( $start + length $2 );
+		$self->BeginUndoAction unless $changed++;
+		$self->ReplaceTarget('');
+	}
+	$self->EndUndoAction if $changed;
 
 	return $changed;
 }

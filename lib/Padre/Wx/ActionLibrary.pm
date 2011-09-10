@@ -1046,22 +1046,22 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'edit.delete_trailing',
-		need_editor => 1,
-		label       => _T('&Delete Trailing Spaces'),
-		comment     => _T('Remove the spaces from the end of the selected lines'),
-		menu_event  => sub {
-			$_[0]->on_delete_ending_space;
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name        => 'edit.delete_leading',
 		need_editor => 1,
 		label       => _T('Delete &Leading Spaces'),
 		comment     => _T('Remove the spaces from the beginning of the selected lines'),
 		menu_event  => sub {
-			$_[0]->on_delete_leading_space;
+			$_[0]->on_delete_leading_spaces;
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name        => 'edit.delete_trailing',
+		need_editor => 1,
+		label       => _T('&Delete Trailing Spaces'),
+		comment     => _T('Remove the spaces from the end of the selected lines'),
+		menu_event  => sub {
+			$_[0]->on_delete_trailing_spaces;
 		},
 	);
 

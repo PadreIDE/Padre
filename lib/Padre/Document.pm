@@ -934,88 +934,15 @@ sub text_with_one_nl {
 }
 
 sub text_replace {
-	my $self   = shift;
-	my $text   = shift;
-	my $editor = $self->editor;
+	my $self = shift;
+	my $to   = shift;
+	my $from = $self->text_get;
 
-	# Replace using a target over the entire range
-	$editor->SetTargetStart(0);
-	$editor->SetTargetEnd( $editor->GetLength );
-	$editor->ReplaceTarget($text);
-
-	return;
-}
-
-sub text_patch {
-	my $self    = shift;
-	my $editor  = $self->editor;
-	my @targets = ();
-
-	# Build the series of target replacements
-	while (@_) {
-		my $target = {
-			start => 0,
-			end   => 0,
-			lines => 0,
-			text  => '',
-		};
-
-		if ( $_[0]->[0] eq '+' ) {
-
-			# The start and end of the target is the beginning of
-			# the insertion record.
-			my $change = shift;
-			my $mode   = $change->[0];
-			my $line   = $change->[1];
-			my $text   = $change->[2];
-			$target->{start} = $line;
-			$target->{end}   = $line;
-			$target->{lines} = 1;
-			$target->{text}  = $text . "\n";
-
-		} else {
-
-			# The change starts with a removal block
-			my $change = shift;
-			my $mode   = $change->[0];
-			my $line   = $change->[1];
-			my $text   = $change->[2];
-			$target->{start} = $line;
-			$target->{end}   = $line + 1;
-
-			# Append any additional removal rows
-			while ( @_ and $_[0]->[0] eq '-' ) {
-				unless ( $_[0]->[1] == $target->{end} ) {
-					last;
-				}
-				shift;
-				$target->{end}++;
-			}
-		}
-
-		# Append any additional addition rows
-		while ( @_ and $_[0]->[0] eq '+' ) {
-			unless ( $_[0]->[1] == $target->{end} + $target->{lines} ) {
-				last;
-			}
-			$target->{lines}++;
-			$target->{text} .= shift->[2] . "\n";
-		}
-
-		# This completes one entire target replace unit
-		push @targets, $target;
-	}
-
-	# Replace the targets in reverse order so we don't have to
-	# recalculate any of the positions as the content above it changes.
-	while (@targets) {
-		my $target = pop @targets;
-		$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
-		$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
-		$editor->ReplaceTarget( $target->{text} );
-	}
-
-	return;
+	# Generate a delta and apply it
+	require Padre::Delta;
+	$self->text_patch(
+		Padre::Delta->from_scalars( \$from, \$to )
+	);
 }
 
 sub text_delta {
@@ -1491,6 +1418,24 @@ sub stats {
 #
 # TO DO Remove this base method
 sub comment_lines_str { }
+
+# Delete all leading spaces.
+# Passes through to the editor by default, and is only defined in the
+# document class so that document classes can overload and do special stuff.
+sub delete_leading_spaces {
+	my $self = shift;
+	my $editor = $self->editor or return;
+	return $editor->delete_leading_spaces;
+}
+
+# Delete all trailing spaces.
+# Passes through to the editor by default, and is only defined in the
+# document class so that document classes can overload and do special stuff.
+sub delete_trailing_spaces {
+	my $self = shift;
+	my $editor = $self->editor or return;
+	return $editor->delete_trailing_spaces;
+}
 
 
 
