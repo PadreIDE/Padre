@@ -231,33 +231,18 @@ sub file_lists_saved {
 
 	TRACE("file_lists_saved: @file_lists_saved") if DEBUG;
 
-	# $self->file1->Clear;
-	# $self->file1->Append( \@file_lists_saved );
-	# $self->{file1_list_ref} = \@file_lists_saved;
-	# # $self->set_selection();
-	# $self->set_selection( $self->{file1_list_ref} );
-	# $self->file1->SetSelection( $self->{selection} );
-
-	# $self->file2->Clear;
-	# $self->file2->Append( \@file_lists_saved );
-	# $self->file2->SetSelection( $self->{selection} );
-	# $self->{file2_list_ref} = \@file_lists_saved;
-	
 	$self->file1->Clear;
 	$self->file1->Append( \@file_lists_saved );
 	$self->{file1_list_ref} = \@file_lists_saved;
-
-	# $self->set_selection( $self->{file1_list_ref} );
 	$self->set_selection_file1();
 	$self->file1->SetSelection( $self->{selection} );
 
 	$self->file2->Clear;
 	$self->file2->Append( \@file_lists_saved );
-
-	# $self->file2->SetSelection( $self->{selection} );
 	$self->{file2_list_ref} = \@file_lists_saved;
 	$self->set_selection_file2();
 	$self->file2->SetSelection( $self->{selection} );
+
 	return;
 }
 
@@ -266,7 +251,7 @@ sub file_lists_saved {
 #######
 sub file2_list_patch {
 	my $self = shift;
-	
+
 	my @file2_list_patch;
 	for ( 0 .. $self->{tab_cardinality} ) {
 		if ( $self->{open_file_info}->{$_}->{'filename'} =~ /(patch|diff)$/sxm ) {
@@ -276,25 +261,12 @@ sub file2_list_patch {
 
 	TRACE("file2_list_patch: @file2_list_patch") if DEBUG;
 
-	# $self->file2->Clear;
-	# $self->file2->Append( \@file2_list_patch );
-	# # $self->file2->SetSelection(0);
-	# $self->set_selection( $self->{file2_list_ref} );
-	# $self->{file2_list_ref} = \@file2_list_patch;
-	# $self->file2->Clear;
-	# $self->file2->Append( \@file2_list_patch );
-	# $self->{file2_list_ref} = \@file2_list_patch;
-	# $self->set_selection( $self->{file2_list_ref} );
-	# $self->file2->SetSelection( $self->{selection} );
-	
 	$self->file2->Clear;
 	$self->file2->Append( \@file2_list_patch );
 	$self->{file2_list_ref} = \@file2_list_patch;
-
-	# $self->set_selection( $self->{file2_list_ref} );
 	$self->set_selection_file2();
 	$self->file2->SetSelection( $self->{selection} );
-	
+
 	return;
 }
 
@@ -316,38 +288,10 @@ sub file1_list_svn {
 
 	TRACE("file1_list_svn: @{ $self->{file1_list_ref} }") if DEBUG;
 
-	# $self->file1->Clear;
-	# $self->file1->Append( $self->{file1_list_ref} );
-	# $self->set_selection( $self->{file1_list_ref} );
-	# $self->file1->SetSelection( $self->{selection} );
 	$self->file1->Clear;
 	$self->file1->Append( $self->{file1_list_ref} );
-
-	# $self->set_selection( $self->{file1_list_ref} );
 	$self->set_selection_file1();
 	$self->file1->SetSelection( $self->{selection} );
-	return;
-}
-
-
-#######
-# Composed Method set_selection
-#######
-sub set_selection {
-	my $self          = shift;
-	my $file_list_ref = shift;
-	my $main          = $self->main;
-
-	$self->{selection} = 0;
-
-	# SetSelection should be current file
-	foreach ( 0 .. $#{ $file_list_ref } ) {
-
-		if ( @{ $file_list_ref }[$_] eq $main->current->title ) {
-			$self->{selection} = $_;
-			return;
-		}
-	}
 
 	return;
 }
@@ -361,15 +305,15 @@ sub set_selection_file1 {
 
 	$self->{selection} = 0;
 	if ( $main->current->title =~ /(patch|diff)$/sxm ) {
-		
-		my @pathch_target = split(/\./, $main->current->title, 2);
-		
+
+		my @pathch_target = split( /\./, $main->current->title, 2 );
+
 		# remove obtuse leading space if exists
 		$pathch_target[0] =~ s/^\s{1}//;
-		
+
 		# SetSelection should be Patch target file
 		foreach ( 0 .. $#{ $self->{file1_list_ref} } ) {
-		
+
 			if ( @{ $self->{file1_list_ref} }[$_] =~ /^$pathch_target[0]/ ) {
 				$self->{selection} = $_;
 				return;
