@@ -28,7 +28,7 @@ sub new {
 	$self->{action_request} = 'Patch';
 	$self->{selection}      = 0;
 
-	# $self->set_up;
+	# $self->set_up();
 	return $self;
 }
 
@@ -37,21 +37,27 @@ sub new {
 #######
 sub run {
 	my $self = shift;
-
-	# generate open file bucket
-	$self->current_files();
-
-	# display default saved file lists
-	$self->file_lists_saved();
-
-	# display correct file-2 list
-	$self->file2_list_type();
-
-	$self->against->SetSelection(0);
-
+	my $current = $self->current;
+	
+	# auto-fill dialogue
+	$self->set_up();
+	
 	# Show the dialog
-	$self->ShowModal;
+	my $result = $self->ShowModal;
 
+	if ( $result == Wx::ID_CANCEL ) {
+
+		# As we leave the Find dialog, return the user to the current editor
+		# window so they don't need to click it.
+		my $editor = $current->editor;
+		$editor->SetFocus if $editor;
+		
+		# Clean up
+		$self->Destroy;
+		
+		return;
+	}
+		
 	return;
 }
 
@@ -83,8 +89,12 @@ sub process_clicked {
 
 	my $file1 = @{ $self->{file1_list_ref} }[ $self->file1->GetSelection() ];
 	my $file2 = @{ $self->{file2_list_ref} }[ $self->file2->GetCurrentSelection() ];
-
-	TRACE( $self->action->GetStringSelection() ) if DEBUG;
+	
+	TRACE( '$self->file1->GetSelection(): ' . $self->file1->GetSelection() )               if DEBUG;
+	TRACE( '$file1: ' . $file1 )                                                           if DEBUG;
+	TRACE( '$self->file2->GetCurrentSelection(): ' . $self->file2->GetCurrentSelection() ) if DEBUG;
+	TRACE( '$file2: ' . $file2 )                                                           if DEBUG;
+	TRACE( $self->action->GetStringSelection() )                                           if DEBUG;
 
 	if ( $self->action->GetStringSelection() eq 'Patch' ) {
 		$self->apply_patch( $file1, $file2 );
@@ -310,7 +320,8 @@ sub set_selection_file1 {
 
 		# remove obtuse leading space if exists
 		$pathch_target[0] =~ s/^\s{1}//;
-
+		TRACE("Looking for File-1 to apply a patch to: $pathch_target[0]") if DEBUG;
+		
 		# SetSelection should be Patch target file
 		foreach ( 0 .. $#{ $self->{file1_list_ref} } ) {
 
