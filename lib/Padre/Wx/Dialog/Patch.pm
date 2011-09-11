@@ -324,14 +324,14 @@ sub set_selection_file1 {
 
 		# TODO this is a padre internal issue
 		# remove obtuse leading space if exists
-		$pathch_target[0] =~ s/^\s{1}//;
+		$pathch_target[0] =~ s/^\p{Space}{1}//;
 		TRACE("Looking for File-1 to apply a patch to: $pathch_target[0]") if DEBUG;
 
 		# SetSelection should be Patch target file
 		foreach ( 0 .. $#{ $self->{file1_list_ref} } ) {
 
-			# add optional leading space \s?
-			if ( @{ $self->{file1_list_ref} }[$_] =~ /^\s?$pathch_target[0]/ ) {
+			# add optional leading space \p{Space}?
+			if ( @{ $self->{file1_list_ref} }[$_] =~ /^\p{Space}?$pathch_target[0]/ ) {
 				$self->{selection} = $_;
 				return;
 			}
