@@ -119,7 +119,10 @@ sub process_clicked {
 #######
 sub on_action {
 	my $self = shift;
-
+	
+	# re-generate open file bucket
+	$self->current_files();
+	
 	if ( $self->action->GetStringSelection() eq 'Patch' ) {
 
 		$self->{action_request} = 'Patch';
