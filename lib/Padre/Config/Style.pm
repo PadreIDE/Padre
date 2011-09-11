@@ -43,12 +43,12 @@ BEGIN {
 
 	# Define the core style library
 	%CORE_STYLES = (
-		default       => _T('Padre'),
-		evening       => _T('Evening'),
-		night         => _T('Night'),
-		ultraedit     => _T('Ultraedit'),
-		notepad       => _T('Notepad++'),
-		solarized_dark => _T('Solarized') . ' ' . _T('Dark'),
+		default         => _T('Padre'),
+		evening         => _T('Evening'),
+		night           => _T('Night'),
+		ultraedit       => _T('Ultraedit'),
+		notepad         => _T('Notepad++'),
+		solarized_dark  => _T('Solarized') . ' ' . _T('Dark'),
 		solarized_light => _T('Solarized') . ' ' . _T('Light'),
 	);
 
