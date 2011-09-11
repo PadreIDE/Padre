@@ -60,7 +60,6 @@ foreach my $name (@styles) {
 	is( $style->name,        $name,  '->name ok' );
 	is( ref( $style->data ), 'HASH', '->data is a HASH' );
 	foreach (qw{ plain padre perl }) {
-		diag $name;
 		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }
