@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 40 );
+plan( tests => 47 );
 
 
 my $dir = catdir( 'share', 'styles' );
@@ -60,6 +60,7 @@ foreach my $name (@styles) {
 	is( $style->name,        $name,  '->name ok' );
 	is( ref( $style->data ), 'HASH', '->data is a HASH' );
 	foreach (qw{ plain padre perl }) {
+		diag $name;
 		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }
