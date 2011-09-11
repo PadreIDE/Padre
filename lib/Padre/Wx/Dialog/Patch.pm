@@ -25,10 +25,10 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 
 	$self->CenterOnParent;
+
 	$self->{action_request} = 'Patch';
 	$self->{selection}      = 0;
 
-	# $self->set_up();
 	return $self;
 }
 
@@ -36,12 +36,13 @@ sub new {
 # Method run
 #######
 sub run {
-	my $self = shift;
+	my $self    = shift;
 	my $current = $self->current;
-	
+
 	# auto-fill dialogue
 	$self->set_up();
-	
+
+	# TODO but I want nonModal, ie $self->Show;
 	# Show the dialog
 	my $result = $self->ShowModal;
 
@@ -51,13 +52,13 @@ sub run {
 		# window so they don't need to click it.
 		my $editor = $current->editor;
 		$editor->SetFocus if $editor;
-		
+
 		# Clean up
 		$self->Destroy;
-		
+
 		return;
 	}
-		
+
 	return;
 }
 
@@ -89,7 +90,7 @@ sub process_clicked {
 
 	my $file1 = @{ $self->{file1_list_ref} }[ $self->file1->GetSelection() ];
 	my $file2 = @{ $self->{file2_list_ref} }[ $self->file2->GetCurrentSelection() ];
-	
+
 	TRACE( '$self->file1->GetSelection(): ' . $self->file1->GetSelection() )               if DEBUG;
 	TRACE( '$file1: ' . $file1 )                                                           if DEBUG;
 	TRACE( '$self->file2->GetCurrentSelection(): ' . $self->file2->GetCurrentSelection() ) if DEBUG;
@@ -119,10 +120,10 @@ sub process_clicked {
 #######
 sub on_action {
 	my $self = shift;
-	
+
 	# re-generate open file bucket
 	$self->current_files();
-	
+
 	if ( $self->action->GetStringSelection() eq 'Patch' ) {
 
 		$self->{action_request} = 'Patch';
@@ -321,14 +322,16 @@ sub set_selection_file1 {
 
 		my @pathch_target = split( /\./, $main->current->title, 2 );
 
+		# TODO this is a padre internal issue
 		# remove obtuse leading space if exists
 		$pathch_target[0] =~ s/^\s{1}//;
 		TRACE("Looking for File-1 to apply a patch to: $pathch_target[0]") if DEBUG;
-		
+
 		# SetSelection should be Patch target file
 		foreach ( 0 .. $#{ $self->{file1_list_ref} } ) {
 
-			if ( @{ $self->{file1_list_ref} }[$_] =~ /^$pathch_target[0]/ ) {
+			# add optional leading space \s?
+			if ( @{ $self->{file1_list_ref} }[$_] =~ /^\s?$pathch_target[0]/ ) {
 				$self->{selection} = $_;
 				return;
 			}
