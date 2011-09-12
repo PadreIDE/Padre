@@ -83,6 +83,7 @@ sub new {
 		"sub main {",
 		"\t# some senseles comment",
 		"\tmy \$x = \$_[0] ? \$_[0] : 5;",
+		"\tprint \"x is \$x\\n\";\n",
 		"\tif ( \$x > 5 ) {",
 		"\t\treturn 1;",
 		"\t} else {",
@@ -92,6 +93,7 @@ sub new {
 		"",
 		"__END__",
 	);
+	$preview->SetReadOnly(1);
 
 	# Build the list of configuration dialog elements.
 	# We assume all public dialog elements will match a wx widget with
