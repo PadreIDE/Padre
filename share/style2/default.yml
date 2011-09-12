@@ -1,0 +1,6 @@
+# Default style
+style text/plain
+SetCaretForeground                         000000
+SetCaretLineBackground                     ffff04
+StyleSetBackground wxSTC_STYLE_LINENUMBER  eeeeee
+StyleSetForeground wxSTC_STYLE_INDENTGUIDE 0000ff
