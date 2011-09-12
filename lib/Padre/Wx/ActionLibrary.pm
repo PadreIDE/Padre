@@ -1379,6 +1379,7 @@ sub init {
 		name       => 'search.open_resource',
 		label      => _T('Open &Resources...'),
 		comment    => _T('Use a filter to select one or more files'),
+		shortcut   => 'Ctrl-Alt-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
 			$_[0]->open_resource->show;

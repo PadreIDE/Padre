@@ -89,6 +89,8 @@ the even version for the release, even during development.
       the editor window around (ADAMK)
     - Added 'Solarized Light' theme contributed by Anton Ukolov ('sugar' on irc)
       (AZAWAWI)
+    - Open resources dialog is now triggered by Ctrl-Alt-R instead of Ctrl-Shift-R
+      which is now reserved for 'Replace in Files' functionality (ADAMK, AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
