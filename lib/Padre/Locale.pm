@@ -516,7 +516,10 @@ sub rfc4646 {
 	return $RFC4646{$locale}->{actual};
 }
 
-#
+sub rfc4646_exists {
+	defined $RFC4646{$_[0]};
+}
+
 sub iso639 {
 	my $id     = rfc4646();
 	my $iso639 = $RFC4646{$id}{iso639};
