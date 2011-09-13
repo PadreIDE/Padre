@@ -3,6 +3,7 @@ package Padre::Wx::Style2;
 use 5.008;
 use strict;
 use warnings;
+use IO::File        ();
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Wx       ();
@@ -62,7 +63,11 @@ sub name {
 sub mime {
 	my $self = shift;
 	my $mime = shift || 'text/plain';
-	return $self->{mime}->{$mime};
+	if ( defined $self->{mime}->{$mime} ) {
+		return $self->{mime}->{$mime};
+	} else {
+		return $self->{mime}->{'text/plain'};
+	}
 }
 
 
@@ -80,14 +85,23 @@ sub load {
 	}
 
 	# Open the file
-	open( CONFIG, '<', $file ) or return;
+	my $handle = IO::File->new($file, 'r') or return;
+	my $self   = $class->parse($handle);
+	$handle->close;
+
+	return $self;
+}
+
+sub parse {
+	my $class  = shift;
+	my $handle = Params::Util::_HANDLE(shift) or die "Not a file handle";
 
 	# Parse the file
 	my $line   = 0;
 	my %name   = 0;
 	my $style  = undef;
 	my %styles = ();
-	while ( defined(my $string = <CONFIG>) ) {
+	while ( defined(my $string = <$handle>) ) {
 		$line++;
 
 		# Clean the line
@@ -126,20 +140,20 @@ sub load {
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'color' ) {
 			# General commands that are passed a single colour
-			my $color = $class->load_color( $line, shift @list );
-			push @$style, [ $cmd, $color ];
+			my $color = $class->parse_color( $line, shift @list );
+			push @$style, $cmd, [ $color ];
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style-color' ) {
 			# Style specific commands that are passed a single color
-			my $style = $class->load_style( $line, shift @list );
-			my $color = $class->load_color( $line, shift @list );
-			push @$style, [ $cmd, $style, $color ];
+			my $style = $class->parse_style( $line, shift @list );
+			my $color = $class->parse_color( $line, shift @list );
+			push @$style, $cmd, [ $style, $color ];
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style-boolean' ) {
 			# Style specific commands that are passed a boolean value
-			my $style   = $class->load_style( $line, shift @list );
-			my $boolean = $class->load_boolean( $line, shift @list );
-			push @$style, [ $cmd, $style, $boolean ];
+			my $style   = $class->parse_style( $line, shift @list );
+			my $boolean = $class->parse_boolean( $line, shift @list );
+			push @$style, $cmd, [ $style, $boolean ];
 
 		} else {
 			die "Line $line: Unsupported style command '$string'";
@@ -152,15 +166,15 @@ sub load {
 	);
 }
 
-sub load_color {
-	my $self   = shift;
+sub parse_color {
+	my $class  = shift;
 	my $line   = shift;
 	my $string = shift;
 	return Padre::Wx::color($string);
 }
 
-sub load_style {
-	my $self   = shift;
+sub parse_style {
+	my $class  = shift;
 	my $line   = shift;
 	my $string = shift;
 	my $copy = $string;
@@ -190,8 +204,8 @@ sub load_style {
 	return $string;
 }
 
-sub load_boolean {
-	my $self   = shift;
+sub parse_boolean {
+	my $class  = shift;
 	my $line   = shift;
 	my $string = shift;
 	unless ( $string eq '0' or $string eq '1' ) {
@@ -207,13 +221,26 @@ sub load_boolean {
 ######################################################################
 # Compilation and Application
 
-sub code {
-	$_[0]->{code} or
-	$_[0]->{code} = $_[0]->compile;
-}
+sub apply {
+	my $self     = shift;
+	my $editor   = shift;
 
-sub compile {
-	my $self = shift;
+	# Determine the style sequence to apply
+	my $document = $editor->{Document} or return;
+	my $mimetype = $document->mimetype or return;
+	my $sequence = $self->mime($mimetype);
+
+	# Flush any previous style information from the editor
+	$editor->StyleClearAll;
+
+	# Apply the precalculated style methods
+	my $i = 0;
+	while ( my $method = $$sequence[$i++] ) {
+		my $params = $$sequence[$i++];
+		$editor->$method(@$params);
+	}
+
+	return 1;
 }
 
 1;
