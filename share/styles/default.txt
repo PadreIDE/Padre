@@ -182,4 +182,3 @@ StyleSetForeground wxSTC_CSS_DOUBLESTRING         202020
 StyleSetForeground wxSTC_CSS_SINGLESTRING         202020
 StyleSetForeground wxSTC_CSS_IDENTIFIER2          202020
 StyleSetForeground wxSTC_CSS_ATTRIBUTE            202020
-
