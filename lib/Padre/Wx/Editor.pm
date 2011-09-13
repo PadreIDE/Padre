@@ -744,7 +744,7 @@ sub setup_style_from_config {
 
 	# Apply the padre warning and error styles to the current editor
 	# Please note that eol-filled and underline do not work well with annotations
-	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+	if ($self->config->syntax_check_annotations) {
 
 		for my $padre_color (qw(PADRE_WARNING PADRE_ERROR)) {
 			my $color = $data->{padre}->{colors}->{$padre_color};
