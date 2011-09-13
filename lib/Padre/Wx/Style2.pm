@@ -3,11 +3,12 @@ package Padre::Wx::Style2;
 use 5.008;
 use strict;
 use warnings;
-use IO::File        ();
-use Params::Util    ();
-use Padre::Constant ();
-use Padre::Wx       ();
-use Padre::Locale   ();
+use IO::File             ();
+use Params::Util         ();
+use Padre::Constant      ();
+use Padre::Wx            ();
+use Padre::Locale        ();
+use Padre::Config::Style ();
 
 our $VERSION = '0.91';
 
@@ -37,6 +38,23 @@ my %PARAM = (
 	StyleSetSpec            => [ 2, 'style,spec'    ],
 );
 
+
+
+
+
+
+######################################################################
+# Style Repository
+
+sub find {
+	my $class = shift;
+	my $name  = shift;
+	my $file  = File::Spec->catfile(
+		$Padre::Config::Style::CORE_DIRECTORY,
+		$name . '.sty',
+	);
+	return $class->load($file);
+}
 
 
 
