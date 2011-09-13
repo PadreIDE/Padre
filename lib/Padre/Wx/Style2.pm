@@ -19,18 +19,22 @@ our $VERSION = '0.91';
 # Style Language Parser Configuration
 
 my %PARAM = (
-	name               => [ 2, 'name'          ],
-	style              => [ 1, 'mime'          ],
-	SetSelBackground   => [ 2, 'style,color'   ],
-	SetSelForeground   => [ 1, 'style,color'   ],
-	SetCaretLineBack   => [ 1, 'color'         ],
-	SetCaretForeground => [ 1, 'color'         ],
-	StyleSetBackground => [ 2, 'style,color'   ],
-	StyleSetForeground => [ 2, 'style,color'   ],
-	StyleSetBold       => [ 2, 'style,boolean' ],
-	StyleSetItalic     => [ 2, 'style,boolean' ],
-	StyleSetEOLFilled  => [ 2, 'style,boolean' ],
-	StyleSetUnderline  => [ 2, 'style,boolean' ],
+	name                    => [ 2, 'name'          ],
+	style                   => [ 1, 'mime'          ],
+	import                  => [ 1, 'mime'          ],
+	SetSelBackground        => [ 2, 'style,color'   ],
+	SetSelForeground        => [ 1, 'style,color'   ],
+	SetCaretLineBack        => [ 1, 'color'         ],
+	SetCaretForeground      => [ 1, 'color'         ],
+	SetWhitespaceBackground => [ 1, 'color'         ],
+	SetWhitespaceForeground => [ 1, 'color'         ],
+	StyleSetBackground      => [ 2, 'style,color'   ],
+	StyleSetForeground      => [ 2, 'style,color'   ],
+	StyleSetBold            => [ 2, 'style,boolean' ],
+	StyleSetItalic          => [ 2, 'style,boolean' ],
+	StyleSetEOLFilled       => [ 2, 'style,boolean' ],
+	StyleSetUnderline       => [ 2, 'style,boolean' ],
+	StyleSetSpec            => [ 2, 'style,spec'    ],
 );
 
 
@@ -50,6 +54,21 @@ sub new {
 	unless ( defined $self->mime ) {
 		die "No default text/plain style";
 	}
+
+	return $self;
+}
+
+sub load {
+	my $class = shift;
+	my $file  = shift;
+	unless ( -f $file ) {
+		die "Missing or invalid style file '$file'";
+	}
+
+	# Open the file
+	my $handle = IO::File->new($file, 'r') or return;
+	my $self   = $class->parse($handle);
+	$handle->close;
 
 	return $self;
 }
@@ -76,21 +95,6 @@ sub mime {
 
 ######################################################################
 # Style Parser
-
-sub load {
-	my $class = shift;
-	my $file  = shift;
-	unless ( -f $file ) {
-		die "Missing or invalid style file '$file'";
-	}
-
-	# Open the file
-	my $handle = IO::File->new($file, 'r') or return;
-	my $self   = $class->parse($handle);
-	$handle->close;
-
-	return $self;
-}
 
 sub parse {
 	my $class  = shift;
@@ -138,6 +142,14 @@ sub parse {
 			# Switch to the new mime type
 			my $style = $styles{$list[0]} ||= [ ];
 
+		} elsif ( $cmd eq 'import' ) {
+			# Copy another style as a starting point
+			my $copy = $styles{$list[0]};
+			unless ( $copy ) {
+				die "Line $line: Style '$list[0]' is not defined (yet)";
+			}
+			push @$style, @$copy;
+
 		} elsif ( $PARAM{$cmd}->[1] eq 'color' ) {
 			# General commands that are passed a single colour
 			my $color = $class->parse_color( $line, shift @list );
@@ -155,6 +167,10 @@ sub parse {
 			my $boolean = $class->parse_boolean( $line, shift @list );
 			push @$style, $cmd, [ $style, $boolean ];
 
+		} elsif ( $PARAM{$cmd}->[1] eq 'style-spec' ) {
+			# Style command that is passed a spec string
+			my $style = $class->parse_style( $line, shift @list );
+			my $spec  = shift @list;
 		} else {
 			die "Line $line: Unsupported style command '$string'";
 		}
@@ -222,8 +238,8 @@ sub parse_boolean {
 # Compilation and Application
 
 sub apply {
-	my $self     = shift;
-	my $editor   = shift;
+	my $self   = shift;
+	my $editor = shift;
 
 	# Determine the style sequence to apply
 	my $document = $editor->{Document} or return;
@@ -232,6 +248,7 @@ sub apply {
 
 	# Flush any previous style information from the editor
 	$editor->StyleClearAll;
+	$editor->StyleResetDefault;
 
 	# Apply the precalculated style methods
 	my $i = 0;
