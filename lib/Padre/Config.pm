@@ -1385,13 +1385,13 @@ setting(
 	help    => _T(q{Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled.}),
 );
 
-# Enable experimental 'Syntax Check' Annotations support.
+# Toggle syntax checker annotations in editor
 setting(
 	name    => 'feature_syntax_check_annotations',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
-	help    => _T('Enable or disable syntax checker annotations')
+	default => 1,
+	help    => _T('Toggle syntax checker annotations in editor')
 );
 
 # Window menu list shorten common path

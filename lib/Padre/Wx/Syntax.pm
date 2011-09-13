@@ -238,13 +238,14 @@ sub gettext_label {
 sub clear {
 	my $self = shift;
 	my $lock = $self->main->lock('UPDATE');
+	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
 
 	# Remove the margins and indicators for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 
-		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		unless ($feature_syntax_check_annotations) {
 			my $len = $editor->GetTextLength;
 			if ( $len > 0 ) {
 
@@ -257,7 +258,7 @@ sub clear {
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		$editor->AnnotationClearAll if Padre::Feature::SYNTAX_CHECK_ANNOTATIONS;
+		$editor->AnnotationClearAll if $feature_syntax_check_annotations;
 	}
 
 	# Remove all items from the tool
@@ -383,6 +384,7 @@ sub render {
 	my $document = $current->document;
 	my $filename = $current->filename;
 	my $lock     = $self->main->lock('UPDATE');
+	my $feature_syntax_check_annotations   = $self->config->feature_syntax_check_annotations;
 
 	# NOTE: Recolor the document to make sure we do not accidentally
 	# remove syntax highlighting while syntax checking
@@ -439,7 +441,7 @@ sub render {
 		my $indent = $editor->GetLineIndentPosition($line);
 		my $end    = $editor->GetLineEndPosition($line);
 
-		unless (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		unless ($feature_syntax_check_annotations) {
 
 			# Change only the indicators
 			$editor->SetIndicatorCurrent(
@@ -449,7 +451,7 @@ sub render {
 
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
-		if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+		if ($feature_syntax_check_annotations) {
 			my $message = $issue->message;
 			my $char_style =
 				$is_warning
@@ -479,7 +481,7 @@ sub render {
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	if (Padre::Feature::SYNTAX_CHECK_ANNOTATIONS) {
+	if ($feature_syntax_check_annotations) {
 
 		# Add annotations
 		foreach my $line ( sort keys %annotations ) {

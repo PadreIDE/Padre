@@ -61,7 +61,6 @@ constant->import(
 		WIZARD_SELECTOR          => $config->feature_wizard_selector,
 		DEVEL_ENDSTATS           => $config->feature_devel_endstats,
 		DEVEL_TRACEUSE           => $config->feature_devel_traceuse,
-		SYNTAX_CHECK_ANNOTATIONS => $config->feature_syntax_check_annotations,
 	}
 );
 
