@@ -96,25 +96,12 @@ StyleSetForeground wxSTC_C_REGEX                  ff007f
 StyleSetForeground wxSTC_C_COMMENTLINEDOC         7f7f7f
 
 style text/x-perlxs
-include text/plain
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
-StyleSetForeground wxSTC_C_DEFAULT                000000
-StyleSetForeground wxSTC_C_COMMENT                007f00
-StyleSetForeground wxSTC_C_COMMENTLINE            007f00
+include text/x-c
 StyleSetForeground wxSTC_C_COMMENTDOC             007f00
-StyleSetForeground wxSTC_C_NUMBER                 007f7f
 StyleSetForeground wxSTC_C_WORD                   7f007f
-StyleSetForeground wxSTC_C_STRING                 ff7f00
-StyleSetForeground wxSTC_C_CHARACTER              7f007f
 StyleSetForeground wxSTC_C_UUID                   7f007f
 StyleSetForeground wxSTC_C_PREPROCESSOR           777777
 StyleSetBold       wxSTC_C_PREPROCESSOR           1
-StyleSetForeground wxSTC_C_OPERATOR               00007f
-StyleSetForeground wxSTC_C_IDENTIFIER             0000ff
-StyleSetForeground wxSTC_C_STRINGEOL              ff0000
-StyleSetForeground wxSTC_C_VERBATIM               7f007f
-StyleSetForeground wxSTC_C_REGEX                  ff007f
 StyleSetForeground wxSTC_C_COMMENTLINEDOC         007f00
 StyleSetForeground wxSTC_C_WORD2                  7f007f
 StyleSetBold       wxSTC_C_WORD2                  1
