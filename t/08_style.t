@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 47 );
+plan( tests => 49 );
 
 
 my $dir = catdir( 'share', 'styles' );
@@ -72,3 +72,7 @@ foreach my $name (@styles) {
 # Ensure the new style API loads as well
 
 use_ok('Padre::Wx::Style');
+
+my $style2 = Padre::Wx::Style->find('default');
+isa_ok( $style2, 'Padre::Wx::Style' );
+ok( scalar(@{$style2->mime}), 'Found a list of methods' );

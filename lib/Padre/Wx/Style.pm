@@ -25,7 +25,7 @@ my %PARAM = (
 	import                  => [ 1, 'mime'          ],
 	SetSelBackground        => [ 2, 'style,color'   ],
 	SetSelForeground        => [ 1, 'style,color'   ],
-	SetCaretLineBack        => [ 1, 'color'         ],
+	SetCaretLineBackground  => [ 1, 'color'         ],
 	SetCaretForeground      => [ 1, 'color'         ],
 	SetWhitespaceBackground => [ 1, 'color'         ],
 	SetWhitespaceForeground => [ 1, 'color'         ],
@@ -119,10 +119,10 @@ sub parse {
 	my $handle = Params::Util::_HANDLE(shift) or die "Not a file handle";
 
 	# Parse the file
-	my $line   = 0;
-	my %name   = 0;
-	my $style  = undef;
+	my %name   = ();
 	my %styles = ();
+	my $style  = undef;
+	my $line   = 0;
 	while ( defined(my $string = <$handle>) ) {
 		$line++;
 
@@ -131,7 +131,7 @@ sub parse {
 		$string =~ s/\s*\z//s;
 
 		# Skip blanks and comments
-		next unless /^\s*[^#]/;
+		next unless $string =~ /^\s*[^#]/;
 
 		# Split the line into a command and params
 		my @list = split /\s+/, $string;
@@ -158,7 +158,7 @@ sub parse {
 		} elsif ( $cmd eq 'style' ) {
 
 			# Switch to the new mime type
-			my $style = $styles{$list[0]} ||= [ ];
+			$style = ($styles{$list[0]} ||= [ ]);
 
 		} elsif ( $cmd eq 'import' ) {
 			# Copy another style as a starting point
@@ -173,19 +173,19 @@ sub parse {
 			my $color = $class->parse_color( $line, shift @list );
 			push @$style, $cmd, [ $color ];
 
-		} elsif ( $PARAM{$cmd}->[1] eq 'style-color' ) {
+		} elsif ( $PARAM{$cmd}->[1] eq 'style,color' ) {
 			# Style specific commands that are passed a single color
-			my $style = $class->parse_style( $line, shift @list );
+			my $id    = $class->parse_style( $line, shift @list );
 			my $color = $class->parse_color( $line, shift @list );
-			push @$style, $cmd, [ $style, $color ];
+			push @$style, $cmd, [ $id, $color ];
 
-		} elsif ( $PARAM{$cmd}->[1] eq 'style-boolean' ) {
+		} elsif ( $PARAM{$cmd}->[1] eq 'style,boolean' ) {
 			# Style specific commands that are passed a boolean value
-			my $style   = $class->parse_style( $line, shift @list );
+			my $id      = $class->parse_style( $line, shift @list );
 			my $boolean = $class->parse_boolean( $line, shift @list );
-			push @$style, $cmd, [ $style, $boolean ];
+			push @$style, $cmd, [ $id, $boolean ];
 
-		} elsif ( $PARAM{$cmd}->[1] eq 'style-spec' ) {
+		} elsif ( $PARAM{$cmd}->[1] eq 'style,spec' ) {
 			# Style command that is passed a spec string
 			my $style = $class->parse_style( $line, shift @list );
 			my $spec  = shift @list;
@@ -266,7 +266,6 @@ sub apply {
 
 	# Flush any previous style information from the editor
 	$editor->StyleClearAll;
-	$editor->StyleResetDefault;
 
 	# Apply the precalculated style methods
 	my $i = 0;
