@@ -940,9 +940,10 @@ sub text_replace {
 
 	# Generate a delta and apply it
 	require Padre::Delta;
-	$self->text_patch(
-		Padre::Delta->from_scalars( \$from, \$to )
-	);
+	#TODO Please implement the text_patch method or remove
+	#$self->text_patch(
+	#	Padre::Delta->from_scalars( \$from, \$to )
+	#);
 }
 
 sub text_delta {
