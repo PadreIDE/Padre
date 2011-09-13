@@ -1670,10 +1670,13 @@ sub vertically_align {
 		}
 		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0];
 		if ( $spaces > 0 ) {
-			$self->InsertText( $insert, ' ' x $spaces );
+			$self->SetTargetStart($insert);
+			$self->SetTargetEnd($insert);
+			$self->ReplaceTarget( ' ' x $spaces );
 		} elsif ( $spaces < 0 ) {
-			$self->SetSelection( $insert, $insert - $spaces );
-			$self->ReplaceSelection('');
+			$self->SetTargetStart( $insert - $spaces );
+			$self->SetTargetEnd( $insert );
+			$self->ReplaceTarget('');
 		}
 	}
 	$self->EndUndoAction;
