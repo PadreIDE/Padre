@@ -37,11 +37,10 @@ our $VERSION = '0.91';
 
 sub new {
 	my $class = shift;
-	my $self  = bless {
+	return bless {
 		mode    => shift,
 		targets => [@_],
 	}, $class;
-
 }
 
 sub mode {
@@ -54,10 +53,10 @@ sub from_diff {
 
 	# Build the series of target replacements
 	while (@_) {
+		my $lines  = 0;
 		my $target = {
 			start => 0,
 			end   => 0,
-			lines => 0,
 			text  => '',
 		};
 
@@ -71,8 +70,8 @@ sub from_diff {
 			my $text   = $change->[2];
 			$target->{start} = $line;
 			$target->{end}   = $line;
-			$target->{lines} = 1;
 			$target->{text}  = $text . "\n";
+			$lines = 1;
 
 		} else {
 
@@ -96,11 +95,11 @@ sub from_diff {
 
 		# Append any additional addition rows
 		while ( @_ and $_[0]->[0] eq '+' ) {
-			unless ( $_[0]->[1] == $target->{end} + $target->{lines} ) {
+			unless ( $_[0]->[1] == $target->{end} + $lines ) {
 				last;
 			}
-			$target->{lines}++;
 			$target->{text} .= shift->[2] . "\n";
+			$lines++;
 		}
 
 		# This completes one entire target replace unit
