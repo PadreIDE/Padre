@@ -22,7 +22,7 @@ our $VERSION = '0.91';
 my %PARAM = (
 	name                    => [ 2, 'name'          ],
 	style                   => [ 1, 'mime'          ],
-	import                  => [ 1, 'mime'          ],
+	include                 => [ 1, 'mime'          ],
 	SetSelBackground        => [ 2, 'style,color'   ],
 	SetSelForeground        => [ 1, 'style,color'   ],
 	SetCaretLineBackground  => [ 1, 'color'         ],
@@ -51,7 +51,7 @@ sub find {
 	my $name  = shift;
 	my $file  = File::Spec->catfile(
 		$Padre::Config::Style::CORE_DIRECTORY,
-		$name . '.sty',
+		"$name.txt",
 	);
 	return $class->load($file);
 }
@@ -160,7 +160,7 @@ sub parse {
 			# Switch to the new mime type
 			$style = ($styles{$list[0]} ||= [ ]);
 
-		} elsif ( $cmd eq 'import' ) {
+		} elsif ( $cmd eq 'include' ) {
 			# Copy another style as a starting point
 			my $copy = $styles{$list[0]};
 			unless ( $copy ) {
@@ -264,8 +264,8 @@ sub apply {
 	my $mimetype = $document->mimetype or return;
 	my $sequence = $self->mime($mimetype);
 
-	# Flush any previous style information from the editor
-	$editor->StyleClearAll;
+	# Reset the style
+	$self->clear($editor);
 
 	# Apply the precalculated style methods
 	my $i = 0;
@@ -273,6 +273,31 @@ sub apply {
 		my $params = $$sequence[$i++];
 		$editor->$method(@$params);
 	}
+
+	return 1;
+}
+
+sub clear {
+	my $self   = shift;
+	my $editor = shift;
+	my $config = $editor->config;
+
+	# Clears settings back to the editor configuration defaults
+	# To do this we flush absolutely everything and then apply
+	# the basic font settings.
+	$editor->StyleResetDefault;
+
+	# Reset the font from configuration (which Scintilla considers part of
+	# the "style" but Padre doesn't allow to be changed as a "style")
+	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+	if ( defined Params::Util::_STRING($config->editor_font) ) {
+		$font->SetNativeFontInfoUserDesc( $config->editor_font );
+	}
+	$editor->SetFont($font);
+	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+
+	# Clear all styles back to the default
+	$editor->StyleClearAll;
 
 	return 1;
 }

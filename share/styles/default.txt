@@ -1,9 +1,10 @@
 name en-gb Padre
 
-# Default style
+# Default Style
 style text/plain
 SetCaretForeground                         000000
 SetCaretLineBackground                     ffff04
+SetWhitespaceForeground                    999999
 StyleSetForeground 0                       00007f
 StyleSetBackground wxSTC_STYLE_DEFAULT     ffffff
 StyleSetForeground wxSTC_STYLE_DEFAULT     000000
@@ -22,7 +23,7 @@ StyleSetBackground PADRE_WARNING           fffff0
 StyleSetForeground PADRE_ERROR             af0000
 StyleSetBackground PADRE_ERROR             fff0f0
 
-# Perl
+# Perl 5
 style application/x-perl
 include text/plain
 StyleSetForeground wxSTC_STYLE_BRACELIGHT  00ff00
