@@ -3,6 +3,7 @@ name en-gb Padre
 style text/plain
 SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
+# Is there a purpose for the zero here?
 StyleSetForeground 0                              00007f
 StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
 StyleSetForeground wxSTC_STYLE_DEFAULT            000000
