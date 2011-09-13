@@ -32,9 +32,9 @@ TO BE COMPLETED
 =cut
 
 use 5.008;
-use utf8; # Encoding of this source code
 use strict;
 use warnings;
+use utf8; # Encoding of this source code
 use List::Util ();
 use File::Spec ();
 
