@@ -1,4 +1,4 @@
-package Padre::Wx::Style2;
+package Padre::Wx::Style;
 
 use 5.008;
 use strict;
