@@ -45,7 +45,7 @@ my $submenu = GetSubMenu( $menu, 0 );
 my $subsubmenu = GetSubMenu( $submenu, 1 );
 {
 	my %h = GetMenuItemInfo( $subsubmenu, 4 );
-	is $h{text}, "Perl 6 Script", "Perl 6 Script in submenu";
+	is $h{text}, "Perl &6 Script", "Perl 6 Script in submenu";
 }
 
 # test Edit
