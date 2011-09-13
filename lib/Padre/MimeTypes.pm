@@ -4,7 +4,7 @@ package Padre::MimeTypes;
 
 =head1 NAME
 
-Padre::MimeTypes - Padre Mime-types
+Padre::MimeTypes - Padre MIME Types
 
 =head1 DESCRIPTION
 
