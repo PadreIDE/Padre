@@ -6,7 +6,6 @@ use warnings;
 use File::Slurp           ();
 use Padre::Wx             ();
 use Padre::Wx::FBP::Patch ();
-use Padre::Current;
 use Padre::Logger;
 
 # use Data::Printer { caller_info => 1 };
@@ -185,7 +184,7 @@ sub current_files {
 	$self->{tab_cardinality} = $#label;
 
 	# thanks Alias
-	my @file_vcs = map { $_->project->vcs } Padre::Current->main->documents;
+	my @file_vcs = map { $_->project->vcs } $self->main->documents;
 
 	# create a bucket for open file info, as only a current file bucket exist
 	for ( 0 .. $self->{tab_cardinality} ) {
