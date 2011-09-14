@@ -1537,10 +1537,15 @@ sub smart_highlight_show {
 
 }
 
+sub SetIndicatorCurrent {
+	warn 'CRASH: Non-existent method called!';
+}
+sub IndicatorClearRange {
+	warn 'CRASH: Non-existent method called!';
+}
+
 sub smart_highlight_hide {
 	my $self = shift;
-
-	eval {
 
 	my @styles = @{ $self->{styles} };
 	if ( scalar @styles ) {
@@ -1553,9 +1558,6 @@ sub smart_highlight_hide {
 		# Clear old styles
 		$#{ $self->{styles} } = -1;
 	}
-
-	};
-	warn 'COVERED BAD CRASH: '.$@ if $@;
 }
 
 
