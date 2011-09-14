@@ -10,6 +10,7 @@ use Padre::Wx::Role::View  ();
 use Padre::Wx              ();
 use Padre::Wx::Icon        ();
 use Padre::Wx::FBP::Syntax ();
+use Time::HiRes            ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -317,6 +318,7 @@ sub refresh {
 	}
 
 	# Fire the background task discarding old results
+	$self->{task_start_time} = Time::HiRes::time;
 	$self->task_request(
 		task     => $task,
 		document => $document,
@@ -353,15 +355,16 @@ sub task_finish {
 }
 
 sub render {
-	my $self                             = shift;
-	my $model                            = $self->{model} || {};
-	my $current                          = $self->current;
-	my $editor                           = $current->editor;
-	my $document                         = $current->document;
-	my $filename                         = $current->filename;
-	my $lock                             = $self->main->lock('UPDATE');
-	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
+	my $self       = shift;
+	my $time_taken = Time::HiRes::time- $self->{task_start_time};
+	my $model      = $self->{model} || {};
+	my $current    = $self->current;
+	my $editor     = $current->editor;
+	my $document   = $current->document;
+	my $filename   = $current->filename;
+	my $lock       = $self->main->lock('UPDATE');
 
+	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
 	if ($feature_syntax_check_annotations) {
 
 		# Show only the current error/warning annotation when you move or click on a line
@@ -393,6 +396,7 @@ sub render {
 	my $root = $self->{tree}->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
+	my $time_taken_msg = sprintf( Wx::gettext(' within %3.2f secs.'), $time_taken );
 	unless ( Params::Util::_HASH($model) ) {
 
 		# Relative-to-the-project filename.
@@ -405,10 +409,11 @@ sub render {
 			}
 			$self->{tree}->SetItemText(
 				$root,
-				sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename )
+				sprintf( Wx::gettext('No errors or warnings found in %s'), $filename ) . $time_taken_msg
 			);
 		} else {
-			$self->{tree}->SetItemText( $root, Wx::gettext('No errors or warnings found.') );
+			$self->{tree}
+				->SetItemText( $root, sprintf( Wx::gettext('No errors or warnings found') ) . $time_taken_msg );
 		}
 		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
 		return;
@@ -416,9 +421,11 @@ sub render {
 
 	$self->{tree}->SetItemText(
 		$root,
-		defined $filename
-		? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{ $model->{issues} }, $filename )
-		: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{ $model->{issues} } )
+		(   defined $filename
+			? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{ $model->{issues} }, $filename )
+			: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{ $model->{issues} } )
+			)
+			. $time_taken_msg
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
