@@ -23,12 +23,14 @@ my %PARAM = (
 	name                    => [ 2, 'name'          ],
 	style                   => [ 1, 'mime'          ],
 	include                 => [ 1, 'mime'          ],
-	SetSelBackground        => [ 2, 'style,color'   ],
-	SetSelForeground        => [ 1, 'style,color'   ],
+	SetForegroundColour     => [ 1, 'color'         ],
+	SetBackgroundColour     => [ 1, 'color'         ],
 	SetCaretLineBackground  => [ 1, 'color'         ],
 	SetCaretForeground      => [ 1, 'color'         ],
 	SetWhitespaceBackground => [ 1, 'color'         ],
 	SetWhitespaceForeground => [ 1, 'color'         ],
+	SetSelBackground        => [ 2, 'style,color'   ],
+	SetSelForeground        => [ 1, 'style,color'   ],
 	StyleSetBackground      => [ 2, 'style,color'   ],
 	StyleSetForeground      => [ 2, 'style,color'   ],
 	StyleSetBold            => [ 2, 'style,boolean' ],
@@ -256,22 +258,25 @@ sub parse_boolean {
 # Compilation and Application
 
 sub apply {
-	my $self   = shift;
-	my $editor = shift;
+	my $self     = shift;
+	my $window   = shift;
+	my $sequence = undef;
+	if ( Params::Util::_INSTANCE($window, 'Padre::Wx::Editor') ) {
+		my $document = $window->{Document} or return;
+		my $mimetype = $document->mimetype or return;
+		$sequence = $self->mime($mimetype);
 
-	# Determine the style sequence to apply
-	my $document = $editor->{Document} or return;
-	my $mimetype = $document->mimetype or return;
-	my $sequence = $self->mime($mimetype);
-
-	# Reset the style
-	$self->clear($editor);
+		# Reset the editor style
+		$self->clear($window);
+	} else {
+		$sequence = $self->{mime}->{gui} or return;
+	}
 
 	# Apply the precalculated style methods
 	my $i = 0;
 	while ( my $method = $$sequence[$i++] ) {
 		my $params = $$sequence[$i++];
-		$editor->$method(@$params);
+		$window->$method(@$params);
 	}
 
 	return 1;
