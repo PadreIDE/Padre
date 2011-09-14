@@ -91,7 +91,7 @@ the even version for the release, even during development.
       (AZAWAWI)
     - Open resources dialog is now triggered by Ctrl-Alt-R instead of Ctrl-Shift-R
       which is now reserved for 'Replace in Files' functionality (ADAMK, AZAWAWI)
-    - Find In Files shows match counts again, and no longer hides files when we
+    - Find In Files match accounting works, and no longer hides files when we
       only do a single render pass for files because there's only a few (ADAMK)
 
 0.91 Development version, not released
