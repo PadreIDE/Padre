@@ -163,10 +163,6 @@ sub new {
 	# TO DO: Make this suck less (because it really does suck a lot)
 	$self->apply_config($config);
 
-	
-	# Load the style data in the legacy evil way
-	$data = data( $config->editor_style );
-
 	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
 	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
