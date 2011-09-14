@@ -93,6 +93,8 @@ the even version for the release, even during development.
       which is now reserved for 'Replace in Files' functionality (ADAMK, AZAWAWI)
     - Find In Files match accounting works, and no longer hides files when we
       only do a single render pass for files because there's only a few (ADAMK)
+    - Replaced references to wxStyledTextCtrl documentation with the original
+      Scintilla website documentation (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

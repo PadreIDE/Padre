@@ -6149,7 +6149,7 @@ sub on_stc_change {
     $main->on_stc_char_added;
 
 This handler is called when a character is added. No return value. See
-L<http://www.yellowbrain.com/stc/events.html#EVT_STC_CHARADDED>
+L<http://www.scintilla.org/ScintillaDoc.html#SCN_CHARADDED>
 
 TO DO: maybe we need to check this more carefully.
 

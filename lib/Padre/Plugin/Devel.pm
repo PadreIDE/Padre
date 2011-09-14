@@ -97,8 +97,8 @@ sub menu_plugins_simple {
 		sprintf( Wx::gettext('&wxWidgets %s Reference'), '2.8.12' ) => sub {
 			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.12/');
 		},
-		Wx::gettext('&STC Reference') => sub {
-			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
+		Wx::gettext('&Scintilla Reference') => sub {
+			Padre::Wx::launch_browser('http://www.scintilla.org/ScintillaDoc.html');
 		},
 		Wx::gettext('wxPerl &Live Support') => sub {
 			Padre::Wx::launch_irc('wxperl');
@@ -296,9 +296,7 @@ Dumps the %INC hash to Output
 
 =head2 wxWidgets 2.8.12 Reference
 
-=head2 C<STC> reference
-
-Documentation for C<wxStyledTextCtrl>, a control that wraps the Scintilla editor component.
+=head2 C<Scintilla> reference
 
 Documentation for C<Wx::Scintilla>, a Scintilla source code editing component for wxWidgets
 
