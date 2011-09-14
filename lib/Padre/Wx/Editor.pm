@@ -51,24 +51,6 @@ my %WXEOL = (
 	UNIX => Wx::wxSTC_EOL_LF,
 );
 
-# mapping for mime-type to the style name in the share/styles/default.yml file
-# TODO this should be defined in MimeTypes.pm
-our %MIME_STYLE = (
-	'application/x-perl'     => 'perl',
-	'application/x-psgi'     => 'perl',
-	'text/x-perlxs'          => 'xs',   # should be in the plugin...
-	'text/x-patch'           => 'diff',
-	'text/x-makefile'        => 'make',
-	'text/x-yaml'            => 'yaml',
-	'text/css'               => 'css',
-	'application/x-php'      => 'perl', # temporary solution
-	'text/x-c'               => 'c',
-	'text/x-c++src'          => 'c',
-	'text/x-csharp'          => 'c',
-	'application/javascript' => 'c',
-	'text/x-java-source'     => 'c',
-);
-
 
 
 

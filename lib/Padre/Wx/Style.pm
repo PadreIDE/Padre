@@ -17,8 +17,9 @@ our $VERSION = '0.91';
 
 
 ######################################################################
-# Style Language Parser Configuration
+# Configuration
 
+# Commands allowed in the style
 my %PARAM = (
 	name                    => [ 2, 'name'          ],
 	style                   => [ 1, 'mime'          ],
@@ -40,6 +41,17 @@ my %PARAM = (
 	StyleSetSpec            => [ 2, 'style,spec'    ],
 );
 
+# Fallback path of next best styles if no style exists.
+# The fallback of last resort is automatically to text/plain
+my %FALLBACK = (
+	'application/x-psgi'     => 'application/x-perl',
+	'application/x-php'      => 'application/perl', # Temporary solution
+	'application/json'       => 'application/javascript',
+	'application/javascript' => 'text/x-c',
+	'text/x-java-source'     => 'text/x-c',
+	'text/x-c++src'          => 'text/x-c',
+	'text/x-csharp'          => 'text/x-c',
+);
 
 
 
@@ -102,11 +114,15 @@ sub name {
 sub mime {
 	my $self = shift;
 	my $mime = shift || 'text/plain';
-	if ( defined $self->{mime}->{$mime} ) {
-		return $self->{mime}->{$mime};
-	} else {
-		return $self->{mime}->{'text/plain'};
+	while ( not $self->{mime}->{$mime} ) {
+		if ( $mime eq 'text/plain' ) {
+			# A null seqeunce... I guess...
+			return [ ];
+		} else {
+			$mime = $FALLBACK{$mime} || 'text/plain';
+		}
 	}
+	return $self->{mime}->{$mime};
 }
 
 
