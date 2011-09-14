@@ -245,16 +245,14 @@ sub clear {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 
-		unless ($feature_syntax_check_annotations) {
-			my $len = $editor->GetTextLength;
-			if ( $len > 0 ) {
+		my $len = $editor->GetTextLength;
+		if ( $len > 0 ) {
 
-				# Clear out all indicators
-				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
-				$editor->IndicatorClearRange( 0, $len );
-				$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
-				$editor->IndicatorClearRange( 0, $len );
-			}
+			# Clear out all indicators
+			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
+			$editor->IndicatorClearRange( 0, $len );
+			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->IndicatorClearRange( 0, $len );
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
@@ -416,13 +414,10 @@ sub render {
 		my $indent = $editor->GetLineIndentPosition($line);
 		my $end    = $editor->GetLineEndPosition($line);
 
-		unless ($feature_syntax_check_annotations) {
-
-			# Change only the indicators
-			$editor->SetIndicatorCurrent(
-				$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
-			$editor->IndicatorFillRange( $indent, $end - $indent );
-		}
+		# Change only the indicators
+		$editor->SetIndicatorCurrent(
+			$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
+		$editor->IndicatorFillRange( $indent, $end - $indent );
 
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
