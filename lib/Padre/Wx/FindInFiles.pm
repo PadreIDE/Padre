@@ -201,6 +201,7 @@ sub search_finish {
 	my $self = shift;
 
 	# Render any final results
+	$self->{search_timer}->Stop;
 	$self->search_render;
 
 	# Display the summary
@@ -259,7 +260,7 @@ sub search_render {
 		my $name  = $path->name;
 		my $dir   = File::Spec->catfile( $task->root, $path->dirs );
 		my $full  = File::Spec->catfile( $task->root, $path->path );
-		my $lines = scalar @_;
+		my $lines = scalar @$entry;
 		my $label =
 			$lines > 1
 			? sprintf(
