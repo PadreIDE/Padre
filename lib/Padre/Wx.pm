@@ -138,12 +138,6 @@ sub capture_mouse {
 #####################################################################
 # External Website Integration
 
-# Fire and forget background version of Wx::LaunchDefaultBrowser
-sub LaunchDefaultBrowser {
-	warn("Padre::Wx::LaunchDefaultBrowser is deprecated. Use launch_browser");
-	launch_browser(@_);
-}
-
 sub launch_browser {
 	require Padre::Task::LaunchDefaultBrowser;
 	Padre::Task::LaunchDefaultBrowser->new(
