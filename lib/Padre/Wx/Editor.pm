@@ -1519,13 +1519,6 @@ sub smart_highlight_show {
 
 }
 
-sub SetIndicatorCurrent {
-	warn 'CRASH: Non-existent method called!';
-}
-sub IndicatorClearRange {
-	warn 'CRASH: Non-existent method called!';
-}
-
 sub smart_highlight_hide {
 	my $self = shift;
 
