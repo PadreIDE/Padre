@@ -1544,7 +1544,11 @@ sub smart_highlight_hide {
 	if ( scalar @styles ) {
 
 		# Clear indicators for all available text
-		$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+		if ($self->can('SetIndicatorCurrent')) {
+			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+		} else {
+			warn 'called ->SetIndicatorCurrent which is not supported?';
+		}
 		my $text_length = $self->GetTextLength;
 		$self->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
 
