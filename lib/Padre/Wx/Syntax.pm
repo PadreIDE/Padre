@@ -77,6 +77,7 @@ sub new {
 
 	# Additional properties
 	$self->{model}  = {};
+	$self->{annotations} = ();
 	$self->{length} = -1;
 
 	# Prepare the available images
@@ -259,6 +260,8 @@ sub clear {
 		$editor->AnnotationClearAll if $feature_syntax_check_annotations;
 	}
 
+	$self->{annotations} = () if $feature_syntax_check_annotations;
+
 	# Remove all items from the tool
 	$self->{tree}->DeleteAllItems;
 
@@ -359,6 +362,41 @@ sub render {
 	my $lock     = $self->main->lock('UPDATE');
 	my $feature_syntax_check_annotations   = $self->config->feature_syntax_check_annotations;
 
+	Wx::Event::EVT_LEFT_UP( $editor, sub {
+		my $self = shift;
+		my $event = shift;
+
+		update_current_line_annotation($self);
+
+ 		$event->Skip(1);
+	});
+	Wx::Event::EVT_KEY_UP( $editor, sub {
+		update_current_line_annotation($_[0]);
+	});
+
+	sub update_current_line_annotation {
+		my $editor = shift;
+		my $main = $editor->main;
+
+		my $position = $editor->GetCurrentPos;
+		my $line = $editor->LineFromPosition($position);
+		my $annotation = $main->syntax->{annotations}{$line};
+		my $visible;
+		if($annotation) {
+			$editor->AnnotationClearAll;
+			$editor->AnnotationSetText( $line, $annotation->{message} );
+			$editor->AnnotationSetStyles( $line, $annotation->{style} );
+
+			$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+		} else {
+			$visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
+		}
+
+		$editor->AnnotationSetVisible($visible);
+	};
+
+
+
 	# NOTE: Recolor the document to make sure we do not accidentally
 	# remove syntax highlighting while syntax checking
 	$document->colourize;
@@ -398,7 +436,7 @@ sub render {
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
-	my %annotations = ();
+	$self->{annotations} = ();
 	my $i           = 0;
 	ISSUE:
 	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{ $model->{issues} } ) {
@@ -427,14 +465,14 @@ sub render {
 				$is_warning
 				? sprintf( '%c', Padre::Constant::PADRE_WARNING() )
 				: sprintf( '%c', Padre::Constant::PADRE_ERROR() );
-			unless ( $annotations{$line} ) {
-				$annotations{$line} = {
+			unless ( $self->{annotations}{$line} ) {
+				$self->{annotations}{$line} = {
 					message => $message,
 					style   => $char_style x length($message),
 				};
 			} else {
-				$annotations{$line}{message} .= "\n$message";
-				$annotations{$line}{style} .= $char_style x ( length($message) + 1 );
+				$self->{annotations}{$line}{message} .= "\n$message";
+				$self->{annotations}{$line}{style} .= $char_style x ( length($message) + 1 );
 			}
 		}
 
@@ -451,18 +489,7 @@ sub render {
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	if ($feature_syntax_check_annotations) {
-
-		# Add annotations
-		foreach my $line ( sort keys %annotations ) {
-			my $annotation = $annotations{$line};
-			$editor->AnnotationSetText( $line, $annotation->{message} );
-			$editor->AnnotationSetStyles( $line, $annotation->{style} );
-		}
-
-		my $wxSTC_ANNOTATION_BOXED = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
-		$editor->AnnotationSetVisible($wxSTC_ANNOTATION_BOXED);
-	}
+	update_current_line_annotation($editor) if $feature_syntax_check_annotations;
 
 	# Enable standard error output display button
 	unless ( $self->{show_stderr}->IsShown ) {
