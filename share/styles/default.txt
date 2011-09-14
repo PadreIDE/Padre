@@ -4,8 +4,8 @@ name en-gb Padre
 
 # Padre GUI Colours
 style gui
-SetForegroundColour                               000000
-SetBackgroundColour                               ffffff
+SetForegroundColour                               990000
+SetBackgroundColour                               ffffee
 
 
 

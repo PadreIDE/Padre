@@ -148,7 +148,7 @@ sub new {
 	$sizerh->SetSizeHints($self);
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply($self);
+		$self->main->style->apply( $self->{tree} );
 	}
 
 	return $self;

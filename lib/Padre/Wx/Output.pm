@@ -11,6 +11,7 @@ use utf8;
 use Encode                ();
 use File::Spec            ();
 use Params::Util          ();
+use Padre::Feature        ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
@@ -62,6 +63,10 @@ sub new {
 			shift->on_text_url(@_);
 		},
 	);
+
+	if (Padre::Feature::STYLE_GUI) {
+		$self->main->style->apply($self);
+	}
 
 	return $self;
 }
