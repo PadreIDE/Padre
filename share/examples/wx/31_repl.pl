@@ -33,11 +33,8 @@ package Demo::Frame;
 use strict;
 use warnings FATAL => 'all';
 
-
 use Wx ':everything';
 use Wx::Event ':everything';
-use Wx::STC ();
-
 
 use File::Spec::Functions qw(catfile);
 use File::Basename qw(basename);
