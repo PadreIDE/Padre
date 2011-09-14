@@ -163,6 +163,7 @@ sub new {
 	# TO DO: Make this suck less (because it really does suck a lot)
 	$self->apply_config($config);
 
+	
 	# Load the style data in the legacy evil way
 	$data = data( $config->editor_style );
 
@@ -652,27 +653,6 @@ sub padre_setup_plain {
 	}
 
 	$self->setup_style_from_config( 'plain', $config );
-
-	return;
-}
-
-sub padre_setup_style {
-	my $self   = shift;
-	my $name   = shift;
-	my $config = shift || $self->config;
-
-	foreach my $i ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
-		$self->StyleSetBackground( $i => Padre::Wx::color( $data->{$name}->{background} ) );
-	}
-
-	$self->setup_style_from_config( $name, $config );
-
-	# if mimetype is known, then it might be Perl with in-line POD
-	if ( Padre::Feature::FOLDING and $config->editor_folding ) {
-		if ( $config->editor_fold_pod ) {
-			$self->fold_pod;
-		}
-	}
 
 	return;
 }
