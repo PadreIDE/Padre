@@ -1904,13 +1904,18 @@ sub change_style {
 	my $name    = shift;
 	my $private = shift;
 	my $lock    = $self->lock('CONFIG');
-	Padre::Wx::Editor::data( $name, $private );
-	foreach my $editor ( $self->editors ) {
-		$editor->padre_setup;
-	}
-
-	# Save editor style configuration
 	$self->config->set( editor_style => $name );
+
+	# Disabled until style selection is sane again
+	return;
+
+	# Find and load the new style
+	my $style = $self->{style} = Padre::Wx::Style->find($name);
+
+	# Apply the new style to all current editors
+	foreach my $editor ( $self->editors ) {
+		$style->apply($editor);
+	}
 
 	return;
 }
