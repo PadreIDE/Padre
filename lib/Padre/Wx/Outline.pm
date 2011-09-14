@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Scalar::Util          ();
 use Params::Util          ();
+use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
@@ -63,6 +64,10 @@ sub new {
 	# we can make the widget APPEAR to be faster than it is and
 	# offset the cost of doing the PPI parse in the background.
 	# $self->{cache} = {};
+
+	if (Padre::Feature::STYLE_GUI) {
+		$self->main->style->apply($self);
+	}
 
 	return $self;
 }

@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Scalar::Util          ();
 use Params::Util          ();
+use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
@@ -158,6 +159,10 @@ sub new {
 	);
 
 	$main->add_refresh_listener($self);
+
+	if (Padre::Feature::STYLE_GUI) {
+		$self->main->style->apply($self);
+	}
 
 	return $self;
 }
