@@ -1,14 +1,9 @@
 name en-gb Padre
 
-style text/plain
-SetCaretForeground                                000000
-SetCaretLineBackground                            ffff04
-# Is there a purpose for the zero here?
-StyleSetForeground 0                              00007f
-StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
-StyleSetForeground wxSTC_STYLE_DEFAULT            000000
-StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
-StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
+
+
+# Padre Internal Colouring
+style padre
 StyleSetForeground PADRE_BLACK                    000000
 StyleSetForeground PADRE_BLUE                     000099
 StyleSetForeground PADRE_RED                      990000
@@ -22,6 +17,19 @@ StyleSetBackground PADRE_WARNING                  fffff0
 StyleSetForeground PADRE_ERROR                    af0000
 StyleSetBackground PADRE_ERROR                    fff0f0
 
+
+
+style text/plain
+include padre
+SetCaretForeground                                000000
+SetCaretLineBackground                            ffff04
+StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
+StyleSetForeground wxSTC_STYLE_DEFAULT            000000
+StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
+StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
+
+
+
 style text/x-config
 include text/plain
 StyleSetForeground wxSTC_CONF_DEFAULT             000000
@@ -34,6 +42,8 @@ StyleSetForeground wxSTC_CONF_STRING              ff7f00
 StyleSetForeground wxSTC_CONF_OPERATOR            00007f
 StyleSetForeground wxSTC_CONF_IP                  209999
 StyleSetForeground wxSTC_CONF_DIRECTIVE           202020
+
+
 
 style application/x-perl
 include text/plain
@@ -76,6 +86,8 @@ StyleSetForeground wxSTC_PL_STRING_QW             7f007f
 # Missing SCE_PL_FORMAT_IDENT     (41)
 # Missing SCE_PL_FORMAT           (42)
 
+
+
 style text/x-c
 include text/plain
 StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
@@ -96,6 +108,8 @@ StyleSetForeground wxSTC_C_VERBATIM               7f007f
 StyleSetForeground wxSTC_C_REGEX                  ff007f
 StyleSetForeground wxSTC_C_COMMENTLINEDOC         7f7f7f
 
+
+
 style text/x-perlxs
 include text/x-c
 StyleSetForeground wxSTC_C_COMMENTDOC             007f00
@@ -111,6 +125,8 @@ StyleSetBackground wxSTC_C_COMMENTDOCKEYWORD      ff0000
 StyleSetForeground wxSTC_C_COMMENTDOCKEYWORDERROR 000000
 StyleSetBackground wxSTC_C_COMMENTDOCKEYWORDERROR ff0000
 StyleSetForeground wxSTC_C_GLOBALCLASS            7f007f
+
+
 
 style text/x-patch
 include text/plain
@@ -129,6 +145,8 @@ StyleSetBold       wxSTC_DIFF_DELETED             1
 StyleSetBackground wxSTC_DIFF_ADDED               80ff80
 StyleSetBold       wxSTC_DIFF_ADDED               1
 
+
+
 style text/x-makefile
 include text/plain
 StyleSetForeground wxSTC_MAKE_DEFAULT             000000
@@ -138,6 +156,8 @@ StyleSetForeground wxSTC_MAKE_IDENTIFIER          000080
 StyleSetForeground wxSTC_MAKE_OPERATOR            7f007f
 StyleSetForeground wxSTC_MAKE_TARGET              a00000
 StyleSetForeground wxSTC_MAKE_IDEOL               7f0000
+
+
 
 style text/x-yaml
 include text/plain
@@ -157,6 +177,8 @@ StyleSetForeground wxSTC_YAML_ERROR               ffffff
 StyleSetBackground wxSTC_YAML_ERROR               000088
 StyleSetBold       wxSTC_YAML_ERROR               1
 StyleSetEOLFilled  wxSTC_YAML_ERROR               1
+
+
 
 style text/css
 include text/plain
