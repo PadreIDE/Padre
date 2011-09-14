@@ -2,7 +2,14 @@ name en-gb Padre
 
 
 
-# Padre Internal Colouring
+# Padre GUI Colours
+style gui
+SetForegroundColour                               000000
+SetBackgroundColour                               ffffff
+
+
+
+# Padre Internal Editor Colours
 style padre
 StyleSetForeground PADRE_BLACK                    000000
 StyleSetForeground PADRE_BLUE                     000099
