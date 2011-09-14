@@ -1394,6 +1394,15 @@ setting(
 	help    => _T('Toggle syntax checker annotations in editor')
 );
 
+# Toggle *experimental* saved document differences feature
+setting(
+	name    => 'feature_saved_document_diffs',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Toggle saved document differences feature')
+);
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
