@@ -72,7 +72,6 @@ our %MIME_STYLE = (
 
 my $data;
 my $data_name;
-my $data_private;
 
 
 
@@ -811,7 +810,6 @@ sub data {
 		warn $@;
 	} else {
 		$data_name    = $name;
-		$data_private = $private;
 		$data         = $tdata;
 	}
 	return $data;
