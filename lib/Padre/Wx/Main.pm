@@ -50,6 +50,7 @@ use Padre::Feature            ();
 use Padre::Locker             ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
+use Padre::Wx::Style          ();
 use Padre::Wx::Display        ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Menubar        ();
@@ -184,6 +185,9 @@ sub new {
 	# Bootstrap locale support before we start fiddling with the GUI.
 	my $startup_locale = $ide->opts->{startup_locale};
 	$self->{locale} = ( $startup_locale ? Padre::Locale::object($startup_locale) : Padre::Locale::object() );
+
+	# Bootstrap style information in case the GUI will need it
+	$self->{style} = Padre::Wx::Style->find('default');
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -562,6 +566,7 @@ use Class::XSAccessor {
 		ide                 => 'ide',
 		config              => 'config',
 		title               => 'title',
+		style               => 'style',
 		aui                 => 'aui',
 		menu                => 'menu',
 		notebook            => 'notebook',
