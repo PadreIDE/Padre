@@ -291,8 +291,6 @@ sub on_char {
 		$document->event_on_char( $self, $event );
 	}
 
-	$self->show_diff_annotations if $self->config->feature_saved_document_diffs;
-
 	# Keep processing
 	$event->Skip(1);
 }
@@ -304,22 +302,26 @@ sub show_diff_annotations {
 	my $document      = $self->current->document or return;
 	my $file     = $document->{file} or return;
 	my $filename = $file->filename;
-
+ 
 	require Padre::Util;
-	my $saved_text = Padre::Util::slurp($filename);
-	my @seq1  = split /\n/, $saved_text;
-	my @seq2  = split /\n/, $document->text_get;
+	my $saved_text = Padre::Util::slurp($filename) or return;
+	my $doc_text = $document->text_get or die "WTF\n";
+	my @seq1  = split /\n/, $$saved_text;
+	my @seq2  = split /\n/, $doc_text;
 	require Algorithm::Diff;
 	my @diffs = Algorithm::Diff::diff(\@seq1, \@seq2);
 
-	$self->MarkerDeleteAll(Padre::Wx::MarkError);
-	$self->MarkerDeleteAll(Padre::Wx::MarkWarn);
+	$self->MarkerDeleteAll(Padre::Wx::MarkLocation);
+	$self->MarkerDeleteAll(Padre::Wx::MarkBreakpoint);
 
-	for my $diff (@{$diffs[0]}) {
-		my @diff = @$diff;
-		my ($type, $line, $text) = @$diff;
-		print "$type, $line, $text\n";
-		$self->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkWarn() : Padre::Wx::MarkError());
+	#use Data::Dumper; print Dumper(@diffs);
+	for my $diff_chunk (@diffs) {
+		for my $diff (@{$diff_chunk}) {
+			my @diff = @$diff;
+			my ($type, $line, $text) = @$diff;
+			#print "$type, $line, $text\n";
+			$self->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkBreakpoint : Padre::Wx::MarkLocation);
+		}
 	}
 }
 
@@ -341,6 +343,8 @@ sub on_change_dwell {
 		$main->refresh_functions;
 		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
+
+		$self->show_diff_annotations if $self->config->feature_saved_document_diffs;
 	}
 
 	return;
