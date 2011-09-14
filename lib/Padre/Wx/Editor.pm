@@ -1540,21 +1540,22 @@ sub smart_highlight_show {
 sub smart_highlight_hide {
 	my $self = shift;
 
+	eval {
+
 	my @styles = @{ $self->{styles} };
 	if ( scalar @styles ) {
 
 		# Clear indicators for all available text
-		if ($self->can('SetIndicatorCurrent')) {
-			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
-		} else {
-			warn 'called ->SetIndicatorCurrent which is not supported?';
-		}
+		$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
 		my $text_length = $self->GetTextLength;
 		$self->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
 
 		# Clear old styles
 		$#{ $self->{styles} } = -1;
 	}
+
+	};
+	warn 'COVERED BAD CRASH: '.$@ if $@;
 }
 
 
