@@ -294,19 +294,19 @@ sub search_render {
 			);
 		}
 
+		# Expand nodes
+		$self->Expand($root) unless $self->{files};
+		$self->Expand($file);
+
 		# Update statistics
 		$self->{matches} += $lines;
 		$self->{files}   += 1;
 
 		# Ensure both the root and the new file are expanded
-		$self->Expand($file);
 	}
 
 	# Flush the pending queue
 	$self->{search_queue} = [];
-
-	# Ensure the root is expanded
-	$self->Expand($root);
 
 	return 1;
 }
