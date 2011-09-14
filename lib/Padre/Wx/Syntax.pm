@@ -362,40 +362,19 @@ sub render {
 	my $lock     = $self->main->lock('UPDATE');
 	my $feature_syntax_check_annotations   = $self->config->feature_syntax_check_annotations;
 
-	Wx::Event::EVT_LEFT_UP( $editor, sub {
-		my $self = shift;
-		my $event = shift;
-
-		update_current_line_annotation($self);
-
- 		$event->Skip(1);
-	});
-	Wx::Event::EVT_KEY_UP( $editor, sub {
-		update_current_line_annotation($_[0]);
-	});
-
-	sub update_current_line_annotation {
-		my $editor = shift;
-		my $main = $editor->main;
-
-		my $position = $editor->GetCurrentPos;
-		my $line = $editor->LineFromPosition($position);
-		my $annotation = $main->syntax->{annotations}{$line};
-		my $visible;
-		if($annotation) {
-			$editor->AnnotationClearAll;
-			$editor->AnnotationSetText( $line, $annotation->{message} );
-			$editor->AnnotationSetStyles( $line, $annotation->{style} );
-
-			$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
-		} else {
-			$visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
-		}
-
-		$editor->AnnotationSetVisible($visible);
-	};
-
-
+	if($feature_syntax_check_annotations) {
+		# Show only the current error/warning annotation when you move or click on a line
+		my $syntax = $self;
+		Wx::Event::EVT_LEFT_UP( $editor, sub {
+			my $self = shift;
+			my $event = shift;
+			$syntax->_show_current_annotation;
+			$event->Skip(1);
+		});
+		Wx::Event::EVT_KEY_UP( $editor, sub {
+			$syntax->_show_current_annotation;
+		});
+	}
 
 	# NOTE: Recolor the document to make sure we do not accidentally
 	# remove syntax highlighting while syntax checking
@@ -489,7 +468,7 @@ sub render {
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	update_current_line_annotation($editor) if $feature_syntax_check_annotations;
+	$self->_show_current_annotation if $feature_syntax_check_annotations;
 
 	# Enable standard error output display button
 	unless ( $self->{show_stderr}->IsShown ) {
@@ -502,6 +481,26 @@ sub render {
 
 	return 1;
 }
+
+# Show the current line error/warning if it exists or hide the previous annotation
+sub _show_current_annotation {
+	my $self = shift;
+	my $editor = $self->main->current->editor;
+
+	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
+	my $annotation = $self->{annotations}{$current_line};
+	my $visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
+	$editor->AnnotationClearAll;
+	if($annotation) {
+		$editor->AnnotationSetText( $current_line, $annotation->{message} );
+		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
+
+		$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+	}
+
+	$editor->AnnotationSetVisible($visible);
+};
+
 
 # Updates the help page. It shows the text if it is defined otherwise clears and hides it
 sub _update_help_page {
