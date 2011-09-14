@@ -31,6 +31,7 @@ use constant {
 	RED    => Wx::Colour->new("red"),
 	GREEN  => Wx::Colour->new("green"),
 	BLUE   => Wx::Colour->new("blue"),
+	YELLOW => Wx::Colour->new("yellow"),
 
 	# Indicators
 	INDICATOR_SMART_HIGHLIGHT => 0,
@@ -124,6 +125,18 @@ sub new {
 		Wx::wxSTC_MARK_SMALLRECT,
 		BLUE,
 		BLUE,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkAddition(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		YELLOW,
+		YELLOW,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkDeletion(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		RED,
+		RED,
 	);
 
 	# No more unsafe CTRL-L for you :)
@@ -311,8 +324,8 @@ sub show_diff_annotations {
 	require Algorithm::Diff;
 	my @diffs = Algorithm::Diff::diff(\@seq1, \@seq2);
 
-	$self->MarkerDeleteAll(Padre::Wx::MarkLocation);
-	$self->MarkerDeleteAll(Padre::Wx::MarkBreakpoint);
+	$self->MarkerDeleteAll(Padre::Wx::MarkAddition);
+	$self->MarkerDeleteAll(Padre::Wx::MarkDeletion);
 
 	#use Data::Dumper; print Dumper(@diffs);
 	for my $diff_chunk (@diffs) {
@@ -320,7 +333,7 @@ sub show_diff_annotations {
 			my @diff = @$diff;
 			my ($type, $line, $text) = @$diff;
 			#print "$type, $line, $text\n";
-			$self->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkBreakpoint : Padre::Wx::MarkLocation);
+			$self->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion);
 		}
 	}
 }
