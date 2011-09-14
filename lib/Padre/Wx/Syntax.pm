@@ -76,9 +76,9 @@ sub new {
 	$self->{show_stderr}->Hide;
 
 	# Additional properties
-	$self->{model}  = {};
+	$self->{model}       = {};
 	$self->{annotations} = ();
-	$self->{length} = -1;
+	$self->{length}      = -1;
 
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -237,8 +237,8 @@ sub gettext_label {
 
 # Remove all markers and empty the list
 sub clear {
-	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
+	my $self                             = shift;
+	my $lock                             = $self->main->lock('UPDATE');
 	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
 
 	# Remove the margins and indicators for the syntax markers
@@ -353,27 +353,34 @@ sub task_finish {
 }
 
 sub render {
-	my $self     = shift;
-	my $model    = $self->{model} || {};
-	my $current  = $self->current;
-	my $editor   = $current->editor;
-	my $document = $current->document;
-	my $filename = $current->filename;
-	my $lock     = $self->main->lock('UPDATE');
-	my $feature_syntax_check_annotations   = $self->config->feature_syntax_check_annotations;
+	my $self                             = shift;
+	my $model                            = $self->{model} || {};
+	my $current                          = $self->current;
+	my $editor                           = $current->editor;
+	my $document                         = $current->document;
+	my $filename                         = $current->filename;
+	my $lock                             = $self->main->lock('UPDATE');
+	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
 
-	if($feature_syntax_check_annotations) {
+	if ($feature_syntax_check_annotations) {
+
 		# Show only the current error/warning annotation when you move or click on a line
 		my $syntax = $self;
-		Wx::Event::EVT_LEFT_UP( $editor, sub {
-			my $self = shift;
-			my $event = shift;
-			$syntax->_show_current_annotation;
-			$event->Skip(1);
-		});
-		Wx::Event::EVT_KEY_UP( $editor, sub {
-			$syntax->_show_current_annotation;
-		});
+		Wx::Event::EVT_LEFT_UP(
+			$editor,
+			sub {
+				my $self  = shift;
+				my $event = shift;
+				$syntax->_show_current_annotation;
+				$event->Skip(1);
+			}
+		);
+		Wx::Event::EVT_KEY_UP(
+			$editor,
+			sub {
+				$syntax->_show_current_annotation;
+			}
+		);
 	}
 
 	# NOTE: Recolor the document to make sure we do not accidentally
@@ -416,7 +423,7 @@ sub render {
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
 	$self->{annotations} = ();
-	my $i           = 0;
+	my $i = 0;
 	ISSUE:
 	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{ $model->{issues} } ) {
 
@@ -484,14 +491,14 @@ sub render {
 
 # Show the current line error/warning if it exists or hide the previous annotation
 sub _show_current_annotation {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->main->current->editor;
 
-	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
-	my $annotation = $self->{annotations}{$current_line};
+	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $annotation   = $self->{annotations}{$current_line};
 	my $visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
 	$editor->AnnotationClearAll;
-	if($annotation) {
+	if ($annotation) {
 		$editor->AnnotationSetText( $current_line, $annotation->{message} );
 		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
 
@@ -499,7 +506,7 @@ sub _show_current_annotation {
 	}
 
 	$editor->AnnotationSetVisible($visible);
-};
+}
 
 
 # Updates the help page. It shows the text if it is defined otherwise clears and hides it
