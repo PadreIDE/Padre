@@ -16,15 +16,15 @@ use threads::shared;
 # Load every exportable constant into here, so that they come into
 # existence in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-# use Wx          (':everything');
-use Wx            ('wxTheClipboard');
-use Wx::Event     (':everything');
-use Wx::DND       ();
-use Wx::AUI       ();
-use Wx::Html      ();
-use Wx::RichText  ();
-use Wx::Scintilla ();
-use Wx::Socket    ();
+# use Wx               (':everything');
+use Wx                 ('wxTheClipboard');
+use Wx::Event          (':everything');
+use Wx::DND            ();
+use Wx::AUI            ();
+use Wx::Html           ();
+use Wx::RichText       ();
+use Wx::Scintilla 0.28 ();
+use Wx::Socket         ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
