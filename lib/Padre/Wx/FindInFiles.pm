@@ -248,9 +248,6 @@ sub search_render {
 	# Lock the tree to reduce flicker and prevent auto-scrolling
 	my $lock = $self->scroll_lock;
 
-	# Ensure the root is expanded
-	$self->Expand($root);
-
 	# Added to avoid crashes when calling methods on path objects
 	require Padre::Wx::Directory::Path;
 
@@ -307,6 +304,9 @@ sub search_render {
 
 	# Flush the pending queue
 	$self->{search_queue} = [];
+
+	# Ensure the root is expanded
+	$self->Expand($root);
 
 	return 1;
 }
