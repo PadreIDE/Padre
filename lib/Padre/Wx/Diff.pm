@@ -47,7 +47,7 @@ sub task_finish {
 	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	my $data = Params::Util::_ARRAY( $task->{data} ) or ( print "data is not an array", return );
+	my $data = Params::Util::_ARRAY0( $task->{data} ) or return;
 	my $lock = $self->{main}->lock('UPDATE');
 
 	my $editor = $self->{main}->current->editor;
