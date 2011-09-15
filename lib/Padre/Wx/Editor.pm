@@ -33,8 +33,8 @@ use constant {
 	BLUE   => Wx::Colour->new("blue"),
 	YELLOW => Wx::Colour->new("yellow"),
 
+	DARK_GREEN  => Wx::Colour->new( 0x00, 0x90, 0x00 ),
 	LIGHT_RED   => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
-	LIGHT_GREEN => Wx::Colour->new( 0x96, 0xFF, 0x96 ),
 	LIGHT_BLUE  => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
 
 	# Indicators
@@ -133,8 +133,8 @@ sub new {
 	$self->MarkerDefine(
 		Padre::Wx::MarkAddition(),
 		Wx::wxSTC_MARK_PLUS,
-		LIGHT_GREEN,
-		LIGHT_GREEN,
+		DARK_GREEN,
+		DARK_GREEN,
 	);
 	$self->MarkerDefine(
 		Padre::Wx::MarkChange(),
