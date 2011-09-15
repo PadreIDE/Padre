@@ -54,7 +54,7 @@ sub run {
 
 	# Generate the differences between saved and current document
 	$self->{data} = [];
-	my $content = Padre::Util::slurp( $self->{filename} );
+	my $content = $self->{filename} ? Padre::Util::slurp( $self->{filename} ) : undef;
 	if ($content) {
 		my @seq1 = split /\n/, $$content;
 		my @seq2 = split /\n/, $text;
