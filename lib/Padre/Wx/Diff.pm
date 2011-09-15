@@ -63,6 +63,7 @@ sub task_finish {
 
 			#print "$type, $line, $text\n";
 			$editor->MarkerAdd( $line, ( $type eq '+' ) ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion );
+			#TODO implement Padre::Wx::MarkChange
 		}
 	}
 
@@ -77,6 +78,7 @@ sub clear {
 	my $editor = $self->{main}->current->editor;
 
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
+	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkDeletion);
 }
 

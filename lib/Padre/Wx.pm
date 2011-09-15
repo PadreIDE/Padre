@@ -58,8 +58,9 @@ use constant {
 	MarkWarn       => 2,
 	MarkLocation   => 3, # current location of the debugger
 	MarkBreakpoint => 4, # location of the debugger breakpoint
-	MarkAddition   => 5,
-	MarkDeletion   => 6,
+	MarkAddition   => 5, # Line(s) added
+	MarkDeletion   => 6, # Line(s) deleted
+	MarkChange     => 7, # Line(s) changed
 };
 
 

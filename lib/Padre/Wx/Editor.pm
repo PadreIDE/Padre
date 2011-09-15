@@ -33,6 +33,10 @@ use constant {
 	BLUE   => Wx::Colour->new("blue"),
 	YELLOW => Wx::Colour->new("yellow"),
 
+	LIGHT_RED => Wx::Colour->new(0xFF, 0xA0, 0xB4),
+	LIGHT_GREEN => Wx::Colour->new(0x96, 0xFF, 0x96),
+	LIGHT_BLUE => Wx::Colour->new(0xA0, 0xC8, 0xFF),
+
 	# Indicators
 	INDICATOR_SMART_HIGHLIGHT => 0,
 	INDICATOR_WARNING         => 1,
@@ -128,15 +132,21 @@ sub new {
 	);
 	$self->MarkerDefine(
 		Padre::Wx::MarkAddition(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		YELLOW,
-		YELLOW,
+		Wx::wxSTC_MARK_PLUS,
+		LIGHT_GREEN,
+		LIGHT_GREEN,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkChange(),
+		Wx::wxSTC_MARK_DOTDOTDOT,
+		LIGHT_BLUE,
+		LIGHT_BLUE,
 	);
 	$self->MarkerDefine(
 		Padre::Wx::MarkDeletion(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		RED,
-		RED,
+		Wx::wxSTC_MARK_MINUS,
+		LIGHT_RED,
+		LIGHT_RED,
 	);
 
 	# No more unsafe CTRL-L for you :)
