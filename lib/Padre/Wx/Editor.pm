@@ -308,36 +308,6 @@ sub on_char {
 	$event->Skip(1);
 }
 
-# Shows differances between current version and saved version
-sub show_diff_annotations {
-	my $self = shift;
-
-	my $document      = $self->current->document or return;
-	my $file     = $document->{file} or return;
-	my $filename = $file->filename;
- 
-	require Padre::Util;
-	my $saved_text = Padre::Util::slurp($filename) or return;
-	my $doc_text = $document->text_get or die "WTF\n";
-	my @seq1  = split /\n/, $$saved_text;
-	my @seq2  = split /\n/, $doc_text;
-	require Algorithm::Diff;
-	my @diffs = Algorithm::Diff::diff(\@seq1, \@seq2);
-
-	$self->MarkerDeleteAll(Padre::Wx::MarkAddition);
-	$self->MarkerDeleteAll(Padre::Wx::MarkDeletion);
-
-	#use Data::Dumper; print Dumper(@diffs);
-	for my $diff_chunk (@diffs) {
-		for my $diff (@{$diff_chunk}) {
-			my @diff = @$diff;
-			my ($type, $line, $text) = @$diff;
-			#print "$type, $line, $text\n";
-			$self->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion);
-		}
-	}
-}
-
 # Called on any change to text.
 # NOTE: This gets called twice for every change, it may be a bug.
 sub on_change {
@@ -356,8 +326,7 @@ sub on_change_dwell {
 		$main->refresh_functions;
 		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
-
-		$self->show_diff_annotations if $self->config->feature_saved_document_diffs;
+		$main->refresh_diff;
 	}
 
 	return;

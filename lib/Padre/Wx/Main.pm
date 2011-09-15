@@ -701,6 +701,15 @@ sub syntax {
 	return $self->{syntax};
 }
 
+sub diff {
+	my $self = shift;
+	unless ( defined $self->{diff} ) {
+		require Padre::Wx::Diff;
+		$self->{diff} = Padre::Wx::Diff->new($self);
+	}
+	return $self->{diff};
+}
+
 BEGIN {
 	no warnings 'once';
 	*debugger = sub {
@@ -1880,6 +1889,25 @@ sub refresh_aui {
 	my $self = shift;
 	return if $self->locked('refresh_aui');
 	$self->aui->Update;
+	return;
+}
+
+=pod
+
+=head3 C<refresh_diff>
+
+    $main->refresh_diff;
+
+Do a refresh of saved and current document differences. This is a "rapid" change,
+since actual calculating differences is happening in the background.
+
+=cut
+
+sub refresh_diff {
+	my $self = shift;
+	return unless $self->config->feature_saved_document_diffs;
+	return if $self->locked('REFRESH');
+	$self->diff->refresh( $_[0] or $self->current );
 	return;
 }
 
