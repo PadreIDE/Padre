@@ -30,10 +30,7 @@ sub new {
 
 	# Obtain document full filename
 	my $file = $document->{file};
-	unless ($file) {
-		die "Could not find a filename for the current document\n";
-	}
-	$self->{filename} = $file->filename;
+	$self->{filename} = $file ? $file->filename : undef;
 
 	# Obtain document text
 	$self->{text} = $document->text_get;
