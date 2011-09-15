@@ -57,15 +57,59 @@ sub task_finish {
 
 	my @diffs = @{$data};
 	for my $diff_chunk (@diffs) {
+		my $marker_line   = undef;
+		my $lines_deleted = 0;
+		my $lines_added   = 0;
 		for my $diff ( @{$diff_chunk} ) {
-			my @diff = @$diff;
 			my ( $type, $line, $text ) = @$diff;
+			TRACE "$type, $line, $text\n";
 
-			#print "$type, $line, $text\n";
-			$editor->MarkerAdd( $line, ( $type eq '+' ) ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion );
+			unless ($marker_line) {
+				$marker_line = $line;
+			}
 
-			#TODO implement Padre::Wx::MarkChange
+			if ( $type eq '-' ) {
+				$lines_deleted++;
+			} else {
+				$lines_added++;
+			}
 		}
+
+		my $description;
+		if ( $lines_deleted > 0 and $lines_added > 0 ) {
+
+			# Line(s) changed
+			$description =
+				$lines_deleted > 1
+				? sprintf( "%d line(s) changed", $lines_deleted )
+				: sprintf( "%d line changed",    $lines_deleted );
+			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
+			TRACE("$description at line #$marker_line") if DEBUG;
+		} elsif ( $lines_added > 0 ) {
+
+			# Line(s) added
+			$description =
+				$lines_added > 1
+				? sprintf( "%d line(s) added", $lines_added )
+				: sprintf( "%d line added",    $lines_added );
+			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
+			TRACE("$description at line #$marker_line") if DEBUG;
+		} elsif ( $lines_deleted > 0 ) {
+
+			# Line(s) deleted
+			$description =
+				$lines_deleted > 1
+				? sprintf( "%d line(s) deleted", $lines_deleted )
+				: sprintf( "%d line deleted",    $lines_deleted );
+			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
+
+		} else {
+
+			# TODO No change... what to do there... ignore? :)
+			$description = 'no change!';
+		}
+
+		TRACE("$description at line #$marker_line");
 	}
 
 	return 1;
