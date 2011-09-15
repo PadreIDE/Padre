@@ -209,7 +209,7 @@ sub show {
 	$item->SetState(Wx::LIST_STATE_SELECTED);
 	$self->{list}->SetItem($item);
 
-	$self->Show;
+	$self->ShowModal;
 }
 
 # GUI Handlers
