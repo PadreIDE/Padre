@@ -279,29 +279,29 @@ sub new {
 		'edit.patch_diff',
 	);
 
-	$self->AppendSeparator;
+	# $self->AppendSeparator;
 
 	# Diff tools
-	$self->{diff} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext('Di&ff Tools'),
-		$self->{diff},
-	);
+	# $self->{diff} = Wx::Menu->new;
+	# $self->Append(
+		# -1,
+		# Wx::gettext('Di&ff Tools'),
+		# $self->{diff},
+	# );
 
-	$self->{diff2saved} = $self->add_menu_action(
-		$self->{diff},
-		'edit.diff2saved',
-	);
-	$self->{diff}->AppendSeparator;
-	$self->{applydiff2file} = $self->add_menu_action(
-		$self->{diff},
-		'edit.applydiff2file',
-	);
-	$self->{applydiff2project} = $self->add_menu_action(
-		$self->{diff},
-		'edit.applydiff2project',
-	);
+	# $self->{diff2saved} = $self->add_menu_action(
+		# $self->{diff},
+		# 'edit.diff2saved',
+	# );
+	# $self->{diff}->AppendSeparator;
+	# $self->{applydiff2file} = $self->add_menu_action(
+		# $self->{diff},
+		# 'edit.applydiff2file',
+	# );
+	# $self->{applydiff2project} = $self->add_menu_action(
+		# $self->{diff},
+		# 'edit.applydiff2project',
+	# );
 
 	$self->{filter_tool} = $self->add_menu_action(
 		'edit.filter_tool',

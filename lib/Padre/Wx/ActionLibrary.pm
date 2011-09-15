@@ -1092,7 +1092,7 @@ sub init {
 	# start or edit.patch_diff
 	Padre::Wx::Action->new(
 		name    => 'edit.patch_diff',
-		label   => _T('Patch-2...'),
+		label   => _T('Patch...'),
 		comment => _T('Simplistic Patch only works on saved files'),
 
 		# shortcut   => 'Ctrl-Shift-F',
@@ -1106,35 +1106,35 @@ sub init {
 	);
 
 
-	Padre::Wx::Action->new(
-		name        => 'edit.diff2saved',
-		need_editor => 1,
-		label       => _T('Diff to &Saved Version'),
-		comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
-		menu_event  => sub {
-			shift->on_diff(@_);
-		},
-	);
+	# Padre::Wx::Action->new(
+		# name        => 'edit.diff2saved',
+		# need_editor => 1,
+		# label       => _T('Diff to &Saved Version'),
+		# comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
+		# menu_event  => sub {
+			# shift->on_diff(@_);
+		# },
+	# );
 
-	Padre::Wx::Action->new(
-		name        => 'edit.applydiff2file',
-		need_editor => 1,
-		label       => _T('Apply Diff to &File'),
-		comment     => _T('Apply a patch file to the current document'),
-		menu_event  => sub {
-			shift->on_diff(@_);
-		},
-	);
+	# Padre::Wx::Action->new(
+		# name        => 'edit.applydiff2file',
+		# need_editor => 1,
+		# label       => _T('Apply Diff to &File'),
+		# comment     => _T('Apply a patch file to the current document'),
+		# menu_event  => sub {
+			# shift->on_diff(@_);
+		# },
+	# );
 
-	Padre::Wx::Action->new(
-		name        => 'edit.applydiff2project',
-		need_editor => 1,
-		label       => _T('Apply Diff to &Project'),
-		comment     => _T('Apply a patch file to the current project'),
-		menu_event  => sub {
-			shift->on_diff(@_);
-		},
-	);
+	# Padre::Wx::Action->new(
+		# name        => 'edit.applydiff2project',
+		# need_editor => 1,
+		# label       => _T('Apply Diff to &Project'),
+		# comment     => _T('Apply a patch file to the current project'),
+		# menu_event  => sub {
+			# shift->on_diff(@_);
+		# },
+	# );
 
 	# End diff tools
 
