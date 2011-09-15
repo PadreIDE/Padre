@@ -517,7 +517,7 @@ sub rfc4646 {
 }
 
 sub rfc4646_exists {
-	defined $RFC4646{$_[0]};
+	defined $RFC4646{ $_[0] };
 }
 
 sub iso639 {

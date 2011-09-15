@@ -75,4 +75,4 @@ use_ok('Padre::Wx::Style');
 
 my $style2 = Padre::Wx::Style->find('default');
 isa_ok( $style2, 'Padre::Wx::Style' );
-ok( scalar(@{$style2->mime}), 'Found a list of methods' );
+ok( scalar( @{ $style2->mime } ), 'Found a list of methods' );

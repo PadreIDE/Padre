@@ -71,7 +71,7 @@ sub from_diff {
 			$target->{start} = $line;
 			$target->{end}   = $line;
 			$target->{text}  = $text . "\n";
-			$lines = 1;
+			$lines           = 1;
 
 		} else {
 
@@ -147,7 +147,7 @@ sub to_editor {
 			$editor->ReplaceTarget( $target->{text} );
 		}
 
-	# Apply positions based on lines
+		# Apply positions based on lines
 	} elsif ( $mode eq 'line' ) {
 
 		foreach my $target (@$targets) {

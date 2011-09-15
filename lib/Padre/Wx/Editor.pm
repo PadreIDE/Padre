@@ -33,9 +33,9 @@ use constant {
 	BLUE   => Wx::Colour->new("blue"),
 	YELLOW => Wx::Colour->new("yellow"),
 
-	LIGHT_RED => Wx::Colour->new(0xFF, 0xA0, 0xB4),
-	LIGHT_GREEN => Wx::Colour->new(0x96, 0xFF, 0x96),
-	LIGHT_BLUE => Wx::Colour->new(0xA0, 0xC8, 0xFF),
+	LIGHT_RED   => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
+	LIGHT_GREEN => Wx::Colour->new( 0x96, 0xFF, 0x96 ),
+	LIGHT_BLUE  => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
 
 	# Indicators
 	INDICATOR_SMART_HIGHLIGHT => 0,
@@ -1378,7 +1378,7 @@ sub delete_leading_spaces {
 			next;
 		}
 		my $start = $self->PositionFromLine($i);
-		$self->SetTargetStart( $start );
+		$self->SetTargetStart($start);
 		$self->SetTargetEnd( $start + length $1 );
 		$self->BeginUndoAction unless $changed++;
 		$self->ReplaceTarget('');
@@ -1400,7 +1400,7 @@ sub delete_trailing_spaces {
 			next;
 		}
 		my $start = $self->PositionFromLine($i) + length $1;
-		$self->SetTargetStart( $start );
+		$self->SetTargetStart($start);
 		$self->SetTargetEnd( $start + length $2 );
 		$self->BeginUndoAction unless $changed++;
 		$self->ReplaceTarget('');
@@ -1468,7 +1468,7 @@ sub vertically_align {
 			$self->ReplaceTarget( ' ' x $spaces );
 		} elsif ( $spaces < 0 ) {
 			$self->SetTargetStart( $insert - $spaces );
-			$self->SetTargetEnd( $insert );
+			$self->SetTargetEnd($insert);
 			$self->ReplaceTarget('');
 		}
 	}

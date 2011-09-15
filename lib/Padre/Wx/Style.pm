@@ -21,31 +21,31 @@ our $VERSION = '0.91';
 
 # Commands allowed in the style
 my %PARAM = (
-	name                    => [ 2, 'name'          ],
-	style                   => [ 1, 'mime'          ],
-	include                 => [ 1, 'mime'          ],
-	SetForegroundColour     => [ 1, 'color'         ],
-	SetBackgroundColour     => [ 1, 'color'         ],
-	SetCaretLineBackground  => [ 1, 'color'         ],
-	SetCaretForeground      => [ 1, 'color'         ],
-	SetWhitespaceBackground => [ 1, 'color'         ],
-	SetWhitespaceForeground => [ 1, 'color'         ],
-	SetSelBackground        => [ 2, 'style,color'   ],
-	SetSelForeground        => [ 1, 'style,color'   ],
-	StyleSetBackground      => [ 2, 'style,color'   ],
-	StyleSetForeground      => [ 2, 'style,color'   ],
+	name                    => [ 2, 'name' ],
+	style                   => [ 1, 'mime' ],
+	include                 => [ 1, 'mime' ],
+	SetForegroundColour     => [ 1, 'color' ],
+	SetBackgroundColour     => [ 1, 'color' ],
+	SetCaretLineBackground  => [ 1, 'color' ],
+	SetCaretForeground      => [ 1, 'color' ],
+	SetWhitespaceBackground => [ 1, 'color' ],
+	SetWhitespaceForeground => [ 1, 'color' ],
+	SetSelBackground        => [ 2, 'style,color' ],
+	SetSelForeground        => [ 1, 'style,color' ],
+	StyleSetBackground      => [ 2, 'style,color' ],
+	StyleSetForeground      => [ 2, 'style,color' ],
 	StyleSetBold            => [ 2, 'style,boolean' ],
 	StyleSetItalic          => [ 2, 'style,boolean' ],
 	StyleSetEOLFilled       => [ 2, 'style,boolean' ],
 	StyleSetUnderline       => [ 2, 'style,boolean' ],
-	StyleSetSpec            => [ 2, 'style,spec'    ],
+	StyleSetSpec            => [ 2, 'style,spec' ],
 );
 
 # Fallback path of next best styles if no style exists.
 # The fallback of last resort is automatically to text/plain
 my %FALLBACK = (
 	'application/x-psgi'     => 'application/x-perl',
-	'application/x-php'      => 'application/perl', # Temporary solution
+	'application/x-php'      => 'application/perl',      # Temporary solution
 	'application/json'       => 'application/javascript',
 	'application/javascript' => 'text/x-c',
 	'text/x-java-source'     => 'text/x-c',
@@ -79,7 +79,7 @@ sub find {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_, code => { } }, $class;
+	my $self = bless { @_, code => {} }, $class;
 	unless ( defined $self->name ) {
 		die "No default en-gb name for style";
 	}
@@ -98,8 +98,8 @@ sub load {
 	}
 
 	# Open the file
-	my $handle = IO::File->new($file, 'r') or return;
-	my $self   = $class->parse($handle);
+	my $handle = IO::File->new( $file, 'r' ) or return;
+	my $self = $class->parse($handle);
 	$handle->close;
 
 	return $self;
@@ -116,8 +116,9 @@ sub mime {
 	my $mime = shift || 'text/plain';
 	while ( not $self->{mime}->{$mime} ) {
 		if ( $mime eq 'text/plain' ) {
+
 			# A null seqeunce... I guess...
-			return [ ];
+			return [];
 		} else {
 			$mime = $FALLBACK{$mime} || 'text/plain';
 		}
@@ -133,7 +134,7 @@ sub mime {
 # Style Parser
 
 sub parse {
-	my $class  = shift;
+	my $class = shift;
 	my $handle = Params::Util::_HANDLE(shift) or die "Not a file handle";
 
 	# Parse the file
@@ -141,7 +142,7 @@ sub parse {
 	my %styles = ();
 	my $style  = undef;
 	my $line   = 0;
-	while ( defined(my $string = <$handle>) ) {
+	while ( defined( my $string = <$handle> ) ) {
 		$line++;
 
 		# Clean the line
@@ -153,7 +154,7 @@ sub parse {
 
 		# Split the line into a command and params
 		my @list = split /\s+/, $string;
-		my $cmd  = shift @list;
+		my $cmd = shift @list;
 		unless ( defined $PARAM{$cmd} ) {
 			die "Line $line: Unsupported style command '$string'";
 		}
@@ -176,37 +177,42 @@ sub parse {
 		} elsif ( $cmd eq 'style' ) {
 
 			# Switch to the new mime type
-			$style = ($styles{$list[0]} ||= [ ]);
+			$style = ( $styles{ $list[0] } ||= [] );
 
 		} elsif ( $cmd eq 'include' ) {
+
 			# Copy another style as a starting point
-			my $copy = $styles{$list[0]};
-			unless ( $copy ) {
+			my $copy = $styles{ $list[0] };
+			unless ($copy) {
 				die "Line $line: Style '$list[0]' is not defined (yet)";
 			}
 			push @$style, @$copy;
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'color' ) {
+
 			# General commands that are passed a single colour
 			my $color = $class->parse_color( $line, shift @list );
-			push @$style, $cmd, [ $color ];
+			push @$style, $cmd, [$color];
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style,color' ) {
+
 			# Style specific commands that are passed a single color
-			my $id    = $class->parse_style( $line, shift @list );
+			my $id = $class->parse_style( $line, shift @list );
 			my $color = $class->parse_color( $line, shift @list );
 			push @$style, $cmd, [ $id, $color ];
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style,boolean' ) {
+
 			# Style specific commands that are passed a boolean value
-			my $id      = $class->parse_style( $line, shift @list );
+			my $id = $class->parse_style( $line, shift @list );
 			my $boolean = $class->parse_boolean( $line, shift @list );
 			push @$style, $cmd, [ $id, $boolean ];
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style,spec' ) {
+
 			# Style command that is passed a spec string
 			my $style = $class->parse_style( $line, shift @list );
-			my $spec  = shift @list;
+			my $spec = shift @list;
 		} else {
 			die "Line $line: Unsupported style command '$string'";
 		}
@@ -229,7 +235,7 @@ sub parse_style {
 	my $class  = shift;
 	my $line   = shift;
 	my $string = shift;
-	my $copy = $string;
+	my $copy   = $string;
 	if ( defined Params::Util::_NONNEGINT($string) ) {
 		return $string;
 	} elsif ( $string =~ /^PADRE_\w+\z/ ) {
@@ -249,7 +255,7 @@ sub parse_style {
 	# Capture the numeric form of the constant
 	no strict 'refs';
 	$string = eval { $string->() };
-	if ( $@ ) {
+	if ($@) {
 		die "Line $line: Unknown or unsupported style '$copy'";
 	}
 
@@ -277,7 +283,7 @@ sub apply {
 	my $self     = shift;
 	my $window   = shift;
 	my $sequence = undef;
-	if ( Params::Util::_INSTANCE($window, 'Padre::Wx::Editor') ) {
+	if ( Params::Util::_INSTANCE( $window, 'Padre::Wx::Editor' ) ) {
 		my $document = $window->{Document} or return;
 		my $mimetype = $document->mimetype or return;
 		$sequence = $self->mime($mimetype);
@@ -290,8 +296,8 @@ sub apply {
 
 	# Apply the precalculated style methods
 	my $i = 0;
-	while ( my $method = $$sequence[$i++] ) {
-		my $params = $$sequence[$i++];
+	while ( my $method = $$sequence[ $i++ ] ) {
+		my $params = $$sequence[ $i++ ];
 		$window->$method(@$params);
 	}
 
@@ -311,7 +317,7 @@ sub clear {
 	# Reset the font from configuration (which Scintilla considers part of
 	# the "style" but Padre doesn't allow to be changed as a "style")
 	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
-	if ( defined Params::Util::_STRING($config->editor_font) ) {
+	if ( defined Params::Util::_STRING( $config->editor_font ) ) {
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	$editor->SetFont($font);
