@@ -56,8 +56,8 @@ sub run {
 	$self->{data} = [];
 	my $content = $self->{filename} ? Padre::Util::slurp( $self->{filename} ) : undef;
 	if ($content) {
-		my @seq1 = split /\n/, $$content;
-		my @seq2 = split /\n/, $text;
+		my @seq1 = split /^/, $$content;
+		my @seq2 = split /^/, $text;
 		my @diffs = Algorithm::Diff::diff( \@seq1, \@seq2 );
 		$self->{data} = \@diffs;
 	}
