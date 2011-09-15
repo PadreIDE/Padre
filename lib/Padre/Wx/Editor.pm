@@ -138,7 +138,7 @@ sub new {
 	);
 	$self->MarkerDefine(
 		Padre::Wx::MarkChange(),
-		Wx::wxSTC_MARK_DOTDOTDOT,
+		Wx::wxSTC_MARK_ARROW,
 		LIGHT_BLUE,
 		LIGHT_BLUE,
 	);
