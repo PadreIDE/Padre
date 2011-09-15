@@ -23,9 +23,9 @@ sub new {
 
 	# Just convert the document to text for now.
 	# Later, we'll suck in more data from the project and
-	# other related documents to do syntax checks more awesomely.
+	# other related documents to create an outline tree more awesomely.
 	unless ( _INSTANCE( $self->{document}, 'Padre::Document' ) ) {
-		die "Failed to provide a document to the syntax check task";
+		die "Failed to provide a document to the outline task";
 	}
 
 	# Remove the document entirely as we do this,
