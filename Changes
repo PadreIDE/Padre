@@ -98,6 +98,7 @@ the even version for the release, even during development.
     - Added how much time does syntax checking take (AZAWAWI)
     - Added experimental online saved file diff checking margins feature (AZAWAWI)
     - Plugin manager is now modal (BOWTIE, AZAWAWI)
+    - Add Patch to editor menu and removed Diff Tools (BOWTIE)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
