@@ -3,11 +3,11 @@ package Padre::Wx::Diff;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util          ();
-use Params::Util          ();
-use Padre::Role::Task     ();
-use Padre::Wx             ();
-use Padre::Util           ();
+use Scalar::Util      ();
+use Params::Util      ();
+use Padre::Role::Task ();
+use Padre::Wx         ();
+use Padre::Util       ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -25,7 +25,7 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	
+
 	my $self = bless {@_}, $class;
 	$self->{main} = $main;
 
@@ -47,21 +47,22 @@ sub task_finish {
 	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	my $data = Params::Util::_ARRAY( $task->{data} ) or (print "data is not an array", return);
+	my $data = Params::Util::_ARRAY( $task->{data} ) or ( print "data is not an array", return );
 	my $lock = $self->{main}->lock('UPDATE');
-	
+
 	my $editor = $self->{main}->current->editor;
 
 	# Clear any old content
 	$self->clear;
-	
+
 	my @diffs = @{$data};
 	for my $diff_chunk (@diffs) {
-		for my $diff (@{$diff_chunk}) {
+		for my $diff ( @{$diff_chunk} ) {
 			my @diff = @$diff;
-			my ($type, $line, $text) = @$diff;
+			my ( $type, $line, $text ) = @$diff;
+
 			#print "$type, $line, $text\n";
-			$editor->MarkerAdd( $line, ($type eq '+') ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion);
+			$editor->MarkerAdd( $line, ( $type eq '+' ) ? Padre::Wx::MarkAddition : Padre::Wx::MarkDeletion );
 		}
 	}
 
@@ -72,7 +73,7 @@ sub task_finish {
 # General Methods
 
 sub clear {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->{main}->current->editor;
 
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);

@@ -3,9 +3,9 @@ package Padre::Task::Diff;
 use 5.008005;
 use strict;
 use warnings;
-use Params::Util ();
-use Padre::Task  ();
-use Padre::Util  ();
+use Params::Util    ();
+use Padre::Task     ();
+use Padre::Util     ();
 use Algorithm::Diff ();
 
 our $VERSION = '0.91';
@@ -29,7 +29,7 @@ sub new {
 	my $document = delete $self->{document};
 
 	# Obtain document full filename
-	my $file     = $document->{file};
+	my $file = $document->{file};
 	unless ($file) {
 		die "Could not find a filename for the current document\n";
 	}
@@ -57,11 +57,11 @@ sub run {
 
 	# Generate the differences between saved and current document
 	$self->{data} = [];
- 	my $content = Padre::Util::slurp($self->{filename});
- 	if($content) {
-		my @seq1  = split /\n/, $$content;
-		my @seq2  = split /\n/, $text;
-		my @diffs = Algorithm::Diff::diff(\@seq1, \@seq2);
+	my $content = Padre::Util::slurp( $self->{filename} );
+	if ($content) {
+		my @seq1 = split /\n/, $$content;
+		my @seq2 = split /\n/, $text;
+		my @diffs = Algorithm::Diff::diff( \@seq1, \@seq2 );
 		$self->{data} = \@diffs;
 	}
 
