@@ -364,9 +364,9 @@ sub refresh {
 	$self->{convert_encoding_system}->Enable($hasdoc);
 	$self->{convert_encoding_utf8}->Enable($hasdoc);
 	$self->{convert_encoding_to}->Enable($hasdoc);
-	$self->{diff2saved}->Enable($hasdoc);
-	$self->{applydiff2file}->Enable(0);
-	$self->{applydiff2project}->Enable(0);
+	#$self->{diff2saved}->Enable($hasdoc);
+	#$self->{applydiff2file}->Enable(0);
+	#$self->{applydiff2project}->Enable(0);
 	$self->{insert_from_file}->Enable($hasdoc);
 	$self->{case_upper}->Enable($hasdoc);
 	$self->{case_lower}->Enable($hasdoc);
