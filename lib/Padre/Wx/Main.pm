@@ -1431,6 +1431,7 @@ sub refresh {
 	$self->refresh_syntaxcheck($current);
 	$self->refresh_functions($current);
 	$self->refresh_outline($current);
+	$self->refresh_diff($current);
 
 	# Refresh the remaining elements while the background tasks
 	# are running for the other elements.
@@ -4596,8 +4597,6 @@ sub on_save {
 	my $self = shift;
 	my $document = shift || $self->current->document;
 	return unless $document;
-
-	#print $document->filename, "\n";
 
 	my $pageid = $self->editor_id( $document->editor );
 	if ( $document->is_new ) {
