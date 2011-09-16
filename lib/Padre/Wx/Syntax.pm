@@ -430,11 +430,15 @@ sub render {
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
 	$self->{annotations} = ();
-	my $i = 0;
+	my $i       = 0;
+	my $maxline = $editor->GetLineCount;
+	my @issues  = sort { $a->{line} <=> $b->{line} } @{ $model->{issues} };
 	ISSUE:
-	foreach my $issue ( sort { $a->{line} <=> $b->{line} } @{ $model->{issues} } ) {
-
+	foreach my $issue ( @issues ) {
 		my $line       = $issue->{line} - 1;
+		if ( $line > $maxline ) {
+			$line = $maxline;
+		}
 		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
 		my $marker     = $MESSAGE{$type}{marker};
 		my $is_warning = $marker == Padre::Wx::MarkWarn();
