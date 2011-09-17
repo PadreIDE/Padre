@@ -566,11 +566,9 @@ __END__
 
 =head1 NAME
 
-Padre::Plugin::Patch::Main
+Padre::Wx::Dialog::Patch
+You will find more infomation in our L<wiki|http://padre.perlide.org/trac/wiki/Features/EditPatch/> pages.
 
-=head1 VERSION
-
-This document describes Padre::Plugin::Patch::Main version 0.03
 
 =head1 DESCRIPTION
 
@@ -586,77 +584,94 @@ All results will be a new Tab.
 
 =head1 METHODS
 
-=over 4
-
-=item new
+=head2 new
 
 Constructor. Should be called with C<$main> by C<Patch::load_dialog_main()>.
 
-=item set_up
+
+=head2 run
+
+C<run> configures the dialogue for your environment
+
+
+=head2 set_up
 
 C<set_up> configures the dialogue for your environment
 
-=item on_action
+
+=head2 on_action
 
 Event handler for action, adjust dialogue accordingly
 
-=item on_against
+
+=head2 on_against
 
 Event handler for against, adjust dialogue accordingly
 
-=item process_clicked
+
+=head2 process_clicked
 
 Event handler for process_clicked, perform your chosen action, all results go into a new tab in editor.
 
-=item current_files
+
+=head2 current_files
 
 extracts file info from Padre about all open files in editor
 
-=item apply_patch
+
+=head2 apply_patch
 
 A convenience method to apply patch to chosen file.
 
-=item make_patch_diff
+
+=head2 make_patch_diff
 
 A convenience method to generate a patch/diff file from two selected files.
 
-=item make_patch_svn
+
+=head2 make_patch_svn
 
 NB only works if you have C<SVN::Class> installed.
 
 A convenience method to generate a patch/diff file from a selected file and svn if applicable,
 ie file has been checked out.
 
-=item file2_list_type
+
+=head2 file2_list_type
 
 composed method
 
-=item filename_url
+
+=head2 filename_url
 
 composed method
 
-=item set_selection
+
+=head2 set_selection
 
 composed method
 
-=item file1_list_svn
+
+=head2 file1_list_svn
 
 composed method
 
-=item file2_list_patch
+
+=head2 file2_list_patch
 
 composed method
 
-=item file_lists_saved
+
+=head2 file_lists_saved
 
 composed method
 
-=back
 
 =head1 BUGS AND LIMITATIONS 
 
 List Order is that of load order, if you move your Tabs the List Order will not follow suite.
 
+If you have multiple files open with same name but with different paths only the first will get matched. 
 
 =head1 AUTHORS
 
