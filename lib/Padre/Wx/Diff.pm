@@ -81,8 +81,8 @@ sub task_finish {
 			# Line(s) changed
 			$description =
 				$lines_deleted > 1
-				? sprintf( "%d line(s) changed", $lines_deleted )
-				: sprintf( "%d line changed",    $lines_deleted );
+				? sprintf( Wx::gettext('%d lines changed'), $lines_deleted )
+				: sprintf( Wx::gettext('%d line changed'),    $lines_deleted );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
 			TRACE("$description at line #$marker_line") if DEBUG;
 		} elsif ( $lines_added > 0 ) {
@@ -90,8 +90,8 @@ sub task_finish {
 			# Line(s) added
 			$description =
 				$lines_added > 1
-				? sprintf( "%d line(s) added", $lines_added )
-				: sprintf( "%d line added",    $lines_added );
+				? sprintf( Wx::gettext('%d lines added'), $lines_added )
+				: sprintf( Wx::gettext('%d line added'),    $lines_added );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
 			TRACE("$description at line #$marker_line") if DEBUG;
 		} elsif ( $lines_deleted > 0 ) {
@@ -99,8 +99,8 @@ sub task_finish {
 			# Line(s) deleted
 			$description =
 				$lines_deleted > 1
-				? sprintf( "%d line(s) deleted", $lines_deleted )
-				: sprintf( "%d line deleted",    $lines_deleted );
+				? sprintf( Wx::gettext('%d lines deleted'), $lines_deleted )
+				: sprintf( Wx::gettext('%d line deleted'),    $lines_deleted );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
 
 		} else {
