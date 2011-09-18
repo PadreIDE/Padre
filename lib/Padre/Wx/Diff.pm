@@ -224,6 +224,10 @@ sub show_diff_annotation {
 
 	my $diff = $self->{diffs}{$line} or return;
 
+	#require Padre::Wx::Dialog::Diff;
+	#my $dialog = Padre::Wx::Dialog::Diff->new($editor, Wx::wxBORDER_NONE);
+	#$dialog->show($diff->{message});
+
 	$editor->AnnotationClearAll;
 	$editor->AnnotationSetText( $line, $diff->{message} );
 	$editor->AnnotationSetStyles( $line, $diff->{style} );
