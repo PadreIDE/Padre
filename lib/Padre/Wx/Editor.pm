@@ -559,7 +559,7 @@ sub set_preferences {
 		$self->{Document}->set_indentation_style;
 	}
 
-	if ( $config->main_syntaxcheck ) {
+	if ( $config->main_syntaxcheck or $config->feature_saved_document_diffs ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
 			$self->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 1 for symbols
 			$self->SetMarginWidth( 1, 16 );                     # set margin 1 16 px wide
