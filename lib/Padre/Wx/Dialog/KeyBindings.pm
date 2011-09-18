@@ -80,8 +80,6 @@ sub _create_controls {
 		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
 	}
 
-	# TODO add tooltip with the comments
-
 	# Shortcut label
 	my $shortcut_label = Wx::StaticText->new( $self, -1, Wx::gettext('Sh&ortcut:') );
 
