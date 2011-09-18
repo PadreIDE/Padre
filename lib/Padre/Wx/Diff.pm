@@ -59,8 +59,9 @@ sub task_finish {
 
 	my @diffs = @{$data};
 	$self->{diffs} = {};
-	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_DIFF_DELETED() );
-	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_DIFF_ADDED() );
+	my $header_style   = sprintf( '%c', Padre::Constant::PADRE_DIFF_HEADER );
+	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_DIFF_DELETED );
+	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_DIFF_ADDED );
 
 	for my $diff_chunk (@diffs) {
 		my $marker_line   = undef;
@@ -130,7 +131,7 @@ sub task_finish {
 
 		$description .= "\n";
 		$self->{diffs}{$marker_line}{message} = $description . $self->{diffs}{$marker_line}{message};
-		$self->{diffs}{$marker_line}{style}   = ( Padre::Constant::PADRE_DIFF_HEADER x length($description) ) . $self->{diffs}{$marker_line}{style};
+		$self->{diffs}{$marker_line}{style}   = ( $header_style x length($description) ) . $self->{diffs}{$marker_line}{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
