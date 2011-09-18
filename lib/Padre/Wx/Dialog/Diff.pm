@@ -16,12 +16,19 @@ sub new {
 	my $panel = Wx::Panel->new($self);
 	
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$self->{prev_diff} = Wx::Button->new(
-		$panel, -1, Wx::gettext('&Previous Difference'),
+	$self->{prev_diff} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Padre::Wx::Icon::find("actions/up")
 	);
-	$self->{next_diff} = Wx::Button->new(
-		$panel, -1, Wx::gettext('&Next Difference'),
+	$self->{prev_diff}->SetToolTip( Wx::gettext('Previous difference') );
+	$self->{next_diff} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Padre::Wx::Icon::find("actions/down")
 	);
+	$self->{next_diff}->SetToolTip( Wx::gettext('Next difference') );
+
 	$self->{revert} = Wx::Button->new(
 		$panel, -1, Wx::gettext('&Revert'),
 	);
