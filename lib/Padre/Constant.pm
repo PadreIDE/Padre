@@ -77,6 +77,15 @@ use constant {
 	PADRE_ERROR    => 127,
 };
 
+# Version Control System (VCS) constants
+use constant {
+	SUBVERSION => 'SVN',
+	GIT        => 'Git',
+	MERCURIAL  => 'Mercurial',
+	BAZAAR     => 'Bazaar',
+	CVS        => 'CVS',
+};
+
 # Portable Perl Support
 use constant PORTABLE => do {
 	no warnings 'once';

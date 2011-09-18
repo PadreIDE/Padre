@@ -154,19 +154,19 @@ sub _vcs {
 	my $class = shift;
 	my $root  = shift;
 	if ( -d File::Spec->catdir( $root, '.svn' ) ) {
-		return 'SVN';
+		return Padre::Constant::SUBVERSION;
 	}
 	if ( -d File::Spec->catdir( $root, '.git' ) ) {
-		return 'Git';
+		return Padre::Constant::GIT;
 	}
 	if ( -d File::Spec->catdir( $root, '.hg' ) ) {
-		return 'Mercurial';
+		return Padre::Constant::MERCURIAL;
 	}
 	if ( -d File::Spec->catdir( $root, '.bzr' ) ) {
-		return 'Bazaar';
+		return Padre::Constant::BAZAAR;
 	}
 	if ( -f File::Spec->catfile( $root, 'CVS', 'Repository' ) ) {
-		return 'CVS';
+		return Padre::Constant::CVS;
 	}
 	return undef;
 }
