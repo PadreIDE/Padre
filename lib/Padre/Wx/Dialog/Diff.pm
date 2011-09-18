@@ -13,7 +13,7 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 
 	my $panel = Wx::Panel->new($self);
-	
+
 	$self->{prev_diff_button} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -35,27 +35,31 @@ sub new {
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{prev_diff_button}, 0, 0, 0 );
-	$button_sizer->Add( $self->{next_diff_button}, 0, 0, 0 );
-	$button_sizer->Add( $self->{revert_button}, 0, 0, 0);
-	$button_sizer->Add( $self->{close_button}, 0, Wx::ALIGN_RIGHT, 5 );
+	$button_sizer->Add( $self->{prev_diff_button}, 0, 0,               0 );
+	$button_sizer->Add( $self->{next_diff_button}, 0, 0,               0 );
+	$button_sizer->Add( $self->{revert_button},    0, 0,               0 );
+	$button_sizer->Add( $self->{close_button},     0, Wx::ALIGN_RIGHT, 5 );
 
-	$self->{text_ctrl} = Wx::TextCtrl->new($panel, -1, '', Wx::wxDefaultPosition, [-1, 100],
-            Wx::wxTE_MULTILINE);
+	$self->{text_ctrl} = Wx::TextCtrl->new(
+		$panel, -1, '', Wx::wxDefaultPosition, [ -1, 100 ],
+		Wx::wxTE_MULTILINE
+	);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 3 );
-	$vsizer->Add( $self->{text_ctrl},   1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $button_sizer,      0, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 3 );
 
 	# Close button
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{revert_button},
 		sub {
+
 			#TODO  implement revert functionality
 		}
 	);
-	# Close button
+
+	# Close button
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{close_button},
@@ -69,6 +73,7 @@ sub new {
 		$self,
 		$self->{prev_diff_button},
 		sub {
+
 			#TODO implement previous diff button
 		}
 	);
@@ -78,12 +83,13 @@ sub new {
 		$self,
 		$self->{next_diff_button},
 		sub {
+
 			#TODO implement next diff button
 		}
 	);
 
 	$panel->SetSizer($vsizer);
-	$panel->Fit;	$self->Fit;
+	$panel->Fit; $self->Fit;
 
 	return $self;
 }
@@ -98,7 +104,8 @@ sub show {
 	$self->{text_ctrl}->SetValue($message); $self->Show(1);
 }
 
-sub ProcessLeftDown {	my ( $self, $event ) = @_;
+sub ProcessLeftDown {
+	my ( $self, $event ) = @_;
 	print "Process Left $event\n";
 
 	#$event->Skip;
