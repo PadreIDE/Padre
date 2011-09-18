@@ -434,8 +434,8 @@ sub render {
 	my $maxline = $editor->GetLineCount;
 	my @issues  = sort { $a->{line} <=> $b->{line} } @{ $model->{issues} };
 	ISSUE:
-	foreach my $issue ( @issues ) {
-		my $line       = $issue->{line} - 1;
+	foreach my $issue (@issues) {
+		my $line = $issue->{line} - 1;
 		if ( $line > $maxline ) {
 			$line = $maxline;
 		}

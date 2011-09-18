@@ -284,23 +284,23 @@ sub new {
 	# Diff tools
 	# $self->{diff} = Wx::Menu->new;
 	# $self->Append(
-		# -1,
-		# Wx::gettext('Di&ff Tools'),
-		# $self->{diff},
+	# -1,
+	# Wx::gettext('Di&ff Tools'),
+	# $self->{diff},
 	# );
 
 	# $self->{diff2saved} = $self->add_menu_action(
-		# $self->{diff},
-		# 'edit.diff2saved',
+	# $self->{diff},
+	# 'edit.diff2saved',
 	# );
 	# $self->{diff}->AppendSeparator;
 	# $self->{applydiff2file} = $self->add_menu_action(
-		# $self->{diff},
-		# 'edit.applydiff2file',
+	# $self->{diff},
+	# 'edit.applydiff2file',
 	# );
 	# $self->{applydiff2project} = $self->add_menu_action(
-		# $self->{diff},
-		# 'edit.applydiff2project',
+	# $self->{diff},
+	# 'edit.applydiff2project',
 	# );
 
 	$self->{filter_tool} = $self->add_menu_action(
@@ -364,6 +364,7 @@ sub refresh {
 	$self->{convert_encoding_system}->Enable($hasdoc);
 	$self->{convert_encoding_utf8}->Enable($hasdoc);
 	$self->{convert_encoding_to}->Enable($hasdoc);
+
 	#$self->{diff2saved}->Enable($hasdoc);
 	#$self->{applydiff2file}->Enable(0);
 	#$self->{applydiff2project}->Enable(0);
