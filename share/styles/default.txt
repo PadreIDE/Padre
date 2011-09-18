@@ -19,6 +19,10 @@ StyleSetForeground PADRE_MAGENTA                  8b008b
 StyleSetForeground PADRE_ORANGE                   ff8228
 StyleSetForeground PADRE_CRIMSON                  dc143c
 StyleSetForeground PADRE_BROWN                    a52a2a
+StyleSetForeground PADRE_DIFF_DELETED             000000
+StyleSetBackground PADRE_DIFF_DELETED             ff8080
+StyleSetForeground PADRE_DIFF_ADDED               000000
+StyleSetBackground PADRE_DIFF_ADDED               80ff80
 StyleSetForeground PADRE_WARNING                  af8000
 StyleSetBackground PADRE_WARNING                  fffff0
 StyleSetForeground PADRE_ERROR                    af0000
