@@ -130,8 +130,7 @@ sub task_finish {
 
 		$description .= "\n";
 		$self->{diffs}{$marker_line}{message} = $description . $self->{diffs}{$marker_line}{message};
-		$self->{diffs}{$marker_line}{style} =
-			( "\001" x length($description) ) . $self->{diffs}{$marker_line}{style};
+		$self->{diffs}{$marker_line}{style}   = ( "\001" x length($description) ) . $self->{diffs}{$marker_line}{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
@@ -202,7 +201,7 @@ sub select_next_difference {
 
 	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $line_to_select = undef;
-	for my $line ( sort keys %{ $self->{diffs} } ) {
+	for my $line ( sort { $a <=> $b } keys %{ $self->{diffs} } ) {
 		unless ($line_to_select) {
 			$line_to_select = $line;
 		}
