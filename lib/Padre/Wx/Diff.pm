@@ -29,7 +29,7 @@ sub new {
 	my $self = bless {@_}, $class;
 	$self->{main} = $main;
 
-	$self->{diff_text} = {};
+	$self->{diffs} = {};
 
 	return $self;
 }
@@ -58,7 +58,7 @@ sub task_finish {
 	$self->clear;
 
 	my @diffs = @{$data};
-	$self->{diff_text} = {};
+	$self->{diffs} = {};
 	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_ERROR() );
 	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_WARNING() );
 
@@ -73,20 +73,20 @@ sub task_finish {
 			unless ($marker_line) {
 				$marker_line = $line;
 
-				$self->{diff_text}->{$marker_line} = {
+				$self->{diffs}{$marker_line} = {
 					message => '',
 					style   => '',
 				};
 			}
 
-			$self->{diff_text}->{$marker_line}->{message} .= $text;
+			$self->{diffs}{$marker_line}{message} .= $text;
 
 			if ( ( $type eq '-' ) ) {
 				$lines_deleted++;
-				$self->{diff_text}->{$marker_line}->{style} .= ( $deleted_style x length($text) );
+				$self->{diffs}{$marker_line}{style} .= ( $deleted_style x length($text) );
 			} else {
 				$lines_added++;
-				$self->{diff_text}->{$marker_line}->{style} .= ( $addition_style x length($text) );
+				$self->{diffs}{$marker_line}{style} .= ( $addition_style x length($text) );
 			}
 		}
 
@@ -129,9 +129,9 @@ sub task_finish {
 		}
 
 		$description .= "\n";
-		$self->{diff_text}->{$marker_line}->{message} = $description . $self->{diff_text}->{$marker_line}->{message};
-		$self->{diff_text}->{$marker_line}->{style} =
-			( "\001" x length($description) ) . $self->{diff_text}->{$marker_line}->{style};
+		$self->{diffs}{$marker_line}{message} = $description . $self->{diffs}{$marker_line}{message};
+		$self->{diffs}{$marker_line}{style} =
+			( "\001" x length($description) ) . $self->{diffs}{$marker_line}{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
@@ -202,7 +202,7 @@ sub select_next_difference {
 
 	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $line_to_select = undef;
-	for my $line ( sort keys %{ $self->{diff_text} } ) {
+	for my $line ( sort keys %{ $self->{diffs} } ) {
 		unless ($line_to_select) {
 			$line_to_select = $line;
 		}
@@ -223,7 +223,7 @@ sub show_diff_annotation {
 	my $line   = shift;
 	my $editor = shift;
 
-	my $diff = $self->{diff_text}{$line} or return;
+	my $diff = $self->{diffs}{$line} or return;
 
 	$editor->AnnotationClearAll;
 	$editor->AnnotationSetText( $line, $diff->{message} );
