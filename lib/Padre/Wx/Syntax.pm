@@ -557,16 +557,6 @@ sub _update_help_page {
 	$self->Layout;
 }
 
-# Selects the problemistic line :)
-sub select_problem {
-	my $self   = shift;
-	my $line   = shift;
-	my $editor = $self->current->editor or return;
-	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-	$editor->SetFocus;
-}
-
 # Selects the next problem in the editor.
 # Wraps to the first one when at the end.
 sub select_next_problem {
@@ -577,7 +567,7 @@ sub select_next_problem {
 	# Start with the first child
 	my $root = $self->{tree}->GetRootItem;
 	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
-	my $first_line = undef;
+	my $line_to_select = undef;
 	while ($cookie) {
 
 		# Get the line and check that it is a valid line number
@@ -593,21 +583,15 @@ sub select_next_problem {
 		}
 		$line--;
 
-		if ( not $first_line ) {
+		unless( $line_to_select ) {
 
-			# record the position of the first problem
-			$first_line = $line;
+			# Record the line number of the first problem :)
+			$line_to_select = $line;
 		}
 
 		if ( $line > $current_line ) {
-
-			# select the next problem
-			$self->select_problem($line);
-
-			# no need to wrap around...
-			$first_line = undef;
-
-			# and we're done here...
+			# Record the line number as the next line beyond the current one
+			$line_to_select = $line;
 			last;
 		}
 
@@ -615,8 +599,8 @@ sub select_next_problem {
 		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
 	}
 
-	# The next problem is simply the first (wrap around)
-	$self->select_problem($first_line) if $first_line;
+	# Select the line in the editor
+	Padre::Util::select_line_in_editor($line_to_select, $editor) if $line_to_select;
 }
 
 

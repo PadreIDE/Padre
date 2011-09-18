@@ -218,18 +218,7 @@ sub select_next_difference {
 			last;
 		}
 	}
-	$self->_select_line_in_editor( $editor, $line_to_select ) if $line_to_select;
-}
-
-# Select and focus on the line within the editor provided
-sub _select_line_in_editor {
-	my $self   = shift;
-	my $editor = shift;
-	my $line   = shift;
-
-	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-	$editor->SetFocus;
+	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
 }
 
 1;

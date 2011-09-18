@@ -545,6 +545,14 @@ sub process_memory {
 	return;
 }
 
+# Select and focus on the line within the editor provided
+sub select_line_in_editor {
+	my $line   = shift;
+	my $editor = shift;
+	$editor->EnsureVisible($line);
+	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+	$editor->SetFocus;
+}
 1;
 
 __END__
