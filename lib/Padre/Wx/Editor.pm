@@ -33,9 +33,9 @@ use constant {
 	BLUE   => Wx::Colour->new("blue"),
 	YELLOW => Wx::Colour->new("yellow"),
 
-	DARK_GREEN  => Wx::Colour->new( 0x00, 0x90, 0x00 ),
-	LIGHT_RED   => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
-	LIGHT_BLUE  => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
+	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
+	LIGHT_RED  => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
+	LIGHT_BLUE => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
 
 	# Indicators
 	INDICATOR_SMART_HIGHLIGHT => 0,
