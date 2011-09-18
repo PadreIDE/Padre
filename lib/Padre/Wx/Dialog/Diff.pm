@@ -12,33 +12,32 @@ sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
-	#$self->SetBackgroundColour(Wx::WHITE);
 	my $panel = Wx::Panel->new($self);
 	
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$self->{prev_diff} = Wx::BitmapButton->new(
+	$self->{prev_diff_button} = Wx::BitmapButton->new(
 		$self,
 		-1,
 		Padre::Wx::Icon::find("actions/up")
 	);
-	$self->{prev_diff}->SetToolTip( Wx::gettext('Previous difference') );
-	$self->{next_diff} = Wx::BitmapButton->new(
+	$self->{prev_diff_button}->SetToolTip( Wx::gettext('Previous difference') );
+	$self->{next_diff_button} = Wx::BitmapButton->new(
 		$self,
 		-1,
 		Padre::Wx::Icon::find("actions/down")
 	);
-	$self->{next_diff}->SetToolTip( Wx::gettext('Next difference') );
+	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 
-	$self->{revert} = Wx::Button->new(
+	$self->{revert_button} = Wx::Button->new(
 		$panel, -1, Wx::gettext('&Revert'),
 	);
 	$self->{close_button} = Wx::Button->new(
 		$panel, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	$button_sizer->Add( $self->{prev_diff}, 0, 0, 0 );
-	$button_sizer->Add( $self->{next_diff}, 0, 0, 0 );
-	$button_sizer->Add( $self->{revert}, 0, 0, 0);
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{prev_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{next_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{revert_button}, 0, 0, 0);
 	$button_sizer->Add( $self->{close_button}, 0, Wx::ALIGN_RIGHT, 5 );
 
 	$self->{text_ctrl} = Wx::TextCtrl->new($panel, -1, '', Wx::wxDefaultPosition, [-1, 100],
@@ -48,12 +47,38 @@ sub new {
 	$vsizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$vsizer->Add( $self->{text_ctrl},   1, Wx::ALL | Wx::EXPAND, 3 );
 
+	# Close button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{revert_button},
+		sub {
+			#TODO  implement revert functionality
+		}
+	);
 	# Close button
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{close_button},
 		sub {
 			$_[0]->Hide;
+		}
+	);
+
+	# Previous difference button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{prev_diff_button},
+		sub {
+			#TODO implement previous diff button
+		}
+	);
+
+	# Next difference button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{next_diff_button},
+		sub {
+			#TODO implement next diff button
 		}
 	);
 
