@@ -73,6 +73,7 @@ use constant {
 	PADRE_DIM_GRAY     => 6,
 	PADRE_CRIMSON      => 7,
 	PADRE_BROWN        => 8,
+	PADRE_DIFF_HEADER  => 123,
 	PADRE_DIFF_DELETED => 124,
 	PADRE_DIFF_ADDED   => 125,
 	PADRE_WARNING      => 126,

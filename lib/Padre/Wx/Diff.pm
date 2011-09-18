@@ -130,7 +130,7 @@ sub task_finish {
 
 		$description .= "\n";
 		$self->{diffs}{$marker_line}{message} = $description . $self->{diffs}{$marker_line}{message};
-		$self->{diffs}{$marker_line}{style}   = ( "\001" x length($description) ) . $self->{diffs}{$marker_line}{style};
+		$self->{diffs}{$marker_line}{style}   = ( Padre::Constant::PADRE_DIFF_HEADER x length($description) ) . $self->{diffs}{$marker_line}{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
