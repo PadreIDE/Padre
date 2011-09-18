@@ -57,6 +57,9 @@ sub task_finish {
 
 	my @diffs = @{$data};
 	$self->{diff_text} = {};
+	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_ERROR() );
+	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_WARNING() );
+
 	for my $diff_chunk (@diffs) {
 		my $marker_line   = undef;
 		my $lines_deleted = 0;
@@ -67,13 +70,21 @@ sub task_finish {
 
 			unless ($marker_line) {
 				$marker_line = $line;
-			}
-			$self->{diff_text}->{$marker_line} .= $type . $text;
 
-			if ( $type eq '-' ) {
+				$self->{diff_text}->{$marker_line} = {
+					message => '',
+					style   => '',
+				};
+			}
+
+			$self->{diff_text}->{$marker_line}->{message} .= $text;
+
+			if ( ( $type eq '-' ) ) {
 				$lines_deleted++;
+				$self->{diff_text}->{$marker_line}->{style} .= ( $deleted_style x length($text) );
 			} else {
 				$lines_added++;
+				$self->{diff_text}->{$marker_line}->{style} .= ( $addition_style x length($text) );
 			}
 		}
 
@@ -97,8 +108,7 @@ sub task_finish {
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
 			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkChange );
 			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkDeletion );
-			$editor->MarkerAdd( $_, Padre::Wx::MarkAddition ) for $marker_line .. $marker_line + $lines_added - 1;
-			$self->{diff_text}->{$_} = $self->{diff_text}->{$marker_line} for $marker_line .. $marker_line + $lines_added - 1;
+			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
 		} elsif ( $lines_deleted > 0 ) {
 
 			# Line(s) deleted
@@ -119,18 +129,26 @@ sub task_finish {
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
 
-	$editor->SetMarginSensitive(1, 1);
+	$editor->SetMarginSensitive( 1, 1 );
 	my $diff_text = $self->{diff_text};
-	Wx::Event::EVT_STC_MARGINCLICK($editor, $editor, sub {
-		my $self = shift;
-		my $event = shift;
-		
-		if($event->GetMargin == 1) {
-			my $position = $event->GetPosition;
-			my $line = $editor->LineFromPosition($position);
-			$self->CallTipShow($position, $diff_text->{$line}) if $diff_text->{$line};
+	Wx::Event::EVT_STC_MARGINCLICK(
+		$editor, $editor,
+		sub {
+			my $self  = shift;
+			my $event = shift;
+
+			if ( $event->GetMargin == 1 ) {
+				my $position = $event->GetPosition;
+				my $line     = $editor->LineFromPosition($position);
+				if ( $diff_text->{$line} ) {
+					$editor->AnnotationClearAll;
+					$editor->AnnotationSetText( $line, $diff_text->{$line}->{message} );
+					$editor->AnnotationSetStyles( $line, $diff_text->{$line}->{style} );
+					$editor->AnnotationSetVisible(2); #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+				}
+			}
 		}
-	});
+	);
 
 	return 1;
 }
