@@ -137,7 +137,7 @@ sub task_finish {
 	}
 
 	$editor->SetMarginSensitive( 1, 1 );
-	my $diff_text = $self->{diff_text};
+	my $myself = $self;
 	Wx::Event::EVT_STC_MARGINCLICK(
 		$editor, $editor,
 		sub {
@@ -145,14 +145,7 @@ sub task_finish {
 			my $event = shift;
 
 			if ( $event->GetMargin == 1 ) {
-				my $position = $event->GetPosition;
-				my $line     = $editor->LineFromPosition($position);
-				if ( $diff_text->{$line} ) {
-					$editor->AnnotationClearAll;
-					$editor->AnnotationSetText( $line, $diff_text->{$line}->{message} );
-					$editor->AnnotationSetStyles( $line, $diff_text->{$line}->{style} );
-					$editor->AnnotationSetVisible(2); #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
-				}
+				$myself->show_diff_annotation( $editor->LineFromPosition( $event->GetPosition ), $editor );
 			}
 		}
 	);
@@ -219,6 +212,21 @@ sub select_next_difference {
 		}
 	}
 	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
+	$self->show_diff_annotation( $line_to_select, $editor );
+}
+
+# Shows the difference annotation for the provided line in the editor provided
+sub show_diff_annotation {
+	my $self   = shift;
+	my $line   = shift;
+	my $editor = shift;
+
+	my $diff = $self->{diff_text}{$line} or return;
+
+	$editor->AnnotationClearAll;
+	$editor->AnnotationSetText( $line, $diff->{message} );
+	$editor->AnnotationSetStyles( $line, $diff->{style} );
+	$editor->AnnotationSetVisible(2); #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
 }
 
 1;
