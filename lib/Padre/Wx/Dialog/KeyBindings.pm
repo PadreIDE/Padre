@@ -113,19 +113,19 @@ sub _create_controls {
 	);
 	$self->{key}->SetSelection(0);
 
-	# TODO tooltips for all buttons
-
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext('&Set'),
 	);
 	$self->{button_set}->Enable(1);
+	$self->{button_set}->SetTooltip( Wx::gettext('Sets the keyboard binding') );
 
 	# Delete button
 	$self->{button_delete} = Wx::Button->new(
 		$self, -1, Wx::gettext('&Delete'),
 	);
 	$self->{button_delete}->Enable(1);
+	$self->{button_delete}->SetTooltip( Wx::gettext('Delete the keyboard binding') );
 
 	# Reset button
 	$self->{button_reset} = Wx::Button->new(
@@ -138,6 +138,7 @@ sub _create_controls {
 	$self->{button_close} = Wx::Button->new(
 		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
+	$self->{button_close}->SetTooltip( Wx::gettext('Close the key bindings dialog') );
 
 	#
 	#----- Dialog Layout -------
