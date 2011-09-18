@@ -164,7 +164,8 @@ sub task_finish {
 
 sub clear {
 	my $self   = shift;
-	my $editor = $self->{main}->current->editor;
+	my $current = $self->{main}->current or return;
+	my $editor = $current->editor or return;
 
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
