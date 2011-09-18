@@ -80,14 +80,15 @@ sub task_finish {
 				};
 			}
 
-			$self->{diffs}{$marker_line}{message} .= $text;
+			my $diff = $self->{diffs}{$marker_line};
+			$diff->{message} .= $text;
 
 			if ( ( $type eq '-' ) ) {
 				$lines_deleted++;
-				$self->{diffs}{$marker_line}{style} .= ( $deleted_style x length($text) );
+				$diff->{style} .= ( $deleted_style x length($text) );
 			} else {
 				$lines_added++;
-				$self->{diffs}{$marker_line}{style} .= ( $addition_style x length($text) );
+				$diff->{style} .= ( $addition_style x length($text) );
 			}
 		}
 
@@ -99,8 +100,7 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines changed'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line changed'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkAddition );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkDeletion );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
 		} elsif ( $lines_added > 0 ) {
 
@@ -109,8 +109,7 @@ sub task_finish {
 				$lines_added > 1
 				? sprintf( Wx::gettext('%d lines added'), $lines_added )
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkChange );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkDeletion );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkChange, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
 		} elsif ( $lines_deleted > 0 ) {
 
@@ -119,8 +118,7 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines deleted'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line deleted'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkAddition );
-			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkChange );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkChange );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
 
 		} else {
@@ -130,8 +128,9 @@ sub task_finish {
 		}
 
 		$description .= "\n";
-		$self->{diffs}{$marker_line}{message} = $description . $self->{diffs}{$marker_line}{message};
-		$self->{diffs}{$marker_line}{style}   = ( $header_style x length($description) ) . $self->{diffs}{$marker_line}{style};
+		my $diff = $self->{diffs}{$marker_line};
+		$diff->{message} = $description . $diff->{message};
+		$diff->{style}   = ( $header_style x length($description) ) . $diff->{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
