@@ -588,46 +588,41 @@ All results will be a new Tab.
 
 Constructor. Should be called with C<$main> by C<Patch::load_dialog_main()>.
 
-
 =head2 run
 
 C<run> configures the dialogue for your environment
-
 
 =head2 set_up
 
 C<set_up> configures the dialogue for your environment
 
-
 =head2 on_action
 
 Event handler for action, adjust dialogue accordingly
-
 
 =head2 on_against
 
 Event handler for against, adjust dialogue accordingly
 
-
 =head2 process_clicked
 
 Event handler for process_clicked, perform your chosen action, all results go into a new tab in editor.
-
 
 =head2 current_files
 
 extracts file info from Padre about all open files in editor
 
-
 =head2 apply_patch
 
 A convenience method to apply patch to chosen file.
 
+uses Text::Patch
 
 =head2 make_patch_diff
 
 A convenience method to generate a patch/diff file from two selected files.
 
+uses Text::Diff
 
 =head2 make_patch_svn
 
@@ -636,18 +631,19 @@ NB only works if you have C<SVN::Class> installed.
 A convenience method to generate a patch/diff file from a selected file and svn if applicable,
 ie file has been checked out.
 
-
 =head2 file2_list_type
 
 composed method
-
 
 =head2 filename_url
 
 composed method
 
+=head2 set_selection_file1
 
-=head2 set_selection
+composed method
+
+=head2 set_selection_file2
 
 composed method
 
