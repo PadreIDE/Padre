@@ -10,20 +10,30 @@ our @ISA     = 'Wx::PlPopupTransientWindow';
 
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new(@_);
+	my $self  = $class->SUPER::new(@_);
 
-	my $panel = Wx::Panel->new( $self, -1 );
-	$panel->SetBackgroundColour(Wx::WHITE);
-	$self->SetBackgroundColour(Wx::WHITE);
-	$self->{st} =  Wx::TextCtrl->new(
-		$panel, -1,
-		'',
-		, [ -1, -1 ], [ -1, -1 ]
+	#$self->SetBackgroundColour(Wx::WHITE);
+	my $panel = Wx::Panel->new($self);
+	
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$self->{prev_diff} = Wx::Button->new(
+		$panel, -1, Wx::gettext('&Previous Difference'),
 	);
-	my $sz = $self->{st}->GetBestSize;
+	$self->{next_diff} = Wx::Button->new(
+		$panel, -1, Wx::gettext('&Next Difference'),
+	);
+	$button_sizer->Add( $self->{prev_diff}, 1, Wx::ALL|Wx::EXPAND, 5 );
+	$button_sizer->Add( $self->{next_diff}, 1, Wx::ALL|Wx::EXPAND, 5 );
 
-	#$self->SetSize( ( $sz->GetWidth + 20, $sz->GetHeight + 20 ) );
-	$self->SetSize( $panel->GetSize );
+	$self->{text_ctrl} = Wx::TextCtrl->new($panel, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+            Wx::wxTE_MULTILINE);
+
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$vsizer->Add( $button_sizer, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{text_ctrl},   1, Wx::ALL | Wx::EXPAND, 3 );
+
+	$panel->SetSizer($vsizer);
+	$panel->Fit;	$self->Fit;
 
 	return $self;
 }
@@ -33,7 +43,7 @@ sub show {
 	my $self    = shift;
 	my $message = shift;
 
-	$self->{st}->SetValue($message);	$self->Show(1);
+	$self->{text_ctrl}->SetValue($message); $self->Show(1);
 }
 
 sub ProcessLeftDown {
