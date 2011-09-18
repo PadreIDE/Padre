@@ -59,8 +59,8 @@ sub task_finish {
 
 	my @diffs = @{$data};
 	$self->{diffs} = {};
-	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_ERROR() );
-	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_WARNING() );
+	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_DIFF_DELETED() );
+	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_DIFF_ADDED() );
 
 	for my $diff_chunk (@diffs) {
 		my $marker_line   = undef;

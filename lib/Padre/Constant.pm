@@ -64,17 +64,19 @@ use constant {
 # Syntax Highlighter Colours.
 # NOTE: It's not clear why these need "PADRE_" in the name, but they do.
 use constant {
-	PADRE_BLACK    => 0,
-	PADRE_BLUE     => 1,
-	PADRE_RED      => 2,
-	PADRE_GREEN    => 3,
-	PADRE_MAGENTA  => 4,
-	PADRE_ORANGE   => 5,
-	PADRE_DIM_GRAY => 6,
-	PADRE_CRIMSON  => 7,
-	PADRE_BROWN    => 8,
-	PADRE_WARNING  => 126,
-	PADRE_ERROR    => 127,
+	PADRE_BLACK        => 0,
+	PADRE_BLUE         => 1,
+	PADRE_RED          => 2,
+	PADRE_GREEN        => 3,
+	PADRE_MAGENTA      => 4,
+	PADRE_ORANGE       => 5,
+	PADRE_DIM_GRAY     => 6,
+	PADRE_CRIMSON      => 7,
+	PADRE_BROWN        => 8,
+	PADRE_DIFF_DELETED => 124,
+	PADRE_DIFF_ADDED   => 125,
+	PADRE_WARNING      => 126,
+	PADRE_ERROR        => 127,
 };
 
 # Version Control System (VCS) constants
