@@ -29,6 +29,8 @@ sub new {
 	my $self = bless {@_}, $class;
 	$self->{main} = $main;
 
+	$self->{diff_text} = {};
+
 	return $self;
 }
 
@@ -201,9 +203,33 @@ sub refresh {
 
 # Selects the next difference in the editor
 sub select_next_difference {
-	my $self = shift;
+	my $self    = shift;
+	my $current = $self->{main}->current or return;
+	my $editor  = $current->editor or return;
 
-	# TODO  implement select_next_difference
+	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $line_to_select = undef;
+	for my $line ( sort keys %{ $self->{diff_text} } ) {
+		unless ($line_to_select) {
+			$line_to_select = $line;
+		}
+		if ( $line > $current_line ) {
+			$line_to_select = $line;
+			last;
+		}
+	}
+	$self->_select_line_in_editor( $editor, $line_to_select ) if $line_to_select;
+}
+
+# Select and focus on the line within the editor provided
+sub _select_line_in_editor {
+	my $self   = shift;
+	my $editor = shift;
+	my $line   = shift;
+
+	$editor->EnsureVisible($line);
+	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+	$editor->SetFocus;
 }
 
 1;
