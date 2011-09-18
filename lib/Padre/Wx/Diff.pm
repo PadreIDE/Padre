@@ -211,8 +211,10 @@ sub select_next_difference {
 			last;
 		}
 	}
-	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
-	$self->show_diff_annotation( $line_to_select, $editor );
+	if ($line_to_select) {
+		Padre::Util::select_line_in_editor( $line_to_select, $editor );
+		$self->show_diff_annotation( $line_to_select, $editor );
+	}
 }
 
 # Shows the difference annotation for the provided line in the editor provided
