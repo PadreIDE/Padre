@@ -6,6 +6,8 @@ use warnings;
 use Params::Util    ();
 use Padre::Task     ();
 use Padre::Util     ();
+use File::Basename ();
+use File::Spec      ();
 use Algorithm::Diff ();
 use Padre::Logger;
 
@@ -39,9 +41,6 @@ sub new {
 	# Obtain document text
 	$self->{text} = $document->text_get;
 
-	# Obtain the is saved flag
-	$self->{is_saved} = $document->is_saved;
-
 	return $self;
 }
 
@@ -60,11 +59,14 @@ sub run {
 	my $text     = delete $self->{text};
 	my $vcs      = delete $self->{vcs} if ( $self->{vcs} );
 	my $filename = delete $self->{filename};
-	my $is_saved = delete $self->{is_saved};
 
-	# Calculate differences between VCS and current or locally saved and current
-	#$self->{data} = ($vcs and $is_saved) ? $self->_find_vcs_diff($vcs, $filename) : $self->_find_local_diff($text, $filename);
-	$self->{data} = $self->_find_local_diff( $text, $filename );
+	# Compare between VCS and local buffer document
+	my $data = $self->_find_vcs_diff_fast( $vcs, $filename, $text );
+	unless($data) {
+		# Compare between saved and current buffer document
+		$data = $self->_find_local_diff( $text, $filename );
+	}
+	$self->{data} = $data;
 
 	return 1;
 }
@@ -84,9 +86,8 @@ sub _find_vcs_diff {
 			$cmd = qq{$vcs_exe diff $filename};
 		}
 		my $output = `$cmd`;
-		print "$cmd => $output\n";
 	} else {
-		print "vcs exe is not found! Let us revert to local diff\n";
+		# TODO handle this!
 	}
 }
 
@@ -126,6 +127,39 @@ sub _find_local_diff {
 		my @seq2 = split /^/, $text;
 		my @diffs = Algorithm::Diff::diff( \@seq1, \@seq2 );
 		$data = \@diffs;
+	}
+
+	return $data;
+}
+
+sub _find_vcs_diff_fast {
+	my $self     = shift;
+	my $vcs      = shift;
+	my $filename = shift;
+	my $text     = shift;
+	
+	my $data = undef;
+	if($vcs eq Padre::Constant::SUBVERSION) {
+		# Generate a fast diff between the editor buffer and the original 
+		# file in the .svn folder
+		# Contributed by submersible_toaster
+		my $local_cheat = File::Spec->catfile(
+			File::Basename::dirname($filename),
+			'.svn', 'text-base',
+			File::Basename::basename($filename) . '.svn-base'
+		);
+		my $origin      = Padre::Util::slurp $local_cheat;
+		if($origin) {
+			my @origin_seq  = split /^/, $$origin;
+			my @unsaved_seq = split /^/, $text;
+			my @diff        = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
+			$data = \@diff;
+		} else {
+			TRACE("Failed to find $local_cheat\n") if DEBUG;
+		}
+	} else {
+		#TODO implement the rest of the VCS like git, mercurial
+		TRACE("Unhandled $vcs") if DEBUG;
 	}
 
 	return $data;
