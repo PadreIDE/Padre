@@ -583,13 +583,14 @@ sub select_next_problem {
 		}
 		$line--;
 
-		unless( $line_to_select ) {
+		unless ($line_to_select) {
 
 			# Record the line number of the first problem :)
 			$line_to_select = $line;
 		}
 
 		if ( $line > $current_line ) {
+
 			# Record the line number as the next line beyond the current one
 			$line_to_select = $line;
 			last;
@@ -600,7 +601,7 @@ sub select_next_problem {
 	}
 
 	# Select the line in the editor
-	Padre::Util::select_line_in_editor($line_to_select, $editor) if $line_to_select;
+	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
 }
 
 
