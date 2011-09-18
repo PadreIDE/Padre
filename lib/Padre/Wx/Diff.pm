@@ -56,6 +56,7 @@ sub task_finish {
 	$self->clear;
 
 	my @diffs = @{$data};
+	$self->{diff_text} = {};
 	for my $diff_chunk (@diffs) {
 		my $marker_line   = undef;
 		my $lines_deleted = 0;
@@ -67,6 +68,7 @@ sub task_finish {
 			unless ($marker_line) {
 				$marker_line = $line;
 			}
+			$self->{diff_text}->{$marker_line} .= $type . $text;
 
 			if ( $type eq '-' ) {
 				$lines_deleted++;
@@ -83,6 +85,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines changed'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line changed'),  $lines_deleted );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkAddition );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
 		} elsif ( $lines_added > 0 ) {
 
@@ -91,7 +95,10 @@ sub task_finish {
 				$lines_added > 1
 				? sprintf( Wx::gettext('%d lines added'), $lines_added )
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkChange );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $_, Padre::Wx::MarkAddition ) for $marker_line .. $marker_line + $lines_added - 1;
+			$self->{diff_text}->{$_} = $self->{diff_text}->{$marker_line} for $marker_line .. $marker_line + $lines_added - 1;
 		} elsif ( $lines_deleted > 0 ) {
 
 			# Line(s) deleted
@@ -99,6 +106,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines deleted'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line deleted'),  $lines_deleted );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkAddition );
+			$editor->MarkerDelete( $marker_line, Padre::Wx::MarkChange );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
 
 		} else {
@@ -109,6 +118,19 @@ sub task_finish {
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
+
+	$editor->SetMarginSensitive(1, 1);
+	my $diff_text = $self->{diff_text};
+	Wx::Event::EVT_STC_MARGINCLICK($editor, $editor, sub {
+		my $self = shift;
+		my $event = shift;
+		
+		if($event->GetMargin == 1) {
+			my $position = $event->GetPosition;
+			my $line = $editor->LineFromPosition($position);
+			$self->CallTipShow($position, $diff_text->{$line}) if $diff_text->{$line};
+		}
+	});
 
 	return 1;
 }
