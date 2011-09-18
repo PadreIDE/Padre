@@ -126,6 +126,12 @@ sub task_finish {
 			$description = 'no change!';
 		}
 
+		$description .= "\n";
+		$self->{diff_text}->{$marker_line}->{message} = $description .
+			$self->{diff_text}->{$marker_line}->{message};
+		$self->{diff_text}->{$marker_line}->{style} = ("\001" x length($description))  .
+			$self->{diff_text}->{$marker_line}->{style};
+
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
 
