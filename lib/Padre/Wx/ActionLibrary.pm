@@ -784,6 +784,19 @@ sub init {
 		},
 	);
 
+	if($main->config->feature_saved_document_diffs) {
+		Padre::Wx::Action->new(
+			name        => 'edit.next_difference',
+			need_editor => 1,
+			label       => _T('&Next Difference'),
+			comment     => _T('Jump to the code that has been changed'),
+			shortcut    => 'Ctrl-,',
+			menu_event  => sub {
+				$_[0]->{diff}->select_next_difference if $_[0]->{diff};
+			},
+		);
+	}
+
 	if (Padre::Feature::QUICK_FIX) {
 		Padre::Wx::Action->new(
 			name        => 'edit.quick_fix',

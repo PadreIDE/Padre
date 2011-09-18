@@ -6,7 +6,7 @@ use warnings;
 use Params::Util    ();
 use Padre::Task     ();
 use Padre::Util     ();
-use File::Basename ();
+use File::Basename  ();
 use File::Spec      ();
 use Algorithm::Diff ();
 use Padre::Logger;
@@ -62,7 +62,8 @@ sub run {
 
 	# Compare between VCS and local buffer document
 	my $data = $self->_find_vcs_diff_fast( $vcs, $filename, $text );
-	unless($data) {
+	unless ($data) {
+
 		# Compare between saved and current buffer document
 		$data = $self->_find_local_diff( $text, $filename );
 	}
@@ -87,6 +88,7 @@ sub _find_vcs_diff {
 		}
 		my $output = `$cmd`;
 	} else {
+
 		# TODO handle this!
 	}
 }
@@ -137,10 +139,11 @@ sub _find_vcs_diff_fast {
 	my $vcs      = shift;
 	my $filename = shift;
 	my $text     = shift;
-	
+
 	my $data = undef;
-	if($vcs eq Padre::Constant::SUBVERSION) {
-		# Generate a fast diff between the editor buffer and the original 
+	if ( $vcs eq Padre::Constant::SUBVERSION ) {
+
+		# Generate a fast diff between the editor buffer and the original
 		# file in the .svn folder
 		# Contributed by submersible_toaster
 		my $local_cheat = File::Spec->catfile(
@@ -148,16 +151,17 @@ sub _find_vcs_diff_fast {
 			'.svn', 'text-base',
 			File::Basename::basename($filename) . '.svn-base'
 		);
-		my $origin      = Padre::Util::slurp $local_cheat;
-		if($origin) {
+		my $origin = Padre::Util::slurp $local_cheat;
+		if ($origin) {
 			my @origin_seq  = split /^/, $$origin;
 			my @unsaved_seq = split /^/, $text;
-			my @diff        = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
+			my @diff = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
 			$data = \@diff;
 		} else {
 			TRACE("Failed to find $local_cheat\n") if DEBUG;
 		}
 	} else {
+
 		#TODO implement the rest of the VCS like git, mercurial
 		TRACE("Unhandled $vcs") if DEBUG;
 	}

@@ -140,6 +140,10 @@ sub new {
 		'edit.next_problem',
 	);
 
+	$self->{next_difference} = $self->add_menu_action(
+		'edit.next_difference',
+	) if $main->config->feature_saved_document_diffs;
+
 	if (Padre::Feature::QUICK_FIX) {
 		$self->{quick_fix} = $self->add_menu_action(
 			'edit.quick_fix',

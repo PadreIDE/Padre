@@ -127,10 +127,9 @@ sub task_finish {
 		}
 
 		$description .= "\n";
-		$self->{diff_text}->{$marker_line}->{message} = $description .
-			$self->{diff_text}->{$marker_line}->{message};
-		$self->{diff_text}->{$marker_line}->{style} = ("\001" x length($description))  .
-			$self->{diff_text}->{$marker_line}->{style};
+		$self->{diff_text}->{$marker_line}->{message} = $description . $self->{diff_text}->{$marker_line}->{message};
+		$self->{diff_text}->{$marker_line}->{style} =
+			( "\001" x length($description) ) . $self->{diff_text}->{$marker_line}->{style};
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
@@ -163,9 +162,9 @@ sub task_finish {
 # General Methods
 
 sub clear {
-	my $self   = shift;
+	my $self    = shift;
 	my $current = $self->{main}->current or return;
-	my $editor = $current->editor or return;
+	my $editor  = $current->editor or return;
 
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
@@ -198,6 +197,13 @@ sub refresh {
 		task     => 'Padre::Task::Diff',
 		document => $document,
 	);
+}
+
+# Selects the next difference in the editor
+sub select_next_difference {
+	my $self = shift;
+
+	# TODO  implement select_next_difference
 }
 
 1;
