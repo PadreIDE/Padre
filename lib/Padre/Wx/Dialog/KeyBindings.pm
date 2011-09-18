@@ -118,14 +118,14 @@ sub _create_controls {
 		$self, -1, Wx::gettext('&Set'),
 	);
 	$self->{button_set}->Enable(1);
-	$self->{button_set}->SetTooltip( Wx::gettext('Sets the keyboard binding') );
+	$self->{button_set}->SetToolTip( Wx::gettext('Sets the keyboard binding') );
 
 	# Delete button
 	$self->{button_delete} = Wx::Button->new(
 		$self, -1, Wx::gettext('&Delete'),
 	);
 	$self->{button_delete}->Enable(1);
-	$self->{button_delete}->SetTooltip( Wx::gettext('Delete the keyboard binding') );
+	$self->{button_delete}->SetToolTip( Wx::gettext('Delete the keyboard binding') );
 
 	# Reset button
 	$self->{button_reset} = Wx::Button->new(
@@ -138,7 +138,7 @@ sub _create_controls {
 	$self->{button_close} = Wx::Button->new(
 		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
-	$self->{button_close}->SetTooltip( Wx::gettext('Close the key bindings dialog') );
+	$self->{button_close}->SetToolTip( Wx::gettext('Close the key bindings dialog') );
 
 	#
 	#----- Dialog Layout -------
