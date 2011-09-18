@@ -100,6 +100,7 @@ the even version for the release, even during development.
     - Plugin manager is now modal (BOWTIE, AZAWAWI)
     - Add Patch to editor menu and removed Diff Tools (BOWTIE)
     - Update Italian translation (SBLANDIN)
+    - Padre::Project vcs strings are constants now (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
