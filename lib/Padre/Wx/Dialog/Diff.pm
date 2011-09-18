@@ -22,15 +22,33 @@ sub new {
 	$self->{next_diff} = Wx::Button->new(
 		$panel, -1, Wx::gettext('&Next Difference'),
 	);
-	$button_sizer->Add( $self->{prev_diff}, 1, Wx::ALL|Wx::EXPAND, 5 );
-	$button_sizer->Add( $self->{next_diff}, 1, Wx::ALL|Wx::EXPAND, 5 );
+	$self->{revert} = Wx::Button->new(
+		$panel, -1, Wx::gettext('&Revert'),
+	);
+	$self->{close_button} = Wx::Button->new(
+		$panel, Wx::ID_CANCEL, Wx::gettext('&Close'),
+	);
 
-	$self->{text_ctrl} = Wx::TextCtrl->new($panel, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+	$button_sizer->Add( $self->{prev_diff}, 0, 0, 0 );
+	$button_sizer->Add( $self->{next_diff}, 0, 0, 0 );
+	$button_sizer->Add( $self->{revert}, 0, 0, 0);
+	$button_sizer->Add( $self->{close_button}, 0, Wx::ALIGN_RIGHT, 5 );
+
+	$self->{text_ctrl} = Wx::TextCtrl->new($panel, -1, '', Wx::wxDefaultPosition, [-1, 100],
             Wx::wxTE_MULTILINE);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $button_sizer, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$vsizer->Add( $self->{text_ctrl},   1, Wx::ALL | Wx::EXPAND, 3 );
+
+	# Close button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{close_button},
+		sub {
+			$_[0]->Hide;
+		}
+	);
 
 	$panel->SetSizer($vsizer);
 	$panel->Fit;	$self->Fit;
@@ -42,12 +60,13 @@ sub show {
 
 	my $self    = shift;
 	my $message = shift;
+	my $pt      = shift;
 
+	$self->Move($pt);
 	$self->{text_ctrl}->SetValue($message); $self->Show(1);
 }
 
-sub ProcessLeftDown {
-	my ( $self, $event ) = @_;
+sub ProcessLeftDown {	my ( $self, $event ) = @_;
 	print "Process Left $event\n";
 
 	#$event->Skip;

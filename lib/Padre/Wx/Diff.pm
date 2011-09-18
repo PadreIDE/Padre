@@ -144,7 +144,7 @@ sub task_finish {
 			my $event = shift;
 
 			if ( $event->GetMargin == 1 ) {
-				$myself->show_diff_annotation( $editor->LineFromPosition( $event->GetPosition ), $editor );
+				$myself->show_diff_box( $editor->LineFromPosition( $event->GetPosition ), $editor );
 			}
 		}
 	);
@@ -212,26 +212,24 @@ sub select_next_difference {
 	}
 	if ($line_to_select) {
 		Padre::Util::select_line_in_editor( $line_to_select, $editor );
-		$self->show_diff_annotation( $line_to_select, $editor );
+		$self->show_diff_box( $line_to_select, $editor );
 	}
 }
 
-# Shows the difference annotation for the provided line in the editor provided
-sub show_diff_annotation {
+# Shows the difference dialog box for the provided line in the editor provided
+sub show_diff_box {
 	my $self   = shift;
 	my $line   = shift;
 	my $editor = shift;
 
 	my $diff = $self->{diffs}{$line} or return;
 
-	#require Padre::Wx::Dialog::Diff;
-	#my $dialog = Padre::Wx::Dialog::Diff->new($editor, Wx::wxBORDER_NONE);
-	#$dialog->show($diff->{message});
-
-	$editor->AnnotationClearAll;
-	$editor->AnnotationSetText( $line, $diff->{message} );
-	$editor->AnnotationSetStyles( $line, $diff->{style} );
-	$editor->AnnotationSetVisible(2); #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+	unless($self->{dialog}) {
+		require Padre::Wx::Dialog::Diff;
+		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
+	}
+	my $pt = $editor->PointFromPosition($editor->PositionFromLine($line+1));
+	$self->{dialog}->show($diff->{message}, $editor->ClientToScreenPoint($pt));
 }
 
 1;
