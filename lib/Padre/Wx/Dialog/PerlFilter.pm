@@ -19,9 +19,6 @@ our @ISA     = qw{
 };
 
 
-
-
-
 ######################################################################
 # Constructor
 
@@ -34,9 +31,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Perl Filter'),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::DEFAULT_FRAME_STYLE,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
 	# Set basic dialog properties
@@ -44,7 +41,7 @@ sub new {
 	$self->SetMinSize( [ 380, 500 ] );
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$self->{sizer} = $sizer;
 
 	# Create the controls
@@ -66,25 +63,45 @@ sub _create_controls {
 
 	# Dialog Controls, created in keyboard navigation order
 
+	# Filter type
+	$self->{filter_mode} = Wx::RadioBox->new(
+		$self, -1,
+		Wx::gettext('Input/output:'),
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		[   Wx::gettext('$_ for both'),
+
+			# Wx::gettext('STDIN/STDOUT'),
+			Wx::gettext('wrap in map { }'),
+			Wx::gettext('wrap in grep { }'),
+		]
+	);
+	$self->{filter_mode_values} = { # Set position of each filter mode
+		default => 0,
+		std     => -1,
+		'map'   => 1,
+		'grep'  => 2,
+	};
+
 	# Perl source
 	my $source_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Perl filter source:') );
 	$self->{source} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::RE_MULTILINE | Wx::WANTS_CHARS
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS
 	);
 
 	# Input text
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('Or&iginal text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Output text:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
-		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Run the filter
@@ -99,33 +116,35 @@ sub _create_controls {
 
 	# Close button
 	$self->{close_button} = Wx::Button->new(
-		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{run_button},    0, Wx::ALL, 1 );
-	$buttons->Add( $self->{insert_button}, 0, Wx::ALL, 1 );
-	$buttons->Add( $self->{close_button},  0, Wx::ALL, 1 );
+	$buttons->Add( $self->{run_button},    0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Dialog Layout
 
 	# Vertical layout of the left hand side
-	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
+	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	$left->Add( $source_label,   0, Wx::ALL | Wx::EXPAND, 1 );
-	$left->Add( $self->{source}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{filter_mode}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
-	$left->Add( $original_label,        0, Wx::ALL | Wx::EXPAND, 1 );
-	$left->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$left->Add( $result_label,          0, Wx::ALL | Wx::EXPAND, 1 );
-	$left->Add( $self->{result_text},   1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $source_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{source}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+
+	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
-	$left->Add( $buttons, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Main sizer
-	$sizer->Add( $left, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 }
 
 sub _bind_events {
@@ -135,7 +154,7 @@ sub _bind_events {
 	# $self,
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 	# return;
 	# }
 	# );
@@ -149,7 +168,7 @@ sub _bind_events {
 	# $self->{source},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 	# return;
 	# }
 	# );
@@ -158,7 +177,7 @@ sub _bind_events {
 	# $self->{original_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 	# return;
 	# }
 	# );
@@ -167,7 +186,7 @@ sub _bind_events {
 	# $self->{result_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
 	# return;
 	# }
 	# );
@@ -268,17 +287,40 @@ sub run {
 
 	my $source        = $self->{source}->GetValue;
 	my $original_text = $self->{original_text}->GetValue;
+	my $filter_mode   = $self->{filter_mode}->GetSelection;
+	my $document      = $self->current->document;
+	my $nl            = defined($document) ? $document->newline : "\n"; # Use (bad) default
+	my $result_text;
 
 	$self->{result_text}->Clear;
 
-	$_ = $original_text;
-	my $result_text = eval $source;
+	if ( $filter_mode == $self->{filter_mode_values}->{default} ) {
+		$_           = $original_text;
+		$result_text = eval $source;
+	} elsif ( $filter_mode == $self->{filter_mode_values}->{std} ) {
+
+		# TODO: use STDIN/STDOUT
+		#		$_ = $original_text;
+		#		$result_text = eval $source;
+	} elsif ( $filter_mode == $self->{filter_mode_values}->{map} ) {
+		$result_text = join( $nl, map { eval $source; } split( /$nl/, $original_text ) );
+	} elsif ( $filter_mode == $self->{filter_mode_values}->{grep} ) {
+		$result_text = join( $nl, grep { eval $source; } split( /$nl/, $original_text ) );
+	}
+
+	# Common eval error handling
 	if ($@) {
+
+		# TODO: Set text color red
 		$result_text = Wx::gettext('Error') . ":\n" . $@;
 	}
 
 	if ( defined $result_text ) {
 		$self->{result_text}->SetValue($result_text);
+	} else {
+
+		# TODO: Set text color red
+		$self->{result_text}->SetValue('undef');
 	}
 
 	return;
