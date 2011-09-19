@@ -18,8 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 49 );
-
+plan( tests => 52 );
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
@@ -73,6 +72,13 @@ foreach my $name (@styles) {
 
 use_ok('Padre::Wx::Style');
 
+# Search for the list of styles
+my $styles = Padre::Wx::Style->search;
+is( ref($styles), 'HASH', 'Found style hash' );
+ok( $styles->{default}, 'The default style is defined' );
+ok( -f $styles->{default}, 'The default style exists' );
+
+# Load the default style
 my $style2 = Padre::Wx::Style->find('default');
 isa_ok( $style2, 'Padre::Wx::Style' );
 ok( scalar( @{ $style2->mime } ), 'Found a list of methods' );

@@ -6,11 +6,21 @@ use warnings;
 use IO::File             ();
 use Params::Util         ();
 use Padre::Constant      ();
+use Padre::Util          ();
 use Padre::Wx            ();
 use Padre::Locale        ();
 use Padre::Config::Style ();
 
 our $VERSION = '0.91';
+
+# Locate the directories containing styles
+use constant {
+	CORE_DIRECTORY => Padre::Util::sharedir('styles'),
+	USER_DIRECTORY => File::Spec->catdir(
+		Padre::Constant::CONFIG_DIR,
+		'styles',
+	),
+};
 
 
 
@@ -45,7 +55,7 @@ my %PARAM = (
 # The fallback of last resort is automatically to text/plain
 my %FALLBACK = (
 	'application/x-psgi'     => 'application/x-perl',
-	'application/x-php'      => 'application/perl',      # Temporary solution
+	'application/x-php'      => 'application/perl', # Temporary solution
 	'application/json'       => 'application/javascript',
 	'application/javascript' => 'text/x-c',
 	'text/x-java-source'     => 'text/x-c',
@@ -59,6 +69,33 @@ my %FALLBACK = (
 
 ######################################################################
 # Style Repository
+
+sub search {
+	my $class  = shift;
+	my %styles = ();
+
+	# Scan style directories
+	foreach my $directory ( USER_DIRECTORY, CORE_DIRECTORY ) {
+		next unless -d $directory;
+
+		# Search the directory
+		local *STYLEDIR;
+		unless ( opendir( STYLEDIR, $directory ) ) {
+			die "Failed to read '$directory'";
+		}
+		foreach my $file ( readdir STYLEDIR ) {
+			next unless $file =~ s/\.txt\z//;
+			next unless Params::Util::_IDENTIFIER($file);
+			next if $styles{$file};
+			$styles{$file} = File::Spec->catfile(
+				$directory, "$file.txt"
+			);
+		}
+		closedir STYLEDIR;
+	}
+
+	return \%styles;
+}
 
 sub find {
 	my $class = shift;
