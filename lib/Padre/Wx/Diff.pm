@@ -264,7 +264,7 @@ sub show_diff_box {
 
 	unless ( $self->{dialog} ) {
 		require Padre::Wx::Dialog::Diff;
-		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
+		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor, -1, Wx::DefaultPosition, Wx::DefaultSize, Wx::wxBORDER_SIMPLE);
 	}
 	$self->{dialog}->show(
 		$editor, $line, $diff,
