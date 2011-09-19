@@ -144,16 +144,16 @@ sub show {
 
 	my $type = $diff->{type};
 	my $color;
-	if( $type eq 'A' ) {
+	if ( $type eq 'A' ) {
 		$color = Padre::Wx::Editor::DARK_GREEN();
-	} elsif( $type eq 'D' ) {
+	} elsif ( $type eq 'D' ) {
 		$color = Padre::Wx::Editor::LIGHT_RED();
-	} elsif( $type eq 'C') {
+	} elsif ( $type eq 'C' ) {
 		$color = Padre::Wx::Editor::LIGHT_BLUE();
 	} else {
 		$color = Wx::Colour->new("black");
 	}
-	$self->{text_ctrl}->SetBackgroundColour( $color );
+	$self->{text_ctrl}->SetBackgroundColour($color);
 
 	$self->{status_label}->SetValue( $diff->{message} );
 	if ( $diff->{old_text} ) {
@@ -162,7 +162,7 @@ sub show {
 	} else {
 		$self->{text_ctrl}->Show(0);
 	}
-	
+
 
 	# Hide when the editor loses focus
 	my $popup = $self;
@@ -176,8 +176,9 @@ sub show {
 	Wx::Event::EVT_KEY_UP(
 		$editor,
 		sub {
-			my ($self, $event) = @_;
-			if($event->GetKeyCode == Wx::WXK_ESCAPE) {
+			my ( $self, $event ) = @_;
+			if ( $event->GetKeyCode == Wx::WXK_ESCAPE ) {
+
 				# Escape hides the diff box
 				$popup->Hide;
 			}

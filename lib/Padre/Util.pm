@@ -556,7 +556,7 @@ sub select_line_in_editor {
 
 # execute command in the directory provided
 sub run_in_directory {
-	my ($cmd, $directory) = @_;
+	my ( $cmd, $directory ) = @_;
 
 	# Make sure we execute from the correct directory
 	if (Padre::Constant::WIN32) {
@@ -568,7 +568,7 @@ sub run_in_directory {
 		);
 	} else {
 		require File::pushd;
-		my $pushd = File::pushd::pushd( $directory );
+		my $pushd = File::pushd::pushd($directory);
 		system $cmd;
 	}
 }

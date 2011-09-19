@@ -3,11 +3,11 @@ package Padre::Wx::Diff;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util      ();
-use Params::Util      ();
-use Padre::Role::Task ();
-use Padre::Wx         ();
-use Padre::Util       ();
+use Scalar::Util            ();
+use Params::Util            ();
+use Padre::Role::Task       ();
+use Padre::Wx               ();
+use Padre::Util             ();
 use Padre::Wx::Dialog::Diff ();
 use Padre::Logger;
 
@@ -218,7 +218,7 @@ sub _select_next_prev_difference {
 	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $line_to_select = undef;
 	for my $line (@lines) {
-		unless (defined $line_to_select) {
+		unless ( defined $line_to_select ) {
 			$line_to_select = $line;
 		}
 		if ($select_next_diff) {
@@ -237,7 +237,7 @@ sub _select_next_prev_difference {
 			}
 		}
 	}
-	if (defined $line_to_select) {
+	if ( defined $line_to_select ) {
 
 		# Select the line in the editor and show the diff box
 		Padre::Util::select_line_in_editor( $line_to_select, $editor );
@@ -263,8 +263,11 @@ sub show_diff_box {
 
 	my $diff = $self->{diffs}{$line} or return;
 
-	$self->{dialog}->Destroy if defined($self->{dialog});
-	$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor, -1, Wx::DefaultPosition, Wx::DefaultSize, Wx::wxBORDER_SIMPLE);
+	if ( defined $self->{dialog} ) {
+		$self->{dialog}->Hide;
+		$self->{dialog}->Destroy;
+	}
+	$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
 	$self->{dialog}->show(
 		$editor, $line, $diff,
 		$editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) )
