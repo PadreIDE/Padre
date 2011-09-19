@@ -88,7 +88,8 @@ sub search {
 			next unless Params::Util::_IDENTIFIER($file);
 			next if $styles{$file};
 			$styles{$file} = File::Spec->catfile(
-				$directory, "$file.txt"
+				$directory,
+				"$file.txt"
 			);
 		}
 		closedir STYLEDIR;
@@ -97,13 +98,27 @@ sub search {
 	return \%styles;
 }
 
+# Get the file name for a named style
+sub file {
+	my $class = shift;
+	my $name  = shift;
+	foreach my $directory ( USER_DIRECTORY, CORE_DIRECTORY ) {
+		my $file = File::Spec->catfile(
+			$directory,
+			"$name.txt",
+		);
+		return $file if -f $file;
+	}
+	return undef;
+}
+
 sub find {
 	my $class = shift;
 	my $name  = shift;
-	my $file  = File::Spec->catfile(
-		$Padre::Config::Style::CORE_DIRECTORY,
-		"$name.txt",
-	);
+	my $file  = $class->file($name);
+	unless ( $file ) {
+		die "The style '$name' does not exist";
+	}
 	return $class->load($file);
 }
 

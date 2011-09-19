@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 52 );
+plan( tests => 54 );
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
@@ -77,6 +77,11 @@ my $styles = Padre::Wx::Style->search;
 is( ref($styles), 'HASH', 'Found style hash' );
 ok( $styles->{default}, 'The default style is defined' );
 ok( -f $styles->{default}, 'The default style exists' );
+
+# Find the file by name
+my $file = Padre::Wx::Style->file('default');
+ok( $file, 'Found file by name' );
+ok( -f $file, 'File by name exists' );
 
 # Load the default style
 my $style2 = Padre::Wx::Style->find('default');
