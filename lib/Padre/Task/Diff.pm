@@ -79,9 +79,7 @@ sub run {
 
 # Find local differences between current unsaved document and saved document
 sub _find_local_diff {
-	my $self     = shift;
-	my $text     = shift;
-	my $filename = shift;
+	my ($self, $text, $filename)     = @_;
 
 	my $content = $filename ? Padre::Util::slurp($filename) : undef;
 	my $data = [];
@@ -94,11 +92,7 @@ sub _find_local_diff {
 
 # Find differences between VCS versioned document and current document
 sub _find_vcs_diff {
-	my $self     = shift;
-	my $vcs      = shift;
-	my $filename = shift;
-	my $text     = shift;
-	my $project  = shift;
+	my ($self, $vcs, $filename, $text, $project)     = @_;
 
 	my $data = undef;
 	if ( $vcs eq Padre::Constant::SUBVERSION ) {
@@ -128,18 +122,15 @@ sub _find_vcs_diff {
 	return $data;
 }
 
+# Find differences between git versioned document and current document
 sub _find_git_diff {
-	my $self     = shift;
-	my $filename = shift;
-	my $text     = shift;
+	my ($self, $filename, $text)     = @_;
 
-	my $data;
-
-	# Open a temporary file for standard output redirection
+	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
 	$out->close;
 
-	# Open a temporary file for standard error redirection
+	# Create a temporary file for standard error redirection
 	my $err = File::Temp->new( UNLINK => 1 );
 	$err->close;
 
@@ -149,44 +140,29 @@ sub _find_git_diff {
 	# Handle spaces in git executable path under win32
 	$git = qq{"$git"} if Padre::Constant::WIN32;
 
-	my $basename = File::Basename::basename($filename);
-	my $dirname  = File::Basename::dirname($filename);
-
+	# 'git --no-pager show' command
 	my @cmd = (
 		$git,
 		'--no-pager',
 		'show',
-		"HEAD:$basename",
+		"HEAD:" . File::Basename::basename($filename),
 		'1>' . $out->filename,
 		'2>' . $err->filename,
 	);
 
 	# We need shell redirection (list context does not give that)
-	my $cmd = join ' ', @cmd;
-
-	# Make sure we execute from the correct directory
-	if (Padre::Constant::WIN32) {
-		require Padre::Util::Win32;
-		Padre::Util::Win32::ExecuteProcessAndWait(
-			directory  => $self->{project},
-			file       => 'cmd.exe',
-			parameters => "/C $cmd",
-		);
-	} else {
-		require File::pushd;
-		my $pushd = File::pushd::pushd( $self->{project} );
-		system $cmd;
-	}
+	# Run command in directory
+	Padre::Util::run_in_directory(join(' ', @cmd), $self->{project});
 
 	# Slurp git command standard input and output
 	my $stdout = Padre::Util::slurp $out->filename;
 	my $stderr = Padre::Util::slurp $err->filename;
 
 	if ( defined($stderr) and ( $$stderr eq '' ) and defined($stdout) ) {
-		$data = $self->_find_diffs( $$stdout, $text );
+		return $self->_find_diffs( $$stdout, $text );
 	}
 
-	return $data;
+	return;
 }
 
 # Find differences between original text and unsaved text

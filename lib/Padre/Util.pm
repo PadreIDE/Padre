@@ -553,6 +553,26 @@ sub select_line_in_editor {
 	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
 }
+
+# execute command in the directory provided
+sub run_in_directory {
+	my ($cmd, $directory) = @_;
+
+	# Make sure we execute from the correct directory
+	if (Padre::Constant::WIN32) {
+		require Padre::Util::Win32;
+		Padre::Util::Win32::ExecuteProcessAndWait(
+			directory  => $directory,
+			file       => 'cmd.exe',
+			parameters => "/C $cmd",
+		);
+	} else {
+		require File::pushd;
+		my $pushd = File::pushd::pushd( $directory );
+		system $cmd;
+	}
+}
+
 1;
 
 __END__
