@@ -169,6 +169,8 @@ sub clear {
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkDeletion);
+
+	$self->{dialog}->Hide if $self->{dialog};
 }
 
 sub refresh {
