@@ -115,19 +115,14 @@ sub on_revert_button {
 	my $editor = $self->{editor};
 	my $line   = $self->{line};
 	my $diff   = $self->{diff};
-	my $new_text   = $diff->{new_text};
 	my $old_text   = $diff->{old_text};
+	my $new_text   = $diff->{new_text};
 
-	if ($old_text) {
-		my $position = $editor->PositionFromLine($line);
-		$editor->InsertText( $position, $old_text );
-	} else {
-		my $start = $editor->PositionFromLine($line);
-		my $end   = $editor->GetLineEndPosition( $line + $diff->{lines_added} ) + 1;
-		$editor->SetTargetStart($start);
-		$editor->SetTargetEnd($start + length($new_text));
-		$editor->ReplaceTarget('');
-	}
+	my $start = $editor->PositionFromLine($line);
+	my $end   = $editor->GetLineEndPosition( $line + $diff->{lines_added} ) + 1;
+	$editor->SetTargetStart($start);
+	$editor->SetTargetEnd($start + length($new_text));
+	$editor->ReplaceTarget($old_text ? $old_text : '');
 }
 
 sub show {
