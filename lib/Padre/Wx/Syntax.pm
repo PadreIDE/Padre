@@ -201,7 +201,7 @@ sub on_tree_item_activated {
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {
-			$self->select_problem( $line - 1 );
+			$self->select_next_problem( $line - 1 );
 			Wx::Event::EVT_IDLE( $self, undef );
 		},
 	);
