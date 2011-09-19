@@ -177,7 +177,7 @@ sub show {
 		$editor,
 		sub {
 			my ($self, $event) = @_;
-			if($event->GetKeyCode == 27) {
+			if($event->GetKeyCode == Wx::WXK_ESCAPE) {
 				# Escape hides the diff box
 				$popup->Hide;
 			}
