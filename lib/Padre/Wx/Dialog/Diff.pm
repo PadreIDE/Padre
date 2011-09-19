@@ -30,21 +30,35 @@ sub new {
 		$panel, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{prev_diff_button}, 0, 0,               0 );
-	$button_sizer->Add( $self->{next_diff_button}, 0, 0,               0 );
-	$button_sizer->Add( $self->{revert_button},    0, 0,               0 );
-	$button_sizer->AddSpacer(10);
-	$button_sizer->Add( $self->{close_button},     0, 0, 0 );
+	$self->{status_label} = Wx::TextCtrl->new(
+		$panel,
+		-1,
+		'',
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_READONLY,
+	);
 
-	$self->{text_ctrl} = Wx::TextCtrl->new(
-		$panel, -1, '', Wx::wxDefaultPosition, [ -1, 100 ],
-		Wx::wxTE_MULTILINE
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{prev_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{next_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{revert_button},    0, 0, 0 );
+	$button_sizer->AddSpacer(10);
+	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
+
+	$self->{original_text} = Wx::TextCtrl->new(
+		$panel,
+		-1,
+		'',
+		Wx::DefaultPosition,
+		[ -1, 100 ],
+		Wx::TE_READONLY | Wx::wxTE_MULTILINE,
 	);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $button_sizer,      0, Wx::ALL | Wx::EXPAND, 3 );
-	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$vsizer->Add( $button_sizer,          0, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $self->{status_label},  0, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Close button
 	Wx::Event::EVT_BUTTON(
@@ -86,19 +100,34 @@ sub new {
 	);
 
 	$panel->SetSizer($vsizer);
-	$panel->Fit; $self->Fit;
+	$panel->Fit;
+	$self->Fit;
 
 	return $self;
 }
 
 sub show {
 
-	my $self    = shift;
-	my $message = shift;
-	my $pt      = shift;
+	my $self          = shift;
+	my $message       = shift;
+	my $original_text = shift;
+	my $pt            = shift;
 
 	$self->Move($pt);
-	$self->{text_ctrl}->SetValue($message); $self->Show(1);
+	$self->{status_label}->SetValue($message);
+	if ($original_text) {
+		$self->{original_text}->Show(1);
+		$self->{original_text}->SetValue($original_text);
+	} else {
+		$self->{original_text}->Show(0);
+	}
+
+	my $panel = $self->{original_text}->GetParent;
+	$panel->Layout;
+	$panel->Fit;
+	$self->Fit;
+
+	$self->Show(1);
 }
 
 sub ProcessLeftDown {

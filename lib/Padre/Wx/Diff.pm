@@ -59,9 +59,6 @@ sub task_finish {
 
 	my @diffs = @{$data};
 	$self->{diffs} = {};
-	my $header_style   = sprintf( '%c', Padre::Constant::PADRE_DIFF_HEADER );
-	my $deleted_style  = sprintf( '%c', Padre::Constant::PADRE_DIFF_DELETED );
-	my $addition_style = sprintf( '%c', Padre::Constant::PADRE_DIFF_ADDED );
 
 	for my $diff_chunk (@diffs) {
 		my $marker_line   = undef;
@@ -75,20 +72,19 @@ sub task_finish {
 				$marker_line = $line;
 
 				$self->{diffs}{$marker_line} = {
-					message => '',
-					style   => '',
+					message       => undef,
+					type          => undef,
+					original_text => undef,
 				};
 			}
 
 			my $diff = $self->{diffs}{$marker_line};
-			$diff->{message} .= $text;
 
-			if ( ( $type eq '-' ) ) {
+			if ( $type eq '-' ) {
 				$lines_deleted++;
-				$diff->{style} .= ( $deleted_style x length($text) );
+				$diff->{original_text} .= $text;
 			} else {
 				$lines_added++;
-				$diff->{style} .= ( $addition_style x length($text) );
 			}
 		}
 
@@ -102,6 +98,7 @@ sub task_finish {
 				: sprintf( Wx::gettext('%d line changed'),  $lines_deleted );
 			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
+			$self->{diffs}{$marker_line}{type} = 'C';
 		} elsif ( $lines_added > 0 ) {
 
 			# Line(s) added
@@ -111,6 +108,7 @@ sub task_finish {
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
 			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkChange, Padre::Wx::MarkDeletion );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
+			$self->{diffs}{$marker_line}{type} = 'A';
 		} elsif ( $lines_deleted > 0 ) {
 
 			# Line(s) deleted
@@ -120,6 +118,7 @@ sub task_finish {
 				: sprintf( Wx::gettext('%d line deleted'),  $lines_deleted );
 			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkChange );
 			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
+			$self->{diffs}{$marker_line}{type} = 'D';
 
 		} else {
 
@@ -129,8 +128,7 @@ sub task_finish {
 
 		$description .= "\n";
 		my $diff = $self->{diffs}{$marker_line};
-		$diff->{message} = $description . $diff->{message};
-		$diff->{style}   = ( $header_style x length($description) ) . $diff->{style};
+		$diff->{message} = $description;
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
@@ -229,7 +227,7 @@ sub show_diff_box {
 		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
 	}
 	my $pt = $editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) );
-	$self->{dialog}->show( $diff->{message}, $editor->ClientToScreenPoint($pt) );
+	$self->{dialog}->show( $diff->{message}, $diff->{original_text}, $editor->ClientToScreenPoint($pt) );
 }
 
 1;
