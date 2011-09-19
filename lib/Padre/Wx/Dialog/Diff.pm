@@ -123,6 +123,8 @@ sub on_revert_button {
 	$editor->SetTargetStart($start);
 	$editor->SetTargetEnd( $start + length($new_text) );
 	$editor->ReplaceTarget( $old_text ? $old_text : '' );
+
+	$self->Hide;
 }
 
 sub show {
