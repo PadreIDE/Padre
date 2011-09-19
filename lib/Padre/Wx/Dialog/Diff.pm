@@ -55,7 +55,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_READONLY | Wx::wxTE_MULTILINE,
+		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_RICH,
 	);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
@@ -141,13 +141,32 @@ sub show {
 	$self->{diff}   = $diff;
 
 	$self->Move($pt);
+
+	my $style      = $self->{text_ctrl}->GetDefaultStyle;
+	my $type = $diff->{type};
+	if( $type eq 'A' ) {
+		$style->SetTextColour( Wx::Colour->new("black") );
+		$style->SetBackgroundColour( Padre::Wx::Editor::DARK_GREEN() );
+	} elsif( $type eq 'D' ) {
+		$style->SetTextColour( Wx::Colour->new("black") );
+		$style->SetBackgroundColour( Padre::Wx::Editor::LIGHT_RED() );
+	} elsif( $type eq 'C') {
+		$style->SetTextColour( Wx::Colour->new("black") );
+		$style->SetBackgroundColour( Padre::Wx::Editor::LIGHT_BLUE() );
+	} else {
+		#TODO what to do here?
+	}
+	$self->{text_ctrl}->SetDefaultStyle($style);
+
 	$self->{status_label}->SetValue( $diff->{message} );
 	if ( $diff->{old_text} ) {
+		$self->{text_ctrl}->SetValue('');
+		$self->{text_ctrl}->AppendText( $diff->{old_text} );
 		$self->{text_ctrl}->Show(1);
-		$self->{text_ctrl}->SetValue( $diff->{old_text} );
 	} else {
 		$self->{text_ctrl}->Show(0);
 	}
+	
 
 	# Hide when the editor loses focus
 	my $popup = $self;
