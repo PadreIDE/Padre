@@ -8,6 +8,7 @@ use Params::Util      ();
 use Padre::Role::Task ();
 use Padre::Wx         ();
 use Padre::Util       ();
+use Padre::Wx::Dialog::Diff ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -262,10 +263,8 @@ sub show_diff_box {
 
 	my $diff = $self->{diffs}{$line} or return;
 
-	unless ( $self->{dialog} ) {
-		require Padre::Wx::Dialog::Diff;
-		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor, -1, Wx::DefaultPosition, Wx::DefaultSize, Wx::wxBORDER_SIMPLE);
-	}
+	$self->{dialog}->Destroy if defined($self->{dialog});
+	$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor, -1, Wx::DefaultPosition, Wx::DefaultSize, Wx::wxBORDER_SIMPLE);
 	$self->{dialog}->show(
 		$editor, $line, $diff,
 		$editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) )
