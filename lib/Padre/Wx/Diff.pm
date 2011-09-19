@@ -72,8 +72,8 @@ sub task_finish {
 				$marker_line = $line;
 
 				$self->{diffs}{$marker_line} = {
-					message       => undef,
-					type          => undef,
+					message  => undef,
+					type     => undef,
 					old_text => undef,
 					new_text => undef,
 				};

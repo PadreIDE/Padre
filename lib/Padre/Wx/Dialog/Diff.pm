@@ -59,9 +59,9 @@ sub new {
 	);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $button_sizer,          0, Wx::ALL | Wx::EXPAND, 0 );
-	$vsizer->Add( $self->{status_label},  0, Wx::ALL | Wx::EXPAND, 0 );
-	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $button_sizer,         0, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $self->{status_label}, 0, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $self->{text_ctrl},    1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Previous difference button
 	Wx::Event::EVT_BUTTON(
@@ -112,17 +112,17 @@ sub on_next_diff_button {
 sub on_revert_button {
 	my $self = shift;
 
-	my $editor = $self->{editor};
-	my $line   = $self->{line};
-	my $diff   = $self->{diff};
-	my $old_text   = $diff->{old_text};
-	my $new_text   = $diff->{new_text};
+	my $editor   = $self->{editor};
+	my $line     = $self->{line};
+	my $diff     = $self->{diff};
+	my $old_text = $diff->{old_text};
+	my $new_text = $diff->{new_text};
 
 	my $start = $editor->PositionFromLine($line);
 	my $end   = $editor->GetLineEndPosition( $line + $diff->{lines_added} ) + 1;
 	$editor->SetTargetStart($start);
-	$editor->SetTargetEnd($start + length($new_text));
-	$editor->ReplaceTarget($old_text ? $old_text : '');
+	$editor->SetTargetEnd( $start + length($new_text) );
+	$editor->ReplaceTarget( $old_text ? $old_text : '' );
 }
 
 sub show {
