@@ -217,7 +217,7 @@ sub _select_next_prev_difference {
 	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $line_to_select = undef;
 	for my $line (@lines) {
-		unless ($line_to_select) {
+		unless (defined $line_to_select) {
 			$line_to_select = $line;
 		}
 		if ($select_next_diff) {
@@ -236,7 +236,7 @@ sub _select_next_prev_difference {
 			}
 		}
 	}
-	if ($line_to_select) {
+	if (defined $line_to_select) {
 
 		# Select the line in the editor and show the diff box
 		Padre::Util::select_line_in_editor( $line_to_select, $editor );
