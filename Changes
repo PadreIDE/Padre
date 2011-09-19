@@ -49,8 +49,6 @@ the even version for the release, even during development.
       checker is active (AZAWAWI)
     - #1207: PluginHooks not removed after plugin reload/disable (MJFO)
     - Padre::File::HTTP: less colloquial English (ZENOG)
-    - remove "Duplicate" and "Delete" from file menu, going from 19 to 17 menu
-      entries (ZENOG)
     - update_pot_file.pl: add --verbose and --nocleanup for easier debugging
       (ZENOG)
     - #1313: Search previous button acts as next (KAARE)
