@@ -214,6 +214,29 @@ sub select_next_difference {
 	}
 }
 
+# Selects the previous difference in the editor
+sub select_previous_difference {
+	my $self    = shift;
+	my $current = $self->{main}->current or return;
+	my $editor  = $current->editor or return;
+
+	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $line_to_select = undef;
+	for my $line ( reverse sort { $a <=> $b } keys %{ $self->{diffs} } ) {
+		unless ($line_to_select) {
+			$line_to_select = $line;
+		}
+		if ( $line < $current_line ) {
+			$line_to_select = $line;
+			last;
+		}
+	}
+	if ($line_to_select) {
+		Padre::Util::select_line_in_editor( $line_to_select, $editor );
+		$self->show_diff_box( $line_to_select, $editor );
+	}
+}
+
 # Shows the difference dialog box for the provided line in the editor provided
 sub show_diff_box {
 	my $self   = shift;

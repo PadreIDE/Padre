@@ -102,17 +102,11 @@ sub new {
 }
 
 sub on_prev_diff_button {
-	my $self  = shift;
-	my $event = shift;
-
-	#TODO implement previous diff button
+	$_[0]->main->diff->select_previous_difference;
 }
 
 sub on_next_diff_button {
-	my $self  = shift;
-	my $event = shift;
-
-	#TODO implement next diff button
+	$_[0]->main->diff->select_next_difference;
 }
 
 sub on_revert_button {
