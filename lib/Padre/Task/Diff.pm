@@ -79,7 +79,7 @@ sub run {
 
 # Find local differences between current unsaved document and saved document
 sub _find_local_diff {
-	my ($self, $text, $filename)     = @_;
+	my ( $self, $text, $filename ) = @_;
 
 	my $content = $filename ? Padre::Util::slurp($filename) : undef;
 	my $data = [];
@@ -92,39 +92,35 @@ sub _find_local_diff {
 
 # Find differences between VCS versioned document and current document
 sub _find_vcs_diff {
-	my ($self, $vcs, $filename, $text, $project)     = @_;
+	my ( $self, $vcs, $filename, $text, $project ) = @_;
 
-	my $data = undef;
-	if ( $vcs eq Padre::Constant::SUBVERSION ) {
+	return $self->_find_svn_diff( $filename, $text ) if $vcs eq Padre::Constant::SUBVERSION;
+	return $self->_find_git_diff( $filename, $text ) if $vcs eq Padre::Constant::GIT;
 
-		# Generate a fast diff between the editor buffer and the original
-		# file in the .svn folder
-		# Contributed by submersible_toaster
-		my $local_cheat = File::Spec->catfile(
-			File::Basename::dirname($filename),
-			'.svn', 'text-base',
-			File::Basename::basename($filename) . '.svn-base'
-		);
-		my $origin = Padre::Util::slurp $local_cheat;
-		if ($origin) {
-			$data = $self->_find_diffs( $$origin, $text );
-		} else {
-			TRACE("Failed to find $local_cheat\n") if DEBUG;
-		}
-	} elsif ( $vcs eq Padre::Constant::GIT ) {
-		$data = $self->_find_git_diff( $filename, $text );
-	} else {
+	#TODO implement the rest of the VCS like mercurial, bazaar
+	TRACE("Unhandled $vcs") if DEBUG;
 
-		#TODO implement the rest of the VCS like mercurial, bazaar
-		TRACE("Unhandled $vcs") if DEBUG;
-	}
+	return;
+}
 
-	return $data;
+# Generate a fast diff between the editor buffer and the original
+# file in the .svn folder
+# Contributed by submersible_toaster
+sub _find_svn_diff {
+	my ( $self, $filename, $text ) = @_;
+
+	my $local_cheat = File::Spec->catfile(
+		File::Basename::dirname($filename),
+		'.svn', 'text-base',
+		File::Basename::basename($filename) . '.svn-base'
+	);
+	my $origin = Padre::Util::slurp $local_cheat;
+	return $origin ? $self->_find_diffs( $$origin, $text ) : undef;
 }
 
 # Find differences between git versioned document and current document
 sub _find_git_diff {
-	my ($self, $filename, $text)     = @_;
+	my ( $self, $filename, $text ) = @_;
 
 	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
@@ -152,7 +148,7 @@ sub _find_git_diff {
 
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
-	Padre::Util::run_in_directory(join(' ', @cmd), $self->{project});
+	Padre::Util::run_in_directory( join( ' ', @cmd ), $self->{project} );
 
 	# Slurp git command standard input and output
 	my $stdout = Padre::Util::slurp $out->filename;
