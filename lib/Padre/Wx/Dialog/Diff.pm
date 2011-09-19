@@ -111,19 +111,36 @@ sub on_next_diff_button {
 
 sub on_revert_button {
 	my $self  = shift;
-	my $event = shift;
 
-	#TODO  implement revert functionality
+	my $editor = $self->{editor};
+	my $line = $self->{line};
+	my $text = $self->{text};
+
+	if($text) {
+		my $position = $editor->PositionFromLine($line);
+		$editor->InsertText($position, $text);
+	} else {
+		my $positon =  $editor->PositionFromLine($line);
+		my $end_position = 1;
+		#$editor->SetTargetStart($position);
+		#$editor->SetTargetEnd($end_position);
+	}
 }
 
 sub show {
 
 	my $self          = shift;
 	my $editor        = shift;
+	my $line          = shift;
 	my $message       = shift;
 	my $original_text = shift;
 	my $type          = shift;
 	my $pt            = shift;
+
+	# Store editor reference so we can access it in revert
+	$self->{editor} = $editor;
+	$self->{line} = $line;
+	$self->{text} = $original_text;
 
 	$self->Move($pt);
 	$self->{status_label}->SetValue($message);
