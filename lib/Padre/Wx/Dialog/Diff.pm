@@ -14,16 +14,12 @@ sub new {
 
 	my $panel = Wx::Panel->new($self);
 
-	$self->{prev_diff_button} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Padre::Wx::Icon::find("actions/up")
+	$self->{prev_diff_button} = Wx::Button->new(
+		$panel, -1, Wx::gettext('&Previous'),
 	);
 	$self->{prev_diff_button}->SetToolTip( Wx::gettext('Previous difference') );
-	$self->{next_diff_button} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Padre::Wx::Icon::find("actions/down")
+	$self->{next_diff_button} = Wx::Button->new(
+		$panel, -1, Wx::gettext('&Next'),
 	);
 	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 
@@ -38,7 +34,8 @@ sub new {
 	$button_sizer->Add( $self->{prev_diff_button}, 0, 0,               0 );
 	$button_sizer->Add( $self->{next_diff_button}, 0, 0,               0 );
 	$button_sizer->Add( $self->{revert_button},    0, 0,               0 );
-	$button_sizer->Add( $self->{close_button},     0, Wx::ALIGN_RIGHT, 5 );
+	$button_sizer->AddSpacer(10);
+	$button_sizer->Add( $self->{close_button},     0, 0, 0 );
 
 	$self->{text_ctrl} = Wx::TextCtrl->new(
 		$panel, -1, '', Wx::wxDefaultPosition, [ -1, 100 ],
