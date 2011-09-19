@@ -54,7 +54,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[ -1, 100 ],
+		Wx::DefaultSize,
 		Wx::TE_READONLY | Wx::wxTE_MULTILINE,
 	);
 
