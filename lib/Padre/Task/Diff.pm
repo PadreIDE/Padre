@@ -8,6 +8,7 @@ use Padre::Task     ();
 use Padre::Util     ();
 use File::Basename  ();
 use File::Spec      ();
+use File::Which     ();
 use Algorithm::Diff ();
 use Padre::Logger;
 
@@ -40,6 +41,9 @@ sub new {
 
 	# Obtain document text
 	$self->{text} = $document->text_get;
+
+	# Obtain document project dir
+	$self->{project} = $document->project_dir;
 
 	return $self;
 }
@@ -98,7 +102,6 @@ sub _find_vcs_exe {
 	my $vcs      = shift;
 	my $filename = shift;
 
-	require File::Which;
 	my $exe;
 	if ( $vcs eq Padre::Constant::SUBVERSION ) {
 		$exe = 'svn';
@@ -139,6 +142,7 @@ sub _find_vcs_diff_fast {
 	my $vcs      = shift;
 	my $filename = shift;
 	my $text     = shift;
+	my $project  = shift;
 
 	my $data = undef;
 	if ( $vcs eq Padre::Constant::SUBVERSION ) {
@@ -161,8 +165,7 @@ sub _find_vcs_diff_fast {
 			TRACE("Failed to find $local_cheat\n") if DEBUG;
 		}
 	} elsif ( $vcs eq Padre::Constant::GIT ) {
-
-		$data = $self->_find_git_diff($filename, $text);
+		$data = $self->_find_git_diff( $filename, $text );
 	} else {
 
 		#TODO implement the rest of the VCS like git, mercurial
@@ -176,8 +179,10 @@ sub _find_git_diff {
 	my $self     = shift;
 	my $filename = shift;
 	my $text     = shift;
-	
+
 	my $data;
+
+	require File::Temp;
 
 	# Open a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
@@ -187,13 +192,16 @@ sub _find_git_diff {
 	my $err = File::Temp->new( UNLINK => 1 );
 	$err->close;
 
-	require File::Which;
-	my $git = File::Which::which('git');
+	# Find the git command line
+	my $git = File::Which::which('git') or return;
 
-	require File::Basename;
+	# Handle spaces in git executable path under win32
+	$git = qq{"$git"} if Padre::Constant::WIN32;
+
 	my $basename = File::Basename::basename($filename);
 	my $dirname  = File::Basename::dirname($filename);
-	my @cmd      = (
+
+	my @cmd = (
 		$git,
 		'--no-pager',
 		'show',
@@ -223,7 +231,7 @@ sub _find_git_diff {
 	my $stdout;
 	if ( open my $fh, '<', $out->filename ) {
 		local $/ = undef;
-		my $stdout = <$fh>;
+		$stdout = <$fh>;
 		close $fh;
 	} else {
 		die $!;
@@ -233,7 +241,7 @@ sub _find_git_diff {
 	my $stderr;
 	if ( open my $fh, '<', $err->filename ) {
 		local $/ = undef;
-		my $stderr = <$fh>;
+		$stderr = <$fh>;
 		close $fh;
 	} else {
 		die $!;
