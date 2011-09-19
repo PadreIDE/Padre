@@ -49,7 +49,7 @@ sub new {
 	$button_sizer->AddSpacer(10);
 	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
 
-	$self->{original_text} = Wx::TextCtrl->new(
+	$self->{text_ctrl} = Wx::TextCtrl->new(
 		$panel,
 		-1,
 		'',
@@ -61,7 +61,7 @@ sub new {
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $button_sizer,          0, Wx::ALL | Wx::EXPAND, 0 );
 	$vsizer->Add( $self->{status_label},  0, Wx::ALL | Wx::EXPAND, 0 );
-	$vsizer->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Previous difference button
 	Wx::Event::EVT_BUTTON(
@@ -110,45 +110,46 @@ sub on_next_diff_button {
 }
 
 sub on_revert_button {
-	my $self  = shift;
+	my $self = shift;
 
 	my $editor = $self->{editor};
-	my $line = $self->{line};
-	my $text = $self->{text};
+	my $line   = $self->{line};
+	my $diff   = $self->{diff};
+	my $new_text   = $diff->{new_text};
+	my $old_text   = $diff->{old_text};
 
-	if($text) {
+	if ($old_text) {
 		my $position = $editor->PositionFromLine($line);
-		$editor->InsertText($position, $text);
+		$editor->InsertText( $position, $old_text );
 	} else {
-		my $positon =  $editor->PositionFromLine($line);
-		my $end_position = 1;
-		#$editor->SetTargetStart($position);
-		#$editor->SetTargetEnd($end_position);
+		my $start = $editor->PositionFromLine($line);
+		my $end   = $editor->GetLineEndPosition( $line + $diff->{lines_added} ) + 1;
+		$editor->SetTargetStart($start);
+		$editor->SetTargetEnd($start + length($new_text));
+		$editor->ReplaceTarget('');
 	}
 }
 
 sub show {
 
-	my $self          = shift;
-	my $editor        = shift;
-	my $line          = shift;
-	my $message       = shift;
-	my $original_text = shift;
-	my $type          = shift;
-	my $pt            = shift;
+	my $self   = shift;
+	my $editor = shift;
+	my $line   = shift;
+	my $diff   = shift;
+	my $pt     = shift;
 
 	# Store editor reference so we can access it in revert
 	$self->{editor} = $editor;
-	$self->{line} = $line;
-	$self->{text} = $original_text;
+	$self->{line}   = $line;
+	$self->{diff}   = $diff;
 
 	$self->Move($pt);
-	$self->{status_label}->SetValue($message);
-	if ($original_text) {
-		$self->{original_text}->Show(1);
-		$self->{original_text}->SetValue($original_text);
+	$self->{status_label}->SetValue( $diff->{message} );
+	if ( $diff->{old_text} ) {
+		$self->{text_ctrl}->Show(1);
+		$self->{text_ctrl}->SetValue( $diff->{old_text} );
 	} else {
-		$self->{original_text}->Show(0);
+		$self->{text_ctrl}->Show(0);
 	}
 
 	# Hide when the editor loses focus
@@ -160,7 +161,7 @@ sub show {
 		}
 	);
 
-	my $panel = $self->{original_text}->GetParent;
+	my $panel = $self->{text_ctrl}->GetParent;
 	$panel->Layout;
 	$panel->Fit;
 	$self->Fit;
