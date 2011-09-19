@@ -122,6 +122,7 @@ sub show {
 	my $editor        = shift;
 	my $message       = shift;
 	my $original_text = shift;
+	my $type          = shift;
 	my $pt            = shift;
 
 	$self->Move($pt);

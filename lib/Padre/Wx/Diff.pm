@@ -191,50 +191,53 @@ sub refresh {
 	);
 }
 
-# Selects the next difference in the editor
-sub select_next_difference {
-	my $self    = shift;
+# Generic method to select next or previous difference
+sub _select_next_prev_difference {
+	my $self = shift;
+	my $select_next_diff = shift;
 	my $current = $self->{main}->current or return;
 	my $editor  = $current->editor or return;
+	
+	# Sort lines in ascending order
+	my @lines = sort { $a <=> $b } keys %{ $self->{diffs} };
 
+	# Lines in descending order if select previous diff is enabled
+	@lines = reverse @lines unless $select_next_diff;
+	
 	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $line_to_select = undef;
-	for my $line ( sort { $a <=> $b } keys %{ $self->{diffs} } ) {
+	for my $line (@lines) {
 		unless ($line_to_select) {
 			$line_to_select = $line;
 		}
-		if ( $line > $current_line ) {
-			$line_to_select = $line;
-			last;
+		if ( $select_next_diff ) {
+			# Next difference
+			if($line > $current_line ) {
+				$line_to_select = $line;
+				last;
+			}
+		} else {
+			# Previous difference
+			if($line < $current_line ) {
+				$line_to_select = $line;
+				last;
+			}
 		}
 	}
 	if ($line_to_select) {
+		# Select the line in the editor and show the diff box
 		Padre::Util::select_line_in_editor( $line_to_select, $editor );
 		$self->show_diff_box( $line_to_select, $editor );
 	}
 }
+# Selects the next difference in the editor
+sub select_next_difference {
+	$_[0]->_select_next_prev_difference(1);
+}
 
 # Selects the previous difference in the editor
 sub select_previous_difference {
-	my $self    = shift;
-	my $current = $self->{main}->current or return;
-	my $editor  = $current->editor or return;
-
-	my $current_line   = $editor->LineFromPosition( $editor->GetCurrentPos );
-	my $line_to_select = undef;
-	for my $line ( reverse sort { $a <=> $b } keys %{ $self->{diffs} } ) {
-		unless ($line_to_select) {
-			$line_to_select = $line;
-		}
-		if ( $line < $current_line ) {
-			$line_to_select = $line;
-			last;
-		}
-	}
-	if ($line_to_select) {
-		Padre::Util::select_line_in_editor( $line_to_select, $editor );
-		$self->show_diff_box( $line_to_select, $editor );
-	}
+	$_[0]->_select_next_prev_difference(0);
 }
 
 # Shows the difference dialog box for the provided line in the editor provided
@@ -250,7 +253,7 @@ sub show_diff_box {
 		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
 	}
 	my $pt = $editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) );
-	$self->{dialog}->show( $editor, $diff->{message}, $diff->{original_text}, $editor->ClientToScreenPoint($pt) );
+	$self->{dialog}->show( $editor, $diff->{message}, $diff->{original_text}, $diff->{type}, $editor->ClientToScreenPoint($pt) );
 }
 
 1;
