@@ -15,19 +15,19 @@ sub new {
 	my $panel = Wx::Panel->new($self);
 
 	$self->{prev_diff_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('&Previous'),
+		$panel, -1, Wx::gettext('Previous'),
 	);
 	$self->{prev_diff_button}->SetToolTip( Wx::gettext('Previous difference') );
 	$self->{next_diff_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('&Next'),
+		$panel, -1, Wx::gettext('Next'),
 	);
 	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 
 	$self->{revert_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('&Revert'),
+		$panel, -1, Wx::gettext('Revert'),
 	);
 	$self->{close_button} = Wx::Button->new(
-		$panel, Wx::ID_CANCEL, Wx::gettext('&Close'),
+		$panel, Wx::ID_CANCEL, Wx::gettext('Close'),
 	);
 
 	$self->{status_label} = Wx::TextCtrl->new(
