@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Constant          ();
+use Padre::Util              ();
 use Padre::Task::Syntax      ();
 use Parse::ErrorString::Perl ();
 
@@ -89,21 +90,8 @@ sub syntax {
 			);
 
 		# We need shell redirection (list context does not give that)
-		my $cmd = join ' ', @cmd;
-
-		# Make sure we execute from the correct directory
-		if (Padre::Constant::WIN32) {
-			require Padre::Util::Win32;
-			Padre::Util::Win32::ExecuteProcessAndWait(
-				directory  => $self->{project},
-				file       => 'cmd.exe',
-				parameters => "/C $cmd",
-			);
-		} else {
-			require File::pushd;
-			my $pushd = File::pushd::pushd( $self->{project} );
-			system $cmd;
-		}
+		# Run command in directory
+		Padre::Util::run_in_directory( join( ' ', @cmd ), $self->{project} );
 
 		# Slurp Perl's stderr...
 		open my $fh, '<', $err->filename or die $!;
