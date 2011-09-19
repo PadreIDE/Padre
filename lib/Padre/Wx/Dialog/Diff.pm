@@ -55,7 +55,7 @@ sub new {
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_RICH,
+		Wx::TE_READONLY | Wx::wxTE_MULTILINE,
 	);
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
@@ -142,26 +142,22 @@ sub show {
 
 	$self->Move($pt);
 
-	my $style      = $self->{text_ctrl}->GetDefaultStyle;
 	my $type = $diff->{type};
+	my $color;
 	if( $type eq 'A' ) {
-		$style->SetTextColour( Wx::Colour->new("black") );
-		$style->SetBackgroundColour( Padre::Wx::Editor::DARK_GREEN() );
+		$color = Padre::Wx::Editor::DARK_GREEN();
 	} elsif( $type eq 'D' ) {
-		$style->SetTextColour( Wx::Colour->new("black") );
-		$style->SetBackgroundColour( Padre::Wx::Editor::LIGHT_RED() );
+		$color = Padre::Wx::Editor::LIGHT_RED();
 	} elsif( $type eq 'C') {
-		$style->SetTextColour( Wx::Colour->new("black") );
-		$style->SetBackgroundColour( Padre::Wx::Editor::LIGHT_BLUE() );
+		$color = Padre::Wx::Editor::LIGHT_BLUE();
 	} else {
-		#TODO what to do here?
+		$color = Wx::Colour->new("black");
 	}
-	$self->{text_ctrl}->SetDefaultStyle($style);
+	$self->{text_ctrl}->SetBackgroundColour( $color );
 
 	$self->{status_label}->SetValue( $diff->{message} );
 	if ( $diff->{old_text} ) {
-		$self->{text_ctrl}->SetValue('');
-		$self->{text_ctrl}->AppendText( $diff->{old_text} );
+		$self->{text_ctrl}->SetValue( $diff->{old_text} );
 		$self->{text_ctrl}->Show(1);
 	} else {
 		$self->{text_ctrl}->Show(0);
