@@ -160,6 +160,9 @@ sub _find_vcs_diff_fast {
 		} else {
 			TRACE("Failed to find $local_cheat\n") if DEBUG;
 		}
+	} elsif ( $vcs eq Padre::Constant::GIT ) {
+
+		$data = $self->_find_git_diff($filename, $text);
 	} else {
 
 		#TODO implement the rest of the VCS like git, mercurial
@@ -167,6 +170,91 @@ sub _find_vcs_diff_fast {
 	}
 
 	return $data;
+}
+
+sub _find_git_diff {
+	my $self     = shift;
+	my $filename = shift;
+	my $text     = shift;
+	
+	my $data;
+
+	# Open a temporary file for standard output redirection
+	my $out = File::Temp->new( UNLINK => 1 );
+	$out->close;
+
+	# Open a temporary file for standard error redirection
+	my $err = File::Temp->new( UNLINK => 1 );
+	$err->close;
+
+	require File::Which;
+	my $git = File::Which::which('git');
+
+	require File::Basename;
+	my $basename = File::Basename::basename($filename);
+	my $dirname  = File::Basename::dirname($filename);
+	my @cmd      = (
+		$git,
+		'--no-pager',
+		'show',
+		"HEAD:$basename",
+		'1>' . $out->filename,
+		'2>' . $err->filename,
+	);
+
+	# We need shell redirection (list context does not give that)
+	my $cmd = join ' ', @cmd;
+
+	# Make sure we execute from the correct directory
+	if (Padre::Constant::WIN32) {
+		require Padre::Util::Win32;
+		Padre::Util::Win32::ExecuteProcessAndWait(
+			directory  => $self->{project},
+			file       => 'cmd.exe',
+			parameters => "/C $cmd",
+		);
+	} else {
+		require File::pushd;
+		my $pushd = File::pushd::pushd( $self->{project} );
+		system $cmd;
+	}
+
+	# Slurp Perl's stderr...
+	my $stdout;
+	if ( open my $fh, '<', $out->filename ) {
+		local $/ = undef;
+		my $stdout = <$fh>;
+		close $fh;
+	} else {
+		die $!;
+	}
+
+	# Slurp Perl's stderr...
+	my $stderr;
+	if ( open my $fh, '<', $err->filename ) {
+		local $/ = undef;
+		my $stderr = <$fh>;
+		close $fh;
+	} else {
+		die $!;
+	}
+
+	if ( $stderr eq '' ) {
+
+		if ($stdout) {
+			my @origin_seq  = split /^/, $stdout;
+			my @unsaved_seq = split /^/, $text;
+			my @diff = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
+			$data = \@diff;
+		} else {
+			TRACE("Failed to git show $filename\n") if DEBUG;
+		}
+
+	} else {
+
+		# TODO handle 'An error occurred\n';
+	}
+
 }
 
 1;
