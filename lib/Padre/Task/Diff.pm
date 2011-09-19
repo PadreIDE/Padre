@@ -128,10 +128,7 @@ sub _find_local_diff {
 	my $content = $filename ? Padre::Util::slurp($filename) : undef;
 	my $data = [];
 	if ($content) {
-		my @seq1 = split /^/, $$content;
-		my @seq2 = split /^/, $text;
-		my @diffs = Algorithm::Diff::diff( \@seq1, \@seq2 );
-		$data = \@diffs;
+		$data = $self->_find_diffs( $$content, $text );
 	}
 
 	return $data;
@@ -157,10 +154,7 @@ sub _find_vcs_diff_fast {
 		);
 		my $origin = Padre::Util::slurp $local_cheat;
 		if ($origin) {
-			my @origin_seq  = split /^/, $$origin;
-			my @unsaved_seq = split /^/, $text;
-			my @diff = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
-			$data = \@diff;
+			$data = $self->_find_diffs( $$origin, $text );
 		} else {
 			TRACE("Failed to find $local_cheat\n") if DEBUG;
 		}
@@ -234,7 +228,7 @@ sub _find_git_diff {
 		$stdout = <$fh>;
 		close $fh;
 	} else {
-		die $!;
+		return;
 	}
 
 	# Slurp Perl's stderr...
@@ -244,16 +238,13 @@ sub _find_git_diff {
 		$stderr = <$fh>;
 		close $fh;
 	} else {
-		die $!;
+		return;
 	}
 
 	if ( $stderr eq '' ) {
 
 		if ($stdout) {
-			my @origin_seq  = split /^/, $stdout;
-			my @unsaved_seq = split /^/, $text;
-			my @diff = Algorithm::Diff::diff( \@origin_seq, \@unsaved_seq );
-			$data = \@diff;
+			$data = $self->_find_diffs( $stdout, $text );
 		} else {
 			TRACE("Failed to git show $filename\n") if DEBUG;
 		}
@@ -263,6 +254,17 @@ sub _find_git_diff {
 		# TODO handle 'An error occurred\n';
 	}
 
+	return $data;
+}
+
+# Find differences between original text and unsaved text
+sub _find_diffs {
+	my ( $self, $original_text, $unsaved_text ) = @_;
+
+	my @original_seq = split /^/, $original_text;
+	my @unsaved_seq  = split /^/, $unsaved_text;
+	my @diff = Algorithm::Diff::diff( \@original_seq, \@unsaved_seq );
+	return \@diff;
 }
 
 1;
