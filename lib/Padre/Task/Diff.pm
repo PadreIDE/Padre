@@ -221,37 +221,12 @@ sub _find_git_diff {
 		system $cmd;
 	}
 
-	# Slurp Perl's stderr...
-	my $stdout;
-	if ( open my $fh, '<', $out->filename ) {
-		local $/ = undef;
-		$stdout = <$fh>;
-		close $fh;
-	} else {
-		return;
-	}
+	# Slurp git command standard input and output
+	my $stdout = Padre::Util::slurp $out->filename;
+	my $stderr = Padre::Util::slurp $err->filename;
 
-	# Slurp Perl's stderr...
-	my $stderr;
-	if ( open my $fh, '<', $err->filename ) {
-		local $/ = undef;
-		$stderr = <$fh>;
-		close $fh;
-	} else {
-		return;
-	}
-
-	if ( $stderr eq '' ) {
-
-		if ($stdout) {
-			$data = $self->_find_diffs( $stdout, $text );
-		} else {
-			TRACE("Failed to git show $filename\n") if DEBUG;
-		}
-
-	} else {
-
-		# TODO handle 'An error occurred\n';
+	if ( defined($stderr) and ( $$stderr eq '' ) and defined($stdout) ) {
+		$data = $self->_find_diffs( $$stdout, $text );
 	}
 
 	return $data;
