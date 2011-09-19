@@ -9,6 +9,7 @@ use Padre::Util     ();
 use File::Basename  ();
 use File::Spec      ();
 use File::Which     ();
+use File::Temp      ();
 use Algorithm::Diff ();
 use Padre::Logger;
 
@@ -65,7 +66,7 @@ sub run {
 	my $filename = delete $self->{filename};
 
 	# Compare between VCS and local buffer document
-	my $data = $self->_find_vcs_diff_fast( $vcs, $filename, $text );
+	my $data = $self->_find_vcs_diff( $vcs, $filename, $text );
 	unless ($data) {
 
 		# Compare between saved and current buffer document
@@ -76,50 +77,7 @@ sub run {
 	return 1;
 }
 
-
-sub _find_vcs_diff {
-	my $self     = shift;
-	my $vcs      = shift;
-	my $filename = shift;
-
-	my $vcs_exe = $self->_find_vcs_exe( $vcs, $filename );
-	if ($vcs_exe) {
-		my $cmd;
-		if (Padre::Constant::WIN32) {
-			$cmd = qq{"$vcs_exe" diff $filename};
-		} else {
-			$cmd = qq{$vcs_exe diff $filename};
-		}
-		my $output = `$cmd`;
-	} else {
-
-		# TODO handle this!
-	}
-}
-
-sub _find_vcs_exe {
-	my $self     = shift;
-	my $vcs      = shift;
-	my $filename = shift;
-
-	my $exe;
-	if ( $vcs eq Padre::Constant::SUBVERSION ) {
-		$exe = 'svn';
-	} elsif ( $vcs eq Padre::Constant::GIT ) {
-		$exe = 'git';
-	} elsif ( $vcs eq Padre::Constant::MERCURIAL ) {
-		$exe = 'hg';
-	} elsif ( $vcs eq Padre::Constant::BAZAAR ) {
-		$exe = 'bzr';
-	} elsif ( $vcs eq Padre::Constant::CVS ) {
-		$exe = 'cvs';
-	} else {
-		TRACE("Unsupported VCS $vcs") if DEBUG;
-	}
-
-	return File::Which::which($exe);
-}
-
+# Find local differences between current unsaved document and saved document
 sub _find_local_diff {
 	my $self     = shift;
 	my $text     = shift;
@@ -134,7 +92,8 @@ sub _find_local_diff {
 	return $data;
 }
 
-sub _find_vcs_diff_fast {
+# Find differences between VCS versioned document and current document
+sub _find_vcs_diff {
 	my $self     = shift;
 	my $vcs      = shift;
 	my $filename = shift;
@@ -162,7 +121,7 @@ sub _find_vcs_diff_fast {
 		$data = $self->_find_git_diff( $filename, $text );
 	} else {
 
-		#TODO implement the rest of the VCS like git, mercurial
+		#TODO implement the rest of the VCS like mercurial, bazaar
 		TRACE("Unhandled $vcs") if DEBUG;
 	}
 
@@ -175,8 +134,6 @@ sub _find_git_diff {
 	my $text     = shift;
 
 	my $data;
-
-	require File::Temp;
 
 	# Open a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
