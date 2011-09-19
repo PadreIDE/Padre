@@ -173,6 +173,18 @@ sub show {
 		}
 	);
 
+	Wx::Event::EVT_KEY_UP(
+		$editor,
+		sub {
+			my ($self, $event) = @_;
+			if($event->GetKeyCode == 27) {
+				# Escape hides the diff box
+				$popup->Hide;
+			}
+			$event->Skip;
+		}
+	);
+
 	my $panel = $self->{text_ctrl}->GetParent;
 	$panel->Layout;
 	$panel->Fit;
