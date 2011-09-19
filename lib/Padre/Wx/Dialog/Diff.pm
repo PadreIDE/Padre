@@ -60,14 +60,26 @@ sub new {
 	$vsizer->Add( $self->{status_label},  0, Wx::ALL | Wx::EXPAND, 0 );
 	$vsizer->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
-	# Close button
+	# Previous difference button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{prev_diff_button},
+		\&on_prev_diff_button,
+	);
+
+	# Next difference button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{next_diff_button},
+		\&on_next_diff_button,
+	);
+
+
+	# Revert button
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{revert_button},
-		sub {
-
-			#TODO  implement revert functionality
-		}
+		\&on_revert_button,
 	);
 
 	# Close button
@@ -79,31 +91,32 @@ sub new {
 		}
 	);
 
-	# Previous difference button
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{prev_diff_button},
-		sub {
-
-			#TODO implement previous diff button
-		}
-	);
-
-	# Next difference button
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{next_diff_button},
-		sub {
-
-			#TODO implement next diff button
-		}
-	);
-
 	$panel->SetSizer($vsizer);
 	$panel->Fit;
 	$self->Fit;
 
 	return $self;
+}
+
+sub on_prev_diff_button {
+	my $self  = shift;
+	my $event = shift;
+
+	#TODO implement previous diff button
+}
+
+sub on_next_diff_button {
+	my $self  = shift;
+	my $event = shift;
+
+	#TODO implement next diff button
+}
+
+sub on_revert_button {
+	my $self  = shift;
+	my $event = shift;
+
+	#TODO  implement revert functionality
 }
 
 sub show {
@@ -128,21 +141,6 @@ sub show {
 	$self->Fit;
 
 	$self->Show(1);
-}
-
-sub ProcessLeftDown {
-	my ( $self, $event ) = @_;
-	print "Process Left $event\n";
-
-	#$event->Skip;
-	return 0;
-}
-
-sub OnDismiss {
-	my ( $self, $event ) = @_;
-	print "OnDismiss\n";
-
-	#$event->Skip;
 }
 
 1;
