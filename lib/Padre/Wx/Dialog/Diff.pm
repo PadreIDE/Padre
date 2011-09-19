@@ -6,7 +6,10 @@ use warnings;
 use Padre::Wx ();
 
 our $VERSION = '0.91';
-our @ISA     = 'Wx::PlPopupTransientWindow';
+our @ISA     = (
+	'Padre::Wx::Role::Main',
+	'Wx::PlPopupTransientWindow',
+);
 
 sub new {
 	my $class = shift;
@@ -122,6 +125,7 @@ sub on_revert_button {
 sub show {
 
 	my $self          = shift;
+	my $editor        = shift;
 	my $message       = shift;
 	my $original_text = shift;
 	my $pt            = shift;
@@ -134,6 +138,15 @@ sub show {
 	} else {
 		$self->{original_text}->Show(0);
 	}
+
+	# Hide when the editor loses focus
+	my $popup = $self;
+	Wx::Event::EVT_KILL_FOCUS(
+		$editor,
+		sub {
+			$popup->Hide;
+		}
+	);
 
 	my $panel = $self->{original_text}->GetParent;
 	$panel->Layout;

@@ -227,7 +227,7 @@ sub show_diff_box {
 		$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
 	}
 	my $pt = $editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) );
-	$self->{dialog}->show( $diff->{message}, $diff->{original_text}, $editor->ClientToScreenPoint($pt) );
+	$self->{dialog}->show( $editor, $diff->{message}, $diff->{original_text}, $editor->ClientToScreenPoint($pt) );
 }
 
 1;
