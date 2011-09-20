@@ -17,12 +17,16 @@ sub new {
 
 	my $panel = Wx::Panel->new($self);
 
-	$self->{prev_diff_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('Previous'),
+	$self->{prev_diff_button} = Wx::BitmapButton->new(
+		$panel,
+		-1,
+		Padre::Wx::Icon::find("actions/up"),
 	);
 	$self->{prev_diff_button}->SetToolTip( Wx::gettext('Previous difference') );
-	$self->{next_diff_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('Next'),
+	$self->{next_diff_button} = Wx::BitmapButton->new(
+		$panel,
+		-1,
+		Padre::Wx::Icon::find("actions/down"),
 	);
 	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 
