@@ -40,6 +40,7 @@ BEGIN {
 	# Don't load all of them with Wx::InitAllImageHandlers, it wastes memory.
 	Wx::Image::AddHandler( Wx::PNGHandler->new );
 	Wx::Image::AddHandler( Wx::ICOHandler->new );
+        Wx::Image::AddHandler( Wx::XPMHandler->new );
 
 	# Load the enhanced constants package
 	require Padre::Wx::Constant;
