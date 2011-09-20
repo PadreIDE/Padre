@@ -30,9 +30,13 @@ sub new {
 	);
 	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 
-	$self->{revert_button} = Wx::Button->new(
-		$panel, -1, Wx::gettext('Revert'),
+	$self->{revert_button} = Wx::BitmapButton->new(
+		$panel,
+		-1,
+		Padre::Wx::Icon::find("actions/edit-undo"),
 	);
+	$self->{revert_button}->SetToolTip( Wx::gettext('Revert') );
+
 	$self->{close_button} = Wx::Button->new(
 		$panel, Wx::ID_CANCEL, Wx::gettext('Close'),
 	);
@@ -46,25 +50,26 @@ sub new {
 		Wx::TE_READONLY,
 	);
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{prev_diff_button}, 0, 0, 0 );
-	$button_sizer->Add( $self->{next_diff_button}, 0, 0, 0 );
-	$button_sizer->Add( $self->{revert_button},    0, 0, 0 );
-	$button_sizer->AddSpacer(10);
-	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
-
 	$self->{text_ctrl} = Wx::TextCtrl->new(
 		$panel,
 		-1,
 		'',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_READONLY | Wx::wxTE_MULTILINE,
+		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
 	);
+
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{prev_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{next_diff_button}, 0, 0, 0 );
+	$button_sizer->Add( $self->{revert_button},    0, 0, 0 );
+	$button_sizer->AddSpacer(10);
+	$button_sizer->Add( $self->{status_label}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$button_sizer->AddSpacer(10);
+	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $button_sizer,         0, Wx::ALL | Wx::EXPAND, 0 );
-	$vsizer->Add( $self->{status_label}, 0, Wx::ALL | Wx::EXPAND, 0 );
 	$vsizer->Add( $self->{text_ctrl},    1, Wx::ALL | Wx::EXPAND, 0 );
 
 	# Previous difference button
