@@ -8,7 +8,7 @@ use Padre::Wx ();
 our $VERSION = '0.91';
 our @ISA     = (
 	'Padre::Wx::Role::Main',
-	'Wx::Window',
+	'Wx::PopupWindow',
 );
 
 sub new {
