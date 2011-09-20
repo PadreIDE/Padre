@@ -35,11 +35,14 @@ sub new {
 		-1,
 		Padre::Wx::Icon::find("actions/edit-undo"),
 	);
-	$self->{revert_button}->SetToolTip( Wx::gettext('Revert') );
+	$self->{revert_button}->SetToolTip( Wx::gettext('Revert this change') );
 
-	$self->{close_button} = Wx::Button->new(
-		$panel, Wx::ID_CANCEL, Wx::gettext('Close'),
+	$self->{close_button} = Wx::BitmapButton->new(
+		$panel,
+		-1,
+		Padre::Wx::Icon::find("actions/window-close"),
 	);
+	$self->{close_button}->SetToolTip( Wx::gettext('Close this window') );
 
 	$self->{status_label} = Wx::TextCtrl->new(
 		$panel,
@@ -69,8 +72,8 @@ sub new {
 	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$vsizer->Add( $button_sizer,         0, Wx::ALL | Wx::EXPAND, 0 );
-	$vsizer->Add( $self->{text_ctrl},    1, Wx::ALL | Wx::EXPAND, 0 );
+	$vsizer->Add( $button_sizer, 0, 0, 0 );
+	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	# Previous difference button
 	Wx::Event::EVT_BUTTON(
