@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 55 );
+plan( tests => 57 );
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
@@ -89,5 +89,10 @@ isa_ok( $style, 'Padre::Wx::Style' );
 ok( scalar( @{ $style->mime } ), 'Found a list of methods' );
 
 # Find the localised name for a style
-my $name = Padre::Wx::Style->label('default');
-is( $name, 'Padre', 'Got expected label for default style' );
+my $label = Padre::Wx::Style->label('default', 'en-gb');
+is( $label, 'Padre', 'Got expected label for default style' );
+
+# Find the localised name for all available styles
+my $labels = Padre::Wx::Style->labels('en-au');
+is( ref($labels), 'HASH', '->labels returns a HASH' );
+is( $labels->{default}, 'Padre', 'The labels HASH contains expected default' );

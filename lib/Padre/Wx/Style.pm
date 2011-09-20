@@ -112,17 +112,34 @@ sub file {
 	return undef;
 }
 
+sub labels {
+	my $class = shift;
+	my $lang  = shift;
+	my $files = $class->files;
+
+	# Load the label for each file.
+	# Because we resolve the filename again this is slower than
+	# it could be, but the code is simple and easy and will do for now.
+	my %labels = ();
+	foreach my $name ( keys %$files ) {
+		$labels{$name} = $class->label( $name, $lang );
+	}
+
+	return \%labels;
+}
+
 sub label {
 	my $class = shift;
 	my $name  = shift;
+	my $lang  = shift;
 	my $file  = $class->file($name);
 	unless ( $file ) {
 		die "The style '$name' does not exist";
 	}
 
-	# Open the file
+	# Parse the file for name statements
 	my $line   = 0;
-	my %names  = ();
+	my %label  = ();
 	my $handle = IO::File->new( $file, 'r' ) or return;
 	while ( defined( my $string = <$handle> ) ) {
 		$line++;
@@ -140,8 +157,7 @@ sub label {
 
 		# We only care about name
 		next unless defined $cmd;
-		next unless $cmd eq 'name';
-		next unless @list >= 2;
+		last unless $cmd eq 'name';
 
 		# Does the language exist
 		my $lang = shift @list;
@@ -150,9 +166,14 @@ sub label {
 		}
 
 		# Save the name
-		$names{$lang} = join ' ', @list;
+		$label{$lang} = join ' ', @list;
 	}
 	$handle->close;
+
+	# Try to find a usable label
+	return $label{ Padre::Locale::rfc4646($lang) }
+	    || $label{ Padre::Locale::DEFAULT }
+	    || $name;
 }
 
 sub find {
