@@ -3,7 +3,8 @@ package Padre::Wx::Dialog::Diff;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Constant ();
+use Padre::Wx       ();
 
 our $VERSION = '0.91';
 our @ISA     = (
@@ -49,7 +50,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[130, -1],
+		[ 130, -1 ],
 		Wx::TE_READONLY,
 	);
 
@@ -58,7 +59,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[350, 70],
+		[ 350, 70 ],
 		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
 	);
 
@@ -73,7 +74,7 @@ sub new {
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->AddSpacer(1);
-	$vsizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$vsizer->Add( $button_sizer,      0, Wx::ALL | Wx::EXPAND, 1 );
 	$vsizer->Add( $self->{text_ctrl}, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Previous difference button
@@ -148,12 +149,18 @@ sub show {
 	my $diff   = shift;
 	my $pt     = shift;
 
+
 	# Store editor reference so we can access it in revert
 	$self->{editor} = $editor;
 	$self->{line}   = $line;
 	$self->{diff}   = $diff;
 
-	$self->Move($pt);
+	# Hack to workaround Wx::PopupWindow relative positioning bug
+	if (Padre::Constant::WIN32) {
+		$self->Move($pt);
+	} else {
+		$self->Move( $editor->ClientToScreen($pt) );
+	}
 
 	my $type = $diff->{type};
 	my $color;
