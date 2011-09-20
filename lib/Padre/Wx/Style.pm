@@ -70,7 +70,7 @@ my %FALLBACK = (
 ######################################################################
 # Style Repository
 
-sub search {
+sub files {
 	my $class  = shift;
 	my %styles = ();
 
@@ -112,6 +112,49 @@ sub file {
 	return undef;
 }
 
+sub label {
+	my $class = shift;
+	my $name  = shift;
+	my $file  = $class->file($name);
+	unless ( $file ) {
+		die "The style '$name' does not exist";
+	}
+
+	# Open the file
+	my $line   = 0;
+	my %names  = ();
+	my $handle = IO::File->new( $file, 'r' ) or return;
+	while ( defined( my $string = <$handle> ) ) {
+		$line++;
+
+		# Clean the line
+		$string =~ s/^\s*//s;
+		$string =~ s/\s*\z//s;
+
+		# Skip blanks and comments
+		next unless $string =~ /^\s*[^#]/;
+
+		# Split the line into a command and params
+		my @list = split /\s+/, $string;
+		my $cmd  = shift @list;
+
+		# We only care about name
+		next unless defined $cmd;
+		next unless $cmd eq 'name';
+		next unless @list >= 2;
+
+		# Does the language exist
+		my $lang = shift @list;
+		unless ( Padre::Locale::rfc4646_exists($lang) ) {
+			die "Line $line: Unknown language in command '$string'";
+		}
+
+		# Save the name
+		$names{$lang} = join ' ', @list;
+	}
+	$handle->close;
+}
+
 sub find {
 	my $class = shift;
 	my $name  = shift;
@@ -151,7 +194,7 @@ sub load {
 
 	# Open the file
 	my $handle = IO::File->new( $file, 'r' ) or return;
-	my $self = $class->parse($handle);
+	my $self   = $class->parse($handle);
 	$handle->close;
 
 	return $self;

@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 54 );
+plan( tests => 55 );
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
@@ -73,10 +73,10 @@ foreach my $name (@styles) {
 use_ok('Padre::Wx::Style');
 
 # Search for the list of styles
-my $styles = Padre::Wx::Style->search;
-is( ref($styles), 'HASH', 'Found style hash' );
-ok( $styles->{default}, 'The default style is defined' );
-ok( -f $styles->{default}, 'The default style exists' );
+my $files = Padre::Wx::Style->files;
+is( ref($files), 'HASH', 'Found style hash' );
+ok( $files->{default}, 'The default style is defined' );
+ok( -f $files->{default}, 'The default style exists' );
 
 # Find the file by name
 my $file = Padre::Wx::Style->file('default');
@@ -84,6 +84,10 @@ ok( $file, 'Found file by name' );
 ok( -f $file, 'File by name exists' );
 
 # Load the default style
-my $style2 = Padre::Wx::Style->find('default');
-isa_ok( $style2, 'Padre::Wx::Style' );
-ok( scalar( @{ $style2->mime } ), 'Found a list of methods' );
+my $style = Padre::Wx::Style->find('default');
+isa_ok( $style, 'Padre::Wx::Style' );
+ok( scalar( @{ $style->mime } ), 'Found a list of methods' );
+
+# Find the localised name for a style
+my $name = Padre::Wx::Style->label('default');
+is( $name, 'Padre', 'Got expected label for default style' );
