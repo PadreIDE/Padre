@@ -20,13 +20,13 @@ sub new {
 	$self->{prev_diff_button} = Wx::BitmapButton->new(
 		$panel,
 		-1,
-		Padre::Wx::Icon::find("actions/up"),
+		Padre::Wx::Icon::find("actions/go-up"),
 	);
 	$self->{prev_diff_button}->SetToolTip( Wx::gettext('Previous difference') );
 	$self->{next_diff_button} = Wx::BitmapButton->new(
 		$panel,
 		-1,
-		Padre::Wx::Icon::find("actions/down"),
+		Padre::Wx::Icon::find("actions/go-down"),
 	);
 	$self->{next_diff_button}->SetToolTip( Wx::gettext('Next difference') );
 

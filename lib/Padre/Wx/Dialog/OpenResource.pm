@@ -217,7 +217,7 @@ sub _create_controls {
 	$self->{popup_button} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Padre::Wx::Icon::find("actions/down")
+		Padre::Wx::Icon::find("actions/go-down")
 	);
 	$self->{popup_button}->SetToolTip( Wx::gettext('Click on the arrow for filter settings') );
 
