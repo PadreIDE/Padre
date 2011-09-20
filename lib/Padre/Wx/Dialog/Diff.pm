@@ -58,7 +58,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[500, 70],
+		[350, 70],
 		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
 	);
 
@@ -68,13 +68,13 @@ sub new {
 	$button_sizer->Add( $self->{revert_button},    0, 0, 0 );
 	$button_sizer->AddSpacer(10);
 	$button_sizer->Add( $self->{status_label}, 0, Wx::ALL, 0 );
-	$button_sizer->AddSpacer(10);
-	$button_sizer->Add( $self->{close_button}, 0, Wx::ALIGN_RIGHT, 0 );
+	$button_sizer->AddStretchSpacer;
+	$button_sizer->Add( $self->{close_button}, 0, 0, 0 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->AddSpacer(1);
-	$vsizer->Add( $button_sizer, 0, 0, 1 );
-	$vsizer->Add( $self->{text_ctrl}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$vsizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$vsizer->Add( $self->{text_ctrl}, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Previous difference button
 	Wx::Event::EVT_BUTTON(
