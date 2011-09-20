@@ -59,7 +59,10 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[ 468, 70 ],
+		# (pbp line = 78 chrs) *2/3=52
+		# (9/16) 52 chrs plus a half; (52*9)+4 = 472
+		# 4 lines plus a half: (4*16)+8= 72
+		[ 472, 72 ],
 		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
 	);
 
