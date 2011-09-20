@@ -59,7 +59,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
-		[ 350, 70 ],
+		[ 468, 70 ],
 		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
 	);
 
