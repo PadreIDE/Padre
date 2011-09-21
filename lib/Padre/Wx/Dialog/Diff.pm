@@ -64,7 +64,7 @@ sub new {
 		# (9/16) 52 chrs plus a half; (52*9)+4 = 472
 		# 4 lines plus a half: (4*16)+8= 72
 		[ 472, 72 ],
-		Wx::TE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP,
+		Wx::TE_READONLY | Wx::TE_MULTILINE | Wx::TE_DONTWRAP,
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
