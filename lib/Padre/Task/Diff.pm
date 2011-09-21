@@ -44,7 +44,7 @@ sub new {
 	$self->{text} = $document->text_get;
 
 	# Obtain document project dir
-	$self->{project} = $document->project_dir;
+	$self->{project_dir} = $document->project_dir;
 
 	return $self;
 }
@@ -64,7 +64,7 @@ sub run {
 	my $text     = delete $self->{text}     if $self->{text};
 	my $vcs      = delete $self->{vcs}      if ( $self->{vcs} );
 	my $filename = delete $self->{filename} if $self->{filename};
-	my $project_dir  = delete $self->{project}  if $self->{project};
+	my $project_dir  = delete $self->{project_dir}  if $self->{project_dir};
 
 	# Compare between VCS and local buffer document
 	my $data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text );
@@ -149,7 +149,7 @@ sub _find_git_diff {
 
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
-	Padre::Util::run_in_directory( join( ' ', @cmd ), $self->{project} );
+	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
 
 	# Slurp git command standard input and output
 	my $stdout = Padre::Util::slurp $out->filename;
