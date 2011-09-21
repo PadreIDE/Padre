@@ -336,6 +336,7 @@ sub on_change_dwell {
 		$main->refresh_functions;
 		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
+		$main->refresh_todo;
 		$main->refresh_diff;
 	}
 
