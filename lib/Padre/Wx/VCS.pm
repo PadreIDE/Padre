@@ -12,6 +12,7 @@ our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
 };
 
 # Constructor
