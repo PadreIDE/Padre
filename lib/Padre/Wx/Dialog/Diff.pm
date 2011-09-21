@@ -59,6 +59,7 @@ sub new {
 		-1,
 		'',
 		Wx::DefaultPosition,
+
 		# (pbp line = 78 chrs) *2/3=52
 		# (9/16) 52 chrs plus a half; (52*9)+4 = 472
 		# 4 lines plus a half: (4*16)+8= 72
@@ -160,7 +161,7 @@ sub show {
 
 	# Hack to workaround Wx::PopupWindow relative positioning bug
 	if (Padre::Constant::WIN32) {
-		$self->Move($self->main->ScreenToClient($editor->ClientToScreen($pt)));
+		$self->Move( $self->main->ScreenToClient( $editor->ClientToScreen($pt) ) );
 	} else {
 		$self->Move( $editor->ClientToScreen($pt) );
 	}

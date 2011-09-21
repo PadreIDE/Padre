@@ -61,10 +61,10 @@ sub run {
 
 	# Pull the text off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
-	my $text     = delete $self->{text}     if $self->{text};
-	my $vcs      = delete $self->{vcs}      if ( $self->{vcs} );
-	my $filename = delete $self->{filename} if $self->{filename};
-	my $project_dir  = delete $self->{project_dir}  if $self->{project_dir};
+	my $text        = delete $self->{text}        if $self->{text};
+	my $vcs         = delete $self->{vcs}         if ( $self->{vcs} );
+	my $filename    = delete $self->{filename}    if $self->{filename};
+	my $project_dir = delete $self->{project_dir} if $self->{project_dir};
 
 	# Compare between VCS and local buffer document
 	my $data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text );
