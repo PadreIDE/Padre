@@ -1185,6 +1185,9 @@ setting(
 	store   => Padre::Constant::HOST,
 	default => 'default',
 	options => Padre::Wx::Style->options,
+	apply   => sub {
+		$_[0]->restyle;
+	},
 );
 
 # Window Geometry

@@ -187,7 +187,7 @@ sub new {
 	$self->{locale} = ( $startup_locale ? Padre::Locale::object($startup_locale) : Padre::Locale::object() );
 
 	# Bootstrap style information in case the GUI will need it
-	$self->{style} = Padre::Wx::Style->find('default');
+	$self->{style} = Padre::Wx::Style->find( $config->editor_style );
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -1919,38 +1919,6 @@ sub refresh_diff {
 Those methods reconfigure Padre's main window in case of drastic changes
 (locale, etc.)
 
-=head3 C<change_style>
-
-    $main->change_style( $style, $private );
-
-Apply C<$style> to Padre main window. C<$private> is a Boolean true if
-the style is located in user's private Padre directory.
-
-=cut
-
-sub change_style {
-	my $self    = shift;
-	my $name    = shift;
-	my $private = shift;
-	my $lock    = $self->lock('CONFIG');
-	$self->config->set( editor_style => $name );
-
-	# Disabled until style selection is sane again
-	return;
-
-	# Find and load the new style
-	my $style = $self->{style} = Padre::Wx::Style->find($name);
-
-	# Apply the new style to all current editors
-	foreach my $editor ( $self->editors ) {
-		$style->apply($editor);
-	}
-
-	return;
-}
-
-=pod
-
 =head3 C<change_locale>
 
     $main->change_locale( $locale );
@@ -2065,6 +2033,35 @@ sub relocale {
 	# Replace the about box if it exists
 	if ( exists $self->{about} ) {
 		$self->{about} = Padre::Wx::About->new($self);
+	}
+
+	return;
+}
+
+=pod
+
+=head3 C<restyle>
+
+    $main->restyle;
+
+The term and method C<restyle> is reserved for code that needs to be run when
+the L<Padre::Wx::Style|style> of the editor has changed and the colouring of
+the application needs to be changed without restarting.
+
+Note that the new style must be applied to configuration before this method is
+called, and this method is usually called by the C<apply> handler for the
+C<editor_style> configuration setting.
+
+=cut
+
+sub restyle {
+	my $self  = shift;
+	my $name  = $self->config->editor_style;
+	my $style = $self->{style} = Padre::Wx::Style->find($name);
+
+	# Apply the new style to all current editors
+	foreach my $editor ( $self->editors ) {
+		$style->apply($editor);
 	}
 
 	return;
