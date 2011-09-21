@@ -67,7 +67,7 @@ sub run {
 	my $project_dir = delete $self->{project_dir} if $self->{project_dir};
 
 	# Compare between VCS and local buffer document
-	my $data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text );
+	my $data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text ) if $vcs;
 	unless ($data) {
 
 		# Compare between saved and current buffer document
@@ -84,7 +84,7 @@ sub _find_local_diff {
 
 	my $content = $filename ? Padre::Util::slurp($filename) : undef;
 	my $data = [];
-	if ($content) {
+	if ($content and $text) {
 		$data = $self->_find_diffs( $$content, $text );
 	}
 
