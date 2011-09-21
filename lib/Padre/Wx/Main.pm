@@ -2058,6 +2058,7 @@ sub restyle {
 	my $self  = shift;
 	my $name  = $self->config->editor_style;
 	my $style = $self->{style} = Padre::Wx::Style->find($name);
+	my $lock  = $self->lock('UPDATE');
 
 	# Apply the new style to all current editors
 	foreach my $editor ( $self->editors ) {
