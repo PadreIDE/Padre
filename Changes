@@ -96,13 +96,16 @@ the even version for the release, even during development.
     - Added how much time does syntax checking take (AZAWAWI)
     - Added realtime VCS or local document difference calculation margin feature
       (AZAWAWI)
-    - Added difference box that can revert back changes (AZAWAWI)
+    - Added a differences popup window that can traverse differences in a document
+      and revert back changes (AZAWAWI)
     - Added 'Next Difference' to edit menu (AZAWAWI)
     - Plugin manager is now modal (BOWTIE, AZAWAWI)
     - Add Patch to editor menu and removed Diff Tools (BOWTIE)
     - Update Italian translation (SBLANDIN)
     - Padre::Project vcs strings are constants now (AZAWAWI)
     - "Filter through Perl" back into core (SEWI)
+    - Added *experimental* version control system (VCS) support that can be
+      enabled through feature_vcs_support (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
