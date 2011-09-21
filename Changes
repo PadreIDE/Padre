@@ -106,6 +106,7 @@ the even version for the release, even during development.
     - "Filter through Perl" back into core (SEWI)
     - Added *experimental* version control system (VCS) support that can be
       enabled through feature_vcs_support (AZAWAWI)
+    - #1126 'TODO list: does not immediately show items' (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
