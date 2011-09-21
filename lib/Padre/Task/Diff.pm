@@ -61,12 +61,13 @@ sub run {
 
 	# Pull the text off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
-	my $text     = delete $self->{text};
-	my $vcs      = delete $self->{vcs} if ( $self->{vcs} );
-	my $filename = delete $self->{filename};
+	my $text     = delete $self->{text}     if $self->{text};
+	my $vcs      = delete $self->{vcs}      if ( $self->{vcs} );
+	my $filename = delete $self->{filename} if $self->{filename};
+	my $project_dir  = delete $self->{project}  if $self->{project};
 
 	# Compare between VCS and local buffer document
-	my $data = $self->_find_vcs_diff( $vcs, $filename, $text );
+	my $data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text );
 	unless ($data) {
 
 		# Compare between saved and current buffer document
@@ -92,10 +93,10 @@ sub _find_local_diff {
 
 # Find differences between VCS versioned document and current document
 sub _find_vcs_diff {
-	my ( $self, $vcs, $filename, $text, $project ) = @_;
+	my ( $self, $vcs, $project_dir, $filename, $text ) = @_;
 
 	return $self->_find_svn_diff( $filename, $text ) if $vcs eq Padre::Constant::SUBVERSION;
-	return $self->_find_git_diff( $filename, $text ) if $vcs eq Padre::Constant::GIT;
+	return $self->_find_git_diff( $project_dir, $filename, $text ) if $vcs eq Padre::Constant::GIT;
 
 	#TODO implement the rest of the VCS like mercurial, bazaar
 	TRACE("Unhandled $vcs") if DEBUG;
@@ -120,7 +121,7 @@ sub _find_svn_diff {
 
 # Find differences between git versioned document and current document
 sub _find_git_diff {
-	my ( $self, $filename, $text ) = @_;
+	my ( $self, $project_dir, $filename, $text ) = @_;
 
 	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
