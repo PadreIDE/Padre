@@ -267,7 +267,7 @@ sub show_diff_box {
 		$self->{dialog}->Hide;
 		$self->{dialog}->Destroy;
 	}
-	$self->{dialog} = Padre::Wx::Dialog::Diff->new($editor);
+	$self->{dialog} = Padre::Wx::Dialog::Diff->new($self->{main});
 	$self->{dialog}->show(
 		$editor, $line, $diff,
 		$editor->PointFromPosition( $editor->PositionFromLine( $line + 1 ) )

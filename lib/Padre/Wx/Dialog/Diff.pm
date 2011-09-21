@@ -160,7 +160,7 @@ sub show {
 
 	# Hack to workaround Wx::PopupWindow relative positioning bug
 	if (Padre::Constant::WIN32) {
-		$self->Move($pt);
+		$self->Move($self->main->ScreenToClient($editor->ClientToScreen($pt)));
 	} else {
 		$self->Move( $editor->ClientToScreen($pt) );
 	}
