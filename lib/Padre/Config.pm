@@ -1411,7 +1411,7 @@ setting(
 	name    => 'feature_vcs_support',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 1,
+	default => 0,
 	help    => _T('Toggle version control system support')
 );
 
