@@ -159,6 +159,11 @@ sub show {
 	$self->{line}   = $line;
 	$self->{diff}   = $diff;
 
+	# Inherit font from current editor
+	my $font = $editor->GetFont;
+	$self->{status_label}->SetFont($font);
+	$self->{text_ctrl}->SetFont($font);
+
 	# Hack to workaround Wx::PopupWindow relative positioning bug
 	if (Padre::Constant::WIN32) {
 		$self->Move( $self->main->ScreenToClient( $editor->ClientToScreen($pt) ) );
