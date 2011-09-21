@@ -40,6 +40,8 @@ StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
 StyleSetForeground wxSTC_STYLE_DEFAULT            000000
 StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
 StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
+StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
+StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
 
 
 
@@ -60,8 +62,6 @@ StyleSetForeground wxSTC_CONF_DIRECTIVE           202020
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
 StyleSetForeground wxSTC_PL_DEFAULT               00ff00
 StyleSetForeground wxSTC_PL_ERROR                 ff0000
 StyleSetForeground wxSTC_PL_COMMENTLINE           007f00
@@ -103,8 +103,6 @@ StyleSetForeground wxSTC_PL_STRING_QW             7f007f
 
 style text/x-c
 include text/plain
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
 StyleSetForeground wxSTC_C_DEFAULT                000000
 StyleSetForeground wxSTC_C_COMMENT                007f00
 StyleSetForeground wxSTC_C_COMMENTLINE            007f00
