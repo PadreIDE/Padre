@@ -359,7 +359,7 @@ sub parse_style {
 		}
 		$string = "Padre::Constant::$string";
 	} elsif ( $string =~ /^wxSTC_\w+\z/ ) {
-		unless ( Wx::->can($string) ) {
+		unless ( Wx->can($string) ) {
 			die "Line $line: Unknown or unsupported style '$copy'";
 		}
 		$string = "Wx::$string";
