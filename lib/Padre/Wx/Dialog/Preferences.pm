@@ -218,7 +218,6 @@ sub cancel {
 
 	# Apply the original style
 	my $style = delete $self->{original_style};
-	$self->main->action("view.style.$style");
 
 	# Cancel the preferences dialog in Wx
 	$self->EndModal(Wx::ID_CANCEL);
@@ -284,8 +283,6 @@ sub preview_refresh {
 		my $style  = $self->choice('editor_style');
 
 		# Removed for RELEAES_TESTING=1 pass
-		#Padre::Current->main->action("view.style.$style");
-		$self->current->main->action("view.style.$style");
 		$preview->set_preferences($config);
 	}
 

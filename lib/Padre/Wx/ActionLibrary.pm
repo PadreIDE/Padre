@@ -7,20 +7,20 @@ package Padre::Wx::ActionLibrary;
 use 5.008005;
 use strict;
 use warnings;
-use File::Spec           ();
-use Params::Util         ();
-use Padre::Util          ('_T');
-use Padre::Feature       ();
-use Padre::Config::Style ();
-use Padre::Current       ();
-use Padre::Constant      ();
-use Padre::MimeTypes     ();
-use Padre::Wx            ();
-use Padre::Wx::Menu      ();
-use Padre::Wx::Action    ();
+use File::Spec        ();
+use Params::Util      ();
+use Padre::Util       ('_T');
+use Padre::Feature    ();
+use Padre::Current    ();
+use Padre::Constant   ();
+use Padre::MimeTypes  ();
+use Padre::Wx         ();
+use Padre::Wx::Menu   ();
+use Padre::Wx::Action ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
+
 
 
 
@@ -1704,32 +1704,6 @@ sub init {
 				$_[0]->zoom( -1 * $editor->GetZoom );
 			},
 		);
-	}
-
-	# Style Actions
-
-	SCOPE: {
-		my @styles = (
-			Padre::Config::Style->styles,
-			Padre::Config::Style->user_styles,
-		);
-
-		foreach my $private ( 0 .. 1 ) {
-			my $styles = $styles[$private];
-
-			foreach my $name ( sort keys %$styles ) {
-				Padre::Wx::Action->new(
-					name    => "view.style.$name",
-					label   => $styles->{$name},
-					comment => _T('Switch highlighting colours'),
-
-					#menu_method => 'AppendRadioItem',
-					menu_event => sub {
-						$_[0]->change_style( $name, $private );
-					},
-				);
-			}
-		}
 	}
 
 	init_language_actions;

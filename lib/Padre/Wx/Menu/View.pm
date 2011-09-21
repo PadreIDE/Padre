@@ -8,7 +8,6 @@ use warnings;
 use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Feature           ();
-use Padre::Config::Style     ();
 use Padre::Wx                ();
 use Padre::Wx::ActionLibrary ();
 use Padre::Wx::Menu          ();

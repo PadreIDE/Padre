@@ -3,13 +3,11 @@ package Padre::Wx::Style;
 use 5.008;
 use strict;
 use warnings;
+use File::Spec           ();
 use IO::File             ();
 use Params::Util         ();
 use Padre::Constant      ();
 use Padre::Util          ();
-use Padre::Wx            ();
-use Padre::Locale        ();
-use Padre::Config::Style ();
 
 our $VERSION = '0.91';
 
@@ -113,26 +111,26 @@ sub file {
 }
 
 sub labels {
-	my $class = shift;
-	my $lang  = shift;
-	my $files = $class->files;
+	my $class  = shift;
+	my $locale = shift;
+	my $files  = $class->files;
 
 	# Load the label for each file.
 	# Because we resolve the filename again this is slower than
 	# it could be, but the code is simple and easy and will do for now.
 	my %labels = ();
 	foreach my $name ( keys %$files ) {
-		$labels{$name} = $class->label( $name, $lang );
+		$labels{$name} = $class->label( $name, $locale );
 	}
 
 	return \%labels;
 }
 
 sub label {
-	my $class = shift;
-	my $name  = shift;
-	my $lang  = shift;
-	my $file  = $class->file($name);
+	my $class  = shift;
+	my $name   = shift;
+	my $locale = shift;
+	my $file   = $class->file($name);
 	unless ( $file ) {
 		die "The style '$name' does not exist";
 	}
@@ -159,21 +157,18 @@ sub label {
 		next unless defined $cmd;
 		last unless $cmd eq 'name';
 
-		# Does the language exist
-		my $lang = shift @list;
-		unless ( Padre::Locale::rfc4646_exists($lang) ) {
-			die "Line $line: Unknown language in command '$string'";
-		}
-
 		# Save the name
+		my $lang = shift @list;
 		$label{$lang} = join ' ', @list;
 	}
 	$handle->close;
 
 	# Try to find a usable label
-	return $label{ Padre::Locale::rfc4646($lang) }
-	    || $label{ Padre::Locale::DEFAULT }
-	    || $name;
+	return $label{$locale} || $label{'en-gb'} || $name;
+}
+
+sub options {
+	$_[0]->labels('en-gb');
 }
 
 sub find {
@@ -252,6 +247,10 @@ sub mime {
 sub parse {
 	my $class = shift;
 	my $handle = Params::Util::_HANDLE(shift) or die "Not a file handle";
+
+	# Load the delayed modules
+	require Padre::Wx;
+	require Padre::Locale;
 
 	# Parse the file
 	my %name   = ();
@@ -432,12 +431,13 @@ sub clear {
 
 	# Reset the font from configuration (which Scintilla considers part of
 	# the "style" but Padre doesn't allow to be changed as a "style")
-	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+	require Padre::Wx;
+	my $font = Wx::Font->new( 10, Wx::TELETYPE(), Wx::NORMAL(), Wx::NORMAL() );
 	if ( defined Params::Util::_STRING( $config->editor_font ) ) {
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	$editor->SetFont($font);
-	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT(), $font );
 
 	# Clear all styles back to the default
 	$editor->StyleClearAll;
