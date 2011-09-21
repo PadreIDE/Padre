@@ -8,6 +8,7 @@ use Padre::Document             ();
 use Padre::Wx                   ();
 use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
+use Padre::Wx::Style            ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -123,86 +124,10 @@ sub config_load {
 	# a public method returning it.
 	$self->SUPER::config_load( $config, $self->names );
 
-	# Sync the editor preview to the current config
-	$self->preview->set_preferences;
-
-	### HACK
-	# Backup the editor style
-	$self->{original_style} = $config->editor_style;
+	# Do an initial style refresh of the editor preview
+	$self->preview_refresh;
 
 	return 1;
-}
-
-# Customised with an extra hack
-sub config_diff {
-	my $self   = shift;
-	my $config = shift;
-	my %diff   = ();
-
-	# Iterate over the configuration entries and apply the
-	# configuration state to the dialog.
-	foreach my $name ( $config->settings ) {
-		next unless $self->can($name);
-
-		# Get the Wx element for this option
-		my $setting = $config->meta($name);
-		my $old     = $config->$name();
-		my $ctrl    = $self->$name();
-
-		### HACK
-		# Get the "old" value from the backed up copy of the style
-		if ( $name eq 'editor_style' ) {
-			$old = $self->{original_style};
-		}
-
-		# Don't capture options that are not shown,
-		# as this may result in falsely clearing them.
-		next unless $ctrl->IsEnabled;
-
-		# Extract the value from the control
-		my $value = undef;
-		if ( $ctrl->isa('Wx::CheckBox') ) {
-			$value = $ctrl->GetValue ? 1 : 0;
-
-		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$value = $ctrl->GetValue;
-
-		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$value = $ctrl->GetValue;
-
-		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
-			$value = $ctrl->GetPath;
-
-		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
-			$value = $ctrl->GetPath;
-
-		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-			$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);
-			$value =~ s/^#// if defined $value;
-
-		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			$value = $ctrl->GetSelectedFont->GetNativeFontInfoUserDesc;
-
-		} elsif ( $ctrl->isa('Wx::Choice') ) {
-			my $options = $setting->options;
-			if ($options) {
-				my @k = sort keys %$options;
-				my $i = $ctrl->GetSelection;
-				$value = $k[$i];
-			}
-		} else {
-
-			# To be completed
-		}
-
-		# Skip if null
-		next unless defined $value;
-		next if $value eq $old;
-		$diff{$name} = $value;
-	}
-
-	return unless %diff;
-	return \%diff;
 }
 
 
@@ -215,9 +140,6 @@ sub config_diff {
 sub cancel {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-
-	# Apply the original style
-	my $style = delete $self->{original_style};
 
 	# Cancel the preferences dialog in Wx
 	$self->EndModal(Wx::ID_CANCEL);
@@ -254,38 +176,14 @@ sub guess {
 	return;
 }
 
-# Generate a config object that we won't ultimately save, but can be used
-# when tailoring the editor preview to new settings.
-sub preview_config {
-	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
-	my $config = $self->config;
-	my $diff   = $self->config_diff($config);
-	my $custom = $config->clone;
-	foreach my $key ( sort keys %$diff ) {
-		$custom->set( $key => $diff->{$key} );
-	}
-	return $custom;
-}
-
 # We do this the long-hand way for now, as we don't have a suitable
 # method for generating proper logical style objects.
 sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $main    = $self->main;
-	my $lock    = $main->lock('UPDATE');
-	my $preview = $self->preview;
-
-	# Apply the style (but only if we can do so safely)
-	if ( $self->{original_style} ) {
-		my $config = $self->preview_config;
-		my $style  = $self->choice('editor_style');
-
-		# Removed for RELEAES_TESTING=1 pass
-		$preview->set_preferences($config);
-	}
-
+	my $self = shift;
+	my $lock = $self->main->lock('UPDATE');
+	my $name = $self->choice('editor_style');
+	Padre::Wx::Style->find($name)->apply( $self->preview );
 	return;
 }
 
