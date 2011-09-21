@@ -31,9 +31,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Perl Filter'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::DEFAULT_FRAME_STYLE,
 	);
 
 	# Set basic dialog properties
@@ -41,7 +41,7 @@ sub new {
 	$self->SetMinSize( [ 380, 500 ] );
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{sizer} = $sizer;
 
 	# Create the controls
@@ -67,8 +67,8 @@ sub _create_controls {
 	$self->{filter_mode} = Wx::RadioBox->new(
 		$self, -1,
 		Wx::gettext('Input/output:'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[   Wx::gettext('$_ for both'),
 
 			# Wx::gettext('STDIN/STDOUT'),
@@ -86,22 +86,22 @@ sub _create_controls {
 	# Perl source
 	my $source_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Perl filter source:') );
 	$self->{source} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
+		Wx::RE_MULTILINE | Wx::WANTS_CHARS
 	);
 
 	# Input text
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('Or&iginal text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
+		Wx::TE_MULTILINE | Wx::NO_FULL_REPAINT_ON_RESIZE
 	);
 
 	# Matched readonly text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Output text:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		$self, -1, '', Wx::DefaultPosition, Wx::DefaultSize,
+		Wx::RE_MULTILINE | Wx::RE_READONLY | Wx::WANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Run the filter
@@ -116,35 +116,35 @@ sub _create_controls {
 
 	# Close button
 	$self->{close_button} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
+		$self, Wx::ID_CANCEL, Wx::gettext('&Close'),
 	);
 
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{run_button},    0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{run_button},    0, Wx::ALL, 1 );
+	$buttons->Add( $self->{insert_button}, 0, Wx::ALL, 1 );
+	$buttons->Add( $self->{close_button},  0, Wx::ALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Dialog Layout
 
 	# Vertical layout of the left hand side
-	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $left = Wx::BoxSizer->new(Wx::VERTICAL);
 
-	$left->Add( $self->{filter_mode}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{filter_mode}, 0, Wx::ALL | Wx::EXPAND, 1 );
 
-	$left->Add( $source_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{source}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $source_label,   0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{source}, 1, Wx::ALL | Wx::EXPAND, 1 );
 
-	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $original_label,        0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{original_text}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $result_label,          0, Wx::ALL | Wx::EXPAND, 1 );
+	$left->Add( $self->{result_text},   1, Wx::ALL | Wx::EXPAND, 1 );
 	$left->AddSpacer(5);
-	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $buttons, 0, Wx::ALL | Wx::EXPAND, 1 );
 
 	# Main sizer
-	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $left, 1, Wx::ALL | Wx::EXPAND, 5 );
 }
 
 sub _bind_events {
@@ -154,7 +154,7 @@ sub _bind_events {
 	# $self,
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -168,7 +168,7 @@ sub _bind_events {
 	# $self->{source},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -177,7 +177,7 @@ sub _bind_events {
 	# $self->{original_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
@@ -186,7 +186,7 @@ sub _bind_events {
 	# $self->{result_text},
 	# sub {
 	# my ($key_event) = $_[1];
-	# $self->Hide if $key_event->GetKeyCode == Wx::WXK_ESCAPE;
+	# $self->Hide if $key_event->GetKeyCode == Wx::K_ESCAPE;
 	# return;
 	# }
 	# );
