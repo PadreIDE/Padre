@@ -710,6 +710,15 @@ sub diff {
 	return $self->{diff};
 }
 
+sub vcs {
+	my $self = shift;
+	unless ( defined $self->{vcs} ) {
+		require Padre::Wx::VCS;
+		$self->{vcs} = Padre::Wx::VCS->new($self);
+	}
+	return $self->{vcs};
+}
+
 BEGIN {
 	no warnings 'once';
 	*debugger = sub {
