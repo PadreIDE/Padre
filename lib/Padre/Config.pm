@@ -1406,6 +1406,15 @@ setting(
 	help    => _T('Toggle saved document differences feature')
 );
 
+# Toggle *experimental* version control system (VCS) support
+setting(
+	name    => 'feature_vcs_support',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+	help    => _T('Toggle version control system support')
+);
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',
