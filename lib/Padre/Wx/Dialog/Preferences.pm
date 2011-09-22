@@ -130,6 +130,16 @@ sub config_load {
 	return 1;
 }
 
+sub config_diff {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $config = shift;
+
+	# We assume all public dialog elements will match a wx widget
+	# with a public method returning it.
+	$self->SUPER::config_diff( $config, $self->names );
+}
+
 
 
 
