@@ -62,7 +62,7 @@ StyleSetForeground wxSTC_CONF_DIRECTIVE           202020
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_PL_DEFAULT               00ff00
+StyleSetForeground wxSTC_PL_DEFAULT               999999
 StyleSetForeground wxSTC_PL_ERROR                 ff0000
 StyleSetForeground wxSTC_PL_COMMENTLINE           007f00
 StyleSetForeground wxSTC_PL_POD                   7f7f7f
