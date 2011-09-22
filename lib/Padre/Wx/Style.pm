@@ -36,8 +36,9 @@ my %PARAM = (
 	SetBackgroundColour     => [ 1, 'color' ],
 	SetCaretLineBackground  => [ 1, 'color' ],
 	SetCaretForeground      => [ 1, 'color' ],
-	SetWhitespaceBackground => [ 1, 'color' ],
-	SetWhitespaceForeground => [ 1, 'color' ],
+	CallTipSetBackground    => [ 1, 'color' ],
+	SetWhitespaceBackground => [ 2, 'boolean,color' ],
+	SetWhitespaceForeground => [ 2, 'boolean,color' ],
 	SetSelBackground        => [ 2, 'style,color' ],
 	SetSelForeground        => [ 1, 'style,color' ],
 	StyleSetBackground      => [ 2, 'style,color' ],
@@ -328,6 +329,10 @@ sub parse {
 			# Style command that is passed a spec string
 			my $style = $class->parse_style( $line, shift @list );
 			my $spec = shift @list;
+		} elsif ( $PARAM{$cmd}->[1] eq 'boolean,color' ) {
+			my $boolean = $class->parse_boolean( $line , shift @list );
+			my $color = $class->parse_color( $line, shift @list );
+			push @$style, $cmd, [ $boolean , $color ];
 		} else {
 			die "Line $line: Unsupported style command '$string'";
 		}
