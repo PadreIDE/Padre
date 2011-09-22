@@ -1,0 +1,162 @@
+name en-gb Solarized Dark
+
+style padre
+StyleSetBackground      wxSTC_STYLE_DEFAULT     002b36
+StyleSetForeground      wxSTC_STYLE_DEFAULT     93a1a1
+StyleSetForeground      wxSTC_STYLE_CONTROLCHAR 657b83
+StyleSetBackground      wxSTC_STYLE_CONTROLCHAR 002b36
+StyleSetForeground      PADRE_BLACK             93a1a1
+StyleSetForeground      PADRE_BLUE              268bd2
+StyleSetForeground      PADRE_RED               dc322f
+StyleSetForeground      PADRE_GREEN             859900
+StyleSetForeground      PADRE_MAGENTA           d33682
+StyleSetForeground      PADRE_ORANGE            cb4b16
+StyleSetForeground      PADRE_CRIMSON           6c71c4
+StyleSetForeground      PADRE_BROWN             b58900
+StyleSetForeground      PADRE_WARNING           af8000
+StyleSetBackground      PADRE_WARNING           fffff0
+StyleSetItalic          PADRE_WARNING           1
+StyleSetForeground      PADRE_ERROR             af0000
+StyleSetBackground      PADRE_ERROR             fff0f0
+StyleSetItalic          PADRE_ERROR             1
+StyleSetBackground      wxSTC_STYLE_CALLTIP     073642
+StyleSetForeground      wxSTC_STYLE_CALLTIP     657b83
+
+style text/plain
+include padre
+SetCaretForeground                                  93a1a1
+SetCaretLineBackground                              073642
+SetSelBackground        1 eee8d5
+SetWhitespaceForeground 0                           657b83
+SetWhitespaceBackground 0                           002b36
+StyleSetBackground      wxSTC_STYLE_DEFAULT         002b36
+StyleSetBackground      wxSTC_STYLE_LINENUMBER      073642
+StyleSetForeground      wxSTC_STYLE_LINENUMBER      586e75
+StyleSetForeground      wxSTC_STYLE_INDENTGUIDE     859900
+CallTipSetBackground 073642
+
+
+#
+# application/x-perl
+#
+style application/x-perl
+include text/plain
+StyleSetForeground      wxSTC_STYLE_BRACELIGHT      eee8d5
+StyleSetForeground      wxSTC_STYLE_BRACEBAD        002b36
+StyleSetForeground      wxSTC_PL_DEFAULT            657b83
+StyleSetForeground      wxSTC_PL_ERROR              ff0000
+StyleSetForeground      wxSTC_PL_COMMENTLINE        586e75
+StyleSetForeground      wxSTC_PL_POD                657b83
+StyleSetForeground      wxSTC_PL_POD_VERB           657b83
+StyleSetItalic          wxSTC_PL_POD_VERB           1
+StyleSetForeground      wxSTC_PL_NUMBER             cb4b16
+StyleSetForeground      wxSTC_PL_WORD               859900
+StyleSetForeground      wxSTC_PL_STRING             2aa198
+StyleSetForeground      wxSTC_PL_CHARACTER          6c71c4
+StyleSetForeground      wxSTC_PL_PUNCTUATION        000000
+StyleSetForeground      wxSTC_PL_PREPROCESSOR       657b83
+StyleSetForeground      wxSTC_PL_OPERATOR           268bd2
+StyleSetForeground      wxSTC_PL_IDENTIFIER         839496
+StyleSetForeground      wxSTC_PL_SCALAR             b58900
+StyleSetForeground      wxSTC_PL_ARRAY              dc322f
+StyleSetForeground      wxSTC_PL_HASH               dc322f
+StyleSetForeground      wxSTC_PL_SYMBOLTABLE        eee8d5
+StyleSetForeground      wxSTC_PL_VARIABLE_INDEXER   b58900
+StyleSetForeground      wxSTC_PL_REGEX              d33682
+StyleSetForeground      wxSTC_PL_REGSUBST           93a1a1
+StyleSetForeground      wxSTC_PL_LONGQUOTE          2aa198
+StyleSetForeground      wxSTC_PL_BACKTICKS          cb4b16
+StyleSetForeground      wxSTC_PL_DATASECTION        2aa198
+StyleSetForeground      wxSTC_PL_HERE_DELIM         2aa198
+StyleSetForeground      wxSTC_PL_HERE_Q             6c71c4
+StyleSetForeground      wxSTC_PL_HERE_QQ            2aa198
+StyleSetForeground      wxSTC_PL_HERE_QX            cb4b16
+StyleSetForeground      wxSTC_PL_STRING_Q           6c71c4
+StyleSetForeground      wxSTC_PL_STRING_QQ          2aa198
+StyleSetForeground      wxSTC_PL_STRING_QX          cb4b16
+StyleSetForeground      wxSTC_PL_STRING_QR          d33682
+StyleSetForeground      wxSTC_PL_STRING_QW          6c71c4
+StyleSetForeground      wxSTC_PL_SUB_PROTOTYPE      cb4b16
+StyleSetForeground      wxSTC_PL_FORMAT_IDENT       eee8d5
+StyleSetForeground      wxSTC_PL_FORMAT             2aa198
+
+StyleSetBackground      wxSTC_STYLE_BRACELIGHT      073642
+StyleSetBackground      wxSTC_STYLE_BRACEBAD        eee8d5
+
+StyleSetBackground      wxSTC_PL_DEFAULT            002b36
+StyleSetBackground      wxSTC_PL_ERROR              002b36
+StyleSetBackground      wxSTC_PL_COMMENTLINE        002b36
+StyleSetBackground      wxSTC_PL_POD                002b36
+StyleSetBackground      wxSTC_PL_NUMBER             002b36
+StyleSetBackground      wxSTC_PL_WORD               002b36
+StyleSetBackground      wxSTC_PL_STRING             002b36
+StyleSetBackground      wxSTC_PL_CHARACTER          002b36
+StyleSetBackground      wxSTC_PL_PUNCTUATION        002b36
+StyleSetBackground      wxSTC_PL_PREPROCESSOR       002b36
+StyleSetBackground      wxSTC_PL_OPERATOR           002b36
+StyleSetBackground      wxSTC_PL_IDENTIFIER         002b36
+StyleSetBackground      wxSTC_PL_SCALAR             002b36
+StyleSetBackground      wxSTC_PL_ARRAY              002b36
+StyleSetBackground      wxSTC_PL_HASH               002b36
+StyleSetBackground      wxSTC_PL_SYMBOLTABLE        002b36
+StyleSetBackground      wxSTC_PL_REGEX              002b36
+StyleSetBackground      wxSTC_PL_REGSUBST           002b36
+StyleSetBackground      wxSTC_PL_LONGQUOTE          002b36
+StyleSetBackground      wxSTC_PL_BACKTICKS          002b36
+StyleSetBackground      wxSTC_PL_DATASECTION        002b36
+StyleSetBackground      wxSTC_PL_HERE_DELIM         002b36
+StyleSetBackground      wxSTC_PL_HERE_Q             002b36
+StyleSetBackground      wxSTC_PL_HERE_QQ            002b36
+StyleSetBackground      wxSTC_PL_HERE_QX            002b36
+StyleSetBackground      wxSTC_PL_STRING_Q           002b36
+StyleSetBackground      wxSTC_PL_STRING_QQ          002b36
+StyleSetBackground      wxSTC_PL_STRING_QX          002b36
+StyleSetBackground      wxSTC_PL_STRING_QR          002b36
+StyleSetBackground      wxSTC_PL_STRING_QW          002b36
+StyleSetBackground      wxSTC_PL_FORMAT             002b36
+StyleSetBackground      wxSTC_PL_FORMAT_IDENT       002b36
+StyleSetBackground      wxSTC_PL_SUB_PROTOTYPE      002b36
+StyleSetBackground      wxSTC_PL_POD_VERB           002b36
+StyleSetBackground      wxSTC_PL_VARIABLE_INDEXER   002b36
+# The 'constant' definition is weird with interplay between
+# Wx::Scintilla , Wx:: Padre::Wx::Constants/Style
+#StyleSetBackground      wxSTC_PL_STRING_VAR         002b36
+#StyleSetBackground      wxSTC_PL_REGEX_VAR          002b36
+#StyleSetBackground      wxSTC_PL_REGSUBST_VAR       002b36
+#StyleSetBackground      wxSTC_PL_BACKTICKS_VAR      002b36
+#StyleSetBackground      wxSTC_PL_HERE_QQ_VAR        002b36
+#StyleSetBackground      wxSTC_PL_HERE_QX_VAR        002b36
+#StyleSetBackground      wxSTC_PL_STRING_QQ_VAR      002b36
+#StyleSetBackground      wxSTC_PL_STRING_QX_VAR      002b36
+#StyleSetBackground      wxSTC_PL_STRING_QR_VAR      002b36
+# RECOOKED using magic numbers instead of constants
+StyleSetForeground      43         b58900
+StyleSetForeground      44         b58900
+StyleSetForeground      54         b58900
+StyleSetForeground      55         b58900
+StyleSetForeground      57         b58900
+StyleSetForeground      61         b58900
+StyleSetForeground      62         b58900
+StyleSetForeground      64         b58900
+StyleSetForeground      65         b58900
+StyleSetForeground      66         b58900
+
+StyleSetBackground      43         002b36
+StyleSetBackground      44         073642
+StyleSetBackground      54         073642
+StyleSetBackground      55         073642
+StyleSetBackground      57         002b36
+StyleSetBackground      61         002b36
+StyleSetBackground      62         002b36
+StyleSetBackground      64         002b36
+StyleSetBackground      65         002b36
+StyleSetBackground      66         073642
+
+
+
+StyleSetBackground       wxSTC_PL_SUB_PROTOTYPE      073642
+StyleSetBackground       wxSTC_PL_FORMAT_IDENT       073642
+StyleSetBackground       wxSTC_PL_FORMAT             073642
+
+# missing:
+
