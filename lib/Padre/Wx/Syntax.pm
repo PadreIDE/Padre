@@ -227,11 +227,6 @@ sub show_stderr {
 #####################################################################
 # General Methods
 
-sub bottom {
-	TRACE("DEPRECATED") if DEBUG;
-	shift->main->bottom;
-}
-
 sub gettext_label {
 	Wx::gettext('Syntax Check');
 }

@@ -224,11 +224,6 @@ sub view_close {
 #####################################################################
 # General Methods
 
-sub bottom {
-	warn "Unexpectedly called Padre::Wx::ReplaceInFiles::bottom, it should be deprecated";
-	shift->main->bottom;
-}
-
 sub gettext_label {
 	Wx::gettext('Replace in Files');
 }

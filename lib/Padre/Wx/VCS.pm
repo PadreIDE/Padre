@@ -63,11 +63,6 @@ sub view_stop {
 #####################################################################
 # General Methods
 
-sub bottom {
-	TRACE("DEPRECATED") if DEBUG;
-	shift->main->bottom;
-}
-
 sub gettext_label {
 	Wx::gettext('Version Control');
 }

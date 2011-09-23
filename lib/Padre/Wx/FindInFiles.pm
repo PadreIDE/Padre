@@ -392,11 +392,6 @@ sub view_close {
 #####################################################################
 # General Methods
 
-sub bottom {
-	warn "Unexpectedly called Padre::Wx::Output::bottom, it should be deprecated";
-	shift->main->bottom;
-}
-
 sub gettext_label {
 	Wx::gettext('Find in Files');
 }
