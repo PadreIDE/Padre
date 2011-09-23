@@ -107,6 +107,9 @@ the even version for the release, even during development.
     - Added *experimental* version control system (VCS) support that can be
       enabled through feature_vcs_support (AZAWAWI)
     - #1126 'TODO list: does not immediately show items' (AZAWAWI)
+    - Added identity_location config setting so collaborative functions such as
+      Swarm can disambiguate multiple Padre instances of the same user by
+      named locations such as "Home" or "Work" (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

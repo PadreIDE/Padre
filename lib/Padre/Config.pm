@@ -364,6 +364,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
+setting(
+	name    => 'identity_location',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => '',
+);
 
 # Indent settings
 # Allow projects to forcefully override personal settings
