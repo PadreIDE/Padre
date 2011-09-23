@@ -15,8 +15,10 @@ the even version for the release, even during development.
 
 0.92 TBA
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)
-    - Lands Task 3.0 which fixes bidirectional communication and thus enables
+    - New Task 3.0 which fixes bidirectional communication and thus enables
       services that run indefinitely in reserved threads (ADAMK)
+    - New Style 2.0 which simplifies implementations, adds style localisation
+      and allows styling of the GUI (ADAMK)
     - Added Replace in Files using matching logic to Find in Files (ADAMK)
     - Added plugin compatibility tracking to Padre::Search (ADAMK)
     - Wx doesn't seem to let us change the PaneBorder setting after pane
