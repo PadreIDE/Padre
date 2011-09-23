@@ -69,7 +69,7 @@ sub bottom {
 }
 
 sub gettext_label {
-	Wx::gettext('Version Control System');
+	Wx::gettext('Version Control');
 }
 
 # Clear everything...
