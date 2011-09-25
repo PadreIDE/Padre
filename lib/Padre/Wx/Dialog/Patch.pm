@@ -67,6 +67,9 @@ sub run {
 sub set_up {
 	my $self = shift;
 
+	# test for local svn_local
+	$self->test_svn();
+
 	# generate open file bucket
 	$self->current_files();
 
@@ -138,8 +141,7 @@ sub on_action {
 
 		# as we can not added items to a radio-box,
 		# we can only enable & disable when radio-box enabled
-		# test inspired my Any
-		unless ( eval { require SVN::Class } ) {
+		unless ( $self->{svn_local} ) {
 			$self->against->EnableItem( 1, 0 );
 		}
 		$self->against->SetSelection(0);
@@ -506,6 +508,37 @@ sub make_patch_diff {
 }
 
 #######
+# Composed Method test_svn
+#######
+sub test_svn {
+	my $self = shift;
+
+	use Sort::Versions;
+	$self->{svn_local} = 0;
+
+	my $svn_client_version   = 0;
+	my $required_svn_version = '1.6.2';
+
+	if ( File::Which::which('svn') ) {
+
+		# test svn version
+		if ( $svn_client_version = qx{svn --version --quiet} ) {
+			chomp($svn_client_version);
+
+			# This is so much better, now we are testing for version as well
+			if ( versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
+				TRACE("Found local SVN v$svn_client_version, good to go.") if DEBUG;
+				$self->{svn_local} = 1;
+				return;
+			} else {
+				TRACE("Found SVN v$svn_client_version but require v$required_svn_version") if DEBUG;
+			}
+		}
+	}
+	return;
+}
+
+#######
 # Method make_patch_svn
 # inspired by P-P-SVN
 #######
@@ -522,17 +555,11 @@ sub make_patch_svn {
 
 	TRACE("file1_url to svn: $file1_url") if DEBUG;
 
-	if ( eval { require SVN::Class } ) {
-		TRACE('found SVN::Class, Good to go') if DEBUG;
-		my $file;
-		if ( eval { $file = SVN::Class::svn_file($file1_url) } ) {
-
-			$file->diff;
-
-			# TODO talk to Alias about supporting Data::Printer { caller_info => 1 }; in Padre::Logger
-			# TRACE output is yuck
-			TRACE( @{ $file->stdout } ) if DEBUG;
-			my $diff_str = join "\n", @{ $file->stdout };
+	# if (test_svn) {
+	if ( $self->{svn_local} ) {
+		TRACE('found local SVN, Good to go') if DEBUG;
+		my $diff_str;
+		if ( eval { $diff_str = qx{ svn diff $file1_url} } ) {
 
 			TRACE($diff_str) if DEBUG;
 
@@ -549,11 +576,16 @@ sub make_patch_svn {
 			$output->AppendText("Patch Dialog failed to Complete.\n");
 			$output->AppendText("Your requested Action Diff against SVN, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
-			$output->AppendText("What follows is the error I received from SVN::Class, if any: \n");
-			$output->AppendText($@);
+			$output->AppendText("What follows is the error I received from SVN, if any: \n");
+			if ($@) {
+				$output->AppendText($@);
+			} else {
+				$output->AppendText(
+					"Sorry Diff to SVN Failed, I don't think there are any diffrences in this file: $file1_name");
+			}
 
 			$main->info(
-				Wx::gettext('Sorry SVN Diff Failed, are you sure your have access to the repository for this action') );
+				Wx::gettext('Sorry Diff Failed, are you sure your have access to the repository for this action') );
 			return;
 		}
 	}
@@ -624,9 +656,11 @@ A convenience method to generate a patch/diff file from two selected files.
 
 uses Text::Diff
 
-=head2 make_patch_svn
+=head2 test_svn
 
-NB only works if you have C<SVN::Class> installed.
+test for a local copy of svn in Path and version greater than 1.6.2.
+
+=head2 make_patch_svn
 
 A convenience method to generate a patch/diff file from a selected file and svn if applicable,
 ie file has been checked out.
