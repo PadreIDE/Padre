@@ -104,7 +104,7 @@ the even version for the release, even during development.
     - Plugin manager is now modal (BOWTIE, AZAWAWI)
     - Add Patch to editor menu and removed Diff Tools (BOWTIE)
     - Update Italian translation (SBLANDIN)
-    - Padre::Project vcs strings are constants now (AZAWAWI)
+    - Padre::Project vcs strings are now constants (AZAWAWI)
     - "Filter through Perl" back into core (SEWI)
     - Added *experimental* version control system (VCS) support that can be
       enabled through feature_vcs_support (AZAWAWI)
