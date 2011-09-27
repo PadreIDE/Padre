@@ -5545,15 +5545,15 @@ sub zoom {
 
 =pod
 
-=head3 C<open_regex_editor>
+=head3 C<show_regex_editor>
 
-    $main->open_regex_editor;
+    $main->show_regex_editor;
 
 Open Padre's regular expression editor. No return value.
 
 =cut
 
-sub open_regex_editor {
+sub show_regex_editor {
 	my $self = shift;
 
 	unless ( defined $self->{regex_editor} ) {
@@ -5574,15 +5574,15 @@ sub open_regex_editor {
 
 =pod
 
-=head3 C<open_perl_filter>
+=head3 C<show_perl_filter>
 
-    $main->open_perl_filter;
+    $main->show_perl_filter;
 
 Open Padre's filter-through-perl. No return value.
 
 =cut
 
-sub open_perl_filter {
+sub show_perl_filter {
 	my $self = shift;
 
 	unless ( defined $self->{perl_filter} ) {
@@ -5602,15 +5602,15 @@ sub open_perl_filter {
 
 =pod
 
-=head3 C<on_key_bindings>
+=head3 C<show_key_bindings>
 
-    $main->on_key_bindings;
+    $main->show_key_bindings;
 
 Opens the key bindings dialog
 
 =cut
 
-sub on_key_bindings {
+sub show_key_bindings {
 	my $self = shift;
 
 	# Show the key bindings dialog

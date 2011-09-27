@@ -1166,7 +1166,7 @@ sub init {
 		label      => _T('Filter through &Perl...'),
 		comment    => _T('Use Perl source as filter'),
 		menu_event => sub {
-			shift->open_perl_filter(@_);
+			shift->show_perl_filter(@_);
 		},
 	);
 
@@ -2344,7 +2344,7 @@ sub init {
 		label      => _T('&Key Bindings'),
 		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
 		menu_event => sub {
-			$_[0]->on_key_bindings;
+			$_[0]->show_key_bindings;
 		},
 	);
 
@@ -2353,7 +2353,7 @@ sub init {
 		label      => _T('&Regex Editor'),
 		comment    => _T('Open the regular expression editing window'),
 		menu_event => sub {
-			shift->open_regex_editor(@_);
+			shift->show_regex_editor(@_);
 		},
 	);
 
@@ -2365,7 +2365,7 @@ sub init {
 		menu_event  => sub {
 			my $document = Padre::Current->document or return;
 			return unless Params::Util::_INSTANCE( $document, 'Padre::Document::Perl' );
-			Padre::Current->main->open_regex_editor;
+			Padre::Current->main->show_regex_editor;
 		},
 	);
 
