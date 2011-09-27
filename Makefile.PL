@@ -225,6 +225,9 @@ keywords(
 	"replace",
 	"syntax",
 	"windows",
+	"version control",
+	"patch",
+	"diff",
 	"wx",
 	"wxwidgets",
 );
