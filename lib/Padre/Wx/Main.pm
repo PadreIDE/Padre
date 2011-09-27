@@ -6528,6 +6528,11 @@ sub on_duplicate {
 
 =pod
 
+=head2 Code Starter Methods
+
+These methods provide skeleton generators for a variety of file types, with
+the preferences of the user applied already.
+
 =head3 C<start_perl5_script>
 
     $main->start_perl5_script;
