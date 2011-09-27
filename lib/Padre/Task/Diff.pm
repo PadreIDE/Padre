@@ -84,7 +84,7 @@ sub _find_local_diff {
 
 	my $content = $filename ? Padre::Util::slurp($filename) : undef;
 	my $data = [];
-	if ($content and $text) {
+	if ( $content and $text ) {
 		$data = $self->_find_diffs( $$content, $text );
 	}
 
