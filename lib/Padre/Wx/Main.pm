@@ -6528,9 +6528,9 @@ sub on_duplicate {
 
 =pod
 
-=head3 C<new_perl5_script>
+=head3 C<start_perl5_script>
 
-    $main->new_perl5_script;
+    $main->start_perl5_script;
 
 Create a new blank Perl 5 script, applying the user's style preferences if
 possible.
@@ -6538,7 +6538,7 @@ possible.
 =cut
 
 # For now, we don't actually apply their style preferences
-sub new_perl5_script {
+sub start_perl5_script {
 	my $self = shift;
 
 	# Generate the code from the script template
@@ -6551,9 +6551,9 @@ sub new_perl5_script {
 
 =pod
 
-=head3 C<new_perl5_module>
+=head3 C<start_perl5_module>
 
-    $main->new_perl5_module($package);
+    $main->start_perl5_module($package);
 
 Create a new empty Perl 5 module, applying the user's style preferences if
 possible. If passed a package name, that module will be created.
@@ -6563,7 +6563,7 @@ If no package name is provided, the user will be asked for the name to use.
 =cut
 
 # For now, we don't actually apply their style preferences
-sub new_perl5_module {
+sub start_perl5_module {
 	my $self    = shift;
 	my $module = shift;
 	unless ( $module ) {
@@ -6586,9 +6586,9 @@ sub new_perl5_module {
 
 =pod
 
-=head3 C<new_perl5_test>
+=head3 C<start_perl5_test>
 
-    $main->new_perl5_test;
+    $main->start_perl5_test;
 
 Create a new empty Perl 5 test, applying the user's style preferences if
 possible.
@@ -6596,7 +6596,7 @@ possible.
 =cut
 
 # For now, we don't actually apply their style preferences
-sub new_perl5_test {
+sub start_perl5_test {
 	my $self = shift;
 
 	# Generate the code from the script template
@@ -6609,9 +6609,9 @@ sub new_perl5_test {
 
 =pod
 
-=head3 C<new_perl6_script>
+=head3 C<start_perl6_script>
 
-    $main->new_perl6_script;
+    $main->start_perl6_script;
 
 Create a new blank Perl 6 script, applying the user's style preferences if
 possible.
@@ -6619,7 +6619,7 @@ possible.
 =cut
 
 # For now, we don't actually apply their style preferences
-sub new_perl6_script {
+sub start_perl6_script {
 	my $self = shift;
 
 	# Generate the code from the script template
