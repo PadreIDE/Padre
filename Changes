@@ -114,6 +114,7 @@ the even version for the release, even during development.
       named locations such as "Home" or "Work" (ADAMK)
     - Refactored the generation of templated skeleton code into a pure
       Padre::Template generator, and IDE-aware code that wraps around it (ADAMK)
+    - Require Wx 0.9901 on all platforms (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
