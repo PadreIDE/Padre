@@ -278,8 +278,8 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Add Patch
-	$self->add_menu_action(
+	# Add Patch/Diff
+	$self->{patch_diff} = $self->add_menu_action(
 		'edit.patch_diff',
 	);
 
@@ -392,6 +392,7 @@ sub refresh {
 	$self->{delete_trailing}->Enable($hasdoc);
 	$self->{show_as_hex}->Enable($hasdoc);
 	$self->{show_as_decimal}->Enable($hasdoc);
+	$self->{patch_diff}->Enable($hasdoc);
 
 	# Handle the complex cases
 	$self->{undo}->Enable($editor);
