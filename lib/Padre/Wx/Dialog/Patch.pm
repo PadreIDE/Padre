@@ -512,6 +512,7 @@ sub make_patch_diff {
 #######
 sub test_svn {
 	my $self = shift;
+	my $main = $self->main;
 
 	use Sort::Versions;
 	$self->{svn_local} = 0;
@@ -532,6 +533,11 @@ sub test_svn {
 				return;
 			} else {
 				TRACE("Found SVN v$svn_client_version but require v$required_svn_version") if DEBUG;
+				$main->info(
+					Wx::gettext(
+						"Warring found SVN v$svn_client_version but we require SVN v$required_svn_version and it is now called \"Apache Subversion\""
+					)
+				);
 			}
 		}
 	}
@@ -681,21 +687,17 @@ composed method
 
 composed method
 
-
 =head2 file1_list_svn
 
 composed method
-
 
 =head2 file2_list_patch
 
 composed method
 
-
 =head2 file_lists_saved
 
 composed method
-
 
 =head1 BUGS AND LIMITATIONS 
 
