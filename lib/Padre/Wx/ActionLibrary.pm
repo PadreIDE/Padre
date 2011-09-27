@@ -149,7 +149,7 @@ sub init {
 		label      => _T('Perl 5 &Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
-			$_[0]->on_new_from_template('pl');
+			$_[0]->new_perl5_script;
 		},
 	);
 
@@ -158,7 +158,7 @@ sub init {
 		label      => _T('Perl 5 &Module'),
 		comment    => _T('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
-			$_[0]->on_new_from_template('pm');
+			$_[0]->new_perl5_module;
 		},
 	);
 
@@ -167,7 +167,7 @@ sub init {
 		label      => _T('Perl 5 &Test'),
 		comment    => _T('Open a document with a skeleton Perl 5 test  script'),
 		menu_event => sub {
-			$_[0]->on_new_from_template('t');
+			$_[0]->new_perl5_test;
 		},
 	);
 
@@ -178,7 +178,7 @@ sub init {
 		label      => _T('Perl &6 Script'),
 		comment    => _T('Open a document with a skeleton Perl 6 script'),
 		menu_event => sub {
-			$_[0]->on_new_from_template('p6');
+			$_[0]->new_perl6_script;
 		},
 	);
 

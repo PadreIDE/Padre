@@ -6528,45 +6528,106 @@ sub on_duplicate {
 
 =pod
 
-=head3 C<on_new_from_template>
+=head3 C<new_perl5_script>
 
-    $main->on_new_from_template( $extension );
+    $main->new_perl5_script;
 
-Create a new document according to template for C<$extension> type of
-file. No return value.
+Create a new blank Perl 5 script, applying the user's style preferences if
+possible.
 
 =cut
 
-sub on_new_from_template {
-	my $self      = shift;
-	my $extension = shift;
+# For now, we don't actually apply their style preferences
+sub new_perl5_script {
+	my $self = shift;
 
-	# Load the template
-	my $file = File::Spec->catfile(
-		Padre::Util::sharedir('templates'),
-		"template.$extension"
-	);
-	my $template = Padre::Util::slurp($file);
-	unless ($template) {
-		$self->error( sprintf( Wx::gettext("Failed to find template file '%s'"), $file ) );
+	# Generate the code from the script template
+	require Padre::Template;
+	my $code = Padre::Template->render('perl5/script.pl');
+
+	# Show the new file in a new editor window
+	$self->new_document_from_string( $code, 'application/x-perl' );
+}
+
+=pod
+
+=head3 C<new_perl5_module>
+
+    $main->new_perl5_module($package);
+
+Create a new empty Perl 5 module, applying the user's style preferences if
+possible. If passed a package name, that module will be created.
+
+If no package name is provided, the user will be asked for the name to use.
+
+=cut
+
+# For now, we don't actually apply their style preferences
+sub new_perl5_module {
+	my $self    = shift;
+	my $module = shift;
+	unless ( $module ) {
+		$module = $self->prompt(
+			Wx::gettext('Module name:'),
+			Wx::gettext('New Module'),
+		);
 	}
 
-	# Generate the full file content
-	require Template::Tiny;
-	require Padre::Util::Template;
-	my $output = '';
-	Template::Tiny->new->process(
-		$template,
-		{   config => $self->{config},
-			util   => Padre::Util::Template->new,
-		},
-		\$output,
+	# Generate the code from the module template
+	require Padre::Template;
+	my $code = Padre::Template->render(
+		'perl5/module.pm',
+		module => $module,
 	);
 
-	# Create the file from the content
-	require Padre::MimeTypes;
-	my $mime_type = Padre::MimeTypes->guess_mimetype( $output, $file );
-	return $self->new_document_from_string( $output, $mime_type );
+	# Show the new file in a new editor window
+	$self->new_document_from_string( $code, 'application/x-perl' );
+}
+
+=pod
+
+=head3 C<new_perl5_test>
+
+    $main->new_perl5_test;
+
+Create a new empty Perl 5 test, applying the user's style preferences if
+possible.
+
+=cut
+
+# For now, we don't actually apply their style preferences
+sub new_perl5_test {
+	my $self = shift;
+
+	# Generate the code from the script template
+	require Padre::Template;
+	my $code = Padre::Template->render('perl5/test.t');
+
+	# Show the new file in a new editor window
+	$self->new_document_from_string( $code, 'application/x-perl' );
+}
+
+=pod
+
+=head3 C<new_perl6_script>
+
+    $main->new_perl6_script;
+
+Create a new blank Perl 6 script, applying the user's style preferences if
+possible.
+
+=cut
+
+# For now, we don't actually apply their style preferences
+sub new_perl6_script {
+	my $self = shift;
+
+	# Generate the code from the script template
+	require Padre::Template;
+	my $code = Padre::Template->render('perl6/script.p6');
+
+	# Show the new file in a new editor window
+	$self->new_document_from_string( $code, 'application/x-perl6' );
 }
 
 =pod
