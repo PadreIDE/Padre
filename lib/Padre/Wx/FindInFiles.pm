@@ -385,6 +385,7 @@ sub on_repeat_click {
 	my $last_search = $self->{last_search} or return;
 	my $main = $self->main;
 
+	require Padre::Wx::Dialog::FindInFiles;
 	my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
 	$main->findinfiles->search(
 		root   => $findinfiles->find_directory->SaveValue,
