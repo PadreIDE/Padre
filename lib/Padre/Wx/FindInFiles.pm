@@ -21,7 +21,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Padre::Wx::TreeCtrl
+	Padre::Wx::FBP::FindInFiles::Output
 };
 
 
@@ -36,14 +36,7 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
 
-	# Create the underlying object
-	my $self = $class->SUPER::new(
-		$panel,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TR_SINGLE | Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::CLIP_CHILDREN
-	);
+	my $self  = $class->SUPER::new($panel);
 
 	# Create the image list
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -160,8 +153,9 @@ sub search {
 		%param,
 	);
 
-	my $root = $self->AddRoot('Root');
-	$self->SetItemText(
+	my $tree = $self->{tree};
+	my $root = $tree->AddRoot('Root');
+	$tree->SetItemText(
 		$root,
 		sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),
@@ -169,7 +163,7 @@ sub search {
 			$param{root},
 		)
 	);
-	$self->SetItemImage( $root, $self->{images}->{root} );
+	$tree->SetItemImage( $root, $self->{images}->{root} );
 
 	# Start the render timer
 	$self->{search_timer}->Start(250);
@@ -208,9 +202,10 @@ sub search_finish {
 	my $task = delete $self->{search_task} or return;
 	my $term = $task->{search}->find_term;
 	my $dir  = $task->{root};
-	my $root = $self->GetRootItem;
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
 	if ( $self->{files} ) {
-		$self->SetItemText(
+		$tree->SetItemText(
 			$root,
 			sprintf(
 				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
@@ -221,7 +216,7 @@ sub search_finish {
 			)
 		);
 	} else {
-		$self->SetItemText(
+		$tree->SetItemText(
 			$root,
 			sprintf(
 				Wx::gettext(q{No results found for '%s' inside '%s'}),
@@ -240,7 +235,8 @@ sub search_finish {
 sub search_render {
 	TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
-	my $root  = $self->GetRootItem;
+	my $tree = $self->{tree};
+	my $root  = $tree->GetRootItem;
 	my $task  = $self->{search_task} or return;
 	my $queue = $self->{search_queue};
 	return unless @$queue;
@@ -266,8 +262,8 @@ sub search_render {
 			$lines,
 			)
 			: $full;
-		my $file = $self->AppendItem( $root, $label, $self->{images}->{file} );
-		$self->SetPlData(
+		my $file = $tree->AppendItem( $root, $label, $self->{images}->{file} );
+		$tree->SetPlData(
 			$file,
 			{   dir  => $dir,
 				file => $name,
@@ -279,12 +275,12 @@ sub search_render {
 
 			# Tabs don't display properly
 			$row->[1] =~ s/\t/    /g;
-			my $line = $self->AppendItem(
+			my $line = $tree->AppendItem(
 				$file,
 				$row->[0] . ': ' . $row->[1],
 				$self->{images}->{result},
 			);
-			$self->SetPlData(
+			$tree->SetPlData(
 				$line,
 				{   dir  => $dir,
 					file => $name,
@@ -295,8 +291,8 @@ sub search_render {
 		}
 
 		# Expand nodes
-		$self->Expand($root) unless $self->{files};
-		$self->Expand($file);
+		$tree->Expand($root) unless $self->{files};
+		$tree->Expand($file);
 
 		# Update statistics
 		$self->{matches} += $lines;
@@ -315,7 +311,7 @@ sub search_render {
 sub _on_find_result_clicked {
 	my ( $self, $event ) = @_;
 
-	my $item_data = $self->GetPlData( $event->GetItem ) or return;
+	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
 	my $dir       = $item_data->{dir}                   or return;
 	my $file      = $item_data->{file}                  or return;
 	my $line      = $item_data->{line};
