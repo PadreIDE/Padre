@@ -70,13 +70,14 @@ sub new {
 			),
 		),
 	};
-	$self->{tree}->AssignImageList($images);
+	my $tree = $self->{tree};
+	$tree->AssignImageList($images);
 
 	# When a find result is clicked, open it
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
+		$tree, $tree,
 		sub {
-			shift->_on_find_result_clicked(@_);
+			shift->GetParent->_on_find_result_clicked(@_);
 		}
 	);
 
