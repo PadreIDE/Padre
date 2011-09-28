@@ -388,10 +388,10 @@ sub on_expand_all_click {
 
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
-	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
-	while ($cookie) {
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
+	while ($child->IsOk) {
 		$tree->Expand($child);
-		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 	}
 
 	$self->_flip_button_state;
@@ -403,10 +403,10 @@ sub on_collapse_all_click {
 
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
-	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
-	while ($cookie) {
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
+	while ($child->IsOk) {
 		$tree->Collapse($child);
-		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 	}
 
 	$self->_flip_button_state;
