@@ -23,7 +23,7 @@ my $padre = new_ok('Padre');
 my $main  = $padre->wx->main;
 isa_ok( $main, 'Padre::Wx::Main' );
 
-# Create the Preferences 2.0 dialog
+# Create the patch dialog
 my $dialog = new_ok( 'Padre::Wx::Dialog::Patch', [$main] );
 
 # Check the radiobox properties
