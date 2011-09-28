@@ -2814,7 +2814,24 @@ sub init {
 			$_[0]->about->ShowModal;
 		},
 	);
+	
+	# Add the About2
 
+	Padre::Wx::Action->new(
+		name       => 'help.about2',
+		# id         => Wx::ID_ABOUT,
+		label      => _T('&About2'),
+		comment    => _T('Show information about Padre'),
+		
+		menu_event => sub {
+			require Padre::Wx::Dialog::About;
+			my $dialog = Padre::Wx::Dialog::About->new( $_[0] );
+			$dialog->run;
+			$dialog->Destroy;
+			return;
+		},
+
+	);
 	return 1;
 }
 
@@ -2824,3 +2841,4 @@ sub init {
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
+
