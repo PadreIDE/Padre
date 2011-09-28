@@ -224,6 +224,14 @@ sub search_finish {
 	# Clear support variables
 	$self->task_reset;
 
+	# Enable the repeat search button again
+	$self->{repeat}->Enable;
+
+	# Only enable collapse all when we have results
+	if ( $self->{files} ) {
+		$self->{collapse_all}->Enable;
+	}
+
 	return 1;
 }
 
@@ -362,7 +370,7 @@ sub open_file_at_line {
 
 # Called when the "Repeat" button is clicked
 sub on_repeat_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 
 	my $last_search = $self->{last_search} or return;
 	my $main = $self->main;
@@ -376,27 +384,43 @@ sub on_repeat_click {
 
 # Called when the "Expand all" button is clicked
 sub on_expand_all_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
 	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
-	while($cookie) {
+	while ($cookie) {
 		$tree->Expand($child);
 		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
 	}
+
+	$self->_flip_button_state;
 }
 
 # Called when the "Collapse all" button is clicked
 sub on_collapse_all_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
 	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
-	while($cookie) {
+	while ($cookie) {
 		$tree->Collapse($child);
 		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+	}
+
+	$self->_flip_button_state;
+}
+
+sub _flip_button_state {
+	my $self = shift;
+
+	if ( $self->{expand_all}->IsEnabled ) {
+		$self->{expand_all}->Disable;
+		$self->{collapse_all}->Enable;
+	} else {
+		$self->{expand_all}->Enable;
+		$self->{collapse_all}->Disable;
 	}
 }
 
@@ -440,6 +464,9 @@ sub clear {
 	$self->{matches} = 0;
 
 	$self->{tree}->DeleteAllItems;
+	$self->{repeat}->Disable;
+	$self->{expand_all}->Disable;
+	$self->{collapse_all}->Disable;
 	return 1;
 }
 
