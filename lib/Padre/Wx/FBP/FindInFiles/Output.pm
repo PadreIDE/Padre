@@ -96,13 +96,13 @@ sub new {
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{repeat}, 0, Wx::ALL, 5 );
-	$button_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 5 );
-	$button_sizer->Add( $self->{collapse_all}, 0, Wx::ALL, 5 );
+	$button_sizer->Add( $self->{repeat}, 0, Wx::ALL, 2 );
+	$button_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 2 );
+	$button_sizer->Add( $self->{collapse_all}, 0, Wx::ALL, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $button_sizer, 0, 0, 5 );
-	$main_sizer->Add( $self->{tree}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$main_sizer->Add( $button_sizer, 0, Wx::ALIGN_RIGHT, 2 );
+	$main_sizer->Add( $self->{tree}, 1, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
