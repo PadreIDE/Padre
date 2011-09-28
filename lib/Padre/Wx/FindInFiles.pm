@@ -6,21 +6,21 @@ package Padre::Wx::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Basename        ();
-use File::Spec            ();
-use Params::Util          ();
-use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
-use Padre::Wx             ();
-use Padre::Wx::TreeCtrl   ();
+use File::Basename                      ();
+use File::Spec                          ();
+use Params::Util                        ();
+use Padre::Role::Task                   ();
+use Padre::Wx::Role::View               ();
+use Padre::Wx::Role::Main               ();
+use Padre::Wx                           ();
+use Padre::Wx::TreeCtrl                 ();
+use Padre::Wx::FBP::FindInFiles::Output ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
-	Padre::Wx::Role::Main
 	Padre::Wx::FBP::FindInFiles::Output
 };
 
@@ -36,7 +36,7 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
 
-	my $self  = $class->SUPER::new($panel);
+	my $self = $class->SUPER::new($panel);
 
 	# Create the image list
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -70,7 +70,7 @@ sub new {
 			),
 		),
 	};
-	$self->AssignImageList($images);
+	$self->{tree}->AssignImageList($images);
 
 	# When a find result is clicked, open it
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
@@ -235,14 +235,14 @@ sub search_finish {
 sub search_render {
 	TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
-	my $tree = $self->{tree};
+	my $tree  = $self->{tree};
 	my $root  = $tree->GetRootItem;
 	my $task  = $self->{search_task} or return;
 	my $queue = $self->{search_queue};
 	return unless @$queue;
 
 	# Lock the tree to reduce flicker and prevent auto-scrolling
-	my $lock = $self->scroll_lock;
+	my $lock = $tree->scroll_lock;
 
 	# Added to avoid crashes when calling methods on path objects
 	require Padre::Wx::Directory::Path;
@@ -312,8 +312,8 @@ sub _on_find_result_clicked {
 	my ( $self, $event ) = @_;
 
 	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
-	my $dir       = $item_data->{dir}                   or return;
-	my $file      = $item_data->{file}                  or return;
+	my $dir       = $item_data->{dir}                           or return;
+	my $file      = $item_data->{file}                          or return;
 	my $line      = $item_data->{line};
 	my $msg = $item_data->{msg} || '';
 
@@ -404,7 +404,7 @@ sub clear {
 	$self->{files}   = 0;
 	$self->{matches} = 0;
 
-	$self->DeleteAllItems;
+	$self->{tree}->DeleteAllItems;
 	return 1;
 }
 

@@ -13609,7 +13609,7 @@
                 </object>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="bg"></property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
@@ -13657,7 +13657,7 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">main_sizer</property>
                 <property name="orient">wxVERTICAL</property>
@@ -13685,7 +13685,7 @@
                                 <property name="font"></property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Repeat search</property>
+                                <property name="label">Repeat</property>
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">repeat</property>
@@ -13864,7 +13864,7 @@
                         <property name="pos"></property>
                         <property name="size"></property>
                         <property name="style">wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_SINGLE</property>
-                        <property name="subclass"></property>
+                        <property name="subclass">Padre::Wx::TreeCtrl; Padre::Wx::TreeCtrl</property>
                         <property name="tooltip"></property>
                         <property name="validator_data_type"></property>
                         <property name="validator_style">wxFILTER_NONE</property>
