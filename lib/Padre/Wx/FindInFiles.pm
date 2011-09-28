@@ -73,6 +73,15 @@ sub new {
 	my $tree = $self->{tree};
 	$tree->AssignImageList($images);
 
+	# Set the bitmap button icons
+	$self->{repeat}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
+	$self->{expand_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-in') );
+	$self->{collapse_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-out') );
+
+	# Set the button tooltips
+	$self->{expand_all}->SetToolTip( Wx::gettext('Expand all') );
+	$self->{collapse_all}->SetToolTip( Wx::gettext('Collapse all') );
+
 	# Create the render data store and timer
 	$self->{search_task}     = undef;
 	$self->{search_queue}    = [];
@@ -226,7 +235,7 @@ sub search_finish {
 
 	# Enable the repeat search button again
 	$self->{repeat}->Enable;
-	$self->{repeat}->SetToolTip( sprintf(Wx::gettext(q{Search again for '%s'}), $term) );
+	$self->{repeat}->SetToolTip( sprintf( Wx::gettext(q{Search again for '%s'}), $term ) );
 
 	# Only enable collapse all when we have results
 	if ( $self->{files} ) {

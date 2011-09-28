@@ -13,7 +13,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::TreeCtrl ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel
@@ -31,12 +31,13 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{repeat} = Wx::Button->new(
+	$self->{repeat} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::gettext("Repeat"),
+		Wx::NullBitmap,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -47,12 +48,13 @@ sub new {
 		},
 	);
 
-	$self->{expand_all} = Wx::Button->new(
+	$self->{expand_all} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::gettext("Expand all"),
+		Wx::NullBitmap,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -63,12 +65,13 @@ sub new {
 		},
 	);
 
-	$self->{collapse_all} = Wx::Button->new(
+	$self->{collapse_all} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::gettext("Collapse all"),
+		Wx::NullBitmap,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 
 	Wx::Event::EVT_BUTTON(
