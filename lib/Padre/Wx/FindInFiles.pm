@@ -226,6 +226,7 @@ sub search_finish {
 
 	# Enable the repeat search button again
 	$self->{repeat}->Enable;
+	$self->{repeat}->SetToolTip( sprintf(Wx::gettext(q{Search again for '%s'}), $term) );
 
 	# Only enable collapse all when we have results
 	if ( $self->{files} ) {
@@ -389,7 +390,7 @@ sub on_expand_all_click {
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
-	while ($child->IsOk) {
+	while ( $child->IsOk ) {
 		$tree->Expand($child);
 		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 	}
@@ -404,7 +405,7 @@ sub on_collapse_all_click {
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
-	while ($child->IsOk) {
+	while ( $child->IsOk ) {
 		$tree->Collapse($child);
 		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 	}
