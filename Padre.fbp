@@ -13702,7 +13702,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
-                                <event name="OnButtonClick"></event>
+                                <event name="OnButtonClick">on_repeat_click</event>
                                 <event name="OnChar"></event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
@@ -13759,7 +13759,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
-                                <event name="OnButtonClick"></event>
+                                <event name="OnButtonClick">on_expand_all_click</event>
                                 <event name="OnChar"></event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
@@ -13816,7 +13816,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
-                                <event name="OnButtonClick"></event>
+                                <event name="OnButtonClick">on_collapse_all_click</event>
                                 <event name="OnChar"></event>
                                 <event name="OnEnterWindow"></event>
                                 <event name="OnEraseBackground"></event>
@@ -13902,7 +13902,7 @@
                         <event name="OnTreeEndDrag"></event>
                         <event name="OnTreeEndLabelEdit"></event>
                         <event name="OnTreeGetInfo"></event>
-                        <event name="OnTreeItemActivated"></event>
+                        <event name="OnTreeItemActivated">on_find_result_clicked</event>
                         <event name="OnTreeItemCollapsed"></event>
                         <event name="OnTreeItemCollapsing"></event>
                         <event name="OnTreeItemExpanded"></event>

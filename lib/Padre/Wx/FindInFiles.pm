@@ -73,14 +73,6 @@ sub new {
 	my $tree = $self->{tree};
 	$tree->AssignImageList($images);
 
-	# When a find result is clicked, open it
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$tree, $tree,
-		sub {
-			shift->GetParent->_on_find_result_clicked(@_);
-		}
-	);
-
 	# Create the render data store and timer
 	$self->{search_task}     = undef;
 	$self->{search_queue}    = [];
@@ -308,8 +300,8 @@ sub search_render {
 	return 1;
 }
 
-# Private method to handle the clicking of a find result
-sub _on_find_result_clicked {
+# Handle the clicking of a find result
+sub on_find_result_clicked {
 	my ( $self, $event ) = @_;
 
 	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
@@ -364,6 +356,27 @@ sub open_file_at_line {
 	}
 
 	return;
+}
+
+# Called when the "Repeat" button is clicked
+sub on_repeat_click {
+	my ($self, $event) = @_;
+	
+	TRACE("on_expand_all_click");
+}
+
+# Called when the "Expand all" button is clicked
+sub on_expand_all_click {
+	my ($self, $event) = @_;
+	
+	TRACE("on_expand_all_click");
+}
+
+# Called when the "Collapse all" button is clicked
+sub on_collapse_all_click {
+	my ($self, $event) = @_;
+	
+	TRACE("on_expand_all_click");
 }
 
 ######################################################################

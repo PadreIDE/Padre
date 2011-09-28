@@ -39,12 +39,28 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{repeat},
+		sub {
+			shift->on_repeat_click(@_);
+		},
+	);
+
 	$self->{expand_all} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Expand all"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{expand_all},
+		sub {
+			shift->on_expand_all_click(@_);
+		},
 	);
 
 	$self->{collapse_all} = Wx::Button->new(
@@ -55,12 +71,28 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{collapse_all},
+		sub {
+			shift->on_collapse_all_click(@_);
+		},
+	);
+
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
 		$self,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_SINGLE,
+	);
+
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self,
+		$self->{tree},
+		sub {
+			shift->on_find_result_clicked(@_);
+		},
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -76,6 +108,22 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_repeat_click {
+	$_[0]->main->error('Handler method on_repeat_click for event repeat.OnButtonClick not implemented');
+}
+
+sub on_expand_all_click {
+	$_[0]->main->error('Handler method on_expand_all_click for event expand_all.OnButtonClick not implemented');
+}
+
+sub on_collapse_all_click {
+	$_[0]->main->error('Handler method on_collapse_all_click for event collapse_all.OnButtonClick not implemented');
+}
+
+sub on_find_result_clicked {
+	$_[0]->main->error('Handler method on_find_result_clicked for event tree.OnTreeItemActivated not implemented');
 }
 
 1;
