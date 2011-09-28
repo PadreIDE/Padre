@@ -116,6 +116,8 @@ the even version for the release, even during development.
       Padre::Template generator, and IDE-aware code that wraps around it (ADAMK)
     - Require Wx 0.9901 on all platforms to fix ticket #1184: Perl help browser
       suppresses linebreaks (AZAWAWI)
+    - Upgrade the find in files panel to wxFormBuilder (AZAWAWI)
+    - Find in files has "Repeat" search, expand and collapse all buttons (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
