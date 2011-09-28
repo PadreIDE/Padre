@@ -3,11 +3,11 @@ package Padre::Wx::Style;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec           ();
-use IO::File             ();
-use Params::Util         ();
-use Padre::Constant      ();
-use Padre::Util          ();
+use File::Spec      ();
+use IO::File        ();
+use Params::Util    ();
+use Padre::Constant ();
+use Padre::Util     ();
 
 our $VERSION = '0.91';
 
@@ -54,7 +54,7 @@ my %PARAM = (
 # The fallback of last resort is automatically to text/plain
 my %FALLBACK = (
 	'application/x-psgi'     => 'application/x-perl',
-	'application/x-php'      => 'application/perl', # Temporary solution
+	'application/x-php'      => 'application/perl',      # Temporary solution
 	'application/json'       => 'application/javascript',
 	'application/javascript' => 'text/x-c',
 	'text/x-java-source'     => 'text/x-c',
@@ -132,7 +132,7 @@ sub label {
 	my $name   = shift;
 	my $locale = shift;
 	my $file   = $class->file($name);
-	unless ( $file ) {
+	unless ($file) {
 		die "The style '$name' does not exist";
 	}
 
@@ -152,7 +152,7 @@ sub label {
 
 		# Split the line into a command and params
 		my @list = split /\s+/, $string;
-		my $cmd  = shift @list;
+		my $cmd = shift @list;
 
 		# We only care about name
 		next unless defined $cmd;
@@ -176,7 +176,7 @@ sub find {
 	my $class = shift;
 	my $name  = shift;
 	my $file  = $class->file($name);
-	unless ( $file ) {
+	unless ($file) {
 		die "The style '$name' does not exist";
 	}
 	return $class->load($file);
@@ -211,7 +211,7 @@ sub load {
 
 	# Open the file
 	my $handle = IO::File->new( $file, 'r' ) or return;
-	my $self   = $class->parse($handle);
+	my $self = $class->parse($handle);
 	$handle->close;
 
 	return $self;
@@ -330,9 +330,9 @@ sub parse {
 			my $style = $class->parse_style( $line, shift @list );
 			my $spec = shift @list;
 		} elsif ( $PARAM{$cmd}->[1] eq 'boolean,color' ) {
-			my $boolean = $class->parse_boolean( $line , shift @list );
+			my $boolean = $class->parse_boolean( $line, shift @list );
 			my $color = $class->parse_color( $line, shift @list );
-			push @$style, $cmd, [ $boolean , $color ];
+			push @$style, $cmd, [ $boolean, $color ];
 		} else {
 			die "Line $line: Unsupported style command '$string'";
 		}

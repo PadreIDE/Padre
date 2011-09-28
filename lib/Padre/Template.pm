@@ -35,7 +35,7 @@ sub render {
 
 	# Load the template file
 	my $input = Padre::Util::slurp($path);
-	unless ( $input ) {
+	unless ($input) {
 		die "Failed to load template file '$name'";
 	}
 

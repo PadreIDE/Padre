@@ -193,14 +193,14 @@ sub new {
 	);
 
 	### End of reload submenu
- 
-	$self->{duplicate} = $self->add_menu_action( 
-		'file.duplicate', 
-	); 
 
-	$self->{delete} = $self->add_menu_action( 
-		'file.delete', 
-	); 
+	$self->{duplicate} = $self->add_menu_action(
+		'file.duplicate',
+	);
+
+	$self->{delete} = $self->add_menu_action(
+		'file.delete',
+	);
 
 	$self->AppendSeparator;
 
@@ -295,14 +295,14 @@ sub refresh {
 	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
-	$self->{duplicate}->Enable($document); 
-    	if (Padre::Constant::WIN32) {
+	$self->{duplicate}->Enable($document);
+	if (Padre::Constant::WIN32) {
 		$self->{open_with_default_system_editor}->Enable($document);
 		$self->{open_in_command_line}->Enable($document);
 	}
 	$self->{close}->Enable($document);
-	$self->{delete}->Enable($document); 
-    	$self->{close_all}->Enable($document);
+	$self->{delete}->Enable($document);
+	$self->{close_all}->Enable($document);
 	$self->{close_all_but_current}->Enable($document);
 	$self->{reload_file}->Enable($document);
 	$self->{reload_all}->Enable($document);

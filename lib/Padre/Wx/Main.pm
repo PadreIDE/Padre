@@ -1866,7 +1866,7 @@ sub refresh_todo {
 	return unless $self->has_todo;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{todo}->IsChecked;
-	$self->todo->refresh(@_ or $self->current );
+	$self->todo->refresh( @_ or $self->current );
 	return;
 }
 
@@ -6569,9 +6569,9 @@ If no package name is provided, the user will be asked for the name to use.
 
 # For now, we don't actually apply their style preferences
 sub start_perl5_module {
-	my $self    = shift;
+	my $self   = shift;
 	my $module = shift;
-	unless ( $module ) {
+	unless ($module) {
 		$module = $self->prompt(
 			Wx::gettext('Module name:'),
 			Wx::gettext('New Module'),

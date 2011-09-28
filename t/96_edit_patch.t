@@ -42,10 +42,10 @@ isa_ok( $file2, 'Wx::Choice' );
 # let's check our subs/methods.
 ######
 
-my @subs = qw( apply_patch current_files file1_list_svn file2_list_patch 
-			file2_list_type file_lists_saved filename_url make_patch_diff 
-			make_patch_svn new on_action on_against process_clicked run
-			set_selection_file1 set_selection_file2 set_up test_svn);
+my @subs = qw( apply_patch current_files file1_list_svn file2_list_patch
+	file2_list_type file_lists_saved filename_url make_patch_diff
+	make_patch_svn new on_action on_against process_clicked run
+	set_selection_file1 set_selection_file2 set_up test_svn);
 
 use_ok( 'Padre::Wx::Dialog::Patch', @subs );
 
@@ -72,10 +72,10 @@ foreach my $subs (@subs) {
 
 # my $diff = $dialog->config_diff($config);
 # if ($diff) {
-	# is scalar keys %$diff, 1, 'only one key defined in the diff';
-	# ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
+# is scalar keys %$diff, 1, 'only one key defined in the diff';
+# ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
 # } else {
-	# ok !$diff, 'null font loaded, config_diff() returned nothing';
-	# ok 1, 'placebo to stick to the plan';
+# ok !$diff, 'null font loaded, config_diff() returned nothing';
+# ok 1, 'placebo to stick to the plan';
 # }
 
