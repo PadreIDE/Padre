@@ -88,6 +88,7 @@ sub new {
 			$self->search_timer( $_[1], $_[2] );
 		},
 	);
+	$self->{last_search} = undef;
 
 	# Initialise statistics
 	$self->{files}   = 0;
@@ -193,6 +194,7 @@ sub search_finish {
 
 	# Display the summary
 	my $task = delete $self->{search_task} or return;
+	$self->{last_search} = $task->{search};
 	my $term = $task->{search}->find_term;
 	my $dir  = $task->{root};
 	my $tree = $self->{tree};
@@ -361,22 +363,41 @@ sub open_file_at_line {
 # Called when the "Repeat" button is clicked
 sub on_repeat_click {
 	my ($self, $event) = @_;
-	
-	TRACE("on_expand_all_click");
+
+	my $last_search = $self->{last_search} or return;
+	my $main = $self->main;
+
+	my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
+	$main->findinfiles->search(
+		root   => $findinfiles->find_directory->SaveValue,
+		search => $last_search,
+	);
 }
 
 # Called when the "Expand all" button is clicked
 sub on_expand_all_click {
 	my ($self, $event) = @_;
-	
-	TRACE("on_expand_all_click");
+
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
+	while($cookie) {
+		$tree->Expand($child);
+		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+	}
 }
 
 # Called when the "Collapse all" button is clicked
 sub on_collapse_all_click {
 	my ($self, $event) = @_;
-	
-	TRACE("on_expand_all_click");
+
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
+	while($cookie) {
+		$tree->Collapse($child);
+		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+	}
 }
 
 ######################################################################
