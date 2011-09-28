@@ -871,6 +871,14 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	my $m_panel9 = Wx::Panel->new(
+		$self->{treebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
@@ -891,7 +899,7 @@ sub new {
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Advanced..."),
+		Wx::gettext("Advanced") . "...",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -1121,13 +1129,21 @@ sub new {
 	$m_panel8->SetSizerAndFit($fgSizer8);
 	$m_panel8->Layout;
 
+	my $fgSizer81 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
+	$fgSizer81->SetFlexibleDirection(Wx::BOTH);
+	$fgSizer81->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+
+	$m_panel9->SetSizerAndFit($fgSizer81);
+	$m_panel9->Layout;
+
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Auto-Complete"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
-	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 1 );
+	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
+	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 1 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::ALL, 5 );
