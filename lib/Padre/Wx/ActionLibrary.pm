@@ -1496,15 +1496,6 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name       => 'view.show_findinfiles',
-		label      => _T('&Hide Find in Files'),
-		comment    => _T('Hide the list of matches for a Find in Files search'),
-		menu_event => sub {
-			$_[0]->show_findinfiles(0);
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name        => 'view.statusbar',
 		label       => _T('Show St&atus Bar'),
 		comment     => _T('Show/hide the status bar at the bottom of the screen'),
