@@ -391,6 +391,7 @@ sub on_repeat_click {
 		root   => $findinfiles->find_directory->SaveValue,
 		search => $last_search,
 	);
+	$findinfiles->Destroy;
 }
 
 # Called when the "Expand all" button is clicked
