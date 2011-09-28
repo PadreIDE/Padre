@@ -879,6 +879,28 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
+	$self->{m_staticText59} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Filter") . ":",
+	);
+
+	$self->{filter} = Wx::TextCtrl->new(
+		$m_panel9,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{list} = Wx::ListView->new(
+		$m_panel9,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
@@ -1129,11 +1151,15 @@ sub new {
 	$m_panel8->SetSizerAndFit($fgSizer8);
 	$m_panel8->Layout;
 
-	my $fgSizer81 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
-	$fgSizer81->SetFlexibleDirection(Wx::BOTH);
-	$fgSizer81->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	my $bSizer46 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer46->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
+	$bSizer46->Add( $self->{filter}, 1, Wx::ALL, 5 );
 
-	$m_panel9->SetSizerAndFit($fgSizer81);
+	my $bSizer45 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer45->Add( $bSizer46, 0, Wx::EXPAND, 5 );
+	$bSizer45->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+
+	$m_panel9->SetSizerAndFit($bSizer45);
 	$m_panel9->Layout;
 
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
