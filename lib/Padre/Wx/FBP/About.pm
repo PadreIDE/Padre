@@ -445,7 +445,7 @@ sub new {
 	$self->{m_staticText4721} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Chinese (Simplified)"),
 	);
 	$self->{m_staticText4721}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -454,19 +454,19 @@ sub new {
 	$self->{m_staticText811} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Fayland Lam"),
 	);
 
 	$self->{m_staticText712} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Chuanren Wu"),
 	);
 
 	$self->{m_staticText4722} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Chinese (Traditional)"),
 	);
 	$self->{m_staticText4722}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -475,19 +475,13 @@ sub new {
 	$self->{m_staticText812} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText713} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Matthew Lien"),
 	);
 
 	$self->{m_staticText47221} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Czech"),
 	);
 	$self->{m_staticText47221}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -496,19 +490,13 @@ sub new {
 	$self->{m_staticText8121} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7131} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Marcela Maslanova"),
 	);
 
 	$self->{m_staticText47222} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Dutch"),
 	);
 	$self->{m_staticText47222}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -517,19 +505,13 @@ sub new {
 	$self->{m_staticText8122} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7132} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Dirk De Nijs"),
 	);
 
 	$self->{m_staticText47223} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("French"),
 	);
 	$self->{m_staticText47223}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -538,19 +520,19 @@ sub new {
 	$self->{m_staticText8123} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Jerome Quelin"),
 	);
 
 	$self->{m_staticText7133} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Olivier Mengue"),
 	);
 
 	$self->{m_staticText47224} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("German"),
 	);
 	$self->{m_staticText47224}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -571,7 +553,7 @@ sub new {
 	$self->{m_staticText47225} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Hebrew"),
 	);
 	$self->{m_staticText47225}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -592,7 +574,7 @@ sub new {
 	$self->{m_staticText47226} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Hungarian"),
 	);
 	$self->{m_staticText47226}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -601,19 +583,13 @@ sub new {
 	$self->{m_staticText8126} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7136} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Gyorgy Pasztor"),
 	);
 
 	$self->{m_staticText47227} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Italian"),
 	);
 	$self->{m_staticText47227}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -622,19 +598,13 @@ sub new {
 	$self->{m_staticText8127} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7137} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Simone Blandino"),
 	);
 
 	$self->{m_staticText47228} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Japanese"),
 	);
 	$self->{m_staticText47228}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -643,19 +613,13 @@ sub new {
 	$self->{m_staticText8128} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7138} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Kenichi Ishigaki"),
 	);
 
 	$self->{m_staticText47229} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("Language"),
+		Wx::gettext("Korean"),
 	);
 	$self->{m_staticText47229}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -664,13 +628,7 @@ sub new {
 	$self->{m_staticText8129} = Wx::StaticText->new(
 		$self->{m_panel11},
 		-1,
-		Wx::gettext("MyLabel"),
-	);
-
-	$self->{m_staticText7139} = Wx::StaticText->new(
-		$self->{m_panel11},
-		-1,
-		Wx::gettext("MyLabel"),
+		Wx::gettext("Keedi Kim"),
 	);
 
 	$self->{m_staticText472210} = Wx::StaticText->new(
@@ -813,7 +771,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::TE_READONLY,
+		Wx::TE_MULTILINE | Wx::TE_NO_VSCROLL | Wx::TE_READONLY,
 	);
 	$self->{output}->SetMaxLength(62);
 	$self->{output}->SetMinSize( [ 570, 455 ] );
@@ -931,17 +889,14 @@ sub new {
 	my $bSizer622 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer622->Add( $self->{m_staticText4722}, 0, Wx::ALL, 5 );
 	$bSizer622->Add( $self->{m_staticText812}, 0, Wx::ALL, 5 );
-	$bSizer622->Add( $self->{m_staticText713}, 0, Wx::ALL, 5 );
 
 	my $bSizer6221 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6221->Add( $self->{m_staticText47221}, 0, Wx::ALL, 5 );
 	$bSizer6221->Add( $self->{m_staticText8121}, 0, Wx::ALL, 5 );
-	$bSizer6221->Add( $self->{m_staticText7131}, 0, Wx::ALL, 5 );
 
 	my $bSizer6222 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6222->Add( $self->{m_staticText47222}, 0, Wx::ALL, 5 );
 	$bSizer6222->Add( $self->{m_staticText8122}, 0, Wx::ALL, 5 );
-	$bSizer6222->Add( $self->{m_staticText7132}, 0, Wx::ALL, 5 );
 
 	my $bSizer6223 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6223->Add( $self->{m_staticText47223}, 0, Wx::ALL, 5 );
@@ -961,22 +916,18 @@ sub new {
 	my $bSizer6226 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6226->Add( $self->{m_staticText47226}, 0, Wx::ALL, 5 );
 	$bSizer6226->Add( $self->{m_staticText8126}, 0, Wx::ALL, 5 );
-	$bSizer6226->Add( $self->{m_staticText7136}, 0, Wx::ALL, 5 );
 
 	my $bSizer6227 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6227->Add( $self->{m_staticText47227}, 0, Wx::ALL, 5 );
 	$bSizer6227->Add( $self->{m_staticText8127}, 0, Wx::ALL, 5 );
-	$bSizer6227->Add( $self->{m_staticText7137}, 0, Wx::ALL, 5 );
 
 	my $bSizer6228 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6228->Add( $self->{m_staticText47228}, 0, Wx::ALL, 5 );
 	$bSizer6228->Add( $self->{m_staticText8128}, 0, Wx::ALL, 5 );
-	$bSizer6228->Add( $self->{m_staticText7138}, 0, Wx::ALL, 5 );
 
 	my $bSizer6229 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6229->Add( $self->{m_staticText47229}, 0, Wx::ALL, 5 );
 	$bSizer6229->Add( $self->{m_staticText8129}, 0, Wx::ALL, 5 );
-	$bSizer6229->Add( $self->{m_staticText7139}, 0, Wx::ALL, 5 );
 
 	my $bSizer62210 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62210->Add( $self->{m_staticText472210}, 0, Wx::ALL, 5 );
@@ -1010,23 +961,23 @@ sub new {
 
 	my $gSizer311 = Wx::GridSizer->new( 0, 3, 0, 0 );
 	$gSizer311->Add( $bSizer623, 0, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer621, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer622, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6221, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6222, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6223, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6224, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6225, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6226, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6227, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6228, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer6229, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62210, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62211, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62212, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62213, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62214, 1, Wx::EXPAND, 5 );
-	$gSizer311->Add( $bSizer62215, 1, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer621, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer622, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6221, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6222, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6223, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6224, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6225, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6226, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6227, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6228, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer6229, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62210, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62211, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62212, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62213, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62214, 0, Wx::EXPAND, 5 );
+	$gSizer311->Add( $bSizer62215, 0, Wx::EXPAND, 5 );
 
 	my $bSizer31 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer31->Add( $gSizer311, 0, Wx::EXPAND, 5 );
