@@ -68,11 +68,11 @@ sub run {
 #######
 sub set_up {
 	my $self = shift;
-	
+
 	# Set the bitmap button icons, o why are we using a 293kb bmp !!!!
 	# $self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash-ccnc.bmp'), Wx::BITMAP_TYPE_BMP) );
 	# create a png only 196kb te-he
-	$self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG) );
+	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG ) );
 
 	my $off_set = 24;
 	$self->{output}->AppendText("\n");
@@ -85,6 +85,7 @@ sub set_up {
 
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
+
 	# $perl_version = "$perl_version";
 	$perl_version =~ s/^v//;
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Perl', $perl_version );
@@ -105,10 +106,13 @@ sub set_up {
 
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Wx', $Wx::VERSION );
 
+
 	# Reformat the native wxWidgets version string slightly
 	my $wx_widgets = Wx::wxVERSION_STRING();
 	$wx_widgets =~ s/^wx\w+\s+//;
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'WxWidgets', $wx_widgets );
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'unicode', Wx::wxUNICODE() );
 
 	eval { require Alien::wxWidgets };
 	my $alien = $Alien::wxWidgets::VERSION;

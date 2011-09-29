@@ -28,7 +28,7 @@ sub new {
 		Wx::gettext("About 2"),
 		Wx::DefaultPosition,
 		[ 600, 600 ],
-		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
+		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
 	$self->{m_notebook3} = Wx::Notebook->new(
