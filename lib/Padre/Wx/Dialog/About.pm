@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Padre::Wx               ();
 use Wx::Perl::ProcessStream ();
+use Padre::Config           ();
+use Padre::Util             ();
 use PPI                     ();
 use Padre::Wx::FBP::About   ();
 
@@ -66,16 +68,31 @@ sub run {
 sub set_up {
 	my $self = shift;
 
-	#TODO sort out left justification
-	$self->{output}->SetValue("hello world\n");
-
 	my $off_set = 24;
-
+	
+	$self->{output}->AppendText( "Core...\n" );
+	
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Padre', $VERSION );
+	
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
 	$perl_version = "$perl_version";
 	$perl_version =~ s/^v//;
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Perl', $perl_version );
+
+	# How many threads are running
+	my $threads_text = Wx::gettext('Threads:');
+	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : Wx::gettext('(disabled)');
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Threads', $threads );
+
+	# Calculate the current memory in use across all threads
+	my $RAM_text = Wx::gettext('RAM:');
+	my $ram = Padre::Util::humanbytes( Padre::Util::process_memory() ) || '0';
+	$ram = Wx::gettext('(unsupported)') if $ram eq '0';
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Ram', $ram );
+
+	
+	$self->{output}->AppendText( "Wx...\n" );	
 
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Wx', $Wx::VERSION );
 
@@ -94,9 +111,14 @@ sub set_up {
 
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Wx::Scintilla', $Wx::Scintilla::VERSION );
 
+	$self->{output}->AppendText( "Other...\n" );
+	
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'PPI', $PPI::VERSION );
-
-
+	
+	my $config_dir_txt = Wx::gettext('Config:');
+	my $config_dir     = Padre::Constant::CONFIG_DIR;
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", $config_dir_txt, $config_dir );
+	
 	return;
 }
 
