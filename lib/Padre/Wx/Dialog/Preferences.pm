@@ -411,11 +411,6 @@ sub _update_shortcut_ui {
 	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
 	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
 
-	# Make sure the value and info sizer are not hidden
-	$self->{top_sizer}->Show( 2, 1 );
-	$self->{top_sizer}->Show( 3, 1 );
-	$self->{top_sizer}->Layout;
-
 	return;
 }
 
