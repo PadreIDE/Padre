@@ -119,6 +119,7 @@ the even version for the release, even during development.
     - Upgrade the find in files panel to wxFormBuilder (AZAWAWI)
     - Find in files has repeat, stop search, expand and collapse all buttons
       (AZAWAWI)
+    - Move the key bindings dialog to the preferences dialog (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
