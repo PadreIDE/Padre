@@ -109,7 +109,7 @@ sub new {
 
 # Translate on the fly when requested
 sub label {
-	Wx::gettext( $_[0]->{label} );
+	return defined $_[0]->{label} ? Wx::gettext( $_[0]->{label} ) : Wx::gettext('(Undefined)');
 }
 
 # A label textual data without any strange menu characters
