@@ -2,6 +2,8 @@
 
 use strict;
 use warnings;
+# Turn on $OUTPUT_AUTOFLUSH 
+$|  = 1;
 use Test::More;
 
 BEGIN {
@@ -52,30 +54,4 @@ use_ok( 'Padre::Wx::Dialog::Patch', @subs );
 foreach my $subs (@subs) {
 	can_ok( 'Padre::Wx::Dialog::Patch', $subs );
 }
-
-
-#my $listview = $treebook->GetListView;
-#isa_ok( $listview, 'Wx::ListView' );
-#is( $listview->,       8,   'Found siz items' );
-#is( $listview->GetColumnCount,     0,   'Found one column' );
-#is( $listview->GetColumnWidth(-1), 100, 'Got column width' );
-
-# Load the dialog from configuration
-
-# my $config = $main->config;
-# isa_ok( $config, 'Padre::Config' );
-# ok( $dialog->config_load($config), '->load ok' );
-
-# The diff (extracted from dialog) to the config should be null,
-# except maybe for a potential default font value. This is because
-# SetSelectedFont() doesn't work on wxNullFont.
-
-# my $diff = $dialog->config_diff($config);
-# if ($diff) {
-# is scalar keys %$diff, 1, 'only one key defined in the diff';
-# ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
-# } else {
-# ok !$diff, 'null font loaded, config_diff() returned nothing';
-# ok 1, 'placebo to stick to the plan';
-# }
 
