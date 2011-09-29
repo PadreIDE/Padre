@@ -70,7 +70,9 @@ sub set_up {
 	my $self = shift;
 	
 	# Set the bitmap button icons, o why are we using a 293kb bmp !!!!
-	$self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash-ccnc.bmp'), Wx::BITMAP_TYPE_BMP) );
+	# $self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash-ccnc.bmp'), Wx::BITMAP_TYPE_BMP) );
+	# create a png only 196kb te-he
+	$self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG) );
 
 	my $off_set = 24;
 	$self->{output}->AppendText("\n");
