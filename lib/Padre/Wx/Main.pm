@@ -300,7 +300,7 @@ sub new {
 			shift->{_do_update_ui} = 1;
 		}
 	);
-	
+
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {

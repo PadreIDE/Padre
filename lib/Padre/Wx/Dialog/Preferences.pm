@@ -9,7 +9,7 @@ use Padre::Wx                   ();
 use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Wx::Theme            ();
-use Padre::Util             ('_T');
+use Padre::Util                 ('_T');
 use Padre::Logger;
 
 our $VERSION = '0.91';
