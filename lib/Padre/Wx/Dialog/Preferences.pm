@@ -52,6 +52,12 @@ sub run {
 	# Save back to configuration
 	$self->config_save($config);
 
+	# Re-create menu to activate key bindings
+	delete $main->{menu};
+	$main->{menu} = Padre::Wx::Menubar->new($main);
+	$main->SetMenuBar( $main->menu->wx );
+	$main->refresh;
+
 	# Clean up
 	$self->Destroy;
 	return 1;

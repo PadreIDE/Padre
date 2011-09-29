@@ -983,6 +983,9 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{button_set}->SetToolTip(
+		Wx::gettext("Sets the keyboard binding")
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -999,6 +1002,9 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{button_delete}->SetToolTip(
+		Wx::gettext("Delete the keyboard binding")
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -1014,6 +1020,9 @@ sub new {
 		Wx::gettext("&Reset"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+	$self->{button_reset}->SetToolTip(
+		Wx::gettext("Reset to default shortcut")
 	);
 
 	Wx::Event::EVT_BUTTON(
