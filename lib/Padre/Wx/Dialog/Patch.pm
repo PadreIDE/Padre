@@ -535,7 +535,7 @@ sub test_svn {
 				TRACE("Found SVN v$svn_client_version but require v$required_svn_version") if DEBUG;
 				$main->info(
 					Wx::gettext(
-						"Warring found SVN v$svn_client_version but we require SVN v$required_svn_version and it is now called \"Apache Subversion\""
+						sprintf('Warring found SVN v%s but we require SVN v%s and it is now called "Apache Subversion"', $svn_client_version, $required_svn_version)
 					)
 				);
 			}
