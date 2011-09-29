@@ -24,7 +24,11 @@ sub config_load {
 		my $ctrl    = $self->$name();
 
 		# Apply this one setting to this one widget
-		if ( $ctrl->isa('Wx::CheckBox') ) {
+		if ( $ctrl->can('config_load') ) {
+			# Allow specialised widgets to load their own setting
+			$ctrl->config_load( $setting, $value );
+
+		} elsif ( $ctrl->isa('Wx::CheckBox') ) {
 			$ctrl->SetValue($value);
 
 		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
