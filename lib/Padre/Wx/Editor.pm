@@ -332,7 +332,6 @@ sub on_change_dwell {
 
 	# Only trigger tool refresh actions if we are the active document
 	if ( $editor and $self->GetId == $editor->GetId ) {
-		my $lock = $main->lock('UPDATE');
 		$main->refresh_functions;
 		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
