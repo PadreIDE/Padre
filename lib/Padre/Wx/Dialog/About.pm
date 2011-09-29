@@ -3,8 +3,10 @@ package Padre::Wx::Dialog::About;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx             ();
-use Padre::Wx::FBP::About ();
+use Padre::Wx               ();
+use Wx::Perl::ProcessStream ();
+use PPI                     ();
+use Padre::Wx::FBP::About   ();
 
 
 our $VERSION = '0.91';
@@ -63,25 +65,38 @@ sub run {
 #######
 sub set_up {
 	my $self = shift;
+
 	#TODO sort out left justification
 	$self->{output}->SetValue("hello world\n");
-	#test code
-	my $col_width = 0;
-		for ( keys %ENV ) {
-			if ( $col_width > length ) {
-				$col_width = $col_width;
-			}
-			else {
-				$col_width = length;
-			}
-		}
 
-	   # now put together a table
-	   # $result .= sprintf "%${col_width}s %s\n", $_, $ENV{$_} for keys %ENV;
-		my $result;
-		for ( keys %ENV ) {
-			$self->{output}->AppendText( sprintf "%${col_width}s %s\n", $_, $ENV{$_} );
-		}
+	my $off_set = 24;
+
+	# Yes, THIS variable should have this upper case char :-)
+	my $perl_version = $^V || $];
+	$perl_version = "$perl_version";
+	$perl_version =~ s/^v//;
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Perl', $perl_version );
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Wx', $Wx::VERSION );
+
+	# Reformat the native wxWidgets version string slightly
+	my $wx_widgets = Wx::wxVERSION_STRING();
+	$wx_widgets =~ s/^wx\w+\s+//;
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'WxWidgets', $wx_widgets );
+
+	eval { require Alien::wxWidgets };
+	my $alien = $Alien::wxWidgets::VERSION;
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Alien::wxWidgets', $alien );
+
+	$self->{output}
+		->AppendText( sprintf "%${off_set}s %s\n", 'Wx::Perl::ProcessStream', $Wx::Perl::ProcessStream::VERSION );
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Wx::Scintilla', $Wx::Scintilla::VERSION );
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'PPI', $PPI::VERSION );
+
+
 	return;
 }
 
