@@ -50,7 +50,7 @@ use Padre::Feature            ();
 use Padre::Locker             ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
-use Padre::Wx::Style          ();
+use Padre::Wx::Theme          ();
 use Padre::Wx::Display        ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Menubar        ();
@@ -116,7 +116,7 @@ sub new {
 	my $config   = $ide->config;
 	my $size     = [ $config->main_width, $config->main_height ];
 	my $position = [ $config->main_left, $config->main_top ];
-	my $style    = Wx::DEFAULT_FRAME_STYLE;
+	my $style    = Wx::DEFAULT_FRAME_STYLE | Wx::CLIP_CHILDREN;
 
 	# If we closed while maximized on the previous run,
 	# the previous size is completely suspect.
@@ -187,7 +187,7 @@ sub new {
 	$self->{locale} = ( $startup_locale ? Padre::Locale::object($startup_locale) : Padre::Locale::object() );
 
 	# Bootstrap style information in case the GUI will need it
-	$self->{style} = Padre::Wx::Style->find( $config->editor_style );
+	$self->{style} = Padre::Wx::Theme->find( $config->editor_style );
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -300,6 +300,7 @@ sub new {
 			shift->{_do_update_ui} = 1;
 		}
 	);
+	
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {
@@ -2054,7 +2055,7 @@ sub relocale {
     $main->restyle;
 
 The term and method C<restyle> is reserved for code that needs to be run when
-the L<Padre::Wx::Style|style> of the editor has changed and the colouring of
+the L<Padre::Wx::Theme|theme> of the editor has changed and the colouring of
 the application needs to be changed without restarting.
 
 Note that the new style must be applied to configuration before this method is
@@ -2066,7 +2067,7 @@ C<editor_style> configuration setting.
 sub restyle {
 	my $self  = shift;
 	my $name  = $self->config->editor_style;
-	my $style = $self->{style} = Padre::Wx::Style->find($name);
+	my $style = $self->{style} = Padre::Wx::Theme->find($name);
 	my $lock  = $self->lock('UPDATE');
 
 	# Apply the new style to all current editors

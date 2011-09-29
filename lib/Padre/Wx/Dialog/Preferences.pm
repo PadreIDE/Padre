@@ -8,7 +8,7 @@ use Padre::Document             ();
 use Padre::Wx                   ();
 use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
-use Padre::Wx::Style            ();
+use Padre::Wx::Theme            ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -193,7 +193,7 @@ sub preview_refresh {
 	my $self = shift;
 	my $lock = $self->main->lock('UPDATE');
 	my $name = $self->choice('editor_style');
-	Padre::Wx::Style->find($name)->apply( $self->preview );
+	Padre::Wx::Theme->find($name)->apply( $self->preview );
 	return;
 }
 

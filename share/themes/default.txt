@@ -3,7 +3,7 @@ name en-gb Padre
 
 
 # Padre GUI Colours
-style gui
+gui Padre::Wx::Directory::TreeCtrl
 SetForegroundColour                               990000
 SetBackgroundColour                               ffffee
 

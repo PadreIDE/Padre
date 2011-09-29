@@ -17,14 +17,14 @@ use threads::shared;
 # existence in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
 # use Wx               (':everything');
-use Wx           ('wxTheClipboard');
-use Wx::Event    (':everything');
-use Wx::DND      ();
-use Wx::AUI      ();
-use Wx::Html     ();
-use Wx::RichText ();
+use Wx                 ('wxTheClipboard');
+use Wx::Event          (':everything');
+use Wx::DND            ();
+use Wx::AUI            ();
+use Wx::Html           ();
+use Wx::RichText       ();
 use Wx::Scintilla 0.30 ();
-use Wx::Socket ();
+use Wx::Socket         ();
 
 our $VERSION    = '0.91';
 our $COMPATIBLE = '0.43';
@@ -45,6 +45,13 @@ BEGIN {
 	# Load the enhanced constants package
 	require Padre::Wx::Constant;
 }
+
+# Some default Wx objects
+use constant {
+	DEFAULT_COLOUR => Wx::Colour->new( 0xFF, 0xFF, 0xFF ),
+	NULL_FONT      => Wx::Font->new( Wx::NullFont ),
+	EDITOR_FONT    => Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
+};
 
 
 
@@ -91,18 +98,54 @@ sub version_human {
 
 # Colour constructor
 sub color {
-	my $rgb = shift;
-	my @c = ( 0xFF, 0xFF, 0xFF ); # Some default
-	if ( not defined $rgb ) {
+	my $string = shift;
+	my @rgb    = ( 0xFF, 0xFF, 0xFF ); # Some default
+	if ( not defined $string ) {
 
 		# Carp::cluck("undefined color");
-	} elsif ( $rgb =~ /^(..)(..)(..)$/ ) {
-		@c = map { hex($_) } ( $1, $2, $3 );
+	} elsif ( $string =~ /^(..)(..)(..)$/ ) {
+		@rgb = map { hex($_) } ( $1, $2, $3 );
 	} else {
 
-		# Carp::cluck("invalid color '$rgb'");
+		# Carp::cluck("invalid color '$string'");
 	}
-	return Wx::Colour->new(@c);
+	return Wx::Colour->new(@rgb);
+}
+
+# Font constructor
+sub native_font {
+	my $string = shift;
+	unless ( defined Params::Util::_STRING($string) ) {
+		return NULL_FONT;
+	}
+
+	# Attempt to apply the font string
+	local $@;
+	eval {
+		my $font = Wx::Font->new( Wx::NullFont );
+		$font->SetNativeFontInfoUserDesc($string);
+		return $font if $font->IsOk;
+	};
+
+	return NULL_FONT;
+}
+
+# Telytype/editor font
+sub editor_font {
+	my $string = shift;
+	unless ( defined Params::Util::_STRING($string) ) {
+		return EDITOR_FONT;
+	}
+
+	# Attempt to apply the font string
+	local $@;
+	eval {
+		my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+		$font->SetNativeFontInfoUserDesc($string);
+		return $font if $font->IsOk;
+	};
+
+	return EDITOR_FONT;
 }
 
 # The Wx::AuiPaneInfo method-chaining API is stupid.
@@ -115,24 +158,6 @@ sub aui_pane_info {
 		$info->$method(shift);
 	}
 	return $info;
-}
-
-# Allow objects to capture the mouse when over them, so you can scroll
-# lists and such without focusing on them.
-sub capture_mouse {
-	my $window = Params::Util::_INSTANCE( shift, 'Wx::Window' ) or return;
-	Wx::Event::EVT_ENTER_WINDOW(
-		$window,
-		sub {
-			$window->CaptureMouse;
-		}
-	);
-	Wx::Event::EVT_LEAVE_WINDOW(
-		$window,
-		sub {
-			$window->ReleaseMouse;
-		}
-	);
 }
 
 

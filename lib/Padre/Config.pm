@@ -20,7 +20,7 @@ use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
-use Padre::Wx::Style       ();
+use Padre::Wx::Theme       ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -1190,7 +1190,7 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HOST,
 	default => 'default',
-	options => Padre::Wx::Style->options,
+	options => Padre::Wx::Theme->options,
 	apply   => sub {
 		$_[0]->restyle;
 	},
