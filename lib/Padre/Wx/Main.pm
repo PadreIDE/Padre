@@ -5603,27 +5603,6 @@ sub show_perl_filter {
 
 =pod
 
-=head3 C<show_key_bindings>
-
-    $main->show_key_bindings;
-
-Opens the key bindings dialog
-
-=cut
-
-sub show_key_bindings {
-	my $self = shift;
-
-	# Show the key bindings dialog
-	require Padre::Wx::Dialog::KeyBindings;
-	my $key_bindings = Padre::Wx::Dialog::KeyBindings->new($self);
-	$key_bindings->show;
-
-	return;
-}
-
-=pod
-
 =head3 C<editor_linenumbers>
 
     $main->editor_linenumbers(1);

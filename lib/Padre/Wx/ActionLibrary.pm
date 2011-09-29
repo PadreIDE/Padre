@@ -2331,15 +2331,6 @@ sub init {
 	}
 
 	Padre::Wx::Action->new(
-		name       => 'tools.keys',
-		label      => _T('&Key Bindings'),
-		comment    => _T('Show the key bindings dialog to configure Padre shortcuts'),
-		menu_event => sub {
-			$_[0]->show_key_bindings;
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name       => 'tools.regex',
 		label      => _T('&Regex Editor'),
 		comment    => _T('Open the regular expression editing window'),

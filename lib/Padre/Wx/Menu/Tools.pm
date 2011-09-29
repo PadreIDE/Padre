@@ -45,11 +45,6 @@ sub new {
 		);
 	}
 
-	# Key bindings
-	$self->add_menu_action(
-		'tools.keys',
-	);
-
 	$self->AppendSeparator;
 
 	# Regex Editor
