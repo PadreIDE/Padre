@@ -68,10 +68,12 @@ sub new {
 
 	# Set the bitmap button icons
 	$self->{repeat}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
+	$self->{stop}->SetBitmapLabel( Padre::Wx::Icon::find('actions/stop') );
 	$self->{expand_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-in') );
 	$self->{collapse_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-out') );
 
 	# Set the button tooltips
+	$self->{stop}->SetToolTip( Wx::gettext('Stop search') );
 	$self->{expand_all}->SetToolTip( Wx::gettext('Expand all') );
 	$self->{collapse_all}->SetToolTip( Wx::gettext('Collapse all') );
 
@@ -151,14 +153,19 @@ sub search {
 
 	my $tree = $self->{tree};
 	my $root = $tree->AddRoot('Root');
-	$self->{status}->SetValue( sprintf(
+	$self->{status}->SetValue(
+		sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),
 			$param{search}->find_term,
 			$param{root},
-		));
+		)
+	);
 
 	# Start the render timer
 	$self->{search_timer}->Start(250);
+
+	# Enable the stop button
+	$self->{stop}->Enable;
 
 	return 1;
 }
@@ -223,6 +230,9 @@ sub search_finish {
 	# Enable the repeat search button again
 	$self->{repeat}->Enable;
 	$self->{repeat}->SetToolTip( sprintf( Wx::gettext(q{Search again for '%s'}), $term ) );
+
+	# Disable the stop button
+	$self->{stop}->Disable;
 
 	# Only enable collapse all when we have results
 	if ( $self->{files} ) {
@@ -421,6 +431,14 @@ sub _flip_button_state {
 		$self->{expand_all}->Enable;
 		$self->{collapse_all}->Disable;
 	}
+}
+
+# Called when the "Stop search" button is clicked
+sub on_stop_click {
+	my $self = shift;
+
+	$self->task_reset;
+	$self->{stop}->Disable;
 }
 
 ######################################################################

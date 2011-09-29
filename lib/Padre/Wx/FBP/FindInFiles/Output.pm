@@ -57,6 +57,23 @@ sub new {
 		},
 	);
 
+	$self->{stop} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{stop},
+		sub {
+			shift->on_stop_click(@_);
+		},
+	);
+
 	$self->{expand_all} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -110,6 +127,7 @@ sub new {
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
 	$top_sizer->Add( $self->{repeat}, 0, Wx::ALL, 2 );
+	$top_sizer->Add( $self->{stop}, 0, Wx::ALL, 2 );
 	$top_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 2 );
 	$top_sizer->Add( $self->{collapse_all}, 0, Wx::ALL, 2 );
 
@@ -125,6 +143,10 @@ sub new {
 
 sub on_repeat_click {
 	$_[0]->main->error('Handler method on_repeat_click for event repeat.OnButtonClick not implemented');
+}
+
+sub on_stop_click {
+	$_[0]->main->error('Handler method on_stop_click for event stop.OnButtonClick not implemented');
 }
 
 sub on_expand_all_click {
