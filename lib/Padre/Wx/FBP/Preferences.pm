@@ -912,7 +912,7 @@ sub new {
 	$self->{save} = Wx::Button->new(
 		$self,
 		Wx::ID_OK,
-		Wx::gettext("Save"),
+		Wx::gettext("&Save"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -921,7 +921,7 @@ sub new {
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Advanced") . "...",
+		Wx::gettext("&Advanced") . "...",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -937,7 +937,7 @@ sub new {
 	$self->{cancel} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Cancel"),
+		Wx::gettext("&Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);

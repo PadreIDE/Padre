@@ -10829,7 +10829,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_OK</property>
-                                        <property name="label">Save</property>
+                                        <property name="label">&amp;Save</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">save</property>
@@ -10886,7 +10886,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Advanced...</property>
+                                        <property name="label">&amp;Advanced...</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">advanced</property>
@@ -10943,7 +10943,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Cancel</property>
+                                        <property name="label">&amp;Cancel</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">cancel</property>
