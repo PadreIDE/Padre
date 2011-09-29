@@ -101,6 +101,16 @@ sub new {
 	# a public method returning it.
 	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
 
+	# Set some internal parameters for keybindings
+	$self->{sortcolumn}  = 0;
+	$self->{sortreverse} = 0;
+
+	# Update the key bindings list
+	$self->_update_list;
+
+	# resize columns
+	$self->_resize_columns;
+
 	return $self;
 }
 
@@ -213,6 +223,125 @@ sub choice {
 	my $options = $setting->options or return;
 	my @results = sort keys %$options;
 	return $results[ $ctrl->GetSelection ];
+}
+
+
+#######################################################################
+# Key Bindings panel methods
+
+# Private method to update the key bindings list view
+sub _update_list {
+	my $self   = shift;
+	my $filter = quotemeta $self->{filter}->GetValue;
+
+	# Clear list
+	my $list = $self->{list};
+	$list->DeleteAllItems;
+
+	my $actions         = $self->ide->actions;
+	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
+	my $alternate_color = Wx::Colour->new(
+		int( $real_color->Red * 0.9 ),
+		int( $real_color->Green * 0.9 ),
+		$real_color->Blue,
+	);
+	my $index = 0;
+
+	my @action_names = sort { $a cmp $b } keys %$actions;
+	if ( $self->{sortcolumn} == 1 ) {
+
+		# Sort by Descreption
+		@action_names = sort { $actions->{$a}->label_text cmp $actions->{$b}->label_text } keys %$actions;
+	}
+	if ( $self->{sortcolumn} == 2 ) {
+
+		# Sort by Shortcut
+		@action_names = sort {
+			_translate_shortcut( $actions->{$a}->shortcut || '' )
+				cmp _translate_shortcut( $actions->{$b}->shortcut || '' )
+		} keys %$actions;
+	}
+	if ( $self->{sortreverse} ) {
+		@action_names = reverse @action_names;
+	}
+
+	foreach my $action_name (@action_names) {
+		my $action = $actions->{$action_name};
+		my $shortcut = defined $action->shortcut ? $action->shortcut : '';
+
+		# Ignore key binding if it does not match the filter
+		next
+			if $action->label_text !~ /$filter/i
+				and $action_name !~ /$filter/i
+				and $shortcut !~ /$filter/i;
+
+		# Add the key binding to the list control
+		$list->InsertStringItem( $index, $action_name );
+		$list->SetItem( $index, 1, $action->label_text );
+		$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
+
+		# Non-default (i.e. overriden) shortcuts should have a bold font
+		my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
+		$self->_set_item_bold_font( $index, $non_default );
+
+		# Alternating table colors
+		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
+		$index++;
+		print "$index\n";
+	}
+
+	return;
+}
+
+# Translates the shortcut to its native language
+sub _translate_shortcut {
+	my ($shortcut) = @_;
+
+	my @parts = split /-/, $shortcut;
+	my $regular_key = @parts ? $parts[-1] : '';
+
+	return join '-', map { Wx::gettext($_) } @parts;
+}
+
+# Private method to set item to bold
+# Somehow SetItemFont is not there... hence i had to write this long workaround
+sub _set_item_bold_font {
+	my ( $self, $index, $bold ) = @_;
+
+	my $list = $self->{list};
+	my $item = $list->GetItem($index);
+	my $font = $item->GetFont;
+	$font->SetWeight( $bold ? Wx::FONTWEIGHT_BOLD : Wx::FONTWEIGHT_NORMAL );
+	$item->SetFont($font);
+	$list->SetItem($item);
+
+	return;
+}
+
+sub _on_list_col_click {
+	my $self     = shift;
+	my $event    = shift;
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sortcolumn};
+	my $reversed = $self->{sortreverse};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sortcolumn}  = $column;
+	$self->{sortreverse} = $reversed;
+	$self->_update_list;
+	return;
+}
+
+# Private method to resize list columns
+sub _resize_columns {
+	my $self = shift;
+
+	# Resize all columns but the last to their biggest item width
+	my $list = $self->{list};
+	for ( 0 .. $list->GetColumnCount - 1 ) {
+		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
+	}
+
+	return;
 }
 
 1;

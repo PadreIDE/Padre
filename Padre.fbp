@@ -10642,7 +10642,7 @@
                                                             <property name="window_extra_style"></property>
                                                             <property name="window_name"></property>
                                                             <property name="window_style"></property>
-                                                            <event name="OnChar">_on_char</event>
+                                                            <event name="OnChar"></event>
                                                             <event name="OnEnterWindow"></event>
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
@@ -10717,7 +10717,7 @@
                                                     <event name="OnListBeginRDrag"></event>
                                                     <event name="OnListCacheHint"></event>
                                                     <event name="OnListColBeginDrag"></event>
-                                                    <event name="OnListColClick">list_col_click</event>
+                                                    <event name="OnListColClick">_on_list_col_click</event>
                                                     <event name="OnListColDragging"></event>
                                                     <event name="OnListColEndDrag"></event>
                                                     <event name="OnListColRightClick"></event>
