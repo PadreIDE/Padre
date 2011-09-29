@@ -62,13 +62,6 @@ sub new {
 				[ 16, 16 ],
 			),
 		),
-		root => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_HELP_FOLDER',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
 	};
 	my $tree = $self->{tree};
 	$tree->AssignImageList($images);
@@ -163,7 +156,6 @@ sub search {
 			$param{search}->find_term,
 			$param{root},
 		));
-	$tree->SetItemImage( $root, $self->{images}->{root} );
 
 	# Start the render timer
 	$self->{search_timer}->Start(250);
