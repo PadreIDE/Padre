@@ -68,6 +68,9 @@ sub run {
 #######
 sub set_up {
 	my $self = shift;
+	
+	# Set the bitmap button icons, o why are we using a 293kb bmp !!!!
+	$self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash-ccnc.bmp'), Wx::BITMAP_TYPE_BMP) );
 
 	my $off_set = 24;
 	$self->{output}->AppendText("\n");
@@ -80,7 +83,7 @@ sub set_up {
 
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
-	$perl_version = "$perl_version";
+	# $perl_version = "$perl_version";
 	$perl_version =~ s/^v//;
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Perl', $perl_version );
 

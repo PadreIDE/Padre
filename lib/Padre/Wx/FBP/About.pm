@@ -67,7 +67,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_bitmap1} = Wx::StaticBitmap->new(
+	$self->{splash} = Wx::StaticBitmap->new(
 		$self->{m_panel9},
 		-1,
 		Wx::NullBitmap,
@@ -777,7 +777,7 @@ sub new {
 	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::ALL, 5 );
 
 	my $bSizer18 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer18->Add( $self->{m_bitmap1}, 0, Wx::ALL, 5 );
+	$bSizer18->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
 
 	my $gSizer6 = Wx::GridSizer->new( 0, 1, 0, 0 );
 	$gSizer6->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
