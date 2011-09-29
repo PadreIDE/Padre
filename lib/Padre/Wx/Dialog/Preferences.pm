@@ -108,7 +108,7 @@ sub new {
 	# a public method returning it.
 	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
 
-	# Set some internal parameters for keybindings
+	# Set some internal parameters for key bindings
 	$self->{sortcolumn}  = 0;
 	$self->{sortreverse} = 0;
 
