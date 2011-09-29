@@ -31,6 +31,15 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
+	$self->{status} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_READONLY,
+	);
+
 	$self->{repeat} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -87,7 +96,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_SINGLE,
+		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_SINGLE,
 	);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
@@ -98,13 +107,14 @@ sub new {
 		},
 	);
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{repeat}, 0, Wx::ALL, 2 );
-	$button_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 2 );
-	$button_sizer->Add( $self->{collapse_all}, 0, Wx::ALL, 2 );
+	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
+	$top_sizer->Add( $self->{repeat}, 0, Wx::ALL, 2 );
+	$top_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 2 );
+	$top_sizer->Add( $self->{collapse_all}, 0, Wx::ALL, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $button_sizer, 0, Wx::ALIGN_RIGHT, 2 );
+	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 0 );
 	$main_sizer->Add( $self->{tree}, 1, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->SetSizer($main_sizer);

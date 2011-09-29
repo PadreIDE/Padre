@@ -158,14 +158,11 @@ sub search {
 
 	my $tree = $self->{tree};
 	my $root = $tree->AddRoot('Root');
-	$tree->SetItemText(
-		$root,
-		sprintf(
+	$self->{status}->SetValue( sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),
 			$param{search}->find_term,
 			$param{root},
-		)
-	);
+		));
 	$tree->SetItemImage( $root, $self->{images}->{root} );
 
 	# Start the render timer
@@ -209,8 +206,7 @@ sub search_finish {
 	my $tree = $self->{tree};
 	my $root = $tree->GetRootItem;
 	if ( $self->{files} ) {
-		$tree->SetItemText(
-			$root,
+		$self->{status}->SetValue(
 			sprintf(
 				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
 				$term,
@@ -220,8 +216,7 @@ sub search_finish {
 			)
 		);
 	} else {
-		$tree->SetItemText(
-			$root,
+		$self->{status}->SetValue(
 			sprintf(
 				Wx::gettext(q{No results found for '%s' inside '%s'}),
 				$term,
