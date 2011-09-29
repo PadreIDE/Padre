@@ -152,7 +152,6 @@ sub search {
 	);
 
 	my $tree = $self->{tree};
-	my $root = $tree->AddRoot('Root');
 	$self->{status}->SetValue(
 		sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),
@@ -203,7 +202,6 @@ sub search_finish {
 	my $term = $task->{search}->find_term;
 	my $dir  = $task->{root};
 	my $tree = $self->{tree};
-	my $root = $tree->GetRootItem;
 	if ( $self->{files} ) {
 		$self->{status}->SetValue(
 			sprintf(
