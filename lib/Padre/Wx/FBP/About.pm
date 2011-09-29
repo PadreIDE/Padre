@@ -67,6 +67,15 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
+	$self->{m_staticText65111} = Wx::StaticText->new(
+		$self->{m_panel9},
+		-1,
+		Wx::gettext("Created by Gabor Szabo"),
+	);
+	$self->{m_staticText65111}->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
+	);
+
 	$self->{splash} = Wx::StaticBitmap->new(
 		$self->{m_panel9},
 		-1,
@@ -78,22 +87,38 @@ sub new {
 	$self->{m_staticText67} = Wx::StaticText->new(
 		$self->{m_panel9},
 		-1,
-		Wx::gettext("Blue butterfly on a green leaf splash image is based on work by Jerry Charlotte (blackbutterfly)"),
+		Wx::gettext("Blue butterfly on a green leaf splash image is based on work \nby Jerry Charlotte (blackbutterfly)"),
 	);
 	$self->{m_staticText67}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
 	);
 
+	$self->{m_staticline27} = Wx::StaticLine->new(
+		$self->{m_panel9},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
 	$self->{m_staticText34} = Wx::StaticText->new(
 		$self->{m_panel9},
 		-1,
-		Wx::gettext("Copyright 2008\x{2013}2011 The Padre Development Team Padre is free software; you can redistribute it and/or modify it under the same terms as Perl 5."),
+		Wx::gettext("Copyright 2008\x{2013}2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
+	);
+
+	$self->{m_staticline28} = Wx::StaticLine->new(
+		$self->{m_panel9},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
 	);
 
 	$self->{m_staticText35} = Wx::StaticText->new(
 		$self->{m_panel9},
 		-1,
-		Wx::gettext("\"Padre contains icons from GNOME, you can redistribute it and/or modify then under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.\""),
+		Wx::gettext("\"Padre contains icons from GNOME, you can redistribute it and/or \nmodify then under the terms of the GNU General Public License as published by the \nFree Software Foundation; version 2 dated June, 1991.\""),
 	);
 
 	$self->{m_panel10} = Wx::Panel->new(
@@ -776,18 +801,24 @@ sub new {
 	$bSizer471->Add( $self->{m_staticText651}, 0, Wx::ALL, 5 );
 	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::ALL, 5 );
 
+	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
+
 	my $bSizer18 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer18->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
 
-	my $gSizer6 = Wx::GridSizer->new( 0, 1, 0, 0 );
-	$gSizer6->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
-	$gSizer6->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
-	$gSizer6->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
+	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticline27}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticline28}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
 
 	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer17->Add( $bSizer471, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $bSizer4711, 0, Wx::EXPAND, 5 );
 	$bSizer17->Add( $bSizer18, 1, Wx::EXPAND, 5 );
-	$bSizer17->Add( $gSizer6, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $bSizer81, 0, Wx::EXPAND, 5 );
 
 	$self->{m_panel9}->SetSizerAndFit($bSizer17);
 	$self->{m_panel9}->Layout;
