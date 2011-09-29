@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::About;
 use 5.008;
 use strict;
 use warnings;
+use Config;
 use Padre::Wx               ();
 use Wx::Perl::ProcessStream ();
 use Padre::Config           ();
@@ -70,9 +71,11 @@ sub set_up {
 
 	my $off_set = 24;
 	
-	$self->{output}->AppendText( "Core...\n" );
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Padre', $VERSION );	
 	
-	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Padre', $VERSION );
+	$self->{output}->AppendText( "Core...\n" );
+
+	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", $Config{osname}, $Config{archname} );
 	
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
