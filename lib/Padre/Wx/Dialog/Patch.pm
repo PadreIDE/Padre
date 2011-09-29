@@ -487,7 +487,7 @@ sub make_patch_diff {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( Wx::gettext("Diff Succesful, you should see a new tab in editor called $patch_file") );
+			$main->info( Wx::gettext(sprintf('Diff Succesful, you should see a new tab in editor called %s', $patch_file)) );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
 
