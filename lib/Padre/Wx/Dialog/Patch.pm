@@ -575,7 +575,7 @@ sub make_patch_svn {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( Wx::gettext("SVN Diff Succesful, you should see a new tab in editor called $patch_file") );
+			$main->info( Wx::gettext(sprintf('SVN Diff Succesful, you should see a new tab in editor called %s', $patch_file)) );
 		} else {
 			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
 
