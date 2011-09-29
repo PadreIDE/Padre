@@ -901,6 +901,81 @@ sub new {
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
+	$self->{shortcut_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Shortcut") . ":",
+	);
+
+	$self->{ctrl} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Ctrl"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{alt} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Alt"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{plus1_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("+"),
+	);
+
+	$self->{shift} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Shift"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{plus2_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("+"),
+	);
+
+	$self->{key} = Wx::Choice->new(
+		$m_panel9,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{key}->SetSelection(0);
+
+	$self->{button_set} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Set"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{button_delete} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Delete"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{button_reset} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Reset"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
@@ -1151,15 +1226,34 @@ sub new {
 	$m_panel8->SetSizerAndFit($fgSizer8);
 	$m_panel8->Layout;
 
-	my $bSizer46 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer46->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
-	$bSizer46->Add( $self->{filter}, 1, Wx::ALL, 5 );
+	my $filter_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$filter_sizer->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
+	$filter_sizer->Add( $self->{filter}, 1, Wx::ALL, 5 );
 
-	my $bSizer45 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer45->Add( $bSizer46, 0, Wx::EXPAND, 5 );
-	$bSizer45->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	my $ctrl_alt_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$ctrl_alt_sizer->Add( $self->{ctrl}, 0, Wx::ALL, 5 );
+	$ctrl_alt_sizer->Add( $self->{alt}, 0, Wx::ALL, 5 );
 
-	$m_panel9->SetSizerAndFit($bSizer45);
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{button_set}, 0, Wx::ALL, 0 );
+	$button_sizer->Add( $self->{button_delete}, 0, Wx::ALL, 0 );
+	$button_sizer->Add( $self->{button_reset}, 0, Wx::ALL, 0 );
+
+	my $bottom_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bottom_sizer->Add( $self->{shortcut_label}, 0, Wx::ALIGN_CENTER, 5 );
+	$bottom_sizer->Add( $ctrl_alt_sizer, 1, Wx::EXPAND, 5 );
+	$bottom_sizer->Add( $self->{plus1_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{shift}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{plus2_label}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $button_sizer, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT, 0 );
+
+	my $top_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$top_sizer->Add( $filter_sizer, 0, Wx::EXPAND, 5 );
+	$top_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$top_sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
+
+	$m_panel9->SetSizerAndFit($top_sizer);
 	$m_panel9->Layout;
 
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
