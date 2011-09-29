@@ -893,12 +893,43 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_CHAR(
+		$self->{filter},
+		sub {
+			shift->_on_char(@_);
+		},
+	);
+
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{filter},
+		sub {
+			shift->_update_list(@_);
+		},
+	);
+
 	$self->{list} = Wx::ListView->new(
 		$m_panel9,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->list_col_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_item_selected(@_);
+		},
 	);
 
 	$self->{shortcut_label} = Wx::StaticText->new(
@@ -955,9 +986,17 @@ sub new {
 	$self->{button_set} = Wx::Button->new(
 		$m_panel9,
 		-1,
-		Wx::gettext("&Set"),
+		Wx::gettext("S&et"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_set},
+		sub {
+			shift->_on_set_button(@_);
+		},
 	);
 
 	$self->{button_delete} = Wx::Button->new(
@@ -968,12 +1007,28 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_delete},
+		sub {
+			shift->_on_delete_button(@_);
+		},
+	);
+
 	$self->{button_reset} = Wx::Button->new(
 		$m_panel9,
 		-1,
 		Wx::gettext("&Reset"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_reset},
+		sub {
+			shift->_on_reset_button(@_);
+		},
 	);
 
 	my $m_staticline1 = Wx::StaticLine->new(
@@ -1241,11 +1296,13 @@ sub new {
 
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bottom_sizer->Add( $self->{shortcut_label}, 0, Wx::ALIGN_CENTER, 5 );
+	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$bottom_sizer->Add( $ctrl_alt_sizer, 1, Wx::EXPAND, 5 );
 	$bottom_sizer->Add( $self->{plus1_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bottom_sizer->Add( $self->{shift}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bottom_sizer->Add( $self->{plus2_label}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
-	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$bottom_sizer->Add( $button_sizer, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT, 0 );
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
@@ -1490,6 +1547,34 @@ sub preview_refresh {
 
 sub guess {
 	$_[0]->main->error('Handler method guess for event editor_indent_guess.OnButtonClick not implemented');
+}
+
+sub _on_char {
+	$_[0]->main->error('Handler method _on_char for event filter.OnChar not implemented');
+}
+
+sub _update_list {
+	$_[0]->main->error('Handler method _update_list for event filter.OnText not implemented');
+}
+
+sub list_col_click {
+	$_[0]->main->error('Handler method list_col_click for event list.OnListColClick not implemented');
+}
+
+sub _on_list_item_selected {
+	$_[0]->main->error('Handler method _on_list_item_selected for event list.OnListItemSelected not implemented');
+}
+
+sub _on_set_button {
+	$_[0]->main->error('Handler method _on_set_button for event button_set.OnButtonClick not implemented');
+}
+
+sub _on_delete_button {
+	$_[0]->main->error('Handler method _on_delete_button for event button_delete.OnButtonClick not implemented');
+}
+
+sub _on_reset_button {
+	$_[0]->main->error('Handler method _on_reset_button for event button_reset.OnButtonClick not implemented');
 }
 
 sub advanced {

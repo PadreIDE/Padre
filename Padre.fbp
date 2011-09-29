@@ -10642,7 +10642,7 @@
                                                             <property name="window_extra_style"></property>
                                                             <property name="window_name"></property>
                                                             <property name="window_style"></property>
-                                                            <event name="OnChar"></event>
+                                                            <event name="OnChar">_on_char</event>
                                                             <event name="OnEnterWindow"></event>
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
@@ -10664,7 +10664,7 @@
                                                             <event name="OnRightUp"></event>
                                                             <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
-                                                            <event name="OnText"></event>
+                                                            <event name="OnText">_update_list</event>
                                                             <event name="OnTextEnter"></event>
                                                             <event name="OnTextMaxLen"></event>
                                                             <event name="OnTextURL"></event>
@@ -10717,7 +10717,7 @@
                                                     <event name="OnListBeginRDrag"></event>
                                                     <event name="OnListCacheHint"></event>
                                                     <event name="OnListColBeginDrag"></event>
-                                                    <event name="OnListColClick"></event>
+                                                    <event name="OnListColClick">list_col_click</event>
                                                     <event name="OnListColDragging"></event>
                                                     <event name="OnListColEndDrag"></event>
                                                     <event name="OnListColRightClick"></event>
@@ -10730,7 +10730,7 @@
                                                     <event name="OnListItemFocused"></event>
                                                     <event name="OnListItemMiddleClick"></event>
                                                     <event name="OnListItemRightClick"></event>
-                                                    <event name="OnListItemSelected"></event>
+                                                    <event name="OnListItemSelected">_on_list_item_selected</event>
                                                     <event name="OnListKeyDown"></event>
                                                     <event name="OnMiddleDClick"></event>
                                                     <event name="OnMiddleDown"></event>
@@ -10810,6 +10810,16 @@
                                                             <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnUpdateUI"></event>
+                                                        </object>
+                                                    </object>
+                                                    <object class="sizeritem" expanded="0">
+                                                        <property name="border">5</property>
+                                                        <property name="flag">wxEXPAND</property>
+                                                        <property name="proportion">1</property>
+                                                        <object class="spacer" expanded="0">
+                                                            <property name="height">0</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="width">0</property>
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
@@ -11108,7 +11118,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALIGN_CENTER_VERTICAL</property>
+                                                        <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxChoice" expanded="0">
                                                             <property name="bg"></property>
@@ -11163,6 +11173,16 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
+                                                        <property name="border">5</property>
+                                                        <property name="flag">wxEXPAND</property>
+                                                        <property name="proportion">1</property>
+                                                        <object class="spacer" expanded="0">
+                                                            <property name="height">0</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="width">0</property>
+                                                        </object>
+                                                    </object>
+                                                    <object class="sizeritem" expanded="0">
                                                         <property name="border">0</property>
                                                         <property name="flag">wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT</property>
                                                         <property name="proportion">0</property>
@@ -11185,7 +11205,7 @@
                                                                     <property name="font"></property>
                                                                     <property name="hidden">0</property>
                                                                     <property name="id">wxID_ANY</property>
-                                                                    <property name="label">&amp;Set</property>
+                                                                    <property name="label">S&amp;et</property>
                                                                     <property name="maximum_size"></property>
                                                                     <property name="minimum_size"></property>
                                                                     <property name="name">button_set</property>
@@ -11202,7 +11222,7 @@
                                                                     <property name="window_extra_style"></property>
                                                                     <property name="window_name"></property>
                                                                     <property name="window_style"></property>
-                                                                    <event name="OnButtonClick"></event>
+                                                                    <event name="OnButtonClick">_on_set_button</event>
                                                                     <event name="OnChar"></event>
                                                                     <event name="OnEnterWindow"></event>
                                                                     <event name="OnEraseBackground"></event>
@@ -11259,7 +11279,7 @@
                                                                     <property name="window_extra_style"></property>
                                                                     <property name="window_name"></property>
                                                                     <property name="window_style"></property>
-                                                                    <event name="OnButtonClick"></event>
+                                                                    <event name="OnButtonClick">_on_delete_button</event>
                                                                     <event name="OnChar"></event>
                                                                     <event name="OnEnterWindow"></event>
                                                                     <event name="OnEraseBackground"></event>
@@ -11316,7 +11336,7 @@
                                                                     <property name="window_extra_style"></property>
                                                                     <property name="window_name"></property>
                                                                     <property name="window_style"></property>
-                                                                    <event name="OnButtonClick"></event>
+                                                                    <event name="OnButtonClick">_on_reset_button</event>
                                                                     <event name="OnChar"></event>
                                                                     <event name="OnEnterWindow"></event>
                                                                     <event name="OnEraseBackground"></event>
