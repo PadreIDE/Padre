@@ -893,13 +893,6 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	Wx::Event::EVT_CHAR(
-		$self->{filter},
-		sub {
-			shift->_on_char(@_);
-		},
-	);
-
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{filter},
@@ -920,7 +913,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			shift->list_col_click(@_);
+			shift->_on_list_col_click(@_);
 		},
 	);
 
@@ -1549,16 +1542,12 @@ sub guess {
 	$_[0]->main->error('Handler method guess for event editor_indent_guess.OnButtonClick not implemented');
 }
 
-sub _on_char {
-	$_[0]->main->error('Handler method _on_char for event filter.OnChar not implemented');
-}
-
 sub _update_list {
 	$_[0]->main->error('Handler method _update_list for event filter.OnText not implemented');
 }
 
-sub list_col_click {
-	$_[0]->main->error('Handler method list_col_click for event list.OnListColClick not implemented');
+sub _on_list_col_click {
+	$_[0]->main->error('Handler method _on_list_col_click for event list.OnListColClick not implemented');
 }
 
 sub _on_list_item_selected {

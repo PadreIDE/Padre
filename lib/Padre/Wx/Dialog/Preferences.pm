@@ -9,6 +9,7 @@ use Padre::Wx                   ();
 use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Wx::Theme            ();
+use Padre::Util             ('_T');
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -104,6 +105,28 @@ sub new {
 	# Set some internal parameters for keybindings
 	$self->{sortcolumn}  = 0;
 	$self->{sortreverse} = 0;
+
+	my @titles = qw(Action Description Shortcut);
+	foreach my $i ( 0 .. 2 ) {
+		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
+		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
+	}
+
+	# key choice list
+	my @keys = (
+		_T('None'),   _T('Backspace'), _T('Tab'),    _T('Space'),  _T('Up'),   _T('Down'),
+		_T('Left'),   _T('Right'),     _T('Insert'), _T('Delete'), _T('Home'), _T('End'),
+		_T('PageUp'), _T('PageDown'),  _T('Enter'),  _T('Escape'),
+		'F1',       'F2',       'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12',
+		'A' .. 'Z', '0' .. '9', '~',  '-',  '=',  '[',  ']',  ';',  '\'', ',',   '.',   '/'
+	);
+	$self->{keys} = \@keys;
+
+	my @translated_keys = map { Wx::gettext($_) } @keys;
+	for my $key (@translated_keys) {
+		$self->{key}->Append($key);
+	}
+	$self->{key}->SetSelection(0);
 
 	# Update the key bindings list
 	$self->_update_list;
@@ -287,7 +310,6 @@ sub _update_list {
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
-		print "$index\n";
 	}
 
 	return;
@@ -331,6 +353,28 @@ sub _on_list_col_click {
 	return;
 }
 
+# Private method to handle the selection of a key binding item
+sub _on_list_item_selected {
+	my $self  = shift;
+	my $event = shift;
+
+	my $list        = $self->{list};
+	my $index       = $list->GetFirstSelected;
+	my $action_name = $list->GetItemText($index);
+	my $action      = $self->ide->actions->{$action_name};
+
+	my $shortcut = $self->ide->actions->{$action_name}->shortcut;
+	$shortcut = '' if not defined $shortcut;
+
+	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
+
+	$self->{button_delete}->Enable( $shortcut ne '' );
+
+	$self->_update_shortcut_ui($shortcut);
+
+	return;
+}
+
 # Private method to resize list columns
 sub _resize_columns {
 	my $self = shift;
@@ -340,6 +384,37 @@ sub _resize_columns {
 	for ( 0 .. $list->GetColumnCount - 1 ) {
 		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
 	}
+
+	return;
+}
+
+# Updates the shortcut UI
+sub _update_shortcut_ui {
+	my ( $self, $shortcut ) = @_;
+
+	my @parts = split /-/, $shortcut;
+	my $regular_key = @parts ? $parts[-1] : '';
+
+	# Find the regular key index in the choice box
+	my $regular_index = 0;
+	my @keys          = @{ $self->{keys} };
+	for ( my $i = 0; $i < scalar @keys; $i++ ) {
+		if ( $regular_key eq $keys[$i] ) {
+			$regular_index = $i;
+			last;
+		}
+	}
+
+	# and update the UI
+	$self->{key}->SetSelection($regular_index);
+	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
+	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
+
+	# Make sure the value and info sizer are not hidden
+	$self->{top_sizer}->Show( 2, 1 );
+	$self->{top_sizer}->Show( 3, 1 );
+	$self->{top_sizer}->Layout;
 
 	return;
 }
