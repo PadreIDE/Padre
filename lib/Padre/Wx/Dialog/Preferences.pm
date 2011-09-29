@@ -414,6 +414,140 @@ sub _update_shortcut_ui {
 	return;
 }
 
+# Private method to handle the pressing of the set value button
+sub _on_set_button {
+	my $self = shift;
+
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
+
+	my @key_list = ();
+	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
+		push @key_list, $regular_key if $self->{ lc $regular_key }->GetValue;
+	}
+	my $key_index   = $self->{key}->GetSelection;
+	my $regular_key = $self->{keys}->[$key_index];
+	push @key_list, $regular_key if not $regular_key eq 'None';
+	my $shortcut = join '-', @key_list;
+
+	$self->_try_to_set_binding( $action_name, $shortcut );
+
+	return;
+}
+
+# Tries to set the binding and asks the user if he want to set the shortcut if has already be used elsewhere
+sub _try_to_set_binding {
+	my ( $self, $action_name, $shortcut ) = @_;
+
+	my $other_action = $self->ide->shortcuts->{$shortcut};
+	if ( defined $other_action && $other_action->name ne $action_name ) {
+		my $answer = $self->yes_no(
+			sprintf(
+				Wx::gettext("The shortcut '%s' is already used by the action '%s'.\n"),
+				$shortcut, $other_action->label_text
+				)
+				. Wx::gettext('Do you want to override it with the selected action?'),
+			Wx::gettext('Override Shortcut')
+		);
+		if ($answer) {
+			$self->_set_binding( $other_action->name, '' );
+		} else {
+			return;
+		}
+	}
+
+	$self->_set_binding( $action_name, $shortcut );
+
+	return;
+}
+
+# Sets the key binding in Padre's configuration
+sub _set_binding {
+	my ( $self, $action_name, $shortcut ) = @_;
+
+	my $shortcuts = $self->ide->shortcuts;
+	my $action    = $self->ide->actions->{$action_name};
+
+	# modify shortcut registry
+	my $old_shortcut = $action->shortcut;
+	delete $shortcuts->{$old_shortcut} if defined $old_shortcut;
+	$shortcuts->{$shortcut} = $action;
+
+	# set the action's shortcut
+	$action->shortcut( $shortcut eq '' ? undef : $shortcut );
+
+	# modify the configuration database
+	$self->config->set( $action->shortcut_setting, $shortcut );
+	$self->config->write;
+
+	# Update the action's UI
+	my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
+	$self->_update_action_ui( $action_name, $shortcut, $non_default );
+
+	return;
+}
+
+# Private method to update the UI from the provided preference
+sub _update_action_ui {
+
+	my ( $self, $action_name, $shortcut, $non_default ) = @_;
+
+	my $list = $self->{list};
+	my $index = $list->FindItem( -1, $action_name );
+
+	$self->{button_reset}->Enable($non_default);
+	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
+	$self->_set_item_bold_font( $index, $non_default );
+
+	$self->_update_shortcut_ui($shortcut);
+
+	return;
+}
+
+# Private method to handle the pressing of the delete button
+sub _on_delete_button {
+	my $self = shift;
+
+	# Prepare the key binding
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
+
+	$self->_set_binding( $action_name, '' );
+
+	return;
+}
+
+# Private method to handle the pressing of the reset button
+sub _on_reset_button {
+	my $self = shift;
+
+	my $index       = $self->{list}->GetFirstSelected;
+	my $action_name = $self->{list}->GetItemText($index);
+	my $action      = $self->ide->actions->{$action_name};
+
+	$self->_try_to_set_binding(
+		$action_name,
+		$self->config->default( $action->shortcut_setting )
+	);
+
+	return;
+}
+
+# Private method to handle the close action
+sub _on_close_button {
+	my $self = shift;
+	my $main = $self->GetParent;
+
+	# re-create menu to activate shortcuts
+	delete $main->{menu};
+	$main->{menu} = Padre::Wx::Menubar->new($main);
+	$main->SetMenuBar( $main->menu->wx );
+	$main->refresh;
+
+	$self->EndModal(Wx::ID_CLOSE);
+	return;
+}
+
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
