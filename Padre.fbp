@@ -15504,7 +15504,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="0">
+        <object class="Dialog" expanded="1">
             <property name="bg"></property>
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
@@ -15562,16 +15562,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer45</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND | wxALL</property>
                     <property name="proportion">0</property>
-                    <object class="wxNotebook" expanded="0">
+                    <object class="wxNotebook" expanded="1">
                         <property name="bg"></property>
                         <property name="bitmapsize"></property>
                         <property name="context_help"></property>
@@ -15586,7 +15586,7 @@
                         <property name="name">m_notebook3</property>
                         <property name="permission">protected</property>
                         <property name="pos"></property>
-                        <property name="size">400,520</property>
+                        <property name="size">-1,-1</property>
                         <property name="style"></property>
                         <property name="subclass"></property>
                         <property name="tooltip"></property>
@@ -16051,11 +16051,11 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="notebookpage" expanded="0">
+                        <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Development</property>
                             <property name="select">0</property>
-                            <object class="wxPanel" expanded="0">
+                            <object class="wxPanel" expanded="1">
                                 <property name="bg"></property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -18979,11 +18979,11 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="notebookpage" expanded="0">
+                        <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Translation</property>
                             <property name="select">0</property>
-                            <object class="wxPanel" expanded="0">
+                            <object class="wxPanel" expanded="1">
                                 <property name="bg"></property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -19030,16 +19030,16 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer31</property>
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
-                                    <object class="sizeritem" expanded="0">
-                                        <property name="border">5</property>
+                                    <object class="sizeritem" expanded="1">
+                                        <property name="border">2</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">0</property>
-                                        <object class="wxGridSizer" expanded="0">
+                                        <object class="wxGridSizer" expanded="1">
                                             <property name="cols">3</property>
                                             <property name="hgap">0</property>
                                             <property name="minimum_size"></property>
@@ -19047,8 +19047,8 @@
                                             <property name="permission">none</property>
                                             <property name="rows">0</property>
                                             <property name="vgap">0</property>
-                                            <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                            <object class="sizeritem" expanded="1">
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19057,7 +19057,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19113,7 +19113,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19170,8 +19170,8 @@
                                                     </object>
                                                 </object>
                                             </object>
-                                            <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                            <object class="sizeritem" expanded="1">
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19180,7 +19180,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19236,7 +19236,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19292,7 +19292,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19350,7 +19350,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19359,7 +19359,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19415,7 +19415,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19472,8 +19472,8 @@
                                                     </object>
                                                 </object>
                                             </object>
-                                            <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                            <object class="sizeritem" expanded="1">
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19482,7 +19482,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19538,7 +19538,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19596,7 +19596,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19605,7 +19605,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19661,7 +19661,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19719,7 +19719,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19728,7 +19728,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19784,7 +19784,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19840,7 +19840,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19898,7 +19898,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -19907,7 +19907,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19963,7 +19963,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -19975,7 +19975,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Heiko Jansen</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText8124</property>
@@ -20019,7 +20019,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20031,7 +20031,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Sebastian Willing</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText7134</property>
@@ -20074,10 +20074,66 @@
                                                             <event name="OnUpdateUI"></event>
                                                         </object>
                                                     </object>
+                                                    <object class="sizeritem" expanded="1">
+                                                        <property name="border">2</property>
+                                                        <property name="flag">wxALL</property>
+                                                        <property name="proportion">0</property>
+                                                        <object class="wxStaticText" expanded="1">
+                                                            <property name="bg"></property>
+                                                            <property name="context_help"></property>
+                                                            <property name="context_menu">1</property>
+                                                            <property name="enabled">1</property>
+                                                            <property name="fg"></property>
+                                                            <property name="font"></property>
+                                                            <property name="hidden">0</property>
+                                                            <property name="id">wxID_ANY</property>
+                                                            <property name="label">Zeno Gantner</property>
+                                                            <property name="maximum_size"></property>
+                                                            <property name="minimum_size"></property>
+                                                            <property name="name">m_staticText71341</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="pos"></property>
+                                                            <property name="size"></property>
+                                                            <property name="style"></property>
+                                                            <property name="subclass"></property>
+                                                            <property name="tooltip"></property>
+                                                            <property name="validator_data_type"></property>
+                                                            <property name="validator_style">wxFILTER_NONE</property>
+                                                            <property name="validator_type">wxDefaultValidator</property>
+                                                            <property name="validator_variable"></property>
+                                                            <property name="window_extra_style"></property>
+                                                            <property name="window_name"></property>
+                                                            <property name="window_style"></property>
+                                                            <property name="wrap">-1</property>
+                                                            <event name="OnChar"></event>
+                                                            <event name="OnEnterWindow"></event>
+                                                            <event name="OnEraseBackground"></event>
+                                                            <event name="OnKeyDown"></event>
+                                                            <event name="OnKeyUp"></event>
+                                                            <event name="OnKillFocus"></event>
+                                                            <event name="OnLeaveWindow"></event>
+                                                            <event name="OnLeftDClick"></event>
+                                                            <event name="OnLeftDown"></event>
+                                                            <event name="OnLeftUp"></event>
+                                                            <event name="OnMiddleDClick"></event>
+                                                            <event name="OnMiddleDown"></event>
+                                                            <event name="OnMiddleUp"></event>
+                                                            <event name="OnMotion"></event>
+                                                            <event name="OnMouseEvents"></event>
+                                                            <event name="OnMouseWheel"></event>
+                                                            <event name="OnPaint"></event>
+                                                            <event name="OnRightDClick"></event>
+                                                            <event name="OnRightDown"></event>
+                                                            <event name="OnRightUp"></event>
+                                                            <event name="OnSetFocus"></event>
+                                                            <event name="OnSize"></event>
+                                                            <event name="OnUpdateUI"></event>
+                                                        </object>
+                                                    </object>
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20142,7 +20198,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20154,7 +20210,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Omer Zak</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText8125</property>
@@ -20198,7 +20254,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20210,7 +20266,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Shlomi Fish</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText7135</property>
@@ -20253,10 +20309,66 @@
                                                             <event name="OnUpdateUI"></event>
                                                         </object>
                                                     </object>
+                                                    <object class="sizeritem" expanded="1">
+                                                        <property name="border">2</property>
+                                                        <property name="flag">wxALL</property>
+                                                        <property name="proportion">0</property>
+                                                        <object class="wxStaticText" expanded="1">
+                                                            <property name="bg"></property>
+                                                            <property name="context_help"></property>
+                                                            <property name="context_menu">1</property>
+                                                            <property name="enabled">1</property>
+                                                            <property name="fg"></property>
+                                                            <property name="font"></property>
+                                                            <property name="hidden">0</property>
+                                                            <property name="id">wxID_ANY</property>
+                                                            <property name="label">Amir E. Aharoni</property>
+                                                            <property name="maximum_size"></property>
+                                                            <property name="minimum_size"></property>
+                                                            <property name="name">m_staticText71351</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="pos"></property>
+                                                            <property name="size"></property>
+                                                            <property name="style"></property>
+                                                            <property name="subclass"></property>
+                                                            <property name="tooltip"></property>
+                                                            <property name="validator_data_type"></property>
+                                                            <property name="validator_style">wxFILTER_NONE</property>
+                                                            <property name="validator_type">wxDefaultValidator</property>
+                                                            <property name="validator_variable"></property>
+                                                            <property name="window_extra_style"></property>
+                                                            <property name="window_name"></property>
+                                                            <property name="window_style"></property>
+                                                            <property name="wrap">-1</property>
+                                                            <event name="OnChar"></event>
+                                                            <event name="OnEnterWindow"></event>
+                                                            <event name="OnEraseBackground"></event>
+                                                            <event name="OnKeyDown"></event>
+                                                            <event name="OnKeyUp"></event>
+                                                            <event name="OnKillFocus"></event>
+                                                            <event name="OnLeaveWindow"></event>
+                                                            <event name="OnLeftDClick"></event>
+                                                            <event name="OnLeftDown"></event>
+                                                            <event name="OnLeftUp"></event>
+                                                            <event name="OnMiddleDClick"></event>
+                                                            <event name="OnMiddleDown"></event>
+                                                            <event name="OnMiddleUp"></event>
+                                                            <event name="OnMotion"></event>
+                                                            <event name="OnMouseEvents"></event>
+                                                            <event name="OnMouseWheel"></event>
+                                                            <event name="OnPaint"></event>
+                                                            <event name="OnRightDClick"></event>
+                                                            <event name="OnRightDown"></event>
+                                                            <event name="OnRightUp"></event>
+                                                            <event name="OnSetFocus"></event>
+                                                            <event name="OnSize"></event>
+                                                            <event name="OnUpdateUI"></event>
+                                                        </object>
+                                                    </object>
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20379,7 +20491,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20388,7 +20500,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20444,7 +20556,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20502,7 +20614,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20511,7 +20623,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20567,7 +20679,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20625,7 +20737,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20634,7 +20746,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20690,7 +20802,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20748,7 +20860,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20757,7 +20869,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20769,7 +20881,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Norwegian</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472210</property>
@@ -20813,7 +20925,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20825,7 +20937,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Kjetil Skotheim</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81210</property>
@@ -20868,66 +20980,10 @@
                                                             <event name="OnUpdateUI"></event>
                                                         </object>
                                                     </object>
-                                                    <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
-                                                        <property name="flag">wxALL</property>
-                                                        <property name="proportion">0</property>
-                                                        <object class="wxStaticText" expanded="0">
-                                                            <property name="bg"></property>
-                                                            <property name="context_help"></property>
-                                                            <property name="context_menu">1</property>
-                                                            <property name="enabled">1</property>
-                                                            <property name="fg"></property>
-                                                            <property name="font"></property>
-                                                            <property name="hidden">0</property>
-                                                            <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
-                                                            <property name="maximum_size"></property>
-                                                            <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71310</property>
-                                                            <property name="permission">protected</property>
-                                                            <property name="pos"></property>
-                                                            <property name="size"></property>
-                                                            <property name="style"></property>
-                                                            <property name="subclass"></property>
-                                                            <property name="tooltip"></property>
-                                                            <property name="validator_data_type"></property>
-                                                            <property name="validator_style">wxFILTER_NONE</property>
-                                                            <property name="validator_type">wxDefaultValidator</property>
-                                                            <property name="validator_variable"></property>
-                                                            <property name="window_extra_style"></property>
-                                                            <property name="window_name"></property>
-                                                            <property name="window_style"></property>
-                                                            <property name="wrap">-1</property>
-                                                            <event name="OnChar"></event>
-                                                            <event name="OnEnterWindow"></event>
-                                                            <event name="OnEraseBackground"></event>
-                                                            <event name="OnKeyDown"></event>
-                                                            <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
-                                                            <event name="OnLeaveWindow"></event>
-                                                            <event name="OnLeftDClick"></event>
-                                                            <event name="OnLeftDown"></event>
-                                                            <event name="OnLeftUp"></event>
-                                                            <event name="OnMiddleDClick"></event>
-                                                            <event name="OnMiddleDown"></event>
-                                                            <event name="OnMiddleUp"></event>
-                                                            <event name="OnMotion"></event>
-                                                            <event name="OnMouseEvents"></event>
-                                                            <event name="OnMouseWheel"></event>
-                                                            <event name="OnPaint"></event>
-                                                            <event name="OnRightDClick"></event>
-                                                            <event name="OnRightDown"></event>
-                                                            <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
-                                                            <event name="OnSize"></event>
-                                                            <event name="OnUpdateUI"></event>
-                                                        </object>
-                                                    </object>
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -20936,7 +20992,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -20948,7 +21004,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Polish</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472211</property>
@@ -20992,7 +21048,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21004,7 +21060,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Cezary Morga</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81211</property>
@@ -21047,66 +21103,10 @@
                                                             <event name="OnUpdateUI"></event>
                                                         </object>
                                                     </object>
-                                                    <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
-                                                        <property name="flag">wxALL</property>
-                                                        <property name="proportion">0</property>
-                                                        <object class="wxStaticText" expanded="0">
-                                                            <property name="bg"></property>
-                                                            <property name="context_help"></property>
-                                                            <property name="context_menu">1</property>
-                                                            <property name="enabled">1</property>
-                                                            <property name="fg"></property>
-                                                            <property name="font"></property>
-                                                            <property name="hidden">0</property>
-                                                            <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
-                                                            <property name="maximum_size"></property>
-                                                            <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71311</property>
-                                                            <property name="permission">protected</property>
-                                                            <property name="pos"></property>
-                                                            <property name="size"></property>
-                                                            <property name="style"></property>
-                                                            <property name="subclass"></property>
-                                                            <property name="tooltip"></property>
-                                                            <property name="validator_data_type"></property>
-                                                            <property name="validator_style">wxFILTER_NONE</property>
-                                                            <property name="validator_type">wxDefaultValidator</property>
-                                                            <property name="validator_variable"></property>
-                                                            <property name="window_extra_style"></property>
-                                                            <property name="window_name"></property>
-                                                            <property name="window_style"></property>
-                                                            <property name="wrap">-1</property>
-                                                            <event name="OnChar"></event>
-                                                            <event name="OnEnterWindow"></event>
-                                                            <event name="OnEraseBackground"></event>
-                                                            <event name="OnKeyDown"></event>
-                                                            <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
-                                                            <event name="OnLeaveWindow"></event>
-                                                            <event name="OnLeftDClick"></event>
-                                                            <event name="OnLeftDown"></event>
-                                                            <event name="OnLeftUp"></event>
-                                                            <event name="OnMiddleDClick"></event>
-                                                            <event name="OnMiddleDown"></event>
-                                                            <event name="OnMiddleUp"></event>
-                                                            <event name="OnMotion"></event>
-                                                            <event name="OnMouseEvents"></event>
-                                                            <event name="OnMouseWheel"></event>
-                                                            <event name="OnPaint"></event>
-                                                            <event name="OnRightDClick"></event>
-                                                            <event name="OnRightDown"></event>
-                                                            <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
-                                                            <event name="OnSize"></event>
-                                                            <event name="OnUpdateUI"></event>
-                                                        </object>
-                                                    </object>
                                                 </object>
                                             </object>
-                                            <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                            <object class="sizeritem" expanded="1">
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -21115,7 +21115,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21127,7 +21127,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Portuguese (Brazil)</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472212</property>
@@ -21171,7 +21171,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21183,7 +21183,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Breno G. de Oliveira</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81212</property>
@@ -21227,7 +21227,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21239,7 +21239,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Gabriel Vieira</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText71312</property>
@@ -21285,7 +21285,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -21294,7 +21294,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21306,7 +21306,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Spanish</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472213</property>
@@ -21350,7 +21350,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21362,7 +21362,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Paco Alguacil</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81213</property>
@@ -21406,7 +21406,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21418,7 +21418,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Enrique Nell</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText71313</property>
@@ -21464,7 +21464,7 @@
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
@@ -21473,7 +21473,7 @@
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21485,7 +21485,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Russian</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472214</property>
@@ -21529,7 +21529,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21541,7 +21541,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Andrew Shitov</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81214</property>
@@ -21584,75 +21584,19 @@
                                                             <event name="OnUpdateUI"></event>
                                                         </object>
                                                     </object>
-                                                    <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
-                                                        <property name="flag">wxALL</property>
-                                                        <property name="proportion">0</property>
-                                                        <object class="wxStaticText" expanded="0">
-                                                            <property name="bg"></property>
-                                                            <property name="context_help"></property>
-                                                            <property name="context_menu">1</property>
-                                                            <property name="enabled">1</property>
-                                                            <property name="fg"></property>
-                                                            <property name="font"></property>
-                                                            <property name="hidden">0</property>
-                                                            <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
-                                                            <property name="maximum_size"></property>
-                                                            <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71314</property>
-                                                            <property name="permission">protected</property>
-                                                            <property name="pos"></property>
-                                                            <property name="size"></property>
-                                                            <property name="style"></property>
-                                                            <property name="subclass"></property>
-                                                            <property name="tooltip"></property>
-                                                            <property name="validator_data_type"></property>
-                                                            <property name="validator_style">wxFILTER_NONE</property>
-                                                            <property name="validator_type">wxDefaultValidator</property>
-                                                            <property name="validator_variable"></property>
-                                                            <property name="window_extra_style"></property>
-                                                            <property name="window_name"></property>
-                                                            <property name="window_style"></property>
-                                                            <property name="wrap">-1</property>
-                                                            <event name="OnChar"></event>
-                                                            <event name="OnEnterWindow"></event>
-                                                            <event name="OnEraseBackground"></event>
-                                                            <event name="OnKeyDown"></event>
-                                                            <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
-                                                            <event name="OnLeaveWindow"></event>
-                                                            <event name="OnLeftDClick"></event>
-                                                            <event name="OnLeftDown"></event>
-                                                            <event name="OnLeftUp"></event>
-                                                            <event name="OnMiddleDClick"></event>
-                                                            <event name="OnMiddleDown"></event>
-                                                            <event name="OnMiddleUp"></event>
-                                                            <event name="OnMotion"></event>
-                                                            <event name="OnMouseEvents"></event>
-                                                            <event name="OnMouseWheel"></event>
-                                                            <event name="OnPaint"></event>
-                                                            <event name="OnRightDClick"></event>
-                                                            <event name="OnRightDown"></event>
-                                                            <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
-                                                            <event name="OnSize"></event>
-                                                            <event name="OnUpdateUI"></event>
-                                                        </object>
-                                                    </object>
                                                 </object>
                                             </object>
-                                            <object class="sizeritem" expanded="0">
-                                                <property name="border">5</property>
+                                            <object class="sizeritem" expanded="1">
+                                                <property name="border">4</property>
                                                 <property name="flag">wxEXPAND</property>
                                                 <property name="proportion">0</property>
-                                                <object class="wxBoxSizer" expanded="0">
+                                                <object class="wxBoxSizer" expanded="1">
                                                     <property name="minimum_size"></property>
                                                     <property name="name">bSizer62215</property>
                                                     <property name="orient">wxVERTICAL</property>
                                                     <property name="permission">none</property>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">4</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21664,7 +21608,7 @@
                                                             <property name="font">,90,92,-1,70,0</property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">Language</property>
+                                                            <property name="label">Turkish</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText472215</property>
@@ -21708,7 +21652,7 @@
                                                         </object>
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
+                                                        <property name="border">2</property>
                                                         <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxStaticText" expanded="0">
@@ -21720,66 +21664,10 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
+                                                            <property name="label">Burak Gursoy </property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText81215</property>
-                                                            <property name="permission">protected</property>
-                                                            <property name="pos"></property>
-                                                            <property name="size"></property>
-                                                            <property name="style"></property>
-                                                            <property name="subclass"></property>
-                                                            <property name="tooltip"></property>
-                                                            <property name="validator_data_type"></property>
-                                                            <property name="validator_style">wxFILTER_NONE</property>
-                                                            <property name="validator_type">wxDefaultValidator</property>
-                                                            <property name="validator_variable"></property>
-                                                            <property name="window_extra_style"></property>
-                                                            <property name="window_name"></property>
-                                                            <property name="window_style"></property>
-                                                            <property name="wrap">-1</property>
-                                                            <event name="OnChar"></event>
-                                                            <event name="OnEnterWindow"></event>
-                                                            <event name="OnEraseBackground"></event>
-                                                            <event name="OnKeyDown"></event>
-                                                            <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
-                                                            <event name="OnLeaveWindow"></event>
-                                                            <event name="OnLeftDClick"></event>
-                                                            <event name="OnLeftDown"></event>
-                                                            <event name="OnLeftUp"></event>
-                                                            <event name="OnMiddleDClick"></event>
-                                                            <event name="OnMiddleDown"></event>
-                                                            <event name="OnMiddleUp"></event>
-                                                            <event name="OnMotion"></event>
-                                                            <event name="OnMouseEvents"></event>
-                                                            <event name="OnMouseWheel"></event>
-                                                            <event name="OnPaint"></event>
-                                                            <event name="OnRightDClick"></event>
-                                                            <event name="OnRightDown"></event>
-                                                            <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
-                                                            <event name="OnSize"></event>
-                                                            <event name="OnUpdateUI"></event>
-                                                        </object>
-                                                    </object>
-                                                    <object class="sizeritem" expanded="0">
-                                                        <property name="border">5</property>
-                                                        <property name="flag">wxALL</property>
-                                                        <property name="proportion">0</property>
-                                                        <object class="wxStaticText" expanded="0">
-                                                            <property name="bg"></property>
-                                                            <property name="context_help"></property>
-                                                            <property name="context_menu">1</property>
-                                                            <property name="enabled">1</property>
-                                                            <property name="fg"></property>
-                                                            <property name="font"></property>
-                                                            <property name="hidden">0</property>
-                                                            <property name="id">wxID_ANY</property>
-                                                            <property name="label">MyLabel</property>
-                                                            <property name="maximum_size"></property>
-                                                            <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71315</property>
                                                             <property name="permission">protected</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
@@ -21826,7 +21714,7 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="notebookpage" expanded="0">
+                        <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">System Info</property>
                             <property name="select">0</property>
@@ -21883,8 +21771,8 @@
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
                                     <object class="sizeritem" expanded="0">
-                                        <property name="border">5</property>
-                                        <property name="flag">wxALL</property>
+                                        <property name="border">10</property>
+                                        <property name="flag">wxALIGN_CENTER|wxALL|wxEXPAND</property>
                                         <property name="proportion">0</property>
                                         <object class="wxTextCtrl" expanded="0">
                                             <property name="bg"></property>
@@ -21897,7 +21785,7 @@
                                             <property name="id">wxID_ANY</property>
                                             <property name="maximum_size"></property>
                                             <property name="maxlength">62</property>
-                                            <property name="minimum_size">570,455</property>
+                                            <property name="minimum_size">-1,400</property>
                                             <property name="name">output</property>
                                             <property name="permission">public</property>
                                             <property name="pos"></property>
