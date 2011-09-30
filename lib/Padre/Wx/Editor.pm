@@ -236,7 +236,7 @@ sub on_set_focus {
 	# another
 	if ( $self->needs_manual_colorize ) {
 		TRACE("needs_manual_colorize") if DEBUG;
-		my $lock  = $main->lock('UPDATE');
+		my $lock  = $self->lock_update;
 		my $lexer = $self->GetLexer;
 		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 			$document->colorize;

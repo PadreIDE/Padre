@@ -233,7 +233,7 @@ sub refresh {
 
 	# Flush and hide the list if there is no active document
 	unless ($document) {
-		my $lock = $self->main->lock('UPDATE');
+		my $lock = $self->lock_update;
 		$search->Hide;
 		$list->Hide;
 		$list->Clear;
@@ -297,7 +297,7 @@ sub render {
 
 	# Show the components and populate the function list
 	SCOPE: {
-		my $lock = $self->main->lock('UPDATE');
+		my $lock = $self->lock_update;
 		$search->Show(1);
 		$list->Show(1);
 		$list->Clear;

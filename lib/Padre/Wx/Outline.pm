@@ -180,7 +180,7 @@ sub task_finish {
 	my $self = shift;
 	my $task = shift;
 	my $data = Params::Util::_ARRAY( $task->{data} ) or return;
-	my $lock = $self->main->lock('UPDATE');
+	my $lock = $self->lock_update;
 
 	# Clear any old content
 	$self->clear;
@@ -251,7 +251,7 @@ sub refresh {
 	my $self     = shift;
 	my $current  = shift or return;
 	my $document = $current->document;
-	my $lock     = $self->main->lock('UPDATE');
+	my $lock     = $self->lock_update;
 
 	# Cancel any existing outline task
 	$self->task_reset;

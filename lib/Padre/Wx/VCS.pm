@@ -25,6 +25,10 @@ sub new {
 	return $self;
 }
 
+
+
+
+
 ######################################################################
 # Padre::Wx::Role::View Methods
 
@@ -47,8 +51,6 @@ sub view_start {
 
 sub view_stop {
 	my $self = shift;
-	my $main = $self->main;
-	my $lock = $main->lock('UPDATE');
 
 	# Clear out any state and tasks
 	$self->task_reset;
@@ -70,8 +72,6 @@ sub gettext_label {
 # Clear everything...
 sub clear {
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
-
 	return;
 }
 
@@ -84,7 +84,6 @@ sub refresh {
 	my $self     = shift;
 	my $current  = shift or return;
 	my $document = $current->document;
-	my $lock     = $self->main->lock('UPDATE');
 
 	# Abort any in-flight checks
 	$self->task_reset;
@@ -122,7 +121,6 @@ sub task_finish {
 sub render {
 	my $self  = shift;
 	my $model = $self->{model} || {};
-	my $lock  = $self->main->lock('UPDATE');
 
 	# Flush old results
 	$self->clear;

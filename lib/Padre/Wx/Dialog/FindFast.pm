@@ -74,8 +74,7 @@ sub _find {
 	my $self    = shift;
 	my $current = Padre::Current->new;
 	my $editor  = $current->editor or return;
-	my $main    = $current->main;
-	my $lock    = $main->lock('UPDATE');
+	my $lock    = $self->lock_update;
 
 	# Reset the dialog status
 	$self->{entry}->SetBackgroundColour( $self->{default_bgcolour} );
@@ -98,7 +97,7 @@ sub _find {
 		}
 
 		# Run the search
-		unless ( $main->search_next($search) ) {
+		unless ( $current->main->search_next($search) ) {
 			$self->{entry}->SetBackgroundColour( $self->{error_bgcolour} );
 		}
 		$self->{entry}->SetFocus;
@@ -313,6 +312,16 @@ sub _on_key_pressed {
 	}
 
 	$event->Skip(1);
+}
+
+sub lock_update {
+	my $self   = shift;
+	my $lock   = Wx::WindowUpdateLocker->new($self->{entry});
+	my $editor = Padre::Current->editor;
+	if ( $editor ) {
+		$lock = [ $lock, $editor->lock_update ];
+	}
+	return $lock;
 }
 
 1;
