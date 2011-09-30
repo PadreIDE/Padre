@@ -24,6 +24,10 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
+	
+	# Always show the first tab regardless of which one
+	# was selected in wxFormBuilder.
+	$self->notebook->ChangeSelection(0);
 
 	$self->CenterOnParent;
 

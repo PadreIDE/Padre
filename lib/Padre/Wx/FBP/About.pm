@@ -31,26 +31,26 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
-	$self->{m_notebook3} = Wx::Notebook->new(
+	$self->{notebook} = Wx::Notebook->new(
 		$self,
 		-1,
 		Wx::DefaultPosition,
 		[ 580, 540 ],
 	);
 
-	$self->{m_panel9} = Wx::Panel->new(
-		$self->{m_notebook3},
+	$self->{padre} = Wx::Panel->new(
+		$self->{notebook},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::TAB_TRAVERSAL,
 	);
-	$self->{m_panel9}->SetFont(
+	$self->{padre}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 91, 0, "" )
 	);
 
 	$self->{m_staticText651} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("Padre:-"),
 	);
@@ -59,7 +59,7 @@ sub new {
 	);
 
 	$self->{m_staticText6511} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("Perl Application Development and Refactoring Environment"),
 	);
@@ -68,7 +68,7 @@ sub new {
 	);
 
 	$self->{m_staticText65111} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("Created by Gabor Szabo"),
 	);
@@ -77,7 +77,7 @@ sub new {
 	);
 
 	$self->{splash} = Wx::StaticBitmap->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::NullBitmap,
 		Wx::DefaultPosition,
@@ -85,7 +85,7 @@ sub new {
 	);
 
 	$self->{m_staticText67} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("Blue butterfly on a green leaf splash image is based on work \nby Jerry Charlotte (blackbutterfly)"),
 	);
@@ -94,7 +94,7 @@ sub new {
 	);
 
 	$self->{m_staticline27} = Wx::StaticLine->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -102,13 +102,13 @@ sub new {
 	);
 
 	$self->{m_staticText34} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("Copyright 2008\x{2013}2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
 	);
 
 	$self->{m_staticline28} = Wx::StaticLine->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -116,13 +116,13 @@ sub new {
 	);
 
 	$self->{m_staticText35} = Wx::StaticText->new(
-		$self->{m_panel9},
+		$self->{padre},
 		-1,
 		Wx::gettext("\"Padre contains icons from GNOME, you can redistribute it and/or \nmodify then under the terms of the GNU General Public License as published by the \nFree Software Foundation; version 2 dated June, 1991.\""),
 	);
 
-	$self->{m_panel10} = Wx::Panel->new(
-		$self->{m_notebook3},
+	$self->{development} = Wx::Panel->new(
+		$self->{notebook},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -130,7 +130,7 @@ sub new {
 	);
 
 	$self->{m_staticText47} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Core Team"),
 	);
@@ -139,7 +139,7 @@ sub new {
 	);
 
 	$self->{m_staticline1} = Wx::StaticLine->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -147,31 +147,31 @@ sub new {
 	);
 
 	$self->{m_staticText1} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Gabor Szabo: Project Manager"),
 	);
 
 	$self->{m_staticText2} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Adam Kennedy: Chief Bugger"),
 	);
 
 	$self->{m_staticText3} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Ahmad Zawawi: Developer"),
 	);
 
 	$self->{m_staticText4} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Peter Lavender: Release Manager"),
 	);
 
 	$self->{m_staticText471} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Current Developers"),
 	);
@@ -180,7 +180,7 @@ sub new {
 	);
 
 	$self->{m_staticline11} = Wx::StaticLine->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -188,187 +188,187 @@ sub new {
 	);
 
 	$self->{m_staticText5} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Aaron Trevena"),
 	);
 
 	$self->{m_staticText6} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Alexandr Ciornii"),
 	);
 
 	$self->{m_staticText7} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Blake Willmarth"),
 	);
 
 	$self->{m_staticText8} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Breno G. de Oliveira"),
 	);
 
 	$self->{m_staticText39} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Brian Cassidy"),
 	);
 
 	$self->{m_staticText40} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Cezary Morga"),
 	);
 
 	$self->{m_staticText411} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Chris Dolan"),
 	);
 
 	$self->{m_staticText42} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Claudio Ramirez"),
 	);
 
 	$self->{m_staticText53} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Tom Eliaz"),
 	);
 
 	$self->{m_staticText54} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("code4pay"),
 	);
 
 	$self->{m_staticText55} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Fayland Lam"),
 	);
 
 	$self->{m_staticText56} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Gabriel Vieira"),
 	);
 
 	$self->{m_staticText561} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Heiko Jansen"),
 	);
 
 	$self->{m_staticText571} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Jerome Quelin"),
 	);
 
 	$self->{m_staticText58} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Kaare Rasmussen"),
 	);
 
 	$self->{m_staticText59} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Kartik Thakore"),
 	);
 
 	$self->{m_staticText60} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Keedi Kim"),
 	);
 
 	$self->{m_staticText611} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Kenichi Ishigaki"),
 	);
 
 	$self->{m_staticText621} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Max Maischein"),
 	);
 
 	$self->{m_staticText63} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Olivier Mengue"),
 	);
 
 	$self->{m_staticText64} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Patrick Donelan"),
 	);
 
 	$self->{m_staticText671} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Pawe\x{142} Murias"),
 	);
 
 	$self->{m_staticText68} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Petar Shangov"),
 	);
 
 	$self->{m_staticText65} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Ryan Niebur"),
 	);
 
 	$self->{m_staticText66} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Sebastian Willing"),
 	);
 
 	$self->{m_staticText69} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Steffen Muller"),
 	);
 
 	$self->{m_staticText70} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Zeno Gantner"),
 	);
 
 	$self->{m_staticText711} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Burak Gursoy"),
 	);
 
 	$self->{m_staticText721} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Andrew Bramble"),
 	);
 
 	$self->{m_staticText73} = Wx::StaticText->new(
-		$self->{m_panel10},
+		$self->{development},
 		-1,
 		Wx::gettext("Kevin Dawson"),
 	);
 
-	$self->{m_panel11} = Wx::Panel->new(
-		$self->{m_notebook3},
+	$self->{translation} = Wx::Panel->new(
+		$self->{notebook},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -376,7 +376,7 @@ sub new {
 	);
 
 	$self->{m_staticText4723} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Arabic"),
 	);
@@ -385,13 +385,13 @@ sub new {
 	);
 
 	$self->{m_staticText813} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Ahmad Zawawi"),
 	);
 
 	$self->{m_staticText4721} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Chinese (Simplified)"),
 	);
@@ -400,19 +400,19 @@ sub new {
 	);
 
 	$self->{m_staticText811} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Fayland Lam"),
 	);
 
 	$self->{m_staticText712} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Chuanren Wu"),
 	);
 
 	$self->{m_staticText4722} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Chinese (Traditional)"),
 	);
@@ -421,13 +421,13 @@ sub new {
 	);
 
 	$self->{m_staticText812} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Matthew Lien"),
 	);
 
 	$self->{m_staticText47221} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Czech"),
 	);
@@ -436,13 +436,13 @@ sub new {
 	);
 
 	$self->{m_staticText8121} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Marcela Maslanova"),
 	);
 
 	$self->{m_staticText47222} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Dutch"),
 	);
@@ -451,13 +451,13 @@ sub new {
 	);
 
 	$self->{m_staticText8122} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Dirk De Nijs"),
 	);
 
 	$self->{m_staticText47223} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("French"),
 	);
@@ -466,19 +466,19 @@ sub new {
 	);
 
 	$self->{m_staticText8123} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Jerome Quelin"),
 	);
 
 	$self->{m_staticText7133} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Olivier Mengue"),
 	);
 
 	$self->{m_staticText47224} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("German"),
 	);
@@ -487,25 +487,25 @@ sub new {
 	);
 
 	$self->{m_staticText8124} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Heiko Jansen"),
 	);
 
 	$self->{m_staticText7134} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Sebastian Willing"),
 	);
 
 	$self->{m_staticText71341} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Zeno Gantner"),
 	);
 
 	$self->{m_staticText47225} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Hebrew"),
 	);
@@ -514,25 +514,25 @@ sub new {
 	);
 
 	$self->{m_staticText8125} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Omer Zak"),
 	);
 
 	$self->{m_staticText7135} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Shlomi Fish"),
 	);
 
 	$self->{m_staticText71351} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Amir E. Aharoni"),
 	);
 
 	$self->{m_staticText47226} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Hungarian"),
 	);
@@ -541,13 +541,13 @@ sub new {
 	);
 
 	$self->{m_staticText8126} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Gyorgy Pasztor"),
 	);
 
 	$self->{m_staticText47227} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Italian"),
 	);
@@ -556,13 +556,13 @@ sub new {
 	);
 
 	$self->{m_staticText8127} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Simone Blandino"),
 	);
 
 	$self->{m_staticText47228} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Japanese"),
 	);
@@ -571,13 +571,13 @@ sub new {
 	);
 
 	$self->{m_staticText8128} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Kenichi Ishigaki"),
 	);
 
 	$self->{m_staticText47229} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Korean"),
 	);
@@ -586,13 +586,13 @@ sub new {
 	);
 
 	$self->{m_staticText8129} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Keedi Kim"),
 	);
 
 	$self->{m_staticText472210} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Norwegian"),
 	);
@@ -601,13 +601,13 @@ sub new {
 	);
 
 	$self->{m_staticText81210} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Kjetil Skotheim"),
 	);
 
 	$self->{m_staticText472211} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Polish"),
 	);
@@ -616,13 +616,13 @@ sub new {
 	);
 
 	$self->{m_staticText81211} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Cezary Morga"),
 	);
 
 	$self->{m_staticText472212} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Portuguese (Brazil)"),
 	);
@@ -631,19 +631,19 @@ sub new {
 	);
 
 	$self->{m_staticText81212} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Breno G. de Oliveira"),
 	);
 
 	$self->{m_staticText71312} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Gabriel Vieira"),
 	);
 
 	$self->{m_staticText472213} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Spanish"),
 	);
@@ -652,19 +652,19 @@ sub new {
 	);
 
 	$self->{m_staticText81213} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Paco Alguacil"),
 	);
 
 	$self->{m_staticText71313} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Enrique Nell"),
 	);
 
 	$self->{m_staticText472214} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Russian"),
 	);
@@ -673,13 +673,13 @@ sub new {
 	);
 
 	$self->{m_staticText81214} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Andrew Shitov"),
 	);
 
 	$self->{m_staticText472215} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Turkish"),
 	);
@@ -688,13 +688,13 @@ sub new {
 	);
 
 	$self->{m_staticText81215} = Wx::StaticText->new(
-		$self->{m_panel11},
+		$self->{translation},
 		-1,
 		Wx::gettext("Burak Gursoy"),
 	);
 
-	$self->{m_panel12} = Wx::Panel->new(
-		$self->{m_notebook3},
+	$self->{system_info} = Wx::Panel->new(
+		$self->{notebook},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -702,7 +702,7 @@ sub new {
 	);
 
 	$self->{output} = Wx::TextCtrl->new(
-		$self->{m_panel12},
+		$self->{system_info},
 		-1,
 		"",
 		Wx::DefaultPosition,
@@ -743,8 +743,8 @@ sub new {
 	$bSizer17->Add( $bSizer18, 1, Wx::EXPAND, 5 );
 	$bSizer17->Add( $bSizer81, 0, Wx::EXPAND, 5 );
 
-	$self->{m_panel9}->SetSizerAndFit($bSizer17);
-	$self->{m_panel9}->Layout;
+	$self->{padre}->SetSizerAndFit($bSizer17);
+	$self->{padre}->Layout;
 
 	my $bSizer6 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6->Add( $self->{m_staticText47}, 0, Wx::ALL, 5 );
@@ -798,8 +798,8 @@ sub new {
 	$bSizer3->Add( $bSizer61, 0, Wx::EXPAND, 5 );
 	$bSizer3->Add( $gSizer3, 0, Wx::EXPAND, 5 );
 
-	$self->{m_panel10}->SetSizerAndFit($bSizer3);
-	$self->{m_panel10}->Layout;
+	$self->{development}->SetSizerAndFit($bSizer3);
+	$self->{development}->Layout;
 
 	my $bSizer623 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer623->Add( $self->{m_staticText4723}, 0, Wx::ALL, 4 );
@@ -904,32 +904,36 @@ sub new {
 	my $bSizer31 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer31->Add( $gSizer311, 0, Wx::EXPAND, 2 );
 
-	$self->{m_panel11}->SetSizerAndFit($bSizer31);
-	$self->{m_panel11}->Layout;
+	$self->{translation}->SetSizerAndFit($bSizer31);
+	$self->{translation}->Layout;
 
 	my $bSizer32 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer32->Add( $self->{output}, 0, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 10 );
 
-	$self->{m_panel12}->SetSizerAndFit($bSizer32);
-	$self->{m_panel12}->Layout;
+	$self->{system_info}->SetSizerAndFit($bSizer32);
+	$self->{system_info}->Layout;
 
-	$self->{m_notebook3}->AddPage( $self->{m_panel9}, Wx::gettext("Padre"), 1 );
-	$self->{m_notebook3}->AddPage( $self->{m_panel10}, Wx::gettext("Development"), 0 );
-	$self->{m_notebook3}->AddPage( $self->{m_panel11}, Wx::gettext("Translation"), 0 );
-	$self->{m_notebook3}->AddPage( $self->{m_panel12}, Wx::gettext("System Info"), 0 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
+	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
+	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
+	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
 
 	$self->{m_sdbSizer1} = Wx::StdDialogButtonSizer->new;
 	$self->{m_sdbSizer1}->AddButton( $self->{m_sdbSizer1_cancel} );
 	$self->{m_sdbSizer1}->Realize;
 
 	my $bSizer45 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer45->Add( $self->{m_notebook3}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer45->Add( $self->{notebook}, 0, Wx::EXPAND | Wx::ALL, 5 );
 	$bSizer45->Add( $self->{m_sdbSizer1}, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer45);
 	$self->Layout;
 
 	return $self;
+}
+
+sub notebook {
+	$_[0]->{notebook};
 }
 
 sub output {
