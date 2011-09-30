@@ -121,12 +121,13 @@ sub native_font {
 
 	# Attempt to apply the font string
 	local $@;
-	eval {
+	my $nfont = eval {
 		my $font = Wx::Font->new( Wx::NullFont );
 		$font->SetNativeFontInfoUserDesc($string);
-		return $font if $font->IsOk;
+		die unless $font->IsOk;
+                return $font;
 	};
-
+        return $nfont if $nfont;
 	return NULL_FONT;
 }
 
