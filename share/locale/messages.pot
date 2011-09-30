@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-30 00:10-0700\n"
+"POT-Creation-Date: 2011-09-30 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -990,7 +990,7 @@ msgstr ""
 msgid "Backreference to the nth group"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 msgid "Backspace"
 msgstr ""
 
@@ -1713,7 +1713,7 @@ msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:375
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:127
 msgid "Delete"
 msgstr ""
 
@@ -1824,7 +1824,7 @@ msgstr ""
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:456
+#: lib/Padre/Wx/Dialog/Preferences.pm:458
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -1853,7 +1853,7 @@ msgstr ""
 msgid "Document type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 msgid "Down"
 msgstr ""
 
@@ -1965,7 +1965,7 @@ msgstr ""
 msgid "Encoding"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:127
 msgid "End"
 msgstr ""
 
@@ -2005,7 +2005,7 @@ msgstr ""
 msgid "Enrique Nell"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:128
 msgid "Enter"
 msgstr ""
 
@@ -2133,7 +2133,7 @@ msgstr ""
 msgid "Error: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:128
 msgid "Escape"
 msgstr ""
 
@@ -2654,7 +2654,7 @@ msgstr ""
 msgid "Highlight the line where the cursor is"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:127
 msgid "Home"
 msgstr ""
 
@@ -2722,7 +2722,7 @@ msgid "Input/output:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:117 lib/Padre/Wx/FBP/Special.pm:77
-#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:127
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:114
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:271
 msgid "Insert"
@@ -2888,7 +2888,7 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:127
 msgid "Left"
 msgstr ""
 
@@ -3307,7 +3307,7 @@ msgstr ""
 msgid "Non-whitespace characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 msgid "None"
 msgstr ""
 
@@ -3598,7 +3598,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:457
+#: lib/Padre/Wx/Dialog/Preferences.pm:459
 msgid "Override Shortcut"
 msgstr ""
 
@@ -3670,11 +3670,11 @@ msgstr ""
 msgid "Padre:-"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:128
 msgid "PageDown"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:128
 msgid "PageUp"
 msgstr ""
 
@@ -4300,7 +4300,7 @@ msgstr ""
 msgid "Revert this change"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:127
 msgid "Right"
 msgstr ""
 
@@ -5079,7 +5079,7 @@ msgid ""
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 msgid "Space"
 msgstr ""
 
@@ -5215,7 +5215,7 @@ msgstr ""
 msgid "System Info"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:141
 msgid "Tab"
 msgstr ""
@@ -5278,7 +5278,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:453
+#: lib/Padre/Wx/Dialog/Preferences.pm:455
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
@@ -5430,7 +5430,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:126
 msgid "Up"
 msgstr ""
 
