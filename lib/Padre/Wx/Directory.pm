@@ -336,7 +336,7 @@ sub searching {
 sub clear {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
+	my $lock = $self->lock_update;
 	$self->{search}->SetValue('');
 	$self->{search}->ShowCancelButton(0);
 	$self->{tree}->DeleteChildren( $self->{tree}->GetRootItem );
@@ -350,7 +350,7 @@ sub refill {
 	my $root   = $tree->GetRootItem;
 	my $files  = delete $self->{files} or return;
 	my $expand = delete $self->{expand} or return;
-	my $lock   = $self->main->lock('UPDATE');
+	my $lock   = $self->lock_update;
 	my @stack  = ();
 	shift @$files;
 
