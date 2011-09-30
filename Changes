@@ -31,7 +31,7 @@ the even version for the release, even during development.
       actually constants instead of strange AUTOLOAD weirdness (ADAMK)
     - We now SetEndAtLastLine(0) on editor panels so you can scroll one page
       past the end of the document and type into relaxing clear space (ADAMK)
-    - Tabs without filename now also backed (SEWI)
+    - Tabs without filename now also backed up (SEWI)
     - The syntax highligher spawns the perl -c call with the unsaved file as
       STDIN rather than by filename. This seems to make things that rely on
       FindBin like Module::Install Makefile.PL files work properly (ADAMK)
