@@ -16,6 +16,7 @@ use Padre::Logger;
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
+	Padre::Wx::Role::Dialog
 	Padre::Wx::FBP::Preferences
 };
 
