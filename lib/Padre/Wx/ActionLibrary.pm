@@ -1118,37 +1118,6 @@ sub init {
 		},
 	);
 
-
-	# Padre::Wx::Action->new(
-	# name        => 'edit.diff2saved',
-	# need_editor => 1,
-	# label       => _T('Diff to &Saved Version'),
-	# comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
-	# menu_event  => sub {
-	# shift->on_diff(@_);
-	# },
-	# );
-
-	# Padre::Wx::Action->new(
-	# name        => 'edit.applydiff2file',
-	# need_editor => 1,
-	# label       => _T('Apply Diff to &File'),
-	# comment     => _T('Apply a patch file to the current document'),
-	# menu_event  => sub {
-	# shift->on_diff(@_);
-	# },
-	# );
-
-	# Padre::Wx::Action->new(
-	# name        => 'edit.applydiff2project',
-	# need_editor => 1,
-	# label       => _T('Apply Diff to &Project'),
-	# comment     => _T('Apply a patch file to the current project'),
-	# menu_event  => sub {
-	# shift->on_diff(@_);
-	# },
-	# );
-
 	# End diff tools
 
 	Padre::Wx::Action->new(
@@ -2797,22 +2766,22 @@ sub init {
 	# Add the About
 
 	# Padre::Wx::Action->new(
-		# name       => 'help.about',
-		# id         => Wx::ID_ABOUT,
-		# label      => _T('&About'),
-		# comment    => _T('Show information about Padre'),
-		# menu_event => sub {
-			# $_[0]->about->ShowModal;
-		# },
+	# name       => 'help.about',
+	# id         => Wx::ID_ABOUT,
+	# label      => _T('&About'),
+	# comment    => _T('Show information about Padre'),
+	# menu_event => sub {
+	# $_[0]->about->ShowModal;
+	# },
 	# );
-	
+
 	# Add the About2
 
 	Padre::Wx::Action->new(
-		name       => 'help.about',
-		label      => _T('&About'),
-		comment    => _T('Show information about Padre'),
-		
+		name    => 'help.about',
+		label   => _T('&About'),
+		comment => _T('Show information about Padre'),
+
 		menu_event => sub {
 			require Padre::Wx::Dialog::About;
 			my $dialog = Padre::Wx::Dialog::About->new( $_[0] );
@@ -2831,4 +2800,3 @@ sub init {
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
-
