@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-30 08:10-0700\n"
+"POT-Creation-Date: 2011-09-30 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -705,11 +705,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:99
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:112
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:105
+#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:118
 msgid "(unsupported)"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:135
+#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:148
 msgid "Config:"
 msgstr ""
 
@@ -4011,7 +4011,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:103
+#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:116
 msgid "RAM:"
 msgstr ""
 
@@ -5297,7 +5297,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:98
+#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:111
 msgid "Threads:"
 msgstr ""
 
