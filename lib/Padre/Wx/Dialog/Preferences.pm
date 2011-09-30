@@ -10,6 +10,7 @@ use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Wx::Choice::Theme    ();
 use Padre::Wx::Theme            ();
+use Padre::Wx::Role::Dialog     ();
 use Padre::Util                 ('_T');
 use Padre::Logger;
 
