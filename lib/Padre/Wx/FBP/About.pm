@@ -35,7 +35,7 @@ sub new {
 		$self,
 		-1,
 		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		[ 580, 540 ],
 	);
 
 	$self->{m_panel9} = Wx::Panel->new(
