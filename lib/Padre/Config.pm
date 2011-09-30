@@ -11,6 +11,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                   ();
+use File::Spec             ();
 use Scalar::Util           ();
 use Params::Util           ();
 use Padre::Constant        ();
@@ -20,7 +21,6 @@ use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
-use Padre::Wx::Theme       ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -319,6 +319,39 @@ sub apply {
 
 sub meta {
 	$SETTING{ $_[1] } or die("Missing or invalid setting name '$_[1]'");
+}
+
+sub themes {
+	my $class = shift;
+	my $core_directory = Padre::Util::sharedir('themes');
+	my $user_directory = File::Spec->catdir(
+		Padre::Constant::CONFIG_DIR,
+		'themes',
+	);
+
+	# Scan themes directories
+	my %themes = ();
+	foreach my $directory ( $user_directory, $core_directory ) {
+		next unless -d $directory;
+
+		# Search the directory
+		local *STYLEDIR;
+		unless ( opendir( STYLEDIR, $directory ) ) {
+			die "Failed to read '$directory'";
+		}
+		foreach my $file ( readdir STYLEDIR ) {
+			next unless $file =~ s/\.txt\z//;
+			next unless Params::Util::_IDENTIFIER($file);
+			next if $themes{$file};
+			$themes{$file} = File::Spec->catfile(
+				$directory,
+				"$file.txt"
+			);
+		}
+		closedir STYLEDIR;
+	}
+
+	return \%themes;
 }
 
 
@@ -1190,7 +1223,7 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HOST,
 	default => 'default',
-	options => Padre::Wx::Theme->options,
+	options => Padre::Config->themes,
 	apply   => sub {
 		$_[0]->restyle;
 	},
