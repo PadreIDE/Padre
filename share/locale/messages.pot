@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-29 12:10-0700\n"
+"POT-Creation-Date: 2011-09-29 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:436
+#: lib/Padre/Config.pm:469
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
@@ -39,7 +39,7 @@ msgid ""
 "Free Software Foundation; version 2 dated June, 1991.\""
 msgstr ""
 
-#: lib/Padre/Config.pm:438
+#: lib/Padre/Config.pm:471
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -747,7 +747,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:432
+#: lib/Padre/Config.pm:465
 msgid "A new empty file"
 msgstr ""
 
@@ -849,11 +849,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:580
+#: lib/Padre/Config.pm:613
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:581
+#: lib/Padre/Config.pm:614
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -1324,7 +1324,7 @@ msgstr ""
 msgid "Close this window"
 msgstr ""
 
-#: lib/Padre/Config.pm:579
+#: lib/Padre/Config.pm:612
 msgid "Code Order"
 msgstr ""
 
@@ -1381,11 +1381,11 @@ msgstr ""
 msgid "Content Assist"
 msgstr ""
 
-#: lib/Padre/Config.pm:495
+#: lib/Padre/Config.pm:528
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:484
+#: lib/Padre/Config.pm:517
 msgid "Contents of the window title"
 msgstr ""
 
@@ -1784,11 +1784,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:627
+#: lib/Padre/Config.pm:660
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:628
+#: lib/Padre/Config.pm:661
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1843,7 +1843,7 @@ msgstr ""
 msgid "Document Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:641
+#: lib/Padre/Config.pm:674
 msgid "Document Tools (Right)"
 msgstr ""
 
@@ -1936,11 +1936,11 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1365
+#: lib/Padre/Config.pm:1398
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1384
+#: lib/Padre/Config.pm:1417
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
 msgstr ""
 
@@ -2704,11 +2704,11 @@ msgid ""
 "Disable all warnings:  -X"
 msgstr ""
 
-#: lib/Padre/Config.pm:850
+#: lib/Padre/Config.pm:883
 msgid "Indent Deeply"
 msgstr ""
 
-#: lib/Padre/Config.pm:849
+#: lib/Padre/Config.pm:882
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -3214,7 +3214,7 @@ msgstr ""
 msgid "Next difference"
 msgstr ""
 
-#: lib/Padre/Config.pm:848
+#: lib/Padre/Config.pm:881
 msgid "No Autoindent"
 msgstr ""
 
@@ -3284,7 +3284,7 @@ msgstr ""
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:433
+#: lib/Padre/Config.pm:466
 msgid "No open files"
 msgstr ""
 
@@ -3494,7 +3494,7 @@ msgstr ""
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:434
+#: lib/Padre/Config.pm:467
 msgid "Open session"
 msgstr ""
 
@@ -3621,11 +3621,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:451 lib/Padre/Config.pm:1095
+#: lib/Padre/MimeTypes.pm:451 lib/Padre/Config.pm:1128
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1096
+#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1129
 msgid "PPI Standard"
 msgstr ""
 
@@ -3930,7 +3930,7 @@ msgstr ""
 msgid "Previous difference"
 msgstr ""
 
-#: lib/Padre/Config.pm:431
+#: lib/Padre/Config.pm:464
 msgid "Previous open files"
 msgstr ""
 
@@ -3954,7 +3954,7 @@ msgstr ""
 msgid "Project Tools"
 msgstr ""
 
-#: lib/Padre/Config.pm:640
+#: lib/Padre/Config.pm:673
 msgid "Project Tools (Left)"
 msgstr ""
 
@@ -4451,7 +4451,7 @@ msgid "Save session as..."
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:435 lib/Padre/MimeTypes.pm:444
-#: lib/Padre/Config.pm:1094
+#: lib/Padre/Config.pm:1127
 msgid "Scintilla"
 msgstr ""
 
@@ -4736,7 +4736,7 @@ msgstr ""
 msgid "Sets the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Config.pm:484 lib/Padre/Config.pm:495
+#: lib/Padre/Config.pm:517 lib/Padre/Config.pm:528
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4898,11 +4898,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1113
+#: lib/Padre/Config.pm:1146
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:716
+#: lib/Padre/Config.pm:749
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -4997,7 +4997,7 @@ msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:418
+#: lib/Padre/Config.pm:451
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -5106,12 +5106,12 @@ msgstr ""
 msgid "Special &Value..."
 msgstr ""
 
-#: lib/Padre/Config.pm:1375
+#: lib/Padre/Config.pm:1408
 msgid ""
 "Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled."
 msgstr ""
 
-#: lib/Padre/Config.pm:1394
+#: lib/Padre/Config.pm:1427
 msgid ""
 "Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled."
 msgstr ""
@@ -5298,11 +5298,11 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1366
+#: lib/Padre/Config.pm:1399
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1385
+#: lib/Padre/Config.pm:1418
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr ""
 
@@ -5326,15 +5326,15 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Config.pm:1412
+#: lib/Padre/Config.pm:1445
 msgid "Toggle saved document differences feature"
 msgstr ""
 
-#: lib/Padre/Config.pm:1403
+#: lib/Padre/Config.pm:1436
 msgid "Toggle syntax checker annotations in editor"
 msgstr ""
 
-#: lib/Padre/Config.pm:1421
+#: lib/Padre/Config.pm:1454
 msgid "Toggle version control system support"
 msgstr ""
 
