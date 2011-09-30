@@ -725,7 +725,7 @@ sub find_render {
 	# instead of using the official main->lock functionality.
 	# Allow the lock to release naturally at the end of the method.
 	my $tree = $self->tree;
-	my $lock = $tree->scroll_lock;
+	my $lock = $tree->lock_scroll;
 
 	# Add all outstanding files
 	foreach my $file (@$queue) {

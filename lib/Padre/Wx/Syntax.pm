@@ -134,6 +134,7 @@ sub view_close {
 
 sub view_start {
 	my $self = shift;
+	my $lock = $self->lock_update;
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
@@ -148,15 +149,14 @@ sub view_start {
 
 sub view_stop {
 	my $self = shift;
-	my $main = $self->main;
-	my $lock = $main->lock('UPDATE');
+	my $lock = $self->lock_update;
 
 	# Clear out any state and tasks
 	$self->task_reset;
 	$self->clear;
 
 	# Remove the editor margins
-	foreach my $editor ( $main->editors ) {
+	foreach my $editor ( $self->main->editors ) {
 		$editor->SetMarginWidth( 1, 0 );
 	}
 
@@ -208,10 +208,10 @@ sub on_tree_item_activated {
 }
 
 sub show_stderr {
-	my $self  = shift;
-	my $event = shift;
-
+	my $self   = shift;
+	my $event  = shift;
 	my $stderr = $self->{model}->{stderr};
+
 	if ( defined $stderr ) {
 		my $main = $self->main;
 		$main->output->SetValue($stderr);
@@ -233,9 +233,9 @@ sub gettext_label {
 
 # Remove all markers and empty the list
 sub clear {
-	my $self                             = shift;
-	my $lock                             = $self->main->lock('UPDATE');
-	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
+	my $self    = shift;
+	my $lock    = $self->lock_update;
+	my $feature = $self->config->feature_syntax_check_annotations;
 
 	# Remove the margins and indicators for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
@@ -253,10 +253,10 @@ sub clear {
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		$editor->AnnotationClearAll if $feature_syntax_check_annotations;
+		$editor->AnnotationClearAll if $feature;
 	}
 
-	$self->{annotations} = () if $feature_syntax_check_annotations;
+	$self->{annotations} = () if $feature;
 
 	# Remove all items from the tool
 	$self->{tree}->DeleteAllItems;
@@ -280,7 +280,7 @@ sub refresh {
 	my $current  = shift or return;
 	my $document = $current->document;
 	my $tree     = $self->{tree};
-	my $lock     = $self->main->lock('UPDATE');
+	my $lock     = $self->lock_update;
 
 	# Abort any in-flight checks
 	$self->task_reset;
@@ -350,17 +350,17 @@ sub task_finish {
 }
 
 sub render {
-	my $self       = shift;
-	my $time_taken = Time::HiRes::time- $self->{task_start_time};
-	my $model      = $self->{model} || {};
-	my $current    = $self->current;
-	my $editor     = $current->editor;
-	my $document   = $current->document;
-	my $filename   = $current->filename;
-	my $lock       = $self->main->lock('UPDATE');
+	my $self     = shift;
+	my $elapsed  = Time::HiRes::time- $self->{task_start_time};
+	my $model    = $self->{model} || {};
+	my $current  = $self->current;
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $filename = $current->filename;
+	my $lock     = $self->lock_update;
+	my $feature  = $self->config->feature_syntax_check_annotations;
 
-	my $feature_syntax_check_annotations = $self->config->feature_syntax_check_annotations;
-	if ($feature_syntax_check_annotations) {
+	if ($feature) {
 
 		# Show only the current error/warning annotation when you move or click on a line
 		my $syntax = $self;
@@ -391,7 +391,7 @@ sub render {
 	my $root = $self->{tree}->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
-	my $time_taken_msg = sprintf( Wx::gettext(' within %3.2f secs.'), $time_taken );
+	my $time_taken_msg = sprintf( Wx::gettext(' within %3.2f secs.'), $elapsed );
 	unless ( Params::Util::_HASH($model) ) {
 
 		# Relative-to-the-project filename.
@@ -435,7 +435,7 @@ sub render {
 			$line = $maxline;
 		}
 		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
-		my $marker     = $MESSAGE{$type}{marker};
+		my $marker     = $MESSAGE{$type}->{marker};
 		my $is_warning = $marker == Padre::Wx::MarkWarn();
 		$editor->MarkerAdd( $line, $marker );
 
@@ -451,20 +451,20 @@ sub render {
 
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
-		if ($feature_syntax_check_annotations) {
+		if ($feature) {
 			my $message = $issue->message;
 			my $char_style =
 				$is_warning
 				? sprintf( '%c', Padre::Constant::PADRE_WARNING() )
 				: sprintf( '%c', Padre::Constant::PADRE_ERROR() );
-			unless ( $self->{annotations}{$line} ) {
-				$self->{annotations}{$line} = {
+			unless ( $self->{annotations}->{$line} ) {
+				$self->{annotations}->{$line} = {
 					message => $message,
 					style   => $char_style x length($message),
 				};
 			} else {
-				$self->{annotations}{$line}{message} .= "\n$message";
-				$self->{annotations}{$line}{style} .= $char_style x ( length($message) + 1 );
+				$self->{annotations}->{$line}->{message} .= "\n$message";
+				$self->{annotations}->{$line}->{style} .= $char_style x ( length($message) + 1 );
 			}
 		}
 
@@ -473,15 +473,15 @@ sub render {
 			sprintf(
 				Wx::gettext('Line %d:   (%s)   %s'),
 				$line + 1,
-				$MESSAGE{$type}{label},
+				$MESSAGE{$type}->{label},
 				$issue->{message}
 			),
-			$is_warning ? $self->{images}{warning} : $self->{images}{error}
+			$is_warning ? $self->{images}->{warning} : $self->{images}->{error}
 		);
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	$self->_show_current_annotation if $feature_syntax_check_annotations;
+	$self->_show_current_annotation if $feature;
 
 	# Enable standard error output display button
 	unless ( $self->{show_stderr}->IsShown ) {
@@ -495,25 +495,33 @@ sub render {
 	return 1;
 }
 
+sub lock_update {
+	my $self   = shift;
+	my $lock   = $self->SUPER::lock_update;
+	my $editor = $self->current->editor;
+	if ( $editor ) {
+		$lock = [ $lock, $editor->lock_update ];
+	}
+	return $lock;
+}
+
 # Show the current line error/warning if it exists or hide the previous annotation
 sub _show_current_annotation {
 	my $self   = shift;
 	my $editor = $self->main->current->editor;
 
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
-	my $annotation   = $self->{annotations}{$current_line};
+	my $annotation   = $self->{annotations}->{$current_line};
 	my $visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
 	$editor->AnnotationClearAll;
 	if ($annotation) {
 		$editor->AnnotationSetText( $current_line, $annotation->{message} );
 		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
-
 		$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
 	}
 
 	$editor->AnnotationSetVisible($visible);
 }
-
 
 # Updates the help page. It shows the text if it is defined otherwise clears and hides it
 sub _update_help_page {
@@ -527,10 +535,10 @@ sub _update_help_page {
 		require CGI;
 		$text = CGI::escapeHTML($text);
 		$text =~ s/\n/<br>/g;
-		my $WARN_TEXT = $MESSAGE{'W'}{label};
+		my $WARN_TEXT = $MESSAGE{'W'}->{label};
 		if ( $text =~ /^\((W\s+(\w+)|D|S|F|P|X|A)\)/ ) {
 			my ( $category, $warning_category ) = ( $1, $2 );
-			my $category_label = ( $category =~ /^W/ ) ? $MESSAGE{'W'}{label} : $MESSAGE{$1}{label};
+			my $category_label = ( $category =~ /^W/ ) ? $MESSAGE{'W'}->{label} : $MESSAGE{$1}->{label};
 			my $notes =
 				defined($warning_category)
 				? "<code>no warnings '$warning_category';    # disable</code><br>"
@@ -598,7 +606,6 @@ sub select_next_problem {
 	# Select the line in the editor
 	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
 }
-
 
 1;
 

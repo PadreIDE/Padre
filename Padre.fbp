@@ -4357,7 +4357,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="0">
+        <object class="Dialog" expanded="1">
             <property name="bg"></property>
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
@@ -4487,7 +4487,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Appearance</property>
-                                    <property name="select">0</property>
+                                    <property name="select">1</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -4633,7 +4633,7 @@
                                                             <property name="pos"></property>
                                                             <property name="selection">0</property>
                                                             <property name="size"></property>
-                                                            <property name="subclass"></property>
+                                                            <property name="subclass">Padre::Wx::Choice::Theme; Padre::Wx::Choice::Theme</property>
                                                             <property name="tooltip"></property>
                                                             <property name="validator_data_type"></property>
                                                             <property name="validator_style">wxFILTER_NONE</property>
@@ -10493,7 +10493,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Key Bindings</property>
-                                    <property name="select">1</property>
+                                    <property name="select">0</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>

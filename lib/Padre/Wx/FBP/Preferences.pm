@@ -11,6 +11,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::Choice::Theme ();
 use Padre::Wx::Editor ();
 
 our $VERSION = '0.91';
@@ -56,7 +57,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{editor_style} = Wx::Choice->new(
+	$self->{editor_style} = Padre::Wx::Choice::Theme->new(
 		$m_panel3,
 		-1,
 		Wx::DefaultPosition,
@@ -882,7 +883,7 @@ sub new {
 	$self->{m_staticText59} = Wx::StaticText->new(
 		$m_panel9,
 		-1,
-		Wx::gettext("&Filter") . ":",
+		Wx::gettext("&Filter:"),
 	);
 
 	$self->{filter} = Wx::TextCtrl->new(
@@ -928,7 +929,7 @@ sub new {
 	$self->{shortcut_label} = Wx::StaticText->new(
 		$m_panel9,
 		-1,
-		Wx::gettext("Shortcut") . ":",
+		Wx::gettext("Shortcut:"),
 	);
 
 	$self->{ctrl} = Wx::CheckBox->new(
@@ -1053,7 +1054,7 @@ sub new {
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("&Advanced") . "...",
+		Wx::gettext("&Advanced..."),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -1315,14 +1316,14 @@ sub new {
 	$m_panel9->SetSizerAndFit($top_sizer);
 	$m_panel9->Layout;
 
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Auto-Complete"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
-	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 1 );
+	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::ALL, 5 );

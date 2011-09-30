@@ -275,14 +275,14 @@ sub refresh {
 
 sub enable {
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
+	my $lock = $self->lock_update;
 	$self->{search}->Show(1);
 	$self->{list}->Show(1);
 }
 
 sub disable {
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
+	my $lock = $self->lock_update;
 	$self->{search}->Hide;
 	$self->{list}->Hide;
 	$self->{list}->Clear;
@@ -315,7 +315,7 @@ sub render {
 
 	# Show the components and populate the function list
 	SCOPE: {
-		my $lock = $self->main->lock('UPDATE');
+		my $lock = $self->lock_update;
 		$search->Show(1);
 		$list->Show(1);
 		$list->Clear;

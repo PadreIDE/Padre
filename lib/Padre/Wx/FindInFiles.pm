@@ -250,7 +250,7 @@ sub search_render {
 	return unless @$queue;
 
 	# Lock the tree to reduce flicker and prevent auto-scrolling
-	my $lock = $tree->scroll_lock;
+	my $lock = $tree->lock_scroll;
 
 	# Added to avoid crashes when calling methods on path objects
 	require Padre::Wx::Directory::Path;

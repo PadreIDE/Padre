@@ -132,7 +132,7 @@ sub replace_message {
 	my $root = $self->GetRootItem;
 
 	# Lock the tree to reduce flicker and prevent auto-scrolling
-	my $lock = $self->scroll_lock;
+	my $lock = $self->lock_scroll;
 
 	# Add the file node to the tree.
 	# Added to avoid crash in next line.

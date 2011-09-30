@@ -110,6 +110,38 @@ sub current {
 	Padre::Current->new( main => shift->main );
 }
 
+=pod
+
+=head2 lock_update
+
+    my $lock = $object->lock_update;
+
+The L<Padre::Locker> API in Padre provides a solid and extensible system for
+locking of IDE resources when large-scale change of state is to occur.
+
+Unfortunately, there are some cases in which this mechanism can cause problems.
+
+Window update locking using this API is done on the entire main window. The
+resulting C<Freeze>/C<Thaw> calls are recursive on Windows, and as C<Thaw> calls
+invalidate the painted state of widgets, this results in a global redraw and
+on the non-double-bufferred Windows platform this causes flickering.
+
+When a piece of code is making very targetted changes to just the graphical
+state of the application and will only need an UPDATE lock (i.e. does not need
+refresh or database locks) the alternative C<lock_update> method provides a
+convenience for creating a L<Wx::WindowUpdateLocker> independant of the main
+locking API.
+
+By using a localised lock and avoiding a global update lock, this should
+remove global flickering on these changes, and limit flickering to just
+the element being update, which should be much less noticable.
+
+=cut
+
+sub lock_update {
+	Wx::WindowUpdateLocker->new($_[0]);
+}
+
 1;
 
 =pod

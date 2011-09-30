@@ -9,7 +9,7 @@ Padre::Wx::TreeCtrl::ScrollLock - Scroll-free transactions for tree controls
 =head1 SYNOPSIS
 
   SCOPE: {
-      my $lock = $padre_wx_treectrl->scroll_lock;
+      my $lock = $padre_wx_treectrl->lock_scroll;
   
       # Change the tree here
   }

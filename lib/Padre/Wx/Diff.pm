@@ -39,40 +39,35 @@ sub new {
 
 
 
-#####################################################################
-# Event Handlers
-
-
 ######################################################################
 # Padre::Role::Task Methods
 
 sub task_finish {
 	TRACE( $_[1] ) if DEBUG;
-	my $self = shift;
-	my $task = shift;
-	my $data = Params::Util::_ARRAY0( $task->{data} ) or return;
-	my $lock = $self->{main}->lock('UPDATE');
-
-	my $editor = $self->{main}->current->editor;
+	my $self   = shift;
+	my $task   = shift;
+	my $chunks = Params::Util::_ARRAY0( $task->{data} ) or return;
+	my $main   = $self->{main};
+	my $editor = $main->current->editor;
+	my $lock   = $editor->lock_update;
 
 	# Clear any old content
 	$self->clear;
 
-	my @diffs = @{$data};
 	$self->{diffs} = {};
 
-	for my $diff_chunk (@diffs) {
+	for my $chunk ( @$chunks ) {
 		my $marker_line   = undef;
 		my $lines_deleted = 0;
 		my $lines_added   = 0;
-		for my $diff ( @{$diff_chunk} ) {
+		for my $diff ( @$chunk ) {
 			my ( $type, $line, $text ) = @$diff;
 			TRACE("$type, $line, $text") if DEBUG;
 
 			unless ($marker_line) {
 				$marker_line = $line;
 
-				$self->{diffs}{$marker_line} = {
+				$self->{diffs}->{$marker_line} = {
 					message  => undef,
 					type     => undef,
 					old_text => undef,
@@ -80,7 +75,7 @@ sub task_finish {
 				};
 			}
 
-			my $diff = $self->{diffs}{$marker_line};
+			my $diff = $self->{diffs}->{$marker_line};
 
 			if ( $type eq '-' ) {
 				$lines_deleted++;
@@ -92,7 +87,7 @@ sub task_finish {
 		}
 
 		my $description;
-		my $diff = $self->{diffs}{$marker_line};
+		my $diff = $self->{diffs}->{$marker_line};
 		my $type;
 		if ( $lines_deleted > 0 and $lines_added > 0 ) {
 
@@ -159,13 +154,18 @@ sub task_finish {
 	return 1;
 }
 
+
+
+
+
 ######################################################################
 # General Methods
 
 sub clear {
 	my $self    = shift;
 	my $current = $self->{main}->current or return;
-	my $editor  = $current->editor or return;
+	my $editor  = $current->editor       or return;
+	my $lock    = $editor->lock_update;
 
 	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
 	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
@@ -179,7 +179,6 @@ sub refresh {
 	my $self     = shift;
 	my $current  = shift or return;
 	my $document = $current->document;
-	my $lock     = $self->{main}->lock('UPDATE');
 
 	# Cancel any existing diff task
 	$self->task_reset;
@@ -260,8 +259,7 @@ sub show_diff_box {
 	my $self   = shift;
 	my $line   = shift;
 	my $editor = shift;
-
-	my $diff = $self->{diffs}{$line} or return;
+	my $diff   = $self->{diffs}->{$line} or return;
 
 	unless ( defined $self->{dialog} ) {
 		$self->{dialog} = Padre::Wx::Dialog::Diff->new( $self->{main} );

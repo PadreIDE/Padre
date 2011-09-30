@@ -18,7 +18,7 @@ our @ISA     = 'Wx::TreeCtrl';
 ######################################################################
 # ScrollLock Integration
 
-sub scroll_lock {
+sub lock_scroll {
 	Padre::Wx::TreeCtrl::ScrollLock->new( $_[0] );
 }
 
