@@ -19,6 +19,9 @@ the even version for the release, even during development.
       services that run indefinitely in reserved threads (ADAMK)
     - New Style 2.0 which simplifies implementations, adds style localisation
       and allows styling of the GUI (ADAMK)
+    - Added fine-grained Wx locking mechanism so that high frequency asyncronous
+      GUI code doesn't create high frequency asyncronous flickering. Padre
+      flickers much less now on Win32 (ADAMK)
     - Added Replace in Files using matching logic to Find in Files (ADAMK)
     - Added plugin compatibility tracking to Padre::Search (ADAMK)
     - Wx doesn't seem to let us change the PaneBorder setting after pane
@@ -120,9 +123,6 @@ the even version for the release, even during development.
     - Find in files has repeat, stop search, expand and collapse all buttons
       (AZAWAWI)
     - Move the key bindings dialog to the preferences dialog (AZAWAWI)
-    - Adding an alternative fine-grained Wx update locking mechanism so that
-      high frequency asyncronous GUI code doesn't create high frequency
-      asyncronous flickering. Padre flickers much less now on Win32 (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
