@@ -84,7 +84,11 @@ sub set_up {
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG ) );
 
 	my $off_set = 24;
-	$self->{output}->SetBackgroundColour(LIGHT_GREEN);
+	
+	#TODO change colours for style/theme forground/background
+	# $self->{output}->SetDefaultStyle(RED);
+	# $self->{output}->SetBackgroundColour(LIGHT_GREEN);
+
 	$self->{output}->AppendText("\n");
 
 	$self->{output}->AppendText( sprintf "%${off_set}s %s\n", 'Padre', $VERSION );
