@@ -120,9 +120,9 @@ the even version for the release, even during development.
     - Find in files has repeat, stop search, expand and collapse all buttons
       (AZAWAWI)
     - Move the key bindings dialog to the preferences dialog (AZAWAWI)
-    - Adding a second Wx update locking mechanism that creates less flickering
-      so that high frequency asyncronous GUI code doesn't create high
-      frequency asyncronous flickering (ADAMK)
+    - Adding an alternative fine-grained Wx update locking mechanism so that
+      high frequency asyncronous GUI code doesn't create high frequency
+      asyncronous flickering. Padre flickers much less now on Win32 (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
