@@ -2725,7 +2725,7 @@ sub on_run_tests {
 		my $things_to_test = $tempfile->filename;
 		$self->run_command(qq{"$prove" - -b < "$things_to_test"});
 	} else {
-		$self->run_command("$prove -b $project_dir/t");
+		$self->run_command("$prove -l $project_dir/t");
 	}
 	chdir $dir;
 }
@@ -2823,8 +2823,13 @@ sub run_command {
 			my $title = $cmd;
 			$title =~ s/"//g;
 			system qq(start "$title" cmd /C "$cmd & pause");
+		} elsif ( $ENV{COLORTERM} eq 'gnome-terminal' ) {
+
+			#Gnome-Terminal line format:
+			#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
+			system qq($ENV{COLORTERM} -e "bash -c \\\"$cmd; exec bash\\\"" & );
 		} else {
-			system qq(xterm -sb -e "$cmd; sleep 1000" &);
+			system qq($ENV{TERM} -sb -e "$cmd; sleep 1000" &);
 		}
 		return;
 	}
