@@ -2,8 +2,9 @@
 
 use strict;
 use warnings;
-# Turn on $OUTPUT_AUTOFLUSH 
-$|  = 1;
+
+# Turn on $OUTPUT_AUTOFLUSH
+$| = 1;
 use Test::More;
 
 BEGIN {
@@ -11,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 13;
+	plan tests => 15;
 }
 
 use Test::NoWarnings;
@@ -36,9 +37,9 @@ isa_ok( $notebook, 'Wx::Notebook' );
 my $output = $dialog->output;
 isa_ok( $output, 'Wx::TextCtrl' );
 
-######
+#######
 # let's check our subs/methods.
-######
+#######
 my @subs = qw( core_info new run set_up wx_info );
 
 use_ok( 'Padre::Wx::Dialog::About', @subs );
@@ -46,4 +47,12 @@ use_ok( 'Padre::Wx::Dialog::About', @subs );
 foreach my $subs (@subs) {
 	can_ok( 'Padre::Wx::Dialog::About', $subs );
 }
+
+#######
+# let's test for image as it's our centre piece
+#######
+use_ok('Padre::Util');
+
+my $FILENAME = Padre::Util::sharefile('padre-splash.png');
+ok( -f $FILENAME, "Found image $FILENAME" );
 
