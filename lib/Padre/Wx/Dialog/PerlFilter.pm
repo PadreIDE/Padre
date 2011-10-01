@@ -227,7 +227,7 @@ sub show {
 		my $editor = $self->current->editor;
 
 		# Insert sample, but do not overwrite an exisiting filter source
-		$self->{source}->ChangeValue( "use utf8;\n" . Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n") )
+		$self->{source}->ChangeValue( Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n") )
 			unless $self->{source}->GetValue;
 
 		if ($editor) {
@@ -294,28 +294,34 @@ sub run {
 
 	$self->{result_text}->Clear;
 
-	if ( $filter_mode == $self->{filter_mode_values}->{default} ) {
-		$_           = $original_text;
-		$result_text = eval $source;
-	} elsif ( $filter_mode == $self->{filter_mode_values}->{std} ) {
+	local $@;
 
-		# TODO: use STDIN/STDOUT
-		#		$_ = $original_text;
-		#		$result_text = eval $source;
-	} elsif ( $filter_mode == $self->{filter_mode_values}->{map} ) {
-		$result_text = join( $nl, map { eval $source; } split( /$nl/, $original_text ) );
-	} elsif ( $filter_mode == $self->{filter_mode_values}->{grep} ) {
-		$result_text = join( $nl, grep { eval $source; } split( /$nl/, $original_text ) );
+	my $code = eval "use utf8;package ".__PACKAGE__."::Sandbox;sub{$source\n}";
+
+	unless ($@) {
+		if ( $filter_mode == $self->{filter_mode_values}->{default} ) {
+			$result_text = eval {
+				local $_  = $original_text;
+				$code->();
+				$_
+			}
+		} elsif ( $filter_mode == $self->{filter_mode_values}->{std} ) {
+
+			# TODO: use STDIN/STDOUT
+			#		$_ = $original_text;
+			#		$result_text = eval $source;
+		} elsif ( $filter_mode == $self->{filter_mode_values}->{map} ) {
+			$result_text = eval { join( $nl, map { $code->() } split( /$nl/, $original_text ) ) };
+		} elsif ( $filter_mode == $self->{filter_mode_values}->{grep} ) {
+			$result_text = eval { join( $nl, grep { $code->() } split( /$nl/, $original_text ) ) };
+		}
 	}
 
 	# Common eval error handling
 	if ($@) {
-
 		# TODO: Set text color red
-		$result_text = Wx::gettext('Error') . ":\n" . $@;
-	}
-
-	if ( defined $result_text ) {
+		$self->{result_text}->SetValue(Wx::gettext("Error:\n") . $@);
+	} elsif ( defined $result_text ) {
 		$self->{result_text}->SetValue($result_text);
 	} else {
 
