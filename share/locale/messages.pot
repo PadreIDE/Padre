@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-01 00:10-0700\n"
+"POT-Creation-Date: 2011-10-01 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -700,11 +700,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:116
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:123
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:122
+#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:129
 msgid "(unsupported)"
 msgstr ""
 
@@ -1344,7 +1344,7 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:152
+#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:91
 msgid "Config:"
 msgstr ""
 
@@ -1760,10 +1760,6 @@ msgstr ""
 msgid "Did not select a bookmark"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Patch.pm:51
-msgid "Diff"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Patch.pm:490
 #, perl-format
 msgid "Diff Succesful, you should see a new tab in editor called %s"
@@ -1840,7 +1836,7 @@ msgstr ""
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7009
+#: lib/Padre/Wx/Main.pm:7015
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -1949,11 +1945,11 @@ msgstr ""
 msgid "Encode Document to &utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7031
+#: lib/Padre/Wx/Main.pm:7037
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7030
+#: lib/Padre/Wx/Main.pm:7036
 msgid "Encode to:"
 msgstr ""
 
@@ -2019,10 +2015,9 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:446 lib/Padre/Wx/Editor.pm:619
+#: lib/Padre/Document.pm:448 lib/Padre/Wx/Editor.pm:619
 #: lib/Padre/Wx/Main.pm:4962 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:315
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
 #: lib/Padre/Wx/Dialog/Sync.pm:118 lib/Padre/Wx/Dialog/Sync.pm:142
@@ -2063,14 +2058,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6989
+#: lib/Padre/Wx/Main.pm:6995
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6974
+#: lib/Padre/Wx/Main.pm:6980
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -2087,7 +2082,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:283
+#: lib/Padre/Document.pm:285
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2103,7 +2098,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:233
+#: lib/Padre/Document.pm:235
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2118,6 +2113,10 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
 #, perl-format
 msgid "Error while trying to perform Padre action: %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:323
+msgid "Error:\n"
 msgstr ""
 
 #: lib/Padre/Document/Perl.pm:491
@@ -2354,7 +2353,7 @@ msgstr ""
 msgid "File-1"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Patch.pm:73 lib/Padre/Wx/FBP/Patch.pm:160
+#: lib/Padre/Wx/FBP/Patch.pm:160
 msgid "File-2"
 msgstr ""
 
@@ -3268,7 +3267,7 @@ msgstr ""
 msgid "No matches found for \"%s\"."
 msgstr ""
 
-#: lib/Padre/Document.pm:327
+#: lib/Padre/Document.pm:329
 #, perl-format
 msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
@@ -3691,7 +3690,7 @@ msgstr ""
 msgid "Paste the clipboard to the current location"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Patch.pm:28 lib/Padre/Wx/FBP/Patch.pm:50
+#: lib/Padre/Wx/FBP/Patch.pm:28
 msgid "Patch"
 msgstr ""
 
@@ -4017,7 +4016,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:120
+#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:127
 msgid "RAM:"
 msgstr ""
 
@@ -4395,10 +4394,6 @@ msgstr ""
 msgid "SQL Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Patch.pm:74
-msgid "SVN"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Patch.pm:581
 #, perl-format
 msgid "SVN Diff Succesful, you should see a new tab in editor called %s"
@@ -4424,7 +4419,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:780
+#: lib/Padre/Document.pm:782
 msgid "Save Warning"
 msgstr ""
 
@@ -5039,7 +5034,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1390 lib/Padre/Document.pm:1391
+#: lib/Padre/Document.pm:1392 lib/Padre/Document.pm:1393
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5267,7 +5262,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:255
+#: lib/Padre/Document.pm:257
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5308,7 +5303,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:115
+#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:122
 msgid "Threads:"
 msgstr ""
 
@@ -5408,7 +5403,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:996
+#: lib/Padre/Document.pm:998
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5559,14 +5554,14 @@ msgstr ""
 msgid "Visit the PerlM&onks"
 msgstr ""
 
-#: lib/Padre/Document.pm:776
+#: lib/Padre/Document.pm:778
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:261 lib/Padre/Wx/Syntax.pm:28
+#: lib/Padre/Document.pm:263 lib/Padre/Wx/Syntax.pm:28
 #: lib/Padre/Wx/Main.pm:2994 lib/Padre/Wx/Main.pm:3709
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5719,7 +5714,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:974
+#: lib/Padre/Document.pm:976
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
