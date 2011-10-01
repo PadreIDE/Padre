@@ -8,18 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-30 20:10-0700\n"
+"POT-Creation-Date: 2011-10-01 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: lib/Padre/Wx/Syntax.pm:394
-#, perl-format
-msgid " within %3.2f secs."
-msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:478
 msgid "\".\" also matches newline"
@@ -1769,6 +1764,11 @@ msgstr ""
 msgid "Diff"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/Patch.pm:490
+#, perl-format
+msgid "Diff Succesful, you should see a new tab in editor called %s"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/Preferences.pm:545
 msgid "Diff tool"
 msgstr ""
@@ -2506,14 +2506,14 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:421
+#: lib/Padre/Wx/Syntax.pm:419
 #, perl-format
-msgid "Found %d issue(s)"
+msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
 #: lib/Padre/Wx/Syntax.pm:420
 #, perl-format
-msgid "Found %d issue(s) in %s"
+msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:395
@@ -2902,9 +2902,14 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:474
+#: lib/Padre/Wx/Syntax.pm:472
 #, perl-format
 msgid "Line %d:   (%s)   %s"
+msgstr ""
+
+#: lib/Padre/Document/Perl/Beginner.pm:84
+#, perl-format
+msgid "Line %d: %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:129
@@ -3230,13 +3235,14 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:411
-msgid "No errors or warnings found"
+#: lib/Padre/Wx/Syntax.pm:406
+#, perl-format
+msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:407
+#: lib/Padre/Wx/Syntax.pm:410
 #, perl-format
-msgid "No errors or warnings found in %s"
+msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:2968
@@ -4393,6 +4399,11 @@ msgstr ""
 msgid "SVN"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/Patch.pm:581
+#, perl-format
+msgid "SVN Diff Succesful, you should see a new tab in editor called %s"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/SessionSave.pm:234
 msgid "Save"
 msgstr ""
@@ -5053,7 +5064,7 @@ msgid ""
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:594
+#: lib/Padre/Wx/Dialog/Patch.pm:597
 msgid ""
 "Sorry Diff Failed, are you sure your have access to the repository for this "
 "action"
@@ -5565,6 +5576,13 @@ msgstr ""
 msgid ""
 "Warning! This will delete all the changes you made to 'My plug-in' and "
 "replace it with the default code that comes with your installation of Padre"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Patch.pm:539
+#, perl-format
+msgid ""
+"Warning: found SVN v%s but we require SVN v%s and it is now called \"Apache "
+"Subversion\""
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:421
