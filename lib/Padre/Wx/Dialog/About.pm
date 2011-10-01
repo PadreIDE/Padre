@@ -43,7 +43,7 @@ sub run {
 	my $current = $self->current;
 
 	# auto-fill dialogue
-	$self->set_up();
+	$self->_set_up();
 
 	# Show the dialog
 	my $result = $self->ShowModal;
@@ -65,14 +65,12 @@ sub run {
 }
 
 #######
-# Method set_up
+# Method _set_up
 #######
-sub set_up {
+sub _set_up {
 	my $self = shift;
 
-	# Set the bitmap button icons, o why are we using a 293kb bmp !!!!
-	# $self->{splash}->SetBitmap( Wx::Bitmap->new(Padre::Util::sharefile('padre-splash-ccnc.bmp'), Wx::BITMAP_TYPE_BMP) );
-	# create a png only 196kb te-he
+	# load the image png only 196kb te-he
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG ) );
 
 	$self->{off_set} = 24;
@@ -81,8 +79,8 @@ sub set_up {
 
 	$self->{output}->AppendText( sprintf "%$self->{off_set}s %s\n", 'Padre', $VERSION );
 
-	$self->core_info();
-	$self->wx_info();
+	$self->_core_info();
+	$self->_wx_info();
 
 	$self->{output}->AppendText("Other...\n");
 
@@ -96,9 +94,9 @@ sub set_up {
 }
 
 #######
-# Composed Method core_info
+# Composed Method _core_info
 #######
-sub core_info {
+sub _core_info {
 	my $self = shift;
 
 	$self->{output}->AppendText("Core...\n");
@@ -133,9 +131,9 @@ sub core_info {
 }
 
 #######
-# Composed Method wx_info
+# Composed Method _wx_info
 #######
-sub wx_info {
+sub _wx_info {
 	my $self = shift;
 
 	$self->{output}->AppendText("Wx...\n");

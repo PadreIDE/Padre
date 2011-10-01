@@ -40,7 +40,7 @@ isa_ok( $output, 'Wx::TextCtrl' );
 #######
 # let's check our subs/methods.
 #######
-my @subs = qw( core_info new run set_up wx_info );
+my @subs = qw( _core_info _set_up _wx_info new run );
 
 use_ok( 'Padre::Wx::Dialog::About', @subs );
 
