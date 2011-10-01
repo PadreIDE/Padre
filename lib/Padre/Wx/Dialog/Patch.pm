@@ -487,7 +487,7 @@ sub make_patch_diff {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( Wx::gettext(sprintf('Diff Succesful, you should see a new tab in editor called %s', $patch_file)) );
+			$main->info( sprintf(Wx::gettext('Diff Succesful, you should see a new tab in editor called %s'), $patch_file) );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
 
@@ -534,8 +534,10 @@ sub test_svn {
 			} else {
 				TRACE("Found SVN v$svn_client_version but require v$required_svn_version") if DEBUG;
 				$main->info(
-					Wx::gettext(
-						sprintf('Warning: found SVN v%s but we require SVN v%s and it is now called "Apache Subversion"', $svn_client_version, $required_svn_version)
+					sprintf(
+						Wx::gettext('Warning: found SVN v%s but we require SVN v%s and it is now called "Apache Subversion"'),
+						$svn_client_version,
+						$required_svn_version
 					)
 				);
 			}
@@ -575,7 +577,7 @@ sub make_patch_svn {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( Wx::gettext(sprintf('SVN Diff Succesful, you should see a new tab in editor called %s', $patch_file)) );
+			$main->info( sprintf(Wx::gettext('SVN Diff Succesful, you should see a new tab in editor called %s'), $patch_file) );
 		} else {
 			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
 

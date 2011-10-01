@@ -391,7 +391,6 @@ sub render {
 	my $root = $self->{tree}->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
-	my $time_taken_msg = sprintf( Wx::gettext(' within %3.2f secs.'), $elapsed );
 	unless ( Params::Util::_HASH($model) ) {
 
 		# Relative-to-the-project filename.
@@ -404,11 +403,11 @@ sub render {
 			}
 			$self->{tree}->SetItemText(
 				$root,
-				sprintf( Wx::gettext('No errors or warnings found in %s'), $filename ) . $time_taken_msg
+				sprintf( Wx::gettext('No errors or warnings found in %s within %3.2f secs.'), $filename, $elapsed )
 			);
 		} else {
 			$self->{tree}
-				->SetItemText( $root, sprintf( Wx::gettext('No errors or warnings found') ) . $time_taken_msg );
+				->SetItemText( $root, sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.', $elapsed ) ) );
 		}
 		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
 		return;
@@ -417,10 +416,9 @@ sub render {
 	$self->{tree}->SetItemText(
 		$root,
 		(   defined $filename
-			? sprintf( Wx::gettext('Found %d issue(s) in %s'), scalar @{ $model->{issues} }, $filename )
-			: sprintf( Wx::gettext('Found %d issue(s)'),       scalar @{ $model->{issues} } )
+			? sprintf( Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'), scalar @{ $model->{issues} }, $filename, $elapsed )
+			: sprintf( Wx::gettext('Found %d issue(s) within %3.2f secs.'),       scalar @{ $model->{issues} }, $elapsed )
 			)
-			. $time_taken_msg
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
