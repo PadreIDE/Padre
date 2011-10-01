@@ -227,7 +227,7 @@ sub show {
 		my $editor = $self->current->editor;
 
 		# Insert sample, but do not overwrite an exisiting filter source
-		$self->{source}->ChangeValue( Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n") )
+		$self->{source}->ChangeValue( "use utf8;\n" . Wx::gettext("# Input is in \$_\n\$_ = \$_;\n# Output goes to \$_\n") )
 			unless $self->{source}->GetValue;
 
 		if ($editor) {
