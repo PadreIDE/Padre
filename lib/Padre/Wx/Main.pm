@@ -2823,13 +2823,17 @@ sub run_command {
 			my $title = $cmd;
 			$title =~ s/"//g;
 			system qq(start "$title" cmd /C "$cmd & pause");
-		} elsif ( $ENV{COLORTERM} eq 'gnome-terminal' ) {
+		} elsif ( defined $ENV{COLORTERM} ) {
+			if ( $ENV{COLORTERM} eq 'gnome-terminal' ) {
 
-			#Gnome-Terminal line format:
-			#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
-			system qq($ENV{COLORTERM} -e "bash -c \\\"$cmd; exec bash\\\"" & );
+				#Gnome-Terminal line format:
+				#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
+				system qq($ENV{COLORTERM} -e "bash -c \\\"$cmd; exec bash\\\"" & );
+			} elsif ( defined $ENV{TERM} ) {
+				system qq($ENV{TERM} -sb -e "$cmd; sleep 1000" &);
+			}
 		} else {
-			system qq($ENV{TERM} -sb -e "$cmd; sleep 1000" &);
+			system qq(xterm -sb -e "$cmd; sleep 1000" &);
 		}
 		return;
 	}
