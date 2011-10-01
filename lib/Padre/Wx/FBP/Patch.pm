@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -26,15 +26,15 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext("Patch"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::DEFAULT_DIALOG_STYLE() | Wx::RESIZE_BORDER(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 
 	$self->{file1} = Wx::Choice->new(
 		$self,
 		-1,
-		Wx::DefaultPosition(),
+		Wx::DefaultPosition,
 		[ 200, -1 ],
 		[],
 	);
@@ -44,14 +44,14 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Action"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[
-			Wx::gettext("Patch"),
-			Wx::gettext("Diff"),
+			"Patch",
+			"Diff",
 		],
 		1,
-		Wx::RA_SPECIFY_COLS(),
+		Wx::RA_SPECIFY_COLS,
 	);
 	$self->{action}->SetSelection(0);
 
@@ -67,14 +67,14 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Against"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[
-			Wx::gettext("File-2"),
-			Wx::gettext("SVN"),
+			"File-2",
+			"SVN",
 		],
 		2,
-		Wx::RA_SPECIFY_COLS(),
+		Wx::RA_SPECIFY_COLS,
 	);
 	$self->{against}->SetSelection(0);
 	$self->{against}->Disable;
@@ -90,8 +90,8 @@ sub new {
 	$self->{file2} = Wx::Choice->new(
 		$self,
 		-1,
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		[],
 	);
 	$self->{file2}->SetSelection(0);
@@ -101,8 +101,8 @@ sub new {
 		$self,
 		-1,
 		Wx::gettext("Process"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -115,19 +115,19 @@ sub new {
 
 	my $close_button = Wx::Button->new(
 		$self,
-		Wx::ID_CANCEL(),
+		Wx::ID_CANCEL,
 		Wx::gettext("Close"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$close_button->SetDefault;
 
 	$self->{m_staticline5} = Wx::StaticLine->new(
 		$self,
 		-1,
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::LI_HORIZONTAL(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
 	);
 
 	my $file_1 = Wx::StaticBoxSizer->new(
@@ -136,9 +136,9 @@ sub new {
 			-1,
 			Wx::gettext("File-1"),
 		),
-		Wx::VERTICAL(),
+		Wx::VERTICAL,
 	);
-	$file_1->Add( $self->{file1}, 0, Wx::ALL(), 5 );
+	$file_1->Add( $self->{file1}, 0, Wx::ALL, 5 );
 
 	my $sbSizer2 = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -146,12 +146,12 @@ sub new {
 			-1,
 			Wx::gettext("Options"),
 		),
-		Wx::HORIZONTAL(),
+		Wx::HORIZONTAL,
 	);
-	$sbSizer2->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$sbSizer2->Add( $self->{action}, 0, Wx::ALL(), 5 );
-	$sbSizer2->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$sbSizer2->Add( $self->{against}, 0, Wx::ALL(), 5 );
+	$sbSizer2->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$sbSizer2->Add( $self->{action}, 0, Wx::ALL, 5 );
+	$sbSizer2->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$sbSizer2->Add( $self->{against}, 0, Wx::ALL, 5 );
 
 	my $file_2 = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -159,25 +159,25 @@ sub new {
 			-1,
 			Wx::gettext("File-2"),
 		),
-		Wx::VERTICAL(),
+		Wx::VERTICAL,
 	);
-	$file_2->Add( $self->{file2}, 1, Wx::ALL(), 5 );
+	$file_2->Add( $self->{file2}, 1, Wx::ALL, 5 );
 
-	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL());
-	$buttons->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$buttons->Add( $self->{process}, 0, Wx::ALL(), 5 );
-	$buttons->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$buttons->Add( $close_button, 0, Wx::ALL(), 5 );
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( $self->{process}, 0, Wx::ALL, 5 );
+	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( $close_button, 0, Wx::ALL, 5 );
 
-	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL());
-	$vsizer->Add( $file_1, 0, Wx::EXPAND(), 5 );
-	$vsizer->Add( $sbSizer2, 1, Wx::EXPAND(), 5 );
-	$vsizer->Add( $file_2, 0, Wx::EXPAND(), 5 );
-	$vsizer->Add( $buttons, 0, Wx::EXPAND(), 3 );
-	$vsizer->Add( $self->{m_staticline5}, 0, Wx::EXPAND() | Wx::ALL(), 5 );
+	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$vsizer->Add( $file_1, 0, Wx::EXPAND, 5 );
+	$vsizer->Add( $sbSizer2, 1, Wx::EXPAND, 5 );
+	$vsizer->Add( $file_2, 0, Wx::EXPAND, 5 );
+	$vsizer->Add( $buttons, 0, Wx::EXPAND, 3 );
+	$vsizer->Add( $self->{m_staticline5}, 0, Wx::EXPAND | Wx::ALL, 5 );
 
-	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL());
-	$sizer->Add( $vsizer, 0, Wx::ALL(), 1 );
+	my $sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$sizer->Add( $vsizer, 0, Wx::ALL, 1 );
 
 	$self->SetSizerAndFit($sizer);
 	$self->Layout;
