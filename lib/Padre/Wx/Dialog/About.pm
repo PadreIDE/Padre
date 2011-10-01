@@ -6,7 +6,7 @@ use warnings;
 use Config;
 use Padre::Wx               ();
 use Wx::Perl::ProcessStream ();
-use Padre::Config           ();
+# use Padre::Config           ();
 use Padre::Util             ();
 use PPI                     ();
 use Padre::Wx::FBP::About   ();
