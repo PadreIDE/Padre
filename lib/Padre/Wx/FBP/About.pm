@@ -173,7 +173,7 @@ sub new {
 	$self->{m_staticText471} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Current Developers"),
+		Wx::gettext("Developers"),
 	);
 	$self->{m_staticText471}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -187,154 +187,16 @@ sub new {
 		Wx::LI_HORIZONTAL,
 	);
 
-	$self->{m_staticText5} = Wx::StaticText->new(
+	$self->{m_staticText66} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Aaron Trevena"),
-	);
-
-	$self->{m_staticText6} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Alexandr Ciornii"),
-	);
-
-	$self->{m_staticText7} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Blake Willmarth"),
-	);
-
-	$self->{m_staticText8} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Breno G. de Oliveira"),
-	);
-
-	$self->{m_staticText39} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Brian Cassidy"),
-	);
-
-	$self->{m_staticText40} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Cezary Morga"),
-	);
-
-	$self->{m_staticText411} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Chris Dolan"),
-	);
-
-	$self->{m_staticText42} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Claudio Ramirez"),
-	);
-
-	$self->{m_staticText53} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Tom Eliaz"),
-	);
-
-	$self->{m_staticText54} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("code4pay"),
-	);
-
-	$self->{m_staticText55} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Fayland Lam"),
-	);
-
-	$self->{m_staticText56} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Gabriel Vieira"),
-	);
-
-	$self->{m_staticText561} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Heiko Jansen"),
+		Wx::gettext("Sebastian Willing"),
 	);
 
 	$self->{m_staticText571} = Wx::StaticText->new(
 		$self->{development},
 		-1,
 		Wx::gettext("Jerome Quelin"),
-	);
-
-	$self->{m_staticText58} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Kaare Rasmussen"),
-	);
-
-	$self->{m_staticText59} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Kartik Thakore"),
-	);
-
-	$self->{m_staticText60} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Keedi Kim"),
-	);
-
-	$self->{m_staticText611} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Kenichi Ishigaki"),
-	);
-
-	$self->{m_staticText621} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Max Maischein"),
-	);
-
-	$self->{m_staticText63} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Olivier Mengue"),
-	);
-
-	$self->{m_staticText64} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Patrick Donelan"),
-	);
-
-	$self->{m_staticText671} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Pawe\x{142} Murias"),
-	);
-
-	$self->{m_staticText68} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Petar Shangov"),
-	);
-
-	$self->{m_staticText65} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Ryan Niebur"),
-	);
-
-	$self->{m_staticText66} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Sebastian Willing"),
 	);
 
 	$self->{m_staticText69} = Wx::StaticText->new(
@@ -349,22 +211,160 @@ sub new {
 		Wx::gettext("Zeno Gantner"),
 	);
 
-	$self->{m_staticText711} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Burak Gursoy"),
-	);
-
 	$self->{m_staticText721} = Wx::StaticText->new(
 		$self->{development},
 		-1,
 		Wx::gettext("Andrew Bramble"),
 	);
 
+	$self->{m_staticText8} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Breno G. de Oliveira"),
+	);
+
+	$self->{m_staticText55} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Fayland Lam"),
+	);
+
 	$self->{m_staticText73} = Wx::StaticText->new(
 		$self->{development},
 		-1,
 		Wx::gettext("Kevin Dawson"),
+	);
+
+	$self->{m_staticText65} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Ryan Niebur"),
+	);
+
+	$self->{m_staticText561} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Heiko Jansen"),
+	);
+
+	$self->{m_staticText6} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Alexandr Ciornii"),
+	);
+
+	$self->{m_staticText40} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Cezary Morga"),
+	);
+
+	$self->{m_staticText39} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Brian Cassidy"),
+	);
+
+	$self->{m_staticText411} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Chris Dolan"),
+	);
+
+	$self->{m_staticText64} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Patrick Donelan"),
+	);
+
+	$self->{m_staticText53} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Tom Eliaz"),
+	);
+
+	$self->{m_staticText711} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Burak Gursoy"),
+	);
+
+	$self->{m_staticText611} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Kenichi Ishigaki"),
+	);
+
+	$self->{m_staticText60} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Keedi Kim"),
+	);
+
+	$self->{m_staticText621} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Max Maischein"),
+	);
+
+	$self->{m_staticText63} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Olivier Mengue"),
+	);
+
+	$self->{m_staticText671} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Pawe\x{142} Murias"),
+	);
+
+	$self->{m_staticText42} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Claudio Ramirez"),
+	);
+
+	$self->{m_staticText58} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Kaare Rasmussen"),
+	);
+
+	$self->{m_staticText68} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Petar Shangov"),
+	);
+
+	$self->{m_staticText59} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Kartik Thakore"),
+	);
+
+	$self->{m_staticText5} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Aaron Trevena"),
+	);
+
+	$self->{m_staticText56} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Gabriel Vieira"),
+	);
+
+	$self->{m_staticText7} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Blake Willmarth"),
+	);
+
+	$self->{m_staticText54} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("code4pay"),
 	);
 
 	$self->{translation} = Wx::Panel->new(
@@ -761,36 +761,36 @@ sub new {
 	$bSizer61->Add( $self->{m_staticline11}, 0, Wx::EXPAND | Wx::ALL, 5 );
 
 	my $gSizer3 = Wx::GridSizer->new( 0, 4, 0, 0 );
-	$gSizer3->Add( $self->{m_staticText5}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText6}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText7}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText8}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText39}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText40}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText411}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText42}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText53}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText54}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText55}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText56}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText561}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText571}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText58}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText60}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText611}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText621}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText63}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText64}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText671}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText68}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText65}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText66}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText571}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText69}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText70}, 0, Wx::ALL, 5 );
-	$gSizer3->Add( $self->{m_staticText711}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText721}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText8}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText55}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText73}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText65}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText561}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText6}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText40}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText39}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText411}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText64}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText53}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText711}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText611}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText60}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText621}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText63}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText671}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText42}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText58}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText68}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText5}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText56}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText7}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText54}, 0, Wx::ALL, 5 );
 
 	my $bSizer3 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer3->Add( $bSizer6, 0, Wx::EXPAND, 5 );
@@ -913,8 +913,8 @@ sub new {
 	$self->{system_info}->SetSizerAndFit($bSizer32);
 	$self->{system_info}->Layout;
 
-	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
-	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 0 );
+	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 1 );
 	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
 	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
 
