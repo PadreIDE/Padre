@@ -6899,6 +6899,7 @@ sub new_document_from_string {
 	my $self     = shift;
 	my $string   = shift;
 	my $mimetype = shift;
+	my $encoding = shift;
 
 	# If we are currently focused on an unused document,
 	# reuse that instead of making a new one.
@@ -6912,6 +6913,9 @@ sub new_document_from_string {
 	$document->text_set($string);
 	if ($mimetype) {
 		$document->set_mimetype($mimetype);
+	}
+	if ($encoding) {
+		$document->set_encoding($encoding);
 	}
 
 	$document->{original_content} = $document->text_get;
