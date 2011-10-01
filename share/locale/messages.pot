@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-01 08:10-0700\n"
+"POT-Creation-Date: 2011-10-01 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -751,7 +751,7 @@ msgstr ""
 msgid "ALT"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:193
+#: lib/Padre/Wx/FBP/About.pm:349
 msgid "Aaron Trevena"
 msgstr ""
 
@@ -800,7 +800,7 @@ msgstr ""
 msgid "Alarm"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:199
+#: lib/Padre/Wx/FBP/About.pm:253
 msgid "Alexandr Ciornii"
 msgstr ""
 
@@ -861,7 +861,7 @@ msgstr ""
 msgid "Amir E. Aharoni"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:361
+#: lib/Padre/Wx/FBP/About.pm:217
 msgid "Andrew Bramble"
 msgstr ""
 
@@ -993,7 +993,7 @@ msgstr ""
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:205
+#: lib/Padre/Wx/FBP/About.pm:361
 msgid "Blake Willmarth"
 msgstr ""
 
@@ -1019,11 +1019,11 @@ msgstr ""
 msgid "Braces Assist"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:211 lib/Padre/Wx/FBP/About.pm:636
+#: lib/Padre/Wx/FBP/About.pm:223 lib/Padre/Wx/FBP/About.pm:636
 msgid "Breno G. de Oliveira"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:217
+#: lib/Padre/Wx/FBP/About.pm:265
 msgid "Brian Cassidy"
 msgstr ""
 
@@ -1044,7 +1044,7 @@ msgstr ""
 msgid "Builds the current project, then run all tests."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:355 lib/Padre/Wx/FBP/About.pm:693
+#: lib/Padre/Wx/FBP/About.pm:289 lib/Padre/Wx/FBP/About.pm:693
 msgid "Burak Gursoy"
 msgstr ""
 
@@ -1088,7 +1088,7 @@ msgstr ""
 msgid "Case-insensitive matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:223 lib/Padre/Wx/FBP/About.pm:621
+#: lib/Padre/Wx/FBP/About.pm:259 lib/Padre/Wx/FBP/About.pm:621
 msgid "Cezary Morga"
 msgstr ""
 
@@ -1213,7 +1213,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:229
+#: lib/Padre/Wx/FBP/About.pm:271
 msgid "Chris Dolan"
 msgstr ""
 
@@ -1225,7 +1225,7 @@ msgstr ""
 msgid "Cl&ose Window on Hit"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:235
+#: lib/Padre/Wx/FBP/About.pm:325
 msgid "Claudio Ramirez"
 msgstr ""
 
@@ -1580,10 +1580,6 @@ msgstr ""
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:176
-msgid "Current Developers"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/OpenResource.pm:245
 msgid "Current Directory: "
 msgstr ""
@@ -1738,6 +1734,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:158 lib/Padre/Wx/Dialog/SessionSave.pm:214
 msgid "Description:"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/About.pm:176
+msgid "Developers"
 msgstr ""
 
 #: lib/Padre/Wx/About.pm:64 lib/Padre/Wx/FBP/About.pm:917
@@ -2284,7 +2284,7 @@ msgstr ""
 msgid "Fatal Error"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:253 lib/Padre/Wx/FBP/About.pm:405
+#: lib/Padre/Wx/FBP/About.pm:229 lib/Padre/Wx/FBP/About.pm:405
 msgid "Fayland Lam"
 msgstr ""
 
@@ -2553,7 +2553,7 @@ msgstr ""
 msgid "Gabor Szabo: Project Manager"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:259 lib/Padre/Wx/FBP/About.pm:642
+#: lib/Padre/Wx/FBP/About.pm:355 lib/Padre/Wx/FBP/About.pm:642
 msgid "Gabriel Vieira"
 msgstr ""
 
@@ -2617,7 +2617,7 @@ msgstr ""
 msgid "Hebrew"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:265 lib/Padre/Wx/FBP/About.pm:492
+#: lib/Padre/Wx/FBP/About.pm:247 lib/Padre/Wx/FBP/About.pm:492
 msgid "Heiko Jansen"
 msgstr ""
 
@@ -2783,7 +2783,7 @@ msgstr ""
 msgid "JavaScript Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:271 lib/Padre/Wx/FBP/About.pm:471
+#: lib/Padre/Wx/FBP/About.pm:199 lib/Padre/Wx/FBP/About.pm:471
 msgid "Jerome Quelin"
 msgstr ""
 
@@ -2819,15 +2819,15 @@ msgstr ""
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:277
+#: lib/Padre/Wx/FBP/About.pm:331
 msgid "Kaare Rasmussen"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:283
+#: lib/Padre/Wx/FBP/About.pm:343
 msgid "Kartik Thakore"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:289 lib/Padre/Wx/FBP/About.pm:591
+#: lib/Padre/Wx/FBP/About.pm:301 lib/Padre/Wx/FBP/About.pm:591
 msgid "Keedi Kim"
 msgstr ""
 
@@ -2835,7 +2835,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:367
+#: lib/Padre/Wx/FBP/About.pm:235
 msgid "Kevin Dawson"
 msgstr ""
 
@@ -3086,7 +3086,7 @@ msgstr ""
 msgid "Matthew Lien"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:301
+#: lib/Padre/Wx/FBP/About.pm:307
 msgid "Max Maischein"
 msgstr ""
 
@@ -3346,7 +3346,7 @@ msgstr ""
 msgid "Offer completions to the current string. See Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:307 lib/Padre/Wx/FBP/About.pm:477
+#: lib/Padre/Wx/FBP/About.pm:313 lib/Padre/Wx/FBP/About.pm:477
 msgid "Olivier Mengue"
 msgstr ""
 
@@ -3707,7 +3707,7 @@ msgstr ""
 msgid "Patch..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:313
+#: lib/Padre/Wx/FBP/About.pm:277
 msgid "Patrick Donelan"
 msgstr ""
 
@@ -3771,7 +3771,7 @@ msgstr ""
 msgid "Persian (Iran)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:325
+#: lib/Padre/Wx/FBP/About.pm:337
 msgid "Petar Shangov"
 msgstr ""
 
@@ -4374,7 +4374,7 @@ msgstr ""
 msgid "Russian"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:331
+#: lib/Padre/Wx/FBP/About.pm:241
 msgid "Ryan Niebur"
 msgstr ""
 
@@ -4521,7 +4521,7 @@ msgstr ""
 msgid "Searching for '%s' in '%s'..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:337 lib/Padre/Wx/FBP/About.pm:498
+#: lib/Padre/Wx/FBP/About.pm:193 lib/Padre/Wx/FBP/About.pm:498
 msgid "Sebastian Willing"
 msgstr ""
 
@@ -5123,7 +5123,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:343
+#: lib/Padre/Wx/FBP/About.pm:205
 msgid "Steffen Muller"
 msgstr ""
 
@@ -5331,7 +5331,7 @@ msgstr ""
 msgid "Toggle version control system support"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:241
+#: lib/Padre/Wx/FBP/About.pm:283
 msgid "Tom Eliaz"
 msgstr ""
 
@@ -5674,11 +5674,11 @@ msgstr ""
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:349 lib/Padre/Wx/FBP/About.pm:504
+#: lib/Padre/Wx/FBP/About.pm:211 lib/Padre/Wx/FBP/About.pm:504
 msgid "Zeno Gantner"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:247
+#: lib/Padre/Wx/FBP/About.pm:367
 msgid "code4pay"
 msgstr ""
 
