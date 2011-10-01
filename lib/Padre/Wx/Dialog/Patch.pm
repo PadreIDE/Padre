@@ -514,7 +514,6 @@ sub test_svn {
 	my $self = shift;
 	my $main = $self->main;
 
-	use Sort::Versions;
 	$self->{svn_local} = 0;
 
 	my $svn_client_version   = 0;
@@ -526,8 +525,10 @@ sub test_svn {
 		if ( $svn_client_version = qx{svn --version --quiet} ) {
 			chomp($svn_client_version);
 
+			require Sort::Versions;
+
 			# This is so much better, now we are testing for version as well
-			if ( versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
+			if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
 				TRACE("Found local SVN v$svn_client_version, good to go.") if DEBUG;
 				$self->{svn_local} = 1;
 				return;
