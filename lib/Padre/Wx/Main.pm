@@ -6885,11 +6885,13 @@ sub set_mimetype {
 
 =head3 C<new_document_from_string>
 
-    $main->new_document_from_string( $string, $mimetype );
+    $main->new_document_from_string( $string, $mimetype, $encoding );
 
 Create a new document in Padre with the string value.
 
 Pass in an optional mime type to have Padre colorize the text correctly.
+
+Pass in an optional encoding name that will be used when saving the file.
 
 Note: this method may not belong here...
 
