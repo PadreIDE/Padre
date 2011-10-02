@@ -1465,6 +1465,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'view.vcs',
+		label       => _T('Show V&ersion Control'),
+		comment     => _T('Turn on version control view of the current project and show version control changes in a window'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_vcs( $_[0]->menu->view->{vcs}->IsChecked );
+		},
+	) if $main->config->feature_vcs_support;
+
+	Padre::Wx::Action->new(
 		name        => 'view.statusbar',
 		label       => _T('Show St&atus Bar'),
 		comment     => _T('Show/hide the status bar at the bottom of the screen'),

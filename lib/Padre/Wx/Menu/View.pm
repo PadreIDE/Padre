@@ -67,6 +67,9 @@ sub new {
 		'view.syntaxcheck',
 	);
 
+	$self->{vcs} = $self->add_menu_action('view.vcs')
+		if $main->config->feature_vcs_support;
+
 	$self->{command_line} = $self->add_menu_action(
 		'view.command_line',
 	);
@@ -261,6 +264,7 @@ sub refresh {
 	$self->{calltips}->Check( $config->editor_calltips );
 	$self->{command_line}->Check( $config->main_command_line );
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
+	$self->{vcs}->Check( $config->main_vcs ) if $self->main->config->feature_vcs_support;
 	$self->{toolbar}->Check( $config->main_toolbar );
 
 	if (Padre::Feature::FOLDING) {
