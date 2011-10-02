@@ -53,6 +53,6 @@ foreach my $subs (@subs) {
 #######
 use_ok('Padre::Util');
 
-my $FILENAME = Padre::Util::sharefile('padre-splash-ccnc.png');
+my $FILENAME = Padre::Util::splash;
 ok( -f $FILENAME, "Found image $FILENAME" );
 
