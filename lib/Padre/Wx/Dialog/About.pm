@@ -71,7 +71,7 @@ sub _set_up {
 	my $self = shift;
 
 	# load the image png only 196kb te-he
-	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::sharefile('padre-splash.png'), Wx::BITMAP_TYPE_PNG ) );
+	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
 
 	$self->{off_set} = 24;
 
