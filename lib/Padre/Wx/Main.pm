@@ -326,7 +326,7 @@ sub new {
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
 	$self->_show_syntaxcheck( $config->main_syntaxcheck );
-	$self->_show_vcs( $config->main_vcs );
+	$self->_show_vcs( $config->main_vcs ) if $config->feature_vcs_support;
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -1446,6 +1446,7 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_outline($current);
 	$self->refresh_diff($current);
+	$self->refresh_vcs($current) if $self->config->feature_vcs_support;
 
 	# Refresh the remaining elements while the background tasks
 	# are running for the other elements.
@@ -1685,6 +1686,27 @@ sub refresh_syntaxcheck {
 	$self->syntax->refresh( $_[0] or $self->current );
 	return;
 }
+
+=pod
+
+=head3 C<refresh_vcs>
+
+    $main->refresh_vcs;
+
+Do a refresh of version control checking. This is a "rapid" change,
+since actual version control check is happening in the background.
+
+=cut
+
+sub refresh_vcs {
+	my $self = shift;
+	return unless $self->has_vcs;
+	return if $self->locked('REFRESH');
+	return unless $self->menu->view->{vcs}->IsChecked;
+	$self->vcs->refresh( $_[0] or $self->current );
+	return;
+}
+
 
 =pod
 
