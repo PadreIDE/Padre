@@ -26,6 +26,21 @@ sub new {
 	# Set the bitmap button icons
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
+	my @titles = qw(Revision Author Status File);
+	foreach my $i ( 0 .. $#titles ) {
+		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
+		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
+	}
+
+	# Add a sample row!
+	my $index = 0;
+	my ( $revision, $author, $status, $file ) = ( 16344, 'azawawi', 'M', 'Makefile.PL' );
+	my $list = $self->{list};
+	$list->InsertStringItem( $index, $revision );
+	$list->SetItem( $index, 1, $author );
+	$list->SetItem( $index, 2, $status );
+	$list->SetItem( $index, 3, $file );
+
 	return $self;
 }
 
@@ -125,7 +140,7 @@ sub task_finish {
 }
 
 sub render {
-	my $self  = shift;
+	my $self = shift;
 	my $model = $self->{model} || {};
 
 	# Flush old results
