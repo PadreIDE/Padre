@@ -70,7 +70,7 @@ sub run {
 sub _set_up {
 	my $self = shift;
 
-	# load the image png only 196kb te-he
+	# load the image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
 
 	$self->{off_set} = 24;
@@ -104,9 +104,15 @@ sub _core_info {
 	$self->{output}->AppendText( sprintf "%$self->{off_set}s %s\n", $Config{osname}, $Config{archname} );
 
 	if ( $Config{osname} eq 'linux' ) {
+
 		my $kernel = qx{uname -r};
 		chomp($kernel);
 		$self->{output}->AppendText( sprintf "%$self->{off_set}s %s\n", 'kernel', $kernel );
+
+		my $description = qx{cat /etc/issue};
+		chomp($description);
+		$description =~ s/\\n \\l//;
+		$self->{output}->AppendText( sprintf "%$self->{off_set}s %s", 'description', $description );
 	}
 
 	# Yes, THIS variable should have this upper case char :-)
