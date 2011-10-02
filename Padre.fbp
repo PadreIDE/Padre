@@ -8791,7 +8791,7 @@
                                         <event name="OnUpdateUI"></event>
                                         <object class="wxBoxSizer" expanded="0">
                                             <property name="minimum_size"></property>
-                                            <property name="name">top_sizer</property>
+                                            <property name="name">sizer</property>
                                             <property name="orient">wxVERTICAL</property>
                                             <property name="permission">none</property>
                                             <object class="sizeritem" expanded="0">
@@ -9004,6 +9004,16 @@
                                                     <property name="name">bottom_sizer</property>
                                                     <property name="orient">wxHORIZONTAL</property>
                                                     <property name="permission">none</property>
+                                                    <object class="sizeritem" expanded="0">
+                                                        <property name="border">0</property>
+                                                        <property name="flag">wxEXPAND</property>
+                                                        <property name="proportion">0</property>
+                                                        <object class="spacer" expanded="0">
+                                                            <property name="height">0</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="width">15</property>
+                                                        </object>
+                                                    </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
                                                         <property name="flag">wxALIGN_CENTER</property>
@@ -9610,6 +9620,16 @@
                                                                     <event name="OnUpdateUI"></event>
                                                                 </object>
                                                             </object>
+                                                        </object>
+                                                    </object>
+                                                    <object class="sizeritem" expanded="0">
+                                                        <property name="border">0</property>
+                                                        <property name="flag">wxEXPAND</property>
+                                                        <property name="proportion">0</property>
+                                                        <object class="spacer" expanded="0">
+                                                            <property name="height">0</property>
+                                                            <property name="permission">protected</property>
+                                                            <property name="width">15</property>
                                                         </object>
                                                     </object>
                                                 </object>

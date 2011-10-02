@@ -1242,6 +1242,7 @@ sub new {
 	$button_sizer->Add( $self->{button_reset}, 0, Wx::ALL, 0 );
 
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bottom_sizer->Add( 15, 0, 0, Wx::EXPAND, 0 );
 	$bottom_sizer->Add( $self->{shortcut_label}, 0, Wx::ALIGN_CENTER, 5 );
 	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$bottom_sizer->Add( $ctrl_alt_sizer, 1, Wx::EXPAND, 5 );
@@ -1251,13 +1252,14 @@ sub new {
 	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$bottom_sizer->Add( $button_sizer, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT, 0 );
+	$bottom_sizer->Add( 15, 0, 0, Wx::EXPAND, 0 );
 
-	my $top_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$top_sizer->Add( $filter_sizer, 0, Wx::EXPAND, 5 );
-	$top_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$top_sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$sizer->Add( $filter_sizer, 0, Wx::EXPAND, 5 );
+	$sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
 
-	$m_panel9->SetSizerAndFit($top_sizer);
+	$m_panel9->SetSizerAndFit($sizer);
 	$m_panel9->Layout;
 
 	my $fgSizer71 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
