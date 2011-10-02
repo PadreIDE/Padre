@@ -159,7 +159,7 @@ sub startup {
 
 	# Locate the splash image without resorting to the use
 	# of any Padre::Util functions whatsoever.
-	my $splash = File::Spec->catfile( $share, 'padre-splash-ccnc.bmp' );
+	my $splash = File::Spec->catfile( $share, 'padre-splash-ccnc.png' );
 
 	# Use CCNC-licensed version if it exists and fallback
 	# to the boring splash so that we can bundle it in
@@ -167,7 +167,7 @@ sub startup {
 	# any custom patches to the code, just delete the file.
 	unless ( -f $splash ) {
 		$splash = File::Spec->catfile(
-			$share, 'padre-splash.bmp',
+			$share, 'padre-splash.png',
 		);
 	}
 
