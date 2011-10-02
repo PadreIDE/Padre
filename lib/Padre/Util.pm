@@ -554,22 +554,38 @@ sub select_line_in_editor {
 	$editor->SetFocus;
 }
 
-# execute command in the directory provided
+=pod
+
+=head2 C<run_in_directory>
+
+    Padre::Util::run_in_directory( $command, $directory );
+
+Runs the provided C<command> in the C<directory>. On win32 platforms, executes
+the command to provide *true* background process executions without window 
+popups on each execution. on non-win32 platforms, it runs a C<system>
+command.
+
+Returns 1 on success and 0 on failure.
+=cut
+
+#
 sub run_in_directory {
 	my ( $cmd, $directory ) = @_;
 
 	# Make sure we execute from the correct directory
 	if (Padre::Constant::WIN32) {
 		require Padre::Util::Win32;
-		Padre::Util::Win32::ExecuteProcessAndWait(
+		my $retval = Padre::Util::Win32::ExecuteProcessAndWait(
 			directory  => $directory,
 			file       => 'cmd.exe',
 			parameters => "/C $cmd",
 		);
+		return $retval ? 1 : 0;
 	} else {
 		require File::pushd;
-		my $pushd = File::pushd::pushd($directory);
-		system $cmd;
+		my $pushd  = File::pushd::pushd($directory);
+		my $retval = system $cmd;
+		return ( $retval == 0 ) ? 1 : 0;
 	}
 }
 
