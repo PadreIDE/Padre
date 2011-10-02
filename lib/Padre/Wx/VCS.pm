@@ -32,18 +32,6 @@ sub new {
 		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
 	}
 
-	# Add a sample row!
-	# TODO remove once Padre::Task::VCS is working correctly
-	my $index = 0;
-	my ( $revision, $author, $status, $file ) = ( 16344, 'azawawi', 'Modified', 'Makefile.PL' );
-	my $list = $self->{list};
-	$list->InsertStringItem( $index, $revision );
-	$list->SetItem( $index, 1, $author );
-	$list->SetItem( $index, 2, $status );
-	$list->SetItem( $index, 3, $file );
-
-	$self->_resize_columns;
-
 	return $self;
 }
 
@@ -83,7 +71,7 @@ sub view_stop {
 # Event Handlers
 
 sub on_refresh_click {
-	$_[0]->main->vcs->refresh($_[0]->current);
+	$_[0]->main->vcs->refresh( $_[0]->current );
 }
 
 #####################################################################
@@ -96,6 +84,9 @@ sub gettext_label {
 # Clear everything...
 sub clear {
 	my $self = shift;
+	
+	$self->{list}->DeleteAllItems;
+
 	return;
 }
 
@@ -149,7 +140,32 @@ sub render {
 	# Flush old results
 	$self->clear;
 
-	#TODO implement render
+	my $index = 0;
+	my $list  = $self->{list};
+	for my $rec (@$model) {
+		my $status = $rec->{status};
+		if ( $status ne ' ' ) {
+			if ( $status eq 'M' ) {
+				$status = 'Modified';
+			} elsif ( $status eq 'A' ) {
+				$status = 'Added';
+			} elsif ( $status eq 'D' ) {
+				$status = 'Deleted';
+			} elsif ( $status eq 'M' ) {
+				$status = 'Modified';
+			}
+
+			# Add a version control entry
+			$list->InsertStringItem( $index, $rec->{current} );
+			$list->SetItem( $index, 1, $rec->{author} );
+			$list->SetItem( $index, 2, $status );
+			$list->SetItem( $index, 3, $rec->{file} );
+
+			$index++;
+		}
+	}
+
+	$self->_resize_columns;
 
 	return 1;
 }

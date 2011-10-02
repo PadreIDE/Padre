@@ -87,7 +87,7 @@ sub run {
 	my $stdout = Padre::Util::slurp $out->filename;
 	my $stderr = Padre::Util::slurp $err->filename;
 
-	$self->{data} = [];
+	$self->{model} = [];
 	if ($stdout) {
 		my $output = $$stdout;
 		my @lines = split /\n/, $output;
@@ -100,7 +100,7 @@ sub run {
 					author => $4,
 					file   => $5,
 				};
-				push @{$self->{data}}, $rec;
+				push @{$self->{model}}, $rec;
 			}
 		}
 	}
