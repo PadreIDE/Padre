@@ -33,6 +33,7 @@ sub new {
 	}
 
 	# Add a sample row!
+	# TODO remove once Padre::Task::VCS is working correctly
 	my $index = 0;
 	my ( $revision, $author, $status, $file ) = ( 16344, 'azawawi', 'Modified', 'Makefile.PL' );
 	my $list = $self->{list};
