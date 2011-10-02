@@ -69,6 +69,22 @@ sub new {
 		},
 	);
 
+	$self->{find_previous} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Previous"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{find_previous},
+		sub {
+			shift->find_previous_clicked(@_);
+		},
+	);
+
 	$self->{find_next} = Wx::Button->new(
 		$self,
 		-1,
@@ -86,22 +102,6 @@ sub new {
 		},
 	);
 
-	$self->{find_previous} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext("Previous"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{find_previous},
-		sub {
-			shift->find_previous_clicked(@_);
-		},
-	);
-
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
@@ -110,18 +110,17 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $sizer = Wx::FlexGridSizer->new( 1, 6, 0, 0 );
-	$sizer->AddGrowableRow(0);
-	$sizer->SetFlexibleDirection(Wx::BOTH);
-	$sizer->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$sizer->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$sizer->Add( $self->{find_case}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	my $bSizer79 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_case}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
 
-	$self->SetSizerAndFit($sizer);
+	$self->SetSizerAndFit($bSizer79);
 	$self->Layout;
 
 	return $self;
@@ -131,12 +130,12 @@ sub find_text {
 	$_[0]->{find_text};
 }
 
-sub find_next {
-	$_[0]->{find_next};
-}
-
 sub find_previous {
 	$_[0]->{find_previous};
+}
+
+sub find_next {
+	$_[0]->{find_next};
 }
 
 sub find_case {
@@ -151,12 +150,12 @@ sub find_text_changed {
 	$_[0]->main->error('Handler method find_text_changed for event find_text.OnText not implemented');
 }
 
-sub find_next_clicked {
-	$_[0]->main->error('Handler method find_next_clicked for event find_next.OnButtonClick not implemented');
-}
-
 sub find_previous_clicked {
 	$_[0]->main->error('Handler method find_previous_clicked for event find_previous.OnButtonClick not implemented');
+}
+
+sub find_next_clicked {
+	$_[0]->main->error('Handler method find_next_clicked for event find_next.OnButtonClick not implemented');
 }
 
 1;

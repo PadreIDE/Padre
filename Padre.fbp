@@ -1479,18 +1479,21 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxFlexGridSizer" expanded="0">
-                <property name="cols">6</property>
-                <property name="flexible_direction">wxBOTH</property>
-                <property name="growablecols"></property>
-                <property name="growablerows">0</property>
-                <property name="hgap">0</property>
+            <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
-                <property name="name">sizer</property>
-                <property name="non_flexible_grow_mode">wxFLEX_GROWMODE_SPECIFIED</property>
+                <property name="name">bSizer79</property>
+                <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
-                <property name="rows">1</property>
-                <property name="vgap">0</property>
+                <object class="sizeritem" expanded="0">
+                    <property name="border">5</property>
+                    <property name="flag">wxALL|wxEXPAND</property>
+                    <property name="proportion">0</property>
+                    <object class="spacer" expanded="0">
+                        <property name="height">0</property>
+                        <property name="permission">protected</property>
+                        <property name="width">0</property>
+                    </object>
+                </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
@@ -1672,16 +1675,16 @@
                         <property name="bg"></property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
-                        <property name="default">1</property>
+                        <property name="default">0</property>
                         <property name="enabled">1</property>
                         <property name="fg"></property>
                         <property name="font"></property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">Next</property>
+                        <property name="label">Previous</property>
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
-                        <property name="name">find_next</property>
+                        <property name="name">find_previous</property>
                         <property name="permission">public</property>
                         <property name="pos"></property>
                         <property name="size"></property>
@@ -1695,7 +1698,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">find_next_clicked</event>
+                        <event name="OnButtonClick">find_previous_clicked</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1729,16 +1732,16 @@
                         <property name="bg"></property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
-                        <property name="default">0</property>
+                        <property name="default">1</property>
                         <property name="enabled">1</property>
                         <property name="fg"></property>
                         <property name="font"></property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">Previous</property>
+                        <property name="label">Next</property>
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
-                        <property name="name">find_previous</property>
+                        <property name="name">find_next</property>
                         <property name="permission">public</property>
                         <property name="pos"></property>
                         <property name="size"></property>
@@ -1752,7 +1755,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">find_previous_clicked</event>
+                        <event name="OnButtonClick">find_next_clicked</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1833,6 +1836,16 @@
                         <event name="OnSetFocus"></event>
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+                <object class="sizeritem" expanded="0">
+                    <property name="border">5</property>
+                    <property name="flag">wxALL|wxEXPAND</property>
+                    <property name="proportion">0</property>
+                    <object class="spacer" expanded="0">
+                        <property name="height">0</property>
+                        <property name="permission">protected</property>
+                        <property name="width">0</property>
                     </object>
                 </object>
             </object>
