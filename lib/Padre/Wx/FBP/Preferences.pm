@@ -531,31 +531,6 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $m_panel6 = Wx::Panel->new(
-		$self->{treebook},
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TAB_TRAVERSAL,
-	);
-
-	my $m_staticText25 = Wx::StaticText->new(
-		$m_panel6,
-		-1,
-		Wx::gettext("Diff tool"),
-	);
-
-	$self->{bin_diff} = Wx::FilePickerCtrl->new(
-		$m_panel6,
-		-1,
-		"",
-		Wx::gettext("Select a file"),
-		"*.*",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::FLP_DEFAULT_STYLE,
-	);
-
 	my $m_panel1 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -1199,16 +1174,6 @@ sub new {
 	$m_panel2->SetSizerAndFit($fgSizer3);
 	$m_panel2->Layout;
 
-	my $fgSizer6 = Wx::FlexGridSizer->new( 1, 2, 0, 0 );
-	$fgSizer6->AddGrowableCol(1);
-	$fgSizer6->SetFlexibleDirection(Wx::BOTH);
-	$fgSizer6->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$fgSizer6->Add( $m_staticText25, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer6->Add( $self->{bin_diff}, 0, Wx::ALL | Wx::EXPAND, 5 );
-
-	$m_panel6->SetSizerAndFit($fgSizer6);
-	$m_panel6->Layout;
-
 	my $fgSizer2 = Wx::FlexGridSizer->new( 6, 2, 0, 0 );
 	$fgSizer2->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_ALL);
@@ -1321,7 +1286,6 @@ sub new {
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Auto-Complete"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
@@ -1472,10 +1436,6 @@ sub todo_regexp {
 
 sub startup_splash {
 	$_[0]->{startup_splash};
-}
-
-sub bin_diff {
-	$_[0]->{bin_diff};
 }
 
 sub editor_indent_auto {

@@ -1298,13 +1298,6 @@ setting(
 # External tool integration
 
 setting(
-	name    => 'bin_diff',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
-	default => '',
-);
-
-setting(
 	name  => 'bin_shell',
 	type  => Padre::Constant::PATH,
 	store => Padre::Constant::HOST,
