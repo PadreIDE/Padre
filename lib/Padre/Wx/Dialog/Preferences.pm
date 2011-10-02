@@ -63,11 +63,8 @@ sub run {
 	# Save back to configuration
 	$self->config_save($config);
 
-	# Re-create menu to activate key bindings
-	delete $main->{menu};
-	$main->{menu} = Padre::Wx::Menubar->new($main);
-	$main->SetMenuBar( $main->menu->wx );
-	$main->refresh;
+	# re-create menu to activate shortcuts
+	$self->_recreate_menubar;
 
 	# Clean up
 	$self->Destroy;
@@ -563,19 +560,15 @@ sub _on_reset_button {
 	return;
 }
 
-# Private method to handle the close action
-sub _on_close_button {
+# re-create menu to activate shortcuts
+sub _recreate_menubar {
 	my $self = shift;
-	my $main = $self->GetParent;
 
-	# re-create menu to activate shortcuts
+	my $main = $self->main;
 	delete $main->{menu};
 	$main->{menu} = Padre::Wx::Menubar->new($main);
 	$main->SetMenuBar( $main->menu->wx );
 	$main->refresh;
-
-	$self->EndModal(Wx::ID_CLOSE);
-	return;
 }
 
 1;
