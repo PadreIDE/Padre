@@ -52,6 +52,10 @@ sub run {
 	my $vcs         = delete $self->{vcs}         if $self->{vcs};
 	my $project_dir = delete $self->{project_dir} if $self->{project_dir};
 
+	# We only support Subversion at the moment
+	#TODO support GIT!
+	return unless $vcs eq Padre::Constant::SUBVERSION;
+
 	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
 	$out->close;
