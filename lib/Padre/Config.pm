@@ -1452,12 +1452,12 @@ setting(
 	help    => _T('Toggle saved document differences feature')
 );
 
-# Toggle *experimental* version control system (VCS) support
+# Toggle version control system (VCS) support
 setting(
 	name    => 'feature_vcs_support',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 1,
 	help    => _T('Toggle version control system support')
 );
 
