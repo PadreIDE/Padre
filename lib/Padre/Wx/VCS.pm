@@ -23,6 +23,9 @@ sub new {
 	my $panel = shift || $main->bottom;
 	my $self  = $class->SUPER::new($panel);
 
+	# Set the bitmap button icons
+	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
+
 	return $self;
 }
 
@@ -42,9 +45,7 @@ sub view_label {
 }
 
 sub view_close {
-
-	#TODO properly implement view_close
-	#$_[0]->main->show_vcs(0);
+	$_[0]->main->show_vcs(0);
 }
 
 sub view_start {
@@ -62,6 +63,10 @@ sub view_stop {
 
 #####################################################################
 # Event Handlers
+
+sub on_refresh_click {
+	print "on_refresh_click\n";
+}
 
 #####################################################################
 # General Methods

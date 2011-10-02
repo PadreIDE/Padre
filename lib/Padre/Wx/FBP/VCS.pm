@@ -49,7 +49,7 @@ sub new {
 		$self,
 		$self->{refresh},
 		sub {
-			shift->on_repeat_click(@_);
+			shift->on_refresh_click(@_);
 		},
 	);
 
@@ -75,8 +75,8 @@ sub new {
 	return $self;
 }
 
-sub on_repeat_click {
-	$_[0]->main->error('Handler method on_repeat_click for event refresh.OnButtonClick not implemented');
+sub on_refresh_click {
+	$_[0]->main->error('Handler method on_refresh_click for event refresh.OnButtonClick not implemented');
 }
 
 1;
