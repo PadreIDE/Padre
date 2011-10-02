@@ -182,7 +182,7 @@ sub _create_panel {
 	Wx::Event::EVT_CHECKBOX( $main, $self->{case}, sub { $self->_on_case_checked } );
 
 	# Place all controls
-	$self->{hbox}->Add( $self->{close},         0, Wx::ALIGN_CENTER_VERTICAL,            0 );
+	$self->{hbox}->Add( $self->{close},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
 	$self->{hbox}->Add( $self->{label},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT, 10 );
 	$self->{hbox}->Add( $self->{entry},         0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
 	$self->{hbox}->Add( $self->{previous},      0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL,  5 );
@@ -316,9 +316,9 @@ sub _on_key_pressed {
 
 sub lock_update {
 	my $self   = shift;
-	my $lock   = Wx::WindowUpdateLocker->new($self->{entry});
+	my $lock   = Wx::WindowUpdateLocker->new( $self->{entry} );
 	my $editor = Padre::Current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$lock = [ $lock, $editor->lock_update ];
 	}
 	return $lock;
