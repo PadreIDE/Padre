@@ -126,7 +126,7 @@ sub new {
 	$self->{sortreverse} = 0;
 
 	my @titles = qw(Action Description Shortcut);
-	foreach my $i ( 0 .. 2 ) {
+	foreach my $i ( 0 .. $#titles ) {
 		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
 		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
 	}
