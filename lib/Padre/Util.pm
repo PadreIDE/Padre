@@ -465,8 +465,8 @@ sub sharefile {
 }
 
 sub splash {
-	my $original = Padre::Util::sharefile('padre-splash-ccnc.bmp');
-	return -f $original ? $original : Padre::Util::sharefile('padre-splash.bmp');
+	my $original = Padre::Util::sharefile('padre-splash-ccnc.png');
+	return -f $original ? $original : Padre::Util::sharefile('padre-splash.png');
 }
 
 sub find_perldiag_translations {
