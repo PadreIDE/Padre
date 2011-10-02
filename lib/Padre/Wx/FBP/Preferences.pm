@@ -647,6 +647,168 @@ sub new {
 	);
 	$self->{editor_autoindent}->SetSelection(0);
 
+	my $m_panel9 = Wx::Panel->new(
+		$self->{treebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{m_staticText59} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Filter") . ":",
+	);
+
+	$self->{filter} = Wx::TextCtrl->new(
+		$m_panel9,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{filter},
+		sub {
+			shift->_update_list(@_);
+		},
+	);
+
+	$self->{list} = Wx::ListView->new(
+		$m_panel9,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_col_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_item_selected(@_);
+		},
+	);
+
+	$self->{shortcut_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Shortcut") . ":",
+	);
+
+	$self->{ctrl} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Ctrl"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{alt} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Alt"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{plus1_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("+"),
+	);
+
+	$self->{shift} = Wx::CheckBox->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("Shift"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{plus2_label} = Wx::StaticText->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("+"),
+	);
+
+	$self->{key} = Wx::Choice->new(
+		$m_panel9,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{key}->SetSelection(0);
+
+	$self->{button_set} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("S&et"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+	$self->{button_set}->SetToolTip(
+		Wx::gettext("Sets the keyboard binding")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_set},
+		sub {
+			shift->_on_set_button(@_);
+		},
+	);
+
+	$self->{button_delete} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Delete"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+	$self->{button_delete}->SetToolTip(
+		Wx::gettext("Delete the keyboard binding")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_delete},
+		sub {
+			shift->_on_delete_button(@_);
+		},
+	);
+
+	$self->{button_reset} = Wx::Button->new(
+		$m_panel9,
+		-1,
+		Wx::gettext("&Reset"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+	$self->{button_reset}->SetToolTip(
+		Wx::gettext("Reset to default shortcut")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_reset},
+		sub {
+			shift->_on_reset_button(@_);
+		},
+	);
+
 	my $m_panel7 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -872,168 +1034,6 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $m_panel9 = Wx::Panel->new(
-		$self->{treebook},
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TAB_TRAVERSAL,
-	);
-
-	$self->{m_staticText59} = Wx::StaticText->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("&Filter:"),
-	);
-
-	$self->{filter} = Wx::TextCtrl->new(
-		$m_panel9,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{filter},
-		sub {
-			shift->_update_list(@_);
-		},
-	);
-
-	$self->{list} = Wx::ListView->new(
-		$m_panel9,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
-	);
-
-	Wx::Event::EVT_LIST_COL_CLICK(
-		$self,
-		$self->{list},
-		sub {
-			shift->_on_list_col_click(@_);
-		},
-	);
-
-	Wx::Event::EVT_LIST_ITEM_SELECTED(
-		$self,
-		$self->{list},
-		sub {
-			shift->_on_list_item_selected(@_);
-		},
-	);
-
-	$self->{shortcut_label} = Wx::StaticText->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("Shortcut:"),
-	);
-
-	$self->{ctrl} = Wx::CheckBox->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("Ctrl"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	$self->{alt} = Wx::CheckBox->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("Alt"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	$self->{plus1_label} = Wx::StaticText->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("+"),
-	);
-
-	$self->{shift} = Wx::CheckBox->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("Shift"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	$self->{plus2_label} = Wx::StaticText->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("+"),
-	);
-
-	$self->{key} = Wx::Choice->new(
-		$m_panel9,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		[],
-	);
-	$self->{key}->SetSelection(0);
-
-	$self->{button_set} = Wx::Button->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("S&et"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-	$self->{button_set}->SetToolTip(
-		Wx::gettext("Sets the keyboard binding")
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_set},
-		sub {
-			shift->_on_set_button(@_);
-		},
-	);
-
-	$self->{button_delete} = Wx::Button->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("&Delete"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-	$self->{button_delete}->SetToolTip(
-		Wx::gettext("Delete the keyboard binding")
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_delete},
-		sub {
-			shift->_on_delete_button(@_);
-		},
-	);
-
-	$self->{button_reset} = Wx::Button->new(
-		$m_panel9,
-		-1,
-		Wx::gettext("&Reset"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-	$self->{button_reset}->SetToolTip(
-		Wx::gettext("Reset to default shortcut")
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_reset},
-		sub {
-			shift->_on_reset_button(@_);
-		},
-	);
-
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
@@ -1054,7 +1054,7 @@ sub new {
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("&Advanced..."),
+		Wx::gettext("&Advanced") . "...",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -1228,6 +1228,38 @@ sub new {
 	$m_panel1->SetSizerAndFit($fgSizer2);
 	$m_panel1->Layout;
 
+	my $filter_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$filter_sizer->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
+	$filter_sizer->Add( $self->{filter}, 1, Wx::ALL, 5 );
+
+	my $ctrl_alt_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$ctrl_alt_sizer->Add( $self->{ctrl}, 0, Wx::ALL, 5 );
+	$ctrl_alt_sizer->Add( $self->{alt}, 0, Wx::ALL, 5 );
+
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{button_set}, 0, Wx::ALL, 0 );
+	$button_sizer->Add( $self->{button_delete}, 0, Wx::ALL, 0 );
+	$button_sizer->Add( $self->{button_reset}, 0, Wx::ALL, 0 );
+
+	my $bottom_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bottom_sizer->Add( $self->{shortcut_label}, 0, Wx::ALIGN_CENTER, 5 );
+	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$bottom_sizer->Add( $ctrl_alt_sizer, 1, Wx::EXPAND, 5 );
+	$bottom_sizer->Add( $self->{plus1_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{shift}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{plus2_label}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
+	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$bottom_sizer->Add( $button_sizer, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT, 0 );
+
+	my $top_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$top_sizer->Add( $filter_sizer, 0, Wx::EXPAND, 5 );
+	$top_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$top_sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
+
+	$m_panel9->SetSizerAndFit($top_sizer);
+	$m_panel9->Layout;
+
 	my $fgSizer71 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
 	$fgSizer71->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer71->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_ALL);
@@ -1284,46 +1316,14 @@ sub new {
 	$m_panel8->SetSizerAndFit($fgSizer8);
 	$m_panel8->Layout;
 
-	my $filter_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$filter_sizer->Add( $self->{m_staticText59}, 0, Wx::ALL, 5 );
-	$filter_sizer->Add( $self->{filter}, 1, Wx::ALL, 5 );
-
-	my $ctrl_alt_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$ctrl_alt_sizer->Add( $self->{ctrl}, 0, Wx::ALL, 5 );
-	$ctrl_alt_sizer->Add( $self->{alt}, 0, Wx::ALL, 5 );
-
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{button_set}, 0, Wx::ALL, 0 );
-	$button_sizer->Add( $self->{button_delete}, 0, Wx::ALL, 0 );
-	$button_sizer->Add( $self->{button_reset}, 0, Wx::ALL, 0 );
-
-	my $bottom_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bottom_sizer->Add( $self->{shortcut_label}, 0, Wx::ALIGN_CENTER, 5 );
-	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$bottom_sizer->Add( $ctrl_alt_sizer, 1, Wx::EXPAND, 5 );
-	$bottom_sizer->Add( $self->{plus1_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bottom_sizer->Add( $self->{shift}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bottom_sizer->Add( $self->{plus2_label}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
-	$bottom_sizer->Add( $self->{key}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bottom_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$bottom_sizer->Add( $button_sizer, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT, 0 );
-
-	my $top_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$top_sizer->Add( $filter_sizer, 0, Wx::EXPAND, 5 );
-	$top_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$top_sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
-
-	$m_panel9->SetSizerAndFit($top_sizer);
-	$m_panel9->Layout;
-
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Auto-Complete"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("External Tools"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
+	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
-	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::ALL, 5 );
