@@ -34,12 +34,14 @@ sub new {
 
 	# Add a sample row!
 	my $index = 0;
-	my ( $revision, $author, $status, $file ) = ( 16344, 'azawawi', 'M', 'Makefile.PL' );
+	my ( $revision, $author, $status, $file ) = ( 16344, 'azawawi', 'Modified', 'Makefile.PL' );
 	my $list = $self->{list};
 	$list->InsertStringItem( $index, $revision );
 	$list->SetItem( $index, 1, $author );
 	$list->SetItem( $index, 2, $status );
 	$list->SetItem( $index, 3, $file );
+
+	$self->_resize_columns;
 
 	return $self;
 }
@@ -149,6 +151,19 @@ sub render {
 	#TODO implement render
 
 	return 1;
+}
+
+# Private method to resize list columns
+sub _resize_columns {
+	my $self = shift;
+
+	# Resize all columns but the last to their biggest item width
+	my $list = $self->{list};
+	for ( 0 .. $list->GetColumnCount - 1 ) {
+		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
+	}
+
+	return;
 }
 
 1;

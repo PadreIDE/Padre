@@ -33,7 +33,7 @@ sub new {
 	$self->{status} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Status text"),
+		'',
 	);
 
 	$self->{refresh} = Wx::BitmapButton->new(
@@ -58,7 +58,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::LC_ICON,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
