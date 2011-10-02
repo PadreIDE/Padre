@@ -81,7 +81,7 @@ sub new {
 		-1,
 		Wx::NullBitmap,
 		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		[ 400, 250 ],
 	);
 
 	$self->{m_staticText67} = Wx::StaticText->new(
@@ -727,9 +727,6 @@ sub new {
 	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
 
-	my $bSizer18 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer18->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 5 );
-
 	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticline27}, 0, Wx::EXPAND | Wx::ALL, 5 );
@@ -740,7 +737,7 @@ sub new {
 	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer17->Add( $bSizer471, 0, Wx::EXPAND, 5 );
 	$bSizer17->Add( $bSizer4711, 0, Wx::EXPAND, 5 );
-	$bSizer17->Add( $bSizer18, 1, Wx::EXPAND, 5 );
+	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
 	$bSizer17->Add( $bSizer81, 0, Wx::EXPAND, 5 );
 
 	$self->{padre}->SetSizerAndFit($bSizer17);
