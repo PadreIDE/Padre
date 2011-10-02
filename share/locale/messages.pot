@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-02 00:10-0700\n"
+"POT-Creation-Date: 2011-10-02 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,11 +703,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:121
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:127
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:127
+#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:133
 msgid "(unsupported)"
 msgstr ""
 
@@ -900,7 +900,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1319
+#: lib/Padre/Wx/FBP/Preferences.pm:1321
 msgid "Appearance"
 msgstr ""
 
@@ -936,7 +936,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1320
+#: lib/Padre/Wx/FBP/Preferences.pm:1322
 msgid "Auto-Complete"
 msgstr ""
 
@@ -984,7 +984,7 @@ msgstr ""
 msgid "Backreference to the nth group"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 msgid "Backspace"
 msgstr ""
 
@@ -992,7 +992,7 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1321
+#: lib/Padre/Wx/FBP/Preferences.pm:1323
 msgid "Behaviour"
 msgstr ""
 
@@ -1703,7 +1703,7 @@ msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:249 lib/Padre/Wx/Directory/TreeCtrl.pm:375
-#: lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Dialog/Preferences.pm:140
 msgid "Delete"
 msgstr ""
 
@@ -1819,7 +1819,7 @@ msgstr ""
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:458
+#: lib/Padre/Wx/Dialog/Preferences.pm:479
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -1848,7 +1848,7 @@ msgstr ""
 msgid "Document type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 msgid "Down"
 msgstr ""
 
@@ -1960,7 +1960,7 @@ msgstr ""
 msgid "Encoding"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Dialog/Preferences.pm:140
 msgid "End"
 msgstr ""
 
@@ -2000,7 +2000,7 @@ msgstr ""
 msgid "Enrique Nell"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:128
+#: lib/Padre/Wx/Dialog/Preferences.pm:141
 msgid "Enter"
 msgstr ""
 
@@ -2018,7 +2018,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:448 lib/Padre/Wx/Editor.pm:619
+#: lib/Padre/Document.pm:448 lib/Padre/Wx/Editor.pm:632
 #: lib/Padre/Wx/Main.pm:4976 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
@@ -2131,7 +2131,7 @@ msgstr ""
 msgid "Error: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:128
+#: lib/Padre/Wx/Dialog/Preferences.pm:141
 msgid "Escape"
 msgstr ""
 
@@ -2208,7 +2208,7 @@ msgid ""
 "and comments"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1322
+#: lib/Padre/Wx/FBP/Preferences.pm:1324
 msgid "External Tools"
 msgstr ""
 
@@ -2486,7 +2486,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1436
+#: lib/Padre/Wx/Editor.pm:1449
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2652,7 +2652,7 @@ msgstr ""
 msgid "Highlight the line where the cursor is"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Dialog/Preferences.pm:140
 msgid "Home"
 msgstr ""
 
@@ -2707,7 +2707,7 @@ msgstr ""
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1323
+#: lib/Padre/Wx/FBP/Preferences.pm:1325
 msgid "Indentation"
 msgstr ""
 
@@ -2720,7 +2720,7 @@ msgid "Input/output:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:117 lib/Padre/Wx/FBP/Special.pm:77
-#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:140
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:114
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:271
 msgid "Insert"
@@ -2842,7 +2842,7 @@ msgstr ""
 msgid "Kevin Dawson"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1324
+#: lib/Padre/Wx/FBP/Preferences.pm:1326
 msgid "Key Bindings"
 msgstr ""
 
@@ -2874,7 +2874,7 @@ msgstr ""
 msgid "Lan&guage"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1325
+#: lib/Padre/Wx/FBP/Preferences.pm:1327
 msgid "Language - Perl 5"
 msgstr ""
 
@@ -2890,7 +2890,7 @@ msgstr ""
 msgid "Last update"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Dialog/Preferences.pm:140
 msgid "Left"
 msgstr ""
 
@@ -2958,7 +2958,7 @@ msgstr ""
 msgid "Loc&k User Interface"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1326
+#: lib/Padre/Wx/FBP/Preferences.pm:1328
 msgid "Local/Remote File Access"
 msgstr ""
 
@@ -3200,7 +3200,7 @@ msgstr ""
 msgid "Newline"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:75
+#: lib/Padre/Wx/FBP/FindFast.pm:91
 msgid "Next"
 msgstr ""
 
@@ -3305,7 +3305,7 @@ msgstr ""
 msgid "Non-whitespace characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 msgid "None"
 msgstr ""
 
@@ -3596,7 +3596,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:459
+#: lib/Padre/Wx/Dialog/Preferences.pm:480
 msgid "Override Shortcut"
 msgstr ""
 
@@ -3668,11 +3668,11 @@ msgstr ""
 msgid "Padre:-"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:128
+#: lib/Padre/Wx/Dialog/Preferences.pm:141
 msgid "PageDown"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:128
+#: lib/Padre/Wx/Dialog/Preferences.pm:141
 msgid "PageUp"
 msgstr ""
 
@@ -3913,7 +3913,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:92
+#: lib/Padre/Wx/FBP/FindFast.pm:75
 msgid "Previous"
 msgstr ""
 
@@ -4019,7 +4019,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:125
+#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:131
 msgid "RAM:"
 msgstr ""
 
@@ -4294,7 +4294,7 @@ msgstr ""
 msgid "Revert this change"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:127
+#: lib/Padre/Wx/Dialog/Preferences.pm:140
 msgid "Right"
 msgstr ""
 
@@ -5070,7 +5070,7 @@ msgid ""
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 msgid "Space"
 msgstr ""
 
@@ -5206,7 +5206,7 @@ msgstr ""
 msgid "System Info"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:141
 msgid "Tab"
 msgstr ""
@@ -5269,7 +5269,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:455
+#: lib/Padre/Wx/Dialog/Preferences.pm:476
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
@@ -5302,7 +5302,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:120
+#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:126
 msgid "Threads:"
 msgstr ""
 
@@ -5421,7 +5421,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:126
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
 msgid "Up"
 msgstr ""
 
@@ -5665,7 +5665,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1420
+#: lib/Padre/Wx/Editor.pm:1433
 msgid "You must select a range of lines"
 msgstr ""
 
