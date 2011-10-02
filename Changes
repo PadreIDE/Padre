@@ -123,6 +123,8 @@ the even version for the release, even during development.
     - Find in files has repeat, stop search, expand and collapse all buttons
       (AZAWAWI)
     - Move the key bindings dialog to the preferences dialog (AZAWAWI)
+    - Removed the bin_diff configuration parameter and the external tools panel
+      from the preferences dialog (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
