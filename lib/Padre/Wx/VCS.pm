@@ -83,7 +83,7 @@ sub view_stop {
 # Event Handlers
 
 sub on_refresh_click {
-	print "on_refresh_click\n";
+	$_[0]->main->vcs->refresh($_[0]->current);
 }
 
 #####################################################################
