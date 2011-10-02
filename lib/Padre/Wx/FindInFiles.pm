@@ -152,7 +152,7 @@ sub search {
 	);
 
 	my $tree = $self->{tree};
-	$self->{status}->SetValue(
+	$self->{status}->SetLabel(
 		sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),
 			$param{search}->find_term,
@@ -203,7 +203,7 @@ sub search_finish {
 	my $dir  = $task->{root};
 	my $tree = $self->{tree};
 	if ( $self->{files} ) {
-		$self->{status}->SetValue(
+		$self->{status}->SetLabel(
 			sprintf(
 				Wx::gettext(q{Search complete, found '%s' %d time(s) in %d file(s) inside '%s'}),
 				$term,
@@ -213,7 +213,7 @@ sub search_finish {
 			)
 		);
 	} else {
-		$self->{status}->SetValue(
+		$self->{status}->SetLabel(
 			sprintf(
 				Wx::gettext(q{No results found for '%s' inside '%s'}),
 				$term,

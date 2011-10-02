@@ -31,13 +31,10 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{status} = Wx::TextCtrl->new(
+	$self->{status} = Wx::StaticText->new(
 		$self,
 		-1,
-		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_READONLY,
+		Wx::gettext("MyLabel"),
 	);
 
 	$self->{repeat} = Wx::BitmapButton->new(
@@ -125,7 +122,7 @@ sub new {
 	);
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
+	$top_sizer->Add( $self->{status}, 1, Wx::ALL | Wx::EXPAND, 7 );
 	$top_sizer->Add( $self->{repeat}, 0, Wx::ALL, 2 );
 	$top_sizer->Add( $self->{stop}, 0, Wx::ALL, 2 );
 	$top_sizer->Add( $self->{expand_all}, 0, Wx::ALL, 2 );
