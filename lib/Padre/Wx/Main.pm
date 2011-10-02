@@ -326,6 +326,7 @@ sub new {
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
 	$self->_show_syntaxcheck( $config->main_syntaxcheck );
+	$self->_show_vcs( $config->main_vcs );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -525,6 +526,8 @@ Accessors to GUI elements:
 
 =item * C<syntax>
 
+=item * C<vcs>
+
 =back
 
 Accessors to operating data:
@@ -550,6 +553,7 @@ use Class::XSAccessor {
 		has_output         => 'output',
 		has_command_line   => 'command_line',
 		has_syntax         => 'syntax',
+		has_vcs		   => 'vcs',
 		has_functions      => 'functions',
 		has_todo           => 'todo',
 		has_debugger       => 'debugger',
@@ -702,15 +706,6 @@ sub syntax {
 	return $self->{syntax};
 }
 
-sub diff {
-	my $self = shift;
-	unless ( defined $self->{diff} ) {
-		require Padre::Wx::Diff;
-		$self->{diff} = Padre::Wx::Diff->new($self);
-	}
-	return $self->{diff};
-}
-
 sub vcs {
 	my $self = shift;
 	unless ( defined $self->{vcs} ) {
@@ -718,6 +713,15 @@ sub vcs {
 		$self->{vcs} = Padre::Wx::VCS->new($self);
 	}
 	return $self->{vcs};
+}
+
+sub diff {
+	my $self = shift;
+	unless ( defined $self->{diff} ) {
+		require Padre::Wx::Diff;
+		$self->{diff} = Padre::Wx::Diff->new($self);
+	}
+	return $self->{diff};
 }
 
 BEGIN {
@@ -2495,6 +2499,44 @@ sub _show_syntaxcheck {
 	} elsif ( $self->has_syntax ) {
 		$self->bottom->hide( $self->syntax );
 		delete $self->{syntax};
+	}
+}
+
+=pod
+
+=head3 C<show_vcs>
+
+    $main->show_vcs( $visible );
+
+Show the version control panel at the bottom if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+
+sub show_vcs {
+	my $self = shift;
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_vcs' );
+	unless ( $show == $self->menu->view->{vcs}->IsChecked ) {
+		$self->menu->view->{vcs}->Check($show);
+	}
+
+	$self->config->set( main_vcs => $show );
+	$self->_show_vcs($show);
+	$self->aui->Update;
+
+	return;
+}
+
+sub _show_vcs {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->bottom->show( $self->vcs );
+	} elsif ( $self->has_vcs ) {
+		$self->bottom->hide( $self->vcs );
+		delete $self->{vcs};
 	}
 }
 

@@ -742,6 +742,20 @@ setting(
 	},
 );
 setting(
+	name    => 'main_vcs',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{vcs};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_vcs($on);
+		$main->aui->Update;
+	},
+);
+setting(
 	name    => 'main_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

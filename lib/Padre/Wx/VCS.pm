@@ -6,13 +6,14 @@ use warnings;
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx             ();
+use Padre::Wx::FBP::VCS   ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
-	Padre::Wx::Role::Main
+	Padre::Wx::FBP::VCS
 };
 
 # Constructor
