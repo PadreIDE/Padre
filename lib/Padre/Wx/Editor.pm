@@ -477,6 +477,19 @@ sub on_context_menu {
 ######################################################################
 # Setup and Preferences Methods
 
+sub SetLexer {
+	my $self  = shift;
+	my $lexer = shift;
+	if ( defined Params::Util::_STRING($lexer) ) {
+		require Padre::MimeTypes;
+		$lexer = Padre::MimeTypes->get_lexer($lexer);
+	}
+	if ( Params::Util::_NUMBER($lexer) ) {
+		return $self->SUPER::SetLexer($lexer);
+	}
+	return;
+}
+
 # Allow projects to override editor preferences
 sub config {
 	my $self    = shift;

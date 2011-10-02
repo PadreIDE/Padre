@@ -81,6 +81,7 @@ sub new {
 	my $preview = $self->preview;
 	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
 	$preview->{Document}->set_editor( $self->preview );
+	$preview->SetLexer('application/x-perl');
 	$preview->SetText(
 		join '',
 		map {"$_\n"} "#!/usr/bin/perl",
