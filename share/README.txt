@@ -13,7 +13,7 @@ Make damn sure it stays that way!
 Images:
 
 =============================
-padre-splash.bmp
+padre-splash.png
 =============================
 
 Made specifically for use in Padre and debian.
@@ -22,7 +22,7 @@ Copyright 2009 Ahmad M. Zawawi
 You can redistribute and/or modify the icons under the same terms as Perl itself.
 
 =============================
-padre-splash-ccnc.bmp
+padre-splash-ccnc.png
 =============================
 
 Original source http://www.flickr.com/photos/blackbutterfly/3257936873/
