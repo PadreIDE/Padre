@@ -15912,7 +15912,7 @@
                                             <property name="permission">none</property>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_CENTER|wxALL</property>
+                                                <property name="flag">wxALIGN_CENTER|wxALL|wxEXPAND</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxStaticBitmap" expanded="0">
                                                     <property name="bg"></property>

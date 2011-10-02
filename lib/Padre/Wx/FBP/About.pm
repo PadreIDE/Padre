@@ -728,7 +728,7 @@ sub new {
 	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
 
 	my $bSizer18 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer18->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
+	$bSizer18->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 5 );
 
 	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
