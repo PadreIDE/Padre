@@ -47,6 +47,14 @@ sub run {
 	$self->GetSizer->SetSizeHints($self);
 	$self->CentreOnParent;
 
+	# Hide value and info sizer at startup
+	if ( $self->{keybindings_panel} ) {
+		my $sizer = $self->{keybindings_panel}->GetSizer;
+		$sizer->Show( 2, 0 );
+		$sizer->Show( 3, 0 );
+		$sizer->Layout;
+	}
+
 	# Show the dialog
 	if ( $self->ShowModal == Wx::ID_CANCEL ) {
 		return;
@@ -111,6 +119,10 @@ sub new {
 	# We assume all public dialog elements will match a wx widget with
 	# a public method returning it.
 	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
+
+	#TODO access the panel by name instead of by index
+	$self->{keybindings_panel} = $self->{treebook}->GetPage(5)
+		or warn "Key bindings panel is not found!\n";
 
 	# Set some internal parameters for key bindings
 	$self->{sortcolumn}  = 0;
@@ -420,6 +432,14 @@ sub _update_shortcut_ui {
 	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
 	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
 	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
+
+	# Make sure the value and info sizer are not hidden
+	if ( $self->{keybindings_panel} ) {
+		my $sizer = $self->{keybindings_panel}->GetSizer;
+		$sizer->Show( 2, 1 );
+		$sizer->Show( 3, 1 );
+		$sizer->Layout;
+	}
 
 	return;
 }
