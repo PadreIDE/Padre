@@ -594,9 +594,9 @@ sub tidy_list {
 
 	require Padre::Wx;
 	for ( 0 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE_USEHEADER() );
+		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE_USEHEADER() );
 		my $header_width = $list->GetColumnWidth($_);
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE() );
+		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE() );
 		my $column_width = $list->GetColumnWidth($_);
 		$list->SetColumnWidth( $_, ( $header_width >= $column_width ) ? $header_width : $column_width );
 	}
