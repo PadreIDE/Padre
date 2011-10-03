@@ -32,6 +32,9 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Set the bitmap button icons
+	$self->{add}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-add') );
+	$self->{delete}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-remove') );
+	$self->{revert}->SetBitmapLabel( Padre::Wx::Icon::find('actions/edit-undo') );
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
 	# Set up column sorting
@@ -337,6 +340,22 @@ sub on_show_unversioned_click {
 # Called when "Show ignored" checkbox is clicked
 sub on_show_ignored_click {
 	$_[0]->render;
+}
+
+# Called when "Add" button is clicked
+sub on_add_click {
+	$_[0]->main->error('on_add_click not implemented');
+	
+}
+
+# Called when "Delete" checkbox is clicked
+sub on_delete_click {
+	$_[0]->main->error('on_delete_click not implemented');
+}
+
+# Called when "Revert" button is clicked
+sub on_revert_click {
+	$_[0]->main->error('on_revert_click not implemented');
 }
 
 1;

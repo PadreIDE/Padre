@@ -36,6 +36,57 @@ sub new {
 		'',
 	);
 
+	$self->{add} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{add},
+		sub {
+			shift->on_add_click(@_);
+		},
+	);
+
+	$self->{delete} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{delete},
+		sub {
+			shift->on_delete_click(@_);
+		},
+	);
+
+	$self->{revert} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{revert},
+		sub {
+			shift->on_revert_click(@_);
+		},
+	);
+
 	$self->{show_label} = Wx::StaticText->new(
 		$self,
 		-1,
@@ -131,6 +182,11 @@ sub new {
 		},
 	);
 
+	my $svn_command_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$svn_command_sizer->Add( $self->{add}, 0, Wx::ALL, 2 );
+	$svn_command_sizer->Add( $self->{delete}, 0, Wx::ALL, 2 );
+	$svn_command_sizer->Add( $self->{revert}, 0, Wx::ALL, 2 );
+
 	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
 	$checkbox_sizer->Add( 7, 0, 0, Wx::EXPAND, 5 );
@@ -140,6 +196,7 @@ sub new {
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
+	$top_sizer->Add( $svn_command_sizer, 0, Wx::EXPAND, 5 );
 	$top_sizer->Add( $checkbox_sizer, 0, Wx::ALIGN_CENTER | Wx::ALL, 2 );
 	$top_sizer->Add( $self->{refresh}, 0, Wx::ALL, 2 );
 
@@ -151,6 +208,18 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_add_click {
+	$_[0]->main->error('Handler method on_add_click for event add.OnButtonClick not implemented');
+}
+
+sub on_delete_click {
+	$_[0]->main->error('Handler method on_delete_click for event delete.OnButtonClick not implemented');
+}
+
+sub on_revert_click {
+	$_[0]->main->error('Handler method on_revert_click for event revert.OnButtonClick not implemented');
 }
 
 sub on_show_normal_click {
