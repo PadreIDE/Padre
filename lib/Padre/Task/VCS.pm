@@ -94,13 +94,13 @@ sub run {
 		for my $line (@lines) {
 			if ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
 				my $rec = {
-					status => $1,
-					latest => $2,
+					status  => $1,
+					latest  => $2,
 					current => $3,
-					author => $4,
-					file   => $5,
+					author  => $4,
+					file    => $5,
 				};
-				push @{$self->{model}}, $rec;
+				push @{ $self->{model} }, $rec;
 			}
 		}
 	}
