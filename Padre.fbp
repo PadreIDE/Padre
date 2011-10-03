@@ -21652,7 +21652,7 @@
                         <event name="OnListBeginRDrag"></event>
                         <event name="OnListCacheHint"></event>
                         <event name="OnListColBeginDrag"></event>
-                        <event name="OnListColClick"></event>
+                        <event name="OnListColClick">on_list_column_click</event>
                         <event name="OnListColDragging"></event>
                         <event name="OnListColEndDrag"></event>
                         <event name="OnListColRightClick"></event>
@@ -21665,7 +21665,7 @@
                         <event name="OnListItemFocused"></event>
                         <event name="OnListItemMiddleClick"></event>
                         <event name="OnListItemRightClick"></event>
-                        <event name="OnListItemSelected"></event>
+                        <event name="OnListItemSelected">on_list_item_selected</event>
                         <event name="OnListKeyDown"></event>
                         <event name="OnMiddleDClick"></event>
                         <event name="OnMiddleDown"></event>

@@ -176,7 +176,7 @@ sub render {
 	$SVN_STATUS{$_}->{count} = 0 for keys %SVN_STATUS;
 
 	# Retrieve the state of the checkboxes
-	my $show_normal  = $self->{show_normal}->IsChecked  ? 1 : 0;
+	my $show_normal      = $self->{show_normal}->IsChecked      ? 1 : 0;
 	my $show_unversioned = $self->{show_unversioned}->IsChecked ? 1 : 0;
 	my $show_ignored     = $self->{show_ignored}->IsChecked     ? 1 : 0;
 
@@ -224,14 +224,50 @@ sub render {
 	return 1;
 }
 
+# Called when a version control list column is clicked
+sub on_list_column_click {
+	my ( $self, $event ) = @_;
+
+	my $column = $event->GetColumn;
+
+	# my $prevcol  = $self->{sortcolumn};
+	# my $reversed = $self->{sortreverse};
+	# $reversed = $column == $prevcol ? !$reversed : 0;
+	# $self->{sortcolumn}  = $column;
+	# $self->{sortreverse} = $reversed;
+	# $self->_update_list;
+
+	TRACE("on_list_column_click");
+
+	return;
+}
+
+# Called when a version control list item is selected
+sub on_list_item_selected {
+	my ( $self, $event ) = @_;
+
+	my $list = $self->{list};
+
+	# my $index       = $list->GetFirstSelected;
+	# my $action_name = $list->GetItemText($index);
+	# my $action      = $self->ide->actions->{$action_name};
+
+	TRACE("on_list_item_selected");
+
+	return;
+}
+
+# Called when "Show normal" checkbox is clicked
 sub on_show_normal_click {
 	$_[0]->render;
 }
 
+# Called when "Show unversional" checkbox is clicked
 sub on_show_unversioned_click {
 	$_[0]->render;
 }
 
+# Called when "Show ignored" checkbox is clicked
 sub on_show_ignored_click {
 	$_[0]->render;
 }

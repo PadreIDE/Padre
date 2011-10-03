@@ -115,6 +115,22 @@ sub new {
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->on_list_column_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->on_list_item_selected(@_);
+		},
+	);
+
 	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( 7, 0, 0, Wx::EXPAND, 5 );
@@ -151,6 +167,14 @@ sub on_show_ignored_click {
 
 sub on_refresh_click {
 	$_[0]->main->error('Handler method on_refresh_click for event refresh.OnButtonClick not implemented');
+}
+
+sub on_list_column_click {
+	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
+}
+
+sub on_list_item_selected {
+	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
 }
 
 1;
