@@ -27,16 +27,7 @@ sub new {
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
 	# Setup column widths
-	my $index = 0;
-	$self->{list}->InsertColumn( $index, Wx::gettext('Revision') );
-	$self->{list}->SetColumnWidth( $index++, 60 );
-	$self->{list}->InsertColumn( $index, Wx::gettext('Author') );
-	$self->{list}->SetColumnWidth( $index++, 60 );
-	$self->{list}->InsertColumn( $index, Wx::gettext('Status') );
-	$self->{list}->SetColumnWidth( $index++, 60 );
-	$self->{list}->InsertColumn( $index, Wx::gettext('File') );
-
-	$self->{list}->SetColumnWidth( $index++, 350 );
+	$self->_resize_columns;
 
 	return $self;
 }
@@ -198,19 +189,36 @@ sub render {
 	}
 	$self->{status}->SetLabel($message);
 
+	$self->_resize_columns;
+
 	return 1;
 }
 
 sub on_show_unversioned_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 }
 
 sub on_show_unmodified_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 }
 
 sub on_show_ignored_click {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
+}
+
+sub _resize_columns {
+	my $self      = shift;
+	my $list = $self->{list};
+
+	for ( 1 .. $list->GetColumnCount - 1 ) {
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE_USEHEADER );
+		my $col_head_size = $list->GetColumnWidth($_);
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		my $col_data_size = $list->GetColumnWidth($_);
+		$list->SetColumnWidth( $_, ( $col_head_size >= $col_data_size ) ? $col_head_size : $col_data_size );
+	}
+
+	return;
 }
 
 1;
