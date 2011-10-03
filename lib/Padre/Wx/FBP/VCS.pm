@@ -36,6 +36,54 @@ sub new {
 		'',
 	);
 
+	$self->{show_unversioned} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("Unversioned"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{show_unversioned},
+		sub {
+			shift->on_show_unversioned_click(@_);
+		},
+	);
+
+	$self->{show_unmodified} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("Unmodified"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{show_unmodified},
+		sub {
+			shift->on_show_unmodified_click(@_);
+		},
+	);
+
+	$self->{show_ignored} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("Ignored"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{show_ignored},
+		sub {
+			shift->on_show_ignored_click(@_);
+		},
+	);
+
 	$self->{refresh} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -61,8 +109,14 @@ sub new {
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
+	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$checkbox_sizer->Add( $self->{show_unversioned}, 0, Wx::ALL, 2 );
+	$checkbox_sizer->Add( $self->{show_unmodified}, 0, Wx::ALL, 2 );
+	$checkbox_sizer->Add( $self->{show_ignored}, 0, Wx::ALL, 2 );
+
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $self->{status}, 1, Wx::ALL | Wx::EXPAND, 7 );
+	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
+	$top_sizer->Add( $checkbox_sizer, 0, Wx::ALIGN_CENTER | Wx::ALL, 2 );
 	$top_sizer->Add( $self->{refresh}, 0, Wx::ALL, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
@@ -73,6 +127,18 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_show_unversioned_click {
+	$_[0]->main->error('Handler method on_show_unversioned_click for event show_unversioned.OnCheckBox not implemented');
+}
+
+sub on_show_unmodified_click {
+	$_[0]->main->error('Handler method on_show_unmodified_click for event show_unmodified.OnCheckBox not implemented');
+}
+
+sub on_show_ignored_click {
+	$_[0]->main->error('Handler method on_show_ignored_click for event show_ignored.OnCheckBox not implemented');
 }
 
 sub on_refresh_click {

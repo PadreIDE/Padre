@@ -201,6 +201,18 @@ sub render {
 	return 1;
 }
 
+sub on_show_unversioned_click {
+	my ($self, $event) = @_;
+}
+
+sub on_show_unmodified_click {
+	my ($self, $event) = @_;
+}
+
+sub on_show_ignored_click {
+	my ($self, $event) = @_;
+}
+
 1;
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
