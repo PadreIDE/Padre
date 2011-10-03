@@ -132,7 +132,7 @@ sub new {
 	);
 
 	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALL, 2 );
+	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
 	$checkbox_sizer->Add( 7, 0, 0, Wx::EXPAND, 5 );
 	$checkbox_sizer->Add( $self->{show_normal}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_unversioned}, 0, Wx::ALL, 2 );
