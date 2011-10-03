@@ -346,23 +346,54 @@ sub on_show_ignored_click {
 # Called when "Commit" button is clicked
 sub on_commit_click {
 	$_[0]->main->error('on_commit_click not implemented');
-	
 }
 
 # Called when "Add" button is clicked
 sub on_add_click {
-	$_[0]->main->error('on_add_click not implemented');
-	
+	my $self = shift;
+	my $main = $self->main;
+
+	#TODO get filename
+	my $filename = 'The filename!';
+
+	return
+		unless $main->yes_no(
+		sprintf( Wx::gettext("Do you want to add '%s' to your repository"), $filename ),
+		Wx::gettext('Add file to repository?')
+		);
+	$main->error('on_add_click not implemented');
 }
 
 # Called when "Delete" checkbox is clicked
 sub on_delete_click {
-	$_[0]->main->error('on_delete_click not implemented');
+	my $self = shift;
+	my $main = $self->main;
+
+	#TODO get filename
+	my $filename = 'The filename!';
+
+	return
+		unless $main->yes_no(
+		sprintf( Wx::gettext("Do you want to delete '%s' from your repository"), $filename ),
+		Wx::gettext('Delete file from repository??')
+		);
+	$main->error('on_delete_click not implemented');
 }
 
 # Called when "Revert" button is clicked
 sub on_revert_click {
-	$_[0]->main->error('on_revert_click not implemented');
+	my $self = shift;
+	my $main = $self->main;
+
+	#TODO get filename
+	my $filename = 'The filename!';
+
+	return
+		unless $main->yes_no(
+		sprintf( Wx::gettext("Do you want to revert changes to '%s'"), $filename ),
+		Wx::gettext('Revert changes?')
+		);
+	$main->error('on_revert_click not implemented');
 }
 
 1;
