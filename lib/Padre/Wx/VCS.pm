@@ -34,6 +34,10 @@ sub new {
 	# Set the bitmap button icons
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
+	# Set up column sorting
+	$self->{sortcolumn}  = 0;
+	$self->{sortreverse} = 1;
+
 	# Setup columns
 	my @column_headers = (
 		Wx::gettext('Revision'),
@@ -191,20 +195,47 @@ sub render {
 	my $index = 0;
 	my $list  = $self->{list};
 	my $model = $self->{model};
-	for my $rec (@$model) {
+
+
+	my @model = @$model;
+	if ( $self->{sortcolumn} == 0 ) {
+
+		# Sort by revision
+		@model = sort { $a->{current} cmp $b->{current} } @model;
+	} elsif ( $self->{sortcolumn} == 1 ) {
+
+		# Sort by author
+		@model = sort { $a->{author} cmp $b->{author} } @model;
+	} elsif ( $self->{sortcolumn} == 2 ) {
+
+		# Sort by status
+		@model = sort { $a->{status} cmp $b->{status} } @model;
+	} elsif ( $self->{sortcolumn} == 3 ) {
+
+		# Sort by path
+		@model = sort { $a->{path} cmp $b->{path} } @model;
+	}
+
+	if ( $self->{sortreverse} ) {
+
+		# reverse the sorting
+		@model = reverse @model;
+	}
+
+	for my $rec (@model) {
 		my $status      = $rec->{status};
-		my $file_status = $SVN_STATUS{$status};
-		if ( defined $file_status ) {
+		my $path_status = $SVN_STATUS{$status};
+		if ( defined $path_status ) {
 
 			if ( $show_normal or $status ne ' ' ) {
 
 				if ( $show_unversioned or $status ne '?' ) {
 					if ( $show_ignored or $status ne 'I' ) {
 
-						# Add a version control file to the list
+						# Add a version control path to the list
 						$list->InsertStringItem( $index, $rec->{current} );
 						$list->SetItem( $index, 1, $rec->{author} );
-						$list->SetItem( $index, 2, $file_status->{name} );
+						$list->SetItem( $index, 2, $path_status->{name} );
 
 						my $color;
 						if ( $status eq ' ' ) {
@@ -219,13 +250,13 @@ sub render {
 							$color = BLACK;
 						}
 						$list->SetItemTextColour( $index, $color );
-						$list->SetItem( $index++, 3, $rec->{file} );
+						$list->SetItem( $index++, 3, $rec->{path} );
 					}
 				}
 			}
 
 		}
-		$file_status->{count}++;
+		$path_status->{count}++;
 	}
 
 	# Show Subversion statistics
@@ -250,16 +281,14 @@ sub render {
 sub on_list_column_click {
 	my ( $self, $event ) = @_;
 
-	my $column = $event->GetColumn;
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sortcolumn};
+	my $reversed = $self->{sortreverse};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sortcolumn}  = $column;
+	$self->{sortreverse} = $reversed;
 
-	# my $prevcol  = $self->{sortcolumn};
-	# my $reversed = $self->{sortreverse};
-	# $reversed = $column == $prevcol ? !$reversed : 0;
-	# $self->{sortcolumn}  = $column;
-	# $self->{sortreverse} = $reversed;
-	# $self->_update_list;
-
-	TRACE("on_list_column_click");
+	$self->render;
 
 	return;
 }

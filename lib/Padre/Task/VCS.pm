@@ -101,7 +101,7 @@ sub run {
 					latest  => '',
 					current => '',
 					author  => '',
-					file    => $2,
+					path    => $2,
 					};
 			} elsif ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
 
@@ -112,7 +112,7 @@ sub run {
 					latest  => $2,
 					current => $3,
 					author  => $4,
-					file    => $5,
+					path    => $5,
 					};
 			} else {
 
