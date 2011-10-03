@@ -190,11 +190,13 @@ sub render {
 
 			if ( $show_unmodified or $status ne ' ' ) {
 
-				# Add a version control file to the list
-				$list->InsertStringItem( $index, $rec->{current} );
-				$list->SetItem( $index,   1, $rec->{author} );
-				$list->SetItem( $index,   2, $file_status->{name} );
-				$list->SetItem( $index++, 3, $rec->{file} );
+				if($show_unversioned or $status ne '?' ) {
+					# Add a version control file to the list
+					$list->InsertStringItem( $index, $rec->{current} );
+					$list->SetItem( $index,   1, $rec->{author} );
+					$list->SetItem( $index,   2, $file_status->{name} );
+					$list->SetItem( $index++, 3, $rec->{file} );
+				}
 			}
 
 		}
