@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 08:10-0700\n"
+"POT-Creation-Date: 2011-10-03 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "%s line %s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:154
+#: lib/Padre/Wx/VCS.pm:167
 #, perl-format
 msgid "%s version control project support is not currently supported"
 msgstr ""
@@ -722,7 +722,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:284
+#: lib/Padre/Wx/VCS.pm:275
 msgid ", "
 msgstr ""
 
@@ -792,11 +792,11 @@ msgstr ""
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:373
+#: lib/Padre/Wx/VCS.pm:399
 msgid "Add file to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:184
+#: lib/Padre/Wx/VCS.pm:200
 msgid "Added"
 msgstr ""
 
@@ -1372,7 +1372,7 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:187
+#: lib/Padre/Wx/VCS.pm:203
 msgid "Conflicted"
 msgstr ""
 
@@ -1629,6 +1629,14 @@ msgstr ""
 msgid "Current document is not a .t file"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:160
+msgid "Current file is not in a version control system"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:151
+msgid "Current file is not saved in a version control system"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Goto.pm:235
 #, perl-format
 msgid "Current line number: %s"
@@ -1744,7 +1752,7 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:391
+#: lib/Padre/Wx/VCS.pm:417
 msgid "Delete file from repository??"
 msgstr ""
 
@@ -1752,7 +1760,7 @@ msgstr ""
 msgid "Delete the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:185
+#: lib/Padre/Wx/VCS.pm:201
 msgid "Deleted"
 msgstr ""
 
@@ -1840,7 +1848,7 @@ msgstr ""
 msgid "Do you really want to close and delete %s from disk?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:372
+#: lib/Padre/Wx/VCS.pm:398
 #, perl-format
 msgid "Do you want to add '%s' to your repository"
 msgstr ""
@@ -1849,7 +1857,7 @@ msgstr ""
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:390
+#: lib/Padre/Wx/VCS.pm:416
 #, perl-format
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
@@ -1858,7 +1866,7 @@ msgstr ""
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:408
+#: lib/Padre/Wx/VCS.pm:434
 #, perl-format
 msgid "Do you want to revert changes to '%s'"
 msgstr ""
@@ -2149,7 +2157,7 @@ msgstr ""
 msgid "Error while searching for POD"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:336 lib/Padre/Wx/Dialog/OpenResource.pm:117
+#: lib/Padre/Wx/VCS.pm:362 lib/Padre/Wx/Dialog/OpenResource.pm:117
 msgid "Error while trying to perform Padre action"
 msgstr ""
 
@@ -2722,7 +2730,7 @@ msgstr ""
 msgid "Ignore case (&i)"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:188 lib/Padre/Wx/FBP/VCS.pm:148
+#: lib/Padre/Wx/VCS.pm:204 lib/Padre/Wx/FBP/VCS.pm:148
 msgid "Ignored"
 msgstr ""
 
@@ -3161,11 +3169,11 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:190
+#: lib/Padre/Wx/VCS.pm:206
 msgid "Missing"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:186
+#: lib/Padre/Wx/VCS.pm:202
 msgid "Modified"
 msgstr ""
 
@@ -3361,7 +3369,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:183 lib/Padre/Wx/FBP/VCS.pm:116
+#: lib/Padre/Wx/VCS.pm:199 lib/Padre/Wx/FBP/VCS.pm:116
 msgid "Normal"
 msgstr ""
 
@@ -3397,7 +3405,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:191
+#: lib/Padre/Wx/VCS.pm:207
 msgid "Obstructed"
 msgstr ""
 
@@ -4354,7 +4362,7 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:409
+#: lib/Padre/Wx/VCS.pm:435
 msgid "Revert changes?"
 msgstr ""
 
@@ -5504,7 +5512,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:189 lib/Padre/Wx/FBP/VCS.pm:132
+#: lib/Padre/Wx/VCS.pm:205 lib/Padre/Wx/FBP/VCS.pm:132
 msgid "Unversioned"
 msgstr ""
 
