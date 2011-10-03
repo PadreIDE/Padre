@@ -274,6 +274,11 @@ sub render {
 		$model_index++;
 	}
 
+	# Select the first item
+	if ( $list->GetItemCount > 0 ) {
+		$list->SetItemState( 0, Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED );
+	}
+
 	# Show Subversion statistics
 	my $message = '';
 	for my $status ( sort keys %SVN_STATUS ) {
@@ -286,7 +291,7 @@ sub render {
 	}
 	$self->{status}->SetLabel($message);
 
-	my $svn_command_shown = $list->GetItemCount > 0;
+	my $svn_command_shown = $list->GetSelectedItemCount > 0;
 	$self->{commit}->Show($svn_command_shown);
 	$self->{add}->Show($svn_command_shown);
 	$self->{delete}->Show($svn_command_shown);
@@ -319,8 +324,8 @@ sub on_list_column_click {
 sub on_list_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $main = $self->main;
-	my $rec  = $self->{model}->[ $self->{list}->GetItemData( $event->GetIndex ) ] or return;
+	my $main     = $self->main;
+	my $rec      = $self->{model}->[ $self->{list}->GetItemData( $event->GetIndex ) ] or return;
 	my $filename = $rec->{fullpath};
 	eval {
 
