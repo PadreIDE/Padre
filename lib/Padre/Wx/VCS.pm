@@ -62,6 +62,12 @@ sub new {
 	$self->{show_unversioned}->SetValue(0);
 	$self->{show_ignored}->SetValue(0);
 
+	# Hide vcs command buttons at startup
+	$self->{commit}->Hide;
+	$self->{add}->Hide;
+	$self->{delete}->Hide;
+	$self->{revert}->Hide;
+
 	return $self;
 }
 
@@ -279,6 +285,14 @@ sub render {
 		$message .= sprintf( '%s=%d', $svn_status->{name}, $svn_status->{count} );
 	}
 	$self->{status}->SetLabel($message);
+
+	my $svn_command_shown = $list->GetItemCount > 0;
+	$self->{commit}->Show($svn_command_shown);
+	$self->{add}->Show($svn_command_shown);
+	$self->{delete}->Show($svn_command_shown);
+	$self->{revert}->Show($svn_command_shown);
+
+	$self->Layout;
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
