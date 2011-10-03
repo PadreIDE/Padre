@@ -36,6 +36,23 @@ sub new {
 		'',
 	);
 
+	$self->{commit} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{commit},
+		sub {
+			shift->on_commit_click(@_);
+		},
+	);
+
 	$self->{add} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -183,6 +200,7 @@ sub new {
 	);
 
 	my $svn_command_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$svn_command_sizer->Add( $self->{commit}, 0, Wx::ALL, 2 );
 	$svn_command_sizer->Add( $self->{add}, 0, Wx::ALL, 2 );
 	$svn_command_sizer->Add( $self->{delete}, 0, Wx::ALL, 2 );
 	$svn_command_sizer->Add( $self->{revert}, 0, Wx::ALL, 2 );
@@ -208,6 +226,10 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_commit_click {
+	$_[0]->main->error('Handler method on_commit_click for event commit.OnButtonClick not implemented');
 }
 
 sub on_add_click {

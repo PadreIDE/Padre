@@ -32,6 +32,7 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Set the bitmap button icons
+	$self->{commit}->SetBitmapLabel( Padre::Wx::Icon::find('actions/document-save') );
 	$self->{add}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-add') );
 	$self->{delete}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-remove') );
 	$self->{revert}->SetBitmapLabel( Padre::Wx::Icon::find('actions/edit-undo') );
@@ -340,6 +341,12 @@ sub on_show_unversioned_click {
 # Called when "Show ignored" checkbox is clicked
 sub on_show_ignored_click {
 	$_[0]->render;
+}
+
+# Called when "Commit" button is clicked
+sub on_commit_click {
+	$_[0]->main->error('on_commit_click not implemented');
+	
 }
 
 # Called when "Add" button is clicked
