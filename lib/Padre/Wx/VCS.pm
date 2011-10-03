@@ -185,10 +185,7 @@ sub task_finish {
 sub render {
 	my $self = shift;
 
-	# Flush old results
-	# $self->clear;
-
-	# Define SVN status
+	# Subversion status codes
 	my %SVN_STATUS = (
 		' ' => { name => Wx::gettext('Normal') },
 		'A' => { name => Wx::gettext('Added') },
