@@ -135,8 +135,9 @@ sub refresh {
 		return;
 	}
 
-	# Shortcut if there is nothing in the document to compile
+	# Shortcut if there is nothing in the document to do
 	if ( $document->is_unused ) {
+		$self->clear;
 		return;
 	}
 
