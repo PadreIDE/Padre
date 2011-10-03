@@ -30,12 +30,6 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{status} = Wx::StaticText->new(
-		$self,
-		-1,
-		'',
-	);
-
 	$self->{commit} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -102,6 +96,12 @@ sub new {
 		sub {
 			shift->on_revert_click(@_);
 		},
+	);
+
+	$self->{status} = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Status"),
 	);
 
 	$self->{show_label} = Wx::StaticText->new(
@@ -213,13 +213,13 @@ sub new {
 	$checkbox_sizer->Add( $self->{show_ignored}, 0, Wx::ALL, 2 );
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
 	$top_sizer->Add( $svn_command_sizer, 0, Wx::EXPAND, 5 );
+	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
 	$top_sizer->Add( $checkbox_sizer, 0, Wx::ALIGN_CENTER | Wx::ALL, 2 );
 	$top_sizer->Add( $self->{refresh}, 0, Wx::ALL, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 0 );
+	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 2 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
