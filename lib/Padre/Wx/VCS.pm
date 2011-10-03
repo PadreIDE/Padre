@@ -26,11 +26,17 @@ sub new {
 	# Set the bitmap button icons
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
-	my @titles = qw(Revision Author Status File);
-	foreach my $i ( 0 .. $#titles ) {
-		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
-		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
-	}
+	# Setup column widths
+	my $index = 0;
+	$self->{list}->InsertColumn( $index, Wx::gettext('Revision') );
+	$self->{list}->SetColumnWidth( $index++, 60 );
+	$self->{list}->InsertColumn( $index, Wx::gettext('Author') );
+	$self->{list}->SetColumnWidth( $index++, 60 );
+	$self->{list}->InsertColumn( $index, Wx::gettext('Status') );
+	$self->{list}->SetColumnWidth( $index++, 60 );
+	$self->{list}->InsertColumn( $index, Wx::gettext('File') );
+
+	$self->{list}->SetColumnWidth( $index++, 350 );
 
 	return $self;
 }
@@ -84,7 +90,7 @@ sub gettext_label {
 # Clear everything...
 sub clear {
 	my $self = shift;
-	
+
 	$self->{list}->DeleteAllItems;
 
 	return;
@@ -140,47 +146,57 @@ sub render {
 	# Flush old results
 	$self->clear;
 
+	# Define SVN status
+	my %SVN_STATUS = (
+		' ' => { name => Wx::gettext('Normal') },
+		'A' => { name => Wx::gettext('Added') },
+		'D' => { name => Wx::gettext('Deleted') },
+		'M' => { name => Wx::gettext('Modified') },
+		'C' => { name => Wx::gettext('Conflicted') },
+		'I' => { name => Wx::gettext('Ignored') },
+		'?' => { name => Wx::gettext('Unversioned') },
+		'!' => { name => Wx::gettext('Missing') },
+		'~' => { name => Wx::gettext('Obstructed') }
+	);
+
+	# Add a zero count key for subversion status hash
+	$SVN_STATUS{$_}->{count} = 0 for keys %SVN_STATUS;
+
 	my $index = 0;
 	my $list  = $self->{list};
 	for my $rec (@$model) {
-		my $status = $rec->{status};
-		if ( $status ne ' ' ) {
-			if ( $status eq 'M' ) {
-				$status = 'Modified';
-			} elsif ( $status eq 'A' ) {
-				$status = 'Added';
-			} elsif ( $status eq 'D' ) {
-				$status = 'Deleted';
-			} elsif ( $status eq 'M' ) {
-				$status = 'Modified';
-			}
+		my $status      = $rec->{status};
+		my $file_status = $SVN_STATUS{$status};
+		if ( defined $file_status ) {
 
-			# Add a version control entry
+			# Add a version control file to the list
 			$list->InsertStringItem( $index, $rec->{current} );
-			$list->SetItem( $index, 1, $rec->{author} );
-			$list->SetItem( $index, 2, $status );
-			$list->SetItem( $index, 3, $rec->{file} );
-
-			$index++;
+			$list->SetItem( $index,   1, $rec->{author} );
+			$list->SetItem( $index,   2, $file_status->{name} );
+			$list->SetItem( $index++, 3, $rec->{file} );
+			$file_status->{count}++;
 		}
 	}
 
-	$self->_resize_columns;
+	# Show Subversion statistics
+	$self->{status}->SetLabel(
+		sprintf(
+			Wx::gettext(
+				'Normal=%d, Added=%d, Deleted=%d, Modified=%d, Conflicted=%d, Ignored=%d, Unversioned=%d, Missing=%d, Obstructed=%d'
+			),
+			$SVN_STATUS{' '}->{count},
+			$SVN_STATUS{'A'}->{count},
+			$SVN_STATUS{'D'}->{count},
+			$SVN_STATUS{'M'}->{count},
+			$SVN_STATUS{'C'}->{count},
+			$SVN_STATUS{'I'}->{count},
+			$SVN_STATUS{'?'}->{count},
+			$SVN_STATUS{'!'}->{count},
+			$SVN_STATUS{'~'}->{count},
+		)
+	);
 
 	return 1;
-}
-
-# Private method to resize list columns
-sub _resize_columns {
-	my $self = shift;
-
-	# Resize all columns but the last to their biggest item width
-	my $list = $self->{list};
-	for ( 0 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
-	}
-
-	return;
 }
 
 1;
