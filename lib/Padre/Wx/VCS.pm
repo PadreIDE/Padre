@@ -319,16 +319,9 @@ sub on_list_column_click {
 sub on_list_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $main        = $self->main;
-	my $current     = $main->current or return;
-	my $project_dir = $current->document->project_dir or return;
-	my $model       = $self->{model};
-	my $item_index  = $self->{list}->GetItemData( $event->GetIndex );
-	my $rec         = $model->[$item_index];
-	return unless defined $rec;
-
-	require File::Spec;
-	my $filename = File::Spec->catfile( $project_dir, $rec->{path} );
+	my $main = $self->main;
+	my $rec  = $self->{model}->[ $self->{list}->GetItemData( $event->GetIndex ) ] or return;
+	my $filename = $rec->{fullpath};
 	eval {
 
 		# Try to open the file now
@@ -365,10 +358,13 @@ sub on_commit_click {
 # Called when "Add" button is clicked
 sub on_add_click {
 	my $self = shift;
-	my $main = $self->main;
 
-	#TODO get filename
-	my $filename = 'The filename!';
+	my $main           = $self->main;
+	my $list           = $self->{list};
+	my $selected_index = $list->GetNextItem( -1, Wx::LIST_NEXT_ALL, Wx::LIST_STATE_SELECTED );
+	return if $selected_index == -1;
+	my $rec = $self->{model}->[ $list->GetItemData($selected_index) ] or return;
+	my $filename = $rec->{fullpath};
 
 	return
 		unless $main->yes_no(
@@ -380,11 +376,13 @@ sub on_add_click {
 
 # Called when "Delete" checkbox is clicked
 sub on_delete_click {
-	my $self = shift;
-	my $main = $self->main;
-
-	#TODO get filename
-	my $filename = 'The filename!';
+	my $self           = shift;
+	my $main           = $self->main;
+	my $list           = $self->{list};
+	my $selected_index = $list->GetNextItem( -1, Wx::LIST_NEXT_ALL, Wx::LIST_STATE_SELECTED );
+	return if $selected_index == -1;
+	my $rec = $self->{model}->[ $list->GetItemData($selected_index) ] or return;
+	my $filename = $rec->{fullpath};
 
 	return
 		unless $main->yes_no(
@@ -396,11 +394,13 @@ sub on_delete_click {
 
 # Called when "Revert" button is clicked
 sub on_revert_click {
-	my $self = shift;
-	my $main = $self->main;
-
-	#TODO get filename
-	my $filename = 'The filename!';
+	my $self           = shift;
+	my $main           = $self->main;
+	my $list           = $self->{list};
+	my $selected_index = $list->GetNextItem( -1, Wx::LIST_NEXT_ALL, Wx::LIST_STATE_SELECTED );
+	return if $selected_index == -1;
+	my $rec = $self->{model}->[ $list->GetItemData($selected_index) ] or return;
+	my $filename = $rec->{fullpath};
 
 	return
 		unless $main->yes_no(
