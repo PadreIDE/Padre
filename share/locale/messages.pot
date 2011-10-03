@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 04:10-0700\n"
+"POT-Creation-Date: 2011-10-03 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "%s line %s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:143
+#: lib/Padre/Wx/VCS.pm:154
 #, perl-format
 msgid "%s version control project support is not currently supported"
 msgstr ""
@@ -722,7 +722,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:235
+#: lib/Padre/Wx/VCS.pm:284
 msgid ", "
 msgstr ""
 
@@ -792,7 +792,11 @@ msgstr ""
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:173
+#: lib/Padre/Wx/VCS.pm:373
+msgid "Add file to repository?"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:184
 msgid "Added"
 msgstr ""
 
@@ -949,7 +953,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:40
+#: lib/Padre/Wx/VCS.pm:48
 msgid "Author"
 msgstr ""
 
@@ -1368,7 +1372,7 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:176
+#: lib/Padre/Wx/VCS.pm:187
 msgid "Conflicted"
 msgstr ""
 
@@ -1740,11 +1744,15 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:391
+msgid "Delete file from repository??"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/Preferences.pm:757
 msgid "Delete the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:174
+#: lib/Padre/Wx/VCS.pm:185
 msgid "Deleted"
 msgstr ""
 
@@ -1832,12 +1840,27 @@ msgstr ""
 msgid "Do you really want to close and delete %s from disk?"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:372
+#, perl-format
+msgid "Do you want to add '%s' to your repository"
+msgstr ""
+
 #: lib/Padre/Wx/Main.pm:3071
 msgid "Do you want to continue?"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:390
+#, perl-format
+msgid "Do you want to delete '%s' from your repository"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Preferences.pm:463
 msgid "Do you want to override it with the selected action?"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:408
+#, perl-format
+msgid "Do you want to revert changes to '%s'"
 msgstr ""
 
 #: lib/Padre/Wx/WizardLibrary.pm:36 lib/Padre/Wx/Dialog/DocStats.pm:95
@@ -2126,7 +2149,7 @@ msgstr ""
 msgid "Error while searching for POD"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:117
+#: lib/Padre/Wx/VCS.pm:336 lib/Padre/Wx/Dialog/OpenResource.pm:117
 msgid "Error while trying to perform Padre action"
 msgstr ""
 
@@ -2699,7 +2722,7 @@ msgstr ""
 msgid "Ignore case (&i)"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:177 lib/Padre/Wx/FBP/VCS.pm:80
+#: lib/Padre/Wx/VCS.pm:188 lib/Padre/Wx/FBP/VCS.pm:148
 msgid "Ignored"
 msgstr ""
 
@@ -3138,11 +3161,11 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:179
+#: lib/Padre/Wx/VCS.pm:190
 msgid "Missing"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:175
+#: lib/Padre/Wx/VCS.pm:186
 msgid "Modified"
 msgstr ""
 
@@ -3338,7 +3361,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:172 lib/Padre/Wx/FBP/VCS.pm:48
+#: lib/Padre/Wx/VCS.pm:183 lib/Padre/Wx/FBP/VCS.pm:116
 msgid "Normal"
 msgstr ""
 
@@ -3374,7 +3397,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:180
+#: lib/Padre/Wx/VCS.pm:191
 msgid "Obstructed"
 msgstr ""
 
@@ -3747,7 +3770,7 @@ msgstr ""
 msgid "Patch..."
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:42
+#: lib/Padre/Wx/VCS.pm:50
 msgid "Path"
 msgstr ""
 
@@ -4331,11 +4354,15 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:409
+msgid "Revert changes?"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Diff.pm:39
 msgid "Revert this change"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:39
+#: lib/Padre/Wx/VCS.pm:47
 msgid "Revision"
 msgstr ""
 
@@ -4805,7 +4832,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:42
+#: lib/Padre/Wx/FBP/VCS.pm:110
 msgid "Show"
 msgstr ""
 
@@ -5169,9 +5196,10 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:41 lib/Padre/Wx/FBP/Sync.pm:51
-#: lib/Padre/Wx/Dialog/PluginManager.pm:68 lib/Padre/Wx/Dialog/Advanced.pm:111
-#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/VCS.pm:49 lib/Padre/Wx/FBP/Sync.pm:51
+#: lib/Padre/Wx/FBP/VCS.pm:104 lib/Padre/Wx/Dialog/PluginManager.pm:68
+#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
+#: lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
 msgstr ""
 
@@ -5476,7 +5504,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:178 lib/Padre/Wx/FBP/VCS.pm:64
+#: lib/Padre/Wx/VCS.pm:189 lib/Padre/Wx/FBP/VCS.pm:132
 msgid "Unversioned"
 msgstr ""
 
@@ -5576,7 +5604,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:103
+#: lib/Padre/Wx/VCS.pm:117
 msgid "Version Control"
 msgstr ""
 
