@@ -26,7 +26,19 @@ sub new {
 	# Set the bitmap button icons
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
-	# Setup column widths
+	# Setup columns
+	my @column_headers = (
+		Wx::gettext('Revision'),
+		Wx::gettext('Author'),
+		Wx::gettext('Status'),
+		Wx::gettext('Path'),
+	);
+	my $index = 0;
+	for my $column_header (@column_headers) {
+		$self->{list}->InsertColumn( $index++, $column_header );
+	}
+
+	# Resize columns
 	$self->_resize_columns;
 
 	return $self;
@@ -205,7 +217,7 @@ sub on_show_ignored_click {
 }
 
 sub _resize_columns {
-	my $self      = shift;
+	my $self = shift;
 	my $list = $self->{list};
 
 	for ( 1 .. $list->GetColumnCount - 1 ) {
