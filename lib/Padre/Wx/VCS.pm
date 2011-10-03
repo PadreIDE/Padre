@@ -51,7 +51,7 @@ sub new {
 
 	# TODO get these from configuration parameters?
 	$self->{show_normal}->SetValue(0);
-	$self->{show_unversioned}->SetValue(1);
+	$self->{show_unversioned}->SetValue(0);
 	$self->{show_ignored}->SetValue(0);
 
 	return $self;
