@@ -119,11 +119,7 @@ sub gettext_label {
 
 # Clear everything...
 sub clear {
-	my $self = shift;
-
-	$self->{list}->DeleteAllItems;
-
-	return;
+	$_[0]->{list}->DeleteAllItems;
 }
 
 # Nothing to implement here
