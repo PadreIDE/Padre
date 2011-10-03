@@ -17,11 +17,11 @@ our @ISA     = qw{
 };
 
 use constant {
-	RED    => Wx::Colour->new('red'),
-	GREEN  => Wx::Colour->new('green'),
-	BLUE   => Wx::Colour->new('blue'),
-	GRAY   => Wx::Colour->new('gray'),
-	BLACK  => Wx::Colour->new('black'),
+	RED        => Wx::Colour->new('red'),
+	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
+	BLUE       => Wx::Colour->new('blue'),
+	GRAY       => Wx::Colour->new('gray'),
+	BLACK      => Wx::Colour->new('black'),
 };
 
 # Constructor
@@ -203,20 +203,22 @@ sub render {
 
 						# Add a version control file to the list
 						$list->InsertStringItem( $index, $rec->{current} );
-						$list->SetItem( $index,   1, $rec->{author} );
-						$list->SetItem( $index,   2, $file_status->{name} );
+						$list->SetItem( $index, 1, $rec->{author} );
+						$list->SetItem( $index, 2, $file_status->{name} );
 
 						my $color;
-						if($status eq 'A' or $status eq 'D') {
+						if ( $status eq ' ' ) {
+							$color = DARK_GREEN;
+						} elsif ( $status eq 'A' or $status eq 'D' ) {
 							$color = RED;
-						} elsif($status eq 'M') {
+						} elsif ( $status eq 'M' ) {
 							$color = BLUE;
-						} elsif($status eq 'I') {
+						} elsif ( $status eq 'I' ) {
 							$color = GRAY;
 						} else {
 							$color = BLACK;
 						}
-						$list->SetItemTextColour( $index, $color);
+						$list->SetItemTextColour( $index, $color );
 						$list->SetItem( $index++, 3, $rec->{file} );
 					}
 				}
