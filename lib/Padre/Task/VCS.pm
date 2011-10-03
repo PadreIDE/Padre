@@ -89,18 +89,34 @@ sub run {
 
 	$self->{model} = [];
 	if ($stdout) {
-		my $output = $$stdout;
-		my @lines = split /\n/, $output;
+		my @lines = split /\n/, $$stdout;
 		for my $line (@lines) {
-			if ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
-				my $rec = {
+			if ( $line =~ /^(\?)\s+(.+?)$/ ) {
+
+				# Handle unversioned object
+				push @{ $self->{model} },
+					{
+					status  => $1,
+					latest  => '',
+					current => '',
+					author  => '',
+					file    => $2,
+					};
+			} elsif ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
+
+				# Handle other cases
+				push @{ $self->{model} },
+					{
 					status  => $1,
 					latest  => $2,
 					current => $3,
 					author  => $4,
 					file    => $5,
-				};
-				push @{ $self->{model} }, $rec;
+					};
+			} else {
+
+				# issue a low-level warning
+				TRACE("Cannot understand '$line'") if DEBUG;
 			}
 		}
 	}

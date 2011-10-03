@@ -41,6 +41,11 @@ sub new {
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
 
+	# TODO get these from configuration parameters?
+	$self->{show_unmodified}->SetValue(0);
+	$self->{show_unversioned}->SetValue(1);
+	$self->{show_ignored}->SetValue(0);
+
 	return $self;
 }
 
@@ -150,7 +155,6 @@ sub task_finish {
 
 sub render {
 	my $self = shift;
-	my $model = $self->{model} || {};
 
 	# Flush old results
 	$self->clear;
@@ -171,20 +175,30 @@ sub render {
 	# Add a zero count key for subversion status hash
 	$SVN_STATUS{$_}->{count} = 0 for keys %SVN_STATUS;
 
+	# Retrieve the state of the checkboxes
+	my $show_unmodified  = $self->{show_unmodified}->IsChecked  ? 1 : 0;
+	my $show_unversioned = $self->{show_unversioned}->IsChecked ? 1 : 0;
+	my $show_ignored     = $self->{show_ignored}->IsChecked     ? 1 : 0;
+
 	my $index = 0;
 	my $list  = $self->{list};
+	my $model = $self->{model};
 	for my $rec (@$model) {
 		my $status      = $rec->{status};
 		my $file_status = $SVN_STATUS{$status};
 		if ( defined $file_status ) {
 
-			# Add a version control file to the list
-			$list->InsertStringItem( $index, $rec->{current} );
-			$list->SetItem( $index,   1, $rec->{author} );
-			$list->SetItem( $index,   2, $file_status->{name} );
-			$list->SetItem( $index++, 3, $rec->{file} );
-			$file_status->{count}++;
+			if ( $show_unmodified or $status ne ' ' ) {
+
+				# Add a version control file to the list
+				$list->InsertStringItem( $index, $rec->{current} );
+				$list->SetItem( $index,   1, $rec->{author} );
+				$list->SetItem( $index,   2, $file_status->{name} );
+				$list->SetItem( $index++, 3, $rec->{file} );
+			}
+
 		}
+		$file_status->{count}++;
 	}
 
 	# Show Subversion statistics
@@ -200,21 +214,21 @@ sub render {
 	$self->{status}->SetLabel($message);
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{list} );
+	Padre::Util::tidy_list($list);
 
 	return 1;
 }
 
 sub on_show_unversioned_click {
-	my ( $self, $event ) = @_;
+	$_[0]->render;
 }
 
 sub on_show_unmodified_click {
-	my ( $self, $event ) = @_;
+	$_[0]->render;
 }
 
 sub on_show_ignored_click {
-	my ( $self, $event ) = @_;
+	$_[0]->render;
 }
 
 1;
