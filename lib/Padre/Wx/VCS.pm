@@ -119,7 +119,12 @@ sub gettext_label {
 
 # Clear everything...
 sub clear {
-	$_[0]->{list}->DeleteAllItems;
+	my $self = shift;
+
+	$self->{list}->DeleteAllItems;
+	$self->_show_command_bar(0);
+
+	return;
 }
 
 # Nothing to implement here
@@ -185,6 +190,10 @@ sub task_finish {
 sub render {
 	my $self = shift;
 
+	# Clear if needed. Please note that this is needed
+	# for sorting
+	$self->clear;
+
 	# Subversion status codes
 	my %SVN_STATUS = (
 		' ' => { name => Wx::gettext('Normal') },
@@ -208,37 +217,12 @@ sub render {
 
 	my $index = 0;
 	my $list  = $self->{list};
+
+	$self->_sort_model;
 	my $model = $self->{model};
 
-
-	my @model = @$model;
-	if ( $self->{sortcolumn} == 0 ) {
-
-		# Sort by revision
-		@model = sort { $a->{current} cmp $b->{current} } @model;
-	} elsif ( $self->{sortcolumn} == 1 ) {
-
-		# Sort by author
-		@model = sort { $a->{author} cmp $b->{author} } @model;
-	} elsif ( $self->{sortcolumn} == 2 ) {
-
-		# Sort by status
-		@model = sort { $a->{status} cmp $b->{status} } @model;
-	} elsif ( $self->{sortcolumn} == 3 ) {
-
-		# Sort by path
-		@model = sort { $a->{path} cmp $b->{path} } @model;
-	}
-	$self->{model} = \@model;
-
-	if ( $self->{sortreverse} ) {
-
-		# reverse the sorting
-		@model = reverse @model;
-	}
-
 	my $model_index = 0;
-	for my $rec (@model) {
+	for my $rec (@$model) {
 		my $status      = $rec->{status};
 		my $path_status = $SVN_STATUS{$status};
 		if ( defined $path_status ) {
@@ -294,18 +278,53 @@ sub render {
 	}
 	$self->{status}->SetLabel($message);
 
-	my $svn_command_shown = $list->GetSelectedItemCount > 0;
-	$self->{commit}->Show($svn_command_shown);
-	$self->{add}->Show($svn_command_shown);
-	$self->{delete}->Show($svn_command_shown);
-	$self->{revert}->Show($svn_command_shown);
-
-	$self->Layout;
+	$self->_show_command_bar( $list->GetItemCount > 0 );
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
 
 	return 1;
+}
+
+sub _show_command_bar {
+	my ( $self, $shown ) = @_;
+
+	$self->{commit}->Show($shown);
+	$self->{add}->Show($shown);
+	$self->{delete}->Show($shown);
+	$self->{revert}->Show($shown);
+	$self->Layout;
+}
+
+sub _sort_model {
+	my $self = shift;
+
+	my @model = @{ $self->{model} };
+	if ( $self->{sortcolumn} == 0 ) {
+
+		# Sort by revision
+		@model = sort { $a->{current} cmp $b->{current} } @model;
+	} elsif ( $self->{sortcolumn} == 1 ) {
+
+		# Sort by author
+		@model = sort { $a->{author} cmp $b->{author} } @model;
+	} elsif ( $self->{sortcolumn} == 2 ) {
+
+		# Sort by status
+		@model = sort { $a->{status} cmp $b->{status} } @model;
+	} elsif ( $self->{sortcolumn} == 3 ) {
+
+		# Sort by path
+		@model = sort { $a->{path} cmp $b->{path} } @model;
+	}
+
+	if ( $self->{sortreverse} ) {
+
+		# reverse the sorting
+		@model = reverse @model;
+	}
+
+	$self->{model} = \@model;
 }
 
 # Called when a version control list column is clicked
