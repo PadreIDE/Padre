@@ -480,12 +480,12 @@ sub on_context_menu {
 sub SetLexer {
 	my $self  = shift;
 	my $lexer = shift;
+        if ( Params::Util::_NUMBER($lexer) ) {
+                return $self->SUPER::SetLexer($lexer);
+        }
 	if ( defined Params::Util::_STRING($lexer) ) {
 		require Padre::MimeTypes;
 		$lexer = Padre::MimeTypes->get_lexer($lexer);
-	}
-	if ( Params::Util::_NUMBER($lexer) ) {
-		return $self->SUPER::SetLexer($lexer);
 	}
 	return;
 }
