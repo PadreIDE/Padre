@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 17 );
+plan( tests => 18 );
 
 my $dir = catdir( 'share', 'styles' );
 ok( -d $dir, "Found style directory $dir" );
