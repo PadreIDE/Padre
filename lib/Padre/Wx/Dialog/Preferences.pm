@@ -150,8 +150,8 @@ sub new {
 	# Update the key bindings list
 	$self->_update_list;
 
-	# resize columns
-	$self->_resize_columns;
+	# Tidy the list
+	Padre::Util::tidy_list( $self->{list} );
 
 	return $self;
 }
@@ -390,19 +390,6 @@ sub _on_list_item_selected {
 	$self->{button_delete}->Enable( $shortcut ne '' );
 
 	$self->_update_shortcut_ui($shortcut);
-
-	return;
-}
-
-# Private method to resize list columns
-sub _resize_columns {
-	my $self = shift;
-
-	# Resize all columns but the last to their biggest item width
-	my $list = $self->{list};
-	for ( 0 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE );
-	}
 
 	return;
 }

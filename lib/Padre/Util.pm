@@ -552,6 +552,8 @@ sub select_line_in_editor {
 	$editor->EnsureVisible($line);
 	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
+
+	return;
 }
 
 =pod
@@ -567,8 +569,6 @@ command.
 
 Returns 1 on success and 0 on failure.
 =cut
-
-#
 sub run_in_directory {
 	my ( $cmd, $directory ) = @_;
 
@@ -587,6 +587,21 @@ sub run_in_directory {
 		my $retval = system $cmd;
 		return ( $retval == 0 ) ? 1 : 0;
 	}
+}
+
+sub tidy_list {
+	my $list = shift;
+
+	require Padre::Wx;
+	for ( 0 .. $list->GetColumnCount - 1 ) {
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE_USEHEADER() );
+		my $header_width = $list->GetColumnWidth($_);
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE() );
+		my $column_width = $list->GetColumnWidth($_);
+		$list->SetColumnWidth( $_, ( $header_width >= $column_width ) ? $header_width : $column_width );
+	}
+
+	return;
 }
 
 1;

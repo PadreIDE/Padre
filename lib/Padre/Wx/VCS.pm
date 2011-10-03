@@ -38,8 +38,8 @@ sub new {
 		$self->{list}->InsertColumn( $index++, $column_header );
 	}
 
-	# Resize columns
-	$self->_resize_columns;
+	# Tidy the list
+	Padre::Util::tidy_list( $self->{list} );
 
 	return $self;
 }
@@ -199,7 +199,8 @@ sub render {
 	}
 	$self->{status}->SetLabel($message);
 
-	$self->_resize_columns;
+	# Tidy the list
+	Padre::Util::tidy_list( $self->{list} );
 
 	return 1;
 }
@@ -214,21 +215,6 @@ sub on_show_unmodified_click {
 
 sub on_show_ignored_click {
 	my ( $self, $event ) = @_;
-}
-
-sub _resize_columns {
-	my $self = shift;
-	my $list = $self->{list};
-
-	for ( 1 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE_USEHEADER );
-		my $col_head_size = $list->GetColumnWidth($_);
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
-		my $col_data_size = $list->GetColumnWidth($_);
-		$list->SetColumnWidth( $_, ( $col_head_size >= $col_data_size ) ? $col_head_size : $col_data_size );
-	}
-
-	return;
 }
 
 1;
