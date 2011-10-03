@@ -36,6 +36,28 @@ sub new {
 		'',
 	);
 
+	$self->{show_label} = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Show") . ":",
+	);
+
+	$self->{show_normal} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("Normal"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{show_normal},
+		sub {
+			shift->on_show_normal_click(@_);
+		},
+	);
+
 	$self->{show_unversioned} = Wx::CheckBox->new(
 		$self,
 		-1,
@@ -49,22 +71,6 @@ sub new {
 		$self->{show_unversioned},
 		sub {
 			shift->on_show_unversioned_click(@_);
-		},
-	);
-
-	$self->{show_unmodified} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext("Unmodified"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_CHECKBOX(
-		$self,
-		$self->{show_unmodified},
-		sub {
-			shift->on_show_unmodified_click(@_);
 		},
 	);
 
@@ -110,8 +116,10 @@ sub new {
 	);
 
 	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALL, 2 );
+	$checkbox_sizer->Add( 7, 0, 0, Wx::EXPAND, 5 );
+	$checkbox_sizer->Add( $self->{show_normal}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_unversioned}, 0, Wx::ALL, 2 );
-	$checkbox_sizer->Add( $self->{show_unmodified}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_ignored}, 0, Wx::ALL, 2 );
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -129,12 +137,12 @@ sub new {
 	return $self;
 }
 
-sub on_show_unversioned_click {
-	$_[0]->main->error('Handler method on_show_unversioned_click for event show_unversioned.OnCheckBox not implemented');
+sub on_show_normal_click {
+	$_[0]->main->error('Handler method on_show_normal_click for event show_normal.OnCheckBox not implemented');
 }
 
-sub on_show_unmodified_click {
-	$_[0]->main->error('Handler method on_show_unmodified_click for event show_unmodified.OnCheckBox not implemented');
+sub on_show_unversioned_click {
+	$_[0]->main->error('Handler method on_show_unversioned_click for event show_unversioned.OnCheckBox not implemented');
 }
 
 sub on_show_ignored_click {

@@ -42,7 +42,7 @@ sub new {
 	Padre::Util::tidy_list( $self->{list} );
 
 	# TODO get these from configuration parameters?
-	$self->{show_unmodified}->SetValue(0);
+	$self->{show_normal}->SetValue(0);
 	$self->{show_unversioned}->SetValue(1);
 	$self->{show_ignored}->SetValue(0);
 
@@ -176,7 +176,7 @@ sub render {
 	$SVN_STATUS{$_}->{count} = 0 for keys %SVN_STATUS;
 
 	# Retrieve the state of the checkboxes
-	my $show_unmodified  = $self->{show_unmodified}->IsChecked  ? 1 : 0;
+	my $show_normal  = $self->{show_normal}->IsChecked  ? 1 : 0;
 	my $show_unversioned = $self->{show_unversioned}->IsChecked ? 1 : 0;
 	my $show_ignored     = $self->{show_ignored}->IsChecked     ? 1 : 0;
 
@@ -188,7 +188,7 @@ sub render {
 		my $file_status = $SVN_STATUS{$status};
 		if ( defined $file_status ) {
 
-			if ( $show_unmodified or $status ne ' ' ) {
+			if ( $show_normal or $status ne ' ' ) {
 
 				if ( $show_unversioned or $status ne '?' ) {
 					if ( $show_ignored or $status ne 'I' ) {
@@ -228,7 +228,7 @@ sub on_show_unversioned_click {
 	$_[0]->render;
 }
 
-sub on_show_unmodified_click {
+sub on_show_normal_click {
 	$_[0]->render;
 }
 
