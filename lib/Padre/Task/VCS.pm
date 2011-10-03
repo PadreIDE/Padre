@@ -6,6 +6,7 @@ use warnings;
 use Padre::Task ();
 use Padre::Util ();
 use File::Temp  ();
+use File::Spec  ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -104,6 +105,7 @@ sub run {
 					current => '',
 					author  => '',
 					path    => $2,
+					fullpath => File::Spec->catfile( $project_dir, $2 ),
 					};
 			} elsif ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
 
@@ -115,6 +117,7 @@ sub run {
 					current => $3,
 					author  => $4,
 					path    => $5,
+					fullpath => File::Spec->catfile( $project_dir, $5 ),
 					};
 			} else {
 
