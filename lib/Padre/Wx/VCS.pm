@@ -120,6 +120,14 @@ sub refresh {
 		return;
 	}
 
+	# Only subversion is supported at the moment
+	my $vcs = $document->project->vcs;
+	if ( $vcs ne Padre::Constant::SUBVERSION ) {
+		$self->{status}
+			->SetLabel( sprintf( Wx::gettext('%s version control project support is not currently supported'), $vcs ) );
+		return;
+	}
+
 	# Fire the background task discarding old results
 	$self->task_request(
 		task     => 'Padre::Task::VCS',
