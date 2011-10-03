@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 00:10-0700\n"
+"POT-Creation-Date: 2011-10-03 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,11 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:37
 #, perl-format
 msgid "%s line %s: %s"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:143
+#, perl-format
+msgid "%s version control project support is not currently supported"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Positions.pm:123
@@ -717,6 +722,10 @@ msgstr ""
 msgid "+"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:235
+msgid ", "
+msgstr ""
+
 #: lib/Padre/Document/Perl/Help.pm:314
 msgid "- DEPRECATED!"
 msgstr ""
@@ -781,6 +790,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:333
 msgid "Add another closing bracket if there already is one"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:173
+msgid "Added"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:62
@@ -934,6 +947,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:303
 msgid "Authentication"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:40
+msgid "Author"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:1287
@@ -1351,6 +1368,10 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:176
+msgid "Conflicted"
+msgstr ""
+
 #: lib/Padre/File/FTP.pm:113
 #, perl-format
 msgid "Connecting to FTP server %s..."
@@ -1723,6 +1744,10 @@ msgstr ""
 msgid "Delete the keyboard binding"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:174
+msgid "Deleted"
+msgstr ""
+
 #: lib/Padre/Wx/Syntax.pm:34
 msgid "Deprecation"
 msgstr ""
@@ -1811,7 +1836,7 @@ msgstr ""
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:476
+#: lib/Padre/Wx/Dialog/Preferences.pm:463
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -2674,6 +2699,10 @@ msgstr ""
 msgid "Ignore case (&i)"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:177 lib/Padre/Wx/FBP/VCS.pm:80
+msgid "Ignored"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2559
 msgid "Imitate clicking on the right mouse button"
 msgstr ""
@@ -3109,6 +3138,14 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:179
+msgid "Missing"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:175
+msgid "Modified"
+msgstr ""
+
 #: lib/Padre/Wx/WizardLibrary.pm:20
 msgid "Module"
 msgstr ""
@@ -3301,6 +3338,10 @@ msgstr ""
 msgid "None"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:172 lib/Padre/Wx/FBP/VCS.pm:48
+msgid "Normal"
+msgstr ""
+
 #: lib/Padre/Locale.pm:370 lib/Padre/Wx/FBP/About.pm:597
 msgid "Norwegian"
 msgstr ""
@@ -3331,6 +3372,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Bookmarks.pm:85 lib/Padre/Wx/FBP/WhereFrom.pm:60
 msgid "OK"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:180
+msgid "Obstructed"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:147
@@ -3588,7 +3633,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:477
+#: lib/Padre/Wx/Dialog/Preferences.pm:464
 msgid "Override Shortcut"
 msgstr ""
 
@@ -3700,6 +3745,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1108
 msgid "Patch..."
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:42
+msgid "Path"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:277
@@ -4286,6 +4335,10 @@ msgstr ""
 msgid "Revert this change"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:39
+msgid "Revision"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Preferences.pm:137
 msgid "Right"
 msgstr ""
@@ -4752,6 +4805,10 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/VCS.pm:42
+msgid "Show"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:1419
 msgid "Show &Command Line"
 msgstr ""
@@ -5112,9 +5169,9 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Sync.pm:51 lib/Padre/Wx/Dialog/PluginManager.pm:68
-#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/VCS.pm:41 lib/Padre/Wx/FBP/Sync.pm:51
+#: lib/Padre/Wx/Dialog/PluginManager.pm:68 lib/Padre/Wx/Dialog/Advanced.pm:111
+#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
 msgstr ""
 
@@ -5265,7 +5322,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:473
+#: lib/Padre/Wx/Dialog/Preferences.pm:460
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
@@ -5419,6 +5476,10 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:178 lib/Padre/Wx/FBP/VCS.pm:64
+msgid "Unversioned"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Preferences.pm:136
 msgid "Up"
 msgstr ""
@@ -5515,7 +5576,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:81
+#: lib/Padre/Wx/VCS.pm:103
 msgid "Version Control"
 msgstr ""
 
