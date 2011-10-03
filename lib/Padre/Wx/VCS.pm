@@ -224,11 +224,11 @@ sub render {
 	return 1;
 }
 
-sub on_show_unversioned_click {
+sub on_show_normal_click {
 	$_[0]->render;
 }
 
-sub on_show_normal_click {
+sub on_show_unversioned_click {
 	$_[0]->render;
 }
 
