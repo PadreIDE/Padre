@@ -29,9 +29,11 @@ StyleSetBackground PADRE_ERROR                    fff0f0
 style text/plain
 include padre
 SetCaretForeground                                aaaaaa
-SetCaretLineBackground                            222222
+SetCaretLineBackground                            111111
 StyleSetBackground wxSTC_STYLE_DEFAULT            000000
 StyleSetForeground wxSTC_STYLE_DEFAULT            00007f
+StyleSetBackground 0                              000000
+StyleSetForeground 0                              0000ff
 StyleSetBackground wxSTC_STYLE_LINENUMBER         111111
 StyleSetForeground wxSTC_STYLE_LINENUMBER         fce94f
 StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
