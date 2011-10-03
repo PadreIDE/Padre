@@ -16,6 +16,14 @@ our @ISA     = qw{
 	Padre::Wx::FBP::VCS
 };
 
+use constant {
+	RED    => Wx::Colour->new('red'),
+	GREEN  => Wx::Colour->new('green'),
+	BLUE   => Wx::Colour->new('blue'),
+	GRAY   => Wx::Colour->new('gray'),
+	BLACK  => Wx::Colour->new('black'),
+};
+
 # Constructor
 sub new {
 	my $class = shift;
@@ -197,6 +205,18 @@ sub render {
 						$list->InsertStringItem( $index, $rec->{current} );
 						$list->SetItem( $index,   1, $rec->{author} );
 						$list->SetItem( $index,   2, $file_status->{name} );
+
+						my $color;
+						if($status eq 'A' or $status eq 'D') {
+							$color = RED;
+						} elsif($status eq 'M') {
+							$color = BLUE;
+						} elsif($status eq 'I') {
+							$color = GRAY;
+						} else {
+							$color = BLACK;
+						}
+						$list->SetItemTextColour( $index, $color);
 						$list->SetItem( $index++, 3, $rec->{file} );
 					}
 				}
