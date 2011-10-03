@@ -73,6 +73,7 @@ sub run {
 	# 'git --no-pager show' command
 	my @cmd = (
 		$svn,
+		'--no-ignore',
 		'--verbose',
 		'status',
 		'1>' . $out->filename,
@@ -91,9 +92,9 @@ sub run {
 	if ($stdout) {
 		my @lines = split /\n/, $$stdout;
 		for my $line (@lines) {
-			if ( $line =~ /^(\?)\s+(.+?)$/ ) {
+			if ( $line =~ /^(\?|I)\s+(.+?)$/ ) {
 
-				# Handle unversioned object
+				# Handle unversioned and ignored objects
 				push @{ $self->{model} },
 					{
 					status  => $1,
