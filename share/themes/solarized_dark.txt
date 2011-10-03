@@ -33,11 +33,12 @@ SetCaretForeground                                  93a1a1
 SetCaretLineBackground                              073642
 SetSelBackground        1 eee8d5
 SetWhitespaceForeground 0                           657b83
-SetWhitespaceBackground 0                           002b36
+SetWhitespaceBackground 0                           ff2b36
 StyleSetBackground      wxSTC_STYLE_DEFAULT         002b36
+# this is cheating - the NULL lexer sets style to 0 what is the constant for that?
 StyleSetBackground      0                           002b36
 StyleSetBackground      wxSTC_STYLE_LINENUMBER      073642
-StyleSetForeground      wxSTC_STYLE_LINENUMBER      657b83
+StyleSetForeground      wxSTC_STYLE_LINENUMBER      586e75
 StyleSetForeground      wxSTC_STYLE_INDENTGUIDE     859900
 CallTipSetBackground 073642
 
@@ -212,3 +213,53 @@ StyleSetBackground       wxSTC_YAML_NUMBER              002b36
 StyleSetBackground       wxSTC_YAML_REFERENCE           002b36
 StyleSetBackground       wxSTC_YAML_TEXT                002b36
 StyleSetBackground       wxSTC_YAML_OPERATOR            002b36
+
+
+# text/x-perlxs
+# surely this should be rolled up to text/x-c and included by cpp and perlxs ?
+style text/x-perlxs
+include text/plain
+StyleSetForeground      wxSTC_C_DEFAULT                 657b83
+StyleSetBackground      wxSTC_C_DEFAULT                 002b36
+StyleSetForeground      wxSTC_C_COMMENT                 586e75
+StyleSetBackground      wxSTC_C_COMMENT                 002b36
+StyleSetForeground      wxSTC_C_COMMENTLINE             586e75
+StyleSetBackground      wxSTC_C_COMMENTLINE             002b36
+StyleSetForeground      wxSTC_C_COMMENTDOC              586e75
+StyleSetBackground      wxSTC_C_COMMENTDOC              002b36
+StyleSetForeground      wxSTC_C_NUMBER                  2aa198
+StyleSetBackground      wxSTC_C_NUMBER                  002b36
+StyleSetForeground      wxSTC_C_WORD                    6c71c4
+StyleSetBackground      wxSTC_C_WORD                    002b36
+StyleSetForeground      wxSTC_C_STRING                  ff7f00
+StyleSetBackground      wxSTC_C_STRING                  002b36
+StyleSetForeground      wxSTC_C_CHARACTER               6c71c4
+StyleSetBackground      wxSTC_C_CHARACTER               002b36
+StyleSetForeground      wxSTC_C_UUID                    6c71c4
+StyleSetBackground      wxSTC_C_UUID                    002b36
+StyleSetForeground      wxSTC_C_PREPROCESSOR            93a1a1
+StyleSetBackground      wxSTC_C_PREPROCESSOR            002b36
+StyleSetBold            wxSTC_C_PREPROCESSOR            1
+StyleSetForeground      wxSTC_C_OPERATOR                268bd2
+StyleSetBackground      wxSTC_C_OPERATOR                002b36
+StyleSetForeground      wxSTC_C_IDENTIFIER              859900
+StyleSetBackground      wxSTC_C_IDENTIFIER              002b36
+StyleSetForeground      wxSTC_C_STRINGEOL               dc322f
+StyleSetBackground      wxSTC_C_STRINGEOL               002b36
+StyleSetForeground      wxSTC_C_VERBATIM                6c71c4
+StyleSetBackground      wxSTC_C_VERBATIM                002b36
+StyleSetForeground      wxSTC_C_REGEX                   ff007f
+StyleSetBackground      wxSTC_C_REGEX                   002b36
+StyleSetForeground      wxSTC_C_COMMENTLINEDOC          586e75
+StyleSetBackground      wxSTC_C_COMMENTLINEDOC          002b36
+StyleSetForeground      wxSTC_C_WORD2                   6c71c4
+StyleSetBackground      wxSTC_C_WORD2                   002b36
+StyleSetBold            wxSTC_C_WORD2                   1
+StyleSetForeground      wxSTC_C_COMMENTDOCKEYWORD       657b83
+StyleSetBackground      wxSTC_C_COMMENTDOCKEYWORD       002b36
+StyleSetForeground      wxSTC_C_COMMENTDOCKEYWORDERROR  657b83
+StyleSetBackground      wxSTC_C_COMMENTDOCKEYWORDERROR  002b36
+StyleSetForeground      wxSTC_C_GLOBALCLASS             6c71c4
+StyleSetBackground      wxSTC_C_GLOBALCLASS             002b36
+
+#
