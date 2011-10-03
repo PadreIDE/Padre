@@ -118,7 +118,7 @@ sub new {
 	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
 
 	#TODO access the panel by name instead of by index
-	$self->{keybindings_panel} = $self->{treebook}->GetPage(5)
+	$self->{keybindings_panel} = $self->{treebook}->GetPage(4)
 		or warn "Key bindings panel is not found!\n";
 
 	# Set some internal parameters for key bindings
