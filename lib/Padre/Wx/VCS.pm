@@ -131,9 +131,7 @@ sub refresh {
 sub task_finish {
 	my $self = shift;
 	my $task = shift;
-	$self->{model} = $task->{model};
-
-	# TODO validate model
+	$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 
 	$self->render;
 }
