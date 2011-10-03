@@ -455,7 +455,7 @@ sub _try_to_set_binding {
 
 	my $other_action = $self->ide->shortcuts->{$shortcut};
 	if ( defined $other_action && $other_action->name ne $action_name ) {
-		my $answer = $self->yes_no(
+		return unless $self->yes_no(
 			sprintf(
 				Wx::gettext("The shortcut '%s' is already used by the action '%s'.\n"),
 				$shortcut, $other_action->label_text
@@ -463,11 +463,7 @@ sub _try_to_set_binding {
 				. Wx::gettext('Do you want to override it with the selected action?'),
 			Wx::gettext('Override Shortcut')
 		);
-		if ($answer) {
-			$self->_set_binding( $other_action->name, '' );
-		} else {
-			return;
-		}
+		$self->_set_binding( $other_action->name, '' );
 	}
 
 	$self->_set_binding( $action_name, $shortcut );
