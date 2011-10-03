@@ -179,22 +179,16 @@ sub render {
 	}
 
 	# Show Subversion statistics
-	$self->{status}->SetLabel(
-		sprintf(
-			Wx::gettext(
-				'Normal=%d, Added=%d, Deleted=%d, Modified=%d, Conflicted=%d, Ignored=%d, Unversioned=%d, Missing=%d, Obstructed=%d'
-			),
-			$SVN_STATUS{' '}->{count},
-			$SVN_STATUS{'A'}->{count},
-			$SVN_STATUS{'D'}->{count},
-			$SVN_STATUS{'M'}->{count},
-			$SVN_STATUS{'C'}->{count},
-			$SVN_STATUS{'I'}->{count},
-			$SVN_STATUS{'?'}->{count},
-			$SVN_STATUS{'!'}->{count},
-			$SVN_STATUS{'~'}->{count},
-		)
-	);
+	my $message = '';
+	for my $status ( sort keys %SVN_STATUS ) {
+		my $svn_status = $SVN_STATUS{$status};
+		next if $svn_status->{count} == 0;
+		if ( length($message) > 0 ) {
+			$message .= Wx::gettext(', ');
+		}
+		$message .= sprintf( '%s=%d', $svn_status->{name}, $svn_status->{count} );
+	}
+	$self->{status}->SetLabel($message);
 
 	return 1;
 }
