@@ -486,6 +486,7 @@ sub SetLexer {
 	if ( defined Params::Util::_STRING($lexer) ) {
 		require Padre::MimeTypes;
 		$lexer = Padre::MimeTypes->get_lexer($lexer);
+                return $self->SUPER::SetLexer($lexer);
 	}
 	return;
 }
