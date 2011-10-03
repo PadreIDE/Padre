@@ -134,6 +134,9 @@ sub refresh {
 
 	# Abort any in-flight checks
 	$self->task_reset;
+	
+	# Flush old results if next current file is not in a vcs
+	$self->clear;
 
 	# Hide the widgets when no files are open
 	unless ($document) {
@@ -146,9 +149,32 @@ sub refresh {
 		$self->clear;
 		return;
 	}
-
+	
+	# info only azawawi, 
+		# Version Control System (VCS) constants
+		# use constant {
+			# SUBVERSION => 'SVN',
+			# GIT        => 'Git',
+			# MERCURIAL  => 'Mercurial',
+			# BAZAAR     => 'Bazaar',
+			# CVS        => 'CVS',
+		# };
+		# this is wrong, 
+		# if not in vcs you get this, vcs => undef
+		# which causes this
+		# Use of uninitialized value $vcs in string ne at /usr/src/Padre/Padre/lib/Padre/Wx/VCS.pm line 155.
+		# Use of uninitialized value $vcs in sprintf at /usr/src/Padre/Padre/lib/Padre/Wx/VCS.pm line 156
+		
+		# If you want to see vcs type use P-P-Patch it chucks loads of stuff at terminal
+		
 	# Only subversion is supported at the moment
 	my $vcs = $document->project->vcs;
+	
+	# test for undef
+	unless ( $vcs ) {
+		$self->{status}->SetLabel( Wx::gettext('Current file not is not in a version control system') );
+		return;
+	}
 	if ( $vcs ne Padre::Constant::SUBVERSION ) {
 		$self->{status}
 			->SetLabel( sprintf( Wx::gettext('%s version control project support is not currently supported'), $vcs ) );
@@ -176,7 +202,7 @@ sub render {
 	my $self = shift;
 
 	# Flush old results
-	$self->clear;
+	# $self->clear;
 
 	# Define SVN status
 	my %SVN_STATUS = (
