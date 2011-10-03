@@ -123,11 +123,11 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_LIST_ITEM_SELECTED(
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self,
 		$self->{list},
 		sub {
-			shift->on_list_item_selected(@_);
+			shift->on_list_item_activated(@_);
 		},
 	);
 
@@ -173,8 +173,8 @@ sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
 }
 
-sub on_list_item_selected {
-	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+sub on_list_item_activated {
+	$_[0]->main->error('Handler method on_list_item_activated for event list.OnListItemActivated not implemented');
 }
 
 1;

@@ -90,8 +90,10 @@ sub run {
 
 	$self->{model} = [];
 	if ($stdout) {
-		my @lines = split /\n/, $$stdout;
+		my @lines = split /^/, $$stdout;
 		for my $line (@lines) {
+			chomp($line);
+			$line =~ s/\r//g; # Remove extra carriage return
 			if ( $line =~ /^(\?|I)\s+(.+?)$/ ) {
 
 				# Handle unversioned and ignored objects

@@ -21660,12 +21660,12 @@
                         <event name="OnListDeleteItem"></event>
                         <event name="OnListEndLabelEdit"></event>
                         <event name="OnListInsertItem"></event>
-                        <event name="OnListItemActivated"></event>
+                        <event name="OnListItemActivated">on_list_item_activated</event>
                         <event name="OnListItemDeselected"></event>
                         <event name="OnListItemFocused"></event>
                         <event name="OnListItemMiddleClick"></event>
                         <event name="OnListItemRightClick"></event>
-                        <event name="OnListItemSelected">on_list_item_selected</event>
+                        <event name="OnListItemSelected"></event>
                         <event name="OnListKeyDown"></event>
                         <event name="OnMiddleDClick"></event>
                         <event name="OnMiddleDown"></event>

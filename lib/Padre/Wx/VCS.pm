@@ -215,6 +215,7 @@ sub render {
 		# Sort by path
 		@model = sort { $a->{path} cmp $b->{path} } @model;
 	}
+	$self->{model} = \@model;
 
 	if ( $self->{sortreverse} ) {
 
@@ -222,6 +223,7 @@ sub render {
 		@model = reverse @model;
 	}
 
+	my $model_index = 0;
 	for my $rec (@model) {
 		my $status      = $rec->{status};
 		my $path_status = $SVN_STATUS{$status};
@@ -234,6 +236,7 @@ sub render {
 
 						# Add a version control path to the list
 						$list->InsertStringItem( $index, $rec->{current} );
+						$list->SetItemData( $index, $model_index );
 						$list->SetItem( $index, 1, $rec->{author} );
 						$list->SetItem( $index, 2, $path_status->{name} );
 
@@ -257,6 +260,7 @@ sub render {
 
 		}
 		$path_status->{count}++;
+		$model_index++;
 	}
 
 	# Show Subversion statistics
@@ -293,19 +297,30 @@ sub on_list_column_click {
 	return;
 }
 
-# Called when a version control list item is selected
-sub on_list_item_selected {
+sub on_list_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $list = $self->{list};
+	my $main        = $self->main;
+	my $current     = $main->current or return;
+	my $project_dir = $current->document->project_dir or return;
+	my $model       = $self->{model};
+	my $item_index  = $self->{list}->GetItemData( $event->GetIndex );
+	my $rec         = $model->[$item_index];
+	return unless defined $rec;
 
-	# my $index       = $list->GetFirstSelected;
-	# my $action_name = $list->GetItemText($index);
-	# my $action      = $self->ide->actions->{$action_name};
+	require File::Spec;
+	my $filename = File::Spec->catfile( $project_dir, $rec->{path} );
+	eval {
 
-	TRACE("on_list_item_selected");
-
-	return;
+		# Try to open the file now
+		if ( my $id = $main->editor_of_file($filename) ) {
+			my $page = $main->notebook->GetPage($id);
+			$page->SetFocus;
+		} else {
+			$main->setup_editors($filename);
+		}
+	};
+	$main->error( Wx::gettext('Error while trying to perform Padre action') ) if $@;
 }
 
 # Called when "Show normal" checkbox is clicked
