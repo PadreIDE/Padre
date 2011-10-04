@@ -84,14 +84,8 @@ sub _on_ok_button_clicked {
 
 			eval { &$event($main); };
 			if ($@) {
-				my $error = $@;
-				Wx::MessageBox(
-					sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $error ),
-					Wx::gettext('Error'),
-					Wx::OK,
-					$main,
-				);
-				TRACE("Error while trying to perform Padre action: $error") if DEBUG;
+				$main->error(sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ));
+				TRACE("Error while trying to perform Padre action: $@") if DEBUG;
 			} else {
 
 				# And insert a recently used tuple if it is not found

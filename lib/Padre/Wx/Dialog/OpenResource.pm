@@ -10,6 +10,7 @@ use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 use Padre::MimeTypes      ();
 use Padre::Role::Task     ();
+use Padre::Logger;
 
 our $VERSION = '0.91';
 our @ISA     = qw{
@@ -113,12 +114,8 @@ sub ok_button {
 			}
 		};
 		if ($@) {
-			Wx::MessageBox(
-				Wx::gettext('Error while trying to perform Padre action'),
-				Wx::gettext('Error'),
-				Wx::OK,
-				$main,
-			);
+			$main->error(sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ));
+			TRACE("Error while trying to perform Padre action: $@") if DEBUG;
 		} else {
 
 			# And insert a recently used tuple if it is not found
