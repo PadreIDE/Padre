@@ -1,5 +1,30 @@
 name en-gb Solarized Dark
 
+
+#####
+#
+# base03            002b36
+# base02            073642
+# 
+# base01            586e75
+# base00            657b83
+# base0             839496
+# base1             93a1a1
+# base2             eee8d5
+# base3             fdf6e6
+#
+# yellow            b58900
+# orange            cb4b16
+# red               dc322f
+# magenta           d33682
+# violet            6c71c4
+# blue              268bd2
+# cyan              2aa198
+# green             859900
+#
+#
+
+
 # Padre GUI Colours
 style gui
 SetForegroundColour                               93a1a1
@@ -214,10 +239,7 @@ StyleSetBackground       wxSTC_YAML_REFERENCE           002b36
 StyleSetBackground       wxSTC_YAML_TEXT                002b36
 StyleSetBackground       wxSTC_YAML_OPERATOR            002b36
 
-
-# text/x-perlxs
-# surely this should be rolled up to text/x-c and included by cpp and perlxs ?
-style text/x-perlxs
+style text/x-c
 include text/plain
 StyleSetForeground      wxSTC_C_DEFAULT                 657b83
 StyleSetBackground      wxSTC_C_DEFAULT                 002b36
@@ -262,4 +284,135 @@ StyleSetBackground      wxSTC_C_COMMENTDOCKEYWORDERROR  002b36
 StyleSetForeground      wxSTC_C_GLOBALCLASS             6c71c4
 StyleSetBackground      wxSTC_C_GLOBALCLASS             002b36
 
+
+# text/x-perlxs
+# surely this should be rolled up to text/x-c and included by cpp and perlxs ?
+style text/x-perlxs
+include text/x-c
+
+style text/x-cpp
+include text/x-c
+
 #
+# text/html
+style text/html
+include text/plain
+StyleSetBackground      wxSTC_H_DEFAULT                 002b36
+StyleSetBackground      wxSTC_H_TAG                     002b36
+StyleSetBackground      wxSTC_H_TAGUNKNOWN              002b36
+StyleSetBackground      wxSTC_H_ATTRIBUTE               002b36
+StyleSetBackground      wxSTC_H_ATTRIBUTEUNKNOWN        002b36
+StyleSetBackground      wxSTC_H_NUMBER                  002b36
+StyleSetBackground      wxSTC_H_DOUBLESTRING            002b36
+StyleSetBackground      wxSTC_H_SINGLESTRING            002b36
+StyleSetBackground      wxSTC_H_OTHER                   002b36
+StyleSetBackground      wxSTC_H_COMMENT                 002b36
+StyleSetBackground      wxSTC_H_ENTITY                  002b36
+
+StyleSetForeground      wxSTC_H_DEFAULT                 93a1a1
+StyleSetForeground      wxSTC_H_TAG                     586e75
+StyleSetForeground      wxSTC_H_TAGUNKNOWN              dc322f
+StyleSetForeground      wxSTC_H_ATTRIBUTE               268bd2
+StyleSetForeground      wxSTC_H_ATTRIBUTEUNKNOWN        dc322f
+StyleSetForeground      wxSTC_H_NUMBER                  d33682
+StyleSetForeground      wxSTC_H_DOUBLESTRING            6c71c4
+StyleSetForeground      wxSTC_H_SINGLESTRING            2aa198
+StyleSetForeground      wxSTC_H_OTHER                   b58900
+StyleSetForeground      wxSTC_H_COMMENT                 657b83
+StyleSetItalic          wxSTC_H_COMMENT                 1
+StyleSetForeground      wxSTC_H_ENTITY                  859900
+
+StyleSetBackground      wxSTC_H_TAGEND                  002b36
+StyleSetBackground      wxSTC_H_XMLSTART                002b36
+StyleSetBackground      wxSTC_H_XMLEND                  002b36
+StyleSetBackground      wxSTC_H_SCRIPT                  002b36
+StyleSetBackground      wxSTC_H_ASP                     002b36
+StyleSetBackground      wxSTC_H_ASPAT                   002b36
+StyleSetBackground      wxSTC_H_CDATA                   073642
+StyleSetEOLFilled       wxSTC_H_CDATA                   1
+StyleSetBackground      wxSTC_H_QUESTION                002b36
+
+StyleSetForeground      wxSTC_H_TAGEND                  586e75
+StyleSetForeground      wxSTC_H_XMLSTART                cb4b16
+StyleSetForeground      wxSTC_H_XMLEND                  cb4b16
+StyleSetForeground      wxSTC_H_SCRIPT                  d33682
+#StyleSetForeground      wxSTC_H_ASP 15
+#StyleSetForeground      wxSTC_H_ASPAT 16
+StyleSetForeground      wxSTC_H_CDATA                   d33682
+StyleSetForeground      wxSTC_H_QUESTION                859900
+
+
+StyleSetBackground      wxSTC_H_VALUE                   073642
+StyleSetBackground      wxSTC_H_XCCOMMENT               002b36
+
+#// SGML
+StyleSetBackground      wxSTC_H_SGML_DEFAULT            073642
+StyleSetBackground      wxSTC_H_SGML_COMMAND            073642
+StyleSetBackground      wxSTC_H_SGML_1ST_PARAM          073642
+StyleSetBackground      wxSTC_H_SGML_DOUBLESTRING       073642
+StyleSetBackground      wxSTC_H_SGML_SIMPLESTRING       073642
+StyleSetBackground      wxSTC_H_SGML_ERROR              073642
+StyleSetBackground      wxSTC_H_SGML_SPECIAL            073642
+StyleSetBackground      wxSTC_H_SGML_ENTITY             073642
+StyleSetBackground      wxSTC_H_SGML_COMMENT            073642
+StyleSetBackground      wxSTC_H_SGML_1ST_PARAM_COMMENT  073642
+StyleSetBackground      wxSTC_H_SGML_BLOCK_DEFAULT      073642
+
+## 
+StyleSetForeground      wxSTC_H_SGML_DEFAULT            d33682
+StyleSetForeground      wxSTC_H_SGML_COMMAND            859900
+StyleSetForeground      wxSTC_H_SGML_1ST_PARAM          cb4b16
+StyleSetForeground      wxSTC_H_SGML_DOUBLESTRING       6c71c4
+StyleSetForeground      wxSTC_H_SGML_SIMPLESTRING       002b36
+StyleSetForeground      wxSTC_H_SGML_ERROR              cb4b16
+StyleSetForeground      wxSTC_H_SGML_SPECIAL            859900
+StyleSetForeground      wxSTC_H_SGML_ENTITY             859900
+StyleSetForeground      wxSTC_H_SGML_COMMENT            657b83
+StyleSetItalic          wxSTC_H_SGML_COMMENT            1
+StyleSetForeground      wxSTC_H_SGML_1ST_PARAM_COMMENT  93a1a1
+StyleSetForeground      wxSTC_H_SGML_BLOCK_DEFAULT      d33682
+
+
+#// Embedded Javascript Backgrounds
+StyleSetBackground      wxSTC_HJ_START                  073642
+StyleSetBackground      wxSTC_HJ_DEFAULT                073642
+StyleSetBackground      wxSTC_HJ_COMMENT                073642
+StyleSetBackground      wxSTC_HJ_COMMENTLINE            073642
+StyleSetBackground      wxSTC_HJ_COMMENTDOC             073642
+StyleSetBackground      wxSTC_HJ_NUMBER                 073642
+StyleSetBackground      wxSTC_HJ_WORD                   073642
+StyleSetBackground      wxSTC_HJ_KEYWORD                073642
+StyleSetBackground      wxSTC_HJ_DOUBLESTRING           073642
+StyleSetBackground      wxSTC_HJ_SINGLESTRING           073642
+StyleSetBackground      wxSTC_HJ_SYMBOLS                073642
+StyleSetBackground      wxSTC_HJ_STRINGEOL              073642
+StyleSetBackground      wxSTC_HJ_REGEX                  073642
+
+StyleSetEOLFilled       wxSTC_HJ_START                  1
+StyleSetEOLFilled       wxSTC_HJ_DEFAULT                1
+StyleSetEOLFilled       wxSTC_HJ_COMMENT                1
+StyleSetEOLFilled       wxSTC_HJ_COMMENTLINE            1
+StyleSetEOLFilled       wxSTC_HJ_COMMENTDOC             1
+StyleSetEOLFilled       wxSTC_HJ_NUMBER                 1
+StyleSetEOLFilled       wxSTC_HJ_WORD                   1
+StyleSetEOLFilled       wxSTC_HJ_KEYWORD                1
+StyleSetEOLFilled       wxSTC_HJ_DOUBLESTRING           1
+StyleSetEOLFilled       wxSTC_HJ_SINGLESTRING           1
+StyleSetEOLFilled       wxSTC_HJ_SYMBOLS                1
+StyleSetEOLFilled       wxSTC_HJ_STRINGEOL              1
+StyleSetEOLFilled       wxSTC_HJ_REGEX                  1
+
+#// Embedded Javascript
+StyleSetForeground      wxSTC_HJ_START                  586e75
+StyleSetForeground      wxSTC_HJ_DEFAULT                93a1a1
+StyleSetForeground      wxSTC_HJ_COMMENT                586e75
+StyleSetForeground      wxSTC_HJ_COMMENTLINE            586e75
+StyleSetForeground      wxSTC_HJ_COMMENTDOC             657b83
+StyleSetForeground      wxSTC_HJ_NUMBER                 cb4b16
+StyleSetForeground      wxSTC_HJ_WORD                   859900
+StyleSetForeground      wxSTC_HJ_KEYWORD                268bd2
+StyleSetForeground      wxSTC_HJ_DOUBLESTRING           cb4b16
+StyleSetForeground      wxSTC_HJ_SINGLESTRING           b58900
+StyleSetForeground      wxSTC_HJ_SYMBOLS                d33682
+StyleSetForeground      wxSTC_HJ_STRINGEOL              6c71c4
+StyleSetForeground      wxSTC_HJ_REGEX                  d33682
