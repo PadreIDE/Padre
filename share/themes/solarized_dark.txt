@@ -468,3 +468,60 @@ StyleSetBackground      wxSTC_MAKE_OPERATOR             002b36
 StyleSetBackground      wxSTC_MAKE_TARGET               002b36
 StyleSetBackground      wxSTC_MAKE_IDEOL                002b36
 
+
+#
+# text/css1
+#
+style text/css
+include text/plain
+
+StyleSetForeground      wxSTC_CSS_DEFAULT                       657b83
+StyleSetForeground      wxSTC_CSS_TAG                           6c71c4
+  StyleSetBold          wxSTC_CSS_TAG                           1
+StyleSetForeground      wxSTC_CSS_CLASS                         268bd2
+StyleSetForeground      wxSTC_CSS_PSEUDOCLASS                   839496
+StyleSetForeground      wxSTC_CSS_UNKNOWN_PSEUDOCLASS           839496
+  StyleSetBold          wxSTC_CSS_UNKNOWN_PSEUDOCLASS           1
+StyleSetForeground      wxSTC_CSS_OPERATOR                      cb4b16
+   StyleSetBold         wxSTC_CSS_OPERATOR                      1
+StyleSetForeground      wxSTC_CSS_IDENTIFIER                    d33682
+StyleSetForeground      wxSTC_CSS_UNKNOWN_IDENTIFIER            839496
+  StyleSetBold          wxSTC_CSS_UNKNOWN_IDENTIFIER            1
+StyleSetForeground      wxSTC_CSS_VALUE                         859900
+StyleSetForeground      wxSTC_CSS_COMMENT                       586e75
+StyleSetForeground      wxSTC_CSS_ID                            2aa198
+    StyleSetBold        wxSTC_CSS_ID                            1
+StyleSetForeground      wxSTC_CSS_IMPORTANT                     839496
+StyleSetForeground      wxSTC_CSS_DIRECTIVE                     839496
+StyleSetForeground      wxSTC_CSS_DOUBLESTRING                  839496
+StyleSetForeground      wxSTC_CSS_SINGLESTRING                  839496
+StyleSetForeground      wxSTC_CSS_IDENTIFIER2                   839496
+StyleSetForeground      wxSTC_CSS_ATTRIBUTE                     839496
+#StyleSetForeground      wxSTC_CSS_IDENTIFIER3 17
+#StyleSetForeground      wxSTC_CSS_PSEUDOELEMENT 18
+#StyleSetForeground      wxSTC_CSS_EXTENDED_IDENTIFIER 19
+#StyleSetForeground      wxSTC_CSS_EXTENDED_PSEUDOCLASS 20
+#StyleSetForeground      wxSTC_CSS_EXTENDED_PSEUDOELEMENT 21
+
+StyleSetBackground           wxSTC_CSS_DEFAULT                  002b36
+StyleSetBackground           wxSTC_CSS_TAG                      002b36
+StyleSetBackground           wxSTC_CSS_CLASS                    002b36
+StyleSetBackground           wxSTC_CSS_PSEUDOCLASS              002b36
+StyleSetBackground           wxSTC_CSS_UNKNOWN_PSEUDOCLASS      002b36
+StyleSetBackground           wxSTC_CSS_OPERATOR                 002b36
+StyleSetBackground           wxSTC_CSS_IDENTIFIER               002b36
+StyleSetBackground           wxSTC_CSS_UNKNOWN_IDENTIFIER       002b36
+StyleSetBackground           wxSTC_CSS_VALUE                    002b36
+StyleSetBackground           wxSTC_CSS_COMMENT                  002b36
+StyleSetBackground           wxSTC_CSS_ID                       002b36
+StyleSetBackground           wxSTC_CSS_IMPORTANT                002b36
+StyleSetBackground           wxSTC_CSS_DIRECTIVE                002b36
+StyleSetBackground           wxSTC_CSS_DOUBLESTRING             002b36
+StyleSetBackground           wxSTC_CSS_SINGLESTRING             002b36
+StyleSetBackground           wxSTC_CSS_IDENTIFIER2              002b36
+StyleSetBackground           wxSTC_CSS_ATTRIBUTE                002b36
+#StyleSetBackground           wxSTC_CSS_IDENTIFIER3              002b36
+#StyleSetBackground           wxSTC_CSS_PSEUDOELEMENT            002b36
+#StyleSetBackground           wxSTC_CSS_EXTENDED_IDENTIFIER      002b36
+#StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOCLASS     002b36
+#StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOELEMENT   002b36
