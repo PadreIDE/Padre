@@ -64,6 +64,7 @@ sub _on_ok_button_clicked {
 
 	# Open the selected menu item if the user pressed OK
 	my $selection = $self->_list->GetSelection;
+	return if $selection == Wx::NOT_FOUND;
 	my $action    = $self->_list->GetClientData($selection);
 	$self->Hide;
 	my %actions     = %{ Padre::ide->actions };
