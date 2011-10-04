@@ -65,7 +65,7 @@ sub _on_ok_button_clicked {
 	# Open the selected menu item if the user pressed OK
 	my $selection = $self->_list->GetSelection;
 	my $action    = $self->_list->GetClientData($selection);
-	$self->Destroy;
+	$self->Hide;
 	my %actions     = %{ Padre::ide->actions };
 	my $menu_action = $actions{ $action->{name} };
 	if ($menu_action) {
