@@ -126,6 +126,7 @@ the even version for the release, even during development.
     - Move the key bindings dialog to the preferences dialog (AZAWAWI)
     - Removed the bin_diff configuration parameter and the external tools panel
       from the preferences dialog (AZAWAWI)
+    - Fix quick menu access stability bugs on Ubuntu (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
