@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-03 12:10-0700\n"
+"POT-Creation-Date: 2011-10-04 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,8 +180,8 @@ msgid "&Browse"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:1048 lib/Padre/Wx/Dialog/Advanced.pm:190
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:155
-#: lib/Padre/Wx/Dialog/OpenResource.pm:184
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:150
+#: lib/Padre/Wx/Dialog/OpenResource.pm:181
 #: lib/Padre/Wx/Dialog/WizardSelector.pm:92 lib/Padre/Wx/Dialog/Goto.pm:100
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70
 msgid "&Cancel"
@@ -370,11 +370,11 @@ msgstr ""
 msgid "&Matching Help Topics:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:228
+#: lib/Padre/Wx/Dialog/OpenResource.pm:225
 msgid "&Matching Items:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:183
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:178
 msgid "&Matching Menu Items:"
 msgstr ""
 
@@ -411,8 +411,8 @@ msgstr ""
 msgid "&Next Problem"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:151
-#: lib/Padre/Wx/Dialog/OpenResource.pm:178 lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:146
+#: lib/Padre/Wx/Dialog/OpenResource.pm:175 lib/Padre/Wx/Dialog/Goto.pm:93
 #: lib/Padre/Wx/Dialog/OpenURL.pm:62
 msgid "&OK"
 msgstr ""
@@ -586,7 +586,7 @@ msgstr ""
 msgid "&Select"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:206
+#: lib/Padre/Wx/Dialog/OpenResource.pm:203
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
 
@@ -631,7 +631,7 @@ msgstr ""
 msgid "&Translate Padre..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:176
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:171
 msgid "&Type a menu item name to access:"
 msgstr ""
 
@@ -1253,7 +1253,7 @@ msgstr ""
 msgid "Clean up file content on saving (for supported document types)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:222
+#: lib/Padre/Wx/Dialog/OpenResource.pm:219
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
@@ -1465,7 +1465,7 @@ msgstr ""
 msgid "Copy Value"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:262
+#: lib/Padre/Wx/Dialog/OpenResource.pm:259
 msgid "Copy filename to clipboard"
 msgstr ""
 
@@ -1604,7 +1604,7 @@ msgstr ""
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:245
+#: lib/Padre/Wx/Dialog/OpenResource.pm:242
 msgid "Current Directory: "
 msgstr ""
 
@@ -1677,7 +1677,7 @@ msgstr ""
 msgid "Date/Time"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:395
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390
 msgid "Debug"
 msgstr ""
 
@@ -1932,7 +1932,7 @@ msgstr ""
 msgid "EOL to &Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:384
 msgid "Edit"
 msgstr ""
 
@@ -2058,7 +2058,7 @@ msgid ""
 "tar.gz"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:215
+#: lib/Padre/Wx/Dialog/OpenResource.pm:212
 msgid "Enter parts of the resource name to find it"
 msgstr ""
 
@@ -2068,14 +2068,12 @@ msgstr ""
 
 #: lib/Padre/Document.pm:448 lib/Padre/Wx/Editor.pm:633
 #: lib/Padre/Wx/Main.pm:5040 lib/Padre/Wx/Role/Dialog.pm:95
-#: lib/Padre/Wx/Dialog/PluginManager.pm:356
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:90 lib/Padre/Wx/Dialog/Sync.pm:78
+#: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
 #: lib/Padre/Wx/Dialog/Sync.pm:118 lib/Padre/Wx/Dialog/Sync.pm:142
 #: lib/Padre/Wx/Dialog/Sync.pm:153 lib/Padre/Wx/Dialog/Sync.pm:163
 #: lib/Padre/Wx/Dialog/Sync.pm:183 lib/Padre/Wx/Dialog/Sync.pm:194
 #: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
-#: lib/Padre/Wx/Dialog/OpenResource.pm:118
 msgid "Error"
 msgstr ""
 
@@ -2157,11 +2155,12 @@ msgstr ""
 msgid "Error while searching for POD"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:362 lib/Padre/Wx/Dialog/OpenResource.pm:117
+#: lib/Padre/Wx/VCS.pm:362
 msgid "Error while trying to perform Padre action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:88
+#: lib/Padre/Wx/Dialog/OpenResource.pm:117
 #, perl-format
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
@@ -2335,7 +2334,7 @@ msgstr ""
 msgid "Fayland Lam"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:383
 #: lib/Padre/Wx/Dialog/WindowList.pm:224 lib/Padre/Wx/Dialog/Special.pm:64
 msgid "File"
 msgstr ""
@@ -2668,7 +2667,7 @@ msgstr ""
 msgid "Heiko Jansen"
 msgstr ""
 
-#: lib/Padre/Wx/Browser.pm:63 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:398
+#: lib/Padre/Wx/Browser.pm:63 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
 msgid "Help"
 msgstr ""
 
@@ -3465,8 +3464,8 @@ msgstr ""
 msgid "Open File"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:30
-#: lib/Padre/Wx/Dialog/OpenResource.pm:76
+#: lib/Padre/Wx/Dialog/OpenResource.pm:31
+#: lib/Padre/Wx/Dialog/OpenResource.pm:77
 msgid "Open Resources"
 msgstr ""
 
@@ -3790,7 +3789,7 @@ msgstr ""
 msgid "Paweł Murias"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:392
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:387
 msgid "Perl"
 msgstr ""
 
@@ -3925,7 +3924,7 @@ msgstr ""
 msgid "Plugin error on event %s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:396
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:391
 msgid "Plugins"
 msgstr ""
 
@@ -4123,7 +4122,7 @@ msgstr ""
 msgid "Reading items. Please wait"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:352
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:347
 msgid "Reading items. Please wait..."
 msgstr ""
 
@@ -4140,7 +4139,7 @@ msgstr ""
 msgid "Ref&actor"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:388
 msgid "Refactor"
 msgstr ""
 
@@ -4383,7 +4382,7 @@ msgid "Ruby Files"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:151
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:394
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
 msgid "Run"
 msgstr ""
 
@@ -4536,7 +4535,7 @@ msgid "Script arguments"
 msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Directory.pm:514
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:390 lib/Padre/Wx/Dialog/Find.pm:74
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:385 lib/Padre/Wx/Dialog/Find.pm:74
 msgid "Search"
 msgstr ""
 
@@ -4684,7 +4683,7 @@ msgstr ""
 msgid "Select files to close:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:239
+#: lib/Padre/Wx/Dialog/OpenResource.pm:236
 msgid "Select one or more resources to open"
 msgstr ""
 
@@ -5113,11 +5112,11 @@ msgstr ""
 msgid "Skip question without giving feedback"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:271
+#: lib/Padre/Wx/Dialog/OpenResource.pm:268
 msgid "Skip using MANIFEST.SKIP"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:267
+#: lib/Padre/Wx/Dialog/OpenResource.pm:264
 msgid "Skip version control system files"
 msgstr ""
 
@@ -5624,7 +5623,7 @@ msgstr ""
 msgid "Very Fatal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:391
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:386
 msgid "View"
 msgstr ""
 
@@ -5709,7 +5708,7 @@ msgstr ""
 msgid "Whitespace characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:392
 msgid "Window"
 msgstr ""
 
