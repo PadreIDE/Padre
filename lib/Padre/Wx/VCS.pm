@@ -233,7 +233,7 @@ sub render {
 					if ( $show_ignored or $status ne 'I' ) {
 
 						# Add a version control path to the list
-						$list->InsertStringItem( $index, $rec->{current} );
+						$list->InsertStringItem( $index, $rec->{revision} );
 						$list->SetItemData( $index, $model_index );
 						$list->SetItem( $index, 1, $rec->{author} );
 						$list->SetItem( $index, 2, $path_status->{name} );
@@ -303,7 +303,7 @@ sub _sort_model {
 	if ( $self->{sortcolumn} == 0 ) {
 
 		# Sort by revision
-		@model = sort { $a->{current} cmp $b->{current} } @model;
+		@model = sort { $a->{revision} cmp $b->{revision} } @model;
 	} elsif ( $self->{sortcolumn} == 1 ) {
 
 		# Sort by author

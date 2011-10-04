@@ -48,14 +48,29 @@ sub new {
 sub run {
 	my $self = shift;
 
+	# Create empty model
+	$self->{model} = [];
+
 	# Pull things off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
-	my $vcs         = delete $self->{vcs}         if $self->{vcs};
-	my $project_dir = delete $self->{project_dir} if $self->{project_dir};
+	return unless $self->{vcs};
+	my $vcs = delete $self->{vcs};
+	return unless $self->{project_dir};
+	my $project_dir = delete $self->{project_dir};
 
 	# We only support Subversion at the moment
+	$self->{model} = $self->_find_svn_status($project_dir)
+		if $vcs eq Padre::Constant::SUBVERSION;
+
 	#TODO support GIT!
-	return unless $vcs eq Padre::Constant::SUBVERSION;
+
+	return 1;
+}
+
+sub _find_svn_status {
+	my ( $self, $project_dir ) = @_;
+
+	my @model = ();
 
 	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
@@ -66,9 +81,9 @@ sub run {
 	$err->close;
 
 	# Find the svn command line
-	my $svn = File::Which::which('svn') or return;
+	my $svn = File::Which::which('svn') or return \@model;
 
-	# Handle spaces in git executable path under win32
+	# Handle spaces in executable path under win32
 	$svn = qq{"$svn"} if Padre::Constant::WIN32;
 
 	# 'git --no-pager show' command
@@ -85,49 +100,50 @@ sub run {
 	# Run command in directory
 	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
 
-	# Slurp git command standard input and output
+	# Slurp command standard input and output
 	my $stdout = Padre::Util::slurp $out->filename;
-	my $stderr = Padre::Util::slurp $err->filename;
 
-	$self->{model} = [];
+	#TODO parse Standard error?
+	#my $stderr = Padre::Util::slurp $err->filename;
+
 	if ($stdout) {
-		my @lines = split /^/, $$stdout;
-		for my $line (@lines) {
+		for my $line ( split /^/, $$stdout ) {
+
+			# Remove newlines and an extra CR (carriage return)
 			chomp($line);
-			$line =~ s/\r//g; # Remove extra carriage return
+			$line =~ s/\r//g;
 			if ( $line =~ /^(\?|I)\s+(.+?)$/ ) {
 
 				# Handle unversioned and ignored objects
-				push @{ $self->{model} },
+				push @model,
 					{
-					status  => $1,
-					latest  => '',
-					current => '',
-					author  => '',
-					path    => $2,
+					status   => $1,
+					revision => '',
+					author   => '',
+					path     => $2,
 					fullpath => File::Spec->catfile( $project_dir, $2 ),
 					};
-			} elsif ( $line =~ /^(.)\s+(\d+)\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
+			} elsif ( $line =~ /^(.)\s+\d+\s+(\d+)\s+(\w+)\s+(.+?)$/ ) {
 
 				# Handle other cases
-				push @{ $self->{model} },
+				push @model,
 					{
-					status  => $1,
-					latest  => $2,
-					current => $3,
-					author  => $4,
-					path    => $5,
-					fullpath => File::Spec->catfile( $project_dir, $5 ),
+					status   => $1,
+					revision => $2,
+					author   => $3,
+					path     => $4,
+					fullpath => File::Spec->catfile( $project_dir, $4 ),
 					};
 			} else {
 
-				# issue a low-level warning
+				# Log the event but do not do anything drastic
+				# about it
 				TRACE("Cannot understand '$line'") if DEBUG;
 			}
 		}
 	}
 
-	return 1;
+	return \@model;
 }
 
 1;
