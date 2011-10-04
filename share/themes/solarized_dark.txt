@@ -416,3 +416,55 @@ StyleSetForeground      wxSTC_HJ_SINGLESTRING           b58900
 StyleSetForeground      wxSTC_HJ_SYMBOLS                d33682
 StyleSetForeground      wxSTC_HJ_STRINGEOL              6c71c4
 StyleSetForeground      wxSTC_HJ_REGEX                  d33682
+
+
+
+# text/x-patch
+#
+style text/x-patch
+include text/plain
+
+StyleSetForeground      wxSTC_DIFF_DEFAULT              657b83
+StyleSetForeground      wxSTC_DIFF_COMMENT              586e75
+StyleSetBold            wxSTC_DIFF_COMMENT              1
+StyleSetItalic          wxSTC_DIFF_COMMENT              1
+StyleSetEOLFilled       wxSTC_DIFF_COMMENT              1
+StyleSetUnderline       wxSTC_DIFF_COMMENT              1
+StyleSetForeground      wxSTC_DIFF_COMMAND              93a1a1
+StyleSetForeground      wxSTC_DIFF_HEADER               859900
+StyleSetForeground      wxSTC_DIFF_POSITION             268bd2
+StyleSetForeground      wxSTC_DIFF_DELETED              dc322f
+StyleSetForeground      wxSTC_DIFF_ADDED                2aa198
+#StyleSetForeground      wxSTC_DIFF_CHANGED              6c71c4
+
+
+StyleSetBackground      wxSTC_DIFF_DEFAULT              002b36
+StyleSetBackground      wxSTC_DIFF_COMMENT              002b36
+StyleSetBackground      wxSTC_DIFF_COMMAND              002b36
+StyleSetBackground      wxSTC_DIFF_HEADER               002b36
+StyleSetBackground      wxSTC_DIFF_POSITION             002b36
+StyleSetBackground      wxSTC_DIFF_DELETED              002b36
+StyleSetBackground      wxSTC_DIFF_ADDED                002b36
+#StyleSetBackground      wxSTC_DIFF_CHANGED              002b36
+
+# text/x-makefile
+#
+style text/x-makefile
+include text/plain
+
+StyleSetForeground      wxSTC_MAKE_DEFAULT              657b83
+StyleSetForeground      wxSTC_MAKE_COMMENT              586e75
+StyleSetForeground      wxSTC_MAKE_PREPROCESSOR         93a1a1
+StyleSetForeground      wxSTC_MAKE_IDENTIFIER           859900
+StyleSetForeground      wxSTC_MAKE_OPERATOR             268bd2
+StyleSetForeground      wxSTC_MAKE_TARGET               dc322f
+StyleSetForeground      wxSTC_MAKE_IDEOL                2aa198
+
+StyleSetBackground      wxSTC_MAKE_DEFAULT              002b36
+StyleSetBackground      wxSTC_MAKE_COMMENT              002b36
+StyleSetBackground      wxSTC_MAKE_PREPROCESSOR         002b36
+StyleSetBackground      wxSTC_MAKE_IDENTIFIER           002b36
+StyleSetBackground      wxSTC_MAKE_OPERATOR             002b36
+StyleSetBackground      wxSTC_MAKE_TARGET               002b36
+StyleSetBackground      wxSTC_MAKE_IDEOL                002b36
+
