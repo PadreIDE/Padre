@@ -569,7 +569,7 @@ sub select_next_problem {
 	my $root = $self->{tree}->GetRootItem;
 	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
 	my $line_to_select = undef;
-	while ($cookie) {
+	while ( $child->IsOk ) {
 
 		# Get the line and check that it is a valid line number
 		my $issue = $self->{tree}->GetPlData($child) or return;

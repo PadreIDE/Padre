@@ -39,7 +39,7 @@ sub GetChildByText {
 	# Start with the first child
 	my ( $child, $cookie ) = $self->GetFirstChild($item);
 
-	while ($cookie) {
+	while ( $child->IsOk ) {
 
 		# Is the current child the one we want?
 		if ( $self->GetItemText($child) eq $text ) {
