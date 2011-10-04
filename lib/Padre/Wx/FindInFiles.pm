@@ -151,7 +151,7 @@ sub search {
 		%param,
 	);
 
-	my $tree = $self->{tree};
+	$self->{tree}->AddRoot('Root');
 	$self->{status}->SetLabel(
 		sprintf(
 			Wx::gettext(q{Searching for '%s' in '%s'...}),

@@ -110,7 +110,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_SINGLE,
+		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_LINES_AT_ROOT | Wx::TR_SINGLE,
 	);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
