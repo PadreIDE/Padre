@@ -113,11 +113,16 @@ sub _translation {
 	$self->kenichi_ishigaki->SetLabel(Wx::gettext('石垣憲'));
 	$self->keedi_kim->SetLabel(Wx::gettext('김도형'));
 	
-	# $self->->SetLabel(Wx::gettext(''));
-	# $self->->SetLabel(Wx::gettext(''));
-	# $self->->SetLabel(Wx::gettext(''));
+	# $self->kjetil_skotheim->SetLabel(Wx::gettext(''));
+	# $self->cezary_morga->SetLabel(Wx::gettext(''));
+	# $self->breno_g_de_oliveira->SetLabel(Wx::gettext(''));
+	# $self->gabriel_vieira->SetLabel(Wx::gettext(''));
 	
 	
+	# $self->->SetLabel(Wx::gettext(''));
+	# $self->->SetLabel(Wx::gettext(''));
+	# $self->->SetLabel(Wx::gettext(''));
+	$self->burak_gursoy->SetLabel(Wx::gettext('Burak Gürsoy'));
 	
 	
 	return;

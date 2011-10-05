@@ -15369,7 +15369,7 @@
             <property name="minimum_size"></property>
             <property name="name">Padre::Wx::FBP::About</property>
             <property name="pos"></property>
-            <property name="size">600,600</property>
+            <property name="size">600,620</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">About</property>
@@ -15435,7 +15435,7 @@
                         <property name="name">notebook</property>
                         <property name="permission">public</property>
                         <property name="pos"></property>
-                        <property name="size">580,540</property>
+                        <property name="size">580,560</property>
                         <property name="style"></property>
                         <property name="subclass"></property>
                         <property name="tooltip"></property>
@@ -15474,7 +15474,7 @@
                         <object class="notebookpage" expanded="0">
                             <property name="bitmap"></property>
                             <property name="label">Padre</property>
-                            <property name="select">0</property>
+                            <property name="select">1</property>
                             <object class="wxPanel" expanded="0">
                                 <property name="bg"></property>
                                 <property name="context_help"></property>
@@ -18353,7 +18353,7 @@
                         <object class="notebookpage" expanded="0">
                             <property name="bitmap"></property>
                             <property name="label">Translation</property>
-                            <property name="select">1</property>
+                            <property name="select">0</property>
                             <object class="wxPanel" expanded="0">
                                 <property name="bg"></property>
                                 <property name="context_help"></property>
@@ -18420,7 +18420,7 @@
                                             <property name="vgap">0</property>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -18543,7 +18543,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -18722,7 +18722,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -18845,7 +18845,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -18968,7 +18968,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19091,7 +19091,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19270,7 +19270,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19505,7 +19505,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19740,7 +19740,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19863,7 +19863,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -19986,7 +19986,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20109,7 +20109,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20232,7 +20232,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20311,8 +20311,8 @@
                                                             <property name="label">Kjetil Skotheim</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81210</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">kjetil_skotheim</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20355,7 +20355,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20434,8 +20434,8 @@
                                                             <property name="label">Cezary Morga</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81211</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">cezary_morga</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20478,7 +20478,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20557,8 +20557,8 @@
                                                             <property name="label">Breno G. de Oliveira</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81212</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">breno_g_de_oliveira</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20613,8 +20613,8 @@
                                                             <property name="label">Gabriel Vieira</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71312</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">gabriel_vieira</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20657,7 +20657,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20736,8 +20736,8 @@
                                                             <property name="label">Paco Alguacil</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81213</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">paco_alguacil</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20792,8 +20792,8 @@
                                                             <property name="label">Enrique Nell</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText71313</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">enrique_nell</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20836,7 +20836,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -20915,8 +20915,8 @@
                                                             <property name="label">Andrew Shitov</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81214</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">andrew_shitov</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -20959,7 +20959,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">4</property>
-                                                <property name="flag">wxEXPAND</property>
+                                                <property name="flag"></property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxBoxSizer" expanded="0">
                                                     <property name="minimum_size"></property>
@@ -21038,8 +21038,8 @@
                                                             <property name="label">Burak Gursoy </property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText81215</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">burak_gursoy</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>

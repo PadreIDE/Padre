@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::gettext("About"),
 		Wx::DefaultPosition,
-		[ 600, 600 ],
+		[ 600, 620 ],
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
@@ -35,7 +35,7 @@ sub new {
 		$self,
 		-1,
 		Wx::DefaultPosition,
-		[ 580, 540 ],
+		[ 580, 560 ],
 	);
 
 	$self->{padre} = Wx::Panel->new(
@@ -606,7 +606,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81210} = Wx::StaticText->new(
+	$self->{kjetil_skotheim} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Kjetil Skotheim"),
@@ -621,7 +621,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81211} = Wx::StaticText->new(
+	$self->{cezary_morga} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Cezary Morga"),
@@ -636,13 +636,13 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81212} = Wx::StaticText->new(
+	$self->{breno_g_de_oliveira} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Breno G. de Oliveira"),
 	);
 
-	$self->{m_staticText71312} = Wx::StaticText->new(
+	$self->{gabriel_vieira} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Gabriel Vieira"),
@@ -657,13 +657,13 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81213} = Wx::StaticText->new(
+	$self->{paco_alguacil} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Paco Alguacil"),
 	);
 
-	$self->{m_staticText71313} = Wx::StaticText->new(
+	$self->{enrique_nell} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Enrique Nell"),
@@ -678,7 +678,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81214} = Wx::StaticText->new(
+	$self->{andrew_shitov} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Andrew Shitov"),
@@ -693,7 +693,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText81215} = Wx::StaticText->new(
+	$self->{burak_gursoy} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Burak Gursoy"),
@@ -861,49 +861,49 @@ sub new {
 
 	my $bSizer62210 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62210->Add( $self->{m_staticText472210}, 0, Wx::ALL, 4 );
-	$bSizer62210->Add( $self->{m_staticText81210}, 0, Wx::ALL, 2 );
+	$bSizer62210->Add( $self->{kjetil_skotheim}, 0, Wx::ALL, 2 );
 
 	my $bSizer62211 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62211->Add( $self->{m_staticText472211}, 0, Wx::ALL, 4 );
-	$bSizer62211->Add( $self->{m_staticText81211}, 0, Wx::ALL, 2 );
+	$bSizer62211->Add( $self->{cezary_morga}, 0, Wx::ALL, 2 );
 
 	my $bSizer62212 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62212->Add( $self->{m_staticText472212}, 0, Wx::ALL, 4 );
-	$bSizer62212->Add( $self->{m_staticText81212}, 0, Wx::ALL, 2 );
-	$bSizer62212->Add( $self->{m_staticText71312}, 0, Wx::ALL, 2 );
+	$bSizer62212->Add( $self->{breno_g_de_oliveira}, 0, Wx::ALL, 2 );
+	$bSizer62212->Add( $self->{gabriel_vieira}, 0, Wx::ALL, 2 );
 
 	my $bSizer62213 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62213->Add( $self->{m_staticText472213}, 0, Wx::ALL, 4 );
-	$bSizer62213->Add( $self->{m_staticText81213}, 0, Wx::ALL, 2 );
-	$bSizer62213->Add( $self->{m_staticText71313}, 0, Wx::ALL, 2 );
+	$bSizer62213->Add( $self->{paco_alguacil}, 0, Wx::ALL, 2 );
+	$bSizer62213->Add( $self->{enrique_nell}, 0, Wx::ALL, 2 );
 
 	my $bSizer62214 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62214->Add( $self->{m_staticText472214}, 0, Wx::ALL, 4 );
-	$bSizer62214->Add( $self->{m_staticText81214}, 0, Wx::ALL, 2 );
+	$bSizer62214->Add( $self->{andrew_shitov}, 0, Wx::ALL, 2 );
 
 	my $bSizer62215 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62215->Add( $self->{m_staticText472215}, 0, Wx::ALL, 4 );
-	$bSizer62215->Add( $self->{m_staticText81215}, 0, Wx::ALL, 2 );
+	$bSizer62215->Add( $self->{burak_gursoy}, 0, Wx::ALL, 2 );
 
 	my $gSizer311 = Wx::GridSizer->new( 0, 3, 0, 0 );
-	$gSizer311->Add( $bSizer623, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer621, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer622, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6221, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6222, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6223, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6224, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6225, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6226, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6227, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6228, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer6229, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62210, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62211, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62212, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62213, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62214, 0, Wx::EXPAND, 4 );
-	$gSizer311->Add( $bSizer62215, 0, Wx::EXPAND, 4 );
+	$gSizer311->Add( $bSizer623, 0, 0, 4 );
+	$gSizer311->Add( $bSizer621, 0, 0, 4 );
+	$gSizer311->Add( $bSizer622, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6221, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6222, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6223, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6224, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6225, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6226, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6227, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6228, 0, 0, 4 );
+	$gSizer311->Add( $bSizer6229, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62210, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62211, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62212, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62213, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62214, 0, 0, 4 );
+	$gSizer311->Add( $bSizer62215, 0, 0, 4 );
 
 	my $bSizer31 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer31->Add( $gSizer311, 0, Wx::EXPAND, 2 );
@@ -917,9 +917,9 @@ sub new {
 	$self->{system_info}->SetSizerAndFit($bSizer32);
 	$self->{system_info}->Layout;
 
-	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 0 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
 	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
-	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 1 );
+	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
 	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
 
 	$self->{m_sdbSizer1} = Wx::StdDialogButtonSizer->new;
@@ -1014,6 +1014,38 @@ sub kenichi_ishigaki {
 
 sub keedi_kim {
 	$_[0]->{keedi_kim};
+}
+
+sub kjetil_skotheim {
+	$_[0]->{kjetil_skotheim};
+}
+
+sub cezary_morga {
+	$_[0]->{cezary_morga};
+}
+
+sub breno_g_de_oliveira {
+	$_[0]->{breno_g_de_oliveira};
+}
+
+sub gabriel_vieira {
+	$_[0]->{gabriel_vieira};
+}
+
+sub paco_alguacil {
+	$_[0]->{paco_alguacil};
+}
+
+sub enrique_nell {
+	$_[0]->{enrique_nell};
+}
+
+sub andrew_shitov {
+	$_[0]->{andrew_shitov};
+}
+
+sub burak_gursoy {
+	$_[0]->{burak_gursoy};
 }
 
 sub output {
