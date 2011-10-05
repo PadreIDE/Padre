@@ -131,6 +131,7 @@ the even version for the release, even during development.
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
+    - Style 2.0 breaks all existing styles (ADAMK)
     - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
     - Rename internal language code 'fr-fr' to 'fr' (and .po files) for
       consistency with other softwares, breaking old fr-fr files (DOLMEN)
