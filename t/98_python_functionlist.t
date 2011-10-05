@@ -24,10 +24,12 @@ def bogus(a, b):
 """
 def __init__:
      return
-"""
+
+def subtract(a, b):
+     return a - b
+
 def add(a, b):
-     text = "Hello, " + what + "!"
-     print text
+     return a + b
 
 g = lambda x: x**2
 END_PYTHON
@@ -40,7 +42,7 @@ SCOPE: {
 	# Create the function list parser
 	my $task = new_ok(
 		'Padre::Document::Python::FunctionList',
-		[   text => $code ]
+		[ text => $code ]
 	);
 
 	# Executing the parsing job
@@ -51,6 +53,7 @@ SCOPE: {
 		$task->{list},
 		[   qw{
 				__init__
+				subtract
 				add
 				g
 				}
@@ -83,12 +86,13 @@ SCOPE: {
 	is_deeply(
 		$task->{list},
 		[   qw{
-			__init__
-			add
-			g
-			}
+				add
+				g
+				__init__
+				subtract
+				}
 		],
-		'Found expected functions',
+		'Found expected functions (alphabetical)',
 	);
 }
 
@@ -116,11 +120,12 @@ SCOPE: {
 	is_deeply(
 		$task->{list},
 		[   qw{
-				g
 				add
+				g
+				subtract
 				__init__
 				}
 		],
-		'Found expected functions',
+		'Found expected functions (alphabetical_private_last)',
 	);
 }
