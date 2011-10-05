@@ -390,7 +390,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText813} = Wx::StaticText->new(
+	$self->{ahmad_zawawi} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Ahmad Zawawi"),
@@ -405,13 +405,13 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText811} = Wx::StaticText->new(
+	$self->{fayland_lam} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Fayland Lam"),
 	);
 
-	$self->{m_staticText712} = Wx::StaticText->new(
+	$self->{chuanren_wu} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Chuanren Wu"),
@@ -426,7 +426,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText812} = Wx::StaticText->new(
+	$self->{matthew_lien} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Matthew Lien"),
@@ -807,16 +807,16 @@ sub new {
 
 	my $bSizer623 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer623->Add( $self->{m_staticText4723}, 0, Wx::ALL, 4 );
-	$bSizer623->Add( $self->{m_staticText813}, 0, Wx::ALL, 2 );
+	$bSizer623->Add( $self->{ahmad_zawawi}, 0, Wx::ALL, 2 );
 
 	my $bSizer621 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer621->Add( $self->{m_staticText4721}, 0, Wx::ALL, 4 );
-	$bSizer621->Add( $self->{m_staticText811}, 0, Wx::ALL, 2 );
-	$bSizer621->Add( $self->{m_staticText712}, 0, Wx::ALL, 2 );
+	$bSizer621->Add( $self->{fayland_lam}, 0, Wx::ALL, 2 );
+	$bSizer621->Add( $self->{chuanren_wu}, 0, Wx::ALL, 2 );
 
 	my $bSizer622 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer622->Add( $self->{m_staticText4722}, 0, Wx::ALL, 4 );
-	$bSizer622->Add( $self->{m_staticText812}, 0, Wx::ALL, 2 );
+	$bSizer622->Add( $self->{matthew_lien}, 0, Wx::ALL, 2 );
 
 	my $bSizer6221 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6221->Add( $self->{m_staticText47221}, 0, Wx::ALL, 4 );
@@ -917,9 +917,9 @@ sub new {
 	$self->{system_info}->SetSizerAndFit($bSizer32);
 	$self->{system_info}->Layout;
 
-	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 0 );
 	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
-	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
+	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 1 );
 	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
 
 	$self->{m_sdbSizer1} = Wx::StdDialogButtonSizer->new;
@@ -942,6 +942,22 @@ sub notebook {
 
 sub creator {
 	$_[0]->{creator};
+}
+
+sub ahmad_zawawi {
+	$_[0]->{ahmad_zawawi};
+}
+
+sub fayland_lam {
+	$_[0]->{fayland_lam};
+}
+
+sub chuanren_wu {
+	$_[0]->{chuanren_wu};
+}
+
+sub matthew_lien {
+	$_[0]->{matthew_lien};
 }
 
 sub output {

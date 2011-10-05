@@ -88,6 +88,15 @@ sub _set_up {
 sub _translation {
 	my $self = shift;
 	
+	$self->ahmad_zawawi->SetLabel(Wx::gettext('أحمد محمد زواوي'));
+	# $self->fayland_lam->SetLabel(Wx::gettext(''));
+	# $self->chuanren_wu->SetLabel(Wx::gettext(''));
+	$self->matthew_lien->SetLabel(Wx::gettext('練喆明'));
+	
+	# $self->ahmad_zawawi->SetLabel(Wx::gettext(''));
+	
+	
+	
 	return;
 }
 
