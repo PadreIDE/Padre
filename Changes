@@ -128,6 +128,8 @@ the even version for the release, even during development.
       from the preferences dialog (AZAWAWI)
     - Fix quick menu access stability bugs on Ubuntu (AZAWAWI)
     - Fix #1318: Padre freeze? (AZAWAWI)
+    - Added Python function list support (AZAWAWI)
+    - Added SQL, C/C++/C#/XS/Python/Ruby/PHP keyword highlighting (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
