@@ -149,7 +149,7 @@ sub _initialize {
 		'application/javascript'    => 'Padre::Document::DoubleSlashComment',
 		'application/x-latex'       => 'Padre::Document::PercentComment',
 		'application/x-shellscript' => 'Padre::Document::HashComment',
-		'text/x-java-source'        => 'Padre::Document::DoubleSlashComment',
+		'text/x-java-source'        => 'Padre::Document::Java',
 		'text/x-lua'                => 'Padre::Document::DoubleDashComment',
 		'text/x-makefile'           => 'Padre::Document::HashComment',
 		'text/x-matlab'             => 'Padre::Document::PercentComment',
