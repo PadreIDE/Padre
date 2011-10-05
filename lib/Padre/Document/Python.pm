@@ -14,8 +14,8 @@ our @ISA     = qw{
 # The list is obtained from src/scite/src/python.properties
 sub lexer_keywords {
 	return [
-		[   qw(and as assert break class continue def del elif \
-else except exec finally for from global if import in is lambda None \
+		[   qw(and as assert break class continue def del elif
+else except exec finally for from global if import in is lambda None
 not or pass print raise return try while with yield)
 		],
 	];
