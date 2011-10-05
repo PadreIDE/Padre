@@ -155,7 +155,7 @@ sub _initialize {
 		'text/x-matlab'             => 'Padre::Document::PercentComment',
 		'application/x-perl'        => 'Padre::Document::Perl',
 		'text/x-python'             => 'Padre::Document::Python',
-		'application/x-php'         => 'Padre::Document::HashComment',
+		'application/x-php'         => 'Padre::Document::PHP',
 		'application/x-ruby'        => 'Padre::Document::Ruby',
 		'text/x-sql'                => 'Padre::Document::SQL',
 		'text/x-config'             => 'Padre::Document::HashComment',
