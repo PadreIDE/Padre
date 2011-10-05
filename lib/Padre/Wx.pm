@@ -58,24 +58,6 @@ use constant {
 
 
 #####################################################################
-# Defines for sidebar marker; others may be needed for breakpoint
-# icons etc.
-
-use constant {
-	MarkError      => 1,
-	MarkWarn       => 2,
-	MarkLocation   => 3, # current location of the debugger
-	MarkBreakpoint => 4, # location of the debugger breakpoint
-	MarkAddition   => 5, # Line(s) added
-	MarkChange     => 6, # Line(s) changed
-	MarkDeletion   => 7, # Line(s) deleted
-};
-
-
-
-
-
-#####################################################################
 # Wx Version Methods
 
 sub version_perl {

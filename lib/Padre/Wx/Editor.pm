@@ -107,43 +107,43 @@ sub new {
 
 	# Set the colour scheme for syntax highlight markers
 	$self->MarkerDefine(
-		Padre::Wx::MarkError(),
+		Padre::Constant::MARKER_ERROR,
 		Wx::wxSTC_MARK_SMALLRECT,
 		RED,
 		RED,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkWarn(),
+		Padre::Constant::MARKER_WARN,
 		Wx::wxSTC_MARK_SMALLRECT,
 		ORANGE,
 		ORANGE,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkLocation(),
+		Padre::Constant::MARKER_LOCATION,
 		Wx::wxSTC_MARK_SMALLRECT,
 		GREEN,
 		GREEN,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkBreakpoint(),
+		Padre::Constant::MARKER_BREAKPOINT,
 		Wx::wxSTC_MARK_SMALLRECT,
 		BLUE,
 		BLUE,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkAddition(),
+		Padre::Constant::MARKER_ADDED,
 		Wx::wxSTC_MARK_PLUS,
 		DARK_GREEN,
 		DARK_GREEN,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkChange(),
+		Padre::Constant::MARKER_CHANGED,
 		Wx::wxSTC_MARK_ARROW,
 		LIGHT_BLUE,
 		LIGHT_BLUE,
 	);
 	$self->MarkerDefine(
-		Padre::Wx::MarkDeletion(),
+		Padre::Constant::MARKER_DELETED,
 		Wx::wxSTC_MARK_MINUS,
 		LIGHT_RED,
 		LIGHT_RED,

@@ -20,8 +20,9 @@ sufficient abstraction from L<Wx>.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current ();
-use Padre::Wx      ();
+use Padre::Constant ();
+use Padre::Current  ();
+use Padre::Wx       ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -162,8 +163,8 @@ sub _set_debugger {
 	# They should be reunited soon !!!! (or not)
 	$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
 	$editor->SetMarginWidth( 1, 16 );
-	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
-	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkLocation );
+	$editor->MarkerDeleteAll(Padre::Constant::MARKER_LOCATION);
+	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_LOCATION );
 
 	my $debugger = $main->debugger;
 	my $count    = $debugger->GetItemCount;
@@ -226,7 +227,7 @@ sub debug_perl_set_breakpoint {
 		$self->error( sprintf( Wx::gettext("Could not set breakpoint on file '%s' row '%s'"), $file, $row ) );
 		return;
 	}
-	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkBreakpoint() );
+	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_BREAKPOINT );
 
 	# TODO: This should be the condition I guess
 	$self->{save}->{ $self->{file} }->{breakpoints}->{$file}->{$row} = 1;
@@ -258,7 +259,7 @@ sub debug_perl_quit {
 	# Clean up the GUI artifacts
 	my $current = Padre::Current->new;
 	$current->main->show_debug(0);
-	$current->editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
+	$current->editor->MarkerDeleteAll(Padre::Constant::MARKER_LOCATION);
 
 	# Detach the debugger
 	$self->{client}->quit;

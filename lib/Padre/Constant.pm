@@ -61,7 +61,18 @@ use constant {
 	PROJECT => 2,
 };
 
-# Syntax Highlighter Colours.
+# Scintilla Marker Allocation
+use constant {
+	MARKER_ERROR      => 1,
+	MARKER_WARN       => 2,
+	MARKER_LOCATION   => 3, # current location of the debugger
+	MARKER_BREAKPOINT => 4, # location of the debugger breakpoint
+	MARKER_ADDED      => 5, # Line added
+	MARKER_CHANGED    => 6, # Line changed
+	MARKER_DELETED    => 7, # Line deleted
+};
+
+# Scintilla Syntax Highlighter Colours.
 # NOTE: It's not clear why these need "PADRE_" in the name, but they do.
 use constant {
 	PADRE_BLACK        => 0,

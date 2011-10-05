@@ -9,6 +9,7 @@ use Scalar::Util     ();
 use Params::Util     ();
 use Padre::Constant  ();
 use Padre::Util      ();
+use Padre::Wx        ();
 use Padre::Wx::Style ();
 
 our $VERSION = '0.91';
@@ -44,6 +45,8 @@ my %PARAM = (
 	SetWhitespaceForeground => [ 2, 'boolean,color' ],
 	SetSelBackground        => [ 2, 'style,color' ],
 	SetSelForeground        => [ 1, 'style,color' ],
+	StyleAllBackground      => [ 1, 'color' ],
+	StyleAllForeground      => [ 1, 'color' ],
 	StyleSetBackground      => [ 2, 'style,color' ],
 	StyleSetForeground      => [ 2, 'style,color' ],
 	StyleSetBold            => [ 2, 'style,boolean' ],
@@ -398,59 +401,68 @@ sub parse_boolean {
 # Compilation and Application
 
 sub apply {
-	my $self     = shift;
-	my $object   = shift;
-	my $sequence = undef;
+	my $self   = shift;
+	my $object = shift;
+
+	# Clear any previous style
+	$self->clear($object);
+
 	if ( Params::Util::_INSTANCE( $object, 'Padre::Wx::Editor' ) ) {
+		# This is an editor style
 		my $document = $object->{Document} or return;
 		my $mimetype = $document->mimetype or return;
-
-		# Reset the editor style
-		$self->clear($object);
 		$self->mime($mimetype)->apply($object);
-		return 1;
+
+	} else {
+		# This is a GUI style, chase the inheritance tree.
+		# Uses inlined Class::ISA algorithm as in Class::Inspector
+		my $class = Scalar::Util::blessed($object);
+		my @queue = ( $class );
+		my %seen  = ( $class => 1 );
+		while ( my $package = shift @queue ) {
+			no strict 'refs';
+			unshift @queue, grep { ! $seen{$_}++ }
+				map { s/^::/main::/; s/\'/::/g; $_ }
+				( @{"${package}::ISA"} );
+
+			# Apply the first style that patches
+			my $style = $self->{mime}->{$package} or next;
+			$style->apply($object);
+			return 1;
+		}
 	}
 
-	# This is a GUI style, chase the inheritance tree.
-	# Uses inlined Class::ISA algorithm as Class::Inspector uses
-	my $class = Scalar::Util::blessed($object);
-	my @queue = ( $class );
-	my %seen  = ( $class => 1 );
-	while ( my $package = shift @queue ) {
-		no strict 'refs';
-		unshift @queue, grep { ! $seen{$_}++ }
-			map { s/^::/main::/; s/\'/::/g; $_ }
-			( @{"${package}::ISA"} );
-
-		# Apply the first style that patches
-		my $style = $self->{mime}->{$package} or next;
-		$style->apply($object);
-		return 1;
-	}
-
-	# No styles matched
 	return 1;
 }
 
 sub clear {
 	my $self   = shift;
-	my $editor = shift;
-	my $config = $editor->config;
+	my $object = shift;
 
-	# Clears settings back to the editor configuration defaults
-	# To do this we flush absolutely everything and then apply
-	# the basic font settings.
-	$editor->StyleResetDefault;
+	if ( Params::Util::_INSTANCE( $object, 'Padre::Wx::Editor' ) ) {
 
-	# Reset the font from configuration (which Scintilla considers part of
-	# the "style" but Padre doesn't allow to be changed as a "style")
-	require Padre::Wx;
-	my $font = Padre::Wx::editor_font( $config->editor_font );
-	$editor->SetFont($font);
-	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT(), $font );
+		# Clears settings back to the editor configuration defaults
+		# To do this we flush absolutely everything and then apply
+		# the basic font settings.
+		$object->StyleResetDefault;
 
-	# Clear all styles back to the default
-	$editor->StyleClearAll;
+		# Reset the font from configuration (which Scintilla considers part of
+		# the "style" but Padre doesn't allow to be changed as a "style")
+		require Padre::Wx;
+		my $config = $object->config;
+		my $font   = Padre::Wx::editor_font( $config->editor_font );
+		$object->SetFont($font);
+		$object->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT(), $font );
+
+		# Clear all styles back to the default
+		$object->StyleClearAll;
+
+	} else {
+		# Reset the GUI element colours back to defaults
+		### Disabled as it blacks the directory tree for some reason
+		# $object->SetForegroundColour( Wx::NullColour );
+		# $object->SetBackgroundColour( Wx::NullColour );
+	}
 
 	return 1;
 }

@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Scalar::Util            ();
 use Params::Util            ();
+use Padre::Constant         ();
 use Padre::Role::Task       ();
 use Padre::Wx               ();
 use Padre::Util             ();
@@ -96,8 +97,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines changed'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line changed'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkDeletion );
-			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkChange );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_DELETED );
+			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_CHANGED );
 			$type = 'C';
 
 		} elsif ( $lines_added > 0 ) {
@@ -107,8 +108,8 @@ sub task_finish {
 				$lines_added > 1
 				? sprintf( Wx::gettext('%d lines added'), $lines_added )
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkChange, Padre::Wx::MarkDeletion );
-			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkAddition );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_CHANGED, Padre::Constant::MARKER_DELETED );
+			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_ADDED );
 			$type = 'A';
 		} elsif ( $lines_deleted > 0 ) {
 
@@ -117,8 +118,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines deleted'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line deleted'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Wx::MarkAddition, Padre::Wx::MarkChange );
-			$editor->MarkerAdd( $marker_line, Padre::Wx::MarkDeletion );
+			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_CHANGED );
+			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_DELETED );
 			$type = 'D';
 
 		} else {
@@ -167,9 +168,9 @@ sub clear {
 	my $editor  = $current->editor       or return;
 	my $lock    = $editor->lock_update;
 
-	$editor->MarkerDeleteAll(Padre::Wx::MarkAddition);
-	$editor->MarkerDeleteAll(Padre::Wx::MarkChange);
-	$editor->MarkerDeleteAll(Padre::Wx::MarkDeletion);
+	$editor->MarkerDeleteAll(Padre::Constant::MARKER_ADDED);
+	$editor->MarkerDeleteAll(Padre::Constant::MARKER_CHANGED);
+	$editor->MarkerDeleteAll(Padre::Constant::MARKER_DELETED);
 
 	$self->{dialog}->Hide if $self->{dialog};
 }
