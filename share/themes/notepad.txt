@@ -29,7 +29,7 @@ style text/plain
 include padre
 SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
-SetSelectionBackground                            0080ff
+SetSelBackground         1                        0080ff
 StyleAllBackground                                ffffff
 StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
 StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
