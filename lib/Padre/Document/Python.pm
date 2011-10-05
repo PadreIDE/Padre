@@ -4,7 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Document::HashComment ();
-use Padre::Role::Task ();
+use Padre::Constant              ();
+use Padre::Role::Task            ();
 
 our $VERSION = '0.91';
 our @ISA     = qw{
@@ -32,13 +33,40 @@ sub get_function_regex {
 	return qr/(?:^|[^# \t-])[ \t]*((?:def)\s+$name\b|\*$name\s*=\s*)/;
 }
 
+sub get_command {
+	my $self    = shift;
+	my $arg_ref = shift || {};
+	my $config  = $self->current->config;
+
+	# Use a temporary file if run_save is set to 'unsaved'
+	my $filename =
+		  $config->run_save eq 'unsaved' && !$self->is_saved
+		? $self->store_in_tempfile
+		: $self->filename;
+
+	# Use console python
+	require File::Which;
+	my $python = File::Which::which('python') or die Wx::gettext("Cannot find python executable in your PATH");
+	$python = qq{"$python"} if Padre::Constant::WIN32;
+
+	my $dir = File::Basename::dirname($filename);
+	chdir $dir;
+	my $shortname = File::Basename::basename($filename);
+
+	my @commands = (qq{"python"});
+	$shortname = qq{"$shortname"} if (Padre::Constant::WIN32);
+	push @commands, qq{"$shortname"};
+
+	return join ' ', @commands;
+}
+
 # Python keywords
 # The list is obtained from src/scite/src/python.properties
 sub lexer_keywords {
 	return [
 		[   qw(and as assert break class continue def del elif
-else except exec finally for from global if import in is lambda None
-not or pass print raise return try while with yield)
+				else except exec finally for from global if import in is lambda None
+				not or pass print raise return try while with yield)
 		],
 	];
 }
