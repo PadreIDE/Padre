@@ -525,8 +525,6 @@ StyleSetBackground           wxSTC_CSS_ATTRIBUTE                002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_IDENTIFIER      002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOCLASS     002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOELEMENT   002b36
-<<<<<<< .mine
-
 
 style text/x-sql
 include text/plain
