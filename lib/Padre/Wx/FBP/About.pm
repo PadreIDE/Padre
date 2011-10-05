@@ -441,7 +441,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8121} = Wx::StaticText->new(
+	$self->{marcela_maslanova} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Marcela Maslanova"),
@@ -456,7 +456,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8122} = Wx::StaticText->new(
+	$self->{dirk_de_nijs} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Dirk De Nijs"),
@@ -471,13 +471,13 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8123} = Wx::StaticText->new(
+	$self->{jerome_quelin} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Jerome Quelin"),
 	);
 
-	$self->{m_staticText7133} = Wx::StaticText->new(
+	$self->{olivier_mengue} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Olivier Mengue"),
@@ -820,16 +820,16 @@ sub new {
 
 	my $bSizer6221 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6221->Add( $self->{m_staticText47221}, 0, Wx::ALL, 4 );
-	$bSizer6221->Add( $self->{m_staticText8121}, 0, Wx::ALL, 2 );
+	$bSizer6221->Add( $self->{marcela_maslanova}, 0, Wx::ALL, 2 );
 
 	my $bSizer6222 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6222->Add( $self->{m_staticText47222}, 0, Wx::ALL, 4 );
-	$bSizer6222->Add( $self->{m_staticText8122}, 0, Wx::ALL, 2 );
+	$bSizer6222->Add( $self->{dirk_de_nijs}, 0, Wx::ALL, 2 );
 
 	my $bSizer6223 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6223->Add( $self->{m_staticText47223}, 0, Wx::ALL, 4 );
-	$bSizer6223->Add( $self->{m_staticText8123}, 0, Wx::ALL, 2 );
-	$bSizer6223->Add( $self->{m_staticText7133}, 0, Wx::ALL, 2 );
+	$bSizer6223->Add( $self->{jerome_quelin}, 0, Wx::ALL, 2 );
+	$bSizer6223->Add( $self->{olivier_mengue}, 0, Wx::ALL, 2 );
 
 	my $bSizer6224 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6224->Add( $self->{m_staticText47224}, 0, Wx::ALL, 4 );
@@ -958,6 +958,22 @@ sub chuanren_wu {
 
 sub matthew_lien {
 	$_[0]->{matthew_lien};
+}
+
+sub marcela_maslanova {
+	$_[0]->{marcela_maslanova};
+}
+
+sub dirk_de_nijs {
+	$_[0]->{dirk_de_nijs};
+}
+
+sub jerome_quelin {
+	$_[0]->{jerome_quelin};
+}
+
+sub olivier_mengue {
+	$_[0]->{olivier_mengue};
 }
 
 sub output {

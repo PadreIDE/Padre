@@ -18924,8 +18924,8 @@
                                                             <property name="label">Marcela Maslanova</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText8121</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">marcela_maslanova</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -19047,8 +19047,8 @@
                                                             <property name="label">Dirk De Nijs</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText8122</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">dirk_de_nijs</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -19170,8 +19170,8 @@
                                                             <property name="label">Jerome Quelin</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText8123</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">jerome_quelin</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>
@@ -19226,8 +19226,8 @@
                                                             <property name="label">Olivier Mengue</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">m_staticText7133</property>
-                                                            <property name="permission">protected</property>
+                                                            <property name="name">olivier_mengue</property>
+                                                            <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="size"></property>
                                                             <property name="style"></property>

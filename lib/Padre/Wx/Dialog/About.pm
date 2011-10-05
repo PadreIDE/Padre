@@ -93,9 +93,10 @@ sub _translation {
 	# $self->chuanren_wu->SetLabel(Wx::gettext(''));
 	$self->matthew_lien->SetLabel(Wx::gettext('練喆明'));
 	
-	# $self->ahmad_zawawi->SetLabel(Wx::gettext(''));
-	
-	
+	$self->marcela_maslanova->SetLabel(Wx::gettext('Marcela Mašláňová'));
+	# $self->dirk_de_nijs->SetLabel(Wx::gettext(''));
+	$self->jerome_quelin->SetLabel(Wx::gettext('Jérôme Quelin'));
+	$self->olivier_mengue->SetLabel(Wx::gettext('Olivier Mengué'));
 	
 	return;
 }
