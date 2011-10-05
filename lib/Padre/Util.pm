@@ -31,6 +31,7 @@ use Cwd             ();
 use File::Spec      ();
 use List::Util      ();
 use Padre::Constant (); ### NO other Padre:: dependencies
+use Padre::Logger;
 
 # If we make $VERSION an 'our' variable the parse_variable() function breaks
 use vars qw{ $VERSION $COMPATIBLE };
@@ -589,28 +590,68 @@ sub run_in_directory {
 	}
 }
 
-##############
-# Options run_in_directory_two(...) = qx{...}
-# 
-# optional dir or return type
-#
-# return type 0 hash_ref in out error
-# return type 1 string output unless error
-##############
+=pod
+
+=head2 C<run_in_directory_two>
+
+Plugin replacment for perl command qx{...} to avoid black lines in non *inux os
+
+	qx{...};
+	run_in_directory_two('...');
+
+optional parameters are dir and return type
+
+	run_in_directory_two('...', $dir);
+	run_in_directory_two('...', $dir, type);
+	
+also
+
+	run_in_directory_two('...', type);
+	
+return type 1 default, returns a string
+
+return type 0 hash_ref
+
+example 1,
+
+	Padre::Util::run_in_directory_two('svn --version --quiet');
+	
+	"1.6.12
+	"
+
+you might need to chomp result
+
+example 2,
+
+	Padre::Util::run_in_directory_two('svn --version --quiet', 0);
+
+	\ {
+		error    "",
+		input    "svn --version --quiet",
+		output   "1.6.12
+	"
+	}
+
+
+=cut
+
+#######
+# function Padre::Util::run_in_directory_two
+#######
 sub run_in_directory_two {
-	# my $self     = shift;
 	my $cmd_line = shift;
 	my $location = shift;
-	my $return_option;
-
+	my $return_option = shift;
+	
+	TRACE("location to process: $location") if DEBUG;
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
 			$location = undef;
-		} else {
-			my $return_option = shift;
-		}
+		} 
+
 	}
+	TRACE("Return option requested: $return_option") if DEBUG;
 	
 	my %ret_ioe;
 	$ret_ioe{input} = $cmd_line;
@@ -623,15 +664,14 @@ sub run_in_directory_two {
 	} else {
 		$return_option = 1;
 	}
+	TRACE("Return option set to: $return_option") if DEBUG;
 
 	# Create a temporary file for standard output redirection
 	require File::Temp;
 	my $std_out = File::Temp->new( UNLINK => 1 );
-	$std_out->close;
 
 	# Create a temporary file for standard error redirection
 	my $std_err = File::Temp->new( UNLINK => 1 );
-	$std_err->close;
 
 	my $temp_dir = File::Temp->newdir();
 
@@ -641,24 +681,28 @@ sub run_in_directory_two {
 	} else {
 		$directory = $temp_dir;
 	}
-
+	TRACE("which directory are we going to run in: $directory") if DEBUG;
+	
 	my @cmd = (
 		$cmd_line,
 		'1>' . $std_out->filename,
 		'2>' . $std_err->filename,
 	);
-
+	TRACE("Let\'s check our command line: @cmd") if DEBUG;
+	
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
 	Padre::Util::run_in_directory( "@cmd", $directory );
-
+	
+	
+	use File::Slurp;
 	# Slurp command standard input and output
-	$ret_ioe{output} = Padre::Util::slurp $std_out->filename;
-	chomp $ret_ioe{output};
+	$ret_ioe{output} = File::Slurp::read_file $std_out->filename;
+	# chomp $ret_ioe{output};
 
 	# Slurp command standard error
-	$ret_ioe{error} = Padre::Util::slurp $std_err->filename;
-	chomp $ret_ioe{error};
+	$ret_ioe{error} = File::Slurp::read_file $std_err->filename;
+	# chomp $ret_ioe{error};
 	if ( $ret_ioe{error} && ( $return_option eq 1 ) ) {
 		$return_option = 2;
 	}
