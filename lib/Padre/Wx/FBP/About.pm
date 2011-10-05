@@ -561,7 +561,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8127} = Wx::StaticText->new(
+	$self->{simone_blandino} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Simone Blandino"),
@@ -576,7 +576,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8128} = Wx::StaticText->new(
+	$self->{kenichi_ishigaki} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Kenichi Ishigaki"),
@@ -591,7 +591,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8129} = Wx::StaticText->new(
+	$self->{keedi_kim} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Keedi Kim"),
@@ -849,15 +849,15 @@ sub new {
 
 	my $bSizer6227 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6227->Add( $self->{m_staticText47227}, 0, Wx::ALL, 4 );
-	$bSizer6227->Add( $self->{m_staticText8127}, 0, Wx::ALL, 2 );
+	$bSizer6227->Add( $self->{simone_blandino}, 0, Wx::ALL, 2 );
 
 	my $bSizer6228 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6228->Add( $self->{m_staticText47228}, 0, Wx::ALL, 4 );
-	$bSizer6228->Add( $self->{m_staticText8128}, 0, Wx::ALL, 2 );
+	$bSizer6228->Add( $self->{kenichi_ishigaki}, 0, Wx::ALL, 2 );
 
 	my $bSizer6229 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6229->Add( $self->{m_staticText47229}, 0, Wx::ALL, 4 );
-	$bSizer6229->Add( $self->{m_staticText8129}, 0, Wx::ALL, 2 );
+	$bSizer6229->Add( $self->{keedi_kim}, 0, Wx::ALL, 2 );
 
 	my $bSizer62210 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62210->Add( $self->{m_staticText472210}, 0, Wx::ALL, 4 );
@@ -1002,6 +1002,18 @@ sub amir_e_aharoni {
 
 sub gyorgy_pasztor {
 	$_[0]->{gyorgy_pasztor};
+}
+
+sub simone_blandino {
+	$_[0]->{simone_blandino};
+}
+
+sub kenichi_ishigaki {
+	$_[0]->{kenichi_ishigaki};
+}
+
+sub keedi_kim {
+	$_[0]->{keedi_kim};
 }
 
 sub output {

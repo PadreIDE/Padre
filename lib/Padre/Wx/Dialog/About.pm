@@ -109,6 +109,10 @@ sub _translation {
 	$self->amir_e_aharoni->SetLabel(Wx::gettext('אמיר א. אהרוני'));
 	$self->gyorgy_pasztor->SetLabel(Wx::gettext('György Pásztor'));
 	
+	# $self->simone_blandino->SetLabel(Wx::gettext(''));
+	$self->kenichi_ishigaki->SetLabel(Wx::gettext('石垣憲'));
+	$self->keedi_kim->SetLabel(Wx::gettext('김도형'));
+	
 	# $self->->SetLabel(Wx::gettext(''));
 	# $self->->SetLabel(Wx::gettext(''));
 	# $self->->SetLabel(Wx::gettext(''));
