@@ -27,6 +27,11 @@ sub task_syntax {
 	return undef;
 }
 
+sub get_function_regex {
+	my $name = quotemeta $_[1];
+	return qr/(?:^|[^# \t-])[ \t]*((?:def)\s+$name\b|\*$name\s*=\s*)/;
+}
+
 # Python keywords
 # The list is obtained from src/scite/src/python.properties
 sub lexer_keywords {
