@@ -43,6 +43,20 @@ sub function {
 	return;
 }
 
+sub function2($$@) {
+	
+	
+}
+
+sub function_attr : Has(Attributes) {
+	
+}
+
+format MYFORM =
+@###   @.###   @##.###  @###   @###   ^####
+42,   3.1415,  undef,    0, 10000,   undef
+.
+
 my $wxSTC_PL_STRING = "string";
 my $wxSTC_PL_CHARACTER = 'c';
 
