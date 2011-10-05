@@ -216,3 +216,8 @@ StyleSetForeground wxSTC_CSS_DOUBLESTRING         202020
 StyleSetForeground wxSTC_CSS_SINGLESTRING         202020
 StyleSetForeground wxSTC_CSS_IDENTIFIER2          202020
 StyleSetForeground wxSTC_CSS_ATTRIBUTE            202020
+
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

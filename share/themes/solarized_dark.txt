@@ -525,3 +525,8 @@ StyleSetBackground           wxSTC_CSS_ATTRIBUTE                002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_IDENTIFIER      002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOCLASS     002b36
 #StyleSetBackground           wxSTC_CSS_EXTENDED_PSEUDOELEMENT   002b36
+
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
