@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -492,19 +492,19 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8124} = Wx::StaticText->new(
+	$self->{heiko_jansen} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Heiko Jansen"),
 	);
 
-	$self->{m_staticText7134} = Wx::StaticText->new(
+	$self->{sebastian_willing} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Sebastian Willing"),
 	);
 
-	$self->{m_staticText71341} = Wx::StaticText->new(
+	$self->{zeno_gantner} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Zeno Gantner"),
@@ -519,19 +519,19 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8125} = Wx::StaticText->new(
+	$self->{omer_zak} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Omer Zak"),
 	);
 
-	$self->{m_staticText7135} = Wx::StaticText->new(
+	$self->{shlomi_fish} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Shlomi Fish"),
 	);
 
-	$self->{m_staticText71351} = Wx::StaticText->new(
+	$self->{amir_e_aharoni} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Amir E. Aharoni"),
@@ -546,7 +546,7 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText8126} = Wx::StaticText->new(
+	$self->{gyorgy_pasztor} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
 		Wx::gettext("Gyorgy Pasztor"),
@@ -833,19 +833,19 @@ sub new {
 
 	my $bSizer6224 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6224->Add( $self->{m_staticText47224}, 0, Wx::ALL, 4 );
-	$bSizer6224->Add( $self->{m_staticText8124}, 0, Wx::ALL, 2 );
-	$bSizer6224->Add( $self->{m_staticText7134}, 0, Wx::ALL, 2 );
-	$bSizer6224->Add( $self->{m_staticText71341}, 0, Wx::ALL, 2 );
+	$bSizer6224->Add( $self->{heiko_jansen}, 0, Wx::ALL, 2 );
+	$bSizer6224->Add( $self->{sebastian_willing}, 0, Wx::ALL, 2 );
+	$bSizer6224->Add( $self->{zeno_gantner}, 0, Wx::ALL, 2 );
 
 	my $bSizer6225 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6225->Add( $self->{m_staticText47225}, 0, Wx::ALL, 5 );
-	$bSizer6225->Add( $self->{m_staticText8125}, 0, Wx::ALL, 2 );
-	$bSizer6225->Add( $self->{m_staticText7135}, 0, Wx::ALL, 2 );
-	$bSizer6225->Add( $self->{m_staticText71351}, 0, Wx::ALL, 2 );
+	$bSizer6225->Add( $self->{omer_zak}, 0, Wx::ALL, 2 );
+	$bSizer6225->Add( $self->{shlomi_fish}, 0, Wx::ALL, 2 );
+	$bSizer6225->Add( $self->{amir_e_aharoni}, 0, Wx::ALL, 2 );
 
 	my $bSizer6226 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6226->Add( $self->{m_staticText47226}, 0, Wx::ALL, 5 );
-	$bSizer6226->Add( $self->{m_staticText8126}, 0, Wx::ALL, 5 );
+	$bSizer6226->Add( $self->{gyorgy_pasztor}, 0, Wx::ALL, 5 );
 
 	my $bSizer6227 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer6227->Add( $self->{m_staticText47227}, 0, Wx::ALL, 4 );
@@ -974,6 +974,34 @@ sub jerome_quelin {
 
 sub olivier_mengue {
 	$_[0]->{olivier_mengue};
+}
+
+sub heiko_jansen {
+	$_[0]->{heiko_jansen};
+}
+
+sub sebastian_willing {
+	$_[0]->{sebastian_willing};
+}
+
+sub zeno_gantner {
+	$_[0]->{zeno_gantner};
+}
+
+sub omer_zak {
+	$_[0]->{omer_zak};
+}
+
+sub shlomi_fish {
+	$_[0]->{shlomi_fish};
+}
+
+sub amir_e_aharoni {
+	$_[0]->{amir_e_aharoni};
+}
+
+sub gyorgy_pasztor {
+	$_[0]->{gyorgy_pasztor};
 }
 
 sub output {

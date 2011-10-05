@@ -3,6 +3,7 @@ package Padre::Wx::Dialog::About;
 use 5.008;
 use strict;
 use warnings;
+use utf8;
 use Config;
 use Padre::Wx               ();
 use Wx::Perl::ProcessStream ();
@@ -92,11 +93,28 @@ sub _translation {
 	# $self->fayland_lam->SetLabel(Wx::gettext(''));
 	# $self->chuanren_wu->SetLabel(Wx::gettext(''));
 	$self->matthew_lien->SetLabel(Wx::gettext('練喆明'));
-	
+
+
 	$self->marcela_maslanova->SetLabel(Wx::gettext('Marcela Mašláňová'));
 	# $self->dirk_de_nijs->SetLabel(Wx::gettext(''));
 	$self->jerome_quelin->SetLabel(Wx::gettext('Jérôme Quelin'));
 	$self->olivier_mengue->SetLabel(Wx::gettext('Olivier Mengué'));
+
+
+	# $self->heiko_jansen->SetLabel(Wx::gettext(''));
+	# $self->sebastian_willing->SetLabel(Wx::gettext(''));
+	# $self->zeno_gantner->SetLabel(Wx::gettext(''));
+	$self->omer_zak->SetLabel(Wx::gettext('עומר זק'));
+	$self->shlomi_fish->SetLabel(Wx::gettext('שלומי פיש'));
+	$self->amir_e_aharoni->SetLabel(Wx::gettext('אמיר א. אהרוני'));
+	$self->gyorgy_pasztor->SetLabel(Wx::gettext('György Pásztor'));
+	
+	# $self->->SetLabel(Wx::gettext(''));
+	# $self->->SetLabel(Wx::gettext(''));
+	# $self->->SetLabel(Wx::gettext(''));
+	
+	
+	
 	
 	return;
 }
