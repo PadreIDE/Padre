@@ -589,6 +589,86 @@ sub run_in_directory {
 	}
 }
 
+##############
+# Options run_in_directory_two(...) = qx{...}
+# 
+# optional dir or return type
+#
+# return type 0 hash_ref in out error
+# return type 1 string output unless error
+##############
+sub run_in_directory_two {
+	# my $self     = shift;
+	my $cmd_line = shift;
+	my $location = shift;
+	my $return_option;
+
+	if ( defined $location ) {
+		if ( $location =~ /\d/ ) {
+			$return_option = $location;
+			$location = undef;
+		} else {
+			my $return_option = shift;
+		}
+	}
+	
+	my %ret_ioe;
+	$ret_ioe{input} = $cmd_line;
+
+	$cmd_line =~ m/((?:\w+)\s)/;
+	my $cmd_app = $1;
+
+	if ( defined $return_option ) {
+		$return_option = ( $return_option =~ m/[0|1|2]/ ) ? $return_option : 1;
+	} else {
+		$return_option = 1;
+	}
+
+	# Create a temporary file for standard output redirection
+	require File::Temp;
+	my $std_out = File::Temp->new( UNLINK => 1 );
+	$std_out->close;
+
+	# Create a temporary file for standard error redirection
+	my $std_err = File::Temp->new( UNLINK => 1 );
+	$std_err->close;
+
+	my $temp_dir = File::Temp->newdir();
+
+	my $directory;
+	if ( defined $location ) {
+		$directory = ($location) ? $location : $temp_dir;
+	} else {
+		$directory = $temp_dir;
+	}
+
+	my @cmd = (
+		$cmd_line,
+		'1>' . $std_out->filename,
+		'2>' . $std_err->filename,
+	);
+
+	# We need shell redirection (list context does not give that)
+	# Run command in directory
+	Padre::Util::run_in_directory( "@cmd", $directory );
+
+	# Slurp command standard input and output
+	$ret_ioe{output} = Padre::Util::slurp $std_out->filename;
+	chomp $ret_ioe{output};
+
+	# Slurp command standard error
+	$ret_ioe{error} = Padre::Util::slurp $std_err->filename;
+	chomp $ret_ioe{error};
+	if ( $ret_ioe{error} && ( $return_option eq 1 ) ) {
+		$return_option = 2;
+	}
+
+	return $ret_ioe{output} if ( $return_option eq 1 );
+	return $ret_ioe{error} if ( $return_option eq 2 );
+	return \%ret_ioe;
+
+}
+
 sub tidy_list {
 	my $list = shift;
 
