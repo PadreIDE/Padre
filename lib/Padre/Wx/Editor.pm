@@ -491,6 +491,24 @@ sub SetLexer {
 	return;
 }
 
+sub StyleAllForeground {
+	my $self   = shift;
+	my $colour = shift;
+	foreach my $i ( 0 .. 31 ) {
+		$self->StyleSetBackground( $i, $colour );
+	}
+	return;
+}
+
+sub StyleAllBackground {
+	my $self   = shift;
+	my $colour = shift;
+	foreach my $i ( 0 .. 31 ) {
+		$self->StyleSetBackground( $i, $colour );
+	}
+	return;
+}
+
 # Allow projects to override editor preferences
 sub config {
 	my $self    = shift;
