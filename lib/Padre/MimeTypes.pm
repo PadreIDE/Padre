@@ -157,7 +157,7 @@ sub _initialize {
 		'text/x-python'             => 'Padre::Document::HashComment',
 		'application/x-php'         => 'Padre::Document::HashComment',
 		'application/x-ruby'        => 'Padre::Document::HashComment',
-		'text/x-sql'                => 'Padre::Document::DoubleDashComment',
+		'text/x-sql'                => 'Padre::Document::SQL',
 		'text/x-config'             => 'Padre::Document::HashComment',
 		'text/x-yaml'               => 'Padre::Document::HashComment',
 		'application/x-perl6'       => 'Padre::Document::HashComment',
