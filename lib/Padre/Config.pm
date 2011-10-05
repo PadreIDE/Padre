@@ -1593,6 +1593,34 @@ setting(
 	default => 1,
 );
 
+#################################################
+# Version control system (VCS)
+#################################################
+
+# Show normal objects?
+setting(
+	name    => 'vcs_normal_shown',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Show unversioned objects?
+setting(
+	name    => 'vcs_unversioned_shown',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Show ignored objects?
+setting(
+	name    => 'vcs_ignored_shown',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Non-preference settings
 setting(
 	name    => 'session_autosave',

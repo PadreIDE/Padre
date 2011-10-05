@@ -57,10 +57,12 @@ sub new {
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
 
-	# TODO get these from configuration parameters?
-	$self->{show_normal}->SetValue(0);
-	$self->{show_unversioned}->SetValue(0);
-	$self->{show_ignored}->SetValue(0);
+	# Update the checkboxes with their corresponding values in the
+	# configuration
+	my $config = $main->config;
+	$self->{show_normal}->SetValue( $config->vcs_normal_shown );
+	$self->{show_unversioned}->SetValue( $config->vcs_unversioned_shown );
+	$self->{show_ignored}->SetValue( $config->vcs_ignored_shown );
 
 	# Hide vcs command buttons at startup
 	$self->{commit}->Hide;
@@ -364,17 +366,41 @@ sub on_list_item_activated {
 
 # Called when "Show normal" checkbox is clicked
 sub on_show_normal_click {
-	$_[0]->render;
+	my ( $self, $event ) = @_;
+
+	# Save to configuration
+	my $config = $self->main->config;
+	$config->apply( vcs_normal_shown => $event->IsChecked ? 1 : 0 );
+	$config->write;
+
+	# refresh list
+	$self->render;
 }
 
-# Called when "Show unversional" checkbox is clicked
+# Called when "Show unversioned" checkbox is clicked
 sub on_show_unversioned_click {
-	$_[0]->render;
+	my ( $self, $event ) = @_;
+
+	# Save to configuration
+	my $config = $self->main->config;
+	$config->apply( vcs_unversioned_shown => $event->IsChecked ? 1 : 0 );
+	$config->write;
+
+	# refresh list
+	$self->render;
 }
 
 # Called when "Show ignored" checkbox is clicked
 sub on_show_ignored_click {
-	$_[0]->render;
+	my ( $self, $event ) = @_;
+
+	# Save to configuration
+	my $config = $self->main->config;
+	$config->apply( vcs_ignored_shown => $event->IsChecked ? 1 : 0 );
+	$config->write;
+
+	# refresh list
+	$self->render;
 }
 
 # Called when "Commit" button is clicked
