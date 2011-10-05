@@ -163,6 +163,7 @@ sub _initialize {
 		'application/x-perl6'       => 'Padre::Document::HashComment',
 		'text/x-csharp'             => 'Padre::Document::DoubleSlashComment',
 		'text/x-pod'                => 'Padre::Document::POD',
+		'text/x-perlxs'             => 'Padre::Document::CPP',
 
 		# Unimplemented special comment types
 		# 'text/x-abc'                => ## \
