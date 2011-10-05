@@ -4,11 +4,28 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Document::HashComment ();
+use Padre::Role::Task ();
 
 our $VERSION = '0.91';
 our @ISA     = qw{
+	Padre::Role::Task
 	Padre::Document::HashComment
 };
+
+#####################################################################
+# Padre::Document Task Integration
+
+sub task_functions {
+	return 'Padre::Document::Python::FunctionList';
+}
+
+sub task_outline {
+	return undef;
+}
+
+sub task_syntax {
+	return undef;
+}
 
 # Python keywords
 # The list is obtained from src/scite/src/python.properties
