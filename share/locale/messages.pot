@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-05 04:10-0700\n"
+"POT-Creation-Date: 2011-10-05 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -708,11 +708,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:179
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:188
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:185
+#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:194
 msgid "(unsupported)"
 msgstr ""
 
@@ -1072,6 +1072,10 @@ msgstr ""
 msgid "Burak Gursoy"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/About.pm:125
+msgid "Burak Gürsoy"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2691
 msgid "C&urrent Document"
 msgstr ""
@@ -1089,6 +1093,10 @@ msgstr ""
 #: lib/Padre/Wx/FBP/Special.pm:94 lib/Padre/Wx/FBP/ReplaceInFiles.pm:177
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
+msgstr ""
+
+#: lib/Padre/Document/Python.pm:49
+msgid "Cannot find python executable in your PATH"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4019
@@ -1364,7 +1372,7 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:141
+#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:150
 msgid "Config:"
 msgstr ""
 
@@ -2326,7 +2334,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:436 lib/Padre/MimeTypes.pm:445
+#: lib/Padre/MimeTypes.pm:437 lib/Padre/MimeTypes.pm:446
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2715,7 +2723,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:457
+#: lib/Padre/MimeTypes.pm:458
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -3062,17 +3070,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:511
+#: lib/Padre/MimeTypes.pm:512
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:500 lib/Padre/MimeTypes.pm:533
+#: lib/Padre/MimeTypes.pm:501 lib/Padre/MimeTypes.pm:534
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:482
+#: lib/Padre/MimeTypes.pm:483
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3711,11 +3719,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:451 lib/Padre/Config.pm:1142
+#: lib/Padre/MimeTypes.pm:452 lib/Padre/Config.pm:1142
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1143
+#: lib/Padre/MimeTypes.pm:457 lib/Padre/Config.pm:1143
 msgid "PPI Standard"
 msgstr ""
 
@@ -4118,7 +4126,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:183
+#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:192
 msgid "RAM:"
 msgstr ""
 
@@ -4549,7 +4557,7 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:435 lib/Padre/MimeTypes.pm:444
+#: lib/Padre/MimeTypes.pm:436 lib/Padre/MimeTypes.pm:445
 #: lib/Padre/Config.pm:1141
 msgid "Scintilla"
 msgstr ""
@@ -4847,7 +4855,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:293
+#: lib/Padre/MimeTypes.pm:294
 msgid "Shell Script"
 msgstr ""
 
@@ -5152,7 +5160,7 @@ msgstr ""
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:452
+#: lib/Padre/MimeTypes.pm:453
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -5343,7 +5351,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:397
+#: lib/Padre/MimeTypes.pm:398
 msgid "Text"
 msgstr ""
 
@@ -5414,7 +5422,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:178
+#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:187
 msgid "Threads:"
 msgstr ""
 
@@ -5481,7 +5489,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:692
+#: lib/Padre/MimeTypes.pm:693
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5880,6 +5888,14 @@ msgstr ""
 msgid "أحمد محمد زواوي"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/About.pm:113
+msgid "石垣憲"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/About.pm:95
 msgid "練喆明"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/About.pm:114
+msgid "김도형"
 msgstr ""
