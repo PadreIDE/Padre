@@ -18,7 +18,7 @@ our $function_search_re = qr/
 			|
 			(?:^|$n)\s*
 			(?:
-				(?:def)\s+(\w+(?:::\w+)*)
+				(?:def)\s+(\w+)
 			)
 		)
 	/sx;
