@@ -7,7 +7,7 @@ use Padre::Document::DoubleSlashComment ();
 
 our $VERSION = '0.91';
 our @ISA     = qw{
-	Padre::Document::DoubleDashComment
+	Padre::Document::DoubleSlashComment
 };
 
 # Java Keywords
