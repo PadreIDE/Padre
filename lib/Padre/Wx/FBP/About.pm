@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.01';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -70,10 +70,16 @@ sub new {
 	$self->{m_staticText65111} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Created by Gabor Szabo"),
+		Wx::gettext("Created by:"),
 	);
 	$self->{m_staticText65111}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
+	);
+
+	$self->{creator} = Wx::StaticText->new(
+		$self->{padre},
+		-1,
+		Wx::gettext("Gabor Szabo"),
 	);
 
 	$self->{splash} = Wx::StaticBitmap->new(
@@ -726,6 +732,7 @@ sub new {
 
 	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
+	$bSizer4711->Add( $self->{creator}, 0, Wx::ALL, 5 );
 
 	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
@@ -910,8 +917,8 @@ sub new {
 	$self->{system_info}->SetSizerAndFit($bSizer32);
 	$self->{system_info}->Layout;
 
-	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 0 );
-	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 1 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
+	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
 	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
 	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
 
@@ -931,6 +938,10 @@ sub new {
 
 sub notebook {
 	$_[0]->{notebook};
+}
+
+sub creator {
+	$_[0]->{creator};
 }
 
 sub output {

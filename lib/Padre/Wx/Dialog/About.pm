@@ -72,7 +72,31 @@ sub _set_up {
 
 	# load the image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
+	
+	$self->creator->SetLabel(Wx::gettext('Gábor Szabó'));
+	
+	$self->_translation();
+	
+	$self->_system_info();
 
+	return;
+}
+
+#######
+# Composed Method _translation
+#######
+sub _translation {
+	my $self = shift;
+	
+	return;
+}
+
+#######
+# Composed Method _core_info
+#######
+sub _system_info {
+	my $self = shift;
+	
 	$self->{off_set} = 24;
 
 	$self->{output}->AppendText("\n");
@@ -89,7 +113,7 @@ sub _set_up {
 	my $config_dir_txt = Wx::gettext('Config:');
 	my $config_dir     = Padre::Constant::CONFIG_DIR;
 	$self->{output}->AppendText( sprintf "%$self->{off_set}s %s\n", $config_dir_txt, $config_dir );
-
+	
 	return;
 }
 
@@ -166,6 +190,8 @@ sub _wx_info {
 
 	return;
 }
+
+
 
 
 1;
