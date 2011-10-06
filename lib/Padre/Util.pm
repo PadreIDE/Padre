@@ -564,7 +564,7 @@ sub select_line_in_editor {
     Padre::Util::run_in_directory( $command, $directory );
 
 Runs the provided C<command> in the C<directory>. On win32 platforms, executes
-the command to provide *true* background process executions without window 
+the command to provide *true* background process executions without window
 popups on each execution. on non-win32 platforms, it runs a C<system>
 command.
 
@@ -603,11 +603,11 @@ optional parameters are dir and return type
 
 	run_in_directory_two('...', $dir);
 	run_in_directory_two('...', $dir, type);
-	
+
 also
 
 	run_in_directory_two('...', type);
-	
+
 return type 1 default, returns a string
 
 return type 0 hash_ref
@@ -615,7 +615,7 @@ return type 0 hash_ref
 example 1,
 
 	Padre::Util::run_in_directory_two('svn --version --quiet');
-	
+
 	"1.6.12
 	"
 
@@ -642,16 +642,16 @@ sub run_in_directory_two {
 	my $cmd_line = shift;
 	my $location = shift;
 	my $return_option = shift;
-	
+
 	# TRACE("location to process: $location") if DEBUG;
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
 			$location = undef;
-		} 
+		}
 
 	}
-	
+
 	my %ret_ioe;
 	$ret_ioe{input} = $cmd_line;
 
@@ -679,18 +679,18 @@ sub run_in_directory_two {
 	} else {
 		$directory = $temp_dir;
 	}
-	
+
 	my @cmd = (
 		$cmd_line,
 		'1>' . $std_out->filename,
 		'2>' . $std_err->filename,
 	);
-	
+
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
 	Padre::Util::run_in_directory( "@cmd", $directory );
-	
-	
+
+
 	use File::Slurp;
 	# Slurp command standard input and output
 	$ret_ioe{output} = File::Slurp::read_file $std_out->filename;
