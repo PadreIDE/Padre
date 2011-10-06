@@ -142,7 +142,7 @@ sub _initialize {
 	%DEFAULT_DOC_CLASS = (
 		'application/x-perl'        => 'Padre::Document::Perl',
 		'text/x-python'             => 'Padre::Document::Python',
-
+		'application/x-ruby'        => 'Padre::Document::Ruby',
 		# Unimplemented special comment types
 		# 'text/x-abc'                => ## \
 		# 'text/x-bat'                => ## REM
