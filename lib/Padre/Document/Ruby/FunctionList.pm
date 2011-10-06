@@ -14,7 +14,7 @@ our @ISA     = 'Padre::Task::FunctionList';
 my $n = "\\cM?\\cJ";
 our $function_search_re = qr/
 		(?:
-			\"\"\".*?\"\"\"
+			=begin.*?=end
 			|
 			(?:^|$n)\s*
 			(?:
