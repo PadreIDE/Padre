@@ -234,48 +234,93 @@ my %SCINTILLA_KEY_WORDS = (
 		]
 	],
 
-	# SQL keyword list is obtained from src/scite/src/sql.properties
-	'text/x-sql' => [
-		[   qw{
-				absolute action add admin after aggregate alias all allocate
-				alter and any are array as asc assertion at authorization
-				before begin binary bit blob body boolean both breadth by call
-				cascade cascaded case cast catalog char character check class
-				clob close collate collation column commit completion connect
-				connection constraint constraints constructor continue
-				corresponding create cross cube current current_date
-				current_path current_role current_time current_timestamp
-				current_user cursor cycle data date day deallocate dec decimal
-				declare default deferrable deferred delete depth deref desc
-				describe descriptor destroy destructor deterministic dictionary
-				diagnostics disconnect distinct domain double drop dynamic each
-				else end end-exec equals escape every except exception exec
-				execute exists exit external false fetch first float for
-				foreign found from free full function general get global go
-				goto grant group grouping having host hour identity if ignore
-				immediate in indicator initialize initially inner inout input
-				insert int integer intersect interval into is isolation iterate
-				join key language large last lateral leading left less level
-				like limit local localtime localtimestamp locator map match
-				minute modifies modify module month names national natural
-				nchar nclob new next no none not null numeric object of off old
-				on only open operation option or order ordinality out outer
-				output package pad parameter parameters partial path postfix
-				precision prefix preorder prepare preserve primary prior
-				privileges procedure public read reads real recursive ref
-				references referencing relative restrict result return returns
-				revoke right role rollback rollup routine row rows savepoint
-				schema scroll scope search second section select sequence
-				session session_user set sets size smallint some| space
-				specific specifictype sql sqlexception sqlstate sqlwarning
-				start state statement static structure system_user table
-				temporary terminate than then time timestamp timezone_hour
-				timezone_minute to trailing transaction translation treat
-				trigger true under union unique unknown unnest update usage
-				user using value values varchar variable varying view when
-				whenever where with without work write year zone
-				}
-		]
+	'text/x-sql' => [ [ qw{
+		absolute action add admin after aggregate alias all allocate
+		alter and any are array as asc assertion at authorization
+		before begin binary bit body both breadth by call
+		cascade cascaded case cast catalog check class
+		close collate collation column commit completion connect
+		connection constraint constraints constructor continue
+		corresponding create cross cube current current_date
+		current_path current_role current_time current_timestamp
+		current_user cursor cycle data deallocate dec decimal
+		declare default deferrable deferred delete depth deref desc
+		describe descriptor destroy destructor deterministic dictionary
+		diagnostics disconnect distinct domain drop dynamic each
+		else end end-exec equals escape every except exception exec
+		execute exists exit external false fetch first for
+		foreign found from free full function general get global go
+		goto grant group grouping having host hour identity if ignore
+		immediate in indicator initialize initially inner inout input
+		insert intersect interval into is isolation iterate
+		join key language large last lateral leading left less level
+		like limit local locator map match
+		merge modifies modify module names national natural
+		new next no none not numeric object of off old
+		on only open operation option or order ordinality out outer
+		output package pad parameter parameters partial path postfix
+		precision prefix preorder prepare preserve primary prior
+		privileges procedure public read reads real recursive ref
+		references referencing relative replace restrict result return returns
+		revoke right role rollback rollup routine row rows savepoint
+		schema scroll scope search second section select sequence
+		session session_user set sets size some| space
+		specific specifictype sql sqlexception sqlstate sqlwarning
+		start state statement static structure system_user table
+		temporary terminate than then timezone_hour
+		timezone_minute to trailing transaction translation treat
+		trigger true under union unique unknown unnest update usage
+		user using value values variable varying view when
+		whenever where with without work write zone
+	} ], 
+	# keywords2 - being used for datatypes
+	[
+		# oracle centric
+		qw( varchar varchar2 nvarchar nvarchar2 char nchar number 
+		integer pls_integer binary_integer long date time
+		timestamp with local timezone interval year day month second minute
+		raw rowid urowid mlslabel clob nclob blob bfile xmltype
+		),
+		qw(
+		boolean smallint null localtime localtimestamp  int integer
+		float double char character
+		),
+	],
+	
+	# pldoc keywords - bare minimum 
+	[ qw( headcom deprecated param return throws ) ],
+	
+	# SQL*Plus 
+	[qw(
+		accept append archive log archivelog attribute
+		break btitle
+		change clear column default compute connect copy
+		define del describe disconnect document
+		edit execute exit
+		get
+		help host html
+		input
+		list logon
+		markup
+		newpage
+		password pause print product_user_profile prompt
+		recover remark repfooter repheader restrict run
+		save set show label shutdown silent spool start startup store
+		timing ttitle
+		undefine
+		variable
+		version
+		whenever oserror sqlerror
+	)],
+	# User Keywords #1 , reserve this for PLSQL functions and procedures
+	[ qw() ],
+	# User Keywords #2 
+	[ qw() ],
+	# User Keywords #3
+	[ qw() ],
+	# User Keywords #4 , reserve this for plugins, eg known schema entities
+	[ qw() ],
+	
 	],
 
 	# C# keyword list is obtained from src/scite/src/cpp.properties

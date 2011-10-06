@@ -107,6 +107,8 @@ sub _initialize {
 		tcl   => 'application/x-tcl',
 		vbs   => 'text/vbscript',
 		patch => 'text/x-patch',
+		pks   => 'text/x-sql',            # PLSQL package spec
+		pkb   => 'text/x-sql',            # PLSQL package body
 		pl    => \&perl_mime_type,
 		plx   => \&perl_mime_type,
 		pm    => \&perl_mime_type,
