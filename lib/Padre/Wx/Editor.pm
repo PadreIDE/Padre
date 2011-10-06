@@ -615,9 +615,9 @@ sub padre_setup {
 		$self->SetWordChars( $document->scintilla_word_chars );
 
 		# Set all the lexer keywords lists that the document provides
-		my @scintilla_key_words = @{ $document->scintilla_key_words };
-		for my $i ( 0 .. $#scintilla_key_words ) {
-			$self->SetKeyWords( $i, join( ' ', @{ $scintilla_key_words[$i] } ) );
+		my $key_words = $document->scintilla_key_words;
+		for my $i ( 0 .. $#$key_words ) {
+			$self->SetKeyWords( $i, join( ' ', @{ $key_words->[$i] } ) );
 		}
 	} else {
 		$self->SetWordChars('');

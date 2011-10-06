@@ -3,12 +3,10 @@ package Padre::Document::CS;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Document::DoubleSlashComment ();
+use Padre::Document ();
 
 our $VERSION = '0.91';
-our @ISA     = qw{
-	Padre::Document::DoubleSlashComment
-};
+our @ISA     = 'Padre::Document';
 
 # C# Keywords
 # The list is obtained from src/scite/src/cpp.properties

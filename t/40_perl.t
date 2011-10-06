@@ -184,7 +184,7 @@ SCOPE: {
 		[   qw{
 				guess_indentation_style
 				guess_filename
-				keywords
+				get_calltip_keywords
 				two_lines
 				three_lines
 				after_data

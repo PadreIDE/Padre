@@ -140,27 +140,14 @@ sub _initialize {
 	);
 
 	%DEFAULT_DOC_CLASS = (
-		'text/x-adasrc'             => 'Padre::Document::DoubleDashComment',
-		'text/x-asm'                => 'Padre::Document::HashComment',
-		'application/x-bibtex'      => 'Padre::Document::PercentComment',
 		'text/x-c'                  => 'Padre::Document::CPP',
 		'text/x-c++src'             => 'Padre::Document::CPP',
-		'text/x-eiffel'             => 'Padre::Document::DoubleDashComment',
-		'application/javascript'    => 'Padre::Document::DoubleSlashComment',
-		'application/x-latex'       => 'Padre::Document::PercentComment',
-		'application/x-shellscript' => 'Padre::Document::HashComment',
 		'text/x-java-source'        => 'Padre::Document::Java',
-		'text/x-lua'                => 'Padre::Document::DoubleDashComment',
-		'text/x-makefile'           => 'Padre::Document::HashComment',
-		'text/x-matlab'             => 'Padre::Document::PercentComment',
 		'application/x-perl'        => 'Padre::Document::Perl',
 		'text/x-python'             => 'Padre::Document::Python',
 		'application/x-php'         => 'Padre::Document::PHP',
 		'application/x-ruby'        => 'Padre::Document::Ruby',
 		'text/x-sql'                => 'Padre::Document::SQL',
-		'text/x-config'             => 'Padre::Document::HashComment',
-		'text/x-yaml'               => 'Padre::Document::HashComment',
-		'application/x-perl6'       => 'Padre::Document::HashComment',
 		'text/x-csharp'             => 'Padre::Document::CS',
 		'text/x-pod'                => 'Padre::Document::POD',
 		'text/x-perlxs'             => 'Padre::Document::CPP',
@@ -333,7 +320,6 @@ sub _initialize {
 		'text/x-python' => {
 			name  => 'Python',
 			lexer => Wx::wxSTC_LEX_PYTHON,          # CONFIRMED
-			class => 'Padre::Document::HashComment',
 		},
 
 		'application/x-php' => {
@@ -344,7 +330,6 @@ sub _initialize {
 		'application/x-ruby' => {
 			name  => 'Ruby',
 			lexer => Wx::wxSTC_LEX_RUBY,            # CONFIRMED
-			class => 'Padre::Document::HashComment',
 		},
 
 		'text/x-sql' => {

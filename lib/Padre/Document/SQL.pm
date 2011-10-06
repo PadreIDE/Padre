@@ -3,12 +3,10 @@ package Padre::Document::SQL;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Document::DoubleDashComment ();
+use Padre::Document ();
 
 our $VERSION = '0.91';
-our @ISA     = qw{
-	Padre::Document::DoubleDashComment
-};
+our @ISA     = 'Padre::Document';
 
 # SQL Keywords
 # The list is obtained from src/scite/src/sql.properties

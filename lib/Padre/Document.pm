@@ -143,6 +143,42 @@ our $COMPATIBLE = '0.89';
 
 
 
+######################################################################
+# Basic Language Support
+
+my %COMMENT_LINE_STRING = (
+	'text/x-adasrc'             => '--',
+	'text/x-asm'                => '#',
+	'application/x-bibtex'      => '%',
+	'text/x-c'                  => '//',
+	'text/x-c++src'             => '//',
+	'text/x-eiffel'             => '--',
+	'application/javascript'    => '//',
+	'application/x-latex'       => '%',
+	'application/x-shellscript' => '#',
+	'text/x-java-source'        => '//',
+	'text/x-lua'                => '--',
+	'text/x-makefile'           => '#',
+	'text/x-matlab'             => '%',
+	'application/x-perl'        => '#',
+	'text/x-python'             => '#',
+	'application/x-php'         => '#',
+	'application/x-ruby'        => '#',
+	'text/x-sql'                => '--',
+	'text/x-config'             => '#',
+	'text/x-yaml'               => '#',
+	'application/x-perl6'       => '#',
+	'text/x-csharp'             => '//',
+	'text/x-pod'                => '#',
+	'text/x-perlxs'             => '//',
+);
+
+my %SCINTILLA_KEY_WORDS = (
+	
+);
+
+
+
 #####################################################################
 # Task Integration
 
@@ -340,10 +376,39 @@ sub current {
 	Padre::Current->new( document => $_[0] );
 }
 
+# Abstract methods, each subclass should implement it
+# TO DO: Clearly this isn't ACTUALLY abstract (since they exist)
+
+sub scintilla_word_chars {
+	return '';
+}
+
 sub scintilla_key_words {
 	return [];
 }
 
+sub get_calltip_keywords {
+	return {};
+}
+
+sub get_function_regex {
+	return '';
+}
+
+#
+# $doc->get_comment_line_string;
+#
+# this is of course dependant on the language, and thus it's actually
+# done in the subclasses. however, we provide base empty methods in
+# order for padre not to crash if user wants to un/comment lines with
+# a document type that did not define those methods.
+#
+# TO DO Remove this base method
+sub get_comment_line_string {
+	my $self = shift;
+	my $mime = $self->mimetype or return;
+	$COMMENT_LINE_STRING{$mime} or return;
+}
 
 
 
@@ -1335,21 +1400,6 @@ sub functions {
 	$task->find( $self->text_get );
 }
 
-# Abstract methods, each subclass should implement it
-# TO DO: Clearly this isn't ACTUALLY abstract (since they exist)
-
-sub get_calltip_keywords {
-	return {};
-}
-
-sub get_function_regex {
-	return '';
-}
-
-sub scintilla_word_chars {
-	return '';
-}
-
 sub pre_process {
 	return 1;
 }
@@ -1411,17 +1461,6 @@ sub stats {
 
 #####################################################################
 # Document Manipulation Methods
-
-#
-# $doc->get_comment_line_string;
-#
-# this is of course dependant on the language, and thus it's actually
-# done in the subclasses. however, we provide base empty methods in
-# order for padre not to crash if user wants to un/comment lines with
-# a document type that did not define those methods.
-#
-# TO DO Remove this base method
-sub get_comment_line_string { }
 
 # Delete all leading spaces.
 # Passes through to the editor by default, and is only defined in the

@@ -3,14 +3,14 @@ package Padre::Document::Python;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Document::HashComment ();
-use Padre::Constant              ();
-use Padre::Role::Task            ();
+use Padre::Constant   ();
+use Padre::Role::Task ();
+use Padre::Document   ();
 
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
-	Padre::Document::HashComment
+	Padre::Document
 };
 
 #####################################################################

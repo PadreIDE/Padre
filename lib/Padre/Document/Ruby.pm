@@ -3,12 +3,10 @@ package Padre::Document::Ruby;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Document::HashComment ();
+use Padre::Document ();
 
 our $VERSION = '0.91';
-our @ISA     = qw{
-	Padre::Document::HashComment
-};
+our @ISA     = 'Padre::Document';
 
 # Ruby Keywords
 # The list is obtained from src/scite/src/ruby.properties

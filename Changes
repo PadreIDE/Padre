@@ -139,6 +139,7 @@ the even version for the release, even during development.
       consistency with other softwares, breaking old fr-fr files (DOLMEN)
     - on_right_click becomes on_context_menu as a first step to support the
       context menu key or Shift+F10 as alternatives (DOLMEN)
+    - Removed the comment basis for Padre::Document subclassing (ADAMK)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)
