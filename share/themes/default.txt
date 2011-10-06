@@ -109,9 +109,13 @@ StyleSetForeground wxSTC_C_COMMENTLINE            007f00
 StyleSetForeground wxSTC_C_COMMENTDOC             7f7f7f
 StyleSetForeground wxSTC_C_NUMBER                 007f7f
 StyleSetForeground wxSTC_C_WORD                   00007f
+StyleSetBold       wxSTC_C_WORD                   1
+StyleSetForeground wxSTC_C_WORD2                  00007f
+StyleSetBold       wxSTC_C_WORD2                  1
 StyleSetForeground wxSTC_C_STRING                 ff7f00
 StyleSetForeground wxSTC_C_CHARACTER              7f007f
 StyleSetForeground wxSTC_C_PREPROCESSOR           7f7f7f
+StyleSetBold       wxSTC_C_PREPROCESSOR           1
 StyleSetForeground wxSTC_C_OPERATOR               00007f
 StyleSetForeground wxSTC_C_IDENTIFIER             0000ff
 StyleSetForeground wxSTC_C_STRINGEOL              ff0000

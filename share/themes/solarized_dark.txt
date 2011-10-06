@@ -253,6 +253,7 @@ StyleSetForeground      wxSTC_C_NUMBER                  2aa198
 StyleSetBackground      wxSTC_C_NUMBER                  002b36
 StyleSetForeground      wxSTC_C_WORD                    6c71c4
 StyleSetBackground      wxSTC_C_WORD                    002b36
+StyleSetBold            wxSTC_C_WORD                    1
 StyleSetForeground      wxSTC_C_STRING                  ff7f00
 StyleSetBackground      wxSTC_C_STRING                  002b36
 StyleSetForeground      wxSTC_C_CHARACTER               6c71c4
