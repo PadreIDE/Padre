@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-06 04:10-0700\n"
+"POT-Creation-Date: 2011-10-06 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2055,7 +2055,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:761 lib/Padre/Wx/Editor.pm:645
+#: lib/Padre/Document.pm:934 lib/Padre/Wx/Editor.pm:645
 #: lib/Padre/Wx/Main.pm:5027 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2120,7 +2120,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:565
+#: lib/Padre/Document.pm:738
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2131,7 +2131,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:515
+#: lib/Padre/Document.pm:688
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2306,7 +2306,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:413 lib/Padre/MimeTypes.pm:422
+#: lib/Padre/MimeTypes.pm:443 lib/Padre/MimeTypes.pm:452
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:434
+#: lib/Padre/MimeTypes.pm:464
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -3025,17 +3025,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:488
+#: lib/Padre/MimeTypes.pm:518
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:477 lib/Padre/MimeTypes.pm:510
+#: lib/Padre/MimeTypes.pm:507 lib/Padre/MimeTypes.pm:540
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:459
+#: lib/Padre/MimeTypes.pm:489
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3312,7 +3312,7 @@ msgstr ""
 msgid "No matches found for \"%s\"."
 msgstr ""
 
-#: lib/Padre/Document.pm:609
+#: lib/Padre/Document.pm:782
 #, perl-format
 msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
@@ -3658,11 +3658,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:428 lib/Padre/Config.pm:1142
+#: lib/Padre/MimeTypes.pm:458 lib/Padre/Config.pm:1142
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:433 lib/Padre/Config.pm:1143
+#: lib/Padre/MimeTypes.pm:463 lib/Padre/Config.pm:1143
 msgid "PPI Standard"
 msgstr ""
 
@@ -4455,7 +4455,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1095
+#: lib/Padre/Document.pm:1268
 msgid "Save Warning"
 msgstr ""
 
@@ -4475,7 +4475,7 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:412 lib/Padre/MimeTypes.pm:421
+#: lib/Padre/MimeTypes.pm:442 lib/Padre/MimeTypes.pm:451
 #: lib/Padre/Config.pm:1141
 msgid "Scintilla"
 msgstr ""
@@ -4765,7 +4765,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:272
+#: lib/Padre/MimeTypes.pm:302
 msgid "Shell Script"
 msgstr ""
 
@@ -5066,11 +5066,11 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1662 lib/Padre/Document.pm:1663
+#: lib/Padre/Document.pm:1835 lib/Padre/Document.pm:1836
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:429
+#: lib/Padre/MimeTypes.pm:459
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -5261,7 +5261,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:374
+#: lib/Padre/MimeTypes.pm:404
 msgid "Text"
 msgstr ""
 
@@ -5295,7 +5295,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:537
+#: lib/Padre/Document.pm:710
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5399,7 +5399,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:669
+#: lib/Padre/MimeTypes.pm:699
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5438,7 +5438,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:1311
+#: lib/Padre/Document.pm:1484
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5593,14 +5593,14 @@ msgstr ""
 msgid "Visit the PerlM&onks"
 msgstr ""
 
-#: lib/Padre/Document.pm:1091
+#: lib/Padre/Document.pm:1264
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:543 lib/Padre/Wx/Syntax.pm:29
+#: lib/Padre/Document.pm:716 lib/Padre/Wx/Syntax.pm:29
 #: lib/Padre/Wx/Main.pm:3061 lib/Padre/Wx/Main.pm:3776
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5748,7 +5748,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:1289
+#: lib/Padre/Document.pm:1462
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
