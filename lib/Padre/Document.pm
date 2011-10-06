@@ -340,7 +340,7 @@ sub current {
 	Padre::Current->new( document => $_[0] );
 }
 
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [];
 }
 
@@ -1338,7 +1338,7 @@ sub functions {
 # Abstract methods, each subclass should implement it
 # TO DO: Clearly this isn't ACTUALLY abstract (since they exist)
 
-sub keywords {
+sub get_calltip_keywords {
 	return {};
 }
 
@@ -1346,7 +1346,7 @@ sub get_function_regex {
 	return '';
 }
 
-sub stc_word_chars {
+sub scintilla_word_chars {
 	return '';
 }
 
@@ -1413,7 +1413,7 @@ sub stats {
 # Document Manipulation Methods
 
 #
-# $doc->comment_lines_str;
+# $doc->get_comment_line_string;
 #
 # this is of course dependant on the language, and thus it's actually
 # done in the subclasses. however, we provide base empty methods in
@@ -1421,7 +1421,7 @@ sub stats {
 # a document type that did not define those methods.
 #
 # TO DO Remove this base method
-sub comment_lines_str { }
+sub get_comment_line_string { }
 
 # Delete all leading spaces.
 # Passes through to the editor by default, and is only defined in the

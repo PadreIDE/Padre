@@ -12,7 +12,7 @@ our @ISA     = qw{
 
 # PHP Keywords
 # The list is obtained from src/scite/src/html.properties
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 		[   qw(and array as bool boolean break case cfunction class const continue declare
 default die directory do double echo else elseif empty enddeclare endfor

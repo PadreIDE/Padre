@@ -8,7 +8,7 @@ use Padre::Document ();
 our $VERSION = '0.91';
 our @ISA     = 'Padre::Document';
 
-sub comment_lines_str {
+sub get_comment_line_string {
 	return '//';
 }
 

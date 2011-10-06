@@ -12,7 +12,7 @@ our @ISA     = qw{
 
 # SQL Keywords
 # The list is obtained from src/scite/src/sql.properties
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 		[   qw(absolute action add admin after aggregate
 				alias all allocate alter and any are array as asc

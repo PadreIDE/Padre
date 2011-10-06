@@ -17,7 +17,7 @@ sub guess_filename {
 # Abstract methods, each subclass should implement it
 # TO DO: Clearly this isn't ACTUALLY abstract (since they exist)
 
-sub keywords {
+sub get_calltip_keywords {
 	return {};
 }
 

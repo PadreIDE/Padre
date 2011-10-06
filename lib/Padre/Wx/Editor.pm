@@ -612,12 +612,12 @@ sub padre_setup {
 	if ($document) {
 		$self->SetLexer( $document->lexer );
 		$self->SetStyleBits( $self->GetStyleBitsNeeded );
-		$self->SetWordChars( $document->stc_word_chars );
+		$self->SetWordChars( $document->scintilla_word_chars );
 
 		# Set all the lexer keywords lists that the document provides
-		my @lexer_keywords = @{ $document->lexer_keywords };
-		for my $i ( 0 .. $#lexer_keywords ) {
-			$self->SetKeyWords( $i, join( ' ', @{ $lexer_keywords[$i] } ) );
+		my @scintilla_key_words = @{ $document->scintilla_key_words };
+		for my $i ( 0 .. $#scintilla_key_words ) {
+			$self->SetKeyWords( $i, join( ' ', @{ $scintilla_key_words[$i] } ) );
 		}
 	} else {
 		$self->SetWordChars('');
@@ -880,12 +880,10 @@ sub show_calltip {
 	my $line   = $self->LineFromPosition($pos);
 	my $first  = $self->PositionFromLine($line);
 	my $prefix = $self->GetTextRange( $first, $pos ); # line from beginning to current position
-	if ( $self->CallTipActive ) {
-		$self->CallTipCancel;
-	}
+	$self->CallTipCancel if $self->CallTipActive;
 
 	my $doc      = $self->current->document or return;
-	my $keywords = $doc->keywords;
+	my $keywords = $doc->get_calltip_keywords;
 	my $regex    = join '|', sort { length $a <=> length $b } keys %$keywords;
 
 	my $tip;

@@ -291,14 +291,14 @@ sub guess_subpath {
 
 my $keywords;
 
-sub keywords {
+sub get_calltip_keywords {
 	$keywords
 		or $keywords = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' ) );
 }
 
 my $wordchars = join '', '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z';
 
-sub stc_word_chars {
+sub scintilla_word_chars {
 	return $wordchars;
 }
 
@@ -496,7 +496,7 @@ sub beginner_check {
 	return 1;
 }
 
-sub comment_lines_str {
+sub get_comment_line_string {
 	return '#';
 }
 
@@ -1791,7 +1791,7 @@ sub guess_filename_to_open {
 	return;
 }
 
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 
 		# Perl Keywords

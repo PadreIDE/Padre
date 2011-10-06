@@ -62,7 +62,7 @@ sub get_command {
 
 # Python keywords
 # The list is obtained from src/scite/src/python.properties
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 		[   qw(and as assert break class continue def del elif
 				else except exec finally for from global if import in is lambda None

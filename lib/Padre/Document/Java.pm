@@ -12,7 +12,7 @@ our @ISA     = qw{
 
 # Java Keywords
 # The list is obtained from src/scite/src/cpp.properties
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 		[   qw(abstract assert boolean break byte case catch char class
 const continue default do double else enum extends final finally float for

@@ -12,7 +12,7 @@ our @ISA     = qw{
 
 # C/C++ Keywords
 # The list is obtained from src/scite/src/cpp.properties
-sub lexer_keywords {
+sub scintilla_key_words {
 	return [
 		[   qw(and and_eq asm auto bitand bitor bool break
 case catch char class compl const const_cast continue

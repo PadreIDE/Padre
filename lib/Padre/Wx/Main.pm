@@ -3610,7 +3610,7 @@ sub on_comment_block {
 	my $begin_line      = $editor->LineFromPosition($selection_start);
 	my $end_line =
 		$editor->LineFromPosition( $selection_start == $selection_end ? $selection_end : $selection_end - 1 );
-	my $comment = $document->comment_lines_str;
+	my $comment = $document->get_comment_line_string;
 
 	if ( not defined $comment ) {
 		$self->error(
