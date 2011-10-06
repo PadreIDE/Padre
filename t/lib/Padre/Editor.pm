@@ -11,7 +11,7 @@ sub new {
 	return $self;
 }
 
-sub configure_editor {
+sub set_document {
 	my ( $self, $doc ) = @_;
 
 	if ( defined $doc->{original_content} ) {

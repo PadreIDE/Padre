@@ -60,6 +60,7 @@ my %WXEOL = (
 
 
 
+
 ######################################################################
 # Constructor and Accessors
 
@@ -77,7 +78,6 @@ sub new {
 	# Create the underlying Wx object
 	my $lock   = $main->lock( 'UPDATE', 'refresh_windowlist' );
 	my $self   = $class->SUPER::new($parent);
-	my $config = $self->config;
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
@@ -160,9 +160,17 @@ sub new {
 	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
 	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
 
-	# Apply settings based on configuration
-	# TO DO: Make this suck less (because it really does suck a lot)
-	$self->apply_config($config);
+	# Setup the editor indicators which we will use in smart, warning and error highlighting
+	# Indicator #0: Green round box indicator for smart highlighting
+	$self->IndicatorSetStyle( INDICATOR_SMART_HIGHLIGHT, Wx::wxSTC_INDIC_ROUNDBOX );
+
+	# Indicator #1, Orange squiggle for warning highlighting
+	$self->IndicatorSetForeground( INDICATOR_WARNING, ORANGE );
+	$self->IndicatorSetStyle( INDICATOR_WARNING, Wx::wxSTC_INDIC_SQUIGGLE );
+
+	# Indicator #2, Red squiggle for error highlighting
+	$self->IndicatorSetForeground( INDICATOR_ERROR, RED );
+	$self->IndicatorSetStyle( INDICATOR_ERROR, Wx::wxSTC_INDIC_SQUIGGLE );
 
 	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
@@ -177,15 +185,18 @@ sub new {
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 
 	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
-	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_context_menu );
-
-	#Wx::Event::EVT_CONTEXT_MENU( $self, \&on_context_menu );
+	if ( Padre::Constant::UNIX ) {
+		Wx::Event::EVT_RIGHT_DOWN( $self, \&on_context_menu );
+	} else {
+		Wx::Event::EVT_CONTEXT_MENU( $self, \&on_context_menu );
+	}
 
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
 	$self->SetModEventMask(
 		Wx::wxSTC_PERFORMED_USER | Wx::wxSTC_PERFORMED_UNDO | Wx::wxSTC_PERFORMED_REDO | Wx::wxSTC_MOD_INSERTTEXT
-			| Wx::wxSTC_MOD_DELETETEXT );
+			| Wx::wxSTC_MOD_DELETETEXT
+	);
 	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
 
 	# Smart highlighting:
@@ -193,17 +204,9 @@ sub new {
 	# with a round box around each of them
 	$self->{styles} = [];
 
-	# Setup the editor indicators which we will use in smart, warning and error highlighting
-	# Indicator #0: Green round box indicator for smart highlighting
-	$self->IndicatorSetStyle( INDICATOR_SMART_HIGHLIGHT, Wx::wxSTC_INDIC_ROUNDBOX );
-
-	# Indicator #1, Orange squiggle for warning highlighting
-	$self->IndicatorSetForeground( INDICATOR_WARNING, ORANGE );
-	$self->IndicatorSetStyle( INDICATOR_WARNING, Wx::wxSTC_INDIC_SQUIGGLE );
-
-	# Indicator #2, Red squiggle for error highlighting
-	$self->IndicatorSetForeground( INDICATOR_ERROR, RED );
-	$self->IndicatorSetStyle( INDICATOR_ERROR, Wx::wxSTC_INDIC_SQUIGGLE );
+	# Apply settings based on configuration
+	# TO DO: Make this suck less (because it really does suck a lot)
+	$self->setup_common;
 
 	return $self;
 }
@@ -477,16 +480,32 @@ sub on_context_menu {
 ######################################################################
 # Setup and Preferences Methods
 
+# Fill the editor with the document
+sub set_document {
+	my $self     = shift;
+	my $document = shift or return;
+	my $eol      = $WXEOL{ $document->newline_type };
+	$self->SetEOLMode($eol) if defined $eol;
+
+	if ( defined $document->{original_content} ) {
+		$self->SetText( $document->{original_content} );
+	}
+
+	$self->EmptyUndoBuffer;
+
+	return;
+}
+
 sub SetLexer {
 	my $self  = shift;
 	my $lexer = shift;
-        if ( Params::Util::_NUMBER($lexer) ) {
-                return $self->SUPER::SetLexer($lexer);
-        }
+	if ( Params::Util::_NUMBER($lexer) ) {
+		return $self->SUPER::SetLexer($lexer);
+	}
 	if ( defined Params::Util::_STRING($lexer) ) {
 		require Padre::MimeTypes;
 		$lexer = Padre::MimeTypes->get_lexer($lexer);
-                return $self->SUPER::SetLexer($lexer);
+		return $self->SUPER::SetLexer($lexer);
 	}
 	return;
 }
@@ -514,13 +533,13 @@ sub config {
 	my $self    = shift;
 	my $project = $self->current->project;
 	return $project->config if $project;
-	return $self->SUPER::config;
+	return $self->SUPER::config(@_);
 }
 
 # Apply global configuration settings to the editor
-sub apply_config {
+sub setup_common {
 	my $self   = shift;
-	my $config = shift;
+	my $config = $self->config;
 
 	# Apply various settings that largely map directly
 	$self->SetCaretPeriod( $config->editor_cursor_blink );
@@ -558,43 +577,12 @@ sub apply_config {
 		$self->show_folding( $config->editor_folding );
 	}
 
-	return;
-}
-
-# Applys the document content to the editor before plugins get notified
-sub configure_editor {
-	my $self     = shift;
-	my $document = shift or return;
-	my $eol      = $WXEOL{ $document->newline_type };
-	$self->SetEOLMode($eol) if defined $eol;
-
-	if ( defined $document->{original_content} ) {
-		$self->SetText( $document->{original_content} );
-	}
-
-	$self->EmptyUndoBuffer;
-
-	return;
-}
-
-sub set_preferences {
-	my $self = shift;
-	my $config = shift || $self->config;
-
-	# (Re)apply general configuration settings
-	$self->apply_config($config);
-
-	# Apply type-specific settings
-	$self->padre_setup($config);
-
-	if ( $self->{Document} ) {
-		$self->{Document}->set_indentation_style;
-	}
-
+	# Enable the symbol margin if anything needs it
 	if ( $config->main_syntaxcheck or $config->feature_saved_document_diffs ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
-			$self->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 1 for symbols
-			$self->SetMarginWidth( 1, 16 );                     # set margin 1 16 px wide
+			# Set margin 1 as a 16 pixel symbol margin
+			$self->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
+			$self->SetMarginWidth( 1, 16 );                     
 		}
 	}
 
@@ -603,9 +591,9 @@ sub set_preferences {
 
 # Most of this should be read from some external files
 # but for now we use this if statement
-sub padre_setup {
+sub setup_document {
 	my $self     = shift;
-	my $config   = shift || $self->config;
+	my $config   = $self->config;
 	my $document = $self->{Document};
 
 	# Configure lexing for the editor based on the document type
@@ -619,6 +607,12 @@ sub padre_setup {
 		for my $i ( 0 .. $#$key_words ) {
 			$self->SetKeyWords( $i, join( ' ', @{ $key_words->[$i] } ) );
 		}
+
+		# Setup indenting
+		my $indent = $document->get_indentation_style;
+		$self->SetTabWidth( $indent->{tabwidth} );  # Tab char width
+		$self->SetIndent( $indent->{indentwidth} ); # Indent columns
+		$self->SetUseTabs( $indent->{use_tabs} );
 	} else {
 		$self->SetWordChars('');
 	}
@@ -847,7 +841,6 @@ sub select_to_matching_brace {
 	my $pos2 = $self->find_matching_brace($pos) or return;
 	my $start = ( $pos < $pos2 ) ? $self->GetSelectionStart : $self->GetSelectionEnd;
 	$self->SetSelection( $start, $pos2 );
-
 }
 
 # currently if there are 9 lines we set the margin to 1 width and then

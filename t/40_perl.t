@@ -37,7 +37,7 @@ SCOPE: {
 		filename => $file,
 	);
 	$doc->set_editor($editor);
-	$editor->configure_editor($doc);
+	$editor->set_document($doc);
 
 	sub is_row_ok {
 		my %arg = @_;
@@ -176,7 +176,7 @@ SCOPE: {
 		filename => $file,
 	);
 	$doc->set_editor($editor);
-	$editor->configure_editor($doc);
+	$editor->set_document($doc);
 
 	my @functions = $doc->functions;
 	is_deeply(
@@ -229,7 +229,7 @@ SCOPE: {
 			filename => $file,
 		);
 		$doc->set_editor($editor);
-		$editor->configure_editor($doc);
+		$editor->set_document($doc);
 
 		my @functions = $doc->functions;
 		is_deeply(
@@ -245,7 +245,7 @@ SCOPE: {
 	my $editor = t::lib::Padre::Editor->new;
 	my $doc    = Padre::Document::Perl->new;
 	$doc->set_editor($editor);
-	$editor->configure_editor($doc);
+	$editor->set_document($doc);
 	$doc->text_set(<<'END_PERL');
 package Foo::Bar::Baz;
 

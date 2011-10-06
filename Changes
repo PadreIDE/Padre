@@ -130,6 +130,7 @@ the even version for the release, even during development.
     - Fix #1318: Padre freeze? (AZAWAWI)
     - Added Python function list support (AZAWAWI)
     - Added SQL, C/C++/C#/XS/Python/Ruby/PHP keyword highlighting (AZAWAWI)
+    - Major refactoring of the editor setup and configuration code (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
@@ -140,6 +141,7 @@ the even version for the release, even during development.
     - on_right_click becomes on_context_menu as a first step to support the
       context menu key or Shift+F10 as alternatives (DOLMEN)
     - Removed the comment basis for Padre::Document subclassing (ADAMK)
+    - Renaming of all methods involved in setting up an editor object (ADAMK)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)

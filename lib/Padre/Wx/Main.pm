@@ -4037,11 +4037,9 @@ sub setup_editor {
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $document;
 	$document->set_editor($editor);
-	$editor->configure_editor($document);
-
+	$editor->set_document($document);
 	$plugins->editor_enable($editor);
-
-	$editor->set_preferences;
+	$editor->setup_document;
 
 	if ( $document->is_new ) {
 
@@ -4621,7 +4619,7 @@ sub reload_file {
 	}
 	if ( $document->reload ) {
 		$editor = $document->editor;
-		$editor->configure_editor($document);
+		$editor->set_document($document);
 		if (Padre::Feature::CURSORMEMORY) {
 			$editor->restore_cursor_position;
 		}
@@ -4834,7 +4832,7 @@ sub on_save_as {
 	$self->_save_buffer($pageid);
 
 	$document->set_mimetype( $document->guess_mimetype );
-	$document->editor->padre_setup;
+	$document->editor->setup_document;
 	$document->rebless;
 	$document->colourize;
 
@@ -4947,7 +4945,7 @@ sub on_save_intuition {
 	$self->_save_buffer($pageid);
 
 	$document->set_mimetype( $document->guess_mimetype );
-	$document->editor->padre_setup;
+	$document->editor->setup_document;
 	$document->rebless;
 	$document->colourize;
 
@@ -6407,7 +6405,7 @@ sub timer_check_overwrite {
 	#				)
 	#			);
 	#		} else {
-	#			$doc->editor->configure_editor($doc);
+	#			$doc->editor->set_document($doc);
 	#		}
 	#	} else {
 	#		$doc->{timestamp} = $doc->timestamp_now;
@@ -6899,7 +6897,7 @@ sub set_mimetype {
 	my $doc = $self->current->document;
 	if ($doc) {
 		$doc->set_mimetype($mime_type);
-		$doc->editor->padre_setup;
+		$doc->editor->setup_document;
 		$doc->rebless;
 		$doc->colourize;
 	}
@@ -6946,7 +6944,7 @@ sub new_document_from_string {
 	}
 
 	$document->{original_content} = $document->text_get;
-	$document->editor->padre_setup;
+	$document->editor->setup_document;
 	$document->rebless;
 	$document->colourize;
 

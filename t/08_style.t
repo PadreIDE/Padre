@@ -20,8 +20,8 @@ use t::lib::Padre;
 
 plan( tests => 21 );
 
-my $dir = catdir( 'share', 'styles' );
-ok( -d $dir, "Found style directory $dir" );
+my $dir = catdir( 'share', 'themes' );
+ok( -d $dir, "Found theme directory $dir" );
 
 my @styles = qw{
 	default

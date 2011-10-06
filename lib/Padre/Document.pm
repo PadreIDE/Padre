@@ -1196,34 +1196,6 @@ sub get_indentation_style {
 	return $style;
 }
 
-=head2 C<set_indentation_style>
-
-Given a hash reference with the keys C<use_tabs>,
-C<tabwidth>, and C<indentwidth>, set the document's editor's
-indentation style.
-
-Without an argument, falls back to what C<get_indentation_style>
-returns.
-
-=cut
-
-sub set_indentation_style {
-	my $self   = shift;
-	my $style  = shift || $self->get_indentation_style;
-	my $editor = $self->editor;
-
-	# The display width of literal tab characters (ne "indentation width"!)
-	$editor->SetTabWidth( $style->{tabwidth} );
-
-	# The actual indentation width in COLUMNS!
-	$editor->SetIndent( $style->{indentwidth} );
-
-	# Use tabs for indentation where possible?
-	$editor->SetUseTabs( $style->{use_tabs} );
-
-	return ();
-}
-
 =head2 C<get_indentation_level_string>
 
 Calculates the string that should be used to indent a given
