@@ -75,6 +75,8 @@ sub _initialize {
 		cc    => 'text/x-c++src',
 		cpp   => 'text/x-c++src',
 		cxx   => 'text/x-c++src',
+		cob   => 'text/x-cobol',
+		cbl   => 'text/x-cobol',
 		'c++' => 'text/x-c++src',
 		hh    => 'text/x-c++src',
 		hpp   => 'text/x-c++src',
