@@ -210,13 +210,6 @@ my %SCINTILLA_KEY_WORDS = (
 		__function__ __line__ __method__ __namespace__ __sleep __wakeup
 	} ] ],
 
-	'application/x-ruby' => [ [ qw{
-		__FILE__ and def end in or self unless __LINE__ begin defined?
-		ensure module redo super until BEGIN break do false next rescue
-		then when END case else for nil retry true while alias class
-		elsif if not return undef yield
-	} ] ],
-
 	'text/x-sql' => [ [ qw{
 		absolute action add admin after aggregate alias all allocate
 		alter and any are array as asc assertion at authorization
