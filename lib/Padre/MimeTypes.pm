@@ -190,12 +190,12 @@ sub _initialize {
 		},
 
 		'text/x-adasrc' => {
-			name  => 'ADA',
+			name  => 'Ada',
 			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
 		},
 
 		'text/x-asm' => {
-			name  => 'ASM',
+			name  => 'Assembly',
 			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
 		},
 
