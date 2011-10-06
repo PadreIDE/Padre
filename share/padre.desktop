@@ -2,9 +2,9 @@
 Encoding=UTF-8
 Name=Padre
 Comment=The Perl IDE
-# Change to correspongdin path
-Exec=/home/claudio/Code/Padre/trunk/Padre/dev -a
-Icon=/home/claudio/Code/Padre/trunk/Padre/share/icons/padre/64x64/logo.png
+# change to corresponding path
+Exec=padre
+Icon=/usr/local/share/perl/5.10.1/auto/share/dist/Padre/icons/padre/64x64/logo.png
 Categories=Application;Development;Perl;IDE
 Version=1.0
 Type=Application
