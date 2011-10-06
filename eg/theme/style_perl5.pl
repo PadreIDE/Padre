@@ -53,7 +53,10 @@ my $wxSTC_PL_IDENTIFIER; #struct $variable @array %hash
 
 my $wxSTC_PL_SCALAR;
 my @wxSTC_PL_ARRAY;
+$wxSTC_PL_ARRAY[100]; # indexed
 my %wxSTC_PL_HASH;
+$wxSTD_PL_HASH{keyname};
+
 
 my $wxSTC_PL_SYMBOLTABLE; # what?
 
@@ -83,6 +86,20 @@ my $wxSTC_PL_STRING_QQ = qq( double quoted string literal );
 my $wxSTC_PL_STRING_QX = qx{ command };
 my $wxSTC_PL_STRING_QR = qr/ sample text /;
 my @wxSTC_PL_STRING_QW = qw( word list );
+
+sub function_prototyped($$&) {
+	
+}
+
+sub function_attrib : SomeAttributes(etc) {
+	
+}
+
+format STDOUT =
+@###   @.###   @##.###  @###   @###   ^####
+42,   3.1415,  undef,    0, 10000,   undef
+.
+
 
 1;
 
