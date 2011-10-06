@@ -87,28 +87,27 @@ sub new {
 	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
 	$preview->{Document}->set_editor( $self->preview );
 	$preview->SetLexer('application/x-perl');
-	$preview->SetText(
-		join '',
-		map {"$_\n"} "#!/usr/bin/perl",
-		"",
-		"use strict;",
-		"",
-		"main();",
-		"",
-		"exit 0;",
-		"",
-		"sub main {",
-		"\t# some senseles comment",
-		"\tmy \$x = \$_[0] ? \$_[0] : 5;",
-		"\tprint \"x is \$x\\n\";\n",
-		"\tif ( \$x > 5 ) {",
-		"\t\treturn 1;",
-		"\t} else {",
-		"\t\treturn 0;",
-		"\t}",
-		"}",
-		"",
-		"__END__",
+	$preview->SetText(<<'HERE'
+#!/usr/bin/perl
+
+use strict;
+
+main();
+exit 0;
+
+sub main {
+	# some senseles comment
+	my $x = $_[0] ? $_[0] : 5;
+	print "x is $x\n";
+	if ( $x > 5 ) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+__END__
+HERE
 	);
 	$preview->SetReadOnly(1);
 
