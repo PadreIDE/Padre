@@ -173,6 +173,17 @@ my %COMMENT_LINE_STRING = (
 	'text/x-perlxs'             => '//',
 );
 
+
+# Javascript keywords
+my %SCINTILLA_JS_KEYWORDS = qw{
+	abstract boolean break byte case catch char class
+	const continue debugger default delete do double else enum export extends
+	final finally float for function goto if implements import in instanceof
+	int interface long native new package private protected public
+	return short static super switch synchronized this throw throws
+	transient try typeof var void volatile while with
+};
+
 # Take mostly from src/scite/src/ properties files
 my %SCINTILLA_KEY_WORDS = (
 
@@ -295,17 +306,7 @@ my %SCINTILLA_KEY_WORDS = (
 	# The list is obtained from src/scite/src/cpp.properties
 	# Some of these are reserved for future use.
 	# https://developer.mozilla.org/en/JavaScript/Reference/Reserved_Words
-	'application/javascript' => [
-		[   qw{
-				abstract boolean break byte case catch char class
-				const continue debugger default delete do double else enum export extends
-				final finally float for function goto if implements import in instanceof
-				int interface long native new package private protected public
-				return short static super switch synchronized this throw throws
-				transient try typeof var void volatile while with
-				}
-		]
-	],
+	'application/javascript' => [ [%SCINTILLA_JS_KEYWORDS] ],
 
 	# CSS keyword list is obtained from src/scite/src/css.properties
 	'text/css' => [
@@ -414,6 +415,9 @@ my %SCINTILLA_KEY_WORDS = (
 				required reversed role sandbox scoped seamless sizes spellcheck srcdoc step
 				},
 		],
+
+		# Embedded Javascript
+		[%SCINTILLA_JS_KEYWORDS]
 	],
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
