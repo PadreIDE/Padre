@@ -140,17 +140,8 @@ sub _initialize {
 	);
 
 	%DEFAULT_DOC_CLASS = (
-		'text/x-c'                  => 'Padre::Document::CPP',
-		'text/x-c++src'             => 'Padre::Document::CPP',
-		'text/x-java-source'        => 'Padre::Document::Java',
 		'application/x-perl'        => 'Padre::Document::Perl',
 		'text/x-python'             => 'Padre::Document::Python',
-		'application/x-php'         => 'Padre::Document::PHP',
-		'application/x-ruby'        => 'Padre::Document::Ruby',
-		'text/x-sql'                => 'Padre::Document::SQL',
-		'text/x-csharp'             => 'Padre::Document::CS',
-		'text/x-pod'                => 'Padre::Document::POD',
-		'text/x-perlxs'             => 'Padre::Document::CPP',
 
 		# Unimplemented special comment types
 		# 'text/x-abc'                => ## \

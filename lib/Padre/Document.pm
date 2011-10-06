@@ -173,9 +173,108 @@ my %COMMENT_LINE_STRING = (
 	'text/x-perlxs'             => '//',
 );
 
+# Take mostly from src/scite/src/ properties files
 my %SCINTILLA_KEY_WORDS = (
-	
+	'text/x-c' => [ [ qw{
+		and and_eq asm auto bitand bitor bool break
+		case catch char class compl const const_cast continue
+		default delete do double dynamic_cast else enum explicit export
+		extern false float for friend goto if inline int long mutable
+		namespace new not not_eq operator or or_eq private protected
+		public register reinterpret_cast return short signed sizeof
+		static static_cast struct switch template this throw true try
+		typedef typeid typename union unsigned using virtual void
+		volatile wchar_t while xor xor_eq
+	} ] ],
+
+	'text/x-java-source' => [ [ qw{
+		abstract assert boolean break byte case catch char class
+		const continue default do double else enum extends final
+		finally float for goto if implements import instanceof int
+		interface long native new package private protected public
+		return short static strictfp super switch synchronized this
+		throw throws transient try var void volatile while
+	} ] ],
+
+	'application/x-php' => [ [ qw{
+		and array as bool boolean break case cfunction class const
+		continue declare default die directory do double echo else
+		elseif empty enddeclare endfor endforeach endif endswitch
+		endwhile eval exit extends false float for foreach function
+		global goto if include include_once int integer isset list
+		namespace new null object old_function or parent print real
+		require require_once resource return static stdclass string
+		switch true unset use var while xor abstract catch clone
+		exception final implements interface php_user_filter private
+		protected public this throw try __class__ __dir__ __file__
+		__function__ __line__ __method__ __namespace__ __sleep __wakeup
+	} ] ],
+
+	'application/x-ruby' => [ [ qw{
+		__FILE__ and def end in or self unless __LINE__ begin defined?
+		ensure module redo super until BEGIN break do false next rescue
+		then when END case else for nil retry true while alias class
+		elsif if not return undef yield
+	} ] ],
+
+	'text/x-sql' => [ [ qw{
+		absolute action add admin after aggregate alias all allocate
+		alter and any are array as asc assertion at authorization
+		before begin binary bit blob body boolean both breadth by call
+		cascade cascaded case cast catalog char character check class
+		clob close collate collation column commit completion connect
+		connection constraint constraints constructor continue
+		corresponding create cross cube current current_date
+		current_path current_role current_time current_timestamp
+		current_user cursor cycle data date day deallocate dec decimal
+		declare default deferrable deferred delete depth deref desc
+		describe descriptor destroy destructor deterministic dictionary
+		diagnostics disconnect distinct domain double drop dynamic each
+		else end end-exec equals escape every except exception exec
+		execute exists exit external false fetch first float for
+		foreign found from free full function general get global go
+		goto grant group grouping having host hour identity if ignore
+		immediate in indicator initialize initially inner inout input
+		insert int integer intersect interval into is isolation iterate
+		join key language large last lateral leading left less level
+		like limit local localtime localtimestamp locator map match
+		minute modifies modify module month names national natural
+		nchar nclob new next no none not null numeric object of off old
+		on only open operation option or order ordinality out outer
+		output package pad parameter parameters partial path postfix
+		precision prefix preorder prepare preserve primary prior
+		privileges procedure public read reads real recursive ref
+		references referencing relative restrict result return returns
+		revoke right role rollback rollup routine row rows savepoint
+		schema scroll scope search second section select sequence
+		session session_user set sets size smallint some| space
+		specific specifictype sql sqlexception sqlstate sqlwarning
+		start state statement static structure system_user table
+		temporary terminate than then time timestamp timezone_hour
+		timezone_minute to trailing transaction translation treat
+		trigger true under union unique unknown unnest update usage
+		user using value values varchar variable varying view when
+		whenever where with without work write year zone
+	} ] ],
+
+	'text/x-csharp' => [ [ qw{
+		abstract as ascending base bool break by byte case catch char
+		checked class const continue decimal default delegate
+		descending do double else enum equals event explicit extern
+		false finally fixed float for foreach from goto group if
+		implicit in int interface internal into is join lock let long
+		namespace new null object on operator orderby out override
+		params private protected public readonly ref return sbyte
+		sealed select short sizeof stackalloc static string struct
+		switch this throw true try typeof uint ulong unchecked unsafe
+		ushort using var virtual void where while
+	} ] ],
+
 );
+$SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
+$SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
+
+
 
 
 
@@ -384,7 +483,9 @@ sub scintilla_word_chars {
 }
 
 sub scintilla_key_words {
-	return [];
+	my $self = shift;
+	my $mime = $self->mimetype  or return [];
+	$SCINTILLA_KEY_WORDS{$mime} or return [];
 }
 
 sub get_calltip_keywords {
@@ -406,9 +507,11 @@ sub get_function_regex {
 # TO DO Remove this base method
 sub get_comment_line_string {
 	my $self = shift;
-	my $mime = $self->mimetype or return;
+	my $mime = $self->mimetype  or return;
 	$COMMENT_LINE_STRING{$mime} or return;
 }
+
+
 
 
 
