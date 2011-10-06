@@ -130,7 +130,7 @@ the even version for the release, even during development.
     - Fix #1318: Padre freeze? (AZAWAWI)
     - Added Python function list support (AZAWAWI)
     - Added SQL, C/C++, C#, XS, Python, Ruby, PHP, HTML, CSS, JavaScript, Ada,
-      COBOL, Haskell and YAML keyword highlighting (AZAWAWI)
+      COBOL, Haskell, Pascal and YAML keyword highlighting (AZAWAWI)
     - Major refactoring of the editor setup and configuration code (ADAMK)
 
 0.91 Development version, not released
