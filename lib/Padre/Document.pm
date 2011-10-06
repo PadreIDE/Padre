@@ -419,6 +419,24 @@ my %SCINTILLA_KEY_WORDS = (
 		# Embedded Javascript
 		[%SCINTILLA_JS_KEYWORDS]
 	],
+
+	# Ada keyword list is obtained from src/scite/src/ada.properties
+	'text/x-adasrc' => [
+		[
+
+			# Ada keywords
+			qw{abort abstract accept access aliased all array at begin body
+				case constant declare delay delta digits do else elsif end entry exception exit for
+				function generic goto if in is limited loop new null of others out package pragma
+				private procedure protected raise range record renames requeue return reverse
+				select separate subtype tagged task terminate then type until use when while with
+				},
+
+			# Ada Operators
+			qw{abs and mod not or rem xor},
+		]
+	],
+
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
 $SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};

@@ -129,8 +129,8 @@ the even version for the release, even during development.
     - Fix quick menu access stability bugs on Ubuntu (AZAWAWI)
     - Fix #1318: Padre freeze? (AZAWAWI)
     - Added Python function list support (AZAWAWI)
-    - Added SQL, C/C++, C#, XS, Python, Ruby, PHP, HTML, CSS, JavaScript and YAML
-      keyword highlighting (AZAWAWI)
+    - Added SQL, C/C++, C#, XS, Python, Ruby, PHP, HTML, CSS, JavaScript, Ada
+      and YAML keyword highlighting (AZAWAWI)
     - Major refactoring of the editor setup and configuration code (ADAMK)
 
 0.91 Development version, not released
