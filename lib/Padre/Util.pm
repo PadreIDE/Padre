@@ -31,7 +31,7 @@ use Cwd             ();
 use File::Spec      ();
 use List::Util      ();
 use Padre::Constant (); ### NO other Padre:: dependencies
-use Padre::Logger;
+### Seriously guys, I fscking mean it.
 
 # If we make $VERSION an 'our' variable the parse_variable() function breaks
 use vars qw{ $VERSION $COMPATIBLE };
@@ -643,7 +643,7 @@ sub run_in_directory_two {
 	my $location = shift;
 	my $return_option = shift;
 	
-	TRACE("location to process: $location") if DEBUG;
+	# TRACE("location to process: $location") if DEBUG;
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
@@ -651,7 +651,6 @@ sub run_in_directory_two {
 		} 
 
 	}
-	TRACE("Return option requested: $return_option") if DEBUG;
 	
 	my %ret_ioe;
 	$ret_ioe{input} = $cmd_line;
@@ -664,7 +663,6 @@ sub run_in_directory_two {
 	} else {
 		$return_option = 1;
 	}
-	TRACE("Return option set to: $return_option") if DEBUG;
 
 	# Create a temporary file for standard output redirection
 	require File::Temp;
@@ -681,14 +679,12 @@ sub run_in_directory_two {
 	} else {
 		$directory = $temp_dir;
 	}
-	TRACE("which directory are we going to run in: $directory") if DEBUG;
 	
 	my @cmd = (
 		$cmd_line,
 		'1>' . $std_out->filename,
 		'2>' . $std_err->filename,
 	);
-	TRACE("Let\'s check our command line: @cmd") if DEBUG;
 	
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
