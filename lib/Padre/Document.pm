@@ -532,7 +532,33 @@ my %SCINTILLA_KEY_WORDS = (
 			# Haskell Foreign Function Interface (FFI) (
 			qw{export label dynamic safe threadsafe unsafe stdcall ccall prim}
 		],
-		]
+	],
+
+	# Pascal keyword list is obtained from src/scite/src/pascal.properties
+	'text/x-pascal' => [
+		[
+
+			# Pascal keywords
+			qw{absolute abstract and array as asm assembler automated begin case
+				cdecl class const constructor deprecated destructor dispid dispinterface div do downto
+				dynamic else end except export exports external far file final finalization finally for
+				forward function goto if implementation in inherited initialization inline interface is
+				label library message mod near nil not object of on or out overload override packed
+				pascal platform private procedure program property protected public published raise
+				record register reintroduce repeat resourcestring safecall sealed set shl shr static
+				stdcall strict string then threadvar to try type unit unsafe until uses var varargs
+				virtual while with xor
+				},
+
+			# Smart pascal highlighting
+			qw{add default implements index name nodefault read readonly
+				remove stored write writeonly},
+
+			# Pascal package
+			#TODO only package dpk should get this list
+			qw{package contains requires},
+		],
+	],
 
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};

@@ -99,7 +99,6 @@ sub _initialize {
 		lua   => 'text/x-lua',
 		mak   => 'text/x-makefile',
 		mat   => 'text/x-matlab',
-		pas   => 'text/x-pascal',
 		pod   => 'text/x-pod',
 		php   => 'application/x-php',
 		py    => 'text/x-python',
@@ -140,6 +139,13 @@ sub _initialize {
 		p6m => 'application/x-perl6',
 		pl6 => 'application/x-perl6',
 		pm6 => 'application/x-perl6',
+
+		# Pascal file extensions
+		pas   => 'text/x-pascal',
+		dpr   => 'text/x-pascal',
+		dfm   => 'text/x-pascal',
+		inc   => 'text/x-pascal',
+		pp    => 'text/x-pascal',
 	);
 
 	%DEFAULT_DOC_CLASS = (
