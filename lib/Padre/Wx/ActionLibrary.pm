@@ -1247,30 +1247,6 @@ sub init {
 		},
 	);
 
-	# We should be able to remove F4 and Shift+F4 and hook this functionality
-	# to F3 and Shift+F3 Incremental find (#60)
-	Padre::Wx::Action->new(
-		name        => 'search.quick_find_next',
-		need_editor => 1,
-		label       => _T('Find &Next'),
-		comment     => _T('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut    => 'F4',
-		menu_event  => sub {
-			$_[0]->findfast->search('next');
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name        => 'search.quick_find_previous',
-		need_editor => 1,
-		label       => _T('Find &Previous'),
-		comment     => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut    => 'Shift-F4',
-		menu_event  => sub {
-			$_[0]->findfast->search('previous');
-		},
-	);
-
 	# Search and Replace
 
 	Padre::Wx::Action->new(
