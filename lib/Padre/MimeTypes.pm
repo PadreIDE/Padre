@@ -195,6 +195,11 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_NULL,
 		},
 
+		'text/x-actionscript' => {
+			name  => 'ABC',
+			lexer => Wx::wxSTC_LEX_CPP,
+		},
+
 		'text/x-adasrc' => {
 			name  => 'Ada',
 			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
