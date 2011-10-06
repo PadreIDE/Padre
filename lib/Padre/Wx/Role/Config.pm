@@ -49,9 +49,8 @@ sub config_load {
 			);
 
 		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			$ctrl->SetSelectedFont(
-				Padre::Wx::native_font($value)
-			);
+			my $font = Padre::Wx::native_font($value);
+			$ctrl->SetSelectedFont( $font ) if $font->IsOk;
 
 		} elsif ( $ctrl->isa('Wx::Choice') ) {
 			my $options = $setting->options;
