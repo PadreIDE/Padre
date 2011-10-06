@@ -31,7 +31,8 @@ def subtract(a, b):
 def add(a, b):
      return a + b
 
-
+def _private:
+     return
 END_RUBY
 
 ######################################################################
@@ -52,10 +53,10 @@ SCOPE: {
 	is_deeply(
 		$task->{list},
 		[   qw{
-				__init__
+				initialize
 				subtract
 				add
-				g
+				_private
 				}
 		],
 		'Found expected functions',
@@ -87,8 +88,8 @@ SCOPE: {
 		$task->{list},
 		[   qw{
 				add
-				g
-				__init__
+				initialize
+				_private
 				subtract
 				}
 		],
@@ -121,9 +122,9 @@ SCOPE: {
 		$task->{list},
 		[   qw{
 				add
-				g
+				initialize
 				subtract
-				__init__
+				_private
 				}
 		],
 		'Found expected functions (alphabetical_private_last)',
