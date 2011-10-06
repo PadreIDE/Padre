@@ -100,7 +100,7 @@ use Padre::Current ();
 use Padre::Logger;
 
 our $VERSION    = '0.91';
-our $COMPATIBLE = '0.69';
+our $COMPATIBLE = '0.91';
 
 # Use a shared sequence for object revisioning greatly
 # simplifies the indexing process.
