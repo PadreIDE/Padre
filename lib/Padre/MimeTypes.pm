@@ -89,6 +89,7 @@ sub _initialize {
 		f     => 'text/x-fortran',
 		htm   => 'text/html',
 		html  => 'text/html',
+		hs    => 'text/x-haskell',
 		i     => 'text/x-c',              # C code that should not be preprocessed
 		ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
 		java  => 'text/x-java-source',
@@ -243,6 +244,11 @@ sub _initialize {
 		'text/x-fortran' => {
 			name  => 'Fortran',
 			lexer => Wx::wxSTC_LEX_FORTRAN, # CONFIRMED
+		},
+
+		'text/x-haskell' => {
+			name  => 'Haskhell',
+			lexer => Wx::wxSTC_LEX_HASKELL,    # CONFIRMED
 		},
 
 		'text/html' => {

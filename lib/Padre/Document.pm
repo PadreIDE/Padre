@@ -522,6 +522,23 @@ my %SCINTILLA_KEY_WORDS = (
 		],
 	],
 
+	# Haskell keyword list is obtained from src/scite/src/haskell.properties
+	'text/x-haskell' => [
+		[
+
+			# Haskell 98
+			qw{case class data default deriving do else hiding if
+				import in infix infixl infixr instance let module
+				newtype of then type where forall foreign
+				}
+		],
+		[
+
+			# Haskell Foreign Function Interface (FFI) (
+			qw{export label dynamic safe threadsafe unsafe stdcall ccall prim}
+		],
+		]
+
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
 $SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
