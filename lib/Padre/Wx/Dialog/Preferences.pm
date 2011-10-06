@@ -96,7 +96,7 @@ main();
 exit 0;
 
 sub main {
-	# some senseles comment
+	# some senseless comment
 	my $x = $_[0] ? $_[0] : 5;
 	print "x is $x\n";
 	if ( $x > 5 ) {
