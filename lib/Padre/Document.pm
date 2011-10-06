@@ -560,6 +560,34 @@ my %SCINTILLA_KEY_WORDS = (
 		],
 	],
 
+	# ActionScript keyword list is obtained from src/scite/src/cpp.properties
+	'text/x-actionscript' => [
+		[   qw{
+				add and break case catch class continue default delete do
+				dynamic else eq extends false finally for function ge get gt if implements import in
+				instanceof interface intrinsic le lt ne new not null or private public return
+				set static super switch this throw true try typeof undefined var void while with
+				}
+		],
+		[   qw{
+				Array Arguments Accessibility Boolean Button Camera Color
+				ContextMenu ContextMenuItem Date Error Function Key LoadVars LocalConnection Math
+				Microphone Mouse MovieClip MovieClipLoader NetConnection NetStream Number Object
+				PrintJob Selection SharedObject Sound Stage String StyleSheet System TextField
+				TextFormat TextSnapshot Video Void XML XMLNode XMLSocket
+				_accProps _focusrect _global _highquality _parent _quality _root _soundbuftime
+				arguments asfunction call capabilities chr clearInterval duplicateMovieClip
+				escape eval fscommand getProperty getTimer getURL getVersion gotoAndPlay gotoAndStop
+				ifFrameLoaded Infinity -Infinity int isFinite isNaN length loadMovie loadMovieNum
+				loadVariables loadVariablesNum maxscroll mbchr mblength mbord mbsubstring MMExecute
+				NaN newline nextFrame nextScene on onClipEvent onUpdate ord parseFloat parseInt play
+				prevFrame prevScene print printAsBitmap printAsBitmapNum printNum random removeMovieClip
+				scroll set setInterval setProperty startDrag stop stopAllSounds stopDrag substring
+				targetPath tellTarget toggleHighQuality trace unescape unloadMovie unLoadMovieNum updateAfterEvent
+				}
+		],
+	],
+
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
 $SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};

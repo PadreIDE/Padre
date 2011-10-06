@@ -140,18 +140,24 @@ sub _initialize {
 		pl6 => 'application/x-perl6',
 		pm6 => 'application/x-perl6',
 
-		# Pascal file extensions
-		pas   => 'text/x-pascal',
-		dpr   => 'text/x-pascal',
-		dfm   => 'text/x-pascal',
-		inc   => 'text/x-pascal',
-		pp    => 'text/x-pascal',
+		# Pascal
+		pas => 'text/x-pascal',
+		dpr => 'text/x-pascal',
+		dfm => 'text/x-pascal',
+		inc => 'text/x-pascal',
+		pp  => 'text/x-pascal',
+
+		# ActionScript
+		as   => 'text/x-actionscript',
+		asc  => 'text/x-actionscript',
+		jsfl => 'text/x-actionscript',
 	);
 
 	%DEFAULT_DOC_CLASS = (
-		'application/x-perl'        => 'Padre::Document::Perl',
-		'text/x-python'             => 'Padre::Document::Python',
-		'application/x-ruby'        => 'Padre::Document::Ruby',
+		'application/x-perl' => 'Padre::Document::Perl',
+		'text/x-python'      => 'Padre::Document::Python',
+		'application/x-ruby' => 'Padre::Document::Ruby',
+
 		# Unimplemented special comment types
 		# 'text/x-abc'                => ## \
 		# 'text/x-bat'                => ## REM
@@ -223,8 +229,8 @@ sub _initialize {
 		},
 
 		'text/x-cobol' => {
-			name => 'COBOL',
-			lexer => 92,  #TODO Wx::Scintilla::LEX_COBOL once it is working
+			name  => 'COBOL',
+			lexer => 92,                  #TODO Wx::Scintilla::LEX_COBOL once it is working
 		},
 
 		'text/x-c++src' => {
@@ -254,7 +260,7 @@ sub _initialize {
 
 		'text/x-haskell' => {
 			name  => 'Haskhell',
-			lexer => Wx::wxSTC_LEX_HASKELL,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_HASKELL, # CONFIRMED
 		},
 
 		'text/html' => {
@@ -329,32 +335,32 @@ sub _initialize {
 
 		'text/x-python' => {
 			name  => 'Python',
-			lexer => Wx::wxSTC_LEX_PYTHON,          # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PYTHON,   # CONFIRMED
 		},
 
 		'application/x-php' => {
 			name  => 'PHP',
-			lexer => Wx::wxSTC_LEX_PHPSCRIPT,       # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
 		},
 
 		'application/x-ruby' => {
 			name  => 'Ruby',
-			lexer => Wx::wxSTC_LEX_RUBY,            # CONFIRMED
+			lexer => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
 		},
 
 		'text/x-sql' => {
 			name  => 'SQL',
-			lexer => Wx::wxSTC_LEX_SQL,             # CONFIRMED
+			lexer => Wx::wxSTC_LEX_SQL,       # CONFIRMED
 		},
 
 		'application/x-tcl' => {
 			name  => 'Tcl',
-			lexer => Wx::wxSTC_LEX_TCL,             # CONFIRMED
+			lexer => Wx::wxSTC_LEX_TCL,       # CONFIRMED
 		},
 
 		'text/vbscript' => {
 			name  => 'VBScript',
-			lexer => Wx::wxSTC_LEX_VBSCRIPT,        # CONFIRMED
+			lexer => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
 		},
 
 		'text/x-config' => {
@@ -366,39 +372,39 @@ sub _initialize {
 		# This is prefered to the more generic application/xml
 		'text/xml' => {
 			name  => 'XML',
-			lexer => Wx::wxSTC_LEX_XML,             # CONFIRMED
+			lexer => Wx::wxSTC_LEX_XML,       # CONFIRMED
 		},
 
 		'text/x-yaml' => {
 			name  => 'YAML',
-			lexer => Wx::wxSTC_LEX_YAML,            # CONFIRMED
+			lexer => Wx::wxSTC_LEX_YAML,      # CONFIRMED
 		},
 
 		'application/x-pir' => {
 			name  => 'PIR',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-pasm' => {
 			name  => 'PASM',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-perl6' => {
 			name  => 'Perl 6',
-			lexer => $perl6_scintilla_lexer,        # CONFIRMED
+			lexer => $perl6_scintilla_lexer,  # CONFIRMED
 		},
 
 		'text/plain' => {
 			name  => _T('Text'),
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => {                        # totally not confirmed
+		'text/x-perlxs' => {                  # totally not confirmed
 			name => 'XS',
 			lexer =>
-				Wx::wxSTC_LEX_CPP,                  # for the lack of a better XS lexer (vim?)
+				Wx::wxSTC_LEX_CPP,            # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
