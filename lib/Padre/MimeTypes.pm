@@ -215,6 +215,11 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_CPP,
 		},
 
+		'text/x-cobol' => {
+			name => 'COBOL',
+			lexer => 92,  #TODO Wx::Scintilla::LEX_COBOL once it is working
+		},
+
 		'text/x-c++src' => {
 			name  => 'C++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
