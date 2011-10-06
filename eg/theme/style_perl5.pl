@@ -55,7 +55,7 @@ my $wxSTC_PL_SCALAR;
 my @wxSTC_PL_ARRAY;
 $wxSTC_PL_ARRAY[100]; # indexed
 my %wxSTC_PL_HASH;
-$wxSTD_PL_HASH{keyname};
+$wxSTC_PL_HASH{keyname};
 
 
 my $wxSTC_PL_SYMBOLTABLE; # what?
