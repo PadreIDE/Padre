@@ -349,10 +349,9 @@ my %SCINTILLA_KEY_WORDS = (
 
 			# CSS3
 			qw{
-				border-radius border-top-right-radius border-bottom-right-radius border-bottom-left-radius border-top-left-radius \
-				box-shadow \
-				columns column-width column-count column-rule column-gap column-rule-color column-rule-style column-rule-width \
-				resize opacity word-wrap
+				border-radius border-top-right-radius border-bottom-right-radius border-bottom-left-radius
+				border-top-left-radius box-shadow columns column-width column-count column-rule column-gap
+				column-rule-color column-rule-style column-rule-width resize opacity word-wrap
 				}
 		],
 	],
