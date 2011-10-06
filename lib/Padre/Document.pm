@@ -296,12 +296,7 @@ my %SCINTILLA_KEY_WORDS = (
 	],
 
 	# YAML keyword list is obtained from src/scite/src/yaml.properties
-	'text/x-yaml' => [
-		[   qw{
-				true false yes no
-				}
-		]
-	],
+	'text/x-yaml' => [ [qw{true false yes no}] ],
 
 	# The list is obtained from src/scite/src/cpp.properties
 	# Some of these are reserved for future use.
