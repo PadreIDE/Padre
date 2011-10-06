@@ -187,20 +187,6 @@ sub plugin_icon {
 
 =pod
 
-=head2 C<plugin_wizards>
-
-The C<plugin_wizards> method will be called by Padre when it retrieves the wizard list.
-
-The default implementation returns an empty list
-
-=cut
-
-sub plugin_wizards {
-	return ();
-}
-
-=pod
-
 =head2 C<padre_interfaces>
 
   sub padre_interfaces {

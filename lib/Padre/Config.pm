@@ -1364,14 +1364,6 @@ setting(
 	default => 1,
 );
 
-# Enable experimental wizard system.
-setting(
-	name    => 'feature_wizard_selector',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-
 # Enable experimental quick fix system.
 setting(
 	name    => 'feature_quick_fix',

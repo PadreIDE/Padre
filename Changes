@@ -142,6 +142,7 @@ the even version for the release, even during development.
       context menu key or Shift+F10 as alternatives (DOLMEN)
     - Removed the comment basis for Padre::Document subclassing (ADAMK)
     - Renaming of all methods involved in setting up an editor object (ADAMK)
+    - Removed the experimental Padre wizard API (AZAWAWI)
 
 0.90 Tue 16 Aug 2011
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)

@@ -199,12 +199,6 @@ sub new {
 	# Bootstrap the action system
 	Padre::Wx::ActionLibrary->init($self);
 
-	# Bootstrap the wizard system
-	if (Padre::Feature::WIZARD_SELECTOR) {
-		require Padre::Wx::WizardLibrary;
-		Padre::Wx::WizardLibrary->init($self);
-	}
-
 	# Temporary store for the notebook tab history
 	# TO DO: Storing this here (might) violate encapsulation.
 	#       It should probably be in the notebook object.
@@ -786,11 +780,6 @@ sub open_resource {
 		$self->{open_resource} = Padre::Wx::Dialog::OpenResource->new($self);
 	}
 	return $self->{open_resource};
-}
-
-sub wizard_selector {
-	require Padre::Wx::Dialog::WizardSelector;
-	return Padre::Wx::Dialog::WizardSelector->new( $_[0] );
 }
 
 sub help_search {

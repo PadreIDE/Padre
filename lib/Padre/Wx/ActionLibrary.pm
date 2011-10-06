@@ -182,18 +182,6 @@ sub init {
 		},
 	);
 
-	# The wizard selector feature
-	if (Padre::Feature::WIZARD_SELECTOR) {
-		Padre::Wx::Action->new(
-			name       => 'file.wizard_selector',
-			label      => _T('&Wizard Selector'),
-			comment    => _T('Selects and opens a wizard'),
-			menu_event => sub {
-				$_[0]->wizard_selector->show;
-			},
-		);
-	}
-
 	### NOTE: Add support for plugins here
 
 	# Open things

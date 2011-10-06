@@ -45,7 +45,6 @@ use Class::XSAccessor 1.05 {
 	},
 	accessors => {
 		actions     => 'actions',
-		wizards     => 'wizards',
 		shortcuts   => 'shortcuts',
 		instance_id => 'instance_id',
 	},
@@ -141,7 +140,6 @@ sub new {
 
 	# Initialise our registries
 	$self->actions(   {} );
-	$self->wizards(   {} );
 	$self->shortcuts( {} );
 
 	# Create the project manager

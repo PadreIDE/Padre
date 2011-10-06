@@ -58,7 +58,6 @@ constant->import(
 		QUICK_FIX       => $config->feature_quick_fix,
 		SYNC            => $config->feature_sync,
 		STYLE_GUI       => $config->feature_style_gui,
-		WIZARD_SELECTOR => $config->feature_wizard_selector,
 		DEVEL_ENDSTATS  => $config->feature_devel_endstats,
 		DEVEL_TRACEUSE  => $config->feature_devel_traceuse,
 	}

@@ -64,15 +64,6 @@ sub new {
 		'file.new_p6_script',
 	);
 
-	if (Padre::Feature::WIZARD_SELECTOR) {
-		$file_new->AppendSeparator;
-
-		$self->add_menu_action(
-			$file_new,
-			'file.wizard_selector',
-		);
-	}
-
 	### NOTE: Add support for plugins here
 
 	# Open things
