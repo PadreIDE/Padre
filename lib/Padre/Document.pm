@@ -175,94 +175,187 @@ my %COMMENT_LINE_STRING = (
 
 # Take mostly from src/scite/src/ properties files
 my %SCINTILLA_KEY_WORDS = (
-	'text/x-c' => [ [ qw{
-		and and_eq asm auto bitand bitor bool break
-		case catch char class compl const const_cast continue
-		default delete do double dynamic_cast else enum explicit export
-		extern false float for friend goto if inline int long mutable
-		namespace new not not_eq operator or or_eq private protected
-		public register reinterpret_cast return short signed sizeof
-		static static_cast struct switch template this throw true try
-		typedef typeid typename union unsigned using virtual void
-		volatile wchar_t while xor xor_eq
-	} ] ],
 
-	'text/x-java-source' => [ [ qw{
-		abstract assert boolean break byte case catch char class
-		const continue default do double else enum extends final
-		finally float for goto if implements import instanceof int
-		interface long native new package private protected public
-		return short static strictfp super switch synchronized this
-		throw throws transient try var void volatile while
-	} ] ],
+	# C/C++ keyword list is obtained from src/scite/src/cpp.properties
+	'text/x-c' => [
+		[   qw{
+				and and_eq asm auto bitand bitor bool break
+				case catch char class compl const const_cast continue
+				default delete do double dynamic_cast else enum explicit export
+				extern false float for friend goto if inline int long mutable
+				namespace new not not_eq operator or or_eq private protected
+				public register reinterpret_cast return short signed sizeof
+				static static_cast struct switch template this throw true try
+				typedef typeid typename union unsigned using virtual void
+				volatile wchar_t while xor xor_eq
+				}
+		]
+	],
 
-	'application/x-php' => [ [ qw{
-		and array as bool boolean break case cfunction class const
-		continue declare default die directory do double echo else
-		elseif empty enddeclare endfor endforeach endif endswitch
-		endwhile eval exit extends false float for foreach function
-		global goto if include include_once int integer isset list
-		namespace new null object old_function or parent print real
-		require require_once resource return static stdclass string
-		switch true unset use var while xor abstract catch clone
-		exception final implements interface php_user_filter private
-		protected public this throw try __class__ __dir__ __file__
-		__function__ __line__ __method__ __namespace__ __sleep __wakeup
-	} ] ],
+	# Java keyword list is obtained from src/scite/src/cpp.properties
+	'text/x-java-source' => [
+		[   qw{
+				abstract assert boolean break byte case catch char class
+				const continue default do double else enum extends final
+				finally float for goto if implements import instanceof int
+				interface long native new package private protected public
+				return short static strictfp super switch synchronized this
+				throw throws transient try var void volatile while
+				}
+		]
+	],
 
-	'text/x-sql' => [ [ qw{
-		absolute action add admin after aggregate alias all allocate
-		alter and any are array as asc assertion at authorization
-		before begin binary bit blob body boolean both breadth by call
-		cascade cascaded case cast catalog char character check class
-		clob close collate collation column commit completion connect
-		connection constraint constraints constructor continue
-		corresponding create cross cube current current_date
-		current_path current_role current_time current_timestamp
-		current_user cursor cycle data date day deallocate dec decimal
-		declare default deferrable deferred delete depth deref desc
-		describe descriptor destroy destructor deterministic dictionary
-		diagnostics disconnect distinct domain double drop dynamic each
-		else end end-exec equals escape every except exception exec
-		execute exists exit external false fetch first float for
-		foreign found from free full function general get global go
-		goto grant group grouping having host hour identity if ignore
-		immediate in indicator initialize initially inner inout input
-		insert int integer intersect interval into is isolation iterate
-		join key language large last lateral leading left less level
-		like limit local localtime localtimestamp locator map match
-		minute modifies modify module month names national natural
-		nchar nclob new next no none not null numeric object of off old
-		on only open operation option or order ordinality out outer
-		output package pad parameter parameters partial path postfix
-		precision prefix preorder prepare preserve primary prior
-		privileges procedure public read reads real recursive ref
-		references referencing relative restrict result return returns
-		revoke right role rollback rollup routine row rows savepoint
-		schema scroll scope search second section select sequence
-		session session_user set sets size smallint some| space
-		specific specifictype sql sqlexception sqlstate sqlwarning
-		start state statement static structure system_user table
-		temporary terminate than then time timestamp timezone_hour
-		timezone_minute to trailing transaction translation treat
-		trigger true under union unique unknown unnest update usage
-		user using value values varchar variable varying view when
-		whenever where with without work write year zone
-	} ] ],
+	# PHP keyword list is obtained from src/scite/src/html.properties
+	'application/x-php' => [
+		[   qw{
+				and array as bool boolean break case cfunction class const
+				continue declare default die directory do double echo else
+				elseif empty enddeclare endfor endforeach endif endswitch
+				endwhile eval exit extends false float for foreach function
+				global goto if include include_once int integer isset list
+				namespace new null object old_function or parent print real
+				require require_once resource return static stdclass string
+				switch true unset use var while xor abstract catch clone
+				exception final implements interface php_user_filter private
+				protected public this throw try __class__ __dir__ __file__
+				__function__ __line__ __method__ __namespace__ __sleep __wakeup
+				}
+		]
+	],
 
-	'text/x-csharp' => [ [ qw{
-		abstract as ascending base bool break by byte case catch char
-		checked class const continue decimal default delegate
-		descending do double else enum equals event explicit extern
-		false finally fixed float for foreach from goto group if
-		implicit in int interface internal into is join lock let long
-		namespace new null object on operator orderby out override
-		params private protected public readonly ref return sbyte
-		sealed select short sizeof stackalloc static string struct
-		switch this throw true try typeof uint ulong unchecked unsafe
-		ushort using var virtual void where while
-	} ] ],
+	# SQL keyword list is obtained from src/scite/src/sql.properties
+	'text/x-sql' => [
+		[   qw{
+				absolute action add admin after aggregate alias all allocate
+				alter and any are array as asc assertion at authorization
+				before begin binary bit blob body boolean both breadth by call
+				cascade cascaded case cast catalog char character check class
+				clob close collate collation column commit completion connect
+				connection constraint constraints constructor continue
+				corresponding create cross cube current current_date
+				current_path current_role current_time current_timestamp
+				current_user cursor cycle data date day deallocate dec decimal
+				declare default deferrable deferred delete depth deref desc
+				describe descriptor destroy destructor deterministic dictionary
+				diagnostics disconnect distinct domain double drop dynamic each
+				else end end-exec equals escape every except exception exec
+				execute exists exit external false fetch first float for
+				foreign found from free full function general get global go
+				goto grant group grouping having host hour identity if ignore
+				immediate in indicator initialize initially inner inout input
+				insert int integer intersect interval into is isolation iterate
+				join key language large last lateral leading left less level
+				like limit local localtime localtimestamp locator map match
+				minute modifies modify module month names national natural
+				nchar nclob new next no none not null numeric object of off old
+				on only open operation option or order ordinality out outer
+				output package pad parameter parameters partial path postfix
+				precision prefix preorder prepare preserve primary prior
+				privileges procedure public read reads real recursive ref
+				references referencing relative restrict result return returns
+				revoke right role rollback rollup routine row rows savepoint
+				schema scroll scope search second section select sequence
+				session session_user set sets size smallint some| space
+				specific specifictype sql sqlexception sqlstate sqlwarning
+				start state statement static structure system_user table
+				temporary terminate than then time timestamp timezone_hour
+				timezone_minute to trailing transaction translation treat
+				trigger true under union unique unknown unnest update usage
+				user using value values varchar variable varying view when
+				whenever where with without work write year zone
+				}
+		]
+	],
 
+	# C# keyword list is obtained from src/scite/src/cpp.properties
+	'text/x-csharp' => [
+		[   qw{
+				abstract as ascending base bool break by byte case catch char
+				checked class const continue decimal default delegate
+				descending do double else enum equals event explicit extern
+				false finally fixed float for foreach from goto group if
+				implicit in int interface internal into is join lock let long
+				namespace new null object on operator orderby out override
+				params private protected public readonly ref return sbyte
+				sealed select short sizeof stackalloc static string struct
+				switch this throw true try typeof uint ulong unchecked unsafe
+				ushort using var virtual void where while
+				}
+		]
+	],
+
+	# YAML keyword list is obtained from src/scite/src/yaml.properties
+	'text/x-yaml' => [
+		[   qw{
+				true false yes no
+				}
+		]
+	],
+
+	# The list is obtained from src/scite/src/cpp.properties
+	# Some of these are reserved for future use.
+	# https://developer.mozilla.org/en/JavaScript/Reference/Reserved_Words
+	'application/javascript' => [
+		[   qw{
+				abstract boolean break byte case catch char class
+				const continue debugger default delete do double else enum export extends
+				final finally float for function goto if implements import in instanceof
+				int interface long native new package private protected public
+				return short static super switch synchronized this throw throws
+				transient try typeof var void volatile while with
+				}
+		]
+	],
+
+	# CSS keyword list is obtained from src/scite/src/css.properties
+	'text/css' => [
+		[
+
+			# CSS1
+			qw{
+				color background-color background-image background-repeat background-attachment background-position background
+				font-family font-style font-variant font-weight font-size font
+				word-spacing letter-spacing text-decoration vertical-align text-transform text-align text-indent line-height
+				margin-top margin-right margin-bottom margin-left margin
+				padding-top padding-right padding-bottom padding-left padding
+				border-top-width border-right-width border-bottom-width border-left-width border-width
+				border-top border-right border-bottom border-left border
+				border-color border-style width height float clear
+				display white-space list-style-type list-style-image list-style-position list-style
+				}
+		],
+		[
+
+			# CSS2
+			qw{
+				border-top-color border-right-color border-bottom-color border-left-color border-color
+				border-top-style border-right-style border-bottom-style border-left-style border-style
+				top right bottom left position z-index direction unicode-bidi
+				min-width max-width min-height max-height overflow clip visibility content quotes
+				counter-reset counter-increment marker-offset
+				size marks page-break-before page-break-after page-break-inside page orphans widows
+				font-stretch font-size-adjust unicode-range units-per-em src
+				panose-1 stemv stemh slope cap-height x-height ascent descent widths bbox definition-src
+				baseline centerline mathline topline text-shadow
+				caption-side table-layout border-collapse border-spacing empty-cells speak-header
+				cursor outline outline-width outline-style outline-color
+				volume speak pause-before pause-after pause cue-before cue-after cue
+				play-during azimuth elevation speech-rate voice-family pitch pitch-range stress richness
+				speak-punctuation speak-numeral
+				}
+
+		],
+		[
+
+			# CSS3
+			qw{
+				border-radius border-top-right-radius border-bottom-right-radius border-bottom-left-radius border-top-left-radius \
+				box-shadow \
+				columns column-width column-count column-rule column-gap column-rule-color column-rule-style column-rule-width \
+				resize opacity word-wrap
+				}
+		],
+	],
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
 $SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
@@ -477,7 +570,7 @@ sub scintilla_word_chars {
 
 sub scintilla_key_words {
 	my $self = shift;
-	my $mime = $self->mimetype  or return [];
+	my $mime = $self->mimetype or return [];
 	$SCINTILLA_KEY_WORDS{$mime} or return [];
 }
 
@@ -500,7 +593,7 @@ sub get_function_regex {
 # TO DO Remove this base method
 sub get_comment_line_string {
 	my $self = shift;
-	my $mime = $self->mimetype  or return;
+	my $mime = $self->mimetype or return;
 	$COMMENT_LINE_STRING{$mime} or return;
 }
 
