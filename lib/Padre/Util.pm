@@ -610,18 +610,20 @@ also
 
 return type 1 default, returns a string
 
+nb you might need to chomp result but thats for you.
+
 return type 0 hash_ref
 
-example 1,
+=over
+
+=item example 1,
 
 	Padre::Util::run_in_directory_two('svn --version --quiet');
 
 	"1.6.12
 	"
 
-you might need to chomp result
-
-example 2,
+=item example 2,
 
 	Padre::Util::run_in_directory_two('svn --version --quiet', 0);
 
@@ -632,6 +634,7 @@ example 2,
 	"
 	}
 
+=back
 
 =cut
 
@@ -643,7 +646,6 @@ sub run_in_directory_two {
 	my $location = shift;
 	my $return_option = shift;
 
-	# TRACE("location to process: $location") if DEBUG;
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
