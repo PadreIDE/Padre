@@ -68,6 +68,7 @@ sub _initialize {
 		ada   => 'text/x-adasrc',
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
+		cmd   => 'text/x-bat',
 		bib   => 'application/x-bibtex',
 		bml   => 'application/x-bml',     # dreamwidth file format
 		c     => 'text/x-c',
@@ -201,7 +202,7 @@ sub _initialize {
 		# text/x-bat is used in EXT_MIME, application/x-bat was listed here,
 		# they need to be the same
 		'text/x-bat' => {
-			name  => 'BAT',
+			name  => 'Batch',
 			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
 		},
 
