@@ -140,6 +140,7 @@ the even version for the release, even during development.
       their layout properly when displayed again (ADAMK)
     - Add out-of-the-box comment support for HTML, XML, LISP, Fortran, Forth,
       Pascal, VBScript, DOS batch files, ActionScript, Tcl, COBOL (ZENOG)
+    - MATLAB source file extension is .m, not .mat (ZENOG)
  
 
 0.91 Development version, not released

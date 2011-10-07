@@ -97,8 +97,8 @@ sub _initialize {
 		json  => 'application/json',
 		lsp   => 'application/x-lisp',
 		lua   => 'text/x-lua',
+		m     => 'text/x-matlab',
 		mak   => 'text/x-makefile',
-		mat   => 'text/x-matlab',
 		pod   => 'text/x-pod',
 		php   => 'application/x-php',
 		py    => 'text/x-python',
@@ -159,21 +159,6 @@ sub _initialize {
 		'application/x-perl' => 'Padre::Document::Perl',
 		'text/x-python'      => 'Padre::Document::Python',
 		'application/x-ruby' => 'Padre::Document::Ruby',
-
-		# Unimplemented special comment types
-		# 'text/x-abc'                => ## \
-		# 'text/x-bat'                => ## REM
-		# 'text/css'                  => ## /* ... */
-		# 'text/x-forth'              => ## \
-		# 'text/x-fortran'            => ## !
-		# 'text/html'                 => ## <!-- ... -->
-		# 'application/x-lisp'        => ## ;
-		# 'text/x-pascal'             => ## { ... }
-		# 'application/x-psgi'        => ## Perl or HashComment or something else?
-		# 'text/vbscript'             => ## '
-		# 'text/x-perlxs'             => ## ' #'
-		# 'text/x-perltt'             => ## <!-- ... -->
-		# 'text/xml'                  => ## <!-- ... -->
 	);
 
 	%HIGHLIGHTER_CONFIG = (
