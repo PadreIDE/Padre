@@ -139,7 +139,8 @@ the even version for the release, even during development.
     - Tools and panels that are hidden across a AUI geometry change recalculate
       their layout properly when displayed again (ADAMK)
     - Add out-of-the-box comment support for HTML, XML, LISP, Fortran, Forth,
-      Pascal, VBScript, DOS batch files, ActionScript, Tcl, COBOL (ZENOG)
+      Pascal, VBScript, DOS batch files, ActionScript, Tcl, COBOL, Haskell
+      (ZENOG)
     - MATLAB source file extension is .m, not .mat (ZENOG)
  
 

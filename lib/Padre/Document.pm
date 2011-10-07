@@ -163,6 +163,7 @@ my %COMMENT_LINE_STRING = (
 	'text/x-eiffel'             => '--',
 	'text/x-forth'              => '\\',
 	'text/x-fortran'            => '!',
+	'text/x-haskell'            => '--',
 	'text/html'                 => [ '<!--', '-->' ],
 	'application/javascript'    => '//',
 	'application/x-latex'       => '%',
