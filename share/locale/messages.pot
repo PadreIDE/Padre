@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-06 12:10-0700\n"
+"POT-Creation-Date: 2011-10-06 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -669,7 +669,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:408
+#: lib/Padre/Wx/Debugger.pm:407
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1495,7 +1495,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:390
+#: lib/Padre/Wx/Debugger.pm:389
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1544,7 +1544,7 @@ msgstr ""
 msgid "Could not save file: "
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:227
+#: lib/Padre/Wx/Debugger.pm:226
 #, perl-format
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
@@ -1674,9 +1674,9 @@ msgstr ""
 msgid "Debugger is already running"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:194 lib/Padre/Wx/Debugger.pm:276
-#: lib/Padre/Wx/Debugger.pm:300 lib/Padre/Wx/Debugger.pm:334
-#: lib/Padre/Wx/Debugger.pm:354
+#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:275
+#: lib/Padre/Wx/Debugger.pm:299 lib/Padre/Wx/Debugger.pm:333
+#: lib/Padre/Wx/Debugger.pm:353
 msgid "Debugger not running"
 msgstr ""
 
@@ -2055,7 +2055,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:934 lib/Padre/Wx/Editor.pm:645
+#: lib/Padre/Document.pm:979 lib/Padre/Wx/Editor.pm:672
 #: lib/Padre/Wx/Main.pm:5027 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2120,7 +2120,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:738
+#: lib/Padre/Document.pm:783
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2131,7 +2131,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:688
+#: lib/Padre/Document.pm:733
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2221,11 +2221,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:441
+#: lib/Padre/Wx/Debugger.pm:440
 msgid "Expr"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:440
+#: lib/Padre/Wx/Debugger.pm:439
 msgid "Expression:"
 msgstr ""
 
@@ -2306,7 +2306,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:443 lib/Padre/MimeTypes.pm:452
+#: lib/Padre/MimeTypes.pm:445 lib/Padre/MimeTypes.pm:454
 msgid "Fast but might be out of date"
 msgstr ""
 
@@ -2496,7 +2496,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1459
+#: lib/Padre/Wx/Editor.pm:1493
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2518,12 +2518,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:420
+#: lib/Padre/Wx/Syntax.pm:415
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:421
+#: lib/Padre/Wx/Syntax.pm:416
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2678,7 +2678,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:464
+#: lib/Padre/MimeTypes.pm:466
 msgid ""
 "Hopefully faster than the PPI Traditional. Big file will fall back to "
 "Scintilla highlighter."
@@ -2934,7 +2934,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:473
+#: lib/Padre/Wx/Syntax.pm:468
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -3025,17 +3025,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:518
+#: lib/Padre/MimeTypes.pm:520
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:507 lib/Padre/MimeTypes.pm:540
+#: lib/Padre/MimeTypes.pm:509 lib/Padre/MimeTypes.pm:542
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:489
+#: lib/Padre/MimeTypes.pm:491
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3279,12 +3279,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:407
+#: lib/Padre/Wx/Syntax.pm:402
 #, perl-format
 msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:411
+#: lib/Padre/Wx/Syntax.pm:406
 #, perl-format
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
@@ -3312,7 +3312,7 @@ msgstr ""
 msgid "No matches found for \"%s\"."
 msgstr ""
 
-#: lib/Padre/Document.pm:782
+#: lib/Padre/Document.pm:827
 #, perl-format
 msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
@@ -3658,11 +3658,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:458 lib/Padre/Config.pm:1142
+#: lib/Padre/MimeTypes.pm:460 lib/Padre/Config.pm:1142
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:463 lib/Padre/Config.pm:1143
+#: lib/Padre/MimeTypes.pm:465 lib/Padre/Config.pm:1143
 msgid "PPI Standard"
 msgstr ""
 
@@ -4455,7 +4455,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1268
+#: lib/Padre/Document.pm:1313
 msgid "Save Warning"
 msgstr ""
 
@@ -4475,7 +4475,7 @@ msgstr ""
 msgid "Save session as..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:442 lib/Padre/MimeTypes.pm:451
+#: lib/Padre/MimeTypes.pm:444 lib/Padre/MimeTypes.pm:453
 #: lib/Padre/Config.pm:1141
 msgid "Scintilla"
 msgstr ""
@@ -4765,7 +4765,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:302
+#: lib/Padre/MimeTypes.pm:304
 msgid "Shell Script"
 msgstr ""
 
@@ -5066,11 +5066,11 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1835 lib/Padre/Document.pm:1836
+#: lib/Padre/Document.pm:1880 lib/Padre/Document.pm:1881
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:459
+#: lib/Padre/MimeTypes.pm:461
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr ""
 
@@ -5223,7 +5223,7 @@ msgid ""
 "forth)"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:232
+#: lib/Padre/Wx/Syntax.pm:227
 msgid "Syntax Check"
 msgstr ""
 
@@ -5261,7 +5261,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:404
+#: lib/Padre/MimeTypes.pm:406
 msgid "Text"
 msgstr ""
 
@@ -5282,7 +5282,7 @@ msgstr ""
 msgid "The bookmark '%s' no longer exists"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:192
+#: lib/Padre/Wx/Debugger.pm:191
 msgid ""
 "The debugger is not running.\n"
 "You can start the debugger using one of the commands 'Step In', 'Step Over', "
@@ -5295,7 +5295,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:710
+#: lib/Padre/Document.pm:755
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5399,7 +5399,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:699
+#: lib/Padre/MimeTypes.pm:701
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5438,7 +5438,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:1484
+#: lib/Padre/Document.pm:1529
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5593,14 +5593,14 @@ msgstr ""
 msgid "Visit the PerlM&onks"
 msgstr ""
 
-#: lib/Padre/Document.pm:1264
+#: lib/Padre/Document.pm:1309
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:716 lib/Padre/Wx/Syntax.pm:29
+#: lib/Padre/Document.pm:761 lib/Padre/Wx/Syntax.pm:29
 #: lib/Padre/Wx/Main.pm:3061 lib/Padre/Wx/Main.pm:3776
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5700,7 +5700,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1443
+#: lib/Padre/Wx/Editor.pm:1477
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5748,7 +5748,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:1462
+#: lib/Padre/Document.pm:1507
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
