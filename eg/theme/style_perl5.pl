@@ -60,7 +60,7 @@ my %wxSTC_PL_HASH;
 $wxSTC_PL_HASH{keyname};
 
 
-my $wxSTC_PL_SYMBOLTABLE; # what?
+my $wxSTC_PL_SYMBOLTABLE;
 *Package::Foo::variable = 'blah';
 
 my $wxSTC_PL_XLAT = tr/abc/xyz/;
@@ -102,6 +102,7 @@ sub function_attrib : SomeAttributes(etc) {
 	
 }
 
+# what wxSTC_PL is lexing STDOUT?
 format STDOUT =
 @###   @.###   @##.###  @###   @###   ^####
 42,   3.1415,  undef,    0, 10000,   undef
