@@ -18,7 +18,7 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 
-plan( tests => 21 );
+plan( tests => 22 );
 
 my $dir = catdir( 'share', 'themes' );
 ok( -d $dir, "Found theme directory $dir" );
