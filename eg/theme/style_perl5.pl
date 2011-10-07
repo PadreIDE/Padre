@@ -31,6 +31,8 @@ my $wxSTC_PL_POD_VERB;
 	#code is a pod verb
 	my $wxSTC_PL_POD_VERB;
 
+=back
+
 =cut
 
 my $wxSTC_PL_NUMBER = 1;
@@ -109,3 +111,13 @@ package baz;
 sub dob {32}
 
 __END__
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl 5 itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
