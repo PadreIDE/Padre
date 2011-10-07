@@ -136,6 +136,8 @@ the even version for the release, even during development.
       now managed in Padre::Constant (ADAMK)
     - Recalculate the line number margin width after various events to ensure
       the numbers always show correctly (ADAMK)
+    - Tools and panels that are hidden across a AUI geometry change recalculate
+      their layout properly when displayed again (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

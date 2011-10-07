@@ -278,6 +278,10 @@ sub enable {
 	my $lock = $self->lock_update;
 	$self->{search}->Show(1);
 	$self->{list}->Show(1);
+
+	# Rerun our layout in case the size of the function list
+	# geometry changed while we were hidden.
+	$self->Layout;
 }
 
 sub disable {

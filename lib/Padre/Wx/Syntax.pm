@@ -299,6 +299,10 @@ sub refresh {
 	# Ensure the widget is visible
 	$tree->Show(1);
 
+	# Recalculate our layout in case the view geometry
+	# has changed from when we were hidden.
+	$self->Layout;
+
 	# Clear out the syntax check window, leaving the margin as is
 	$self->{tree}->DeleteAllItems;
 	$self->_update_help_page;

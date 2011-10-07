@@ -274,6 +274,10 @@ sub refresh {
 	# Ensure the widget is visible
 	$self->Show(1);
 
+	# Recalculate our layout in case the view geometry
+	# has changed from when we were hidden.
+	$self->Layout;
+
 	# Shortcut if there is nothing to search for
 	if ( $document->is_unused ) {
 		return;
