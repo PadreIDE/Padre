@@ -21,6 +21,19 @@ our @ISA     = qw{
 	Padre::Wx::FBP::Syntax
 };
 
+use constant {
+	OK => 'status/padre-syntax-ok',
+	ERROR => 'status/padre-syntax-error',
+	WARNING => 'status/padre-syntax-warning',
+};
+
+# Load the bitmap icons for the label
+my %ICON = (
+	ok      => Padre::Wx::Icon::find(OK),
+	error   => Padre::Wx::Icon::find(ERROR),
+	warning => Padre::Wx::Icon::find(WARNING),
+);
+
 # perldiag error message classification
 my %MESSAGE = (
 
@@ -85,9 +98,9 @@ sub new {
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
-		error       => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') ),
-		warning     => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') ),
-		ok          => $images->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') ),
+		ok          => $images->Add( Padre::Wx::Icon::icon(OK) ),
+		error       => $images->Add( Padre::Wx::Icon::icon(ERROR) ),
+		warning     => $images->Add( Padre::Wx::Icon::icon(WARNING) ),
 		diagnostics => $images->Add(
 			Wx::ArtProvider::GetBitmap(
 				'wxART_GO_FORWARD',
@@ -410,6 +423,7 @@ sub render {
 				->SetItemText( $root, sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.', $elapsed ) ) );
 		}
 		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
+		$self->set_label_bitmap('ok');
 		return;
 	}
 
@@ -424,6 +438,7 @@ sub render {
 
 	$self->{annotations} = ();
 	my $i       = 0;
+	my $worst   = 'ok';
 	my $maxline = $editor->GetLineCount;
 	my @issues  = sort { $a->{line} <=> $b->{line} } @{ $model->{issues} };
 	ISSUE:
@@ -436,6 +451,15 @@ sub render {
 		my $marker     = $MESSAGE{$type}->{marker};
 		my $is_warning = $marker == Padre::Constant::MARKER_WARN;
 		$editor->MarkerAdd( $line, $marker );
+
+		# Is this the worst thing we have encountered?
+		unless ( $worst eq 'error' ) {
+			if ( $is_warning ) {
+				$worst = 'warning';
+			} else {
+				$worst = 'error';
+			}
+		}
 
 		# Underline the syntax warning/error line with an orange or red squiggle indicator
 		my $start  = $editor->PositionFromLine($line);
@@ -490,6 +514,9 @@ sub render {
 	$self->{tree}->Expand($root);
 	$self->{tree}->EnsureVisible($root);
 
+	# Set the icon to the new state
+	$self->set_label_bitmap($worst);
+
 	return 1;
 }
 
@@ -501,6 +528,17 @@ sub lock_update {
 		$lock = [ $lock, $editor->lock_update ];
 	}
 	return $lock;
+}
+
+sub set_label_bitmap {
+	return; # Temporarily disabled
+	my $self     = shift;
+	my $name     = shift;
+	my $icon     = $ICON{$name} or return;
+	my $method   = $self->view_panel;
+	my $panel    = $self->main->$method();
+	my $position = $panel->GetPageIndex($self);
+	$panel->SetPageBitmap( $position, $icon );
 }
 
 # Show the current line error/warning if it exists or hide the previous annotation
