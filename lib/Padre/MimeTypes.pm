@@ -251,7 +251,7 @@ sub _initialize {
 		},
 
 		'text/x-haskell' => {
-			name  => 'Haskhell',
+			name  => 'Haskell',
 			lexer => Wx::wxSTC_LEX_HASKELL, # CONFIRMED
 		},
 
