@@ -55,8 +55,8 @@ sub task_finish {
 	# Clear any old content
 	$self->clear;
 
+	my $delta = 0;
 	$self->{diffs} = {};
-
 	for my $chunk ( @$chunks ) {
 		my $marker_line   = undef;
 		my $lines_deleted = 0;
@@ -66,7 +66,7 @@ sub task_finish {
 			TRACE("$type, $line, $text") if DEBUG;
 
 			unless ($marker_line) {
-				$marker_line = $line;
+				$marker_line = $line + $delta;
 
 				$self->{diffs}->{$marker_line} = {
 					message  => undef,
@@ -134,6 +134,9 @@ sub task_finish {
 		$diff->{lines_deleted} = $lines_deleted;
 		$diff->{type}          = $type;
 		$diff->{message}       = $description;
+
+		# Update the offset
+		$delta = $delta + $lines_added - $lines_deleted;
 
 		TRACE("$description at line #$marker_line") if DEBUG;
 	}
