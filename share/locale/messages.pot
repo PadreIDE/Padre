@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 00:10-0700\n"
+"POT-Creation-Date: 2011-10-07 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -809,7 +809,7 @@ msgstr ""
 msgid "Alexandr Ciornii"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:65
+#: lib/Padre/Wx/Syntax.pm:78
 msgid "Alien Error"
 msgstr ""
 
@@ -930,7 +930,7 @@ msgstr ""
 msgid "Assign the selected expression to a newly declared variable"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:296
+#: lib/Padre/Wx/Outline.pm:300
 msgid "Attributes"
 msgstr ""
 
@@ -1749,7 +1749,7 @@ msgstr ""
 msgid "Deleted"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:35
+#: lib/Padre/Wx/Syntax.pm:48
 msgid "Deprecation"
 msgstr ""
 
@@ -2310,7 +2310,7 @@ msgstr ""
 msgid "Fast but might be out of date"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:47
+#: lib/Padre/Wx/Syntax.pm:60
 msgid "Fatal Error"
 msgstr ""
 
@@ -2518,12 +2518,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:415
+#: lib/Padre/Wx/Syntax.pm:433
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:416
+#: lib/Padre/Wx/Syntax.pm:434
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2780,7 +2780,7 @@ msgstr ""
 msgid "Integer"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:53
+#: lib/Padre/Wx/Syntax.pm:66
 msgid "Internal Error"
 msgstr ""
 
@@ -2934,7 +2934,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:468
+#: lib/Padre/Wx/Syntax.pm:496
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -3135,7 +3135,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:295
+#: lib/Padre/Wx/Outline.pm:299
 msgid "Methods"
 msgstr ""
 
@@ -3167,7 +3167,7 @@ msgstr ""
 msgid "Module name:"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:294
+#: lib/Padre/Wx/Outline.pm:298
 msgid "Modules"
 msgstr ""
 
@@ -3279,12 +3279,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:402
+#: lib/Padre/Wx/Syntax.pm:419
 #, perl-format
 msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:406
+#: lib/Padre/Wx/Syntax.pm:423
 #, perl-format
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
@@ -3914,7 +3914,7 @@ msgstr ""
 msgid "Positive lookbehind assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:293
+#: lib/Padre/Wx/Outline.pm:297
 msgid "Pragmata"
 msgstr ""
 
@@ -4757,7 +4757,7 @@ msgstr ""
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:41
+#: lib/Padre/Wx/Syntax.pm:54
 msgid "Severe Warning"
 msgstr ""
 
@@ -5223,7 +5223,7 @@ msgid ""
 "forth)"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:227
+#: lib/Padre/Wx/Syntax.pm:240
 msgid "Syntax Check"
 msgstr ""
 
@@ -5565,7 +5565,7 @@ msgstr ""
 msgid "Vertically &Align Selected"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:59
+#: lib/Padre/Wx/Syntax.pm:72
 msgid "Very Fatal Error"
 msgstr ""
 
@@ -5600,7 +5600,7 @@ msgid ""
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:813 lib/Padre/Wx/Syntax.pm:29
+#: lib/Padre/Document.pm:813 lib/Padre/Wx/Syntax.pm:42
 #: lib/Padre/Wx/Main.pm:3061 lib/Padre/Wx/Main.pm:3776
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
