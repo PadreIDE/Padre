@@ -147,30 +147,45 @@ our $COMPATIBLE = '0.91';
 # Basic Language Support
 
 my %COMMENT_LINE_STRING = (
+	'text/x-abc'                => '\\',
+	'text/x-actionscript'       => '//',
 	'text/x-adasrc'             => '--',
 	'text/x-asm'                => '#',
+	'text/x-bat'                => 'REM',
 	'application/x-bibtex'      => '%',
+	'application/x-bml'         => [ '<?_c', '_c?>' ],
 	'text/x-c'                  => '//',
+	'text/x-cobol'              => '      *',
+	'text/x-config'             => '#',
+	'text/x-csharp'             => '//',
+	'text/css'                  => [ '/*', '*/' ],
 	'text/x-c++src'             => '//',
 	'text/x-eiffel'             => '--',
+	'text/x-forth'              => '\\',
+	'text/x-fortran'            => '!',
+	'text/html'                 => [ '<!--', '-->' ],
 	'application/javascript'    => '//',
 	'application/x-latex'       => '%',
-	'application/x-shellscript' => '#',
 	'text/x-java-source'        => '//',
+	'application/x-lisp'        => ';',
 	'text/x-lua'                => '--',
 	'text/x-makefile'           => '#',
 	'text/x-matlab'             => '%',
+	'text/x-pascal'             => [ '{',  '}' ],
 	'application/x-perl'        => '#',
-	'text/x-python'             => '#',
-	'application/x-php'         => '#',
-	'application/x-ruby'        => '#',
-	'text/x-sql'                => '--',
-	'text/x-config'             => '#',
-	'text/x-yaml'               => '#',
 	'application/x-perl6'       => '#',
-	'text/x-csharp'             => '//',
-	'text/x-pod'                => '#',
+	'text/x-perltt'             => [ '<!--', '-->' ],
 	'text/x-perlxs'             => '//',
+	'application/x-php'         => '#',
+	'text/x-pod'                => '#',	
+	'text/x-python'             => '#',
+	'application/x-ruby'        => '#',
+	'application/x-shellscript' => '#',
+	'text/x-sql'                => '--',
+	'application/x-tcl'         => [ 'if 0 {', '}' ],
+	'text/vbscript'             => "'",
+	'text/xml'                  => [ '<!--', '-->' ],
+	'text/x-yaml'               => '#',
 );
 
 
@@ -272,11 +287,11 @@ my %SCINTILLA_KEY_WORDS = (
 		trigger true under union unique unknown unnest update usage
 		user using value values variable varying view when
 		whenever where with without work write zone
-	} ], 
+	} ],
 	# keywords2 - being used for datatypes
 	[
 		# oracle centric
-		qw( varchar varchar2 nvarchar nvarchar2 char nchar number 
+		qw( varchar varchar2 nvarchar nvarchar2 char nchar number
 		integer pls_integer binary_integer long date time
 		timestamp with local timezone interval year day month second minute
 		raw rowid urowid mlslabel clob nclob blob bfile xmltype rowtype
@@ -285,13 +300,13 @@ my %SCINTILLA_KEY_WORDS = (
 		boolean smallint null localtime localtimestamp  int integer
 		float double char character
 		),
-		
+
 	],
-	
-	# pldoc keywords - bare minimum 
+
+	# pldoc keywords - bare minimum
 	[ qw( headcom deprecated param return throws ) ],
-	
-	# SQL*Plus 
+
+	# SQL*Plus
 	[qw(
 		accept append archive log archivelog attribute
 		break btitle
@@ -316,9 +331,9 @@ my %SCINTILLA_KEY_WORDS = (
 	# User Keywords #1 , reserve this for PLSQL functions, procedures, packages
 	[ qw(
 		utl_coll utl_encode utl_file utl_http utl_inaddr utl_raw utl_ref
-		utl_smtp utl_tcp utl_url 
-		anydata anytype anydataset 
-		
+		utl_smtp utl_tcp utl_url
+		anydata anytype anydataset
+
 		dbms_alert dbms_application_info dbms_apply_adm dbms_aq dbms_aqadm
 		dbms_aqelm dbms_capture_adm dbms_ddl dbms_debug dbms_defer
 		dbms_defer_query dbms_defer_sys dbms_describe
@@ -343,7 +358,7 @@ my %SCINTILLA_KEY_WORDS = (
 		debug_extproc
 	) ],
 	# User Keywords #2 , sql functions
-	[ qw( sqlerrm 
+	[ qw( sqlerrm
 		abs greatest sin
 		acos group_id sinh add_months hextoraw soundex ascii initcap sqlcode
 		asciistr instr sqlerrm asin lag sqrt atan last_day stddev atan2 lead
@@ -360,8 +375,8 @@ my %SCINTILLA_KEY_WORDS = (
 		userenv dense_rank round var_pop dump var_samp exp rpad variance extract
 		rtrim vsize floor sessiontimezone from_tz sign
 	) ],
-	# User Keywords #3 , exception types 
-	[ 
+	# User Keywords #3 , exception types
+	[
 		# exception types
 		qw(
 		no_data_found too_many_rows invalid_cursor value_error
@@ -372,7 +387,7 @@ my %SCINTILLA_KEY_WORDS = (
 	],
 	# User Keywords #4 , reserve this for plugins, eg known schema entities
 	[ qw() ],
-	
+
 	],
 
 	# C# keyword list is obtained from src/scite/src/cpp.properties
