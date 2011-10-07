@@ -61,6 +61,7 @@ $wxSTC_PL_HASH{keyname};
 
 
 my $wxSTC_PL_SYMBOLTABLE; # what?
+*Package::Foo::variable = 'blah';
 
 my $wxSTC_PL_REGEX =~ m/ <:name>(pattern) /p;
 my $wxSTC_PL_REGSUBST = s/^\s{1}//a;
@@ -88,6 +89,8 @@ my $wxSTC_PL_STRING_QQ = qq( double quoted string literal );
 my $wxSTC_PL_STRING_QX = qx{ command };
 my $wxSTC_PL_STRING_QR = qr/ sample text /;
 my @wxSTC_PL_STRING_QW = qw( word list );
+
+my $escaped = "Hello World\n";
 
 sub function_prototyped($$&) {
 	
