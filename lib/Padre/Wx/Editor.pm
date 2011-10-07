@@ -27,20 +27,14 @@ use constant {
 
 	# Convenience colour constants
 	# NOTE: DO NOT USE "orange" string since it is actually red on win32
-	ORANGE => Wx::Colour->new( 255, 165, 0 ),
-	RED    => Wx::Colour->new("red"),
-	GREEN  => Wx::Colour->new("green"),
-	BLUE   => Wx::Colour->new("blue"),
-	YELLOW => Wx::Colour->new("yellow"),
-
+	ORANGE     => Wx::Colour->new( 255, 165, 0 ),
+	RED        => Wx::Colour->new("red"),
+	GREEN      => Wx::Colour->new("green"),
+	BLUE       => Wx::Colour->new("blue"),
+	YELLOW     => Wx::Colour->new("yellow"),
 	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
 	LIGHT_RED  => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
 	LIGHT_BLUE => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
-
-	# Indicators
-	INDICATOR_SMART_HIGHLIGHT => 0,
-	INDICATOR_WARNING         => 1,
-	INDICATOR_ERROR           => 2,
 };
 
 # End-Of-Line modes:
@@ -55,7 +49,6 @@ my %WXEOL = (
 	MAC  => Wx::wxSTC_EOL_CR,
 	UNIX => Wx::wxSTC_EOL_LF,
 );
-
 
 
 
@@ -76,8 +69,8 @@ sub new {
 	}
 
 	# Create the underlying Wx object
-	my $lock   = $main->lock( 'UPDATE', 'refresh_windowlist' );
-	my $self   = $class->SUPER::new($parent);
+	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
+	my $self = $class->SUPER::new($parent);
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
@@ -101,11 +94,31 @@ sub new {
 	$self->SetMarginRight(0);
 
 	# Clear out all the other margins
-	$self->SetMarginWidth( 0, 0 );
-	$self->SetMarginWidth( 1, 0 );
-	$self->SetMarginWidth( 2, 0 );
+	$self->SetMarginWidth( Padre::Constant::MARGIN_LINE,   0 );
+	$self->SetMarginWidth( Padre::Constant::MARGIN_MARKER, 0 );
+	$self->SetMarginWidth( Padre::Constant::MARGIN_FOLD,   0 );
 
-	# Set the colour scheme for syntax highlight markers
+	# Set the margin types (whether we show them or not)
+	$self->SetMarginType(
+		Padre::Constant::MARGIN_LINE,
+		Wx::wxSTC_MARGIN_NUMBER,
+	);
+	$self->SetMarginType(
+		Padre::Constant::MARGIN_MARKER,
+		Wx::wxSTC_MARGIN_SYMBOL,
+	);
+	if ( Padre::Feature::FOLDING ) {
+		$self->SetMarginType(
+			Padre::Constant::MARGIN_FOLD,
+			Wx::wxSTC_MARGIN_SYMBOL,
+		);
+		$self->SetMarginMask(
+			Padre::Constant::MARGIN_FOLD,
+			Wx::wxSTC_MASK_FOLDERS,
+		);
+	}
+
+	# Set up all of the default markers
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_ERROR,
 		Wx::wxSTC_MARK_SMALLRECT,
@@ -149,7 +162,6 @@ sub new {
 		LIGHT_RED,
 	);
 
-	# No more unsafe CTRL-L for you :)
 	# CTRL-L or line cut should only work when there is no empty line
 	# This prevents the accidental destruction of the clipboard
 	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
@@ -162,15 +174,15 @@ sub new {
 
 	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
-	$self->IndicatorSetStyle( INDICATOR_SMART_HIGHLIGHT, Wx::wxSTC_INDIC_ROUNDBOX );
+	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_SMART_HIGHLIGHT, Wx::wxSTC_INDIC_ROUNDBOX );
 
 	# Indicator #1, Orange squiggle for warning highlighting
-	$self->IndicatorSetForeground( INDICATOR_WARNING, ORANGE );
-	$self->IndicatorSetStyle( INDICATOR_WARNING, Wx::wxSTC_INDIC_SQUIGGLE );
+	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_WARNING, ORANGE );
+	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_WARNING, Wx::wxSTC_INDIC_SQUIGGLE );
 
 	# Indicator #2, Red squiggle for error highlighting
-	$self->IndicatorSetForeground( INDICATOR_ERROR, RED );
-	$self->IndicatorSetStyle( INDICATOR_ERROR, Wx::wxSTC_INDIC_SQUIGGLE );
+	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_ERROR, RED );
+	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_ERROR, Wx::wxSTC_INDIC_SQUIGGLE );
 
 	# Generate basic event bindings
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
@@ -223,20 +235,23 @@ sub on_set_focus {
 	TRACE() if DEBUG;
 	my $self     = shift;
 	my $event    = shift;
-	my $main     = $self->main;
 	my $document = $self->{Document} or return;
 	TRACE( "Focus received file:" . $document->get_title ) if DEBUG;
+
+	# Update the line number width
+	$self->refresh_line_numbers;
 
 	# NOTE: The editor focus event fires a LOT, even for trivial things
 	# like changing focus to another application and immediately back again,
 	# or switching between tools in Padre.
-	# Don't do any refreshing here, it is an excessive waste of resources.
-	# Instead, put them in the events that ACTUALLY change application state.
+	# Try to avoid refreshing here, it is an excessive waste of resources.
+	# Instead, put them in the events that ACTUALLY change application
+	# state.
 
 	# TO DO
-	# This is called even if the mouse is moved away from padre and back again
-	# we should restrict some of the updates to cases when we switch from one file to
-	# another
+	# This is called even if the mouse is moved away from padre and back
+	# again we should restrict some of the updates to cases when we switch
+	# from one file to another.
 	if ( $self->needs_manual_colorize ) {
 		TRACE("needs_manual_colorize") if DEBUG;
 		my $lock  = $self->lock_update;
@@ -335,6 +350,7 @@ sub on_change_dwell {
 
 	# Only trigger tool refresh actions if we are the active document
 	if ( $editor and $self->GetId == $editor->GetId ) {
+		$self->refresh_line_numbers;
 		$main->refresh_functions;
 		$main->refresh_outline;
 		$main->refresh_syntaxcheck;
@@ -581,8 +597,7 @@ sub setup_common {
 	if ( $config->main_syntaxcheck or $config->feature_saved_document_diffs ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
 			# Set margin 1 as a 16 pixel symbol margin
-			$self->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
-			$self->SetMarginWidth( 1, 16 );                     
+			$self->SetMarginWidth( Padre::Constant::MARGIN_MARKER, 16 );
 		}
 	}
 
@@ -620,6 +635,10 @@ sub setup_document {
 	# Apply the current style to the editor
 	$self->main->style->apply($self);
 
+	# When we apply the style, refresh the line number margin in case
+	# the changed style results in a different size font.
+	$self->refresh_line_numbers;
+
 	return;
 }
 
@@ -629,6 +648,14 @@ sub setup_document {
 
 ######################################################################
 # General Methods
+
+# Recalculate the line number margins whenever we change the zoom level
+sub SetZoom {
+	my $self = shift;
+	my @rv   = $self->SUPER::SetZoom(@_);
+	$self->refresh_line_numbers;
+	return @rv;
+}
 
 # convenience methods
 # return the character at a given position as a perl string
@@ -843,25 +870,32 @@ sub select_to_matching_brace {
 	$self->SetSelection( $start, $pos2 );
 }
 
-# currently if there are 9 lines we set the margin to 1 width and then
-# if another line is added it is not seen well.
-# actually I added some improvement allowing a 50% growth in the file
-# and requireing a min of 2 width
-sub show_line_numbers {
+sub refresh_line_numbers {
 	my $self = shift;
-	my $on   = shift;
+	$self->show_line_numbers(
+		$self->config->editor_linenumbers
+	);
+}
+
+# Calculate the maximum possible width, and set to that plus a few pixels.
+# We don't allow any excess space for future growth as we anticipate calling
+# this function relatively frequently.
+sub show_line_numbers {
+	my $self  = shift;
+	my $on    = shift;
+	my $width = 0;
 
 	if ($on) {
-		my $n = 1 + List::Util::max( 2, length( $self->GetLineCount * 2 ) );
-		my $width = $n * $self->TextWidth( Wx::wxSTC_STYLE_LINENUMBER, "m" );
-		$self->SetMarginWidth( 0, $width );
-		$self->SetMarginType( 0, Wx::wxSTC_MARGIN_NUMBER );
-	} else {
-		$self->SetMarginWidth( 0, 0 );
-		$self->SetMarginType( 0, Wx::wxSTC_MARGIN_NUMBER );
+		$width  = $self->TextWidth(
+			Wx::wxSTC_STYLE_LINENUMBER,
+			"m" x List::Util::max( 2, length $self->GetLineCount )
+		) + 4; # 4 pixel left "margin of the margin
 	}
 
-	return;
+	$self->SetMarginWidth(
+		Padre::Constant::MARGIN_LINE,
+		$width,
+	);
 }
 
 sub show_calltip {
@@ -1559,7 +1593,7 @@ sub smart_highlight_show {
 	# smart highlight if there are more than one occurrence...
 	if ( scalar @{ $self->{styles} } > 1 ) {
 		foreach my $style ( @{ $self->{styles} } ) {
-			$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+			$self->SetIndicatorCurrent(Padre::Constant::INDICATOR_SMART_HIGHLIGHT);
 			$self->IndicatorFillRange( $style->{start}, $style->{len} );
 		}
 	}
@@ -1573,7 +1607,7 @@ sub smart_highlight_hide {
 	if ( scalar @styles ) {
 
 		# Clear indicators for all available text
-		$self->SetIndicatorCurrent(INDICATOR_SMART_HIGHLIGHT);
+		$self->SetIndicatorCurrent(Padre::Constant::INDICATOR_SMART_HIGHLIGHT);
 		my $text_length = $self->GetTextLength;
 		$self->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
 
@@ -1599,10 +1633,15 @@ BEGIN {
 		if ($on) {
 
 			# Setup a margin to hold fold markers
-			$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
-			$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
-			$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
-			$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
+			 # This one needs to be mouse-aware.
+			$self->SetMarginSensitive(
+				Padre::Constant::MARGIN_FOLD,
+				1,
+			);
+			$self->SetMarginWidth(
+				Padre::Constant::MARGIN_FOLD,
+				16,
+			);
 
 			# Define folding markers
 			my $w = Wx::Colour->new("white");
@@ -1640,8 +1679,14 @@ BEGIN {
 				}
 			);
 		} else {
-			$self->SetMarginSensitive( 2, 0 );
-			$self->SetMarginWidth( 2, 0 );
+			$self->SetMarginSensitive(
+				Padre::Constant::MARGIN_FOLD,
+				0,
+			);
+			$self->SetMarginWidth(
+				Padre::Constant::MARGIN_FOLD,
+				0,
+			);
 
 			# Deactivate
 			$self->SetProperty( 'fold' => 1 );

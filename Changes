@@ -132,6 +132,10 @@ the even version for the release, even during development.
     - Added SQL, C/C++, C#, XS, Python, Ruby, PHP, HTML, CSS, JavaScript, Ada,
       COBOL, Haskell, Pascal, ActionScript and YAML keyword highlighting (AZAWAWI)
     - Major refactoring of the editor setup and configuration code (ADAMK)
+    - Scintilla numeric resources such as margins, markers and indicators are
+      now managed in Padre::Constant (ADAMK)
+    - Recalculate the line number margin width after various events to ensure
+      the numbers always show correctly (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

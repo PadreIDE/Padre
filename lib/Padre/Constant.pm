@@ -61,6 +61,13 @@ use constant {
 	PROJECT => 2,
 };
 
+# Scintilla Margin Allocation
+use constant {
+	MARGIN_LINE   => 0,
+	MARGIN_MARKER => 1,
+	MARGIN_FOLD   => 2,
+};
+
 # Scintilla Marker Allocation
 use constant {
 	MARKER_ERROR      => 1,
@@ -70,6 +77,13 @@ use constant {
 	MARKER_ADDED      => 5, # Line added
 	MARKER_CHANGED    => 6, # Line changed
 	MARKER_DELETED    => 7, # Line deleted
+};
+
+# Scintilla Indicator Allocation
+use constant {
+	INDICATOR_SMART_HIGHLIGHT => 0,
+	INDICATOR_WARNING         => 1,
+	INDICATOR_ERROR           => 2,
 };
 
 # Scintilla Syntax Highlighter Colours.

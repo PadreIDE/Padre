@@ -161,8 +161,7 @@ sub _set_debugger {
 
 	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
 	# They should be reunited soon !!!! (or not)
-	$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
-	$editor->SetMarginWidth( 1, 16 );
+	$editor->SetMarginWidth( Padre::Constant::MARGIN_MARKER, 16 );
 	$editor->MarkerDeleteAll(Padre::Constant::MARKER_LOCATION);
 	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_LOCATION );
 

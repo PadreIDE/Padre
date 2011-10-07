@@ -139,11 +139,6 @@ sub view_start {
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
-
-		# Margin number 1 for symbols
-		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
-
-		# Set margin 1 16 px wide
 		$editor->SetMarginWidth( 1, 16 );
 	}
 }
@@ -247,9 +242,9 @@ sub clear {
 		if ( $len > 0 ) {
 
 			# Clear out all indicators
-			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_WARNING() );
+			$editor->SetIndicatorCurrent( Padre::Constant::INDICATOR_WARNING );
 			$editor->IndicatorClearRange( 0, $len );
-			$editor->SetIndicatorCurrent( Padre::Wx::Editor::INDICATOR_ERROR() );
+			$editor->SetIndicatorCurrent( Padre::Constant::INDICATOR_ERROR );
 			$editor->IndicatorClearRange( 0, $len );
 		}
 
@@ -445,7 +440,7 @@ sub render {
 
 		# Change only the indicators
 		$editor->SetIndicatorCurrent(
-			$is_warning ? Padre::Wx::Editor::INDICATOR_WARNING() : Padre::Wx::Editor::INDICATOR_ERROR() );
+			$is_warning ? Padre::Constant::INDICATOR_WARNING : Padre::Constant::INDICATOR_ERROR );
 		$editor->IndicatorFillRange( $indent, $end - $indent );
 
 		# Collect annotations for later display
