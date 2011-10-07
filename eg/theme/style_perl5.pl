@@ -49,7 +49,7 @@ my $wxSTC_PL_STRING = "string";
 my $wxSTC_PL_CHARACTER = 'c';
 
 my $wxSTC_PL_PUNCTUATION; # () [] {} 
-my $wxSTC_PL_PREPROCESSOR; # what?
+my $wxSTC_PL_PREPROCESSOR; # not emitted by LexPerl, can we recycle it?
 my $wxSTC_PL_OPERATOR; # + - * % ** . =~ x , ++ -- ||= != <=
 my $wxSTC_PL_IDENTIFIER; #struct $variable @array %hash 
 
@@ -62,6 +62,8 @@ $wxSTC_PL_HASH{keyname};
 
 my $wxSTC_PL_SYMBOLTABLE; # what?
 *Package::Foo::variable = 'blah';
+
+my $wxSTC_PL_XLAT = tr/abc/xyz/;
 
 my $wxSTC_PL_REGEX =~ m/ <:name>(pattern) /p;
 my $wxSTC_PL_REGSUBST = s/^\s{1}//a;

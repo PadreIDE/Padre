@@ -50,6 +50,14 @@ UPDATE mytable SET this = :that;
 */
 REPLACE INTO mytable VALUES (10,"eleven",'singlequoted');
 
+MERGE INTO mytable USING newdata
+    ON mytable.foo = newdata.foo
+    WHEN MATCHED THEN
+        UPDATE SET bar = newdata.bar
+    WHEN NOT MATCHED THEN
+        INSERT newdata
+    ;
+
 -- DDL
 
 CREATE OR REPLACE TRIGGER xyz_trg BEFORE INSERT ON mytable;
