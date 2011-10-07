@@ -76,7 +76,7 @@ StyleSetForeground      wxSTC_STYLE_BRACELIGHT      eee8d5
 StyleSetForeground      wxSTC_STYLE_BRACEBAD        002b36
 StyleSetForeground      wxSTC_PL_DEFAULT            657b83
 StyleSetForeground      wxSTC_PL_ERROR              ff0000
-StyleSetForeground      wxSTC_PL_COMMENTLINE        586e75
+StyleSetForeground      wxSTC_PL_COMMENTLINE        93a1a1
 StyleSetForeground      wxSTC_PL_POD                657b83
 StyleSetForeground      wxSTC_PL_POD_VERB           657b83
 StyleSetItalic          wxSTC_PL_POD_VERB           1
@@ -109,6 +109,7 @@ StyleSetForeground      wxSTC_PL_STRING_QR          d33682
 StyleSetForeground      wxSTC_PL_STRING_QW          6c71c4
 StyleSetForeground      wxSTC_PL_SUB_PROTOTYPE      cb4b16
 StyleSetForeground      wxSTC_PL_FORMAT_IDENT       eee8d5
+StyleSetBold            wxSTC_PL_FORMAT_IDENT 1
 StyleSetForeground      wxSTC_PL_FORMAT             2aa198
 
 StyleSetBackground      wxSTC_STYLE_BRACELIGHT      073642
@@ -152,6 +153,7 @@ StyleSetBackground      wxSTC_PL_VARIABLE_INDEXER   002b36
 # The 'constant' definition is weird with interplay between
 # Wx::Scintilla , Wx:: Padre::Wx::Constants/Style
 #StyleSetBackground      wxSTC_PL_STRING_VAR         002b36
+#StyleSetBackground      wxSTC_PL_XLAT               002b36
 #StyleSetBackground      wxSTC_PL_REGEX_VAR          002b36
 #StyleSetBackground      wxSTC_PL_REGSUBST_VAR       002b36
 #StyleSetBackground      wxSTC_PL_BACKTICKS_VAR      002b36
@@ -162,7 +164,8 @@ StyleSetBackground      wxSTC_PL_VARIABLE_INDEXER   002b36
 #StyleSetBackground      wxSTC_PL_STRING_QR_VAR      002b36
 # RECOOKED using magic numbers instead of constants
 StyleSetForeground      43         b58900
-StyleSetForeground      44         b58900
+StyleSetForeground      44         d33682
+StyleSetItalic          44         1
 StyleSetForeground      54         b58900
 StyleSetForeground      55         b58900
 StyleSetForeground      57         b58900
@@ -481,6 +484,7 @@ StyleSetForeground      wxSTC_CSS_TAG                           6c71c4
   StyleSetBold          wxSTC_CSS_TAG                           1
 StyleSetForeground      wxSTC_CSS_CLASS                         268bd2
 StyleSetForeground      wxSTC_CSS_PSEUDOCLASS                   839496
+StyleSetItalic          wxSTC_CSS_PSEUDOCLASS                   1
 StyleSetForeground      wxSTC_CSS_UNKNOWN_PSEUDOCLASS           839496
   StyleSetBold          wxSTC_CSS_UNKNOWN_PSEUDOCLASS           1
 StyleSetForeground      wxSTC_CSS_OPERATOR                      cb4b16
@@ -496,7 +500,7 @@ StyleSetForeground      wxSTC_CSS_IMPORTANT                     839496
 StyleSetForeground      wxSTC_CSS_DIRECTIVE                     839496
 StyleSetForeground      wxSTC_CSS_DOUBLESTRING                  839496
 StyleSetForeground      wxSTC_CSS_SINGLESTRING                  839496
-StyleSetForeground      wxSTC_CSS_IDENTIFIER2                   839496
+StyleSetForeground      wxSTC_CSS_IDENTIFIER2                   d33682
 StyleSetForeground      wxSTC_CSS_ATTRIBUTE                     839496
 #StyleSetForeground      wxSTC_CSS_IDENTIFIER3 17
 #StyleSetForeground      wxSTC_CSS_PSEUDOELEMENT 18
