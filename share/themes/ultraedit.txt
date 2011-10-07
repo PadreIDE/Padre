@@ -31,6 +31,7 @@ SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
 StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
 StyleSetForeground wxSTC_STYLE_DEFAULT            000000
+StyleSetForeground wxSTC_STYLE_LINENUMBER         111111
 StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
 StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
 StyleSetForeground wxSTC_STYLE_BRACELIGHT         ff00ff
