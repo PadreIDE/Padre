@@ -430,10 +430,14 @@ my %SCINTILLA_KEY_WORDS = (
 				border-top border-right border-bottom border-left border
 				border-color border-style width height float clear
 				display white-space list-style-type list-style-image list-style-position list-style
+				position top bottom left right
 				}
 		],
+		
+		# Pseudoclasses
+		[ qw( link visited hover active focus first-child lang ) ],
+		
 		[
-
 			# CSS2
 			qw{
 				border-top-color border-right-color border-bottom-color border-left-color border-color
@@ -450,6 +454,7 @@ my %SCINTILLA_KEY_WORDS = (
 				volume speak pause-before pause-after pause cue-before cue-after cue
 				play-during azimuth elevation speech-rate voice-family pitch pitch-range stress richness
 				speak-punctuation speak-numeral
+				visibility z-index
 				}
 
 		],
@@ -462,6 +467,17 @@ my %SCINTILLA_KEY_WORDS = (
 				column-rule-color column-rule-style column-rule-width resize opacity word-wrap
 				}
 		],
+		
+		# pseudo elements
+		[ qw( first-letter first-line before after selection) ],
+		
+		# I presume extended in LexCSS means -moz -x -webkit and friends
+		# extended-props
+		[ qw( ) ],
+		# extended-pseudo-classes
+		[ qw( ) ],
+		# extended-pseudo-elements
+		[ qw( ) ],
 	],
 
 	# HTML keyword list is obtained from src/scite/src/css.properties
