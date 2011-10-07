@@ -889,7 +889,7 @@ sub show_line_numbers {
 		$width  = $self->TextWidth(
 			Wx::wxSTC_STYLE_LINENUMBER,
 			"m" x List::Util::max( 2, length $self->GetLineCount )
-		) + 4; # 4 pixel left "margin of the margin
+		) + 5; # 5 pixel left "margin of the margin
 	}
 
 	$self->SetMarginWidth(
