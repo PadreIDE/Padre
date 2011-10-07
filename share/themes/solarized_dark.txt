@@ -541,15 +541,18 @@ StyleSetForeground      wxSTC_SQL_CHARACTER             6c71c4
 StyleSetForeground      wxSTC_SQL_SQLPLUS               657b83
 StyleSetForeground      wxSTC_SQL_SQLPLUS_PROMPT        657b83
 StyleSetForeground      wxSTC_SQL_OPERATOR              268bd2
-StyleSetForeground      wxSTC_SQL_IDENTIFIER            839496
+StyleSetForeground      11                              839496  # wxSTC_SQL_IDENTIFIER
 StyleSetForeground      wxSTC_SQL_SQLPLUS_COMMENT       586e75
 StyleSetForeground      wxSTC_SQL_COMMENTLINEDOC        586e75
-StyleSetForeground      wxSTC_SQL_WORD2                 839496
+StyleSetForeground      16                              b58900  # wxSTC_SQL_WORD2
+		StyleSetBold    16 1
 StyleSetForeground      wxSTC_SQL_COMMENTDOCKEYWORD     586e75
 StyleSetForeground      wxSTC_SQL_COMMENTDOCKEYWORDERROR    dc322f
-#StyleSetForeground      wxSTC_SQL_USER1                 
-#StyleSetForeground      wxSTC_SQL_USER2                 
-#StyleSetForeground      wxSTC_SQL_USER3                 
+StyleSetForeground      19                              d33682  # wxSTC_SQL_USER1
+		StyleSetItalic  19								1
+StyleSetForeground      20                              2aa198  # wxSTC_SQL_USER2
+StyleSetForeground      21                              cb4b16  # wxSTC_SQL_USER3
+		StyleSetItalic  21								1
 #StyleSetForeground      wxSTC_SQL_USER4                 
 StyleSetForeground      wxSTC_SQL_QUOTEDIDENTIFIER      2aa198
 

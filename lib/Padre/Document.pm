@@ -254,8 +254,8 @@ my %SCINTILLA_KEY_WORDS = (
 		immediate in indicator initialize initially inner inout input
 		insert intersect interval into is isolation iterate
 		join key language large last lateral leading left less level
-		like limit local locator map match
-		merge modifies modify module names national natural
+		like limit local locator loop map match
+		merge minus modifies modify module names national natural
 		new next no none not numeric object of off old
 		on only open operation option or order ordinality out outer
 		output package pad parameter parameters partial path postfix
@@ -279,12 +279,13 @@ my %SCINTILLA_KEY_WORDS = (
 		qw( varchar varchar2 nvarchar nvarchar2 char nchar number 
 		integer pls_integer binary_integer long date time
 		timestamp with local timezone interval year day month second minute
-		raw rowid urowid mlslabel clob nclob blob bfile xmltype
+		raw rowid urowid mlslabel clob nclob blob bfile xmltype rowtype
 		),
 		qw(
 		boolean smallint null localtime localtimestamp  int integer
 		float double char character
 		),
+		
 	],
 	
 	# pldoc keywords - bare minimum 
@@ -312,12 +313,63 @@ my %SCINTILLA_KEY_WORDS = (
 		version
 		whenever oserror sqlerror
 	)],
-	# User Keywords #1 , reserve this for PLSQL functions and procedures
-	[ qw() ],
-	# User Keywords #2 
-	[ qw() ],
-	# User Keywords #3
-	[ qw() ],
+	# User Keywords #1 , reserve this for PLSQL functions, procedures, packages
+	[ qw(
+		utl_coll utl_encode utl_file utl_http utl_inaddr utl_raw utl_ref
+		utl_smtp utl_tcp utl_url 
+		anydata anytype anydataset 
+		
+		dbms_alert dbms_application_info dbms_apply_adm dbms_aq dbms_aqadm
+		dbms_aqelm dbms_capture_adm dbms_ddl dbms_debug dbms_defer
+		dbms_defer_query dbms_defer_sys dbms_describe
+		dbms_distributed_trust_admin dbms_fga dbms_flashback
+		dbms_hs_passthrough dbms_iot dbms_job dbms_ldap dbms_libcache
+		dbms_lob dbms_lock dbms_logmnr dbms_logmnr_cdc_publish
+		dbms_logmnr_cdc_subscribe dbms_logmnr_d dbms_logstdby dbms_metadata
+		dbms_mgwadm dbms_mgwmsg dbms_mview dbms_obfuscation_toolkit
+		dbms_odci dbms_offline_og dbms_offline_snapshot dbms_olap
+		dbms_oracle_trace_agent dbms_oracle_trace_user dbms_outln
+		dbms_outln_edit dbms_output dbms_pclxutil dbms_pipe dbms_profiler
+		dbms_propagation_adm dbms_random dbms_rectifier_diff dbms_redefinition
+		dbms_refresh dbms_repair dbms_repcat dbms_repcat_admin
+		dbms_repcat_instantiate dbms_repcat_rgt dbms_reputil
+		dbms_resource_manager dbms_resource_manager_privs dbms_resumable
+		dbms_rls dbms_rowid dbms_rule dbms_rule_adm dbms_session
+		dbms_shared_pool dbms_space dbms_space_admin dbms_sql dbms_stats
+		dbms_storage_map dbms_streams dbms_streams_adm dbms_trace
+		dbms_transaction dbms_transform dbms_tts dbms_types dbms_utility
+		dbms_wm dbms_xdb dbms_xdbt dbms_xdb_version dbms_xmldom dbms_xmlgen
+		dbms_xmlparser dbms_xmlquery dbms_xmlsave dbms_xplan dbms_xslprocessor
+		debug_extproc
+	) ],
+	# User Keywords #2 , sql functions
+	[ qw( sqlerrm 
+		abs greatest sin
+		acos group_id sinh add_months hextoraw soundex ascii initcap sqlcode
+		asciistr instr sqlerrm asin lag sqrt atan last_day stddev atan2 lead
+		substr avg least sum bfilename length sys_context bin_to_num lnnvl
+		sysdate bitand ln systimestamp cardinality localtimestamp tan case
+		statement log tanh cast lower to_char ceil lpad to_clob chartorowid
+		ltrim to_date chr max to_dsinterval coalesce median to_lob compose min
+		to_multi_byte concat mod to_nclob months_between to_number convert nanvl
+		to_single_byte corr new_time to_timestamp cos next_day to_timestamp_tz
+		cosh nullif to_yminterval count numtodsinterval translate covar_pop
+		numtoyminterval trim covar_samp nvl trunc cume_dist nvl2 trunc
+		current_date power tz_offset current_timestamp rank uid
+		dbtimezone rawtohex upper decode remainder user decompose replace
+		userenv dense_rank round var_pop dump var_samp exp rpad variance extract
+		rtrim vsize floor sessiontimezone from_tz sign
+	) ],
+	# User Keywords #3 , exception types 
+	[ 
+		# exception types
+		qw(
+		no_data_found too_many_rows invalid_cursor value_error
+		invalid_number zero_divide dup_val_on_index cursor_already_open
+		not_logged_on transaction_backed_out login_denied program_error
+		storage_error timeout_on_resource others
+		)
+	],
 	# User Keywords #4 , reserve this for plugins, eg known schema entities
 	[ qw() ],
 	

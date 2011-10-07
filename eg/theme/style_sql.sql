@@ -40,7 +40,7 @@ WHENEVER OSERROR SHUTDOWN;
 
 SELECT * FROM mytable WHERE this = :that;
 
-SELECT abs(this) FROM mytable WHERE this = ?;
+SELECT abs(this),HexToRaw('dead') FROM mytable WHERE this = ?;
 
 INSERT INTO mytable(that,that) VALUES ( NULL, 10 );
 
