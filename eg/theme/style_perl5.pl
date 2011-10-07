@@ -107,6 +107,9 @@ format STDOUT =
 42,   3.1415,  undef,    0, 10000,   undef
 .
 
+open( FILEHANDLE, '<' , 'data.txt' );
+print FILEHANDLE "\r\n";
+
 
 1;
 
