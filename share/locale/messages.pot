@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 08:10-0700\n"
+"POT-Creation-Date: 2011-10-08 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1055,10 +1055,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:295 lib/Padre/Wx/FBP/About.pm:699
 msgid "Burak Gursoy"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:125
-msgid "Burak Gürsoy"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2655
@@ -2630,10 +2626,6 @@ msgstr ""
 msgid "Gyorgy Pasztor"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:110
-msgid "György Pásztor"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/About.pm:77
 msgid "Gábor Szabó"
 msgstr ""
@@ -2848,10 +2840,6 @@ msgstr ""
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:100
-msgid "Jérôme Quelin"
-msgstr ""
-
 #: lib/Padre/Wx/FBP/About.pm:337
 msgid "Kaare Rasmussen"
 msgstr ""
@@ -3050,10 +3038,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:447
 msgid "Marcela Maslanova"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:98
-msgid "Marcela Mašláňová"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:633
@@ -3401,10 +3385,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:319 lib/Padre/Wx/FBP/About.pm:483
 msgid "Olivier Mengue"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:101
-msgid "Olivier Mengué"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:525
@@ -5775,32 +5755,4 @@ msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:103
 msgid "wxPerl &Live Support"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:109
-msgid "אמיר א. אהרוני"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:107
-msgid "עומר זק"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:108
-msgid "שלומי פיש"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:92
-msgid "أحمد محمد زواوي"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:113
-msgid "石垣憲"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:95
-msgid "練喆明"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:114
-msgid "김도형"
 msgstr ""
