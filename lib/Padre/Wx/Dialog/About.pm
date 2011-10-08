@@ -89,40 +89,40 @@ sub _set_up {
 sub _translation {
 	my $self = shift;
 	
-	$self->ahmad_zawawi->SetLabel(Wx::gettext('أحمد محمد زواوي'));
-	# $self->fayland_lam->SetLabel(Wx::gettext(''));
-	# $self->chuanren_wu->SetLabel(Wx::gettext(''));
-	$self->matthew_lien->SetLabel(Wx::gettext('練喆明'));
+	$self->ahmad_zawawi->SetLabel('أحمد محمد زواوي');
+	# $self->fayland_lam->SetLabel('');
+	# $self->chuanren_wu->SetLabel('');
+	$self->matthew_lien->SetLabel('練喆明');
 
 
-	$self->marcela_maslanova->SetLabel(Wx::gettext('Marcela Mašláňová'));
-	# $self->dirk_de_nijs->SetLabel(Wx::gettext(''));
-	$self->jerome_quelin->SetLabel(Wx::gettext('Jérôme Quelin'));
-	$self->olivier_mengue->SetLabel(Wx::gettext('Olivier Mengué'));
+	$self->marcela_maslanova->SetLabel('Marcela Mašláňová');
+	# $self->dirk_de_nijs->SetLabel('');
+	$self->jerome_quelin->SetLabel('Jérôme Quelin');
+	$self->olivier_mengue->SetLabel('Olivier Mengué');
 
 
-	# $self->heiko_jansen->SetLabel(Wx::gettext(''));
-	# $self->sebastian_willing->SetLabel(Wx::gettext(''));
-	# $self->zeno_gantner->SetLabel(Wx::gettext(''));
-	$self->omer_zak->SetLabel(Wx::gettext('עומר זק'));
-	$self->shlomi_fish->SetLabel(Wx::gettext('שלומי פיש'));
-	$self->amir_e_aharoni->SetLabel(Wx::gettext('אמיר א. אהרוני'));
-	$self->gyorgy_pasztor->SetLabel(Wx::gettext('György Pásztor'));
+	# $self->heiko_jansen->SetLabel('');
+	# $self->sebastian_willing->SetLabel('');
+	# $self->zeno_gantner->SetLabel('');
+	$self->omer_zak->SetLabel('עומר זק');
+	$self->shlomi_fish->SetLabel('שלומי פיש');
+	$self->amir_e_aharoni->SetLabel('אמיר א. אהרוני');
+	$self->gyorgy_pasztor->SetLabel('György Pásztor');
 	
-	# $self->simone_blandino->SetLabel(Wx::gettext(''));
-	$self->kenichi_ishigaki->SetLabel(Wx::gettext('石垣憲'));
-	$self->keedi_kim->SetLabel(Wx::gettext('김도형'));
+	# $self->simone_blandino->SetLabel('');
+	$self->kenichi_ishigaki->SetLabel('石垣憲');
+	$self->keedi_kim->SetLabel('김도형');
 	
-	# $self->kjetil_skotheim->SetLabel(Wx::gettext(''));
-	# $self->cezary_morga->SetLabel(Wx::gettext(''));
-	# $self->breno_g_de_oliveira->SetLabel(Wx::gettext(''));
-	# $self->gabriel_vieira->SetLabel(Wx::gettext(''));
+	# $self->kjetil_skotheim->SetLabel('');
+	# $self->cezary_morga->SetLabel('');
+	# $self->breno_g_de_oliveira->SetLabel('');
+	# $self->gabriel_vieira->SetLabel('');
 	
 	
-	# $self->->SetLabel(Wx::gettext(''));
-	# $self->->SetLabel(Wx::gettext(''));
-	# $self->->SetLabel(Wx::gettext(''));
-	$self->burak_gursoy->SetLabel(Wx::gettext('Burak Gürsoy'));
+	# $self->->SetLabel('');
+	# $self->->SetLabel('');
+	# $self->->SetLabel('');
+	$self->burak_gursoy->SetLabel('Burak Gürsoy');
 	
 	
 	return;
