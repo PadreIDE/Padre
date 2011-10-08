@@ -119,9 +119,9 @@ sub _translation {
 	# $self->gabriel_vieira->SetLabel('');
 	
 	
-	# $self->->SetLabel('');
-	# $self->->SetLabel('');
-	# $self->->SetLabel('');
+	# $self->paco_alguacil->SetLabel('');
+	# $self->enrique_nell->SetLabel('');
+	# $self->andrew_shitov->SetLabel('');
 	$self->burak_gursoy->SetLabel('Burak Gürsoy');
 	
 	
