@@ -35,7 +35,9 @@ msgid ""
 "modify then under the terms of the GNU General Public License as published "
 "by the \n"
 "Free Software Foundation; version 2 dated June, 1991.\""
-msgstr ""
+msgstr "\"Padre enthält Icons aus GNOME, welche unter den Bedingungen der \n"
+"GNU General Public License, Version 2, Juni 1991, wie von der Free Software Foundation "
+"veröffentlicht, verbreitet und/oder modizifiert werden können.\""
 
 #: lib/Padre/Config.pm:471
 msgid ""
@@ -82,7 +84,7 @@ msgstr "%d Zeile gelöscht"
 #: lib/Padre/Wx/Diff.pm:109
 #, perl-format
 msgid "%d lines added"
-msgstr ""
+msgstr "%d Zeilen hinzugefügt"
 
 #: lib/Padre/Wx/Diff.pm:98
 #, perl-format
@@ -152,7 +154,7 @@ msgstr "%s Zeile %s: %s"
 #: lib/Padre/Wx/VCS.pm:169
 #, perl-format
 msgid "%s version control project support is not currently supported"
-msgstr ""
+msgstr "Versionskontrolle mit %s für Projekte wird momentan leider nicht unterstützt"
 
 # perl-format
 #: lib/Padre/Wx/Dialog/Positions.pm:123
@@ -220,7 +222,7 @@ msgstr "S&chließen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:945
 msgid "&Comment Out"
-msgstr ""
+msgstr "&Auskommentieren"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2642
 msgid "&Context Help"
@@ -701,7 +703,7 @@ msgstr "(seit Perl %s)"
 
 #: lib/Padre/Wx/Action.pm:112
 msgid "(Undefined)"
-msgstr ""
+msgstr "(Undefiniert)"
 
 #: lib/Padre/PluginManager.pm:927
 msgid "(core)"
@@ -723,7 +725,7 @@ msgstr "+"
 
 #: lib/Padre/Wx/VCS.pm:277
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: lib/Padre/Document/Perl/Help.pm:314
 msgid "- DEPRECATED!"
@@ -764,7 +766,7 @@ msgstr "Alt"
 
 #: lib/Padre/Wx/FBP/About.pm:355
 msgid "Aaron Trevena"
-msgstr ""
+msgstr "Aaron Trevena"
 
 #: lib/Padre/Wx/FBP/About.pm:28 lib/Padre/Plugin/PopularityContest.pm:207
 msgid "About"
@@ -785,7 +787,7 @@ msgstr "Aktion: %s"
 
 #: lib/Padre/Wx/FBP/About.pm:164
 msgid "Adam Kennedy: Chief Bugger"
-msgstr ""
+msgstr "Adam Kennedy: Baut die meisten Fehler ein"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:333
 msgid "Add another closing bracket if there already is one"
@@ -794,11 +796,11 @@ msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:425
 msgid "Add file to repository?"
-msgstr ""
+msgstr "Datei zum Repository hinzufügen?"
 
 #: lib/Padre/Wx/VCS.pm:202
 msgid "Added"
-msgstr "&Hinzugefügt"
+msgstr "Hinzugefügt"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:62
 msgid "Advanced Settings"
@@ -822,7 +824,7 @@ msgstr "Alarm"
 
 #: lib/Padre/Wx/FBP/About.pm:259
 msgid "Alexandr Ciornii"
-msgstr ""
+msgstr "Alexandr Ciornii"
 
 #: lib/Padre/Wx/Syntax.pm:78
 msgid "Alien Error"
@@ -879,15 +881,15 @@ msgstr "Alternation (Oder)"
 
 #: lib/Padre/Wx/FBP/About.pm:537
 msgid "Amir E. Aharoni"
-msgstr ""
+msgstr "Amir E. Aharoni"
 
 #: lib/Padre/Wx/FBP/About.pm:223
 msgid "Andrew Bramble"
-msgstr ""
+msgstr "Andrew Bramble"
 
 #: lib/Padre/Wx/FBP/About.pm:684
 msgid "Andrew Shitov"
-msgstr ""
+msgstr "Andrew Shitov"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any character except a newline"
@@ -1021,7 +1023,7 @@ msgstr "Verhalten"
 
 #: lib/Padre/Wx/FBP/About.pm:367
 msgid "Blake Willmarth"
-msgstr ""
+msgstr "Blake Willmarth"
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
@@ -1031,7 +1033,8 @@ msgstr "Blauer Schmetterling auf einem grünen Blatt"
 msgid ""
 "Blue butterfly on a green leaf splash image is based on work \n"
 "by Jerry Charlotte (blackbutterfly)"
-msgstr ""
+msgstr "Blauer Schmetterling auf grünem Blatt: Bild basiert \n"
+"auf einem Foto von Jerry Charlotte (blackbutterfly)"
 
 #: lib/Padre/Wx/FBP/Bookmarks.pm:28
 msgid "Bookmarks"
@@ -1047,11 +1050,11 @@ msgstr "Unterstützung beim Setzen von Klammern"
 
 #: lib/Padre/Wx/FBP/About.pm:229 lib/Padre/Wx/FBP/About.pm:642
 msgid "Breno G. de Oliveira"
-msgstr ""
+msgstr "Breno G. de Oliveira"
 
 #: lib/Padre/Wx/FBP/About.pm:271
 msgid "Brian Cassidy"
-msgstr ""
+msgstr "Brian Cassidy"
 
 #: lib/Padre/Wx/ActionLibrary.pm:193
 msgid "Browse directory of the current document to open one or several files"
@@ -1072,11 +1075,11 @@ msgstr "Erstellt das aktuelle Projekt und führt alle Tests aus."
 
 #: lib/Padre/Wx/FBP/About.pm:295 lib/Padre/Wx/FBP/About.pm:699
 msgid "Burak Gursoy"
-msgstr ""
+msgstr "Burak Gursoy"
 
 #: lib/Padre/Wx/Dialog/About.pm:125
 msgid "Burak Gürsoy"
-msgstr ""
+msgstr "Burak Gürsoy"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2655
 msgid "C&urrent Document"
@@ -1124,7 +1127,7 @@ msgstr "Ignoriere Groß-/Kleinschreibung bei der Mustersuche"
 
 #: lib/Padre/Wx/FBP/About.pm:265 lib/Padre/Wx/FBP/About.pm:627
 msgid "Cezary Morga"
-msgstr ""
+msgstr "Cezary Morga"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1086
 msgid "Change the current selection to lower case"
@@ -1249,11 +1252,11 @@ msgstr "Datei auswählen"
 
 #: lib/Padre/Wx/FBP/About.pm:277
 msgid "Chris Dolan"
-msgstr ""
+msgstr "Chris Dolan"
 
 #: lib/Padre/Wx/FBP/About.pm:417
 msgid "Chuanren Wu"
-msgstr ""
+msgstr "Chuanren Wu"
 
 #: lib/Padre/Wx/FBP/Find.pm:95
 msgid "Cl&ose Window on Hit"
@@ -1261,7 +1264,7 @@ msgstr "Dialog schließen bei &Treffer"
 
 #: lib/Padre/Wx/FBP/About.pm:331
 msgid "Claudio Ramirez"
-msgstr ""
+msgstr "Claudio Ramirez"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:382
 msgid "Clean up file content on saving (for supported document types)"
@@ -1390,7 +1393,7 @@ msgstr "Bestätigen"
 
 #: lib/Padre/Wx/VCS.pm:205
 msgid "Conflicted"
-msgstr ""
+msgstr "Konflikt"
 
 #: lib/Padre/File/FTP.pm:113
 #, perl-format
@@ -1821,7 +1824,7 @@ msgstr "Vergleich"
 #: lib/Padre/Wx/Dialog/Patch.pm:490
 #, perl-format
 msgid "Diff Succesful, you should see a new tab in editor called %s"
-msgstr ""
+msgstr "Dff erfolgreich, Sie sollten im Editor einen neuen Reiter namens %s sehen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:89
 msgid "Digits"
@@ -1842,7 +1845,7 @@ msgstr "Verzeichnis"
 
 #: lib/Padre/Wx/FBP/About.pm:462
 msgid "Dirk De Nijs"
-msgstr ""
+msgstr "Dirk De Nijs"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Disk"
@@ -1869,7 +1872,7 @@ msgstr "Wollen Sie die Dateu %s wirklich schließen und löschen?"
 #: lib/Padre/Wx/VCS.pm:424
 #, perl-format
 msgid "Do you want to add '%s' to your repository"
-msgstr ""
+msgstr "Wollen Sie '%s' zu Ihrem Repository hinzufügen"
 
 #: lib/Padre/Wx/Main.pm:3060
 msgid "Do you want to continue?"
@@ -2069,7 +2072,7 @@ msgstr "Englisch (Vereinigte Staaten)"
 
 #: lib/Padre/Wx/FBP/About.pm:669
 msgid "Enrique Nell"
-msgstr ""
+msgstr "Enrique Nell"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:137
 msgid "Enter"
@@ -2262,7 +2265,7 @@ msgstr "Vorhandene Lesezeichen"
 
 #: lib/Padre/Wx/FindInFiles.pm:77
 msgid "Expand all"
-msgstr ""
+msgstr "Alle ausklappen"
 
 #: lib/Padre/Wx/Command.pm:81
 msgid ""
@@ -2373,7 +2376,7 @@ msgstr "Schwerer Fehler"
 
 #: lib/Padre/Wx/FBP/About.pm:235 lib/Padre/Wx/FBP/About.pm:411
 msgid "Fayland Lam"
-msgstr ""
+msgstr "Fayland Lam"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:383
 #: lib/Padre/Wx/Dialog/WindowList.pm:224 lib/Padre/Wx/Dialog/Special.pm:64
@@ -2694,15 +2697,15 @@ msgstr "Aus aktuellem Dokument erraten"
 
 #: lib/Padre/Wx/FBP/About.pm:552
 msgid "Gyorgy Pasztor"
-msgstr ""
+msgstr "György Pásztor"
 
 #: lib/Padre/Wx/Dialog/About.pm:110
 msgid "György Pásztor"
-msgstr ""
+msgstr "György Pásztor"
 
 #: lib/Padre/Wx/Dialog/About.pm:77
 msgid "Gábor Szabó"
-msgstr ""
+msgstr "Gábor Szabó"
 
 #: lib/Padre/Locale.pm:292 lib/Padre/Wx/FBP/About.pm:516
 msgid "Hebrew"
@@ -2710,7 +2713,7 @@ msgstr "Hebräisch"
 
 #: lib/Padre/Wx/FBP/About.pm:253 lib/Padre/Wx/FBP/About.pm:498
 msgid "Heiko Jansen"
-msgstr ""
+msgstr "Heiko Jansen"
 
 #: lib/Padre/Wx/Browser.pm:63 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
 msgid "Help"
@@ -2778,7 +2781,7 @@ msgstr "Groß-/Kleinschreibung ignorieren (&i)"
 
 #: lib/Padre/Wx/VCS.pm:206 lib/Padre/Wx/FBP/VCS.pm:148
 msgid "Ignored"
-msgstr ""
+msgstr "Ignoriert"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2523
 msgid "Imitate clicking on the right mouse button"
@@ -2817,7 +2820,7 @@ msgstr "Einrückungstiefe (in Spalten)"
 
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:69
 msgid "Input/output:"
-msgstr ""
+msgstr "Eingabe/Ausgabe:"
 
 #: lib/Padre/Wx/FBP/Snippet.pm:117 lib/Padre/Wx/FBP/Special.pm:77
 #: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:136
@@ -2888,7 +2891,7 @@ msgstr "JavaScript-Dateien"
 
 #: lib/Padre/Wx/FBP/About.pm:205 lib/Padre/Wx/FBP/About.pm:477
 msgid "Jerome Quelin"
-msgstr ""
+msgstr "Jérôme Quelin"
 
 #: lib/Padre/Wx/ActionLibrary.pm:885
 msgid "Join the next line to the end of the current line."
@@ -2924,7 +2927,7 @@ msgstr "Zur passenden Klammer springen: { }, ( ), [ ], < >"
 
 #: lib/Padre/Wx/Dialog/About.pm:100
 msgid "Jérôme Quelin"
-msgstr ""
+msgstr "Jérôme Quelin"
 
 #: lib/Padre/Wx/FBP/About.pm:337
 msgid "Kaare Rasmussen"
@@ -2960,7 +2963,7 @@ msgstr "Kilobyte (kB)"
 
 #: lib/Padre/Wx/FBP/About.pm:612
 msgid "Kjetil Skotheim"
-msgstr ""
+msgstr "Kjetil Skotheim"
 
 #: lib/Padre/Locale.pm:464
 msgid "Klingon"
@@ -3126,11 +3129,11 @@ msgstr "Schrift kleiner darstellen"
 
 #: lib/Padre/Wx/FBP/About.pm:447
 msgid "Marcela Maslanova"
-msgstr ""
+msgstr "Marcela Mašláňová"
 
 #: lib/Padre/Wx/Dialog/About.pm:98
 msgid "Marcela Mašláňová"
-msgstr ""
+msgstr "Marcela Mašláňová"
 
 #: lib/Padre/Wx/ActionLibrary.pm:633
 msgid "Mark Selection &End"
@@ -3433,7 +3436,7 @@ msgstr "Nichts"
 
 #: lib/Padre/Wx/VCS.pm:201 lib/Padre/Wx/FBP/VCS.pm:116
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: lib/Padre/Locale.pm:370 lib/Padre/Wx/FBP/About.pm:603
 msgid "Norwegian"
@@ -3743,7 +3746,7 @@ msgstr "POD"
 
 #: lib/Padre/MimeTypes.pm:446 lib/Padre/Config.pm:1142
 msgid "PPI Experimental"
-msgstr "PPI (Experimentell)"
+msgstr "PPI (experimentell)"
 
 #: lib/Padre/MimeTypes.pm:451 lib/Padre/Config.pm:1143
 msgid "PPI Standard"
@@ -3751,7 +3754,7 @@ msgstr "PPI (Standard)"
 
 #: lib/Padre/Wx/FBP/About.pm:663
 msgid "Paco Alguacil"
-msgstr ""
+msgstr "Paco Alguacil"
 
 #: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/FBP/About.pm:920
 #: lib/Padre/Wx/Dialog/Form.pm:98
@@ -3817,12 +3820,12 @@ msgstr "Patch"
 
 #: lib/Padre/Wx/Dialog/Patch.pm:434
 msgid "Patch Succesful, you should see a new tab in editor called Unsaved #"
-msgstr ""
+msgstr "Patch erfolgreich, Sie sollten im Editor einen neuen Reiter namen Unsaved # sehen"
 
 #: lib/Padre/Wx/Dialog/Patch.pm:419
 msgid ""
 "Patch file should end in .patch or .diff, you should reselect & try again"
-msgstr ""
+msgstr "Patch-Datei sollte auf .patch oder .diff enden, bitte wählen Sie erneut und versuchen es noch einmal"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1096
 msgid "Patch..."
@@ -3862,7 +3865,7 @@ msgstr "Perl-5-&Test"
 
 #: lib/Padre/Wx/FBP/About.pm:64
 msgid "Perl Application Development and Refactoring Environment"
-msgstr ""
+msgstr "Perl Application Development and Refactoring Environment"
 
 #: lib/Padre/Wx/Main.pm:4325
 msgid "Perl Files"
@@ -3890,11 +3893,11 @@ msgstr "Persisch (Iran)"
 
 #: lib/Padre/Wx/FBP/About.pm:343
 msgid "Petar Shangov"
-msgstr ""
+msgstr "Petar Shangov"
 
 #: lib/Padre/Wx/FBP/About.pm:176
 msgid "Peter Lavender: Release Manager"
-msgstr ""
+msgstr "Peter Lavender: Release-Manager"
 
 #: lib/Padre/Wx/Dialog/Sync.pm:141
 msgid "Please ensure all inputs have appropriate values."
@@ -4132,7 +4135,7 @@ msgstr "R/W"
 
 #: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:192
 msgid "RAM:"
-msgstr ""
+msgstr "RAM:"
 
 #: lib/Padre/Wx/Menu/File.pm:167
 msgid "Re&load"
@@ -4525,11 +4528,11 @@ msgstr "SQL-Dateien"
 #: lib/Padre/Wx/Dialog/Patch.pm:581
 #, perl-format
 msgid "SVN Diff Succesful, you should see a new tab in editor called %s"
-msgstr ""
+msgstr "SVN-Diff erfolgreich, Sie sollten im Editor einen neuen Reiter namens %s sehen"
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:234
 msgid "Save"
-msgstr "&Speichern"
+msgstr "Speichern"
 
 #: lib/Padre/Wx/ActionLibrary.pm:423
 msgid "Save &As..."
@@ -4652,7 +4655,7 @@ msgstr "Suche nach '%s' in '%s' fehlgeschlagen..."
 
 #: lib/Padre/Wx/FBP/About.pm:199 lib/Padre/Wx/FBP/About.pm:504
 msgid "Sebastian Willing"
-msgstr ""
+msgstr "Sebastian Willing"
 
 #: lib/Padre/Wx/Dialog/Form.pm:55
 msgid "Second Label"
@@ -4852,7 +4855,7 @@ msgstr "Den Fokus auf den Editor-Bereich setzen"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:738
 msgid "Sets the keyboard binding"
-msgstr ""
+msgstr "Tastenkombination setzen"
 
 #: lib/Padre/Config.pm:517 lib/Padre/Config.pm:528
 msgid "Several placeholders like the filename can be used"
@@ -4977,7 +4980,7 @@ msgstr "&Werkzeugleiste zeigen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1433
 msgid "Show V&ersion Control"
-msgstr ""
+msgstr "Versionskontroll&e anzeigen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2209
 msgid "Show Value Now (&x)"
@@ -5137,11 +5140,11 @@ msgstr "Logo beim Start anzeigen"
 
 #: lib/Padre/Wx/FBP/About.pm:567
 msgid "Simone Blandino"
-msgstr ""
+msgstr "Simone Blandino"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1097
 msgid "Simplistic Patch only works on saved files"
-msgstr ""
+msgstr "Einfaches Patch funktioniert nur mit gespeicherten Dateien"
 
 #: lib/Padre/Plugin/Devel.pm:92
 msgid "Simulate &Background Crash"
@@ -5201,19 +5204,19 @@ msgstr ""
 msgid ""
 "Sorry Diff Failed, are you sure your choice of files was correct for this "
 "action"
-msgstr ""
+msgstr "Diff fehlgeschlagen, bitten stellen Sie sicher, dass Sie die passenden Dateien ausgewählt haben"
 
 #: lib/Padre/Wx/Dialog/Patch.pm:597
 msgid ""
 "Sorry Diff Failed, are you sure your have access to the repository for this "
 "action"
-msgstr ""
+msgstr "Diff fehlgeschlagen, bitte stellen Sie sicher, dass Sie Zugriff auf das Repository haben"
 
 #: lib/Padre/Wx/Dialog/Patch.pm:446
 msgid ""
 "Sorry Patch Failed, are you sure your choice of files was correct for this "
 "action"
-msgstr ""
+msgstr "Patch fehlgeschlagen, bitten stellen Sie sicher, dass Sie die passenden Dateien ausgewählt haben"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:135
 msgid "Space"
@@ -5276,7 +5279,7 @@ msgstr "Status"
 
 #: lib/Padre/Wx/FBP/About.pm:211
 msgid "Steffen Muller"
-msgstr ""
+msgstr "Steffen Müller"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2036
 msgid "Step In (&s)"
@@ -5489,7 +5492,7 @@ msgstr ""
 
 #: lib/Padre/Config.pm:1435
 msgid "Toggle syntax checker annotations in editor"
-msgstr ""
+msgstr "Editor-Annotationen für Syntax-Check ein-/ausschalten"
 
 #: lib/Padre/Config.pm:1453
 msgid "Toggle version control system support"
@@ -5761,7 +5764,8 @@ msgstr ""
 msgid ""
 "Warning: found SVN v%s but we require SVN v%s and it is now called \"Apache "
 "Subversion\""
-msgstr ""
+msgstr "Warnung: SVN v%s gefunden, aber Padre benötigt SVN v%s, und es wird "
+"jetzt \"Apache Subversion\" genannt"
 
 #: lib/Padre/PluginManager.pm:421
 msgid ""
@@ -5922,11 +5926,11 @@ msgstr "nicht geladen"
 
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:76
 msgid "wrap in grep { }"
-msgstr ""
+msgstr "in grep { } einbinden"
 
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:75
 msgid "wrap in map { }"
-msgstr ""
+msgstr "in map { } einbinden"
 
 #: lib/Padre/Plugin/Devel.pm:103
 msgid "wxPerl &Live Support"
