@@ -169,8 +169,9 @@ sub _core_info {
 		# TODO: use instead /etc/lsb-release
 		my $distro = qx{cat /etc/issue};
 		chomp($distro);
-		$distro =~ s/\\n \\l//;
-		$self->{output}->AppendText( sprintf "%*s %s", $offset, Wx::gettext('Distribution'), $distro );
+		$distro =~ s/\\n \\l//g;
+		$distro =~ s/\x0A//g;
+		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Distribution'), $distro );
 
 		# Do we really care for Padre?
 		my $kernel = qx{uname -r};
