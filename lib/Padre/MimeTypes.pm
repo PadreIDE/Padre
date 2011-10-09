@@ -928,8 +928,9 @@ sub perl_mime_type {
 	my $text  = shift;
 
 	# Sometimes Perl 6 will look like Perl 5
-	# But only do this test if the Perl 6 plugin is enabled.
-	if ( $MIME{'application/x-perl6'}->{class} and is_perl6($text) ) {
+	# But only do this test if the lang_perl6_auto_detection is enabled.
+	my $config = Padre::Config->read;
+	if ( $config->lang_perl6_auto_detection and is_perl6($text) ) {
 		return 'application/x-perl6';
 	} else {
 		return 'application/x-perl';

@@ -1453,6 +1453,15 @@ setting(
 	help    => _T('Toggle version control system support')
 );
 
+# Toggle Perl 6 auto detection
+setting(
+	name    => 'lang_perl6_auto_detection',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Toggle Perl 6 auto detection in Perl 5 files')
+);
+
 # Window menu list shorten common path
 setting(
 	name    => 'window_list_shorten_path',

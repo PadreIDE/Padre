@@ -145,6 +145,10 @@ the even version for the release, even during development.
     - Add syntax checking comments pragmas. To disable Padre syntax
       check, please type '## no padre_syntax_check' and to enable again type 
       '## use padre_syntax_check' in your source code (AZAWAWI)
+    - Added lang_perl6_auto_detection which enables Padre to detect Perl 6 files
+      in Perl 5 files. Please note that this is not an accurate method of
+      detecting Perl 6 files (disabled by default). The previous behavior was to
+      enable it when the Perl 6 plugin is enabled (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
