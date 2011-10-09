@@ -149,6 +149,7 @@ the even version for the release, even during development.
       in Perl 5 files. Please note that this is not an accurate method of
       detecting Perl 6 files (disabled by default). The previous behavior was to
       enable it when the Perl 6 plugin is enabled (AZAWAWI)
+    - Added "Language Perl 6" tab to preferences (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
