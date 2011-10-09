@@ -147,9 +147,7 @@ sub _system_info {
 
 	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'PPI', $PPI::VERSION );
 
-	my $config_dir_txt = Wx::gettext('Config:');
-	my $config_dir     = Padre::Constant::CONFIG_DIR;
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, $config_dir_txt, $config_dir );
+	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR );
 	
 	return;
 }
@@ -162,18 +160,22 @@ sub _core_info {
 
 	$self->{output}->AppendText("Core...\n");
 
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, $Config{osname}, $Config{archname} );
+	# Do not translate those labels
+	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, "osname", $Config{osname}, );
+	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, "archname", $Config{archname} );
 
 	if ( $Config{osname} eq 'linux' ) {
 
+		# TODO: use instead /etc/lsb-release
+		my $distro = qx{cat /etc/issue};
+		chomp($distro);
+		$distro =~ s/\\n \\l//;
+		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Distribution'), $distro );
+
+		# Do we really care for Padre?
 		my $kernel = qx{uname -r};
 		chomp($kernel);
-		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'kernel', $kernel );
-
-		my $description = qx{cat /etc/issue};
-		chomp($description);
-		$description =~ s/\\n \\l//;
-		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'description', $description );
+		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Kernel'), $kernel );
 	}
 
 	# Yes, THIS variable should have this upper case char :-)
@@ -184,15 +186,13 @@ sub _core_info {
 	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Perl', $perl_version );
 
 	# How many threads are running
-	my $threads_text = Wx::gettext('Threads:');
 	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : Wx::gettext('(disabled)');
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Threads', $threads );
+	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Threads'), $threads );
 
 	# Calculate the current memory in use across all threads
-	my $RAM_text = Wx::gettext('RAM:');
-	my $ram = Padre::Util::humanbytes( Padre::Util::process_memory() ) || '0';
-	$ram = Wx::gettext('(unsupported)') if $ram eq '0';
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Ram', $ram );
+	my $ram = Padre::Util::process_memory();
+	$ram = $ram ? Padre::Util::humanbytes( $ram ) : Wx::gettext('(unsupported)');
+	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext("RAM"), $ram );
 
 	return;
 }
