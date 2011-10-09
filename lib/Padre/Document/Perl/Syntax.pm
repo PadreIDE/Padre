@@ -64,6 +64,9 @@ sub syntax {
 			$file->print("#line 1\n");
 		}
 
+		# Toggle syntax checking for certain regions
+		$text = $self->_parse_syntax_check_comments($text);
+
 		$file->print($text);
 		$file->close;
 
@@ -121,6 +124,25 @@ sub syntax {
 		issues => \@issues,
 		stderr => $stderr,
 	};
+}
+
+#
+# Parses syntax checking comments blocks
+# To disable Padre syntax check, please use:
+# 	## no padre_syntax_check
+# To enable again:
+# 	## use padre_syntax_check
+#
+sub _parse_syntax_check_comments {
+	my ($self, $text) = @_;
+
+	#TODO implement...
+	my $n = "\\cM?\\cJ";
+	if($text =~ /$n\s*\##\s+(use|no)\s+padre_syntax_check/) {
+		#print "Need to parse padre_syntax_check comments\n";
+	}
+
+	return $text;
 }
 
 1;
