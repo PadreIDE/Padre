@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-08 12:10-0700\n"
+"POT-Creation-Date: 2011-10-09 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -693,7 +693,7 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:188
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:189
 msgid "(disabled)"
 msgstr ""
 
@@ -1357,7 +1357,11 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:320 lib/Padre/Wx/Dialog/About.pm:150
+#: lib/Padre/Wx/Dialog/About.pm:150
+msgid "Config"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:320
 msgid "Config:"
 msgstr ""
 
@@ -1822,6 +1826,10 @@ msgstr ""
 #: lib/Padre/Wx/ActionLibrary.pm:2195
 msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/About.pm:173
+msgid "Distribution"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Warning.pm:49
@@ -2514,12 +2522,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:433
+#: lib/Padre/Wx/Syntax.pm:434
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:434
+#: lib/Padre/Wx/Syntax.pm:437
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2624,10 +2632,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:552
 msgid "Gyorgy Pasztor"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/About.pm:77
-msgid "Gábor Szabó"
 msgstr ""
 
 #: lib/Padre/Locale.pm:292 lib/Padre/Wx/FBP/About.pm:516
@@ -2856,6 +2860,10 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/About.pm:178
+msgid "Kernel"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/About.pm:241
 msgid "Kevin Dawson"
 msgstr ""
@@ -2922,7 +2930,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:496
+#: lib/Padre/Wx/Syntax.pm:499
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -4024,7 +4032,11 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:343 lib/Padre/Wx/Dialog/About.pm:192
+#: lib/Padre/Wx/Dialog/About.pm:195
+msgid "RAM"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:343
 msgid "RAM:"
 msgstr ""
 
@@ -5312,7 +5324,11 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:353 lib/Padre/Wx/Dialog/About.pm:187
+#: lib/Padre/Wx/Dialog/About.pm:190
+msgid "Threads"
+msgstr ""
+
+#: lib/Padre/Wx/About.pm:353
 msgid "Threads:"
 msgstr ""
 
@@ -5326,6 +5342,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Special.pm:67
 msgid "Today"
+msgstr ""
+
+#: lib/Padre/Config.pm:1462
+msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
 #: lib/Padre/Config.pm:1444
