@@ -142,7 +142,9 @@ the even version for the release, even during development.
       Pascal, VBScript, DOS batch files, ActionScript, Tcl, COBOL, Haskell
       (ZENOG)
     - MATLAB source file extension is .m, not .mat (ZENOG)
- 
+    - Add syntax checking comments pragmas. To disable Padre syntax
+      check, please type '## no padre_syntax_check' and to enable again type 
+      '## use padre_syntax_check' in your source code (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
