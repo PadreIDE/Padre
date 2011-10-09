@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-09 04:10-0700\n"
+"POT-Creation-Date: 2011-10-09 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,7 +154,7 @@ msgstr ""
 msgid "&About"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1032
+#: lib/Padre/Wx/FBP/Preferences.pm:1065
 msgid "&Advanced"
 msgstr ""
 
@@ -170,7 +170,7 @@ msgstr ""
 msgid "&Browse"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1048 lib/Padre/Wx/Dialog/Advanced.pm:190
+#: lib/Padre/Wx/FBP/Preferences.pm:1081 lib/Padre/Wx/Dialog/Advanced.pm:190
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:150
 #: lib/Padre/Wx/Dialog/OpenResource.pm:181 lib/Padre/Wx/Dialog/Goto.pm:100
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70
@@ -551,7 +551,7 @@ msgstr ""
 msgid "&Run Script"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:410 lib/Padre/Wx/FBP/Preferences.pm:1023
+#: lib/Padre/Wx/ActionLibrary.pm:410 lib/Padre/Wx/FBP/Preferences.pm:1056
 msgid "&Save"
 msgstr ""
 
@@ -693,11 +693,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:189
+#: lib/Padre/Wx/About.pm:354 lib/Padre/Wx/Dialog/About.pm:190
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:194
+#: lib/Padre/Wx/About.pm:345 lib/Padre/Wx/Dialog/About.pm:195
 msgid "(unsupported)"
 msgstr ""
 
@@ -902,7 +902,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1286
+#: lib/Padre/Wx/FBP/Preferences.pm:1332
 msgid "Appearance"
 msgstr ""
 
@@ -942,7 +942,11 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1287
+#: lib/Padre/Wx/FBP/Preferences.pm:976
+msgid "Auto detect Perl 6 files"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Preferences.pm:1333
 msgid "Auto-Complete"
 msgstr ""
 
@@ -998,7 +1002,7 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1288
+#: lib/Padre/Wx/FBP/Preferences.pm:1334
 msgid "Behaviour"
 msgstr ""
 
@@ -1828,7 +1832,7 @@ msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:173
+#: lib/Padre/Wx/Dialog/About.pm:174
 msgid "Distribution"
 msgstr ""
 
@@ -2336,11 +2340,11 @@ msgstr ""
 msgid "File Types"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:983
+#: lib/Padre/Wx/FBP/Preferences.pm:1016
 msgid "File access via FTP"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:959
+#: lib/Padre/Wx/FBP/Preferences.pm:992
 msgid "File access via HTTP"
 msgstr ""
 
@@ -2729,7 +2733,7 @@ msgstr ""
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1289
+#: lib/Padre/Wx/FBP/Preferences.pm:1335
 msgid "Indentation"
 msgstr ""
 
@@ -2860,7 +2864,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:178
+#: lib/Padre/Wx/Dialog/About.pm:179
 msgid "Kernel"
 msgstr ""
 
@@ -2868,7 +2872,7 @@ msgstr ""
 msgid "Kevin Dawson"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1290
+#: lib/Padre/Wx/FBP/Preferences.pm:1336
 msgid "Key Bindings"
 msgstr ""
 
@@ -2900,11 +2904,15 @@ msgstr ""
 msgid "Lan&guage"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1291
+#: lib/Padre/Wx/FBP/Preferences.pm:1337
 msgid "Language - Perl 5"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:798
+#: lib/Padre/Wx/FBP/Preferences.pm:1338
+msgid "Language - Perl 6"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Preferences.pm:798 lib/Padre/Wx/FBP/Preferences.pm:959
 msgid "Language Integration"
 msgstr ""
 
@@ -2984,7 +2992,7 @@ msgstr ""
 msgid "Loc&k User Interface"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1292
+#: lib/Padre/Wx/FBP/Preferences.pm:1339
 msgid "Local/Remote File Access"
 msgstr ""
 
@@ -4032,7 +4040,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:195
+#: lib/Padre/Wx/Dialog/About.pm:196
 msgid "RAM"
 msgstr ""
 
@@ -5324,7 +5332,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:190
+#: lib/Padre/Wx/Dialog/About.pm:191
 msgid "Threads"
 msgstr ""
 
@@ -5332,7 +5340,7 @@ msgstr ""
 msgid "Threads:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:965 lib/Padre/Wx/FBP/Preferences.pm:989
+#: lib/Padre/Wx/FBP/Preferences.pm:998 lib/Padre/Wx/FBP/Preferences.pm:1022
 msgid "Timeout (in seconds)"
 msgstr ""
 
@@ -5489,7 +5497,7 @@ msgstr ""
 msgid "Uptime:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1007
+#: lib/Padre/Wx/FBP/Preferences.pm:1040
 msgid "Use FTP passive mode"
 msgstr ""
 
