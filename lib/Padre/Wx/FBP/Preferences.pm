@@ -945,6 +945,39 @@ sub new {
 		Wx::FLP_DEFAULT_STYLE,
 	);
 
+	my $lang_perl6 = Wx::Panel->new(
+		$self->{treebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{m_staticText391} = Wx::StaticText->new(
+		$lang_perl6,
+		-1,
+		Wx::gettext("Language Integration"),
+	);
+	$self->{m_staticText391}->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	$self->{m_staticline101} = Wx::StaticLine->new(
+		$lang_perl6,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
+	$self->{lang_perl6_auto_detection} = Wx::CheckBox->new(
+		$lang_perl6,
+		-1,
+		Wx::gettext("Auto detect Perl 6 files"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
 	my $m_panel8 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -1267,6 +1300,19 @@ sub new {
 	$m_panel7->SetSizerAndFit($bSizer71);
 	$m_panel7->Layout;
 
+	my $fgSizer711 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
+	$fgSizer711->SetFlexibleDirection(Wx::BOTH);
+	$fgSizer711->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_ALL);
+	$fgSizer711->Add( $self->{lang_perl6_auto_detection}, 0, Wx::ALL, 5 );
+
+	my $bSizer711 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer711->Add( $self->{m_staticText391}, 0, Wx::ALL, 5 );
+	$bSizer711->Add( $self->{m_staticline101}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer711->Add( $fgSizer711, 0, 0, 5 );
+
+	$lang_perl6->SetSizerAndFit($bSizer711);
+	$lang_perl6->Layout;
+
 	my $fgSizer8 = Wx::FlexGridSizer->new( 5, 2, 0, 0 );
 	$fgSizer8->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer8->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
@@ -1289,6 +1335,7 @@ sub new {
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
+	$self->{treebook}->AddPage( $lang_perl6, Wx::gettext("Language - Perl 6"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("Local/Remote File Access"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -1492,6 +1539,10 @@ sub lang_perl5_lexer {
 
 sub lang_perl5_tags_file {
 	$_[0]->{lang_perl5_tags_file};
+}
+
+sub lang_perl6_auto_detection {
+	$_[0]->{lang_perl6_auto_detection};
 }
 
 sub file_http_timeout {
