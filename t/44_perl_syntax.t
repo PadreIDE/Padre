@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => $] <= 5.008009 ? 72 : 82 );
+	plan( tests => $] <= 5.008009 ? 102 : 112 );
 }
 
 use t::lib::Padre;
@@ -171,6 +171,67 @@ END_PERL
 	);
 }
 
+
+# Syntax check off/on pragma block
+SCOPE: {
+	my $module = execute( <<'END_PERL' );
+use strict;
+## no padre_syntax_check
+use Faulty::Module; # error
+## use padre_syntax_check
+END_PERL
+
+	is_deeply( $module->{model}, [], 'Syntax check off/on pragma' );
+}
+
+# Syntax check off/on pragma block and then error
+SCOPE: {
+	my $module = execute( <<'END_PERL' );
+use strict;
+## no padre_syntax_check
+use Faulty::Module; # error
+## use padre_syntax_check
+lala; # error
+END_PERL
+
+	is_model_ok(
+		model     => $module->{model},
+		line      => 3,
+		message   => q{Bareword "lala" not allowed while "strict subs" in use},
+		type      => 'F',
+		test_name => 'Syntax check off/on pragma block and then error',
+	);
+}
+
+# Syntax check off pragma block
+SCOPE: {
+	my $module = execute( <<'END_PERL' );
+use strict;
+## no padre_syntax_check
+use Faulty::Module; # error
+END_PERL
+
+	is_deeply( $module->{model}, [], 'Syntax check off pragma' );
+}
+
+# Syntax check off pragma misspelled
+SCOPE: {
+	my $module = execute( <<'END_PERL' );
+use strict;
+use warnings;
+## no padre_syntax_checker
+lala; # error
+END_PERL
+
+	
+	is_model_ok(
+		model     => $module->{model},
+		line      => 4,
+		message   => q{Bareword "lala" not allowed while "strict subs" in use},
+		type      => 'F',
+		test_name => 'Syntax check off pragma misspelled',
+	);
+}
 
 
 ######################################################################
