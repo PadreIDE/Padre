@@ -22,8 +22,8 @@ our @ISA     = qw{
 };
 
 use constant {
-	OK => 'status/padre-syntax-ok',
-	ERROR => 'status/padre-syntax-error',
+	OK      => 'status/padre-syntax-ok',
+	ERROR   => 'status/padre-syntax-error',
 	WARNING => 'status/padre-syntax-warning',
 };
 
@@ -255,9 +255,9 @@ sub clear {
 		if ( $len > 0 ) {
 
 			# Clear out all indicators
-			$editor->SetIndicatorCurrent( Padre::Constant::INDICATOR_WARNING );
+			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_WARNING);
 			$editor->IndicatorClearRange( 0, $len );
-			$editor->SetIndicatorCurrent( Padre::Constant::INDICATOR_ERROR );
+			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_ERROR);
 			$editor->IndicatorClearRange( 0, $len );
 		}
 
@@ -382,14 +382,14 @@ sub render {
 			sub {
 				my $self  = shift;
 				my $event = shift;
-				$syntax->_show_current_annotation;
+				$syntax->_show_current_annotation(1);
 				$event->Skip(1);
 			}
 		);
 		Wx::Event::EVT_KEY_UP(
 			$editor,
 			sub {
-				$syntax->_show_current_annotation;
+				$syntax->_show_current_annotation(1);
 			}
 		);
 	}
@@ -419,8 +419,8 @@ sub render {
 				sprintf( Wx::gettext('No errors or warnings found in %s within %3.2f secs.'), $filename, $elapsed )
 			);
 		} else {
-			$self->{tree}
-				->SetItemText( $root, sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.', $elapsed ) ) );
+			$self->{tree}->SetItemText( $root,
+				sprintf( Wx::gettext( 'No errors or warnings found within %3.2f secs.', $elapsed ) ) );
 		}
 		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
 		$self->set_label_bitmap('ok');
@@ -430,9 +430,12 @@ sub render {
 	$self->{tree}->SetItemText(
 		$root,
 		(   defined $filename
-			? sprintf( Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'), scalar @{ $model->{issues} }, $filename, $elapsed )
-			: sprintf( Wx::gettext('Found %d issue(s) within %3.2f secs.'),       scalar @{ $model->{issues} }, $elapsed )
-			)
+			? sprintf(
+				Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'), scalar @{ $model->{issues} }, $filename,
+				$elapsed
+				)
+			: sprintf( Wx::gettext('Found %d issue(s) within %3.2f secs.'), scalar @{ $model->{issues} }, $elapsed )
+		)
 	);
 	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
 
@@ -454,7 +457,7 @@ sub render {
 
 		# Is this the worst thing we have encountered?
 		unless ( $worst eq 'error' ) {
-			if ( $is_warning ) {
+			if ($is_warning) {
 				$worst = 'warning';
 			} else {
 				$worst = 'error';
@@ -503,7 +506,7 @@ sub render {
 		$self->{tree}->SetPlData( $item, $issue );
 	}
 
-	$self->_show_current_annotation if $feature;
+	$self->_show_current_annotation(0) if $feature;
 
 	# Enable standard error output display button
 	unless ( $self->{show_stderr}->IsShown ) {
@@ -524,7 +527,7 @@ sub lock_update {
 	my $self   = shift;
 	my $lock   = $self->SUPER::lock_update;
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$lock = [ $lock, $editor->lock_update ];
 	}
 	return $lock;
@@ -543,7 +546,7 @@ sub set_label_bitmap {
 
 # Show the current line error/warning if it exists or hide the previous annotation
 sub _show_current_annotation {
-	my $self   = shift;
+	my ($self, $syntax_shown)   = @_;
 	my $editor = $self->main->current->editor;
 
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
@@ -554,10 +557,33 @@ sub _show_current_annotation {
 		$editor->AnnotationSetText( $current_line, $annotation->{message} );
 		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
 		$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+		$self->_show_syntax_without_focus if $syntax_shown;
 	}
 
 	$editor->AnnotationSetVisible($visible);
 }
+
+# Shows the non-visible syntax check tab without
+# losing focus on the editor!
+sub _show_syntax_without_focus {
+	my $self    = shift;
+	my $current = $self->current or return;
+	my $main    = $self->main;
+	my $bottom  = $main->bottom;
+
+	# Are we currently showing the page
+	my $position = $bottom->GetPageIndex($main->syntax);
+	if ( $position >= 0 ) {
+
+		# Already showing, switch to it
+		$bottom->SetSelection($position);
+		$current->editor->SetFocus;
+		return;
+	}
+
+	return;
+}
+
 
 # Updates the help page. It shows the text if it is defined otherwise clears and hides it
 sub _update_help_page {
