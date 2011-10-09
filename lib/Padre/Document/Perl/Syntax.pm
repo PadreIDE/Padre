@@ -65,9 +65,7 @@ sub syntax {
 		}
 
 		# Toggle syntax checking for certain regions
-		$text = $self->_parse_syntax_check_comments($text);
-
-		$file->print($text);
+		$file->print( $self->_parse_comment_pragmas($text) );
 		$file->close;
 
 		my @cmd = ( $self->{perl} );
@@ -133,13 +131,26 @@ sub syntax {
 # To enable again:
 # 	## use padre_syntax_check
 #
-sub _parse_syntax_check_comments {
-	my ($self, $text) = @_;
+sub _parse_comment_pragmas {
+	my ( $self, $text ) = @_;
 
-	#TODO implement...
 	my $n = "\\cM?\\cJ";
-	if($text =~ /$n\s*\##\s+(use|no)\s+padre_syntax_check/) {
-		#print "Need to parse padre_syntax_check comments\n";
+	if ( $text =~ /$n\s*\#\#\s+(use|no)\s+padre_syntax_check\s*/ ) {
+
+		# Only process when there is 'use|no padre_syntax_check'
+		# comment pragmas
+		my $ignore = 0;
+		my $output = '';
+		for my $line ( split /^/, $text ) {
+			if ( $line =~ /^\s*\#\#\s+(use|no)\s+padre_syntax_check\s*$/ ) {
+				$ignore = ( $1 eq 'no' ) ? 1 : 0;
+			} else {
+				$output .= $ignore ? "# $line" : $line;
+			}
+		}
+
+		# Return processed text
+		return $output;
 	}
 
 	return $text;
