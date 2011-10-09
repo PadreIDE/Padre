@@ -74,7 +74,7 @@ sub _set_up {
 	# load the image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
 	
-	$self->creator->SetLabel(Wx::gettext('Gábor Szabó'));
+	$self->creator->SetLabel('Gábor Szabó');
 	
 	$self->_translation();
 	
