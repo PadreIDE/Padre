@@ -151,6 +151,8 @@ the even version for the release, even during development.
       detecting Perl 6 files (disabled by default). The previous behavior was to
       enable it when the Perl 6 plugin is enabled (AZAWAWI)
     - Added "Language Perl 6" tab to preferences (AZAWAWI)
+    - Ruby, Python script can be now be executed (AZAWAWI)
+    - Ruby, Python and Java are supported in the function list (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
