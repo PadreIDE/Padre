@@ -2,8 +2,9 @@
 
 use strict;
 use warnings;
-# Turn on $OUTPUT_AUTOFLUSH 
-$|  = 1;
+
+# Turn on $OUTPUT_AUTOFLUSH
+$| = 1;
 use Test::More;
 
 BEGIN {

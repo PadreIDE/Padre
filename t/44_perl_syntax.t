@@ -223,7 +223,7 @@ use warnings;
 lala; # error
 END_PERL
 
-	
+
 	is_model_ok(
 		model     => $module->{model},
 		line      => 4,
