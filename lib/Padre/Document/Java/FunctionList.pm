@@ -12,7 +12,8 @@ our @ISA     = 'Padre::Task::FunctionList';
 # Padre::Task::FunctionList Methods
 
 my $n = "\\cM?\\cJ";
-our $function_search_re = qr/
+#TODO fix Java functionlist regex
+our $method_search_re = qr/
 		(?:
 			=begin.*?=end
 			|
@@ -24,7 +25,7 @@ our $function_search_re = qr/
 	/sx;
 
 sub find {
-	return grep { defined $_ } $_[1] =~ /$function_search_re/g;
+	return grep { defined $_ } $_[1] =~ /$method_search_re/g;
 }
 
 1;

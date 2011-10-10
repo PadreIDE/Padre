@@ -47,14 +47,15 @@ sub get_command {
 
 	# Use console python
 	require File::Which;
-	my $python = File::Which::which('python') or die Wx::gettext("Cannot find python executable in your PATH");
+	my $python = File::Which::which('python')
+		or die Wx::gettext("Cannot find python executable in your PATH");
 	$python = qq{"$python"} if Padre::Constant::WIN32;
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
 	my $shortname = File::Basename::basename($filename);
 
-	my @commands = (qq{"python"});
+	my @commands = (qq{$python});
 	$shortname = qq{"$shortname"} if (Padre::Constant::WIN32);
 	push @commands, qq{"$shortname"};
 

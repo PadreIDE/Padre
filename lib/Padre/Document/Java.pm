@@ -31,6 +31,8 @@ sub task_syntax {
 
 sub get_function_regex {
 	my $name = quotemeta $_[1];
+
+	#TODO fix Java function regex
 	return qr/(?:^|[^# \t-])[ \t]*((?:def)\s+$name\b|\*$name\s*=\s*)/;
 }
 
@@ -45,10 +47,10 @@ sub get_command {
 		? $self->store_in_tempfile
 		: $self->filename;
 
-	# Use console ruby
+	# Use console java
 	require File::Which;
-	my $java = File::Which::which('java') or 
-		die Wx::gettext("Cannot find ruby executable in your PATH");
+	my $java = File::Which::which('java')
+		or die Wx::gettext("Cannot find ruby executable in your PATH");
 	$java = qq{"$java"} if Padre::Constant::WIN32;
 
 	my $dir = File::Basename::dirname($filename);
@@ -62,15 +64,16 @@ sub get_command {
 	return join ' ', @commands;
 }
 
-# Ruby keywords
-# The list is obtained from src/scite/src/ruby.properties
+# Java keyword list is obtained from src/scite/src/cpp.properties
 sub scintilla_key_words {
 	return [
 		[   qw{
-				__FILE__ and def end in or self unless __LINE__ begin defined?
-				ensure module redo super until BEGIN break do false next rescue
-				then when END case else for nil retry true while alias class
-				elsif if not return undef yield
+				abstract assert boolean break byte case catch char class
+				const continue default do double else enum extends final
+				finally float for goto if implements import instanceof int
+				interface long native new package private protected public
+				return short static strictfp super switch synchronized this
+				throw throws transient try var void volatile while
 				}
 		]
 	];

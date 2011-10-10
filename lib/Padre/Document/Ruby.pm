@@ -55,7 +55,7 @@ sub get_command {
 	chdir $dir;
 	my $shortname = File::Basename::basename($filename);
 
-	my @commands = (qq{"ruby"});
+	my @commands = (qq{$ruby});
 	$shortname = qq{"$shortname"} if (Padre::Constant::WIN32);
 	push @commands, qq{"$shortname"};
 

@@ -157,10 +157,10 @@ sub _initialize {
 	);
 
 	%DEFAULT_DOC_CLASS = (
-		'application/x-perl'        => 'Padre::Document::Perl',
-		'text/x-python'             => 'Padre::Document::Python',
-		'application/x-ruby'        => 'Padre::Document::Ruby',
-		'application/x-java-source' => 'Padre::Document::Java',
+		'application/x-perl' => 'Padre::Document::Perl',
+		'text/x-python'      => 'Padre::Document::Python',
+		'application/x-ruby' => 'Padre::Document::Ruby',
+		'text/x-java-source' => 'Padre::Document::Java',
 	);
 
 	%HIGHLIGHTER_CONFIG = (
