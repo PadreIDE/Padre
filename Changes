@@ -130,7 +130,8 @@ the even version for the release, even during development.
     - Fix #1318: Padre freeze? (AZAWAWI)
     - Added Python function list support (AZAWAWI)
     - Added SQL, C/C++, C#, XS, Python, Ruby, PHP, HTML, CSS, JavaScript, Ada,
-      COBOL, Haskell, Pascal, ActionScript and YAML keyword highlighting (AZAWAWI)
+      COBOL, Haskell, Pascal, ActionScript, VBScript and YAML keyword
+      highlighting (AZAWAWI)
     - Major refactoring of the editor setup and configuration code (ADAMK)
     - Scintilla numeric resources such as margins, markers and indicators are
       now managed in Padre::Constant (ADAMK)
