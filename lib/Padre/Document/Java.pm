@@ -39,34 +39,6 @@ sub get_function_regex {
 		     {0,2}(?: \w+)\s+$name)/x;
 }
 
-sub get_command {
-	my $self    = shift;
-	my $arg_ref = shift || {};
-	my $config  = $self->current->config;
-
-	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename =
-		  $config->run_save eq 'unsaved' && !$self->is_saved
-		? $self->store_in_tempfile
-		: $self->filename;
-
-	# Use console java
-	require File::Which;
-	my $java = File::Which::which('java')
-		or die Wx::gettext("Cannot find ruby executable in your PATH");
-	$java = qq{"$java"} if Padre::Constant::WIN32;
-
-	my $dir = File::Basename::dirname($filename);
-	chdir $dir;
-	my $shortname = File::Basename::basename($filename);
-
-	my @commands = (qq{$java});
-	$shortname = qq{"$shortname"} if (Padre::Constant::WIN32);
-	push @commands, qq{"$shortname"};
-
-	return join ' ', @commands;
-}
-
 # Java keyword list is obtained from src/scite/src/cpp.properties
 sub scintilla_key_words {
 	return [
