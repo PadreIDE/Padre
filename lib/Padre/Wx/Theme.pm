@@ -364,11 +364,11 @@ sub parse_style {
 			die "Line $line: Unknown or unsupported style '$copy'";
 		}
 		$string = "Padre::Constant::$string";
-	} elsif ( $string =~ /^wxSTC_\w+\z/ ) {
-		unless ( Wx->can($string) ) {
+	} elsif ( $string =~ /^\w+\z/ ) {
+		unless ( Wx::Scintilla->can($string) ) {
 			die "Line $line: Unknown or unsupported style '$copy'";
 		}
-		$string = "Wx::$string";
+		$string = "Wx::Scintilla::$string";
 	} else {
 		die "Line $line: Unknown or unsupported style '$copy'";
 	}
@@ -452,7 +452,7 @@ sub clear {
 		my $config = $object->config;
 		my $font   = Padre::Wx::editor_font( $config->editor_font );
 		$object->SetFont($font);
-		$object->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT(), $font );
+		$object->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
 
 		# Clear all styles back to the default
 		$object->StyleClearAll;

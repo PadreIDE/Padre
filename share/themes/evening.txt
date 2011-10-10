@@ -31,49 +31,49 @@ SetCaretForeground                                aaaaaa
 SetCaretLineBackground                            222222
 StyleAllBackground                                000000
 StyleSetForeground 0                              00007f
-StyleSetBackground wxSTC_STYLE_DEFAULT            000000
-StyleSetForeground wxSTC_STYLE_DEFAULT            00007f
-StyleSetBackground wxSTC_STYLE_LINENUMBER         111111
-StyleSetForeground wxSTC_STYLE_LINENUMBER         7f7f7f
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         ffff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
+StyleSetBackground STYLE_DEFAULT            000000
+StyleSetForeground STYLE_DEFAULT            00007f
+StyleSetBackground STYLE_LINENUMBER         111111
+StyleSetForeground STYLE_LINENUMBER         7f7f7f
+StyleSetForeground STYLE_BRACELIGHT         ffff00
+StyleSetForeground STYLE_BRACEBAD           ff0000
 
 
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_PL_DEFAULT               66cccc
-StyleSetForeground wxSTC_PL_ERROR                 ff0000
-StyleSetForeground wxSTC_PL_COMMENTLINE           66ff99
-StyleSetForeground wxSTC_PL_POD                   66ff99
-StyleSetForeground wxSTC_PL_POD_VERB              66ff99
-StyleSetForeground wxSTC_PL_NUMBER                ff9966
-StyleSetForeground wxSTC_PL_WORD                  00ff00
-StyleSetBold       wxSTC_PL_WORD                  1
-StyleSetForeground wxSTC_PL_STRING                66cccc
-StyleSetForeground wxSTC_PL_CHARACTER             77ccbb
-StyleSetForeground wxSTC_PL_PUNCTUATION           ffcccc
-StyleSetForeground wxSTC_PL_PREPROCESSOR          c0c0c0
-StyleSetForeground wxSTC_PL_OPERATOR              ffcccc
-StyleSetForeground wxSTC_PL_IDENTIFIER            ffff00
-StyleSetForeground wxSTC_PL_SCALAR                bbbbff
-StyleSetForeground wxSTC_PL_ARRAY                 33ffff
-StyleSetForeground wxSTC_PL_HASH                  66cccc
-StyleSetForeground wxSTC_PL_SYMBOLTABLE           00ff00
-StyleSetForeground wxSTC_PL_REGEX                 ffcc99
-StyleSetForeground wxSTC_PL_REGSUBST              ffdd99
-StyleSetForeground wxSTC_PL_LONGQUOTE             ff7f00
-StyleSetForeground wxSTC_PL_BACKTICKS             ffaa00
-StyleSetForeground wxSTC_PL_DATASECTION           00cccc
-StyleSetForeground wxSTC_PL_HERE_DELIM            ffddaa
-StyleSetForeground wxSTC_PL_HERE_Q                ffcc99
-StyleSetForeground wxSTC_PL_HERE_QQ               ff7f00
-StyleSetForeground wxSTC_PL_HERE_QX               ffaa00
-StyleSetForeground wxSTC_PL_STRING_Q              66cccc
-StyleSetForeground wxSTC_PL_STRING_QQ             ff7f00
-StyleSetForeground wxSTC_PL_STRING_QX             ffaa00
-StyleSetForeground wxSTC_PL_STRING_QR             ffcc99
-StyleSetForeground wxSTC_PL_STRING_QW             66cccc
+StyleSetForeground PL_DEFAULT               66cccc
+StyleSetForeground PL_ERROR                 ff0000
+StyleSetForeground PL_COMMENTLINE           66ff99
+StyleSetForeground PL_POD                   66ff99
+StyleSetForeground PL_POD_VERB              66ff99
+StyleSetForeground PL_NUMBER                ff9966
+StyleSetForeground PL_WORD                  00ff00
+StyleSetBold       PL_WORD                  1
+StyleSetForeground PL_STRING                66cccc
+StyleSetForeground PL_CHARACTER             77ccbb
+StyleSetForeground PL_PUNCTUATION           ffcccc
+StyleSetForeground PL_PREPROCESSOR          c0c0c0
+StyleSetForeground PL_OPERATOR              ffcccc
+StyleSetForeground PL_IDENTIFIER            ffff00
+StyleSetForeground PL_SCALAR                bbbbff
+StyleSetForeground PL_ARRAY                 33ffff
+StyleSetForeground PL_HASH                  66cccc
+StyleSetForeground PL_SYMBOLTABLE           00ff00
+StyleSetForeground PL_REGEX                 ffcc99
+StyleSetForeground PL_REGSUBST              ffdd99
+StyleSetForeground PL_LONGQUOTE             ff7f00
+StyleSetForeground PL_BACKTICKS             ffaa00
+StyleSetForeground PL_DATASECTION           00cccc
+StyleSetForeground PL_HERE_DELIM            ffddaa
+StyleSetForeground PL_HERE_Q                ffcc99
+StyleSetForeground PL_HERE_QQ               ff7f00
+StyleSetForeground PL_HERE_QX               ffaa00
+StyleSetForeground PL_STRING_Q              66cccc
+StyleSetForeground PL_STRING_QQ             ff7f00
+StyleSetForeground PL_STRING_QX             ffaa00
+StyleSetForeground PL_STRING_QR             ffcc99
+StyleSetForeground PL_STRING_QW             66cccc
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

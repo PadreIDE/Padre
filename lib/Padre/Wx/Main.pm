@@ -5718,7 +5718,7 @@ sub editor_rightmargin {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_right_margin_enable => $show );
 
-	my $mode = $show ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE;
+	my $mode = $show ? Wx::Scintilla::EDGE_LINE : Wx::Scintilla::EDGE_NONE;
 	my $column = $self->config->editor_right_margin_column;
 	foreach my $editor ( $self->editors ) {
 		$editor->SetEdgeColumn($column);
@@ -5801,7 +5801,7 @@ sub editor_whitespace {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_whitespace => $show );
 
-	my $mode = $show ? Wx::wxSTC_WS_VISIBLEALWAYS : Wx::wxSTC_WS_INVISIBLE;
+	my $mode = $show ? Wx::Scintilla::WS_VISIBLEALWAYS : Wx::Scintilla::WS_INVISIBLE;
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace($show);
 	}
@@ -5829,7 +5829,7 @@ sub on_word_wrap {
 	}
 
 	my $doc = $self->current->document or return;
-	my $mode = $show ? Wx::wxSTC_WRAP_WORD : Wx::wxSTC_WRAP_NONE;
+	my $mode = $show ? Wx::Scintilla::WRAP_WORD : Wx::Scintilla::WRAP_NONE;
 	$doc->editor->SetWrapMode($mode);
 }
 

@@ -280,9 +280,9 @@ sub refresh {
 		my $editor = $document->editor;
 		my $mode   = $editor->GetWrapMode;
 		my $wrap   = $self->{word_wrap};
-		if ( $mode eq Wx::wxSTC_WRAP_WORD and not $wrap->IsChecked ) {
+		if ( $mode eq Wx::Scintilla::WRAP_WORD and not $wrap->IsChecked ) {
 			$wrap->Check(1);
-		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $wrap->IsChecked ) {
+		} elsif ( $mode eq Wx::Scintilla::WRAP_NONE and $wrap->IsChecked ) {
 			$wrap->Check(0);
 		}
 

@@ -9,19 +9,19 @@ $| = 1;
 use diagnostics;
 use Data::Printer { caller_info => 1, colored => 1, };
 
-my $wxSTC_STYLE_DEFAULT = text;
-my $wxSTC_STYLE_BRACELIGHT;
-my $wxSTC_STYLE_BRACEBAD;
+my $STYLE_DEFAULT = text;
+my $STYLE_BRACELIGHT;
+my $STYLE_BRACEBAD;
 
-my $wxSTC_PL_COMMENTLINE; #comment
-my $wxSTC_PL_POD;
+my $PL_COMMENTLINE; #comment
+my $PL_POD;
 =pod
 
 =head1 heading-1
 
 =cut
 
-my $wxSTC_PL_POD_VERB;
+my $PL_POD_VERB;
 =pod
 
 =over
@@ -29,15 +29,15 @@ my $wxSTC_PL_POD_VERB;
 =item * This is a bulleted list.
 
 	#code is a pod verb
-	my $wxSTC_PL_POD_VERB;
+	my $PL_POD_VERB;
 
 =back
 
 =cut
 
-my $wxSTC_PL_NUMBER = 1;
+my $PL_NUMBER = 1;
 
-my $wxSTC_PL_WORD;
+my $PL_WORD;
 # use my sub for while else print return if chomp shift
 say 'sample text';
 print "sample text\n";
@@ -45,52 +45,52 @@ sub function {
 	return;
 }
 
-my $wxSTC_PL_STRING = "string";
-my $wxSTC_PL_CHARACTER = 'c';
+my $PL_STRING = "string";
+my $PL_CHARACTER = 'c';
 
-my $wxSTC_PL_PUNCTUATION; # () [] {} 
-my $wxSTC_PL_PREPROCESSOR; # not emitted by LexPerl, can we recycle it?
-my $wxSTC_PL_OPERATOR; # + - * % ** . =~ x , ++ -- ||= != <=
-my $wxSTC_PL_IDENTIFIER; #struct $variable @array %hash 
+my $PL_PUNCTUATION; # () [] {} 
+my $PL_PREPROCESSOR; # not emitted by LexPerl, can we recycle it?
+my $PL_OPERATOR; # + - * % ** . =~ x , ++ -- ||= != <=
+my $PL_IDENTIFIER; #struct $variable @array %hash 
 
-my $wxSTC_PL_SCALAR;
-my @wxSTC_PL_ARRAY;
-$wxSTC_PL_ARRAY[100]; # indexed
-my %wxSTC_PL_HASH;
-$wxSTC_PL_HASH{keyname};
+my $PL_SCALAR;
+my @PL_ARRAY;
+$PL_ARRAY[100]; # indexed
+my %PL_HASH;
+$PL_HASH{keyname};
 
 
-my $wxSTC_PL_SYMBOLTABLE;
+my $PL_SYMBOLTABLE;
 *Package::Foo::variable = 'blah';
 
-my $wxSTC_PL_XLAT = tr/abc/xyz/;
+my $PL_XLAT = tr/abc/xyz/;
 
-my $wxSTC_PL_REGEX =~ m/ <:name>(pattern) /p;
-my $wxSTC_PL_REGSUBST = s/^\s{1}//a;
+my $PL_REGEX =~ m/ <:name>(pattern) /p;
+my $PL_REGSUBST = s/^\s{1}//a;
 
-my $wxSTC_PL_LONGQUOTE; # what?
-my $wxSTC_PL_BACKTICKS = `back ticks`;
+my $PL_LONGQUOTE; # what?
+my $PL_BACKTICKS = `back ticks`;
 
-my $wxSTC_PL_DATASECTION; # see below
+my $PL_DATASECTION; # see below
 
-my $wxSTC_PL_HERE_DELIM = <<FOO;
+my $PL_HERE_DELIM = <<FOO;
 sample text
 FOO
-my $wxSTC_PL_HERE_Q = <<'FOO';
+my $PL_HERE_Q = <<'FOO';
 sample text
 FOO
-my $wxSTC_PL_HERE_QQ = <<"FOO";
+my $PL_HERE_QQ = <<"FOO";
 sample text
 FOO
-my $wxSTC_PL_HERE_QX = <<`FOO`;
+my $PL_HERE_QX = <<`FOO`;
 sample text
 FOO
 
-my $wxSTC_PL_STRING_Q  = q( single quoted string literal );
-my $wxSTC_PL_STRING_QQ = qq( double quoted string literal );
-my $wxSTC_PL_STRING_QX = qx{ command };
-my $wxSTC_PL_STRING_QR = qr/ sample text /;
-my @wxSTC_PL_STRING_QW = qw( word list );
+my $PL_STRING_Q  = q( single quoted string literal );
+my $PL_STRING_QQ = qq( double quoted string literal );
+my $PL_STRING_QX = qx{ command };
+my $PL_STRING_QR = qr/ sample text /;
+my @PL_STRING_QW = qw( word list );
 
 my $escaped = "Hello World\n";
 
@@ -102,7 +102,7 @@ sub function_attrib : SomeAttributes(etc) {
 	
 }
 
-# what wxSTC_PL is lexing STDOUT?
+# what PL is lexing STDOUT?
 format STDOUT =
 @###   @.###   @##.###  @###   @###   ^####
 42,   3.1415,  undef,    0, 10000,   undef

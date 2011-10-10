@@ -36,64 +36,64 @@ style text/plain
 include padre
 SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
-StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
-StyleSetForeground wxSTC_STYLE_DEFAULT            000000
-StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
-StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
+StyleSetBackground STYLE_DEFAULT            ffffff
+StyleSetForeground STYLE_DEFAULT            000000
+StyleSetBackground STYLE_LINENUMBER         eeeeee
+StyleSetForeground STYLE_INDENTGUIDE        0000ff
+StyleSetForeground STYLE_BRACELIGHT         00ff00
+StyleSetForeground STYLE_BRACEBAD           ff0000
 
 
 
 style text/x-config
 include text/plain
-StyleSetForeground wxSTC_CONF_DEFAULT             000000
-StyleSetForeground wxSTC_CONF_COMMENT             007f00
-StyleSetForeground wxSTC_CONF_NUMBER              007f7f
-StyleSetForeground wxSTC_CONF_IDENTIFIER          0000ff
-StyleSetForeground wxSTC_CONF_EXTENSION           202020
-StyleSetForeground wxSTC_CONF_PARAMETER           208820
-StyleSetForeground wxSTC_CONF_STRING              ff7f00
-StyleSetForeground wxSTC_CONF_OPERATOR            00007f
-StyleSetForeground wxSTC_CONF_IP                  209999
-StyleSetForeground wxSTC_CONF_DIRECTIVE           202020
+StyleSetForeground CONF_DEFAULT             000000
+StyleSetForeground CONF_COMMENT             007f00
+StyleSetForeground CONF_NUMBER              007f7f
+StyleSetForeground CONF_IDENTIFIER          0000ff
+StyleSetForeground CONF_EXTENSION           202020
+StyleSetForeground CONF_PARAMETER           208820
+StyleSetForeground CONF_STRING              ff7f00
+StyleSetForeground CONF_OPERATOR            00007f
+StyleSetForeground CONF_IP                  209999
+StyleSetForeground CONF_DIRECTIVE           202020
 
 
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_PL_DEFAULT               999999
-StyleSetForeground wxSTC_PL_ERROR                 ff0000
-StyleSetForeground wxSTC_PL_COMMENTLINE           007f00
-StyleSetForeground wxSTC_PL_POD                   7f7f7f
-StyleSetForeground wxSTC_PL_POD_VERB              7f7f7f
-StyleSetForeground wxSTC_PL_NUMBER                007f7f
-StyleSetForeground wxSTC_PL_WORD                  00007f
-StyleSetBold       wxSTC_PL_WORD                  1
-StyleSetForeground wxSTC_PL_STRING                ff7f00
-StyleSetForeground wxSTC_PL_CHARACTER             7f007f
-StyleSetForeground wxSTC_PL_PUNCTUATION           00ff00
-StyleSetForeground wxSTC_PL_PREPROCESSOR          7f7f7f
-StyleSetForeground wxSTC_PL_OPERATOR              00007f
-StyleSetForeground wxSTC_PL_IDENTIFIER            0000ff
-StyleSetForeground wxSTC_PL_SCALAR                7f007f
-StyleSetForeground wxSTC_PL_ARRAY                 4080ff
-StyleSetForeground wxSTC_PL_HASH                  0080ff
-StyleSetForeground wxSTC_PL_SYMBOLTABLE           00ff00
-StyleSetForeground wxSTC_PL_REGEX                 ff007f
-StyleSetForeground wxSTC_PL_REGSUBST              7f7f00
-StyleSetForeground wxSTC_PL_LONGQUOTE             ff7f00
-StyleSetForeground wxSTC_PL_BACKTICKS             ffaa00
-StyleSetForeground wxSTC_PL_DATASECTION           ff7f00
-StyleSetForeground wxSTC_PL_HERE_DELIM            ff7f00
-StyleSetForeground wxSTC_PL_HERE_Q                7f007f
-StyleSetForeground wxSTC_PL_HERE_QQ               ff7f00
-StyleSetForeground wxSTC_PL_HERE_QX               ffaa00
-StyleSetForeground wxSTC_PL_STRING_Q              7f007f
-StyleSetForeground wxSTC_PL_STRING_QQ             ff7f00
-StyleSetForeground wxSTC_PL_STRING_QX             ffaa00
-StyleSetForeground wxSTC_PL_STRING_QR             ff007f
-StyleSetForeground wxSTC_PL_STRING_QW             7f007f
+StyleSetForeground PL_DEFAULT               999999
+StyleSetForeground PL_ERROR                 ff0000
+StyleSetForeground PL_COMMENTLINE           007f00
+StyleSetForeground PL_POD                   7f7f7f
+StyleSetForeground PL_POD_VERB              7f7f7f
+StyleSetForeground PL_NUMBER                007f7f
+StyleSetForeground PL_WORD                  00007f
+StyleSetBold       PL_WORD                  1
+StyleSetForeground PL_STRING                ff7f00
+StyleSetForeground PL_CHARACTER             7f007f
+StyleSetForeground PL_PUNCTUATION           00ff00
+StyleSetForeground PL_PREPROCESSOR          7f7f7f
+StyleSetForeground PL_OPERATOR              00007f
+StyleSetForeground PL_IDENTIFIER            0000ff
+StyleSetForeground PL_SCALAR                7f007f
+StyleSetForeground PL_ARRAY                 4080ff
+StyleSetForeground PL_HASH                  0080ff
+StyleSetForeground PL_SYMBOLTABLE           00ff00
+StyleSetForeground PL_REGEX                 ff007f
+StyleSetForeground PL_REGSUBST              7f7f00
+StyleSetForeground PL_LONGQUOTE             ff7f00
+StyleSetForeground PL_BACKTICKS             ffaa00
+StyleSetForeground PL_DATASECTION           ff7f00
+StyleSetForeground PL_HERE_DELIM            ff7f00
+StyleSetForeground PL_HERE_Q                7f007f
+StyleSetForeground PL_HERE_QQ               ff7f00
+StyleSetForeground PL_HERE_QX               ffaa00
+StyleSetForeground PL_STRING_Q              7f007f
+StyleSetForeground PL_STRING_QQ             ff7f00
+StyleSetForeground PL_STRING_QX             ffaa00
+StyleSetForeground PL_STRING_QR             ff007f
+StyleSetForeground PL_STRING_QW             7f007f
 # Missing SCE_PL_VARIABLE_INDEXER (16)
 # Missing SCE_PL_SUB_PROTOTYPE    (40)
 # Missing SCE_PL_FORMAT_IDENT     (41)
@@ -103,123 +103,123 @@ StyleSetForeground wxSTC_PL_STRING_QW             7f007f
 
 style text/x-c
 include text/plain
-StyleSetForeground wxSTC_C_DEFAULT                000000
-StyleSetForeground wxSTC_C_COMMENT                007f00
-StyleSetForeground wxSTC_C_COMMENTLINE            007f00
-StyleSetForeground wxSTC_C_COMMENTDOC             7f7f7f
-StyleSetForeground wxSTC_C_NUMBER                 007f7f
-StyleSetForeground wxSTC_C_WORD                   00007f
-StyleSetBold       wxSTC_C_WORD                   1
-StyleSetForeground wxSTC_C_WORD2                  00007f
-StyleSetBold       wxSTC_C_WORD2                  1
-StyleSetForeground wxSTC_C_STRING                 ff7f00
-StyleSetForeground wxSTC_C_CHARACTER              7f007f
-StyleSetForeground wxSTC_C_PREPROCESSOR           7f7f7f
-StyleSetBold       wxSTC_C_PREPROCESSOR           1
-StyleSetForeground wxSTC_C_OPERATOR               00007f
-StyleSetForeground wxSTC_C_IDENTIFIER             0000ff
-StyleSetForeground wxSTC_C_STRINGEOL              ff0000
-StyleSetForeground wxSTC_C_VERBATIM               7f007f
-StyleSetForeground wxSTC_C_REGEX                  ff007f
-StyleSetForeground wxSTC_C_COMMENTLINEDOC         7f7f7f
+StyleSetForeground C_DEFAULT                000000
+StyleSetForeground C_COMMENT                007f00
+StyleSetForeground C_COMMENTLINE            007f00
+StyleSetForeground C_COMMENTDOC             7f7f7f
+StyleSetForeground C_NUMBER                 007f7f
+StyleSetForeground C_WORD                   00007f
+StyleSetBold       C_WORD                   1
+StyleSetForeground C_WORD2                  00007f
+StyleSetBold       C_WORD2                  1
+StyleSetForeground C_STRING                 ff7f00
+StyleSetForeground C_CHARACTER              7f007f
+StyleSetForeground C_PREPROCESSOR           7f7f7f
+StyleSetBold       C_PREPROCESSOR           1
+StyleSetForeground C_OPERATOR               00007f
+StyleSetForeground C_IDENTIFIER             0000ff
+StyleSetForeground C_STRINGEOL              ff0000
+StyleSetForeground C_VERBATIM               7f007f
+StyleSetForeground C_REGEX                  ff007f
+StyleSetForeground C_COMMENTLINEDOC         7f7f7f
 
 
 
 style text/x-perlxs
 include text/x-c
-StyleSetForeground wxSTC_C_COMMENTDOC             007f00
-StyleSetForeground wxSTC_C_WORD                   7f007f
-StyleSetForeground wxSTC_C_UUID                   7f007f
-StyleSetForeground wxSTC_C_PREPROCESSOR           777777
-StyleSetBold       wxSTC_C_PREPROCESSOR           1
-StyleSetForeground wxSTC_C_COMMENTLINEDOC         007f00
-StyleSetForeground wxSTC_C_WORD2                  7f007f
-StyleSetBold       wxSTC_C_WORD2                  1
-StyleSetForeground wxSTC_C_COMMENTDOCKEYWORD      000000
-StyleSetBackground wxSTC_C_COMMENTDOCKEYWORD      ff0000
-StyleSetForeground wxSTC_C_COMMENTDOCKEYWORDERROR 000000
-StyleSetBackground wxSTC_C_COMMENTDOCKEYWORDERROR ff0000
-StyleSetForeground wxSTC_C_GLOBALCLASS            7f007f
+StyleSetForeground C_COMMENTDOC             007f00
+StyleSetForeground C_WORD                   7f007f
+StyleSetForeground C_UUID                   7f007f
+StyleSetForeground C_PREPROCESSOR           777777
+StyleSetBold       C_PREPROCESSOR           1
+StyleSetForeground C_COMMENTLINEDOC         007f00
+StyleSetForeground C_WORD2                  7f007f
+StyleSetBold       C_WORD2                  1
+StyleSetForeground C_COMMENTDOCKEYWORD      000000
+StyleSetBackground C_COMMENTDOCKEYWORD      ff0000
+StyleSetForeground C_COMMENTDOCKEYWORDERROR 000000
+StyleSetBackground C_COMMENTDOCKEYWORDERROR ff0000
+StyleSetForeground C_GLOBALCLASS            7f007f
 
 
 
 style text/x-patch
 include text/plain
-StyleSetForeground wxSTC_DIFF_DEFAULT             000000
-StyleSetForeground wxSTC_DIFF_COMMENT             007f00
-StyleSetBackground wxSTC_DIFF_COMMENT             eeeeee
-StyleSetBold       wxSTC_DIFF_COMMENT             1
-StyleSetEOLFilled  wxSTC_DIFF_COMMENT             1
-StyleSetForeground wxSTC_DIFF_COMMAND             808080
-StyleSetBold       wxSTC_DIFF_COMMAND             1
-StyleSetBackground wxSTC_DIFF_HEADER              ffff80
-StyleSetForeground wxSTC_DIFF_POSITION            7f007f
-StyleSetBold       wxSTC_DIFF_POSITION            1
-StyleSetBackground wxSTC_DIFF_DELETED             ff8080
-StyleSetBold       wxSTC_DIFF_DELETED             1
-StyleSetBackground wxSTC_DIFF_ADDED               80ff80
-StyleSetBold       wxSTC_DIFF_ADDED               1
+StyleSetForeground DIFF_DEFAULT             000000
+StyleSetForeground DIFF_COMMENT             007f00
+StyleSetBackground DIFF_COMMENT             eeeeee
+StyleSetBold       DIFF_COMMENT             1
+StyleSetEOLFilled  DIFF_COMMENT             1
+StyleSetForeground DIFF_COMMAND             808080
+StyleSetBold       DIFF_COMMAND             1
+StyleSetBackground DIFF_HEADER              ffff80
+StyleSetForeground DIFF_POSITION            7f007f
+StyleSetBold       DIFF_POSITION            1
+StyleSetBackground DIFF_DELETED             ff8080
+StyleSetBold       DIFF_DELETED             1
+StyleSetBackground DIFF_ADDED               80ff80
+StyleSetBold       DIFF_ADDED               1
 
 
 
 style text/x-makefile
 include text/plain
-StyleSetForeground wxSTC_MAKE_DEFAULT             000000
-StyleSetForeground wxSTC_MAKE_COMMENT             007f00
-StyleSetForeground wxSTC_MAKE_PREPROCESSOR        aa0000
-StyleSetForeground wxSTC_MAKE_IDENTIFIER          000080
-StyleSetForeground wxSTC_MAKE_OPERATOR            7f007f
-StyleSetForeground wxSTC_MAKE_TARGET              a00000
-StyleSetForeground wxSTC_MAKE_IDEOL               7f0000
+StyleSetForeground MAKE_DEFAULT             000000
+StyleSetForeground MAKE_COMMENT             007f00
+StyleSetForeground MAKE_PREPROCESSOR        aa0000
+StyleSetForeground MAKE_IDENTIFIER          000080
+StyleSetForeground MAKE_OPERATOR            7f007f
+StyleSetForeground MAKE_TARGET              a00000
+StyleSetForeground MAKE_IDEOL               7f0000
 
 
 
 style text/x-yaml
 include text/plain
-StyleSetForeground wxSTC_YAML_DEFAULT             000000
-StyleSetForeground wxSTC_YAML_COMMENT             008800
-StyleSetForeground wxSTC_YAML_IDENTIFIER          000088
-StyleSetBold       wxSTC_YAML_IDENTIFIER          1
-StyleSetForeground wxSTC_YAML_KEYWORD             880088
-StyleSetForeground wxSTC_YAML_NUMBER              880000
-StyleSetForeground wxSTC_YAML_REFERENCE           008888
-StyleSetForeground wxSTC_YAML_DOCUMENT            ffffff
-StyleSetBackground wxSTC_YAML_DOCUMENT            000088
-StyleSetBold       wxSTC_YAML_DOCUMENT            1
-StyleSetEOLFilled  wxSTC_YAML_DOCUMENT            1
-StyleSetForeground wxSTC_YAML_TEXT                333366
-StyleSetForeground wxSTC_YAML_ERROR               ffffff
-StyleSetBackground wxSTC_YAML_ERROR               000088
-StyleSetBold       wxSTC_YAML_ERROR               1
-StyleSetEOLFilled  wxSTC_YAML_ERROR               1
+StyleSetForeground YAML_DEFAULT             000000
+StyleSetForeground YAML_COMMENT             008800
+StyleSetForeground YAML_IDENTIFIER          000088
+StyleSetBold       YAML_IDENTIFIER          1
+StyleSetForeground YAML_KEYWORD             880088
+StyleSetForeground YAML_NUMBER              880000
+StyleSetForeground YAML_REFERENCE           008888
+StyleSetForeground YAML_DOCUMENT            ffffff
+StyleSetBackground YAML_DOCUMENT            000088
+StyleSetBold       YAML_DOCUMENT            1
+StyleSetEOLFilled  YAML_DOCUMENT            1
+StyleSetForeground YAML_TEXT                333366
+StyleSetForeground YAML_ERROR               ffffff
+StyleSetBackground YAML_ERROR               000088
+StyleSetBold       YAML_ERROR               1
+StyleSetEOLFilled  YAML_ERROR               1
 
 
 
 style text/css
 include text/plain
-StyleSetForeground wxSTC_CSS_DEFAULT              000000
-StyleSetForeground wxSTC_CSS_TAG                  2020ff
-StyleSetBold       wxSTC_CSS_TAG                  1
-StyleSetForeground wxSTC_CSS_CLASS                3350ff
-StyleSetBold       wxSTC_CSS_CLASS                1
-StyleSetForeground wxSTC_CSS_PSEUDOCLASS          202020
-StyleSetForeground wxSTC_CSS_UNKNOWN_PSEUDOCLASS  202020
-StyleSetBold       wxSTC_CSS_UNKNOWN_PSEUDOCLASS  1
-StyleSetForeground wxSTC_CSS_OPERATOR             3350ff
-StyleSetBold       wxSTC_CSS_OPERATOR             1
-StyleSetForeground wxSTC_CSS_IDENTIFIER           882020
-StyleSetForeground wxSTC_CSS_UNKNOWN_IDENTIFIER   202020
-StyleSetBold       wxSTC_CSS_UNKNOWN_IDENTIFIER   1
-StyleSetForeground wxSTC_CSS_VALUE                209999
-StyleSetForeground wxSTC_CSS_COMMENT              888820
-StyleSetForeground wxSTC_CSS_ID                   3030aa
-StyleSetBold       wxSTC_CSS_ID                   1
-StyleSetForeground wxSTC_CSS_IMPORTANT            202020
-StyleSetForeground wxSTC_CSS_DIRECTIVE            202020
-StyleSetForeground wxSTC_CSS_DOUBLESTRING         202020
-StyleSetForeground wxSTC_CSS_SINGLESTRING         202020
-StyleSetForeground wxSTC_CSS_IDENTIFIER2          202020
-StyleSetForeground wxSTC_CSS_ATTRIBUTE            202020
+StyleSetForeground CSS_DEFAULT              000000
+StyleSetForeground CSS_TAG                  2020ff
+StyleSetBold       CSS_TAG                  1
+StyleSetForeground CSS_CLASS                3350ff
+StyleSetBold       CSS_CLASS                1
+StyleSetForeground CSS_PSEUDOCLASS          202020
+StyleSetForeground CSS_UNKNOWN_PSEUDOCLASS  202020
+StyleSetBold       CSS_UNKNOWN_PSEUDOCLASS  1
+StyleSetForeground CSS_OPERATOR             3350ff
+StyleSetBold       CSS_OPERATOR             1
+StyleSetForeground CSS_IDENTIFIER           882020
+StyleSetForeground CSS_UNKNOWN_IDENTIFIER   202020
+StyleSetBold       CSS_UNKNOWN_IDENTIFIER   1
+StyleSetForeground CSS_VALUE                209999
+StyleSetForeground CSS_COMMENT              888820
+StyleSetForeground CSS_ID                   3030aa
+StyleSetBold       CSS_ID                   1
+StyleSetForeground CSS_IMPORTANT            202020
+StyleSetForeground CSS_DIRECTIVE            202020
+StyleSetForeground CSS_DOUBLESTRING         202020
+StyleSetForeground CSS_SINGLESTRING         202020
+StyleSetForeground CSS_IDENTIFIER2          202020
+StyleSetForeground CSS_ATTRIBUTE            202020
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

@@ -551,12 +551,12 @@ sub _show_current_annotation {
 
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $annotation   = $self->{annotations}->{$current_line};
-	my $visible = 0; #TODO use Wx::wxSTC_ANNOTATION_HIDDEN once it is there
+	my $visible = Wx::Scintilla::ANNOTATION_HIDDEN;
 	$editor->AnnotationClearAll;
 	if ($annotation) {
 		$editor->AnnotationSetText( $current_line, $annotation->{message} );
 		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
-		$visible = 2; #TODO use Wx::wxSTC_ANNOTATION_BOXED once it is there
+		$visible = Wx::Scintilla::ANNOTATION_BOXED;
 		$self->_show_syntax_without_focus if $syntax_shown;
 	}
 

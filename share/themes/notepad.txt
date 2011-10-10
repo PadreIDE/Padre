@@ -31,55 +31,55 @@ SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
 SetSelBackground         1                        0080ff
 StyleAllBackground                                ffffff
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         00ff00
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
+StyleSetForeground STYLE_BRACELIGHT         00ff00
+StyleSetForeground STYLE_BRACEBAD           ff0000
 
 
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         ff0000
-StyleSetForeground wxSTC_STYLE_BRACEBAD           880000
-StyleSetForeground wxSTC_PL_DEFAULT               ff0000
-StyleSetForeground wxSTC_PL_ERROR                 ff88c0
-StyleSetBold       wxSTC_PL_ERROR                 1
-StyleSetItalic     wxSTC_PL_ERROR                 1
-StyleSetForeground wxSTC_PL_COMMENTLINE           008800
-StyleSetForeground wxSTC_PL_POD                   000000
-StyleSetForeground wxSTC_PL_POD_VERB              000000
-StyleSetForeground wxSTC_PL_NUMBER                ff0000
-StyleSetForeground wxSTC_PL_WORD                  0000ff
-StyleSetBold       wxSTC_PL_WORD                  1
-StyleSetForeground wxSTC_PL_STRING                808080
-StyleSetForeground wxSTC_PL_CHARACTER             808080
-StyleSetForeground wxSTC_PL_PUNCTUATION           804000
-StyleSetForeground wxSTC_PL_PREPROCESSOR          804000
-StyleSetForeground wxSTC_PL_OPERATOR              000080
-StyleSetBold       wxSTC_PL_OPERATOR              1
-StyleSetForeground wxSTC_PL_IDENTIFIER            000000
-StyleSetForeground wxSTC_PL_SCALAR                ff8000
-StyleSetForeground wxSTC_PL_ARRAY                 4080ff
-StyleSetForeground wxSTC_PL_HASH                  0080ff
-StyleSetForeground wxSTC_PL_SYMBOLTABLE           ff0000
-StyleSetBold       wxSTC_PL_SYMBOLTABLE           1
-StyleSetForeground wxSTC_PL_REGEX                 8080ff
-StyleSetBackground wxSTC_PL_REGEX                 ffeeec
-StyleSetForeground wxSTC_PL_REGSUBST              8080c0
-StyleSetBackground wxSTC_PL_REGSUBST              ffeeec
-StyleSetForeground wxSTC_PL_LONGQUOTE             ff8000
-StyleSetForeground wxSTC_PL_BACKTICKS             ffff00
-StyleSetBackground wxSTC_PL_BACKTICKS             808080
-StyleSetBold       wxSTC_PL_BACKTICKS             1
-StyleSetForeground wxSTC_PL_DATASECTION           808080
-StyleSetForeground wxSTC_PL_HERE_DELIM            000000
-StyleSetForeground wxSTC_PL_HERE_Q                000000
-StyleSetForeground wxSTC_PL_HERE_QQ               000000
-StyleSetForeground wxSTC_PL_HERE_QX               000000
-StyleSetForeground wxSTC_PL_STRING_Q              000000
-StyleSetForeground wxSTC_PL_STRING_QQ             000000
-StyleSetForeground wxSTC_PL_STRING_QX             000000
-StyleSetForeground wxSTC_PL_STRING_QR             000000
-StyleSetForeground wxSTC_PL_STRING_QW             000000
+StyleSetForeground STYLE_BRACELIGHT         ff0000
+StyleSetForeground STYLE_BRACEBAD           880000
+StyleSetForeground PL_DEFAULT               ff0000
+StyleSetForeground PL_ERROR                 ff88c0
+StyleSetBold       PL_ERROR                 1
+StyleSetItalic     PL_ERROR                 1
+StyleSetForeground PL_COMMENTLINE           008800
+StyleSetForeground PL_POD                   000000
+StyleSetForeground PL_POD_VERB              000000
+StyleSetForeground PL_NUMBER                ff0000
+StyleSetForeground PL_WORD                  0000ff
+StyleSetBold       PL_WORD                  1
+StyleSetForeground PL_STRING                808080
+StyleSetForeground PL_CHARACTER             808080
+StyleSetForeground PL_PUNCTUATION           804000
+StyleSetForeground PL_PREPROCESSOR          804000
+StyleSetForeground PL_OPERATOR              000080
+StyleSetBold       PL_OPERATOR              1
+StyleSetForeground PL_IDENTIFIER            000000
+StyleSetForeground PL_SCALAR                ff8000
+StyleSetForeground PL_ARRAY                 4080ff
+StyleSetForeground PL_HASH                  0080ff
+StyleSetForeground PL_SYMBOLTABLE           ff0000
+StyleSetBold       PL_SYMBOLTABLE           1
+StyleSetForeground PL_REGEX                 8080ff
+StyleSetBackground PL_REGEX                 ffeeec
+StyleSetForeground PL_REGSUBST              8080c0
+StyleSetBackground PL_REGSUBST              ffeeec
+StyleSetForeground PL_LONGQUOTE             ff8000
+StyleSetForeground PL_BACKTICKS             ffff00
+StyleSetBackground PL_BACKTICKS             808080
+StyleSetBold       PL_BACKTICKS             1
+StyleSetForeground PL_DATASECTION           808080
+StyleSetForeground PL_HERE_DELIM            000000
+StyleSetForeground PL_HERE_Q                000000
+StyleSetForeground PL_HERE_QQ               000000
+StyleSetForeground PL_HERE_QX               000000
+StyleSetForeground PL_STRING_Q              000000
+StyleSetForeground PL_STRING_QQ             000000
+StyleSetForeground PL_STRING_QX             000000
+StyleSetForeground PL_STRING_QR             000000
+StyleSetForeground PL_STRING_QW             000000
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

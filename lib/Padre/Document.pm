@@ -1015,7 +1015,7 @@ sub colourize {
 	TRACE("colourize called") if DEBUG;
 
 	$editor->remove_color;
-	if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
+	if ( $lexer == Wx::Scintilla::LEX_CONTAINER ) {
 		$self->colorize;
 	} else {
 		TRACE("Colourize is being called") if DEBUG;
@@ -1609,7 +1609,7 @@ sub lexer {
 	my $self = shift;
 
 	# this should never happen as now we set mime-type on everything
-	return Wx::wxSTC_LEX_AUTOMATIC unless $self->mimetype;
+	return Wx::Scintilla::LEX_AUTOMATIC unless $self->mimetype;
 
 	my $highlighter = $self->highlighter;
 	if ( not $highlighter ) {
@@ -1622,8 +1622,8 @@ sub lexer {
 		$highlighter = 'stc';
 	}
 	TRACE("The highlighter is '$highlighter'") if DEBUG;
-	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
-	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
+	return Wx::Scintilla::LEX_CONTAINER if $highlighter ne 'stc';
+	return Wx::Scintilla::LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
 
 	TRACE( 'STC Lexer will be based on mime type "' . $self->mimetype . '"' ) if DEBUG;
 	return Padre::MimeTypes->get_lexer( $self->mimetype );

@@ -301,7 +301,7 @@ sub new {
 
 	$self->SetFont($font);
 
-	$self->StyleSetFont( wxSTC_STYLE_DEFAULT, $font );
+	$self->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
 	$self->StyleClearAll;
 
 	$self->StyleSetForeground( 0,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
@@ -321,9 +321,9 @@ sub new {
 	$self->StyleSetForeground( 17, Wx::Colour->new( 0xff, 0x00, 0x7f ) );
 	$self->StyleSetForeground( 18, Wx::Colour->new( 0x7f, 0x7f, 0x00 ) );
 	$self->StyleSetBold( 12, 1 );
-	$self->StyleSetSpec( wxSTC_H_TAG, "fore:#0000ff" );
+	$self->StyleSetSpec( Wx::Scintilla::H_TAG, "fore:#0000ff" );
 
-	$self->SetLexer(wxSTC_LEX_PERL);
+	$self->SetLexer(Wx::Scintilla::LEX_PERL);
 
 	$self->SetLayoutDirection(wxLayout_LeftToRight)
 		if $self->can('SetLayoutDirection');

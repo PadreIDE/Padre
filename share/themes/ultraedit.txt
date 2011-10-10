@@ -29,49 +29,49 @@ style text/plain
 include padre
 SetCaretForeground                                000000
 SetCaretLineBackground                            ffff04
-StyleSetBackground wxSTC_STYLE_DEFAULT            ffffff
-StyleSetForeground wxSTC_STYLE_DEFAULT            000000
-StyleSetForeground wxSTC_STYLE_LINENUMBER         111111
-StyleSetBackground wxSTC_STYLE_LINENUMBER         eeeeee
-StyleSetForeground wxSTC_STYLE_INDENTGUIDE        0000ff
-StyleSetForeground wxSTC_STYLE_BRACELIGHT         ff00ff
-StyleSetForeground wxSTC_STYLE_BRACEBAD           ff0000
+StyleSetBackground STYLE_DEFAULT            ffffff
+StyleSetForeground STYLE_DEFAULT            000000
+StyleSetForeground STYLE_LINENUMBER         111111
+StyleSetBackground STYLE_LINENUMBER         eeeeee
+StyleSetForeground STYLE_INDENTGUIDE        0000ff
+StyleSetForeground STYLE_BRACELIGHT         ff00ff
+StyleSetForeground STYLE_BRACEBAD           ff0000
 
 
 
 style application/x-perl
 include text/plain
-StyleSetForeground wxSTC_PL_DEFAULT               7f7f7f
-StyleSetForeground wxSTC_PL_ERROR                 ff0000
-StyleSetForeground wxSTC_PL_COMMENTLINE           3f7f7f
-StyleSetForeground wxSTC_PL_POD                   3f7f7f
-StyleSetForeground wxSTC_PL_POD_VERB              3f7f7f
-StyleSetForeground wxSTC_PL_NUMBER                ff0000
-StyleSetForeground wxSTC_PL_WORD                  000000
-StyleSetForeground wxSTC_PL_STRING                7f7f7f
-StyleSetForeground wxSTC_PL_CHARACTER             7f7f7f
-StyleSetForeground wxSTC_PL_PUNCTUATION           7f3f00
-StyleSetForeground wxSTC_PL_PREPROCESSOR          7f7f7f
-StyleSetForeground wxSTC_PL_OPERATOR              7f3f00
-StyleSetForeground wxSTC_PL_IDENTIFIER            000000
-StyleSetForeground wxSTC_PL_SCALAR                000000
-StyleSetForeground wxSTC_PL_ARRAY                 000000
-StyleSetForeground wxSTC_PL_HASH                  000000
-StyleSetForeground wxSTC_PL_SYMBOLTABLE           00ff00
-StyleSetForeground wxSTC_PL_REGEX                 7f00ff
-StyleSetForeground wxSTC_PL_REGSUBST              7f7f00
-StyleSetForeground wxSTC_PL_LONGQUOTE             7f7f7f
-StyleSetForeground wxSTC_PL_BACKTICKS             00bf00
-StyleSetForeground wxSTC_PL_DATASECTION           ff7f00
-StyleSetForeground wxSTC_PL_HERE_DELIM            ff7f00
-StyleSetForeground wxSTC_PL_HERE_Q                7f7f7f
-StyleSetForeground wxSTC_PL_HERE_QQ               7f7f7f
-StyleSetForeground wxSTC_PL_HERE_QX               00bf00
-StyleSetForeground wxSTC_PL_STRING_Q              7f7f7f
-StyleSetForeground wxSTC_PL_STRING_QQ             7f7f7f
-StyleSetForeground wxSTC_PL_STRING_QX             7f7f7f
-StyleSetForeground wxSTC_PL_STRING_QR             7f00ff
-StyleSetForeground wxSTC_PL_STRING_QW             7f7f7f
+StyleSetForeground PL_DEFAULT               7f7f7f
+StyleSetForeground PL_ERROR                 ff0000
+StyleSetForeground PL_COMMENTLINE           3f7f7f
+StyleSetForeground PL_POD                   3f7f7f
+StyleSetForeground PL_POD_VERB              3f7f7f
+StyleSetForeground PL_NUMBER                ff0000
+StyleSetForeground PL_WORD                  000000
+StyleSetForeground PL_STRING                7f7f7f
+StyleSetForeground PL_CHARACTER             7f7f7f
+StyleSetForeground PL_PUNCTUATION           7f3f00
+StyleSetForeground PL_PREPROCESSOR          7f7f7f
+StyleSetForeground PL_OPERATOR              7f3f00
+StyleSetForeground PL_IDENTIFIER            000000
+StyleSetForeground PL_SCALAR                000000
+StyleSetForeground PL_ARRAY                 000000
+StyleSetForeground PL_HASH                  000000
+StyleSetForeground PL_SYMBOLTABLE           00ff00
+StyleSetForeground PL_REGEX                 7f00ff
+StyleSetForeground PL_REGSUBST              7f7f00
+StyleSetForeground PL_LONGQUOTE             7f7f7f
+StyleSetForeground PL_BACKTICKS             00bf00
+StyleSetForeground PL_DATASECTION           ff7f00
+StyleSetForeground PL_HERE_DELIM            ff7f00
+StyleSetForeground PL_HERE_Q                7f7f7f
+StyleSetForeground PL_HERE_QQ               7f7f7f
+StyleSetForeground PL_HERE_QX               00bf00
+StyleSetForeground PL_STRING_Q              7f7f7f
+StyleSetForeground PL_STRING_QQ             7f7f7f
+StyleSetForeground PL_STRING_QX             7f7f7f
+StyleSetForeground PL_STRING_QR             7f00ff
+StyleSetForeground PL_STRING_QW             7f7f7f
 # Missing SCE_PL_VARIABLE_INDEXER (16)
 # Missing SCE_PL_SUB_PROTOTYPE    (40)
 # Missing SCE_PL_FORMAT_IDENT     (41)

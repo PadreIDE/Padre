@@ -1607,8 +1607,8 @@ sub event_mouse_moving {
 		return unless length $token;
 		return unless $editor->has_function($token);
 
-		$editor->StartStyling( $location->[2], Wx::wxSTC_INDICS_MASK );
-		$editor->SetStyling( length($token), Wx::wxSTC_INDIC2_MASK );
+		$editor->StartStyling( $location->[2], Wx::Scintilla::INDICS_MASK );
+		$editor->SetStyling( length($token), Wx::Scintilla::INDIC2_MASK );
 
 		$self->{last_highlight} = {
 			token => $token,
@@ -1635,7 +1635,7 @@ sub _clear_highlight {
 
 	return unless $self->{last_highlight};
 
-	$editor->StartStyling( $self->{last_highlight}{pos}, Wx::wxSTC_INDICS_MASK );
+	$editor->StartStyling( $self->{last_highlight}{pos}, Wx::Scintilla::INDICS_MASK );
 	$editor->SetStyling( length( $self->{last_highlight}{token} ), 0 );
 	undef $self->{last_highlight};
 }
