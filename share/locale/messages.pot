@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-10 04:10-0700\n"
+"POT-Creation-Date: 2011-10-10 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2063,7 +2063,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1090 lib/Padre/Wx/Editor.pm:672
+#: lib/Padre/Document.pm:1166 lib/Padre/Wx/Editor.pm:672
 #: lib/Padre/Wx/Main.pm:5027 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2128,7 +2128,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:894
+#: lib/Padre/Document.pm:970
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2139,7 +2139,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:844
+#: lib/Padre/Document.pm:920
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2526,12 +2526,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:434
+#: lib/Padre/Wx/Syntax.pm:436
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:437
+#: lib/Padre/Wx/Syntax.pm:439
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2938,7 +2938,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:499
+#: lib/Padre/Wx/Syntax.pm:501
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -3284,7 +3284,7 @@ msgstr ""
 msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:423
+#: lib/Padre/Wx/Syntax.pm:424
 #, perl-format
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
@@ -3312,7 +3312,7 @@ msgstr ""
 msgid "No matches found for \"%s\"."
 msgstr ""
 
-#: lib/Padre/Document.pm:938
+#: lib/Padre/Document.pm:1014
 #, perl-format
 msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
@@ -4455,7 +4455,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1424
+#: lib/Padre/Document.pm:1500
 msgid "Save Warning"
 msgstr ""
 
@@ -5066,7 +5066,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1991 lib/Padre/Document.pm:1992
+#: lib/Padre/Document.pm:2067 lib/Padre/Document.pm:2068
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5295,7 +5295,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:866
+#: lib/Padre/Document.pm:942
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5446,7 +5446,7 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
-#: lib/Padre/Document.pm:1640
+#: lib/Padre/Document.pm:1716
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5601,14 +5601,14 @@ msgstr ""
 msgid "Visit the PerlM&onks"
 msgstr ""
 
-#: lib/Padre/Document.pm:1420
+#: lib/Padre/Document.pm:1496
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:872 lib/Padre/Wx/Syntax.pm:42
+#: lib/Padre/Document.pm:948 lib/Padre/Wx/Syntax.pm:42
 #: lib/Padre/Wx/Main.pm:3061 lib/Padre/Wx/Main.pm:3776
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5756,7 +5756,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:1618
+#: lib/Padre/Document.pm:1694
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
