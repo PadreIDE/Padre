@@ -156,7 +156,7 @@ sub _initialize {
 		# PHP
 		php   => 'application/x-php',
 		php3  => 'application/x-php',
-		phtml => 'application/x-php'
+		phtml => 'application/x-php',
 
 		# VisualBasic and VBScript
 		vb    => 'text/vbscript',
