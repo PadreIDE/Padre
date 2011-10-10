@@ -60,8 +60,6 @@ my @actions = (
 	'file.new,search.find',
 	'file.new,search.find_next',
 	'file.new,search.find_previous',
-	'file.new,search.quick_find_next',
-	'file.new,search.quick_find_previous',
 
 	# Twice to reset them to previous state
 	'view.lockinterface,view.lockinterface',
