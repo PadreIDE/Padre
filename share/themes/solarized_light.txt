@@ -72,7 +72,7 @@ CallTipSetBackground  eee8d5
 #
 style application/x-perl
 include text/plain
-StyleSetForeground      wxSTC_STYLE_BRACELIGHT      eee8d5
+StyleSetForeground      wxSTC_STYLE_BRACELIGHT      073642
 StyleSetForeground      wxSTC_STYLE_BRACEBAD        fdf6e6
 StyleSetForeground      wxSTC_PL_DEFAULT            657b83
 StyleSetForeground      wxSTC_PL_ERROR              ff0000
