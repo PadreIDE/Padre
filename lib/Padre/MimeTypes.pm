@@ -105,7 +105,6 @@ sub _initialize {
 		rb    => 'application/x-ruby',
 		sql   => 'text/x-sql',
 		tcl   => 'application/x-tcl',
-		vbs   => 'text/vbscript',
 		patch => 'text/x-patch',
 		pks   => 'text/x-sql',            # PLSQL package spec
 		pkb   => 'text/x-sql',            # PLSQL package body
@@ -158,6 +157,18 @@ sub _initialize {
 		php   => 'application/x-php',
 		php3  => 'application/x-php',
 		phtml => 'application/x-php'
+
+		# VisualBasic and VBScript
+		vb    => 'text/vbscript',
+		bas   => 'text/vbscript',
+		frm   => 'text/vbscript',
+		cls   => 'text/vbscript',
+		ctl   => 'text/vbscript',
+		pag   => 'text/vbscript',
+		dsr   => 'text/vbscript',
+		dob   => 'text/vbscript',
+		vbs   => 'text/vbscript',
+		dsm   => 'text/vbscript',
 	);
 
 	%DEFAULT_DOC_CLASS = (
