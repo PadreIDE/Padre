@@ -38,17 +38,6 @@ for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	last;
 }
 
-use_ok('Padre::Perl');
-
-my $cmd;
-if ( $^O eq 'MSWin32' ) {
-
-	# Look for Perl on Windows
-	$cmd = Padre::Perl::cperl();
-	plan skip_all => 'Need some Perl for this test' unless defined($cmd);
-	$cmd .= ' ';
-}
-
 my @actions = (
 	'file.new',
 	'file.open_last_closed_file',
@@ -92,6 +81,17 @@ my @actions = (
 );
 
 plan( tests => scalar(@actions) * 3 + 1 );
+
+use_ok('Padre::Perl');
+
+my $cmd;
+if ( $^O eq 'MSWin32' ) {
+
+	# Look for Perl on Windows
+	$cmd = Padre::Perl::cperl();
+	plan skip_all => 'Need some Perl for this test' unless defined($cmd);
+	$cmd .= ' ';
+}
 
 # Create temp dir
 my $dir = File::Temp->newdir;
