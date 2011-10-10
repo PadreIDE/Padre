@@ -744,6 +744,82 @@ my %SCINTILLA_KEY_WORDS = (
 		],
 	],
 
+	# Inspired from Perl 6 vim syntax file
+	# https://github.com/petdance/vim-perl/blob/master/syntax/perl6.vim
+	'application/x-perl6' => [
+		[
+
+			# Perl 6 routine declaration keywords
+			qw{macro sub submethod method multi proto only rule token regex category},
+
+			# Perl 6 module keywords
+			qw{module class role package enum grammar slang subset},
+
+			# Perl 6 variable keywords
+			qw{self},
+
+			# Perl 6 include keywords
+			qw{use require},
+
+			# Perl 6 conditional keywords
+			qw{if else elsif unless},
+
+			# Perl 6 variable storage keywords
+			qw{let my our state temp has constant},
+
+			# Perl 6 repeat keywords
+			qw{for loop repeat while until gather given},
+
+			# Perl flow control keywords
+			qw{take do when next last redo return contend maybe defer
+				default exit make continue break goto leave async lift},
+
+			# Perl 6 type constraints keywords
+			qw{is as but trusts of returns handles where augment supersede},
+
+			# Perl 6 closure traits keywords
+			qw{BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP
+				UNDO NEXT LAST PRE POST END CATCH CONTROL TEMP},
+
+			# Perl 6 exception keywords
+			qw{die fail try warn},
+
+			# Perl 6 property keywords
+			qw{prec irs ofs ors export deep binary unary reparsed rw parsed cached
+				readonly defequiv will ref copy inline tighter looser equiv assoc
+				required},
+
+			# Perl 6 number keywords
+			qw{NaN Inf},
+
+			# Perl 6 pragma keywords
+			qw{oo fatal},
+
+			# Perl 6 type keywords
+			qw{Object Any Junction Whatever Capture Match
+				Signature Proxy Matcher Package Module Class
+				Grammar Scalar Array Hash KeyHash KeySet KeyBag
+				Pair List Seq Range Set Bag Mapping Void Undef
+				Failure Exception Code Block Routine Sub Macro
+				Method Submethod Regex Str Blob Char Byte
+				Codepoint Grapheme StrPos StrLen Version Num
+				Complex num complex Bit bit bool True False
+				Increasing Decreasing Ordered Callable AnyChar
+				Positional Associative Ordering KeyExtractor
+				Comparator OrderingPair IO KitchenSink Role
+				Int int int1 int2 int4 int8 int16 int32 int64
+				Rat rat rat1 rat2 rat4 rat8 rat16 rat32 rat64
+				Buf buf buf1 buf2 buf4 buf8 buf16 buf32 buf64
+				UInt uint uint1 uint2 uint4 uint8 uint16 uint32
+				uint64 Abstraction utf8 utf16 utf32},
+
+			# Perl 6 operator keywords
+			qw{div x xx mod also leg cmp before after eq ne le lt
+				gt ge eqv ff fff and andthen Z X or xor
+				orelse extra m mm rx s tr},
+		],
+	],
+
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
 $SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
