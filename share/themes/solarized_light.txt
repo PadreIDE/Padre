@@ -160,31 +160,30 @@ StyleSetBackground      PL_VARIABLE_INDEXER   fdf6e6
 #StyleSetBackground      PL_STRING_QQ_VAR      fdf6e6
 #StyleSetBackground      PL_STRING_QX_VAR      fdf6e6
 #StyleSetBackground      PL_STRING_QR_VAR      fdf6e6
-# RECOOKED using magic numbers instead of constants
-StyleSetForeground      43         b58900
-StyleSetForeground      44         b58900
-StyleSetForeground      54         b58900
-StyleSetForeground      55         b58900
-StyleSetForeground      57         b58900
-StyleSetForeground      61         b58900
-StyleSetForeground      62         b58900
-StyleSetForeground      64         b58900
-StyleSetForeground      65         b58900
-StyleSetForeground      66         b58900
+StyleSetForeground      PL_STRING_VAR          b58900
+StyleSetForeground      PL_XLAT               b58900
+StyleSetForeground      PL_REGEX_VAR          b58900
+StyleSetForeground      PL_REGSUBST_VAR       b58900
+StyleSetForeground      PL_BACKTICKS_VAR      b58900
+StyleSetForeground      PL_HERE_QQ_VAR        b58900
+StyleSetForeground      PL_HERE_QX_VAR        b58900
+StyleSetForeground      PL_STRING_QQ_VAR      b58900
+StyleSetForeground      PL_STRING_QX_VAR      b58900
+StyleSetForeground      PL_STRING_QR_VAR      b58900
 
-StyleSetBackground      43         fdf6e6
-StyleSetBackground      44          eee8d5
-StyleSetBackground      54          eee8d5
-StyleSetBackground      55          eee8d5
-StyleSetBackground      57         fdf6e6
-StyleSetBackground      61         fdf6e6
-StyleSetBackground      62         fdf6e6
-StyleSetBackground      64         fdf6e6
-StyleSetBackground      65         fdf6e6
-StyleSetBackground      66          eee8d5
-StyleSetBackground       PL_SUB_PROTOTYPE       eee8d5
-StyleSetBackground       PL_FORMAT_IDENT        eee8d5
-StyleSetBackground       PL_FORMAT              eee8d5
+StyleSetBackground      PL_STRING_VAR         df6e6
+StyleSetBackground      PL_XLAT               eee8d5
+StyleSetBackground      PL_REGEX_VAR          eee8d5
+StyleSetBackground      PL_REGSUBST_VAR       eee8d5
+StyleSetBackground      PL_BACKTICKS_VAR      fdf6e6
+StyleSetBackground      PL_HERE_QQ_VAR        fdf6e6
+StyleSetBackground      PL_HERE_QX_VAR        fdf6e6
+StyleSetBackground      PL_STRING_QQ_VAR      fdf6e6
+StyleSetBackground      PL_STRING_QX_VAR      fdf6e6
+StyleSetBackground      PL_STRING_QR_VAR      eee8d5
+StyleSetBackground       PL_SUB_PROTOTYPE     eee8d5
+StyleSetBackground       PL_FORMAT_IDENT      eee8d5
+StyleSetBackground       PL_FORMAT            eee8d5
 
 ## conf
 style text/x-config
