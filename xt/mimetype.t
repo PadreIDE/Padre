@@ -28,8 +28,6 @@ my %test_texts = (
 	'[% PROCESS Padre %]'                                                     => 'text/x-perltt',
 	'#!/bin/bash'                                                             => 'application/x-shellscript',
 	'<html><head><title>Padre</title></head></html>'                          => 'text/html',
-	'=begin pod'                                                              => 'application/x-perl6',
-	'use v6;'                                                                 => 'application/x-perl6',
 	'use strict; sub foo { 1; } my $self = split(/y/,$ENV{foo}));'            => 'application/x-perl',
 	"function lua_fct()\n\t--[[This\n\tis\n\ta\ncomment\n\t]]--repeat\nend\n" => 'text/x-lua',
 );
