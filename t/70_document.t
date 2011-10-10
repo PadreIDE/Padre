@@ -33,7 +33,6 @@ my %MIMES = (
 	'eg/perl5/perl5.pod'              => 'text/x-pod',
 	'eg/perl5_with_perl6_example.pod' => 'text/x-pod',
 	'eg/perl6/perl6.pod'              => 'text/x-pod',
-	'eg/perl6/Perl6Class.pm'          => 'application/x-perl6',
 	'eg/xml/xml_example'              => 'text/xml',
 	'eg/tcl/hello_tcl'                => 'application/x-tcl',
 	'eg/tcl/portable_tcl'             => 'application/x-tcl',
