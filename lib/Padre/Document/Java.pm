@@ -31,9 +31,12 @@ sub task_syntax {
 
 sub get_function_regex {
 	my $name = quotemeta $_[1];
-
-	#TODO fix Java function regex
-	return qr/(?:^|[^# \t-])[ \t]*((?:def)\s+$name\b|\*$name\s*=\s*)/;
+	return qr/
+	        (?:^|[^# \t-])
+	        [ \t]*
+		((?: (public|protected|private|abstract|static|final|native|
+		     synchronized|transient|volatile|strictfp)\s+)
+		     {0,2}(?: \w+)\s+$name)/x;
 }
 
 sub get_command {

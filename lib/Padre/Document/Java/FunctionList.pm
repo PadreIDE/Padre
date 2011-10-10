@@ -11,21 +11,34 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $n = "\\cM?\\cJ";
-#TODO fix Java functionlist regex
-our $method_search_re = qr/
+my $n                   = "\\cM?\\cJ";
+my $method_search_regex = qr/
 		(?:
-			=begin.*?=end
+			\/\*\*.+?\*\/
+			|
+			\/\/.+?$n
 			|
 			(?:^|$n)\s*
 			(?:
-				(?:def)\s+(\w+)
+				(?:
+				  (?:
+					(?: public|protected|private|abstract|static|
+					final|native|synchronized|transient|volatile|
+					strictfp)
+					\s+
+				  ){0,2}
+				  (?: \w+)
+				  \s+
+				  (\w+)
+				  \s*
+				  \(.*?\)
+				 )
 			)
 		)
 	/sx;
 
 sub find {
-	return grep { defined $_ } $_[1] =~ /$method_search_re/g;
+	return grep { defined $_ } $_[1] =~ /$method_search_regex/g;
 }
 
 1;
