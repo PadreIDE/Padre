@@ -419,8 +419,10 @@ sub render {
 				sprintf( Wx::gettext('No errors or warnings found in %s within %3.2f secs.'), $filename, $elapsed )
 			);
 		} else {
-			$self->{tree}->SetItemText( $root,
-				sprintf( Wx::gettext( 'No errors or warnings found within %3.2f secs.', $elapsed ) ) );
+			$self->{tree}->SetItemText(
+				$root,
+				sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.'), $elapsed )
+			);
 		}
 		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
 		$self->set_label_bitmap('ok');
@@ -534,6 +536,7 @@ sub lock_update {
 }
 
 sub set_label_bitmap {
+
 	# Temporarily disabled (ADAMK)
 	# commented to prevent perl critic test from failing (AZAWAWI)
 	#TODO enable? :)
@@ -548,12 +551,12 @@ sub set_label_bitmap {
 
 # Show the current line error/warning if it exists or hide the previous annotation
 sub _show_current_annotation {
-	my ($self, $syntax_shown)   = @_;
+	my ( $self, $syntax_shown ) = @_;
 	my $editor = $self->main->current->editor;
 
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 	my $annotation   = $self->{annotations}->{$current_line};
-	my $visible = Wx::Scintilla::ANNOTATION_HIDDEN;
+	my $visible      = Wx::Scintilla::ANNOTATION_HIDDEN;
 	$editor->AnnotationClearAll;
 	if ($annotation) {
 		$editor->AnnotationSetText( $current_line, $annotation->{message} );
@@ -574,7 +577,7 @@ sub _show_syntax_without_focus {
 	my $bottom  = $main->bottom;
 
 	# Are we currently showing the page
-	my $position = $bottom->GetPageIndex($main->syntax);
+	my $position = $bottom->GetPageIndex( $main->syntax );
 	if ( $position >= 0 ) {
 
 		# Already showing, switch to it
