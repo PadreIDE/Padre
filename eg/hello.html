@@ -1,0 +1,21 @@
+<html>
+<head><title><?php echo "Hello, World!"; ?> 
+</title></head>
+<body>
+<script language="JavaScript">
+function add(int a, b) {
+ return a + b;
+}
+</script>
+<?php echo "Hello, World from PHP!"; ?> 
+<div>
+<% 
+	' Grab current time from Now() function.
+	Dim currentTime
+	currentTime = Now()
+%>
+	The time, in 24-hour format, is 
+	<%=Hour(currentTime)%>:<%=Minute(currentTime)%>:<%=Second(currentTime)%>.
+</div>
+ </body>
+ </html>
