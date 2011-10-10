@@ -172,13 +172,13 @@ my %COMMENT_LINE_STRING = (
 	'text/x-lua'                => '--',
 	'text/x-makefile'           => '#',
 	'text/x-matlab'             => '%',
-	'text/x-pascal'             => [ '{',  '}' ],
+	'text/x-pascal'             => [ '{', '}' ],
 	'application/x-perl'        => '#',
 	'application/x-perl6'       => '#',
 	'text/x-perltt'             => [ '<!--', '-->' ],
 	'text/x-perlxs'             => '//',
 	'application/x-php'         => '#',
-	'text/x-pod'                => '#',	
+	'text/x-pod'                => '#',
 	'text/x-python'             => '#',
 	'application/x-ruby'        => '#',
 	'application/x-shellscript' => '#',
@@ -191,13 +191,41 @@ my %COMMENT_LINE_STRING = (
 
 
 # Javascript keywords
-my %SCINTILLA_JS_KEYWORDS = qw{
+my @SCINTILLA_JS_KEYWORDS = qw{
 	abstract boolean break byte case catch char class
 	const continue debugger default delete do double else enum export extends
 	final finally float for function goto if implements import in instanceof
 	int interface long native new package private protected public
 	return short static super switch synchronized this throw throws
 	transient try typeof var void volatile while with
+};
+
+# PHP keywords
+my @SCINTILLA_PHP_KEYWORDS = qw{
+	and array as bool boolean break case cfunction class const
+	continue declare default die directory do double echo else
+	elseif empty enddeclare endfor endforeach endif endswitch
+	endwhile eval exit extends false float for foreach function
+	global goto if include include_once int integer isset list
+	namespace new null object old_function or parent print real
+	require require_once resource return static stdclass string
+	switch true unset use var while xor abstract catch clone
+	exception final implements interface php_user_filter private
+	protected public this throw try __class__ __dir__ __file__
+	__function__ __line__ __method__ __namespace__ __sleep __wakeup
+};
+
+# VB keyword list is obtained from src/scite/src/vb.properties
+my @SCINTILLA_VB_KEYWORDS = qw{addressof alias and as attribute base begin binary
+	boolean byref byte byval call case cdbl cint clng compare const csng cstr currency
+	date decimal declare defbool defbyte defcur
+	defdate defdbl defdec defint deflng defobj defsng defstr defvar dim do double each else
+	elseif empty end enum eqv erase error event exit explicit false for friend function get
+	global gosub goto if imp implements in input integer is len let lib like load lock long
+	loop lset me mid midb mod new next not nothing null object on option optional or paramarray
+	preserve print private property public raiseevent randomize redim rem resume return rset
+	seek select set single static step stop string sub text then time to true type typeof
+	unload until variant wend while with withevents xor
 };
 
 # Take mostly from src/scite/src/ properties files
@@ -220,161 +248,157 @@ my %SCINTILLA_KEY_WORDS = (
 	],
 
 	# PHP keyword list is obtained from src/scite/src/html.properties
-	'application/x-php' => [
+	'application/x-php' => [ [@SCINTILLA_PHP_KEYWORDS] ],
+
+	'text/x-sql' => [
 		[   qw{
-				and array as bool boolean break case cfunction class const
-				continue declare default die directory do double echo else
-				elseif empty enddeclare endfor endforeach endif endswitch
-				endwhile eval exit extends false float for foreach function
-				global goto if include include_once int integer isset list
-				namespace new null object old_function or parent print real
-				require require_once resource return static stdclass string
-				switch true unset use var while xor abstract catch clone
-				exception final implements interface php_user_filter private
-				protected public this throw try __class__ __dir__ __file__
-				__function__ __line__ __method__ __namespace__ __sleep __wakeup
+				absolute action add admin after aggregate alias all allocate
+				alter and any are array as asc assertion at authorization
+				before begin binary bit body both breadth by call
+				cascade cascaded case cast catalog check class
+				close collate collation column commit completion connect
+				connection constraint constraints constructor continue
+				corresponding create cross cube current current_date
+				current_path current_role current_time current_timestamp
+				current_user cursor cycle data deallocate dec decimal
+				declare default deferrable deferred delete depth deref desc
+				describe descriptor destroy destructor deterministic dictionary
+				diagnostics disconnect distinct domain drop dynamic each
+				else end end-exec equals escape every except exception exec
+				execute exists exit external false fetch first for
+				foreign found from free full function general get global go
+				goto grant group grouping having host hour identity if ignore
+				immediate in indicator initialize initially inner inout input
+				insert intersect interval into is isolation iterate
+				join key language large last lateral leading left less level
+				like limit local locator loop map match
+				merge minus modifies modify module names national natural
+				new next no none not numeric object of off old
+				on only open operation option or order ordinality out outer
+				output package pad parameter parameters partial path postfix
+				precision prefix preorder prepare preserve primary prior
+				privileges procedure public read reads real recursive ref
+				references referencing relative replace restrict result return returns
+				revoke right role rollback rollup routine row rows savepoint
+				schema scroll scope search second section select sequence
+				session session_user set sets size some| space
+				specific specifictype sql sqlexception sqlstate sqlwarning
+				start state statement static structure system_user table
+				temporary terminate than then timezone_hour
+				timezone_minute to trailing transaction translation treat
+				trigger true under union unique unknown unnest update usage
+				user using value values variable varying view when
+				whenever where with without work write zone
 				}
-		]
-	],
+		],
 
-	'text/x-sql' => [ [ qw{
-		absolute action add admin after aggregate alias all allocate
-		alter and any are array as asc assertion at authorization
-		before begin binary bit body both breadth by call
-		cascade cascaded case cast catalog check class
-		close collate collation column commit completion connect
-		connection constraint constraints constructor continue
-		corresponding create cross cube current current_date
-		current_path current_role current_time current_timestamp
-		current_user cursor cycle data deallocate dec decimal
-		declare default deferrable deferred delete depth deref desc
-		describe descriptor destroy destructor deterministic dictionary
-		diagnostics disconnect distinct domain drop dynamic each
-		else end end-exec equals escape every except exception exec
-		execute exists exit external false fetch first for
-		foreign found from free full function general get global go
-		goto grant group grouping having host hour identity if ignore
-		immediate in indicator initialize initially inner inout input
-		insert intersect interval into is isolation iterate
-		join key language large last lateral leading left less level
-		like limit local locator loop map match
-		merge minus modifies modify module names national natural
-		new next no none not numeric object of off old
-		on only open operation option or order ordinality out outer
-		output package pad parameter parameters partial path postfix
-		precision prefix preorder prepare preserve primary prior
-		privileges procedure public read reads real recursive ref
-		references referencing relative replace restrict result return returns
-		revoke right role rollback rollup routine row rows savepoint
-		schema scroll scope search second section select sequence
-		session session_user set sets size some| space
-		specific specifictype sql sqlexception sqlstate sqlwarning
-		start state statement static structure system_user table
-		temporary terminate than then timezone_hour
-		timezone_minute to trailing transaction translation treat
-		trigger true under union unique unknown unnest update usage
-		user using value values variable varying view when
-		whenever where with without work write zone
-	} ],
-	# keywords2 - being used for datatypes
-	[
-		# oracle centric
-		qw( varchar varchar2 nvarchar nvarchar2 char nchar number
-		integer pls_integer binary_integer long date time
-		timestamp with local timezone interval year day month second minute
-		raw rowid urowid mlslabel clob nclob blob bfile xmltype rowtype
-		),
-		qw(
-		boolean smallint null localtime localtimestamp  int integer
-		float double char character
-		),
+		# keywords2 - being used for datatypes
+		[
 
-	],
+			# oracle centric
+			qw( varchar varchar2 nvarchar nvarchar2 char nchar number
+				integer pls_integer binary_integer long date time
+				timestamp with local timezone interval year day month second minute
+				raw rowid urowid mlslabel clob nclob blob bfile xmltype rowtype
+				),
+			qw(
+				boolean smallint null localtime localtimestamp  int integer
+				float double char character
+				),
 
-	# pldoc keywords - bare minimum
-	[ qw( headcom deprecated param return throws ) ],
+		],
 
-	# SQL*Plus
-	[qw(
-		accept append archive log archivelog attribute
-		break btitle
-		change clear column default compute connect copy
-		define del describe disconnect document
-		edit execute exit
-		get
-		help host html
-		input
-		list logon
-		markup
-		newpage
-		password pause print product_user_profile prompt
-		recover remark repfooter repheader restrict run
-		save set show label shutdown silent spool start startup store
-		timing ttitle
-		undefine
-		variable
-		version
-		whenever oserror sqlerror
-	)],
-	# User Keywords #1 , reserve this for PLSQL functions, procedures, packages
-	[ qw(
-		utl_coll utl_encode utl_file utl_http utl_inaddr utl_raw utl_ref
-		utl_smtp utl_tcp utl_url
-		anydata anytype anydataset
+		# pldoc keywords - bare minimum
+		[qw( headcom deprecated param return throws )],
 
-		dbms_alert dbms_application_info dbms_apply_adm dbms_aq dbms_aqadm
-		dbms_aqelm dbms_capture_adm dbms_ddl dbms_debug dbms_defer
-		dbms_defer_query dbms_defer_sys dbms_describe
-		dbms_distributed_trust_admin dbms_fga dbms_flashback
-		dbms_hs_passthrough dbms_iot dbms_job dbms_ldap dbms_libcache
-		dbms_lob dbms_lock dbms_logmnr dbms_logmnr_cdc_publish
-		dbms_logmnr_cdc_subscribe dbms_logmnr_d dbms_logstdby dbms_metadata
-		dbms_mgwadm dbms_mgwmsg dbms_mview dbms_obfuscation_toolkit
-		dbms_odci dbms_offline_og dbms_offline_snapshot dbms_olap
-		dbms_oracle_trace_agent dbms_oracle_trace_user dbms_outln
-		dbms_outln_edit dbms_output dbms_pclxutil dbms_pipe dbms_profiler
-		dbms_propagation_adm dbms_random dbms_rectifier_diff dbms_redefinition
-		dbms_refresh dbms_repair dbms_repcat dbms_repcat_admin
-		dbms_repcat_instantiate dbms_repcat_rgt dbms_reputil
-		dbms_resource_manager dbms_resource_manager_privs dbms_resumable
-		dbms_rls dbms_rowid dbms_rule dbms_rule_adm dbms_session
-		dbms_shared_pool dbms_space dbms_space_admin dbms_sql dbms_stats
-		dbms_storage_map dbms_streams dbms_streams_adm dbms_trace
-		dbms_transaction dbms_transform dbms_tts dbms_types dbms_utility
-		dbms_wm dbms_xdb dbms_xdbt dbms_xdb_version dbms_xmldom dbms_xmlgen
-		dbms_xmlparser dbms_xmlquery dbms_xmlsave dbms_xplan dbms_xslprocessor
-		debug_extproc
-	) ],
-	# User Keywords #2 , sql functions
-	[ qw( sqlerrm
-		abs greatest sin
-		acos group_id sinh add_months hextoraw soundex ascii initcap sqlcode
-		asciistr instr sqlerrm asin lag sqrt atan last_day stddev atan2 lead
-		substr avg least sum bfilename length sys_context bin_to_num lnnvl
-		sysdate bitand ln systimestamp cardinality localtimestamp tan case
-		statement log tanh cast lower to_char ceil lpad to_clob chartorowid
-		ltrim to_date chr max to_dsinterval coalesce median to_lob compose min
-		to_multi_byte concat mod to_nclob months_between to_number convert nanvl
-		to_single_byte corr new_time to_timestamp cos next_day to_timestamp_tz
-		cosh nullif to_yminterval count numtodsinterval translate covar_pop
-		numtoyminterval trim covar_samp nvl trunc cume_dist nvl2 trunc
-		current_date power tz_offset current_timestamp rank uid
-		dbtimezone rawtohex upper decode remainder user decompose replace
-		userenv dense_rank round var_pop dump var_samp exp rpad variance extract
-		rtrim vsize floor sessiontimezone from_tz sign
-	) ],
-	# User Keywords #3 , exception types
-	[
-		# exception types
-		qw(
-		no_data_found too_many_rows invalid_cursor value_error
-		invalid_number zero_divide dup_val_on_index cursor_already_open
-		not_logged_on transaction_backed_out login_denied program_error
-		storage_error timeout_on_resource others
-		)
-	],
-	# User Keywords #4 , reserve this for plugins, eg known schema entities
-	[ qw() ],
+		# SQL*Plus
+		[   qw(
+				accept append archive log archivelog attribute
+				break btitle
+				change clear column default compute connect copy
+				define del describe disconnect document
+				edit execute exit
+				get
+				help host html
+				input
+				list logon
+				markup
+				newpage
+				password pause print product_user_profile prompt
+				recover remark repfooter repheader restrict run
+				save set show label shutdown silent spool start startup store
+				timing ttitle
+				undefine
+				variable
+				version
+				whenever oserror sqlerror
+				)
+		],
+
+		# User Keywords #1 , reserve this for PLSQL functions, procedures, packages
+		[   qw(
+				utl_coll utl_encode utl_file utl_http utl_inaddr utl_raw utl_ref
+				utl_smtp utl_tcp utl_url
+				anydata anytype anydataset
+
+				dbms_alert dbms_application_info dbms_apply_adm dbms_aq dbms_aqadm
+				dbms_aqelm dbms_capture_adm dbms_ddl dbms_debug dbms_defer
+				dbms_defer_query dbms_defer_sys dbms_describe
+				dbms_distributed_trust_admin dbms_fga dbms_flashback
+				dbms_hs_passthrough dbms_iot dbms_job dbms_ldap dbms_libcache
+				dbms_lob dbms_lock dbms_logmnr dbms_logmnr_cdc_publish
+				dbms_logmnr_cdc_subscribe dbms_logmnr_d dbms_logstdby dbms_metadata
+				dbms_mgwadm dbms_mgwmsg dbms_mview dbms_obfuscation_toolkit
+				dbms_odci dbms_offline_og dbms_offline_snapshot dbms_olap
+				dbms_oracle_trace_agent dbms_oracle_trace_user dbms_outln
+				dbms_outln_edit dbms_output dbms_pclxutil dbms_pipe dbms_profiler
+				dbms_propagation_adm dbms_random dbms_rectifier_diff dbms_redefinition
+				dbms_refresh dbms_repair dbms_repcat dbms_repcat_admin
+				dbms_repcat_instantiate dbms_repcat_rgt dbms_reputil
+				dbms_resource_manager dbms_resource_manager_privs dbms_resumable
+				dbms_rls dbms_rowid dbms_rule dbms_rule_adm dbms_session
+				dbms_shared_pool dbms_space dbms_space_admin dbms_sql dbms_stats
+				dbms_storage_map dbms_streams dbms_streams_adm dbms_trace
+				dbms_transaction dbms_transform dbms_tts dbms_types dbms_utility
+				dbms_wm dbms_xdb dbms_xdbt dbms_xdb_version dbms_xmldom dbms_xmlgen
+				dbms_xmlparser dbms_xmlquery dbms_xmlsave dbms_xplan dbms_xslprocessor
+				debug_extproc
+				)
+		],
+
+		# User Keywords #2 , sql functions
+		[   qw( sqlerrm
+				abs greatest sin
+				acos group_id sinh add_months hextoraw soundex ascii initcap sqlcode
+				asciistr instr sqlerrm asin lag sqrt atan last_day stddev atan2 lead
+				substr avg least sum bfilename length sys_context bin_to_num lnnvl
+				sysdate bitand ln systimestamp cardinality localtimestamp tan case
+				statement log tanh cast lower to_char ceil lpad to_clob chartorowid
+				ltrim to_date chr max to_dsinterval coalesce median to_lob compose min
+				to_multi_byte concat mod to_nclob months_between to_number convert nanvl
+				to_single_byte corr new_time to_timestamp cos next_day to_timestamp_tz
+				cosh nullif to_yminterval count numtodsinterval translate covar_pop
+				numtoyminterval trim covar_samp nvl trunc cume_dist nvl2 trunc
+				current_date power tz_offset current_timestamp rank uid
+				dbtimezone rawtohex upper decode remainder user decompose replace
+				userenv dense_rank round var_pop dump var_samp exp rpad variance extract
+				rtrim vsize floor sessiontimezone from_tz sign
+				)
+		],
+
+		# User Keywords #3 , exception types
+		[
+
+			# exception types
+			qw(
+				no_data_found too_many_rows invalid_cursor value_error
+				invalid_number zero_divide dup_val_on_index cursor_already_open
+				not_logged_on transaction_backed_out login_denied program_error
+				storage_error timeout_on_resource others
+				) ],
+
+		# User Keywords #4 , reserve this for plugins, eg known schema entities
+		[qw()],
 
 	],
 
@@ -401,7 +425,7 @@ my %SCINTILLA_KEY_WORDS = (
 	# The list is obtained from src/scite/src/cpp.properties
 	# Some of these are reserved for future use.
 	# https://developer.mozilla.org/en/JavaScript/Reference/Reserved_Words
-	'application/javascript' => [ [%SCINTILLA_JS_KEYWORDS] ],
+	'application/javascript' => [ [@SCINTILLA_JS_KEYWORDS] ],
 
 	# CSS keyword list is obtained from src/scite/src/css.properties
 	'text/css' => [
@@ -421,11 +445,12 @@ my %SCINTILLA_KEY_WORDS = (
 				position top bottom left right
 				}
 		],
-		
+
 		# Pseudoclasses
-		[ qw( link visited hover active focus first-child lang ) ],
-		
+		[qw( link visited hover active focus first-child lang )],
+
 		[
+
 			# CSS2
 			qw{
 				border-top-color border-right-color border-bottom-color border-left-color border-color
@@ -455,17 +480,19 @@ my %SCINTILLA_KEY_WORDS = (
 				column-rule-color column-rule-style column-rule-width resize opacity word-wrap
 				}
 		],
-		
+
 		# pseudo elements
-		[ qw( first-letter first-line before after selection) ],
-		
+		[qw( first-letter first-line before after selection)],
+
 		# I presume extended in LexCSS means -moz -x -webkit and friends
 		# extended-props
-		[ qw( ) ],
+		[qw( )],
+
 		# extended-pseudo-classes
-		[ qw( ) ],
+		[qw( )],
+
 		# extended-pseudo-elements
-		[ qw( ) ],
+		[qw( )],
 	],
 
 	# HTML keyword list is obtained from src/scite/src/css.properties
@@ -528,7 +555,20 @@ my %SCINTILLA_KEY_WORDS = (
 		],
 
 		# Embedded Javascript
-		[%SCINTILLA_JS_KEYWORDS]
+		[@SCINTILLA_JS_KEYWORDS],
+
+		# Embedded Python
+		[   qw(and as assert break class continue def del elif
+				else except exec finally for from global if import in is lambda None
+				not or pass print raise return try while with yield)
+		],
+
+		# Embedded VBScript
+		[@SCINTILLA_VB_KEYWORDS],
+
+		# Embedded PHP
+		[@SCINTILLA_PHP_KEYWORDS],
+
 	],
 
 	# Ada keyword list is obtained from src/scite/src/ada.properties

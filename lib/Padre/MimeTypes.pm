@@ -101,7 +101,6 @@ sub _initialize {
 		m     => 'text/x-matlab',
 		mak   => 'text/x-makefile',
 		pod   => 'text/x-pod',
-		php   => 'application/x-php',
 		py    => 'text/x-python',
 		rb    => 'application/x-ruby',
 		sql   => 'text/x-sql',
@@ -154,6 +153,11 @@ sub _initialize {
 		as   => 'text/x-actionscript',
 		asc  => 'text/x-actionscript',
 		jsfl => 'text/x-actionscript',
+
+		# PHP
+		php   => 'application/x-php',
+		php3  => 'application/x-php',
+		phtml => 'application/x-php'
 	);
 
 	%DEFAULT_DOC_CLASS = (
