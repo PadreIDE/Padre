@@ -28,6 +28,8 @@ public static void main(String args[]) {
 
 public abstract void myAbstractMethod();
 
+public byte[] toByteArray();
+
 private int subtract(int a, int b) {
 	return a - b;
 }
@@ -57,6 +59,7 @@ SCOPE: {
 		[   qw{
 				main
 				myAbstractMethod
+				toByteArray
 				subtract
 				add
 				}
@@ -93,6 +96,7 @@ SCOPE: {
 				main
 				myAbstractMethod
 				subtract
+				toByteArray
 				}
 		],
 		'Found expected functions (alphabetical)',
@@ -127,6 +131,7 @@ SCOPE: {
 				main
 				myAbstractMethod
 				subtract
+				toByteArray
 				}
 		],
 		'Found expected functions (alphabetical_private_last)',
