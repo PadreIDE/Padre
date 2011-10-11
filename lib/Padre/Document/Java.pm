@@ -34,9 +34,14 @@ sub get_function_regex {
 	return qr/
 	        (?:^|[^# \t-])
 	        [ \t]*
-		((?: (public|protected|private|abstract|static|final|native|
-		     synchronized|transient|volatile|strictfp)\s+)
-		     {0,2}(?: \w+)\s+$name)/x;
+		(
+			(?: (public|protected|private|abstract|static|final|native|
+		             synchronized|transient|volatile|strictfp)
+		             \s+){0,2}    # zero to 2 method modifiers
+		        (?: <\w+>\s+ )?   # optional: generic type parameter
+   		        (?: [\w\[\]<>]+)  # return data type
+		        \s+$name
+		)/x;
 }
 
 # Java keyword list is obtained from src/scite/src/cpp.properties
