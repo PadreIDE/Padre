@@ -11,7 +11,8 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $newline             = qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
+my $newline =
+	qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
 my $method_search_regex = qr{
 			/\*.+?\*/        # block comment
 			|

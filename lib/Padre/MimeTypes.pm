@@ -159,16 +159,16 @@ sub _initialize {
 		phtml => 'application/x-php',
 
 		# VisualBasic and VBScript
-		vb    => 'text/vbscript',
-		bas   => 'text/vbscript',
-		frm   => 'text/vbscript',
-		cls   => 'text/vbscript',
-		ctl   => 'text/vbscript',
-		pag   => 'text/vbscript',
-		dsr   => 'text/vbscript',
-		dob   => 'text/vbscript',
-		vbs   => 'text/vbscript',
-		dsm   => 'text/vbscript',
+		vb  => 'text/vbscript',
+		bas => 'text/vbscript',
+		frm => 'text/vbscript',
+		cls => 'text/vbscript',
+		ctl => 'text/vbscript',
+		pag => 'text/vbscript',
+		dsr => 'text/vbscript',
+		dob => 'text/vbscript',
+		vbs => 'text/vbscript',
+		dsm => 'text/vbscript',
 	);
 
 	%DEFAULT_DOC_CLASS = (
@@ -240,7 +240,7 @@ sub _initialize {
 
 		'text/x-cobol' => {
 			name  => 'COBOL',
-			lexer => 92,                  #TODO Wx::Scintilla::LEX_COBOL once it is working
+			lexer => 92,                       #TODO Wx::Scintilla::LEX_COBOL once it is working
 		},
 
 		'text/x-c++src' => {
@@ -402,7 +402,7 @@ sub _initialize {
 
 		'application/x-perl6' => {
 			name  => 'Perl 6',
-			lexer => $perl6_scintilla_lexer,  # CONFIRMED
+			lexer => $perl6_scintilla_lexer,       # CONFIRMED
 		},
 
 		'text/plain' => {
@@ -411,7 +411,7 @@ sub _initialize {
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => {                  # totally not confirmed
+		'text/x-perlxs' => {                       # totally not confirmed
 			name => 'XS',
 			lexer =>
 				Wx::Scintilla::LEX_CPP,            # for the lack of a better XS lexer (vim?)
