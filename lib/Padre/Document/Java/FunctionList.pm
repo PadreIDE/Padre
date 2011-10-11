@@ -13,27 +13,25 @@ our @ISA     = 'Padre::Task::FunctionList';
 
 my $newline             = qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
 my $method_search_regex = qr{
-			/\*.+?\*/        # block comment
+			/\*.+?\*/          # block comment
 			|
 			\/\/.+?$newline    # line comment
 			|
 			(?:^|$newline)     # text start or newline 
 			\s*                #   followed by ...
 			(?:
-				(?:
-				  (?:
-					(?: public|protected|private|abstract|static|
-					final|native|synchronized|transient|volatile|
-					strictfp)
-					\s+
-				  ){0,2}            # zero to 2 method modifiers
-				  (?: <\w+>\s+ )?   # optional: generic type parameter
-				  (?: [\w\[\]<>]+)  # return data type
-				  \s+
-				  (\w+)             # method name
-				  \s*
-				  \(.*?\)           # parentheses around the parameters
-				 )
+			  (?:
+				(?: public|protected|private|abstract|static|
+				final|native|synchronized|transient|volatile|
+				strictfp)
+				\s+
+			  ){0,2}            # zero to 2 method modifiers
+			  (?: <\w+>\s+ )?   # optional: generic type parameter
+			  (?: [\w\[\]<>]+)  # return data type
+			  \s+
+			  (\w+)             # method name
+			  \s*
+			  \(.*?\)           # parentheses around the parameters
 			)
 	}sx;
 
