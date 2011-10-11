@@ -176,6 +176,7 @@ sub _initialize {
 		'text/x-python'      => 'Padre::Document::Python',
 		'application/x-ruby' => 'Padre::Document::Ruby',
 		'text/x-java-source' => 'Padre::Document::Java',
+		'text/x-csharp'      => 'Padre::Document::CSharp',
 	);
 
 	%HIGHLIGHTER_CONFIG = (

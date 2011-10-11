@@ -152,7 +152,8 @@ the even version for the release, even during development.
       enable it when the Perl 6 plugin is enabled (AZAWAWI)
     - Added "Language Perl 6" tab to preferences (AZAWAWI)
     - Ruby and Python script can be now be executed (AZAWAWI)
-    - Ruby, Python and Java are supported in the function list (AZAWAWI)
+    - Ruby, Python, Java, and C# are supported in the function list
+      (AZAWAWI, ZENOG)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
