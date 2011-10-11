@@ -18,7 +18,7 @@ my $method_search_regex = qr{
 			\/\/.+?$newline    # line comment
 			|
 			(?:^|$newline)     # text start or newline 
-			\s*                #   followed by ...
+			\s* 
 			(?:
 			  (?:
 				(?: public|protected|private|abstract|static|
