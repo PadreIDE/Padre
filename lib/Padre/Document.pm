@@ -190,7 +190,7 @@ my %COMMENT_LINE_STRING = (
 );
 
 
-# Javascript keywords
+# JavaScript keywords
 my @SCINTILLA_JS_KEYWORDS = qw{
 	abstract boolean break byte case catch char class
 	const continue debugger default delete do double else enum export extends
@@ -400,23 +400,6 @@ my %SCINTILLA_KEY_WORDS = (
 		# User Keywords #4 , reserve this for plugins, eg known schema entities
 		[qw()],
 
-	],
-
-	# C# keyword list is obtained from src/scite/src/cpp.properties
-	'text/x-csharp' => [
-		[   qw{
-				abstract as ascending base bool break by byte case catch char
-				checked class const continue decimal default delegate
-				descending do double else enum equals event explicit extern
-				false finally fixed float for foreach from goto group if
-				implicit in int interface internal into is join lock let long
-				namespace new null object on operator orderby out override
-				params private protected public readonly ref return sbyte
-				sealed select short sizeof stackalloc static string struct
-				switch this throw true try typeof uint ulong unchecked unsafe
-				ushort using var virtual void where while
-				}
-		]
 	],
 
 	# YAML keyword list is obtained from src/scite/src/yaml.properties
