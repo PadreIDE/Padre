@@ -13,7 +13,6 @@ our @ISA     = 'Padre::Task::FunctionList';
 
 my $n                   = "\\cM?\\cJ";
 my $method_search_regex = qr/
-		(?:
 			\/\*\*.+?\*\/
 			|
 			\/\/.+?$n
@@ -26,15 +25,14 @@ my $method_search_regex = qr/
 					final|native|synchronized|transient|volatile|
 					strictfp)
 					\s+
-				  ){0,2}
-				  (?: \w+)
+				  ){0,2}            # zero to 2 method modifiers
+				  (?: [\w\[\]<>]+)  # return data type
 				  \s+
-				  (\w+)
+				  (\w+)             # method name
 				  \s*
-				  \(.*?\)
+				  \(.*?\)           # parantheses around the parameters
 				 )
 			)
-		)
 	/sx;
 
 sub find {
