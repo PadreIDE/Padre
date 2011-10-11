@@ -13,12 +13,12 @@ our @ISA     = 'Padre::Task::FunctionList';
 
 my $newline             = qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
 my $method_search_regex = qr{
-			/\*\*.+?\*/
+			/\*.+?\*/        # block comment
 			|
-			\/\/.+?$newline
+			\/\/.+?$newline    # line comment
 			|
-			(?:^|$newline)
-			\s*
+			(?:^|$newline)     # text start or newline 
+			\s*                #   followed by ...
 			(?:
 				(?:
 				  (?:
@@ -34,7 +34,7 @@ my $method_search_regex = qr{
 				  \s*
 				  \(.*?\)           # parentheses around the parameters
 				 )
-			)	
+			)
 	}sx;
 
 sub find {

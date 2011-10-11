@@ -23,6 +23,10 @@ my $code = <<'END_JAVA';
 public static void bogus(a, b) {
 }
 */
+/*
+public static void bogus(a, b) {
+}
+*/
 //public static void bogus(a, b) {
 
 public static void main(String args[]) {
