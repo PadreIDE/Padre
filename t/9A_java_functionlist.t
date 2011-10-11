@@ -30,6 +30,12 @@ public abstract void myAbstractMethod();
 
 public byte[] toByteArray();
 
+public static <T> T[] genericToArray(T... elements) {
+   return elements;
+}
+
+public abstract List<Integer> getList();
+
 private int subtract(int a, int b) {
 	return a - b;
 }
@@ -60,6 +66,8 @@ SCOPE: {
 				main
 				myAbstractMethod
 				toByteArray
+				genericToArray
+				getList
 				subtract
 				add
 				}
@@ -93,6 +101,8 @@ SCOPE: {
 		$task->{list},
 		[   qw{
 				add
+				genericToArray
+				getList
 				main
 				myAbstractMethod
 				subtract
@@ -128,6 +138,8 @@ SCOPE: {
 		$task->{list},
 		[   qw{
 				add
+				genericToArray
+				getList
 				main
 				myAbstractMethod
 				subtract

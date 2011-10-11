@@ -11,13 +11,14 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $n                   = "\\cM?\\cJ";
+my $newline             = "\\cM?\\cJ";
 my $method_search_regex = qr/
 			\/\*\*.+?\*\/
 			|
-			\/\/.+?$n
+			\/\/.+?$newline
 			|
-			(?:^|$n)\s*
+			(?:^|$newline)
+			\s*
 			(?:
 				(?:
 				  (?:
@@ -26,13 +27,14 @@ my $method_search_regex = qr/
 					strictfp)
 					\s+
 				  ){0,2}            # zero to 2 method modifiers
+				  (?: <\w+>\s+ )?   # optional: generic type parameter
 				  (?: [\w\[\]<>]+)  # return data type
 				  \s+
 				  (\w+)             # method name
 				  \s*
-				  \(.*?\)           # parantheses around the parameters
+				  \(.*?\)           # parentheses around the parameters
 				 )
-			)
+			)	
 	/sx;
 
 sub find {
