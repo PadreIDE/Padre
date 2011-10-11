@@ -12,8 +12,8 @@ our @ISA     = 'Padre::Task::FunctionList';
 # Padre::Task::FunctionList Methods
 
 my $newline             = qr{\cM?\cJ};
-my $method_search_regex = qr/
-			\/\*\*.+?\*\/
+my $method_search_regex = qr{
+			/\*\*.+?\*/
 			|
 			\/\/.+?$newline
 			|
@@ -35,7 +35,7 @@ my $method_search_regex = qr/
 				  \(.*?\)           # parentheses around the parameters
 				 )
 			)	
-	/sx;
+	}sx;
 
 sub find {
 	return grep { defined $_ } $_[1] =~ /$method_search_regex/g;
