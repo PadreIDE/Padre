@@ -16,21 +16,21 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $n = "\\cM?\\cJ";
-our $sub_search_re = qr/
+my $newline        = qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
+our $sub_search_re = qr{
 		(?:
-			${n}__(?:DATA|END)__\b.*
+			${newline}__(?:DATA|END)__\b.*
 			|
-			$n$n=\w+.*?$n\s*?$n=cut\b(?=.*?(?:$n){1,2})
+			$newline$newline=\w+.*?$newline\s*?$newline=cut\b(?=.*?(?:$newline){1,2})
 			|
-			(?:^|$n)\s*
+			(?:^|$newline)\s*
 			(?:
 				(?:sub|func|method)\s+(\w+(?:::\w+)*)
 				|
 				\* (\w+(?:::\w+)*) \s*=\s* (?: sub\b | \\\& )
 			)
 		)
-	/sx;
+	}sx;
 
 sub find {
 	return grep { defined $_ } $_[1] =~ /$sub_search_re/g;
