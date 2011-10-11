@@ -29,6 +29,10 @@ public static void bogus(a, b) {
 */
 //public static void bogus(a, b) {
 
+//
+public static void bogus(a, b) {
+// ticket #1351
+
 public static void main(String args[]) {
 }
 

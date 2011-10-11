@@ -30,6 +30,10 @@ public static void Main(string[] args)
 {
 }
 
+///
+protected override void Init()
+// ticket #1351
+
 public abstract void MyAbstractMethod();
 
 public byte[] ToByteArray();
