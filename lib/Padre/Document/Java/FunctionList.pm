@@ -11,7 +11,7 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $newline             = "\\cM?\\cJ";
+my $newline             = qr{\cM?\cJ};
 my $method_search_regex = qr/
 			\/\*\*.+?\*\/
 			|
