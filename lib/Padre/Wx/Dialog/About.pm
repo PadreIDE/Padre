@@ -78,7 +78,7 @@ sub _set_up {
 	
 	$self->_translation();
 	
-	$self->_system_info();
+	$self->_information();
 
 	return;
 }
@@ -131,7 +131,7 @@ sub _translation {
 #######
 # Composed Method _core_info
 #######
-sub _system_info {
+sub _information {
 	my $self = shift;
 
 	my $offset = 24;

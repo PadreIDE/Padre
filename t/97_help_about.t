@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 15;
+	plan tests => 17;
 }
 
 use Test::NoWarnings;
@@ -40,7 +40,7 @@ isa_ok( $output, 'Wx::TextCtrl' );
 #######
 # let's check our subs/methods.
 #######
-my @subs = qw( _core_info _set_up _wx_info new run );
+my @subs = qw( _core_info _set_up _information _translation _wx_info new run );
 
 use_ok( 'Padre::Wx::Dialog::About', @subs );
 
