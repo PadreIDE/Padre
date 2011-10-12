@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-11 12:10-0700\n"
+"POT-Creation-Date: 2011-10-12 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1255,8 +1255,8 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:119 lib/Padre/Wx/FBP/Text.pm:55
-#: lib/Padre/Wx/FBP/Sync.pm:266 lib/Padre/Wx/Dialog/FilterTool.pm:152
-#: lib/Padre/Wx/Dialog/WindowList.pm:280
+#: lib/Padre/Wx/FBP/About.pm:727 lib/Padre/Wx/FBP/Sync.pm:266
+#: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Close"
 msgstr ""
@@ -1769,7 +1769,7 @@ msgstr ""
 msgid "Developers"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:64 lib/Padre/Wx/FBP/About.pm:921
+#: lib/Padre/Wx/About.pm:64 lib/Padre/Wx/FBP/About.pm:925
 msgid "Development"
 msgstr ""
 
@@ -2741,6 +2741,10 @@ msgstr ""
 msgid "Indentation width (in columns)"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/About.pm:927
+msgid "Information"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:69
 msgid "Input/output:"
 msgstr ""
@@ -3666,7 +3670,7 @@ msgstr ""
 msgid "Paco Alguacil"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/FBP/About.pm:920
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/FBP/About.pm:924
 #: lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr ""
@@ -5236,7 +5240,6 @@ msgid "System Default"
 msgstr ""
 
 #: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:319
-#: lib/Padre/Wx/FBP/About.pm:923
 msgid "System Info"
 msgstr ""
 
@@ -5372,7 +5375,7 @@ msgstr ""
 msgid "Tom Eliaz"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:69 lib/Padre/Wx/FBP/About.pm:922
+#: lib/Padre/Wx/About.pm:69 lib/Padre/Wx/FBP/About.pm:926
 msgid "Translation"
 msgstr ""
 
