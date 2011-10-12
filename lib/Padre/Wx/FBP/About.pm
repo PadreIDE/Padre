@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.01';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::gettext("About"),
 		Wx::DefaultPosition,
-		[ 600, 620 ],
+		[ 600, 630 ],
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 

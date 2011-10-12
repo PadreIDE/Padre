@@ -15613,7 +15613,7 @@
             <property name="minimum_size"></property>
             <property name="name">Padre::Wx::FBP::About</property>
             <property name="pos"></property>
-            <property name="size">600,620</property>
+            <property name="size">600,630</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">About</property>
