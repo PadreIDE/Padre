@@ -22,16 +22,26 @@ BEGIN {
 use ORLite 1.48 ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
-use Padre::DB::Migrate {
+use ORLite::Migrate 1.08 {
 	create       => 1,
-	tables       => ['Modules'],
 	file         => Padre::Constant::CONFIG_HOST,
-	user_version => 11,
-	array        => 1,                           # Smaller faster array objects
-	xsaccessor   => 0,                           # XS acceleration for the generated code
-	shim         => 1,                           # Overlay classes can fully override
-	x_update     => 1,
+	timeline     => 'Padre::DB::Timeline',
+	tables       => [ 'Modules' ],
+	user_version => 11, # Confirm we have the correct schema version
+	array        => 1,  # Smaller faster array objects
+	xsaccessor   => 0,  # XS acceleration for the generated code
+	shim         => 1,  # Overlay classes can fully override methods
+	x_update     => 1,  # Experimental ->update support
 }; #, '-DEBUG';
+
+# Free the timeline modules if we used them
+BEGIN {
+	if ( $Padre::DB::Timeline::VERSION ) {
+		require Padre::Unload;
+		Padre::Unload::unload('Padre::DB::Timeline');
+		Padre::Unload::unload('ORLite::Migrate::Timeline');
+	}
+}
 
 # Overlay classes to enhance the ORLite defaults
 use Padre::DB::Plugin             ();

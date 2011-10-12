@@ -154,6 +154,8 @@ the even version for the release, even during development.
     - Ruby and Python script can be now be executed (AZAWAWI)
     - Ruby, Python, Java, and C# are supported in the function list
       (AZAWAWI, ZENOG)
+    - Ported the timeline class mechanism back to ORLite::Migrate, and switch
+      from our custom inlined version back to depending on CPAN (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

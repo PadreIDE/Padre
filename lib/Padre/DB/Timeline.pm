@@ -5,70 +5,10 @@ package Padre::DB::Timeline;
 use 5.008005;
 use strict;
 use warnings;
-use DBI          ();
-use DBD::SQLite  ();
-use Params::Util ();
+use ORLite::Migrate::Timeline ();
 
 our $VERSION = '0.91';
-
-
-
-
-
-######################################################################
-# Constructor
-
-sub new {
-	my $class = shift;
-	my $self = bless {@_}, $class;
-
-	# Check the database handle
-	unless ( Params::Util::_INSTANCE( $self->dbh, 'DBI::db' ) ) {
-		die "Missing or invalid dbh database handle";
-	}
-	unless ( $self->dbh->{AutoCommit} ) {
-		die "Database connection must be AutoCommit";
-	}
-
-	return $self;
-}
-
-sub dbh {
-	$_[0]->{dbh};
-}
-
-
-
-
-
-#######################################################################
-# Main Methods
-
-sub upgrade {
-	my $self = shift;
-	my $want = Params::Util::_POSINT(shift);
-	my $have = $self->user_version;
-
-	# Roll the schema forwards
-	while ( $want and $want > $have ) {
-
-		# Find the migration step
-		my $method = "upgrade" . ++$have;
-		unless ( $self->can($method) ) {
-			die "No migration path to user_version $want";
-		}
-
-		# Run the migration step
-		unless ( eval { $self->$method } ) {
-			die "Schema migration failed during $method: $@";
-		}
-
-		# Confirm completion
-		$self->user_version($have);
-	}
-
-	return 1;
-}
+our @ISA     = 'ORLite::Migrate::Timeline';
 
 
 
@@ -348,62 +288,6 @@ END_SQL
 	}
 
 	return 1;
-}
-
-
-
-
-
-######################################################################
-# Support Methods
-
-sub do {
-	shift->dbh->do(@_);
-}
-
-sub selectall_arrayref {
-	shift->dbh->selectall_arrayref(@_);
-}
-
-sub selectall_hashref {
-	shift->dbh->selectall_hashref(@_);
-}
-
-sub selectcol_arrayref {
-	shift->dbh->selectcol_arrayref(@_);
-}
-
-sub selectrow_array {
-	shift->dbh->selectrow_array(@_);
-}
-
-sub selectrow_arrayref {
-	shift->dbh->selectrow_arrayref(@_);
-}
-
-sub selectrow_hashref {
-	shift->dbh->selectrow_hashref(@_);
-}
-
-sub user_version {
-	shift->pragma( 'user_version', @_ );
-}
-
-sub pragma {
-	$_[0]->do("pragma $_[1] = $_[2]") if @_ > 2;
-	$_[0]->selectrow_arrayref("pragma $_[1]")->[0];
-}
-
-sub table_exists {
-	$_[0]->selectrow_array(
-		"select count(*) from sqlite_master where type = 'table' and name = ?",
-		{}, $_[1],
-	);
-}
-
-sub column_exists {
-	$_[0]->table_exists( $_[1] )
-		or $_[0]->selectrow_array( "select count($_[2]) from $_[1]", {} );
 }
 
 1;

@@ -122,6 +122,7 @@ requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
 requires 'ORLite'                   => '1.48';
+requires 'ORLite::Migrate'          => '1.08';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.14';
 requires 'Parse::ExuberantCTags'    => '1.00';
