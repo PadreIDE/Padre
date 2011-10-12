@@ -17,6 +17,23 @@ our @ISA     = 'ORLite::Migrate::Timeline';
 ######################################################################
 # Schema Migration (reverse chronological for readability)
 
+sub upgrade12 {
+	my $self = shift;
+
+	# Create the debug breakpoints table
+	$self->do(<<'END_SQL');
+CREATE TABLE debug_breakpoints (
+	id INTEGER NOT NULL PRIMARY KEY,
+	filename VARCHAR(255) NOT NULL,
+	line_number INTEGER NOT NULL,
+	active BOOLEAN NOT NULL,
+	last_used DATE
+)
+END_SQL
+
+	return 1;
+}
+
 sub upgrade11 {
 	my $self = shift;
 
