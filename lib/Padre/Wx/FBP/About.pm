@@ -699,7 +699,7 @@ sub new {
 		Wx::gettext("Burak Gursoy"),
 	);
 
-	$self->{system_info} = Wx::Panel->new(
+	$self->{Information} = Wx::Panel->new(
 		$self->{notebook},
 		-1,
 		Wx::DefaultPosition,
@@ -708,7 +708,7 @@ sub new {
 	);
 
 	$self->{output} = Wx::TextCtrl->new(
-		$self->{system_info},
+		$self->{Information},
 		-1,
 		"",
 		Wx::DefaultPosition,
@@ -721,10 +721,14 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
 	);
 
-	$self->{m_sdbSizer1_cancel} = Wx::Button->new(
+	my $close_button = Wx::Button->new(
 		$self,
 		Wx::ID_CANCEL,
+		Wx::gettext("Close"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
+	$close_button->SetDefault;
 
 	my $bSizer471 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer471->Add( $self->{m_staticText651}, 0, Wx::ALL, 5 );
@@ -914,21 +918,21 @@ sub new {
 	my $bSizer32 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer32->Add( $self->{output}, 0, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 10 );
 
-	$self->{system_info}->SetSizerAndFit($bSizer32);
-	$self->{system_info}->Layout;
+	$self->{Information}->SetSizerAndFit($bSizer32);
+	$self->{Information}->Layout;
 
 	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
 	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
 	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
-	$self->{notebook}->AddPage( $self->{system_info}, Wx::gettext("System Info"), 0 );
+	$self->{notebook}->AddPage( $self->{Information}, Wx::gettext("Information"), 0 );
 
-	$self->{m_sdbSizer1} = Wx::StdDialogButtonSizer->new;
-	$self->{m_sdbSizer1}->AddButton( $self->{m_sdbSizer1_cancel} );
-	$self->{m_sdbSizer1}->Realize;
+	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$buttons->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( $close_button, 0, Wx::ALL, 5 );
 
 	my $bSizer45 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer45->Add( $self->{notebook}, 0, Wx::EXPAND | Wx::ALL, 5 );
-	$bSizer45->Add( $self->{m_sdbSizer1}, 1, Wx::EXPAND, 5 );
+	$bSizer45->Add( $buttons, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer45);
 	$self->Layout;
