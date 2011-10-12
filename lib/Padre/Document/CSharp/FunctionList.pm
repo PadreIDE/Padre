@@ -21,6 +21,7 @@ my $method_search_regex = qr{
 			(?:^|$newline)   # text start or newline 
 			\s*              
 			(?:
+			  (?: \[ [\s\w()]+ \]\s* )?  # optional annotations
 			  (?:
 				(?: public|protected|private|
 				    abstract|static|sealed|virtual|override|
@@ -28,13 +29,13 @@ my $method_search_regex = qr{
 				    operator|
 				    extern)
 				\s+
-			  ){0,4}             # zero to 2 method modifiers
-			  (?: [\w\[\]<>,]+)  # return data type
+			  ){0,4}                     # zero to 2 method modifiers
+			  (?: [\w\[\]<>,]+)          # return data type
 			  \s+
-			  (\w+)              # method name
-			  (?: <\w+>)?        # optional: generic type parameter
+			  (\w+)                      # method name
+			  (?: <\w+>)?                # optional: generic type parameter
 			  \s*
-			  \(.*?\)            # parentheses around the parameters
+			  \(.*?\)                    # parentheses around the parameters
 			)
 	}sx;
 

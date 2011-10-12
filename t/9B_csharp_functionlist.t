@@ -46,13 +46,17 @@ public virtual string[,] TwoDimArrayReturnType();
 
 public abstract List<int> GetList();
 
-private int Subtract(int a, int b) {
+private int Subtract(int a, int b)
+{
 	return a - b;
 }
 
-private int Add(int a, int b) {
+private int Add(int a, int b)
+{
 	return a + b;
-}  
+}
+
+[Test()] public void TestMethod() { }
 END_CS
 
 ######################################################################
@@ -82,6 +86,7 @@ SCOPE: {
 				GetList
 				Subtract
 				Add
+				TestMethod
 				}
 		],
 		'Found expected functions',
@@ -119,6 +124,7 @@ SCOPE: {
 				MyAbstractMethod
 				StaticGenericMethod
 				Subtract
+				TestMethod
 				ToByteArray
 				TwoDimArrayReturnType
 				}
@@ -158,6 +164,7 @@ SCOPE: {
 				MyAbstractMethod
 				StaticGenericMethod
 				Subtract
+				TestMethod
 				ToByteArray
 				TwoDimArrayReturnType
 				}
