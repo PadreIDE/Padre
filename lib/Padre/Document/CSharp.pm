@@ -38,11 +38,11 @@ sub get_function_regex {
 		      abstract|static|sealed|virtual|override|
 		      explicit|implicit|operator|extern)\s+)
 		     {0,4}             # zero to 4 method modifiers
-		     (?: [\w\[\]<>,]+) # return data type	     
+		     (?: [\w\[\]<>,]+) # return data type
 		     \s+
 		     $name
    		     (?: <\w+>)?        # optional: generic type parameter
-	        )     
+	        )
 		/x;
 }
 
@@ -50,17 +50,27 @@ sub get_function_regex {
 # added missing keyword volatile
 sub scintilla_key_words {
 	return [
-		[   qw{
-				abstract as ascending base bool break by byte case catch char
+		[
+
+			# C# keywords
+			qw{
+				abstract as base bool break by byte case catch char
 				checked class const continue decimal default delegate
-				descending do double else enum equals event explicit extern
-				false finally fixed float for foreach from goto group if
-				implicit in int interface internal into is join lock let long
-				namespace new null object on operator orderby out override
+				do double else enum equals event explicit extern
+				false finally fixed float for foreach goto if
+				implicit in int interface internal into is lock long
+				namespace new null object on operator out override
 				params private protected public readonly ref return sbyte
-				sealed select short sizeof stackalloc static string struct
+				sealed short sizeof stackalloc static string struct
 				switch this throw true try typeof uint ulong unchecked unsafe
-				ushort using var virtual void volatile where while
+				ushort using virtual void volatile while
+				},
+
+			# C# contextual keywords
+			qw{
+				add alias ascending descending dynamic from
+				get global group into join let orderby partial
+				remove select set value var where yield
 				}
 		]
 	];
