@@ -261,9 +261,11 @@ sub refresh {
 	# Cancel any existing outline task
 	$self->task_reset;
 
+	# Always clear! :)
+	$self->clear;
+
 	# Hide the widgets when no files are open
 	unless ($document) {
-		$self->clear;
 		$tree->Hide;
 		return;
 	}
@@ -271,7 +273,6 @@ sub refresh {
 	# Is there an outline task for this document type
 	my $task = $document->task_outline;
 	unless ($task) {
-		$self->clear;
 		$tree->Hide;
 		return;
 	}
