@@ -156,6 +156,8 @@ the even version for the release, even during development.
       (AZAWAWI, ZENOG)
     - Ported the timeline class mechanism back to ORLite::Migrate, and switch
       from our custom inlined version back to depending on CPAN (ADAMK)
+    - Fix Outline focus and paint bugs that caused other right panels to 
+      misbehave when Outline is enabled (BOWTIE, AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

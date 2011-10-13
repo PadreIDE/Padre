@@ -17,7 +17,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::TreeCtrl
+	Wx::Panel
 };
 
 
@@ -32,18 +32,33 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->right;
 
-	# This tool is just a single tree control
+	# Create the parent panel which will contain the tree
 	my $self = $class->SUPER::new(
 		$panel,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	# This tool is just a single tree control
+	my $tree = $self->{tree} = Wx::TreeCtrl->new(
+		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 		Wx::TR_HIDE_ROOT | Wx::TR_SINGLE | Wx::TR_HAS_BUTTONS | Wx::TR_LINES_AT_ROOT
 	);
-	$self->SetIndent(10);
+	$tree->SetIndent(10);
+
+	# Create a sizer
+	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$sizer->Add( $tree, 1, Wx::ALL | Wx::EXPAND );
+
+	# Fits panel layout
+	$self->SetSizerAndFit($sizer);
 
 	Wx::Event::EVT_COMMAND_SET_FOCUS(
-		$self, $self,
+		$tree, $tree,
 		sub {
 			$self->on_tree_item_set_focus( $_[1] );
 		},
@@ -57,13 +72,7 @@ sub new {
 		}
 	);
 
-	$self->Hide;
-
-	# Cache document metadata for use when changing documents.
-	# By substituting old metadata before we scan for new metadata,
-	# we can make the widget APPEAR to be faster than it is and
-	# offset the cost of doing the PPI parse in the background.
-	# $self->{cache} = {};
+	$tree->Hide;
 
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->style->apply($self);
@@ -84,7 +93,8 @@ sub on_tree_item_right_click {
 	my $event  = shift;
 	my $show   = 0;
 	my $menu   = Wx::Menu->new;
-	my $pldata = $self->GetPlData( $event->GetItem );
+	my $tree   = $self->{tree};
+	my $pldata = $tree->GetPlData( $event->GetItem );
 
 	if ( defined($pldata) && defined( $pldata->{line} ) && $pldata->{line} > 0 ) {
 		my $goto = $menu->Append( -1, Wx::gettext('&Go to Element') );
@@ -121,7 +131,7 @@ sub on_tree_item_right_click {
 	if ( $show > 0 ) {
 		my $x = $event->GetPoint->x;
 		my $y = $event->GetPoint->y;
-		$self->PopupMenu( $menu, $x, $y );
+		$tree->PopupMenu( $menu, $x, $y );
 	}
 
 	return;
@@ -135,9 +145,10 @@ sub on_tree_item_activated {
 sub on_tree_item_set_focus {
 	my $self      = shift;
 	my $event     = shift;
-	my $selection = $self->GetSelection;
+	my $tree      = $self->{tree};
+	my $selection = $tree->GetSelection;
 	if ( $selection and $selection->IsOk ) {
-		my $item = $self->GetPlData($selection);
+		my $item = $tree->GetPlData($selection);
 		if ( defined $item ) {
 			$self->select_line_in_editor( $item->{line} );
 		}
@@ -186,7 +197,8 @@ sub task_finish {
 	$self->clear;
 
 	# Add the hidden unused root
-	my $root = $self->AddRoot(
+	my $tree = $self->{tree};
+	my $root = $tree->AddRoot(
 		Wx::gettext('Outline'),
 		-1,
 		-1,
@@ -195,7 +207,7 @@ sub task_finish {
 
 	# Add the package trees
 	foreach my $pkg (@$data) {
-		my $branch = $self->AppendItem(
+		my $branch = $tree->AppendItem(
 			$root,
 			$pkg->{name},
 			-1, -1,
@@ -211,21 +223,17 @@ sub task_finish {
 		foreach my $type (@types) {
 			$self->add_subtree( $pkg, $type, $branch );
 		}
-		$self->Expand($branch);
+		$tree->Expand($branch);
 	}
 
 	# Set MIME type specific event handler
 	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
-		$self, $self,
+		$tree, $tree,
 		sub {
-			$_[0]->on_tree_item_right_click( $_[1] );
+			$self->on_tree_item_right_click( $_[1] );
 		},
 	);
 
-	# TO DO Expanding all is not acceptable: We need to keep the state
-	# (i.e., keep the pragmata subtree collapsed if it was collapsed
-	# by the user)
-	#$self->ExpandAll;
 	$self->GetBestSize;
 
 	return 1;
@@ -243,7 +251,7 @@ sub gettext_label {
 }
 
 sub clear {
-	$_[0]->DeleteAllItems;
+	$_[0]->{tree}->DeleteAllItems;
 }
 
 sub refresh {
@@ -252,6 +260,7 @@ sub refresh {
 	my $current  = shift or return;
 	my $document = $current->document;
 	my $lock     = $self->lock_update;
+	my $tree     = $self->{tree};
 
 	# Cancel any existing outline task
 	$self->task_reset;
@@ -259,7 +268,7 @@ sub refresh {
 	# Hide the widgets when no files are open
 	unless ($document) {
 		$self->clear;
-		$self->Hide;
+		$tree->Hide;
 		return;
 	}
 
@@ -267,12 +276,12 @@ sub refresh {
 	my $task = $document->task_outline;
 	unless ($task) {
 		$self->clear;
-		$self->Hide;
+		$tree->Hide;
 		return;
 	}
 
 	# Ensure the widget is visible
-	$self->Show(1);
+	$tree->Show;
 
 	# Recalculate our layout in case the view geometry
 	# has changed from when we were hidden.
@@ -292,6 +301,7 @@ sub refresh {
 
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
+	my $tree = $self->{tree};
 
 	my %type_caption = (
 		pragmata   => Wx::gettext('Pragmata'),
@@ -309,7 +319,7 @@ sub add_subtree {
 			warn "Type not translated: $type_caption\n";
 		}
 
-		$type_elem = $self->AppendItem(
+		$type_elem = $tree->AppendItem(
 			$root,
 			$type_caption,
 			-1,
@@ -340,7 +350,7 @@ sub add_subtree {
 		}
 
 		foreach my $item (@sorted_entries) {
-			$self->AppendItem(
+			$tree->AppendItem(
 				$type_elem,
 				$item->{name},
 				-1, -1,
@@ -355,10 +365,10 @@ sub add_subtree {
 	}
 	if ( defined $type_elem ) {
 		if ( $type eq 'methods' ) {
-			$self->Expand($type_elem);
+			$tree->Expand($type_elem);
 		} else {
-			if ( $self->IsExpanded($type_elem) ) {
-				$self->Collapse($type_elem);
+			if ( $tree->IsExpanded($type_elem) ) {
+				$tree->Collapse($type_elem);
 			}
 		}
 	}
