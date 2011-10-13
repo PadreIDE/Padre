@@ -39,6 +39,26 @@ sub new {
 	$self->disable;
 	$tree->SetIndent(10);
 
+	# Prepare the available images
+	my $images = Wx::ImageList->new( 16, 16 );
+	$self->{images} = {
+		folder => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_FOLDER',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		file => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+	};
+	$tree->AssignImageList($images);
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{search},
@@ -219,13 +239,15 @@ sub render {
 	$self->clear;
 
 	# Add the hidden unused root
-	my $tree = $self->{tree};
-	my $root = $tree->AddRoot(
+	my $tree   = $self->{tree};
+	my $images = $self->{images};
+	my $root   = $tree->AddRoot(
 		Wx::gettext('Outline'),
 		-1,
 		-1,
 		Wx::TreeItemData->new('')
 	);
+	$tree->SetItemImage( $root, $images->{folder} );
 
 	# Add the package trees
 	foreach my $pkg (@$data) {
@@ -344,6 +366,7 @@ sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
 	my $tree        = $self->{tree};
 	my $search_term = quotemeta $self->{search}->GetValue;
+	my $images      = $self->{images};
 
 	my %type_caption = (
 		pragmata   => Wx::gettext('Pragmata'),
@@ -368,6 +391,7 @@ sub add_subtree {
 			-1,
 			Wx::TreeItemData->new
 		);
+		$tree->SetItemImage( $type_elem, $images->{folder} );
 
 		my @sorted_entries = ();
 		if ( $type eq 'methods' ) {
@@ -394,7 +418,7 @@ sub add_subtree {
 		foreach my $item (@sorted_entries) {
 			my $name = $item->{name};
 			next if $name !~ /$search_term/;
-			$tree->AppendItem(
+			my $item = $tree->AppendItem(
 				$type_elem,
 				$name, -1, -1,
 				Wx::TreeItemData->new(
@@ -404,6 +428,8 @@ sub add_subtree {
 					}
 				)
 			);
+			$tree->SetItemImage( $item, $images->{file} );
+
 		}
 	}
 	if ( defined $type_elem ) {
