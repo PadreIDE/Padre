@@ -2544,9 +2544,9 @@ sub _show_vcs {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->bottom->show( $self->vcs );
+		$self->right->show( $self->vcs );
 	} elsif ( $self->has_vcs ) {
-		$self->bottom->hide( $self->vcs );
+		$self->right->hide( $self->vcs );
 		delete $self->{vcs};
 	}
 }

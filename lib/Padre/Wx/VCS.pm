@@ -28,7 +28,7 @@ use constant {
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $panel = shift || $main->bottom;
+	my $panel = shift || $main->right;
 	my $self  = $class->SUPER::new($panel);
 
 	# Set the bitmap button icons
@@ -81,7 +81,7 @@ sub new {
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
-	return 'bottom';
+	return 'right';
 }
 
 sub view_label {
