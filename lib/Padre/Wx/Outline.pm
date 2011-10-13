@@ -47,6 +47,37 @@ sub new {
 		},
 	);
 
+	# Handle char events in search box
+	Wx::Event::EVT_CHAR(
+		$self->{search},
+		sub {
+			my ( $this, $event ) = @_;
+
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::K_DOWN or $code == Wx::K_UP or $code == Wx::K_RETURN ) {
+
+				# Up/Down and return keys focus on the functions lists
+				my $tree = $self->{tree};
+				$tree->SetFocus;
+				my $selection = $tree->GetSelection;
+				if ( $selection == -1 and $tree->GetCount > 0 ) {
+					$selection = 0;
+				}
+				$tree->SelectItem($selection);
+			} elsif ( $code == Wx::K_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
+			}
+
+			$event->Skip(1);
+			return;
+		}
+	);
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->style->apply($self);
 	}
