@@ -116,12 +116,13 @@ sub new {
 			),
 		),
 	};
-	$self->{tree}->AssignImageList($images);
+	my $tree = $self->{tree};
+	$tree->AssignImageList($images);
 
 	$self->Hide;
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply( $self->{tree} );
+		$self->main->style->apply($tree);
 	}
 
 	return $self;
@@ -317,7 +318,7 @@ sub refresh {
 	$self->Layout;
 
 	# Clear out the syntax check window, leaving the margin as is
-	$self->{tree}->DeleteAllItems;
+	$tree->DeleteAllItems;
 	$self->_update_help_page;
 
 	# Shortcut if there is nothing in the document to compile
@@ -401,7 +402,8 @@ sub render {
 	# Flush old results
 	$self->clear;
 
-	my $root = $self->{tree}->AddRoot('Root');
+	my $tree = $self->{tree};
+	my $root = $tree->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
 	unless ( Params::Util::_HASH($model) ) {
@@ -414,22 +416,22 @@ sub render {
 				$project_dir = quotemeta $project_dir;
 				$filename =~ s/^$project_dir[\\\/]?//;
 			}
-			$self->{tree}->SetItemText(
+			$tree->SetItemText(
 				$root,
 				sprintf( Wx::gettext('No errors or warnings found in %s within %3.2f secs.'), $filename, $elapsed )
 			);
 		} else {
-			$self->{tree}->SetItemText(
+			$tree->SetItemText(
 				$root,
 				sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.'), $elapsed )
 			);
 		}
-		$self->{tree}->SetItemImage( $root, $self->{images}->{ok} );
+		$tree->SetItemImage( $root, $self->{images}->{ok} );
 		$self->set_label_bitmap('ok');
 		return;
 	}
 
-	$self->{tree}->SetItemText(
+	$tree->SetItemText(
 		$root,
 		(   defined $filename
 			? sprintf(
@@ -439,7 +441,7 @@ sub render {
 			: sprintf( Wx::gettext('Found %d issue(s) within %3.2f secs.'), scalar @{ $model->{issues} }, $elapsed )
 		)
 	);
-	$self->{tree}->SetItemImage( $root, $self->{images}->{root} );
+	$tree->SetItemImage( $root, $self->{images}->{root} );
 
 	$self->{annotations} = ();
 	my $i       = 0;
@@ -495,7 +497,7 @@ sub render {
 			}
 		}
 
-		my $item = $self->{tree}->AppendItem(
+		my $item = $tree->AppendItem(
 			$root,
 			sprintf(
 				Wx::gettext('Line %d:   (%s)   %s'),
@@ -505,7 +507,7 @@ sub render {
 			),
 			$is_warning ? $self->{images}->{warning} : $self->{images}->{error}
 		);
-		$self->{tree}->SetPlData( $item, $issue );
+		$tree->SetPlData( $item, $issue );
 	}
 
 	$self->_show_current_annotation(0) if $feature;
@@ -516,8 +518,8 @@ sub render {
 		$self->Layout;
 	}
 
-	$self->{tree}->Expand($root);
-	$self->{tree}->EnsureVisible($root);
+	$tree->Expand($root);
+	$tree->EnsureVisible($root);
 
 	# Set the icon to the new state
 	$self->set_label_bitmap($worst);
@@ -635,20 +637,21 @@ sub select_next_problem {
 	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 
 	# Start with the first child
-	my $root = $self->{tree}->GetRootItem;
-	my ( $child, $cookie ) = $self->{tree}->GetFirstChild($root);
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	my $line_to_select = undef;
 	while ( $child->IsOk ) {
 
 		# Get the line and check that it is a valid line number
-		my $issue = $self->{tree}->GetPlData($child) or return;
+		my $issue = $tree->GetPlData($child) or return;
 		my $line = $issue->{line};
 
 		if (   not defined($line)
 			or ( $line !~ /^\d+$/o )
 			or ( $line > $editor->GetLineCount ) )
 		{
-			( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+			( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 			next;
 		}
 		$line--;
@@ -667,7 +670,7 @@ sub select_next_problem {
 		}
 
 		# Get the next child if there is one
-		( $child, $cookie ) = $self->{tree}->GetNextChild( $root, $cookie );
+		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
 	}
 
 	# Select the line in the editor
