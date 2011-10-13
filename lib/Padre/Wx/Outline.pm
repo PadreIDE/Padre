@@ -63,7 +63,7 @@ sub new {
 		$self,
 		$self->{search},
 		sub {
-			$self->on_text( $_[1] );
+			$self->render;
 		},
 	);
 
@@ -111,10 +111,6 @@ sub new {
 
 #####################################################################
 # Event Handlers
-
-sub on_text {
-	$_[0]->render;
-}
 
 sub on_tree_item_right_click {
 	my $self   = shift;
