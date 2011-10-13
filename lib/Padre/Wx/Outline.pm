@@ -3,13 +3,14 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util          ();
-use Params::Util          ();
-use Padre::Feature        ();
-use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
-use Padre::Wx             ();
+use Scalar::Util            ();
+use Params::Util            ();
+use Padre::Feature          ();
+use Padre::Role::Task       ();
+use Padre::Wx::Role::View   ();
+use Padre::Wx::Role::Main   ();
+use Padre::Wx               ();
+use Padre::Wx::FBP::Outline ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -17,7 +18,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
-	Wx::Panel
+	Padre::Wx::FBP::Outline
 };
 
 
@@ -31,41 +32,12 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 	my $panel = shift || $main->right;
-
-	# Create the parent panel which will contain the tree
-	my $self = $class->SUPER::new(
-		$panel,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
+	my $self  = $class->SUPER::new($panel);
 
 	# This tool is just a single tree control
-	my $tree = $self->{tree} = Wx::TreeCtrl->new(
-		$self,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TR_HIDE_ROOT | Wx::TR_SINGLE | Wx::TR_HAS_BUTTONS | Wx::TR_LINES_AT_ROOT
-	);
-	$tree->SetIndent(10);
-
-	# Create a sizer
-	my $sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$sizer->Add( $tree, 1, Wx::ALL | Wx::EXPAND );
-
-	# Fits panel layout
-	$self->SetSizerAndFit($sizer);
-
-	# Double-click a function name
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$tree, $tree,
-		sub {
-			$self->on_tree_item_activated( $_[1] );
-		}
-	);
-
+	my $tree = $self->{tree};
 	$tree->Hide;
+	$tree->SetIndent(10);
 
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->style->apply($self);
