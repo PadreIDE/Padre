@@ -62,21 +62,7 @@ sub new {
 # Event Handlers
 
 sub on_text {
-	my ( $self, $event ) = @_;
-
-	my $tree        = $self->{tree};
-	my $search_term = $self->{search}->GetValue;
-
-	my $root = $tree->GetRootItem;
-	my ( $child, $cookie ) = $tree->GetFirstChild($root);
-	while ( $child->IsOk ) {
-		my $data = $tree->GetPlData($child) or return;
-
-		# Next item
-		( $child, $cookie ) = $tree->GetNextChild($child);
-	}
-
-	return;
+	$_[0]->render;
 }
 
 sub on_tree_item_right_click {
@@ -184,6 +170,20 @@ sub task_finish {
 	my $data = Params::Util::_ARRAY( $task->{data} ) or return;
 	my $lock = $self->lock_update;
 
+	# Cache data model for faster searches
+	$self->{data} = $data;
+	
+	# And render it
+	$self->render;
+
+	return 1;
+}
+
+sub render {
+	my $self        = shift;
+	my $data        = $self->{data};
+	my $search_term = quotemeta $self->{search}->GetValue;
+
 	# Clear any old content
 	$self->clear;
 
@@ -227,7 +227,7 @@ sub task_finish {
 
 	$self->GetBestSize;
 
-	return 1;
+	return;
 }
 
 
@@ -297,7 +297,8 @@ sub refresh {
 
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
-	my $tree = $self->{tree};
+	my $tree        = $self->{tree};
+	my $search_term = quotemeta $self->{search}->GetValue;
 
 	my %type_caption = (
 		pragmata   => Wx::gettext('Pragmata'),
@@ -346,13 +347,14 @@ sub add_subtree {
 		}
 
 		foreach my $item (@sorted_entries) {
+			my $name = $item->{name};
+			next if $name !~ /$search_term/;
 			$tree->AppendItem(
 				$type_elem,
-				$item->{name},
-				-1, -1,
+				$name, -1, -1,
 				Wx::TreeItemData->new(
 					{   line => $item->{line},
-						name => $item->{name},
+						name => $name,
 						type => $type,
 					}
 				)
