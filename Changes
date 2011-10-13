@@ -159,6 +159,7 @@ the even version for the release, even during development.
     - Fix Outline focus and paint bugs that caused other right panels to 
       misbehave when Outline is enabled (BOWTIE, AZAWAWI)
     - Upgrade the Outline panel to wxFormBuilder (AZAWAWI)
+    - Outline panel is searchable now (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
