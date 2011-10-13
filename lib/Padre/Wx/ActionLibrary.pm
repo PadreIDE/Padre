@@ -1405,6 +1405,7 @@ sub init {
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_outline( $_[0]->menu->view->{outline}->IsChecked );
+			$_[0]->outline->focus_on_search;
 		},
 	);
 
@@ -2565,7 +2566,7 @@ sub init {
 		shortcut   => 'Alt-L',
 		menu_event => sub {
 			$_[0]->show_outline(1);
-			$_[0]->outline->SetFocus;
+			$_[0]->outline->focus_on_search;
 		},
 	);
 

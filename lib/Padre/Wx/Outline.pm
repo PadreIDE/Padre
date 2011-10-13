@@ -39,6 +39,14 @@ sub new {
 	$tree->Hide;
 	$tree->SetIndent(10);
 
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{search},
+		sub {
+			$self->on_text( $_[1] );
+		},
+	);
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->style->apply($self);
 	}
@@ -52,6 +60,24 @@ sub new {
 
 #####################################################################
 # Event Handlers
+
+sub on_text {
+	my ( $self, $event ) = @_;
+
+	my $tree        = $self->{tree};
+	my $search_term = $self->{search}->GetValue;
+
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
+	while ( $child->IsOk ) {
+		my $data = $tree->GetPlData($child) or return;
+
+		# Next item
+		( $child, $cookie ) = $tree->GetNextChild($child);
+	}
+
+	return;
+}
 
 sub on_tree_item_right_click {
 	my $self   = shift;
@@ -210,6 +236,11 @@ sub task_finish {
 
 ######################################################################
 # General Methods
+
+# Sets the focus on the search field
+sub focus_on_search {
+	$_[0]->{search}->SetFocus;
+}
 
 sub gettext_label {
 	Wx::gettext('Outline');
