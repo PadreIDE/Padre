@@ -26,25 +26,8 @@ sub new {
 		$parent,
 		-1,
 		Wx::DefaultPosition,
-		[ 500, 300 ],
+		[ 195, 530 ],
 		Wx::TAB_TRAVERSAL,
-	);
-
-	$self->{commit} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Wx::NullBitmap,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::BU_AUTODRAW,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{commit},
-		sub {
-			shift->on_commit_click(@_);
-		},
 	);
 
 	$self->{add} = Wx::BitmapButton->new(
@@ -81,6 +64,40 @@ sub new {
 		},
 	);
 
+	$self->{update} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{update},
+		sub {
+			shift->on_update_click(@_);
+		},
+	);
+
+	$self->{commit} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{commit},
+		sub {
+			shift->on_commit_click(@_);
+		},
+	);
+
 	$self->{revert} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -98,16 +115,45 @@ sub new {
 		},
 	);
 
-	$self->{status} = Wx::StaticText->new(
+	$self->{refresh} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::gettext("Status"),
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 
-	$self->{show_label} = Wx::StaticText->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{refresh},
+		sub {
+			shift->on_refresh_click(@_);
+		},
+	);
+
+	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
-		Wx::gettext("Show") . ":",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->on_list_column_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self->{list},
+		sub {
+			shift->on_list_item_activated(@_);
+		},
 	);
 
 	$self->{show_normal} = Wx::CheckBox->new(
@@ -158,78 +204,42 @@ sub new {
 		},
 	);
 
-	$self->{refresh} = Wx::BitmapButton->new(
+	$self->{status} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::NullBitmap,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::BU_AUTODRAW,
+		Wx::gettext("Status"),
 	);
 
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{refresh},
-		sub {
-			shift->on_refresh_click(@_);
-		},
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{add}, 0, Wx::ALL, 1 );
+	$button_sizer->Add( $self->{delete}, 0, Wx::ALL, 1 );
+	$button_sizer->Add( $self->{update}, 0, Wx::ALL, 1 );
+	$button_sizer->Add( $self->{commit}, 0, Wx::ALL, 1 );
+	$button_sizer->Add( $self->{revert}, 0, Wx::ALL, 1 );
+	$button_sizer->Add( $self->{refresh}, 0, Wx::ALL, 1 );
+
+	my $checkbox_sizer = Wx::StaticBoxSizer->new(
+		Wx::StaticBox->new(
+			$self,
+			-1,
+			Wx::gettext("Show"),
+		),
+		Wx::VERTICAL,
 	);
-
-	$self->{list} = Wx::ListCtrl->new(
-		$self,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
-	);
-
-	Wx::Event::EVT_LIST_COL_CLICK(
-		$self,
-		$self->{list},
-		sub {
-			shift->on_list_column_click(@_);
-		},
-	);
-
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{list},
-		sub {
-			shift->on_list_item_activated(@_);
-		},
-	);
-
-	my $svn_command_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$svn_command_sizer->Add( $self->{commit}, 0, Wx::ALL, 2 );
-	$svn_command_sizer->Add( $self->{add}, 0, Wx::ALL, 2 );
-	$svn_command_sizer->Add( $self->{delete}, 0, Wx::ALL, 2 );
-	$svn_command_sizer->Add( $self->{revert}, 0, Wx::ALL, 2 );
-
-	my $checkbox_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$checkbox_sizer->Add( $self->{show_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 2 );
-	$checkbox_sizer->Add( 7, 0, 0, Wx::EXPAND, 5 );
 	$checkbox_sizer->Add( $self->{show_normal}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_unversioned}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_ignored}, 0, Wx::ALL, 2 );
 
-	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $svn_command_sizer, 0, Wx::EXPAND, 5 );
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
-	$top_sizer->Add( $checkbox_sizer, 0, Wx::ALIGN_CENTER | Wx::ALL, 2 );
-	$top_sizer->Add( $self->{refresh}, 0, Wx::ALL, 2 );
-
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 2 );
+	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$main_sizer->Add( $checkbox_sizer, 0, Wx::EXPAND, 2 );
+	$main_sizer->Add( $self->{status}, 0, Wx::ALL | Wx::EXPAND, 8 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
 
 	return $self;
-}
-
-sub on_commit_click {
-	$_[0]->main->error('Handler method on_commit_click for event commit.OnButtonClick not implemented');
 }
 
 sub on_add_click {
@@ -240,20 +250,16 @@ sub on_delete_click {
 	$_[0]->main->error('Handler method on_delete_click for event delete.OnButtonClick not implemented');
 }
 
+sub on_update_click {
+	$_[0]->main->error('Handler method on_update_click for event update.OnButtonClick not implemented');
+}
+
+sub on_commit_click {
+	$_[0]->main->error('Handler method on_commit_click for event commit.OnButtonClick not implemented');
+}
+
 sub on_revert_click {
 	$_[0]->main->error('Handler method on_revert_click for event revert.OnButtonClick not implemented');
-}
-
-sub on_show_normal_click {
-	$_[0]->main->error('Handler method on_show_normal_click for event show_normal.OnCheckBox not implemented');
-}
-
-sub on_show_unversioned_click {
-	$_[0]->main->error('Handler method on_show_unversioned_click for event show_unversioned.OnCheckBox not implemented');
-}
-
-sub on_show_ignored_click {
-	$_[0]->main->error('Handler method on_show_ignored_click for event show_ignored.OnCheckBox not implemented');
 }
 
 sub on_refresh_click {
@@ -266,6 +272,18 @@ sub on_list_column_click {
 
 sub on_list_item_activated {
 	$_[0]->main->error('Handler method on_list_item_activated for event list.OnListItemActivated not implemented');
+}
+
+sub on_show_normal_click {
+	$_[0]->main->error('Handler method on_show_normal_click for event show_normal.OnCheckBox not implemented');
+}
+
+sub on_show_unversioned_click {
+	$_[0]->main->error('Handler method on_show_unversioned_click for event show_unversioned.OnCheckBox not implemented');
+}
+
+sub on_show_ignored_click {
+	$_[0]->main->error('Handler method on_show_ignored_click for event show_ignored.OnCheckBox not implemented');
 }
 
 1;

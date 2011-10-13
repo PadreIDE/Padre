@@ -32,9 +32,10 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Set the bitmap button icons
-	$self->{commit}->SetBitmapLabel( Padre::Wx::Icon::find('actions/document-save') );
 	$self->{add}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-add') );
 	$self->{delete}->SetBitmapLabel( Padre::Wx::Icon::find('actions/list-remove') );
+	$self->{update}->SetBitmapLabel( Padre::Wx::Icon::find('actions/stock_update-data') );
+	$self->{commit}->SetBitmapLabel( Padre::Wx::Icon::find('actions/document-save') );
 	$self->{revert}->SetBitmapLabel( Padre::Wx::Icon::find('actions/edit-undo') );
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
@@ -44,10 +45,10 @@ sub new {
 
 	# Setup columns
 	my @column_headers = (
-		Wx::gettext('Revision'),
-		Wx::gettext('Author'),
 		Wx::gettext('Status'),
 		Wx::gettext('Path'),
+		Wx::gettext('Author'),
+		Wx::gettext('Revision'),
 	);
 	my $index = 0;
 	for my $column_header (@column_headers) {
@@ -235,11 +236,9 @@ sub render {
 					if ( $show_ignored or $status ne 'I' ) {
 
 						# Add a version control path to the list
-						$list->InsertStringItem( $index, $rec->{revision} );
+						$list->InsertStringItem( $index, $path_status->{name} );
 						$list->SetItemData( $index, $model_index );
-						$list->SetItem( $index, 1, $rec->{author} );
-						$list->SetItem( $index, 2, $path_status->{name} );
-
+						$list->SetItem( $index, 1, $rec->{path} );
 						my $color;
 						if ( $status eq ' ' ) {
 							$color = DARK_GREEN;
@@ -253,7 +252,9 @@ sub render {
 							$color = BLACK;
 						}
 						$list->SetItemTextColour( $index, $color );
-						$list->SetItem( $index++, 3, $rec->{path} );
+
+						$list->SetItem( $index, 2, $rec->{author} );
+						$list->SetItem( $index++, 3, $rec->{revision} );
 					}
 				}
 			}
@@ -443,6 +444,13 @@ sub on_delete_click {
 		Wx::gettext('Delete file from repository??')
 		);
 	$main->error('on_delete_click not implemented');
+}
+
+# Called when "Update" button is clicked
+sub on_update_click {
+	my $self           = shift;
+	my $main           = $self->main;
+	$main->error('on_update_click  not implemented');
 }
 
 # Called when "Revert" button is clicked

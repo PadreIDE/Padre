@@ -111,7 +111,7 @@ the even version for the release, even during development.
     - "Filter through Perl" back into core (SEWI)
     - Added a generic version control panel that provides minimal project
       subversion support with the ability to view normal/unversioned and ignored
-      files and add/delete/revert and commit selected files(AZAWAWI)
+      files and add/delete/revert/update and commit selected files(AZAWAWI)
     - #1126 'TODO list: does not immediately show items' (AZAWAWI)
     - Added identity_location config setting so collaborative functions such as
       Swarm can disambiguate multiple Padre instances of the same user by
