@@ -172,7 +172,7 @@ sub task_finish {
 
 	# Cache data model for faster searches
 	$self->{data} = $data;
-	
+
 	# And render it
 	$self->render;
 
@@ -363,11 +363,15 @@ sub add_subtree {
 		}
 	}
 	if ( defined $type_elem ) {
-		if ( $type eq 'methods' ) {
+		if ( length $search_term > 0 ) {
 			$tree->Expand($type_elem);
 		} else {
-			if ( $tree->IsExpanded($type_elem) ) {
-				$tree->Collapse($type_elem);
+			if ( $type eq 'methods' ) {
+				$tree->Expand($type_elem);
+			} else {
+				if ( $tree->IsExpanded($type_elem) ) {
+					$tree->Collapse($type_elem);
+				}
 			}
 		}
 	}
