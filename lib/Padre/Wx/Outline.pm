@@ -36,7 +36,7 @@ sub new {
 
 	# This tool is just a single tree control
 	my $tree = $self->{tree};
-	$tree->Hide;
+	$self->disable;
 	$tree->SetIndent(10);
 
 	Wx::Event::EVT_TEXT(
@@ -266,34 +266,47 @@ sub refresh {
 
 	# Hide the widgets when no files are open
 	unless ($document) {
-		$tree->Hide;
+		$self->disable;
 		return;
 	}
 
 	# Is there an outline task for this document type
 	my $task = $document->task_outline;
 	unless ($task) {
-		$tree->Hide;
+		$self->disable;
 		return;
 	}
-
-	# Ensure the widget is visible
-	$tree->Show;
-
-	# Recalculate our layout in case the view geometry
-	# has changed from when we were hidden.
-	$self->Layout;
 
 	# Shortcut if there is nothing to search for
 	if ( $document->is_unused ) {
+		$self->disable;
 		return;
 	}
+
+	# Ensure the search box and tree are visible
+	$self->enable;
 
 	# Trigger the task to fetch the refresh data
 	$self->task_request(
 		task     => $task,
 		document => $document,
 	);
+}
+
+sub disable {
+	$_[0]->{search}->Hide;
+	$_[0]->{tree}->Hide;
+}
+
+sub enable {
+	my $self = shift;
+
+	$self->{search}->Show;
+	$self->{tree}->Show;
+
+	# Recalculate our layout in case the view geometry
+	# has changed from when we were hidden.
+	$self->Layout;
 }
 
 sub add_subtree {
