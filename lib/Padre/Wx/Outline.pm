@@ -247,7 +247,6 @@ sub render {
 		-1,
 		Wx::TreeItemData->new('')
 	);
-	$tree->SetItemImage( $root, $images->{folder} );
 
 	# Add the package trees
 	foreach my $pkg (@$data) {
@@ -262,6 +261,8 @@ sub render {
 				}
 			)
 		);
+		$tree->SetItemImage( $branch, $images->{folder} );
+
 		my @types = qw(classes grammars packages pragmata modules
 			attributes methods events roles regexes);
 		foreach my $type (@types) {
