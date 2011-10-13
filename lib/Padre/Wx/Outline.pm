@@ -57,16 +57,9 @@ sub new {
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);
 
-	Wx::Event::EVT_COMMAND_SET_FOCUS(
-		$tree, $tree,
-		sub {
-			$self->on_tree_item_set_focus( $_[1] );
-		},
-	);
-
 	# Double-click a function name
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
+		$tree, $tree,
 		sub {
 			$self->on_tree_item_activated( $_[1] );
 		}
