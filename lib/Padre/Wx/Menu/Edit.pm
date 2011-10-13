@@ -329,6 +329,7 @@ sub refresh {
 
 	# Handle the simple cases
 	$self->{next_problem}->Enable($hasdoc);
+	$self->{next_difference}->Enable($hasdoc) if defined $self->{next_difference};
 	if (Padre::Feature::QUICK_FIX) {
 		$self->{quick_fix}->Enable($quickfix);
 	}
