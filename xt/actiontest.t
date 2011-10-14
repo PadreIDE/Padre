@@ -73,11 +73,8 @@ my @actions = (
 	'view.font_increase,view.font_decrease,view.font_reset',
 	'view.full_screen,view.full_screen,',
 	'search.find,view.close_panel',
-	'file.new,file.new,window.last_visited_file',
-	'file.new,file.new,window.oldest_visited_file',
 	'file.new,file.new,window.next_file',
 	'file.new,file.new,window.previous_file',
-	'file.new,file.new,window.last_visited_file_old',
 );
 
 plan( tests => scalar(@actions) * 3 + 1 );
