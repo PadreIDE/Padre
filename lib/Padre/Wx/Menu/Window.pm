@@ -87,7 +87,6 @@ sub refresh {
 	my $enable = $pages ? 1 : 0;
 	$self->{window_next_file}->Enable($enable);
 	$self->{window_previous_file}->Enable($enable);
-	$self->{window_last_visited_file}->Enable($enable);
 	$self->{window_right_click}->Enable($enable);
 
 	return 1;
