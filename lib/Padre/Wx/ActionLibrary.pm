@@ -2434,28 +2434,6 @@ sub init {
 	# File Navigation
 
 	Padre::Wx::Action->new(
-		name        => 'window.last_visited_file',
-		label       => _T('&Last Visited File'),
-		comment     => _T('Switch to edit the file that was previously edited (can switch back and forth)'),
-		shortcut    => 'Ctrl-Tab',
-		need_editor => 1,
-		menu_event  => sub {
-			shift->on_last_visited_pane(@_);
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name        => 'window.oldest_visited_file',
-		label       => _T('&Oldest Visited File'),
-		comment     => _T('Put focus on tab visited the longest time ago.'),
-		shortcut    => 'Ctrl-Shift-Tab',
-		need_editor => 1,
-		menu_event  => sub {
-			shift->on_oldest_visited_pane(@_);
-		},
-	);
-
-	Padre::Wx::Action->new(
 		name        => 'window.next_file',
 		label       => _T('&Next File'),
 		comment     => _T('Put focus on the next tab to the right'),
@@ -2477,51 +2455,11 @@ sub init {
 		},
 	);
 
-	# TODO: Remove this and the menu option as soon as #750 is fixed
-	#       as it's the same like Ctrl-Tab
 	Padre::Wx::Action->new(
-		name        => 'window.last_visited_file_old',
-		label       => _T('Last Visited File'),
-		comment     => _T('Jump between the two last visited files back and forth'),
-		shortcut    => 'Ctrl-Shift-P',
-		need_editor => 1,
-		menu_event  => sub {
-			shift->on_last_visited_pane(@_);
-		},
-	);
 
-	Padre::Wx::Action->new(
-		name    => 'window.goto_previous_position',
-		label   => _T('&Go to previous position'),
-		comment => _T('Jump to the last position saved in memory'),
-
-		#shortcut    => '',
-		need_editor => 1,
-		menu_event  => sub {
-			require Padre::Wx::Dialog::Positions;
-			Padre::Wx::Dialog::Positions->goto_prev_position( $_[0] );
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name    => 'window.show_previous_positions',
-		label   => _T('&Show previous positions...'),
-		comment => _T('Show the list of positions recently visited'),
-
-		#shortcut    => '',
-		need_editor => 1,
-		menu_event  => sub {
-			require Padre::Wx::Dialog::Positions;
-			Padre::Wx::Dialog::Positions->show_positions( $_[0] );
-		},
-	);
-
-
-	# FIXME change "right click" into "context menu"
-	Padre::Wx::Action->new(
 		name        => 'window.right_click',
-		label       => _T('&Right Click'),
-		comment     => _T('Imitate clicking on the right mouse button'),
+		label       => _T('&Context Menu'),
+		comment     => _T('Simulate a right mouse button click to open the context menu'),
 		shortcut    => 'Alt-/',
 		need_editor => 1,
 		menu_event  => sub {

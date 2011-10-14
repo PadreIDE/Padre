@@ -160,6 +160,7 @@ the even version for the release, even during development.
       misbehave when Outline is enabled (BOWTIE, AZAWAWI)
     - Upgrade the Outline panel to wxFormBuilder (AZAWAWI)
     - Outline panel is searchable now (AZAWAWI)
+    - Fix #1050: Window menu is confusing (ZENOG, AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
