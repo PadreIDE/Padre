@@ -772,7 +772,7 @@ sub init {
 		},
 	);
 
-	if ( $main->config->feature_saved_document_diffs ) {
+	if ( $main->config->feature_document_diffs ) {
 		Padre::Wx::Action->new(
 			name        => 'edit.next_difference',
 			need_editor => 1,

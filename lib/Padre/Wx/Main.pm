@@ -1931,7 +1931,7 @@ since actual calculating differences is happening in the background.
 
 sub refresh_diff {
 	my $self = shift;
-	return unless $self->config->feature_saved_document_diffs;
+	return unless $self->config->feature_document_diffs;
 	return if $self->locked('REFRESH');
 	$self->diff->refresh( $_[0] or $self->current );
 	return;

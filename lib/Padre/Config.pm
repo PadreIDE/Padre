@@ -1435,13 +1435,13 @@ setting(
 	help    => _T('Toggle syntax checker annotations in editor')
 );
 
-# Toggle saved document differences feature
+# Toggle document differences feature
 setting(
-	name    => 'feature_saved_document_diffs',
+	name    => 'feature_document_diffs',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	help    => _T('Toggle saved document differences feature')
+	help    => _T('Toggle document differences feature')
 );
 
 # Toggle version control system (VCS) support

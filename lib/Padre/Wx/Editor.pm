@@ -594,7 +594,7 @@ sub setup_common {
 	}
 
 	# Enable the symbol margin if anything needs it
-	if ( $config->main_syntaxcheck or $config->feature_saved_document_diffs ) {
+	if ( $config->main_syntaxcheck or $config->feature_document_diffs ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
 			# Set margin 1 as a 16 pixel symbol margin
 			$self->SetMarginWidth( Padre::Constant::MARGIN_MARKER, 16 );
