@@ -139,7 +139,8 @@ sub new {
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_BREAKPOINT,
-		Wx::Scintilla::MARK_SMALLRECT,
+		# Wx::Scintilla::MARK_SMALLRECT,
+		Wx::Scintilla::MARK_DOTDOTDOT,
 		BLUE,
 		BLUE,
 	);
