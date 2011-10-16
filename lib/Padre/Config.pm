@@ -1622,6 +1622,14 @@ setting(
 	default => 0,
 );
 
+# Toggle experimental VCS command bar
+setting(
+	name    => 'vcs_enable_command_bar',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Non-preference settings
 setting(
 	name    => 'session_autosave',

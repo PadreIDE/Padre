@@ -91,6 +91,7 @@ sub new {
 	$self->{add}->Hide;
 	$self->{delete}->Hide;
 	$self->{revert}->Hide;
+	$self->{update}->Hide;
 
 	return $self;
 }
@@ -306,7 +307,8 @@ sub render {
 	}
 	$self->{status}->SetLabel($message);
 
-	$self->_show_command_bar( $list->GetItemCount > 0 );
+	$self->_show_command_bar( $list->GetItemCount > 0 )
+		if $self->main->config->vcs_enable_command_bar;
 
 	# Update the list sort image
 	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
@@ -324,6 +326,7 @@ sub _show_command_bar {
 	$self->{add}->Show($shown);
 	$self->{delete}->Show($shown);
 	$self->{revert}->Show($shown);
+	$self->{update}->Show($shown);
 	$self->Layout;
 }
 
