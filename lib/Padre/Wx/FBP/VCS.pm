@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.01';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel
@@ -38,6 +38,9 @@ sub new {
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
 	);
+	$self->{add}->SetToolTip(
+		Wx::gettext("Schedule the file or directory for addition to the repository")
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -54,6 +57,9 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
+	);
+	$self->{delete}->SetToolTip(
+		Wx::gettext("Schedule the file or directory for deletion from the repository")
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -72,6 +78,9 @@ sub new {
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
 	);
+	$self->{update}->SetToolTip(
+		Wx::gettext("Bring changes from the repository into the working copy")
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -88,6 +97,9 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
+	);
+	$self->{commit}->SetToolTip(
+		Wx::gettext("Send changes from your working copy to the repository")
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -106,6 +118,9 @@ sub new {
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
 	);
+	$self->{revert}->SetToolTip(
+		Wx::gettext("Restore pristine working copy file (undo most local edits)")
+	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -122,6 +137,9 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
+	);
+	$self->{refresh}->SetToolTip(
+		Wx::gettext("Refresh the status of working copy files and directories")
 	);
 
 	Wx::Event::EVT_BUTTON(
