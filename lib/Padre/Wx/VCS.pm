@@ -23,6 +23,10 @@ use constant {
 	BLUE       => Wx::Colour->new('blue'),
 	GRAY       => Wx::Colour->new('gray'),
 	BLACK      => Wx::Colour->new('black'),
+
+	# Column ascending/descending images
+	ICON_ASC   => 'actions/go-up',
+	ICON_DESC => 'actions/go-down',
 };
 
 # Constructor
@@ -55,6 +59,14 @@ sub new {
 	for my $column_header (@column_headers) {
 		$self->{list}->InsertColumn( $index++, $column_header );
 	}
+
+	# Column ascending/descending image
+	my $images = Wx::ImageList->new( 16, 16 );
+	$self->{images} = {
+		asc   => $images->Add( Padre::Wx::Icon::icon(ICON_ASC) ),
+		desc  => $images->Add( Padre::Wx::Icon::icon(ICON_DESC) ),
+	};
+	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
@@ -200,6 +212,8 @@ sub render {
 	# for sorting
 	$self->clear;
 
+	return unless $self->{model};
+
 	# Subversion status codes
 	my %SVN_STATUS = (
 		' ' => { name => Wx::gettext('Normal') },
@@ -239,7 +253,7 @@ sub render {
 					if ( $show_ignored or $status ne 'I' ) {
 
 						# Add a version control path to the list
-						$list->InsertStringItem( $index, $path_status->{name} );
+						$list->InsertImageStringItem( $index, $path_status->{name}, -1 );
 						$list->SetItemData( $index, $model_index );
 						$list->SetItem( $index, 1, $rec->{path} );
 						my $color;
@@ -285,6 +299,9 @@ sub render {
 	$self->{status}->SetLabel($message);
 
 	$self->_show_command_bar( $list->GetItemCount > 0 );
+
+	# Update the list sort image
+	$self->set_icon_image($self->{sortcolumn}, $self->{sortreverse});
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
@@ -344,7 +361,21 @@ sub on_list_column_click {
 	$self->{sortcolumn}  = $column;
 	$self->{sortreverse} = $reversed;
 
+	# Reset the previous column sort image
+	$self->set_icon_image($prevcol, -1);
+
 	$self->render;
+
+	return;
+}
+
+sub set_icon_image {
+	my ($self, $column, $image_index) = @_;
+
+	my $item = Wx::ListItem->new;
+	$item->SetMask(Wx::wxLIST_MASK_IMAGE); 
+	$item->SetImage($image_index); 
+	$self->{list}->SetColumn($column, $item);
 
 	return;
 }
