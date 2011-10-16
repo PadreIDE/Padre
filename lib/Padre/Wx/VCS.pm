@@ -23,10 +23,6 @@ use constant {
 	BLUE       => Wx::Colour->new('blue'),
 	GRAY       => Wx::Colour->new('gray'),
 	BLACK      => Wx::Colour->new('black'),
-
-	# Column ascending/descending images
-	ICON_ASC   => 'actions/go-up',
-	ICON_DESC => 'actions/go-down',
 };
 
 # Constructor
@@ -45,8 +41,8 @@ sub new {
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
 	# Set up column sorting
-	$self->{sort_column}  = 0;
-	$self->{sort_desc} = 1;
+	$self->{sort_column} = 0;
+	$self->{sort_desc}   = 1;
 
 	# Setup columns
 	my @column_headers = (
@@ -63,8 +59,20 @@ sub new {
 	# Column ascending/descending image
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
-		asc   => $images->Add( Padre::Wx::Icon::icon(ICON_ASC) ),
-		desc  => $images->Add( Padre::Wx::Icon::icon(ICON_DESC) ),
+		asc => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_UP',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		desc => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_DOWN',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
 	};
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
@@ -301,7 +309,7 @@ sub render {
 	$self->_show_command_bar( $list->GetItemCount > 0 );
 
 	# Update the list sort image
-	$self->set_icon_image($self->{sort_column}, $self->{sort_desc});
+	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
@@ -320,12 +328,13 @@ sub _show_command_bar {
 }
 
 sub _sort_model {
-	my ($self, %SVN_STATUS) = @_;
+	my ( $self, %SVN_STATUS ) = @_;
 
 	my @model = @{ $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
+
 		# Sort by status
-		@model = sort { $SVN_STATUS{$a->{status}}{name} cmp $SVN_STATUS{$b->{status}}{name} } @model;
+		@model = sort { $SVN_STATUS{ $a->{status} }{name} cmp $SVN_STATUS{ $b->{status} }{name} } @model;
 
 	} elsif ( $self->{sort_column} == 1 ) {
 
@@ -359,11 +368,11 @@ sub on_list_column_click {
 	my $prevcol  = $self->{sort_column};
 	my $reversed = $self->{sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->{sort_column}  = $column;
-	$self->{sort_desc} = $reversed;
+	$self->{sort_column} = $column;
+	$self->{sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
-	$self->set_icon_image($prevcol, -1);
+	$self->set_icon_image( $prevcol, -1 );
 
 	$self->render;
 
@@ -371,12 +380,12 @@ sub on_list_column_click {
 }
 
 sub set_icon_image {
-	my ($self, $column, $image_index) = @_;
+	my ( $self, $column, $image_index ) = @_;
 
 	my $item = Wx::ListItem->new;
-	$item->SetMask(Wx::wxLIST_MASK_IMAGE); 
-	$item->SetImage($image_index); 
-	$self->{list}->SetColumn($column, $item);
+	$item->SetMask(Wx::wxLIST_MASK_IMAGE);
+	$item->SetImage($image_index);
+	$self->{list}->SetColumn( $column, $item );
 
 	return;
 }
