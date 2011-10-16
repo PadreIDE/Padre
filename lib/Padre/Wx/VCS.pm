@@ -45,8 +45,8 @@ sub new {
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
 	# Set up column sorting
-	$self->{sortcolumn}  = 0;
-	$self->{sortreverse} = 1;
+	$self->{sort_column}  = 0;
+	$self->{sort_desc} = 1;
 
 	# Setup columns
 	my @column_headers = (
@@ -238,7 +238,7 @@ sub render {
 	my $index = 0;
 	my $list  = $self->{list};
 
-	$self->_sort_model;
+	$self->_sort_model(%SVN_STATUS);
 	my $model = $self->{model};
 
 	my $model_index = 0;
@@ -301,7 +301,7 @@ sub render {
 	$self->_show_command_bar( $list->GetItemCount > 0 );
 
 	# Update the list sort image
-	$self->set_icon_image($self->{sortcolumn}, $self->{sortreverse});
+	$self->set_icon_image($self->{sort_column}, $self->{sort_desc});
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
@@ -320,29 +320,29 @@ sub _show_command_bar {
 }
 
 sub _sort_model {
-	my $self = shift;
+	my ($self, %SVN_STATUS) = @_;
 
 	my @model = @{ $self->{model} };
-	if ( $self->{sortcolumn} == 0 ) {
+	if ( $self->{sort_column} == 0 ) {
 		# Sort by status
-		@model = sort { $a->{status} cmp $b->{status} } @model;
+		@model = sort { $SVN_STATUS{$a->{status}}{name} cmp $SVN_STATUS{$b->{status}}{name} } @model;
 
-	} elsif ( $self->{sortcolumn} == 1 ) {
+	} elsif ( $self->{sort_column} == 1 ) {
 
 		# Sort by path
 		@model = sort { $a->{path} cmp $b->{path} } @model;
-	} elsif ( $self->{sortcolumn} == 2 ) {
+	} elsif ( $self->{sort_column} == 2 ) {
 
 		# Sort by author
 		@model = sort { $a->{author} cmp $b->{author} } @model;
-	} elsif ( $self->{sortcolumn} == 3 ) {
+	} elsif ( $self->{sort_column} == 3 ) {
 
 		# Sort by revision
 		@model = sort { $a->{revision} cmp $b->{revision} } @model;
 
 	}
 
-	if ( $self->{sortreverse} ) {
+	if ( $self->{sort_desc} ) {
 
 		# reverse the sorting
 		@model = reverse @model;
@@ -356,11 +356,11 @@ sub on_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{sortcolumn};
-	my $reversed = $self->{sortreverse};
+	my $prevcol  = $self->{sort_column};
+	my $reversed = $self->{sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->{sortcolumn}  = $column;
-	$self->{sortreverse} = $reversed;
+	$self->{sort_column}  = $column;
+	$self->{sort_desc} = $reversed;
 
 	# Reset the previous column sort image
 	$self->set_icon_image($prevcol, -1);
