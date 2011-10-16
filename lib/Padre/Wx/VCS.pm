@@ -40,14 +40,6 @@ sub new {
 	$self->{revert}->SetBitmapLabel( Padre::Wx::Icon::find('actions/edit-undo') );
 	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
 
-	# Set the bitmap button tooltips
-	$self->{add}->SetToolTip( Wx::gettext('Schedule the file or directory for addition to the repository') );
-	$self->{delete}->SetToolTip( Wx::gettext('Schedule the file or directory for deletion from the repository') );
-	$self->{update}->SetToolTip( Wx::gettext('Bring changes from the repository into the working copy') );
-	$self->{commit}->SetToolTip( Wx::gettext('Send changes from your working copy to the repository') );
-	$self->{revert}->SetToolTip( Wx::gettext('Restore pristine working copy file (undo most local edits)') );
-	$self->{refresh}->SetToolTip( Wx::gettext('Refresh the status of working copy files and directories') );
-
 	# Set up column sorting
 	$self->{sortcolumn}  = 0;
 	$self->{sortreverse} = 1;
