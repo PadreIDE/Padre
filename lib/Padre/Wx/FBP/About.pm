@@ -715,7 +715,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::TE_MULTILINE | Wx::TE_NO_VSCROLL | Wx::TE_READONLY,
 	);
-	$self->{output}->SetMaxLength(62);
 	$self->{output}->SetMinSize( [ -1, 400 ] );
 	$self->{output}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
