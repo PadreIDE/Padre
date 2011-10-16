@@ -7,6 +7,7 @@ use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx             ();
 use Padre::Wx::FBP::VCS   ();
+use Padre::Task::VCS      ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -144,8 +145,10 @@ sub relocale {
 }
 
 sub refresh {
-	my $self     = shift;
-	my $current  = shift or return;
+	my $self    = shift;
+	my $current = shift or return;
+	my $command = shift || Padre::Task::VCS::VCS_STATUS;
+
 	my $document = $current->document;
 
 	# Abort any in-flight checks
@@ -173,17 +176,17 @@ sub refresh {
 	}
 
 	# Only subversion is supported at the moment
+	#TODO support GIT
 	if ( $vcs ne Padre::Constant::SUBVERSION ) {
-		$self->{status}
-			->SetLabel( sprintf( Wx::gettext('%s version control project support is not currently supported'), $vcs ) );
+		$self->{status}->SetLabel( sprintf( Wx::gettext('%s version control is not currently available'), $vcs ) );
 		return;
 	}
 
-	#TODO support GIT
 
-	# Fire the background task discarding old results
+	# Start a background VCS status task
 	$self->task_request(
 		task     => 'Padre::Task::VCS',
+		command  => $command,
 		document => $document,
 	);
 
@@ -261,7 +264,7 @@ sub render {
 						}
 						$list->SetItemTextColour( $index, $color );
 
-						$list->SetItem( $index, 2, $rec->{author} );
+						$list->SetItem( $index,   2, $rec->{author} );
 						$list->SetItem( $index++, 3, $rec->{revision} );
 					}
 				}
@@ -414,7 +417,16 @@ sub on_show_ignored_click {
 
 # Called when "Commit" button is clicked
 sub on_commit_click {
-	$_[0]->main->error('on_commit_click not implemented');
+	my $self = shift;
+	my $main = $self->main;
+
+	return
+		unless $main->yes_no(
+		Wx::gettext("Do you want to commit?"),
+		Wx::gettext('Commit file/directory to repository?')
+		);
+
+	$main->vcs->refresh( $self->current, Padre::Task::VCS::VCS_COMMIT );
 }
 
 # Called when "Add" button is clicked
@@ -433,7 +445,8 @@ sub on_add_click {
 		sprintf( Wx::gettext("Do you want to add '%s' to your repository"), $filename ),
 		Wx::gettext('Add file to repository?')
 		);
-	$main->error('on_add_click not implemented');
+
+	$main->vcs->refresh( $self->current, Padre::Task::VCS::VCS_ADD );
 }
 
 # Called when "Delete" checkbox is clicked
@@ -451,14 +464,16 @@ sub on_delete_click {
 		sprintf( Wx::gettext("Do you want to delete '%s' from your repository"), $filename ),
 		Wx::gettext('Delete file from repository??')
 		);
-	$main->error('on_delete_click not implemented');
+
+	$main->vcs->refresh( $self->current, Padre::Task::VCS::VCS_DELETE );
 }
 
 # Called when "Update" button is clicked
 sub on_update_click {
-	my $self           = shift;
-	my $main           = $self->main;
-	$main->error('on_update_click  not implemented');
+	my $self = shift;
+	my $main = $self->main;
+
+	$main->vcs->refresh( $main->current, Padre::Task::VCS::VCS_UPDATE );
 }
 
 # Called when "Revert" button is clicked
@@ -476,7 +491,8 @@ sub on_revert_click {
 		sprintf( Wx::gettext("Do you want to revert changes to '%s'"), $filename ),
 		Wx::gettext('Revert changes?')
 		);
-	$main->error('on_revert_click not implemented');
+
+	$main->vcs->refresh( $self->current, Padre::Task::VCS::VCS_REVERT );
 }
 
 1;

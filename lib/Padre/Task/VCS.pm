@@ -12,17 +12,29 @@ use Padre::Logger;
 our $VERSION = '0.91';
 our @ISA     = 'Padre::Task';
 
+use constant {
+	VCS_STATUS => 'status',
+	VCS_UPDATE => 'update',
+	VCS_ADD    => 'add',
+	VCS_DELETE => 'delete',
+	VCS_REVERT => 'revert',
+	VCS_COMMIT => 'commit',
+};
+
 ######################################################################
 # Constructor
 
 sub new {
 	my $self = shift->SUPER::new(@_);
 
-	# Just convert the document to text for now.
-	# Later, we'll suck in more data from the project and
-	# other related documents to do VCS operations more awesomely.
+	# Assert required document parameter
 	unless ( Params::Util::_INSTANCE( $self->{document}, 'Padre::Document' ) ) {
 		die "Failed to provide a document to the VCS task\n";
+	}
+
+	# Assert required command parameter
+	unless ( defined $self->{command} ) {
+		die "Failed to provide a command to the VCS task\n";
 	}
 
 	# Remove the document entirely as we do this,
@@ -53,16 +65,22 @@ sub run {
 
 	# Pull things off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
+	return unless $self->{command};
+	my $command = delete $self->{command};
 	return unless $self->{vcs};
 	my $vcs = delete $self->{vcs};
 	return unless $self->{project_dir};
 	my $project_dir = delete $self->{project_dir};
 
-	# We only support Subversion at the moment
-	$self->{model} = $self->_find_svn_status($project_dir)
-		if $vcs eq Padre::Constant::SUBVERSION;
-
 	#TODO support GIT!
+	return if $vcs ne Padre::Constant::SUBVERSION;
+
+	# We only support Subversion at the moment
+	if ( $command eq VCS_STATUS ) {
+		$self->{model} = $self->_find_svn_status($project_dir);
+	} else {
+		die "$command is not currently supported\n";
+	}
 
 	return 1;
 }
