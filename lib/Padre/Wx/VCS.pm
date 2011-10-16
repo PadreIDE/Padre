@@ -403,7 +403,7 @@ sub on_list_item_activated {
 			my $page = $main->notebook->GetPage($id);
 			$page->SetFocus;
 		} else {
-			$main->setup_editors($filename);
+			$main->setup_editor($filename);
 		}
 
 		# Select the next difference after opening the file
