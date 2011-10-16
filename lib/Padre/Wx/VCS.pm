@@ -324,21 +324,22 @@ sub _sort_model {
 
 	my @model = @{ $self->{model} };
 	if ( $self->{sortcolumn} == 0 ) {
-
-		# Sort by revision
-		@model = sort { $a->{revision} cmp $b->{revision} } @model;
-	} elsif ( $self->{sortcolumn} == 1 ) {
-
-		# Sort by author
-		@model = sort { $a->{author} cmp $b->{author} } @model;
-	} elsif ( $self->{sortcolumn} == 2 ) {
-
 		# Sort by status
 		@model = sort { $a->{status} cmp $b->{status} } @model;
-	} elsif ( $self->{sortcolumn} == 3 ) {
+
+	} elsif ( $self->{sortcolumn} == 1 ) {
 
 		# Sort by path
 		@model = sort { $a->{path} cmp $b->{path} } @model;
+	} elsif ( $self->{sortcolumn} == 2 ) {
+
+		# Sort by author
+		@model = sort { $a->{author} cmp $b->{author} } @model;
+	} elsif ( $self->{sortcolumn} == 3 ) {
+
+		# Sort by revision
+		@model = sort { $a->{revision} cmp $b->{revision} } @model;
+
 	}
 
 	if ( $self->{sortreverse} ) {
