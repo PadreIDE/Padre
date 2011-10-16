@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-15 12:10-0700\n"
+"POT-Creation-Date: 2011-10-16 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,9 +140,9 @@ msgstr ""
 msgid "%s line %s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:170
+#: lib/Padre/Wx/VCS.pm:194
 #, perl-format
-msgid "%s version control project support is not currently supported"
+msgid "%s version control is not currently available"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Positions.pm:123
@@ -691,7 +691,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:278
+#: lib/Padre/Wx/VCS.pm:304
 msgid ", "
 msgstr ""
 
@@ -761,11 +761,11 @@ msgstr ""
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:426
+#: lib/Padre/Wx/VCS.pm:492
 msgid "Add file to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:203
+#: lib/Padre/Wx/VCS.pm:229
 msgid "Added"
 msgstr ""
 
@@ -922,7 +922,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:50
+#: lib/Padre/Wx/VCS.pm:51
 msgid "Author"
 msgstr ""
 
@@ -1022,6 +1022,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:271
 msgid "Brian Cassidy"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/VCS.pm:82
+msgid "Bring changes from the repository into the working copy"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:193
@@ -1239,7 +1243,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:119 lib/Padre/Wx/FBP/Text.pm:55
-#: lib/Padre/Wx/FBP/About.pm:727 lib/Padre/Wx/FBP/Sync.pm:266
+#: lib/Padre/Wx/FBP/About.pm:726 lib/Padre/Wx/FBP/Sync.pm:266
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Close"
@@ -1345,6 +1349,10 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:472
+msgid "Commit file/directory to repository?"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/About.pm:150
 msgid "Config"
 msgstr ""
@@ -1357,7 +1365,7 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:206
+#: lib/Padre/Wx/VCS.pm:232
 msgid "Conflicted"
 msgstr ""
 
@@ -1602,11 +1610,11 @@ msgstr ""
 msgid "Current document is not a .t file"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:163
+#: lib/Padre/Wx/VCS.pm:187
 msgid "Current file is not in a version control system"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:154
+#: lib/Padre/Wx/VCS.pm:178
 msgid "Current file is not saved in a version control system"
 msgstr ""
 
@@ -1725,7 +1733,7 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:444
+#: lib/Padre/Wx/VCS.pm:511
 msgid "Delete file from repository??"
 msgstr ""
 
@@ -1733,7 +1741,7 @@ msgstr ""
 msgid "Delete the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:204
+#: lib/Padre/Wx/VCS.pm:230
 msgid "Deleted"
 msgstr ""
 
@@ -1753,7 +1761,7 @@ msgstr ""
 msgid "Developers"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:64 lib/Padre/Wx/FBP/About.pm:925
+#: lib/Padre/Wx/About.pm:64 lib/Padre/Wx/FBP/About.pm:924
 msgid "Development"
 msgstr ""
 
@@ -1829,16 +1837,20 @@ msgstr ""
 msgid "Do you really want to close and delete %s from disk?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:425
+#: lib/Padre/Wx/VCS.pm:491
 #, perl-format
 msgid "Do you want to add '%s' to your repository"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:471
+msgid "Do you want to commit?"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3060
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:443
+#: lib/Padre/Wx/VCS.pm:510
 #, perl-format
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
@@ -1847,7 +1859,7 @@ msgstr ""
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:468
+#: lib/Padre/Wx/VCS.pm:537
 #, perl-format
 msgid "Do you want to revert changes to '%s'"
 msgstr ""
@@ -2131,7 +2143,7 @@ msgstr ""
 msgid "Error while searching for POD"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:365
+#: lib/Padre/Wx/VCS.pm:422
 msgid "Error while trying to perform Padre action"
 msgstr ""
 
@@ -2692,7 +2704,7 @@ msgstr ""
 msgid "Ignore case (&i)"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:207 lib/Padre/Wx/FBP/VCS.pm:194
+#: lib/Padre/Wx/VCS.pm:233 lib/Padre/Wx/FBP/VCS.pm:212
 msgid "Ignored"
 msgstr ""
 
@@ -2721,7 +2733,7 @@ msgstr ""
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:927
+#: lib/Padre/Wx/FBP/About.pm:926
 msgid "Information"
 msgstr ""
 
@@ -3127,11 +3139,11 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:209
+#: lib/Padre/Wx/VCS.pm:235
 msgid "Missing"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:205
+#: lib/Padre/Wx/VCS.pm:231
 msgid "Modified"
 msgstr ""
 
@@ -3323,7 +3335,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:202 lib/Padre/Wx/FBP/VCS.pm:162
+#: lib/Padre/Wx/VCS.pm:228 lib/Padre/Wx/FBP/VCS.pm:180
 msgid "Normal"
 msgstr ""
 
@@ -3359,7 +3371,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:210
+#: lib/Padre/Wx/VCS.pm:236
 msgid "Obstructed"
 msgstr ""
 
@@ -3638,7 +3650,7 @@ msgstr ""
 msgid "Paco Alguacil"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/FBP/About.pm:924
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/FBP/About.pm:923
 #: lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr ""
@@ -3711,7 +3723,7 @@ msgstr ""
 msgid "Patch..."
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:49
+#: lib/Padre/Wx/VCS.pm:50
 msgid "Path"
 msgstr ""
 
@@ -4069,6 +4081,10 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/VCS.pm:142
+msgid "Refresh the status of working copy files and directories"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/Preferences.pm:515
 msgid "RegExp for TODO panel"
 msgstr ""
@@ -4279,11 +4295,15 @@ msgstr ""
 msgid "Restore focus..."
 msgstr ""
 
+#: lib/Padre/Wx/FBP/VCS.pm:122
+msgid "Restore pristine working copy file (undo most local edits)"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:143
 msgid "Return"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:469
+#: lib/Padre/Wx/VCS.pm:538
 msgid "Revert changes?"
 msgstr ""
 
@@ -4291,7 +4311,7 @@ msgstr ""
 msgid "Revert this change"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:51
+#: lib/Padre/Wx/VCS.pm:52
 msgid "Revision"
 msgstr ""
 
@@ -4441,6 +4461,14 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:31
 msgid "Save session as..."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/VCS.pm:42
+msgid "Schedule the file or directory for addition to the repository"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/VCS.pm:62
+msgid "Schedule the file or directory for deletion from the repository"
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:447 lib/Padre/MimeTypes.pm:456
@@ -4643,6 +4671,10 @@ msgstr ""
 msgid "Send a bug report to the Padre developer team"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/VCS.pm:102
+msgid "Send changes from your working copy to the repository"
+msgstr ""
+
 #: lib/Padre/File/HTTP.pm:51
 #, perl-format
 msgid "Sending HTTP request %s..."
@@ -4753,7 +4785,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:225
+#: lib/Padre/Wx/FBP/VCS.pm:243
 msgid "Show"
 msgstr ""
 
@@ -5117,8 +5149,8 @@ msgstr ""
 msgid "Stats"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:48 lib/Padre/Wx/FBP/Sync.pm:51
-#: lib/Padre/Wx/FBP/VCS.pm:210 lib/Padre/Wx/Dialog/PluginManager.pm:68
+#: lib/Padre/Wx/VCS.pm:49 lib/Padre/Wx/FBP/Sync.pm:51
+#: lib/Padre/Wx/FBP/VCS.pm:228 lib/Padre/Wx/Dialog/PluginManager.pm:68
 #: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
 #: lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
@@ -5333,7 +5365,7 @@ msgstr ""
 msgid "Tom Eliaz"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:69 lib/Padre/Wx/FBP/About.pm:926
+#: lib/Padre/Wx/About.pm:69 lib/Padre/Wx/FBP/About.pm:925
 msgid "Translation"
 msgstr ""
 
@@ -5426,7 +5458,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:208 lib/Padre/Wx/FBP/VCS.pm:178
+#: lib/Padre/Wx/VCS.pm:234 lib/Padre/Wx/FBP/VCS.pm:196
 msgid "Unversioned"
 msgstr ""
 
@@ -5526,7 +5558,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:120
+#: lib/Padre/Wx/VCS.pm:142
 msgid "Version Control"
 msgstr ""
 
