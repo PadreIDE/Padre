@@ -405,6 +405,16 @@ sub on_list_item_activated {
 		} else {
 			$main->setup_editors($filename);
 		}
+
+		# Select the next difference after opening the file
+		Wx::Event::EVT_IDLE(
+			$main,
+			sub {
+				$main->{diff}->select_next_difference;
+				Wx::Event::EVT_IDLE( $main, undef );
+			},
+		) if $main->config->feature_document_diffs;
+
 	};
 	$main->error( Wx::gettext('Error while trying to perform Padre action') ) if $@;
 }
