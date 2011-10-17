@@ -3,15 +3,17 @@ package Padre::Task::Diff;
 use 5.008005;
 use strict;
 use warnings;
-use Params::Util    ();
+use Padre::Locale   ();
 use Padre::Task     ();
 use Padre::Util     ();
+use Algorithm::Diff ();
+use Encode          ();
 use File::Basename  ();
 use File::Spec      ();
 use File::Which     ();
 use File::Temp      ();
-use Algorithm::Diff ();
-use Padre::Logger;
+use Params::Util    ();
+use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.91';
 our @ISA     = 'Padre::Task';
@@ -83,7 +85,7 @@ sub run {
 sub _find_local_diff {
 	my ( $self, $text, $filename ) = @_;
 
-	my $content = $filename ? Padre::Util::slurp($filename) : undef;
+	my $content = $filename ? _slurp($filename) : undef;
 	my $data = [];
 	if ( $content and $text ) {
 		$data = $self->_find_diffs( $$content, $text );
@@ -116,8 +118,26 @@ sub _find_svn_diff {
 		'.svn', 'text-base',
 		File::Basename::basename($filename) . '.svn-base'
 	);
-	my $origin = Padre::Util::slurp $local_cheat;
+	my $origin = _slurp($local_cheat);
 	return $origin ? $self->_find_diffs( $$origin, $text ) : undef;
+}
+
+# Reads the contents of a file, figure out its encoding
+# and return properly decoded content
+sub _slurp {
+	my $file = shift;
+
+	open my $fh, '<', $file or return '';
+	binmode $fh;
+	local $/ = undef;
+	my $content = <$fh>;
+	close $fh;
+
+	# Figure out what encoding is that file using and decode it
+	my $encoding = Padre::Locale::encoding_from_string($content);
+	$content = Encode::decode( $encoding, $content );
+
+	return \$content;
 }
 
 # Find differences between git versioned document and current document
@@ -155,8 +175,8 @@ sub _find_git_diff {
 	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
 
 	# Slurp git command standard input and output
-	my $stdout = Padre::Util::slurp $out->filename;
-	my $stderr = Padre::Util::slurp $err->filename;
+	my $stdout = _slurp( $out->filename );
+	my $stderr = _slurp( $err->filename );
 
 	if ( defined($stderr) and ( $$stderr eq '' ) and defined($stdout) ) {
 		return $self->_find_diffs( $$stdout, $text );
