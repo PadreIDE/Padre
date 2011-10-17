@@ -175,7 +175,7 @@ sub refresh {
 
 	# Shortcut if there is nothing in the document to do
 	if ( $document->is_unused ) {
-		$self->{status}->SetLabel( Wx::gettext('Current file is not saved in a version control system') );
+		$self->{status}->SetValue( Wx::gettext('Current file is not saved in a version control system') );
 		return;
 	}
 
@@ -184,13 +184,13 @@ sub refresh {
 
 	# No version control system?
 	unless ($vcs) {
-		$self->{status}->SetLabel( Wx::gettext('Current file is not in a version control system') );
+		$self->{status}->SetValue( Wx::gettext('Current file is not in a version control system') );
 		return;
 	}
 
 	# Not supported VCS check
 	if ( $vcs ne Padre::Constant::SUBVERSION and $vcs ne Padre::Constant::GIT ) {
-		$self->{status}->SetLabel( sprintf( Wx::gettext('%s version control is not currently available'), $vcs ) );
+		$self->{status}->SetValue( sprintf( Wx::gettext('%s version control is not currently available'), $vcs ) );
 		return;
 	}
 
@@ -319,7 +319,7 @@ sub render {
 		}
 		$message .= sprintf( '%s=%d', $vcs_status_obj->{name}, $vcs_status_obj->{count} );
 	}
-	$self->{status}->SetLabel($message);
+	$self->{status}->SetValue($message);
 
 	$self->_show_command_bar( $list->GetItemCount > 0 )
 		if $self->main->config->vcs_enable_command_bar;

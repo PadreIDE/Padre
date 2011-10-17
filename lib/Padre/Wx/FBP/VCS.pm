@@ -12,7 +12,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel
@@ -222,10 +222,13 @@ sub new {
 		},
 	);
 
-	$self->{status} = Wx::StaticText->new(
+	$self->{status} = Wx::TextCtrl->new(
 		$self,
 		-1,
-		Wx::gettext("Status"),
+		"",
+		Wx::DefaultPosition,
+		[ -1, 50 ],
+		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -252,7 +255,7 @@ sub new {
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$main_sizer->Add( $checkbox_sizer, 0, Wx::EXPAND, 2 );
-	$main_sizer->Add( $self->{status}, 0, Wx::ALL | Wx::EXPAND, 8 );
+	$main_sizer->Add( $self->{status}, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
