@@ -28,7 +28,8 @@ HTML.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx             ();
+use Padre::Wx::HtmlWindow ();
 
 our $VERSION = '0.91';
 our @ISA     = 'Wx::Frame';
@@ -55,7 +56,6 @@ sub new {
 	$self->{panel} = Wx::Panel->new( $self, -1 );
 
 	# Create the HTML widget within the panel
-	require Padre::Wx::HtmlWindow;
 	$self->{html} = Padre::Wx::HtmlWindow->new( $self->{panel}, -1 );
 
 	return $self;

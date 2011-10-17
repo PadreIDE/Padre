@@ -23,11 +23,18 @@ methods.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
-use Wx::Html  ();
+use Padre::Wx           ();
+use Padre::Wx::Constant ();
+use Wx::Html            ();
 
 our $VERSION = '0.91';
 our @ISA     = 'Wx::HtmlWindow';
+
+# Now that we have loaded Wx::Html we need to rerun the constant
+# loader to ensure the new style constants are correctly created.
+BEGIN {
+	Padre::Wx::Constant::load();
+}
 
 
 

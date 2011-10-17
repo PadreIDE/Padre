@@ -8,6 +8,7 @@ use warnings;
 use Carp                  ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
+use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.91';
@@ -107,7 +108,6 @@ sub new {
 	$self->{label}->SetFont($font);
 
 	# Plug-in Documentation HTML Window
-	require Padre::Wx::HtmlWindow;
 	$self->{whtml} = Wx::HtmlWindow->new($self);
 
 	# Enable/Disable Button

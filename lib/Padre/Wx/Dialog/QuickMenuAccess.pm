@@ -7,6 +7,7 @@ use Padre::Util           ();
 use Padre::DB             ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
+use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
@@ -185,7 +186,6 @@ sub _create_controls {
 	);
 
 	# Shows how many items are selected and information about what is selected
-	require Padre::Wx::HtmlWindow;
 	$self->_status_text(
 		Padre::Wx::HtmlWindow->new(
 			$self,

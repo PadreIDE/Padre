@@ -121,6 +121,10 @@ sub load {
 		MAC     => Wx::wxMAC,
 		X11     => Wx::wxX11,
 	);
+	foreach ( keys %constants ) {
+		# Prevent duplicates on 2nd or later runs
+		delete $constants{$_} if Wx->can($_);
+	}
 	foreach ( map { s/^:// ? @{ $Wx::EXPORT_TAGS{$_} } : $_ } WANT ) {
 		next if defined $constants{$_};
 		next unless s/^(wx)(.+)//i;
@@ -132,7 +136,7 @@ sub load {
 			next;
 		}
 		if ( Wx->can($name) ) {
-			warn "Clash with function Wx::$name";
+			# warn "Clash with function Wx::$name";
 			next;
 		}
 		if ( exists $Wx::{"$name\::"} ) {
@@ -161,13 +165,13 @@ sub load {
 		Wx;
 	require constant;
 	constant::->import( \%constants );
-
-	# Aliases for other things that aren't actual constants
-	no warnings 'once';
-	*Wx::TheApp = *Wx::wxTheApp;
 }
 
 load();
+
+# Aliases for other things that aren't actual constants
+no warnings 'once';
+*Wx::TheApp = *Wx::wxTheApp;
 
 1;
 

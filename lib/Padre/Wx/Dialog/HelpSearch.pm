@@ -11,6 +11,7 @@ our @ISA     = 'Wx::Dialog';
 # module imports
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::Wx::HtmlWindow ();
 
 # accessors
 use Class::XSAccessor {
@@ -164,7 +165,6 @@ sub _create_controls {
 	);
 
 	# HTML Help Viewer
-	require Padre::Wx::HtmlWindow;
 	$self->_help_viewer(
 		Padre::Wx::HtmlWindow->new(
 			$self,
