@@ -386,7 +386,7 @@ sub set_icon_image {
 	my ( $self, $column, $image_index ) = @_;
 
 	my $item = Wx::ListItem->new;
-	$item->SetMask(Wx::wxLIST_MASK_IMAGE);
+	$item->SetMask(Wx::LIST_MASK_IMAGE);
 	$item->SetImage($image_index);
 	$self->{list}->SetColumn( $column, $item );
 
