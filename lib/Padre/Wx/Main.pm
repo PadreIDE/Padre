@@ -581,25 +581,6 @@ use Class::XSAccessor {
 
 =pod
 
-=head3 C<about>
-
-    my $dialog = $main->about;
-
-Returns the About Padre dialog, creating it if needed.
-
-=cut
-
-sub about {
-	my $self = shift;
-	unless ( defined $self->{about} ) {
-		require Padre::Wx::About;
-		$self->{about} = Padre::Wx::About->new($self);
-	}
-	return $self->{about};
-}
-
-=pod
-
 =head3 C<left>
 
     my $panel = $main->left;
@@ -2053,11 +2034,6 @@ sub relocale {
 		$self->{regex_editor} = Padre::Wx::Dialog::RegexEditor->new($self);
 		$self->{regex_editor}->show if $was_visible;
 		$self->{regex_editor}->set_data($data_ref);
-	}
-
-	# Replace the about box if it exists
-	if ( exists $self->{about} ) {
-		$self->{about} = Padre::Wx::About->new($self);
 	}
 
 	return;
