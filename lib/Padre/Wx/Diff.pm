@@ -245,6 +245,8 @@ sub _select_next_prev_difference {
 		# Select the line in the editor and show the diff box
 		Padre::Util::select_line_in_editor( $line_to_select, $editor );
 		$self->show_diff_box( $line_to_select, $editor );
+	} else {
+		$self->{main}->error( Wx::gettext('No changes found') );
 	}
 }
 
