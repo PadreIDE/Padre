@@ -68,7 +68,7 @@ sub run {
 	return unless $self->{command};
 	my $command = delete $self->{command};
 	return unless $self->{vcs};
-	my $vcs = delete $self->{vcs};
+	my $vcs = $self->{vcs};
 	return unless $self->{project_dir};
 	my $project_dir = delete $self->{project_dir};
 
@@ -192,7 +192,7 @@ sub _find_git_status {
 	my @cmd = (
 		$git,
 		'status',
-		'--short',		
+		'--short',
 		'1>' . $out->filename,
 		'2>' . $err->filename,
 	);
@@ -210,10 +210,14 @@ sub _find_git_status {
 			if ( $line =~ /^(..)\s+(.+?)(?:\s\->\s(.+?))?$/ ) {
 
 				# Handle stuff
+				my $status = $1;
 				my $path = defined $3 ? $3 : $2;
+
+				$status =~ s/(^\s+)|(\s+$)//;
+				$status =~ s/\?\?/?/;
 				push @model,
 					{
-					status   => $1,
+					status   => $status,
 					revision => '',
 					author   => '',
 					path     => $path,

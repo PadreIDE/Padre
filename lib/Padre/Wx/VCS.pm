@@ -188,9 +188,8 @@ sub refresh {
 		return;
 	}
 
-	# Only subversion is supported at the moment
-	#TODO support GIT
-	if ( $vcs ne Padre::Constant::SUBVERSION ) {
+	# Not supported VCS check
+	if ( $vcs ne Padre::Constant::SUBVERSION and $vcs ne Padre::Constant::GIT ) {
 		$self->{status}->SetLabel( sprintf( Wx::gettext('%s version control is not currently available'), $vcs ) );
 		return;
 	}
@@ -210,6 +209,7 @@ sub task_finish {
 	my $self = shift;
 	my $task = shift;
 	$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+	$self->{vcs} = $task->{vcs} or return;
 
 	$self->render;
 }
@@ -236,8 +236,22 @@ sub render {
 		'~' => { name => Wx::gettext('Obstructed') }
 	);
 
-	# Add a zero count key for subversion status hash
-	$SVN_STATUS{$_}->{count} = 0 for keys %SVN_STATUS;
+	# GIT status code
+	my %GIT_STATUS = (
+		' ' => { name => Wx::gettext('Unmodified') },
+		'M' => { name => Wx::gettext('Modified') },
+		'A' => { name => Wx::gettext('Added') },
+		'D' => { name => Wx::gettext('Deleted') },
+		'R' => { name => Wx::gettext('Renamed') },
+		'C' => { name => Wx::gettext('Copied') },
+		'U' => { name => Wx::gettext('Updated but unmerged') },
+		'?' => { name => Wx::gettext('Unversioned') },
+	);
+
+	my %vcs_status = $self->{vcs} eq Padre::Constant::SUBVERSION ? %SVN_STATUS : %GIT_STATUS;
+
+	# Add a zero count key for VCS status hash
+	$vcs_status{$_}->{count} = 0 for keys %vcs_status;
 
 	# Retrieve the state of the checkboxes
 	my $show_normal      = $self->{show_normal}->IsChecked      ? 1 : 0;
@@ -247,13 +261,13 @@ sub render {
 	my $index = 0;
 	my $list  = $self->{list};
 
-	$self->_sort_model(%SVN_STATUS);
+	$self->_sort_model(%vcs_status);
 	my $model = $self->{model};
 
 	my $model_index = 0;
 	for my $rec (@$model) {
 		my $status      = $rec->{status};
-		my $path_status = $SVN_STATUS{$status};
+		my $path_status = $vcs_status{$status};
 		if ( defined $path_status ) {
 
 			if ( $show_normal or $status ne ' ' ) {
@@ -297,13 +311,13 @@ sub render {
 
 	# Show Subversion statistics
 	my $message = '';
-	for my $status ( sort keys %SVN_STATUS ) {
-		my $svn_status = $SVN_STATUS{$status};
-		next if $svn_status->{count} == 0;
+	for my $status ( sort keys %vcs_status ) {
+		my $vcs_status_obj = $vcs_status{$status};
+		next if $vcs_status_obj->{count} == 0;
 		if ( length($message) > 0 ) {
 			$message .= Wx::gettext(', ');
 		}
-		$message .= sprintf( '%s=%d', $svn_status->{name}, $svn_status->{count} );
+		$message .= sprintf( '%s=%d', $vcs_status_obj->{name}, $vcs_status_obj->{count} );
 	}
 	$self->{status}->SetLabel($message);
 
@@ -331,13 +345,13 @@ sub _show_command_bar {
 }
 
 sub _sort_model {
-	my ( $self, %SVN_STATUS ) = @_;
+	my ( $self, %vcs_status ) = @_;
 
 	my @model = @{ $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
 
 		# Sort by status
-		@model = sort { $SVN_STATUS{ $a->{status} }{name} cmp $SVN_STATUS{ $b->{status} }{name} } @model;
+		@model = sort { $vcs_status{ $a->{status} }{name} cmp $vcs_status{ $b->{status} }{name} } @model;
 
 	} elsif ( $self->{sort_column} == 1 ) {
 
