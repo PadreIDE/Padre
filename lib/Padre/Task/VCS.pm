@@ -104,7 +104,7 @@ sub _find_svn_status {
 	# Handle spaces in executable path under win32
 	$svn = qq{"$svn"} if Padre::Constant::WIN32;
 
-	# 'git --no-pager show' command
+	# run 'svn --no-ignore --verbose status' command
 	my @cmd = (
 		$svn,
 		'--no-ignore',
