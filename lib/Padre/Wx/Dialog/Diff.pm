@@ -171,7 +171,7 @@ sub show {
 		$self->Move( $editor->ClientToScreen($pt) );
 	}
 
-	my $type = $diff->{type};
+	my $type = $diff->{type} or return;
 	my $color;
 	if ( $type eq 'A' ) {
 		$color = Padre::Wx::Editor::DARK_GREEN();

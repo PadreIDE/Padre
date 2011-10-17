@@ -139,11 +139,13 @@ sub _find_git_diff {
 	$git = qq{"$git"} if Padre::Constant::WIN32;
 
 	# 'git --no-pager show' command
+	my $path = File::Spec->abs2rel( $filename, $project_dir );
+	$path =~ s/\\/\//g if Padre::Constant::WIN32;
 	my @cmd = (
 		$git,
 		'--no-pager',
 		'show',
-		"HEAD:" . File::Basename::basename($filename),
+		"HEAD:" . $path,
 		'1>' . $out->filename,
 		'2>' . $err->filename,
 	);
