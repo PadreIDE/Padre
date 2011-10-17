@@ -3,7 +3,6 @@ package Padre::Task::Diff;
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Locale   ();
 use Padre::Task     ();
 use Padre::Util     ();
 use Algorithm::Diff ();
@@ -45,6 +44,9 @@ sub new {
 	# Obtain document text
 	$self->{text} = $document->text_get;
 
+	# Obtain document encoding scheme
+	$self->{encoding} = $document->encoding;
+
 	# Obtain document project dir
 	$self->{project_dir} = $document->project_dir;
 
@@ -67,14 +69,15 @@ sub run {
 	my $vcs         = delete $self->{vcs};
 	my $filename    = delete $self->{filename};
 	my $project_dir = delete $self->{project_dir};
+	my $encoding    = delete $self->{encoding};
 
 	# Compare between VCS and local buffer document
 	my $data;
-	$data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text ) if $vcs;
+	$data = $self->_find_vcs_diff( $vcs, $project_dir, $filename, $text, $encoding ) if $vcs;
 	unless ($data) {
 
 		# Compare between saved and current buffer document
-		$data = $self->_find_local_diff( $text, $filename );
+		$data = $self->_find_local_diff( $text, $filename, $encoding );
 	}
 	$self->{data} = $data;
 
@@ -83,9 +86,9 @@ sub run {
 
 # Find local differences between current unsaved document and saved document
 sub _find_local_diff {
-	my ( $self, $text, $filename ) = @_;
+	my ( $self, $text, $filename, $encoding ) = @_;
 
-	my $content = $filename ? _slurp($filename) : undef;
+	my $content = $filename ? _slurp( $filename, $encoding ) : undef;
 	my $data = [];
 	if ( $content and $text ) {
 		$data = $self->_find_diffs( $$content, $text );
@@ -96,10 +99,10 @@ sub _find_local_diff {
 
 # Find differences between VCS versioned document and current document
 sub _find_vcs_diff {
-	my ( $self, $vcs, $project_dir, $filename, $text ) = @_;
+	my ( $self, $vcs, $project_dir, $filename, $text, $encoding ) = @_;
 
-	return $self->_find_svn_diff( $filename, $text ) if $vcs eq Padre::Constant::SUBVERSION;
-	return $self->_find_git_diff( $project_dir, $filename, $text ) if $vcs eq Padre::Constant::GIT;
+	return $self->_find_svn_diff( $filename, $text, $encoding ) if $vcs eq Padre::Constant::SUBVERSION;
+	return $self->_find_git_diff( $project_dir, $filename, $text, $encoding ) if $vcs eq Padre::Constant::GIT;
 
 	#TODO implement the rest of the VCS like mercurial, bazaar
 	TRACE("Unhandled $vcs") if DEBUG;
@@ -111,21 +114,20 @@ sub _find_vcs_diff {
 # file in the .svn folder
 # Contributed by submersible_toaster
 sub _find_svn_diff {
-	my ( $self, $filename, $text ) = @_;
+	my ( $self, $filename, $text, $encoding ) = @_;
 
 	my $local_cheat = File::Spec->catfile(
 		File::Basename::dirname($filename),
 		'.svn', 'text-base',
 		File::Basename::basename($filename) . '.svn-base'
 	);
-	my $origin = _slurp($local_cheat);
+	my $origin = _slurp( $local_cheat, $encoding );
 	return $origin ? $self->_find_diffs( $$origin, $text ) : undef;
 }
 
-# Reads the contents of a file, figure out its encoding
-# and return properly decoded content
+# Reads the contents of a file, and decode it using document encoding scheme
 sub _slurp {
-	my $file = shift;
+	my ( $file, $encoding ) = @_;
 
 	open my $fh, '<', $file or return '';
 	binmode $fh;
@@ -133,8 +135,7 @@ sub _slurp {
 	my $content = <$fh>;
 	close $fh;
 
-	# Figure out what encoding is that file using and decode it
-	my $encoding = Padre::Locale::encoding_from_string($content);
+	# Decode the content
 	$content = Encode::decode( $encoding, $content );
 
 	return \$content;
@@ -142,7 +143,7 @@ sub _slurp {
 
 # Find differences between git versioned document and current document
 sub _find_git_diff {
-	my ( $self, $project_dir, $filename, $text ) = @_;
+	my ( $self, $project_dir, $filename, $text, $encoding ) = @_;
 
 	# Create a temporary file for standard output redirection
 	my $out = File::Temp->new( UNLINK => 1 );
@@ -175,8 +176,8 @@ sub _find_git_diff {
 	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
 
 	# Slurp git command standard input and output
-	my $stdout = _slurp( $out->filename );
-	my $stderr = _slurp( $err->filename );
+	my $stdout = _slurp( $out->filename, $encoding );
+	my $stderr = _slurp( $err->filename, $encoding );
 
 	if ( defined($stderr) and ( $$stderr eq '' ) and defined($stdout) ) {
 		return $self->_find_diffs( $$stdout, $text );

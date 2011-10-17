@@ -153,6 +153,7 @@ sub show {
 	my $diff   = shift;
 	my $pt     = shift;
 
+	my $type = $diff->{type} or return;
 
 	# Store editor reference so we can access it in revert
 	$self->{editor} = $editor;
@@ -171,7 +172,6 @@ sub show {
 		$self->Move( $editor->ClientToScreen($pt) );
 	}
 
-	my $type = $diff->{type} or return;
 	my $color;
 	if ( $type eq 'A' ) {
 		$color = Padre::Wx::Editor::DARK_GREEN();
