@@ -1093,7 +1093,7 @@ sub init {
 	# start or edit.patch_diff
 	Padre::Wx::Action->new(
 		name    => 'edit.patch_diff',
-		label   => _T('Patch...'),
+		label   => _T('&Patch...'),
 		comment => _T('Simplistic Patch only works on saved files'),
 
 		# shortcut   => 'Ctrl-Shift-F',
