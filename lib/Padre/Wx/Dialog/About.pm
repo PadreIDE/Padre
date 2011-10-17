@@ -30,9 +30,6 @@ sub new {
 
 	$self->CenterOnParent;
 
-	$self->{action_request} = 'Patch';
-	$self->{selection}      = 0;
-
 	return $self;
 }
 
