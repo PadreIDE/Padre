@@ -15597,7 +15597,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="0">
+        <object class="Dialog" expanded="1">
             <property name="bg"></property>
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
@@ -15655,16 +15655,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer45</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND | wxALL</property>
                     <property name="proportion">0</property>
-                    <object class="wxNotebook" expanded="0">
+                    <object class="wxNotebook" expanded="1">
                         <property name="bg"></property>
                         <property name="bitmapsize"></property>
                         <property name="context_help"></property>
@@ -16093,7 +16093,7 @@
                                                     <property name="font">,90,90,-1,70,0</property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Blue butterfly on a green leaf splash image is based on work &#x0A;by Jerry Charlotte (blackbutterfly)</property>
+                                                    <property name="label">Blue butterfly on a green leaf splash image is based on work&#x0A;by Jerry Charlotte (blackbutterfly)</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_staticText67</property>
@@ -16203,7 +16203,7 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Copyright 2008–2011 The Padre Development Team Padre is free software; &#x0A;you can redistribute it and/or modify it under the same terms as Perl 5. </property>
+                                                    <property name="label">Copyright 2008–2011 The Padre Development Team&#x0A;Padre is free software; you can redistribute it and/or modify it under the same terms as Perl 5.</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_staticText34</property>
@@ -16313,7 +16313,7 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">&quot;Padre contains icons from GNOME, you can redistribute it and/or &#x0A;modify then under the terms of the GNU General Public License as published by the &#x0A;Free Software Foundation; version 2 dated June, 1991.&quot;</property>
+                                                    <property name="label">Padre contains icons from GNOME, you can redistribute them and/or&#x0A;modify them under the terms of the GNU General Public License as published by the &#x0A;Free Software Foundation; version 2 dated June, 1991.</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_staticText35</property>
