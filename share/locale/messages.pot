@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 20:10-0700\n"
+"POT-Creation-Date: 2011-10-17 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "%s line %s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:194
+#: lib/Padre/Wx/VCS.pm:193
 #, perl-format
 msgid "%s version control is not currently available"
 msgstr ""
@@ -677,11 +677,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:190
+#: lib/Padre/Wx/Dialog/About.pm:187
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:195
+#: lib/Padre/Wx/Dialog/About.pm:192
 msgid "(unsupported)"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:304
+#: lib/Padre/Wx/VCS.pm:318
 msgid ", "
 msgstr ""
 
@@ -757,11 +757,11 @@ msgstr ""
 msgid "Add another closing bracket if there already is one"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:492
+#: lib/Padre/Wx/VCS.pm:506
 msgid "Add file to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:229
+#: lib/Padre/Wx/VCS.pm:229 lib/Padre/Wx/VCS.pm:243
 msgid "Added"
 msgstr ""
 
@@ -1341,11 +1341,11 @@ msgstr ""
 msgid "Comment out/remove comment for selected lines or the current line"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:472
+#: lib/Padre/Wx/VCS.pm:486
 msgid "Commit file/directory to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:150
+#: lib/Padre/Wx/Dialog/About.pm:147
 msgid "Config"
 msgstr ""
 
@@ -1408,6 +1408,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:87
 msgid "Cop&y Specials"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:246
+msgid "Copied"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:117
@@ -1717,7 +1721,7 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:511
+#: lib/Padre/Wx/VCS.pm:525
 msgid "Delete file from repository??"
 msgstr ""
 
@@ -1725,7 +1729,7 @@ msgstr ""
 msgid "Delete the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:230
+#: lib/Padre/Wx/VCS.pm:230 lib/Padre/Wx/VCS.pm:244
 msgid "Deleted"
 msgstr ""
 
@@ -1808,7 +1812,7 @@ msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:174
+#: lib/Padre/Wx/Dialog/About.pm:171
 msgid "Distribution"
 msgstr ""
 
@@ -1821,12 +1825,12 @@ msgstr ""
 msgid "Do you really want to close and delete %s from disk?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:491
+#: lib/Padre/Wx/VCS.pm:505
 #, perl-format
 msgid "Do you want to add '%s' to your repository"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:471
+#: lib/Padre/Wx/VCS.pm:485
 msgid "Do you want to commit?"
 msgstr ""
 
@@ -1834,7 +1838,7 @@ msgstr ""
 msgid "Do you want to continue?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:510
+#: lib/Padre/Wx/VCS.pm:524
 #, perl-format
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
@@ -1843,7 +1847,7 @@ msgstr ""
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:537
+#: lib/Padre/Wx/VCS.pm:551
 #, perl-format
 msgid "Do you want to revert changes to '%s'"
 msgstr ""
@@ -2127,7 +2131,7 @@ msgstr ""
 msgid "Error while searching for POD"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:422
+#: lib/Padre/Wx/VCS.pm:436
 msgid "Error while trying to perform Padre action"
 msgstr ""
 
@@ -2836,7 +2840,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:179
+#: lib/Padre/Wx/Dialog/About.pm:176
 msgid "Kernel"
 msgstr ""
 
@@ -3127,7 +3131,7 @@ msgstr ""
 msgid "Missing"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:231
+#: lib/Padre/Wx/VCS.pm:231 lib/Padre/Wx/VCS.pm:242
 msgid "Modified"
 msgstr ""
 
@@ -3997,7 +4001,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:196
+#: lib/Padre/Wx/Dialog/About.pm:193
 msgid "RAM"
 msgstr ""
 
@@ -4183,6 +4187,10 @@ msgstr ""
 msgid "Rename variable"
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:245
+msgid "Renamed"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:1210
 msgid "Repeat the last find to find the next match"
 msgstr ""
@@ -4276,7 +4284,7 @@ msgstr ""
 msgid "Return"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:538
+#: lib/Padre/Wx/VCS.pm:552
 msgid "Revert changes?"
 msgstr ""
 
@@ -5286,7 +5294,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:191
+#: lib/Padre/Wx/Dialog/About.pm:188
 msgid "Threads"
 msgstr ""
 
@@ -5396,6 +5404,10 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
+#: lib/Padre/Wx/VCS.pm:241
+msgid "Unmodified"
+msgstr ""
+
 #: lib/Padre/Document.pm:1699
 #, perl-format
 msgid "Unsaved %d"
@@ -5415,12 +5427,16 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:234 lib/Padre/Wx/FBP/VCS.pm:196
+#: lib/Padre/Wx/VCS.pm:234 lib/Padre/Wx/VCS.pm:248 lib/Padre/Wx/FBP/VCS.pm:196
 msgid "Unversioned"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:135
 msgid "Up"
+msgstr ""
+
+#: lib/Padre/Wx/VCS.pm:247
+msgid "Updated but unmerged"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Sync.pm:215
