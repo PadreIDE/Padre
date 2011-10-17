@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-17 04:10-0700\n"
+"POT-Creation-Date: 2011-10-17 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3234,6 +3234,10 @@ msgstr ""
 msgid "No Help found"
 msgstr ""
 
+#: lib/Padre/Wx/Diff.pm:249
+msgid "No changes found"
+msgstr ""
+
 #: lib/Padre/Document/Perl.pm:637
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
@@ -4766,7 +4770,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:243
+#: lib/Padre/Wx/FBP/VCS.pm:246
 msgid "Show"
 msgstr ""
 
@@ -5131,9 +5135,8 @@ msgid "Stats"
 msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:49 lib/Padre/Wx/FBP/Sync.pm:51
-#: lib/Padre/Wx/FBP/VCS.pm:228 lib/Padre/Wx/Dialog/PluginManager.pm:69
-#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/Dialog/PluginManager.pm:69 lib/Padre/Wx/Dialog/Advanced.pm:111
+#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
 msgstr ""
 
