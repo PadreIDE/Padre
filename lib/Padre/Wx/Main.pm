@@ -3806,9 +3806,6 @@ sub on_close_window {
 	if ( $self->has_syntax ) {
 		$self->syntax->view_stop;
 	}
-	if ( $self->has_about ) {
-		$self->about->Destroy;
-	}
 	if ( $self->{help} ) {
 		$self->{help}->Destroy;
 	}
