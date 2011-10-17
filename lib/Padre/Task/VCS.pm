@@ -72,12 +72,17 @@ sub run {
 	return unless $self->{project_dir};
 	my $project_dir = delete $self->{project_dir};
 
-	#TODO support GIT!
-	return if $vcs ne Padre::Constant::SUBVERSION;
+	# bail out if a version control system is not currently supported
+	return unless ( $vcs eq Padre::Constant::SUBVERSION or $vcs eq Padre::Constant::GIT );
 
-	# We only support Subversion at the moment
 	if ( $command eq VCS_STATUS ) {
-		$self->{model} = $self->_find_svn_status($project_dir);
+		if ( $vcs eq Padre::Constant::SUBVERSION ) {
+			$self->{model} = $self->_find_svn_status($project_dir);
+		} elsif ( $vcs eq Padre::Constant::GIT ) {
+			$self->{model} = $self->_find_git_status($project_dir);
+		} else {
+			die VCS_STATUS . " is not supported for $vcs\n";
+		}
 	} else {
 		die "$command is not currently supported\n";
 	}
@@ -151,6 +156,68 @@ sub _find_svn_status {
 					author   => $3,
 					path     => $4,
 					fullpath => File::Spec->catfile( $project_dir, $4 ),
+					};
+			} else {
+
+				# Log the event but do not do anything drastic
+				# about it
+				TRACE("Cannot understand '$line'") if DEBUG;
+			}
+		}
+	}
+
+	return \@model;
+}
+
+sub _find_git_status {
+	my ( $self, $project_dir ) = @_;
+
+	my @model = ();
+
+	# Create a temporary file for standard output redirection
+	my $out = File::Temp->new( UNLINK => 1 );
+	$out->close;
+
+	# Create a temporary file for standard error redirection
+	my $err = File::Temp->new( UNLINK => 1 );
+	$err->close;
+
+	# Find the git command line
+	my $git = File::Which::which('git') or return \@model;
+
+	# Handle spaces in executable path under win32
+	$git = qq{"$git"} if Padre::Constant::WIN32;
+
+	# run 'git status --short' command
+	my @cmd = (
+		$git,
+		'status',
+		'--short',		
+		'1>' . $out->filename,
+		'2>' . $err->filename,
+	);
+
+	# We need shell redirection (list context does not give that)
+	# Run command in directory
+	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
+
+	# Slurp command standard input and output
+	my $stdout = Padre::Util::slurp $out->filename;
+
+	if ($stdout) {
+		for my $line ( split /^/, $$stdout ) {
+			chomp($line);
+			if ( $line =~ /^(..)\s+(.+?)(?:\s\->\s(.+?))?$/ ) {
+
+				# Handle stuff
+				my $path = defined $3 ? $3 : $2;
+				push @model,
+					{
+					status   => $1,
+					revision => '',
+					author   => '',
+					path     => $path,
+					fullpath => File::Spec->catfile( $project_dir, $path ),
 					};
 			} else {
 
