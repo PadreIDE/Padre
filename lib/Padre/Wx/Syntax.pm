@@ -369,7 +369,7 @@ sub render {
 	my $elapsed  = Time::HiRes::time- $self->{task_start_time};
 	my $model    = $self->{model} || {};
 	my $current  = $self->current;
-	my $editor   = $current->editor;
+	my $editor   = $current->editor or return;
 	my $document = $current->document;
 	my $filename = $current->filename;
 	my $lock     = $self->lock_update;
