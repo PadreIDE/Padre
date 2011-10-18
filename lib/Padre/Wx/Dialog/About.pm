@@ -90,42 +90,17 @@ sub _translation {
 	my $self = shift;
 
 	$self->ahmad_zawawi->SetLabel('أحمد محمد زواوي');
-
-	# $self->fayland_lam->SetLabel('');
-	# $self->chuanren_wu->SetLabel('');
 	$self->matthew_lien->SetLabel('練喆明');
-
-
 	$self->marcela_maslanova->SetLabel('Marcela Mašláňová');
-
-	# $self->dirk_de_nijs->SetLabel('');
 	$self->jerome_quelin->SetLabel('Jérôme Quelin');
 	$self->olivier_mengue->SetLabel('Olivier Mengué');
-
-
-	# $self->heiko_jansen->SetLabel('');
-	# $self->sebastian_willing->SetLabel('');
-	# $self->zeno_gantner->SetLabel('');
 	$self->omer_zak->SetLabel('עומר זק');
 	$self->shlomi_fish->SetLabel('שלומי פיש');
 	$self->amir_e_aharoni->SetLabel('אמיר א. אהרוני');
 	$self->gyorgy_pasztor->SetLabel('György Pásztor');
-
-	# $self->simone_blandino->SetLabel('');
 	$self->kenichi_ishigaki->SetLabel('石垣憲');
 	$self->keedi_kim->SetLabel('김도형');
-
-	# $self->kjetil_skotheim->SetLabel('');
-	# $self->cezary_morga->SetLabel('');
-	# $self->breno_g_de_oliveira->SetLabel('');
-	# $self->gabriel_vieira->SetLabel('');
-
-
-	# $self->paco_alguacil->SetLabel('');
-	# $self->enrique_nell->SetLabel('');
-	# $self->andrew_shitov->SetLabel('');
 	$self->burak_gursoy->SetLabel('Burak Gürsoy');
-
 
 	return;
 }
