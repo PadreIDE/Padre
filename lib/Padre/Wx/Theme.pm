@@ -368,6 +368,7 @@ sub parse_style {
 		unless ( Wx::Scintilla->can($string) ) {
 			die "Line $line: Unknown or unsupported style '$copy'";
 		}
+		require Wx::Scintilla;
 		$string = "Wx::Scintilla::$string";
 	} else {
 		die "Line $line: Unknown or unsupported style '$copy'";

@@ -221,6 +221,7 @@ sub _wx_info {
 	$self->{output}
 		->AppendText( sprintf "%*s %s\n", $offset, 'Wx::Perl::ProcessStream', $Wx::Perl::ProcessStream::VERSION );
 
+	require Wx::Scintilla;
 	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Wx::Scintilla', $Wx::Scintilla::VERSION );
 
 	return;

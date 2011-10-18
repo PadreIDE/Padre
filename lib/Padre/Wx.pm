@@ -22,7 +22,6 @@ use Wx::Event          (':everything');
 use Wx::DND            ();
 use Wx::AUI            ();
 use Wx::RichText       ();
-use Wx::Scintilla 0.32 ();
 use Wx::Socket         ();
 
 our $VERSION    = '0.91';

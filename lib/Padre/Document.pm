@@ -128,6 +128,7 @@ use Carp ();
 use File::Spec 3.21 (); # 3.21 needed for volume-safe abs2rel
 use File::Temp       ();
 use Params::Util     ();
+use Wx::Scintilla    ();
 use Padre::Constant  ();
 use Padre::Current   ();
 use Padre::Util      ();

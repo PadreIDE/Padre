@@ -9,6 +9,7 @@ use File::Spec        ();
 use File::Basename    ();
 use Params::Util      ();
 use YAML::Tiny        ();
+use Wx::Scintilla     ();
 use Padre::Util       ();
 use Padre::Perl       ();
 use Padre::Document   ();

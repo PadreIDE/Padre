@@ -24,6 +24,7 @@ use Padre::Current ();
 use Padre::Util    ('_T');
 use Padre::Wx      ();
 use Padre::DB      ();
+use Wx::Scintilla  ();
 
 our $VERSION = '0.91';
 

@@ -37,6 +37,7 @@ use List::Util                ();
 use Scalar::Util              ();
 use Params::Util              ();
 use Time::HiRes               ();
+use Wx::Scintilla             ();
 use Padre::Wx::Action         ();
 use Padre::Wx::ActionLibrary  ();
 use Padre::Constant           ();

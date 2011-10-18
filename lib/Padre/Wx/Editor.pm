@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Time::HiRes               ();
+use Wx::Scintilla        0.32 ();
 use Padre::Constant           ();
 use Padre::Config             ();
 use Padre::Feature            ();

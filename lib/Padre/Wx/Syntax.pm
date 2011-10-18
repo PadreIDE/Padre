@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util           ();
+use Wx::Scintilla          ();
 use Padre::Constant        ();
 use Padre::Feature         ();
 use Padre::Role::Task      ();
