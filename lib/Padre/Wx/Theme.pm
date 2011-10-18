@@ -11,6 +11,7 @@ use Padre::Constant  ();
 use Padre::Util      ();
 use Padre::Wx        ();
 use Padre::Wx::Style ();
+use Wx::Scintilla    ();
 
 our $VERSION = '0.91';
 
@@ -368,7 +369,6 @@ sub parse_style {
 		unless ( Wx::Scintilla->can($string) ) {
 			die "Line $line: Unknown or unsupported style '$copy'";
 		}
-		require Wx::Scintilla;
 		$string = "Wx::Scintilla::$string";
 	} else {
 		die "Line $line: Unknown or unsupported style '$copy'";
