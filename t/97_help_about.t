@@ -42,10 +42,10 @@ SCOPE: {
 	use utf8;
 
 	$dialog->_set_up;
-	is( $dialog->creator->GetLabel,       'Gábor Szabó' );
-	is( $dialog->ahmad_zawawi->GetLabel,  'أحمد محمد زواوي' );
-	is( $dialog->jerome_quelin->GetLabel, 'Jérôme Quelin' );
-	is( $dialog->shlomi_fish->GetLabel,   'שלומי פיש' );
+	is( $dialog->creator->GetLabel,       'Gábor Szabó', 'check utf8 name for Gabor Szabo' );
+	is( $dialog->ahmad_zawawi->GetLabel,  'أحمد محمد زواوي', 'check utf8 name for ahmad zawawi' );
+	is( $dialog->jerome_quelin->GetLabel, 'Jérôme Quelin', 'check utf8 name for jerome_quelin' );
+	is( $dialog->shlomi_fish->GetLabel,   'שלומי פיש', 'check utf8 name for jerome_quelin' );
 }
 
 #######
