@@ -55,6 +55,13 @@ sub new {
 				[ 16, 16 ],
 			),
 		),
+		file => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
 	};
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
@@ -164,7 +171,7 @@ sub render {
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and author as a row to the list
-		$list->InsertImageStringItem( $index, $rec->{documentation}, -1 );
+		$list->InsertImageStringItem( $index, $rec->{documentation}, $self->{images}{file} );
 		$list->SetItemData( $index, $index );
 		$list->SetItem( $index++, 1, $rec->{author} );
 	}
