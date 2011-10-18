@@ -16,6 +16,9 @@ our @ISA     = qw{
 	Padre::Wx::FBP::About
 };
 
+use constant {
+	OFFSET => 24,
+};
 
 #######
 # new
@@ -70,11 +73,11 @@ sub _set_up {
 
 	# load the image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
-	
+
 	$self->creator->SetLabel('Gábor Szabó');
-	
+
 	$self->_translation();
-	
+
 	$self->_information();
 
 	return;
@@ -85,14 +88,16 @@ sub _set_up {
 #######
 sub _translation {
 	my $self = shift;
-	
+
 	$self->ahmad_zawawi->SetLabel('أحمد محمد زواوي');
+
 	# $self->fayland_lam->SetLabel('');
 	# $self->chuanren_wu->SetLabel('');
 	$self->matthew_lien->SetLabel('練喆明');
 
 
 	$self->marcela_maslanova->SetLabel('Marcela Mašláňová');
+
 	# $self->dirk_de_nijs->SetLabel('');
 	$self->jerome_quelin->SetLabel('Jérôme Quelin');
 	$self->olivier_mengue->SetLabel('Olivier Mengué');
@@ -105,23 +110,23 @@ sub _translation {
 	$self->shlomi_fish->SetLabel('שלומי פיש');
 	$self->amir_e_aharoni->SetLabel('אמיר א. אהרוני');
 	$self->gyorgy_pasztor->SetLabel('György Pásztor');
-	
+
 	# $self->simone_blandino->SetLabel('');
 	$self->kenichi_ishigaki->SetLabel('石垣憲');
 	$self->keedi_kim->SetLabel('김도형');
-	
+
 	# $self->kjetil_skotheim->SetLabel('');
 	# $self->cezary_morga->SetLabel('');
 	# $self->breno_g_de_oliveira->SetLabel('');
 	# $self->gabriel_vieira->SetLabel('');
-	
-	
+
+
 	# $self->paco_alguacil->SetLabel('');
 	# $self->enrique_nell->SetLabel('');
 	# $self->andrew_shitov->SetLabel('');
 	$self->burak_gursoy->SetLabel('Burak Gürsoy');
-	
-	
+
+
 	return;
 }
 
@@ -131,21 +136,17 @@ sub _translation {
 sub _information {
 	my $self = shift;
 
-	my $offset = 24;
+	my $output = "\n";
+	$output .= sprintf "%*s %s\n", OFFSET, 'Padre', $VERSION;
 
-	$self->{output}->AppendText("\n");
+	$output .= $self->_core_info();
+	$output .= $self->_wx_info();
 
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Padre', $VERSION );
+	$output .= "Other...\n";
+	$output .= sprintf "%*s %s\n", OFFSET, 'PPI', $PPI::VERSION;
+	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 
-	$self->_core_info($offset);
-	$self->_wx_info($offset);
-
-	$self->{output}->AppendText("Other...\n");
-
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'PPI', $PPI::VERSION );
-
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR );
-	
+	$self->{output}->ChangeValue($output);
 	return;
 }
 
@@ -153,13 +154,13 @@ sub _information {
 # Composed Method _core_info
 #######
 sub _core_info {
-	my ($self, $offset) = @_;
+	my $self = shift;
 
-	$self->{output}->AppendText("Core...\n");
+	my $output = "Core...\n";
 
 	# Do not translate those labels
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, "osname", $Config{osname}, );
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, "archname", $Config{archname} );
+	$output .= sprintf "%*s %s\n", OFFSET, "osname",   $Config{osname};
+	$output .= sprintf "%*s %s\n", OFFSET, "archname", $Config{archname};
 
 	if ( $Config{osname} eq 'linux' ) {
 
@@ -168,12 +169,12 @@ sub _core_info {
 		chomp($distro);
 		$distro =~ s/\\n \\l//g;
 		$distro =~ s/\x0A//g;
-		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Distribution'), $distro );
+		$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Distribution'), $distro;
 
 		# Do we really care for Padre?
 		my $kernel = qx{uname -r};
 		chomp($kernel);
-		$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Kernel'), $kernel );
+		$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Kernel'), $kernel;
 	}
 
 	# Yes, THIS variable should have this upper case char :-)
@@ -181,50 +182,45 @@ sub _core_info {
 
 	# $perl_version = "$perl_version";
 	$perl_version =~ s/^v//;
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Perl', $perl_version );
+	$output .= sprintf "%*s %s\n", OFFSET, 'Perl', $perl_version;
 
 	# How many threads are running
 	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : Wx::gettext('(disabled)');
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext('Threads'), $threads );
+	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Threads'), $threads;
 
 	# Calculate the current memory in use across all threads
 	my $ram = Padre::Util::process_memory();
-	$ram = $ram ? Padre::Util::humanbytes( $ram ) : Wx::gettext('(unsupported)');
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, Wx::gettext("RAM"), $ram );
+	$ram = $ram ? Padre::Util::humanbytes($ram) : Wx::gettext('(unsupported)');
+	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext("RAM"), $ram;
 
-	return;
+	return $output;
 }
 
 #######
 # Composed Method _wx_info
 #######
 sub _wx_info {
-	my ($self, $offset) = @_;
+	my $self = shift;
 
-	$self->{output}->AppendText("Wx...\n");
-
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Wx', $Wx::VERSION );
-
+	my $output .= "Wx...\n";
+	$output .= sprintf "%*s %s\n", OFFSET, 'Wx', $Wx::VERSION;
 
 	# Reformat the native wxWidgets version string slightly
 	my $wx_widgets = Wx::wxVERSION_STRING();
 	$wx_widgets =~ s/^wx\w+\s+//;
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'WxWidgets', $wx_widgets );
-
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'unicode', Wx::wxUNICODE() );
+	$output .= sprintf "%*s %s\n", OFFSET, 'WxWidgets', $wx_widgets;
+	$output .= sprintf "%*s %s\n", OFFSET, 'unicode', Wx::wxUNICODE();
 
 	require Alien::wxWidgets;
 	my $alien = $Alien::wxWidgets::VERSION;
+	$output .= sprintf "%*s %s\n", OFFSET, 'Alien::wxWidgets', $alien;
 
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Alien::wxWidgets', $alien );
-
-	$self->{output}
-		->AppendText( sprintf "%*s %s\n", $offset, 'Wx::Perl::ProcessStream', $Wx::Perl::ProcessStream::VERSION );
+	$output .= sprintf "%*s %s\n", OFFSET, 'Wx::Perl::ProcessStream', $Wx::Perl::ProcessStream::VERSION;
 
 	require Wx::Scintilla;
-	$self->{output}->AppendText( sprintf "%*s %s\n", $offset, 'Wx::Scintilla', $Wx::Scintilla::VERSION );
+	$output .= sprintf "%*s %s\n", OFFSET, 'Wx::Scintilla', $Wx::Scintilla::VERSION;
 
-	return;
+	return $output;
 }
 
 
