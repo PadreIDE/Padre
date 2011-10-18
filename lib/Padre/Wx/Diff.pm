@@ -49,7 +49,7 @@ sub task_finish {
 	my $task   = shift;
 	my $chunks = Params::Util::_ARRAY0( $task->{data} ) or return;
 	my $main   = $self->{main};
-	my $editor = $main->current->editor;
+	my $editor = $main->current->editor or return;
 	my $lock   = $editor->lock_update;
 
 	# Clear any old content
