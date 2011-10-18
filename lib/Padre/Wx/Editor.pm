@@ -217,7 +217,7 @@ sub new {
 	Wx::Event::EVT_STC_DOUBLECLICK(
 		$self, -1,
 		sub {
-			shift->on_left_double(@);
+			shift->on_left_double(@_);
 		},
 	);
 
@@ -518,6 +518,17 @@ sub on_context_menu {
 
 ######################################################################
 # Setup and Preferences Methods
+
+# An alternative to GetWrapMode that returns the mode in text form,
+# primarily so that the view menu does not need to load Wx::Scintilla
+# for access to the constants
+sub get_wrap_mode {
+	my $self = shift;
+	my $mode = $self->GetWrapMode;
+	return 'WORD' if $mode == Wx::Scintilla::WRAP_WORD;
+	return 'CHAR' if $mode == Wx::Scintilla::WRAP_CHAR;
+	return 'NONE';
+}
 
 # Fill the editor with the document
 sub set_document {

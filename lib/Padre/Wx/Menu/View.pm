@@ -278,11 +278,11 @@ sub refresh {
 	# Check state for word wrap is document-specific
 	if ($document) {
 		my $editor = $document->editor;
-		my $mode   = $editor->GetWrapMode;
+		my $mode   = $editor->get_wrap_mode;
 		my $wrap   = $self->{word_wrap};
-		if ( $mode eq Wx::Scintilla::WRAP_WORD and not $wrap->IsChecked ) {
+		if ( $mode eq 'WORD' and not $wrap->IsChecked ) {
 			$wrap->Check(1);
-		} elsif ( $mode eq Wx::Scintilla::WRAP_NONE and $wrap->IsChecked ) {
+		} elsif ( $mode eq 'NONE' and $wrap->IsChecked ) {
 			$wrap->Check(0);
 		}
 
