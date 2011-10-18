@@ -9,7 +9,6 @@ use File::Spec        ();
 use File::Basename    ();
 use Params::Util      ();
 use YAML::Tiny        ();
-use Wx::Scintilla     ();
 use Padre::Util       ();
 use Padre::Perl       ();
 use Padre::Document   ();
@@ -1608,8 +1607,11 @@ sub event_mouse_moving {
 		return unless length $token;
 		return unless $editor->has_function($token);
 
-		$editor->StartStyling( $location->[2], Wx::Scintilla::INDICS_MASK );
-		$editor->SetStyling( length($token), Wx::Scintilla::INDIC2_MASK );
+		$editor->manual_highlight_show(
+			2,              # Indicator mask number
+			$location->[2], # Position
+			length($token), # Characters
+		);
 
 		$self->{last_highlight} = {
 			token => $token,
@@ -1631,13 +1633,15 @@ sub event_key_up {
 }
 
 sub _clear_highlight {
-	my $self   = shift;
-	my $editor = shift;
-
+	my $self = shift;
 	return unless $self->{last_highlight};
 
-	$editor->StartStyling( $self->{last_highlight}{pos}, Wx::Scintilla::INDICS_MASK );
-	$editor->SetStyling( length( $self->{last_highlight}{token} ), 0 );
+	# Remove the last highlight
+	my $editor = shift;
+	$editor->manual_highlight_hide(
+		$self->{last_highlight}->{pos},
+		length $self->{last_highlight}->{token},
+	);
 	undef $self->{last_highlight};
 }
 
