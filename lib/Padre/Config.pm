@@ -1446,6 +1446,14 @@ setting(
 	help    => _T('Toggle version control system support')
 );
 
+# Toggle *experimental* CPAN 2.0 panel
+setting(
+	name    => 'feature_cpan_panel',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Toggle Perl 6 auto detection
 setting(
 	name    => 'lang_perl6_auto_detection',
