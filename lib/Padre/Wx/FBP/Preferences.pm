@@ -368,14 +368,6 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{swap_ctrl_tab_alt_right} = Wx::CheckBox->new(
-		$m_panel2,
-		-1,
-		Wx::gettext("Use panel order for Ctrl-Tab (not usage history)"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
 	$self->{save_autoclean} = Wx::CheckBox->new(
 		$m_panel2,
 		-1,
@@ -633,7 +625,7 @@ sub new {
 	$self->{m_staticText59} = Wx::StaticText->new(
 		$m_panel9,
 		-1,
-		Wx::gettext("&Filter") . ":",
+		Wx::gettext("&Filter:"),
 	);
 
 	$self->{filter} = Wx::TextCtrl->new(
@@ -679,7 +671,7 @@ sub new {
 	$self->{shortcut_label} = Wx::StaticText->new(
 		$m_panel9,
 		-1,
-		Wx::gettext("Shortcut") . ":",
+		Wx::gettext("Shortcut:"),
 	);
 
 	$self->{ctrl} = Wx::CheckBox->new(
@@ -1062,7 +1054,7 @@ sub new {
 	$self->{advanced} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("&Advanced") . "...",
+		Wx::gettext("&Advanced..."),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -1175,8 +1167,6 @@ sub new {
 	$fgSizer3->AddGrowableCol(1);
 	$fgSizer3->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer3->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_NONE);
-	$fgSizer3->Add( $self->{swap_ctrl_tab_alt_right}, 0, Wx::ALL, 5 );
-	$fgSizer3->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$fgSizer3->Add( $self->{save_autoclean}, 0, Wx::ALL, 5 );
 	$fgSizer3->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$fgSizer3->Add( $m_staticText41, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
@@ -1427,10 +1417,6 @@ sub autocomplete_multiclosebracket {
 
 sub editor_fold_pod {
 	$_[0]->{editor_fold_pod};
-}
-
-sub swap_ctrl_tab_alt_right {
-	$_[0]->{swap_ctrl_tab_alt_right};
 }
 
 sub save_autoclean {
