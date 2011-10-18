@@ -44,6 +44,14 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{search},
+		sub {
+			shift->on_text_search(@_);
+		},
+	);
+
 	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
@@ -80,6 +88,10 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_text_search {
+	$_[0]->main->error('Handler method on_text_search for event search.OnText not implemented');
 }
 
 sub on_list_column_click {

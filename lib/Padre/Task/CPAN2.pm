@@ -28,10 +28,6 @@ sub new {
 	return $self;
 }
 
-
-
-
-
 ######################################################################
 # Padre::Task Methods
 
@@ -45,8 +41,29 @@ sub run {
 	# it back up to the parent Wx thread at the end of the task.
 	return unless $self->{command};
 	my $command = delete $self->{command};
-	
-	#TODO implement MetaCPAN searching code!
+	return unless $self->{query};
+	my $query = delete $self->{query};
+
+	if ( $command eq CPAN_SEARCH ) {
+		require LWP::UserAgent;
+		my $ua = LWP::UserAgent->new;
+		$ua->timeout(10);
+		$ua->env_proxy;
+		my $url      = "https://metacpan.org/search/autocomplete?q=$query";
+		my $response = $ua->get($url);
+		unless ( $response->is_success ) {
+			TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
+				if DEBUG;
+			return;
+		}
+		require JSON::XS;
+		$self->{model} = JSON::XS::decode_json( $response->decoded_content );
+	} elsif ( $command eq CPAN_INSTALL ) {
+
+		#TODO run cpanm module!
+	} else {
+		TRACE("Unimplemented $command. Please fix!") if DEBUG;
+	}
 
 	return 1;
 }

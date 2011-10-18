@@ -97,13 +97,6 @@ sub view_stop {
 }
 
 #####################################################################
-# Event Handlers
-
-sub on_refresh_click {
-	$_[0]->main->cpan_explorer->refresh;
-}
-
-#####################################################################
 # General Methods
 
 sub gettext_label {
@@ -126,7 +119,7 @@ sub relocale {
 
 sub refresh {
 	my $self = shift;
-	my $command = shift or Padre::Task::CPAN2::CPAN_SEARCH;
+	my $command = shift || Padre::Task::CPAN2::CPAN_SEARCH;
 
 	# Abort any in-flight checks
 	$self->task_reset;
@@ -138,6 +131,7 @@ sub refresh {
 	$self->task_request(
 		task    => 'Padre::Task::CPAN2',
 		command => $command,
+		query   => $self->{search}->GetValue,
 	);
 
 	return 1;
@@ -163,6 +157,17 @@ sub render {
 	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
 
 	my $list = $self->{list};
+	$self->_sort_model();
+	my $model = $self->{model};
+
+	my $index = 0;
+	for my $rec (@$model) {
+
+		# Add a CPAN distribution and author as a row to the list
+		$list->InsertImageStringItem( $index, $rec->{documentation}, -1 );
+		$list->SetItemData( $index, $index );
+		$list->SetItem( $index++, 1, $rec->{author} );
+	}
 
 	# Tidy the list
 	Padre::Util::tidy_list($list);
@@ -196,6 +201,9 @@ sub _sort_model {
 	$self->{model} = \@model;
 }
 
+#####################################################################
+# Event Handlers
+
 # Called when a CPAN list column is clicked
 sub on_list_column_click {
 	my ( $self, $event ) = @_;
@@ -226,8 +234,16 @@ sub set_icon_image {
 	return;
 }
 
+# Called when a CPAN list column is activated
 sub on_list_item_activated {
 	my ( $self, $event ) = @_;
+}
+
+# Called when search text control is changed
+sub on_text_search {
+	my ( $self, $event ) = @_;
+
+	$_[0]->main->cpan_explorer->refresh;
 }
 
 1;
