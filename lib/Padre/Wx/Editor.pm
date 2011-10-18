@@ -185,24 +185,41 @@ sub new {
 	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_ERROR, RED );
 	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_ERROR, Wx::Scintilla::INDIC_SQUIGGLE );
 
-	# Generate basic event bindings
-	Wx::Event::EVT_SET_FOCUS( $self, \&on_set_focus );
-	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
-	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
-	Wx::Event::EVT_CHAR( $self, \&on_char );
-	Wx::Event::EVT_MOTION( $self, \&on_mouse_moving );
-	Wx::Event::EVT_MOUSEWHEEL( $self, \&on_mousewheel );
-	Wx::Event::EVT_LEFT_DOWN( $self, \&on_left_down );
-	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
-	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_left_double );
-	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
+	# Basic event bindings
+	Wx::Event::EVT_SET_FOCUS(  $self, sub { shift->on_set_focus(@_)    } );
+	Wx::Event::EVT_KILL_FOCUS( $self, sub { shift->on_kill_focus(@_)   } );
+	Wx::Event::EVT_KEY_UP(     $self, sub { shift->on_key_up(@_)       } );
+	Wx::Event::EVT_CHAR(       $self, sub { shift->on_char(@_)         } );
+	Wx::Event::EVT_MOTION(     $self, sub { shift->on_mouse_moving(@_) } );
+	Wx::Event::EVT_MOUSEWHEEL( $self, sub { shift->on_mousewheel(@_)   } );
+	Wx::Event::EVT_LEFT_DOWN(  $self, sub { shift->on_left_down(@_)    } );
+	Wx::Event::EVT_LEFT_UP(    $self, sub { shift->on_left_up(@_)      } );
+	Wx::Event::EVT_MIDDLE_UP(  $self, sub { shift->on_middle_up(@_)    } );
 
 	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
 	if ( Padre::Constant::UNIX ) {
-		Wx::Event::EVT_RIGHT_DOWN( $self, \&on_context_menu );
+		Wx::Event::EVT_RIGHT_DOWN(
+			$self,
+			sub {
+				shift->on_context_menu(@_);
+			},
+		);
 	} else {
-		Wx::Event::EVT_CONTEXT_MENU( $self, \&on_context_menu );
+		Wx::Event::EVT_CONTEXT_MENU(
+			$self,
+			sub {
+				shift->on_context_menu(@_);
+			},
+		);
 	}
+
+	# Scintilla specific event bindings
+	Wx::Event::EVT_STC_DOUBLECLICK(
+		$self, -1,
+		sub {
+			shift->on_left_double(@);
+		},
+	);
 
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
@@ -210,7 +227,12 @@ sub new {
 		Wx::Scintilla::PERFORMED_USER | Wx::Scintilla::PERFORMED_UNDO | Wx::Scintilla::PERFORMED_REDO | Wx::Scintilla::MOD_INSERTTEXT
 			| Wx::Scintilla::MOD_DELETETEXT
 	);
-	Wx::Event::EVT_STC_CHANGE( $self, $self, \&on_change );
+	Wx::Event::EVT_STC_CHANGE(
+		$self, $self,
+		sub {
+			shift->on_change(@_);
+		},
+	);
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
