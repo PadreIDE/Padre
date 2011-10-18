@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 17;
+	plan tests => 21;
 }
 
 use Test::NoWarnings;
@@ -37,6 +37,17 @@ isa_ok( $notebook, 'Wx::Notebook' );
 my $output = $dialog->output;
 isa_ok( $output, 'Wx::TextCtrl' );
 
+# Check unicode translated names
+SCOPE: {
+	use utf8;
+
+	$dialog->_set_up;
+	is( $dialog->creator->GetLabel,       'Gábor Szabó' );
+	is( $dialog->ahmad_zawawi->GetLabel,  'أحمد محمد زواوي' );
+	is( $dialog->jerome_quelin->GetLabel, 'Jérôme Quelin' );
+	is( $dialog->shlomi_fish->GetLabel,   'שלומי פיש' );
+}
+
 #######
 # let's check our subs/methods.
 #######
@@ -55,4 +66,3 @@ use_ok('Padre::Util');
 
 my $FILENAME = Padre::Util::splash;
 ok( -f $FILENAME, "Found image $FILENAME" );
-
