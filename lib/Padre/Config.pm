@@ -820,13 +820,6 @@ setting(
 		. 'debug.quit;'
 );
 
-setting(
-	name    => 'swap_ctrl_tab_alt_right',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-
 # Directory Tree Settings
 setting(
 	name  => 'default_projects_directory',

@@ -160,6 +160,7 @@ the even version for the release, even during development.
     - Upgrade the Outline panel to wxFormBuilder (AZAWAWI)
     - Outline panel is searchable now (AZAWAWI)
     - Fix #1050: Window menu is confusing (ZENOG, AZAWAWI)
+    - Remove swap_ctrl_tab_alt_right configuration parameter (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
