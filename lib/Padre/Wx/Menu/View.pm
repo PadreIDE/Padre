@@ -43,6 +43,9 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
+	$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer')
+		if $main->config->feature_cpan_explorer;
+
 	$self->{functions} = $self->add_menu_action(
 		'view.functions',
 	);
@@ -265,6 +268,8 @@ sub refresh {
 	$self->{command_line}->Check( $config->main_command_line );
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{vcs}->Check( $config->main_vcs ) if $config->feature_vcs_support;
+	$self->{cpan_explorer}->Check( $config->main_cpan_explorer )
+		if $config->feature_cpan_explorer;
 	$self->{toolbar}->Check( $config->main_toolbar );
 
 	if (Padre::Feature::FOLDING) {

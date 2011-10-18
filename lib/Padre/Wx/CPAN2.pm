@@ -100,14 +100,14 @@ sub view_stop {
 # Event Handlers
 
 sub on_refresh_click {
-	$_[0]->main->cpan->refresh;
+	$_[0]->main->cpan_explorer->refresh;
 }
 
 #####################################################################
 # General Methods
 
 sub gettext_label {
-	Wx::gettext('CPAN 2.0');
+	Wx::gettext('CPAN Explorer');
 }
 
 # Clear everything...

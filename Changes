@@ -161,6 +161,9 @@ the even version for the release, even during development.
     - Outline panel is searchable now (AZAWAWI)
     - Fix #1050: Window menu is confusing (ZENOG, AZAWAWI)
     - Remove swap_ctrl_tab_alt_right configuration parameter (AZAWAWI)
+    - Added *experimental* CPAN explorer that reuses MetaCPAN.org API for
+      searching and cpanm for installation. This is enabled by 
+      feature_cpan_explorer configuration parameter (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

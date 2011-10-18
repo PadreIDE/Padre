@@ -1389,6 +1389,16 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
+		name        => 'view.cpan_explorer',
+		label       => _T('Show CPA&N Explorer'),
+		comment     => _T('Turn on CPAN explorer'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_cpan_explorer( $_[0]->menu->view->{cpan_explorer}->IsChecked );
+		},
+	) if $main->config->feature_cpan_explorer;
+
+	Padre::Wx::Action->new(
 		name        => 'view.todo',
 		label       => _T('Show &To-do List'),
 		comment     => _T('Show a window listing all todo items in the current document'),

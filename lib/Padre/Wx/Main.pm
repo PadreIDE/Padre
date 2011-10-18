@@ -322,6 +322,8 @@ sub new {
 	$self->_show_command_line( $config->main_command_line );
 	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 	$self->_show_vcs( $config->main_vcs ) if $config->feature_vcs_support;
+	$self->_show_cpan_explorer( $config->main_cpan_explorer )
+		if $config->feature_cpan_explorer;
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -549,6 +551,7 @@ use Class::XSAccessor {
 		has_command_line   => 'command_line',
 		has_syntax         => 'syntax',
 		has_vcs		   => 'vcs',
+		has_cpan_explorer  => 'cpan_explorer',
 		has_functions      => 'functions',
 		has_todo           => 'todo',
 		has_debugger       => 'debugger',
@@ -689,6 +692,15 @@ sub vcs {
 		$self->{vcs} = Padre::Wx::VCS->new($self);
 	}
 	return $self->{vcs};
+}
+
+sub cpan_explorer {
+	my $self = shift;
+	unless ( defined $self->{cpan_explorer} ) {
+		require Padre::Wx::CPAN2;
+		$self->{cpan_explorer} = Padre::Wx::CPAN2->new($self);
+	}
+	return $self->{cpan_explorer};
 }
 
 sub diff {
@@ -2525,6 +2537,44 @@ sub _show_vcs {
 	} elsif ( $self->has_vcs ) {
 		$self->right->hide( $self->vcs );
 		delete $self->{vcs};
+	}
+}
+
+=pod
+
+=head3 C<show_cpan_explorer>
+
+    $main->show_cpan_explorer( $visible );
+
+Show the CPAN explorer panel at the bottom if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+
+sub show_cpan_explorer {
+	my $self = shift;
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_cpan_explorer' );
+	unless ( $show == $self->menu->view->{cpan_explorer}->IsChecked ) {
+		$self->menu->view->{cpan_explorer}->Check($show);
+	}
+
+	$self->config->set( main_cpan_explorer => $show );
+	$self->_show_cpan_explorer($show);
+	$self->aui->Update;
+
+	return;
+}
+
+sub _show_cpan_explorer {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->right->show( $self->cpan_explorer );
+	} elsif ( $self->has_cpan_explorer ) {
+		$self->right->hide( $self->cpan_explorer );
+		delete $self->{cpan_explorer};
 	}
 }
 

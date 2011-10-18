@@ -756,6 +756,20 @@ setting(
 	},
 );
 setting(
+	name    => 'main_cpan_explorer',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->view->{cpan_explorer};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_cpan_explorer($on);
+		$main->aui->Update;
+	},
+);
+setting(
 	name    => 'main_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
@@ -1446,9 +1460,9 @@ setting(
 	help    => _T('Toggle version control system support')
 );
 
-# Toggle *experimental* CPAN 2.0 panel
+# Toggle *experimental* CPAN explorer
 setting(
-	name    => 'feature_cpan_panel',
+	name    => 'feature_cpan_explorer',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
