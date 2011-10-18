@@ -26,7 +26,7 @@ sub new {
 
 	# Set up column sorting
 	$self->{sort_column} = 0;
-	$self->{sort_desc}   = 1;
+	$self->{sort_desc}   = 0;
 
 	# Setup columns
 	my @column_headers = (
