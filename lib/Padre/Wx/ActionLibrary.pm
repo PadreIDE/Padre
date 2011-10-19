@@ -2489,7 +2489,7 @@ sub init {
 			$_[0]->show_cpan_explorer(1);
 			$_[0]->cpan_explorer->focus_on_search;
 		},
-	);
+	)  if $main->config->feature_cpan_explorer;
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',

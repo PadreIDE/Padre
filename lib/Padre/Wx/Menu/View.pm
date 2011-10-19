@@ -43,6 +43,10 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
+	$self->{command_line} = $self->add_menu_action(
+		'view.command_line',
+	);
+
 	$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer')
 		if $main->config->feature_cpan_explorer;
 
@@ -50,16 +54,12 @@ sub new {
 		'view.functions',
 	);
 
-	$self->{todo} = $self->add_menu_action(
-		'view.todo',
+	$self->{directory} = $self->add_menu_action(
+		'view.directory',
 	);
 
 	$self->{outline} = $self->add_menu_action(
 		'view.outline',
-	);
-
-	$self->{directory} = $self->add_menu_action(
-		'view.directory',
 	);
 
 	$self->{output} = $self->add_menu_action(
@@ -70,12 +70,12 @@ sub new {
 		'view.syntaxcheck',
 	);
 
+	$self->{todo} = $self->add_menu_action(
+		'view.todo',
+	);
+
 	$self->{vcs} = $self->add_menu_action('view.vcs')
 		if $main->config->feature_vcs_support;
-
-	$self->{command_line} = $self->add_menu_action(
-		'view.command_line',
-	);
 
 	$self->{toolbar} = $self->add_menu_action(
 		'view.toolbar',
