@@ -165,6 +165,7 @@ the even version for the release, even during development.
       searching and cpanm for installation. This is enabled by 
       feature_cpan_explorer configuration parameter (AZAWAWI)
     - Fix #1291 'Code folding icons missing' (AZAWAWI)
+    - Code folding markers are now theme-able (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
