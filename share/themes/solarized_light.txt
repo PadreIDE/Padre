@@ -51,6 +51,8 @@ StyleSetBackground      PADRE_ERROR             fff0f0
 StyleSetItalic          PADRE_ERROR             1
 StyleSetBackground      STYLE_CALLTIP      eee8d5
 StyleSetForeground      STYLE_CALLTIP     657b83
+SetFoldMarginColour     1 eee8d5
+SetFoldMarginHiColour   1 eee8d5
 
 style text/plain
 include padre

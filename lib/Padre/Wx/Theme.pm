@@ -55,6 +55,8 @@ my %PARAM = (
 	StyleSetEOLFilled       => [ 2, 'style,boolean' ],
 	StyleSetUnderline       => [ 2, 'style,boolean' ],
 	StyleSetSpec            => [ 2, 'style,spec' ],
+	SetFoldMarginColour     => [ 2, 'boolean,color' ],
+	SetFoldMarginHiColour   => [ 2, 'boolean,color' ],
 );
 
 # Fallback path of next best styles if no style exists.
