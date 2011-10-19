@@ -109,6 +109,11 @@ sub view_stop {
 #####################################################################
 # General Methods
 
+# Sets the focus on the search field
+sub focus_on_search {
+	$_[0]->{search}->SetFocus;
+}
+
 sub gettext_label {
 	Wx::gettext('CPAN Explorer');
 }

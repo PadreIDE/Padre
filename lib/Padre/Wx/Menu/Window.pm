@@ -47,6 +47,10 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Navigation
+	$self->{window_goto_cpan_explorer_window} = $self->add_menu_action(
+		'window.goto_cpan_explorer_window',
+	) if $main->config->feature_cpan_explorer;
+
 	$self->{window_goto_functions_window} = $self->add_menu_action(
 		'window.goto_functions_window',
 	);

@@ -30,12 +30,6 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{search_label} = Wx::StaticText->new(
-		$self,
-		-1,
-		Wx::gettext("Search:"),
-	);
-
 	$self->{search} = Wx::TextCtrl->new(
 		$self,
 		-1,
@@ -77,12 +71,11 @@ sub new {
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{search_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 1 );
-	$button_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 2 );
+	$button_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
-	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;

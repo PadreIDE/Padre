@@ -2478,7 +2478,18 @@ sub init {
 		},
 	);
 
-	# Window Navigation
+	# Various Window navigation shortcuts
+
+	Padre::Wx::Action->new(
+		name       => 'window.goto_cpan_explorer_window',
+		label      => _T('Go to CPAN E&xplorer Window'),
+		comment    => _T('Set the focus to the "CPAN Explorer" window'),
+		shortcut   => 'Alt-X',
+		menu_event => sub {
+			$_[0]->show_cpan_explorer(1);
+			$_[0]->cpan_explorer->focus_on_search;
+		},
+	);
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',
@@ -2491,8 +2502,6 @@ sub init {
 			$_[0]->functions->focus_on_search;
 		},
 	);
-
-	# Window Navigation
 
 	Padre::Wx::Action->new(
 		name    => 'window.goto_todo_window',
