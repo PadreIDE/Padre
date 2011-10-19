@@ -3,17 +3,19 @@ package Padre::Wx::CPAN2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
-use Padre::Wx             ();
-use Padre::Task::CPAN2    ();
-use Padre::Wx::FBP::CPAN  ();
+use Padre::Role::Task      ();
+use Padre::Wx::Role::View  ();
+use Padre::Wx              ();
+use Padre::Task::CPAN2     ();
+use Padre::Wx::Role::Dwell ();
+use Padre::Wx::FBP::CPAN   ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.91';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Dwell
 	Padre::Wx::FBP::CPAN
 };
 
@@ -96,9 +98,10 @@ sub view_start {
 sub view_stop {
 	my $self = shift;
 
-	# Clear out any state and tasks
-	$self->task_reset;
+	# Clear, reset running task and stop dwells
 	$self->clear;
+	$self->task_reset;
+	$self->dwell_stop('refresh'); # Just in case
 
 	return;
 }
@@ -131,14 +134,11 @@ sub refresh {
 	# Abort any in-flight checks
 	$self->task_reset;
 
-	# Flush old results
-	$self->clear;
-
 	# Start a background CPAN command task
 	$self->task_request(
 		task    => 'Padre::Task::CPAN2',
 		command => $command,
-		query   => $self->{search}->GetValue,
+		query   => lc($self->{search}->GetValue),
 	);
 
 	return 1;
@@ -250,7 +250,7 @@ sub on_list_item_activated {
 sub on_text_search {
 	my ( $self, $event ) = @_;
 
-	$_[0]->main->cpan_explorer->refresh;
+	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
 }
 
 1;
