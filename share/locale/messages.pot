@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-19 12:10-0700\n"
+"POT-Creation-Date: 2011-10-19 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:118
+#: lib/Padre/Wx/CPAN2.pm:119
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -4050,6 +4050,10 @@ msgstr ""
 msgid "Really delete the file \"%s\"?"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/CPAN.pm:53
+msgid "Recent?"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:595
 msgid "Redo last undo"
 msgstr ""
@@ -5215,6 +5219,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:40
 msgid "Switch language to system default"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/CPAN.pm:109
+msgid "Synopsis"
 msgstr ""
 
 #: lib/Padre/Wx/Syntax.pm:242
