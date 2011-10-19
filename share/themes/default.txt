@@ -29,8 +29,8 @@ StyleSetForeground PADRE_WARNING                  af8000
 StyleSetBackground PADRE_WARNING                  fffff0
 StyleSetForeground PADRE_ERROR                    af0000
 StyleSetBackground PADRE_ERROR                    fff0f0
-SetFoldMarginColour     1 93a1a1
-SetFoldMarginHiColour   1 93a1a1
+SetFoldMarginColour     1 eeeeee
+SetFoldMarginHiColour   1 eeeeee
 
 
 
