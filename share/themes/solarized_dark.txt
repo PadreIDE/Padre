@@ -51,8 +51,23 @@ StyleSetBackground      PADRE_ERROR             fff0f0
 StyleSetItalic          PADRE_ERROR             1
 StyleSetBackground      STYLE_CALLTIP     073642
 StyleSetForeground      STYLE_CALLTIP     657b83
-SetFoldMarginColour     1 073642
-SetFoldMarginHiColour   1 073642
+# Code folding margin
+SetFoldMarginColour     1                      073642
+SetFoldMarginHiColour   1                      073642
+MarkerSetForeground     MARKNUM_FOLDEREND      073642
+MarkerSetBackground     MARKNUM_FOLDEREND      586e75
+MarkerSetForeground     MARKNUM_FOLDEROPENMID  073642
+MarkerSetBackground     MARKNUM_FOLDEROPENMID  586e75
+MarkerSetForeground     MARKNUM_FOLDERMIDTAIL  586e75
+MarkerSetBackground     MARKNUM_FOLDERMIDTAIL  586e75
+MarkerSetForeground     MARKNUM_FOLDERTAIL     586e75
+MarkerSetBackground     MARKNUM_FOLDERTAIL     586e75
+MarkerSetForeground     MARKNUM_FOLDERSUB      586e75
+MarkerSetBackground     MARKNUM_FOLDERSUB      586e75
+MarkerSetForeground     MARKNUM_FOLDER         586e75
+MarkerSetBackground     MARKNUM_FOLDER         073642
+MarkerSetForeground     MARKNUM_FOLDEROPEN     073642
+MarkerSetBackground     MARKNUM_FOLDEROPEN     586e75
 
 style text/plain
 include padre

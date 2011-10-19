@@ -1707,7 +1707,8 @@ BEGIN {
 				16,
 			);
 
-			# Define folding markers
+			# Define folding markers. The colours are really dummy
+			# as the themes will override them
 			my $w = Wx::Colour->new("white");
 			my $b = Wx::Colour->new("black");
 			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDEREND,     Wx::Scintilla::MARK_BOXPLUSCONNECTED,  $w, $b );
@@ -1717,11 +1718,6 @@ BEGIN {
 			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDERSUB,     Wx::Scintilla::MARK_VLINE,             $w, $b );
 			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDER,        Wx::Scintilla::MARK_BOXPLUS,           $w, $b );
 			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDEROPEN,    Wx::Scintilla::MARK_BOXMINUS,          $w, $b );
-
-			# This would be nice but the color used for drawing the lines is
-			# Wx::Scintilla::STYLE_DEFAULT, i.e. usually black and therefore quite
-			# obtrusive...
-			# $self->SetFoldFlags( Wx::Scintilla::FOLDFLAG_LINEBEFORE_CONTRACTED | Wx::Scintilla::FOLDFLAG_LINEAFTER_CONTRACTED );
 
 			# Activate
 			$self->SetProperty( 'fold' => 1 );
