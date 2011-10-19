@@ -188,7 +188,7 @@ sub new {
 	$self->{locale} = ( $startup_locale ? Padre::Locale::object($startup_locale) : Padre::Locale::object() );
 
 	# Bootstrap style information in case the GUI will need it
-	$self->{style} = Padre::Wx::Theme->find( $config->editor_style );
+	$self->{theme} = Padre::Wx::Theme->find( $config->editor_style );
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -569,7 +569,8 @@ use Class::XSAccessor {
 		ide                 => 'ide',
 		config              => 'config',
 		title               => 'title',
-		style               => 'style',
+		style               => 'theme',
+		theme               => 'theme',
 		aui                 => 'aui',
 		menu                => 'menu',
 		notebook            => 'notebook',
@@ -2071,7 +2072,7 @@ C<editor_style> configuration setting.
 sub restyle {
 	my $self  = shift;
 	my $name  = $self->config->editor_style;
-	my $style = $self->{style} = Padre::Wx::Theme->find($name);
+	my $style = $self->{theme} = Padre::Wx::Theme->find($name);
 	my $lock  = $self->lock('UPDATE');
 
 	# Apply the new style to all current editors
