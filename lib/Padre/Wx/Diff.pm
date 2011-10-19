@@ -152,6 +152,9 @@ sub task_finish {
 			if ( $event->GetMargin == 1 ) {
 				$myself->show_diff_box( $editor->LineFromPosition( $event->GetPosition ), $editor );
 			}
+
+			# Keep processing
+			$event->Skip(1);
 		}
 	);
 
