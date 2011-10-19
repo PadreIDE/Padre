@@ -668,7 +668,7 @@ sub setup_document {
 	}
 
 	# Apply the current style to the editor
-	$self->main->style->apply($self);
+	$self->main->theme->apply($self);
 
 	# When we apply the style, refresh the line number margin in case
 	# the changed style results in a different size font.

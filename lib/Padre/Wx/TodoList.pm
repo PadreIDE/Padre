@@ -161,7 +161,7 @@ sub new {
 	$main->add_refresh_listener($self);
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply($self);
+		$self->main->theme->apply($self);
 	}
 
 	return $self;

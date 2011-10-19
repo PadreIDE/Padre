@@ -65,7 +65,7 @@ sub new {
 	);
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply($self);
+		$self->main->theme->apply($self);
 	}
 
 	return $self;

@@ -123,7 +123,7 @@ sub new {
 	$self->Hide;
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply($tree);
+		$self->main->theme->apply($tree);
 	}
 
 	return $self;

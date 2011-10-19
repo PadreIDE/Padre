@@ -161,7 +161,7 @@ sub new {
 	);
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->style->apply( $self->{list} );
+		$self->main->theme->apply( $self->{list} );
 	}
 
 	return $self;

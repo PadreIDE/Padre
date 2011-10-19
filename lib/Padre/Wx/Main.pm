@@ -569,7 +569,6 @@ use Class::XSAccessor {
 		ide                 => 'ide',
 		config              => 'config',
 		title               => 'title',
-		style               => 'theme',
 		theme               => 'theme',
 		aui                 => 'aui',
 		menu                => 'menu',
