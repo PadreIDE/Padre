@@ -607,11 +607,11 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::Patch
-You will find more infomation in our L<wiki|http://padre.perlide.org/trac/wiki/Features/EditPatch/> pages.
-
+Padre::Wx::Dialog::Patch - The Padre Patch dialog
 
 =head1 DESCRIPTION
+
+You will find more infomation in our L<wiki|http://padre.perlide.org/trac/wiki/Features/EditPatch/> pages.
 
 A very simplistic tool, only works on open saved files, in the Padre editor.
 
@@ -702,11 +702,11 @@ composed method
 
 composed method
 
-=head1 BUGS AND LIMITATIONS 
+=head1 BUGS AND LIMITATIONS
 
 List Order is that of load order, if you move your Tabs the List Order will not follow suite.
 
-If you have multiple files open with same name but with different paths only the first will get matched. 
+If you have multiple files open with same name but with different paths only the first will get matched.
 
 =head1 AUTHORS
 
@@ -723,6 +723,8 @@ it and/or modify it under the same terms as Perl 5 itself.
 
 The full text of the license can be found in the
 LICENSE file included with this module.
+
+=cut
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
