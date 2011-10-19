@@ -11,6 +11,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::HtmlWindow ();
 
 our $VERSION = '0.91';
 our @ISA     = qw{
@@ -46,6 +47,22 @@ sub new {
 		},
 	);
 
+	$self->{recent} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("Recent?"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{recent},
+		sub {
+			shift->on_recent_click(@_);
+		},
+	);
+
 	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
@@ -70,12 +87,53 @@ sub new {
 		},
 	);
 
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->on_list_item_selected(@_);
+		},
+	);
+
+	$self->{doc} = Padre::Wx::HtmlWindow->new(
+		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::STATIC_BORDER,
+	);
+
+	$self->{synopsis} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Synopsis"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{synopsis},
+		sub {
+			shift->on_synopsis_click(@_);
+		},
+	);
+
+	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$search_sizer->Add( $self->{search}, 0, Wx::EXPAND, 0 );
+	$search_sizer->Add( 5, 0, 0, Wx::EXPAND, 5 );
+	$search_sizer->Add( $self->{recent}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
+	$main_sizer->Add( $search_sizer, 0, Wx::EXPAND, 0 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
@@ -87,12 +145,24 @@ sub on_text_search {
 	$_[0]->main->error('Handler method on_text_search for event search.OnText not implemented');
 }
 
+sub on_recent_click {
+	$_[0]->main->error('Handler method on_recent_click for event recent.OnCheckBox not implemented');
+}
+
 sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
 }
 
 sub on_list_item_activated {
 	$_[0]->main->error('Handler method on_list_item_activated for event list.OnListItemActivated not implemented');
+}
+
+sub on_list_item_selected {
+	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+}
+
+sub on_synopsis_click {
+	$_[0]->main->error('Handler method on_synopsis_click for event synopsis.OnButtonClick not implemented');
 }
 
 1;

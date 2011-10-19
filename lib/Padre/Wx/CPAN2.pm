@@ -89,10 +89,11 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->main->show_cpan(0);
+	$_[0]->main->show_cpan_explorer(0);
 }
 
 sub view_start {
+	$_[0]->{synopsis}->Disable;
 }
 
 sub view_stop {
@@ -143,7 +144,7 @@ sub refresh {
 	$self->task_request(
 		task    => 'Padre::Task::CPAN2',
 		command => $command,
-		query   => lc($self->{search}->GetValue),
+		query   => lc( $self->{search}->GetValue ),
 	);
 
 	return 1;
@@ -242,6 +243,55 @@ sub set_icon_image {
 	$item->SetMask(Wx::LIST_MASK_IMAGE);
 	$item->SetImage($image_index);
 	$self->{list}->SetColumn( $column, $item );
+
+	return;
+}
+
+# Called when a CPAN list item is selected
+sub on_list_item_selected {
+	my ( $self, $event ) = @_;
+
+	my $module = $event->GetLabel;
+
+	require LWP::UserAgent;
+	my $ua = LWP::UserAgent->new;
+	$ua->timeout(10);
+	$ua->env_proxy;
+	my $url      = "http://api.metacpan.org/v0/pod/$module?content-type=text/x-pod";
+	my $response = $ua->get($url);
+	unless ( $response->is_success ) {
+		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
+			if DEBUG;
+		return;
+	}
+
+	my $pod = $response->decoded_content;
+	$self->{doc}->load_pod($pod);
+	my ( $synopsis, $section ) = ( '', '' );
+	for my $pod_line ( split /^/, $pod ) {
+		if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
+			$section = $1;
+		} elsif ( $section eq 'SYNOPSIS' ) {
+			$synopsis .= $pod_line;
+		}
+	}
+	if(length $synopsis > 0) {
+		$self->{synopsis}->Enable;
+	} else {
+		$self->{synopsis}->Disable;
+	}
+	$self->{SYNOPSIS} = $synopsis;
+
+	return;
+}
+
+# Called when the synopsis is clicked
+sub on_synopsis_click {
+	my ( $self, $event ) = @_;
+	return unless $self->{SYNOPSIS};
+
+	# Open a new Perl document containing the SYNOPSIS text
+	$self->main->new_document_from_string( $self->{SYNOPSIS}, 'application/x-perl' );
 
 	return;
 }
