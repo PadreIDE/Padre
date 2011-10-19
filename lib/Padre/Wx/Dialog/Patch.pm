@@ -431,7 +431,7 @@ sub apply_patch {
 
 			# Open the patched file as a new file
 			$main->new_document_from_string( $our_patch => 'application/x-perl', );
-			$main->info( Wx::gettext('Patch Succesful, you should see a new tab in editor called Unsaved #') );
+			$main->info( Wx::gettext('Patch successful, you should see a new tab in editor called Unsaved #') );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
 
@@ -487,7 +487,7 @@ sub make_patch_diff {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( sprintf(Wx::gettext('Diff Succesful, you should see a new tab in editor called %s'), $patch_file) );
+			$main->info( sprintf(Wx::gettext('Diff successful, you should see a new tab in editor called %s'), $patch_file) );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
 
@@ -578,7 +578,7 @@ sub make_patch_svn {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( sprintf(Wx::gettext('SVN Diff Succesful, you should see a new tab in editor called %s'), $patch_file) );
+			$main->info( sprintf(Wx::gettext('SVN Diff successful, you should see a new tab in editor called %s'), $patch_file) );
 		} else {
 			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
 
