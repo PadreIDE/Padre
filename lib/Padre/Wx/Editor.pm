@@ -623,11 +623,6 @@ sub setup_common {
 	$self->SetFont($font);
 	$self->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
 
-	# Enable or disable folding (if folding is turned on)
-	if (Padre::Feature::FOLDING) {
-		$self->show_folding( $config->editor_folding );
-	}
-
 	# Enable the symbol margin if anything needs it
 	if ( $config->main_syntaxcheck or $config->feature_document_diffs ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
@@ -663,6 +658,13 @@ sub setup_document {
 		$self->SetTabWidth( $indent->{tabwidth} );  # Tab char width
 		$self->SetIndent( $indent->{indentwidth} ); # Indent columns
 		$self->SetUseTabs( $indent->{use_tabs} );
+
+		# Enable or disable folding (if folding is turned on)
+		# Please enable it when the lexer is changed because it is
+		# the one that creates the code folding for that particular
+		# document
+		$self->show_folding( $config->editor_folding )
+			if Padre::Feature::FOLDING;
 	} else {
 		$self->SetWordChars('');
 	}
