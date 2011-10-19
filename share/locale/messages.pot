@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-18 16:10-0700\n"
+"POT-Creation-Date: 2011-10-19 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1779,7 +1779,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Patch.pm:490
 #, perl-format
-msgid "Diff Succesful, you should see a new tab in editor called %s"
+msgid "Diff successful, you should see a new tab in editor called %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:89
@@ -3699,13 +3699,13 @@ msgstr ""
 msgid "Patch"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:434
-msgid "Patch Succesful, you should see a new tab in editor called Unsaved #"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Patch.pm:419
 msgid ""
 "Patch file should end in .patch or .diff, you should reselect & try again"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Patch.pm:434
+msgid "Patch successful, you should see a new tab in editor called Unsaved #"
 msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:50
@@ -4405,7 +4405,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Patch.pm:581
 #, perl-format
-msgid "SVN Diff Succesful, you should see a new tab in editor called %s"
+msgid "SVN Diff successful, you should see a new tab in editor called %s"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:234
