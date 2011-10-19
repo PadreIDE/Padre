@@ -22,8 +22,23 @@ StyleSetForeground PADRE_WARNING                  af8000
 StyleSetBackground PADRE_WARNING                  fffff0
 StyleSetForeground PADRE_ERROR                    af0000
 StyleSetBackground PADRE_ERROR                    fff0f0
+# Code folding margin
 SetFoldMarginColour     1 eeeeee
 SetFoldMarginHiColour   1 eeeeee
+MarkerSetForeground     MARKNUM_FOLDEREND      ffffff
+MarkerSetBackground     MARKNUM_FOLDEREND      000000
+MarkerSetForeground     MARKNUM_FOLDEROPENMID  ffffff
+MarkerSetBackground     MARKNUM_FOLDEROPENMID  000000
+MarkerSetForeground     MARKNUM_FOLDERMIDTAIL  000000
+MarkerSetBackground     MARKNUM_FOLDERMIDTAIL  000000
+MarkerSetForeground     MARKNUM_FOLDERTAIL     000000
+MarkerSetBackground     MARKNUM_FOLDERTAIL     000000
+MarkerSetForeground     MARKNUM_FOLDERSUB      000000
+MarkerSetBackground     MARKNUM_FOLDERSUB      000000
+MarkerSetForeground     MARKNUM_FOLDER         000000
+MarkerSetBackground     MARKNUM_FOLDER         ffffff
+MarkerSetForeground     MARKNUM_FOLDEROPEN     ffffff
+MarkerSetBackground     MARKNUM_FOLDEROPEN     000000
 
 
 
