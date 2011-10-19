@@ -164,6 +164,7 @@ the even version for the release, even during development.
     - Added *experimental* CPAN explorer that reuses MetaCPAN.org API for
       searching and cpanm for installation. This is enabled by 
       feature_cpan_explorer configuration parameter (AZAWAWI)
+    - Fix #1291 'Code folding icons missing' (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
