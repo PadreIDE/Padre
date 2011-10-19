@@ -47,6 +47,10 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Navigation
+	$self->{window_goto_command_line_window} = $self->add_menu_action(
+		'window.goto_command_line_window',
+	);
+
 	$self->{window_goto_cpan_explorer_window} = $self->add_menu_action(
 		'window.goto_cpan_explorer_window',
 	) if $main->config->feature_cpan_explorer;
@@ -59,16 +63,12 @@ sub new {
 		'window.goto_outline_window',
 	);
 
-	$self->{window_goto_syntax_check_window} = $self->add_menu_action(
-		'window.goto_syntax_check_window',
-	);
-
-	$self->{window_goto_command_line_window} = $self->add_menu_action(
-		'window.goto_command_line_window',
-	);
-
 	$self->{window_goto_main_window} = $self->add_menu_action(
 		'window.goto_main_window',
+	);
+
+	$self->{window_goto_syntax_check_window} = $self->add_menu_action(
+		'window.goto_syntax_check_window',
 	);
 
 	# Save everything we need to keep
