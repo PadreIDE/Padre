@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-19 04:10-0700\n"
+"POT-Creation-Date: 2011-10-19 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2705 lib/Padre/Plugin/Devel.pm:109
+#: lib/Padre/Wx/ActionLibrary.pm:2714 lib/Padre/Plugin/Devel.pm:109
 msgid "&About"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 msgid "&Comment Out"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2591
+#: lib/Padre/Wx/ActionLibrary.pm:2600
 msgid "&Context Help"
 msgstr ""
 
@@ -320,7 +320,7 @@ msgstr ""
 msgid "&Go to Element"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2570 lib/Padre/Wx/Menu/Help.pm:115
+#: lib/Padre/Wx/ActionLibrary.pm:2579 lib/Padre/Wx/Menu/Help.pm:115
 msgid "&Help"
 msgstr ""
 
@@ -422,7 +422,7 @@ msgstr ""
 msgid "&POSIX Character classes"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2615
+#: lib/Padre/Wx/ActionLibrary.pm:2624
 msgid "&Padre Support (English)"
 msgstr ""
 
@@ -555,7 +555,7 @@ msgstr ""
 msgid "&Search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2579
+#: lib/Padre/Wx/ActionLibrary.pm:2588
 msgid "&Search Help"
 msgstr ""
 
@@ -600,7 +600,7 @@ msgstr ""
 msgid "&Tools"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2682
+#: lib/Padre/Wx/ActionLibrary.pm:2691
 msgid "&Translate Padre..."
 msgstr ""
 
@@ -636,11 +636,11 @@ msgstr ""
 msgid "&View Document As..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2639
+#: lib/Padre/Wx/ActionLibrary.pm:2648
 msgid "&Win32 Questions (English)"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Window.pm:77
+#: lib/Padre/Wx/Menu/Window.pm:81
 msgid "&Window"
 msgstr ""
 
@@ -1041,7 +1041,7 @@ msgstr ""
 msgid "Burak Gursoy"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2604
+#: lib/Padre/Wx/ActionLibrary.pm:2613
 msgid "C&urrent Document"
 msgstr ""
 
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:113
+#: lib/Padre/Wx/CPAN2.pm:118
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -2582,19 +2582,19 @@ msgstr ""
 msgid "Go to"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2545
+#: lib/Padre/Wx/ActionLibrary.pm:2554
 msgid "Go to &Command Line Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2485
+#: lib/Padre/Wx/ActionLibrary.pm:2496
 msgid "Go to &Functions Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2556
+#: lib/Padre/Wx/ActionLibrary.pm:2565
 msgid "Go to &Main Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2499
+#: lib/Padre/Wx/ActionLibrary.pm:2508
 msgid "Go to &Todo Window"
 msgstr ""
 
@@ -2602,15 +2602,19 @@ msgstr ""
 msgid "Go to Bookmar&k..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2512
+#: lib/Padre/Wx/ActionLibrary.pm:2485
+msgid "Go to CPAN E&xplorer Window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2521
 msgid "Go to O&utline Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2523
+#: lib/Padre/Wx/ActionLibrary.pm:2532
 msgid "Go to Ou&tput Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2534
+#: lib/Padre/Wx/ActionLibrary.pm:2543
 msgid "Go to S&yntax Check Window"
 msgstr ""
 
@@ -2642,7 +2646,7 @@ msgstr ""
 msgid "Help Search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2683
+#: lib/Padre/Wx/ActionLibrary.pm:2692
 msgid "Help by translating Padre to your local language"
 msgstr ""
 
@@ -3509,7 +3513,7 @@ msgstr ""
 msgid "Open in File Browser"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2655
+#: lib/Padre/Wx/ActionLibrary.pm:2664
 msgid ""
 "Open perlmonks.org, one of the biggest Perl community sites, in your default "
 "web browser"
@@ -3523,19 +3527,19 @@ msgstr ""
 msgid "Open session"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2617
+#: lib/Padre/Wx/ActionLibrary.pm:2626
 msgid ""
 "Open the Padre live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2629
+#: lib/Padre/Wx/ActionLibrary.pm:2638
 msgid ""
 "Open the Perl live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2641
+#: lib/Padre/Wx/ActionLibrary.pm:2650
 msgid ""
 "Open the Perl/Win32 live support chat in your web browser and talk to others "
 "who may help you with your problem"
@@ -3618,7 +3622,7 @@ msgstr ""
 msgid "Override Shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2627
+#: lib/Padre/Wx/ActionLibrary.pm:2636
 msgid "P&erl Help"
 msgstr ""
 
@@ -4256,7 +4260,7 @@ msgstr ""
 msgid "Replacing '%s' in '%s'..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2665
+#: lib/Padre/Wx/ActionLibrary.pm:2674
 msgid "Report a New &Bug"
 msgstr ""
 
@@ -4514,11 +4518,11 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2580
+#: lib/Padre/Wx/ActionLibrary.pm:2589
 msgid "Search the Perl help pages (perldoc)"
 msgstr ""
 
-#: lib/Padre/Wx/Browser.pm:103 lib/Padre/Wx/FBP/CPAN.pm:36
+#: lib/Padre/Wx/Browser.pm:103
 msgid "Search:"
 msgstr ""
 
@@ -4652,7 +4656,7 @@ msgstr ""
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2666
+#: lib/Padre/Wx/ActionLibrary.pm:2675
 msgid "Send a bug report to the Padre developer team"
 msgstr ""
 
@@ -4706,31 +4710,35 @@ msgid ""
 "Set focus to the line where the current statement is in the debugging process"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2546
+#: lib/Padre/Wx/ActionLibrary.pm:2486
+msgid "Set the focus to the \"CPAN Explorer\" window"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:2555
 msgid "Set the focus to the \"Command Line\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2486
+#: lib/Padre/Wx/ActionLibrary.pm:2497
 msgid "Set the focus to the \"Functions\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2513
+#: lib/Padre/Wx/ActionLibrary.pm:2522
 msgid "Set the focus to the \"Outline\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2524
+#: lib/Padre/Wx/ActionLibrary.pm:2533
 msgid "Set the focus to the \"Output\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2535
+#: lib/Padre/Wx/ActionLibrary.pm:2544
 msgid "Set the focus to the \"Syntax Check\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2500
+#: lib/Padre/Wx/ActionLibrary.pm:2509
 msgid "Set the focus to the \"Todo\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2557
+#: lib/Padre/Wx/ActionLibrary.pm:2566
 msgid "Set the focus to the main editor window"
 msgstr ""
 
@@ -4908,7 +4916,7 @@ msgstr ""
 msgid "Show current report"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2706
+#: lib/Padre/Wx/ActionLibrary.pm:2715
 msgid "Show information about Padre"
 msgstr ""
 
@@ -4944,11 +4952,11 @@ msgid ""
 "output window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2605
+#: lib/Padre/Wx/ActionLibrary.pm:2614
 msgid "Show the POD (Perldoc) version of the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2571
+#: lib/Padre/Wx/ActionLibrary.pm:2580
 msgid "Show the Padre help"
 msgstr ""
 
@@ -4960,7 +4968,7 @@ msgstr ""
 msgid "Show the command line window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2592
+#: lib/Padre/Wx/ActionLibrary.pm:2601
 msgid "Show the help article for the current context"
 msgstr ""
 
@@ -5554,11 +5562,11 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2673
+#: lib/Padre/Wx/ActionLibrary.pm:2682
 msgid "View All &Open Bugs"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2674
+#: lib/Padre/Wx/ActionLibrary.pm:2683
 msgid "View all known and currently unsolved bugs in Padre"
 msgstr ""
 
@@ -5570,7 +5578,7 @@ msgstr ""
 msgid "Visible characters and spaces"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2653
+#: lib/Padre/Wx/ActionLibrary.pm:2662
 msgid "Visit the PerlM&onks"
 msgstr ""
 
