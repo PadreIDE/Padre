@@ -1555,14 +1555,15 @@ sub vertically_align {
 		if ( $_ == 0 ) {
 			$start = $start + $spaces;
 		}
+
 		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0];
 		if ( $spaces > 0 ) {
 			$self->SetTargetStart($insert);
 			$self->SetTargetEnd($insert);
 			$self->ReplaceTarget( ' ' x $spaces );
 		} elsif ( $spaces < 0 ) {
-			$self->SetTargetStart( $insert - $spaces );
-			$self->SetTargetEnd($insert);
+			$self->SetTargetStart($insert);
+			$self->SetTargetEnd( $insert - $spaces );
 			$self->ReplaceTarget('');
 		}
 	}
