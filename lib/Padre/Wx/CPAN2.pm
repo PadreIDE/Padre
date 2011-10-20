@@ -70,6 +70,9 @@ sub new {
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
 
+	# Create the search control menu
+	$self->{search}->SetMenu( $self->new_menu );
+
 	return $self;
 }
 
@@ -94,6 +97,7 @@ sub view_close {
 
 sub view_start {
 	$_[0]->{synopsis}->Disable;
+	$_[0]->{changes}->Disable;
 }
 
 sub view_stop {
@@ -109,6 +113,24 @@ sub view_stop {
 
 #####################################################################
 # General Methods
+
+# We need to create the menu whenever our locale changes
+sub new_menu {
+	my $self = shift;
+	my $menu = Wx::Menu->new;
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append(
+			-1,
+			Wx::gettext('Search in recent'),
+		),
+		sub {
+		},
+	);
+
+	return $menu;
+}
 
 # Sets the focus on the search field
 sub focus_on_search {
@@ -296,15 +318,8 @@ sub on_synopsis_click {
 	return;
 }
 
-# Called when a CPAN list column is activated
-sub on_list_item_activated {
-	my ( $self, $event ) = @_;
-}
-
 # Called when search text control is changed
-sub on_text_search {
-	my ( $self, $event ) = @_;
-
+sub on_search_text {
 	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
 }
 

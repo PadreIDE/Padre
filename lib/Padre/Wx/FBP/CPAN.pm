@@ -27,39 +27,35 @@ sub new {
 		$parent,
 		-1,
 		Wx::DefaultPosition,
-		[ 195, 530 ],
+		[ 235, 530 ],
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{search} = Wx::TextCtrl->new(
+	$self->{search} = Wx::SearchCtrl->new(
 		$self,
 		-1,
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	unless ( Wx::MAC ) {
+		$self->{search}->ShowSearchButton(1);
+	}
+	$self->{search}->ShowCancelButton(1);
+
+	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
+		$self,
+		$self->{search},
+		sub {
+			shift->on_search_cancel(@_);
+		},
+	);
 
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{search},
 		sub {
-			shift->on_text_search(@_);
-		},
-	);
-
-	$self->{recent} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext("Recent?"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_CHECKBOX(
-		$self,
-		$self->{recent},
-		sub {
-			shift->on_recent_click(@_);
+			shift->on_search_text(@_);
 		},
 	);
 
@@ -106,7 +102,7 @@ sub new {
 	$self->{synopsis} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Synopsis"),
+		Wx::gettext("Insert Synopsis"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -119,20 +115,36 @@ sub new {
 		},
 	);
 
+	$self->{changes} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Show Changes"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{changes},
+		sub {
+			shift->on_changes_click(@_);
+		},
+	);
+
 	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$search_sizer->Add( $self->{search}, 0, Wx::EXPAND, 0 );
-	$search_sizer->Add( 5, 0, 0, Wx::EXPAND, 5 );
-	$search_sizer->Add( $self->{recent}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$search_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$button_sizer->Add( $self->{changes}, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $search_sizer, 0, Wx::EXPAND, 0 );
+	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
@@ -141,12 +153,12 @@ sub new {
 	return $self;
 }
 
-sub on_text_search {
-	$_[0]->main->error('Handler method on_text_search for event search.OnText not implemented');
+sub on_search_cancel {
+	$_[0]->main->error('Handler method on_search_cancel for event search.OnCancelButton not implemented');
 }
 
-sub on_recent_click {
-	$_[0]->main->error('Handler method on_recent_click for event recent.OnCheckBox not implemented');
+sub on_search_text {
+	$_[0]->main->error('Handler method on_search_text for event search.OnText not implemented');
 }
 
 sub on_list_column_click {
@@ -163,6 +175,10 @@ sub on_list_item_selected {
 
 sub on_synopsis_click {
 	$_[0]->main->error('Handler method on_synopsis_click for event synopsis.OnButtonClick not implemented');
+}
+
+sub on_changes_click {
+	$_[0]->main->error('Handler method on_changes_click for event changes.OnButtonClick not implemented');
 }
 
 1;
