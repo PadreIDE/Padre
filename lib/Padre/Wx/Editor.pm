@@ -1556,7 +1556,7 @@ sub vertically_align {
 			$start = $start + $spaces;
 		}
 
-		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0];
+		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0] + 1;
 		if ( $spaces > 0 ) {
 			$self->SetTargetStart($insert);
 			$self->SetTargetEnd($insert);
