@@ -1466,7 +1466,7 @@ sub delete_leading_spaces {
 	my $lines   = $self->GetLineCount;
 	my $changed = 0;
 
-	foreach my $i ( 1 .. $self->GetLineCount ) {
+	foreach my $i ( 0 .. $self->GetLineCount ) {
 		my $line = $self->GetLine($i);
 		unless ( $line =~ /\A([ \t]+)/ ) {
 			next;
@@ -1488,7 +1488,7 @@ sub delete_trailing_spaces {
 	my $lines   = $self->GetLineCount;
 	my $changed = 0;
 
-	foreach my $i ( 1 .. $self->GetLineCount ) {
+	foreach my $i ( 0 .. $self->GetLineCount ) {
 		my $line = $self->GetLine($i);
 		unless ( $line =~ /\A(.*?)([ \t]+)([\015\012]*)\z/ ) {
 			next;
