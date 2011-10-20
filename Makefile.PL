@@ -118,7 +118,6 @@ requires 'List::Util'               => '1.18';
 requires 'List::MoreUtils'          => '0.22';
 requires 'LWP'                      => '5.815';
 requires 'LWP::UserAgent'           => '5.815';
-requires 'LWP::Protocol::https'     => '6.02';
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
