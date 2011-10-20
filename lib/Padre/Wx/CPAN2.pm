@@ -297,7 +297,7 @@ sub on_list_item_selected {
 			$synopsis .= $pod_line;
 		}
 	}
-	if(length $synopsis > 0) {
+	if ( length $synopsis > 0 ) {
 		$self->{synopsis}->Enable;
 	} else {
 		$self->{synopsis}->Disable;
@@ -321,6 +321,17 @@ sub on_synopsis_click {
 # Called when search text control is changed
 sub on_search_text {
 	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
+}
+
+# Called when search cancel button is clicked
+sub on_search_cancel {
+	my $self = shift;
+
+	# Clear the search control, stop the refresh dwell, and trigger it
+	# immediately
+	$self->{search}->SetValue('');
+	$self->dwell_stop('refresh');
+	$self->on_search_text;
 }
 
 1;
