@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-19 16:10-0700\n"
+"POT-Creation-Date: 2011-10-20 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:119
+#: lib/Padre/Wx/CPAN2.pm:141
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -1864,7 +1864,7 @@ msgstr ""
 msgid "Document Statistics"
 msgstr ""
 
-#: lib/Padre/Wx/Right.pm:52
+#: lib/Padre/Wx/Right.pm:53
 msgid "Document Tools"
 msgstr ""
 
@@ -2750,6 +2750,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Special.pm:28
 msgid "Insert Special Values"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/CPAN.pm:105
+msgid "Insert Synopsis"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2426
@@ -3935,7 +3939,7 @@ msgstr ""
 msgid "Project Browser - Was known as the Directory Tree"
 msgstr ""
 
-#: lib/Padre/Wx/Left.pm:52
+#: lib/Padre/Wx/Left.pm:53
 msgid "Project Tools"
 msgstr ""
 
@@ -4048,10 +4052,6 @@ msgstr ""
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:211
 #, perl-format
 msgid "Really delete the file \"%s\"?"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/CPAN.pm:53
-msgid "Recent?"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:595
@@ -4522,6 +4522,10 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
+#: lib/Padre/Wx/CPAN2.pm:126
+msgid "Search in recent"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2589
 msgid "Search the Perl help pages (perldoc)"
 msgstr ""
@@ -4836,6 +4840,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1545
 msgid "Show Ca&ll Tips"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/CPAN.pm:121
+msgid "Show Changes"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1504
@@ -5219,10 +5227,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:40
 msgid "Switch language to system default"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/CPAN.pm:109
-msgid "Synopsis"
 msgstr ""
 
 #: lib/Padre/Wx/Syntax.pm:242
