@@ -246,13 +246,23 @@ sub render {
 	$self->_sort_model();
 	my $model = $self->{model};
 
+	# Calculate odd/even row colors (for readability)
+	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
+	my $alternate_color = Wx::Colour->new(
+		int( $real_color->Red * 0.9 ),
+		int( $real_color->Green * 0.9 ),
+		$real_color->Blue,
+	);
+
 	my $index = 0;
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and author as a row to the list
 		$list->InsertImageStringItem( $index, $rec->{documentation}, $self->{images}{file} );
 		$list->SetItemData( $index, $index );
-		$list->SetItem( $index++, 1, $rec->{author} );
+		$list->SetItem( $index, 1, $rec->{author} );
+		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
+		$index++;
 	}
 
 	# Tidy the list
