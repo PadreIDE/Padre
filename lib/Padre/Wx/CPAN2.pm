@@ -197,8 +197,9 @@ sub relocale {
 }
 
 sub refresh {
-	my $self = shift;
+	my $self    = shift;
 	my $command = shift || Padre::Task::CPAN2::CPAN_SEARCH;
+	my $query   = shift || lc( $self->{search}->GetValue );
 
 	# Abort any in-flight checks
 	$self->task_reset;
@@ -207,7 +208,7 @@ sub refresh {
 	$self->task_request(
 		task    => 'Padre::Task::CPAN2',
 		command => $command,
-		query   => lc( $self->{search}->GetValue ),
+		query   => $query,
 	);
 
 	return 1;
@@ -216,8 +217,17 @@ sub refresh {
 sub task_finish {
 	my $self = shift;
 	my $task = shift;
-	$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
-	$self->render;
+
+	my $command = $task->{command};
+	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+		$self->render;
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
+		$self->{model} = Params::Util::_HASH( $task->{model} ) or return;
+		$self->render_doc;
+	} else {
+		die "Cannot handle $command\n";
+	}
 }
 
 sub render {
@@ -315,35 +325,29 @@ sub on_list_item_selected {
 	my ( $self, $event ) = @_;
 
 	my $module = $event->GetLabel;
+	my $doc    = $self->{doc};
+	$doc->SetPage(
+		sprintf(
+			Wx::gettext(q{<b>Loading %s...</b>}),
+			$module
+		)
+	);
+	$doc->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
 
-	require LWP::UserAgent;
-	my $ua = LWP::UserAgent->new;
-	$ua->timeout(10);
-	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url      = "http://api.metacpan.org/v0/pod/$module?content-type=text/x-pod";
-	my $response = $ua->get($url);
-	unless ( $response->is_success ) {
-		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
-			if DEBUG;
-		return;
-	}
+	$self->refresh( Padre::Task::CPAN2::CPAN_POD, $module );
+}
 
-	my $pod = $response->decoded_content;
-	$self->{doc}->load_pod($pod);
+# Renders the documentation/SYNOPSIS section
+sub render_doc {
+	my $self = shift;
+
+	my $model = $self->{model} or return;
+	my ( $pod_html, $synopsis ) = ( $model->{html}, $model->{synopsis} );
+
+	$self->{doc}->SetPage($pod_html);
 	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
 	$self->{doc}->Show;
 
-	my ( $synopsis, $section ) = ( '', '' );
-	for my $pod_line ( split /^/, $pod ) {
-		if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
-			$section = $1;
-		} elsif ( $section eq 'SYNOPSIS' ) {
-
-			# Add leading-spaces-trimmed line to synopsis
-			$pod_line =~ s/^\s+//g;
-			$synopsis .= $pod_line;
-		}
-	}
 	if ( length $synopsis > 0 ) {
 		$self->{synopsis}->Show;
 	} else {

@@ -13,6 +13,7 @@ our @ISA     = 'Padre::Task';
 use constant {
 	CPAN_SEARCH  => 'search',
 	CPAN_INSTALL => 'install',
+	CPAN_POD     => 'pod',
 };
 
 ######################################################################
@@ -41,15 +42,57 @@ sub run {
 	# Pull things off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
 	return unless $self->{command};
-	my $command = delete $self->{command};
+	my $command = $self->{command};
 	return unless $self->{query};
 	my $query = delete $self->{query};
 
 	if ( $command eq CPAN_SEARCH ) {
+
+		# Autocomplete search using MetaCPAN JSON API
 		$self->{model} = $self->metacpan_autocomplete( $query, 10 );
 	} elsif ( $command eq CPAN_INSTALL ) {
 
 		#TODO run cpanm module!
+	} elsif ( $command eq CPAN_POD ) {
+
+		# Load module's POD using MetaCPAN API
+		require LWP::UserAgent;
+		my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
+		$ua->timeout(10);
+		$ua->env_proxy unless Padre::Constant::WIN32;
+		my $url      = "http://api.metacpan.org/v0/pod/$query?content-type=text/x-pod";
+		my $response = $ua->get($url);
+		unless ( $response->is_success ) {
+			TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
+				if DEBUG;
+			return;
+		}
+
+		# The pod text is here
+		my $pod = $response->decoded_content;
+
+		# Convert POD to HTML
+		require Padre::Pod2HTML;
+		my $pod_html = Padre::Pod2HTML->pod2html($pod);
+
+		# Find the SYNOPSIS section
+		my ( $synopsis, $section ) = ( '', '' );
+		for my $pod_line ( split /^/, $pod ) {
+			if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
+				$section = $1;
+			} elsif ( $section eq 'SYNOPSIS' ) {
+
+				# Add leading-spaces-trimmed line to synopsis
+				$pod_line =~ s/^\s+//g;
+				$synopsis .= $pod_line;
+			}
+		}
+
+		$self->{model} = {
+			html     => $pod_html,
+			synopsis => $synopsis,
+			},
+
 	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
@@ -72,7 +115,8 @@ sub metacpan_autocomplete {
 	# The documentation Module-Name that should be analyzed
 	my $should = [
 		map { { field => { 'documentation.analyzed' => "$_*" } }, { field => { 'documentation.camelcase' => "$_*" } } }
-		grep {$_} @query ];
+		grep {$_} @query
+	];
 
 	# The distribution we do not want in our search
 	my @ROGUE_DISTRIBUTIONS = qw(kurila perl_debug perl-5.005_02+apache1.3.3+modperl pod2texi perlbench spodcxx);
