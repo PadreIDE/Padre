@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-20 04:10-0700\n"
+"POT-Creation-Date: 2011-10-23 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -918,7 +918,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:36 lib/Padre/Wx/VCS.pm:51
+#: lib/Padre/Wx/CPAN2.pm:37 lib/Padre/Wx/VCS.pm:51
 msgid "Author"
 msgstr ""
 
@@ -1049,7 +1049,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:141
+#: lib/Padre/Wx/CPAN2.pm:142
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -1816,7 +1816,7 @@ msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:35 lib/Padre/Wx/Dialog/About.pm:173
+#: lib/Padre/Wx/CPAN2.pm:36 lib/Padre/Wx/Dialog/About.pm:173
 msgid "Distribution"
 msgstr ""
 
@@ -4522,7 +4522,7 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:126
+#: lib/Padre/Wx/CPAN2.pm:127
 msgid "Search in recent"
 msgstr ""
 
@@ -4672,7 +4672,7 @@ msgstr ""
 msgid "Send changes from your working copy to the repository"
 msgstr ""
 
-#: lib/Padre/File/HTTP.pm:51
+#: lib/Padre/File/HTTP.pm:52
 #, perl-format
 msgid "Sending HTTP request %s..."
 msgstr ""
@@ -5695,7 +5695,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: lib/Padre/File/HTTP.pm:161
+#: lib/Padre/File/HTTP.pm:162
 msgid ""
 "You are going to write a file using HTTP PUT.\n"
 "This is highly experimental and not supported by most servers."
