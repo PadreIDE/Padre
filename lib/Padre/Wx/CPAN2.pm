@@ -3,6 +3,7 @@ package Padre::Wx::CPAN2;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Constant        ();
 use Padre::Role::Task      ();
 use Padre::Wx::Role::View  ();
 use Padre::Wx              ();
@@ -278,7 +279,7 @@ sub on_list_item_selected {
 	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new;
 	$ua->timeout(10);
-	$ua->env_proxy;
+	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $url      = "http://api.metacpan.org/v0/pod/$module?content-type=text/x-pod";
 	my $response = $ua->get($url);
 	unless ( $response->is_success ) {

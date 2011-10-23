@@ -4,7 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::File;
+use Padre::Constant ();
+use Padre::File     ();
 use Padre::Logger;
 
 our $VERSION = '0.91';
@@ -38,7 +39,7 @@ sub new {
 
 	$self->{protocol} = 'http'; # Should not be overridden
 	$self->{UA}->timeout( $self->{_timeout} );
-	$self->{UA}->env_proxy;
+	$self->{UA}->env_proxy unless Padre::Constant::WIN32;
 	return $self;
 }
 

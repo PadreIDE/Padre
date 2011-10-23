@@ -26,8 +26,9 @@ Sending and receiving data via HTTP.
 use 5.008005;
 use strict;
 use warnings;
-use Params::Util ();
-use Padre::Task  ();
+use Padre::Constant ();
+use Params::Util    ();
+use Padre::Task     ();
 
 our $VERSION = '0.91';
 our @ISA     = 'Padre::Task';
@@ -143,7 +144,7 @@ sub run {
 		agent   => "Padre/$VERSION",
 		timeout => 60,
 	);
-	$useragent->env_proxy;
+	$useragent->env_proxy unless Padre::Constant::WIN32;
 
 	# Execute the request.
 	# It's not up to us to judge success or failure at this point,
