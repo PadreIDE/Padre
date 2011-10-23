@@ -166,6 +166,7 @@ the even version for the release, even during development.
       feature_cpan_explorer configuration parameter (AZAWAWI)
     - Fix #1291 'Code folding icons missing' (AZAWAWI)
     - Code folding markers are now theme-able (AZAWAWI)
+    - Find and Find in Files dialogs hide the Fast Find panel (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
