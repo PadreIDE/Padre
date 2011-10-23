@@ -68,11 +68,48 @@ sub new {
 	};
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
+	# Handle char events in search box
+	Wx::Event::EVT_CHAR(
+		$self->{search},
+		sub {
+			my ( $this, $event ) = @_;
+
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
+
+				# Up/Down and return keys focus on the list
+				my $list = $self->{list};
+				$list->SetFocus;
+				my $selection = -1;
+				$selection = $list->GetNextItem(
+					$selection,
+					Wx::LIST_NEXT_ALL,
+					Wx::LIST_STATE_SELECTED
+				);
+				if ( $selection == -1 && $self->{list}->GetItemCount > 0 ) {
+					$selection = 0;
+				}
+				$list->SetItemState(
+					$selection,
+					Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED
+				) if $selection != -1;
+			} elsif ( $code == Wx::K_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor or return;
+				$editor->SetFocus if $editor;
+			}
+
+			$event->Skip(1);
+			return;
+		}
+	);
+
+
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
-
-	# Create the search control menu
-	$self->{search}->SetMenu( $self->new_menu );
 
 	return $self;
 }
@@ -290,6 +327,8 @@ sub on_list_item_selected {
 
 	my $pod = $response->decoded_content;
 	$self->{doc}->load_pod($pod);
+	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
+
 	my ( $synopsis, $section ) = ( '', '' );
 	for my $pod_line ( split /^/, $pod ) {
 		if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
@@ -322,17 +361,6 @@ sub on_synopsis_click {
 # Called when search text control is changed
 sub on_search_text {
 	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
-}
-
-# Called when search cancel button is clicked
-sub on_search_cancel {
-	my $self = shift;
-
-	# Clear the search control, stop the refresh dwell, and trigger it
-	# immediately
-	$self->{search}->SetValue('');
-	$self->dwell_stop('refresh');
-	$self->on_search_text;
 }
 
 1;

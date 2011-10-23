@@ -31,24 +31,12 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{search} = Wx::SearchCtrl->new(
+	$self->{search} = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-	);
-	unless ( Wx::MAC ) {
-		$self->{search}->ShowSearchButton(1);
-	}
-	$self->{search}->ShowCancelButton(1);
-
-	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self,
-		$self->{search},
-		sub {
-			shift->on_search_cancel(@_);
-		},
 	);
 
 	Wx::Event::EVT_TEXT(
@@ -98,6 +86,9 @@ sub new {
 		Wx::DefaultSize,
 		Wx::STATIC_BORDER,
 	);
+	$self->{doc}->SetBackgroundColour(
+		Wx::Colour->new( 253, 252, 187 )
+	);
 
 	$self->{synopsis} = Wx::Button->new(
 		$self,
@@ -144,17 +135,13 @@ sub new {
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
 
 	return $self;
-}
-
-sub on_search_cancel {
-	$_[0]->main->error('Handler method on_search_cancel for event search.OnCancelButton not implemented');
 }
 
 sub on_search_text {
