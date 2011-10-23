@@ -3,7 +3,8 @@ package Padre::Task::CPAN2;
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Task ();
+use Padre::Task     ();
+use Padre::Constant ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.91';
@@ -46,12 +47,10 @@ sub run {
 
 	if ( $command eq CPAN_SEARCH ) {
 		$self->{model} = $self->metacpan_autocomplete( $query, 10 );
-	}
-	elsif ( $command eq CPAN_INSTALL ) {
+	} elsif ( $command eq CPAN_INSTALL ) {
 
 		#TODO run cpanm module!
-	}
-	else {
+	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
 
@@ -72,15 +71,11 @@ sub metacpan_autocomplete {
 
 	# The documentation Module-Name that should be analyzed
 	my $should = [
-		map {
-			{ field   => { 'documentation.analyzed'  => "$_*" } },
-			  { field => { 'documentation.camelcase' => "$_*" } }
-		  } grep { $_ } @query
-	];
+		map { { field => { 'documentation.analyzed' => "$_*" } }, { field => { 'documentation.camelcase' => "$_*" } } }
+		grep {$_} @query ];
 
 	# The distribution we do not want in our search
-	my @ROGUE_DISTRIBUTIONS =
-	  qw(kurila perl_debug perl-5.005_02+apache1.3.3+modperl pod2texi perlbench spodcxx);
+	my @ROGUE_DISTRIBUTIONS = qw(kurila perl_debug perl-5.005_02+apache1.3.3+modperl pod2texi perlbench spodcxx);
 
 	# The ElasticSearch query in Perl
 	my %payload = (
@@ -88,35 +83,22 @@ sub metacpan_autocomplete {
 			filtered => {
 				query => {
 					custom_score => {
-						query => { bool => { should => $should } },
-						script =>
-"_score - doc['documentation'].stringValue.length()/100"
+						query  => { bool => { should => $should } },
+						script => "_score - doc['documentation'].stringValue.length()/100"
 					},
 				},
 				filter => {
 					and => [
-						{
-							not => {
+						{   not => {
 								filter => {
-									or => [
-										map {
-											{ term =>
-												  { 'file.distribution' => $_ }
-											}
-										  } @ROGUE_DISTRIBUTIONS
-									]
+									or => [ map { { term => { 'file.distribution' => $_ } } } @ROGUE_DISTRIBUTIONS ]
 								}
 							}
 						},
 						{ exists => { field          => 'documentation' } },
 						{ term   => { 'file.indexed' => \1 } },
 						{ term   => { 'file.status'  => 'latest' } },
-						{
-							not => {
-								filter =>
-								  { term => { 'file.authorized' => \0 } }
-							}
-						}
+						{ not    => { filter         => { term => { 'file.authorized' => \0 } } } }
 					]
 				}
 			}
@@ -133,13 +115,16 @@ sub metacpan_autocomplete {
 	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
-	$ua->env_proxy;
-	my $response = $ua->post( 'http://api.metacpan.org/v0/file/_search',
-		Content => $json_request, );
+
+	$ua->env_proxy unless Padre::Constant::WIN32;
+	my $response = $ua->post(
+		'http://api.metacpan.org/v0/file/_search',
+		Content => $json_request,
+	);
 
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s' from metacpan.org", $response->status_line ) )
-		  if DEBUG;
+			if DEBUG;
 		return [];
 	}
 
