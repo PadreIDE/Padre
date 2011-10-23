@@ -55,44 +55,9 @@ sub run {
 		#TODO run cpanm module!
 	} elsif ( $command eq CPAN_POD ) {
 
-		# Load module's POD using MetaCPAN API
-		require LWP::UserAgent;
-		my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
-		$ua->timeout(10);
-		$ua->env_proxy unless Padre::Constant::WIN32;
-		my $url      = "http://api.metacpan.org/v0/pod/$query?content-type=text/x-pod";
-		my $response = $ua->get($url);
-		unless ( $response->is_success ) {
-			TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
-				if DEBUG;
-			return;
-		}
-
-		# The pod text is here
-		my $pod = $response->decoded_content;
-
-		# Convert POD to HTML
-		require Padre::Pod2HTML;
-		my $pod_html = Padre::Pod2HTML->pod2html($pod);
-
-		# Find the SYNOPSIS section
-		my ( $synopsis, $section ) = ( '', '' );
-		for my $pod_line ( split /^/, $pod ) {
-			if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
-				$section = $1;
-			} elsif ( $section eq 'SYNOPSIS' ) {
-
-				# Add leading-spaces-trimmed line to synopsis
-				$pod_line =~ s/^\s+//g;
-				$synopsis .= $pod_line;
-			}
-		}
-
-		$self->{model} = {
-			html     => $pod_html,
-			synopsis => $synopsis,
-			},
-
+		# Find the POD's HTML and SYNOPSIS section
+		# using MetaCPAN JSON API
+		$self->{model} = $self->metacpan_pod($query);
 	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
@@ -178,6 +143,51 @@ sub metacpan_autocomplete {
 
 	# And return its reference
 	return \@results;
+}
+
+# Load module's POD using MetaCPAN API
+# retrieves the SYNOPSIS section from that POD and returns a POD2HTML text
+sub metacpan_pod {
+	my ( $self, $query ) = @_;
+
+	# Load module's POD using MetaCPAN API
+	require LWP::UserAgent;
+	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
+	$ua->timeout(10);
+	$ua->env_proxy unless Padre::Constant::WIN32;
+	my $url      = "http://api.metacpan.org/v0/pod/$query?content-type=text/x-pod";
+	my $response = $ua->get($url);
+	unless ( $response->is_success ) {
+		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
+			if DEBUG;
+		return;
+	}
+
+	# The pod text is here
+	my $pod = $response->decoded_content;
+
+	# Convert POD to HTML
+	require Padre::Pod2HTML;
+	my $pod_html = Padre::Pod2HTML->pod2html($pod);
+
+	# Find the SYNOPSIS section
+	my ( $synopsis, $section ) = ( '', '' );
+	for my $pod_line ( split /^/, $pod ) {
+		if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
+			$section = $1;
+		} elsif ( $section eq 'SYNOPSIS' ) {
+
+			# Add leading-spaces-trimmed line to synopsis
+			$pod_line =~ s/^\s+//g;
+			$synopsis .= $pod_line;
+		}
+	}
+
+	return {
+		html     => $pod_html,
+		synopsis => $synopsis,
+		},
+
 }
 
 1;
