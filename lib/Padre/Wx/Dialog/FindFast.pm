@@ -33,6 +33,7 @@ sub new {
 		default_bgcolour => $default_bg,
 		error_bgcolour   => $error_bg,
 	}, $class;
+
 	return $self;
 }
 

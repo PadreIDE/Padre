@@ -135,6 +135,11 @@ sub run {
 	# Refresh
 	$self->refresh;
 
+	# Hide the Fast Find if visible
+	if ( $self->main->has_findfast ) {
+		$self->main->findfast->_hide_panel;
+	}
+
 	# Show the dialog
 	my $result = $self->ShowModal;
 

@@ -1186,7 +1186,6 @@ sub init {
 			my $find = Padre::Wx::Dialog::Find->new($main);
 			$find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
 			$find->find_term->SetValue( $main->findfast->{entry}->GetValue );
-			$main->findfast->_hide_panel;
 			$find->run;
 			my $term = $find->find_term->GetValue;
 			$find->Destroy;
