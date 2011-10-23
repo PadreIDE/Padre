@@ -134,8 +134,11 @@ sub view_close {
 }
 
 sub view_start {
-	$_[0]->{synopsis}->Disable;
-	$_[0]->{changes}->Disable;
+	my $self = shift;
+
+	$self->{synopsis}->Hide;
+	$self->{changes}->Hide;
+	$self->{doc}->Hide;
 }
 
 sub view_stop {
@@ -328,20 +331,25 @@ sub on_list_item_selected {
 	my $pod = $response->decoded_content;
 	$self->{doc}->load_pod($pod);
 	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
+	$self->{doc}->Show;
 
 	my ( $synopsis, $section ) = ( '', '' );
 	for my $pod_line ( split /^/, $pod ) {
 		if ( $pod_line =~ /^=head1\s+(\S+)/ ) {
 			$section = $1;
 		} elsif ( $section eq 'SYNOPSIS' ) {
+
+			# Add leading-spaces-trimmed line to synopsis
+			$pod_line =~ s/^\s+//g;
 			$synopsis .= $pod_line;
 		}
 	}
 	if ( length $synopsis > 0 ) {
-		$self->{synopsis}->Enable;
+		$self->{synopsis}->Show;
 	} else {
-		$self->{synopsis}->Disable;
+		$self->{synopsis}->Hide;
 	}
+	$self->Layout;
 	$self->{SYNOPSIS} = $synopsis;
 
 	return;
