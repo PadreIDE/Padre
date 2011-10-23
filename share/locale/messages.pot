@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-23 04:10-0700\n"
+"POT-Creation-Date: 2011-10-23 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,6 +703,11 @@ msgstr ""
 msgid "7-bit US-ASCII character"
 msgstr ""
 
+#: lib/Padre/Wx/CPAN2.pm:341
+#, perl-format
+msgid "<b>Loading %s...</b>"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Shortcut.pm:32 lib/Padre/Wx/Dialog/Form.pm:32
 #: lib/Padre/Wx/Dialog/Warning.pm:32
 msgid "A Dialog"
@@ -1049,7 +1054,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:142
+#: lib/Padre/Wx/CPAN2.pm:182
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -2752,7 +2757,7 @@ msgstr ""
 msgid "Insert Special Values"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/CPAN.pm:105
+#: lib/Padre/Wx/FBP/CPAN.pm:96
 msgid "Insert Synopsis"
 msgstr ""
 
@@ -4522,7 +4527,7 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:127
+#: lib/Padre/Wx/CPAN2.pm:167
 msgid "Search in recent"
 msgstr ""
 
@@ -4842,7 +4847,7 @@ msgstr ""
 msgid "Show Ca&ll Tips"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/CPAN.pm:121
+#: lib/Padre/Wx/FBP/CPAN.pm:112
 msgid "Show Changes"
 msgstr ""
 
