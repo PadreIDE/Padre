@@ -98,7 +98,7 @@ sub new {
 				# Escape key clears search and returns focus
 				# to the editor
 				$self->{search}->SetValue('');
-				my $editor = $self->current->editor or return;
+				my $editor = $self->current->editor;
 				$editor->SetFocus if $editor;
 			}
 
