@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-23 20:10-0700\n"
+"POT-Creation-Date: 2011-10-24 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4418,7 +4418,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Patch.pm:581
 #, perl-format
-msgid "SVN Diff successful, you should see a new tab in editor called %s"
+msgid "SVN Diff successful. You should see a new tab in editor called %s."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:234
@@ -5111,13 +5111,13 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Patch.pm:597
 msgid ""
-"Sorry Diff Failed, are you sure your have access to the repository for this "
+"Sorry, Diff failed. Are you sure your have access to the repository for this "
 "action"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Patch.pm:446
 msgid ""
-"Sorry Patch Failed, are you sure your choice of files was correct for this "
+"Sorry, patch failed, are you sure your choice of files was correct for this "
 "action"
 msgstr ""
 
