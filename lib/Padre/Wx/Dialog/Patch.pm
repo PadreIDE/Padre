@@ -443,7 +443,7 @@ sub apply_patch {
 			$output->AppendText($@);
 
 			$main->info(
-				Wx::gettext('Sorry Patch Failed, are you sure your choice of files was correct for this action') );
+				Wx::gettext('Sorry, patch failed, are you sure your choice of files was correct for this action') );
 			return;
 		}
 	}
@@ -578,7 +578,7 @@ sub make_patch_svn {
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
-			$main->info( sprintf(Wx::gettext('SVN Diff successful, you should see a new tab in editor called %s'), $patch_file) );
+			$main->info( sprintf(Wx::gettext('SVN Diff successful. You should see a new tab in editor called %s.'), $patch_file) );
 		} else {
 			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
 
@@ -590,11 +590,11 @@ sub make_patch_svn {
 				$output->AppendText($@);
 			} else {
 				$output->AppendText(
-					"Sorry Diff to SVN Failed, I don't think there are any diffrences in this file: $file1_name");
+					"Sorry, Diff to SVN failed. There are any diffrences in this file: $file1_name");
 			}
 
 			$main->info(
-				Wx::gettext('Sorry Diff Failed, are you sure your have access to the repository for this action') );
+				Wx::gettext('Sorry, Diff failed. Are you sure your have access to the repository for this action') );
 			return;
 		}
 	}
