@@ -36,6 +36,7 @@ use constant {
 	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
 	LIGHT_RED  => Wx::Colour->new( 0xFF, 0xA0, 0xB4 ),
 	LIGHT_BLUE => Wx::Colour->new( 0xA0, 0xC8, 0xFF ),
+	GRAY       => Wx::Colour->new('gray'),
 };
 
 # End-Of-Line modes:
@@ -144,6 +145,12 @@ sub new {
 		Wx::Scintilla::MARK_DOTDOTDOT,
 		BLUE,
 		BLUE,
+	);	
+	$self->MarkerDefine(
+		Padre::Constant::MARKER_NOT_BREAKABLE,
+		Wx::Scintilla::MARK_DOTDOTDOT,
+		GRAY,
+		GRAY,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_ADDED,

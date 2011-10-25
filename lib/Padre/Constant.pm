@@ -77,6 +77,7 @@ use constant {
 	MARKER_ADDED      => 5, # Line added
 	MARKER_CHANGED    => 6, # Line changed
 	MARKER_DELETED    => 7, # Line deleted
+	MARKER_NOT_BREAKABLE => 8, # location of the debugger not break able
 };
 
 # Scintilla Indicator Allocation
