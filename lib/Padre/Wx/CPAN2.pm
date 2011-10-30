@@ -445,12 +445,11 @@ sub render_recent {
 	my $list = $self->{list};
 	my $alternate_color = $self->_alternate_color;
 	my $index = 0;
-	print scalar @$model . "\n";
 	for my $rec (@$model) {
 		# Add a CPAN distribution and abstract as a row to the list
 		$list->InsertImageStringItem( $index, $rec->{name}, $self->{images}{file} );
 		$list->SetItemData( $index, $index );
-		$list->SetItem( $index, 1, $rec->{abstract} );
+		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
 	}

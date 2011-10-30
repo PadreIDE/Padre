@@ -201,7 +201,6 @@ sub metacpan_recent {
 	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $url      = "http://api.metacpan.org/v0/release/?sort=date:desc&size=30&fields=name,abstract,date";
 	my $response = $ua->get($url);
-	print "1\n";
 
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) );
