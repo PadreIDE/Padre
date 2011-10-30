@@ -1460,12 +1460,13 @@ setting(
 	help    => _T('Toggle version control system support')
 );
 
-# Toggle *experimental* CPAN explorer
+# Toggle MetaCPAN CPAN explorer panel
 setting(
 	name    => 'feature_cpan_explorer',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 1,
+	help    => _T('Toggle MetaCPAN CPAN explorer panel'),
 );
 
 # Toggle Perl 6 auto detection
