@@ -35,6 +35,7 @@ sub new {
 
 	# Column ascending/descending image
 	my $images = Wx::ImageList->new( 16, 16 );
+	my $recent_images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
 		asc => $images->Add(
 			Wx::ArtProvider::GetBitmap(
@@ -58,8 +59,31 @@ sub new {
 			),
 		),
 	};
+	$self->{recent_images} = {
+		asc => $recent_images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_UP',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		desc => $recent_images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_DOWN',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+		file => $recent_images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
+		),
+	};
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
-	$self->{recent_list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
+	$self->{recent_list}->AssignImageList( $recent_images, Wx::IMAGE_LIST_SMALL );
 
 	# Handle char events in search box
 	Wx::Event::EVT_CHAR(
