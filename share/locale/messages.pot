@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-25 12:10-0700\n"
+"POT-Creation-Date: 2011-10-30 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,7 +703,7 @@ msgstr ""
 msgid "7-bit US-ASCII character"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:341
+#: lib/Padre/Wx/CPAN2.pm:358
 #, perl-format
 msgid "<b>Loading %s...</b>"
 msgstr ""
@@ -1054,7 +1054,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:182
+#: lib/Padre/Wx/CPAN2.pm:188
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -2757,8 +2757,12 @@ msgstr ""
 msgid "Insert Special Values"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/CPAN.pm:96
+#: lib/Padre/Wx/FBP/CPAN.pm:104
 msgid "Insert Synopsis"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/CPAN.pm:136
+msgid "Install"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:2425
@@ -4059,6 +4063,10 @@ msgstr ""
 msgid "Really delete the file \"%s\"?"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/CPAN.pm:53
+msgid "Recent"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:595
 msgid "Redo last undo"
 msgstr ""
@@ -4527,10 +4535,6 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:167
-msgid "Search in recent"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:2588
 msgid "Search the Perl help pages (perldoc)"
 msgstr ""
@@ -4847,7 +4851,7 @@ msgstr ""
 msgid "Show Ca&ll Tips"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/CPAN.pm:112
+#: lib/Padre/Wx/FBP/CPAN.pm:120
 msgid "Show Changes"
 msgstr ""
 
@@ -5346,7 +5350,11 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Config.pm:1477
+#: lib/Padre/Config.pm:1469
+msgid "Toggle MetaCPAN CPAN explorer panel"
+msgstr ""
+
+#: lib/Padre/Config.pm:1478
 msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
