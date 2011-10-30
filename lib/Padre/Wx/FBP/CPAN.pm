@@ -95,7 +95,7 @@ sub new {
 		},
 	);
 
-	$self->{install_selected} = Wx::Button->new(
+	$self->{install} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("Install"),
@@ -105,7 +105,7 @@ sub new {
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{install_selected},
+		$self->{install},
 		sub {
 			shift->on_install_click(@_);
 		},
@@ -167,7 +167,7 @@ sub new {
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $self->{install_selected}, 0, Wx::ALIGN_CENTER, 2 );
+	$main_sizer->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
 	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
@@ -198,7 +198,7 @@ sub on_list_item_selected {
 }
 
 sub on_install_click {
-	$_[0]->main->error('Handler method on_install_click for event install_selected.OnButtonClick not implemented');
+	$_[0]->main->error('Handler method on_install_click for event install.OnButtonClick not implemented');
 }
 
 sub on_synopsis_click {

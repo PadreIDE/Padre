@@ -12,7 +12,6 @@ our @ISA     = 'Padre::Task';
 
 use constant {
 	CPAN_SEARCH  => 'search',
-	CPAN_INSTALL => 'install',
 	CPAN_POD     => 'pod',
 };
 
@@ -50,9 +49,6 @@ sub run {
 
 		# Autocomplete search using MetaCPAN JSON API
 		$self->{model} = $self->metacpan_autocomplete( $query, 10 );
-	} elsif ( $command eq CPAN_INSTALL ) {
-
-		#TODO run cpanm module!
 	} elsif ( $command eq CPAN_POD ) {
 
 		# Find the POD's HTML and SYNOPSIS section
@@ -186,6 +182,7 @@ sub metacpan_pod {
 	return {
 		html     => $pod_html,
 		synopsis => $synopsis,
+		distro   => $query,
 		},
 
 }

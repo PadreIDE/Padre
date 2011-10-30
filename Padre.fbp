@@ -22604,7 +22604,7 @@
                         <property name="label">Install</property>
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
-                        <property name="name">install_selected</property>
+                        <property name="name">install</property>
                         <property name="permission">protected</property>
                         <property name="pos"></property>
                         <property name="size"></property>

@@ -137,6 +137,7 @@ sub view_start {
 	my $self = shift;
 
 	$self->{synopsis}->Hide;
+	$self->{install}->Hide;
 	$self->{changes}->Hide;
 	$self->{doc}->Hide;
 }
@@ -352,7 +353,11 @@ sub render_doc {
 	my $self = shift;
 
 	my $model = $self->{model} or return;
-	my ( $pod_html, $synopsis ) = ( $model->{html}, $model->{synopsis} );
+	my ( $pod_html, $synopsis, $distro ) = ( 
+		$model->{html}, 
+		$model->{synopsis}, 
+		$model->{distro},
+	);
 
 	$self->{doc}->SetPage($pod_html);
 	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
@@ -363,8 +368,10 @@ sub render_doc {
 	} else {
 		$self->{synopsis}->Hide;
 	}
+	$self->{install}->Show;
 	$self->Layout;
 	$self->{SYNOPSIS} = $synopsis;
+	$self->{distro} = $distro;
 
 	return;
 }
@@ -383,6 +390,27 @@ sub on_synopsis_click {
 # Called when search text control is changed
 sub on_search_text {
 	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
+}
+
+# Called when the install button is clicked
+sub on_install_click {
+	my $self = shift;
+
+	# Install selected distribution using App::cpanminus
+	my $distro = $self->{distro} or return;
+	require File::Which;
+	my $cpanm = File::Which::which('cpanm');
+	$cpanm = qq{"cpanm"} if Padre::Constant::WIN32;
+	$self->main->run_command("$cpanm $distro");
+
+	return;
+}
+
+# Called when the show recent button is clicked
+sub on_show_recent_click {
+	my ( $self, $event ) = @_;
+	
+	return;
 }
 
 1;
