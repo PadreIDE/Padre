@@ -161,7 +161,11 @@ sub metacpan_pod {
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
 			if DEBUG;
-		return;
+		return {
+			html     => '<b>' . Wx::gettext(qq{No documentation for '$query'}) . '</b>',
+			synopsis => '',
+			distro   => $query,
+		};
 	}
 
 	# The pod text is here
