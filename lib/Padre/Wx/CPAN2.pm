@@ -35,7 +35,6 @@ sub new {
 
 	# Column ascending/descending image
 	my $images = Wx::ImageList->new( 16, 16 );
-	my $recent_images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
 		asc => $images->Add(
 			Wx::ArtProvider::GetBitmap(
@@ -59,6 +58,9 @@ sub new {
 			),
 		),
 	};
+	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
+
+	my $recent_images = Wx::ImageList->new( 16, 16 );
 	$self->{recent_images} = {
 		asc => $recent_images->Add(
 			Wx::ArtProvider::GetBitmap(
@@ -82,7 +84,6 @@ sub new {
 			),
 		),
 	};
-	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 	$self->{recent_list}->AssignImageList( $recent_images, Wx::IMAGE_LIST_SMALL );
 
 	# Handle char events in search box
@@ -260,7 +261,7 @@ sub render {
 	return unless $self->{model};
 
 	# Update the list sort image
-	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
+	$self->set_icon_image( $self->{list}, $self->{sort_column}, $self->{sort_desc} );
 
 	my $list = $self->{list};
 	$self->_sort_model(0);
@@ -278,7 +279,7 @@ sub render {
 		$index++;
 	}
 
-	$self->_update_ui( $self->{list}, scalar @$model > 0 );
+	$self->_update_ui( $list, scalar @$model > 0 );
 
 	return 1;
 }
@@ -288,7 +289,12 @@ sub _update_ui {
 	my ( $self, $list, $shown ) = @_;
 
 	if ($shown) {
-		Padre::Util::tidy_list($list);
+		if($list == $self->{list}) {
+			Padre::Util::tidy_list($list);
+		} else {
+			$list->SetColumnWidth( 0, 140 );
+			$list->SetColumnWidth( 1, Wx::LIST_AUTOSIZE );
+		}
 		$list->Show;
 		$self->Layout;
 	} else {
@@ -349,24 +355,39 @@ sub on_list_column_click {
 	$self->{sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
-	$self->set_icon_image( $prevcol, -1 );
+	$self->set_icon_image( $self->{list}, $prevcol, -1 );
 
-	if ( $self->{list}->GetColumnCount > 2 ) {
-		$self->render_recent;
-	} else {
-		$self->render;
-	}
+	$self->render;
+
+	return;
+}
+
+# Called when a recent CPAN list column is clicked
+sub on_recent_list_column_click {
+	my ( $self, $event ) = @_;
+
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sort_column};
+	my $reversed = $self->{sort_desc};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sort_column} = $column;
+	$self->{sort_desc}   = $reversed;
+
+	# Reset the previous column sort image
+	$self->set_icon_image( $self->{recent_list}, $prevcol, -1 );
+
+	$self->render_recent;
 
 	return;
 }
 
 sub set_icon_image {
-	my ( $self, $column, $image_index ) = @_;
+	my ( $self, $list, $column, $image_index ) = @_;
 
 	my $item = Wx::ListItem->new;
 	$item->SetMask(Wx::LIST_MASK_IMAGE);
 	$item->SetImage($image_index);
-	$self->{list}->SetColumn( $column, $item );
+	$list->SetColumn( $column, $item );
 
 	return;
 }
@@ -470,14 +491,14 @@ sub render_recent {
 		# Add a CPAN distribution and abstract as a row to the list
 		my $distribution = $rec->{distribution};
 		$distribution =~ s/-/::/g;
-		$list->InsertImageStringItem( $index, $distribution, $self->{images}{file} );
+		$list->InsertImageStringItem( $index, $distribution, $self->{recent_images}{file} );
 		$list->SetItemData( $index, $index );
 		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
 	}
 
-	$self->_update_ui( $self->{recent_list}, scalar @$model > 0 );
+	$self->_update_ui( $list, scalar @$model > 0 );
 
 	return;
 }

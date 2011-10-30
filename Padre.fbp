@@ -22744,7 +22744,7 @@
                                             <event name="OnListBeginRDrag"></event>
                                             <event name="OnListCacheHint"></event>
                                             <event name="OnListColBeginDrag"></event>
-                                            <event name="OnListColClick">on_list_column_click</event>
+                                            <event name="OnListColClick">on_recent_list_column_click</event>
                                             <event name="OnListColDragging"></event>
                                             <event name="OnListColEndDrag"></event>
                                             <event name="OnListColRightClick"></event>
@@ -22839,7 +22839,7 @@
                 <object class="sizeritem" expanded="0">
                     <property name="border">1</property>
                     <property name="flag">wxALL|wxEXPAND</property>
-                    <property name="proportion">2</property>
+                    <property name="proportion">1</property>
                     <object class="wxHtmlWindow" expanded="0">
                         <property name="bg">253,252,187</property>
                         <property name="context_help"></property>

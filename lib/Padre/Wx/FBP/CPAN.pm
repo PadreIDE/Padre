@@ -106,7 +106,7 @@ sub new {
 		$self,
 		$self->{recent_list},
 		sub {
-			shift->on_list_column_click(@_);
+			shift->on_recent_list_column_click(@_);
 		},
 	);
 
@@ -248,6 +248,10 @@ sub on_list_column_click {
 
 sub on_list_item_selected {
 	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+}
+
+sub on_recent_list_column_click {
+	$_[0]->main->error('Handler method on_recent_list_column_click for event recent_list.OnListColClick not implemented');
 }
 
 sub on_show_recent_click {
