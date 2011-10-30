@@ -229,7 +229,7 @@ sub new {
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $self->{m_notebook}, 1, Wx::EXPAND | Wx::ALL, 5 );
-	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
+	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->SetSizer($main_sizer);

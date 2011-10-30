@@ -65,80 +65,21 @@ sub new {
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
-			my ( $this, $event ) = @_;
-
-			my $code = $event->GetKeyCode;
-			if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
-
-				# Up/Down and return keys focus on the list
-				my $list = $self->{list};
-				$list->SetFocus;
-				my $selection = -1;
-				$selection = $list->GetNextItem(
-					$selection,
-					Wx::LIST_NEXT_ALL,
-					Wx::LIST_STATE_SELECTED
-				);
-				if ( $selection == -1 && $self->{list}->GetItemCount > 0 ) {
-					$selection = 0;
-				}
-				$list->SetItemState(
-					$selection,
-					Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED
-				) if $selection != -1;
-			} elsif ( $code == Wx::K_ESCAPE ) {
-
-				# Escape key clears search and returns focus
-				# to the editor
-				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
-			}
-
-			$event->Skip(1);
-			return;
+			$self->_on_char_search(@_);
 		}
 	);
 
 	Wx::Event::EVT_CHAR(
 		$self->{list},
 		sub {
-			my ( $this, $event ) = @_;
-
-			my $code = $event->GetKeyCode;
-			if ( $code == Wx::K_ESCAPE ) {
-
-				# Escape key clears search and returns focus
-				# to the editor
-				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
-			}
-
-			$event->Skip(1);
-
-			return;
+			$self->_on_char_list(@_);
 		}
 	);
 
 	Wx::Event::EVT_CHAR(
 		$self->{recent_list},
 		sub {
-			my ( $this, $event ) = @_;
-
-			my $code = $event->GetKeyCode;
-			if ( $code == Wx::K_ESCAPE ) {
-
-				# Escape key clears search and returns focus
-				# to the editor
-				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
-			}
-
-			$event->Skip(1);
-
-			return;
+			$self->_on_char_list(@_);
 		}
 	);
 
@@ -173,14 +114,15 @@ sub view_start {
 	$self->{synopsis}->Hide;
 	$self->{install}->Hide;
 	$self->{changes}->Hide;
-	$self->{doc}->Hide;
+
 }
 
 sub view_stop {
 	my $self = shift;
 
 	# Clear, reset running task and stop dwells
-	$self->clear;
+	$self->clear(0);
+	$self->clear(1);
 	$self->task_reset;
 	$self->dwell_stop('refresh'); # Just in case
 
@@ -211,7 +153,6 @@ sub _setup_columns {
 	@column_headers = (
 		Wx::gettext('Distribution'),
 		Wx::gettext('Abstract'),
-		Wx::gettext('Date'),
 	);
 	$index = 0;
 	for my $column_header (@column_headers) {
@@ -232,10 +173,14 @@ sub gettext_label {
 
 # Clear everything...
 sub clear {
-	my $self = shift;
+	my ($self, $is_recent) = @_;
 
-	$self->{list}->DeleteAllItems;
-
+	if($is_recent) {
+		$self->{recent_list}->DeleteAllItems;
+	} else {
+		$self->{list}->DeleteAllItems;
+	}
+	
 	return;
 }
 
@@ -286,7 +231,7 @@ sub render {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear;
+	$self->clear(0);
 
 	return unless $self->{model};
 
@@ -324,7 +269,6 @@ sub _update_ui {
 		$self->Layout;
 	} else {
 		$self->{changes}->Hide;
-		$self->{doc}->Hide;
 		$self->{synopsis}->Hide;
 		$self->{install}->Hide;
 		$list->Hide;
@@ -433,7 +377,6 @@ sub render_doc {
 
 	$self->{doc}->SetPage($pod_html);
 	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
-	$self->{doc}->Show;
 
 	if ( length $synopsis > 0 ) {
 		$self->{synopsis}->Show;
@@ -490,7 +433,7 @@ sub render_recent {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear;
+	$self->clear(1);
 
 	my $model = $self->{model} or return;
 	$self->_sort_model(1);
@@ -525,6 +468,59 @@ sub _alternate_color {
 		int( $real_color->Green * 0.9 ),
 		$real_color->Blue,
 	);
+}
+
+
+sub _on_char_search {
+	my ( $self, $this, $event ) = @_;
+
+	my $code = $event->GetKeyCode;
+	if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
+
+		# Up/Down and return keys focus on the list
+		my $list = $self->{list};
+		$list->SetFocus;
+		my $selection = -1;
+		$selection = $list->GetNextItem(
+			$selection,
+			Wx::LIST_NEXT_ALL,
+			Wx::LIST_STATE_SELECTED
+		);
+		if ( $selection == -1 && $self->{list}->GetItemCount > 0 ) {
+			$selection = 0;
+		}
+		$list->SetItemState(
+			$selection,
+			Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED
+		) if $selection != -1;
+	} elsif ( $code == Wx::K_ESCAPE ) {
+
+		# Escape key clears search and returns focus
+		# to the editor
+		$self->{search}->SetValue('');
+		my $editor = $self->current->editor;
+		$editor->SetFocus if $editor;
+	}
+	$event->Skip(1);
+	return;
+}
+
+sub _on_char_list {
+	my ( $self, $this, $event ) = @_;
+
+	my $code = $event->GetKeyCode;
+	if ( $code == Wx::K_ESCAPE ) {
+
+		# Escape key clears search and returns focus
+		# to the editor
+		$self->{search}->SetValue('');
+		my $editor = $self->current->editor;
+		$editor->SetFocus if $editor;
+	}
+
+	$event->Skip(1);
+
+	return;
 }
 
 1;
