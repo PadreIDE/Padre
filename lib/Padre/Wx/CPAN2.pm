@@ -107,6 +107,28 @@ sub new {
 		}
 	);
 
+	Wx::Event::EVT_CHAR(
+		$self->{list},
+		sub {
+			my ( $this, $event ) = @_;
+
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::K_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
+			}
+
+			$event->Skip(1);
+
+			return;
+		}
+	);
+
+
 
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
@@ -156,23 +178,6 @@ sub view_stop {
 #####################################################################
 # General Methods
 
-# We need to create the menu whenever our locale changes
-sub new_menu {
-	my $self = shift;
-	my $menu = Wx::Menu->new;
-
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append(
-			-1,
-			Wx::gettext('Search in recent'),
-		),
-		sub {
-		},
-	);
-
-	return $menu;
-}
 
 # Sets the focus on the search field
 sub focus_on_search {
@@ -266,8 +271,17 @@ sub render {
 		$index++;
 	}
 
-	# Tidy the list
-	Padre::Util::tidy_list($list);
+	# Show & Tidy or hide the list
+	if ( scalar @$model > 0 ) {
+		Padre::Util::tidy_list($list);
+		$list->Show;
+	} else {
+		$self->{changes}->Hide;
+		$self->{doc}->Hide;
+		$self->{synopsis}->Hide;
+		$self->{install}->Hide;
+		$list->Hide;
+	}
 
 	return 1;
 }
@@ -353,9 +367,9 @@ sub render_doc {
 	my $self = shift;
 
 	my $model = $self->{model} or return;
-	my ( $pod_html, $synopsis, $distro ) = ( 
-		$model->{html}, 
-		$model->{synopsis}, 
+	my ( $pod_html, $synopsis, $distro ) = (
+		$model->{html},
+		$model->{synopsis},
 		$model->{distro},
 	);
 
@@ -371,7 +385,7 @@ sub render_doc {
 	$self->{install}->Show;
 	$self->Layout;
 	$self->{SYNOPSIS} = $synopsis;
-	$self->{distro} = $distro;
+	$self->{distro}   = $distro;
 
 	return;
 }
@@ -409,7 +423,7 @@ sub on_install_click {
 # Called when the show recent button is clicked
 sub on_show_recent_click {
 	my ( $self, $event ) = @_;
-	
+
 	return;
 }
 

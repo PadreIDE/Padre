@@ -79,35 +79,11 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{list},
-		sub {
-			shift->on_list_item_activated(@_);
-		},
-	);
-
 	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
 		$self->{list},
 		sub {
 			shift->on_list_item_selected(@_);
-		},
-	);
-
-	$self->{install} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext("Install"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{install},
-		sub {
-			shift->on_install_click(@_);
 		},
 	);
 
@@ -154,22 +130,45 @@ sub new {
 		},
 	);
 
+	$self->{install} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Install"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{install},
+		sub {
+			shift->on_install_click(@_);
+		},
+	);
+
 	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$search_sizer->Add( $self->{search}, 1, Wx::ALIGN_CENTER_VERTICAL, 0 );
 	$search_sizer->Add( $self->{show_recent}, 0, Wx::ALL, 1 );
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
-	$button_sizer->Add( $self->{changes}, 0, Wx::ALL | Wx::EXPAND, 2 );
-	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	my $button_row_1 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_row_1->Add( 2, 0, 0, 0, 0 );
+	$button_row_1->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$button_row_1->Add( $self->{changes}, 0, Wx::ALL | Wx::EXPAND, 2 );
+
+	my $button_row_2 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_row_2->Add( 5, 0, 0, 0, 5 );
+	$button_row_2->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
+	$button_row_2->Add( 0, 0, 1, Wx::EXPAND, 5 );
+
+	my $button_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$button_sizer->Add( $button_row_1, 0, Wx::EXPAND, 5 );
+	$button_sizer->Add( $button_row_2, 0, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
 	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
+	$main_sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 2 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
@@ -189,16 +188,8 @@ sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
 }
 
-sub on_list_item_activated {
-	$_[0]->main->error('Handler method on_list_item_activated for event list.OnListItemActivated not implemented');
-}
-
 sub on_list_item_selected {
 	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
-}
-
-sub on_install_click {
-	$_[0]->main->error('Handler method on_install_click for event install.OnButtonClick not implemented');
 }
 
 sub on_synopsis_click {
@@ -207,6 +198,10 @@ sub on_synopsis_click {
 
 sub on_changes_click {
 	$_[0]->main->error('Handler method on_changes_click for event changes.OnButtonClick not implemented');
+}
+
+sub on_install_click {
+	$_[0]->main->error('Handler method on_install_click for event install.OnButtonClick not implemented');
 }
 
 1;
