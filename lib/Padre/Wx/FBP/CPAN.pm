@@ -31,8 +31,23 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{search} = Wx::TextCtrl->new(
+	$self->{m_notebook} = Wx::Notebook->new(
 		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{search_panel} = Wx::Panel->new(
+		$self->{m_notebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{search} = Wx::TextCtrl->new(
+		$self->{search_panel},
 		-1,
 		"",
 		Wx::DefaultPosition,
@@ -47,24 +62,8 @@ sub new {
 		},
 	);
 
-	$self->{show_recent} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext("Recent"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{show_recent},
-		sub {
-			shift->on_show_recent_click(@_);
-		},
-	);
-
 	$self->{list} = Wx::ListCtrl->new(
-		$self,
+		$self->{search_panel},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -84,6 +83,54 @@ sub new {
 		$self->{list},
 		sub {
 			shift->on_list_item_selected(@_);
+		},
+	);
+
+	$self->{recent_panel} = Wx::Panel->new(
+		$self->{m_notebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{recent_list} = Wx::ListCtrl->new(
+		$self->{recent_panel},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{recent_list},
+		sub {
+			shift->on_list_column_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{recent_list},
+		sub {
+			shift->on_list_item_selected(@_);
+		},
+	);
+
+	$self->{show_recent} = Wx::Button->new(
+		$self->{recent_panel},
+		-1,
+		Wx::gettext("Refresh"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{show_recent},
+		sub {
+			shift->on_show_recent_click(@_);
 		},
 	);
 
@@ -148,7 +195,23 @@ sub new {
 
 	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$search_sizer->Add( $self->{search}, 1, Wx::ALIGN_CENTER_VERTICAL, 0 );
-	$search_sizer->Add( $self->{show_recent}, 0, Wx::ALL, 1 );
+
+	my $search_panel_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$search_panel_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
+	$search_panel_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
+
+	$self->{search_panel}->SetSizerAndFit($search_panel_sizer);
+	$self->{search_panel}->Layout;
+
+	my $recent_panel_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$recent_panel_sizer->Add( $self->{recent_list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$recent_panel_sizer->Add( $self->{show_recent}, 0, Wx::ALIGN_CENTER | Wx::ALL, 1 );
+
+	$self->{recent_panel}->SetSizerAndFit($recent_panel_sizer);
+	$self->{recent_panel}->Layout;
+
+	$self->{m_notebook}->AddPage( $self->{search_panel}, Wx::gettext("Search"), 1 );
+	$self->{m_notebook}->AddPage( $self->{recent_panel}, Wx::gettext("Recent"), 0 );
 
 	my $button_row_1 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_row_1->Add( 2, 0, 0, 0, 0 );
@@ -165,8 +228,7 @@ sub new {
 	$button_sizer->Add( $button_row_2, 0, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$main_sizer->Add( $self->{m_notebook}, 1, Wx::EXPAND | Wx::ALL, 5 );
 	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 2 );
 
@@ -180,16 +242,16 @@ sub on_search_text {
 	$_[0]->main->error('Handler method on_search_text for event search.OnText not implemented');
 }
 
-sub on_show_recent_click {
-	$_[0]->main->error('Handler method on_show_recent_click for event show_recent.OnButtonClick not implemented');
-}
-
 sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
 }
 
 sub on_list_item_selected {
 	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+}
+
+sub on_show_recent_click {
+	$_[0]->main->error('Handler method on_show_recent_click for event show_recent.OnButtonClick not implemented');
 }
 
 sub on_synopsis_click {

@@ -31,6 +31,7 @@ sub new {
 	$self->{sort_column} = 0;
 	$self->{sort_desc}   = 0;
 
+	$self->_setup_columns;
 
 	# Column ascending/descending image
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -58,6 +59,7 @@ sub new {
 		),
 	};
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
+	$self->{recent_list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
 	# Handle char events in search box
 	Wx::Event::EVT_CHAR(
@@ -119,7 +121,26 @@ sub new {
 		}
 	);
 
+	Wx::Event::EVT_CHAR(
+		$self->{recent_list},
+		sub {
+			my ( $this, $event ) = @_;
 
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::K_ESCAPE ) {
+
+				# Escape key clears search and returns focus
+				# to the editor
+				$self->{search}->SetValue('');
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
+			}
+
+			$event->Skip(1);
+
+			return;
+		}
+	);
 
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
@@ -170,28 +191,31 @@ sub view_stop {
 # General Methods
 
 
+# Setup columns
 sub _setup_columns {
-	my ( $self, $is_recent ) = @_;
+	my $self = shift;
 
-	# Setup columns
 	my $list = $self->{list};
+	my $index;
+	my @column_headers;
 
-	$list->ClearAll;
+	@column_headers = (
+		Wx::gettext('Distribution'),
+		Wx::gettext('Author'),
+	);
+	$index = 0;
+	for my $column_header (@column_headers) {
+		$self->{list}->InsertColumn( $index++, $column_header );
+	}
 
-	my @column_headers =
-		$is_recent
-		? (
+	@column_headers = (
 		Wx::gettext('Distribution'),
 		Wx::gettext('Abstract'),
 		Wx::gettext('Date'),
-		)
-		: (
-		Wx::gettext('Distribution'),
-		Wx::gettext('Author'),
-		);
-	my $index = 0;
+	);
+	$index = 0;
 	for my $column_header (@column_headers) {
-		$self->{list}->InsertColumn( $index++, $column_header );
+		$self->{recent_list}->InsertColumn( $index++, $column_header );
 	}
 
 	return;
@@ -266,8 +290,6 @@ sub render {
 
 	return unless $self->{model};
 
-	$self->_setup_columns(0);
-
 	# Update the list sort image
 	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
 
@@ -287,16 +309,15 @@ sub render {
 		$index++;
 	}
 
-	$self->_update_ui( scalar @$model > 0 );
+	$self->_update_ui( $self->{list}, scalar @$model > 0 );
 
 	return 1;
 }
 
 # Show & Tidy or hide the list
 sub _update_ui {
-	my ( $self, $shown ) = @_;
+	my ( $self, $list, $shown ) = @_;
 
-	my $list = $self->{list};
 	if ($shown) {
 		Padre::Util::tidy_list($list);
 		$list->Show;
@@ -471,12 +492,10 @@ sub render_recent {
 	# for sorting
 	$self->clear;
 
-	$self->_setup_columns(1);
-
 	my $model = $self->{model} or return;
 	$self->_sort_model(1);
 
-	my $list            = $self->{list};
+	my $list            = $self->{recent_list};
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
 	for my $rec (@$model) {
@@ -491,7 +510,7 @@ sub render_recent {
 		$index++;
 	}
 
-	$self->_update_ui( scalar @$model > 0 );
+	$self->_update_ui( $self->{recent_list}, scalar @$model > 0 );
 
 	return;
 }
