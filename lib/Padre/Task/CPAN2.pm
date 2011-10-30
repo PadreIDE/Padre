@@ -211,6 +211,12 @@ sub metacpan_recent {
 	my $data = JSON::XS::decode_json( $response->decoded_content );
 	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
 
+	# Fix up the results a bit to workaround undefined stuff
+	for my $result (@results) {
+		$result->{documentation} = '' unless defined $result->{documentation};
+		$result->{abstract}      = '' unless defined $result->{abstract};
+	}
+
 	return \@results;
 }
 
