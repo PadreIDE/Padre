@@ -2555,7 +2555,6 @@ the panel.
 sub show_cpan_explorer {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_cpan_explorer' );
 	unless ( $show == $self->menu->view->{cpan_explorer}->IsChecked ) {
 		$self->menu->view->{cpan_explorer}->Check($show);
 	}
