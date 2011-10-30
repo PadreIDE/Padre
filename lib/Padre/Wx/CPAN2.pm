@@ -231,7 +231,10 @@ sub task_finish {
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
 		$self->{model} = Params::Util::_HASH( $task->{model} ) or return;
 		$self->render_doc;
-	} else {
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+		$self->render_recent;
+	} else{
 		die "Cannot handle $command\n";
 	}
 }
@@ -252,14 +255,7 @@ sub render {
 	$self->_sort_model();
 	my $model = $self->{model};
 
-	# Calculate odd/even row colors (for readability)
-	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
-	my $alternate_color = Wx::Colour->new(
-		int( $real_color->Red * 0.9 ),
-		int( $real_color->Green * 0.9 ),
-		$real_color->Blue,
-	);
-
+	my $alternate_color = $self->_alternate_color;
 	my $index = 0;
 	for my $rec (@$model) {
 
@@ -271,8 +267,17 @@ sub render {
 		$index++;
 	}
 
-	# Show & Tidy or hide the list
-	if ( scalar @$model > 0 ) {
+	$self->_update_ui(scalar @$model > 0);
+
+	return 1;
+}
+
+# Show & Tidy or hide the list
+sub _update_ui {
+	my ($self, $shown) = @_;
+	
+	my $list = $self->{list};
+	if ( $shown ) {
 		Padre::Util::tidy_list($list);
 		$list->Show;
 		$self->Layout;
@@ -285,7 +290,7 @@ sub render {
 		$self->Layout;
 	}
 
-	return 1;
+	return;
 }
 
 sub _sort_model {
@@ -424,9 +429,47 @@ sub on_install_click {
 
 # Called when the show recent button is clicked
 sub on_show_recent_click {
-	my ( $self, $event ) = @_;
+	$_[0]->refresh( Padre::Task::CPAN2::CPAN_RECENT );
+	return;
+}
+
+sub render_recent {
+	my $self = shift;
+
+	# Clear if needed. Please note that this is needed
+	# for sorting
+	$self->clear;
+
+	my $model = $self->{model} or return;
+
+	my $list = $self->{list};
+	my $alternate_color = $self->_alternate_color;
+	my $index = 0;
+	print scalar @$model . "\n";
+	for my $rec (@$model) {
+		# Add a CPAN distribution and abstract as a row to the list
+		$list->InsertImageStringItem( $index, $rec->{name}, $self->{images}{file} );
+		$list->SetItemData( $index, $index );
+		$list->SetItem( $index, 1, $rec->{abstract} );
+		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
+		$index++;
+	}
+	
+	$self->_update_ui(scalar @$model > 0);
 
 	return;
+}
+
+sub _alternate_color {
+	my $self = shift;
+
+	# Calculate odd/even row colors (for readability)
+	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
+	return Wx::Colour->new(
+		int( $real_color->Red * 0.9 ),
+		int( $real_color->Green * 0.9 ),
+		$real_color->Blue,
+	);
 }
 
 1;

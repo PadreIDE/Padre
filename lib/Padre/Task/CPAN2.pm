@@ -5,14 +5,18 @@ use strict;
 use warnings;
 use Padre::Task     ();
 use Padre::Constant ();
+use Padre::Pod2HTML ();
+use LWP::UserAgent  ();
+use JSON::XS        ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.91';
 our @ISA     = 'Padre::Task';
 
 use constant {
-	CPAN_SEARCH  => 'search',
-	CPAN_POD     => 'pod',
+	CPAN_SEARCH => 'search',
+	CPAN_POD    => 'pod',
+	CPAN_RECENT => 'recent',
 };
 
 ######################################################################
@@ -40,9 +44,9 @@ sub run {
 
 	# Pull things off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
-	return unless $self->{command};
+	return unless defined $self->{command};
 	my $command = $self->{command};
-	return unless $self->{query};
+	return unless defined $self->{query};
 	my $query = delete $self->{query};
 
 	if ( $command eq CPAN_SEARCH ) {
@@ -54,6 +58,10 @@ sub run {
 		# Find the POD's HTML and SYNOPSIS section
 		# using MetaCPAN JSON API
 		$self->{model} = $self->metacpan_pod($query);
+	} elsif ( $command eq CPAN_RECENT ) {
+
+		# Find MetaCPAN's recent distributions
+		$self->{model} = $self->metacpan_recent;
 	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
@@ -113,11 +121,9 @@ sub metacpan_autocomplete {
 	);
 
 	# Convert ElasticSearch Perl query to a JSON request
-	require JSON::XS;
 	my $json_request = JSON::XS::encode_json( \%payload );
 
 	# POST the json request to api.metacpan.org
-	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 
@@ -147,7 +153,6 @@ sub metacpan_pod {
 	my ( $self, $query ) = @_;
 
 	# Load module's POD using MetaCPAN API
-	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
@@ -163,7 +168,6 @@ sub metacpan_pod {
 	my $pod = $response->decoded_content;
 
 	# Convert POD to HTML
-	require Padre::Pod2HTML;
 	my $pod_html = Padre::Pod2HTML->pod2html($pod);
 
 	# Find the SYNOPSIS section
@@ -185,6 +189,30 @@ sub metacpan_pod {
 		distro   => $query,
 		},
 
+}
+
+# Retrieves the recent CPAN distributions
+sub metacpan_recent {
+	my $self = shift;
+
+	# Load recent distributions using MetaCPAN API
+	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
+	$ua->timeout(10);
+	$ua->env_proxy unless Padre::Constant::WIN32;
+	my $url      = "http://api.metacpan.org/v0/release/?sort=date:desc&size=30&fields=name,abstract,date";
+	my $response = $ua->get($url);
+	print "1\n";
+
+	unless ( $response->is_success ) {
+		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) );
+		return;
+	}
+
+	# Decode json response then cleverly map it for the average joe :)
+	my $data = JSON::XS::decode_json( $response->decoded_content );
+	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
+
+	return \@results;
 }
 
 1;
