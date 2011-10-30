@@ -22396,7 +22396,7 @@
                         <property name="permission">none</property>
                         <object class="sizeritem" expanded="0">
                             <property name="border">0</property>
-                            <property name="flag">wxALL|wxEXPAND</property>
+                            <property name="flag">wxALIGN_CENTER_VERTICAL</property>
                             <property name="proportion">1</property>
                             <object class="wxTextCtrl" expanded="0">
                                 <property name="bg"></property>

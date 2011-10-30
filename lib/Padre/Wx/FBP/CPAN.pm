@@ -155,7 +155,7 @@ sub new {
 	);
 
 	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$search_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$search_sizer->Add( $self->{search}, 1, Wx::ALIGN_CENTER_VERTICAL, 0 );
 	$search_sizer->Add( $self->{show_recent}, 0, Wx::ALL, 1 );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
