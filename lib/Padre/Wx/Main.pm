@@ -3856,6 +3856,12 @@ sub on_close_window {
 	if ( $self->has_syntax ) {
 		$self->syntax->view_stop;
 	}
+	if ( $self->has_cpan_explorer ) {
+		$self->cpan_explorer->view_stop;
+	}
+	if ( $self->has_vcs ) {
+		$self->vcs->view_stop;
+	}
 	if ( $self->{help} ) {
 		$self->{help}->Destroy;
 	}
