@@ -244,7 +244,7 @@ sub task_finish {
 		$self->{pod_model} = Params::Util::_HASH( $task->{model} ) or return;
 		$self->render_doc;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
-		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+		$self->{recent_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_recent;
 	} else {
 		die "Cannot handle $command\n";
@@ -311,7 +311,7 @@ sub _update_ui {
 sub _sort_model {
 	my ( $self, $is_recent ) = @_;
 
-	my @model = @{ $self->{model} };
+	my @model = @{ $is_recent ? $self->{recent_model} : $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
 
 		# Sort by name or distribution
@@ -337,7 +337,11 @@ sub _sort_model {
 		@model = reverse @model;
 	}
 
-	$self->{model} = \@model;
+	if($is_recent) {
+		$self->{recent_model} = \@model;
+	} else {
+		$self->{model} = \@model;
+	}
 }
 
 #####################################################################
@@ -480,10 +484,14 @@ sub render_recent {
 	# for sorting
 	$self->clear(1);
 
-	my $model = $self->{model} or return;
+	my $list            = $self->{recent_list};
+
+	# Update the list sort image
+	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
+
+	my $model = $self->{recent_model} or return;
 	$self->_sort_model(1);
 
-	my $list            = $self->{recent_list};
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
 	for my $rec (@$model) {
