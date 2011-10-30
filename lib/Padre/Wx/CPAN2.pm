@@ -31,15 +31,6 @@ sub new {
 	$self->{sort_column} = 0;
 	$self->{sort_desc}   = 0;
 
-	# Setup columns
-	my @column_headers = (
-		Wx::gettext('Distribution'),
-		Wx::gettext('Author'),
-	);
-	my $index = 0;
-	for my $column_header (@column_headers) {
-		$self->{list}->InsertColumn( $index++, $column_header );
-	}
 
 	# Column ascending/descending image
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -179,6 +170,33 @@ sub view_stop {
 # General Methods
 
 
+sub _setup_columns {
+	my ( $self, $is_recent ) = @_;
+
+	# Setup columns
+	my $list = $self->{list};
+
+	$list->ClearAll;
+
+	my @column_headers =
+		$is_recent
+		? (
+		Wx::gettext('Distribution'),
+		Wx::gettext('Abstract'),
+		Wx::gettext('Date'),
+		)
+		: (
+		Wx::gettext('Distribution'),
+		Wx::gettext('Author'),
+		);
+	my $index = 0;
+	for my $column_header (@column_headers) {
+		$self->{list}->InsertColumn( $index++, $column_header );
+	}
+
+	return;
+}
+
 # Sets the focus on the search field
 sub focus_on_search {
 	$_[0]->{search}->SetFocus;
@@ -229,12 +247,12 @@ sub task_finish {
 		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
-		$self->{model} = Params::Util::_HASH( $task->{model} ) or return;
+		$self->{pod_model} = Params::Util::_HASH( $task->{model} ) or return;
 		$self->render_doc;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_recent;
-	} else{
+	} else {
 		die "Cannot handle $command\n";
 	}
 }
@@ -248,15 +266,17 @@ sub render {
 
 	return unless $self->{model};
 
+	$self->_setup_columns(0);
+
 	# Update the list sort image
 	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
 
 	my $list = $self->{list};
-	$self->_sort_model();
+	$self->_sort_model(0);
 	my $model = $self->{model};
 
 	my $alternate_color = $self->_alternate_color;
-	my $index = 0;
+	my $index           = 0;
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and author as a row to the list
@@ -267,17 +287,17 @@ sub render {
 		$index++;
 	}
 
-	$self->_update_ui(scalar @$model > 0);
+	$self->_update_ui( scalar @$model > 0 );
 
 	return 1;
 }
 
 # Show & Tidy or hide the list
 sub _update_ui {
-	my ($self, $shown) = @_;
-	
+	my ( $self, $shown ) = @_;
+
 	my $list = $self->{list};
-	if ( $shown ) {
+	if ($shown) {
 		Padre::Util::tidy_list($list);
 		$list->Show;
 		$self->Layout;
@@ -294,18 +314,24 @@ sub _update_ui {
 }
 
 sub _sort_model {
-	my ($self) = @_;
+	my ( $self, $is_recent ) = @_;
 
 	my @model = @{ $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
 
-		# Sort by status
+		# Sort by name or distribution
 		@model = sort { $a->{distribution} cmp $b->{distribution} } @model;
 
 	} elsif ( $self->{sort_column} == 1 ) {
 
-		# Sort by path
-		@model = sort { $a->{author} cmp $b->{author} } @model;
+		# Sort by author or abstract
+		@model = sort { $is_recent ? $a->{abstract} cmp $b->{abstract} : $a->{author} cmp $b->{author} } @model;
+
+	} elsif ( $self->{sort_column} == 2 ) {
+
+		# Sort by date
+		@model = sort { $a->{date} cmp $b->{date} } @model;
+
 	} else {
 		TRACE( "sort_column: " . $self->{sort_column} . " is not implemented" ) if DEBUG;
 	}
@@ -336,7 +362,11 @@ sub on_list_column_click {
 	# Reset the previous column sort image
 	$self->set_icon_image( $prevcol, -1 );
 
-	$self->render;
+	if ( $self->{list}->GetColumnCount > 2 ) {
+		$self->render_recent;
+	} else {
+		$self->render;
+	}
 
 	return;
 }
@@ -373,7 +403,7 @@ sub on_list_item_selected {
 sub render_doc {
 	my $self = shift;
 
-	my $model = $self->{model} or return;
+	my $model = $self->{pod_model} or return;
 	my ( $pod_html, $synopsis, $distro ) = (
 		$model->{html},
 		$model->{synopsis},
@@ -429,10 +459,11 @@ sub on_install_click {
 
 # Called when the show recent button is clicked
 sub on_show_recent_click {
-	$_[0]->refresh( Padre::Task::CPAN2::CPAN_RECENT );
+	$_[0]->refresh(Padre::Task::CPAN2::CPAN_RECENT);
 	return;
 }
 
+# Renders the recent CPAN list
 sub render_recent {
 	my $self = shift;
 
@@ -440,21 +471,27 @@ sub render_recent {
 	# for sorting
 	$self->clear;
 
-	my $model = $self->{model} or return;
+	$self->_setup_columns(1);
 
-	my $list = $self->{list};
+	my $model = $self->{model} or return;
+	$self->_sort_model(1);
+
+	my $list            = $self->{list};
 	my $alternate_color = $self->_alternate_color;
-	my $index = 0;
+	my $index           = 0;
 	for my $rec (@$model) {
+
 		# Add a CPAN distribution and abstract as a row to the list
-		$list->InsertImageStringItem( $index, $rec->{name}, $self->{images}{file} );
+		my $distribution = $rec->{distribution};
+		$distribution =~ s/-/::/g;
+		$list->InsertImageStringItem( $index, $distribution, $self->{images}{file} );
 		$list->SetItemData( $index, $index );
 		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
 	}
-	
-	$self->_update_ui(scalar @$model > 0);
+
+	$self->_update_ui( scalar @$model > 0 );
 
 	return;
 }
@@ -463,7 +500,7 @@ sub _alternate_color {
 	my $self = shift;
 
 	# Calculate odd/even row colors (for readability)
-	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
+	my $real_color = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 	return Wx::Colour->new(
 		int( $real_color->Red * 0.9 ),
 		int( $real_color->Green * 0.9 ),

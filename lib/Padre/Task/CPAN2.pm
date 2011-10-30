@@ -199,7 +199,7 @@ sub metacpan_recent {
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url      = "http://api.metacpan.org/v0/release/?sort=date:desc&size=30&fields=name,abstract,date";
+	my $url      = "http://api.metacpan.org/v0/release/?sort=date:desc&size=30&fields=distribution,abstract";
 	my $response = $ua->get($url);
 
 	unless ( $response->is_success ) {
