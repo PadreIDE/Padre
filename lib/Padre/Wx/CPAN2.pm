@@ -275,12 +275,14 @@ sub render {
 	if ( scalar @$model > 0 ) {
 		Padre::Util::tidy_list($list);
 		$list->Show;
+		$self->Layout;
 	} else {
 		$self->{changes}->Hide;
 		$self->{doc}->Hide;
 		$self->{synopsis}->Hide;
 		$self->{install}->Hide;
 		$list->Hide;
+		$self->Layout;
 	}
 
 	return 1;
