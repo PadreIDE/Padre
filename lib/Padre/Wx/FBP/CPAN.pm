@@ -47,6 +47,22 @@ sub new {
 		},
 	);
 
+	$self->{show_recent} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Recent"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{show_recent},
+		sub {
+			shift->on_show_recent_click(@_);
+		},
+	);
+
 	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
@@ -76,6 +92,22 @@ sub new {
 		$self->{list},
 		sub {
 			shift->on_list_item_selected(@_);
+		},
+	);
+
+	$self->{install_selected} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("Install"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{install_selected},
+		sub {
+			shift->on_install_click(@_);
 		},
 	);
 
@@ -124,17 +156,18 @@ sub new {
 
 	my $search_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$search_sizer->Add( $self->{search}, 1, Wx::ALL | Wx::EXPAND, 0 );
+	$search_sizer->Add( $self->{show_recent}, 0, Wx::ALL, 1 );
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
-	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$button_sizer->Add( $self->{changes}, 0, Wx::ALL | Wx::EXPAND, 2 );
 	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$main_sizer->Add( $self->{install_selected}, 0, Wx::ALIGN_CENTER, 2 );
 	$main_sizer->Add( $self->{doc}, 2, Wx::ALL | Wx::EXPAND, 1 );
 	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
@@ -148,6 +181,10 @@ sub on_search_text {
 	$_[0]->main->error('Handler method on_search_text for event search.OnText not implemented');
 }
 
+sub on_show_recent_click {
+	$_[0]->main->error('Handler method on_show_recent_click for event show_recent.OnButtonClick not implemented');
+}
+
 sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
 }
@@ -158,6 +195,10 @@ sub on_list_item_activated {
 
 sub on_list_item_selected {
 	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+}
+
+sub on_install_click {
+	$_[0]->main->error('Handler method on_install_click for event install_selected.OnButtonClick not implemented');
 }
 
 sub on_synopsis_click {
