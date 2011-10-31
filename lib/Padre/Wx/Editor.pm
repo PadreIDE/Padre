@@ -1603,19 +1603,12 @@ sub needs_manual_colorize {
 # The main purpose of these manual highlighting methods is to prevent
 # the document classes from having to use Wx code directly.
 
-my @MANUAL_HIGHLIGHT_MASK = (
-	Wx::Scintilla::INDIC0_MASK,
-	Wx::Scintilla::INDIC1_MASK,
-	Wx::Scintilla::INDIC2_MASK,
-);
-
 sub manual_highlight_show {
 	my $self       = shift;
-	my $mask       = $MANUAL_HIGHLIGHT_MASK[shift()];
 	my $position   = shift;
 	my $characters = shift;
-	$self->StartStyling( $position, Wx::Scintilla::INDICS_MASK );
-	$self->SetStyling( $characters, $mask );
+	$self->SetIndicatorCurrent(Padre::Constant::INDICATOR_UNDERLINE);
+	$self->IndicatorFillRange( $position, $characters );
 	return 1;
 }
 
@@ -1623,8 +1616,8 @@ sub manual_highlight_hide {
 	my $self       = shift;
 	my $position   = shift;
 	my $characters = shift;
-	$self->StartStyling( $position, Wx::Scintilla::INDICS_MASK );
-	$self->SetStyling( $characters, 0 );
+	$self->SetIndicatorCurrent(Padre::Constant::INDICATOR_UNDERLINE);
+	$self->IndicatorClearRange( $position, $characters );
 }
 
 sub smart_highlight_show {

@@ -1597,17 +1597,6 @@ sub event_mouse_moving {
 
 		$token ||= '';
 
-		if ( defined $location ) {
-			# Clear all previous underline indicators
-			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_UNDERLINE);
-			my $text_length = $editor->GetTextLength;
-			$editor->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
-
-			# Show an underline indicator under the token
-			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_UNDERLINE);
-			$editor->IndicatorFillRange( $location->[2], length($token) );
-		}
-
 		if ( $self->{last_highlight} and $token ne $self->{last_highlight}->{token} ) {
 
 			# No longer mousing over the same token so un-highlight it
@@ -1619,7 +1608,6 @@ sub event_mouse_moving {
 		return unless $editor->has_function($token);
 
 		$editor->manual_highlight_show(
-			2,              # Indicator mask number
 			$location->[2], # Position
 			length($token), # Characters
 		);
@@ -1641,10 +1629,6 @@ sub event_key_up {
 		# Ctrl key has been released, clear any highlighting
 		$self->_clear_highlight($editor);
 	}
-
-	$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_UNDERLINE);
-	my $text_length = $editor->GetTextLength;
-	$editor->IndicatorClearRange( 0, $text_length ) if $text_length > 0;
 }
 
 sub _clear_highlight {
