@@ -85,6 +85,7 @@ use constant {
 	INDICATOR_SMART_HIGHLIGHT => 0,
 	INDICATOR_WARNING         => 1,
 	INDICATOR_ERROR           => 2,
+	INDICATOR_UNDERLINE       => 3,
 };
 
 # Scintilla Syntax Highlighter Colours.

@@ -193,6 +193,10 @@ sub new {
 	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_ERROR, RED );
 	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_ERROR, Wx::Scintilla::INDIC_SQUIGGLE );
 
+	# Indicator #3, underline for mouse-clickable tokens
+	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_UNDERLINE, BLUE );
+	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_UNDERLINE, Wx::Scintilla::INDIC_PLAIN );
+
 	# Basic event bindings
 	Wx::Event::EVT_SET_FOCUS(  $self, sub { shift->on_set_focus(@_)    } );
 	Wx::Event::EVT_KILL_FOCUS( $self, sub { shift->on_kill_focus(@_)   } );
