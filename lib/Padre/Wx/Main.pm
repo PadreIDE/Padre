@@ -4078,6 +4078,7 @@ sub setup_editor {
 
 	my $title = $editor->{Document}->get_title;
 	my $id = $self->create_tab( $editor, $title );
+	$editor->Show;
 	$self->notebook->GetPage($id)->SetFocus;
 
 	if (Padre::Feature::CURSORMEMORY) {

@@ -167,6 +167,8 @@ the even version for the release, even during development.
     - Fix #1291 'Code folding icons missing' (AZAWAWI)
     - Code folding markers are now theme-able (AZAWAWI)
     - Find and Find in Files dialogs hide the Fast Find panel (ADAMK)
+    - Hide editor objects during their (potentially long) setup so that we
+      don't see a half-formed editor in a weird position (ADAMK)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)

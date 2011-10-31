@@ -74,6 +74,10 @@ sub new {
 	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
 	my $self = $class->SUPER::new($parent);
 
+	# Hide the editor as quickly as possible so it isn't
+	# visible during the period we are setting it up.
+	$self->Hide;
+
 	# This is supposed to be Wx::Scintilla::CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
