@@ -53,7 +53,6 @@ use Padre::Wx::ActionLibrary  ();
 use Padre::Wx::Icon           ();
 use Padre::Wx::Theme          ();
 use Padre::Wx::Display        ();
-use Padre::Wx::Editor         ();
 use Padre::Wx::Menubar        ();
 use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
@@ -4051,7 +4050,8 @@ sub setup_editor {
 
 	TRACE("Document created for '$file'") if DEBUG;
 
-	my $lock = $self->lock( 'REFRESH', 'update_last_session', 'refresh_menu' );
+	require Padre::Wx::Editor;
+	my $lock   = $self->lock( 'REFRESH', 'update_last_session', 'refresh_menu' );
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $document;
 	$document->set_editor($editor);
@@ -5747,7 +5747,7 @@ sub editor_rightmargin {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_right_margin_enable => $show );
 
-	my $mode = $show ? Wx::Scintilla::EDGE_LINE : Wx::Scintilla::EDGE_NONE;
+	my $mode   = $show ? Wx::Scintilla::EDGE_LINE : Wx::Scintilla::EDGE_NONE;
 	my $column = $self->config->editor_right_margin_column;
 	foreach my $editor ( $self->editors ) {
 		$editor->SetEdgeColumn($column);
