@@ -34,59 +34,10 @@ sub new {
 	$self->_setup_columns;
 
 	# Column ascending/descending image
-	my $images = Wx::ImageList->new( 16, 16 );
-	$self->{images} = {
-		asc => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_GO_UP',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-		desc => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_GO_DOWN',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-		file => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_NORMAL_FILE',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-	};
-	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
-
-	my $recent_images = Wx::ImageList->new( 16, 16 );
-	$self->{recent_images} = {
-		asc => $recent_images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_GO_UP',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-		desc => $recent_images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_GO_DOWN',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-		file => $recent_images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_NORMAL_FILE',
-				'wxART_OTHER_C',
-				[ 16, 16 ],
-			),
-		),
-	};
-	$self->{recent_list}->AssignImageList( $recent_images, Wx::IMAGE_LIST_SMALL );
+	$self->_setup_column_images;
 
 	# Handle char events in search box
+	#TODO move to FBP superclass once EVT_CHAR is properly supported
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
@@ -94,6 +45,7 @@ sub new {
 		}
 	);
 
+	#TODO move to FBP superclass once EVT_CHAR is properly supported
 	Wx::Event::EVT_CHAR(
 		$self->{list},
 		sub {
@@ -101,6 +53,7 @@ sub new {
 		}
 	);
 
+	#TODO move to FBP superclass once EVT_CHAR is properly supported
 	Wx::Event::EVT_CHAR(
 		$self->{recent_list},
 		sub {
@@ -110,6 +63,7 @@ sub new {
 
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
+	Padre::Util::tidy_list( $self->{recent_list} );
 
 	return $self;
 }
@@ -146,8 +100,8 @@ sub view_stop {
 	my $self = shift;
 
 	# Clear, reset running task and stop dwells
-	$self->clear(0);
-	$self->clear(1);
+	$self->clear( recent => 0 );
+	$self->clear( recent => 1 );
 	$self->task_reset;
 	$self->dwell_stop('refresh'); # Just in case
 
@@ -156,6 +110,58 @@ sub view_stop {
 
 #####################################################################
 # General Methods
+
+sub _setup_column_images {
+	my $self = shift;
+
+	# Create bitmaps
+	my $up_arrow_bitmap = Wx::ArtProvider::GetBitmap(
+		'wxART_GO_UP',
+		'wxART_OTHER_C',
+		[ 16, 16 ],
+	);
+	my $down_arrow_bitmap = Wx::ArtProvider::GetBitmap(
+		'wxART_GO_DOWN',
+		'wxART_OTHER_C',
+		[ 16, 16 ],
+	);
+	my $file_bitmap = Wx::ArtProvider::GetBitmap(
+		'wxART_NORMAL_FILE',
+		'wxART_OTHER_C',
+		[ 16, 16 ],
+	);
+
+	# Search list column bitmaps
+	$self->{images} = $self->_setup_image_list(
+		list => $self->{list},
+		up   => $up_arrow_bitmap,
+		down => $down_arrow_bitmap,
+		file => $file_bitmap,
+	);
+
+	# Recent list column bitmaps
+	$self->{recent_images} = $self->_setup_image_list(
+		list => $self->{recent_list},
+		up   => $up_arrow_bitmap,
+		down => $down_arrow_bitmap,
+		file => $file_bitmap,
+	);
+	
+	return;
+}
+sub _setup_image_list {
+	my ( $self, %args ) = @_;
+
+	my $images = Wx::ImageList->new( 16, 16 );
+	my $result = {
+		asc  => $images->Add( $args{up} ),
+		desc => $images->Add( $args{down} ),
+		file => $images->Add( $args{file} ),
+	};
+	$args{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
+
+	return $result;
+}
 
 
 # Setup columns
@@ -198,14 +204,14 @@ sub gettext_label {
 
 # Clear everything...
 sub clear {
-	my ($self, $is_recent) = @_;
+	my ( $self, %args ) = @_;
 
-	if($is_recent) {
+	if ( $args{recent} ) {
 		$self->{recent_list}->DeleteAllItems;
 	} else {
 		$self->{list}->DeleteAllItems;
 	}
-	
+
 	return;
 }
 
@@ -256,7 +262,7 @@ sub render {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear(0);
+	$self->clear( recent => 0 );
 
 	return unless $self->{model};
 
@@ -264,7 +270,7 @@ sub render {
 	$self->set_icon_image( $self->{list}, $self->{sort_column}, $self->{sort_desc} );
 
 	my $list = $self->{list};
-	$self->_sort_model(0);
+	$self->_sort_model( recent => 0 );
 	my $model = $self->{model};
 
 	my $alternate_color = $self->_alternate_color;
@@ -289,7 +295,7 @@ sub _update_ui {
 	my ( $self, $list, $shown ) = @_;
 
 	if ($shown) {
-		if($list == $self->{list}) {
+		if ( $list == $self->{list} ) {
 			Padre::Util::tidy_list($list);
 		} else {
 			$list->SetColumnWidth( 0, 140 );
@@ -309,8 +315,9 @@ sub _update_ui {
 }
 
 sub _sort_model {
-	my ( $self, $is_recent ) = @_;
+	my ( $self, %args ) = @_;
 
+	my $is_recent = $args{recent} || 0;
 	my @model = @{ $is_recent ? $self->{recent_model} : $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
 
@@ -337,7 +344,7 @@ sub _sort_model {
 		@model = reverse @model;
 	}
 
-	if($is_recent) {
+	if ($is_recent) {
 		$self->{recent_model} = \@model;
 	} else {
 		$self->{model} = \@model;
@@ -482,15 +489,15 @@ sub render_recent {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear(1);
+	$self->clear( recent => 1 );
 
-	my $list            = $self->{recent_list};
+	my $list = $self->{recent_list};
 
 	# Update the list sort image
 	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
 
 	my $model = $self->{recent_model} or return;
-	$self->_sort_model(1);
+	$self->_sort_model( recent => 1 );
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
