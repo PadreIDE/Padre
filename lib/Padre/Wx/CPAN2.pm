@@ -145,9 +145,10 @@ sub _setup_column_images {
 		down => $down_arrow_bitmap,
 		file => $file_bitmap,
 	);
-	
+
 	return;
 }
+
 sub _setup_image_list {
 	my ( $self, %args ) = @_;
 
@@ -319,12 +320,16 @@ sub _sort_model {
 	my @model = @{ $is_recent ? $self->{recent_model} : $self->{model} };
 	if ( $self->{sort_column} == 0 ) {
 
-		# Sort by name or distribution
-		@model = sort { $a->{distribution} cmp $b->{distribution} } @model;
+		# Sort by distribution or documentation
+		@model = sort {
+			      $is_recent
+				? $a->{distribution} cmp $b->{distribution}
+				: $a->{documentation} cmp $b->{documentation}
+		} @model;
 
 	} elsif ( $self->{sort_column} == 1 ) {
 
-		# Sort by author or abstract
+		# Sort by abstract or author
 		@model = sort { $is_recent ? $a->{abstract} cmp $b->{abstract} : $a->{author} cmp $b->{author} } @model;
 
 	} elsif ( $self->{sort_column} == 2 ) {
