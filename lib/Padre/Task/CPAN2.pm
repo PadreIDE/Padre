@@ -83,8 +83,14 @@ sub metacpan_autocomplete {
 
 	# The documentation Module-Name that should be analyzed
 	my $should = [
-		map { { field => { 'documentation.analyzed' => "$_*" } }, { field => { 'documentation.camelcase' => "$_*" } } }
-		grep {$_} @query
+		map {
+			(   { field => { 'documentation.analyzed'  => "$_*" } },
+				{ field => { 'documentation.camelcase' => "$_*" } }
+				)
+			}
+			grep {
+			$_
+			} @query
 	];
 
 	# The distribution we do not want in our search
