@@ -143,7 +143,8 @@ sub make_exe {
 		push @cmd, '-M', 'Tie::Hash::NamedCapture';
 	}
 
-	push @cmd, '-M', 'Padre::DB::Migrate::Patch';
+	#TODO Padre::DB::Migrate was moved to ORLite::Migrate. Keep or remove? (AZAWAWI)
+	## push @cmd, '-M', 'Padre::DB::Migrate::Patch';
 
 	print join( ' ', @cmd ) . "\n";
 	system(@cmd);
