@@ -78,7 +78,7 @@ sub new {
 
 	# Add interesting and helpful websites
 	$self->add_menu_action(
-		'help.visit_perlmonks',
+		'help.visit_perl_websites',
 	);
 
 	$self->AppendSeparator;

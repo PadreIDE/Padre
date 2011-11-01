@@ -2657,12 +2657,12 @@ sub init {
 	# Add interesting and helpful websites
 
 	Padre::Wx::Action->new(
-		name  => 'help.visit_perlmonks',
-		label => _T('Visit the PerlM&onks'),
+		name  => 'help.visit_perl_websites',
+		label => _T('Visit Perl Websites...'),
 		comment =>
-			_T( 'Open perlmonks.org, one of the biggest Perl community sites, ' . 'in your default web browser' ),
+			_T( 'Open interesting and helpful Perl websites in your default web browser' ),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://perlmonks.org/');
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/PerlWebsites');
 		},
 	);
 
