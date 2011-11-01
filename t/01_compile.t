@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 35 );
+plan( tests => 34 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -25,7 +25,6 @@ use_ok('t::lib::Padre');
 use_ok('Padre::Util');
 use_ok('Padre::Config');
 use_ok('Padre::DB::Timeline');
-require_ok('Padre::DB::Migrate');
 use_ok('Padre::DB');
 use_ok('Padre::Project');
 use_ok('Padre::Wx');
