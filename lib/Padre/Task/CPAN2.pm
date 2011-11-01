@@ -14,9 +14,14 @@ our $VERSION = '0.91';
 our @ISA     = 'Padre::Task';
 
 use constant {
+
+	# Task commands
 	CPAN_SEARCH => 'search',
 	CPAN_POD    => 'pod',
 	CPAN_RECENT => 'recent',
+
+	# Maximum number of MetaCPAN results
+	MAX_RESULTS => 20,
 };
 
 ######################################################################
@@ -52,7 +57,7 @@ sub run {
 	if ( $command eq CPAN_SEARCH ) {
 
 		# Autocomplete search using MetaCPAN JSON API
-		$self->{model} = $self->metacpan_autocomplete( $query, 10 );
+		$self->{model} = $self->metacpan_autocomplete($query);
 	} elsif ( $command eq CPAN_POD ) {
 
 		# Find the POD's HTML and SYNOPSIS section
@@ -73,7 +78,7 @@ sub run {
 # Adopted from https://github.com/CPAN-API/metacpan-web
 #
 sub metacpan_autocomplete {
-	my ( $self, $query, $size ) = @_;
+	my ( $self, $query ) = @_;
 
 	# Convert :: to spaces so we dont crash request :)
 	$query =~ s/::/ /g;
@@ -123,7 +128,7 @@ sub metacpan_autocomplete {
 			}
 		},
 		fields => [qw(documentation release author distribution)],
-		size   => $size,
+		size   => MAX_RESULTS,
 	);
 
 	# Convert ElasticSearch Perl query to a JSON request
@@ -209,7 +214,8 @@ sub metacpan_recent {
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url      = "http://api.metacpan.org/v0/release/?sort=date:desc&size=30&fields=distribution,abstract";
+	my $url =
+		"http://api.metacpan.org/v0/release/?sort=date:desc&size=" . MAX_RESULTS . "&fields=distribution,abstract";
 	my $response = $ua->get($url);
 
 	unless ( $response->is_success ) {
