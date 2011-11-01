@@ -35,6 +35,10 @@ StyleSetBackground      STYLE_DEFAULT     002b36
 StyleSetForeground      STYLE_DEFAULT     93a1a1
 StyleSetForeground      STYLE_CONTROLCHAR 657b83
 StyleSetBackground      STYLE_CONTROLCHAR 002b36
+StyleSetForeground      STYLE_BRACELIGHT      cb4b16
+StyleSetBackground      STYLE_BRACELIGHT      002b36
+StyleSetForeground      STYLE_BRACEBAD        002b36
+StyleSetBackground      STYLE_BRACEBAD          dc322f
 StyleSetForeground      PADRE_BLACK             93a1a1
 StyleSetForeground      PADRE_BLUE              268bd2
 StyleSetForeground      PADRE_RED               dc322f
@@ -89,8 +93,6 @@ CallTipSetBackground 073642
 #
 style application/x-perl
 include text/plain
-StyleSetForeground      STYLE_BRACELIGHT      eee8d5
-StyleSetForeground      STYLE_BRACEBAD        002b36
 StyleSetForeground      PL_DEFAULT            657b83
 StyleSetForeground      PL_ERROR              ff0000
 StyleSetForeground      PL_COMMENTLINE        93a1a1
@@ -140,9 +142,6 @@ StyleSetForeground      PL_HERE_QX_VAR         b58900
 StyleSetForeground      PL_STRING_QQ_VAR       b58900
 StyleSetForeground      PL_STRING_QX_VAR       b58900
 StyleSetForeground      PL_STRING_QR_VAR       b58900
-
-StyleSetBackground      STYLE_BRACELIGHT      073642
-StyleSetBackground      STYLE_BRACEBAD        eee8d5
 
 StyleSetBackground      PL_DEFAULT            002b36
 StyleSetBackground      PL_ERROR              002b36
