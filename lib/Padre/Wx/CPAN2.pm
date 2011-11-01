@@ -92,7 +92,6 @@ sub view_start {
 
 	$self->{synopsis}->Hide;
 	$self->{install}->Hide;
-	$self->{changes}->Hide;
 
 }
 
@@ -304,7 +303,6 @@ sub _update_ui {
 		$list->Show;
 		$self->Layout;
 	} else {
-		$self->{changes}->Hide;
 		$self->{synopsis}->Hide;
 		$self->{install}->Hide;
 		$list->Hide;

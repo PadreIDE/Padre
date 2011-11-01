@@ -161,22 +161,6 @@ sub new {
 		},
 	);
 
-	$self->{changes} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext("Show Changes"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{changes},
-		sub {
-			shift->on_changes_click(@_);
-		},
-	);
-
 	$self->{install} = Wx::Button->new(
 		$self,
 		-1,
@@ -213,24 +197,16 @@ sub new {
 	$self->{m_notebook}->AddPage( $self->{search_panel}, Wx::gettext("Search"), 1 );
 	$self->{m_notebook}->AddPage( $self->{recent_panel}, Wx::gettext("Recent"), 0 );
 
-	my $button_row_1 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_row_1->Add( 2, 0, 0, 0, 0 );
-	$button_row_1->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
-	$button_row_1->Add( $self->{changes}, 0, Wx::ALL | Wx::EXPAND, 2 );
-
-	my $button_row_2 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$button_row_2->Add( 5, 0, 0, 0, 5 );
-	$button_row_2->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
-	$button_row_2->Add( 0, 0, 1, Wx::EXPAND, 5 );
-
-	my $button_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$button_sizer->Add( $button_row_1, 0, Wx::EXPAND, 5 );
-	$button_sizer->Add( $button_row_2, 0, Wx::EXPAND, 5 );
+	my $button_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$button_sizer->SetFlexibleDirection(Wx::BOTH);
+	$button_sizer->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$button_sizer->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $self->{m_notebook}, 1, Wx::EXPAND | Wx::ALL, 5 );
 	$main_sizer->Add( $self->{doc}, 1, Wx::ALL | Wx::EXPAND, 1 );
-	$main_sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 2 );
+	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
@@ -260,10 +236,6 @@ sub on_show_recent_click {
 
 sub on_synopsis_click {
 	$_[0]->main->error('Handler method on_synopsis_click for event synopsis.OnButtonClick not implemented');
-}
-
-sub on_changes_click {
-	$_[0]->main->error('Handler method on_changes_click for event changes.OnButtonClick not implemented');
 }
 
 sub on_install_click {
