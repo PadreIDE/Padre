@@ -114,6 +114,7 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
 		pod   => \&pod_mime_type,
+		pov   => 'text/x-povray',
 		psgi  => 'application/x-psgi',
 		sty   => 'application/x-latex',
 		t     => \&perl_mime_type,
@@ -338,6 +339,11 @@ sub _initialize {
 		'application/x-perl' => {
 			name  => 'Perl 5',
 			lexer => Wx::Scintilla::LEX_PERL,     # CONFIRMED
+		},
+		
+		'text/x-povray' => {
+			name  => 'POVRAY',
+			lexer => Wx::Scintilla::LEX_POV,
 		},
 
 		'application/x-psgi' => {

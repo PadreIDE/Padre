@@ -127,7 +127,19 @@ StyleSetForeground      PL_STRING_QW          6c71c4
 StyleSetForeground      PL_SUB_PROTOTYPE      cb4b16
 StyleSetForeground      PL_FORMAT_IDENT       eee8d5
 StyleSetBold            PL_FORMAT_IDENT 1
+
 StyleSetForeground      PL_FORMAT             2aa198
+StyleSetForeground      PL_STRING_VAR          b58900
+StyleSetForeground      PL_XLAT                d33682
+StyleSetItalic          PL_XLAT                1
+StyleSetForeground      PL_REGEX_VAR           b58900
+StyleSetForeground      PL_REGSUBST_VAR        b58900
+StyleSetForeground      PL_BACKTICKS_VAR       b58900
+StyleSetForeground      PL_HERE_QQ_VAR         b58900
+StyleSetForeground      PL_HERE_QX_VAR         b58900
+StyleSetForeground      PL_STRING_QQ_VAR       b58900
+StyleSetForeground      PL_STRING_QX_VAR       b58900
+StyleSetForeground      PL_STRING_QR_VAR       b58900
 
 StyleSetBackground      STYLE_BRACELIGHT      073642
 StyleSetBackground      STYLE_BRACEBAD        eee8d5
@@ -167,40 +179,18 @@ StyleSetBackground      PL_FORMAT_IDENT       002b36
 StyleSetBackground      PL_SUB_PROTOTYPE      002b36
 StyleSetBackground      PL_POD_VERB           002b36
 StyleSetBackground      PL_VARIABLE_INDEXER   002b36
-# The 'constant' definition is weird with interplay between
-# Wx::Scintilla , Wx:: Padre::Wx::Constants/Style
-#StyleSetBackground      PL_STRING_VAR         002b36
-#StyleSetBackground      PL_XLAT               002b36
-#StyleSetBackground      PL_REGEX_VAR          002b36
-#StyleSetBackground      PL_REGSUBST_VAR       002b36
-#StyleSetBackground      PL_BACKTICKS_VAR      002b36
-#StyleSetBackground      PL_HERE_QQ_VAR        002b36
-#StyleSetBackground      PL_HERE_QX_VAR        002b36
-#StyleSetBackground      PL_STRING_QQ_VAR      002b36
-#StyleSetBackground      PL_STRING_QX_VAR      002b36
-#StyleSetBackground      PL_STRING_QR_VAR      002b36
-StyleSetForeground      PL_STRING_VAR         b58900
-StyleSetForeground      PL_XLAT               d33682
-StyleSetItalic          PL_XLAT               1
-StyleSetForeground      PL_REGEX_VAR          b58900
-StyleSetForeground      PL_REGSUBST_VAR       b58900
-StyleSetForeground      PL_BACKTICKS_VAR      b58900
-StyleSetForeground      PL_HERE_QQ_VAR        b58900
-StyleSetForeground      PL_HERE_QX_VAR        b58900
-StyleSetForeground      PL_STRING_QQ_VAR      b58900
-StyleSetForeground      PL_STRING_QX_VAR      b58900
-StyleSetForeground      PL_STRING_QR_VAR      b58900
 
 StyleSetBackground      PL_STRING_VAR         002b36
-StyleSetBackground      PL_XLAT               073642
-StyleSetBackground      PL_REGEX_VAR          073642
-StyleSetBackground      PL_REGSUBST_VAR       073642
+StyleSetBackground      PL_XLAT               002b36
+StyleSetBackground      PL_REGEX_VAR          002b36
+StyleSetBackground      PL_REGSUBST_VAR       002b36
 StyleSetBackground      PL_BACKTICKS_VAR      002b36
 StyleSetBackground      PL_HERE_QQ_VAR        002b36
 StyleSetBackground      PL_HERE_QX_VAR        002b36
 StyleSetBackground      PL_STRING_QQ_VAR      002b36
 StyleSetBackground      PL_STRING_QX_VAR      002b36
-StyleSetBackground      PL_STRING_QR_VAR      073642
+StyleSetBackground      PL_STRING_QR_VAR      002b36
+
 
 StyleSetBackground       PL_SUB_PROTOTYPE      073642
 StyleSetBackground       PL_FORMAT_IDENT       073642
@@ -456,7 +446,7 @@ StyleSetForeground      DIFF_HEADER               859900
 StyleSetForeground      DIFF_POSITION             268bd2
 StyleSetForeground      DIFF_DELETED              dc322f
 StyleSetForeground      DIFF_ADDED                2aa198
-#StyleSetForeground      DIFF_CHANGED              6c71c4
+StyleSetForeground      DIFF_CHANGED              6c71c4
 
 
 StyleSetBackground      DIFF_DEFAULT              002b36
@@ -542,11 +532,11 @@ StyleSetBackground           CSS_DOUBLESTRING             002b36
 StyleSetBackground           CSS_SINGLESTRING             002b36
 StyleSetBackground           CSS_IDENTIFIER2              002b36
 StyleSetBackground           CSS_ATTRIBUTE                002b36
-#StyleSetBackground           CSS_IDENTIFIER3              002b36
-#StyleSetBackground           CSS_PSEUDOELEMENT            002b36
-#StyleSetBackground           CSS_EXTENDED_IDENTIFIER      002b36
-#StyleSetBackground           CSS_EXTENDED_PSEUDOCLASS     002b36
-#StyleSetBackground           CSS_EXTENDED_PSEUDOELEMENT   002b36
+StyleSetBackground           CSS_IDENTIFIER3              002b36
+StyleSetBackground           CSS_PSEUDOELEMENT            002b36
+StyleSetBackground           CSS_EXTENDED_IDENTIFIER      002b36
+StyleSetBackground           CSS_EXTENDED_PSEUDOCLASS     002b36
+StyleSetBackground           CSS_EXTENDED_PSEUDOELEMENT   002b36
 
 style text/x-sql
 include text/plain
@@ -565,12 +555,12 @@ StyleSetForeground      SQL_OPERATOR              268bd2
 StyleSetForeground      11                              839496  # SQL_IDENTIFIER
 StyleSetForeground      SQL_SQLPLUS_COMMENT       586e75
 StyleSetForeground      SQL_COMMENTLINEDOC        586e75
-StyleSetForeground      16                              b58900  # SQL_WORD2
-		StyleSetBold    16 1
+StyleSetForeground      SQL_WORD2                 b58900  # SQL_WORD2
+		StyleSetBold    SQL_WORD2 1
 StyleSetForeground      SQL_COMMENTDOCKEYWORD     586e75
 StyleSetForeground      SQL_COMMENTDOCKEYWORDERROR    dc322f
 StyleSetForeground      19                              d33682  # SQL_USER1
-		StyleSetItalic  19								1
+  StyleSetItalic        19				1
 StyleSetForeground      20                              2aa198  # SQL_USER2
 StyleSetForeground      21                              cb4b16  # SQL_USER3
 		StyleSetItalic  21								1
@@ -600,6 +590,33 @@ StyleSetBackground      SQL_USER3                 002b36
 StyleSetBackground      SQL_USER4                 002b36
 StyleSetBackground      SQL_QUOTEDIDENTIFIER      002b36
 
+
+# POVRAY Persistence of Vision Raytracer
+style text/x-povray
+include text/plain
+
+StyleAllBackground      002b36
+
+StyleSetForeground      POV_DEFAULT               657b83
+StyleSetForeground      POV_COMMENT               839496
+StyleSetForeground      POV_COMMENTLINE           839496
+StyleSetForeground      POV_NUMBER                cb4b16
+StyleSetForeground      POV_OPERATOR              268bd2
+StyleSetForeground      POV_IDENTIFIER            6c71c4
+StyleSetForeground      POV_STRING                2aa198
+StyleSetForeground      POV_STRINGEOL             2aa198
+StyleSetForeground      POV_DIRECTIVE             859900
+StyleSetBold            POV_DIRECTIVE  1
+StyleSetForeground      POV_BADDIRECTIVE          dc322f
+StyleSetForeground      POV_WORD2 859900 # object structure 
+StyleSetForeground      POV_WORD3 6c71c4 # patterns
+StyleSetForeground      POV_WORD4 859900 # transforms
+StyleSetItalic          POV_WORD4 1
+StyleSetForeground      POV_WORD5 d33682 # modifiers
+StyleSetForeground      POV_WORD6 b58900 # functions
+StyleSetBold            POV_WORD6 1
+StyleSetForeground      POV_WORD7 d33682 # reserved identifiers
+StyleSetForeground      POV_WORD8 d33682
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

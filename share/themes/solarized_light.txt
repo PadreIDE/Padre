@@ -592,6 +592,32 @@ StyleSetBackground      SQL_USER3                 fdf6e6
 StyleSetBackground      SQL_USER4                 fdf6e6
 StyleSetBackground      SQL_QUOTEDIDENTIFIER      fdf6e6
 
+# POVRAY Persistence of Vision Raytracer
+style text/x-povray
+include text/plain
+
+StyleAllBackground      fdf6e6
+
+StyleSetForeground      POV_DEFAULT               657b83
+StyleSetForeground      POV_COMMENT               839496
+StyleSetForeground      POV_COMMENTLINE           839496
+StyleSetForeground      POV_NUMBER                cb4b16
+StyleSetForeground      POV_OPERATOR              268bd2
+StyleSetForeground      POV_IDENTIFIER            6c71c4
+StyleSetForeground      POV_STRING                2aa198
+StyleSetForeground      POV_STRINGEOL             2aa198
+StyleSetForeground      POV_DIRECTIVE             859900
+StyleSetBold            POV_DIRECTIVE  1
+StyleSetForeground      POV_BADDIRECTIVE          dc322f
+StyleSetForeground      POV_WORD2 859900 # object structure 
+StyleSetForeground      POV_WORD3 6c71c4 # patterns
+StyleSetForeground      POV_WORD4 859900 # transforms
+StyleSetItalic          POV_WORD4 1
+StyleSetForeground      POV_WORD5 d33682 # modifiers
+StyleSetForeground      POV_WORD6 b58900 # functions
+StyleSetBold            POV_WORD6 1
+StyleSetForeground      POV_WORD7 d33682 # reserved identifiers
+StyleSetForeground      POV_WORD8 d33682
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

@@ -803,6 +803,60 @@ my %SCINTILLA_KEY_WORDS = (
 				orelse extra m mm rx s tr},
 		],
 	],
+	
+	# 8 different keyword lists for povray
+	'text/x-povray' => [
+		# structure keyword1 == POV_DIRECTIVE
+		[qw( declare local undef default macro if else while end
+		include version debug error warning switch case range break
+		ifdef indef  fopen fclose read write render statistics )],
+		
+		# objects  POV_WORD2
+		[
+		qw(blob  box bicubic_patch object light_source 
+		camera  cylinder cubic global_settings height_field
+		isosurface julia_fractal sor sphere sphere_sweep superellipsoid
+		torus triangle quadric quartic sky_sphere plane poly polygon ),
+		
+		qw(
+		looks_like bounded_by contained_by clipped_by
+		),
+		qw(
+		union intersection difference
+		)
+		],
+		
+		# patterns  POV_WORD3
+		[qw( agate bozo checker cells bumps brick facets dents crackle
+		hexagon gradient granite  spotted spiral1 ripples marble
+		leopard spiral2 wrinkles)],
+			
+		# transforms  POV_WORD4
+		[qw( translate rotate scale transform matrix point_at look_at )],
+		
+		# modifiers - POV_WORD5
+		[qw( 
+		
+		)],
+		
+		## float functions - POV_WORD6
+		[qw(
+		abs acos acosh asc asin asinh atan atanh atan2 ceil cos cosh defined 
+		degrees dimensions dimension_size div exp file_exists floor int inside 
+		ln log max min mod pow radians rand seed select sin sinh sqrt strcmp strlen 
+		tan tanh val vdot vlength ), 
+		## vector functions
+		qw( min_extent max_extent trace vaxis_rotate vcross vrotate 
+		vnormalize vturbulence ),
+		## string functions
+		qw( chr concat str strlwr strupr substr vstr )
+		],
+		
+		## reserved identifiers POV_WORD7
+		[qw(
+		x y z red green blue alpha filter rgb rgbf rgba rgbfa u v
+		)],
+	],
 
 );
 $SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};

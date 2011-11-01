@@ -169,6 +169,7 @@ the even version for the release, even during development.
     - Find and Find in Files dialogs hide the Fast Find panel (ADAMK)
     - Hide editor objects during their (potentially long) setup so that we
       don't see a half-formed editor in a weird position (ADAMK)
+    - Add povray mimetype and keyword lists (BRAMBLE)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
