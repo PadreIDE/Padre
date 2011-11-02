@@ -251,7 +251,7 @@ sub new {
 
 	$self->{m_notebook}->AddPage( $self->{search_panel}, Wx::gettext("Search"), 1 );
 	$self->{m_notebook}->AddPage( $self->{recent_panel}, Wx::gettext("Recent"), 0 );
-	$self->{m_notebook}->AddPage( $self->{favorite_panel}, Wx::gettext("a page"), 0 );
+	$self->{m_notebook}->AddPage( $self->{favorite_panel}, Wx::gettext("Favorite"), 0 );
 
 	my $button_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$button_sizer->SetFlexibleDirection(Wx::BOTH);

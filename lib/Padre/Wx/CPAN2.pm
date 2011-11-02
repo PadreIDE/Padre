@@ -61,9 +61,18 @@ sub new {
 		}
 	);
 
+	#TODO move to FBP superclass once EVT_CHAR is properly supported
+	Wx::Event::EVT_CHAR(
+		$self->{favorite_list},
+		sub {
+			$self->_on_char_list(@_);
+		}
+	);
+
 	# Tidy the list
 	Padre::Util::tidy_list( $self->{list} );
 	Padre::Util::tidy_list( $self->{recent_list} );
+	Padre::Util::tidy_list( $self->{favorite_list} );
 
 	return $self;
 }
@@ -99,8 +108,9 @@ sub view_stop {
 	my $self = shift;
 
 	# Clear, reset running task and stop dwells
-	$self->clear( recent => 0 );
-	$self->clear( recent => 1 );
+	$self->clear( Padre::Task::CPAN2::CPAN_SEARCH );
+	$self->clear( Padre::Task::CPAN2::CPAN_RECENT );
+	$self->clear( Padre::Task::CPAN2::CPAN_FAVORITE );
 	$self->task_reset;
 	$self->dwell_stop('refresh'); # Just in case
 
@@ -141,6 +151,14 @@ sub _setup_column_images {
 	# Recent list column bitmaps
 	$self->{recent_images} = $self->_setup_image_list(
 		list => $self->{recent_list},
+		up   => $up_arrow_bitmap,
+		down => $down_arrow_bitmap,
+		file => $file_bitmap,
+	);
+
+	# Favorite list column bitmaps
+	$self->{favorite_images} = $self->_setup_image_list(
+		list => $self->{favorite_list},
 		up   => $up_arrow_bitmap,
 		down => $down_arrow_bitmap,
 		file => $file_bitmap,
@@ -190,6 +208,15 @@ sub _setup_columns {
 		$self->{recent_list}->InsertColumn( $index++, $column_header );
 	}
 
+	@column_headers = (
+		Wx::gettext('Distribution'),
+		Wx::gettext('Abstract'),
+	);
+	$index = 0;
+	for my $column_header (@column_headers) {
+		$self->{favorite_list}->InsertColumn( $index++, $column_header );
+	}
+
 	return;
 }
 
@@ -204,12 +231,16 @@ sub gettext_label {
 
 # Clear everything...
 sub clear {
-	my ( $self, %args ) = @_;
+	my ( $self, $command ) = @_;
 
-	if ( $args{recent} ) {
+	if( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{recent_list}->DeleteAllItems;
-	} else {
+	} elsif($command eq Padre::Task::CPAN2::CPAN_SEARCH ) { 
 		$self->{list}->DeleteAllItems;
+	} elsif($command eq Padre::Task::CPAN2::CPAN_FAVORITE ) { 
+		$self->{favorite_list}->DeleteAllItems;
+	} else {
+		die "Unhandled $command in ->clear";
 	}
 
 	return;
@@ -243,6 +274,7 @@ sub task_finish {
 	my $task = shift;
 
 	my $command = $task->{command};
+	print $command . "\n";
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render;
@@ -252,6 +284,9 @@ sub task_finish {
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{recent_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_recent;
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+		$self->{favorite_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+		$self->render_favorite;
 	} else {
 		die "Cannot handle $command\n";
 	}
@@ -262,7 +297,7 @@ sub render {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear( recent => 0 );
+	$self->clear( Padre::Task::CPAN2::CPAN_SEARCH );
 
 	return unless $self->{model};
 
@@ -480,8 +515,8 @@ sub on_install_click {
 	return;
 }
 
-# Called when the show recent button is clicked
-sub on_show_recent_click {
+# Called when the Refresh recent button is clicked
+sub on_refresh_recent_click {
 	$_[0]->refresh(Padre::Task::CPAN2::CPAN_RECENT);
 	return;
 }
@@ -492,7 +527,7 @@ sub render_recent {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear( recent => 1 );
+	$self->clear( Padre::Task::CPAN2::CPAN_RECENT );
 
 	my $list = $self->{recent_list};
 
@@ -582,6 +617,66 @@ sub _on_char_list {
 	}
 
 	$event->Skip(1);
+
+	return;
+}
+
+# Called when the Refresh favorite button is clicked
+sub on_refresh_favorite_click {
+	$_[0]->refresh(Padre::Task::CPAN2::CPAN_FAVORITE);
+	return;
+}
+
+# Renders the most favorite CPAN list
+sub render_favorite {
+	my $self = shift;
+
+	# Clear if needed. Please note that this is needed
+	# for sorting
+	$self->clear( Padre::Task::CPAN2::CPAN_FAVORITE );
+
+	my $list = $self->{favorite_list};
+
+	# Update the list sort image
+	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
+
+	my $model = $self->{recent_model} or return;
+	$self->_sort_model( recent => 1 );
+
+	my $alternate_color = $self->_alternate_color;
+	my $index           = 0;
+	for my $rec (@$model) {
+
+		# Add a CPAN distribution and abstract as a row to the list
+		my $distribution = $rec->{distribution};
+		$distribution =~ s/-/::/g;
+		$list->InsertImageStringItem( $index, $distribution, $self->{recent_images}{file} );
+		$list->SetItemData( $index, $index );
+		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
+		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
+		$index++;
+	}
+
+	$self->_update_ui( $list, scalar @$model > 0 );
+
+	return;
+}
+
+# Called when a favorite CPAN list column is clicked
+sub on_favorite_list_column_click {
+	my ( $self, $event ) = @_;
+
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sort_column};
+	my $reversed = $self->{sort_desc};
+	$reversed = $column == $prevcol ? !$reversed : 0;
+	$self->{sort_column} = $column;
+	$self->{sort_desc}   = $reversed;
+
+	# Reset the previous column sort image
+	$self->set_icon_image( $self->{recent_list}, $prevcol, -1 );
+
+	$self->render_favorite;
 
 	return;
 }

@@ -16,9 +16,10 @@ our @ISA     = 'Padre::Task';
 use constant {
 
 	# Task commands
-	CPAN_SEARCH => 'search',
-	CPAN_POD    => 'pod',
-	CPAN_RECENT => 'recent',
+	CPAN_SEARCH   => 'search',
+	CPAN_POD      => 'pod',
+	CPAN_RECENT   => 'recent',
+	CPAN_FAVORITE => 'favorite',
 
 	# Maximum number of MetaCPAN results
 	MAX_RESULTS => 20,
@@ -65,8 +66,12 @@ sub run {
 		$self->{model} = $self->metacpan_pod($query);
 	} elsif ( $command eq CPAN_RECENT ) {
 
-		# Find MetaCPAN's recent distributions
+		# Find MetaCPAN's top recent distributions
 		$self->{model} = $self->metacpan_recent;
+	} elsif ( $command eq CPAN_FAVORITE ) {
+
+		# Find MetaCPAN's top favorite distributions
+		$self->{model} = $self->metacpan_favorite;
 	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
@@ -206,11 +211,11 @@ sub metacpan_pod {
 
 }
 
-# Retrieves the recent CPAN distributions
+# Retrieves the most recent CPAN distributions
 sub metacpan_recent {
 	my $self = shift;
 
-	# Load recent distributions using MetaCPAN API
+	# Load most recent distributions using MetaCPAN API
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
@@ -235,6 +240,37 @@ sub metacpan_recent {
 
 	return \@results;
 }
+
+# Retrieves the most favorite CPAN distributions
+sub metacpan_favorite {
+	my $self = shift;
+
+	# Load most favorite distributions using MetaCPAN API
+	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
+	$ua->timeout(10);
+	$ua->env_proxy unless Padre::Constant::WIN32;
+	my $url =
+		"http://api.metacpan.org/v0/release/?sort=date:desc&size=" . MAX_RESULTS . "&fields=distribution,abstract";
+	my $response = $ua->get($url);
+
+	unless ( $response->is_success ) {
+		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) );
+		return;
+	}
+
+	# Decode json response then cleverly map it for the average joe :)
+	my $data = JSON::XS::decode_json( $response->decoded_content );
+	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
+
+	# Fix up the results a bit to workaround undefined stuff
+	for my $result (@results) {
+		$result->{documentation} = '' unless defined $result->{documentation};
+		$result->{abstract}      = '' unless defined $result->{abstract};
+	}
+
+	return \@results;
+}
+
 
 1;
 
