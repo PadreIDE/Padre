@@ -61,39 +61,39 @@ StyleSetBackground STYLE_BRACEBAD           000000
 
 style application/x-perl
 include text/plain
-StyleSetForeground PL_DEFAULT               ffffff
-StyleSetForeground PL_ERROR                 ff0000
-StyleSetForeground PL_COMMENTLINE           007f00
-StyleSetForeground PL_POD                   7f7f7f
-StyleSetForeground PL_POD_VERB              7f7f7f
-StyleSetForeground PL_NUMBER                007f7f
-StyleSetForeground PL_WORD                  00007f
-StyleSetBold       PL_WORD                  1
-StyleSetForeground PL_STRING                ff7f00
-StyleSetForeground PL_CHARACTER             7f007f
-StyleSetForeground PL_PUNCTUATION           ffffff
-StyleSetBackground PL_PUNCTUATION           000000
-StyleSetForeground PL_PREPROCESSOR          7f7f7f
-StyleSetForeground PL_OPERATOR              00007f
-StyleSetForeground PL_IDENTIFIER            0000ff
-StyleSetForeground PL_SCALAR                7f007f
-StyleSetForeground PL_ARRAY                 4080ff
-StyleSetForeground PL_HASH                  0080ff
-StyleSetForeground PL_SYMBOLTABLE           00ff00
-StyleSetForeground PL_REGEX                 ff007f
-StyleSetForeground PL_REGSUBST              7f7f00
-StyleSetForeground PL_LONGQUOTE             ff7f00
-StyleSetForeground PL_BACKTICKS             ffaa00
-StyleSetForeground PL_DATASECTION           ff7f00
-StyleSetForeground PL_HERE_DELIM            ff7f00
-StyleSetForeground PL_HERE_Q                7f007f
-StyleSetForeground PL_HERE_QQ               ff7f00
-StyleSetForeground PL_HERE_QX               ffaa00
-StyleSetForeground PL_STRING_Q              7f007f
-StyleSetForeground PL_STRING_QQ             ff7f00
-StyleSetForeground PL_STRING_QX             ffaa00
-StyleSetForeground PL_STRING_QR             ff007f
-StyleSetForeground PL_STRING_QW             7f007f
+StyleSetForeground SCE_PL_DEFAULT               ffffff
+StyleSetForeground SCE_PL_ERROR                 ff0000
+StyleSetForeground SCE_PL_COMMENTLINE           007f00
+StyleSetForeground SCE_PL_POD                   7f7f7f
+StyleSetForeground SCE_PL_POD_VERB              7f7f7f
+StyleSetForeground SCE_PL_NUMBER                007f7f
+StyleSetForeground SCE_PL_WORD                  00007f
+StyleSetBold       SCE_PL_WORD                  1
+StyleSetForeground SCE_PL_STRING                ff7f00
+StyleSetForeground SCE_PL_CHARACTER             7f007f
+StyleSetForeground SCE_PL_PUNCTUATION           ffffff
+StyleSetBackground SCE_PL_PUNCTUATION           000000
+StyleSetForeground SCE_PL_PREPROCESSOR          7f7f7f
+StyleSetForeground SCE_PL_OPERATOR              00007f
+StyleSetForeground SCE_PL_IDENTIFIER            0000ff
+StyleSetForeground SCE_PL_SCALAR                7f007f
+StyleSetForeground SCE_PL_ARRAY                 4080ff
+StyleSetForeground SCE_PL_HASH                  0080ff
+StyleSetForeground SCE_PL_SYMBOLTABLE           00ff00
+StyleSetForeground SCE_PL_REGEX                 ff007f
+StyleSetForeground SCE_PL_REGSUBST              7f7f00
+StyleSetForeground SCE_PL_LONGQUOTE             ff7f00
+StyleSetForeground SCE_PL_BACKTICKS             ffaa00
+StyleSetForeground SCE_PL_DATASECTION           ff7f00
+StyleSetForeground SCE_PL_HERE_DELIM            ff7f00
+StyleSetForeground SCE_PL_HERE_Q                7f007f
+StyleSetForeground SCE_PL_HERE_QQ               ff7f00
+StyleSetForeground SCE_PL_HERE_QX               ffaa00
+StyleSetForeground SCE_PL_STRING_Q              7f007f
+StyleSetForeground SCE_PL_STRING_QQ             ff7f00
+StyleSetForeground SCE_PL_STRING_QX             ffaa00
+StyleSetForeground SCE_PL_STRING_QR             ff007f
+StyleSetForeground SCE_PL_STRING_QW             7f007f
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

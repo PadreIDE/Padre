@@ -204,101 +204,101 @@ StyleSetBackground       SCE_PL_FORMAT            eee8d5
 ## conf
 style text/x-config
 include text/plain
-StyleSetForeground       CONF_DEFAULT          657b83
-StyleSetForeground       CONF_COMMENT          586e75
-StyleSetForeground       CONF_NUMBER           2aa198
-StyleSetForeground       CONF_IDENTIFIER       b58900
-StyleSetForeground       CONF_EXTENSION        839496
-StyleSetForeground       CONF_PARAMETER        d33682
-StyleSetForeground       CONF_STRING           cb4b16
-StyleSetForeground       CONF_OPERATOR         93a1a1
-StyleSetForeground       CONF_IP               859900
-StyleSetForeground       CONF_DIRECTIVE        839496
-StyleSetBackground       CONF_DEFAULT          fdf6e6
-StyleSetBackground       CONF_COMMENT          fdf6e6
-StyleSetBackground       CONF_NUMBER           fdf6e6
-StyleSetBackground       CONF_IDENTIFIER       fdf6e6
-StyleSetBackground       CONF_EXTENSION        fdf6e6
-StyleSetBackground       CONF_PARAMETER        fdf6e6
-StyleSetBackground       CONF_STRING           fdf6e6
-StyleSetBackground       CONF_OPERATOR         fdf6e6
-StyleSetBackground       CONF_IP               fdf6e6
-StyleSetBackground       CONF_DIRECTIVE        fdf6e6
+StyleSetForeground       SCE_CONF_DEFAULT          657b83
+StyleSetForeground       SCE_CONF_COMMENT          586e75
+StyleSetForeground       SCE_CONF_NUMBER           2aa198
+StyleSetForeground       SCE_CONF_IDENTIFIER       b58900
+StyleSetForeground       SCE_CONF_EXTENSION        839496
+StyleSetForeground       SCE_CONF_PARAMETER        d33682
+StyleSetForeground       SCE_CONF_STRING           cb4b16
+StyleSetForeground       SCE_CONF_OPERATOR         93a1a1
+StyleSetForeground       SCE_CONF_IP               859900
+StyleSetForeground       SCE_CONF_DIRECTIVE        839496
+StyleSetBackground       SCE_CONF_DEFAULT          fdf6e6
+StyleSetBackground       SCE_CONF_COMMENT          fdf6e6
+StyleSetBackground       SCE_CONF_NUMBER           fdf6e6
+StyleSetBackground       SCE_CONF_IDENTIFIER       fdf6e6
+StyleSetBackground       SCE_CONF_EXTENSION        fdf6e6
+StyleSetBackground       SCE_CONF_PARAMETER        fdf6e6
+StyleSetBackground       SCE_CONF_STRING           fdf6e6
+StyleSetBackground       SCE_CONF_OPERATOR         fdf6e6
+StyleSetBackground       SCE_CONF_IP               fdf6e6
+StyleSetBackground       SCE_CONF_DIRECTIVE        fdf6e6
 
 
 ## yaml
 style text/x-yaml
 include text/plain
-StyleSetForeground       YAML_DEFAULT             859900
-StyleSetForeground       YAML_COMMENT             586e75
-StyleSetForeground       YAML_IDENTIFIER          268bd2
-StyleSetBold             YAML_IDENTIFIER          1
-StyleSetForeground       YAML_KEYWORD             6c71c4
-StyleSetForeground       YAML_NUMBER              dc322f
-StyleSetForeground       YAML_REFERENCE           2aa198
-StyleSetForeground       YAML_DOCUMENT            859900
-StyleSetBackground       YAML_DOCUMENT            eee8d5
-StyleSetBold             YAML_DOCUMENT            1
-StyleSetEOLFilled        YAML_DOCUMENT            1
-StyleSetForeground       YAML_TEXT                333366
-StyleSetForeground       YAML_ERROR               859900
-StyleSetBackground       YAML_ERROR               eee8d5
-StyleSetBold             YAML_ERROR               1
-StyleSetEOLFilled        YAML_ERROR               1
-StyleSetBackground       YAML_DEFAULT             fdf6e6
-StyleSetBackground       YAML_COMMENT             fdf6e6
-StyleSetBackground       YAML_IDENTIFIER          fdf6e6
-StyleSetBackground       YAML_KEYWORD             fdf6e6
-StyleSetBackground       YAML_NUMBER              fdf6e6
-StyleSetBackground       YAML_REFERENCE           fdf6e6
-StyleSetBackground       YAML_TEXT                fdf6e6
-StyleSetBackground       YAML_OPERATOR            fdf6e6
+StyleSetForeground       SCE_YAML_DEFAULT             859900
+StyleSetForeground       SCE_YAML_COMMENT             586e75
+StyleSetForeground       SCE_YAML_IDENTIFIER          268bd2
+StyleSetBold             SCE_YAML_IDENTIFIER          1
+StyleSetForeground       SCE_YAML_KEYWORD             6c71c4
+StyleSetForeground       SCE_YAML_NUMBER              dc322f
+StyleSetForeground       SCE_YAML_REFERENCE           2aa198
+StyleSetForeground       SCE_YAML_DOCUMENT            859900
+StyleSetBackground       SCE_YAML_DOCUMENT            eee8d5
+StyleSetBold             SCE_YAML_DOCUMENT            1
+StyleSetEOLFilled        SCE_YAML_DOCUMENT            1
+StyleSetForeground       SCE_YAML_TEXT                333366
+StyleSetForeground       SCE_YAML_ERROR               859900
+StyleSetBackground       SCE_YAML_ERROR               eee8d5
+StyleSetBold             SCE_YAML_ERROR               1
+StyleSetEOLFilled        SCE_YAML_ERROR               1
+StyleSetBackground       SCE_YAML_DEFAULT             fdf6e6
+StyleSetBackground       SCE_YAML_COMMENT             fdf6e6
+StyleSetBackground       SCE_YAML_IDENTIFIER          fdf6e6
+StyleSetBackground       SCE_YAML_KEYWORD             fdf6e6
+StyleSetBackground       SCE_YAML_NUMBER              fdf6e6
+StyleSetBackground       SCE_YAML_REFERENCE           fdf6e6
+StyleSetBackground       SCE_YAML_TEXT                fdf6e6
+StyleSetBackground       SCE_YAML_OPERATOR            fdf6e6
 
 style text/x-c
 include text/plain
-StyleSetForeground      C_DEFAULT                 657b83
-StyleSetBackground      C_DEFAULT                 fdf6e6
-StyleSetForeground      C_COMMENT                 586e75
-StyleSetBackground      C_COMMENT                 fdf6e6
-StyleSetForeground      C_COMMENTLINE             586e75
-StyleSetBackground      C_COMMENTLINE             fdf6e6
-StyleSetForeground      C_COMMENTDOC              586e75
-StyleSetBackground      C_COMMENTDOC              fdf6e6
-StyleSetForeground      C_NUMBER                  2aa198
-StyleSetBackground      C_NUMBER                  fdf6e6
-StyleSetForeground      C_WORD                    6c71c4
-StyleSetBackground      C_WORD                    fdf6e6
-StyleSetBold            C_WORD                    1
-StyleSetForeground      C_STRING                  ff7f00
-StyleSetBackground      C_STRING                  fdf6e6
-StyleSetForeground      C_CHARACTER               6c71c4
-StyleSetBackground      C_CHARACTER               fdf6e6
-StyleSetForeground      C_UUID                    6c71c4
-StyleSetBackground      C_UUID                    fdf6e6
-StyleSetForeground      C_PREPROCESSOR            93a1a1
-StyleSetBackground      C_PREPROCESSOR            fdf6e6
-StyleSetBold            C_PREPROCESSOR            1
-StyleSetForeground      C_OPERATOR                268bd2
-StyleSetBackground      C_OPERATOR                fdf6e6
-StyleSetForeground      C_IDENTIFIER              859900
-StyleSetBackground      C_IDENTIFIER              fdf6e6
-StyleSetForeground      C_STRINGEOL               dc322f
-StyleSetBackground      C_STRINGEOL               fdf6e6
-StyleSetForeground      C_VERBATIM                6c71c4
-StyleSetBackground      C_VERBATIM                fdf6e6
-StyleSetForeground      C_REGEX                   ff007f
-StyleSetBackground      C_REGEX                   fdf6e6
-StyleSetForeground      C_COMMENTLINEDOC          586e75
-StyleSetBackground      C_COMMENTLINEDOC          fdf6e6
-StyleSetForeground      C_WORD2                   6c71c4
-StyleSetBackground      C_WORD2                   fdf6e6
-StyleSetBold            C_WORD2                   1
-StyleSetForeground      C_COMMENTDOCKEYWORD       657b83
-StyleSetBackground      C_COMMENTDOCKEYWORD       fdf6e6
-StyleSetForeground      C_COMMENTDOCKEYWORDERROR  657b83
-StyleSetBackground      C_COMMENTDOCKEYWORDERROR  fdf6e6
-StyleSetForeground      C_GLOBALCLASS             6c71c4
-StyleSetBackground      C_GLOBALCLASS             fdf6e6
+StyleSetForeground      SCE_C_DEFAULT                 657b83
+StyleSetBackground      SCE_C_DEFAULT                 fdf6e6
+StyleSetForeground      SCE_C_COMMENT                 586e75
+StyleSetBackground      SCE_C_COMMENT                 fdf6e6
+StyleSetForeground      SCE_C_COMMENTLINE             586e75
+StyleSetBackground      SCE_C_COMMENTLINE             fdf6e6
+StyleSetForeground      SCE_C_COMMENTDOC              586e75
+StyleSetBackground      SCE_C_COMMENTDOC              fdf6e6
+StyleSetForeground      SCE_C_NUMBER                  2aa198
+StyleSetBackground      SCE_C_NUMBER                  fdf6e6
+StyleSetForeground      SCE_C_WORD                    6c71c4
+StyleSetBackground      SCE_C_WORD                    fdf6e6
+StyleSetBold            SCE_C_WORD                    1
+StyleSetForeground      SCE_C_STRING                  ff7f00
+StyleSetBackground      SCE_C_STRING                  fdf6e6
+StyleSetForeground      SCE_C_CHARACTER               6c71c4
+StyleSetBackground      SCE_C_CHARACTER               fdf6e6
+StyleSetForeground      SCE_C_UUID                    6c71c4
+StyleSetBackground      SCE_C_UUID                    fdf6e6
+StyleSetForeground      SCE_C_PREPROCESSOR            93a1a1
+StyleSetBackground      SCE_C_PREPROCESSOR            fdf6e6
+StyleSetBold            SCE_C_PREPROCESSOR            1
+StyleSetForeground      SCE_C_OPERATOR                268bd2
+StyleSetBackground      SCE_C_OPERATOR                fdf6e6
+StyleSetForeground      SCE_C_IDENTIFIER              859900
+StyleSetBackground      SCE_C_IDENTIFIER              fdf6e6
+StyleSetForeground      SCE_C_STRINGEOL               dc322f
+StyleSetBackground      SCE_C_STRINGEOL               fdf6e6
+StyleSetForeground      SCE_C_VERBATIM                6c71c4
+StyleSetBackground      SCE_C_VERBATIM                fdf6e6
+StyleSetForeground      SCE_C_REGEX                   ff007f
+StyleSetBackground      SCE_C_REGEX                   fdf6e6
+StyleSetForeground      SCE_C_COMMENTLINEDOC          586e75
+StyleSetBackground      SCE_C_COMMENTLINEDOC          fdf6e6
+StyleSetForeground      SCE_C_WORD2                   6c71c4
+StyleSetBackground      SCE_C_WORD2                   fdf6e6
+StyleSetBold            SCE_C_WORD2                   1
+StyleSetForeground      SCE_C_COMMENTDOCKEYWORD       657b83
+StyleSetBackground      SCE_C_COMMENTDOCKEYWORD       fdf6e6
+StyleSetForeground      SCE_C_COMMENTDOCKEYWORDERROR  657b83
+StyleSetBackground      SCE_C_COMMENTDOCKEYWORDERROR  fdf6e6
+StyleSetForeground      SCE_C_GLOBALCLASS             6c71c4
+StyleSetBackground      SCE_C_GLOBALCLASS             fdf6e6
 
 
 # text/x-perlxs
@@ -313,125 +313,125 @@ include text/x-c
 # text/html
 style text/html
 include text/plain
-StyleSetBackground      H_DEFAULT                 fdf6e6
-StyleSetBackground      H_TAG                     fdf6e6
-StyleSetBackground      H_TAGUNKNOWN              fdf6e6
-StyleSetBackground      H_ATTRIBUTE               fdf6e6
-StyleSetBackground      H_ATTRIBUTEUNKNOWN        fdf6e6
-StyleSetBackground      H_NUMBER                  fdf6e6
-StyleSetBackground      H_DOUBLESTRING            fdf6e6
-StyleSetBackground      H_SINGLESTRING            fdf6e6
-StyleSetBackground      H_OTHER                   fdf6e6
-StyleSetBackground      H_COMMENT                 fdf6e6
-StyleSetBackground      H_ENTITY                  fdf6e6
+StyleSetBackground      SCE_H_DEFAULT                 fdf6e6
+StyleSetBackground      SCE_H_TAG                     fdf6e6
+StyleSetBackground      SCE_H_TAGUNKNOWN              fdf6e6
+StyleSetBackground      SCE_H_ATTRIBUTE               fdf6e6
+StyleSetBackground      SCE_H_ATTRIBUTEUNKNOWN        fdf6e6
+StyleSetBackground      SCE_H_NUMBER                  fdf6e6
+StyleSetBackground      SCE_H_DOUBLESTRING            fdf6e6
+StyleSetBackground      SCE_H_SINGLESTRING            fdf6e6
+StyleSetBackground      SCE_H_OTHER                   fdf6e6
+StyleSetBackground      SCE_H_COMMENT                 fdf6e6
+StyleSetBackground      SCE_H_ENTITY                  fdf6e6
 
-StyleSetForeground      H_DEFAULT                 93a1a1
-StyleSetForeground      H_TAG                     586e75
-StyleSetForeground      H_TAGUNKNOWN              dc322f
-StyleSetForeground      H_ATTRIBUTE               268bd2
-StyleSetForeground      H_ATTRIBUTEUNKNOWN        dc322f
-StyleSetForeground      H_NUMBER                  d33682
-StyleSetForeground      H_DOUBLESTRING            6c71c4
-StyleSetForeground      H_SINGLESTRING            2aa198
-StyleSetForeground      H_OTHER                   b58900
-StyleSetForeground      H_COMMENT                 657b83
-StyleSetItalic          H_COMMENT                 1
-StyleSetForeground      H_ENTITY                  859900
+StyleSetForeground      SCE_H_DEFAULT                 93a1a1
+StyleSetForeground      SCE_H_TAG                     586e75
+StyleSetForeground      SCE_H_TAGUNKNOWN              dc322f
+StyleSetForeground      SCE_H_ATTRIBUTE               268bd2
+StyleSetForeground      SCE_H_ATTRIBUTEUNKNOWN        dc322f
+StyleSetForeground      SCE_H_NUMBER                  d33682
+StyleSetForeground      SCE_H_DOUBLESTRING            6c71c4
+StyleSetForeground      SCE_H_SINGLESTRING            2aa198
+StyleSetForeground      SCE_H_OTHER                   b58900
+StyleSetForeground      SCE_H_COMMENT                 657b83
+StyleSetItalic          SCE_H_COMMENT                 1
+StyleSetForeground      SCE_H_ENTITY                  859900
 
-StyleSetBackground      H_TAGEND                  fdf6e6
-StyleSetBackground      H_XMLSTART                fdf6e6
-StyleSetBackground      H_XMLEND                  fdf6e6
-StyleSetBackground      H_SCRIPT                  fdf6e6
-StyleSetBackground      H_ASP                     fdf6e6
-StyleSetBackground      H_ASPAT                   fdf6e6
-StyleSetBackground      H_CDATA                    eee8d5
-StyleSetEOLFilled       H_CDATA                   1
-StyleSetBackground      H_QUESTION                fdf6e6
+StyleSetBackground      SCE_H_TAGEND                  fdf6e6
+StyleSetBackground      SCE_H_XMLSTART                fdf6e6
+StyleSetBackground      SCE_H_XMLEND                  fdf6e6
+StyleSetBackground      SCE_H_SCRIPT                  fdf6e6
+StyleSetBackground      SCE_H_ASP                     fdf6e6
+StyleSetBackground      SCE_H_ASPAT                   fdf6e6
+StyleSetBackground      SCE_H_CDATA                    eee8d5
+StyleSetEOLFilled       SCE_H_CDATA                   1
+StyleSetBackground      SCE_H_QUESTION                fdf6e6
 
-StyleSetForeground      H_TAGEND                  586e75
-StyleSetForeground      H_XMLSTART                cb4b16
-StyleSetForeground      H_XMLEND                  cb4b16
-StyleSetForeground      H_SCRIPT                  d33682
-#StyleSetForeground      H_ASP 15
-#StyleSetForeground      H_ASPAT 16
-StyleSetForeground      H_CDATA                   d33682
-StyleSetForeground      H_QUESTION                859900
+StyleSetForeground      SCE_H_TAGEND                  586e75
+StyleSetForeground      SCE_H_XMLSTART                cb4b16
+StyleSetForeground      SCE_H_XMLEND                  cb4b16
+StyleSetForeground      SCE_H_SCRIPT                  d33682
+#StyleSetForeground      SCE_H_ASP 15
+#StyleSetForeground      SCE_H_ASPAT 16
+StyleSetForeground      SCE_H_CDATA                   d33682
+StyleSetForeground      SCE_H_QUESTION                859900
 
 
-StyleSetBackground      H_VALUE                    eee8d5
-StyleSetBackground      H_XCCOMMENT               fdf6e6
+StyleSetBackground      SCE_H_VALUE                    eee8d5
+StyleSetBackground      SCE_H_XCCOMMENT               fdf6e6
 
 #// SGML
-StyleSetBackground      H_SGML_DEFAULT             eee8d5
-StyleSetBackground      H_SGML_COMMAND             eee8d5
-StyleSetBackground      H_SGML_1ST_PARAM           eee8d5
-StyleSetBackground      H_SGML_DOUBLESTRING        eee8d5
-StyleSetBackground      H_SGML_SIMPLESTRING        eee8d5
-StyleSetBackground      H_SGML_ERROR               eee8d5
-StyleSetBackground      H_SGML_SPECIAL             eee8d5
-StyleSetBackground      H_SGML_ENTITY              eee8d5
-StyleSetBackground      H_SGML_COMMENT             eee8d5
-StyleSetBackground      H_SGML_1ST_PARAM_COMMENT   eee8d5
-StyleSetBackground      H_SGML_BLOCK_DEFAULT       eee8d5
+StyleSetBackground      SCE_H_SGML_DEFAULT             eee8d5
+StyleSetBackground      SCE_H_SGML_COMMAND             eee8d5
+StyleSetBackground      SCE_H_SGML_1ST_PARAM           eee8d5
+StyleSetBackground      SCE_H_SGML_DOUBLESTRING        eee8d5
+StyleSetBackground      SCE_H_SGML_SIMPLESTRING        eee8d5
+StyleSetBackground      SCE_H_SGML_ERROR               eee8d5
+StyleSetBackground      SCE_H_SGML_SPECIAL             eee8d5
+StyleSetBackground      SCE_H_SGML_ENTITY              eee8d5
+StyleSetBackground      SCE_H_SGML_COMMENT             eee8d5
+StyleSetBackground      SCE_H_SGML_1ST_PARAM_COMMENT   eee8d5
+StyleSetBackground      SCE_H_SGML_BLOCK_DEFAULT       eee8d5
 
 ## 
-StyleSetForeground      H_SGML_DEFAULT            d33682
-StyleSetForeground      H_SGML_COMMAND            859900
-StyleSetForeground      H_SGML_1ST_PARAM          cb4b16
-StyleSetForeground      H_SGML_DOUBLESTRING       6c71c4
-StyleSetForeground      H_SGML_SIMPLESTRING       fdf6e6
-StyleSetForeground      H_SGML_ERROR              cb4b16
-StyleSetForeground      H_SGML_SPECIAL            859900
-StyleSetForeground      H_SGML_ENTITY             859900
-StyleSetForeground      H_SGML_COMMENT            657b83
-StyleSetItalic          H_SGML_COMMENT            1
-StyleSetForeground      H_SGML_1ST_PARAM_COMMENT  93a1a1
-StyleSetForeground      H_SGML_BLOCK_DEFAULT      d33682
+StyleSetForeground      SCE_H_SGML_DEFAULT            d33682
+StyleSetForeground      SCE_H_SGML_COMMAND            859900
+StyleSetForeground      SCE_H_SGML_1ST_PARAM          cb4b16
+StyleSetForeground      SCE_H_SGML_DOUBLESTRING       6c71c4
+StyleSetForeground      SCE_H_SGML_SIMPLESTRING       fdf6e6
+StyleSetForeground      SCE_H_SGML_ERROR              cb4b16
+StyleSetForeground      SCE_H_SGML_SPECIAL            859900
+StyleSetForeground      SCE_H_SGML_ENTITY             859900
+StyleSetForeground      SCE_H_SGML_COMMENT            657b83
+StyleSetItalic          SCE_H_SGML_COMMENT            1
+StyleSetForeground      SCE_H_SGML_1ST_PARAM_COMMENT  93a1a1
+StyleSetForeground      SCE_H_SGML_BLOCK_DEFAULT      d33682
 
 
 #// Embedded Javascript Backgrounds
-StyleSetBackground      HJ_START                   eee8d5
-StyleSetBackground      HJ_DEFAULT                 eee8d5
-StyleSetBackground      HJ_COMMENT                 eee8d5
-StyleSetBackground      HJ_COMMENTLINE             eee8d5
-StyleSetBackground      HJ_COMMENTDOC              eee8d5
-StyleSetBackground      HJ_NUMBER                  eee8d5
-StyleSetBackground      HJ_WORD                    eee8d5
-StyleSetBackground      HJ_KEYWORD                 eee8d5
-StyleSetBackground      HJ_DOUBLESTRING            eee8d5
-StyleSetBackground      HJ_SINGLESTRING            eee8d5
-StyleSetBackground      HJ_SYMBOLS                 eee8d5
-StyleSetBackground      HJ_STRINGEOL               eee8d5
-StyleSetBackground      HJ_REGEX                   eee8d5
+StyleSetBackground      SCE_HJ_START                   eee8d5
+StyleSetBackground      SCE_HJ_DEFAULT                 eee8d5
+StyleSetBackground      SCE_HJ_COMMENT                 eee8d5
+StyleSetBackground      SCE_HJ_COMMENTLINE             eee8d5
+StyleSetBackground      SCE_HJ_COMMENTDOC              eee8d5
+StyleSetBackground      SCE_HJ_NUMBER                  eee8d5
+StyleSetBackground      SCE_HJ_WORD                    eee8d5
+StyleSetBackground      SCE_HJ_KEYWORD                 eee8d5
+StyleSetBackground      SCE_HJ_DOUBLESTRING            eee8d5
+StyleSetBackground      SCE_HJ_SINGLESTRING            eee8d5
+StyleSetBackground      SCE_HJ_SYMBOLS                 eee8d5
+StyleSetBackground      SCE_HJ_STRINGEOL               eee8d5
+StyleSetBackground      SCE_HJ_REGEX                   eee8d5
 
-StyleSetEOLFilled       HJ_START                  1
-StyleSetEOLFilled       HJ_DEFAULT                1
-StyleSetEOLFilled       HJ_COMMENT                1
-StyleSetEOLFilled       HJ_COMMENTLINE            1
-StyleSetEOLFilled       HJ_COMMENTDOC             1
-StyleSetEOLFilled       HJ_NUMBER                 1
-StyleSetEOLFilled       HJ_WORD                   1
-StyleSetEOLFilled       HJ_KEYWORD                1
-StyleSetEOLFilled       HJ_DOUBLESTRING           1
-StyleSetEOLFilled       HJ_SINGLESTRING           1
-StyleSetEOLFilled       HJ_SYMBOLS                1
-StyleSetEOLFilled       HJ_STRINGEOL              1
-StyleSetEOLFilled       HJ_REGEX                  1
+StyleSetEOLFilled       SCE_HJ_START                  1
+StyleSetEOLFilled       SCE_HJ_DEFAULT                1
+StyleSetEOLFilled       SCE_HJ_COMMENT                1
+StyleSetEOLFilled       SCE_HJ_COMMENTLINE            1
+StyleSetEOLFilled       SCE_HJ_COMMENTDOC             1
+StyleSetEOLFilled       SCE_HJ_NUMBER                 1
+StyleSetEOLFilled       SCE_HJ_WORD                   1
+StyleSetEOLFilled       SCE_HJ_KEYWORD                1
+StyleSetEOLFilled       SCE_HJ_DOUBLESTRING           1
+StyleSetEOLFilled       SCE_HJ_SINGLESTRING           1
+StyleSetEOLFilled       SCE_HJ_SYMBOLS                1
+StyleSetEOLFilled       SCE_HJ_STRINGEOL              1
+StyleSetEOLFilled       SCE_HJ_REGEX                  1
 
 #// Embedded Javascript
-StyleSetForeground      HJ_START                  586e75
-StyleSetForeground      HJ_DEFAULT                93a1a1
-StyleSetForeground      HJ_COMMENT                586e75
-StyleSetForeground      HJ_COMMENTLINE            586e75
-StyleSetForeground      HJ_COMMENTDOC             657b83
-StyleSetForeground      HJ_NUMBER                 cb4b16
-StyleSetForeground      HJ_WORD                   859900
-StyleSetForeground      HJ_KEYWORD                268bd2
-StyleSetForeground      HJ_DOUBLESTRING           cb4b16
-StyleSetForeground      HJ_SINGLESTRING           b58900
-StyleSetForeground      HJ_SYMBOLS                d33682
-StyleSetForeground      HJ_STRINGEOL              6c71c4
-StyleSetForeground      HJ_REGEX                  d33682
+StyleSetForeground      SCE_HJ_START                  586e75
+StyleSetForeground      SCE_HJ_DEFAULT                93a1a1
+StyleSetForeground      SCE_HJ_COMMENT                586e75
+StyleSetForeground      SCE_HJ_COMMENTLINE            586e75
+StyleSetForeground      SCE_HJ_COMMENTDOC             657b83
+StyleSetForeground      SCE_HJ_NUMBER                 cb4b16
+StyleSetForeground      SCE_HJ_WORD                   859900
+StyleSetForeground      SCE_HJ_KEYWORD                268bd2
+StyleSetForeground      SCE_HJ_DOUBLESTRING           cb4b16
+StyleSetForeground      SCE_HJ_SINGLESTRING           b58900
+StyleSetForeground      SCE_HJ_SYMBOLS                d33682
+StyleSetForeground      SCE_HJ_STRINGEOL              6c71c4
+StyleSetForeground      SCE_HJ_REGEX                  d33682
 
 
 
@@ -440,49 +440,49 @@ StyleSetForeground      HJ_REGEX                  d33682
 style text/x-patch
 include text/plain
 
-StyleSetForeground      DIFF_DEFAULT              657b83
-StyleSetForeground      DIFF_COMMENT              586e75
-StyleSetBold            DIFF_COMMENT              1
-StyleSetItalic          DIFF_COMMENT              1
-StyleSetEOLFilled       DIFF_COMMENT              1
-StyleSetUnderline       DIFF_COMMENT              1
-StyleSetForeground      DIFF_COMMAND              93a1a1
-StyleSetForeground      DIFF_HEADER               859900
-StyleSetForeground      DIFF_POSITION             268bd2
-StyleSetForeground      DIFF_DELETED              dc322f
-StyleSetForeground      DIFF_ADDED                2aa198
-#StyleSetForeground      DIFF_CHANGED              6c71c4
+StyleSetForeground      SCE_DIFF_DEFAULT              657b83
+StyleSetForeground      SCE_DIFF_COMMENT              586e75
+StyleSetBold            SCE_DIFF_COMMENT              1
+StyleSetItalic          SCE_DIFF_COMMENT              1
+StyleSetEOLFilled       SCE_DIFF_COMMENT              1
+StyleSetUnderline       SCE_DIFF_COMMENT              1
+StyleSetForeground      SCE_DIFF_COMMAND              93a1a1
+StyleSetForeground      SCE_DIFF_HEADER               859900
+StyleSetForeground      SCE_DIFF_POSITION             268bd2
+StyleSetForeground      SCE_DIFF_DELETED              dc322f
+StyleSetForeground      SCE_DIFF_ADDED                2aa198
+#StyleSetForeground      SCE_DIFF_CHANGED              6c71c4
 
 
-StyleSetBackground      DIFF_DEFAULT              fdf6e6
-StyleSetBackground      DIFF_COMMENT              fdf6e6
-StyleSetBackground      DIFF_COMMAND              fdf6e6
-StyleSetBackground      DIFF_HEADER               fdf6e6
-StyleSetBackground      DIFF_POSITION             fdf6e6
-StyleSetBackground      DIFF_DELETED              fdf6e6
-StyleSetBackground      DIFF_ADDED                fdf6e6
-#StyleSetBackground      DIFF_CHANGED              fdf6e6
+StyleSetBackground      SCE_DIFF_DEFAULT              fdf6e6
+StyleSetBackground      SCE_DIFF_COMMENT              fdf6e6
+StyleSetBackground      SCE_DIFF_COMMAND              fdf6e6
+StyleSetBackground      SCE_DIFF_HEADER               fdf6e6
+StyleSetBackground      SCE_DIFF_POSITION             fdf6e6
+StyleSetBackground      SCE_DIFF_DELETED              fdf6e6
+StyleSetBackground      SCE_DIFF_ADDED                fdf6e6
+#StyleSetBackground      SCE_DIFF_CHANGED              fdf6e6
 
 # text/x-makefile
 #
 style text/x-makefile
 include text/plain
 
-StyleSetForeground      MAKE_DEFAULT              657b83
-StyleSetForeground      MAKE_COMMENT              586e75
-StyleSetForeground      MAKE_PREPROCESSOR         93a1a1
-StyleSetForeground      MAKE_IDENTIFIER           859900
-StyleSetForeground      MAKE_OPERATOR             268bd2
-StyleSetForeground      MAKE_TARGET               dc322f
-StyleSetForeground      MAKE_IDEOL                2aa198
+StyleSetForeground      SCE_MAKE_DEFAULT              657b83
+StyleSetForeground      SCE_MAKE_COMMENT              586e75
+StyleSetForeground      SCE_MAKE_PREPROCESSOR         93a1a1
+StyleSetForeground      SCE_MAKE_IDENTIFIER           859900
+StyleSetForeground      SCE_MAKE_OPERATOR             268bd2
+StyleSetForeground      SCE_MAKE_TARGET               dc322f
+StyleSetForeground      SCE_MAKE_IDEOL                2aa198
 
-StyleSetBackground      MAKE_DEFAULT              fdf6e6
-StyleSetBackground      MAKE_COMMENT              fdf6e6
-StyleSetBackground      MAKE_PREPROCESSOR         fdf6e6
-StyleSetBackground      MAKE_IDENTIFIER           fdf6e6
-StyleSetBackground      MAKE_OPERATOR             fdf6e6
-StyleSetBackground      MAKE_TARGET               fdf6e6
-StyleSetBackground      MAKE_IDEOL                fdf6e6
+StyleSetBackground      SCE_MAKE_DEFAULT              fdf6e6
+StyleSetBackground      SCE_MAKE_COMMENT              fdf6e6
+StyleSetBackground      SCE_MAKE_PREPROCESSOR         fdf6e6
+StyleSetBackground      SCE_MAKE_IDENTIFIER           fdf6e6
+StyleSetBackground      SCE_MAKE_OPERATOR             fdf6e6
+StyleSetBackground      SCE_MAKE_TARGET               fdf6e6
+StyleSetBackground      SCE_MAKE_IDEOL                fdf6e6
 
 
 #
@@ -491,105 +491,105 @@ StyleSetBackground      MAKE_IDEOL                fdf6e6
 style text/css
 include text/plain
 
-StyleSetForeground      CSS_DEFAULT                       657b83
-StyleSetForeground      CSS_TAG                           6c71c4
-  StyleSetBold          CSS_TAG                           1
-StyleSetForeground      CSS_CLASS                         268bd2
-StyleSetForeground      CSS_PSEUDOCLASS                   839496
-StyleSetForeground      CSS_UNKNOWN_PSEUDOCLASS           839496
-  StyleSetBold          CSS_UNKNOWN_PSEUDOCLASS           1
-StyleSetForeground      CSS_OPERATOR                      cb4b16
-   StyleSetBold         CSS_OPERATOR                      1
-StyleSetForeground      CSS_IDENTIFIER                    d33682
-StyleSetForeground      CSS_UNKNOWN_IDENTIFIER            839496
-  StyleSetBold          CSS_UNKNOWN_IDENTIFIER            1
-StyleSetForeground      CSS_VALUE                         859900
-StyleSetForeground      CSS_COMMENT                       586e75
-StyleSetForeground      CSS_ID                            2aa198
-    StyleSetBold        CSS_ID                            1
-StyleSetForeground      CSS_IMPORTANT                     839496
-StyleSetForeground      CSS_DIRECTIVE                     839496
-StyleSetForeground      CSS_DOUBLESTRING                  839496
-StyleSetForeground      CSS_SINGLESTRING                  839496
-StyleSetForeground      CSS_IDENTIFIER2                   839496
-StyleSetForeground      CSS_ATTRIBUTE                     839496
-#StyleSetForeground      CSS_IDENTIFIER3 17
-#StyleSetForeground      CSS_PSEUDOELEMENT 18
-#StyleSetForeground      CSS_EXTENDED_IDENTIFIER 19
-#StyleSetForeground      CSS_EXTENDED_PSEUDOCLASS 20
-#StyleSetForeground      CSS_EXTENDED_PSEUDOELEMENT 21
+StyleSetForeground      SCE_CSS_DEFAULT                       657b83
+StyleSetForeground      SCE_CSS_TAG                           6c71c4
+  StyleSetBold          SCE_CSS_TAG                           1
+StyleSetForeground      SCE_CSS_CLASS                         268bd2
+StyleSetForeground      SCE_CSS_PSEUDOCLASS                   839496
+StyleSetForeground      SCE_CSS_UNKNOWN_PSEUDOCLASS           839496
+  StyleSetBold          SCE_CSS_UNKNOWN_PSEUDOCLASS           1
+StyleSetForeground      SCE_CSS_OPERATOR                      cb4b16
+   StyleSetBold         SCE_CSS_OPERATOR                      1
+StyleSetForeground      SCE_CSS_IDENTIFIER                    d33682
+StyleSetForeground      SCE_CSS_UNKNOWN_IDENTIFIER            839496
+  StyleSetBold          SCE_CSS_UNKNOWN_IDENTIFIER            1
+StyleSetForeground      SCE_CSS_VALUE                         859900
+StyleSetForeground      SCE_CSS_COMMENT                       586e75
+StyleSetForeground      SCE_CSS_ID                            2aa198
+    StyleSetBold        SCE_CSS_ID                            1
+StyleSetForeground      SCE_CSS_IMPORTANT                     839496
+StyleSetForeground      SCE_CSS_DIRECTIVE                     839496
+StyleSetForeground      SCE_CSS_DOUBLESTRING                  839496
+StyleSetForeground      SCE_CSS_SINGLESTRING                  839496
+StyleSetForeground      SCE_CSS_IDENTIFIER2                   839496
+StyleSetForeground      SCE_CSS_ATTRIBUTE                     839496
+#StyleSetForeground      SCE_CSS_IDENTIFIER3 17
+#StyleSetForeground      SCE_CSS_PSEUDOELEMENT 18
+#StyleSetForeground      SCE_CSS_EXTENDED_IDENTIFIER 19
+#StyleSetForeground      SCE_CSS_EXTENDED_PSEUDOCLASS 20
+#StyleSetForeground      SCE_CSS_EXTENDED_PSEUDOELEMENT 21
 
-StyleSetBackground           CSS_DEFAULT                  fdf6e6
-StyleSetBackground           CSS_TAG                      fdf6e6
-StyleSetBackground           CSS_CLASS                    fdf6e6
-StyleSetBackground           CSS_PSEUDOCLASS              fdf6e6
-StyleSetBackground           CSS_UNKNOWN_PSEUDOCLASS      fdf6e6
-StyleSetBackground           CSS_OPERATOR                 fdf6e6
-StyleSetBackground           CSS_IDENTIFIER               fdf6e6
-StyleSetBackground           CSS_UNKNOWN_IDENTIFIER       fdf6e6
-StyleSetBackground           CSS_VALUE                    fdf6e6
-StyleSetBackground           CSS_COMMENT                  fdf6e6
-StyleSetBackground           CSS_ID                       fdf6e6
-StyleSetBackground           CSS_IMPORTANT                fdf6e6
-StyleSetBackground           CSS_DIRECTIVE                fdf6e6
-StyleSetBackground           CSS_DOUBLESTRING             fdf6e6
-StyleSetBackground           CSS_SINGLESTRING             fdf6e6
-StyleSetBackground           CSS_IDENTIFIER2              fdf6e6
-StyleSetBackground           CSS_ATTRIBUTE                fdf6e6
-#StyleSetBackground           CSS_IDENTIFIER3              fdf6e6
-#StyleSetBackground           CSS_PSEUDOELEMENT            fdf6e6
-#StyleSetBackground           CSS_EXTENDED_IDENTIFIER      fdf6e6
-#StyleSetBackground           CSS_EXTENDED_PSEUDOCLASS     fdf6e6
-#StyleSetBackground           CSS_EXTENDED_PSEUDOELEMENT   fdf6e6
+StyleSetBackground           SCE_CSS_DEFAULT                  fdf6e6
+StyleSetBackground           SCE_CSS_TAG                      fdf6e6
+StyleSetBackground           SCE_CSS_CLASS                    fdf6e6
+StyleSetBackground           SCE_CSS_PSEUDOCLASS              fdf6e6
+StyleSetBackground           SCE_CSS_UNKNOWN_PSEUDOCLASS      fdf6e6
+StyleSetBackground           SCE_CSS_OPERATOR                 fdf6e6
+StyleSetBackground           SCE_CSS_IDENTIFIER               fdf6e6
+StyleSetBackground           SCE_CSS_UNKNOWN_IDENTIFIER       fdf6e6
+StyleSetBackground           SCE_CSS_VALUE                    fdf6e6
+StyleSetBackground           SCE_CSS_COMMENT                  fdf6e6
+StyleSetBackground           SCE_CSS_ID                       fdf6e6
+StyleSetBackground           SCE_CSS_IMPORTANT                fdf6e6
+StyleSetBackground           SCE_CSS_DIRECTIVE                fdf6e6
+StyleSetBackground           SCE_CSS_DOUBLESTRING             fdf6e6
+StyleSetBackground           SCE_CSS_SINGLESTRING             fdf6e6
+StyleSetBackground           SCE_CSS_IDENTIFIER2              fdf6e6
+StyleSetBackground           SCE_CSS_ATTRIBUTE                fdf6e6
+#StyleSetBackground           SCE_CSS_IDENTIFIER3              fdf6e6
+#StyleSetBackground           SCE_CSS_PSEUDOELEMENT            fdf6e6
+#StyleSetBackground           SCE_CSS_EXTENDED_IDENTIFIER      fdf6e6
+#StyleSetBackground           SCE_CSS_EXTENDED_PSEUDOCLASS     fdf6e6
+#StyleSetBackground           SCE_CSS_EXTENDED_PSEUDOELEMENT   fdf6e6
 
 style text/x-sql
 include text/plain
 
-StyleSetForeground      SQL_DEFAULT               657b83
-StyleSetForeground      SQL_COMMENT               586e75
-StyleSetForeground      SQL_COMMENTLINE           586e75
-StyleSetForeground      SQL_COMMENTDOC            586e75
-StyleSetForeground      SQL_NUMBER                cb4b16
-StyleSetForeground      SQL_WORD                  859900
-StyleSetForeground      SQL_STRING                2aa198
-StyleSetForeground      SQL_CHARACTER             6c71c4
-StyleSetForeground      SQL_SQLPLUS               657b83
-StyleSetForeground      SQL_SQLPLUS_PROMPT        657b83
-StyleSetForeground      SQL_OPERATOR              268bd2
-StyleSetForeground      SQL_IDENTIFIER            839496
-StyleSetForeground      SQL_SQLPLUS_COMMENT       586e75
-StyleSetForeground      SQL_COMMENTLINEDOC        586e75
-StyleSetForeground      SQL_WORD2                 839496
-StyleSetForeground      SQL_COMMENTDOCKEYWORD     586e75
-StyleSetForeground      SQL_COMMENTDOCKEYWORDERROR    dc322f
-#StyleSetForeground      SQL_USER1                 
-#StyleSetForeground      SQL_USER2                 
-#StyleSetForeground      SQL_USER3                 
-#StyleSetForeground      SQL_USER4                 
-StyleSetForeground      SQL_QUOTEDIDENTIFIER      2aa198
+StyleSetForeground      SCE_SQL_DEFAULT               657b83
+StyleSetForeground      SCE_SQL_COMMENT               586e75
+StyleSetForeground      SCE_SQL_COMMENTLINE           586e75
+StyleSetForeground      SCE_SQL_COMMENTDOC            586e75
+StyleSetForeground      SCE_SQL_NUMBER                cb4b16
+StyleSetForeground      SCE_SQL_WORD                  859900
+StyleSetForeground      SCE_SQL_STRING                2aa198
+StyleSetForeground      SCE_SQL_CHARACTER             6c71c4
+StyleSetForeground      SCE_SQL_SQLPLUS               657b83
+StyleSetForeground      SCE_SQL_SQLPLUS_PROMPT        657b83
+StyleSetForeground      SCE_SQL_OPERATOR              268bd2
+StyleSetForeground      SCE_SQL_IDENTIFIER            839496
+StyleSetForeground      SCE_SQL_SQLPLUS_COMMENT       586e75
+StyleSetForeground      SCE_SQL_COMMENTLINEDOC        586e75
+StyleSetForeground      SCE_SQL_WORD2                 839496
+StyleSetForeground      SCE_SQL_COMMENTDOCKEYWORD     586e75
+StyleSetForeground      SCE_SQL_COMMENTDOCKEYWORDERROR    dc322f
+#StyleSetForeground      SCE_SQL_USER1                 
+#StyleSetForeground      SCE_SQL_USER2                 
+#StyleSetForeground      SCE_SQL_USER3                 
+#StyleSetForeground      SCE_SQL_USER4                 
+StyleSetForeground      SCE_SQL_QUOTEDIDENTIFIER      2aa198
 
-StyleSetBackground      SQL_DEFAULT               fdf6e6
-StyleSetBackground      SQL_COMMENT               fdf6e6
-StyleSetBackground      SQL_COMMENTLINE           fdf6e6
-StyleSetBackground      SQL_COMMENTDOC            fdf6e6
-StyleSetBackground      SQL_NUMBER                fdf6e6
-StyleSetBackground      SQL_WORD                  fdf6e6
-StyleSetBackground      SQL_STRING                fdf6e6
-StyleSetBackground      SQL_CHARACTER             fdf6e6
-StyleSetBackground      SQL_SQLPLUS               fdf6e6
-StyleSetBackground      SQL_SQLPLUS_PROMPT        fdf6e6
-StyleSetBackground      SQL_OPERATOR              fdf6e6
-StyleSetBackground      SQL_IDENTIFIER            fdf6e6
-StyleSetBackground      SQL_SQLPLUS_COMMENT       fdf6e6
-StyleSetBackground      SQL_COMMENTLINEDOC        fdf6e6
-StyleSetBackground      SQL_WORD2                 fdf6e6
-StyleSetBackground      SQL_COMMENTDOCKEYWORD     fdf6e6
-StyleSetBackground      SQL_COMMENTDOCKEYWORDERROR    fdf6e6
-StyleSetBackground      SQL_USER1                 fdf6e6
-StyleSetBackground      SQL_USER2                 fdf6e6
-StyleSetBackground      SQL_USER3                 fdf6e6
-StyleSetBackground      SQL_USER4                 fdf6e6
-StyleSetBackground      SQL_QUOTEDIDENTIFIER      fdf6e6
+StyleSetBackground      SCE_SQL_DEFAULT               fdf6e6
+StyleSetBackground      SCE_SQL_COMMENT               fdf6e6
+StyleSetBackground      SCE_SQL_COMMENTLINE           fdf6e6
+StyleSetBackground      SCE_SQL_COMMENTDOC            fdf6e6
+StyleSetBackground      SCE_SQL_NUMBER                fdf6e6
+StyleSetBackground      SCE_SQL_WORD                  fdf6e6
+StyleSetBackground      SCE_SQL_STRING                fdf6e6
+StyleSetBackground      SCE_SQL_CHARACTER             fdf6e6
+StyleSetBackground      SCE_SQL_SQLPLUS               fdf6e6
+StyleSetBackground      SCE_SQL_SQLPLUS_PROMPT        fdf6e6
+StyleSetBackground      SCE_SQL_OPERATOR              fdf6e6
+StyleSetBackground      SCE_SQL_IDENTIFIER            fdf6e6
+StyleSetBackground      SCE_SQL_SQLPLUS_COMMENT       fdf6e6
+StyleSetBackground      SCE_SQL_COMMENTLINEDOC        fdf6e6
+StyleSetBackground      SCE_SQL_WORD2                 fdf6e6
+StyleSetBackground      SCE_SQL_COMMENTDOCKEYWORD     fdf6e6
+StyleSetBackground      SCE_SQL_COMMENTDOCKEYWORDERROR    fdf6e6
+StyleSetBackground      SCE_SQL_USER1                 fdf6e6
+StyleSetBackground      SCE_SQL_USER2                 fdf6e6
+StyleSetBackground      SCE_SQL_USER3                 fdf6e6
+StyleSetBackground      SCE_SQL_USER4                 fdf6e6
+StyleSetBackground      SCE_SQL_QUOTEDIDENTIFIER      fdf6e6
 
 # POVRAY Persistence of Vision Raytracer
 style text/x-povray
@@ -597,26 +597,26 @@ include text/plain
 
 StyleAllBackground      fdf6e6
 
-StyleSetForeground      POV_DEFAULT               657b83
-StyleSetForeground      POV_COMMENT               839496
-StyleSetForeground      POV_COMMENTLINE           839496
-StyleSetForeground      POV_NUMBER                cb4b16
-StyleSetForeground      POV_OPERATOR              268bd2
-StyleSetForeground      POV_IDENTIFIER            6c71c4
-StyleSetForeground      POV_STRING                2aa198
-StyleSetForeground      POV_STRINGEOL             2aa198
-StyleSetForeground      POV_DIRECTIVE             859900
-StyleSetBold            POV_DIRECTIVE  1
-StyleSetForeground      POV_BADDIRECTIVE          dc322f
-StyleSetForeground      POV_WORD2 859900 # object structure 
-StyleSetForeground      POV_WORD3 6c71c4 # patterns
-StyleSetForeground      POV_WORD4 859900 # transforms
-StyleSetItalic          POV_WORD4 1
-StyleSetForeground      POV_WORD5 d33682 # modifiers
-StyleSetForeground      POV_WORD6 b58900 # functions
-StyleSetBold            POV_WORD6 1
-StyleSetForeground      POV_WORD7 d33682 # reserved identifiers
-StyleSetForeground      POV_WORD8 d33682
+StyleSetForeground      SCE_POV_DEFAULT               657b83
+StyleSetForeground      SCE_POV_COMMENT               839496
+StyleSetForeground      SCE_POV_COMMENTLINE           839496
+StyleSetForeground      SCE_POV_NUMBER                cb4b16
+StyleSetForeground      SCE_POV_OPERATOR              268bd2
+StyleSetForeground      SCE_POV_IDENTIFIER            6c71c4
+StyleSetForeground      SCE_POV_STRING                2aa198
+StyleSetForeground      SCE_POV_STRINGEOL             2aa198
+StyleSetForeground      SCE_POV_DIRECTIVE             859900
+StyleSetBold            SCE_POV_DIRECTIVE  1
+StyleSetForeground      SCE_POV_BADDIRECTIVE          dc322f
+StyleSetForeground      SCE_POV_WORD2 859900 # object structure 
+StyleSetForeground      SCE_POV_WORD3 6c71c4 # patterns
+StyleSetForeground      SCE_POV_WORD4 859900 # transforms
+StyleSetItalic          SCE_POV_WORD4 1
+StyleSetForeground      SCE_POV_WORD5 d33682 # modifiers
+StyleSetForeground      SCE_POV_WORD6 b58900 # functions
+StyleSetBold            SCE_POV_WORD6 1
+StyleSetForeground      SCE_POV_WORD7 d33682 # reserved identifiers
+StyleSetForeground      SCE_POV_WORD8 d33682
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
