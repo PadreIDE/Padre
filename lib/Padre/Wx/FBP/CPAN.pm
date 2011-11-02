@@ -118,7 +118,7 @@ sub new {
 		},
 	);
 
-	$self->{show_recent} = Wx::Button->new(
+	$self->{refresh_recent} = Wx::Button->new(
 		$self->{recent_panel},
 		-1,
 		Wx::gettext("Refresh"),
@@ -128,9 +128,57 @@ sub new {
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{show_recent},
+		$self->{refresh_recent},
 		sub {
-			shift->on_show_recent_click(@_);
+			shift->on_refresh_recent_click(@_);
+		},
+	);
+
+	$self->{favorite_panel} = Wx::Panel->new(
+		$self->{m_notebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{favorite_list} = Wx::ListCtrl->new(
+		$self->{favorite_panel},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
+	);
+
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{favorite_list},
+		sub {
+			shift->on_favorite_list_column_click(@_);
+		},
+	);
+
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{favorite_list},
+		sub {
+			shift->on_list_item_selected(@_);
+		},
+	);
+
+	$self->{refresh_favorite} = Wx::Button->new(
+		$self->{favorite_panel},
+		-1,
+		Wx::gettext("Refresh"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{refresh_favorite},
+		sub {
+			shift->on_refresh_favorite_click(@_);
 		},
 	);
 
@@ -189,13 +237,21 @@ sub new {
 
 	my $recent_panel_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$recent_panel_sizer->Add( $self->{recent_list}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$recent_panel_sizer->Add( $self->{show_recent}, 0, Wx::ALIGN_CENTER | Wx::ALL, 1 );
+	$recent_panel_sizer->Add( $self->{refresh_recent}, 0, Wx::ALIGN_CENTER | Wx::ALL, 1 );
 
 	$self->{recent_panel}->SetSizerAndFit($recent_panel_sizer);
 	$self->{recent_panel}->Layout;
 
+	my $favorite_panel_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$favorite_panel_sizer->Add( $self->{favorite_list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$favorite_panel_sizer->Add( $self->{refresh_favorite}, 0, Wx::ALIGN_CENTER | Wx::ALL, 1 );
+
+	$self->{favorite_panel}->SetSizerAndFit($favorite_panel_sizer);
+	$self->{favorite_panel}->Layout;
+
 	$self->{m_notebook}->AddPage( $self->{search_panel}, Wx::gettext("Search"), 1 );
 	$self->{m_notebook}->AddPage( $self->{recent_panel}, Wx::gettext("Recent"), 0 );
+	$self->{m_notebook}->AddPage( $self->{favorite_panel}, Wx::gettext("a page"), 0 );
 
 	my $button_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$button_sizer->SetFlexibleDirection(Wx::BOTH);
@@ -230,8 +286,16 @@ sub on_recent_list_column_click {
 	$_[0]->main->error('Handler method on_recent_list_column_click for event recent_list.OnListColClick not implemented');
 }
 
-sub on_show_recent_click {
-	$_[0]->main->error('Handler method on_show_recent_click for event show_recent.OnButtonClick not implemented');
+sub on_refresh_recent_click {
+	$_[0]->main->error('Handler method on_refresh_recent_click for event refresh_recent.OnButtonClick not implemented');
+}
+
+sub on_favorite_list_column_click {
+	$_[0]->main->error('Handler method on_favorite_list_column_click for event favorite_list.OnListColClick not implemented');
+}
+
+sub on_refresh_favorite_click {
+	$_[0]->main->error('Handler method on_refresh_favorite_click for event refresh_favorite.OnButtonClick not implemented');
 }
 
 sub on_synopsis_click {
