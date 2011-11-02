@@ -100,6 +100,7 @@ sub view_start {
 	my $self = shift;
 
 	$self->{synopsis}->Hide;
+	$self->{metacpan}->Hide;
 	$self->{install}->Hide;
 
 }
@@ -342,6 +343,7 @@ sub _update_ui {
 		$self->Layout;
 	} else {
 		$self->{synopsis}->Hide;
+		$self->{metacpan}->Hide;
 		$self->{install}->Hide;
 		$list->Hide;
 		$self->Layout;
@@ -503,6 +505,7 @@ sub render_doc {
 	} else {
 		$self->{synopsis}->Hide;
 	}
+	$self->{metacpan}->Show;
 	$self->{install}->Show;
 	$self->Layout;
 	$self->{SYNOPSIS} = $synopsis;
@@ -706,6 +709,17 @@ sub on_favorite_list_column_click {
 
 	return;
 }
+
+# Called when the 'MetaCPAN!' button is clicked
+sub on_metacpan_click {
+	my $self = shift;
+
+	return unless defined $self->{distro};
+	Padre::Wx::launch_browser('https://metacpan.org/module/' . $self->{distro});
+
+	return;
+}
+
 
 1;
 

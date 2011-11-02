@@ -209,6 +209,22 @@ sub new {
 		},
 	);
 
+	$self->{metacpan} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("MetaCPAN..."),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{metacpan},
+		sub {
+			shift->on_metacpan_click(@_);
+		},
+	);
+
 	$self->{install} = Wx::Button->new(
 		$self,
 		-1,
@@ -257,7 +273,8 @@ sub new {
 	$button_sizer->SetFlexibleDirection(Wx::BOTH);
 	$button_sizer->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$button_sizer->Add( $self->{synopsis}, 0, Wx::ALL | Wx::EXPAND, 2 );
-	$button_sizer->Add( $self->{install}, 0, Wx::ALIGN_CENTER, 2 );
+	$button_sizer->Add( $self->{metacpan}, 0, Wx::ALL, 2 );
+	$button_sizer->Add( $self->{install}, 0, Wx::ALL | Wx::EXPAND, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $self->{m_notebook}, 1, Wx::EXPAND | Wx::ALL, 5 );
@@ -300,6 +317,10 @@ sub on_refresh_favorite_click {
 
 sub on_synopsis_click {
 	$_[0]->main->error('Handler method on_synopsis_click for event synopsis.OnButtonClick not implemented');
+}
+
+sub on_metacpan_click {
+	$_[0]->main->error('Handler method on_metacpan_click for event metacpan.OnButtonClick not implemented');
 }
 
 sub on_install_click {
