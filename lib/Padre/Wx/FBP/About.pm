@@ -27,7 +27,7 @@ sub new {
 		-1,
 		Wx::gettext("About"),
 		Wx::DefaultPosition,
-		[ 600, 630 ],
+		[ 600, 640 ],
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
@@ -35,7 +35,7 @@ sub new {
 		$self,
 		-1,
 		Wx::DefaultPosition,
-		[ 580, 560 ],
+		Wx::DefaultSize,
 	);
 
 	$self->{padre} = Wx::Panel->new(
@@ -49,12 +49,12 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 91, 0, "" )
 	);
 
-	$self->{m_staticText651} = Wx::StaticText->new(
+	$self->{app_name} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
 		Wx::gettext("Padre:-"),
 	);
-	$self->{m_staticText651}->SetFont(
+	$self->{app_name}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
@@ -730,7 +730,7 @@ sub new {
 	$close_button->SetDefault;
 
 	my $bSizer471 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer471->Add( $self->{m_staticText651}, 0, Wx::ALL, 5 );
+	$bSizer471->Add( $self->{app_name}, 0, Wx::ALL, 5 );
 	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::ALL, 5 );
 
 	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -941,6 +941,10 @@ sub new {
 
 sub notebook {
 	$_[0]->{notebook};
+}
+
+sub app_name {
+	$_[0]->{app_name};
 }
 
 sub creator {
