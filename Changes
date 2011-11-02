@@ -162,9 +162,11 @@ the even version for the release, even during development.
     - Outline panel is searchable now (AZAWAWI)
     - Fix #1050: Window menu is confusing (ZENOG, AZAWAWI)
     - Remove swap_ctrl_tab_alt_right configuration parameter (AZAWAWI)
-    - Added CPAN explorer that reuses MetaCPAN.org API for searching
-      and cpanm for package installation. Recent cpan packages and insert
-      synopsis inside Padre are also implemented. (AZAWAWI)
+    - Added CPAN explorer that reuses MetaCPAN.org API for searching for a module
+      and uses App::cpanminus for package installation. It can list the most
+      recent and favorite CPAN releases, view their POD documentation
+      and if there is a SYNOPSIS section, one can insert it from within Padre.
+      (AZAWAWI)
     - Fix #1291 'Code folding icons missing' (AZAWAWI)
     - Code folding markers are now theme-able (AZAWAWI)
     - Find and Find in Files dialogs hide the Fast Find panel (ADAMK)
