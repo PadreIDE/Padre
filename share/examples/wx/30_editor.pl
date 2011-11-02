@@ -287,7 +287,7 @@ package Demo::Panel;
 use strict;
 use warnings FATAL => 'all';
 use Wx::Scintilla;
-use base 'Wx::ScintillaTextCtrl';
+use base 'Wx::Scintilla::TextCtrl';
 use Wx ':everything';
 use Wx::Event ':everything';
 

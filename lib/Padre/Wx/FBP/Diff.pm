@@ -49,12 +49,12 @@ sub new {
 		Wx::BU_AUTODRAW,
 	);
 
-	$self->{left_editor} = Wx::ScintillaTextCtrl->new(
+	$self->{left_editor} = Wx::Scintilla::TextCtrl->new(
 		$self,
 		-1,
 	);
 
-	$self->{right_editor} = Wx::ScintillaTextCtrl->new(
+	$self->{right_editor} = Wx::Scintilla::TextCtrl->new(
 		$self,
 		-1,
 	);

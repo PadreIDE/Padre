@@ -21,7 +21,7 @@ our $COMPATIBLE = '0.91';
 our @ISA        = (
 	'Padre::Wx::Role::Main',
 	'Padre::Wx::Role::Dwell',
-	'Wx::ScintillaTextCtrl',
+	'Wx::Scintilla::TextCtrl',
 );
 
 use constant {
