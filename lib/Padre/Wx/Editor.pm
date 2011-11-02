@@ -47,9 +47,9 @@ use constant {
 #
 # Initialize variables after loading either Wx::Scintilla or Wx::STC
 my %WXEOL = (
-	WIN  => Wx::Scintilla::EOL_CRLF,
-	MAC  => Wx::Scintilla::EOL_CR,
-	UNIX => Wx::Scintilla::EOL_LF,
+	WIN  => Wx::Scintilla::SC_EOL_CRLF,
+	MAC  => Wx::Scintilla::SC_EOL_CR,
+	UNIX => Wx::Scintilla::SC_EOL_LF,
 );
 
 
@@ -107,70 +107,70 @@ sub new {
 	# Set the margin types (whether we show them or not)
 	$self->SetMarginType(
 		Padre::Constant::MARGIN_LINE,
-		Wx::Scintilla::MARGIN_NUMBER,
+		Wx::Scintilla::SC_MARGIN_NUMBER,
 	);
 	$self->SetMarginType(
 		Padre::Constant::MARGIN_MARKER,
-		Wx::Scintilla::MARGIN_SYMBOL,
+		Wx::Scintilla::SC_MARGIN_SYMBOL,
 	);
 	if ( Padre::Feature::FOLDING ) {
 		$self->SetMarginType(
 			Padre::Constant::MARGIN_FOLD,
-			Wx::Scintilla::MARGIN_SYMBOL,
+			Wx::Scintilla::SC_MARGIN_SYMBOL,
 		);
 		$self->SetMarginMask(
 			Padre::Constant::MARGIN_FOLD,
-			Wx::Scintilla::MASK_FOLDERS,
+			Wx::Scintilla::SC_MASK_FOLDERS,
 		);
 	}
 
 	# Set up all of the default markers
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_ERROR,
-		Wx::Scintilla::MARK_SMALLRECT,
+		Wx::Scintilla::SC_MARK_SMALLRECT,
 		RED,
 		RED,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_WARN,
-		Wx::Scintilla::MARK_SMALLRECT,
+		Wx::Scintilla::SC_MARK_SMALLRECT,
 		ORANGE,
 		ORANGE,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_LOCATION,
-		Wx::Scintilla::MARK_SMALLRECT,
+		Wx::Scintilla::SC_MARK_SMALLRECT,
 		GREEN,
 		GREEN,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_BREAKPOINT,
 		# Wx::Scintilla::MARK_SMALLRECT,
-		Wx::Scintilla::MARK_DOTDOTDOT,
+		Wx::Scintilla::SC_MARK_DOTDOTDOT,
 		BLUE,
 		BLUE,
 	);	
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_NOT_BREAKABLE,
-		Wx::Scintilla::MARK_DOTDOTDOT,
+		Wx::Scintilla::SC_MARK_DOTDOTDOT,
 		GRAY,
 		GRAY,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_ADDED,
-		Wx::Scintilla::MARK_PLUS,
+		Wx::Scintilla::SC_MARK_PLUS,
 		DARK_GREEN,
 		DARK_GREEN,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_CHANGED,
-		Wx::Scintilla::MARK_ARROW,
+		Wx::Scintilla::SC_MARK_ARROW,
 		LIGHT_BLUE,
 		LIGHT_BLUE,
 	);
 	$self->MarkerDefine(
 		Padre::Constant::MARKER_DELETED,
-		Wx::Scintilla::MARK_MINUS,
+		Wx::Scintilla::SC_MARK_MINUS,
 		LIGHT_RED,
 		LIGHT_RED,
 	);
@@ -182,8 +182,8 @@ sub new {
 	# Disable CTRL keypad -/+. These seem to emit wrong scan codes
 	# on some laptop keyboards. (e.g. CTRL-Caps lock is the same as CTRL -)
 	# Please see bug #790
-	$self->CmdKeyClear( Wx::Scintilla::KEY_SUBTRACT, Wx::Scintilla::SCMOD_CTRL );
-	$self->CmdKeyClear( Wx::Scintilla::KEY_ADD,      Wx::Scintilla::SCMOD_CTRL );
+	$self->CmdKeyClear( Wx::Scintilla::SCK_SUBTRACT, Wx::Scintilla::SCMOD_CTRL );
+	$self->CmdKeyClear( Wx::Scintilla::SCK_ADD,      Wx::Scintilla::SCMOD_CTRL );
 
 	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
@@ -240,8 +240,8 @@ sub new {
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
 	$self->SetModEventMask(
-		Wx::Scintilla::PERFORMED_USER | Wx::Scintilla::PERFORMED_UNDO | Wx::Scintilla::PERFORMED_REDO | Wx::Scintilla::MOD_INSERTTEXT
-			| Wx::Scintilla::MOD_DELETETEXT
+		Wx::Scintilla::SC_PERFORMED_USER | Wx::Scintilla::SC_PERFORMED_UNDO | Wx::Scintilla::SC_PERFORMED_REDO | Wx::Scintilla::SC_MOD_INSERTTEXT
+			| Wx::Scintilla::SC_MOD_DELETETEXT
 	);
 	Wx::Event::EVT_STC_CHANGE(
 		$self, $self,
@@ -295,7 +295,7 @@ sub on_set_focus {
 		TRACE("needs_manual_colorize") if DEBUG;
 		my $lock  = $self->lock_update;
 		my $lexer = $self->GetLexer;
-		if ( $lexer == Wx::Scintilla::LEX_CONTAINER ) {
+		if ( $lexer == Wx::Scintilla::SCLEX_CONTAINER ) {
 			$document->colorize;
 		} else {
 			$self->remove_color;
@@ -331,11 +331,13 @@ sub on_key_up {
 		if ( $line !~ /^\s*$/ ) {
 
 			# Only cut on non-blank lines
-			$self->CmdKeyExecute(Wx::Scintilla::CMD_LINECUT);
+			#TODO enable once Wx::Scintilla constant re-support this!
+			#$self->CmdKeyExecute(Wx::Scintilla::SC_CMD_LINECUT);
 		} else {
 
 			# Otherwise delete the line
-			$self->CmdKeyExecute(Wx::Scintilla::CMD_LINEDELETE);
+			#TODO enable once Wx::Scintilla constants re-support this!
+			#$self->CmdKeyExecute(Wx::Scintilla::SC_CMD_LINEDELETE);
 		}
 		$event->Skip(0); # done processing this nothing more to do
 		return;
@@ -541,8 +543,8 @@ sub on_context_menu {
 sub get_wrap_mode {
 	my $self = shift;
 	my $mode = $self->GetWrapMode;
-	return 'WORD' if $mode == Wx::Scintilla::WRAP_WORD;
-	return 'CHAR' if $mode == Wx::Scintilla::WRAP_CHAR;
+	return 'WORD' if $mode == Wx::Scintilla::SC_WRAP_WORD;
+	return 'CHAR' if $mode == Wx::Scintilla::SC_WRAP_CHAR;
 	return 'NONE';
 }
 
@@ -617,9 +619,9 @@ sub setup_common {
 
 	# Enable or disable word wrapping
 	if ( $config->editor_wordwrap ) {
-		$self->SetWrapMode(Wx::Scintilla::WRAP_WORD);
+		$self->SetWrapMode(Wx::Scintilla::SC_WRAP_WORD);
 	} else {
-		$self->SetWrapMode(Wx::Scintilla::WRAP_NONE);
+		$self->SetWrapMode(Wx::Scintilla::SC_WRAP_NONE);
 	}
 
 	# Enable or disable the right hand margin guideline
@@ -1246,9 +1248,9 @@ sub _convert_paste_eols {
 	}
 
 	# To what to convert to?
-	if ( $eol_mode eq Wx::Scintilla::EOL_CRLF ) {
+	if ( $eol_mode eq Wx::Scintilla::SC_EOL_CRLF ) {
 		$to = $CRLF;
-	} elsif ( $eol_mode eq Wx::Scintilla::EOL_LF ) {
+	} elsif ( $eol_mode eq Wx::Scintilla::SC_EOL_LF ) {
 		$to = $LF;
 	} else {
 
@@ -1720,13 +1722,13 @@ BEGIN {
 			# as the themes will override them
 			my $w = Wx::Colour->new("white");
 			my $b = Wx::Colour->new("black");
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDEREND,     Wx::Scintilla::MARK_BOXPLUSCONNECTED,  $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDEROPENMID, Wx::Scintilla::MARK_BOXMINUSCONNECTED, $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDERMIDTAIL, Wx::Scintilla::MARK_TCORNER,           $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDERTAIL,    Wx::Scintilla::MARK_LCORNER,           $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDERSUB,     Wx::Scintilla::MARK_VLINE,             $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDER,        Wx::Scintilla::MARK_BOXPLUS,           $w, $b );
-			$self->MarkerDefine( Wx::Scintilla::MARKNUM_FOLDEROPEN,    Wx::Scintilla::MARK_BOXMINUS,          $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDEREND,     Wx::Scintilla::SC_MARK_BOXPLUSCONNECTED,  $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDEROPENMID, Wx::Scintilla::SC_MARK_BOXMINUSCONNECTED, $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERMIDTAIL, Wx::Scintilla::SC_MARK_TCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERTAIL,    Wx::Scintilla::SC_MARK_LCORNER,           $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERSUB,     Wx::Scintilla::SC_MARK_VLINE,             $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDER,        Wx::Scintilla::SC_MARK_BOXPLUS,           $w, $b );
+			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDEROPEN,    Wx::Scintilla::SC_MARK_BOXMINUS,          $w, $b );
 
 			# Activate
 			$self->SetProperty( 'fold' => 1 );

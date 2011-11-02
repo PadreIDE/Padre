@@ -25,20 +25,20 @@ StyleSetBackground PADRE_ERROR                    fff0f0
 # Code folding margin
 SetFoldMarginColour     1 111111
 SetFoldMarginHiColour   1 111111
-MarkerSetForeground     MARKNUM_FOLDEREND      111111
-MarkerSetBackground     MARKNUM_FOLDEREND      7f7f7f
-MarkerSetForeground     MARKNUM_FOLDEROPENMID  111111
-MarkerSetBackground     MARKNUM_FOLDEROPENMID  7f7f7f
-MarkerSetForeground     MARKNUM_FOLDERMIDTAIL  7f7f7f
-MarkerSetBackground     MARKNUM_FOLDERMIDTAIL  7f7f7f
-MarkerSetForeground     MARKNUM_FOLDERTAIL     7f7f7f
-MarkerSetBackground     MARKNUM_FOLDERTAIL     7f7f7f
-MarkerSetForeground     MARKNUM_FOLDERSUB      7f7f7f
-MarkerSetBackground     MARKNUM_FOLDERSUB      7f7f7f
-MarkerSetForeground     MARKNUM_FOLDER         7f7f7f
-MarkerSetBackground     MARKNUM_FOLDER         111111
-MarkerSetForeground     MARKNUM_FOLDEROPEN     111111
-MarkerSetBackground     MARKNUM_FOLDEROPEN     7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDEREND      111111
+MarkerSetBackground     SC_MARKNUM_FOLDEREND      7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDEROPENMID  111111
+MarkerSetBackground     SC_MARKNUM_FOLDEROPENMID  7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDERMIDTAIL  7f7f7f
+MarkerSetBackground     SC_MARKNUM_FOLDERMIDTAIL  7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDERTAIL     7f7f7f
+MarkerSetBackground     SC_MARKNUM_FOLDERTAIL     7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDERSUB      7f7f7f
+MarkerSetBackground     SC_MARKNUM_FOLDERSUB      7f7f7f
+MarkerSetForeground     SC_MARKNUM_FOLDER         7f7f7f
+MarkerSetBackground     SC_MARKNUM_FOLDER         111111
+MarkerSetForeground     SC_MARKNUM_FOLDEROPEN     111111
+MarkerSetBackground     SC_MARKNUM_FOLDEROPEN     7f7f7f
 
 
 
@@ -59,38 +59,38 @@ StyleSetForeground STYLE_BRACEBAD           ff0000
 
 style application/x-perl
 include text/plain
-StyleSetForeground PL_DEFAULT               66cccc
-StyleSetForeground PL_ERROR                 ff0000
-StyleSetForeground PL_COMMENTLINE           66ff99
-StyleSetForeground PL_POD                   66ff99
-StyleSetForeground PL_POD_VERB              66ff99
-StyleSetForeground PL_NUMBER                ff9966
-StyleSetForeground PL_WORD                  00ff00
-StyleSetBold       PL_WORD                  1
-StyleSetForeground PL_STRING                66cccc
-StyleSetForeground PL_CHARACTER             77ccbb
-StyleSetForeground PL_PUNCTUATION           ffcccc
-StyleSetForeground PL_PREPROCESSOR          c0c0c0
-StyleSetForeground PL_OPERATOR              ffcccc
-StyleSetForeground PL_IDENTIFIER            ffff00
-StyleSetForeground PL_SCALAR                bbbbff
-StyleSetForeground PL_ARRAY                 33ffff
-StyleSetForeground PL_HASH                  66cccc
-StyleSetForeground PL_SYMBOLTABLE           00ff00
-StyleSetForeground PL_REGEX                 ffcc99
-StyleSetForeground PL_REGSUBST              ffdd99
-StyleSetForeground PL_LONGQUOTE             ff7f00
-StyleSetForeground PL_BACKTICKS             ffaa00
-StyleSetForeground PL_DATASECTION           00cccc
-StyleSetForeground PL_HERE_DELIM            ffddaa
-StyleSetForeground PL_HERE_Q                ffcc99
-StyleSetForeground PL_HERE_QQ               ff7f00
-StyleSetForeground PL_HERE_QX               ffaa00
-StyleSetForeground PL_STRING_Q              66cccc
-StyleSetForeground PL_STRING_QQ             ff7f00
-StyleSetForeground PL_STRING_QX             ffaa00
-StyleSetForeground PL_STRING_QR             ffcc99
-StyleSetForeground PL_STRING_QW             66cccc
+StyleSetForeground SCE_PL_DEFAULT               66cccc
+StyleSetForeground SCE_PL_ERROR                 ff0000
+StyleSetForeground SCE_PL_COMMENTLINE           66ff99
+StyleSetForeground SCE_PL_POD                   66ff99
+StyleSetForeground SCE_PL_POD_VERB              66ff99
+StyleSetForeground SCE_PL_NUMBER                ff9966
+StyleSetForeground SCE_PL_WORD                  00ff00
+StyleSetBold       SCE_PL_WORD                  1
+StyleSetForeground SCE_PL_STRING                66cccc
+StyleSetForeground SCE_PL_CHARACTER             77ccbb
+StyleSetForeground SCE_PL_PUNCTUATION           ffcccc
+StyleSetForeground SCE_PL_PREPROCESSOR          c0c0c0
+StyleSetForeground SCE_PL_OPERATOR              ffcccc
+StyleSetForeground SCE_PL_IDENTIFIER            ffff00
+StyleSetForeground SCE_PL_SCALAR                bbbbff
+StyleSetForeground SCE_PL_ARRAY                 33ffff
+StyleSetForeground SCE_PL_HASH                  66cccc
+StyleSetForeground SCE_PL_SYMBOLTABLE           00ff00
+StyleSetForeground SCE_PL_REGEX                 ffcc99
+StyleSetForeground SCE_PL_REGSUBST              ffdd99
+StyleSetForeground SCE_PL_LONGQUOTE             ff7f00
+StyleSetForeground SCE_PL_BACKTICKS             ffaa00
+StyleSetForeground SCE_PL_DATASECTION           00cccc
+StyleSetForeground SCE_PL_HERE_DELIM            ffddaa
+StyleSetForeground SCE_PL_HERE_Q                ffcc99
+StyleSetForeground SCE_PL_HERE_QQ               ff7f00
+StyleSetForeground SCE_PL_HERE_QX               ffaa00
+StyleSetForeground SCE_PL_STRING_Q              66cccc
+StyleSetForeground SCE_PL_STRING_QQ             ff7f00
+StyleSetForeground SCE_PL_STRING_QX             ffaa00
+StyleSetForeground SCE_PL_STRING_QR             ffcc99
+StyleSetForeground SCE_PL_STRING_QW             66cccc
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

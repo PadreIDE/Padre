@@ -5831,7 +5831,7 @@ sub editor_whitespace {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_whitespace => $show );
 
-	my $mode = $show ? Wx::Scintilla::WS_VISIBLEALWAYS : Wx::Scintilla::WS_INVISIBLE;
+	my $mode = $show ? Wx::Scintilla::SCWS_VISIBLEALWAYS : Wx::Scintilla::SCWS_INVISIBLE;
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace($show);
 	}
@@ -5859,7 +5859,7 @@ sub on_word_wrap {
 	}
 
 	my $doc = $self->current->document or return;
-	my $mode = $show ? Wx::Scintilla::WRAP_WORD : Wx::Scintilla::WRAP_NONE;
+	my $mode = $show ? Wx::Scintilla::SC_WRAP_WORD : Wx::Scintilla::SC_WRAP_NONE;
 	$doc->editor->SetWrapMode($mode);
 }
 
