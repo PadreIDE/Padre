@@ -331,13 +331,11 @@ sub on_key_up {
 		if ( $line !~ /^\s*$/ ) {
 
 			# Only cut on non-blank lines
-			#TODO enable once Wx::Scintilla constant re-support this!
-			#$self->CmdKeyExecute(Wx::Scintilla::SC_CMD_LINECUT);
+			$self->LineCut;
 		} else {
 
 			# Otherwise delete the line
-			#TODO enable once Wx::Scintilla constants re-support this!
-			#$self->CmdKeyExecute(Wx::Scintilla::SC_CMD_LINEDELETE);
+			$self->LineDelete;
 		}
 		$event->Skip(0); # done processing this nothing more to do
 		return;
