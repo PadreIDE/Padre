@@ -321,9 +321,9 @@ sub new {
 	$self->StyleSetForeground( 17, Wx::Colour->new( 0xff, 0x00, 0x7f ) );
 	$self->StyleSetForeground( 18, Wx::Colour->new( 0x7f, 0x7f, 0x00 ) );
 	$self->StyleSetBold( 12, 1 );
-	$self->StyleSetSpec( Wx::Scintilla::H_TAG, "fore:#0000ff" );
+	$self->StyleSetSpec( Wx::Scintilla::SCE_H_TAG, "fore:#0000ff" );
 
-	$self->SetLexer(Wx::Scintilla::LEX_PERL);
+	$self->SetLexer(Wx::Scintilla::SCLEX_PERL);
 
 	$self->SetLayoutDirection(wxLayout_LeftToRight)
 		if $self->can('SetLayoutDirection');
