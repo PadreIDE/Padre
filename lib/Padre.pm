@@ -606,9 +606,6 @@ Please submit your bugs at L<http://padre.perlide.org/trac/>
 
 =head1 SUPPORT
 
-I hope the L<http://www.perlmonks.org/> will be ready to take
-upon themselves supporting this application.
-
 See also L<http://padre.perlide.org/contact.html>
 
 =head1 COPYRIGHT
