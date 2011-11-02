@@ -329,11 +329,14 @@ sub _update_ui {
 	my ( $self, $list, $shown ) = @_;
 
 	if ($shown) {
-		if ( $list == $self->{list} ) {
-			Padre::Util::tidy_list($list);
-		} else {
+		if( $list == $self->{recent_list} ) {
 			$list->SetColumnWidth( 0, 140 );
 			$list->SetColumnWidth( 1, Wx::LIST_AUTOSIZE );
+		} elsif( $list == $self->{favorite_list} ) {
+			$list->SetColumnWidth( 0, 140 );
+			$list->SetColumnWidth( 1, 50 );
+		} else {
+			Padre::Util::tidy_list($list);
 		}
 		$list->Show;
 		$self->Layout;
@@ -697,7 +700,7 @@ sub on_favorite_list_column_click {
 	$self->{sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
-	$self->set_icon_image( $self->{recent_list}, $prevcol, -1 );
+	$self->set_icon_image( $self->{favorite_list}, $prevcol, -1 );
 
 	$self->render_favorite;
 

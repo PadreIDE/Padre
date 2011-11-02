@@ -246,18 +246,16 @@ sub metacpan_favorite {
 	my $self = shift;
 
 	my %payload = (
-		query => {
-			"query" => { "match_all" => {} },
-			"facets" => {
-				"leaderboard" => {
-					"terms" => {
-						"field" => "distribution",
-						"size"   => MAX_RESULTS,
-					},
+		"query"  => { "match_all" => {} },
+		"facets" => {
+			"leaderboard" => {
+				"terms" => {
+					"field" => "distribution",
+					"size"  => MAX_RESULTS,
 				},
 			},
-			size => 0,
 		},
+		size => 0,
 
 	);
 
@@ -280,8 +278,8 @@ sub metacpan_favorite {
 
 	# Decode json response then cleverly map it for the average joe :)
 	my $data = JSON::XS::decode_json( $response->decoded_content );
-	my @results = map { $_ } @{ $data->{facets}->{leaderboard}->{terms} || [] };
-	use Data::Dumper; print Dumper(@results);
+	my @results = map {$_} @{ $data->{facets}->{leaderboard}->{terms} || [] };
+
 	return \@results;
 }
 
