@@ -2662,7 +2662,7 @@ sub init {
 		comment =>
 			_T( 'Open interesting and helpful Perl websites in your default web browser' ),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/PerlWebsites');
+			Padre::Wx::launch_browser('http://padre.perlide.org/perl.html?padre=' . $VERSION);
 		},
 	);
 
