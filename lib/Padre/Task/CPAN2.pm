@@ -245,29 +245,43 @@ sub metacpan_recent {
 sub metacpan_favorite {
 	my $self = shift;
 
+	my %payload = (
+		query => {
+			"query" => { "match_all" => {} },
+			"facets" => {
+				"leaderboard" => {
+					"terms" => {
+						"field" => "distribution",
+						"size"   => MAX_RESULTS,
+					},
+				},
+			},
+			size => 0,
+		},
+
+	);
+
+	# Convert ElasticSearch Perl query to a JSON request
+	my $json_request = JSON::XS::encode_json( \%payload );
+
 	# Load most favorite distributions using MetaCPAN API
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url =
-		"http://api.metacpan.org/v0/release/?sort=date:desc&size=" . MAX_RESULTS . "&fields=distribution,abstract";
-	my $response = $ua->get($url);
+	my $response = $ua->post(
+		'http://api.metacpan.org/v0/favorite/_search',
+		Content => $json_request,
+	);
 
 	unless ( $response->is_success ) {
-		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) );
-		return;
+		die( sprintf( "Got '%s' from metacpan.org", $response->status_line ) );
+		return [];
 	}
 
 	# Decode json response then cleverly map it for the average joe :)
 	my $data = JSON::XS::decode_json( $response->decoded_content );
-	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
-
-	# Fix up the results a bit to workaround undefined stuff
-	for my $result (@results) {
-		$result->{documentation} = '' unless defined $result->{documentation};
-		$result->{abstract}      = '' unless defined $result->{abstract};
-	}
-
+	my @results = map { $_ } @{ $data->{facets}->{leaderboard}->{terms} || [] };
+	use Data::Dumper; print Dumper(@results);
 	return \@results;
 }
 

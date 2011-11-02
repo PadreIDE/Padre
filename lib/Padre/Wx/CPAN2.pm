@@ -108,9 +108,9 @@ sub view_stop {
 	my $self = shift;
 
 	# Clear, reset running task and stop dwells
-	$self->clear( Padre::Task::CPAN2::CPAN_SEARCH );
-	$self->clear( Padre::Task::CPAN2::CPAN_RECENT );
-	$self->clear( Padre::Task::CPAN2::CPAN_FAVORITE );
+	$self->clear(Padre::Task::CPAN2::CPAN_SEARCH);
+	$self->clear(Padre::Task::CPAN2::CPAN_RECENT);
+	$self->clear(Padre::Task::CPAN2::CPAN_FAVORITE);
 	$self->task_reset;
 	$self->dwell_stop('refresh'); # Just in case
 
@@ -210,7 +210,7 @@ sub _setup_columns {
 
 	@column_headers = (
 		Wx::gettext('Distribution'),
-		Wx::gettext('Abstract'),
+		Wx::gettext('Count'),
 	);
 	$index = 0;
 	for my $column_header (@column_headers) {
@@ -233,11 +233,11 @@ sub gettext_label {
 sub clear {
 	my ( $self, $command ) = @_;
 
-	if( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+	if ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{recent_list}->DeleteAllItems;
-	} elsif($command eq Padre::Task::CPAN2::CPAN_SEARCH ) { 
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{list}->DeleteAllItems;
-	} elsif($command eq Padre::Task::CPAN2::CPAN_FAVORITE ) { 
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
 		$self->{favorite_list}->DeleteAllItems;
 	} else {
 		die "Unhandled $command in ->clear";
@@ -274,7 +274,6 @@ sub task_finish {
 	my $task = shift;
 
 	my $command = $task->{command};
-	print $command . "\n";
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render;
@@ -297,7 +296,7 @@ sub render {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear( Padre::Task::CPAN2::CPAN_SEARCH );
+	$self->clear(Padre::Task::CPAN2::CPAN_SEARCH);
 
 	return unless $self->{model};
 
@@ -305,7 +304,7 @@ sub render {
 	$self->set_icon_image( $self->{list}, $self->{sort_column}, $self->{sort_desc} );
 
 	my $list = $self->{list};
-	$self->_sort_model( recent => 0 );
+	$self->_sort_model(Padre::Task::CPAN2::CPAN_SEARCH);
 	my $model = $self->{model};
 
 	my $alternate_color = $self->_alternate_color;
@@ -349,23 +348,45 @@ sub _update_ui {
 }
 
 sub _sort_model {
-	my ( $self, %args ) = @_;
+	my ( $self, $command ) = @_;
 
-	my $is_recent = $args{recent} || 0;
-	my @model = @{ $is_recent ? $self->{recent_model} : $self->{model} };
+	my @model;
+	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+		@model = @{ $self->{model} };
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+		@model = @{ $self->{recent_model} };
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+		@model = @{ $self->{favorite_model} };
+	} else {
+		die "Handled $command in ->sort_model\n";
+	}
 	if ( $self->{sort_column} == 0 ) {
 
 		# Sort by distribution or documentation
 		@model = sort {
-			      $is_recent
-				? $a->{distribution} cmp $b->{distribution}
-				: $a->{documentation} cmp $b->{documentation}
+			if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH )
+			{
+				$a->{documentation} cmp $b->{documentation};
+			} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+				$a->{distribution} cmp $b->{distribution};
+			} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+				$a->{term} cmp $b->{term};
+			}
 		} @model;
 
 	} elsif ( $self->{sort_column} == 1 ) {
 
 		# Sort by abstract or author
-		@model = sort { $is_recent ? $a->{abstract} cmp $b->{abstract} : $a->{author} cmp $b->{author} } @model;
+		@model = sort {
+			if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH )
+			{
+				$a->{author} cmp $b->{author};
+			} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+				$a->{abstract} cmp $b->{abstract};
+			} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+				$a->{count} cmp $b->{count};
+			}
+		} @model;
 
 	} elsif ( $self->{sort_column} == 2 ) {
 
@@ -382,10 +403,12 @@ sub _sort_model {
 		@model = reverse @model;
 	}
 
-	if ($is_recent) {
-		$self->{recent_model} = \@model;
-	} else {
+	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{model} = \@model;
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+		$self->{recent_model} = \@model;
+	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+		$self->{favorite_model} = \@model;
 	}
 }
 
@@ -527,7 +550,7 @@ sub render_recent {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear( Padre::Task::CPAN2::CPAN_RECENT );
+	$self->clear(Padre::Task::CPAN2::CPAN_RECENT);
 
 	my $list = $self->{recent_list};
 
@@ -535,7 +558,7 @@ sub render_recent {
 	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
 
 	my $model = $self->{recent_model} or return;
-	$self->_sort_model( recent => 1 );
+	$self->_sort_model(Padre::Task::CPAN2::CPAN_RECENT);
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
@@ -633,26 +656,26 @@ sub render_favorite {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear( Padre::Task::CPAN2::CPAN_FAVORITE );
+	$self->clear(Padre::Task::CPAN2::CPAN_FAVORITE);
 
 	my $list = $self->{favorite_list};
 
 	# Update the list sort image
 	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
 
-	my $model = $self->{recent_model} or return;
-	$self->_sort_model( recent => 1 );
+	my $model = $self->{favorite_model} or return;
+	$self->_sort_model(Padre::Task::CPAN2::CPAN_FAVORITE);
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and abstract as a row to the list
-		my $distribution = $rec->{distribution};
+		my $distribution = $rec->{term};
 		$distribution =~ s/-/::/g;
-		$list->InsertImageStringItem( $index, $distribution, $self->{recent_images}{file} );
+		$list->InsertImageStringItem( $index, $distribution, $self->{favorite_images}{file} );
 		$list->SetItemData( $index, $index );
-		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
+		$list->SetItem( $index, 1, $rec->{count} ) if defined $rec->{count};
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
 		$index++;
 	}
