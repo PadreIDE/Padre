@@ -1403,7 +1403,7 @@ sub init {
 		comment     => _T('Turn on Diff window'),
 		menu_event  => sub {
 			require Padre::Wx::Diff2;
-			Padre::Wx::Diff2->new($_[0])->ShowModal;
+			Padre::Wx::Diff2->new($_[0])->show;
 		},
 	) if $main->config->feature_diff_window;
 
