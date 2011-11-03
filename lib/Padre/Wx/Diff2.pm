@@ -78,18 +78,22 @@ CODE
 	$left_editor->StyleSetFont( Wx::Scintilla::Constant::STYLE_DEFAULT, $font );
 	$right_editor->StyleSetFont( Wx::Scintilla::Constant::STYLE_DEFAULT, $font );
 
-	$left_editor->StyleSetForeground( 1, Wx::Colour->new('white') );
-	$left_editor->StyleSetBackground( 1, Wx::Colour->new('red') );
+	my $deleted_color = Wx::Colour->new( 0xFF, 0xD8, 0xD8 );
+	my $added_color   = Wx::Colour->new( 0xDD, 0xF8, 0xCC );
+	my $text_color    = Wx::Colour->new('black');
+
+	$left_editor->StyleSetForeground( 1, $text_color );
+	$left_editor->StyleSetBackground( 1, $deleted_color );
 	$left_editor->StyleSetEOLFilled( 1, 1 );
-	$left_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
-	$left_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
+	$left_editor->StyleSetForeground( 2, $text_color );
+	$left_editor->StyleSetBackground( 2, $added_color );
 	$left_editor->StyleSetEOLFilled( 2, 1 );
 
-	$right_editor->StyleSetForeground( 1, Wx::Colour->new('white') );
-	$right_editor->StyleSetBackground( 1, Wx::Colour->new('red') );
+	$right_editor->StyleSetForeground( 1, $text_color );
+	$right_editor->StyleSetBackground( 1, $deleted_color );
 	$right_editor->StyleSetEOLFilled( 1, 1 );
-	$right_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
-	$right_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
+	$right_editor->StyleSetForeground( 2, $text_color );
+	$right_editor->StyleSetBackground( 2, $added_color );
 	$right_editor->StyleSetEOLFilled( 2, 1 );
 
 	$left_editor->IndicatorSetStyle( 0, Wx::Scintilla::Constant::INDIC_STRIKE );
@@ -101,12 +105,12 @@ CODE
 	$right_editor->SetCaretLineVisible(1);
 
 	for my $diff_chunk (@$diffs) {
-		TRACE("new_chunk") if DEBUG;
+		TRACE("new_chunk");
 
 		my ( $lines_added, $lines_deleted ) = ( 0, 0 );
 		for my $diff (@$diff_chunk) {
 			my ( $type, $line, $text ) = @$diff;
-			TRACE("$type, $line, $text") if DEBUG;
+			TRACE("$type, $line, $text");
 			if ( $type eq '-' ) {
 
 				$lines_deleted++;
@@ -129,12 +133,12 @@ CODE
 		}
 
 		# if ( $lines_deleted > 0 && $lines_added > 0 ) {
-			# print "changed!\n";
+		# print "changed!\n";
 		# } elsif ( $lines_deleted > 0 ) {
-			# print "lines deleted\n";
+		# print "lines deleted\n";
 
-# # 		} elsif ( $lines_added > 0 ) {
-			# print "lines added\n";
+		# # 		} elsif ( $lines_added > 0 ) {
+		# print "lines added\n";
 		# }
 	}
 
