@@ -278,7 +278,7 @@ sub metacpan_favorite {
 	);
 
 	unless ( $response->is_success ) {
-		die( sprintf( "Got '%s' from metacpan.org", $response->status_line ) );
+		TRACE( sprintf( "Got '%s' from metacpan.org", $response->status_line ) ) if DEBUG;
 		return [];
 	}
 
