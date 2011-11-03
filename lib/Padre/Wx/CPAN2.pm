@@ -28,11 +28,11 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Set up column sorting
-	$self->{search_sort_column}   = 0;
+	$self->{search_sort_column}   = undef;
 	$self->{search_sort_desc}     = 0;
-	$self->{recent_sort_column}   = 0;
+	$self->{recent_sort_column}   = undef;
 	$self->{recent_sort_desc}     = 0;
-	$self->{favorite_sort_column} = 0;
+	$self->{favorite_sort_column} = undef;
 	$self->{favorite_sort_desc}   = 0;
 
 	$self->_setup_columns;
@@ -280,7 +280,7 @@ sub task_finish {
 
 	my $command = $task->{command};
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
-		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
+		$self->{search_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_search;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
 		$self->{pod_model} = Params::Util::_HASH( $task->{model} ) or return;
@@ -303,14 +303,20 @@ sub render_search {
 	# for sorting
 	$self->clear(Padre::Task::CPAN2::CPAN_SEARCH);
 
-	return unless $self->{model};
+	return unless $self->{search_model};
 
-	# Update the list sort image
-	$self->set_icon_image( $self->{search_list}, $self->{search_sort_column}, $self->{search_sort_desc} );
+	my $list        = $self->{search_list};
+	my $sort_column = $self->{search_sort_column};
+	if ( defined $sort_column ) {
 
-	my $list = $self->{search_list};
-	$self->_sort_model(Padre::Task::CPAN2::CPAN_SEARCH);
-	my $model = $self->{model};
+		# Update the list sort image
+		$self->set_icon_image( $list, $sort_column, $self->{search_sort_desc} );
+
+		# and sort the model
+		$self->_sort_model(Padre::Task::CPAN2::CPAN_SEARCH);
+	}
+
+	my $model = $self->{search_model};
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
@@ -362,7 +368,7 @@ sub _sort_model {
 	my @model;
 	my ( $sort_column, $sort_desc );
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
-		@model       = @{ $self->{model} };
+		@model       = @{ $self->{search_model} };
 		$sort_column = $self->{search_sort_column};
 		$sort_desc   = $self->{search_sort_desc};
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
@@ -417,7 +423,7 @@ sub _sort_model {
 	@model = reverse @model if $sort_desc;
 
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
-		$self->{model} = \@model;
+		$self->{search_model} = \@model;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{recent_model} = \@model;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
@@ -435,7 +441,7 @@ sub on_search_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{search_sort_column};
+	my $prevcol  = $self->{search_sort_column} || 0;
 	my $reversed = $self->{search_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->{search_sort_column} = $column;
@@ -454,7 +460,7 @@ sub on_recent_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{recent_sort_column};
+	my $prevcol  = $self->{recent_sort_column} || 0;
 	my $reversed = $self->{recent_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->{recent_sort_column} = $column;
@@ -568,13 +574,19 @@ sub render_recent {
 	# for sorting
 	$self->clear(Padre::Task::CPAN2::CPAN_RECENT);
 
-	my $list = $self->{recent_list};
+	return unless $self->{recent_model};
 
-	# Update the list sort image
-	$self->set_icon_image( $list, $self->{recent_sort_column}, $self->{recent_sort_desc} );
+	my $list        = $self->{recent_list};
+	my $sort_column = $self->{recent_sort_column};
+	if ( defined $sort_column ) {
 
-	my $model = $self->{recent_model} or return;
-	$self->_sort_model(Padre::Task::CPAN2::CPAN_RECENT);
+		# Update the list sort image
+		$self->set_icon_image( $list, $sort_column, $self->{recent_sort_desc} );
+
+		# and sort the model
+		$self->_sort_model(Padre::Task::CPAN2::CPAN_RECENT);
+	}
+	my $model = $self->{recent_model};
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
@@ -674,13 +686,19 @@ sub render_favorite {
 	# for sorting
 	$self->clear(Padre::Task::CPAN2::CPAN_FAVORITE);
 
-	my $list = $self->{favorite_list};
+	return unless $self->{favorite_model};
 
-	# Update the list sort image
-	$self->set_icon_image( $list, $self->{favorite_sort_column}, $self->{favorite_sort_desc} );
+	my $list        = $self->{favorite_list};
+	my $sort_column = $self->{favorite_sort_column};
+	if ( defined $sort_column ) {
 
-	my $model = $self->{favorite_model} or return;
-	$self->_sort_model(Padre::Task::CPAN2::CPAN_FAVORITE);
+		# Update the list sort image
+		$self->set_icon_image( $list, $sort_column, $self->{favorite_sort_desc} );
+
+		# and sort the model
+		$self->_sort_model(Padre::Task::CPAN2::CPAN_FAVORITE);
+	}
+	my $model = $self->{favorite_model};
 
 	my $alternate_color = $self->_alternate_color;
 	my $index           = 0;
@@ -706,7 +724,7 @@ sub on_favorite_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{favorite_sort_column};
+	my $prevcol  = $self->{favorite_sort_column} || 0;
 	my $reversed = $self->{favorite_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->{favorite_sort_column} = $column;
