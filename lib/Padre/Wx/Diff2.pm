@@ -3,9 +3,11 @@ package Padre::Wx::Diff2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx            ();
-use Padre::Wx::FBP::Diff ();
+use Padre::Wx                ();
+use Padre::Wx::FBP::Diff     ();
+use Wx::Scintilla::Constant ();
 use Padre::Logger qw(TRACE);
+
 
 our $VERSION = '0.91';
 our @ISA     = qw{
@@ -73,7 +75,7 @@ sub show_line_numbers {
 	my $editor = shift;
 
 	my $width = $editor->TextWidth(
-		Wx::Scintilla::STYLE_LINENUMBER,
+		Wx::Scintilla::Constant::STYLE_LINENUMBER,
 		"m" x List::Util::max( 2, length $editor->GetLineCount )
 	) + 5; # 5 pixel left "margin of the margin
 
@@ -84,6 +86,17 @@ sub show_line_numbers {
 	return;
 }
 
+sub on_prev_diff_click {
+	$_[0]->main->error('on_prev_diff_click');
+}
+
+sub on_next_diff_click {
+	$_[0]->main->error('on_next_diff_click');
+}
+
+sub on_close_click {
+	$_[0]->Destroy;
+}
 
 1;
 
