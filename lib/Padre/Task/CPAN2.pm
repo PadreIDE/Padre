@@ -178,7 +178,7 @@ sub metacpan_pod {
 		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
 			if DEBUG;
 		return {
-			html     => '<b>' . Wx::gettext(qq{No documentation for '$query'}) . '</b>',
+			html     => '<b>' . sprintf(Wx::gettext(qq{No documentation for '%s'}), $query) . '</b>',
 			synopsis => '',
 			distro   => $query,
 		};
