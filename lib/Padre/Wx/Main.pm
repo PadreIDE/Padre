@@ -37,7 +37,7 @@ use List::Util                ();
 use Scalar::Util              ();
 use Params::Util              ();
 use Time::HiRes               ();
-use Wx::Scintilla             ();
+use Wx::Scintilla::Constant   ();
 use Padre::Constant           ();
 use Padre::Util               ('_T');
 use Padre::Perl               ();
@@ -5748,8 +5748,11 @@ sub editor_rightmargin {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_right_margin_enable => $show );
 
-	my $mode   = $show ? Wx::Scintilla::EDGE_LINE : Wx::Scintilla::EDGE_NONE;
 	my $column = $self->config->editor_right_margin_column;
+	my $mode   = $show
+		? Wx::Scintilla::Constant::EDGE_LINE
+		: Wx::Scintilla::Constant::EDGE_NONE;
+
 	foreach my $editor ( $self->editors ) {
 		$editor->SetEdgeColumn($column);
 		$editor->SetEdgeMode($mode);
@@ -5831,7 +5834,10 @@ sub editor_whitespace {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_whitespace => $show );
 
-	my $mode = $show ? Wx::Scintilla::SCWS_VISIBLEALWAYS : Wx::Scintilla::SCWS_INVISIBLE;
+	my $mode = $show
+		? Wx::Scintilla::Constant::SCWS_VISIBLEALWAYS
+		: Wx::Scintilla::Constant::SCWS_INVISIBLE;
+
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace($show);
 	}
@@ -5858,8 +5864,11 @@ sub on_word_wrap {
 		$self->menu->view->{word_wrap}->Check($show);
 	}
 
-	my $doc = $self->current->document or return;
-	my $mode = $show ? Wx::Scintilla::SC_WRAP_WORD : Wx::Scintilla::SC_WRAP_NONE;
+	my $doc  = $self->current->document or return;
+	my $mode = $show
+		? Wx::Scintilla::Constant::SC_WRAP_WORD
+		: Wx::Scintilla::Constant::SC_WRAP_NONE;
+
 	$doc->editor->SetWrapMode($mode);
 }
 
