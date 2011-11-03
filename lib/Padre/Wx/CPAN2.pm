@@ -28,8 +28,12 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Set up column sorting
-	$self->{sort_column} = 0;
-	$self->{sort_desc}   = 0;
+	$self->{search_sort_column}   = 0;
+	$self->{search_sort_desc}     = 0;
+	$self->{recent_sort_column}   = 0;
+	$self->{recent_sort_desc}     = 0;
+	$self->{favorite_sort_column} = 0;
+	$self->{favorite_sort_desc}   = 0;
 
 	$self->_setup_columns;
 
@@ -47,7 +51,7 @@ sub new {
 
 	#TODO move to FBP superclass once EVT_CHAR is properly supported
 	Wx::Event::EVT_CHAR(
-		$self->{list},
+		$self->{search_list},
 		sub {
 			$self->_on_char_list(@_);
 		}
@@ -70,7 +74,7 @@ sub new {
 	);
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{list} );
+	Padre::Util::tidy_list( $self->{search_list} );
 	Padre::Util::tidy_list( $self->{recent_list} );
 	Padre::Util::tidy_list( $self->{favorite_list} );
 
@@ -143,7 +147,7 @@ sub _setup_column_images {
 
 	# Search list column bitmaps
 	$self->{images} = $self->_setup_image_list(
-		list => $self->{list},
+		list => $self->{search_list},
 		up   => $up_arrow_bitmap,
 		down => $down_arrow_bitmap,
 		file => $file_bitmap,
@@ -187,7 +191,7 @@ sub _setup_image_list {
 sub _setup_columns {
 	my $self = shift;
 
-	my $list = $self->{list};
+	my $list = $self->{search_list};
 	my $index;
 	my @column_headers;
 
@@ -197,7 +201,7 @@ sub _setup_columns {
 	);
 	$index = 0;
 	for my $column_header (@column_headers) {
-		$self->{list}->InsertColumn( $index++, $column_header );
+		$self->{search_list}->InsertColumn( $index++, $column_header );
 	}
 
 	@column_headers = (
@@ -237,7 +241,7 @@ sub clear {
 	if ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
 		$self->{recent_list}->DeleteAllItems;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
-		$self->{list}->DeleteAllItems;
+		$self->{search_list}->DeleteAllItems;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
 		$self->{favorite_list}->DeleteAllItems;
 	} else {
@@ -277,7 +281,7 @@ sub task_finish {
 	my $command = $task->{command};
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{model} = Params::Util::_ARRAY0( $task->{model} ) or return;
-		$self->render;
+		$self->render_search;
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
 		$self->{pod_model} = Params::Util::_HASH( $task->{model} ) or return;
 		$self->render_doc;
@@ -292,7 +296,7 @@ sub task_finish {
 	}
 }
 
-sub render {
+sub render_search {
 	my $self = shift;
 
 	# Clear if needed. Please note that this is needed
@@ -302,9 +306,9 @@ sub render {
 	return unless $self->{model};
 
 	# Update the list sort image
-	$self->set_icon_image( $self->{list}, $self->{sort_column}, $self->{sort_desc} );
+	$self->set_icon_image( $self->{search_list}, $self->{search_sort_column}, $self->{search_sort_desc} );
 
-	my $list = $self->{list};
+	my $list = $self->{search_list};
 	$self->_sort_model(Padre::Task::CPAN2::CPAN_SEARCH);
 	my $model = $self->{model};
 
@@ -330,10 +334,10 @@ sub _update_ui {
 	my ( $self, $list, $shown ) = @_;
 
 	if ($shown) {
-		if( $list == $self->{recent_list} ) {
+		if ( $list == $self->{recent_list} ) {
 			$list->SetColumnWidth( 0, 140 );
 			$list->SetColumnWidth( 1, Wx::LIST_AUTOSIZE );
-		} elsif( $list == $self->{favorite_list} ) {
+		} elsif ( $list == $self->{favorite_list} ) {
 			$list->SetColumnWidth( 0, 140 );
 			$list->SetColumnWidth( 1, 50 );
 		} else {
@@ -356,16 +360,23 @@ sub _sort_model {
 	my ( $self, $command ) = @_;
 
 	my @model;
+	my ( $sort_column, $sort_desc );
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
-		@model = @{ $self->{model} };
+		@model       = @{ $self->{model} };
+		$sort_column = $self->{search_sort_column};
+		$sort_desc   = $self->{search_sort_desc};
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
-		@model = @{ $self->{recent_model} };
+		@model       = @{ $self->{recent_model} };
+		$sort_column = $self->{recent_sort_column};
+		$sort_desc   = $self->{recent_sort_desc};
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
-		@model = @{ $self->{favorite_model} };
+		@model       = @{ $self->{favorite_model} };
+		$sort_column = $self->{favorite_sort_column};
+		$sort_desc   = $self->{favorite_sort_desc};
 	} else {
 		die "Handled $command in ->sort_model\n";
 	}
-	if ( $self->{sort_column} == 0 ) {
+	if ( $sort_column == 0 ) {
 
 		# Sort by distribution or documentation
 		@model = sort {
@@ -379,7 +390,7 @@ sub _sort_model {
 			}
 		} @model;
 
-	} elsif ( $self->{sort_column} == 1 ) {
+	} elsif ( $sort_column == 1 ) {
 
 		# Sort by abstract or author
 		@model = sort {
@@ -393,20 +404,17 @@ sub _sort_model {
 			}
 		} @model;
 
-	} elsif ( $self->{sort_column} == 2 ) {
+	} elsif ( $sort_column == 2 ) {
 
 		# Sort by date
 		@model = sort { $a->{date} cmp $b->{date} } @model;
 
 	} else {
-		TRACE( "sort_column: " . $self->{sort_column} . " is not implemented" ) if DEBUG;
+		TRACE( "sort_column: " . $sort_column . " is not implemented" ) if DEBUG;
 	}
 
-	if ( $self->{sort_desc} ) {
-
-		# reverse the sorting
-		@model = reverse @model;
-	}
+	# Reverse the model if descending order is needed
+	@model = reverse @model if $sort_desc;
 
 	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
 		$self->{model} = \@model;
@@ -415,26 +423,28 @@ sub _sort_model {
 	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
 		$self->{favorite_model} = \@model;
 	}
+
+	return;
 }
 
 #####################################################################
 # Event Handlers
 
-# Called when a CPAN list column is clicked
-sub on_list_column_click {
+# Called when a CPAN search list column is clicked
+sub on_search_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{sort_column};
-	my $reversed = $self->{sort_desc};
+	my $prevcol  = $self->{search_sort_column};
+	my $reversed = $self->{search_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->{sort_column} = $column;
-	$self->{sort_desc}   = $reversed;
+	$self->{search_sort_column} = $column;
+	$self->{search_sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
-	$self->set_icon_image( $self->{list}, $prevcol, -1 );
+	$self->set_icon_image( $self->{search_list}, $prevcol, -1 );
 
-	$self->render;
+	$self->render_search;
 
 	return;
 }
@@ -444,11 +454,11 @@ sub on_recent_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{sort_column};
-	my $reversed = $self->{sort_desc};
+	my $prevcol  = $self->{recent_sort_column};
+	my $reversed = $self->{recent_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->{sort_column} = $column;
-	$self->{sort_desc}   = $reversed;
+	$self->{recent_sort_column} = $column;
+	$self->{recent_sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
 	$self->set_icon_image( $self->{recent_list}, $prevcol, -1 );
@@ -469,7 +479,7 @@ sub set_icon_image {
 	return;
 }
 
-# Called when a CPAN list item is selected
+# Called when a CPAN Search list item is selected
 sub on_list_item_selected {
 	my ( $self, $event ) = @_;
 
@@ -561,7 +571,7 @@ sub render_recent {
 	my $list = $self->{recent_list};
 
 	# Update the list sort image
-	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
+	$self->set_icon_image( $list, $self->{recent_sort_column}, $self->{recent_sort_desc} );
 
 	my $model = $self->{recent_model} or return;
 	$self->_sort_model(Padre::Task::CPAN2::CPAN_RECENT);
@@ -605,7 +615,7 @@ sub _on_char_search {
 	if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
 
 		# Up/Down and return keys focus on the list
-		my $list = $self->{list};
+		my $list = $self->{search_list};
 		$list->SetFocus;
 		my $selection = -1;
 		$selection = $list->GetNextItem(
@@ -613,7 +623,7 @@ sub _on_char_search {
 			Wx::LIST_NEXT_ALL,
 			Wx::LIST_STATE_SELECTED
 		);
-		if ( $selection == -1 && $self->{list}->GetItemCount > 0 ) {
+		if ( $selection == -1 && $self->{search_list}->GetItemCount > 0 ) {
 			$selection = 0;
 		}
 		$list->SetItemState(
@@ -667,7 +677,7 @@ sub render_favorite {
 	my $list = $self->{favorite_list};
 
 	# Update the list sort image
-	$self->set_icon_image( $list, $self->{sort_column}, $self->{sort_desc} );
+	$self->set_icon_image( $list, $self->{favorite_sort_column}, $self->{favorite_sort_desc} );
 
 	my $model = $self->{favorite_model} or return;
 	$self->_sort_model(Padre::Task::CPAN2::CPAN_FAVORITE);
@@ -696,11 +706,11 @@ sub on_favorite_list_column_click {
 	my ( $self, $event ) = @_;
 
 	my $column   = $event->GetColumn;
-	my $prevcol  = $self->{sort_column};
-	my $reversed = $self->{sort_desc};
+	my $prevcol  = $self->{favorite_sort_column};
+	my $reversed = $self->{favorite_sort_desc};
 	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->{sort_column} = $column;
-	$self->{sort_desc}   = $reversed;
+	$self->{favorite_sort_column} = $column;
+	$self->{favorite_sort_desc}   = $reversed;
 
 	# Reset the previous column sort image
 	$self->set_icon_image( $self->{favorite_list}, $prevcol, -1 );
@@ -715,7 +725,7 @@ sub on_metacpan_click {
 	my $self = shift;
 
 	return unless defined $self->{distro};
-	Padre::Wx::launch_browser('https://metacpan.org/module/' . $self->{distro});
+	Padre::Wx::launch_browser( 'https://metacpan.org/module/' . $self->{distro} );
 
 	return;
 }

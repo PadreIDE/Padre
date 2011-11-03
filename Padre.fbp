@@ -22987,7 +22987,7 @@
                                             <property name="id">wxID_ANY</property>
                                             <property name="maximum_size"></property>
                                             <property name="minimum_size"></property>
-                                            <property name="name">list</property>
+                                            <property name="name">search_list</property>
                                             <property name="permission">protected</property>
                                             <property name="pos"></property>
                                             <property name="size"></property>
@@ -23016,7 +23016,7 @@
                                             <event name="OnListBeginRDrag"></event>
                                             <event name="OnListCacheHint"></event>
                                             <event name="OnListColBeginDrag"></event>
-                                            <event name="OnListColClick">on_list_column_click</event>
+                                            <event name="OnListColClick">on_search_list_column_click</event>
                                             <event name="OnListColDragging"></event>
                                             <event name="OnListColEndDrag"></event>
                                             <event name="OnListColRightClick"></event>

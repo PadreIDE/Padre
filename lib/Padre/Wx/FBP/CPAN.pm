@@ -62,7 +62,7 @@ sub new {
 		},
 	);
 
-	$self->{list} = Wx::ListCtrl->new(
+	$self->{search_list} = Wx::ListCtrl->new(
 		$self->{search_panel},
 		-1,
 		Wx::DefaultPosition,
@@ -72,15 +72,15 @@ sub new {
 
 	Wx::Event::EVT_LIST_COL_CLICK(
 		$self,
-		$self->{list},
+		$self->{search_list},
 		sub {
-			shift->on_list_column_click(@_);
+			shift->on_search_list_column_click(@_);
 		},
 	);
 
 	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
-		$self->{list},
+		$self->{search_list},
 		sub {
 			shift->on_list_item_selected(@_);
 		},
@@ -246,7 +246,7 @@ sub new {
 
 	my $search_panel_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$search_panel_sizer->Add( $search_sizer, 0, Wx::ALL | Wx::EXPAND, 1 );
-	$search_panel_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 1 );
+	$search_panel_sizer->Add( $self->{search_list}, 1, Wx::ALL | Wx::EXPAND, 1 );
 
 	$self->{search_panel}->SetSizerAndFit($search_panel_sizer);
 	$self->{search_panel}->Layout;
@@ -291,12 +291,12 @@ sub on_search_text {
 	$_[0]->main->error('Handler method on_search_text for event search.OnText not implemented');
 }
 
-sub on_list_column_click {
-	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
+sub on_search_list_column_click {
+	$_[0]->main->error('Handler method on_search_list_column_click for event search_list.OnListColClick not implemented');
 }
 
 sub on_list_item_selected {
-	$_[0]->main->error('Handler method on_list_item_selected for event list.OnListItemSelected not implemented');
+	$_[0]->main->error('Handler method on_list_item_selected for event search_list.OnListItemSelected not implemented');
 }
 
 sub on_recent_list_column_click {
