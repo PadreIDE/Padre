@@ -1398,6 +1398,16 @@ sub init {
 	) if $main->config->feature_cpan_explorer;
 
 	Padre::Wx::Action->new(
+		name        => 'tools.diff_window',
+		label       => _T('Show diff window!'),
+		comment     => _T('Turn on Diff window'),
+		menu_event  => sub {
+			require Padre::Wx::Diff2;
+			Padre::Wx::Diff2->new($_[0])->ShowModal;
+		},
+	) if $main->config->feature_diff_window;
+
+	Padre::Wx::Action->new(
 		name        => 'view.todo',
 		label       => _T('Show &To-do List'),
 		comment     => _T('Show a window listing all todo items in the current document'),

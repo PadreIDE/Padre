@@ -33,6 +33,14 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
+	if($main->config->feature_diff_window) {
+		# Differences window
+		$self->add_menu_action(
+			'tools.diff_window',
+		);
+		$self->AppendSeparator;
+	}
+
 	# User Preferences
 	$self->add_menu_action(
 		'tools.preferences',
