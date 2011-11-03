@@ -80,6 +80,7 @@ sub directory {
 
 sub run {
 	my $self    = shift;
+	my $main    = $self->main;
 	my $current = $self->current;
 
 	# Clear
@@ -87,7 +88,18 @@ sub run {
 
 	# Do they have a specific search term in mind?
 	my $text = $current->text;
-	$text = '' if $text =~ /\n/;
+	unless ( defined $text ) {
+		$text = '';
+	}
+	unless ( length $text ) {
+		if ( $main->has_findfast ) {
+			my $fast = $main->findfast->find_term;
+			$text = $fast if length $fast;	
+		}
+	}
+	if ( $text =~ /\n/ ) {
+		$text = '';
+	}
 
 	# Clear out and reset the search term box
 	$self->find_term->refresh($text);

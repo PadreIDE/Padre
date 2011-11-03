@@ -73,16 +73,32 @@ sub directory {
 
 sub run {
 	my $self    = shift;
+	my $main    = $self->main;
 	my $current = $self->current;
 	my $config  = $current->config;
 
 	# Do they have a specific search term in mind?
 	my $text = $current->text;
-	$text = '' if $text =~ /\n/;
+	unless ( defined $text ) {
+		$text = '';
+	}
+	unless ( length $text ) {
+		if ( $main->has_findfast ) {
+			my $fast = $main->findfast->find_term;
+			$text = $fast if length $fast;	
+		}
+	}
+	if ( $text =~ /\n/ ) {
+		$text = '';
+	}
 
 	# Clear out and reset the search term box
 	$self->find_term->refresh($text);
-	$self->find_term->SetFocus;
+	if ( length $text ) {
+		$self->replace_term->SetFocus;
+	} else {
+		$self->find_term->SetFocus;
+	}
 
 	# Update the user interface
 	$self->refresh;
@@ -91,6 +107,7 @@ sub run {
 	if ( $self->main->has_findfast ) {
 		$self->main->findfast->_hide_panel;
 	}
+
 
 	# Show the dialog
 	my $result = $self->ShowModal;
