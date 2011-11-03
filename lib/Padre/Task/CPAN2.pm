@@ -166,22 +166,25 @@ sub metacpan_autocomplete {
 # Load module's POD using MetaCPAN API
 # retrieves the SYNOPSIS section from that POD and returns a POD2HTML text
 sub metacpan_pod {
-	my ( $self, $query ) = @_;
+	my ( $self, $rec ) = @_;
+
+	my ( $module, $download_url ) = ( $rec->{module}, $rec->{download_url} );
 
 	# Load module's POD using MetaCPAN API
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url      = "http://api.metacpan.org/v0/pod/$query?content-type=text/x-pod";
+	my $url      = "http://api.metacpan.org/v0/pod/$module?content-type=text/x-pod";
 	my $response = $ua->get($url);
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
 			if DEBUG;
 		return {
-			html     => '<b>' . sprintf(Wx::gettext(qq{No documentation for '%s'}), $query) . '</b>',
-			synopsis => '',
-			distro   => $query,
-		};
+			html         => '<b>' . sprintf( Wx::gettext(qq{No documentation for '%s'}), $module ) . '</b>',
+			synopsis     => '',
+			distro       => $module,
+			download_url => $download_url,
+	};
 	}
 
 	# The pod text is here
@@ -204,9 +207,10 @@ sub metacpan_pod {
 	}
 
 	return {
-		html     => $pod_html,
-		synopsis => $synopsis,
-		distro   => $query,
+		html         => $pod_html,
+		synopsis     => $synopsis,
+		distro       => $module,
+		download_url => $download_url,
 		},
 
 }
@@ -220,7 +224,10 @@ sub metacpan_recent {
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $url =
-		"http://api.metacpan.org/v0/release/?sort=date:desc&size=" . MAX_RESULTS . "&fields=distribution,abstract";
+		  "http://api.metacpan.org/v0/release/?sort=date:desc" 
+		. "&size="
+		. MAX_RESULTS
+		. "&fields=name,distribution,abstract,download_url";
 	my $response = $ua->get($url);
 
 	unless ( $response->is_success ) {
@@ -234,8 +241,7 @@ sub metacpan_recent {
 
 	# Fix up the results a bit to workaround undefined stuff
 	for my $result (@results) {
-		$result->{documentation} = '' unless defined $result->{documentation};
-		$result->{abstract}      = '' unless defined $result->{abstract};
+		$result->{abstract} = '' unless defined $result->{abstract};
 	}
 
 	return \@results;

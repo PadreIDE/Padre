@@ -389,13 +389,13 @@ sub _sort_model {
 	}
 	if ( $sort_column == 0 ) {
 
-		# Sort by distribution or documentation
+		# Sort by distribution, name or term
 		@model = sort {
 			if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH )
 			{
 				$a->{documentation} cmp $b->{documentation};
 			} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
-				$a->{distribution} cmp $b->{distribution};
+				$a->{name} cmp $b->{name};
 			} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
 				$a->{term} cmp $b->{term};
 			}
@@ -494,7 +494,17 @@ sub set_icon_image {
 sub on_list_item_selected {
 	my ( $self, $event ) = @_;
 
-	my $module = $event->GetLabel;
+	my $list = $event->GetEventObject;
+	my ($download_url, $module);
+	if ( $list == $self->{recent_list} ) {
+		my @model = @{ $self->{recent_model} };
+		my $item = $model[ $event->GetIndex ];
+		$download_url = $item->{download_url};
+		$module = $item->{distribution};
+		$module =~ s/-/::/g;
+	} else {
+		$module = $event->GetLabel;
+	}
 	my $doc    = $self->{doc};
 	$doc->SetPage(
 		sprintf(
@@ -502,9 +512,13 @@ sub on_list_item_selected {
 			$module
 		)
 	);
-	$doc->SetBackgroundColour( YELLOW_POD );
+	$doc->SetBackgroundColour(YELLOW_POD);
 
-	$self->refresh( Padre::Task::CPAN2::CPAN_POD, $module );
+	$self->refresh( Padre::Task::CPAN2::CPAN_POD,
+		{   module       => $module,
+			download_url => $download_url,
+		},
+	);
 }
 
 # Renders the documentation/SYNOPSIS section
@@ -512,14 +526,15 @@ sub render_doc {
 	my $self = shift;
 
 	my $model = $self->{pod_model} or return;
-	my ( $pod_html, $synopsis, $distro ) = (
+	my ( $pod_html, $synopsis, $distro, $download_url ) = (
 		$model->{html},
 		$model->{synopsis},
 		$model->{distro},
+		$model->{download_url},
 	);
 
 	$self->{doc}->SetPage($pod_html);
-	$self->{doc}->SetBackgroundColour( YELLOW_POD );
+	$self->{doc}->SetBackgroundColour(YELLOW_POD);
 
 	if ( length $synopsis > 0 ) {
 		$self->{synopsis}->Show;
@@ -531,6 +546,7 @@ sub render_doc {
 	$self->Layout;
 	$self->{SYNOPSIS} = $synopsis;
 	$self->{distro}   = $distro;
+	$self->{download_url} = $download_url;
 
 	return;
 }
@@ -557,10 +573,15 @@ sub on_install_click {
 
 	# Install selected distribution using App::cpanminus
 	my $distro = $self->{distro} or return;
+	my $download_url = $self->{download_url};
 	require File::Which;
 	my $cpanm = File::Which::which('cpanm');
 	$cpanm = qq{"cpanm"} if Padre::Constant::WIN32;
-	$self->main->run_command("$cpanm $distro");
+	if(defined $download_url) {
+		$self->main->run_command("$cpanm $download_url");
+	} else {
+		$self->main->run_command("$cpanm $distro");
+	}
 
 	return;
 }
@@ -598,9 +619,8 @@ sub render_recent {
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and abstract as a row to the list
-		my $distribution = $rec->{distribution};
-		$distribution =~ s/-/::/g;
-		$list->InsertImageStringItem( $index, $distribution, $self->{recent_images}{file} );
+		my $name = $rec->{name};
+		$list->InsertImageStringItem( $index, $name, $self->{recent_images}{file} );
 		$list->SetItemData( $index, $index );
 		$list->SetItem( $index, 1, $rec->{abstract} ) if defined $rec->{abstract};
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
