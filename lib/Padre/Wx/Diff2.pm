@@ -125,8 +125,8 @@ CODE
 				# right side
 				$lines_added++;
 
-				#my @lines = split /^/, $text;
-				#$left_editor->AnnotationSetText( $line, "\n" x (scalar @lines - 1) );
+				my @lines = split /^/, $text;
+				$left_editor->AnnotationSetText( $line-1, "\n" x (scalar @lines - 1) );
 				$right_editor->StartStyling( $right_editor->PositionFromLine($line), 0xFF );
 				$right_editor->SetStyling( length($text), 2 );
 			}
@@ -142,8 +142,8 @@ CODE
 		# }
 	}
 
-	$left_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_BOXED);
-	$right_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_BOXED);
+	$left_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_STANDARD);
+	$right_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_STANDARD);
 
 	$self->Show;
 
