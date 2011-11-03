@@ -37,6 +37,13 @@ sub new {
 	return $self;
 }
 
+sub find_term {
+	my $self = shift;
+	my $term = $self->{entry}->GetValue;
+	return '' unless defined $term;
+	return $term;
+}
+
 
 
 

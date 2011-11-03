@@ -383,32 +383,49 @@ of the search and not as the string to be used.
 =cut
 
 sub find {
-	my $self = shift;
-	my $text = $self->current->text;
+	my $self    = shift;
+	my $main    = $self->main;
+	my $current = $self->current;
 
 	# No search if no file is open (TO DO ??)
-	return unless $self->current->editor;
+	return unless $current->editor;
+
+	# Do we have a default search term?
+	my $text = $current->text;
+	unless ( defined $text ) {
+		$text = '';
+	}
+	unless ( length $text ) {
+		if ( $main->has_findfast ) {
+			my $fast = $main->findfast->find_term;
+			$text = $fast if length $fast;	
+		}
+	}
 
 	# TO DO: if selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
 	$text = '' if $text =~ /\n/;
 
+	# Hide the Fast Find if visible
+	if ( $main->has_findfast ) {
+		$main->findfast->_hide_panel;
+	}
+
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh($text);
 	$self->{replace_text}->refresh;
 	if ( $self->IsShown ) {
-		$self->find_button;
-	} else {
-		if ( length $text ) {
-
-			# Go straight to the replace field
-			$self->{replace_text}->SetFocus;
-		} else {
-			$self->{find_text}->SetFocus;
-		}
-		$self->Show(1);
+		return $self->find_button;
 	}
-	return;
+
+	if ( length $text ) {
+		# Go straight to the replace field
+		$self->{replace_text}->SetFocus;
+	} else {
+		$self->{find_text}->SetFocus;
+	}
+	
+	$self->Show(1);
 }
 
 
