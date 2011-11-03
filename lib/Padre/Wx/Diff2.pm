@@ -39,7 +39,8 @@ sub show {
 
 	# TODO replace these with parameter-based stuff once it is working
 	my $left_text = <<'CODE';
-12
+1
+2
 3
 4
 5
@@ -83,6 +84,7 @@ CODE
 	$left_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
 	$left_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
 	$left_editor->StyleSetEOLFilled( 2, 1 );
+
 	$right_editor->StyleSetForeground( 1, Wx::Colour->new('white') );
 	$right_editor->StyleSetBackground( 1, Wx::Colour->new('red') );
 	$right_editor->StyleSetEOLFilled( 1, 1 );
@@ -90,30 +92,54 @@ CODE
 	$right_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
 	$right_editor->StyleSetEOLFilled( 2, 1 );
 
+	$left_editor->IndicatorSetStyle( 0, Wx::Scintilla::Constant::INDIC_STRIKE );
+	$right_editor->IndicatorSetStyle( 0, Wx::Scintilla::Constant::INDIC_STRIKE );
+
 	$left_editor->SetCaretLineBackground( Wx::Colour->new('gray') );
 	$right_editor->SetCaretLineBackground( Wx::Colour->new('gray') );
 	$left_editor->SetCaretLineVisible(1);
 	$right_editor->SetCaretLineVisible(1);
 
 	for my $diff_chunk (@$diffs) {
+		TRACE("new_chunk") if DEBUG;
 
+		my ( $lines_added, $lines_deleted ) = ( 0, 0 );
 		for my $diff (@$diff_chunk) {
 			my ( $type, $line, $text ) = @$diff;
 			TRACE("$type, $line, $text") if DEBUG;
-			$line += 1;
 			if ( $type eq '-' ) {
+
+				$lines_deleted++;
 
 				# left side
 				$left_editor->StartStyling( $left_editor->PositionFromLine($line), 0xFF );
 				$left_editor->SetStyling( length($text), 1 );
+				$left_editor->SetIndicatorCurrent(0);
+				$left_editor->IndicatorFillRange( $left_editor->PositionFromLine($line), length($text) );
 			} else {
 
 				# right side
+				$lines_added++;
+
+				#my @lines = split /^/, $text;
+				#$left_editor->AnnotationSetText( $line, "\n" x (scalar @lines - 1) );
 				$right_editor->StartStyling( $right_editor->PositionFromLine($line), 0xFF );
 				$right_editor->SetStyling( length($text), 2 );
 			}
 		}
+
+		# if ( $lines_deleted > 0 && $lines_added > 0 ) {
+			# print "changed!\n";
+		# } elsif ( $lines_deleted > 0 ) {
+			# print "lines deleted\n";
+
+# # 		} elsif ( $lines_added > 0 ) {
+			# print "lines added\n";
+		# }
 	}
+
+	$left_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_BOXED);
+	$right_editor->AnnotationSetVisible(Wx::Scintilla::Constant::ANNOTATION_BOXED);
 
 	$self->Show;
 
