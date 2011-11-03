@@ -89,6 +89,12 @@ CODE
 	$right_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
 	$right_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
 	$right_editor->StyleSetEOLFilled( 2, 1 );
+
+	$left_editor->SetCaretLineBackground( Wx::Colour->new('gray') );
+	$right_editor->SetCaretLineBackground( Wx::Colour->new('gray') );
+	$left_editor->SetCaretLineVisible(1);
+	$right_editor->SetCaretLineVisible(1);
+
 	for my $diff_chunk (@$diffs) {
 
 		for my $diff (@$diff_chunk) {
