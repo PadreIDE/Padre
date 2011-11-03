@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-03 02:11-0700\n"
+"POT-Creation-Date: 2011-11-03 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,7 +703,7 @@ msgstr ""
 msgid "7-bit US-ASCII character"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:480
+#: lib/Padre/Wx/CPAN2.pm:511
 #, perl-format
 msgid "<b>Loading %s...</b>"
 msgstr ""
@@ -745,7 +745,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:205
+#: lib/Padre/Wx/CPAN2.pm:214
 msgid "Abstract"
 msgstr ""
 
@@ -927,7 +927,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:196 lib/Padre/Wx/VCS.pm:51
+#: lib/Padre/Wx/CPAN2.pm:205 lib/Padre/Wx/VCS.pm:51
 msgid "Author"
 msgstr ""
 
@@ -1058,7 +1058,7 @@ msgstr ""
 msgid "CHANGED"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:230
+#: lib/Padre/Wx/CPAN2.pm:239
 msgid "CPAN Explorer"
 msgstr ""
 
@@ -1550,7 +1550,7 @@ msgstr ""
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:214
+#: lib/Padre/Wx/CPAN2.pm:223
 msgid "Count"
 msgstr ""
 
@@ -1829,8 +1829,8 @@ msgid ""
 "Display the current value of a variable in the right hand side debugger pane"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN2.pm:195 lib/Padre/Wx/CPAN2.pm:204
-#: lib/Padre/Wx/CPAN2.pm:213 lib/Padre/Wx/Dialog/About.pm:175
+#: lib/Padre/Wx/CPAN2.pm:204 lib/Padre/Wx/CPAN2.pm:213
+#: lib/Padre/Wx/CPAN2.pm:222 lib/Padre/Wx/Dialog/About.pm:175
 msgid "Distribution"
 msgstr ""
 
@@ -3289,7 +3289,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/Task/CPAN2.pm:181
+#: lib/Padre/Task/CPAN2.pm:183
 #, perl-format
 msgid "No documentation for '%s'"
 msgstr ""
