@@ -108,7 +108,6 @@ sub run {
 		$self->main->findfast->_hide_panel;
 	}
 
-
 	# Show the dialog
 	my $result = $self->ShowModal;
 	if ( $result == Wx::ID_CANCEL ) {
