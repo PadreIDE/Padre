@@ -3,8 +3,8 @@ package Padre::Wx::Diff2;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                ();
-use Padre::Wx::FBP::Diff     ();
+use Padre::Wx               ();
+use Padre::Wx::FBP::Diff    ();
 use Wx::Scintilla::Constant ();
 use Padre::Logger qw(TRACE);
 
@@ -46,10 +46,16 @@ sub show {
 CODE
 	my $right_text = <<'CODE';
 1
+1.1
 2
-3
+3.1
 4
 CODE
+
+	# TODO this should be task-based once it is working
+	my $diffs = $self->find_diffs( $left_text, $right_text );
+
+	#use Data::Dumper; print Dumper($diffs);
 
 	# Set the left side text
 	my $left_editor = $self->{left_editor};
@@ -64,6 +70,34 @@ CODE
 	$right_editor->SetReadOnly(0);
 	$right_editor->SetText($right_text);
 	$right_editor->SetReadOnly(1);
+
+	$left_editor->StyleSetForeground( 1, Wx::Colour->new( 0xff, 0xff, 0xff ) );
+	$left_editor->StyleSetBackground( 1, Wx::Colour->new( 0xff, 0x00, 0x00 ) );
+	$left_editor->StyleSetForeground( 2, Wx::Colour->new( 0xff, 0xff, 0xff ) );
+	$left_editor->StyleSetBackground( 2, Wx::Colour->new( 0x00, 0xff, 0x00 ) );
+	$right_editor->StyleSetForeground( 1, Wx::Colour->new( 0xff, 0xff, 0xff ) );
+	$right_editor->StyleSetBackground( 1, Wx::Colour->new( 0xff, 0x00, 0x00 ) );
+	$right_editor->StyleSetForeground( 2, Wx::Colour->new( 0xff, 0xff, 0xff ) );
+	$right_editor->StyleSetBackground( 2, Wx::Colour->new( 0x00, 0xff, 0x00 ) );
+	for my $diff_chunk (@$diffs) {
+
+		for my $diff (@$diff_chunk) {
+			my ( $type, $line, $text ) = @$diff;
+
+
+			if ( $type eq '-' ) {
+
+				# left side
+				$left_editor->StartStyling( $left_editor->PositionFromLine($line), 0xFF );
+				$left_editor->SetStyling( length($text), 1 );
+			} else {
+
+				# right side
+				$right_editor->StartStyling( $right_editor->PositionFromLine($line), 0xFF );
+				$right_editor->SetStyling( length($text), 2 );
+			}
+		}
+	}
 
 	$self->Show;
 
@@ -84,6 +118,16 @@ sub show_line_numbers {
 		$width,
 	);
 	return;
+}
+
+# Find differences between left and right text
+sub find_diffs {
+	my ( $self, $left_text, $right_text ) = @_;
+
+	my @left_seq  = split /^/, $left_text;
+	my @right_seq = split /^/, $right_text;
+	my @diff = Algorithm::Diff::diff( \@left_seq, \@right_seq );
+	return \@diff;
 }
 
 sub on_prev_diff_click {
