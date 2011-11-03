@@ -20,6 +20,11 @@ our @ISA     = qw{
 	Padre::Wx::FBP::CPAN
 };
 
+# Constants
+use constant {
+	YELLOW_POD => Wx::Colour->new( 253, 252, 187 ),
+};
+
 # Constructor
 sub new {
 	my $class = shift;
@@ -497,7 +502,7 @@ sub on_list_item_selected {
 			$module
 		)
 	);
-	$doc->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
+	$doc->SetBackgroundColour( YELLOW_POD );
 
 	$self->refresh( Padre::Task::CPAN2::CPAN_POD, $module );
 }
@@ -514,7 +519,7 @@ sub render_doc {
 	);
 
 	$self->{doc}->SetPage($pod_html);
-	$self->{doc}->SetBackgroundColour( Wx::Colour->new( 253, 252, 187 ) );
+	$self->{doc}->SetBackgroundColour( YELLOW_POD );
 
 	if ( length $synopsis > 0 ) {
 		$self->{synopsis}->Show;
