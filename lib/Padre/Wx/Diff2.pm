@@ -39,23 +39,23 @@ sub show {
 
 	# TODO replace these with parameter-based stuff once it is working
 	my $left_text = <<'CODE';
-1
-2
+12
 3
 4
+5
+7
 CODE
 	my $right_text = <<'CODE';
 1
 1.1
 2
-3.1
 4
+5
+8
 CODE
 
 	# TODO this should be task-based once it is working
 	my $diffs = $self->find_diffs( $left_text, $right_text );
-
-	#use Data::Dumper; print Dumper($diffs);
 
 	# Set the left side text
 	my $left_editor = $self->{left_editor};
@@ -71,20 +71,30 @@ CODE
 	$right_editor->SetText($right_text);
 	$right_editor->SetReadOnly(1);
 
-	$left_editor->StyleSetForeground( 1, Wx::Colour->new( 0xff, 0xff, 0xff ) );
-	$left_editor->StyleSetBackground( 1, Wx::Colour->new( 0xff, 0x00, 0x00 ) );
-	$left_editor->StyleSetForeground( 2, Wx::Colour->new( 0xff, 0xff, 0xff ) );
-	$left_editor->StyleSetBackground( 2, Wx::Colour->new( 0x00, 0xff, 0x00 ) );
-	$right_editor->StyleSetForeground( 1, Wx::Colour->new( 0xff, 0xff, 0xff ) );
-	$right_editor->StyleSetBackground( 1, Wx::Colour->new( 0xff, 0x00, 0x00 ) );
-	$right_editor->StyleSetForeground( 2, Wx::Colour->new( 0xff, 0xff, 0xff ) );
-	$right_editor->StyleSetBackground( 2, Wx::Colour->new( 0x00, 0xff, 0x00 ) );
+	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+	$left_editor->SetFont($font);
+	$right_editor->SetFont($font);
+	$left_editor->StyleSetFont( Wx::Scintilla::Constant::STYLE_DEFAULT, $font );
+	$right_editor->StyleSetFont( Wx::Scintilla::Constant::STYLE_DEFAULT, $font );
+
+	$left_editor->StyleSetForeground( 1, Wx::Colour->new('white') );
+	$left_editor->StyleSetBackground( 1, Wx::Colour->new('red') );
+	$left_editor->StyleSetEOLFilled( 1, 1 );
+	$left_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
+	$left_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
+	$left_editor->StyleSetEOLFilled( 2, 1 );
+	$right_editor->StyleSetForeground( 1, Wx::Colour->new('white') );
+	$right_editor->StyleSetBackground( 1, Wx::Colour->new('red') );
+	$right_editor->StyleSetEOLFilled( 1, 1 );
+	$right_editor->StyleSetForeground( 2, Wx::Colour->new('black') );
+	$right_editor->StyleSetBackground( 2, Wx::Colour->new('green') );
+	$right_editor->StyleSetEOLFilled( 2, 1 );
 	for my $diff_chunk (@$diffs) {
 
 		for my $diff (@$diff_chunk) {
 			my ( $type, $line, $text ) = @$diff;
-
-
+			TRACE("$type, $line, $text") if DEBUG;
+			$line += 1;
 			if ( $type eq '-' ) {
 
 				# left side
