@@ -1469,6 +1469,15 @@ setting(
 	help    => _T('Toggle MetaCPAN CPAN explorer panel'),
 );
 
+# Toggle Diff window feature
+setting(
+	name    => 'feature_diff_window',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Toggle Diff window feature that compares two buffers graphically'),
+);
+
 # Toggle Perl 6 auto detection
 setting(
 	name    => 'lang_perl6_auto_detection',
