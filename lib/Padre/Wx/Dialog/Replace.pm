@@ -407,9 +407,7 @@ sub find {
 	$text = '' if $text =~ /\n/;
 
 	# Hide the Fast Find if visible
-	if ( $main->has_findfast ) {
-		$main->findfast->_hide_panel;
-	}
+	$self->main->show_findfast(0);
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh($text);

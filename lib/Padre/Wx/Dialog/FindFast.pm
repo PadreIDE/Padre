@@ -243,6 +243,11 @@ sub _hide_panel {
 sub _show_panel {
 	my $self = shift;
 
+	# Create the panel if needed
+	unless ( $self->{panel} ) {
+		$self->_create_panel;
+	}
+
 	# Show the panel; pane != panel
 	my $auimngr = Padre->ide->wx->main->aui;
 	$auimngr->GetPane('find')->Show(1);

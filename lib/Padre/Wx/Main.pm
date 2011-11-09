@@ -2355,8 +2355,16 @@ to show the panel.
 =cut
 
 sub show_findfast {
-	my $self = shift;
-	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $self    = shift;
+	my $show    = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $visible = $self->has_findfast && $self->findfast->visible;
+	if ( $show and not $visible ) {
+		$self->findfast->_show_panel;
+		$self->aui->Update;
+	} elsif ( $visible and not $show ) {
+		$self->findfast->_hide_panel;
+		$self->aui->Update;
+	}
 	return;
 }
 

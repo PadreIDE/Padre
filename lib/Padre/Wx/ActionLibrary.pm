@@ -1158,21 +1158,18 @@ sub init {
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
-			my $main     = shift;
-			my $findfast = $main->findfast;
+			my $main = shift;
 
 			# Ctrl-F first press, show fast find
-			unless ( $findfast->visible ) {
-				unless ( $findfast->{panel} ) {
-					$findfast->_create_panel;
-				}
-				$findfast->_show_panel;
+			unless ( $main->has_findfast and $main->findfast->visible ) {
+				$main->show_findfast;
 
 				# Do they have a specific search term in mind?
 				my $text = $main->current->text;
 				$text = '' if $text =~ /\n/;
 
 				# Clear out and reset the search term box
+				my $findfast = $main->findfast;
 				$findfast->{entry}->ChangeValue($text);
 				$findfast->{entry}->SelectAll;
 				if ( length $text ) {
