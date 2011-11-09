@@ -137,6 +137,9 @@ sub on_auinotebook_page_changed {
 		push @$page_history, $current;
 	}
 
+	# Hide the Find Fast panel when this changes
+	$main->show_findfast(0);
+
 	$main->ide->plugin_manager->plugin_event('editor_changed');
 }
 
