@@ -11,6 +11,13 @@ use Padre::Wx::Icon ();
 
 our $VERSION = '0.91';
 
+use constant GOOD => Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_WINDOW );
+use constant BAD  => Wx::Colour->new(
+	GOOD->Red,
+	int( GOOD->Green * 0.5 ),
+	int( GOOD->Blue  * 0.5 ),
+);
+
 
 
 
@@ -21,17 +28,9 @@ our $VERSION = '0.91';
 sub new {
 	my $class = shift;
 
-	my $default_bg = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
-	my $error_bg   = Wx::Colour->new(
-		$default_bg->Red,
-		int( $default_bg->Green * 0.5 ),
-		int( $default_bg->Blue * 0.5 )
-	);
 	my $self = bless {
-		restart          => 1,
-		backward         => 0,
-		default_bgcolour => $default_bg,
-		error_bgcolour   => $error_bg,
+		restart  => 1,
+		backward => 0,
 	}, $class;
 
 	return $self;
@@ -85,7 +84,7 @@ sub _find {
 	my $lock    = $self->lock_update;
 
 	# Reset the dialog status
-	$self->{entry}->SetBackgroundColour( $self->{default_bgcolour} );
+	$self->_status(1);
 
 	# Build the search expression
 	my $find_term = $self->{entry}->GetValue;
@@ -106,7 +105,7 @@ sub _find {
 
 		# Run the search
 		unless ( $current->main->search_next($search) ) {
-			$self->{entry}->SetBackgroundColour( $self->{error_bgcolour} );
+			$self->_status(0);
 		}
 		$self->{entry}->SetFocus;
 	}
@@ -156,7 +155,6 @@ sub _create_panel {
 		Wx::BORDER_NONE
 	);
 
-	#$self->{previous}->SetLabel("Next"); # TO DO: should be better but does not work
 	Wx::Event::EVT_BUTTON( $main, $self->{previous}, sub { $self->search('previous') } );
 	$self->{previous_text} = Wx::Button->new(
 		$self->{panel}, -1,
@@ -254,6 +252,7 @@ sub _show_panel {
 	$auimngr->Update;
 
 	# Reset the form
+	$self->_status(1);
 	$self->{case}->SetValue(0);
 	$self->{entry}->SetValue('');
 	$self->{entry}->SetFocus;
@@ -263,8 +262,7 @@ sub _show_panel {
 }
 
 sub visible {
-	my $self = shift;
-	return $self->{visible} || 0;
+	$_[0]->{visible} || 0;
 }
 
 # -- Event handlers
@@ -278,9 +276,8 @@ sub visible {
 sub _on_case_checked {
 	my $self = shift;
 	$self->{restart} = 1;
-	$self->_find;
 	$self->{entry}->SetFocus;
-	return;
+	$self->_find;
 }
 
 #
@@ -291,11 +288,8 @@ sub _on_case_checked {
 #
 sub _on_entry_changed {
 	my $self = shift;
-	unless ( $self->{entry}->GetValue eq '' ) {
-		$self->{restart} = 1;
-		$self->_find;
-	}
-	return;
+	$self->{restart} = 1;
+	$self->_find;
 }
 
 #
@@ -325,6 +319,11 @@ sub _on_key_pressed {
 	}
 
 	$event->Skip(1);
+}
+
+# Set the status visuals as good/bad
+sub _status {
+	$_[0]->{entry}->SetBackgroundColour( $_[1] ? GOOD : BAD );
 }
 
 sub lock_update {
