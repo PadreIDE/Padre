@@ -1,10 +1,10 @@
-package Padre::Wx::Dialog::Replace;
+package Padre::Wx::Replace;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::Dialog::Replace - Find and Replace Widget
+Padre::Wx::Replace - Find and Replace Widget
 
 =head1 DESCRIPTION
 
@@ -32,9 +32,9 @@ our @ISA     = qw{
 
 =head2 new
 
-  my $find = Padre::Wx::Dialog::Replace->new($main);
+  my $find = Padre::Wx::Replace->new($main);
 
-Create and return a C<Padre::Wx::Dialog::Replace> search and replace widget.
+Create and return a C<Padre::Wx::Replace> search and replace widget.
 
 =cut
 

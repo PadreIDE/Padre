@@ -836,8 +836,8 @@ Return current replace dialog. Create a new one if needed.
 sub replace {
 	my $self = shift;
 	unless ( defined $self->{replace} ) {
-		require Padre::Wx::Dialog::Replace;
-		$self->{replace} = Padre::Wx::Dialog::Replace->new($self);
+		require Padre::Wx::Replace;
+		$self->{replace} = Padre::Wx::Replace->new($self);
 	}
 	return $self->{replace};
 }
