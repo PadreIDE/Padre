@@ -31,7 +31,7 @@ use warnings;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = 'Wx::Frame';
 
 =pod

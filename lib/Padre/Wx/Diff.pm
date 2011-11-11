@@ -12,7 +12,7 @@ use Padre::Util             ();
 use Padre::Wx::Dialog::Diff ();
 use Padre::Logger;
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = qw{
 	Padre::Role::Task
 };

@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use ORLite::Migrate::Timeline ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = 'ORLite::Migrate::Timeline';
 
 

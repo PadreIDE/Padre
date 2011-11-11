@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use Padre::Constant ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 
 

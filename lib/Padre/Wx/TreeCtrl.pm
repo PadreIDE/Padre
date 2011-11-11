@@ -8,7 +8,7 @@ use warnings;
 use Padre::Wx                       ();
 use Padre::Wx::TreeCtrl::ScrollLock ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = 'Wx::TreeCtrl';
 
 

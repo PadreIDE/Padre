@@ -7,7 +7,7 @@ use Params::Util              ();
 use Padre::DB                 ();
 use Padre::Wx::FBP::Bookmarks ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = 'Padre::Wx::FBP::Bookmarks';
 
 

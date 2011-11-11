@@ -27,7 +27,7 @@ use Padre::Wx           ();
 use Padre::Wx::Constant ();
 use Wx::Html            ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = 'Wx::HtmlWindow';
 
 # Now that we have loaded Wx::Html we need to rerun the constant

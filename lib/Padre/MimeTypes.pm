@@ -26,7 +26,7 @@ use Padre::Wx      ();
 use Padre::DB      ();
 use Wx::Scintilla  ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 # Binary file extensions, which we don't support loading at all
 my %EXT_BINARY = ();

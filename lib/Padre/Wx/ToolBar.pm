@@ -14,7 +14,7 @@ use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
 use Padre::Constant   ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::ToolBar

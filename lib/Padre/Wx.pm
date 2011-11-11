@@ -24,7 +24,7 @@ use Wx::AUI            ();
 use Wx::RichText       ();
 use Wx::Socket         ();
 
-our $VERSION    = '0.91';
+our $VERSION    = '0.92';
 our $COMPATIBLE = '0.43';
 
 BEGIN {

@@ -14,7 +14,7 @@ use Padre::Wx::Role::Dialog     ();
 use Padre::Util                 ('_T');
 use Padre::Logger;
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::Role::Dialog

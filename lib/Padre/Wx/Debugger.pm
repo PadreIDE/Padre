@@ -25,7 +25,7 @@ use Padre::Current  ();
 use Padre::Wx       ();
 use Padre::Logger;
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 =pod
 

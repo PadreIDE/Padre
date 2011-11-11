@@ -11,7 +11,7 @@ use Padre::Util             ();
 use PPI                     ();
 use Padre::Wx::FBP::About   ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = qw{
 	Padre::Wx::FBP::About
 };

@@ -10,7 +10,7 @@ use File::Spec     ();
 use Scalar::Util   ();
 use Padre::Project ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 
 

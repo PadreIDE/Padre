@@ -8,7 +8,7 @@ use warnings;
 use Scalar::Util   ();
 use Padre::Current ();
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 # -- constructors
 

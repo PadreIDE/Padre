@@ -15,7 +15,7 @@ use Padre::Wx::FBP::Syntax ();
 use Time::HiRes            ();
 use Padre::Logger;
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
