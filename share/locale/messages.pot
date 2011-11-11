@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-10 20:10-0800\n"
+"POT-Creation-Date: 2011-11-11 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -375,7 +375,7 @@ msgstr ""
 msgid "&Newline Same Column"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindFast.pm:179
+#: lib/Padre/Wx/FindFast.pm:179
 msgid "&Next"
 msgstr ""
 
@@ -1091,7 +1091,7 @@ msgstr ""
 msgid "Cannot set bookmark in unsaved document"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:79 lib/Padre/Wx/Dialog/FindFast.pm:187
+#: lib/Padre/Wx/FindFast.pm:187 lib/Padre/Wx/Replace.pm:79
 msgid "Case &sensitive"
 msgstr ""
 
@@ -2505,7 +2505,7 @@ msgid ""
 "there."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindFast.pm:143
+#: lib/Padre/Wx/FindFast.pm:143
 msgid "Find:"
 msgstr ""
 
@@ -3939,7 +3939,7 @@ msgstr ""
 msgid "Preferences &Sync..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindFast.pm:161
+#: lib/Padre/Wx/FindFast.pm:161
 msgid "Previ&ous"
 msgstr ""
 
