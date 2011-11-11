@@ -817,8 +817,8 @@ Return current quick find dialog. Create a new one if needed.
 sub findfast {
 	my $self = shift;
 	unless ( defined $self->{findfast} ) {
-		require Padre::Wx::Dialog::FindFast;
-		$self->{findfast} = Padre::Wx::Dialog::FindFast->new;
+		require Padre::Wx::FindFast;
+		$self->{findfast} = Padre::Wx::FindFast->new;
 	}
 	return $self->{findfast};
 }
