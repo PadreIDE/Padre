@@ -13,7 +13,7 @@ next production release, and synchronise their release to the Padre schedule.
 Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
-0.92 TBA
+0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)
     - New Task 3.0 which fixes bidirectional communication and thus enables
       services that run indefinitely in reserved threads (ADAMK)
