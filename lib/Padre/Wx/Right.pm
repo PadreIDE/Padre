@@ -39,14 +39,14 @@ sub new {
 			PaneBorder     => 0,
 			CloseButton    => 0,
 			DestroyOnClose => 0,
-			MaximizeButton => 0,
+			MaximizeButton => 1,
 			Position       => 3,
 			Layer          => 3,
 			CaptionVisible => $unlock,
 			Floatable      => $unlock,
 			Dockable       => $unlock,
 			Movable        => $unlock,
-			BestSize       => [ 265, -1 ],
+			BestSize       => [ 235, -1 ],
 			)->Right->Hide,
 	);
 	$aui->caption(

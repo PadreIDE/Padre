@@ -46,7 +46,7 @@ sub new {
 			MaximizeButton => 0,
 			Position       => 4,
 			Layer          => 2,
-			BestSize       => [ 235, -1 ],
+			BestSize       => [ 215, -1 ],
 			)->Left->Hide,
 	);
 	$aui->caption(
