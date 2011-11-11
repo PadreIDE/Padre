@@ -12,7 +12,7 @@ use Padre::Wx::Role::Dwell ();
 use Padre::Wx::FBP::CPAN   ();
 use Padre::Logger qw(TRACE);
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View

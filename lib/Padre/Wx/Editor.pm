@@ -16,7 +16,7 @@ use Padre::Wx::Role::Main     ();
 use Padre::Wx::Role::Dwell    ();
 use Padre::Logger;
 
-our $VERSION    = '0.92';
+our $VERSION    = '0.93';
 our $COMPATIBLE = '0.91';
 our @ISA        = (
 	'Padre::Wx::Role::Main',

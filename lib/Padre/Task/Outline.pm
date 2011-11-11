@@ -8,7 +8,7 @@ use warnings;
 use Params::Util ('_INSTANCE');
 use Padre::Task  ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = 'Padre::Task';
 
 

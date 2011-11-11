@@ -8,7 +8,7 @@ use Padre::Util     ();
 use Padre::Constant ();
 use Padre::Current  ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 
 use constant TEMPLATE_DIRECTORY => Padre::Util::sharedir('templates');
 

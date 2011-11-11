@@ -20,7 +20,7 @@ use Padre::Wx::Menu::Window   ();
 use Padre::Wx::Menu::Help     ();
 
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 
 
 

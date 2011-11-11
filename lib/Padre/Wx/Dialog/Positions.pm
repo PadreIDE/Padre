@@ -9,7 +9,7 @@ use warnings;
 use Padre::DB ();
 use Padre::Wx ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 
 my @positions;
 

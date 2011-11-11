@@ -7,7 +7,7 @@ use File::Temp     ();
 use Padre::File    ();
 use Padre::Current ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = 'Padre::File';
 
 my %connection_cache;

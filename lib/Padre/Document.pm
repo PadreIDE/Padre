@@ -137,7 +137,7 @@ use Padre::MimeTypes ();
 use Padre::File      ();
 use Padre::Logger;
 
-our $VERSION    = '0.92';
+our $VERSION    = '0.93';
 our $COMPATIBLE = '0.91';
 
 

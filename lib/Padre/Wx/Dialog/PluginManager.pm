@@ -11,7 +11,7 @@ use Padre::Wx::Icon       ();
 use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

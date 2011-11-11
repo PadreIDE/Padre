@@ -54,7 +54,7 @@ use Padre::DB      ();
 use Padre::Wx      ();
 use Padre::Unload  ();
 
-our $VERSION    = '0.92';
+our $VERSION    = '0.93';
 our $COMPATIBLE = '0.43';
 
 # Link plug-ins back to their IDE

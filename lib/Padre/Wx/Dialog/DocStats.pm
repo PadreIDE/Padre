@@ -7,7 +7,7 @@ use File::Basename;
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

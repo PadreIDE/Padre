@@ -10,7 +10,7 @@ use LWP::UserAgent  ();
 use JSON::XS        ();
 use Padre::Logger qw(TRACE);
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = 'Padre::Task';
 
 use constant {

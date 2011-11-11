@@ -10,7 +10,7 @@ use strict;
 use warnings;
 use File::Temp ();
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 
 use Class::XSAccessor {
 	getters => {

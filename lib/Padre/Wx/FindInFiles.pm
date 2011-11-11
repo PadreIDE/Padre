@@ -17,7 +17,7 @@ use Padre::Wx::TreeCtrl                 ();
 use Padre::Wx::FBP::FindInFiles::Output ();
 use Padre::Logger;
 
-our $VERSION = '0.92';
+our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
