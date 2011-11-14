@@ -34,11 +34,11 @@ plan( tests => 7 );
 
 	$file->{filename} = 'T/Files/Padre-File-Test';
 	$file->_reformat_filename;
-	is( $file->{filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{filename}, 't\files\padre-file-test', 'Correct wrong case' );
 
 	$file->{filename} = 'T\Files\Padre-File-Test';
 	$file->_reformat_filename;
-	is( $file->{filename}, 't\files\Padre-File-Test', 'Correct wrong case' );
+	is( $file->{filename}, 't\files\padre-file-test', 'Correct wrong case' );
 
 	my $Crap = 'X:\foo\bar\padre-nonexistent\testfile';
 	$file->{filename} = $Crap;
