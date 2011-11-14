@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 04:10-0800\n"
+"POT-Creation-Date: 2011-11-14 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4464,7 +4464,7 @@ msgstr ""
 msgid "SQL Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:581
+#: lib/Padre/Wx/Dialog/Patch.pm:582
 #, perl-format
 msgid "SVN Diff successful. You should see a new tab in editor called %s."
 msgstr ""
@@ -5159,7 +5159,7 @@ msgid ""
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:597
+#: lib/Padre/Wx/Dialog/Patch.pm:598
 msgid ""
 "Sorry, Diff failed. Are you sure your have access to the repository for this "
 "action"
@@ -5680,7 +5680,7 @@ msgid ""
 "replace it with the default code that comes with your installation of Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:539
+#: lib/Padre/Wx/Dialog/Patch.pm:540
 #, perl-format
 msgid ""
 "Warning: found SVN v%s but we require SVN v%s and it is now called \"Apache "
