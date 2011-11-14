@@ -522,8 +522,9 @@ sub test_svn {
 	if ( File::Which::which('svn') ) {
 
 		# test svn version
-		if ( $svn_client_version = Padre::Util::run_in_directory_two('svn --version --quiet') ) {
-			chomp($svn_client_version);
+		$svn_client_version = Padre::Util::run_in_directory_two('svn --version --quiet');
+		if ( $svn_client_version ) {
+			chomp $svn_client_version;
 
 			require Sort::Versions;
 
