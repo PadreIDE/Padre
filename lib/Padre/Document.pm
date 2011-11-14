@@ -562,8 +562,8 @@ my %SCINTILLA_KEY_WORDS = (
 			# Ada keywords
 			qw{abort abstract accept access aliased all array at begin body
 				case constant declare delay delta digits do else elsif end entry exception exit for
-				function generic goto if in is limited loop new null of others out package pragma
-				private procedure protected raise range record renames requeue return reverse
+				function generic goto if in is limited loop new null of others out package 
+				pragma private procedure protected raise range record renames requeue return reverse
 				select separate subtype tagged task terminate then type until use when while with
 				},
 
