@@ -179,6 +179,8 @@ the even version for the release, even during development.
     - Hide editor objects during their (potentially long) setup so that we
       don't see a half-formed editor in a weird position (ADAMK)
     - Add povray mimetype and keyword lists (BRAMBLE)
+    - Fix AUTOMATED_TESTING=1 t/ errors automatically set by cpanm (AZAWAWI)
+    - Fix bad assumption in 93_padre_filename_win.t (AZAWAWI)
 
 0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
