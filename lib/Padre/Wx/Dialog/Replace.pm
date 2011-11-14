@@ -54,11 +54,11 @@ sub run {
 	}
 
 	# Clear out and reset the search term box
-	$self->find_term->refresh($text);
+	$self->{find_term}->refresh($text);
 	if ( length $text ) {
-		$self->replace_term->SetFocus;
+		$self->{replace_term}->SetFocus;
 	} else {
-		$self->find_term->SetFocus;
+		$self->{find_term}->SetFocus;
 	}
 
 	# Hide the Fast Find if visible
@@ -79,9 +79,9 @@ sub run {
 # values are valid
 sub refresh {
 	my $self = shift;
-	my $show = $self->find_term->GetValue ne '';
-	$self->find->Enable($show);
-	$self->replace->Enable($show);
+	my $show = $self->{find_term}->GetValue ne '';
+	$self->{find_term}->Enable($show);
+	$self->{replace_term}->Enable($show);
 }
 
 # Generate a search object for the current dialog state
@@ -89,10 +89,10 @@ sub as_search {
 	my $self = shift;
 	require Padre::Search;
 	Padre::Search->new(
-		find_term    => $self->find_term->SaveValue,
-		find_case    => $self->find_case->GetValue,
-		find_regex   => $self->find_regex->GetValue,
-		replace_term => $self->replace_term->GetValue,
+		find_term    => $self->{find_term}->SaveValue,
+		find_case    => $self->{find_case}->GetValue,
+		find_regex   => $self->{find_regex}->GetValue,
+		replace_term => $self->{replace_term}->GetValue,
 	);
 }
 
