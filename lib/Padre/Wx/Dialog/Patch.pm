@@ -10,7 +10,7 @@ use Padre::Logger;
 
 # use Data::Printer { caller_info => 1 };
 
-our $VERSION = '0.91';
+our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::FBP::Patch
 };
