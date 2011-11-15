@@ -24,6 +24,7 @@ use Padre::Current          ();
 use Padre::Util             ('_T');
 use Padre::DB               ();
 use Wx::Scintilla::Constant ();
+use Wx::Scintilla           ();
 
 our $VERSION = '0.93';
 
@@ -194,7 +195,7 @@ sub _initialize {
 	# lexer => The Scintilla lexer to be used
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
-	my $perl6_scintilla_lexer = Wx::Scintilla::Constant::wxSCINTILLA_LEX_PERL6();
+	my $perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
 
 	%MIME = (
 		'text/x-abc' => {
