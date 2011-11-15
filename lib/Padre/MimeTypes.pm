@@ -17,14 +17,13 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Carp           ();
-use File::Basename ();
-use Padre::Config  ();
-use Padre::Current ();
-use Padre::Util    ('_T');
-use Padre::Wx      ();
-use Padre::DB      ();
-use Wx::Scintilla  ();
+use Carp                    ();
+use File::Basename          ();
+use Padre::Config           ();
+use Padre::Current          ();
+use Padre::Util             ('_T');
+use Padre::DB               ();
+use Wx::Scintilla::Constant ();
 
 our $VERSION = '0.93';
 
@@ -195,27 +194,27 @@ sub _initialize {
 	# lexer => The Scintilla lexer to be used
 
 	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
-	my $perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
+	my $perl6_scintilla_lexer = Wx::Scintilla::Constant::wxSCINTILLA_LEX_PERL6();
 
 	%MIME = (
 		'text/x-abc' => {
 			name  => 'ABC',
-			lexer => Wx::Scintilla::SCLEX_NULL,
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,
 		},
 
 		'text/x-actionscript' => {
 			name  => 'ABC',
-			lexer => Wx::Scintilla::SCLEX_CPP,
+			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 
 		'text/x-adasrc' => {
 			name  => 'Ada',
-			lexer => Wx::Scintilla::SCLEX_ADA, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_ADA, # CONFIRMED
 		},
 
 		'text/x-asm' => {
 			name  => 'Assembly',
-			lexer => Wx::Scintilla::SCLEX_ASM, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_ASM, # CONFIRMED
 		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
@@ -223,189 +222,189 @@ sub _initialize {
 		# they need to be the same
 		'text/x-bat' => {
 			name  => 'Batch',
-			lexer => Wx::Scintilla::SCLEX_BATCH, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_BATCH, # CONFIRMED
 		},
 
 		'application/x-bibtex' => {
 			name  => 'BibTeX',
-			lexer => Wx::Scintilla::SCLEX_NULL,
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,
 		},
 
 		'application/x-bml' => {
 			name  => 'BML',
-			lexer => Wx::Scintilla::SCLEX_NULL,  #
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,  #
 		},
 
 		'text/x-c' => {
 			name  => 'C',
-			lexer => Wx::Scintilla::SCLEX_CPP,
+			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 
 		'text/x-cobol' => {
 			name  => 'COBOL',
-			lexer => 92,                       #TODO Wx::Scintilla::SCLEX_COBOL once it is working
+			lexer => 92,                       #TODO Wx::Scintilla::Constant::SCLEX_COBOL once it is working
 		},
 
 		'text/x-c++src' => {
 			name  => 'C++',
-			lexer => Wx::Scintilla::SCLEX_CPP,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_CPP,   # CONFIRMED
 		},
 
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::Scintilla::SCLEX_CSS,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_CSS,   # CONFIRMED
 		},
 
 		'text/x-eiffel' => {
 			name  => 'Eiffel',
-			lexer => Wx::Scintilla::SCLEX_EIFFEL, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_EIFFEL, # CONFIRMED
 		},
 
 		'text/x-forth' => {
 			name  => 'Forth',
-			lexer => Wx::Scintilla::SCLEX_FORTH,  # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_FORTH,  # CONFIRMED
 		},
 
 		'text/x-fortran' => {
 			name  => 'Fortran',
-			lexer => Wx::Scintilla::SCLEX_FORTRAN, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_FORTRAN, # CONFIRMED
 		},
 
 		'text/x-haskell' => {
 			name  => 'Haskell',
-			lexer => Wx::Scintilla::SCLEX_HASKELL, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_HASKELL, # CONFIRMED
 		},
 
 		'text/html' => {
 			name  => 'HTML',
-			lexer => Wx::Scintilla::SCLEX_HTML,    # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_HTML,    # CONFIRMED
 		},
 
 		'application/javascript' => {
 			name  => 'JavaScript',
-			lexer => Wx::Scintilla::SCLEX_ESCRIPT, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/json' => {
 			name  => 'JSON',
-			lexer => Wx::Scintilla::SCLEX_ESCRIPT, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/x-latex' => {
 			name  => 'LaTeX',
-			lexer => Wx::Scintilla::SCLEX_LATEX,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_LATEX,   # CONFIRMED
 		},
 
 		'application/x-lisp' => {
 			name  => 'LISP',
-			lexer => Wx::Scintilla::SCLEX_LISP,    # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_LISP,    # CONFIRMED
 		},
 
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::Scintilla::SCLEX_DIFF,    # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_DIFF,    # CONFIRMED
 		},
 
 		'application/x-shellscript' => {
 			name  => _T('Shell Script'),
-			lexer => Wx::Scintilla::SCLEX_BASH,
+			lexer => Wx::Scintilla::Constant::SCLEX_BASH,
 		},
 
 		'text/x-java-source' => {
 			name  => 'Java',
-			lexer => Wx::Scintilla::SCLEX_CPP,
+			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 
 		'text/x-lua' => {
 			name  => 'Lua',
-			lexer => Wx::Scintilla::SCLEX_LUA, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_LUA, # CONFIRMED
 		},
 
 		'text/x-makefile' => {
 			name  => 'Makefile',
-			lexer => Wx::Scintilla::SCLEX_MAKEFILE, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_MAKEFILE, # CONFIRMED
 		},
 
 		'text/x-matlab' => {
 			name  => 'Matlab',
-			lexer => Wx::Scintilla::SCLEX_MATLAB,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_MATLAB,   # CONFIRMED
 		},
 
 		'text/x-pascal' => {
 			name  => 'Pascal',
-			lexer => Wx::Scintilla::SCLEX_PASCAL,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_PASCAL,   # CONFIRMED
 		},
 
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer => Wx::Scintilla::SCLEX_PERL,     # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_PERL,     # CONFIRMED
 		},
 		
 		'text/x-povray' => {
 			name  => 'POVRAY',
-			lexer => Wx::Scintilla::SCLEX_POV,
+			lexer => Wx::Scintilla::Constant::SCLEX_POV,
 		},
 
 		'application/x-psgi' => {
 			name  => 'PSGI',
-			lexer => Wx::Scintilla::SCLEX_PERL,     # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_PERL,     # CONFIRMED
 		},
 
 		'text/x-python' => {
 			name  => 'Python',
-			lexer => Wx::Scintilla::SCLEX_PYTHON,   # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_PYTHON,   # CONFIRMED
 		},
 
 		'application/x-php' => {
 			name  => 'PHP',
-			lexer => Wx::Scintilla::SCLEX_PHPSCRIPT, # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_PHPSCRIPT, # CONFIRMED
 		},
 
 		'application/x-ruby' => {
 			name  => 'Ruby',
-			lexer => Wx::Scintilla::SCLEX_RUBY,      # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_RUBY,      # CONFIRMED
 		},
 
 		'text/x-sql' => {
 			name  => 'SQL',
-			lexer => Wx::Scintilla::SCLEX_SQL,       # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_SQL,       # CONFIRMED
 		},
 
 		'application/x-tcl' => {
 			name  => 'Tcl',
-			lexer => Wx::Scintilla::SCLEX_TCL,       # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_TCL,       # CONFIRMED
 		},
 
 		'text/vbscript' => {
 			name  => 'VBScript',
-			lexer => Wx::Scintilla::SCLEX_VBSCRIPT,  # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_VBSCRIPT,  # CONFIRMED
 		},
 
 		'text/x-config' => {
 			name  => 'Config',
-			lexer => Wx::Scintilla::SCLEX_CONF,
+			lexer => Wx::Scintilla::Constant::SCLEX_CONF,
 		},
 
 		# text/xml specifically means "human-readable XML".
 		# This is prefered to the more generic application/xml
 		'text/xml' => {
 			name  => 'XML',
-			lexer => Wx::Scintilla::SCLEX_XML,       # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_XML,       # CONFIRMED
 		},
 
 		'text/x-yaml' => {
 			name  => 'YAML',
-			lexer => Wx::Scintilla::SCLEX_YAML,      # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_YAML,      # CONFIRMED
 		},
 
 		'application/x-pir' => {
 			name  => 'PIR',
-			lexer => Wx::Scintilla::SCLEX_NULL,      # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-pasm' => {
 			name  => 'PASM',
-			lexer => Wx::Scintilla::SCLEX_NULL,      # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-perl6' => {
@@ -415,27 +414,27 @@ sub _initialize {
 
 		'text/plain' => {
 			name  => _T('Text'),
-			lexer => Wx::Scintilla::SCLEX_NULL,      # CONFIRMED
+			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		# Completely custom mime types
 		'text/x-perlxs' => {                       # totally not confirmed
 			name => 'XS',
 			lexer =>
-				Wx::Scintilla::SCLEX_CPP,            # for the lack of a better XS lexer (vim?)
+				Wx::Scintilla::Constant::SCLEX_CPP,            # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
-			lexer => Wx::Scintilla::SCLEX_HTML,
+			lexer => Wx::Scintilla::Constant::SCLEX_HTML,
 		},
 
 		'text/x-csharp' => {
 			name  => 'C#',
-			lexer => Wx::Scintilla::SCLEX_CPP,
+			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 		'text/x-pod' => {
 			name  => 'POD',
-			lexer => Wx::Scintilla::SCLEX_PERL,
+			lexer => Wx::Scintilla::Constant::SCLEX_PERL,
 		},
 	);
 
