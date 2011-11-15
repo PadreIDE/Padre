@@ -1395,12 +1395,12 @@ sub init {
 	) if $main->config->feature_cpan_explorer;
 
 	Padre::Wx::Action->new(
-		name        => 'tools.diff_window',
-		label       => _T('Show diff window!'),
-		comment     => _T('Turn on Diff window'),
-		menu_event  => sub {
+		name       => 'tools.diff_window',
+		label      => _T('Show diff window!'),
+		comment    => _T('Turn on Diff window'),
+		menu_event => sub {
 			require Padre::Wx::Diff2;
-			Padre::Wx::Diff2->new($_[0])->show;
+			Padre::Wx::Diff2->new( $_[0] )->show;
 		},
 	) if $main->config->feature_diff_window;
 
@@ -1446,9 +1446,10 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.vcs',
-		label       => _T('Show V&ersion Control'),
-		comment     => _T('Turn on version control view of the current project and show version control changes in a window'),
+		name  => 'view.vcs',
+		label => _T('Show V&ersion Control'),
+		comment =>
+			_T('Turn on version control view of the current project and show version control changes in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_vcs( $_[0]->menu->view->{vcs}->IsChecked );
@@ -2043,17 +2044,73 @@ sub init {
 	# Debugging
 
 	if (Padre::Feature::DEBUGGER) {
-		
-	Padre::Wx::Action->new(
-		name        => 'debug.breakpoints',
-		label       => _T('Show debug breakpoints'),
-		comment     => _T('Turn on debug breakpoints'),
-		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
-			# $_[0]->show_debug_breakpoints( $_[0]->menu->view->{debug_breakpoints}->IsChecked );
+
+		Padre::Wx::Action->new(
+			name        => 'debug.breakpoints',
+			label       => _T('Show debug breakpoints'),
+			comment     => _T('Turn on debug breakpoints'),
+			menu_method => 'AppendCheckItem',
+			menu_event  => sub {
+
+				# $_[0]->show_debug_breakpoints( $_[0]->menu->view->{debug_breakpoints}->IsChecked );
+			},
+		) if $main->config->feature_debug2;
+
+		Padre::Wx::Action->new(
+			name         => 'debug.launch',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'actions/morpho3',
+			label        => _T('Launch Debugger'),
+			comment      => _T('Launch Debugger'),
+
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+
+				# $_[0]->{debugger} or return;
+				# $_[0]->{debugger}->debug_perl_quit;
+			},
+		) if $main->config->feature_debug2;
+
+		Padre::Wx::Action->new(
+			name         => 'debug.set_breakpoints',
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			toolbar      => 'actions/breakpoints',
+			label        => _T('Set Breakpoints'),
+			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
+
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+
+				# $_[0]->{debugger} or return;
+				# $_[0]->{debugger}->debug_perl_quit;
+			},
+		) if $main->config->feature_debug2;
+
+		Padre::Wx::Action->new(
+			name         => 'debug.quit2',
+			# need_editor  => 1,
+			# need_runable => 1,
+			# need_file    => 1,		
+			need => sub {
+			# $_[0]->main->{command};
 		},
-	) if $main->config->feature_debug2;
-			
+			toolbar      => 'actions/red_cross',
+			label        => _T('Quit Debugger (&q)'),
+			comment      => _T('Quit the process being debugged'),
+
+			#shortcut     => 'Shift-F5',
+			menu_event => sub {
+
+				# $_[0]->{debugger} or return;
+				# $_[0]->{debugger}->debug_perl_quit;
+			},
+		) if $main->config->feature_debug2;
+
+		#debugger v1 follows
 		Padre::Wx::Action->new(
 			name         => 'debug.step_in',
 			need_editor  => 1,
@@ -2069,7 +2126,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_step_in;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.step_over',
@@ -2087,7 +2144,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_step_over;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 		Padre::Wx::Action->new(
 			name         => 'debug.step_out',
@@ -2103,7 +2161,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_step_out;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 		Padre::Wx::Action->new(
 			name         => 'debug.run',
@@ -2119,7 +2178,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_run;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 		Padre::Wx::Action->new(
 			name         => 'debug.jump_to',
@@ -2134,7 +2194,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_jumpt_to;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.set_breakpoint',
@@ -2150,7 +2210,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_set_breakpoint;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 		Padre::Wx::Action->new(
 			name         => 'debug.remove_breakpoint',
@@ -2165,7 +2226,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_remove_breakpoint;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.list_breakpoints',
@@ -2180,7 +2241,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_list_breakpoints;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.run_to_cursor',
@@ -2195,7 +2256,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_run_to_cursor;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.show_stack_trace',
@@ -2210,7 +2271,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_show_stack_trace;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.display_value',
@@ -2226,7 +2287,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_display_value;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 		Padre::Wx::Action->new(
 			name         => 'debug.show_value',
@@ -2241,7 +2303,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_show_value;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.evaluate_expression',
@@ -2256,7 +2318,7 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_evaluate_expression;
 			},
-		);
+		) if !$main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.quit',
@@ -2272,7 +2334,8 @@ sub init {
 				$_[0]->{debugger} or return;
 				$_[0]->{debugger}->debug_perl_quit;
 			},
-		);
+		) if !$main->config->feature_debug2;
+
 
 	}
 
@@ -2505,7 +2568,7 @@ sub init {
 			$_[0]->show_cpan_explorer(1);
 			$_[0]->cpan_explorer->focus_on_search;
 		},
-	)  if $main->config->feature_cpan_explorer;
+	) if $main->config->feature_cpan_explorer;
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',
@@ -2674,12 +2737,11 @@ sub init {
 	# Add interesting and helpful websites
 
 	Padre::Wx::Action->new(
-		name  => 'help.visit_perl_websites',
-		label => _T('Visit Perl Websites...'),
-		comment =>
-			_T( 'Open interesting and helpful Perl websites in your default web browser' ),
+		name       => 'help.visit_perl_websites',
+		label      => _T('Visit Perl Websites...'),
+		comment    => _T('Open interesting and helpful Perl websites in your default web browser'),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/perl.html?padre=' . $VERSION);
+			Padre::Wx::launch_browser( 'http://padre.perlide.org/perl.html?padre=' . $VERSION );
 		},
 	);
 

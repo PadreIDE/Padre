@@ -35,6 +35,22 @@ sub new {
 
 	$self->AppendSeparator if $main->config->feature_debug2;
 
+	$self->{launch} = $self->add_menu_action(
+		'debug.launch',
+	);
+
+	$self->{set_breakpoints} = $self->add_menu_action(
+		'debug.set_breakpoints',
+	);
+
+	$self->AppendSeparator if $main->config->feature_debug2;
+
+	$self->{quit2} = $self->add_menu_action(
+		'debug.quit2',
+	);
+
+	$self->AppendSeparator if $main->config->feature_debug2;
+
 	$self->{step_in} = $self->add_menu_action(
 		'debug.step_in',
 	);
@@ -50,13 +66,14 @@ sub new {
 		'debug.run',
 	);
 
-	$self->AppendSeparator;
+	$self->AppendSeparator if !$main->config->feature_debug2;
 
 	$self->{jump_to} = $self->add_menu_action(
 		'debug.jump_to',
 	);
 
-	$self->AppendSeparator;
+	$self->AppendSeparator if !$main->config->feature_debug2;
+
 
 	$self->{set_breakpoint} = $self->add_menu_action(
 		'debug.set_breakpoint',
@@ -70,7 +87,7 @@ sub new {
 		'debug.list_breakpoints',
 	);
 
-	$self->AppendSeparator;
+	$self->AppendSeparator if !$main->config->feature_debug2;
 
 	$self->{show_stack_trace} = $self->add_menu_action(
 		'debug.show_stack_trace',
@@ -80,7 +97,7 @@ sub new {
 		'debug.display_value',
 	);
 
-	$self->AppendSeparator;
+	$self->AppendSeparator if !$main->config->feature_debug2;
 
 	$self->{show_value} = $self->add_menu_action(
 		'debug.show_value',
@@ -90,7 +107,8 @@ sub new {
 		'debug.evaluate_expression',
 	);
 
-	$self->AppendSeparator;
+	$self->AppendSeparator if !$main->config->feature_debug2;
+
 
 	$self->{quit} = $self->add_menu_action(
 		'debug.quit',
@@ -109,36 +127,24 @@ sub refresh {
 	my $document = Padre::Current::_CURRENT(@_)->document;
 	my $hasdoc   = $document ? 1 : 0;
 
-	$self->{breakpoints}->Enable($hasdoc) if $main->config->feature_debug2;
+	$self->{breakpoints}->Enable(1)     if $main->config->feature_debug2;
+	$self->{launch}->Enable(1)          if $main->config->feature_debug2;
+	$self->{set_breakpoints}->Enable(1) if $main->config->feature_debug2;
+	$self->{quit2}->Enable(1)           if $main->config->feature_debug2;
 
-	$self->{step_in}->Enable($hasdoc);
-	$self->{step_over}->Enable($hasdoc);
-	$self->{step_out}->Enable($hasdoc);
-	$self->{run}->Enable($hasdoc);
-	$self->{jump_to}->Enable($hasdoc);
-	$self->{set_breakpoint}->Enable($hasdoc);
-	$self->{remove_breakpoint}->Enable($hasdoc);
-	$self->{list_breakpoints}->Enable($hasdoc);
-	$self->{show_stack_trace}->Enable($hasdoc);
-	$self->{display_value}->Enable($hasdoc);
-	$self->{show_value}->Enable($hasdoc);
-	$self->{evaluate_expression}->Enable($hasdoc);
-
-	if ( $main->config->feature_debug2 ) {
-
-		$self->{step_in}->Enable(0);
-		$self->{step_over}->Enable(0);
-		$self->{step_out}->Enable(0);
-		$self->{run}->Enable(0);
-		$self->{jump_to}->Enable(0);
-		$self->{set_breakpoint}->Enable(0);
-		$self->{remove_breakpoint}->Enable(0);
-		$self->{list_breakpoints}->Enable(0);
-		$self->{show_stack_trace}->Enable(0);
-		$self->{display_value}->Enable(0);
-		$self->{show_value}->Enable(0);
-		$self->{evaluate_expression}->Enable(0);
-		$self->{quit}->Enable(0);
+	if ( !$main->config->feature_debug2 ) {
+		$self->{step_in}->Enable($hasdoc);
+		$self->{step_over}->Enable($hasdoc);
+		$self->{step_out}->Enable($hasdoc);
+		$self->{run}->Enable($hasdoc);
+		$self->{jump_to}->Enable($hasdoc);
+		$self->{set_breakpoint}->Enable($hasdoc);
+		$self->{remove_breakpoint}->Enable($hasdoc);
+		$self->{list_breakpoints}->Enable($hasdoc);
+		$self->{show_stack_trace}->Enable($hasdoc);
+		$self->{display_value}->Enable($hasdoc);
+		$self->{show_value}->Enable($hasdoc);
+		$self->{evaluate_expression}->Enable($hasdoc);
 	}
 
 	return 1;

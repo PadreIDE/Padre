@@ -831,7 +831,10 @@ setting(
 		. 'debug.run;'
 		. 'debug.set_breakpoint;'
 		. 'debug.display_value;'
-		. 'debug.quit;'
+		. 'debug.quit;'. '|;'
+		. 'debug.launch;'
+		. 'debug.set_breakpoints;'
+		. 'debug.quit2;'. '|;'
 );
 
 # Directory Tree Settings
