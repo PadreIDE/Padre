@@ -2082,25 +2082,26 @@ sub init {
 			label        => _T('Set Breakpoints'),
 			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
-			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-
-				# $_[0]->{debugger} or return;
-				# $_[0]->{debugger}->debug_perl_quit;
+				require Padre::Breakpoints;
+				Padre::Breakpoints->set_breakpoints_clicked();
+				return;
 			},
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
-			name         => 'debug.quit2',
+			name => 'debug.quit2',
+
 			# need_editor  => 1,
 			# need_runable => 1,
-			# need_file    => 1,		
+			# need_file    => 1,
 			need => sub {
-			# $_[0]->main->{command};
-		},
-			toolbar      => 'actions/red_cross',
-			label        => _T('Quit Debugger (&q)'),
-			comment      => _T('Quit the process being debugged'),
+
+				# $_[0]->main->{command};
+			},
+			toolbar => 'actions/red_cross',
+			label   => _T('Quit Debugger (&q)'),
+			comment => _T('Quit the process being debugged'),
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
