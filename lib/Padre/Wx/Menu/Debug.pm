@@ -29,10 +29,15 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
+	$self->{breakpoints} = $self->add_menu_action(
+		'debug.breakpoints',
+	);
+
+	$self->AppendSeparator if $main->config->feature_debug2;
+
 	$self->{step_in} = $self->add_menu_action(
 		'debug.step_in',
 	);
-
 	$self->{step_over} = $self->add_menu_action(
 		'debug.step_over',
 	);
@@ -100,8 +105,11 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
+	my $main     = shift;
 	my $document = Padre::Current::_CURRENT(@_)->document;
 	my $hasdoc   = $document ? 1 : 0;
+
+	$self->{breakpoints}->Enable($hasdoc) if $main->config->feature_debug2;
 
 	$self->{step_in}->Enable($hasdoc);
 	$self->{step_over}->Enable($hasdoc);
@@ -115,6 +123,23 @@ sub refresh {
 	$self->{display_value}->Enable($hasdoc);
 	$self->{show_value}->Enable($hasdoc);
 	$self->{evaluate_expression}->Enable($hasdoc);
+
+	if ( $main->config->feature_debug2 ) {
+
+		$self->{step_in}->Enable(0);
+		$self->{step_over}->Enable(0);
+		$self->{step_out}->Enable(0);
+		$self->{run}->Enable(0);
+		$self->{jump_to}->Enable(0);
+		$self->{set_breakpoint}->Enable(0);
+		$self->{remove_breakpoint}->Enable(0);
+		$self->{list_breakpoints}->Enable(0);
+		$self->{show_stack_trace}->Enable(0);
+		$self->{display_value}->Enable(0);
+		$self->{show_value}->Enable(0);
+		$self->{evaluate_expression}->Enable(0);
+		$self->{quit}->Enable(0);
+	}
 
 	return 1;
 }

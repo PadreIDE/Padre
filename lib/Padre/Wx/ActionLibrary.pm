@@ -2043,7 +2043,17 @@ sub init {
 	# Debugging
 
 	if (Padre::Feature::DEBUGGER) {
-
+		
+	Padre::Wx::Action->new(
+		name        => 'debug.breakpoints',
+		label       => _T('Show debug breakpoints'),
+		comment     => _T('Turn on debug breakpoints'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			# $_[0]->show_debug_breakpoints( $_[0]->menu->view->{debug_breakpoints}->IsChecked );
+		},
+	) if $main->config->feature_debug2;
+			
 		Padre::Wx::Action->new(
 			name         => 'debug.step_in',
 			need_editor  => 1,
