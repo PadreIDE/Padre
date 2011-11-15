@@ -448,33 +448,26 @@ sub _initialize {
 		}
 	}
 
-	# Array ref of objects with value and mime_type fields that have the raw values
+	# Load preferences from configuration
 	__PACKAGE__->load_highlighter_config;
 
 	__PACKAGE__->add_highlighter(
-		'stc', _T('Scintilla'),
-		_T('Fast but might be out of date')
+		'stc',
+		_T('Scintilla'),
 	);
 
 	foreach my $mime ( keys %MIME ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
 	}
 
-	__PACKAGE__->add_highlighter(
-		'stc', _T('Scintilla'),
-		_T('Fast but might be out of date')
-	);
-
 	# Perl 5 specific highlighters
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::Lexer',
 		_T('PPI Experimental'),
-		_T('Slow but accurate and we have full control so bugs can be fixed')
 	);
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::PPILexer',
 		_T('PPI Standard'),
-		_T('Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.')
 	);
 
 	__PACKAGE__->add_highlighter_to_mime_type(
@@ -562,66 +555,30 @@ sub get_mime_class {
 }
 
 sub add_highlighter {
-	my $class       = shift;
-	my $module      = shift;
-	my $human       = shift;
-	my $explanation = shift || '';
+	my $class  = shift;
+	my $module = shift;
+	my $human  = shift;
 
 	if ( not defined $human ) {
 		Carp::Cluck("human name not defined for '$module'\n");
 		return;
 	}
 	$HIGHLIGHTER{$module} = {
-		name        => $human,
-		explanation => $explanation,
+		name => $human,
 	};
-}
-
-sub get_highlighter_explanation {
-	my $class = shift;
-	my $name  = shift;
-
-	my ($highlighter) =
-		grep { $HIGHLIGHTER{$_}->{name} eq $name }
-		keys %HIGHLIGHTER;
-	if ( not $highlighter ) {
-		Carp::cluck("Could not find highlighter for '$name'\n");
-		return '';
-	}
-	return Wx::gettext( $HIGHLIGHTER{$highlighter}->{explanation} );
 }
 
 sub get_highlighter_name {
 	my $class       = shift;
-	my $highlighter = shift;
+	my $module = shift;
 
 	# TO DO this can happen if the user configured highlighter but on the next start
 	# the highlighter is not available any more
 	# we need to handle this situation
-	return '' if !defined($highlighter);
+	return '' if !defined($module);
 	return ''
-		if not $HIGHLIGHTER{$highlighter}; # avoid autovivification
-	return $HIGHLIGHTER{$highlighter}->{name};
-}
-
-# get a hash of mime-type => highlighter
-# update the database
-sub change_highlighters {
-	my $class   = shift;
-	my $changed = shift;
-
-	my %mtn = map { $MIME{$_}->{name} => $_ } keys %MIME;
-	my %highlighters =
-		map { $HIGHLIGHTER{$_}->{name} => $_ }
-		keys %HIGHLIGHTER;
-
-	foreach my $name ( keys %$changed ) {
-		my $type        = $mtn{$name};
-		my $highlighter = $highlighters{ $changed->{$name} };
-		Padre::DB::SyntaxHighlight->set_mime_type( $type, $highlighter );
-	}
-
-	$class->load_highlighter_config;
+		if not $HIGHLIGHTER{$module}; # avoid autovivification
+	return $HIGHLIGHTER{$module}->{name};
 }
 
 sub load_highlighter_config {
@@ -649,23 +606,6 @@ sub load_highlighter_config {
 	}
 }
 
-# returns hash of mime_type => highlighter
-sub get_current_highlighters {
-	map { $_ => $MIME{$_}->{current_highlighter} } keys %MIME;
-}
-
-# returns hash-ref of mime_type_name => highlighter_name
-sub get_current_highlighter_names {
-	my $class = shift;
-	my %hash  = ();
-
-	foreach my $type ( keys %MIME ) {
-		$hash{ $class->get_mime_type_name($type) } =
-			$class->get_highlighter_name( $MIME{$type}->{current_highlighter} );
-	}
-	return \%hash;
-}
-
 sub get_current_highlighter_of_mime_type {
 	return $MIME{ $_[1] }->{current_highlighter};
 }
@@ -679,15 +619,6 @@ sub add_highlighter_to_mime_type {
 	$MIME{$mime}->{highlighters}->{$module} = 1;
 }
 
-sub remove_highlighter_from_mime_type {
-	my $class  = shift;
-	my $mime   = shift;
-	my $module = shift;
-
-	# TO DO check overwrite
-	delete $MIME{$mime}->{highlighters}->{$module};
-}
-
 # return the MIME types ordered according to their display name
 sub get_mime_types {
 	return [
@@ -699,9 +630,8 @@ sub get_mime_types {
 # return the display-names of the MIME types ordered according to the display names
 sub get_mime_type_names {
 	my $class = shift;
-
-	return [ map { $MIME{$_}->{name} } @{ $class->get_mime_types } ]; # Need to be checked with non Western languages
-
+	# Need to be checked with non Western languages
+	return [ map { $MIME{$_}->{name} } @{ $class->get_mime_types } ];
 }
 
 # given a MIME type
@@ -714,28 +644,6 @@ sub get_mime_type_name {
 			or not $MIME{$type}
 			or not $MIME{$type}->{name};
 	return Wx::gettext( $MIME{$type}->{name} );
-}
-
-# given a MIME type
-# return the display names of the available highlighters
-sub get_highlighters_of_mime_type {
-	my $class = shift;
-	my $type  = shift;
-	my @names = map { __PACKAGE__->get_highlighter_name($_) } sort keys %{ $MIME{$type}->{highlighters} };
-	return \@names;
-}
-
-# given the display name of a MIME type
-# return the display names of the available highlighters
-sub get_highlighters_of_mime_type_name {
-	my ( $class, $name ) = @_;
-	my ($type) =
-		grep { $MIME{$_}->{name} eq $name } keys %MIME;
-	if ( not $type ) {
-		warn "Could not find the MIME type of the display name '$name'\n";
-		return []; # return [] to avoid crash
-	}
-	$class->get_highlighters_of_mime_type($type);
 }
 
 
@@ -1031,7 +939,6 @@ sub menu_view_mimes {
 	}
 	return %menu_view_mimes;
 }
-
 
 1;
 
