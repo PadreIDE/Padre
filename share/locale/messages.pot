@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-14 08:10-0800\n"
+"POT-Creation-Date: 2011-11-15 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2318,10 +2318,6 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:456 lib/Padre/MimeTypes.pm:465
-msgid "Fast but might be out of date"
-msgstr ""
-
 #: lib/Padre/Wx/Syntax.pm:61
 msgid "Fatal Error"
 msgstr ""
@@ -2691,12 +2687,6 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:477
-msgid ""
-"Hopefully faster than the PPI Traditional. Big file will fall back to "
-"Scintilla highlighter."
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Advanced.pm:819
 msgid "Host"
 msgstr ""
@@ -3042,17 +3032,17 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:531
+#: lib/Padre/MimeTypes.pm:524
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:520 lib/Padre/MimeTypes.pm:553
+#: lib/Padre/MimeTypes.pm:513 lib/Padre/MimeTypes.pm:546
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:502
+#: lib/Padre/MimeTypes.pm:495
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3678,11 +3668,13 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:471 lib/Padre/Config.pm:1149
+#: lib/Padre/MimeTypes.pm:466 lib/Padre/Config.pm:1149
+#: lib/Padre/Wx/Scintilla.pm:89
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:476 lib/Padre/Config.pm:1150
+#: lib/Padre/MimeTypes.pm:470 lib/Padre/Config.pm:1150
+#: lib/Padre/Wx/Scintilla.pm:95
 msgid "PPI Standard"
 msgstr ""
 
@@ -4517,8 +4509,7 @@ msgstr ""
 msgid "Schedule the file or directory for deletion from the repository"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:455 lib/Padre/MimeTypes.pm:464
-#: lib/Padre/Config.pm:1148
+#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1148
 msgid "Scintilla"
 msgstr ""
 
@@ -5138,10 +5129,6 @@ msgstr ""
 msgid "Skipped for large files"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:472
-msgid "Slow but accurate and we have full control so bugs can be fixed"
-msgstr ""
-
 #: lib/Padre/Wx/FBP/Snippet.pm:60
 msgid "Snippet"
 msgstr ""
@@ -5467,7 +5454,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:712
+#: lib/Padre/MimeTypes.pm:642
 msgid "UNKNOWN"
 msgstr ""
 
