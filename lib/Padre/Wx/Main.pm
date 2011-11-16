@@ -2626,9 +2626,9 @@ sub _show_panel_breakpoints {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->left->show( $self->{panel_breakpoints} );
+		$self->left->show( $self->panel_breakpoints );
 	} elsif ( $self->has_panel_breakpoints ) {
-		$self->left->hide( $self->{panel_breakpoints} );
+		$self->left->hide( $self->panel_breakpoints );
 		delete $self->{panel_breakpoints};
 	}
 }
