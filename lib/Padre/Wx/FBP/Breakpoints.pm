@@ -127,7 +127,7 @@ sub new {
 		Wx::BU_AUTODRAW(),
 	);
 	$self->{delete_project_bp}->SetToolTip(
-		Wx::gettext("TODO delete_project_bp")
+		Wx::gettext("Delete all project Breakpoints")
 	);
 
 	Wx::Event::EVT_BUTTON(
