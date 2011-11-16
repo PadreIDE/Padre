@@ -1691,6 +1691,10 @@ sub text_with_one_nl {
 	return $text;
 }
 
+# Don't use this method if you can avoid it, as it is relatively
+# slow and runs in the foreground. Do whatever work you need to do
+# and produce the delta in the background first, and only apply it
+# the delta in the foreground via text_delta instead.
 sub text_replace {
 	my $self = shift;
 	my $to   = shift;
@@ -1698,11 +1702,8 @@ sub text_replace {
 
 	# Generate a delta and apply it
 	require Padre::Delta;
-
-	#TODO Please implement the text_patch method or remove
-	#$self->text_patch(
-	#	Padre::Delta->from_scalars( \$from, \$to )
-	#);
+	my $delta = Padre::Delta->from_scalars( \$from => \$to );
+	return $self->text_delta($delta);
 }
 
 sub text_delta {
