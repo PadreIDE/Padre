@@ -47,6 +47,10 @@ sub mode {
 	$_[0]->{mode};
 }
 
+sub null {
+	! scalar @{ $_[0]->{targets} };
+}
+
 sub from_diff {
 	my $class   = shift;
 	my @targets = ();
