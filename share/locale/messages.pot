@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-15 20:10-0800\n"
+"POT-Creation-Date: 2011-11-16 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -971,11 +971,11 @@ msgstr ""
 msgid "Automatic indentation style detection"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:293
+#: lib/Padre/Wx/StatusBar.pm:274
 msgid "Background Tasks are running"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:294
+#: lib/Padre/Wx/StatusBar.pm:275
 msgid "Background Tasks are running with high load"
 msgstr ""
 
@@ -2081,7 +2081,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1204 lib/Padre/Wx/Editor.pm:724
+#: lib/Padre/Document.pm:1204 lib/Padre/Wx/Editor.pm:729
 #: lib/Padre/Wx/Main.pm:5115 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2523,7 +2523,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1545
+#: lib/Padre/Wx/Editor.pm:1580
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -4055,7 +4055,7 @@ msgstr ""
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:435
+#: lib/Padre/Wx/StatusBar.pm:416
 msgid "R/W"
 msgstr ""
 
@@ -4079,7 +4079,7 @@ msgstr ""
 msgid "Re&set My plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:435
+#: lib/Padre/Wx/StatusBar.pm:416
 msgid "Read Only"
 msgstr ""
 
@@ -5159,7 +5159,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:2110 lib/Padre/Document.pm:2111
+#: lib/Padre/Document.pm:2112 lib/Padre/Document.pm:2113
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5543,7 +5543,7 @@ msgstr ""
 msgid "Unmodified"
 msgstr ""
 
-#: lib/Padre/Document.pm:1759
+#: lib/Padre/Document.pm:1761
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5801,7 +5801,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1529
+#: lib/Padre/Wx/Editor.pm:1564
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5849,7 +5849,7 @@ msgstr ""
 msgid "loaded"
 msgstr ""
 
-#: lib/Padre/Document.pm:1737
+#: lib/Padre/Document.pm:1739
 #, perl-format
 msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
