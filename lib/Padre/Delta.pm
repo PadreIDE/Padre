@@ -154,7 +154,7 @@ sub to_editor {
 			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
 			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
 			$editor->BeginUndoAction unless $changed++;
-			$editor->ReplaceText( $target->{text} );
+			$editor->ReplaceTarget( $target->{text} );
 		}
 	} else {
 		die "Unexpected delta mode '$mode'";
