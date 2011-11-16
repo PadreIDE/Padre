@@ -1712,8 +1712,6 @@ sub text_delta {
 	unless ( $delta->null ) {
 		my $editor = $self->editor;
 		$delta->to_editor($editor);
-		$DB::single = 1;
-		1;
 	}
 	return 1;
 }

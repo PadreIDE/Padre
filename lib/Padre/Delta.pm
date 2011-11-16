@@ -110,7 +110,7 @@ sub from_diff {
 		}
 	}
 
-	return $class->new( 'line', @targets );
+	return $class->new( 'line', reverse @targets );
 }
 
 sub from_scalars {
