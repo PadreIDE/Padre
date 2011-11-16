@@ -29,8 +29,8 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	$self->{breakpoints} = $self->add_menu_action(
-		'debug.breakpoints',
+	$self->{panel_breakpoints} = $self->add_menu_action(
+		'debug.panel_breakpoints',
 	);
 
 	$self->AppendSeparator if $main->config->feature_debug2;
@@ -124,10 +124,12 @@ sub title {
 sub refresh {
 	my $self     = shift;
 	my $main     = shift;
+	my $current  = Padre::Current::_CURRENT(@_);
+	my $config   = $current->config;
 	my $document = Padre::Current::_CURRENT(@_)->document;
-	my $hasdoc   = $document ? 1 : 0;
+	my $hasdoc   = $document ? 1 : 0;	
 
-	$self->{breakpoints}->Enable(1)     if $main->config->feature_debug2;
+	$self->{panel_breakpoints}->Check( $config->main_panel_breakpoints ) if $main->config->feature_debug2;
 	$self->{launch}->Enable(1)          if $main->config->feature_debug2;
 	$self->{set_breakpoints}->Enable(1) if $main->config->feature_debug2;
 	$self->{quit2}->Enable(1)           if $main->config->feature_debug2;

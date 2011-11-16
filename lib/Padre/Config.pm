@@ -770,6 +770,20 @@ setting(
 	},
 );
 setting(
+	name    => 'main_panel_breakpoints',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->debug->{panel_breakpoints};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_panel_breakpoints($on);
+		$main->aui->Update;
+	},
+);
+setting(
 	name    => 'main_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

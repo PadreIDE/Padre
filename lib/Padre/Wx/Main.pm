@@ -323,6 +323,8 @@ sub new {
 	$self->_show_vcs( $config->main_vcs ) if $config->feature_vcs_support;
 	$self->_show_cpan_explorer( $config->main_cpan_explorer )
 		if $config->feature_cpan_explorer;
+	$self->_show_panel_breakpoints( $config->main_panel_breakpoints )
+		if $config->feature_debug2;
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -542,25 +544,26 @@ use Class::XSAccessor {
 	predicates => {
 
 		# Needed for lazily-constructed GUI elements
-		has_about          => 'about',
-		has_left           => 'left',
-		has_right          => 'right',
-		has_bottom         => 'bottom',
-		has_output         => 'output',
-		has_command_line   => 'command_line',
-		has_syntax         => 'syntax',
-		has_vcs		   => 'vcs',
-		has_cpan_explorer  => 'cpan_explorer',
-		has_functions      => 'functions',
-		has_todo           => 'todo',
-		has_debugger       => 'debugger',
-		has_find           => 'find',
-		has_findfast       => 'findfast',
-		has_replace        => 'replace',
-		has_outline        => 'outline',
-		has_directory      => 'directory',
-		has_findinfiles    => 'findinfiles',
-		has_replaceinfiles => 'replaceinfiles',
+		has_about             => 'about',
+		has_left              => 'left',
+		has_right             => 'right',
+		has_bottom            => 'bottom',
+		has_panel_breakpoints => 'panel_breakpoints',
+		has_output            => 'output',
+		has_command_line      => 'command_line',
+		has_syntax            => 'syntax',
+		has_vcs               => 'vcs',
+		has_cpan_explorer     => 'cpan_explorer',
+		has_functions         => 'functions',
+		has_todo              => 'todo',
+		has_debugger          => 'debugger',
+		has_find              => 'find',
+		has_findfast          => 'findfast',
+		has_replace           => 'replace',
+		has_outline           => 'outline',
+		has_directory         => 'directory',
+		has_findinfiles       => 'findinfiles',
+		has_replaceinfiles    => 'replaceinfiles',
 	},
 	getters => {
 
@@ -700,6 +703,15 @@ sub cpan_explorer {
 		$self->{cpan_explorer} = Padre::Wx::CPAN2->new($self);
 	}
 	return $self->{cpan_explorer};
+}
+
+sub panel_breakpoints {
+	my $self = shift;
+	unless ( defined $self->{panel_breakpoints} ) {
+		require Padre::Wx::Panel::Breakpoints;
+		$self->{panel_breakpoints} = Padre::Wx::Panel::Breakpoints->new($self);
+	}
+	return $self->{panel_breakpoints};
 }
 
 sub diff {
@@ -2586,6 +2598,43 @@ sub _show_cpan_explorer {
 
 =pod
 
+=head3 C<show_panel_breakpoints>
+
+    $main->show_panel_breakpoints( $visible );
+
+Show the version control panel at the left if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+
+sub show_panel_breakpoints {
+	my $self = shift;
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $show == $self->menu->debug->{panel_breakpoints}->IsChecked ) {
+		$self->menu->debug->{panel_breakpoints}->Check($show);
+	}
+
+	$self->config->set( main_panel_breakpoints => $show );
+	$self->_show_panel_breakpoints($show);
+	$self->aui->Update;
+
+return;
+}
+
+sub _show_panel_breakpoints {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->left->show( $self->{panel_breakpoints} );
+	} elsif ( $self->has_panel_breakpoints ) {
+		$self->left->hide( $self->{panel_breakpoints} );
+		delete $self->{panel_breakpoints};
+	}
+}
+
+=pod
+
 =head2 Introspection
 
 The following methods allow to poke into Padre's internals.
@@ -2922,6 +2971,7 @@ sub run_command {
 				}
 			}
 		} elsif (Padre::Constant::UNIX) {
+
 			# tome
 		} else {
 			system qq(xterm -sb -e "$cmd; sleep 1000" &);
@@ -4059,7 +4109,7 @@ sub setup_editor {
 	TRACE("Document created for '$file'") if DEBUG;
 
 	require Padre::Wx::Editor;
-	my $lock   = $self->lock( 'REFRESH', 'update_last_session', 'refresh_menu' );
+	my $lock = $self->lock( 'REFRESH', 'update_last_session', 'refresh_menu' );
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $document;
 	$document->set_editor($editor);
@@ -5757,7 +5807,8 @@ sub editor_rightmargin {
 	$self->config->set( editor_right_margin_enable => $show );
 
 	my $column = $self->config->editor_right_margin_column;
-	my $mode   = $show
+	my $mode =
+		$show
 		? Wx::Scintilla::Constant::EDGE_LINE
 		: Wx::Scintilla::Constant::EDGE_NONE;
 
@@ -5842,7 +5893,8 @@ sub editor_whitespace {
 	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_whitespace => $show );
 
-	my $mode = $show
+	my $mode =
+		$show
 		? Wx::Scintilla::Constant::SCWS_VISIBLEALWAYS
 		: Wx::Scintilla::Constant::SCWS_INVISIBLE;
 
@@ -5872,8 +5924,9 @@ sub on_word_wrap {
 		$self->menu->view->{word_wrap}->Check($show);
 	}
 
-	my $doc  = $self->current->document or return;
-	my $mode = $show
+	my $doc = $self->current->document or return;
+	my $mode =
+		$show
 		? Wx::Scintilla::Constant::SC_WRAP_WORD
 		: Wx::Scintilla::Constant::SC_WRAP_NONE;
 
@@ -6721,7 +6774,7 @@ sub key_up {
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::MOD_ALT + Wx::MOD_CMD + Wx::MOD_SHIFT );
 	if ( $mod == Wx::MOD_CMD ) { # Ctrl
-		# Ctrl-TAB TO DO it is already in the menu
+		                         # Ctrl-TAB TO DO it is already in the menu
 		if ( $code == Wx::K_TAB ) {
 			&{ $self->ide->actions->{'window.next_file'}->menu_event }( $self, $event );
 		}
