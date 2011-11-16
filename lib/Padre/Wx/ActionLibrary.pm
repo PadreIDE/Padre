@@ -2050,16 +2050,13 @@ sub init {
 			label       => _T('Show debug breakpoints panel'),
 			comment     => _T('Turn on debug breakpoints panel'),
 			menu_method => 'AppendCheckItem',
-			menu_event => sub {
+			menu_event  => sub {
 				$_[0]->show_panel_breakpoints( $_[0]->menu->debug->{panel_breakpoints}->IsChecked );
-			# silly me this is for dialogs :(
-			# require Padre::Wx::Panel::Breakpoints;
-			# my $dialog = Padre::Wx::Panel::Breakpoints->new( $_[0] );
-			# $dialog->run;
-			# $dialog->Destroy;
-			return;
-		},
-			
+				if ( $_[0]->{panel_breakpoints} ) {
+					$_[0]->{panel_breakpoints}->on_refresh_click();
+				}
+			},
+
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
@@ -2089,9 +2086,11 @@ sub init {
 			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
+
 				#todo use breakpoint panel if loaded instead
 				require Padre::Breakpoints;
 				Padre::Breakpoints->set_breakpoints_clicked();
+
 				# Padre::Breakpoints->show_breakpoints();
 				return;
 			},
