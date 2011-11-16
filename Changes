@@ -14,6 +14,11 @@ Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
 0.94 TBA
+    - Completed the Padre::Delta module for applying document updates, diffs or
+      other small automated changes to a document without moving the scroll
+      position or cursor (ADAMK)
+    - The modification indicator on the notebook tab is now set correctly even
+      during automated mass document changes (ADAMK)
 
 0.93 Development version, not released
     - No incompatible API changes during the 0.94 release cycle
