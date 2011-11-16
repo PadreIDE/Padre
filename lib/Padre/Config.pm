@@ -784,6 +784,20 @@ setting(
 	},
 );
 setting(
+	name    => 'main_panel_debug_output',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	apply   => sub {
+		my $main = shift;
+		my $on   = shift;
+		my $item = $main->menu->debug->{panel_debug_output};
+		$item->Check($on) if $on != $item->IsChecked;
+		$main->_show_panel_debug_output($on);
+		$main->aui->Update;
+	},
+);
+setting(
 	name    => 'main_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

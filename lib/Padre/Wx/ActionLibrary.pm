@@ -2047,7 +2047,7 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name        => 'debug.panel_breakpoints',
-			label       => _T('Show debug breakpoints panel'),
+			label       => _T('Show Debug Breakpoints'),
 			comment     => _T('Turn on debug breakpoints panel'),
 			menu_method => 'AppendCheckItem',
 			menu_event  => sub {
@@ -2057,6 +2057,16 @@ sub init {
 				}
 			},
 
+		) if $main->config->feature_debug2;
+
+		Padre::Wx::Action->new(
+			name        => 'debug.panel_debug_output',
+			label       => _T('Show Debug Output'),
+			comment     => _T('We should not need this menu item'),
+			menu_method => 'AppendCheckItem',
+			menu_event  => sub {
+				$_[0]->show_panel_debug_output( $_[0]->menu->debug->{panel_debug_output}->IsChecked );
+			},
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
@@ -2070,9 +2080,10 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-
-				# $_[0]->{debugger} or return;
-				# $_[0]->{debugger}->debug_perl_quit;
+				$_[0]->show_panel_breakpoints(1);
+				if ( $_[0]->{panel_breakpoints} ) {
+					$_[0]->{panel_breakpoints}->on_refresh_click();
+				}
 			},
 		) if $main->config->feature_debug2;
 

@@ -325,7 +325,9 @@ sub new {
 		if $config->feature_cpan_explorer;
 	$self->_show_panel_breakpoints( $config->main_panel_breakpoints )
 		if $config->feature_debug2;
-
+	$self->_show_panel_debug_output( $config->main_panel_debug_output )
+		if $config->feature_debug2;
+		
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
 
@@ -549,6 +551,7 @@ use Class::XSAccessor {
 		has_right             => 'right',
 		has_bottom            => 'bottom',
 		has_panel_breakpoints => 'panel_breakpoints',
+		has_panel_debug_output => 'panel_debug_output',
 		has_output            => 'output',
 		has_command_line      => 'command_line',
 		has_syntax            => 'syntax',
@@ -712,6 +715,15 @@ sub panel_breakpoints {
 		$self->{panel_breakpoints} = Padre::Wx::Panel::Breakpoints->new($self);
 	}
 	return $self->{panel_breakpoints};
+}
+
+sub panel_debug_output {
+	my $self = shift;
+	unless ( defined $self->{panel_debug_output} ) {
+		require Padre::Wx::Panel::DebugOutput;
+		$self->{panel_debug_output} = Padre::Wx::Panel::DebugOutput->new($self);
+	}
+	return $self->{panel_debug_output};
 }
 
 sub diff {
@@ -2633,6 +2645,41 @@ sub _show_panel_breakpoints {
 	}
 }
 
+=pod
+
+=head3 C<show_panel_debug_output>
+
+    $main->show_panel_debug_output( $visible );
+
+Show the version control panel at the left if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+sub show_panel_debug_output {
+	my $self = shift;
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $show == $self->menu->debug->{panel_debug_output}->IsChecked ) {
+		$self->menu->debug->{panel_debug_output}->Check($show);
+	}
+
+	$self->config->set( main_panel_debug_output => $show );
+	$self->_show_panel_debug_output($show);
+	$self->aui->Update;
+
+return;
+}
+
+sub _show_panel_debug_output {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->bottom->show( $self->panel_debug_output );
+	} elsif ( $self->has_panel_debug_output ) {
+		$self->bottom->hide( $self->panel_debug_output );
+		delete $self->{panel_debug_output};
+	}
+}
 =pod
 
 =head2 Introspection
