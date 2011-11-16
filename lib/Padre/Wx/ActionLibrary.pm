@@ -2086,12 +2086,12 @@ sub init {
 			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
-
-				#todo use breakpoint panel if loaded instead
-				require Padre::Breakpoints;
-				Padre::Breakpoints->set_breakpoints_clicked();
-
-				# Padre::Breakpoints->show_breakpoints();
+				if ( $_[0]->{panel_breakpoints} ) {
+					$_[0]->{panel_breakpoints}->set_breakpoints_clicked();
+				} else {
+					require Padre::Breakpoints;
+					Padre::Breakpoints->set_breakpoints_clicked();
+				}
 				return;
 			},
 		) if $main->config->feature_debug2;
