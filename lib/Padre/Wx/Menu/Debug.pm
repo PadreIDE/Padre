@@ -37,6 +37,10 @@ sub new {
 		'debug.panel_debug_output',
 	);
 	
+	$self->{panel_debugger} = $self->add_menu_action(
+		'debug.panel_debugger',
+	);
+	
 	$self->AppendSeparator if $main->config->feature_debug2;
 
 	$self->{launch} = $self->add_menu_action(
@@ -135,6 +139,7 @@ sub refresh {
 
 	$self->{panel_breakpoints}->Check( $config->main_panel_breakpoints ) if $main->config->feature_debug2;
 	$self->{panel_debug_output}->Check( $config->main_panel_debug_output ) if $main->config->feature_debug2;
+	$self->{panel_debugger}->Check( $config->main_panel_debugger ) if $main->config->feature_debug2;
 	
 	$self->{launch}->Enable(1)          if $main->config->feature_debug2;
 	$self->{set_breakpoints}->Enable(1) if $main->config->feature_debug2;

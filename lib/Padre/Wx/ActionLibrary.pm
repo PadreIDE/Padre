@@ -2070,6 +2070,16 @@ sub init {
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
+			name        => 'debug.panel_debugger',
+			label       => _T('Show Debugger'),
+			comment     => _T('We should not need this menu item'),
+			menu_method => 'AppendCheckItem',
+			menu_event  => sub {
+				$_[0]->show_panel_debugger( $_[0]->menu->debug->{panel_debugger}->IsChecked );
+			},
+		) if $main->config->feature_debug2;
+
+		Padre::Wx::Action->new(
 			name         => 'debug.launch',
 			need_editor  => 1,
 			need_runable => 1,
@@ -2084,6 +2094,8 @@ sub init {
 				if ( $_[0]->{panel_breakpoints} ) {
 					$_[0]->{panel_breakpoints}->on_refresh_click();
 				}
+				$_[0]->show_panel_debugger(1);
+				$_[0]->{panel_debugger}->on_debug_clicked();
 			},
 		) if $main->config->feature_debug2;
 
@@ -2109,23 +2121,22 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name => 'debug.quit2',
-
-			# need_editor  => 1,
-			# need_runable => 1,
-			# need_file    => 1,
-			need => sub {
-
-				# $_[0]->main->{command};
-			},
+			need_editor  => 1,
+			need_runable => 1,
+			need_file    => 1,
+			#todo make this dynamic
+			# need => sub {
+				# $_[0]->{panel_debugger};
+			# },
 			toolbar => 'actions/red_cross',
 			label   => _T('Quit Debugger (&q)'),
 			comment => _T('Quit the process being debugged'),
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-
-				# $_[0]->{debugger} or return;
-				# $_[0]->{debugger}->debug_perl_quit;
+				if ( $_[0]->{panel_debugger} ) {
+					$_[0]->{panel_debugger}->on_quit_debugger_clicked();
+				}
 			},
 		) if $main->config->feature_debug2;
 
