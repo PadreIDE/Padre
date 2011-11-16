@@ -138,8 +138,8 @@ sub to_editor {
 	my $targets = $self->{targets};
 	my $changed = 0;
 
-	# Apply positions based on raw positions
 	if ( $mode eq 'position' ) {
+		# Apply positions based on raw positions
 		foreach my $target (@$targets) {
 			$editor->SetTargetStart( $target->{start} );
 			$editor->SetTargetEnd( $target->{end} );
@@ -147,15 +147,15 @@ sub to_editor {
 			$editor->ReplaceTarget( $target->{text} );
 		}
 
-		# Apply positions based on lines
 	} elsif ( $mode eq 'line' ) {
-
+		# Apply positions based on lines
 		foreach my $target (@$targets) {
 			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
 			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
 			$editor->BeginUndoAction unless $changed++;
 			$editor->ReplaceTarget( $target->{text} );
 		}
+
 	} else {
 		die "Unexpected delta mode '$mode'";
 	}
