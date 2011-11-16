@@ -1709,7 +1709,7 @@ sub text_replace {
 sub text_delta {
 	my $self = shift;
 	my $delta = Params::Util::_INSTANCE( shift, 'Padre::Delta' ) or return;
-	$delta->apply( $self->editor );
+	$delta->to_editor( $self->editor );
 }
 
 
