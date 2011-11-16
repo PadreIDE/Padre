@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Time::HiRes               ();
+use Params::Util              ();
 use Wx::Scintilla        0.34 ();
 use Padre::Constant           ();
 use Padre::Config             ();
@@ -260,6 +261,10 @@ sub new {
 	$self->setup_common;
 
 	return $self;
+}
+
+sub notebook {
+	Params::Util::_INSTANCE($_[0]->GetParent, 'Padre::Wx::Notebook');
 }
 
 
@@ -920,6 +925,36 @@ sub select_to_matching_brace {
 	my $pos2 = $self->find_matching_brace($pos) or return;
 	my $start = ( $pos < $pos2 ) ? $self->GetSelectionStart : $self->GetSelectionEnd;
 	$self->SetSelection( $start, $pos2 );
+}
+
+sub refresh_notebook {
+	my $self     = shift;
+	my $document = $self->{Document} or return;
+	my $notebook = Params::Util::_INSTANCE(
+		$self->GetParent,
+		'Padre::Wx::Notebook',
+	) or return;
+
+	# Find the page we are in
+	my $id = $notebook->GetPageIndex($self);
+	return if $id == Wx::wxNOT_FOUND;
+
+	# Generate the page title
+	my $old      = $notebook->GetPageText($id);
+	my $filename = $document->filename || '';
+	my $modified = $self->GetModify ? '*' : ' ';
+	my $title    = $modified . (
+		$filename
+		? File::Basename::basename($filename)
+		: substr( $old, 1 )
+	);
+
+	# Fixed ticket #190: Massive GDI object leakages
+	# http://padre.perlide.org/ticket/190
+	# Please remember to call SetPageText once per the same text
+	# This still leaks but far less slowly (just on undo)
+	return if $old eq $title;
+	$notebook->SetPageText( $id, $title );
 }
 
 sub refresh_line_numbers {

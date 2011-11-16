@@ -6238,7 +6238,7 @@ sub on_stc_update_ui {
 
 	# Avoid refreshing the subs as that takes a lot of time
 	# TO DO maybe we should refresh it on every 20s hit or so
-	# $self->refresh_menu;
+	$editor->refresh_notebook;
 	$self->refresh_toolbar($current);
 
 	# $self->refresh_status($current);

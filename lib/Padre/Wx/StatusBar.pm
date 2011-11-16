@@ -180,20 +180,10 @@ sub refresh {
 
 	# Prepare the various strings that form the status bar
 	my $main     = $self->{main};
-	my $notebook = $current->notebook;
 	my $document = $current->document;
 	my $newline  = $document->newline_type || Padre::Constant::NEWLINE;
-	my $pageid   = $notebook->GetSelection;
-	my $old      = $notebook->GetPageText($pageid);
-	my $filename = $document->filename || '';
-	my $text =
-		$filename
-		? File::Basename::basename($filename)
-		: substr( $old, 1 );
 	$self->{_last_editor}   = $editor;
 	$self->{_last_modified} = $editor->GetModify;
-	my $modified       = $self->{_last_modified} ? '*' : ' ';
-	my $title          = $modified . $text;
 	my $position       = $editor->GetCurrentPos;
 	my $line           = $editor->GetCurrentLine;
 	my $start          = $editor->PositionFromLine($line);
@@ -207,7 +197,6 @@ sub refresh {
 	# Set some defaults to advoid "use of uninittialized value" - messages:
 	$mime_type_name = '???' if !defined($mime_type_name);
 
-	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
 	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
 	my $length   = length( $lines + 1 ) + 8;
 	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
@@ -245,14 +234,6 @@ sub refresh {
 
 	# Move the static bitmap holding the task load status
 	$self->_move_bitmap;
-
-	# Fixed ticket #190: Massive GDI object leakages
-	# http://padre.perlide.org/ticket/190
-	# Please remember to call SetPageText once per the same text
-	# This still leaks but far less slowly (just on undo)
-	if ( $old ne $title ) {
-		$notebook->SetPageText( $pageid, $title );
-	}
 
 	return;
 }

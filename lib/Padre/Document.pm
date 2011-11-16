@@ -1671,6 +1671,7 @@ sub text_length {
 
 sub text_set {
 	$_[0]->editor->SetText( $_[1] );
+	$_[0]->editor->refresh_notebook;
 }
 
 sub text_like {
@@ -1712,6 +1713,7 @@ sub text_delta {
 	unless ( $delta->null ) {
 		my $editor = $self->editor;
 		$delta->to_editor($editor);
+		$editor->refresh_notebook;
 	}
 	return 1;
 }
