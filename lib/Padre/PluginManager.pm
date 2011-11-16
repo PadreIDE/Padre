@@ -691,7 +691,7 @@ sub compatible {
 
 			# Find the unloaded file
 			my $file = Class::Inspector->resolved_filename($module);
-			unless ( defined $file ) {
+			unless ( defined $file and length $file ) {
 				return "$module is not installed or undetectable";
 			}
 
