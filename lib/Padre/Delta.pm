@@ -56,58 +56,58 @@ sub from_diff {
 	my @targets = ();
 
 	# Build the series of target replacements
-	while (@_) {
-		my $lines  = 0;
-		my $target = {
-			start => 0,
-			end   => 0,
-			text  => '',
-		};
+	while ( @_ ) {
+		my @hunk = @{shift()};
+		while ( @hunk ) {
+			my $lines  = 0;
+			my $target = {
+				start => 0,
+				end   => 0,
+				text  => '',
+			};
 
-		if ( $_[0]->[0] eq '+' ) {
+			if ( $hunk[0]->[0] eq '+' ) {
 
-			# The start and end of the target is the beginning of
-			# the insertion record.
-			my $change = shift;
-			my $mode   = $change->[0];
-			my $line   = $change->[1];
-			my $text   = $change->[2];
-			$target->{start} = $line;
-			$target->{end}   = $line;
-			$target->{text}  = $text . "\n";
-			$lines           = 1;
+				# The start and end of the target is the beginning of
+				# the insertion record.
+				my $change = shift @hunk;
+				my $mode   = $change->[0];
+				my $line   = $change->[1];
+				my $text   = $change->[2];
+				$target->{start} = $line;
+				$target->{end}   = $line;
+				$target->{text}  = $text . "\n";
+				$lines           = 1;
 
-		} else {
+			} else {
 
-			# The change starts with a removal block
-			my $change = shift;
-			my $mode   = $change->[0];
-			my $line   = $change->[1];
-			my $text   = $change->[2];
-			$target->{start} = $line;
-			$target->{end}   = $line + 1;
+				# The change starts with a removal block
+				my $change = shift @hunk;
+				my $mode   = $change->[0];
+				my $line   = $change->[1];
+				my $text   = $change->[2];
+				$target->{start} = $line;
+				$target->{end}   = $line + 1;
 
-			# Append any additional removal rows
-			while ( @_ and $_[0]->[0] eq '-' ) {
-				unless ( $_[0]->[1] == $target->{end} ) {
-					last;
+				# Append any additional removal rows
+				while ( @hunk and $hunk[0]->[0] eq '-' ) {
+					unless ( $hunk[0]->[1] == $target->{end} ) {
+						last;
+					}
+					shift @hunk;
+					$target->{end}++;
 				}
-				shift;
-				$target->{end}++;
 			}
-		}
 
-		# Append any additional addition rows
-		while ( @_ and $_[0]->[0] eq '+' ) {
-			unless ( $_[0]->[1] == $target->{end} + $lines ) {
-				last;
+			# Append any additional addition rows
+			while ( @hunk and $hunk[0]->[0] eq '+' ) {
+				$target->{text} .= shift(@hunk)->[2] . "\n";
+				$lines++;
 			}
-			$target->{text} .= shift->[2] . "\n";
-			$lines++;
-		}
 
-		# This completes one entire target replace unit
-		push @targets, $target;
+			# This completes one entire target replace unit
+			push @targets, $target;
+		}
 	}
 
 	return $class->new( 'line', @targets );
