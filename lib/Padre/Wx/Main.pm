@@ -327,6 +327,8 @@ sub new {
 		if $config->feature_debug2;
 	$self->_show_panel_debug_output( $config->main_panel_debug_output )
 		if $config->feature_debug2;
+	$self->_show_panel_debugger( $config->main_panel_debugger )
+		if $config->feature_debug2;
 		
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -552,6 +554,7 @@ use Class::XSAccessor {
 		has_bottom            => 'bottom',
 		has_panel_breakpoints => 'panel_breakpoints',
 		has_panel_debug_output => 'panel_debug_output',
+		has_panel_debugger     => 'panel_debugger',
 		has_output            => 'output',
 		has_command_line      => 'command_line',
 		has_syntax            => 'syntax',
@@ -724,6 +727,16 @@ sub panel_debug_output {
 		$self->{panel_debug_output} = Padre::Wx::Panel::DebugOutput->new($self);
 	}
 	return $self->{panel_debug_output};
+}
+
+sub panel_debugger {
+    my $self = shift;
+    unless ( defined $self->{panel_debugger} ) {
+        require Padre::Wx::Panel::Debugger;
+        $self->{panel_debugger}
+            = Padre::Wx::Panel::Debugger->new($self);
+    }
+    return $self->{panel_debugger};
 }
 
 sub diff {
@@ -2680,6 +2693,46 @@ sub _show_panel_debug_output {
 		delete $self->{panel_debug_output};
 	}
 }
+
+=pod
+
+=head3 C<show_panel_debugger>
+
+    $main->show_panel_debugger( $visible );
+
+Show the version control panel at the left if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+
+sub show_panel_debugger {
+    my $self = shift;
+    my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+    unless ( $show == $self->menu->debug->{panel_debugger}->IsChecked ) {
+        $self->menu->debug->{panel_debugger}->Check($show);
+    }
+
+    $self->config->set( main_panel_debugger => $show );
+    $self->_show_panel_debugger($show);
+    $self->aui->Update;
+
+    return;
+}
+
+sub _show_panel_debugger {
+    my $self = shift;
+    my $lock = $self->lock('UPDATE');
+    if ( $_[0] ) {
+        $self->right->show( $self->panel_debugger );
+    }
+    elsif ( $self->has_panel_debugger ) {
+        $self->right->hide( $self->panel_debugger );
+        delete $self->{panel_debugger};
+    }
+}
+
+
 =pod
 
 =head2 Introspection
