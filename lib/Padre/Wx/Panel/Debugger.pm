@@ -1,12 +1,12 @@
 package Padre::Wx::Panel::Debugger;
-#yes i know I need to down grade to 5.008 tobe done
-use 5.010;
+
+use 5.008;
 use strict;
 use warnings;
 
 # Turn on $OUTPUT_AUTOFLUSH
 $| = 1;
-# use diagnostics;
+
 use utf8; # this don't work, the following would be nice
 # use feature 'unicode_strings';
 
@@ -17,7 +17,6 @@ use Padre::Logger qw(TRACE DEBUG);
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::Debugger ();
 
-# use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
 
@@ -934,63 +933,6 @@ sub _bp_autoload {
 
 	return;
 }
-
-##########################################
-# Debugger-Output Controller
-########
-# Panel Controler show debug output
-########
-# sub show_debug_output {
-	# my $self = shift;
-	# my $main = $self->main;
-
-
-	# This is the conditional operator. It works much like an if-then-else.
-	# If the X is true then Y is evaluated and returned otherwise Z is evaluated and returned.
-
-	# The context it is called in propagates to Y and Z, so if the operator is called in
-	# scalar context and X is true then Y will be evaluated in scalar context.
-
-	# The result of the operator is a valid lvalue (i.e. it can be assigned to).
-	# Note, normal rules about lvalues (e.g. you can't assign to constants) still apply.
-	# my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-
-
-	# This needs to be added, to catch case not running
-	# if ( !$self->{panel_debug_output} && $show == 0 ) {
-		# return;
-	# }
-
-
-	# Construct debug output panel if it is not there
-	# unless ( $self->{panel_debug_output} ) {
-		# require Padre::Plugin::Debug::Panel::DebugOutput;
-		# $self->{panel_debug_output} = Padre::Plugin::Debug::Panel::DebugOutput->new($main);
-	# }
-
-# # 	$self->_show_debug_output($show);
-
-# # 	$main->aui->Update;
-
-# # 	return;
-# }
-########
-# Panel Launcher show debug output
-########
-# sub _show_debug_output {
-	# my $self = shift;
-	# my $main = $self->main;
-
-# # 	if ( $_[0] ) {
-		# $main->bottom->show( $self->{panel_debug_output} );
-	# } else {
-		# $main->bottom->hide( $self->{panel_debug_output} );
-		# delete $self->{panel_debug_output};
-	# }
-
-# # 	return;
-# }
-
 
 ###############################################
 # event handler top row
