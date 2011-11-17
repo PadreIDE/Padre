@@ -2121,13 +2121,9 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name => 'debug.quit2',
-			need_editor  => 1,
-			need_runable => 1,
-			need_file    => 1,
-			#todo make this dynamic
-			# need => sub {
-				# $_[0]->{panel_debugger};
-			# },
+			need => sub {
+				$main->{panel_debugger};
+			},
 			toolbar => 'actions/red_cross',
 			label   => _T('Quit Debugger (&q)'),
 			comment => _T('Quit the process being debugged'),
