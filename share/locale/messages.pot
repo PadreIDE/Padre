@@ -8,18 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-17 04:10-0800\n"
+"POT-Creation-Date: 2011-11-17 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: lib/Padre/Wx/FBP/Debugger.pm:268
-msgid ""
-"!(IO::Socket|Carp) are the subs used by Debug::Client, hence lets remove them"
-msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:478
 msgid "\".\" also matches newline"
@@ -658,7 +653,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:655
+#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:656
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1515,7 +1510,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:629
+#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:630
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1702,7 +1697,7 @@ msgstr ""
 msgid "Debugger RC1"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:279
+#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:280
 msgid "Debugger is already running"
 msgstr ""
 
@@ -1712,7 +1707,7 @@ msgstr ""
 msgid "Debugger not running"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:341
+#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:342
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -1769,13 +1764,13 @@ msgstr ""
 msgid "Delete File"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:42
+#: lib/Padre/Wx/FBP/Breakpoints.pm:43
 msgid ""
 "Delete MARKER_NOT_BREAKABLE\n"
 "Current File Only"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:130
+#: lib/Padre/Wx/FBP/Breakpoints.pm:131
 msgid "Delete all project Breakpoints"
 msgstr ""
 
@@ -2281,11 +2276,15 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:688
+#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:689
 msgid "Expr"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:687
+#: lib/Padre/Wx/FBP/Debugger.pm:268
+msgid "Expression To Evaluate"
+msgstr ""
+
+#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:688
 msgid "Expression:"
 msgstr ""
 
@@ -3438,7 +3437,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:283
+#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:284
 msgid "Not a Perl document"
 msgstr ""
 
@@ -4170,7 +4169,7 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:62
+#: lib/Padre/Wx/FBP/Breakpoints.pm:63
 msgid "Refresh List"
 msgstr ""
 
@@ -4514,12 +4513,6 @@ msgstr ""
 msgid "Ryan Niebur"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:248
-msgid ""
-"S [[!]regex]\n"
-"List subroutine names [not] matching the regex."
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Advanced.pm:184
 msgid "S&ave"
 msgstr ""
@@ -4827,7 +4820,7 @@ msgstr ""
 msgid "Set Breakpoints"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:82
+#: lib/Padre/Wx/FBP/Breakpoints.pm:83
 msgid "Set Breakpoints (toggle)"
 msgstr ""
 
@@ -4920,7 +4913,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:247 lib/Padre/Wx/FBP/Breakpoints.pm:151
+#: lib/Padre/Wx/FBP/VCS.pm:247 lib/Padre/Wx/FBP/Breakpoints.pm:152
 #: lib/Padre/Wx/FBP/Debugger.pm:404
 msgid "Show"
 msgstr ""
@@ -5310,7 +5303,7 @@ msgid "Stats"
 msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:49 lib/Padre/Wx/FBP/Sync.pm:52
-#: lib/Padre/Wx/FBP/DebugOutput.pm:36 lib/Padre/Wx/Dialog/PluginManager.pm:69
+#: lib/Padre/Wx/FBP/DebugOutput.pm:37 lib/Padre/Wx/Dialog/PluginManager.pm:69
 #: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:32
 #: lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
@@ -5362,10 +5355,6 @@ msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:155
 msgid "Sub-tracing stopped"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/Debugger.pm:243
-msgid "Sub. Names"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:69
@@ -5959,7 +5948,15 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:105
+#: lib/Padre/Wx/FBP/Debugger.pm:249
+msgid ""
+"p expr\n"
+"Same as print {$DB::OUT} expr in the current package. In particular, because "
+"this is just Perl's own print function, this means that nested data "
+"structures and objects are not dumped, unlike with the x command."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Breakpoints.pm:106
 msgid "project"
 msgstr ""
 
@@ -5978,7 +5975,7 @@ msgid ""
 "calls, it too will be single-stepped."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:110
+#: lib/Padre/Wx/FBP/Breakpoints.pm:111
 msgid "show breakpoints in project"
 msgstr ""
 
