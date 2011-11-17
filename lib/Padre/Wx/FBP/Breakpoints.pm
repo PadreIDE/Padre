@@ -6,7 +6,8 @@ package Padre::Wx::FBP::Breakpoints;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -25,18 +26,18 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::DefaultPosition(),
+		Wx::DefaultPosition,
 		[ 195, 530 ],
-		Wx::TAB_TRAVERSAL(),
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{delete_not_breakable} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::NullBitmap(),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::BU_AUTODRAW(),
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 	$self->{delete_not_breakable}->SetToolTip(
 		Wx::gettext("Delete MARKER_NOT_BREAKABLE\nCurrent File Only")
@@ -53,10 +54,10 @@ sub new {
 	$self->{refresh} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::NullBitmap(),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::BU_AUTODRAW(),
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 	$self->{refresh}->SetToolTip(
 		Wx::gettext("Refresh List")
@@ -73,10 +74,10 @@ sub new {
 	$self->{set_breakpoints} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::NullBitmap(),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::BU_AUTODRAW(),
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 	$self->{set_breakpoints}->SetToolTip(
 		Wx::gettext("Set Breakpoints (toggle)")
@@ -93,18 +94,18 @@ sub new {
 	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::LC_REPORT() | Wx::LC_SINGLE_SEL(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
-	$self->{list}->SetMinSize( Wx::DefaultSize() );
+	$self->{list}->SetMinSize( Wx::DefaultSize );
 
 	$self->{show_project} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("project"),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
 	);
 	$self->{show_project}->SetToolTip(
 		Wx::gettext("show breakpoints in project")
@@ -121,10 +122,10 @@ sub new {
 	$self->{delete_project_bp} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::NullBitmap(),
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::BU_AUTODRAW(),
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
 	$self->{delete_project_bp}->SetToolTip(
 		Wx::gettext("Delete all project Breakpoints")
@@ -138,11 +139,11 @@ sub new {
 		},
 	);
 
-	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL());
-	$button_sizer->Add( $self->{delete_not_breakable}, 0, Wx::ALL(), 5 );
-	$button_sizer->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$button_sizer->Add( $self->{refresh}, 0, Wx::ALL(), 5 );
-	$button_sizer->Add( $self->{set_breakpoints}, 0, Wx::ALL(), 5 );
+	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$button_sizer->Add( $self->{delete_not_breakable}, 0, Wx::ALL, 5 );
+	$button_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$button_sizer->Add( $self->{refresh}, 0, Wx::ALL, 5 );
+	$button_sizer->Add( $self->{set_breakpoints}, 0, Wx::ALL, 5 );
 
 	my $checkbox_sizer = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -150,16 +151,16 @@ sub new {
 			-1,
 			Wx::gettext("Show"),
 		),
-		Wx::HORIZONTAL(),
+		Wx::HORIZONTAL,
 	);
-	$checkbox_sizer->Add( $self->{show_project}, 0, Wx::ALL(), 2 );
-	$checkbox_sizer->Add( 0, 0, 1, Wx::EXPAND(), 5 );
-	$checkbox_sizer->Add( $self->{delete_project_bp}, 0, Wx::ALL(), 5 );
+	$checkbox_sizer->Add( $self->{show_project}, 0, Wx::ALL, 2 );
+	$checkbox_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$checkbox_sizer->Add( $self->{delete_project_bp}, 0, Wx::ALL, 5 );
 
-	my $bSizer10 = Wx::BoxSizer->new(Wx::VERTICAL());
-	$bSizer10->Add( $button_sizer, 0, Wx::EXPAND(), 5 );
-	$bSizer10->Add( $self->{list}, 1, Wx::ALL() | Wx::EXPAND(), 5 );
-	$bSizer10->Add( $checkbox_sizer, 0, Wx::EXPAND(), 5 );
+	my $bSizer10 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer10->Add( $button_sizer, 0, Wx::EXPAND, 5 );
+	$bSizer10->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer10->Add( $checkbox_sizer, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer10);
 	$self->Layout;
