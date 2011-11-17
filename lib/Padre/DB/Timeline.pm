@@ -17,6 +17,17 @@ our @ISA     = 'ORLite::Migrate::Timeline';
 ######################################################################
 # Schema Migration (reverse chronological for readability)
 
+sub upgrade13 {
+	my $self = shift;
+
+	# Drop the syntax highlight table as we now have current
+	# Scintilla and the pressure to have highlighter plugins
+	# is greatly reduced.
+	$self->do('DROP TABLE syntax_highlight');
+
+	return 1;
+}
+
 sub upgrade12 {
 	my $self = shift;
 

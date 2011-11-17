@@ -582,18 +582,9 @@ sub get_highlighter_name {
 }
 
 sub load_highlighter_config {
-	my $current_highlighters = Padre::DB::SyntaxHighlight->select || [];
-
 	# Set defaults
 	foreach my $type ( keys %MIME ) {
 		$MIME{$type}->{current_highlighter} = 'stc';
-	}
-
-	# TO DO check if the highlighter is really available
-	foreach my $e (@$current_highlighters) {
-		if ( defined $e->mime_type ) {
-			$MIME{ $e->mime_type }->{current_highlighter} = $e->value;
-		}
 	}
 
 	# Override with settings that have been moved from the database

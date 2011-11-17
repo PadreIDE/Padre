@@ -19,6 +19,10 @@ the even version for the release, even during development.
       position or cursor (ADAMK)
     - The modification indicator on the notebook tab is now set correctly even
       during automated mass document changes (ADAMK)
+    - Removed Padre::DB::SyntaxHighlighter as the need for custom highlighting
+      plugins is greatly reduced now we have Wx::Scintilla (ADAMK)
+    - Move back from badly conceived "Smart" gettext usage to a more regular
+      usage at the urging of the translation team (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

@@ -51,7 +51,7 @@ sub new {
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	if ( scalar Padre->ide->wx->main->pages ) {
+	if ( scalar Padre->ide->wx->main->editors ) {
 
 		# Create dialog
 		$self->_create;
@@ -313,9 +313,9 @@ sub _refresh_list {
 	my $list = $self->_list;
 	$list->DeleteAllItems;
 	$self->{items} = []; # Clear
-	foreach my $page ( $main->pages ) {
+	foreach my $editor ( $main->editors ) {
 
-		my $document = $page->{Document};
+		my $document = $editor->{Document};
 
 		my $disk_state = $document->has_changed_on_disk;
 		next if $self->{no_fresh} and ( !( $document->is_modified or $disk_state ) );
@@ -331,7 +331,7 @@ sub _refresh_list {
 
 			# Apply filter (if any)
 			if ( defined( $self->{filter} ) ) {
-				next unless &{ $self->{filter} }( $page, $project_dir, $filename, $document );
+				next unless &{ $self->{filter} }( $editor, $project_dir, $filename, $document );
 			}
 		} else {
 			$filename = $document->get_title;
@@ -344,7 +344,7 @@ sub _refresh_list {
 		$item->SetText( defined( $document->project ) ? $document->project->name : '' );
 		$item->SetData( $#{ $self->{items} } );
 		my $idx = $list->InsertItem($item);
-		splice @{ $self->{items} }, $idx, 0, { page => $page };
+		splice @{ $self->{items} }, $idx, 0, { page => $editor };
 
 		$list->SetItem( $idx, 1, $filename );
 		$list->SetItem( $idx, 2, $document->is_modified ? Wx::gettext('CHANGED') : Wx::gettext('fresh') );

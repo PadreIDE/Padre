@@ -212,7 +212,7 @@ my @events = (
 			$main->close_all;
 			$T->diag("create a new editor");
 			$main->on_new;
-			my @editors = $main->pages;
+			my @editors = $main->editors;
 			$T->is_num( scalar(@editors), 1, 'one new editor' );
 			my $doc    = $main->current->document;
 			my $editor = $doc->editor;
@@ -223,11 +223,11 @@ my @events = (
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
 				$main->on_open_selection;
-				$T->is_num( scalar( $main->pages ), 2, 'new and abs cyrillic_test open' );
+				$T->is_num( scalar( $main->editors ), 2, 'new and abs cyrillic_test open' );
 
 			}
 			$main->close;
-			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
+			$T->is_num( scalar( $main->editors ), 1, 'back to unsaved?' );
 			SCOPE: {
 
 				#put down one filename that is relative to the dir padre was started from
@@ -235,10 +235,10 @@ my @events = (
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
 				$main->on_open_selection;
-				$T->is_num( scalar( $main->pages ), 2, 'new and relative cyrillic_test open' );
+				$T->is_num( scalar( $main->editors ), 2, 'new and relative cyrillic_test open' );
 			}
 			$main->close;
-			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
+			$T->is_num( scalar( $main->editors ), 1, 'back to unsaved?' );
 			SCOPE: {
 
 				#put down one filename that is relative to the dir padre was started from
@@ -246,10 +246,10 @@ my @events = (
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
 				$main->on_open_selection;
-				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
+				$T->is_num( scalar( $main->editors ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 			$main->close;
-			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
+			$T->is_num( scalar( $main->editors ), 1, 'back to unsaved?' );
 			SCOPE: {
 
 				#put down one filename that is relative to the dir padre was started from
@@ -257,10 +257,10 @@ my @events = (
 				$doc->text_set($path);
 				$editor->SetSelection( 0, length($path) );
 				$main->on_open_selection;
-				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
+				$T->is_num( scalar( $main->editors ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 			$main->close;
-			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
+			$T->is_num( scalar( $main->editors ), 1, 'back to unsaved?' );
 			SCOPE: {
 
 				#put down one filename that is relative to the dir padre was started from
@@ -271,7 +271,7 @@ my @events = (
 
 				#$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection;
-				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
+				$T->is_num( scalar( $main->editors ), 2, 'relative cyrillic_test open with additional \n' );
 			}
 
 			#redo above tests from an editor which _does_ have a filename (ie, has been opened or saved, not newly created
