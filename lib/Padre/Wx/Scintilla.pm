@@ -4,8 +4,8 @@ package Padre::Wx::Scintilla;
 
 use 5.008;
 use Padre::Config           ();
-use Padre::DB               ();
 use Padre::MimeTypes        ();
+use Padre::Util             ('_T');
 use Wx::Scintilla::Constant ();
 use Wx::Scintilla           ();
 
@@ -102,28 +102,12 @@ my %MODULE = (
 # Current highlighter for each mime type
 my %HIGHLIGHTER = ();
 
+# Fill from configuration settings
 sub highlighter_init {
-	# Flush old settings
-	%HIGHLIGHTER = ();
-
-	# Load database stored preferences
-	my $host = Padre::DB::SyntaxHighlight->select || [];
-	foreach my $row ( @$host ) {
-		my $mime = $row->mime_type;
-		next unless $HIGHLIGHTER{$mime};
-		$HIGHLIGHTER{$mime} = $row->value;
-	}
-
-	# Overlay with settings that have been moved from the database
-	# to the Padre::Config system.
 	my $config = Padre::Config->read;
-	my %human  = (
-		'application/x-perl' => 'lang_perl5_lexer'
+	%HIGHLIGHTER = (
+		'application/x-perl' => $config->lang_perl5_lexer,
 	);
-	foreach my $type ( keys %human ) {
-		my $method = $human{$type};
-		$HIGHLIGHTER{$mime} = $config->$method();
-	}
 
 	return 1;
 }
