@@ -6,7 +6,8 @@ package Padre::Wx::FBP::About;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -110,7 +111,7 @@ sub new {
 	$self->{m_staticText34} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Copyright 2008\x{2013}2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
+		Wx::gettext("Copyright 2008–2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
 	);
 
 	$self->{m_staticline28} = Wx::StaticLine->new(
@@ -322,7 +323,7 @@ sub new {
 	$self->{m_staticText671} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Pawe\x{142} Murias"),
+		Wx::gettext("Paweł Murias"),
 	);
 
 	$self->{m_staticText42} = Wx::StaticText->new(

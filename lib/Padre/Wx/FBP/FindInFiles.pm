@@ -6,7 +6,8 @@ package Padre::Wx::FBP::FindInFiles;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -35,7 +36,7 @@ sub new {
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Search &Term") . ":",
+		Wx::gettext("Search &Term:"),
 	);
 
 	$self->{find_term} = Padre::Wx::History::ComboBox->new(
@@ -60,7 +61,7 @@ sub new {
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Directory") . ":",
+		Wx::gettext("Directory:"),
 	);
 
 	$self->{find_directory} = Padre::Wx::History::ComboBox->new(
@@ -93,7 +94,7 @@ sub new {
 	my $m_staticText4 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("File Types") . ":",
+		Wx::gettext("File Types:"),
 	);
 
 	$self->{find_types} = Wx::ComboBox->new(

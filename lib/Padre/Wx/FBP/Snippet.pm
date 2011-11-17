@@ -6,7 +6,8 @@ package Padre::Wx::FBP::Snippet;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -34,7 +35,7 @@ sub new {
 	my $filter_label = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Filter") . ":",
+		Wx::gettext("Filter:"),
 	);
 
 	$self->{filter} = Wx::Choice->new(
@@ -57,7 +58,7 @@ sub new {
 	my $name_label = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Snippet") . ":",
+		Wx::gettext("Snippet:"),
 	);
 
 	$self->{select} = Wx::Choice->new(
@@ -88,7 +89,7 @@ sub new {
 	my $m_staticText11 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Preview") . ":",
+		Wx::gettext("Preview:"),
 	);
 
 	$self->{preview} = Wx::TextCtrl->new(

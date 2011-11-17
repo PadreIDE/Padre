@@ -6,7 +6,8 @@ package Padre::Wx::FBP::Bookmarks;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -34,7 +35,7 @@ sub new {
 	$self->{set_label} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Set Bookmark") . ":",
+		Wx::gettext("Set Bookmark:"),
 	);
 	$self->{set_label}->Hide;
 
@@ -59,7 +60,7 @@ sub new {
 	$self->{m_staticText2} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Existing Bookmarks") . ":",
+		Wx::gettext("Existing Bookmarks:"),
 	);
 
 	$self->{list} = Wx::ListBox->new(

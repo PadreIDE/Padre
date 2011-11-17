@@ -6,7 +6,8 @@ package Padre::Wx::FBP::FindFast;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -49,7 +50,7 @@ sub new {
 	$self->{find_label} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Find") . ":",
+		Wx::gettext("Find:"),
 	);
 
 	$self->{find_text} = Wx::TextCtrl->new(
