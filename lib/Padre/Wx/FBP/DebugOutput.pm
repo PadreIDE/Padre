@@ -6,7 +6,8 @@ package Padre::Wx::FBP::DebugOutput;
 # To change this module edit the original .fbp file and regenerate.
 # DO NOT MODIFY THIS FILE BY HAND!
 
-use 5.008;
+use 5.008005;
+use utf8;
 use strict;
 use warnings;
 use Padre::Wx ();
@@ -25,9 +26,9 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::DefaultPosition(),
+		Wx::DefaultPosition,
 		[ 500, 300 ],
-		Wx::TAB_TRAVERSAL(),
+		Wx::TAB_TRAVERSAL,
 	);
 
 	$self->{status} = Wx::StaticText->new(
@@ -40,17 +41,17 @@ sub new {
 		$self,
 		-1,
 		"",
-		Wx::DefaultPosition(),
-		Wx::DefaultSize(),
-		Wx::TE_MULTILINE() | Wx::TE_READONLY(),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_MULTILINE | Wx::TE_READONLY,
 	);
 
-	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL());
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL() | Wx::ALL() | Wx::EXPAND(), 8 );
+	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
 
-	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL());
-	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT() | Wx::ALL() | Wx::EXPAND(), 2 );
-	$main_sizer->Add( $self->{output}, 1, Wx::ALL() | Wx::EXPAND(), 5 );
+	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
+	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 2 );
+	$main_sizer->Add( $self->{output}, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
