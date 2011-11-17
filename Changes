@@ -21,7 +21,7 @@ the even version for the release, even during development.
       during automated mass document changes (ADAMK)
 
 0.93 Development version, not released
-    - No incompatible API changes during the 0.94 release cycle
+    - The Padre::Wx::Main method ->pages was removed (ADAMK)
 
 0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)
