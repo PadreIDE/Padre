@@ -2712,23 +2712,7 @@ Return a list of all current tab ids (integers) within the notebook.
 =cut
 
 sub pageids {
-	return ( 0 .. $_[0]->notebook->GetPageCount - 1 );
-}
-
-=pod
-
-=head3 C<pages>
-
-    my @pages = $main->pages;
-
-Return a list of all notebook tabs. Those are the real objects, not the
-ids (see C<pageids()> above).
-
-=cut
-
-sub pages {
-	my $notebook = $_[0]->notebook;
-	return map { $notebook->GetPage($_) } $_[0]->pageids;
+	$_[0]->notebook->pageids;
 }
 
 =pod
@@ -2746,8 +2730,7 @@ this will change once we get project tabs or something else.
 =cut
 
 sub editors {
-	my $notebook = $_[0]->notebook;
-	return map { $notebook->GetPage($_) } $_[0]->pageids;
+	$_[0]->notebook->editors;
 }
 
 =pod
@@ -2762,7 +2745,7 @@ they are open in the notepad.
 =cut
 
 sub documents {
-	return map { $_->{Document} } $_[0]->editors;
+	$_[0]->notebook->documents;
 }
 
 =pod

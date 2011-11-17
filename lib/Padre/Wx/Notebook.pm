@@ -1,5 +1,20 @@
 package Padre::Wx::Notebook;
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Notebook - Notebook that holds a set of editor objects
+
+=head1 DESCRIPTION
+
+B<Padre::Wx::Notebook> implements the tabbed notebook in the main window
+that stores the editors for open documents in Padre.
+
+=head1 METHODS
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -100,8 +115,20 @@ sub relocale {
 ######################################################################
 # Main Methods
 
-# Search for and display the page for a specified file name.
-# Returns true if found and displayed, false otherwise.
+=pod
+
+=head2 show_file
+
+  $notebook->show_file('/home/user/path/script.pl');
+
+The C<show_file> method takes a single parameter of a fully resolved
+filesystem path, finds the notebook page containing the editor for that
+file, and sets that editor to be the currently selected foreground page.
+
+Returns true if found and displayed, or false otherwise.
+
+=cut
+
 sub show_file {
 	my $self = shift;
 	my $file = shift or return;
@@ -150,7 +177,82 @@ sub on_auinotebook_page_changed {
 ######################################################################
 # Introspection and Convenience
 
-# Find the common root path for saved files
+
+=pod
+
+=head2 pageids
+
+    my @ids = $notebook->pageids;
+
+Return a list of all current tab ids (integers) within the notebook.
+
+=cut
+
+sub pageids {
+	return ( 0 .. $_[0]->GetPageCount - 1 );
+}
+
+=pod
+
+=head2 pages
+
+    my @pages = $notebook->pages;
+
+Return a list of all notebook tabs. Those are the real objects, not page ids,
+and should be L<Padre::Wx::Editor> objects (although they are not
+guarenteed to be).
+
+=cut
+
+sub pages {
+	my $self = shift;
+	return map { $self->GetPage($_) } $self->pageids;
+}
+
+=pod
+
+=head2 editors
+
+    my @editors = $notebook->editors;
+
+Return a list of all current editors. Those are the real objects, not page ids,
+and are guarenteed to be L<Padre::Wx::Editor> objects.
+
+Note: for now, this has the same meaning as the C<pages> method, but this will
+change once we get specialised non-text entry tabs.
+
+=cut
+
+sub editors {
+	return grep {
+		Params::Util::_INSTANCE($_, 'Padre::Wx::Editor')
+	} $_[0]->pages;
+}
+
+=pod
+
+=head2 documents
+
+    my @document = $notebook->documents;
+
+Return a list of all current documents, in the specific order
+they are open in the notepad.
+
+=cut
+
+sub documents {
+	return map { $_->{Document} } $_[0]->editors;
+}
+
+=pod
+
+=head2 prefix
+
+The C<prefix> method scans the list of all local documents, and finds the
+common root directory for all of them.
+
+=cut
+
 sub prefix {
 	my $self   = shift;
 	my $found  = 0;
@@ -227,16 +329,28 @@ sub labels {
 }
 
 sub find_pane_by_label {
-	my $self  = shift;
-	my $label = shift;
-
+	my $self   = shift;
+	my $label  = shift;
 	my @labels = $self->labels;
-	my ($id) = grep { $label eq $labels[$_][0] } 0 .. $#labels;
-
+	my ($id)   = grep { $label eq $labels[$_][0] } 0 .. $#labels;
 	return $id;
 }
 
 1;
+
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
