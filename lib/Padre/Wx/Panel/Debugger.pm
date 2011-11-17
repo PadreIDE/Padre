@@ -188,8 +188,9 @@ sub set_up {
 	$self->{all_threads}->Disable;
 	
 	$self->{trace}->Disable;
-	$self->{sub_names}->Disable;
-	$self->{sub_name_regex}->Disable;
+	$self->{evaluate_expression}->SetBitmapLabel( Padre::Wx::Icon::find('actions/70-p') );
+	$self->{evaluate_expression}->Disable;
+	$self->{expression}->Disable;
 
 	# Setup columns names and order here
 	my @column_headers = qw( Variable Value );
@@ -434,8 +435,8 @@ sub debug_quit {
 	$self->{trace_status} = 'Trace = off';
 	$self->{trace}->SetValue(0);
 	$self->{trace}->Disable;
-	$self->{sub_names}->Disable;
-	$self->{sub_name_regex}->Disable;
+	$self->{evaluate_expression}->Disable;
+	$self->{expression}->Disable;
 	$self->{stacktrace}->Disable;
 
 	$self->{module_versions}->Disable;
@@ -953,8 +954,8 @@ sub on_debug_clicked {
 	$self->{display_value}->Show;
 
 	$self->{trace}->Enable;
-	$self->{sub_names}->Enable;
-	$self->{sub_name_regex}->Enable;
+	$self->{evaluate_expression}->Enable;
+	$self->{expression}->Enable;
 	$self->{stacktrace}->Enable;
 
 	$self->{module_versions}->Enable;
@@ -1092,14 +1093,14 @@ sub on_trace_checked {
 	return;
 }
 #######
-# Event handler on_sub_names_clicked
+# Event handler on_evaluate_expression_clicked
 #######
-sub on_sub_names_clicked {
+sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
 	$main->{panel_debug_output}
-		->debug_output( $self->{client}->list_subroutine_names( $self->{sub_name_regex}->GetValue() ) );
+		->debug_output( $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
 
 	return;
 }

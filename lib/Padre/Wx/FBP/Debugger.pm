@@ -237,35 +237,35 @@ sub new {
 		},
 	);
 
-	$self->{sub_names} = Wx::Button->new(
+	$self->{evaluate_expression} = Wx::BitmapButton->new(
 		$self,
 		-1,
-		Wx::gettext("Sub. Names"),
+		Wx::NullBitmap,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
 	);
-	$self->{sub_names}->SetToolTip(
-		Wx::gettext("S [[!]regex]\nList subroutine names [not] matching the regex.")
+	$self->{evaluate_expression}->SetToolTip(
+		Wx::gettext("p expr\nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function, this means that nested data structures and objects are not dumped, unlike with the x command.")
 	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{sub_names},
+		$self->{evaluate_expression},
 		sub {
-			shift->on_sub_names_clicked(@_);
+			shift->on_evaluate_expression_clicked(@_);
 		},
 	);
 
-	$self->{sub_name_regex} = Wx::TextCtrl->new(
+	$self->{expression} = Wx::TextCtrl->new(
 		$self,
 		-1,
-		"!(IO::Socket|Carp)",
+		"",
 		Wx::DefaultPosition,
 		[ 130, -1 ],
 	);
-	$self->{sub_name_regex}->SetMaxLength(21);
-	$self->{sub_name_regex}->SetToolTip(
-		Wx::gettext("!(IO::Socket|Carp) are the subs used by Debug::Client, hence lets remove them")
+	$self->{expression}->SetToolTip(
+		Wx::gettext("Expression To Evaluate")
 	);
 
 	$self->{dot} = Wx::BitmapButton->new(
@@ -413,8 +413,8 @@ sub new {
 	$doo->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$doo->Add( $self->{trace}, 0, Wx::ALL, 5 );
 	$doo->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$doo->Add( $self->{sub_names}, 0, Wx::ALL, 5 );
-	$doo->Add( $self->{sub_name_regex}, 1, Wx::ALL, 5 );
+	$doo->Add( $self->{evaluate_expression}, 0, Wx::ALL, 5 );
+	$doo->Add( $self->{expression}, 1, Wx::ALL, 5 );
 
 	my $option_button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$option_button_sizer->Add( $self->{dot}, 0, Wx::ALL, 5 );
@@ -451,8 +451,8 @@ sub trace {
 	$_[0]->{trace};
 }
 
-sub sub_name_regex {
-	$_[0]->{sub_name_regex};
+sub expression {
+	$_[0]->{expression};
 }
 
 sub on_debug_clicked {
@@ -495,8 +495,8 @@ sub on_trace_checked {
 	$_[0]->main->error('Handler method on_trace_checked for event trace.OnCheckBox not implemented');
 }
 
-sub on_sub_names_clicked {
-	$_[0]->main->error('Handler method on_sub_names_clicked for event sub_names.OnButtonClick not implemented');
+sub on_evaluate_expression_clicked {
+	$_[0]->main->error('Handler method on_evaluate_expression_clicked for event evaluate_expression.OnButtonClick not implemented');
 }
 
 sub on_dot_clicked {
