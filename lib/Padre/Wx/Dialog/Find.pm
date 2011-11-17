@@ -140,7 +140,6 @@ sub run {
 
 	# Show the dialog
 	my $result = $self->ShowModal;
-
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
@@ -151,7 +150,7 @@ sub run {
 
 # Ensure the find button is only enabled if the field values are valid
 sub refresh {
-	my $self = shift;
+	my $self   = shift;
 	my $enable = $self->find_term->GetValue ne '';
 	$self->find_next->Enable($enable);
 	$self->find_all->Enable($enable);
