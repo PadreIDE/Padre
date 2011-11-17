@@ -6,7 +6,7 @@ use warnings;
 
 # Turn on $OUTPUT_AUTOFLUSH
 $| = 1;
-use diagnostics;
+# use diagnostics;
 use utf8; # this don't work, the following would be nice
 # use feature 'unicode_strings';
 
@@ -17,7 +17,7 @@ use Padre::Logger qw(TRACE DEBUG);
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::Debugger ();
 
-use Data::Printer { caller_info => 1, colored => 1, };
+# use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
 
