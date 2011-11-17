@@ -100,17 +100,9 @@ my %MODULE = (
 );
 
 # Current highlighter for each mime type
-my %HIGHLIGHTER = ();
-
-# Fill from configuration settings
-sub highlighter_init {
-	my $config = Padre::Config->read;
-	%HIGHLIGHTER = (
-		'application/x-perl' => $config->lang_perl5_lexer,
-	);
-
-	return 1;
-}
+my %HIGHLIGHTER = (
+	'application/x-perl' => Padre::Config->read->lang_perl5_lexer,
+);
 
 sub highlighter {
 	$HIGHLIGHTER{ $_[1] };
