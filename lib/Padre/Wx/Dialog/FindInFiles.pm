@@ -92,7 +92,7 @@ sub run {
 		$text = '';
 	}
 	unless ( length $text ) {
-		if ( $main->has_findfast ) {
+		if ( $main->has_findfast and $main->findfast->visible ) {
 			my $fast = $main->findfast->find_term;
 			$text = $fast if length $fast;	
 		}
