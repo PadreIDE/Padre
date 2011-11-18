@@ -1120,7 +1120,7 @@ sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
+	$main->{panel_debug_output}->debug_output( $self->{expression}->GetValue() . " = " . $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
 
 	return;
 }
