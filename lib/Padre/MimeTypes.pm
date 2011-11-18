@@ -17,11 +17,10 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Carp                    ();
-use File::Basename          ();
-use Padre::Config           ();
-use Padre::Current          ();
-use Padre::Util             ('_T');
+use Carp           ();
+use Padre::Config  ();
+use Padre::Current ();
+use Padre::Util    ('_T');
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
@@ -522,6 +521,7 @@ sub guess_mimetype {
 	# Makefile is now highlighted as a Makefile
 	# Changelog files are now displayed as text files
 	if ($filename) {
+		require File::Basename;
 		my $basename = File::Basename::basename($filename);
 		if ($basename) {
 			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
