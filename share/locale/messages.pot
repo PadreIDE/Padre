@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-18 00:10-0800\n"
+"POT-Creation-Date: 2011-11-18 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3094,17 +3094,17 @@ msgid ""
 "Display all loaded modules and their versions."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:484
+#: lib/Padre/MimeTypes.pm:419
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:473 lib/Padre/MimeTypes.pm:506
+#: lib/Padre/MimeTypes.pm:408 lib/Padre/MimeTypes.pm:441
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:455
+#: lib/Padre/MimeTypes.pm:390
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -4882,7 +4882,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:301
+#: lib/Padre/MimeTypes.pm:268
 msgid "Shell Script"
 msgstr ""
 
@@ -5402,7 +5402,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:408
+#: lib/Padre/MimeTypes.pm:354
 msgid "Text"
 msgstr ""
 
@@ -5564,7 +5564,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:537
+#: lib/Padre/MimeTypes.pm:465
 msgid "UNKNOWN"
 msgstr ""
 
