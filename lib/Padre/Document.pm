@@ -124,17 +124,17 @@ or to set it to "Default by extension".
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use File::Spec 3.21 (); # 3.21 needed for volume-safe abs2rel
-use File::Temp       ();
-use Params::Util     ();
-use Wx::Scintilla    ();
-use Padre::Constant  ();
-use Padre::Current   ();
-use Padre::Util      ();
-use Padre::Wx        ();
-use Padre::MimeTypes ();
-use Padre::File      ();
+use Carp                 ();
+use File::Spec      3.21 (); # 3.21 needed for volume-safe abs2rel
+use File::Temp           ();
+use Params::Util         ();
+use Padre::Constant      ();
+use Padre::Current       ();
+use Padre::Util          ();
+use Padre::Wx            ();
+use Padre::Wx::Scintilla ();
+use Padre::MimeTypes     ();
+use Padre::File          ();
 use Padre::Logger;
 
 our $VERSION    = '0.93';
@@ -189,7 +189,6 @@ my %COMMENT_LINE_STRING = (
 	'text/xml'                  => [ '<!--', '-->' ],
 	'text/x-yaml'               => '#',
 );
-
 
 # JavaScript keywords
 my @SCINTILLA_JS_KEYWORDS = qw{
@@ -1041,18 +1040,10 @@ sub rebless {
 		bless $self, $class;
 	}
 
-	my $module   = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
-	my $filename = '';                                                                # Not undef
-	$filename = $self->{file}->filename
-		if defined( $self->{file} )
-			and defined( $self->{file}->{filename} );
-	if ( not $module ) {
-		$self->current->main->error(
-			sprintf(
-				Wx::gettext("No module mime_type='%s' filename='%s'"),
-				$mime_type, $filename
-			)
-		);
+	my $module   = Padre::Wx::Scintilla->highlighter($mime_type);
+	my $filename = ''; # Not undef
+	if ( defined $self->{file} and defined $self->{file}->{filename} ) {
+		$filename = $self->{file}->{filename};
 	}
 	$self->set_highlighter($module);
 
@@ -1123,13 +1114,13 @@ sub DESTROY {
 
 sub colourize {
 	my $self   = shift;
-	my $lexer  = $self->lexer;
 	my $editor = $self->editor;
+	my $lexer  = Padre::Wx::Scintilla->lexer( $self->mimetype );
 	$editor->SetLexer($lexer);
 	TRACE("colourize called") if DEBUG;
 
 	$editor->remove_color;
-	if ( $lexer == Wx::Scintilla::SCLEX_CONTAINER ) {
+	if ( $lexer == Wx::Scintilla::Constant::SCLEX_CONTAINER ) {
 		$self->colorize;
 	} else {
 		TRACE("Colourize is being called") if DEBUG;
@@ -1139,14 +1130,10 @@ sub colourize {
 }
 
 sub colorize {
-	my $self = shift;
-	TRACE("colorize called") if DEBUG;
-
+	my $self   = shift;
 	my $module = $self->highlighter;
-	TRACE("module: '$module'") if DEBUG;
-	if ( $module eq 'stc' ) {
-
-		#TO DO sometime this happens when I open Padre with several file
+	unless ( $module ) {
+		# TO DO sometime this happens when I open Padre with several file
 		# I think this can be somehow related to the quick (or slow ?) switching of
 		# what is the current document while the code is still running.
 		# for now I hide the warnings as this would just frighten people and the
@@ -1724,31 +1711,6 @@ sub text_delta {
 
 #####################################################################
 # GUI Integration Methods
-
-# Determine the Scintilla lexer to use
-sub lexer {
-	my $self = shift;
-
-	# this should never happen as now we set mime-type on everything
-	return Wx::Scintilla::SCLEX_AUTOMATIC unless $self->mimetype;
-
-	my $highlighter = $self->highlighter;
-	if ( not $highlighter ) {
-		$self->current->main->error(
-			sprintf(
-				Wx::gettext("no highlighter for mime-type '%s' using stc"),
-				$self->mimetype
-			)
-		);
-		$highlighter = 'stc';
-	}
-	TRACE("The highlighter is '$highlighter'") if DEBUG;
-	return Wx::Scintilla::SCLEX_CONTAINER if $highlighter ne 'stc';
-	return Wx::Scintilla::SCLEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
-
-	TRACE( 'STC Lexer will be based on mime type "' . $self->mimetype . '"' ) if DEBUG;
-	return Padre::MimeTypes->get_lexer( $self->mimetype );
-}
 
 # What should be shown in the notebook tab
 sub get_title {

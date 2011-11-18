@@ -570,12 +570,14 @@ sub set_document {
 sub SetLexer {
 	my $self  = shift;
 	my $lexer = shift;
-	if ( Params::Util::_NUMBER($lexer) ) {
-		return $self->SUPER::SetLexer($lexer);
+	if ( Params::Util::_INSTANCE($lexer, 'Padre::Document') ) {
+		$lexer = $lexer->mimetype;
 	}
-	if ( defined Params::Util::_STRING($lexer) ) {
-		require Padre::MimeTypes;
-		$lexer = Padre::MimeTypes->get_lexer($lexer);
+	unless ( Params::Util::_NUMBER($lexer) ) {
+		require Padre::Wx::Scintilla;
+		$lexer = Padre::Wx::Scintilla->lexer($lexer);
+	}
+	if ( Params::Util::_NUMBER($lexer) ) {
 		return $self->SUPER::SetLexer($lexer);
 	}
 	return;
@@ -663,7 +665,7 @@ sub setup_document {
 
 	# Configure lexing for the editor based on the document type
 	if ($document) {
-		$self->SetLexer( $document->lexer );
+		$self->SetLexer($document);
 		$self->SetStyleBits( $self->GetStyleBitsNeeded );
 		$self->SetWordChars( $document->scintilla_word_chars );
 
@@ -937,7 +939,7 @@ sub refresh_notebook {
 
 	# Find the page we are in
 	my $id = $notebook->GetPageIndex($self);
-	return if $id == Wx::wxNOT_FOUND;
+	return if $id == Wx::NOT_FOUND;
 
 	# Generate the page title
 	my $old      = $notebook->GetPageText($id);

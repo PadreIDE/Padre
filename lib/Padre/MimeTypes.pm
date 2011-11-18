@@ -26,19 +26,14 @@ use Padre::DB               ();
 use Wx::Scintilla::Constant ();
 use Wx::Scintilla           ();
 
-our $VERSION = '0.93';
+our $VERSION    = '0.93';
+our $COMPATIBLE = '0.93';
 
 # Binary file extensions, which we don't support loading at all
 my %EXT_BINARY = ();
 
 # Text file extension to MIME type mapping (either string or code reference)
 my %EXT_MIME = ();
-
-# The list of available syntax highlighting modules
-my %HIGHLIGHTER = ();
-
-# Highlighters preferences defined in Padre's configuration system
-my %HIGHLIGHTER_CONFIG = ();
 
 # Main MIME type database and settings.
 # NOTE: This has gotten complex enough it probably needs to be a HASH
@@ -113,7 +108,7 @@ sub _initialize {
 		plx   => \&perl_mime_type,
 		pm    => \&perl_mime_type,
 		pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
-		pod   => \&pod_mime_type,
+		pod   => 'text/x-pod',
 		pov   => 'text/x-povray',
 		psgi  => 'application/x-psgi',
 		sty   => 'application/x-latex',
@@ -180,10 +175,6 @@ sub _initialize {
 		'text/x-java-source' => 'Padre::Document::Java',
 		'text/x-csharp'      => 'Padre::Document::CSharp',
 		'text/x-patch'       => 'Padre::Document::Patch',
-	);
-
-	%HIGHLIGHTER_CONFIG = (
-		'application/x-perl' => 'lang_perl5_lexer',
 	);
 
 	# This is the mime-type to Scintilla lexer mapping.
@@ -447,37 +438,6 @@ sub _initialize {
 			warn "Unknown MIME type: $type\n";
 		}
 	}
-
-	# Load preferences from configuration
-	__PACKAGE__->load_highlighter_config;
-
-	__PACKAGE__->add_highlighter(
-		'stc',
-		_T('Scintilla'),
-	);
-
-	foreach my $mime ( keys %MIME ) {
-		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
-	}
-
-	# Perl 5 specific highlighters
-	__PACKAGE__->add_highlighter(
-		'Padre::Document::Perl::Lexer',
-		_T('PPI Experimental'),
-	);
-	__PACKAGE__->add_highlighter(
-		'Padre::Document::Perl::PPILexer',
-		_T('PPI Standard'),
-	);
-
-	__PACKAGE__->add_highlighter_to_mime_type(
-		'application/x-perl',
-		'Padre::Document::Perl::Lexer'
-	);
-	__PACKAGE__->add_highlighter_to_mime_type(
-		'application/x-perl',
-		'Padre::Document::Perl::PPILexer'
-	);
 }
 
 sub get_lexer {
@@ -552,62 +512,6 @@ sub get_mime_class {
 	}
 
 	return $MIME{$type}->{class};
-}
-
-sub add_highlighter {
-	my $class  = shift;
-	my $module = shift;
-	my $human  = shift;
-
-	if ( not defined $human ) {
-		Carp::Cluck("human name not defined for '$module'\n");
-		return;
-	}
-	$HIGHLIGHTER{$module} = {
-		name => $human,
-	};
-}
-
-sub get_highlighter_name {
-	my $class       = shift;
-	my $module = shift;
-
-	# TO DO this can happen if the user configured highlighter but on the next start
-	# the highlighter is not available any more
-	# we need to handle this situation
-	return '' if !defined($module);
-	return ''
-		if not $HIGHLIGHTER{$module}; # avoid autovivification
-	return $HIGHLIGHTER{$module}->{name};
-}
-
-sub load_highlighter_config {
-	# Set defaults
-	foreach my $type ( keys %MIME ) {
-		$MIME{$type}->{current_highlighter} = 'stc';
-	}
-
-	# Override with settings that have been moved from the database
-	# to the Padre::Config system
-	# Can't use Padre::Current here, because we won't have Padre->new yet.
-	my $config = Padre::Config->read;
-	foreach my $type ( keys %HIGHLIGHTER_CONFIG ) {
-		my $method = $HIGHLIGHTER_CONFIG{$type};
-		$MIME{$type}->{current_highlighter} = $config->$method();
-	}
-}
-
-sub get_current_highlighter_of_mime_type {
-	return $MIME{ $_[1] }->{current_highlighter};
-}
-
-sub add_highlighter_to_mime_type {
-	my $class  = shift;
-	my $mime   = shift;
-	my $module = shift; # Or 'stc' to indicate Scintilla
-
-	# TO DO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
-	$MIME{$mime}->{highlighters}->{$module} = 1;
 }
 
 # return the MIME types ordered according to their display name
@@ -839,12 +743,6 @@ sub guess_mimetype {
 
 	# Fall back to plain text file
 	return 'text/plain';
-}
-
-# currently we only have one pod mime-type but probably we should have
-# two separate ones. One for Perl 5 and one for Perl 6
-sub pod_mime_type {
-	return 'text/x-pod';
 }
 
 sub perl_mime_type {

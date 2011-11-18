@@ -6819,10 +6819,9 @@ sub change_highlighter {
 		$document->set_highlighter($module);
 		my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 		TRACE( "Set highlighter to to $module for $document in file " . ( $filename || '' ) ) if DEBUG;
-		my $lexer = $document->lexer;
-		$editor->SetLexer($lexer);
+		$editor->SetLexer( $document->mimetype );
 
-		TRACE("Editor $editor focused $focused lexer: $lexer") if DEBUG;
+		TRACE("Editor $editor focused $focused") if DEBUG;
 		if ( $editor eq $focused ) {
 			$editor->needs_manual_colorize(0);
 			$document->colourize;

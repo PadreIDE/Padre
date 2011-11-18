@@ -23,9 +23,13 @@ the even version for the release, even during development.
       plugins is greatly reduced now we have Wx::Scintilla (ADAMK)
     - Move back from badly conceived "Smart" gettext usage to a more regular
       usage at the urging of the translation team (ADAMK)
-
+    - Moved Wx::Scintilla specific lexer and highlighter registration out of
+      Padre::MimeTypes and into Padre::Wx::Scintilla so we can use
+      Padre::MimeTypes in background threads (ADAMK)
+      
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
+    - Padre::MimeTypes is heavily refactored (ADAMK)
 
 0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)

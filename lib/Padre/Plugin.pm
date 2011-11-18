@@ -293,7 +293,7 @@ sub DESTROY {
       'application/json'       => 'Padre::Plugin::JavaScript::Document',
   }
 
-The C<registered_documents> methods can be used by a plug-in to define
+The C<registered_documents> method can be used by a plug-in to define
 document types for which the plug-in provides a document class
 (which is used by Padre to enable functionality beyond the level of
 a plain text file with simple Scintilla highlighting).
@@ -317,25 +317,41 @@ sub registered_documents {
 	return ();
 }
 
-=head2 C<provided_highlighters>
+=head2 C<registered_highlighters>
 
-Default method returning an empty array.
+    sub registered_highlighters {
+        'Padre::Plugin::MyPlugin::Perl' => {
+            name => _T("My Highlighter"),
+            mime => [ qw{
+                application/x-perl
+                application/x-perl6
+                text/x-pod
+            } ],
+        },
+	'Padre::Plugin::MyPlugin::C' => {
+            name => _T("My Highlighter"),
+            mime => [ qw{
+                text/x-c
+                text/x-c++src
+                text/x-perlxs
+            } ],
+        },
+    }
 
-TO DO. See L<Padre::Document>.
+The C<registered_documents> method can be used by a plug-in to define custom
+syntax highlighters for use with one or more MIME types.
+
+As shown in the example above, highlighters are described as a module name
+and an attribute that describes a visible name for the highlighter and a
+reference to a list of the mime types that the highlighter should be applied
+to.
+
+Defining a new syntax highlighter will automatically cause that
+highlighter to be used by default for the MIME type.
 
 =cut
 
-sub provided_highlighters {
-	return ();
-}
-
-=head2 C<highlighting_mime_types>
-
-TO DO. See L<Padre::Document>.
-
-=cut
-
-sub highlighting_mime_types {
+sub registered_highlighters {
 	return ();
 }
 

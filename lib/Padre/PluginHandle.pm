@@ -216,42 +216,35 @@ sub enable {
 		return 0;
 	}
 
-	# If the plugin defines document types, register them
-	my @documents = $self->object->registered_documents;
-	if (@documents) {
-		require Padre::MimeTypes;
-	}
-	while (@documents) {
-		my $type  = shift @documents;
-		my $class = shift @documents;
-		Padre::MimeTypes->add_mime_class( $type, $class );
-	}
+	# If the plugin defines document types, register them.
+	# Skip document registration on error.
+	eval {
+		my @documents = $self->object->registered_documents;
+		if (@documents) {
+			require Padre::MimeTypes;
+		}
+		while (@documents) {
+			my $type  = shift @documents;
+			my $class = shift @documents;
+			Padre::MimeTypes->add_mime_class( $type, $class );
+		}
+	};
 
+	# If the plugin defines syntax highlighters, register them.
+	# Skip highlighter registration on error.
 	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
-	if ( my @highlighters = $self->object->provided_highlighters ) {
-		require Padre::MimeTypes;
-		foreach my $h (@highlighters) {
-			if ( ref $h ne 'ARRAY' ) {
-				warn "Not array reference '$h'\n";
-				next;
-			}
-			Padre::MimeTypes->add_highlighter(@$h);
-		}
-	}
-
-	# TO DO remove these when plugin is disabled (and make sure files
-	# are not highlighted with this any more)
-	if ( my %mime_types = $self->object->highlighting_mime_types ) {
-		require Padre::MimeTypes;
-		foreach my $module ( keys %mime_types ) {
-
-			# TO DO sanity check here too.
-			foreach my $mime_type ( @{ $mime_types{$module} } ) {
-				Padre::MimeTypes->add_highlighter_to_mime_type( $mime_type, $module );
+	eval {
+		my @highlighters = $self->object->provided_highlighters;
+		if ( @highlighters ) {
+			require Padre::Wx::Scintilla;
+			while ( @highlighters ) {
+				my $module = shift @highlighters;
+				my $params = shift @highlighters;
+				Padre::Wx::Scintilla->add_highlighter( $module, $params );
 			}
 		}
-	}
+	};
 
 	# If the plugin has a hook for the context menu, cache it
 	if ( $self->object->can('event_on_context_menu') ) {

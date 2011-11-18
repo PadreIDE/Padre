@@ -62,12 +62,15 @@ our @ISA     = qw{
 use constant {
 	FILENAME    => 0,
 	TASKLOAD    => 1,
-	HIGHLIGHTER => 2,
-	MIMETYPE    => 3,
-	NEWLINE     => 4,
-	POSTRING    => 5,
-	RDONLY      => 6,
+	MIMETYPE    => 2,
+	NEWLINE     => 3,
+	POSTRING    => 4,
+	RDONLY      => 5,
 };
+
+
+
+
 
 #####################################################################
 
@@ -110,7 +113,7 @@ sub new {
 	                               # );
 
 	# Set up the fields
-	$self->SetFieldsCount(7);
+	$self->SetFieldsCount(6);
 
 	#$self->SetStatusWidths( -1, 0, 100, 100, 50, 100 );
 
@@ -136,7 +139,6 @@ in all fields.
 sub clear {
 	my $self = shift;
 	$self->SetStatusText( "", FILENAME );
-	$self->SetStatusText( "", HIGHLIGHTER );
 	$self->SetStatusText( "", MIMETYPE );
 	$self->SetStatusText( "", NEWLINE );
 	$self->SetStatusText( "", POSTRING );
@@ -190,7 +192,6 @@ sub refresh {
 	my $lines          = $editor->GetLineCount;
 	my $char           = $position - $start;
 	my $width          = $self->GetCharWidth;
-	my $highlighter    = Padre::MimeTypes->get_highlighter_name( $document->highlighter );
 	my $mime_type_name = Padre::MimeTypes->get_mime_type_name( $document->mimetype );
 	my $percent        = int( 100 * $line / $lines );
 
@@ -217,7 +218,6 @@ sub refresh {
 		my $status = $main->process_template_frequent( $self->{_template_} );
 		$self->SetStatusText( $status, FILENAME );
 	}
-	$self->SetStatusText( $highlighter,    HIGHLIGHTER );
 	$self->SetStatusText( $mime_type_name, MIMETYPE );
 	$self->SetStatusText( $newline,        NEWLINE );
 	$self->SetStatusText( $postring,       POSTRING );
@@ -225,7 +225,6 @@ sub refresh {
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,
-		( length($highlighter) + 2 ) * $width,
 		( length($mime_type_name) + 2 ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,

@@ -3,6 +3,8 @@ package Padre::Wx::Scintilla;
 # Utility package for integrating Wx::Scintilla with Padre
 
 use 5.008;
+use Params::Util            ();
+use Class::Inspector        ();
 use Padre::Config           ();
 use Padre::MimeTypes        ();
 use Padre::Util             ('_T');
@@ -67,6 +69,7 @@ my %LEXER = (
 	'text/x-pod'                => Wx::Scintilla::Constant::SCLEX_PERL,
 );
 
+# Must ALWAYS return a valid lexer (defaulting to AUTOMATIC as a last resort)
 sub lexer {
 	my $class = shift;
 	my $mime  = shift;
@@ -106,6 +109,59 @@ my %HIGHLIGHTER = (
 
 sub highlighter {
 	$HIGHLIGHTER{ $_[1] };
+}
+
+sub add_highlighter {
+	my $class  = shift;
+	my $module = shift;
+	my $params = shift;
+
+	# Check the highlighter params
+	unless ( Class::Inspector->installed($module) ) {
+		die "Missing or invalid highlighter $module";
+	}
+	if ( $MODULE{$module} ) {
+		die "Duplicate highlighter registration $module";
+	}
+	unless ( Params::Util::_HASH($params) ) {
+		die "Missing or invalid highlighter params";
+	}
+	unless ( defined Params::Util::_STRING($params->{name}) ) {
+		die "Missing or invalid highlighter name";
+	}
+	unless ( Params::Util::_ARRAY($params->{mime}) ) {
+		die "Missing or invalid highlighter mime list";
+	}
+
+	# Register the highlighter module
+	my %mime = map { $_ => 1 } @{$params->{mime}};
+	$MODULE{$module} = {
+		name => $params->{name},
+		mime => \%mime,
+	};
+
+	# Bind the mime types to the highlighter
+	foreach my $mime ( keys %mime ) {
+		$HIGHLIGHTER{$mime} = $module;
+	}
+
+	return 1;
+}
+
+sub remove_highlighter {
+	my $class  = shift;
+	my $module = shift;
+
+	# Unregister the highlighter module
+	my $deleted = delete $MODULE{$module} or return;
+
+	# Unbind the mime types for the highlighter
+	foreach my $mime ( keys %HIGHLIGHTER ) {
+		next unless $HIGHLIGHTER{$mime} eq $module;
+		delete $HIGHLIGHTER{$mime};
+	}
+
+	return 1;
 }
 
 1;
