@@ -8,6 +8,7 @@ use warnings;
 $| = 1;
 
 use utf8; # this don't work, the following would be nice
+
 # use feature 'unicode_strings';
 
 use Padre::Constant ();
@@ -17,6 +18,7 @@ use Padre::Logger qw(TRACE DEBUG);
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::Debugger ();
 
+# use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
 
@@ -93,7 +95,8 @@ sub view_close {
 
 sub view_icon {
 	my $self = shift;
-	# This method should return a valid Wx bitmap 
+
+	# This method should return a valid Wx bitmap
 	#### if exsists, other wise comment out hole method
 	# to be used as the icon for
 	# a notebook page (displayed alongside C<view_label>).
@@ -118,7 +121,7 @@ sub view_stop {
 }
 
 sub gettext_label {
-	Wx::gettext('Debugger RC1');
+	Wx::gettext('Debugger RC2');
 }
 ###############
 # Make Padre::Wx::Role::View happy end
@@ -177,16 +180,16 @@ sub set_up {
 
 	$self->{view_around}->SetBitmapLabel( Padre::Wx::Icon::find('actions/76-v') );
 	$self->{view_around}->Disable;
-	
+
 	$self->{stacktrace}->SetBitmapLabel( Padre::Wx::Icon::find('actions/54-t') );
 	$self->{stacktrace}->Disable;
-	
+
 	$self->{module_versions}->SetBitmapLabel( Padre::Wx::Icon::find('actions/4d-m') );
 	$self->{module_versions}->Disable;
-	
+
 	$self->{all_threads}->SetBitmapLabel( Padre::Wx::Icon::find('actions/45-e') );
 	$self->{all_threads}->Disable;
-	
+
 	$self->{trace}->Disable;
 	$self->{evaluate_expression}->SetBitmapLabel( Padre::Wx::Icon::find('actions/70-p') );
 	$self->{evaluate_expression}->Disable;
@@ -275,7 +278,7 @@ sub debug_perl {
 	# display panels
 	# $self->show_debug_output(1);
 	$main->show_panel_debug_output(1);
-	
+
 	if ( $self->{client} ) {
 		$main->error( Wx::gettext('Debugger is already running') );
 		return;
@@ -295,7 +298,7 @@ sub debug_perl {
 	} elsif ( $config->run_save eq 'all_buffer' ) {
 		$main->on_save_all;
 	}
-	
+
 	#TODO I think this is where the Fup filenames are comming from, see POD in main
 	# Get the filename
 	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
@@ -303,7 +306,7 @@ sub debug_perl {
 	# TODO: improve the message displayed to the user
 	# If the document is not saved, simply return for now
 	return unless $filename;
-	
+
 	#TODO how do we add debug options at startup such as threaded mode
 
 	# Set up the debugger
@@ -328,14 +331,15 @@ sub debug_perl {
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
 
-	# get bp's from db
-	# $self->_get_bp_db();
+	## get bp's from db
+	## $self->_get_bp_db();
 	if ( $self->{set_bp} == 0 ) {
 
-		# get bp's from db
+		# # 		## get bp's from db
 		$self->_get_bp_db();
 		$self->{set_bp} = 1;
-		# say "set_bp debug run";
+
+		# # 		## say "set_bp debug run";
 	}
 
 	unless ( $self->_set_debugger ) {
@@ -357,6 +361,7 @@ sub _set_debugger {
 
 	my $editor = $current->editor            or return;
 	my $file   = $self->{client}->{filename} or return;
+
 	# p $file;
 	my $row = $self->{client}->{row} or return;
 
@@ -364,7 +369,9 @@ sub _set_debugger {
 	if ( $editor->{Document}->filename ne $file ) {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
-		$self->_bp_autoload();
+
+		# we only want to do this if we are loading other packages of ours
+		# $self->_bp_autoload();
 	}
 
 	$editor->goto_line_centerize( $row - 1 );
@@ -457,6 +464,7 @@ sub debug_quit {
 	$self->update_variables( $self->{var_val}, $self->{auto_var_val}, $self->{auto_x_var} );
 
 	$self->{debug}->Show;
+
 	# $self->show_debug_output(0);
 	$main->show_panel_debug_output(0);
 	return;
@@ -470,11 +478,11 @@ sub debug_step_in {
 	my $main = $self->main;
 
 	# unless ( $self->{client} ) {
-		# unless ( $self->debug_perl ) {
-			# $main->error( Wx::gettext('Debugger not running') );
-			# return;
-		# }
-		# return;
+	# unless ( $self->debug_perl ) {
+	# $main->error( Wx::gettext('Debugger not running') );
+	# return;
+	# }
+	# return;
 	# }
 
 	my ( $module, $file, $row, $content ) = $self->{client}->step_in;
@@ -500,10 +508,10 @@ sub debug_step_over {
 	my $main = $self->main;
 
 	# unless ( $self->{client} ) {
-		# unless ( $self->debug_perl ) {
-			# $main->error( Wx::gettext('Debugger not running') );
-			# return;
-		# }
+	# unless ( $self->debug_perl ) {
+	# $main->error( Wx::gettext('Debugger not running') );
+	# return;
+	# }
 	# }
 
 	my ( $module, $file, $row, $content ) = $self->{client}->step_over;
@@ -530,8 +538,8 @@ sub debug_step_out {
 	my $main = $self->main;
 
 	# unless ( $self->{client} ) {
-		# $main->error( Wx::gettext('Debugger not running') );
-		# return;
+	# $main->error( Wx::gettext('Debugger not running') );
+	# return;
 	# }
 
 	my ( $module, $file, $row, $content ) = $self->{client}->step_out;
@@ -559,10 +567,10 @@ sub debug_run_till {
 	my $main  = $self->main;
 
 	# unless ( $self->{client} ) {
-		# unless ( $self->debug_perl ) {
-			# $main->error( Wx::gettext('Debugger not running') );
-			# return;
-		# }
+	# unless ( $self->debug_perl ) {
+	# $main->error( Wx::gettext('Debugger not running') );
+	# return;
+	# }
 	# }
 
 	my ( $module, $file, $row, $content ) = $self->{client}->run($param);
@@ -630,6 +638,7 @@ sub debug_perl_show_value {
 		$main->error( sprintf( Wx::gettext("Could not evaluate '%s'"), $text ) );
 		return;
 	}
+
 	# say "text: $text => value: $value";
 	$self->message("$text = $value");
 
@@ -710,7 +719,7 @@ sub quit {
 sub _output_variables {
 	my $self = shift;
 
-	foreach my $variable ( keys %{$self->{var_val}} ) {
+	foreach my $variable ( keys %{ $self->{var_val} } ) {
 		my $value;
 		eval { $value = $self->{client}->get_value($variable); };
 		if ($@) {
@@ -860,11 +869,7 @@ sub _get_bp_db {
 	my $editor = Padre::Current->editor;
 
 	$self->{project_dir} = Padre::Current->document->project_dir;
-
-	# p $self->{project_dir};
 	$self->{current_file} = Padre::Current->document->filename;
-
-	# p $self->{current_file};
 
 	TRACE("current file from _get_bp_db: $self->{current_file}") if DEBUG;
 
@@ -873,8 +878,8 @@ sub _get_bp_db {
 
 	for ( 0 .. $#tuples ) {
 
-		if ( $tuples[$_][1] =~ m/$self->{current_file}/ ) {
-
+		# if ( $tuples[$_][1] =~ m/^$self->{current_file}$/ ) {
+		if ( $tuples[$_][1] eq $self->{current_file} ) {
 			if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
 				$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 			} else {
@@ -887,16 +892,26 @@ sub _get_bp_db {
 		}
 
 	}
-	#TODO this is causing bleading of BP's 
-	# for ( 0 .. $#tuples ) {
 
-# # 		if ( $tuples[$_][1] =~ m/$self->{project_dir}/ ) {
+	#TODO tidy up
+	# no more bleading BP's
+	for ( 0 .. $#tuples ) {
 
-# # 			# set common project files bp's in debugger
-			# $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] );
-		# }
-	# }
+		if ( $tuples[$_][1] =~ m/^$self->{project_dir}/ ) {
+			if ( $tuples[$_][1] ne $self->{current_file} ) {
 
+				if ( $self->{client}->__send("f $tuples[$_][1]") !~ m/^No file matching/ ) {
+
+					unless ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
+						Padre::DB->do( 'update debug_breakpoints SET active = ? WHERE id = ?', {}, 0, $tuples[$_][0], );
+					}
+				}
+			}
+		}
+	}
+
+	#let's do some boot n braces
+	$self->{client}->__send("f $self->{current_file}");
 	return;
 }
 
@@ -945,6 +960,7 @@ sub on_debug_clicked {
 	my $main = $self->main;
 
 	$self->{quit_debugger}->Enable;
+
 	# $self->show_debug_output(1);
 	$main->show_panel_debug_output(1);
 	$self->{step_in}->Show;
@@ -971,6 +987,11 @@ sub on_debug_clicked {
 	if ( $main->{panel_debug_output} ) {
 		$main->{panel_debug_output}->debug_output( $self->{client}->_show_help );
 	}
+
+	#let's reload our breakpoints
+	# $self->_get_bp_db();
+	$self->{set_bp} = 0;
+
 	return;
 }
 #######
@@ -1099,8 +1120,7 @@ sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}
-		->debug_output( $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
+	$main->{panel_debug_output}->debug_output( $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
 
 	return;
 }
@@ -1138,7 +1158,7 @@ sub on_list_action_clicked {
 	return;
 }
 #######
-# Event handler on_stacktrace_clicked 
+# Event handler on_stacktrace_clicked
 #######
 sub on_stacktrace_clicked {
 	my $self = shift;
