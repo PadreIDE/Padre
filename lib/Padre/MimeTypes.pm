@@ -22,9 +22,6 @@ use File::Basename          ();
 use Padre::Config           ();
 use Padre::Current          ();
 use Padre::Util             ('_T');
-use Padre::DB               ();
-use Wx::Scintilla::Constant ();
-use Wx::Scintilla           ();
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
@@ -177,36 +174,24 @@ sub _initialize {
 		'text/x-patch'       => 'Padre::Document::Patch',
 	);
 
-	# This is the mime-type to Scintilla lexer mapping.
 	# Lines marked with CONFIRMED indicate that the mime-type has been checked
 	# that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
 
 	# name  => Human readable name
-	# lexer => The Scintilla lexer to be used
-
-	# Padre can use Wx::Scintilla's built-in Perl 6 lexer
-	my $perl6_scintilla_lexer = Wx::Scintilla::wxSCINTILLA_LEX_PERL6();
 
 	%MIME = (
 		'text/x-abc' => {
 			name  => 'ABC',
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,
 		},
-
 		'text/x-actionscript' => {
 			name  => 'ABC',
-			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
-
 		'text/x-adasrc' => {
 			name  => 'Ada',
-			lexer => Wx::Scintilla::Constant::SCLEX_ADA, # CONFIRMED
 		},
-
 		'text/x-asm' => {
 			name  => 'Assembly',
-			lexer => Wx::Scintilla::Constant::SCLEX_ASM, # CONFIRMED
 		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
@@ -214,304 +199,255 @@ sub _initialize {
 		# they need to be the same
 		'text/x-bat' => {
 			name  => 'Batch',
-			lexer => Wx::Scintilla::Constant::SCLEX_BATCH, # CONFIRMED
 		},
 
 		'application/x-bibtex' => {
 			name  => 'BibTeX',
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,
 		},
 
 		'application/x-bml' => {
 			name  => 'BML',
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,  #
 		},
 
 		'text/x-c' => {
 			name  => 'C',
-			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 
 		'text/x-cobol' => {
 			name  => 'COBOL',
-			lexer => 92,                       #TODO Wx::Scintilla::Constant::SCLEX_COBOL once it is working
 		},
 
 		'text/x-c++src' => {
 			name  => 'C++',
-			lexer => Wx::Scintilla::Constant::SCLEX_CPP,   # CONFIRMED
 		},
 
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::Scintilla::Constant::SCLEX_CSS,   # CONFIRMED
 		},
 
 		'text/x-eiffel' => {
 			name  => 'Eiffel',
-			lexer => Wx::Scintilla::Constant::SCLEX_EIFFEL, # CONFIRMED
 		},
 
 		'text/x-forth' => {
 			name  => 'Forth',
-			lexer => Wx::Scintilla::Constant::SCLEX_FORTH,  # CONFIRMED
 		},
 
 		'text/x-fortran' => {
 			name  => 'Fortran',
-			lexer => Wx::Scintilla::Constant::SCLEX_FORTRAN, # CONFIRMED
 		},
 
 		'text/x-haskell' => {
 			name  => 'Haskell',
-			lexer => Wx::Scintilla::Constant::SCLEX_HASKELL, # CONFIRMED
 		},
 
 		'text/html' => {
 			name  => 'HTML',
-			lexer => Wx::Scintilla::Constant::SCLEX_HTML,    # CONFIRMED
 		},
 
 		'application/javascript' => {
 			name  => 'JavaScript',
-			lexer => Wx::Scintilla::Constant::SCLEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/json' => {
 			name  => 'JSON',
-			lexer => Wx::Scintilla::Constant::SCLEX_ESCRIPT, # CONFIRMED
 		},
 
 		'application/x-latex' => {
 			name  => 'LaTeX',
-			lexer => Wx::Scintilla::Constant::SCLEX_LATEX,   # CONFIRMED
 		},
 
 		'application/x-lisp' => {
 			name  => 'LISP',
-			lexer => Wx::Scintilla::Constant::SCLEX_LISP,    # CONFIRMED
 		},
 
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::Scintilla::Constant::SCLEX_DIFF,    # CONFIRMED
 		},
 
 		'application/x-shellscript' => {
 			name  => _T('Shell Script'),
-			lexer => Wx::Scintilla::Constant::SCLEX_BASH,
 		},
 
 		'text/x-java-source' => {
 			name  => 'Java',
-			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 
 		'text/x-lua' => {
 			name  => 'Lua',
-			lexer => Wx::Scintilla::Constant::SCLEX_LUA, # CONFIRMED
 		},
 
 		'text/x-makefile' => {
 			name  => 'Makefile',
-			lexer => Wx::Scintilla::Constant::SCLEX_MAKEFILE, # CONFIRMED
 		},
 
 		'text/x-matlab' => {
 			name  => 'Matlab',
-			lexer => Wx::Scintilla::Constant::SCLEX_MATLAB,   # CONFIRMED
 		},
 
 		'text/x-pascal' => {
 			name  => 'Pascal',
-			lexer => Wx::Scintilla::Constant::SCLEX_PASCAL,   # CONFIRMED
 		},
 
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer => Wx::Scintilla::Constant::SCLEX_PERL,     # CONFIRMED
 		},
 		
 		'text/x-povray' => {
 			name  => 'POVRAY',
-			lexer => Wx::Scintilla::Constant::SCLEX_POV,
 		},
 
 		'application/x-psgi' => {
 			name  => 'PSGI',
-			lexer => Wx::Scintilla::Constant::SCLEX_PERL,     # CONFIRMED
 		},
 
 		'text/x-python' => {
 			name  => 'Python',
-			lexer => Wx::Scintilla::Constant::SCLEX_PYTHON,   # CONFIRMED
 		},
 
 		'application/x-php' => {
 			name  => 'PHP',
-			lexer => Wx::Scintilla::Constant::SCLEX_PHPSCRIPT, # CONFIRMED
 		},
 
 		'application/x-ruby' => {
 			name  => 'Ruby',
-			lexer => Wx::Scintilla::Constant::SCLEX_RUBY,      # CONFIRMED
 		},
 
 		'text/x-sql' => {
 			name  => 'SQL',
-			lexer => Wx::Scintilla::Constant::SCLEX_SQL,       # CONFIRMED
 		},
 
 		'application/x-tcl' => {
 			name  => 'Tcl',
-			lexer => Wx::Scintilla::Constant::SCLEX_TCL,       # CONFIRMED
 		},
 
 		'text/vbscript' => {
 			name  => 'VBScript',
-			lexer => Wx::Scintilla::Constant::SCLEX_VBSCRIPT,  # CONFIRMED
 		},
 
 		'text/x-config' => {
 			name  => 'Config',
-			lexer => Wx::Scintilla::Constant::SCLEX_CONF,
 		},
 
 		# text/xml specifically means "human-readable XML".
 		# This is prefered to the more generic application/xml
 		'text/xml' => {
 			name  => 'XML',
-			lexer => Wx::Scintilla::Constant::SCLEX_XML,       # CONFIRMED
 		},
 
 		'text/x-yaml' => {
 			name  => 'YAML',
-			lexer => Wx::Scintilla::Constant::SCLEX_YAML,      # CONFIRMED
 		},
 
 		'application/x-pir' => {
 			name  => 'PIR',
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-pasm' => {
 			name  => 'PASM',
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		'application/x-perl6' => {
 			name  => 'Perl 6',
-			lexer => $perl6_scintilla_lexer,       # CONFIRMED
 		},
 
 		'text/plain' => {
 			name  => _T('Text'),
-			lexer => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 		},
 
 		# Completely custom mime types
 		'text/x-perlxs' => {                       # totally not confirmed
 			name => 'XS',
-			lexer =>
-				Wx::Scintilla::Constant::SCLEX_CPP,            # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
-			lexer => Wx::Scintilla::Constant::SCLEX_HTML,
 		},
 
 		'text/x-csharp' => {
 			name  => 'C#',
-			lexer => Wx::Scintilla::Constant::SCLEX_CPP,
 		},
 		'text/x-pod' => {
 			name  => 'POD',
-			lexer => Wx::Scintilla::Constant::SCLEX_PERL,
 		},
 	);
 
-
-	foreach my $type ( keys %DEFAULT_DOC_CLASS ) {
-		if ( exists $MIME{$type} ) {
-			$MIME{$type}->{class} = $DEFAULT_DOC_CLASS{$type};
+	foreach my $mime ( keys %DEFAULT_DOC_CLASS ) {
+		if ( exists $MIME{$mime} ) {
+			$MIME{$mime}->{class} = $DEFAULT_DOC_CLASS{$mime};
 		} else {
-			warn "Unknown MIME type: $type\n";
+			warn "Unknown MIME type: $mime\n";
 		}
 	}
 }
 
-sub get_lexer {
-	$MIME{ $_[1] }->{lexer};
-}
-
 sub add_mime_class {
-	my $class      = shift;
-	my $type       = shift;
-	my $mime_class = shift;
+	my $class  = shift;
+	my $mime   = shift;
+	my $module = shift;
 
-	if ( not $MIME{$type} ) {
+	if ( not $MIME{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext('MIME type was not supported when %s(%s) was called'),
 				'add_mime_class',
-				$type
+				$mime
 			)
 		);
 		return;
 	}
 
-	$MIME{$type}->{class} = $mime_class;
+	$MIME{$mime}->{class} = $module;
 }
 
 sub reset_mime_class {
 	my $class = shift;
-	my $type  = shift;
+	my $mime  = shift;
 
-	if ( not $MIME{$type} ) {
+	if ( not $MIME{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext('MIME type is not supported when %s(%s) was called'),
 				'remove_mime_class',
-				$type
+				$mime
 			)
 		);
 		return;
 	}
 
-	if ( not $MIME{$type}->{class} ) {
+	if ( not $MIME{$mime}->{class} ) {
 		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext('MIME type did not have a class entry when %s(%s) was called'),
 				'remove_mime_class',
-				$type
+				$mime
 			)
 		);
 		return;
 	}
 
-	if ( exists $DEFAULT_DOC_CLASS{$type} ) {
-		$MIME{$type}->{class} = $DEFAULT_DOC_CLASS{$type};
+	if ( exists $DEFAULT_DOC_CLASS{$mime} ) {
+		$MIME{$mime}->{class} = $DEFAULT_DOC_CLASS{$mime};
 	} else {
-		delete $MIME{$type}->{class};
+		delete $MIME{$mime}->{class};
 	}
 }
 
 sub get_mime_class {
 	my $class = shift;
-	my $type  = shift;
+	my $mime  = shift;
 
-	if ( not $MIME{$type} ) {
+	if ( not $MIME{$mime} ) {
 		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext('MIME type is not supported when %s(%s) was called'),
 				'get_mime_class',
-				$type
+				$mime
 			)
 		);
 		return;
 	}
 
-	return $MIME{$type}->{class};
+	return $MIME{$mime}->{class};
 }
 
 # return the MIME types ordered according to their display name
@@ -522,23 +458,16 @@ sub get_mime_types {
 	];
 }
 
-# return the display-names of the MIME types ordered according to the display names
-sub get_mime_type_names {
-	my $class = shift;
-	# Need to be checked with non Western languages
-	return [ map { $MIME{$_}->{name} } @{ $class->get_mime_types } ];
-}
-
 # given a MIME type
 # return its display name
 sub get_mime_type_name {
 	my $class = shift;
-	my $type = shift || '';
+	my $mime = shift || '';
 	return Wx::gettext('UNKNOWN')
-		if $type eq ''
-			or not $MIME{$type}
-			or not $MIME{$type}->{name};
-	return Wx::gettext( $MIME{$type}->{name} );
+		if $mime eq ''
+			or not $MIME{$mime}
+			or not $MIME{$mime}->{name};
+	return Wx::gettext( $MIME{$mime}->{name} );
 }
 
 
@@ -820,10 +749,10 @@ sub is_perl6 {
 
 sub menu_view_mimes {
 	my %menu_view_mimes = ();
-	foreach my $type ( keys %MIME ) {
-		my $name = $MIME{$type}->{name};
+	foreach my $mime ( keys %MIME ) {
+		my $name = $MIME{$mime}->{name};
 		if ($name) {
-			$menu_view_mimes{$type} = $name;
+			$menu_view_mimes{$mime} = $name;
 		}
 	}
 	return %menu_view_mimes;
