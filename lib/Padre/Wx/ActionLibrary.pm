@@ -2110,7 +2110,7 @@ sub init {
 
 			menu_event => sub {
 				if ( $_[0]->{panel_breakpoints} ) {
-					$_[0]->{panel_breakpoints}->set_breakpoints_clicked();
+					$_[0]->{panel_breakpoints}->on_set_breakpoints_clicked();
 				} else {
 					require Padre::Breakpoints;
 					Padre::Breakpoints->set_breakpoints_clicked();
