@@ -10,35 +10,35 @@ use Padre::Wx::FBP::Breakpoints;
 
 our $VERSION = '0.93';
 our @ISA     = qw{
-    Padre::Wx::Role::View
-    Padre::Wx::FBP::Breakpoints
+	Padre::Wx::Role::View
+	Padre::Wx::FBP::Breakpoints
 };
 
 use constant {
-    RED        => Wx::Colour->new('red'),
-    DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
-    BLUE       => Wx::Colour->new('blue'),
-    GRAY       => Wx::Colour->new('gray'),
-    DARK_GRAY  => Wx::Colour->new( 0x7f, 0x7f, 0x7f ),
-    BLACK      => Wx::Colour->new('black'),
+	RED        => Wx::Colour->new('red'),
+	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
+	BLUE       => Wx::Colour->new('blue'),
+	GRAY       => Wx::Colour->new('gray'),
+	DARK_GRAY  => Wx::Colour->new( 0x7f, 0x7f, 0x7f ),
+	BLACK      => Wx::Colour->new('black'),
 };
 
 #######
 # new
 #######
 sub new {
-    my $class = shift;
-    my $main  = shift;
-    my $panel = shift || $main->left;
+	my $class = shift;
+	my $main  = shift;
+	my $panel = shift || $main->left;
 
-    # Create the panel
-    my $self = $class->SUPER::new($panel);
+	# Create the panel
+	my $self = $class->SUPER::new($panel);
 
-    $main->aui->Update;
+	$main->aui->Update;
 
-    $self->set_up();
+	$self->set_up();
 
-    return $self;
+	return $self;
 }
 
 ###############
@@ -46,72 +46,72 @@ sub new {
 ###############
 
 sub view_panel {
-    my $self = shift;
+	my $self = shift;
 
-    # This method describes which panel the tool lives in.
-    # Returns the string 'right', 'left', or 'bottom'.
+	# This method describes which panel the tool lives in.
+	# Returns the string 'right', 'left', or 'bottom'.
 
-    return 'left';
+	return 'left';
 }
 
 sub view_label {
-    my $self = shift;
+	my $self = shift;
 
-    # The method returns the string that the notebook label should be filled
-    # with. This should be internationalised properly. This method is called
-    # once when the object is constructed, and again if the user triggers a
-    # C<relocale> cascade to change their interface language.
+	# The method returns the string that the notebook label should be filled
+	# with. This should be internationalised properly. This method is called
+	# once when the object is constructed, and again if the user triggers a
+	# C<relocale> cascade to change their interface language.
 
-    return Wx::gettext('Breakpoints');
+	return Wx::gettext('Breakpoints');
 }
 
 sub view_close {
-    my $self = shift;
+	my $self = shift;
 
-    # This method is called on the object by the event handler for the "X"
-    # control on the notebook label, if it has one.
+	# This method is called on the object by the event handler for the "X"
+	# control on the notebook label, if it has one.
 
-    # The method should generally initiate whatever is needed to close the
-    # tool via the highest level API. Note that while we aren't calling the
-    # equivalent menu handler directly, we are calling the high-level method
-    # on the main window that the menu itself calls.
+	# The method should generally initiate whatever is needed to close the
+	# tool via the highest level API. Note that while we aren't calling the
+	# equivalent menu handler directly, we are calling the high-level method
+	# on the main window that the menu itself calls.
 
-    $self->main->show_panel_breakpoints(0);
+	$self->main->show_panel_breakpoints(0);
 
-    return;
+	return;
 }
 
 sub view_icon {
-    my $self = shift;
+	my $self = shift;
 
-    # This method should return a valid Wx bitmap
-    #### if exsists, other wise comment out hole method
-    # to be used as the icon for
-    # a notebook page (displayed alongside C<view_label>).
+	# This method should return a valid Wx bitmap
+	#### if exsists, other wise comment out hole method
+	# to be used as the icon for
+	# a notebook page (displayed alongside C<view_label>).
 
-    my $icon = Padre::Wx::Icon::find('actions/morpho3');
+	my $icon = Padre::Wx::Icon::find('actions/morpho3');
 
-    return $icon;
+	return $icon;
 }
 
 sub view_start {
-    my $self = shift;
+	my $self = shift;
 
-    # Called immediately after the view has been displayed, to allow the view
-    # to kick off any timers or do additional post-creation setup.
-    return;
+	# Called immediately after the view has been displayed, to allow the view
+	# to kick off any timers or do additional post-creation setup.
+	return;
 }
 
 sub view_stop {
-    my $self = shift;
+	my $self = shift;
 
-   # Called immediately before the view is hidden, to allow the view to cancel
-   # any timers, cancel tasks or do pre-destruction teardown.
-    return;
+	# Called immediately before the view is hidden, to allow the view to cancel
+	# any timers, cancel tasks or do pre-destruction teardown.
+	return;
 }
 
 sub gettext_label {
-    Wx::gettext('BreakPoints');
+	Wx::gettext('BreakPoints');
 }
 ###############
 # Make Padre::Wx::Role::View happy end
@@ -121,49 +121,43 @@ sub gettext_label {
 # Method set_up
 #######
 sub set_up {
-    my $self = shift;
+	my $self = shift;
 
-    $self->{breakpoints_visable} = 0;
+	$self->{breakpoints_visable} = 0;
 
-    # Setup the debug button icons
-    $self->{refresh}
-        ->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
-    $self->{refresh}->Enable;
+	# Setup the debug button icons
+	$self->{refresh}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
+	$self->{refresh}->Enable;
 
-    $self->{delete_not_breakable}
-        ->SetBitmapLabel( Padre::Wx::Icon::find('actions/window-close') );
-    $self->{delete_not_breakable}->Enable;
+	$self->{delete_not_breakable}->SetBitmapLabel( Padre::Wx::Icon::find('actions/window-close') );
+	$self->{delete_not_breakable}->Enable;
 
-    $self->{set_breakpoints}
-        ->SetBitmapLabel( Padre::Wx::Icon::find('actions/breakpoints') );
-    $self->{set_breakpoints}->Enable;
+	$self->{set_breakpoints}->SetBitmapLabel( Padre::Wx::Icon::find('actions/breakpoints') );
+	$self->{set_breakpoints}->Enable;
 
-    $self->{delete_project_bp}
-        ->SetBitmapLabel( Padre::Wx::Icon::find('actions/x-document-close') );
-    $self->{delete_project_bp}->Disable;
+	$self->{delete_project_bp}->SetBitmapLabel( Padre::Wx::Icon::find('actions/x-document-close') );
+	$self->{delete_project_bp}->Disable;
 
-    # Update the checkboxes with their corresponding values in the
-    # configuration
-    $self->{show_project}->SetValue(0);
-    $self->{show_project} = 0;
+	# Update the checkboxes with their corresponding values in the
+	# configuration
+	$self->{show_project}->SetValue(0);
+	$self->{show_project} = 0;
 
-    $self->_setup_db();
+	$self->_setup_db();
 
-    # TODO Active should be droped, just on show for now
-    # Setup columns names, Active should be droped, just and order here
-    my @column_headers = qw( Path Line Active );
-    my $index          = 0;
-    for my $column_header (@column_headers) {
-        $self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
-    }
+	# TODO Active should be droped, just on show for now
+	# Setup columns names, Active should be droped, just and order here
+	# my @column_headers = qw( Path Line Active ); do not remove
+	my @column_headers = qw( Path Line );
+	my $index          = 0;
+	for my $column_header (@column_headers) {
+		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
+	}
 
-    # Tidy the list
-    Padre::Util::tidy_list( $self->{list} );
-    
-    #this is disaled here as it is now done by actionlibrary in first instance
-    # $self->on_refresh_click();
+	# Tidy the list
+	Padre::Util::tidy_list( $self->{list} );
 
-    return;
+	return;
 }
 
 ##########################
@@ -171,143 +165,150 @@ sub set_up {
 #######
 # event handler delete_not_breakable_clicked
 #######
-sub delete_not_breakable_clicked {
-    my $self = shift;
+sub on_delete_not_breakable_clicked {
+	my $self = shift;
 
-    #TODO there must be a better way than this
-    my $editor = Padre::Current->editor;
+	#TODO there must be a better way than this
+	my $editor = Padre::Current->editor;
 
-    my $sql_select
-        = "WHERE filename = \"$self->{current_file}\" AND active = 0";
-    my @tuples = $self->{debug_breakpoints}->select($sql_select);
+	my $sql_select = "WHERE filename = \"$self->{current_file}\" AND active = 0";
+	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
 
-    my $index = 0;
+	my $index = 0;
 
-    for ( 0 .. $#tuples ) {
+	for ( 0 .. $#tuples ) {
 
-        # say 'delete me';
-        $editor->MarkerDelete( $tuples[$_][2] - 1,
-            Padre::Constant::MARKER_BREAKPOINT() );
-        $editor->MarkerDelete( $tuples[$_][2] - 1,
-            Padre::Constant::MARKER_NOT_BREAKABLE() );
+		# say 'delete me';
+		$editor->MarkerDelete(
+			$tuples[$_][2] - 1,
+			Padre::Constant::MARKER_BREAKPOINT()
+		);
+		$editor->MarkerDelete(
+			$tuples[$_][2] - 1,
+			Padre::Constant::MARKER_NOT_BREAKABLE()
+		);
 
-    }
-    $self->{debug_breakpoints}
-        ->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
+	}
+	$self->{debug_breakpoints}->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
 
-    $self->_update_list();
-    return;
+	$self->_update_list();
+	return;
 }
 
 #######
 # event handler on_refresh_click
 #######
 sub on_refresh_click {
-    my $self    = shift;
-    my $main    = $self->main;
-    my $current = $main->current;
+	my $self    = shift;
+	my $main    = $self->main;
+	my $current = $main->current;
 
-    $self->{project_dir} = $current->document->project_dir;
-    
-    $self->{current_file} = $current->document->filename;
+	$self->{project_dir}  = $current->document->project_dir;
+	$self->{current_file} = $current->document->filename;
 
-    $self->_update_list();
+	$self->_update_list();
 
-    return;
+	return;
 }
 
 #######
 # event handler breakpoint_clicked
 #######
-sub set_breakpoints_clicked {
-    my $self    = shift;
-    my $main    = $self->main;
-    my $current = $main->current;
+sub on_set_breakpoints_clicked {
+	my $self    = shift;
+	my $main    = $self->main;
+	my $current = $main->current;
 
-    $self->_setup_db;
+	$self->_setup_db;
 
-    # $self->running or return;
-    my $editor = Padre::Current->editor;
-    $self->{current_file} = $current->document->filename;
-    $self->{current_line} = $editor->GetCurrentLine + 1;
+	# $self->running or return;
+	my $editor = Padre::Current->editor;
+	$self->{current_file} = $current->document->filename;
+	$self->{current_line} = $editor->GetCurrentLine + 1;
 
-    # dereferance array and test for contents
-    if ($#{ $self->{debug_breakpoints}->select(
-                "WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\""
-            )
-        } >= 0
-        )
-    {
+	# dereferance array and test for contents
+	if ($#{ $self->{debug_breakpoints}
+				->select("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"")
+		} >= 0
+		)
+	{
 
-        # say 'delete me';
-        $editor->MarkerDelete( $self->{current_line} - 1,
-            Padre::Constant::MARKER_BREAKPOINT() );
-        $editor->MarkerDelete( $self->{current_line} - 1,
-            Padre::Constant::MARKER_NOT_BREAKABLE() );
-        $self->_delete_bp_db();
+		# say 'delete me';
+		$editor->MarkerDelete(
+			$self->{current_line} - 1,
+			Padre::Constant::MARKER_BREAKPOINT()
+		);
+		$editor->MarkerDelete(
+			$self->{current_line} - 1,
+			Padre::Constant::MARKER_NOT_BREAKABLE()
+		);
+		$self->_delete_bp_db();
 
-    }
-    else {
+	} else {
 
-        # say 'create me';
-        $self->{bp_active} = 1;
-        $editor->MarkerAdd( $self->{current_line} - 1,
-            Padre::Constant::MARKER_BREAKPOINT() );
-        $self->_add_bp_db();
-    }
-    $self->on_refresh_click();
-    return;
+		# say 'create me';
+		$self->{bp_active} = 1;
+		$editor->MarkerAdd(
+			$self->{current_line} - 1,
+			Padre::Constant::MARKER_BREAKPOINT()
+		);
+		$self->_add_bp_db();
+	}
+	$self->on_refresh_click();
+	return;
 }
 
 #######
 # event handler on_show_project_click
 #######
 sub on_show_project_click {
-    my ( $self, $event ) = @_;
+	my ( $self, $event ) = @_;
 
-    if ( $event->IsChecked ) {
-        $self->{show_project} = 1;
-        $self->{delete_project_bp}->Enable;
+	if ( $event->IsChecked ) {
+		$self->{show_project} = 1;
+		$self->{delete_project_bp}->Enable;
 
-    }
-    else {
-        $self->{show_project} = 0;
-        $self->{delete_project_bp}->Disable;
+	} else {
+		$self->{show_project} = 0;
+		$self->{delete_project_bp}->Disable;
 
-    }
+	}
 
-    $self->on_refresh_click();
+	$self->on_refresh_click();
 
-    return;
+	return;
 }
 
 #######
 # event handler delete_project_bp_clicked
 #######
-sub delete_project_bp_clicked {
-    my $self   = shift;
-    my $editor = Padre::Current->editor;
+sub on_delete_project_bp_clicked {
+	my $self   = shift;
+	my $editor = Padre::Current->editor;
 
-    my $sql_select = 'ORDER BY filename ASC';
-    my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+	my $sql_select = 'ORDER BY filename ASC';
+	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
 
-    my $index = 0;
+	my $index = 0;
 
-    for ( 0 .. $#tuples ) {
+	for ( 0 .. $#tuples ) {
 
-        if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
+		if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
 
-            $editor->MarkerDelete( $tuples[$_][2] - 1,
-                Padre::Constant::MARKER_BREAKPOINT() );
-            $editor->MarkerDelete( $tuples[$_][2] - 1,
-                Padre::Constant::MARKER_NOT_BREAKABLE() );
-            $self->{debug_breakpoints}
-                ->delete("WHERE filename = \"$tuples[$_][1]\" ");
-        }
-    }
+			$editor->MarkerDelete(
+				$tuples[$_][2] - 1,
+				Padre::Constant::MARKER_BREAKPOINT()
+			);
+			$editor->MarkerDelete(
+				$tuples[$_][2] - 1,
+				Padre::Constant::MARKER_NOT_BREAKABLE()
+			);
+			$self->{debug_breakpoints}->delete("WHERE filename = \"$tuples[$_][1]\" ");
+		}
+	}
 
-    $self->on_refresh_click();
-    return;
+	$self->on_refresh_click();
+	return;
 }
 
 ###############
@@ -316,41 +317,40 @@ sub delete_project_bp_clicked {
 # internal method _setup_db connector
 #######
 sub _setup_db {
-    my $self = shift;
+	my $self = shift;
 
-    # set padre db relation
-    $self->{debug_breakpoints} = ('Padre::DB::DebugBreakpoints');
+	# set padre db relation
+	$self->{debug_breakpoints} = ('Padre::DB::DebugBreakpoints');
 
-    return;
+	return;
 }
 
 #######
 # internal method _add_bp_db
 #######
 sub _add_bp_db {
-    my $self = shift;
+	my $self = shift;
 
-    $self->{debug_breakpoints}->create(
-        filename    => $self->{current_file},
-        line_number => $self->{current_line},
-        active      => $self->{bp_active},
-        last_used   => time(),
-    );
+	$self->{debug_breakpoints}->create(
+		filename    => $self->{current_file},
+		line_number => $self->{current_line},
+		active      => $self->{bp_active},
+		last_used   => time(),
+	);
 
-    return;
+	return;
 }
 
 #######
 # internal method _delete_bp_db
 #######
 sub _delete_bp_db {
-    my $self = shift;
+	my $self = shift;
 
-    $self->{debug_breakpoints}->delete(
-        "WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\""
-    );
+	$self->{debug_breakpoints}
+		->delete("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"");
 
-    return;
+	return;
 }
 
 #######
@@ -358,80 +358,75 @@ sub _delete_bp_db {
 # display any relation db
 #######
 sub _update_list {
-    my $self = shift;
+	my $self = shift;
 
-    my $item = Wx::ListItem->new;
+	my $item = Wx::ListItem->new;
 
-    # clear ListCtrl items
-    $self->{list}->DeleteAllItems;
+	# clear ListCtrl items
+	$self->{list}->DeleteAllItems;
 
-    my $editor = Padre::Current->editor;
-    
-    # if ( not defined $self->{project_dir} ) {
-        # print "self->{project} => $self->{project_dir}\n";
-        # # $self->{project_dir} = 'undef';
-    # }
+	my $editor = Padre::Current->editor;
 
-    my $sql_select = 'ORDER BY filename ASC, line_number ASC';
-    my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+	my $sql_select = 'ORDER BY filename DESC, line_number DESC';
+	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
 
-    my $index = 0;
+	my $index = 0;
 
-    for ( 0 .. $#tuples ) {
+	for ( 0 .. $#tuples ) {
 
-        if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
-            if (   $self->{show_project} == 0
-                && $tuples[$_][1] =~ m/^$self->{current_file}/ )
-            {
-                $item->SetId($index);
-                $self->{list}->InsertItem($item);
-                if ( $tuples[$_][3] == 1 ) {
-                    $self->{list}->SetItemTextColour( $index, BLUE );
-                    $editor->MarkerAdd( $tuples[$_][2] - 1,
-                        Padre::Constant::MARKER_BREAKPOINT() );
-                }
-                else {
-                    $self->{list}->SetItemTextColour( $index, DARK_GRAY );
-                    $editor->MarkerAdd( $tuples[$_][2] - 1,
-                        Padre::Constant::MARKER_NOT_BREAKABLE() );
-                }
-                $self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
-                $tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
-                $self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
+		if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
+			if ( $tuples[$_][1] =~ m/ $self->{current_file} $/sxm ) {
+				$item->SetId($index);
+				$self->{list}->InsertItem($item);
+				if ( $tuples[$_][3] == 1 ) {
+					$self->{list}->SetItemTextColour( $index, BLUE );
+					$editor->MarkerAdd(
+						$tuples[$_][2] - 1,
+						Padre::Constant::MARKER_BREAKPOINT()
+					);
+				} else {
+					$self->{list}->SetItemTextColour( $index, DARK_GRAY );
+					$editor->MarkerAdd(
+						$tuples[$_][2] - 1,
+						Padre::Constant::MARKER_NOT_BREAKABLE()
+					);
+				}
+				$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
+				$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
+				$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 
-                # TODO comment out just on show for now
-                $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
+				# TODO comment out just on show for now, do not remove
+				# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
 
-            }
-            elsif ( $self->{show_project} == 1 ) {
-                $item->SetId($index);
-                $self->{list}->InsertItem($item);
+			}
 
-                # make current file blue
-                if ( $tuples[$_][1] =~ m/^$self->{current_file}/ ) {
-                    $self->{list}->SetItemTextColour( $index, BLUE );
-                }
-                else {
-                    $self->{list}->SetItemTextColour( $index, DARK_GREEN );
-                }
-                if ( $tuples[$_][3] == 0 ) {
-                    $self->{list}->SetItemTextColour( $index, DARK_GRAY );
-                }
-                $self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
-                $tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
-                $self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
+			if ( $self->{show_project} == 1 ) {
 
-                # TODO comment out just on show for now
-                $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
+				# we need to switch around due to previously stripping project_dir
+				if ( $self->{current_file} !~ m/ $tuples[$_][1] $/sxm ) {
 
-            }
-        }
+					$item->SetId($index);
+					$self->{list}->InsertItem($item);
+					$self->{list}->SetItemTextColour( $index, DARK_GREEN );
 
-        Padre::Util::tidy_list( $self->{list} );
-    }
+					if ( $tuples[$_][3] == 0 ) {
+						$self->{list}->SetItemTextColour( $index, DARK_GRAY );
+					}
+					$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
+					$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
+					$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 
-    # }
-    return;
+					# TODO comment out just on show for now, do not remove
+					# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
+
+				}
+			}
+		}
+
+		Padre::Util::tidy_list( $self->{list} );
+	}
+
+	return;
 }
 
 1;

@@ -47,7 +47,7 @@ sub new {
 		$self,
 		$self->{delete_not_breakable},
 		sub {
-			shift->delete_not_breakable_clicked(@_);
+			shift->on_delete_not_breakable_clicked(@_);
 		},
 	);
 
@@ -87,7 +87,7 @@ sub new {
 		$self,
 		$self->{set_breakpoints},
 		sub {
-			shift->set_breakpoints_clicked(@_);
+			shift->on_set_breakpoints_clicked(@_);
 		},
 	);
 
@@ -135,7 +135,7 @@ sub new {
 		$self,
 		$self->{delete_project_bp},
 		sub {
-			shift->delete_project_bp_clicked(@_);
+			shift->on_delete_project_bp_clicked(@_);
 		},
 	);
 
@@ -168,24 +168,24 @@ sub new {
 	return $self;
 }
 
-sub delete_not_breakable_clicked {
-	$_[0]->main->error('Handler method delete_not_breakable_clicked for event delete_not_breakable.OnButtonClick not implemented');
+sub on_delete_not_breakable_clicked {
+	$_[0]->main->error('Handler method on_delete_not_breakable_clicked for event delete_not_breakable.OnButtonClick not implemented');
 }
 
 sub on_refresh_click {
 	$_[0]->main->error('Handler method on_refresh_click for event refresh.OnButtonClick not implemented');
 }
 
-sub set_breakpoints_clicked {
-	$_[0]->main->error('Handler method set_breakpoints_clicked for event set_breakpoints.OnButtonClick not implemented');
+sub on_set_breakpoints_clicked {
+	$_[0]->main->error('Handler method on_set_breakpoints_clicked for event set_breakpoints.OnButtonClick not implemented');
 }
 
 sub on_show_project_click {
 	$_[0]->main->error('Handler method on_show_project_click for event show_project.OnCheckBox not implemented');
 }
 
-sub delete_project_bp_clicked {
-	$_[0]->main->error('Handler method delete_project_bp_clicked for event delete_project_bp.OnButtonClick not implemented');
+sub on_delete_project_bp_clicked {
+	$_[0]->main->error('Handler method on_delete_project_bp_clicked for event delete_project_bp.OnButtonClick not implemented');
 }
 
 1;
