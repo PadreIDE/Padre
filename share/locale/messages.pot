@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-17 12:10-0800\n"
+"POT-Creation-Date: 2011-11-18 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -975,11 +975,11 @@ msgstr ""
 msgid "Automatic indentation style detection"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:274
+#: lib/Padre/Wx/StatusBar.pm:273
 msgid "Background Tasks are running"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:275
+#: lib/Padre/Wx/StatusBar.pm:274
 msgid "Background Tasks are running with high load"
 msgstr ""
 
@@ -1925,7 +1925,7 @@ msgstr ""
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7117
+#: lib/Padre/Wx/Main.pm:7116
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -2040,11 +2040,11 @@ msgstr ""
 msgid "Encode Document to &utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7139
+#: lib/Padre/Wx/Main.pm:7138
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7138
+#: lib/Padre/Wx/Main.pm:7137
 msgid "Encode to:"
 msgstr ""
 
@@ -2110,7 +2110,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1204 lib/Padre/Wx/Editor.pm:729
+#: lib/Padre/Document.pm:1191 lib/Padre/Wx/Editor.pm:731
 #: lib/Padre/Wx/Main.pm:5198 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2151,14 +2151,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7097
+#: lib/Padre/Wx/Main.pm:7096
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7082
+#: lib/Padre/Wx/Main.pm:7081
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -2175,7 +2175,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:1008
+#: lib/Padre/Document.pm:1007
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2186,7 +2186,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:958
+#: lib/Padre/Document.pm:957
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2323,7 +2323,7 @@ msgstr ""
 msgid "Failed to delete POD fragment"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:328
+#: lib/Padre/PluginHandle.pm:321
 #, perl-format
 msgid "Failed to disable plug-in '%s': %s"
 msgstr ""
@@ -2555,7 +2555,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1580
+#: lib/Padre/Wx/Editor.pm:1582
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -3094,17 +3094,17 @@ msgid ""
 "Display all loaded modules and their versions."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:524
+#: lib/Padre/MimeTypes.pm:484
 #, perl-format
 msgid "MIME type did not have a class entry when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:513 lib/Padre/MimeTypes.pm:546
+#: lib/Padre/MimeTypes.pm:473 lib/Padre/MimeTypes.pm:506
 #, perl-format
 msgid "MIME type is not supported when %s(%s) was called"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:495
+#: lib/Padre/MimeTypes.pm:455
 #, perl-format
 msgid "MIME type was not supported when %s(%s) was called"
 msgstr ""
@@ -3275,7 +3275,7 @@ msgstr ""
 msgid "Ne&w"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6918
+#: lib/Padre/Wx/Main.pm:6917
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
@@ -3388,11 +3388,6 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Find.pm:71
 #, perl-format
 msgid "No matches found for \"%s\"."
-msgstr ""
-
-#: lib/Padre/Document.pm:1052
-#, perl-format
-msgid "No module mime_type='%s' filename='%s'"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3183
@@ -3730,13 +3725,11 @@ msgstr ""
 msgid "POD"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:466 lib/Padre/Config.pm:1194
-#: lib/Padre/Wx/Scintilla.pm:89
+#: lib/Padre/Config.pm:1194 lib/Padre/Wx/Scintilla.pm:92
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:470 lib/Padre/Config.pm:1195
-#: lib/Padre/Wx/Scintilla.pm:95
+#: lib/Padre/Config.pm:1195 lib/Padre/Wx/Scintilla.pm:98
 msgid "PPI Standard"
 msgstr ""
 
@@ -3916,17 +3909,17 @@ msgstr ""
 msgid "Plugin %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:269
+#: lib/Padre/PluginHandle.pm:262
 #, perl-format
 msgid "Plugin %s returned %s instead of a hook list on ->padre_hooks"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:279
+#: lib/Padre/PluginHandle.pm:272
 #, perl-format
 msgid "Plugin %s tried to register invalid hook %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:287
+#: lib/Padre/PluginHandle.pm:280
 #, perl-format
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
@@ -4103,7 +4096,7 @@ msgstr ""
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:416
+#: lib/Padre/Wx/StatusBar.pm:415
 msgid "R/W"
 msgstr ""
 
@@ -4127,7 +4120,7 @@ msgstr ""
 msgid "Re&set My plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:416
+#: lib/Padre/Wx/StatusBar.pm:415
 msgid "Read Only"
 msgstr ""
 
@@ -4554,7 +4547,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1538
+#: lib/Padre/Document.pm:1525
 msgid "Save Warning"
 msgstr ""
 
@@ -4582,7 +4575,7 @@ msgstr ""
 msgid "Schedule the file or directory for deletion from the repository"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:456 lib/Padre/Config.pm:1193
+#: lib/Padre/Config.pm:1193
 msgid "Scintilla"
 msgstr ""
 
@@ -4889,7 +4882,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:310
+#: lib/Padre/MimeTypes.pm:301
 msgid "Shell Script"
 msgstr ""
 
@@ -5223,7 +5216,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:2112 lib/Padre/Document.pm:2113
+#: lib/Padre/Document.pm:2074 lib/Padre/Document.pm:2075
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5409,7 +5402,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:417
+#: lib/Padre/MimeTypes.pm:408
 msgid "Text"
 msgstr ""
 
@@ -5435,7 +5428,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:980
+#: lib/Padre/Document.pm:979
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5571,7 +5564,7 @@ msgstr ""
 msgid "Type in any expression and evaluate it in the debugged process"
 msgstr ""
 
-#: lib/Padre/MimeTypes.pm:633
+#: lib/Padre/MimeTypes.pm:537
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5614,7 +5607,7 @@ msgstr ""
 msgid "Unmodified"
 msgstr ""
 
-#: lib/Padre/Document.pm:1761
+#: lib/Padre/Document.pm:1723
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5765,14 +5758,14 @@ msgstr ""
 msgid "Visit Perl Websites..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1534
+#: lib/Padre/Document.pm:1521
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:986 lib/Padre/Wx/Syntax.pm:43
+#: lib/Padre/Document.pm:985 lib/Padre/Wx/Syntax.pm:43
 #: lib/Padre/Wx/Main.pm:3227 lib/Padre/Wx/Main.pm:3942
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5876,7 +5869,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1564
+#: lib/Padre/Wx/Editor.pm:1566
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5937,11 +5930,6 @@ msgid ""
 "Next. Executes over subroutine calls, until the beginning of the next "
 "statement. If an expression is supplied that includes function calls, those "
 "functions will be executed with stops before each statement."
-msgstr ""
-
-#: lib/Padre/Document.pm:1739
-#, perl-format
-msgid "no highlighter for mime-type '%s' using stc"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:179
