@@ -592,7 +592,7 @@ sub debug_run_till {
 # sub display_trace
 # TODO this is yuck!
 #######
-sub display_trace {
+sub _display_trace {
 	my $self = shift;
 	my $main = $self->main;
 
@@ -604,7 +604,8 @@ sub display_trace {
 	}
 
 	if ( $trace_on == 1 && $self->{trace_status} eq 'Trace = off' ) {
-		$self->{trace_status} = $self->{client}->toggle_trace;
+		# $self->{trace_status} = $self->{client}->_set_option('frame=6');
+		$self->{trace_status} = $self->{client}->toggle_trace();
 		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
 		return;
 	}
@@ -614,7 +615,8 @@ sub display_trace {
 	}
 
 	if ( $trace_on == 0 && $self->{trace_status} eq 'Trace = on' ) {
-		$self->{trace_status} = $self->{client}->toggle_trace;
+		# $self->{trace_status} = $self->{client}->_set_option('frame=1');
+		$self->{trace_status} = $self->{client}->toggle_trace();
 		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
 		return;
 	}
@@ -985,7 +987,7 @@ sub on_debug_clicked {
 	$self->debug_perl;
 	$main->aui->Update;
 	if ( $main->{panel_debug_output} ) {
-		$main->{panel_debug_output}->debug_output( $self->{client}->_show_help );
+		$main->{panel_debug_output}->debug_output( $self->{client}->get_h_var('h') );
 	}
 
 	#let's reload our breakpoints
@@ -1106,9 +1108,9 @@ sub on_trace_checked {
 	my ( $self, $event ) = @_;
 
 	if ( $event->IsChecked ) {
-		$self->display_trace(1);
+		$self->_display_trace(1);
 	} else {
-		$self->display_trace(0);
+		$self->_display_trace(0);
 	}
 
 	return;
