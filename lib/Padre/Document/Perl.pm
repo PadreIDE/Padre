@@ -165,7 +165,7 @@ sub set_highlighter {
 
 	if ( defined $limit and $length > $limit ) {
 		TRACE("Forcing STC highlighting") if DEBUG;
-		$module = 'stc';
+		$module = '';
 	}
 
 	return $self->SUPER::set_highlighter($module);

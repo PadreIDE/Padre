@@ -1148,7 +1148,8 @@ sub colorize {
 	unless ( $module->can('colorize') ) {
 		eval "use $module";
 		if ($@) {
-			Carp::cluck( "Could not load module '$module' for file '" . ( $self->{file}->filename || '' ) . "'\n" );
+			my $name = $self->{file} ? $self->{file}->filename : $self->get_title;
+			Carp::cluck( "Could not load module '$module' for file '$name'\n" );
 			return;
 		}
 	}

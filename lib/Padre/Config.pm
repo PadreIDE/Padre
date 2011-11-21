@@ -1188,9 +1188,9 @@ setting(
 	name    => 'lang_perl5_lexer',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HOST,
-	default => 'stc',
+	default => '',
 	options => {
-		'stc'                             => _T('Scintilla'),
+		''                                => _T('Scintilla'),
 		'Padre::Document::Perl::Lexer'    => _T('PPI Experimental'),
 		'Padre::Document::Perl::PPILexer' => _T('PPI Standard'),
 	},

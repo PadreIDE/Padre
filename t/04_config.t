@@ -130,6 +130,6 @@ SCOPE: {
 
 	# Configuration should ignore a value not in configuration and go
 	# with the default instead.
-	is( $bad->default('lang_perl5_lexer'), 'stc', 'Default Perl 5 lexer ok' );
-	is( $bad->lang_perl5_lexer,            'stc', '->lang_perl5_lexer matches default' );
+	is( $bad->default('lang_perl5_lexer'), '', 'Default Perl 5 lexer ok' );
+	is( $bad->lang_perl5_lexer,            '', '->lang_perl5_lexer matches default' );
 }
