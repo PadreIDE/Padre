@@ -338,6 +338,20 @@ sub new {
 	if (Padre::Feature::DEBUGGER) {
 		require Padre::Wx::Debugger;
 		$self->{debugger} = Padre::Wx::Debugger->new;
+		if ( $config->feature_debug2 ) {
+
+			#Reset the value to the default setting
+			my $name  = "main_toolbar_items";
+			my $value = $config->main_toolbar_items;
+			if ( $value !~ m/quit2/ ) {
+				my $debug2_tools = 'debug.launch;' . 'debug.set_breakpoints;' . 'debug.quit2;'. '|;';
+				$value .= $debug2_tools;
+				$config->apply($name, $value);
+				#$self->rebuild_toolbar();
+				#why dose this fail with following message
+				#Can't use an undefined value as a HASH reference at Padre/lib/Padre/Wx/ActionLibrary.pm line 2024.
+			}
+		}
 	}
 
 	# We need an event immediately after the window opened
