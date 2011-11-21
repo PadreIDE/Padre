@@ -25,6 +25,10 @@ $pragma = qr{${pragma}use warnings;\s*};
 
 foreach my $file (@files) {
 	my $content = slurp($file);
+
+	# Ignore utf8 pragmas
+	$content =~ s/^use utf8;\n//m;
+
 	ok( $content =~ qr{$pragma}, $file );
 }
 

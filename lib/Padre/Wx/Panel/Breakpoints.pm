@@ -3,10 +3,11 @@ package Padre::Wx::Panel::Breakpoints;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::Wx::Role::View ();
-use Padre::Wx             ();
-use Padre::Wx::FBP::Breakpoints;
+use Padre::Util                 ();
+use Padre::Wx                   ();
+use Padre::Wx::Icon             ();
+use Padre::Wx::Role::View       ();
+use Padre::Wx::FBP::Breakpoints ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -36,7 +37,7 @@ sub new {
 
 	$main->aui->Update;
 
-	$self->set_up();
+	$self->set_up;
 
 	return $self;
 }
@@ -143,7 +144,7 @@ sub set_up {
 	$self->{show_project}->SetValue(0);
 	$self->{show_project} = 0;
 
-	$self->_setup_db();
+	$self->_setup_db;
 
 	# TODO Active should be droped, just on show for now
 	# Setup columns names, Active should be droped, just and order here
@@ -166,15 +167,11 @@ sub set_up {
 # event handler delete_not_breakable_clicked
 #######
 sub on_delete_not_breakable_clicked {
-	my $self = shift;
-
-	#TODO there must be a better way than this
-	my $editor = Padre::Current->editor;
-
+	my $self       = shift;
+	my $editor     = $self->current->editor;
 	my $sql_select = "WHERE filename = \"$self->{current_file}\" AND active = 0";
 	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
-
-	my $index = 0;
+	my $index      = 0;
 
 	for ( 0 .. $#tuples ) {
 
@@ -190,8 +187,7 @@ sub on_delete_not_breakable_clicked {
 
 	}
 	$self->{debug_breakpoints}->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
-
-	$self->_update_list();
+	$self->_update_list;
 	return;
 }
 
@@ -200,13 +196,12 @@ sub on_delete_not_breakable_clicked {
 #######
 sub on_refresh_click {
 	my $self    = shift;
-	my $main    = $self->main;
-	my $current = $main->current;
+	my $document = $self->current->document;
 
-	$self->{project_dir}  = $current->document->project_dir;
-	$self->{current_file} = $current->document->filename;
+	$self->{project_dir}  = $document->project_dir;
+	$self->{current_file} = $document->filename;
 
-	$self->_update_list();
+	$self->_update_list;
 
 	return;
 }
@@ -215,15 +210,14 @@ sub on_refresh_click {
 # event handler breakpoint_clicked
 #######
 sub on_set_breakpoints_clicked {
-	my $self    = shift;
-	my $main    = $self->main;
-	my $current = $main->current;
-
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document;
+	my $editor   = $current->editor;
 	$self->_setup_db;
 
 	# $self->running or return;
-	my $editor = Padre::Current->editor;
-	$self->{current_file} = $current->document->filename;
+	$self->{current_file} = $document->filename;
 	$self->{current_line} = $editor->GetCurrentLine + 1;
 
 	# dereferance array and test for contents
@@ -242,7 +236,7 @@ sub on_set_breakpoints_clicked {
 			$self->{current_line} - 1,
 			Padre::Constant::MARKER_NOT_BREAKABLE()
 		);
-		$self->_delete_bp_db();
+		$self->_delete_bp_db;
 
 	} else {
 
@@ -252,9 +246,9 @@ sub on_set_breakpoints_clicked {
 			$self->{current_line} - 1,
 			Padre::Constant::MARKER_BREAKPOINT()
 		);
-		$self->_add_bp_db();
+		$self->_add_bp_db;
 	}
-	$self->on_refresh_click();
+	$self->on_refresh_click;
 	return;
 }
 
@@ -274,7 +268,7 @@ sub on_show_project_click {
 
 	}
 
-	$self->on_refresh_click();
+	$self->on_refresh_click;
 
 	return;
 }
@@ -283,13 +277,11 @@ sub on_show_project_click {
 # event handler delete_project_bp_clicked
 #######
 sub on_delete_project_bp_clicked {
-	my $self   = shift;
-	my $editor = Padre::Current->editor;
-
+	my $self       = shift;
+	my $editor     = $self->current->editor;
 	my $sql_select = 'ORDER BY filename ASC';
 	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
-
-	my $index = 0;
+	my $index      = 0;
 
 	for ( 0 .. $#tuples ) {
 
@@ -307,7 +299,7 @@ sub on_delete_project_bp_clicked {
 		}
 	}
 
-	$self->on_refresh_click();
+	$self->on_refresh_click;
 	return;
 }
 
@@ -359,19 +351,16 @@ sub _delete_bp_db {
 #######
 sub _update_list {
 	my $self = shift;
+	my $editor = $self->current->editor;
 
-	my $item = Wx::ListItem->new;
-
-	# clear ListCtrl items
+	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
-
-	my $editor = Padre::Current->editor;
 
 	my $sql_select = 'ORDER BY filename DESC, line_number DESC';
 	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
 
 	my $index = 0;
-
+	my $item  = Wx::ListItem->new;
 	for ( 0 .. $#tuples ) {
 
 		if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
@@ -430,5 +419,3 @@ sub _update_list {
 }
 
 1;
-
-__END__

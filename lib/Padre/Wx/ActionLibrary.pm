@@ -1478,16 +1478,16 @@ sub init {
 
 	# MIME Type Actions
 	SCOPE: {
-		my %mime = Padre::MimeTypes::menu_view_mimes();
+		my %mime = Padre::MimeTypes->get_names;
 
-		foreach my $mime_type ( keys %mime ) {
+		foreach my $type ( keys %mime ) {
 			Padre::Wx::Action->new(
-				name        => "view.mime.$mime_type",
-				label       => $mime{$mime_type},
+				name        => "view.mime.$type",
+				label       => $mime{$type},
 				comment     => _T('Switch document type'),
 				menu_method => 'AppendRadioItem',
 				menu_event  => sub {
-					$_[0]->set_mimetype($mime_type);
+					$_[0]->set_mimetype($type);
 				},
 			);
 		}

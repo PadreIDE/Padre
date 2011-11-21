@@ -3768,10 +3768,11 @@ sub on_comment_block {
 	my $comment = $document->get_comment_line_string;
 
 	if ( not defined $comment ) {
+		my $mime_name = Padre::MimeTypes->get_name( $document->mimetype );
 		$self->error(
 			sprintf(
 				Wx::gettext('Could not determine the comment character for %s document type'),
-				Padre::MimeTypes->get_mime_type_name( $document->mimetype )
+				Wx::gettext($mime_name),
 			)
 		);
 		return;
@@ -4911,64 +4912,9 @@ sub on_save_as {
 		# for a file path to be saved to.
 		# now we need to work out if we use GetPath
 		# or concatinate the two values used.
-
-		#my $filename = $dialog->GetFilename;
-		#print "FileName: $filename\n";
-		#my $dir = $dialog->GetDirectory;
-		#print "Directory: $dir\n";
-		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
 		my $saveto = $dialog->GetPath;
-
-		# PJL - waxhead 10/02/2011
-		# commenting out the file extension check
-		# for now until a better implimentation is sorted out.
-		# As this will be revisited again, don't remove this block of
-		# code unless it's totally bit rotted.
-		#
-		#		# feature request: http://padre.perlide.org/trac/ticket/1027
-		#		# work out if we have an extension to the file name
-		#		#print "The file name is: " . $dialog->GetFilename . "\n";
-		#		#print "The mimetype is: " . $document->mimetype . "\n";
-		#
-		#		my @file_extensions = Padre::MimeTypes->get_extensions_by_mime_type( $document->mimetype );
-		#
-		#		my $ext_string = "'" . join( "', '", @file_extensions ) . "'";
-		#
-		#		#print "file extensions: $ext_string\n"; # .  join( "\n", @file_extensions ) . "\n";
-		#
-		#		# now lets check if we have a file extension that suits the current mimetype:
-		#		my $fileName = $dialog->GetFilename;
-		#		my $ext      = "";
-		#		$fileName =~ m/\.([^\.]+)$/;
-		#		$ext = $1;
-		#
-		#		#print "File Extension is: $ext\n";
-		#
-		#		if ( !defined($ext) || $ext eq '' ) {
-		#
-		#			#show dialog that the file extension is missing for the mimetype
-		#			my $ret = Wx::MessageBox(
-		#				sprintf(
-		#					Wx::gettext(
-		#						"You have tried to save a file without a suitable file extension based on the current document's mimetype.\n\nBased on the current mimetype, suitable file extensions are:\n\n%s.\n\n\nDo you wish to continue?"
-		#					),
-		#					$ext_string
-		#				),
-		#				Wx::gettext("File extension missing warning..."),
-		#				Wx::YES_NO | Wx::CENTRE,
-		#				$self,
-		#			);
-		#
-		#
-		#			# return back to the save as dialog when we click No.
-		#			if( $ret == Wx::NO ) {
-		#				next; # because we are in a while(1) loop
-		#			}
-		#		}
-
-		#my $path = File::Spec->catfile( $self->cwd, $filename );
-		my $path = File::Spec->catfile($saveto);
+		my $path   = File::Spec->catfile($saveto);
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),

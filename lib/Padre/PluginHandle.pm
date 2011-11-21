@@ -226,7 +226,7 @@ sub enable {
 		while (@documents) {
 			my $type  = shift @documents;
 			my $class = shift @documents;
-			Padre::MimeTypes->add_mime_class( $type, $class );
+			Padre::MimeTypes->set_class( $type, $class );
 		}
 	};
 
@@ -307,7 +307,7 @@ sub disable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		Padre::MimeTypes->reset_mime_class($type);
+		Padre::MimeTypes->reset_class($type);
 	}
 
 	# Call the plugin's own disable method

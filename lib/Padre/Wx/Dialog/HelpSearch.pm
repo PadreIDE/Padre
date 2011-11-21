@@ -308,8 +308,11 @@ sub _search {
 				return;
 			}
 			if ( not $self->_help_provider ) {
-				$self->_display_msg( Wx::gettext("Could not find a help provider for ")
-						. Padre::MimeTypes->get_mime_type_name( $doc->mimetype ) );
+				my $mime_name = Padre::MimeTypes->get_name( $doc->mimetype );
+				$self->_display_msg(
+					Wx::gettext("Could not find a help provider for ") .
+					Wx::gettext($mime_name)
+				);
 				return;
 			}
 		} else {

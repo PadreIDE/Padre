@@ -17,456 +17,391 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Carp           ();
 use Padre::Config  ();
-use Padre::Current ();
 use Padre::Util    ('_T');
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
 
+
+
+
+
+######################################################################
+# MIME Type Registry
+
 # Binary file extensions, which we don't support loading at all
-my %EXT_BINARY = ();
+my %EXT_BINARY = map { $_ => 1 } qw{
+	aiff  au   avi   bmp  cache  dat  doc   docx  gif  gz
+	icns  jar  jpeg  jpg  m4a    mov  mp3   mpg   ogg  pdf
+        png   pnt  ppt   qt   ra     svg  svgz  svn   swf  tar
+        tgz   tif  tiff  wav  xls    xlw  xlsx  zip
+};
 
 # Text file extension to MIME type mapping (either string or code reference)
-my %EXT_MIME = ();
+my %EXT_MIME = (
+	abc   => 'text/x-abc',
+	ada   => 'text/x-adasrc',
+	asm   => 'text/x-asm',
+	bat   => 'text/x-bat',
+	cmd   => 'text/x-bat',
+	bib   => 'application/x-bibtex',
+	bml   => 'application/x-bml',     # dreamwidth file format
+	c     => 'text/x-c',
+	h     => 'text/x-c',
+	cc    => 'text/x-c++src',
+	cpp   => 'text/x-c++src',
+	cxx   => 'text/x-c++src',
+	cob   => 'text/x-cobol',
+	cbl   => 'text/x-cobol',
+	'c++' => 'text/x-c++src',
+	hh    => 'text/x-c++src',
+	hpp   => 'text/x-c++src',
+	hxx   => 'text/x-c++src',
+	'h++' => 'text/x-c++src',
+	cs    => 'text/x-csharp',
+	css   => 'text/css',
+	diff  => 'text/x-patch',
+	e     => 'text/x-eiffel',
+	f     => 'text/x-fortran',
+	htm   => 'text/html',
+	html  => 'text/html',
+	hs    => 'text/x-haskell',
+	i     => 'text/x-c',              # C code that should not be preprocessed
+	ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
+	java  => 'text/x-java-source',
+	js    => 'application/javascript',
+	json  => 'application/json',
+	lsp   => 'application/x-lisp',
+	lua   => 'text/x-lua',
+	m     => 'text/x-matlab',
+	mak   => 'text/x-makefile',
+	pod   => 'text/x-pod',
+	py    => 'text/x-python',
+	rb    => 'application/x-ruby',
+	sql   => 'text/x-sql',
+	tcl   => 'application/x-tcl',
+	patch => 'text/x-patch',
+	pks   => 'text/x-sql',            # PLSQL package spec
+	pkb   => 'text/x-sql',            # PLSQL package body
+	pl    => \&perl_mime_type,
+	plx   => \&perl_mime_type,
+	pm    => \&perl_mime_type,
+	pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
+	pod   => 'text/x-pod',
+	pov   => 'text/x-povray',
+	psgi  => 'application/x-psgi',
+	sty   => 'application/x-latex',
+	t     => \&perl_mime_type,
+	tex   => 'application/x-latex',
+
+	# Lacking a better solution, define our own MIME
+	xs => 'text/x-perlxs',
+	tt => 'text/x-perltt',
+
+	conf  => 'text/x-config',
+	sh    => 'application/x-shellscript',
+	ksh   => 'application/x-shellscript',
+	txt   => 'text/plain',
+	xml   => 'text/xml',
+	yml   => 'text/x-yaml',
+	yaml  => 'text/x-yaml',
+	'4th' => 'text/x-forth',
+	pasm  => 'application/x-pasm',
+	pir   => 'application/x-pir',
+
+	# See docs/Perl6/Spec/S01-overview.pod for the
+	# list of acceptable Perl 6 extensions
+	p6  => 'application/x-perl6',
+	p6l => 'application/x-perl6',
+	p6m => 'application/x-perl6',
+	pl6 => 'application/x-perl6',
+	pm6 => 'application/x-perl6',
+
+	# Pascal
+	pas => 'text/x-pascal',
+	dpr => 'text/x-pascal',
+	dfm => 'text/x-pascal',
+	inc => 'text/x-pascal',
+	pp  => 'text/x-pascal',
+
+	# ActionScript
+	as   => 'text/x-actionscript',
+	asc  => 'text/x-actionscript',
+	jsfl => 'text/x-actionscript',
+
+	# PHP
+	php   => 'application/x-php',
+	php3  => 'application/x-php',
+	phtml => 'application/x-php',
+
+	# VisualBasic and VBScript
+	vb  => 'text/vbscript',
+	bas => 'text/vbscript',
+	frm => 'text/vbscript',
+	cls => 'text/vbscript',
+	ctl => 'text/vbscript',
+	pag => 'text/vbscript',
+	dsr => 'text/vbscript',
+	dob => 'text/vbscript',
+	vbs => 'text/vbscript',
+	dsm => 'text/vbscript',
+);
 
 # Main MIME type database and settings.
-# NOTE: This has gotten complex enough it probably needs to be a HASH
-#       of objects now.
-my %MIME = ();
+# Lines marked with CONFIRMED indicate that the mime-type has been checked
+# that the MIME type is either the official type, or the primary
+# one in use by the relevant language community.
+# name     => 'Human Language Name',
+# document => 'Default::Document::Class',
+my %MIME = (
+	'text/x-abc' => {
+		name  => 'ABC',
+	},
 
-# Default document classes
-my %DEFAULT_DOC_CLASS = ();
+	'text/x-actionscript' => {
+		name  => 'ABC',
+	},
 
-#####################################################################
-# Document Registration
+	'text/x-adasrc' => {
+		name  => 'Ada',
+	},
 
-_initialize();
+	'text/x-asm' => {
+		name  => 'Assembly',
+	},
 
-sub _initialize {
-	return if %EXT_BINARY; # call it only once
+	# application/x-msdos-program includes .exe and .com, so don't use it
+	# text/x-bat is used in EXT_MIME, application/x-bat was listed here,
+	# they need to be the same
+	'text/x-bat' => {
+		name  => 'Batch',
+	},
 
-	%EXT_BINARY = map { $_ => 1 } qw{
-		aiff  au    avi  bmp  cache  dat   doc  docx gif  gz   icns
-		jar   jpeg  jpg  m4a  mov    mp3   mpg  ogg  pdf  png
-		pnt   ppt   qt   ra   svg    svgz  svn  swf  tar  tgz
-		tif   tiff  wav  xls  xlw    xlsx  zip
-	};
+	'application/x-bibtex' => {
+		name  => 'BibTeX',
+	},
 
-	# This is the primary file extension to mime-type mapping
-	%EXT_MIME = (
-		abc   => 'text/x-abc',
-		ada   => 'text/x-adasrc',
-		asm   => 'text/x-asm',
-		bat   => 'text/x-bat',
-		cmd   => 'text/x-bat',
-		bib   => 'application/x-bibtex',
-		bml   => 'application/x-bml',     # dreamwidth file format
-		c     => 'text/x-c',
-		h     => 'text/x-c',
-		cc    => 'text/x-c++src',
-		cpp   => 'text/x-c++src',
-		cxx   => 'text/x-c++src',
-		cob   => 'text/x-cobol',
-		cbl   => 'text/x-cobol',
-		'c++' => 'text/x-c++src',
-		hh    => 'text/x-c++src',
-		hpp   => 'text/x-c++src',
-		hxx   => 'text/x-c++src',
-		'h++' => 'text/x-c++src',
-		cs    => 'text/x-csharp',
-		css   => 'text/css',
-		diff  => 'text/x-patch',
-		e     => 'text/x-eiffel',
-		f     => 'text/x-fortran',
-		htm   => 'text/html',
-		html  => 'text/html',
-		hs    => 'text/x-haskell',
-		i     => 'text/x-c',              # C code that should not be preprocessed
-		ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
-		java  => 'text/x-java-source',
-		js    => 'application/javascript',
-		json  => 'application/json',
-		lsp   => 'application/x-lisp',
-		lua   => 'text/x-lua',
-		m     => 'text/x-matlab',
-		mak   => 'text/x-makefile',
-		pod   => 'text/x-pod',
-		py    => 'text/x-python',
-		rb    => 'application/x-ruby',
-		sql   => 'text/x-sql',
-		tcl   => 'application/x-tcl',
-		patch => 'text/x-patch',
-		pks   => 'text/x-sql',            # PLSQL package spec
-		pkb   => 'text/x-sql',            # PLSQL package body
-		pl    => \&perl_mime_type,
-		plx   => \&perl_mime_type,
-		pm    => \&perl_mime_type,
-		pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
-		pod   => 'text/x-pod',
-		pov   => 'text/x-povray',
-		psgi  => 'application/x-psgi',
-		sty   => 'application/x-latex',
-		t     => \&perl_mime_type,
-		tex   => 'application/x-latex',
+	'application/x-bml' => {
+		name  => 'BML',
+	},
 
-		# Lacking a better solution, define our own MIME
-		xs => 'text/x-perlxs',
-		tt => 'text/x-perltt',
+	'text/x-c' => {
+		name  => 'C',
+	},
 
-		conf  => 'text/x-config',
-		sh    => 'application/x-shellscript',
-		ksh   => 'application/x-shellscript',
-		txt   => 'text/plain',
-		xml   => 'text/xml',
-		yml   => 'text/x-yaml',
-		yaml  => 'text/x-yaml',
-		'4th' => 'text/x-forth',
-		pasm  => 'application/x-pasm',
-		pir   => 'application/x-pir',
+	'text/x-cobol' => {
+		name  => 'COBOL',
+	},
 
-		# See docs/Perl6/Spec/S01-overview.pod for the
-		# list of acceptable Perl 6 extensions
-		p6  => 'application/x-perl6',
-		p6l => 'application/x-perl6',
-		p6m => 'application/x-perl6',
-		pl6 => 'application/x-perl6',
-		pm6 => 'application/x-perl6',
+	'text/x-c++src' => {
+		name  => 'C++',
+	},
 
-		# Pascal
-		pas => 'text/x-pascal',
-		dpr => 'text/x-pascal',
-		dfm => 'text/x-pascal',
-		inc => 'text/x-pascal',
-		pp  => 'text/x-pascal',
+	'text/css' => {
+		name  => 'CSS',
+	},
 
-		# ActionScript
-		as   => 'text/x-actionscript',
-		asc  => 'text/x-actionscript',
-		jsfl => 'text/x-actionscript',
+	'text/x-eiffel' => {
+		name  => 'Eiffel',
+	},
 
-		# PHP
-		php   => 'application/x-php',
-		php3  => 'application/x-php',
-		phtml => 'application/x-php',
+	'text/x-forth' => {
+		name  => 'Forth',
+	},
 
-		# VisualBasic and VBScript
-		vb  => 'text/vbscript',
-		bas => 'text/vbscript',
-		frm => 'text/vbscript',
-		cls => 'text/vbscript',
-		ctl => 'text/vbscript',
-		pag => 'text/vbscript',
-		dsr => 'text/vbscript',
-		dob => 'text/vbscript',
-		vbs => 'text/vbscript',
-		dsm => 'text/vbscript',
-	);
+	'text/x-fortran' => {
+		name  => 'Fortran',
+	},
 
-	%DEFAULT_DOC_CLASS = (
-		'application/x-perl' => 'Padre::Document::Perl',
-		'text/x-python'      => 'Padre::Document::Python',
-		'application/x-ruby' => 'Padre::Document::Ruby',
-		'text/x-java-source' => 'Padre::Document::Java',
-		'text/x-csharp'      => 'Padre::Document::CSharp',
-		'text/x-patch'       => 'Padre::Document::Patch',
-	);
+	'text/x-haskell' => {
+		name  => 'Haskell',
+	},
 
-	# Lines marked with CONFIRMED indicate that the mime-type has been checked
-	# that the MIME type is either the official type, or the primary
-	# one in use by the relevant language community.
+	'text/html' => {
+		name  => 'HTML',
+	},
 
-	# name  => Human readable name
+	'application/javascript' => {
+		name  => 'JavaScript',
+	},
 
-	%MIME = (
-		'text/x-abc' => {
-			name  => 'ABC',
-		},
-		'text/x-actionscript' => {
-			name  => 'ABC',
-		},
-		'text/x-adasrc' => {
-			name  => 'Ada',
-		},
-		'text/x-asm' => {
-			name  => 'Assembly',
-		},
+	'application/json' => {
+		name  => 'JSON',
+	},
 
-		# application/x-msdos-program includes .exe and .com, so don't use it
-		# text/x-bat is used in EXT_MIME, application/x-bat was listed here,
-		# they need to be the same
-		'text/x-bat' => {
-			name  => 'Batch',
-		},
+	'application/x-latex' => {
+		name  => 'LaTeX',
+	},
 
-		'application/x-bibtex' => {
-			name  => 'BibTeX',
-		},
+	'application/x-lisp' => {
+		name  => 'LISP',
+	},
 
-		'application/x-bml' => {
-			name  => 'BML',
-		},
+	'text/x-patch' => {
+		name     => 'Patch',
+		document => 'Padre::Document::Patch',
+	},
 
-		'text/x-c' => {
-			name  => 'C',
-		},
+	'application/x-shellscript' => {
+		name  => _T('Shell Script'),
+	},
 
-		'text/x-cobol' => {
-			name  => 'COBOL',
-		},
+	'text/x-java-source' => {
+		name     => 'Java',
+		document => 'Padre::Document::Java',
+	},
 
-		'text/x-c++src' => {
-			name  => 'C++',
-		},
+	'text/x-lua' => {
+		name  => 'Lua',
+	},
 
-		'text/css' => {
-			name  => 'CSS',
-		},
+	'text/x-makefile' => {
+		name  => 'Makefile',
+	},
 
-		'text/x-eiffel' => {
-			name  => 'Eiffel',
-		},
+	'text/x-matlab' => {
+		name  => 'Matlab',
+	},
 
-		'text/x-forth' => {
-			name  => 'Forth',
-		},
+	'text/x-pascal' => {
+		name  => 'Pascal',
+	},
 
-		'text/x-fortran' => {
-			name  => 'Fortran',
-		},
+	'application/x-perl' => {
+		name     => 'Perl 5',
+		document => 'Padre::Document::Perl',
+	},
+	
+	'text/x-povray' => {
+		name  => 'POVRAY',
+	},
 
-		'text/x-haskell' => {
-			name  => 'Haskell',
-		},
+	'application/x-psgi' => {
+		name  => 'PSGI',
+	},
 
-		'text/html' => {
-			name  => 'HTML',
-		},
+	'text/x-python' => {
+		name     => 'Python',
+		document => 'Padre::Document::Python',
+	},
 
-		'application/javascript' => {
-			name  => 'JavaScript',
-		},
+	'application/x-php' => {
+		name  => 'PHP',
+	},
 
-		'application/json' => {
-			name  => 'JSON',
-		},
+	'application/x-ruby' => {
+		name     => 'Ruby',
+		document => 'Padre::Document::Ruby',
+	},
 
-		'application/x-latex' => {
-			name  => 'LaTeX',
-		},
+	'text/x-sql' => {
+		name  => 'SQL',
+	},
 
-		'application/x-lisp' => {
-			name  => 'LISP',
-		},
+	'application/x-tcl' => {
+		name  => 'Tcl',
+	},
 
-		'text/x-patch' => {
-			name  => 'Patch',
-		},
+	'text/vbscript' => {
+		name  => 'VBScript',
+	},
 
-		'application/x-shellscript' => {
-			name  => _T('Shell Script'),
-		},
+	'text/x-config' => {
+		name  => 'Config',
+	},
 
-		'text/x-java-source' => {
-			name  => 'Java',
-		},
+	# text/xml specifically means "human-readable XML".
+	# This is prefered to the more generic application/xml
+	'text/xml' => {
+		name  => 'XML',
+	},
 
-		'text/x-lua' => {
-			name  => 'Lua',
-		},
+	'text/x-yaml' => {
+		name  => 'YAML',
+	},
 
-		'text/x-makefile' => {
-			name  => 'Makefile',
-		},
+	'application/x-pir' => {
+		name  => 'PIR',
+	},
 
-		'text/x-matlab' => {
-			name  => 'Matlab',
-		},
+	'application/x-pasm' => {
+		name  => 'PASM',
+	},
 
-		'text/x-pascal' => {
-			name  => 'Pascal',
-		},
+	'application/x-perl6' => {
+		name  => 'Perl 6',
+	},
 
-		'application/x-perl' => {
-			name  => 'Perl 5',
-		},
-		
-		'text/x-povray' => {
-			name  => 'POVRAY',
-		},
+	'text/plain' => {
+		name  => _T('Text'),
+	},
 
-		'application/x-psgi' => {
-			name  => 'PSGI',
-		},
+	# Completely custom mime types
+	'text/x-perlxs' => {                       # totally not confirmed
+		name => 'XS',
+	},
+	'text/x-perltt' => {
+		name  => 'Template Toolkit',
+	},
 
-		'text/x-python' => {
-			name  => 'Python',
-		},
+	'text/x-csharp' => {
+		name     => 'C#',
+		document => 'Padre::Document::CSharp',
+	},
+	'text/x-pod' => {
+		name  => 'POD',
+	},
+);
 
-		'application/x-php' => {
-			name  => 'PHP',
-		},
-
-		'application/x-ruby' => {
-			name  => 'Ruby',
-		},
-
-		'text/x-sql' => {
-			name  => 'SQL',
-		},
-
-		'application/x-tcl' => {
-			name  => 'Tcl',
-		},
-
-		'text/vbscript' => {
-			name  => 'VBScript',
-		},
-
-		'text/x-config' => {
-			name  => 'Config',
-		},
-
-		# text/xml specifically means "human-readable XML".
-		# This is prefered to the more generic application/xml
-		'text/xml' => {
-			name  => 'XML',
-		},
-
-		'text/x-yaml' => {
-			name  => 'YAML',
-		},
-
-		'application/x-pir' => {
-			name  => 'PIR',
-		},
-
-		'application/x-pasm' => {
-			name  => 'PASM',
-		},
-
-		'application/x-perl6' => {
-			name  => 'Perl 6',
-		},
-
-		'text/plain' => {
-			name  => _T('Text'),
-		},
-
-		# Completely custom mime types
-		'text/x-perlxs' => {                       # totally not confirmed
-			name => 'XS',
-		},
-		'text/x-perltt' => {
-			name  => 'Template Toolkit',
-		},
-
-		'text/x-csharp' => {
-			name  => 'C#',
-		},
-		'text/x-pod' => {
-			name  => 'POD',
-		},
-	);
-
-	foreach my $mime ( keys %DEFAULT_DOC_CLASS ) {
-		if ( exists $MIME{$mime} ) {
-			$MIME{$mime}->{class} = $DEFAULT_DOC_CLASS{$mime};
-		} else {
-			warn "Unknown MIME type: $mime\n";
-		}
+sub get_class {
+	my $class = shift;
+	my $mime  = $MIME{ shift || '' };
+	unless ( $mime ) {
+		warn "Unknown MIME type '$mime'";
+		return;
 	}
+	return $mime->{class} if $mime->{class};
+	return $mime->{document};
 }
 
-sub add_mime_class {
+sub set_class {
 	my $class  = shift;
 	my $mime   = shift;
 	my $module = shift;
-
-	if ( not $MIME{$mime} ) {
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext('MIME type was not supported when %s(%s) was called'),
-				'add_mime_class',
-				$mime
-			)
-		);
+	unless ( $mime and $MIME{$mime} ) {
+		warn "Unknown MIME type '$mime'";
 		return;
 	}
-
 	$MIME{$mime}->{class} = $module;
 }
 
-sub reset_mime_class {
+sub reset_class {
 	my $class = shift;
 	my $mime  = shift;
-
-	if ( not $MIME{$mime} ) {
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext('MIME type is not supported when %s(%s) was called'),
-				'remove_mime_class',
-				$mime
-			)
-		);
+	unless ( $mime and $MIME{$mime} ) {
+		warn "Unknown MIME type '$mime'";
 		return;
 	}
-
-	if ( not $MIME{$mime}->{class} ) {
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext('MIME type did not have a class entry when %s(%s) was called'),
-				'remove_mime_class',
-				$mime
-			)
-		);
-		return;
-	}
-
-	if ( exists $DEFAULT_DOC_CLASS{$mime} ) {
-		$MIME{$mime}->{class} = $DEFAULT_DOC_CLASS{$mime};
-	} else {
-		delete $MIME{$mime}->{class};
-	}
+	delete $MIME{$mime}->{class};
 }
 
-sub get_mime_class {
+# Return the unlocalised display name
+sub get_name {
 	my $class = shift;
-	my $mime  = shift;
-
-	if ( not $MIME{$mime} ) {
-		Padre::Current->main->error(
-			sprintf(
-				Wx::gettext('MIME type is not supported when %s(%s) was called'),
-				'get_mime_class',
-				$mime
-			)
-		);
-		return;
+	my $mime  = $MIME{ shift || '' };
+	unless ( $mime and $mime->{name} ) {
+		return _T('UNKNOWN');
 	}
-
-	return $MIME{$mime}->{class};
+	return _T($mime->{name});
 }
 
-# return the MIME types ordered according to their display name
-sub get_mime_types {
-	return [
-		sort { lc $MIME{$a}->{name} cmp lc $MIME{$b}->{name} }
-			keys %MIME
-	];
-}
-
-# given a MIME type
-# return its display name
-sub get_mime_type_name {
-	my $class = shift;
-	my $mime = shift || '';
-	return Wx::gettext('UNKNOWN')
-		if $mime eq ''
-			or not $MIME{$mime}
-			or not $MIME{$mime}->{name};
-	return Wx::gettext( $MIME{$mime}->{name} );
+sub get_names {
+	return map {
+		$_ => $MIME{$_}->{name}
+	} grep {
+		$MIME{$_}->{name}
+	} keys %MIME;
 }
 
 
@@ -474,16 +409,7 @@ sub get_mime_type_name {
 
 
 #####################################################################
-# Bad/Ugly/Broken Methods
-# These don't really completely belong in this class, but there's
-# currently nowhere better for them. Some break API boundaries...
-# NOTE: This is NOT an excuse to invent somewhere new that's just as
-# innappropriate just to get them out of here.
-
-sub _guess_mimetype {
-	warn join( ',', caller ) . ' called MimeTypes::_guess_mimetype which is depreached, use ::guess_mimetype!';
-	return $_[0]->guess_mimetype(@_);
-}
+# MIME Type Detection
 
 sub guess_mimetype {
 	my $class = shift;
@@ -517,7 +443,7 @@ sub guess_mimetype {
 		}
 	}
 
-	# Try derive the mime type from the basename
+	# Try to derive the mime type from the basename
 	# Makefile is now highlighted as a Makefile
 	# Changelog files are now displayed as text files
 	if ($filename) {
@@ -688,33 +614,6 @@ sub perl_mime_type {
 	}
 }
 
-sub mime_type_by_extension {
-	$EXT_MIME{ $_[1] };
-}
-
-sub get_extensions_by_mime_type {
-
-	# %EXT_MIME holds a mapping of extenions to their mimetypes
-	# We may want to know what extensions belong to a mimetype:
-	my $class    = shift;
-	my $mimetype = shift;
-
-	my @extensions;
-	while ( my ( $key, $value ) = each(%EXT_MIME) ) {
-
-		# this is just so bad, but to be honest I have no idea
-		# how else to do this :(
-		$value = 'application/x-perl'
-			if ( ref($value) eq 'CODE' ); # assume the hash holds a code ref for all perl extensions.
-		if ( $value eq $mimetype ) {
-			push @extensions, $key;
-		}
-
-	}
-	return @extensions;
-
-}
-
 # naive sub to decide if a piece of code is Perl 6 or Perl 5.
 # Perl 6:   use v6; class ..., module ...
 # maybe also grammar ...
@@ -745,17 +644,6 @@ sub is_perl6 {
 
 	# Not Perl 6 for sure...
 	return;
-}
-
-sub menu_view_mimes {
-	my %menu_view_mimes = ();
-	foreach my $mime ( keys %MIME ) {
-		my $name = $MIME{$mime}->{name};
-		if ($name) {
-			$menu_view_mimes{$mime} = $name;
-		}
-	}
-	return %menu_view_mimes;
 }
 
 1;

@@ -96,9 +96,9 @@ sub new {
 			$self->{view_as_highlighting}
 		);
 
-		my %mimes = Padre::MimeTypes::menu_view_mimes();
-		my @names = $self->sort_mimes( \%mimes );
-		foreach my $name (@names) {
+		my %mime  = Padre::MimeTypes->get_names;
+		my @names = $self->sort_mimes( \%mime );
+		foreach my $name ( @names ) {
 			my $radio = $self->add_menu_action(
 				$self->{view_as_highlighting},
 				"view.mime.$name",
@@ -294,11 +294,11 @@ sub refresh {
 		# Set mimetype
 		my $has_checked = 0;
 		if ( $document->mimetype ) {
-			my %mimes = Padre::MimeTypes::menu_view_mimes();
-			my @mimes = $self->sort_mimes( \%mimes );
-			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
+			my %mime = Padre::MimeTypes->get_names;
+			my @list = $self->sort_mimes( \%mime );
+			foreach my $pos ( 0 .. $#list ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
-				if ( $document->mimetype eq $mimes[$pos] ) {
+				if ( $document->mimetype eq $list[$pos] ) {
 					$radio->Check(1);
 					$has_checked = 1;
 				}

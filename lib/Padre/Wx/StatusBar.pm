@@ -186,17 +186,16 @@ sub refresh {
 	my $newline  = $document->newline_type || Padre::Constant::NEWLINE;
 	$self->{_last_editor}   = $editor;
 	$self->{_last_modified} = $editor->GetModify;
-	my $position       = $editor->GetCurrentPos;
-	my $line           = $editor->GetCurrentLine;
-	my $start          = $editor->PositionFromLine($line);
-	my $lines          = $editor->GetLineCount;
-	my $char           = $position - $start;
-	my $width          = $self->GetCharWidth;
-	my $mime_type_name = Padre::MimeTypes->get_mime_type_name( $document->mimetype );
-	my $percent        = int( 100 * $line / $lines );
-
-	# Set some defaults to advoid "use of uninittialized value" - messages:
-	$mime_type_name = '???' if !defined($mime_type_name);
+	my $position  = $editor->GetCurrentPos;
+	my $line      = $editor->GetCurrentLine;
+	my $start     = $editor->PositionFromLine($line);
+	my $lines     = $editor->GetLineCount;
+	my $char      = $position - $start;
+	my $width     = $self->GetCharWidth;
+	my $percent   = int( 100 * $line / $lines );
+	my $mime_name = Wx::gettext(
+		Padre::MimeTypes->get_name( $document->mimetype )
+	);
 
 	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
 	my $length   = length( $lines + 1 ) + 8;
@@ -218,14 +217,14 @@ sub refresh {
 		my $status = $main->process_template_frequent( $self->{_template_} );
 		$self->SetStatusText( $status, FILENAME );
 	}
-	$self->SetStatusText( $mime_type_name, MIMETYPE );
-	$self->SetStatusText( $newline,        NEWLINE );
-	$self->SetStatusText( $postring,       POSTRING );
-	$self->SetStatusText( $rdstatus,       RDONLY );
+	$self->SetStatusText( Wx::gettext($mime_name), MIMETYPE );
+	$self->SetStatusText( $newline,                NEWLINE );
+	$self->SetStatusText( $postring,               POSTRING );
+	$self->SetStatusText( $rdstatus,               RDONLY );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,
-		( length($mime_type_name) + 2 ) * $width,
+		( length($mime_name) + 2 ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,
 		( length($rdstatus) + 2 ) * $width,

@@ -1030,7 +1030,7 @@ sub rebless {
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
 	my $mime_type = $self->mimetype or return;
-	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
+	my $class = Padre::MimeTypes->get_class($mime_type) || __PACKAGE__;
 	TRACE("Reblessing to mimetype: '$class'") if DEBUG;
 	if ($class) {
 		unless ( $class->VERSION ) {
