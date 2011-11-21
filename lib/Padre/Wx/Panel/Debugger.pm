@@ -618,7 +618,7 @@ sub debug_perl_show_value {
 	}
 
 	# say "text: $text => value: $value";
-	$self->message("$text = $value");
+	$self->main->message("$text = $value");
 
 	return;
 }
