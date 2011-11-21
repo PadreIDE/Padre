@@ -7,9 +7,7 @@ use warnings;
 # Turn on $OUTPUT_AUTOFLUSH
 $| = 1;
 
-use utf8; # this don't work, the following would be nice
-
-# use feature 'unicode_strings';
+use utf8;
 
 use Padre::Constant          ();
 use Padre::Wx                ();
@@ -17,7 +15,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-
+use Debug::Client	 0.13_10 ();
 # use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
@@ -299,7 +297,7 @@ sub debug_perl {
 	}
 
 	# Bootstrap the debugger
-	require Debug::Client;
+	# require Debug::Client;
 	$self->{client} = Debug::Client->new(
 		host => $host,
 		port => $port,
@@ -339,9 +337,9 @@ sub _set_debugger {
 	my $self    = shift;
 	my $main    = $self->main;
 	my $current = $self->current;
-	my $editor  = $current->editor            or return;
+	my $editor  = $current->editor or return;
 	my $file    = $self->{client}->{filename} or return;
-	my $row     = $self->{client}->{row}      or return;
+	my $row     = $self->{client}->{row} or return;
 
 	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
@@ -384,7 +382,7 @@ sub running {
 		return;
 	}
 
-	return !! $self->current->editor;
+	return !!$self->current->editor;
 }
 
 ####### v1
@@ -580,6 +578,7 @@ sub _display_trace {
 	}
 
 	if ( $trace_on == 1 && $self->{trace_status} eq 'Trace = off' ) {
+
 		# $self->{trace_status} = $self->{client}->_set_option('frame=6');
 		$self->{trace_status} = $self->{client}->toggle_trace();
 		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
@@ -591,6 +590,7 @@ sub _display_trace {
 	}
 
 	if ( $trace_on == 0 && $self->{trace_status} eq 'Trace = on' ) {
+
 		# $self->{trace_status} = $self->{client}->_set_option('frame=1');
 		$self->{trace_status} = $self->{client}->toggle_trace();
 		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
@@ -627,7 +627,7 @@ sub debug_perl_show_value {
 # sub _debug_get_variable $line
 #######
 sub _debug_get_variable {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 
 	#my $text = $current->text;
@@ -1100,7 +1100,8 @@ sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{expression}->GetValue() . " = " . $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
+	$main->{panel_debug_output}->debug_output(
+		$self->{expression}->GetValue() . " = " . $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
 
 	return;
 }

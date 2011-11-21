@@ -5,13 +5,12 @@ use strict;
 use warnings;
 
 # Turn on $OUTPUT_AUTOFLUSH
-# $| = 1;
-# use diagnostics;
-# use utf8;
+$| = 1;
 
+use utf8;
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::DebugOutput ();
-# use Data::Printer { caller_info => 1, colored => 1, };
+
 our $VERSION = '0.93';
 
 our @ISA = qw{
