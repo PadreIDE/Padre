@@ -1420,7 +1420,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	help    => _T('Toggle Debug2, suggest you disable feature_debugger if you use this'),
+	help    => _T('Toggle Debug2'),
 );
 
 # Enable experimental quick fix system.
