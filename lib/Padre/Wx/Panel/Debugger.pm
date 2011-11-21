@@ -11,18 +11,17 @@ use utf8; # this don't work, the following would be nice
 
 # use feature 'unicode_strings';
 
-use Padre::Constant ();
-use Padre::Current  ();
-use Padre::Wx       ();
-use Padre::Logger qw(TRACE DEBUG);
-use Padre::Wx::Role::View;
+use Padre::Constant          ();
+use Padre::Wx                ();
+use Padre::Wx::Icon          ();
+use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
+use Padre::Logger;
 
 # use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
-
-our @ISA = qw{
+our @ISA     = qw{
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::Debugger
 };
@@ -49,7 +48,7 @@ sub new {
 	# Create the panel
 	my $self = $class->SUPER::new($panel);
 
-	$self->set_up();
+	$self->set_up;
 
 	return $self;
 }
@@ -104,25 +103,10 @@ sub view_icon {
 	return $icon;
 }
 
-sub view_start {
-	my $self = shift;
-
-	# Called immediately after the view has been displayed, to allow the view
-	# to kick off any timers or do additional post-creation setup.
-	return;
-}
-
-sub view_stop {
-	my $self = shift;
-
-	# Called immediately before the view is hidden, to allow the view to cancel
-	# any timers, cancel tasks or do pre-destruction teardown.
-	return;
-}
-
 sub gettext_label {
 	Wx::gettext('Debugger RC2');
 }
+
 ###############
 # Make Padre::Wx::Role::View happy end
 ###############
@@ -217,16 +201,13 @@ sub update_variables {
 	my $var_val_ref      = shift;
 	my $auto_var_val_ref = shift;
 	my $auto_x_var_ref   = shift;
-
-	my $item = Wx::ListItem->new;
+	my $editor           = $self->current->editor;
 
 	# clear ListCtrl items
 	$self->{variables}->DeleteAllItems;
 
-	my $editor = Padre::Current->editor;
-
 	my $index = 0;
-
+	my $item  = Wx::ListItem->new;
 	foreach my $var ( keys %{$var_val_ref} ) {
 
 		$item->SetId($index);
@@ -271,7 +252,7 @@ sub update_variables {
 sub debug_perl {
 	my $self     = shift;
 	my $main     = $self->main;
-	my $current  = Padre::Current->new;
+	my $current  = $self->current;
 	my $document = $current->document;
 	my $editor   = $current->editor;
 
@@ -357,13 +338,10 @@ sub debug_perl {
 sub _set_debugger {
 	my $self    = shift;
 	my $main    = $self->main;
-	my $current = Padre::Current->new;
-
-	my $editor = $current->editor            or return;
-	my $file   = $self->{client}->{filename} or return;
-
-	# p $file;
-	my $row = $self->{client}->{row} or return;
+	my $current = $self->current;
+	my $editor  = $current->editor            or return;
+	my $file    = $self->{client}->{filename} or return;
+	my $row     = $self->{client}->{row}      or return;
 
 	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
@@ -406,7 +384,7 @@ sub running {
 		return;
 	}
 
-	return !!Padre::Current->editor;
+	return !! $self->current->editor;
 }
 
 ####### v1
@@ -428,12 +406,10 @@ sub debug_quit {
 	$self->running or return;
 
 	# Clean up the GUI artifacts
-	my $current = Padre::Current->new;
-
 	# $current->main->show_debug(0);
 	# $self->show_debug_output(0);
 	# $self->show_debug_variable(0);
-	$current->editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION() );
+	$self->current->editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION() );
 
 	# Detach the debugger
 	$self->{client}->quit;
@@ -652,8 +628,7 @@ sub debug_perl_show_value {
 #######
 sub _debug_get_variable {
 	my $self     = shift;
-	my $main     = $self->main;
-	my $document = Padre::Current->document or return;
+	my $document = $self->current->document or return;
 
 	#my $text = $current->text;
 	my ( $location, $text ) = $document->get_current_symbol;
@@ -661,7 +636,7 @@ sub _debug_get_variable {
 	# p $location;
 	# p $text;
 	if ( not $text or $text !~ m/^[\$@%\\]/smx ) {
-		$main->error(
+		$self->main->error(
 			sprintf(
 				Wx::gettext(
 					"'%s' does not look like a variable. First select a variable in the code and then try again."),
@@ -695,7 +670,7 @@ sub debug_perl_evaluate_expression {
 	my $self = shift;
 	$self->running or return;
 
-	my $expression = Padre::Current->main->prompt(
+	my $expression = $self->main->prompt(
 		Wx::gettext('Expression:'),
 		Wx::gettext('Expr'),
 		'EVAL_EXPRESSION'
@@ -865,13 +840,14 @@ sub _setup_db {
 # display relation db
 #######
 sub _get_bp_db {
-	my $self = shift;
+	my $self     = shift;
+	my $editor   = $self->current->editor;
+	my $document = $self->current->document;
 
 	$self->_setup_db();
-	my $editor = Padre::Current->editor;
 
-	$self->{project_dir} = Padre::Current->document->project_dir;
-	$self->{current_file} = Padre::Current->document->filename;
+	$self->{project_dir}  = $document->project_dir;
+	$self->{current_file} = $document->filename;
 
 	TRACE("current file from _get_bp_db: $self->{current_file}") if DEBUG;
 
@@ -922,13 +898,15 @@ sub _get_bp_db {
 # for an autoloaded file (current) display breakpoints in editor if any
 #######
 sub _bp_autoload {
-	my $self = shift;
+	my $self     = shift;
+	my $current  = $self->current;
+	my $editor   = $current->editor;
+	my $document = $current->document;
 
-	$self->_setup_db();
+	$self->_setup_db;
 
 	#TODO is there a better way
-	my $editor = Padre::Current->editor;
-	$self->{current_file} = Padre::Current->document->filename;
+	$self->{current_file} = $document->filename;
 
 	my $sql_select = "WHERE filename = \"$self->{current_file}\"";
 	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
