@@ -187,7 +187,7 @@ sub guess_filename {
 	}
 
 	my $text    = $self->text_get;
-	my $project = $self->current->project;
+	my $project = $self->project;
 
 	# Is this a test?
 	if ( $text =~ /(?:use Test::|plan \=\>)/ ) {
@@ -749,7 +749,7 @@ sub _find_method {
 		# Scan for declarations in all module files.
 		# TODO: This is horrendously slow to be running in the foreground.
 		# TODO: This is pretty crude and doesn't integrate with the project system.
-		my $project = $self->current->project;
+		my $project = $self->project;
 		if ($project) {
 			require File::Find::Rule;
 			my @files = File::Find::Rule->file->name('*.pm')->in( File::Spec->catfile( $project->root, 'lib' ) );
