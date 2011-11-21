@@ -88,7 +88,7 @@ my %TODO = map { $_ => 1 } qw(
 	Padre::Document
 	Padre::File::FTP
 	Padre::Locale
-	Padre::MimeTypes
+	Padre::MIME
 	Padre::Plugin
 	Padre::Plugin::Devel
 	Padre::Plugin::My

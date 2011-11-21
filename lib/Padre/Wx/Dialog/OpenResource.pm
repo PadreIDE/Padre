@@ -8,7 +8,7 @@ use Padre::DB             ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
-use Padre::MimeTypes      ();
+use Padre::MIME      ();
 use Padre::Role::Task     ();
 use Padre::Logger;
 
@@ -578,7 +578,7 @@ sub render {
 
 			# display package name if it is a Perl file
 			my $pkg = '';
-			my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
+			my $mime_type = Padre::MIME->guess_mimetype( undef, $file );
 			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 				my $contents = Padre::Util::slurp($file);
 				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
@@ -605,7 +605,7 @@ sub render {
 			} else {
 
 				# display package name if it is a Perl file
-				my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
+				my $mime_type = Padre::MIME->guess_mimetype( undef, $file );
 				if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 					my $contents = Padre::Util::slurp($file);
 					if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {

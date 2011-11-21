@@ -254,7 +254,7 @@ StyleSetBackground       SCE_YAML_REFERENCE           fdf6e6
 StyleSetBackground       SCE_YAML_TEXT                fdf6e6
 StyleSetBackground       SCE_YAML_OPERATOR            fdf6e6
 
-style text/x-c
+style text/x-csrc
 include text/plain
 StyleSetForeground      SCE_C_DEFAULT                 657b83
 StyleSetBackground      SCE_C_DEFAULT                 fdf6e6
@@ -302,12 +302,12 @@ StyleSetBackground      SCE_C_GLOBALCLASS             fdf6e6
 
 
 # text/x-perlxs
-# surely this should be rolled up to text/x-c and included by cpp and perlxs ?
+# surely this should be rolled up to text/x-csrc and included by cpp and perlxs ?
 style text/x-perlxs
-include text/x-c
+include text/x-csrc
 
 style text/x-cpp
-include text/x-c
+include text/x-csrc
 
 #
 # text/html

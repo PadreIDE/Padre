@@ -1,10 +1,10 @@
-package Padre::MimeTypes;
+package Padre::MIME;
 
 =pod
 
 =head1 NAME
 
-Padre::MimeTypes - Padre MIME Types
+Padre::MIME - Padre MIME Types
 
 =head1 DESCRIPTION
 
@@ -23,23 +23,17 @@ use Padre::Util    ('_T');
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
 
+# The MIME object store
+my %MIME = ();
 
+# The "Unknown" MIME type
+my $UNKNOWN = Padre::MIME->create(
+	type  => '',
+	name  => _T('UNKNOWN'),
+);
 
-
-
-######################################################################
-# MIME Type Registry
-
-# Binary file extensions, which we don't support loading at all
-my %EXT_BINARY = map { $_ => 1 } qw{
-	aiff  au   avi   bmp  cache  dat  doc   docx  gif  gz
-	icns  jar  jpeg  jpg  m4a    mov  mp3   mpg   ogg  pdf
-        png   pnt  ppt   qt   ra     svg  svgz  svn   swf  tar
-        tgz   tif  tiff  wav  xls    xlw  xlsx  zip
-};
-
-# Text file extension to MIME type mapping (either string or code reference)
-my %EXT_MIME = (
+# File extension to MIME type mapping
+my %EXT = (
 	abc   => 'text/x-abc',
 	ada   => 'text/x-adasrc',
 	asm   => 'text/x-asm',
@@ -47,8 +41,8 @@ my %EXT_MIME = (
 	cmd   => 'text/x-bat',
 	bib   => 'application/x-bibtex',
 	bml   => 'application/x-bml',     # dreamwidth file format
-	c     => 'text/x-c',
-	h     => 'text/x-c',
+	c     => 'text/x-csrc',
+	h     => 'text/x-csrc',
 	cc    => 'text/x-c++src',
 	cpp   => 'text/x-c++src',
 	cxx   => 'text/x-c++src',
@@ -67,9 +61,9 @@ my %EXT_MIME = (
 	htm   => 'text/html',
 	html  => 'text/html',
 	hs    => 'text/x-haskell',
-	i     => 'text/x-c',              # C code that should not be preprocessed
+	i     => 'text/x-csrc',           # C code that should not be preprocessed
 	ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
-	java  => 'text/x-java-source',
+	java  => 'text/x-java',
 	js    => 'application/javascript',
 	json  => 'application/json',
 	lsp   => 'application/x-lisp',
@@ -148,211 +142,51 @@ my %EXT_MIME = (
 	dsm => 'text/vbscript',
 );
 
-# Main MIME type database and settings.
-# Lines marked with CONFIRMED indicate that the mime-type has been checked
-# that the MIME type is either the official type, or the primary
-# one in use by the relevant language community.
-# name     => 'Human Language Name',
-# document => 'Default::Document::Class',
-my %MIME = (
-	'text/x-abc' => {
-		name  => 'ABC',
-	},
 
-	'text/x-actionscript' => {
-		name  => 'ABC',
-	},
 
-	'text/x-adasrc' => {
-		name  => 'Ada',
-	},
 
-	'text/x-asm' => {
-		name  => 'Assembly',
-	},
 
-	# application/x-msdos-program includes .exe and .com, so don't use it
-	# text/x-bat is used in EXT_MIME, application/x-bat was listed here,
-	# they need to be the same
-	'text/x-bat' => {
-		name  => 'Batch',
-	},
+######################################################################
+# MIME Objects
 
-	'application/x-bibtex' => {
-		name  => 'BibTeX',
-	},
+sub new {
+	my $class = shift;
+	my $self  = bless { @_ }, $class;
+	return $self;
+}
 
-	'application/x-bml' => {
-		name  => 'BML',
-	},
+sub create {
+	my $class = shift;
+	my $self  = $class->new(@_);
+	$MIME{$self->type} = $self;
+}
 
-	'text/x-c' => {
-		name  => 'C',
-	},
+sub type {
+	$_[0]->{type};
+}
 
-	'text/x-cobol' => {
-		name  => 'COBOL',
-	},
+sub name {
+	$_[0]->{name};
+}
 
-	'text/x-c++src' => {
-		name  => 'C++',
-	},
+sub super {
+	$_[0]->{super};
+}
 
-	'text/css' => {
-		name  => 'CSS',
-	},
 
-	'text/x-eiffel' => {
-		name  => 'Eiffel',
-	},
 
-	'text/x-forth' => {
-		name  => 'Forth',
-	},
 
-	'text/x-fortran' => {
-		name  => 'Fortran',
-	},
 
-	'text/x-haskell' => {
-		name  => 'Haskell',
-	},
+######################################################################
+# MIME Registry
 
-	'text/html' => {
-		name  => 'HTML',
-	},
+sub types {
+	keys %MIME;
+}
 
-	'application/javascript' => {
-		name  => 'JavaScript',
-	},
-
-	'application/json' => {
-		name  => 'JSON',
-	},
-
-	'application/x-latex' => {
-		name  => 'LaTeX',
-	},
-
-	'application/x-lisp' => {
-		name  => 'LISP',
-	},
-
-	'text/x-patch' => {
-		name     => 'Patch',
-		document => 'Padre::Document::Patch',
-	},
-
-	'application/x-shellscript' => {
-		name  => _T('Shell Script'),
-	},
-
-	'text/x-java-source' => {
-		name     => 'Java',
-		document => 'Padre::Document::Java',
-	},
-
-	'text/x-lua' => {
-		name  => 'Lua',
-	},
-
-	'text/x-makefile' => {
-		name  => 'Makefile',
-	},
-
-	'text/x-matlab' => {
-		name  => 'Matlab',
-	},
-
-	'text/x-pascal' => {
-		name  => 'Pascal',
-	},
-
-	'application/x-perl' => {
-		name     => 'Perl 5',
-		document => 'Padre::Document::Perl',
-	},
-	
-	'text/x-povray' => {
-		name  => 'POVRAY',
-	},
-
-	'application/x-psgi' => {
-		name  => 'PSGI',
-	},
-
-	'text/x-python' => {
-		name     => 'Python',
-		document => 'Padre::Document::Python',
-	},
-
-	'application/x-php' => {
-		name  => 'PHP',
-	},
-
-	'application/x-ruby' => {
-		name     => 'Ruby',
-		document => 'Padre::Document::Ruby',
-	},
-
-	'text/x-sql' => {
-		name  => 'SQL',
-	},
-
-	'application/x-tcl' => {
-		name  => 'Tcl',
-	},
-
-	'text/vbscript' => {
-		name  => 'VBScript',
-	},
-
-	'text/x-config' => {
-		name  => 'Config',
-	},
-
-	# text/xml specifically means "human-readable XML".
-	# This is prefered to the more generic application/xml
-	'text/xml' => {
-		name  => 'XML',
-	},
-
-	'text/x-yaml' => {
-		name  => 'YAML',
-	},
-
-	'application/x-pir' => {
-		name  => 'PIR',
-	},
-
-	'application/x-pasm' => {
-		name  => 'PASM',
-	},
-
-	'application/x-perl6' => {
-		name  => 'Perl 6',
-	},
-
-	'text/plain' => {
-		name  => _T('Text'),
-	},
-
-	# Completely custom mime types
-	'text/x-perlxs' => {                       # totally not confirmed
-		name => 'XS',
-	},
-	'text/x-perltt' => {
-		name  => 'Template Toolkit',
-	},
-
-	'text/x-csharp' => {
-		name     => 'C#',
-		document => 'Padre::Document::CSharp',
-	},
-	'text/x-pod' => {
-		name  => 'POD',
-	},
-);
+sub get {
+	$MIME{$_[1]} || $UNKNOWN;
+}
 
 sub get_class {
 	my $class = shift;
@@ -386,23 +220,301 @@ sub reset_class {
 	delete $MIME{$mime}->{class};
 }
 
-# Return the unlocalised display name
-sub get_name {
-	my $class = shift;
-	my $mime  = $MIME{ shift || '' };
-	unless ( $mime and $mime->{name} ) {
-		return _T('UNKNOWN');
-	}
-	return _T($mime->{name});
-}
 
-sub get_names {
-	return map {
-		$_ => $MIME{$_}->{name}
-	} grep {
-		$MIME{$_}->{name}
-	} keys %MIME;
-}
+
+
+
+######################################################################
+# MIME Declarations
+
+Padre::MIME->create(
+	type  => 'text/x-abc',
+	name  => 'ABC',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-actionscript',
+	name  => 'ActionScript',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-adasrc',
+	name  => 'Ada',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-asm',
+	name  => 'Assembly',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-bat',
+	name  => 'Batch',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-bibtex',
+	name  => 'BibTeX',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-bat',
+	name  => 'BML',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-csrc',
+	name  => 'C',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-cobol',
+	name  => 'COBOL',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-c++src',
+	name  => 'C++',
+	super => 'text/x-csrc',
+);
+
+Padre::MIME->create(
+	type  => 'text/css',
+	name  => 'CSS',
+	super => 'text/x-csrc',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-eiffel',
+	name  => 'Eiffel',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-forth',
+	name  => 'Forth',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-fortran',
+	name  => 'Fortran',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-haskell',
+	name  => 'Haskell',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/html',
+	name  => 'HTML',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/javascript',
+	name  => 'JavaScript',
+	super => 'text/x-csrc',
+);
+
+Padre::MIME->create(
+	type  => 'application/json',
+	name  => 'JSON',
+	super => 'application/javascript',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-latex',
+	name  => 'LaTeX',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-lisp',
+	name  => 'LISP',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-patch',
+	name     => 'Patch',
+	super    => 'text/plain',
+	document => 'Padre::Document::Patch',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-shellscript',
+	name  => _T('Shell Script'),
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-java',
+	name     => 'Java',
+	super    => 'text/x-csrc',
+	document => 'Padre::Document::Java',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-lua',
+	name  => 'Lua',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-makefile',
+	name  => 'Makefile',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-matlab',
+	name  => 'Matlab',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-pascal',
+	name  => 'Pascal',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-perl',
+	name     => 'Perl 5',
+	document => 'Padre::Document::Perl',
+	super    => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-povray',
+	name  => 'POVRAY',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-psgi',
+	name  => 'PSGI',
+	super => 'application/x-perl',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-python',
+	name     => 'Python',
+	super    => 'text/plain',
+	document => 'Padre::Document::Python',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-php',
+	name  => 'PHP',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-ruby',
+	name     => 'Ruby',
+	super    => 'text/plain',
+	document => 'Padre::Document::Ruby',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-sql',
+	name  => 'SQL',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-tcl',
+	name  => 'Tcl',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/vbscript',
+	name  => 'VBScript',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-config',
+	name  => 'Config',
+	super => 'text/plain',
+);
+
+# text/xml specifically means "human-readable XML".
+# This is prefered to the more generic application/xml
+Padre::MIME->create(
+	type  => 'text/xml',
+	name  => 'XML',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-yaml',
+	name  => 'YAML',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-pir',
+	name  => 'PIR',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-pasm',
+	name  => 'PASM',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'application/x-perl6',
+	name  => 'Perl 6',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/plain',
+	name  => _T('Text'),
+);
+
+# Completely custom mime types
+Padre::MIME->create(
+	type  => 'text/x-perlxs', # totally not confirmed
+	name => 'XS',
+	super=> 'text/x-csrc',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-perltt',
+	name  => 'Template Toolkit',
+	super => 'text/plain',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-csharp',
+	name     => 'C#',
+	super    => 'text/x-csrc',
+	document => 'Padre::Document::CSharp',
+);
+
+Padre::MIME->create(
+	type  => 'text/x-pod',
+	name  => 'POD',
+	super => 'text/plain',
+);
 
 
 
@@ -434,11 +546,11 @@ sub guess_mimetype {
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
-		if ( $EXT_MIME{$ext} ) {
-			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->( $class, $text );
+		if ( $EXT{$ext} ) {
+			if ( ref $EXT{$ext} ) {
+				return $EXT{$ext}->( $class, $text );
 			} else {
-				return $EXT_MIME{$ext};
+				return $EXT{$ext};
 			}
 		}
 	}

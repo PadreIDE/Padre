@@ -331,7 +331,7 @@ sub registered_documents {
 	'Padre::Plugin::MyPlugin::C' => {
             name => _T("My Highlighter"),
             mime => [ qw{
-                text/x-c
+                text/x-csrc
                 text/x-c++src
                 text/x-perlxs
             } ],

@@ -262,8 +262,8 @@ sub show {
 		}
 		$self->_topic($topic);
 		$self->_search_text->ChangeValue( $self->_topic );
-		my $doc = Padre::Current->document;
-		if ($doc) {
+		my $document = Padre::Current->document;
+		if ($document) {
 			$self->_help_provider(undef);
 		}
 		$self->Show(1);
@@ -300,18 +300,17 @@ sub _search {
 
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
-		my $doc = Padre::Current->document;
-		if ($doc) {
-			eval { $self->_help_provider( $doc->get_help_provider ); };
+		my $document = Padre::Current->document;
+		if ($document) {
+			eval { $self->_help_provider( $document->get_help_provider ); };
 			if ($@) {
 				$self->_display_msg( sprintf( Wx::gettext('Error while calling %s %s'), 'get_help_provider', $@ ) );
 				return;
 			}
 			if ( not $self->_help_provider ) {
-				my $mime_name = Padre::MimeTypes->get_name( $doc->mimetype );
 				$self->_display_msg(
 					Wx::gettext("Could not find a help provider for ") .
-					Wx::gettext($mime_name)
+					Wx::gettext($document->mime->name)
 				);
 				return;
 			}
@@ -338,14 +337,14 @@ sub _search {
 sub _find_help_topic {
 	my $self = shift;
 
-	my $doc = Padre::Current->document;
-	return '' unless $doc;
+	my $document = Padre::Current->document;
+	return '' unless $document;
 
-	my $topic = $doc->find_help_topic;
+	my $topic = $document->find_help_topic;
 
 	#fallback
 	unless ($topic) {
-		my $editor = $doc->editor;
+		my $editor = $document->editor;
 		my $pos    = $editor->GetCurrentPos;
 
 		# The selected/under the cursor word is a help topic

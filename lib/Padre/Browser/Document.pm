@@ -55,7 +55,7 @@ sub guess_title {
 
 # Yuk .
 # This is the primary file extension to mime-type mapping
-our %EXT_MIME = (
+our %EXT = (
 	abc   => 'text/x-abc',
 	ada   => 'text/x-adasrc',
 	asm   => 'text/x-asm',
@@ -108,12 +108,12 @@ sub guess_mimetype {
 	}
 	my ( $path, $file, $suffix ) = File::Basename::fileparse(
 		$self->filename,
-		keys %EXT_MIME
+		keys %EXT
 	);
 
 	my $type =
-		exists $EXT_MIME{$suffix}
-		? $EXT_MIME{$suffix}
+		exists $EXT{$suffix}
+		? $EXT{$suffix}
 		: '';
 	return $type;
 }

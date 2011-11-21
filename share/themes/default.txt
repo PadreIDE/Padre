@@ -118,7 +118,7 @@ StyleSetForeground SCE_PL_STRING_QW             7f007f
 
 
 
-style text/x-c
+style text/x-csrc
 include text/plain
 StyleSetForeground SCE_C_DEFAULT                000000
 StyleSetForeground SCE_C_COMMENT                007f00
@@ -143,7 +143,7 @@ StyleSetForeground SCE_C_COMMENTLINEDOC         7f7f7f
 
 
 style text/x-perlxs
-include text/x-c
+include text/x-csrc
 StyleSetForeground SCE_C_COMMENTDOC             007f00
 StyleSetForeground SCE_C_WORD                   7f007f
 StyleSetForeground SCE_C_UUID                   7f007f

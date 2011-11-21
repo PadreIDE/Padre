@@ -133,7 +133,7 @@ use Padre::Current       ();
 use Padre::Util          ();
 use Padre::Wx            ();
 use Padre::Wx::Scintilla ();
-use Padre::MimeTypes     ();
+use Padre::MIME          ();
 use Padre::File          ();
 use Padre::Logger;
 
@@ -155,7 +155,7 @@ my %COMMENT_LINE_STRING = (
 	'text/x-bat'                => 'REM',
 	'application/x-bibtex'      => '%',
 	'application/x-bml'         => [ '<?_c', '_c?>' ],
-	'text/x-c'                  => '//',
+	'text/x-csrc'               => '//',
 	'text/x-cobol'              => '      *',
 	'text/x-config'             => '#',
 	'text/x-csharp'             => '//',
@@ -168,7 +168,7 @@ my %COMMENT_LINE_STRING = (
 	'text/html'                 => [ '<!--', '-->' ],
 	'application/javascript'    => '//',
 	'application/x-latex'       => '%',
-	'text/x-java-source'        => '//',
+	'text/x-java'               => '//',
 	'application/x-lisp'        => ';',
 	'text/x-lua'                => '--',
 	'text/x-makefile'           => '#',
@@ -232,7 +232,7 @@ my @SCINTILLA_VB_KEYWORDS = qw{addressof alias and as attribute base begin binar
 my %SCINTILLA_KEY_WORDS = (
 
 	# C/C++ keyword list is obtained from src/scite/src/cpp.properties
-	'text/x-c' => [
+	'text/x-csrc' => [
 		[   qw{
 				and and_eq asm auto bitand bitor bool break
 				case catch char class compl const const_cast continue
@@ -858,8 +858,8 @@ my %SCINTILLA_KEY_WORDS = (
 	],
 
 );
-$SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
-$SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-c'};
+$SCINTILLA_KEY_WORDS{'text/x-c++src'} = $SCINTILLA_KEY_WORDS{'text/x-csrc'};
+$SCINTILLA_KEY_WORDS{'text/x-perlxs'} = $SCINTILLA_KEY_WORDS{'text/x-csrc'};
 
 
 
@@ -1030,7 +1030,7 @@ sub rebless {
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
 	my $mime_type = $self->mimetype or return;
-	my $class = Padre::MimeTypes->get_class($mime_type) || __PACKAGE__;
+	my $class = Padre::MIME->get_class($mime_type) || __PACKAGE__;
 	TRACE("Reblessing to mimetype: '$class'") if DEBUG;
 	if ($class) {
 		unless ( $class->VERSION ) {
@@ -1052,6 +1052,10 @@ sub rebless {
 
 sub current {
 	Padre::Current->new( document => $_[0] );
+}
+
+sub mime {
+	Padre::MIME->get( $_[0]->mimetype );
 }
 
 # Abstract methods, each subclass should implement it
@@ -1904,7 +1908,7 @@ sub filename_relative {
 # Maybe we need to remove this sub.
 sub guess_mimetype {
 	my $self = shift;
-	Padre::MimeTypes->guess_mimetype(
+	Padre::MIME->guess_mimetype(
 		$self->{original_content},
 		$self->file,
 	);

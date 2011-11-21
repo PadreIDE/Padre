@@ -67,10 +67,10 @@ my %FALLBACK = (
 	'application/x-psgi'     => 'application/x-perl',
 	'application/x-php'      => 'application/perl',      # Temporary solution
 	'application/json'       => 'application/javascript',
-	'application/javascript' => 'text/x-c',
-	'text/x-java-source'     => 'text/x-c',
-	'text/x-c++src'          => 'text/x-c',
-	'text/x-csharp'          => 'text/x-c',
+	'application/javascript' => 'text/x-csrc',
+	'text/x-java'            => 'text/x-csrc',
+	'text/x-c++src'          => 'text/x-csrc',
+	'text/x-csharp'          => 'text/x-csrc',
 );
 
 

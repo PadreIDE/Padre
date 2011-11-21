@@ -13,7 +13,7 @@ use Padre::Util       ('_T');
 use Padre::Feature    ();
 use Padre::Current    ();
 use Padre::Constant   ();
-use Padre::MimeTypes  ();
+use Padre::MIME  ();
 use Padre::Wx         ();
 use Padre::Wx::Menu   ();
 use Padre::Wx::Action ();
@@ -1478,12 +1478,11 @@ sub init {
 
 	# MIME Type Actions
 	SCOPE: {
-		my %mime = Padre::MimeTypes->get_names;
-
-		foreach my $type ( keys %mime ) {
+		foreach my $type ( Padre::MIME->types ) {
+			my $label = Padre::MIME->get($type)->name;
 			Padre::Wx::Action->new(
 				name        => "view.mime.$type",
-				label       => $mime{$type},
+				label       => $label,
 				comment     => _T('Switch document type'),
 				menu_method => 'AppendRadioItem',
 				menu_event  => sub {

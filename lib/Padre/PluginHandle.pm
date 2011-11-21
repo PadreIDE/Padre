@@ -221,12 +221,12 @@ sub enable {
 	eval {
 		my @documents = $self->object->registered_documents;
 		if (@documents) {
-			require Padre::MimeTypes;
+			require Padre::MIME;
 		}
 		while (@documents) {
 			my $type  = shift @documents;
 			my $class = shift @documents;
-			Padre::MimeTypes->set_class( $type, $class );
+			Padre::MIME->set_class( $type, $class );
 		}
 	};
 
@@ -307,7 +307,7 @@ sub disable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		Padre::MimeTypes->reset_class($type);
+		Padre::MIME->reset_class($type);
 	}
 
 	# Call the plugin's own disable method

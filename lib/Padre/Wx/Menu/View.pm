@@ -96,9 +96,7 @@ sub new {
 			$self->{view_as_highlighting}
 		);
 
-		my %mime  = Padre::MimeTypes->get_names;
-		my @names = $self->sort_mimes( \%mime );
-		foreach my $name ( @names ) {
+		foreach my $name ( $self->sorted ) {
 			my $radio = $self->add_menu_action(
 				$self->{view_as_highlighting},
 				"view.mime.$name",
@@ -294,8 +292,7 @@ sub refresh {
 		# Set mimetype
 		my $has_checked = 0;
 		if ( $document->mimetype ) {
-			my %mime = Padre::MimeTypes->get_names;
-			my @list = $self->sort_mimes( \%mime );
+			my @list = $self->sorted;
 			foreach my $pos ( 0 .. $#list ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
 				if ( $document->mimetype eq $list[$pos] ) {
@@ -321,15 +318,18 @@ sub refresh {
 	return;
 }
 
-sub sort_mimes {
+sub sorted {
 	my $self  = shift;
-	my $mimes = shift;
+	my %names = map {
+		$_ => Wx::gettext( Padre::MIME->get($_)->name )
+	} Padre::MIME->types;
 
 	# Can't do "return sort", must sort to a list first
 	my @sorted = sort {
 		( $b eq 'text/plain' ) <=> ( $a eq 'text/plain' )
-			or Wx::gettext( $mimes->{$a} ) cmp Wx::gettext( $mimes->{$b} )
-	} keys %$mimes;
+		or
+		$names{$a} cmp $names{$b}
+	} keys %names;
 
 	return @sorted;
 }

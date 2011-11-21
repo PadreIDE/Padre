@@ -3768,11 +3768,10 @@ sub on_comment_block {
 	my $comment = $document->get_comment_line_string;
 
 	if ( not defined $comment ) {
-		my $mime_name = Padre::MimeTypes->get_name( $document->mimetype );
 		$self->error(
 			sprintf(
 				Wx::gettext('Could not determine the comment character for %s document type'),
-				Wx::gettext($mime_name),
+				Wx::gettext($document->mime->name),
 			)
 		);
 		return;

@@ -43,7 +43,7 @@ use Padre::Util           ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
-use Padre::MimeTypes      ();
+use Padre::MIME           ();
 
 use Class::XSAccessor {
 	accessors => {
@@ -193,14 +193,11 @@ sub refresh {
 	my $char      = $position - $start;
 	my $width     = $self->GetCharWidth;
 	my $percent   = int( 100 * $line / $lines );
-	my $mime_name = Wx::gettext(
-		Padre::MimeTypes->get_name( $document->mimetype )
-	);
-
-	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
-	my $length   = length( $lines + 1 ) + 8;
-	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
-	my $rdstatus = $self->is_read_only;
+	my $mime_name = Wx::gettext( $document->mime->name );
+	my $format    = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
+	my $length    = length( $lines + 1 ) + 8;
+	my $postring  = sprintf( $format, ( $line + 1 ), $char, $percent );
+	my $rdstatus  = $self->is_read_only;
 
 	# update task load status
 	$self->update_task_status;
@@ -217,10 +214,10 @@ sub refresh {
 		my $status = $main->process_template_frequent( $self->{_template_} );
 		$self->SetStatusText( $status, FILENAME );
 	}
-	$self->SetStatusText( Wx::gettext($mime_name), MIMETYPE );
-	$self->SetStatusText( $newline,                NEWLINE );
-	$self->SetStatusText( $postring,               POSTRING );
-	$self->SetStatusText( $rdstatus,               RDONLY );
+	$self->SetStatusText( $mime_name, MIMETYPE );
+	$self->SetStatusText( $newline,   NEWLINE  );
+	$self->SetStatusText( $postring,  POSTRING );
+	$self->SetStatusText( $rdstatus,  RDONLY   );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,

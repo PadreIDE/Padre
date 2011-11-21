@@ -8,7 +8,7 @@ use warnings;
 use Params::Util            ();
 use Class::Inspector        ();
 use Padre::Config           ();
-use Padre::MimeTypes        ();
+use Padre::MIME        ();
 use Padre::Util             ('_T');
 use Wx::Scintilla::Constant ();
 
@@ -115,7 +115,7 @@ my %LEXER = (
 	'application/x-bibtex'      => Wx::Scintilla::Constant::SCLEX_NULL,
 	'application/x-bml'         => Wx::Scintilla::Constant::SCLEX_NULL,
 	'text/x-bat'                => Wx::Scintilla::Constant::SCLEX_BATCH,     # CONFIRMED
-	'text/x-c'                  => Wx::Scintilla::Constant::SCLEX_CPP,
+	'text/x-csrc'               => Wx::Scintilla::Constant::SCLEX_CPP,       # CONFIRMED
 	'text/x-cobol'              => Wx::Scintilla::Constant::SCLEX_COBOL,     # CONFIRMED 
 	'text/x-c++src'             => Wx::Scintilla::Constant::SCLEX_CPP,       # CONFIRMED
 	'text/css'                  => Wx::Scintilla::Constant::SCLEX_CSS,       # CONFIRMED
@@ -130,7 +130,7 @@ my %LEXER = (
 	'application/x-lisp'        => Wx::Scintilla::Constant::SCLEX_LISP,      # CONFIRMED
 	'text/x-patch'              => Wx::Scintilla::Constant::SCLEX_DIFF,      # CONFIRMED
 	'application/x-shellscript' => Wx::Scintilla::Constant::SCLEX_BASH,
-	'text/x-java-source'        => Wx::Scintilla::Constant::SCLEX_CPP,
+	'text/x-java'               => Wx::Scintilla::Constant::SCLEX_CPP,       # CONFIRMED
 	'text/x-lua'                => Wx::Scintilla::Constant::SCLEX_LUA,       # CONFIRMED
 	'text/x-makefile'           => Wx::Scintilla::Constant::SCLEX_MAKEFILE,  # CONFIRMED
 	'text/x-matlab'             => Wx::Scintilla::Constant::SCLEX_MATLAB,    # CONFIRMED
@@ -147,10 +147,10 @@ my %LEXER = (
 	'text/x-config'             => Wx::Scintilla::Constant::SCLEX_CONF,
 	'text/xml'                  => Wx::Scintilla::Constant::SCLEX_XML,       # CONFIRMED
 	'text/x-yaml'               => Wx::Scintilla::Constant::SCLEX_YAML,      # CONFIRMED
-	'application/x-pir'         => Wx::Scintilla::Constant::SCLEX_NULL, # CONFIRMED
-	'application/x-pasm'        => Wx::Scintilla::Constant::SCLEX_NULL, # CONFIRMED
+	'application/x-pir'         => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
+	'application/x-pasm'        => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 	'application/x-perl6'       => 102, # TODO Wx::Scintilla::Constant::PERL_6
-	'text/plain'                => Wx::Scintilla::Constant::SCLEX_NULL, # CONFIRMED
+	'text/plain'                => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 	# for the lack of a better XS lexer (vim?)
 	'text/x-perlxs'             => Wx::Scintilla::Constant::SCLEX_CPP,
 	'text/x-perltt'             => Wx::Scintilla::Constant::SCLEX_HTML,
