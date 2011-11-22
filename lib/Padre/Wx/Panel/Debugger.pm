@@ -15,7 +15,8 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client	 0.13_10 ();
+use Debug::Client 0.13_10 ();
+
 # use Data::Printer { caller_info => 1, colored => 1, };
 
 our $VERSION = '0.93';
@@ -694,7 +695,9 @@ sub quit {
 # Composed Method _output_variables
 #######
 sub _output_variables {
-	my $self = shift;
+	my $self     = shift;
+	my $document = $self->current->document;
+	$self->{current_file} = $document->filename;
 
 	foreach my $variable ( keys %{ $self->{var_val} } ) {
 		my $value;
@@ -720,22 +723,29 @@ sub _output_variables {
 	# why dose $self->{project_dir} contain the root when no magic file present
 	#TODO trying to stop debug X & V from crashing
 	my @magic_files = qw { Makefile.PL Build.PL dist.ini };
+	my $in_project  = 0;
 	require File::Spec;
 	foreach (@magic_files) {
 		if ( -e File::Spec->catfile( $self->{project_dir}, $_ ) ) {
-
-			$self->{show_global_variables}->Enable;
-			if ( $self->{current_file} =~ m/[^(pm)]$/ ) {
-				$self->{show_global_variables}->Disable;
-
-				# get ride of stale values
-				$self->{auto_x_var} = {};
-
-			} else {
-				$self->get_global_variables();
-			}
+			$in_project = 1;
 		}
 	}
+	if ($in_project) {
+
+		$self->{show_global_variables}->Enable;
+
+		if ( $self->{current_file} =~ m/pm$/ ) {
+			$self->get_global_variables();
+
+		} else {
+			$self->{show_global_variables}->Disable;
+
+			# get ride of stale values
+			$self->{auto_x_var} = {};
+		}
+	}
+
+	# }
 
 	$self->update_variables( $self->{var_val}, $self->{auto_var_val}, $self->{auto_x_var} );
 
@@ -1101,7 +1111,7 @@ sub on_evaluate_expression_clicked {
 	my $main = $self->main;
 
 	$main->{panel_debug_output}->debug_output(
-		$self->{expression}->GetValue() . " = " . $self->{client}->get_p_exp( $self->{expression}->GetValue() ) );
+		$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
 
 	return;
 }
