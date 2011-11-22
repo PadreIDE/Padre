@@ -152,9 +152,20 @@ my %EXT = (
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
-	if ( $self->{super} and not $MIME{$self->{super}} ) {
-		die "Supertype '$self->{super}' does not exist";
+
+	# Check the supertype and precalculate the super path
+	if ( $self->{super} ) {
+		unless ( $MIME{$self->{super}} ) {
+			die "Supertype '$self->{super}' does not exist";
+		}
+		$self->{super_path} = [
+			$self->{type},
+			$MIME{$self->{super}}->super_path,
+		];
+	} else {
+		$self->{super_path} = [ $self->{type} ];
 	}
+
 	return $self;
 }
 
@@ -174,6 +185,20 @@ sub name {
 
 sub super {
 	$_[0]->{super};
+}
+
+sub super_path {
+	@{$_[0]->{super_path}};
+}
+
+sub class {
+	my $self = shift;
+	foreach my $type ( $self->super_path ) {
+		my $mime = $MIME{$type};
+		return $mime->{class}    if $mime->{class};
+		return $mime->{document} if $mime->{document};
+	}
+	die "Failed to find a document class for '" . $self->type . "'";
 }
 
 
@@ -232,8 +257,9 @@ sub reset_class {
 
 # Plain text from which everything else should inherit
 Padre::MIME->create(
-	type  => 'text/plain',
-	name  => _T('Text'),
+	type     => 'text/plain',
+	name     => _T('Text'),
+	document => 'Padre::Document',
 );
 
 Padre::MIME->create(
@@ -357,7 +383,7 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'text/x-patch',
+	type     => 'text/x-patch',
 	name     => 'Patch',
 	super    => 'text/plain',
 	document => 'Padre::Document::Patch',
@@ -370,7 +396,7 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'text/x-java',
+	type     => 'text/x-java',
 	name     => 'Java',
 	super    => 'text/x-csrc',
 	document => 'Padre::Document::Java',
@@ -401,10 +427,10 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'application/x-perl',
+	type     => 'application/x-perl',
 	name     => 'Perl 5',
-	document => 'Padre::Document::Perl',
 	super    => 'text/plain',
+	document => 'Padre::Document::Perl',
 );
 
 Padre::MIME->create(
@@ -420,7 +446,7 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'text/x-python',
+	type     => 'text/x-python',
 	name     => 'Python',
 	super    => 'text/plain',
 	document => 'Padre::Document::Python',
@@ -433,7 +459,7 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'application/x-ruby',
+	type     => 'application/x-ruby',
 	name     => 'Ruby',
 	super    => 'text/plain',
 	document => 'Padre::Document::Ruby',
@@ -508,7 +534,7 @@ Padre::MIME->create(
 );
 
 Padre::MIME->create(
-	type  => 'text/x-csharp',
+	type     => 'text/x-csharp',
 	name     => 'C#',
 	super    => 'text/x-csrc',
 	document => 'Padre::Document::CSharp',
