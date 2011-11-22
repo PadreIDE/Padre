@@ -226,7 +226,7 @@ sub enable {
 		while (@documents) {
 			my $type  = shift @documents;
 			my $class = shift @documents;
-			Padre::MIME->set_class( $type, $class );
+			Padre::MIME->find($type)->plugin($class);
 		}
 	};
 
@@ -307,7 +307,7 @@ sub disable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		Padre::MIME->reset_class($type);
+		Padre::MIME->find($type)->reset;
 	}
 
 	# Call the plugin's own disable method

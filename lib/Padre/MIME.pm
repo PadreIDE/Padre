@@ -146,6 +146,22 @@ my %EXT = (
 
 
 
+
+######################################################################
+# MIME Registry Methods
+
+sub types {
+	keys %MIME;
+}
+
+sub find {
+	$MIME{$_[1]} || $UNKNOWN;
+}
+
+
+
+
+
 ######################################################################
 # MIME Objects
 
@@ -153,17 +169,17 @@ sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
 
-	# Check the supertype and precalculate the super path
-	if ( $self->{super} ) {
-		unless ( $MIME{$self->{super}} ) {
-			die "Supertype '$self->{super}' does not exist";
+	# Check the supertype and precalculate the supertype path
+	if ( $self->{supertype} ) {
+		unless ( $MIME{$self->{supertype}} ) {
+			die "MIME type '$self->{supertype}' does not exist";
 		}
-		$self->{super_path} = [
+		$self->{superpath} = [
 			$self->{type},
-			$MIME{$self->{super}}->super_path,
+			$MIME{$self->{supertype}}->superpath,
 		];
 	} else {
-		$self->{super_path} = [ $self->{type} ];
+		$self->{superpath} = [ $self->{type} ];
 	}
 
 	return $self;
@@ -183,69 +199,36 @@ sub name {
 	$_[0]->{name};
 }
 
+sub supertype {
+	$_[0]->{supertype};
+}
+
+sub superpath {
+	@{$_[0]->{superpath}};
+}
+
 sub super {
-	$_[0]->{super};
+	$MIME{ $_[0]->{supertype} || '' };
 }
 
-sub super_path {
-	@{$_[0]->{super_path}};
-}
-
-sub class {
+sub document {
 	my $self = shift;
-	foreach my $type ( $self->super_path ) {
-		my $mime = $MIME{$type};
-		return $mime->{class}    if $mime->{class};
+	my $mime = $self;
+
+	do {
+		return $mime->{plugin}   if $mime->{plugin};
 		return $mime->{document} if $mime->{document};
-	}
+	} while ( $mime = $mime->super );
+
 	die "Failed to find a document class for '" . $self->type . "'";
 }
 
-
-
-
-
-######################################################################
-# MIME Registry
-
-sub types {
-	keys %MIME;
+sub plugin {
+	$_[0]->{plugin} = $_[1];
 }
 
-sub get {
-	$MIME{$_[1]} || $UNKNOWN;
-}
-
-sub get_class {
-	my $class = shift;
-	my $mime  = $MIME{ shift || '' };
-	unless ( $mime ) {
-		warn "Unknown MIME type '$mime'";
-		return;
-	}
-	return $mime->{class} if $mime->{class};
-	return $mime->{document};
-}
-
-sub set_class {
-	my $class  = shift;
-	my $mime   = shift;
-	my $module = shift;
-	unless ( $mime and $MIME{$mime} ) {
-		warn "Unknown MIME type '$mime'";
-		return;
-	}
-	$MIME{$mime}->{class} = $module;
-}
-
-sub reset_class {
-	my $class = shift;
-	my $mime  = shift;
-	unless ( $mime and $MIME{$mime} ) {
-		warn "Unknown MIME type '$mime'";
-		return;
-	}
-	delete $MIME{$mime}->{class};
+sub reset {
+	delete $_[0]->{plugin};
 }
 
 
@@ -257,293 +240,294 @@ sub reset_class {
 
 # Plain text from which everything else should inherit
 Padre::MIME->create(
-	type     => 'text/plain',
-	name     => _T('Text'),
-	document => 'Padre::Document',
+	type      => 'text/plain',
+	name      => _T('Text'),
+	document  => 'Padre::Document',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-abc',
-	name  => 'ABC',
-	super => 'text/plain',
+	type      => 'text/x-abc',
+	name      => 'ABC',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-actionscript',
-	name  => 'ActionScript',
-	super => 'text/plain',
+	type      => 'text/x-actionscript',
+	name      => 'ActionScript',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-adasrc',
-	name  => 'Ada',
-	super => 'text/plain',
+	type      => 'text/x-adasrc',
+	name      => 'Ada',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-asm',
-	name  => 'Assembly',
-	super => 'text/plain',
+	type      => 'text/x-asm',
+	name      => 'Assembly',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-bat',
-	name  => 'Batch',
-	super => 'text/plain',
+	type      => 'text/x-bat',
+	name      => 'Batch',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-bibtex',
-	name  => 'BibTeX',
-	super => 'text/plain',
+	type      => 'application/x-bibtex',
+	name      => 'BibTeX',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-bat',
-	name  => 'BML',
-	super => 'text/plain',
+	type      => 'application/x-bat',
+	name      => 'BML',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-csrc',
-	name  => 'C',
-	super => 'text/plain',
+	type      => 'text/x-csrc',
+	name      => 'C',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-cobol',
-	name  => 'COBOL',
-	super => 'text/plain',
+	type      => 'text/x-cobol',
+	name      => 'COBOL',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-c++src',
-	name  => 'C++',
-	super => 'text/x-csrc',
+	type      => 'text/x-c++src',
+	name      => 'C++',
+	supertype => 'text/x-csrc',
 );
 
 Padre::MIME->create(
-	type  => 'text/css',
-	name  => 'CSS',
-	super => 'text/x-csrc',
+	type      => 'text/css',
+	name      => 'CSS',
+	supertype => 'text/x-csrc',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-eiffel',
-	name  => 'Eiffel',
-	super => 'text/plain',
+	type      => 'text/x-eiffel',
+	name      => 'Eiffel',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-forth',
-	name  => 'Forth',
-	super => 'text/plain',
+	type      => 'text/x-forth',
+	name      => 'Forth',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-fortran',
-	name  => 'Fortran',
-	super => 'text/plain',
+	type      => 'text/x-fortran',
+	name      => 'Fortran',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-haskell',
-	name  => 'Haskell',
-	super => 'text/plain',
+	type      => 'text/x-haskell',
+	name      => 'Haskell',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/html',
-	name  => 'HTML',
-	super => 'text/plain',
+	type      => 'text/html',
+	name      => 'HTML',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/javascript',
-	name  => 'JavaScript',
-	super => 'text/x-csrc',
+	type      => 'application/javascript',
+	name      => 'JavaScript',
+	supertype => 'text/x-csrc',
 );
 
 Padre::MIME->create(
-	type  => 'application/json',
-	name  => 'JSON',
-	super => 'application/javascript',
+	type      => 'application/json',
+	name      => 'JSON',
+	supertype => 'application/javascript',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-latex',
-	name  => 'LaTeX',
-	super => 'text/plain',
+	type      => 'application/x-latex',
+	name      => 'LaTeX',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-lisp',
-	name  => 'LISP',
-	super => 'text/plain',
+	type      => 'application/x-lisp',
+	name      => 'LISP',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type     => 'text/x-patch',
-	name     => 'Patch',
-	super    => 'text/plain',
-	document => 'Padre::Document::Patch',
+	type      => 'text/x-patch',
+	name      => 'Patch',
+	supertype => 'text/plain',
+	document  => 'Padre::Document::Patch',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-shellscript',
-	name  => _T('Shell Script'),
-	super => 'text/plain',
+	type      => 'application/x-shellscript',
+	name      => _T('Shell Script'),
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type     => 'text/x-java',
-	name     => 'Java',
-	super    => 'text/x-csrc',
-	document => 'Padre::Document::Java',
+	type      => 'text/x-java',
+	name      => 'Java',
+	supertype => 'text/x-csrc',
+	document  => 'Padre::Document::Java',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-lua',
-	name  => 'Lua',
-	super => 'text/plain',
+	type      => 'text/x-lua',
+	name      => 'Lua',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-makefile',
-	name  => 'Makefile',
-	super => 'text/plain',
+	type      => 'text/x-makefile',
+	name      => 'Makefile',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-matlab',
-	name  => 'Matlab',
-	super => 'text/plain',
+	type      => 'text/x-matlab',
+	name      => 'Matlab',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-pascal',
-	name  => 'Pascal',
-	super => 'text/plain',
+	type      => 'text/x-pascal',
+	name      => 'Pascal',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type     => 'application/x-perl',
-	name     => 'Perl 5',
-	super    => 'text/plain',
-	document => 'Padre::Document::Perl',
+	type      => 'application/x-perl',
+	name      => 'Perl 5',
+	supertype => 'text/plain',
+	document  => 'Padre::Document::Perl',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-povray',
-	name  => 'POVRAY',
-	super => 'text/plain',
+	type      => 'text/x-povray',
+	name      => 'POVRAY',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-psgi',
-	name  => 'PSGI',
-	super => 'application/x-perl',
+	type      => 'application/x-psgi',
+	name      => 'PSGI',
+	supertype => 'application/x-perl',
 );
 
 Padre::MIME->create(
-	type     => 'text/x-python',
-	name     => 'Python',
-	super    => 'text/plain',
-	document => 'Padre::Document::Python',
+	type      => 'text/x-python',
+	name      => 'Python',
+	supertype => 'text/plain',
+	document  => 'Padre::Document::Python',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-php',
-	name  => 'PHP',
-	super => 'text/plain',
+	type      => 'application/x-php',
+	name      => 'PHP',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type     => 'application/x-ruby',
-	name     => 'Ruby',
-	super    => 'text/plain',
-	document => 'Padre::Document::Ruby',
+	type      => 'application/x-ruby',
+	name      => 'Ruby',
+	supertype => 'text/plain',
+	document  => 'Padre::Document::Ruby',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-sql',
-	name  => 'SQL',
-	super => 'text/plain',
+	type      => 'text/x-sql',
+	name      => 'SQL',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-tcl',
-	name  => 'Tcl',
-	super => 'text/plain',
+	type      => 'application/x-tcl',
+	name      => 'Tcl',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/vbscript',
-	name  => 'VBScript',
-	super => 'text/plain',
+	type      => 'text/vbscript',
+	name      => 'VBScript',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-config',
-	name  => 'Config',
-	super => 'text/plain',
+	type      => 'text/x-config',
+	name      => 'Config',
+	supertype => 'text/plain',
 );
 
 # text/xml specifically means "human-readable XML".
 # This is prefered to the more generic application/xml
 Padre::MIME->create(
-	type  => 'text/xml',
-	name  => 'XML',
+	type      => 'text/xml',
+	name      => 'XML',
+	document  => 'Padre::Document',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-yaml',
-	name  => 'YAML',
-	super => 'text/plain',
+	type      => 'text/x-yaml',
+	name      => 'YAML',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-pir',
-	name  => 'PIR',
-	super => 'text/plain',
+	type      => 'application/x-pir',
+	name      => 'PIR',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-pasm',
-	name  => 'PASM',
-	super => 'text/plain',
+	type      => 'application/x-pasm',
+	name      => 'PASM',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type  => 'application/x-perl6',
-	name  => 'Perl 6',
-	super => 'text/plain',
+	type      => 'application/x-perl6',
+	name      => 'Perl 6',
+	supertype => 'text/plain',
 );
 
 # Completely custom mime types
 Padre::MIME->create(
-	type  => 'text/x-perlxs', # totally not confirmed
-	name => 'XS',
-	super=> 'text/x-csrc',
+	type      => 'text/x-perlxs', # totally not confirmed
+	name      => 'XS',
+	supertype => 'text/x-csrc',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-perltt',
-	name  => 'Template Toolkit',
-	super => 'text/plain',
+	type      => 'text/x-perltt',
+	name      => 'Template Toolkit',
+	supertype => 'text/plain',
 );
 
 Padre::MIME->create(
-	type     => 'text/x-csharp',
-	name     => 'C#',
-	super    => 'text/x-csrc',
-	document => 'Padre::Document::CSharp',
+	type      => 'text/x-csharp',
+	name      => 'C#',
+	supertype => 'text/x-csrc',
+	document  => 'Padre::Document::CSharp',
 );
 
 Padre::MIME->create(
-	type  => 'text/x-pod',
-	name  => 'POD',
-	super => 'text/plain',
+	type      => 'text/x-pod',
+	name      => 'POD',
+	supertype => 'text/plain',
 );
 
 

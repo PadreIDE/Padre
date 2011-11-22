@@ -8,7 +8,7 @@ use warnings;
 use Params::Util            ();
 use Class::Inspector        ();
 use Padre::Config           ();
-use Padre::MIME        ();
+use Padre::MIME             ();
 use Padre::Util             ('_T');
 use Wx::Scintilla::Constant ();
 
@@ -44,7 +44,8 @@ my %HIGHLIGHTER = (
 );
 
 sub highlighter {
-	$HIGHLIGHTER{ $_[1] };
+	my $mime = _TYPE($_[1]);
+	return $HIGHLIGHTER{$mime};
 }
 
 sub add_highlighter {
@@ -160,12 +161,29 @@ my %LEXER = (
 
 # Must ALWAYS return a valid lexer (defaulting to AUTOMATIC as a last resort)
 sub lexer {
-	my $class = shift;
-	my $mime  = shift;
+	my $mime  = _TYPE($_[1]);
 	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $mime;
 	return Wx::Scintilla::Constant::SCLEX_CONTAINER if $HIGHLIGHTER{$mime};
 	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $LEXER{$mime};
 	return $LEXER{$mime};
+}
+
+
+
+
+
+######################################################################
+# Support Functions
+
+sub _TYPE {
+	my $it = shift;
+	if ( Params::Util::_INSTANCE($it, 'Padre::Document') ) {
+		$it = $it->mime;
+	}
+	if ( Params::Util::_INSTANCE($it, 'Padre::MIME') ) {
+		$it = $it->type;
+	}
+	return $it || '';
 }
 
 1;

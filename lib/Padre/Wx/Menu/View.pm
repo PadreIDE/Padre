@@ -321,7 +321,7 @@ sub refresh {
 sub sorted {
 	my $self  = shift;
 	my %names = map {
-		$_ => Wx::gettext( Padre::MIME->get($_)->name )
+		$_ => Wx::gettext( Padre::MIME->find($_)->name )
 	} Padre::MIME->types;
 
 	# Can't do "return sort", must sort to a list first

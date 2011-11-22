@@ -63,7 +63,7 @@ plan(     tests => ( 2 * @files ) + 1
 use_ok('Padre::MIME');
 
 # Fake installed Perl6 plugin
-Padre::MIME->set_class( 'application/x-perl6', __PACKAGE__ );
+Padre::MIME->find('application/x-perl6')->plugin(__PACKAGE__);
 
 # All Padre modules should be Perl files and Padre should be able to detect his own files
 foreach my $file (@files) {

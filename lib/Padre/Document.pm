@@ -1029,9 +1029,8 @@ sub rebless {
 	# to the the base class,
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
-	my $mime_type = $self->mimetype or return;
-	my $class = Padre::MIME->get_class($mime_type) || __PACKAGE__;
-	TRACE("Reblessing to mimetype: '$class'") if DEBUG;
+	my $class = $self->mime->document;
+	TRACE("Reblessing to mimetype class: '$class'") if DEBUG;
 	if ($class) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
@@ -1040,12 +1039,9 @@ sub rebless {
 		bless $self, $class;
 	}
 
-	my $module   = Padre::Wx::Scintilla->highlighter($mime_type);
-	my $filename = ''; # Not undef
-	if ( defined $self->{file} and defined $self->{file}->{filename} ) {
-		$filename = $self->{file}->{filename};
-	}
-	$self->set_highlighter($module);
+	$self->set_highlighter(
+		Padre::Wx::Scintilla->highlighter($self)
+	);
 
 	return;
 }
@@ -1055,7 +1051,7 @@ sub current {
 }
 
 sub mime {
-	Padre::MIME->get( $_[0]->mimetype );
+	Padre::MIME->find($_[0]->mimetype);
 }
 
 # Abstract methods, each subclass should implement it

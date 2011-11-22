@@ -1479,7 +1479,7 @@ sub init {
 	# MIME Type Actions
 	SCOPE: {
 		foreach my $type ( Padre::MIME->types ) {
-			my $label = Padre::MIME->get($type)->name;
+			my $label = Padre::MIME->find($type)->name;
 			Padre::Wx::Action->new(
 				name        => "view.mime.$type",
 				label       => $label,
