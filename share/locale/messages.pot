@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-21 08:10-0800\n"
+"POT-Creation-Date: 2011-11-22 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2110,7 +2110,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1196 lib/Padre/Wx/Editor.pm:731
+#: lib/Padre/Document.pm:1192 lib/Padre/Wx/Editor.pm:731
 #: lib/Padre/Wx/Main.pm:5157 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -4532,7 +4532,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1530
+#: lib/Padre/Document.pm:1526
 msgid "Save Warning"
 msgstr ""
 
@@ -4867,7 +4867,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MIME.pm:359
+#: lib/Padre/MIME.pm:377
 msgid "Shell Script"
 msgstr ""
 
@@ -5201,7 +5201,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:2079 lib/Padre/Document.pm:2080
+#: lib/Padre/Document.pm:2075 lib/Padre/Document.pm:2076
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5387,7 +5387,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MIME.pm:490
+#: lib/Padre/MIME.pm:244
 msgid "Text"
 msgstr ""
 
@@ -5592,7 +5592,7 @@ msgstr ""
 msgid "Unmodified"
 msgstr ""
 
-#: lib/Padre/Document.pm:1728
+#: lib/Padre/Document.pm:1724
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5743,7 +5743,7 @@ msgstr ""
 msgid "Visit Perl Websites..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1526
+#: lib/Padre/Document.pm:1522
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
