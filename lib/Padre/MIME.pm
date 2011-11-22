@@ -27,7 +27,7 @@ our $COMPATIBLE = '0.93';
 my %MIME = ();
 
 # The "Unknown" MIME type
-my $UNKNOWN = Padre::MIME->create(
+my $UNKNOWN = Padre::MIME->new(
 	type  => '',
 	name  => _T('UNKNOWN'),
 );
@@ -152,6 +152,9 @@ my %EXT = (
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
+	if ( $self->{super} and not $MIME{$self->{super}} ) {
+		die "Supertype '$self->{super}' does not exist";
+	}
 	return $self;
 }
 
@@ -226,6 +229,12 @@ sub reset_class {
 
 ######################################################################
 # MIME Declarations
+
+# Plain text from which everything else should inherit
+Padre::MIME->create(
+	type  => 'text/plain',
+	name  => _T('Text'),
+);
 
 Padre::MIME->create(
 	type  => 'text/x-abc',
@@ -483,11 +492,6 @@ Padre::MIME->create(
 	type  => 'application/x-perl6',
 	name  => 'Perl 6',
 	super => 'text/plain',
-);
-
-Padre::MIME->create(
-	type  => 'text/plain',
-	name  => _T('Text'),
 );
 
 # Completely custom mime types
