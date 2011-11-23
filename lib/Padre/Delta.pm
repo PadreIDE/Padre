@@ -14,11 +14,13 @@ foreground.
 
 B<Padre::Delta> objects provide a mechanism for defining change to an editor,
 with the representation stored in a way that is extremely well aligned with the
-Padre::Wx::Editor API.
+L<Padre::Wx::Editor> and L<Wx::Scintilla> APIs.
 
 By doing as much preliminary calculations as possible in the background and
-passing a Padre::Delta back to the parent, the amount of time spent blocking in
-the foreground is kept to an absolute minimum.
+passing a Padre::Delta object back to the parent, the amount of time spent
+blocking in the foreground is kept to an absolute minimum.
+
+=head1 METHODS
 
 =cut
 
@@ -39,17 +41,58 @@ sub new {
 	my $class = shift;
 	return bless {
 		mode    => shift,
-		targets => [@_],
+		targets => [ @_ ],
 	}, $class;
 }
+
+=pod
+
+=head2 mode
+
+The C<mode> accessor indicates if the replacement will be done using line
+numbers or character positions.
+
+Returns C<'line'> or C<'position'>.
+
+=cut
 
 sub mode {
 	$_[0]->{mode};
 }
 
+=pod
+
+=head2 null
+
+The C<null> method returns true if the delta contains zero changes to the
+document and thus has no effect, or false if the delta contains any changes
+to the document.
+
+The ability to create null deltas allows refactoring to indicate a successful
+transform resulting in no changes to the current document, as opposed to some
+other response indicating a failure to apply the transform or similar response.
+
+=cut
+
 sub null {
 	! scalar @{ $_[0]->{targets} };
 }
+
+=pod
+
+=head2 from_diff
+
+  my $delta = Padre::Delta->from_diff(
+      Algorithm::Diff::diff( \@from => \@to )
+  );
+
+The C<from_diff> method takes a list of hunk structures as returned by the
+L<Algorithm::Diff> function C<diff> and creates a new delta that will apply
+that diff to a document.
+
+Returns a new L<Padre::Delta> object.
+
+=cut
 
 sub from_diff {
 	my $class   = shift;
@@ -59,7 +102,6 @@ sub from_diff {
 	while ( @_ ) {
 		my @hunk = @{shift()};
 		while ( @hunk ) {
-			my $lines  = 0;
 			my $target = {
 				start => 0,
 				end   => 0,
@@ -67,17 +109,14 @@ sub from_diff {
 			};
 
 			if ( $hunk[0]->[0] eq '+' ) {
-
-				# The start and end of the target is the beginning of
-				# the insertion record.
-				my $change = shift @hunk;
-				my $mode   = $change->[0];
-				my $line   = $change->[1];
-				my $text   = $change->[2];
-				$target->{start} = $line;
-				$target->{end}   = $line;
-				$target->{text}  = $text . "\n";
-				$lines           = 1;
+				# If there is a stray addition chunk,
+				# the position of the addition is the end
+				# of the previous hunk, so just pop off the
+				# previous target. If there is no previous
+				# target the default at start 0 will suffice.
+				if ( @targets ) {
+					$target = pop @targets;
+				}
 
 			} else {
 
@@ -102,7 +141,6 @@ sub from_diff {
 			# Append any additional addition rows
 			while ( @hunk and $hunk[0]->[0] eq '+' ) {
 				$target->{text} .= shift(@hunk)->[2] . "\n";
-				$lines++;
 			}
 
 			# This completes one entire target replace unit
@@ -112,6 +150,23 @@ sub from_diff {
 
 	return $class->new( 'line', reverse @targets );
 }
+
+=pod
+
+=head2 from_scalars
+
+  my $delta = Padre::Delta->from_scalars( \$from => \$to );
+
+The C<from_scalars> method takes a pair of documents "from" and "to" and creates
+a L<Padre::Delta> object that when applied to document "from" will convert it
+into document "to".
+
+The documents are provided as SCALAR references to avoid the need for
+superfluous copies of what may be relatively large strings.
+
+Returns a new L<Padre::Delta> object.
+
+=cut
 
 sub from_scalars {
 	my $self = shift;
