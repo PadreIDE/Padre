@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 00:10-0800\n"
+"POT-Creation-Date: 2011-11-22 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -653,7 +653,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:642
+#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:643
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1510,7 +1510,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:616
+#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:617
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1689,15 +1689,15 @@ msgstr ""
 msgid "Debug-Output Options"
 msgstr ""
 
-#: lib/Padre/Wx/Debug.pm:97 lib/Padre/Wx/Panel/Debugger.pm:75
+#: lib/Padre/Wx/Debug.pm:97 lib/Padre/Wx/Panel/Debugger.pm:76
 msgid "Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:105
+#: lib/Padre/Wx/Panel/Debugger.pm:106
 msgid "Debugger RC2"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:262
+#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:263
 msgid "Debugger is already running"
 msgstr ""
 
@@ -1707,7 +1707,7 @@ msgstr ""
 msgid "Debugger not running"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:325
+#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:326
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -2276,7 +2276,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:675
+#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:676
 msgid "Expr"
 msgstr ""
 
@@ -2284,7 +2284,7 @@ msgstr ""
 msgid "Expression To Evaluate"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:674
+#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:675
 msgid "Expression:"
 msgstr ""
 
@@ -3417,7 +3417,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:266
+#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:267
 msgid "Not a Perl document"
 msgstr ""
 
