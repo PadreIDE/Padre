@@ -708,6 +708,12 @@ sub setup_document {
 ######################################################################
 # General Methods
 
+# Take a temporary readonly lock on the object
+sub lock_readonly {
+	require Padre::Wx::Editor::Lock;
+	Padre::Wx::Editor::Lock->new(shift);
+}
+
 # Recalculate the line number margins whenever we change the zoom level
 sub SetZoom {
 	my $self = shift;
