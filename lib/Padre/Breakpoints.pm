@@ -19,6 +19,8 @@ sub set_breakpoints_clicked {
 	my $editor       = Padre::Current->editor;
 	my $current_file = $editor->{Document}->filename;
 	my $bp_line      = $editor->GetCurrentLine + 1;
+	my %bp_action;
+	$bp_action{line} = $bp_line;
 
 	if ( $#{ $debug_breakpoints->select("WHERE filename = \"$current_file\" AND line_number = \"$bp_line\"") } >= 0 ) {
 
@@ -26,7 +28,7 @@ sub set_breakpoints_clicked {
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_BREAKPOINT() );
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
 		$debug_breakpoints->delete("WHERE filename = \"$current_file\" AND line_number = \"$bp_line\"");
-
+		$bp_action{action} = 'delete';
 	} else {
 
 		# say 'create me';
@@ -37,9 +39,10 @@ sub set_breakpoints_clicked {
 			active      => 1,
 			last_used   => time(),
 		);
+		$bp_action{action} = 'add';
 	}
 
-	return;
+	return \%bp_action;
 }
 
 #TODO finish when in trunk
