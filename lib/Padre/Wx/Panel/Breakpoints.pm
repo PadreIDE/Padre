@@ -195,7 +195,7 @@ sub on_delete_not_breakable_clicked {
 # event handler on_refresh_click
 #######
 sub on_refresh_click {
-	my $self    = shift;
+	my $self     = shift;
 	my $document = $self->current->document;
 
 	$self->{project_dir}  = $document->project_dir;
@@ -214,11 +214,13 @@ sub on_set_breakpoints_clicked {
 	my $current  = $self->current;
 	my $document = $current->document;
 	my $editor   = $current->editor;
+	my %bp_action;
 	$self->_setup_db;
 
 	# $self->running or return;
 	$self->{current_file} = $document->filename;
 	$self->{current_line} = $editor->GetCurrentLine + 1;
+	$bp_action{line}      = $self->{current_line};
 
 	# dereferance array and test for contents
 	if ($#{ $self->{debug_breakpoints}
@@ -237,6 +239,7 @@ sub on_set_breakpoints_clicked {
 			Padre::Constant::MARKER_NOT_BREAKABLE()
 		);
 		$self->_delete_bp_db;
+		$bp_action{action} = 'delete';
 
 	} else {
 
@@ -247,9 +250,10 @@ sub on_set_breakpoints_clicked {
 			Padre::Constant::MARKER_BREAKPOINT()
 		);
 		$self->_add_bp_db;
+		$bp_action{action} = 'add';
 	}
 	$self->on_refresh_click;
-	return;
+	return \%bp_action;
 }
 
 #######
@@ -350,7 +354,7 @@ sub _delete_bp_db {
 # display any relation db
 #######
 sub _update_list {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor;
 
 	# Clear ListCtrl items
