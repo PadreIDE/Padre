@@ -237,37 +237,6 @@ sub new {
 		},
 	);
 
-	$self->{evaluate_expression} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Wx::NullBitmap,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::BU_AUTODRAW,
-	);
-	$self->{evaluate_expression}->SetToolTip(
-		Wx::gettext("p expr\nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function, this means that nested data structures and objects are not dumped, unlike with the x command.")
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{evaluate_expression},
-		sub {
-			shift->on_evaluate_expression_clicked(@_);
-		},
-	);
-
-	$self->{expression} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		[ 130, -1 ],
-	);
-	$self->{expression}->SetToolTip(
-		Wx::gettext("Expression To Evaluate")
-	);
-
 	$self->{dot} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -328,7 +297,7 @@ sub new {
 		},
 	);
 
-	$self->{stacktrace} = Wx::BitmapButton->new(
+	$self->{evaluate_expression} = Wx::BitmapButton->new(
 		$self,
 		-1,
 		Wx::NullBitmap,
@@ -336,15 +305,46 @@ sub new {
 		Wx::DefaultSize,
 		Wx::BU_AUTODRAW,
 	);
-	$self->{stacktrace}->SetToolTip(
-		Wx::gettext("T\nProduce a stack backtrace.")
+	$self->{evaluate_expression}->SetToolTip(
+		Wx::gettext("p expr \nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n\nx [maxdepth] expr\nEvaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,")
 	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{stacktrace},
+		$self->{evaluate_expression},
 		sub {
-			shift->on_stacktrace_clicked(@_);
+			shift->on_evaluate_expression_clicked(@_);
+		},
+	);
+
+	$self->{expression} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		[ 130, -1 ],
+	);
+	$self->{expression}->SetToolTip(
+		Wx::gettext("Expression To Evaluate")
+	);
+
+	$self->{running_bp} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{running_bp}->SetToolTip(
+		Wx::gettext("Toggle running breakpoints (update DB)\nb\nSets breakpoint on current line\nB line\nDelete a breakpoint from the specified line.")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{running_bp},
+		sub {
+			shift->on_running_bp_clicked(@_);
 		},
 	);
 
@@ -368,6 +368,26 @@ sub new {
 		},
 	);
 
+	$self->{stacktrace} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{stacktrace}->SetToolTip(
+		Wx::gettext("T\nProduce a stack backtrace.")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{stacktrace},
+		sub {
+			shift->on_stacktrace_clicked(@_);
+		},
+	);
+
 	$self->{all_threads} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -385,6 +405,26 @@ sub new {
 		$self->{all_threads},
 		sub {
 			shift->on_all_threads_clicked(@_);
+		},
+	);
+
+	$self->{display_options} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{display_options}->SetToolTip(
+		Wx::gettext("o\nDisplay all options.")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{display_options},
+		sub {
+			shift->on_display_options_clicked(@_);
 		},
 	);
 
@@ -408,21 +448,24 @@ sub new {
 	$checkbox_sizer->Add( $self->{show_local_variables}, 0, Wx::ALL, 2 );
 	$checkbox_sizer->Add( $self->{show_global_variables}, 0, Wx::ALL, 5 );
 
+	my $bSizer11 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer11->Add( $self->{trace}, 0, Wx::ALL, 5 );
+	$bSizer11->Add( $self->{dot}, 0, Wx::ALL, 5 );
+	$bSizer11->Add( $self->{view_around}, 0, Wx::ALL, 5 );
+	$bSizer11->Add( $self->{list_action}, 0, Wx::ALL, 5 );
+
 	my $doo = Wx::FlexGridSizer->new( 0, 2, 0, 0 );
 	$doo->SetFlexibleDirection(Wx::BOTH);
 	$doo->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$doo->Add( $self->{trace}, 0, Wx::ALL, 5 );
-	$doo->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$doo->Add( $self->{evaluate_expression}, 0, Wx::ALL, 5 );
 	$doo->Add( $self->{expression}, 1, Wx::ALL, 5 );
 
 	my $option_button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$option_button_sizer->Add( $self->{dot}, 0, Wx::ALL, 5 );
-	$option_button_sizer->Add( $self->{view_around}, 0, Wx::ALL, 5 );
-	$option_button_sizer->Add( $self->{list_action}, 0, Wx::ALL, 5 );
-	$option_button_sizer->Add( $self->{stacktrace}, 0, Wx::ALL, 5 );
+	$option_button_sizer->Add( $self->{running_bp}, 0, Wx::ALL, 5 );
 	$option_button_sizer->Add( $self->{module_versions}, 0, Wx::ALL, 5 );
+	$option_button_sizer->Add( $self->{stacktrace}, 0, Wx::ALL, 5 );
 	$option_button_sizer->Add( $self->{all_threads}, 0, Wx::ALL, 5 );
+	$option_button_sizer->Add( $self->{display_options}, 0, Wx::ALL, 5 );
 
 	my $file_11 = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
@@ -432,6 +475,7 @@ sub new {
 		),
 		Wx::VERTICAL,
 	);
+	$file_11->Add( $bSizer11, 0, Wx::EXPAND, 5 );
 	$file_11->Add( $doo, 1, 0, 5 );
 	$file_11->Add( $option_button_sizer, 0, Wx::EXPAND, 5 );
 
@@ -495,10 +539,6 @@ sub on_trace_checked {
 	$_[0]->main->error('Handler method on_trace_checked for event trace.OnCheckBox not implemented');
 }
 
-sub on_evaluate_expression_clicked {
-	$_[0]->main->error('Handler method on_evaluate_expression_clicked for event evaluate_expression.OnButtonClick not implemented');
-}
-
 sub on_dot_clicked {
 	$_[0]->main->error('Handler method on_dot_clicked for event dot.OnButtonClick not implemented');
 }
@@ -511,16 +551,28 @@ sub on_list_action_clicked {
 	$_[0]->main->error('Handler method on_list_action_clicked for event list_action.OnButtonClick not implemented');
 }
 
-sub on_stacktrace_clicked {
-	$_[0]->main->error('Handler method on_stacktrace_clicked for event stacktrace.OnButtonClick not implemented');
+sub on_evaluate_expression_clicked {
+	$_[0]->main->error('Handler method on_evaluate_expression_clicked for event evaluate_expression.OnButtonClick not implemented');
+}
+
+sub on_running_bp_clicked {
+	$_[0]->main->error('Handler method on_running_bp_clicked for event running_bp.OnButtonClick not implemented');
 }
 
 sub on_module_versions_clicked {
 	$_[0]->main->error('Handler method on_module_versions_clicked for event module_versions.OnButtonClick not implemented');
 }
 
+sub on_stacktrace_clicked {
+	$_[0]->main->error('Handler method on_stacktrace_clicked for event stacktrace.OnButtonClick not implemented');
+}
+
 sub on_all_threads_clicked {
 	$_[0]->main->error('Handler method on_all_threads_clicked for event all_threads.OnButtonClick not implemented');
+}
+
+sub on_display_options_clicked {
+	$_[0]->main->error('Handler method on_display_options_clicked for event display_options.OnButtonClick not implemented');
 }
 
 1;

@@ -15,7 +15,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.13_10 ();
+use Debug::Client 0.15 ();
 
 # use Data::Printer { caller_info => 1, colored => 1, };
 
@@ -103,7 +103,7 @@ sub view_icon {
 }
 
 sub gettext_label {
-	Wx::gettext('Debugger RC2');
+	Wx::gettext('Debugger');
 }
 
 ###############
@@ -174,9 +174,18 @@ sub set_up {
 	$self->{all_threads}->Disable;
 
 	$self->{trace}->Disable;
-	$self->{evaluate_expression}->SetBitmapLabel( Padre::Wx::Icon::find('actions/70-p') );
+	$self->{evaluate_expression}->SetBitmapLabel( Padre::Wx::Icon::find('actions/pux') );
 	$self->{evaluate_expression}->Disable;
 	$self->{expression}->Disable;
+
+	$self->{running_bp}->SetBitmapLabel( Padre::Wx::Icon::find('actions/bub') );
+	$self->{running_bp}->Disable;
+
+	# $self->{running_bp_delete}->SetBitmapLabel( Padre::Wx::Icon::find('actions/42-b') );
+	# $self->{running_bp_delete}->Disable;
+
+	$self->{display_options}->SetBitmapLabel( Padre::Wx::Icon::find('actions/6f-o') );
+	$self->{display_options}->Disable;
 
 	# Setup columns names and order here
 	my @column_headers = qw( Variable Value );
@@ -346,6 +355,9 @@ sub _set_debugger {
 	if ( $editor->{Document}->filename ne $file ) {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
+		if ( $self->main->{panel_breakpoints} ) {
+			$self->main->{panel_breakpoints}->on_refresh_click();
+		}
 
 		# we only want to do this if we are loading other packages of ours
 		# $self->_bp_autoload();
@@ -426,6 +438,11 @@ sub debug_quit {
 	$self->{list_action}->Disable;
 	$self->{dot}->Disable;
 	$self->{view_around}->Disable;
+
+	$self->{running_bp}->Disable;
+
+	# $self->{running_bp_delete}->Disable;
+	$self->{display_options}->Disable;
 
 	$self->{step_in}->Hide;
 	$self->{step_over}->Hide;
@@ -897,6 +914,9 @@ sub _get_bp_db {
 			}
 		}
 	}
+	if ( $self->main->{panel_breakpoints} ) {
+		$self->main->{panel_breakpoints}->on_refresh_click();
+	}
 
 	#let's do some boot n braces
 	$self->{client}->__send("f $self->{current_file}");
@@ -933,6 +953,9 @@ sub _bp_autoload {
 
 			#wright $tuples[$_][3] = 0
 			Padre::DB->do( 'update debug_breakpoints SET active = ? WHERE id = ?', {}, 0, $tuples[$_][0], );
+			if ( $self->main->{panel_breakpoints} ) {
+				$self->main->{panel_breakpoints}->on_refresh_click();
+			}
 		}
 
 	}
@@ -970,6 +993,10 @@ sub on_debug_clicked {
 	$self->{dot}->Enable;
 	$self->{view_around}->Enable;
 
+	$self->{running_bp}->Enable;
+
+	# $self->{running_bp_delete}->Enable;
+	$self->{display_options}->Enable;
 
 	$self->{debug}->Hide;
 	$self->debug_perl;
@@ -1104,19 +1131,7 @@ sub on_trace_checked {
 	return;
 }
 #######
-# Event handler on_evaluate_expression_clicked
-#######
-sub on_evaluate_expression_clicked {
-	my $self = shift;
-	my $main = $self->main;
-
-	$main->{panel_debug_output}->debug_output(
-		$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
-
-	return;
-}
-#######
-# Event on_dot_clicked
+# Event on_dot_clicked .
 #######
 sub on_dot_clicked {
 	my $self = shift;
@@ -1127,7 +1142,7 @@ sub on_dot_clicked {
 	return;
 }
 #######
-# Event on_view_around_clicked
+# Event on_view_around_clicked v
 #######
 sub on_view_around_clicked {
 	my $self = shift;
@@ -1138,7 +1153,7 @@ sub on_view_around_clicked {
 	return;
 }
 #######
-# Event handler on_list_action_clicked
+# Event handler on_list_action_clicked L
 #######
 sub on_list_action_clicked {
 	my $self = shift;
@@ -1148,19 +1163,90 @@ sub on_list_action_clicked {
 
 	return;
 }
+
 #######
-# Event handler on_stacktrace_clicked
+# Event handler on_evaluate_expression_clicked p|x
 #######
-sub on_stacktrace_clicked {
+sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->get_stack_trace() );
+	if ( $self->{expression}->GetValue() ne "" ) {
+
+		$main->{panel_debug_output}->debug_output(
+			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
+	} else {
+		$main->{panel_debug_output}->debug_output( '$_ = ' . $self->{client}->get_value() );
+	}
 
 	return;
 }
 #######
-# Event handler on_module_versions_clicked
+# Event handler on_stacktrace_clicked i
+#######
+# sub on_nested_parents_clicked {
+# my $self = shift;
+# my $main = $self->main;
+
+# # 	$main->{panel_debug_output}->debug_output( $self->{client}->__send('i') );
+
+# # 	return;
+# }
+#######
+# Event handler on_running_bp_set_clicked b|B
+#######
+sub on_running_bp_clicked {
+	my $self     = shift;
+	my $editor   = $self->current->editor;
+	my $document = $self->current->document;
+	$self->{current_file} = $document->filename;
+
+	my $bp_action_ref;
+	if ( $self->main->{panel_breakpoints} ) {
+		$bp_action_ref = $self->main->{panel_breakpoints}->on_set_breakpoints_clicked();
+	} else {
+		require Padre::Breakpoints;
+		$bp_action_ref = Padre::Breakpoints->set_breakpoints_clicked();
+	}
+
+	# p $bp_action_ref;
+	my %bp_action = %{$bp_action_ref};
+
+	# p $bp_action{action};
+	if ( $bp_action{action} eq 'add' ) {
+		my $result = $self->{client}->set_breakpoint( $self->{current_file}, $bp_action{line} );
+		if ( $result == 0 ) {
+
+			# print "not breakable\n";
+			$editor->MarkerAdd( $bp_action{line} - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
+			$self->_setup_db;
+			Padre::DB->do(
+				'update debug_breakpoints SET active = ? WHERE filename = ? AND line_number = ?', {}, 0,
+				$self->{current_file}, $bp_action{line},
+			);
+			if ( $self->main->{panel_breakpoints} ) {
+				$self->main->{panel_breakpoints}->on_refresh_click();
+			}
+
+		}
+	}
+	if ( $bp_action{action} eq 'delete' ) {
+		$self->{client}->remove_breakpoint( $self->{current_file}, $bp_action{line} );
+	}
+	return;
+}
+#######
+# Event handler on_running_bp_delete_clicked B
+#######
+# sub on_running_bp_delete_clicked {
+# my $self = shift;
+
+# # 	return;
+# }
+
+
+#######
+# Event handler on_module_versions_clicked M
 #######
 sub on_module_versions_clicked {
 	my $self = shift;
@@ -1171,13 +1257,35 @@ sub on_module_versions_clicked {
 	return;
 }
 #######
-# Event handler on_all_threads_clicked
+# Event handler on_stacktrace_clicked T
+#######
+sub on_stacktrace_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	$main->{panel_debug_output}->debug_output( $self->{client}->get_stack_trace() );
+
+	return;
+}
+#######
+# Event handler on_all_threads_clicked E
 #######
 sub on_all_threads_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
 	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np('E') );
+
+	return;
+}
+#######
+# Event handler on_display_options_clicked o
+#######
+sub on_display_options_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np('o') );
 
 	return;
 }
