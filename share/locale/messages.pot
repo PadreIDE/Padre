@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 20:10-0800\n"
+"POT-Creation-Date: 2011-11-23 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4867,7 +4867,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MIME.pm:377
+#: lib/Padre/MIME.pm:389
 msgid "Shell Script"
 msgstr ""
 
@@ -5201,7 +5201,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:2075 lib/Padre/Document.pm:2076
+#: lib/Padre/Document.pm:2076 lib/Padre/Document.pm:2077
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5387,7 +5387,7 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/MIME.pm:244
+#: lib/Padre/MIME.pm:256
 msgid "Text"
 msgstr ""
 
