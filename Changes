@@ -26,6 +26,8 @@ the even version for the release, even during development.
     - Moved Wx::Scintilla specific lexer and highlighter registration out of
       Padre::MimeTypes and into Padre::Wx::Scintilla so we can use
       Padre::MimeTypes in background threads (ADAMK)
+    - Rewrote MIME support as Padre::MIME, which does not rely on Padre::Config
+      and can be loaded and used in background threads more easily (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
