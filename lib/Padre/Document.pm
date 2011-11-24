@@ -1904,9 +1904,10 @@ sub filename_relative {
 # Maybe we need to remove this sub.
 sub guess_mimetype {
 	my $self = shift;
-	Padre::MIME->guess_mimetype(
-		$self->{original_content},
-		$self->file,
+	Padre::MIME->guess(
+		text  => $self->{original_content},
+		file  => $self->file,
+		perl6 => $self->current->config->lang_perl6_auto_detection,
 	);
 }
 

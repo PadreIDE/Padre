@@ -578,7 +578,10 @@ sub render {
 
 			# display package name if it is a Perl file
 			my $pkg = '';
-			my $mime_type = Padre::MIME->guess_mimetype( undef, $file );
+			my $mime_type = Padre::MIME->guess(
+				file  => $file,
+				perl6 => $self->config->lang_perl6_auto_detection,
+			);
 			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 				my $contents = Padre::Util::slurp($file);
 				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
@@ -605,7 +608,10 @@ sub render {
 			} else {
 
 				# display package name if it is a Perl file
-				my $mime_type = Padre::MIME->guess_mimetype( undef, $file );
+				my $mime_type = Padre::MIME->guess(
+					file => $file,
+					perl6 => $self->config->lang_perl6_auto_detection,
+				);
 				if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 					my $contents = Padre::Util::slurp($file);
 					if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {

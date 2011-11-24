@@ -40,7 +40,10 @@ my %EXT = (
 	bat   => 'text/x-bat',
 	cmd   => 'text/x-bat',
 	bib   => 'application/x-bibtex',
-	bml   => 'application/x-bml',     # dreamwidth file format
+
+	# Dreamwidth file format
+	bml   => 'application/x-bml',
+
 	c     => 'text/x-csrc',
 	h     => 'text/x-csrc',
 	cc    => 'text/x-c++src',
@@ -61,8 +64,11 @@ my %EXT = (
 	htm   => 'text/html',
 	html  => 'text/html',
 	hs    => 'text/x-haskell',
-	i     => 'text/x-csrc',           # C code that should not be preprocessed
-	ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
+
+	# C code that should not be preprocessed
+	i     => 'text/x-csrc',
+	ii    => 'text/x-c++src',
+
 	java  => 'text/x-java',
 	js    => 'application/javascript',
 	json  => 'application/json',
@@ -76,17 +82,20 @@ my %EXT = (
 	sql   => 'text/x-sql',
 	tcl   => 'application/x-tcl',
 	patch => 'text/x-patch',
-	pks   => 'text/x-sql',            # PLSQL package spec
-	pkb   => 'text/x-sql',            # PLSQL package body
-	pl    => \&perl_mime_type,
-	plx   => \&perl_mime_type,
-	pm    => \&perl_mime_type,
-	pmc   => \&perl_mime_type,        # Compiled Perl Module or gimme5's output
+	pks   => 'text/x-sql',         # PLSQL package spec
+	pkb   => 'text/x-sql',         # PLSQL package body
+	pl    => 'application/x-perl',
+	plx   => 'application/x-perl',
+	pm    => 'application/x-perl',
+
+	# Compiled Perl Module or gimme5's output
+	pmc   => 'application/x-perl',
+
 	pod   => 'text/x-pod',
 	pov   => 'text/x-povray',
 	psgi  => 'application/x-psgi',
 	sty   => 'application/x-latex',
-	t     => \&perl_mime_type,
+	t     => 'application/x-perl',
 	tex   => 'application/x-latex',
 
 	# Lacking a better solution, define our own MIME
@@ -127,6 +136,9 @@ my %EXT = (
 	# PHP
 	php   => 'application/x-php',
 	php3  => 'application/x-php',
+	php4  => 'application/x-php',
+	php5  => 'application/x-php',
+	phtm  => 'application/x-php',
 	phtml => 'application/x-php',
 
 	# VisualBasic and VBScript
@@ -537,230 +549,258 @@ Padre::MIME->create(
 #####################################################################
 # MIME Type Detection
 
-sub guess_mimetype {
+sub guess {
 	my $class = shift;
-	my $text  = shift;
-	my $file  = shift; # Could be a filename or a Padre::File - object
+	my %param = @_;
+	my $text  = $param{text};
+	my $file  = $param{file};
 
-	my $filename;
+	# Could be a Padre::File object with an identified mime type
+	if ( ref $file ) {
+		# The mime might already be identified
+		my $mime = $file->mime;
+		return $mime if defined $mime;
 
-	if ( ref($file) ) {
-		$filename = $file->{filename};
-
-		# Combining this to one line would check if the method ->mime exists, not the result!
-		my $MIME = $file->mime;
-		defined($MIME) and return $MIME;
-
-	} else {
-		$filename = $file;
-		undef $file;
+		# Not identified, just use the actual file name
+		$file = $file->filename;
 	}
-
 
 	# Try derive the mime type from the file extension
-	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
+	my $mime = undef;
+	if ( $file and $file =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
-		if ( $EXT{$ext} ) {
-			if ( ref $EXT{$ext} ) {
-				return $EXT{$ext}->( $class, $text );
-			} else {
-				return $EXT{$ext};
-			}
-		}
-	}
+		$mime = $EXT{$ext} if $EXT{$ext};
 
-	# Try to derive the mime type from the basename
-	# Makefile is now highlighted as a Makefile
-	# Changelog files are now displayed as text files
-	if ($filename) {
+	} elsif ( $file ) {
+		# Try to derive the mime type from the basename
+		# Makefile is now highlighted as a Makefile
+		# Changelog files are now displayed as text files
 		require File::Basename;
-		my $basename = File::Basename::basename($filename);
+		my $basename = File::Basename::basename($file);
 		if ($basename) {
-			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
-			return 'text/plain'      if $basename =~ /^(changes|changelog)/i;
+			$mime = 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+			$mime = 'text/plain'      if $basename =~ /^(changes|changelog)/i;
 		}
 	}
 
 	# Fall back on deriving the type from the content.
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
-	if ( defined $text ) {
-		my $eval_mime_type = eval {
-
-			# Working on content with malformed/bad UTF-8 chars may drop warnings
-			# which just say that there are bad UTF-8 chars in the file currently
-			# being checked. Maybe they are no UTF-8 chars at all but just a line
-			# of bits and Padre/Perl simply has the wrong point of view (UTF-8),
-			# so we drop these warnings:
-			local $SIG{__WARN__} = sub {
-
-				# Die if we throw a bad codepoint - this is a binary file.
-				if ( $_[0] =~ /Code point .* is not Unicode/ ) {
-					die $_[0];
-				} elsif ( $_[0] !~ /Malformed UTF\-8 char/ ) {
-					print STDERR "$_[0] while looking for mime type of $filename";
-				}
-			};
-
-			# Is this a script of some kind?
-			if ( $text =~ /\A#!/ ) {
-				return $class->perl_mime_type($text)
-					if $text =~ /\A#!.*\bperl6?\b/m;
-				return 'application/x-tcl'
-					if $text =~ /\A#!.*\bsh\b.*(?:\n.*)?\nexec wish/m;
-				return 'application/x-tcl'
-					if $text =~ /\A#!.*\bwish\b/m;
-				return 'application/x-shellscript'
-					if $text =~ /\A#!.*\b(?:z|k|ba|t?c|da)?sh\b/m;
-				return 'text/x-python'
-					if $text =~ /\A#!.*\bpython\b/m;
-				return 'application/x-ruby'
-					if $text =~ /\A#!.*\bruby\b/m;
-			}
-
-			# YAML will start with a ---
-			if ( $text =~ /\A---/ ) {
-				return 'text/x-yaml';
-			}
-
-			# Try to identify Perl Scripts based on soft criterias as a last resort
-			# TO DO: Improve the tests
-			SCOPE: {
-				my $score = 0;
-				if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ ) {
-					$score += 2;
-				}
-				if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ ) { $score += 1; }
-				if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ ) {
-					$score += 1;
-				}
-				if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) {
-					$score += 1;
-				}
-				if ( $text =~ /\=\~ ?[sm]?\// )  { $score += 1; }
-				if ( $text =~ /\bmy [\$\%\@]/ )  { $score += .5; }
-				if ( $text =~ /1\;[\r\n]+$/ )    { $score += .5; }
-				if ( $text =~ /\$\w+\{/ )        { $score += .5; }
-				if ( $text =~ /\bsplit[ \(]\// ) { $score += .5; }
-				return $class->perl_mime_type($text) if $score >= 3;
-			}
-
-			# Look for Template::Toolkit syntax
-			#  - traditional syntax:
-			return 'text/x-perltt'
-				if $text =~ /\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\]/;
-
-			#  - default alternate styles (match 2 tags)
-			return 'text/x-perltt'
-				if $text
-					=~ /(\%\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\%.*){2}/s;
-			return 'text/x-perltt'
-				if $text
-					=~ /(\[\*[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\*\].*){2}/s;
-
-			#  - other languages defaults (match 3 tags)
-			return 'text/x-perltt'
-				if $text
-					=~ /(\<([\?\%])[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\1\>.*){3}/s;
-			return 'text/x-perltt'
-				if $text
-					=~ /(\<\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\>.*){3}/s;
-			return 'text/x-perltt'
-				if $text
-					=~ /(\<\!\-\-[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\-\-\>.*){3}/s;
-
-			#  - traditional, but lowercase syntax (3 tags)
-			return 'text/x-perltt'
-				if $text
-					=~ /(\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\].*){3}/si;
-
-			# Try to recognize XHTML
-			return 'text/html'
-				if $text =~ /\A<\?xml version="\d+\.\d+" encoding=".+"\?>/m
-					and $text =~ /^<!DOCTYPE html/m;
-
-			# Try to recognize XML
-			return 'text/xml'
-				if $text =~ /^<\?xml version="\d+\.\d+"(?: +encoding=".+")?(?: +standalone="(?:yes|no)")?\?>/;
-
-			# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
-			if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
-
-				# Is it Template Toolkit HTML?
-				# Only try to text the default [% %]
-				if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
-					return 'text/x-perltt';
-				}
-				return 'text/html';
-			}
-
-			# Try to detect plain CSS without HTML around it
-			return 'text/css'
-				if $text !~ /\<\w+\/?\>/
-					and $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/;
-
-			# LUA detection
-			my $lua_score = 0;
-			for ( 'end', 'it', 'in', 'nil', 'repeat', '...', '~=' ) {
-				$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
-			}
-			$lua_score += 2.01
-				if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
-			$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
-			$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
-			return 'text/x-lua' if $lua_score >= 5;
-
-			return '';
+	if ( not defined $mime and defined $text ) {
+		$mime = eval {
+			$class->guess_content($text)
 		};
-		return if $@;
-		return $eval_mime_type if $eval_mime_type;
+		return undef if $@;
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI
 	# TO DO: Make it configurable in the GUI :)
-	unless ($filename) {
-		return $class->perl_mime_type($text);
+	unless ( defined $mime or defined $file ) {
+		$mime = 'application/x-perl';
 	}
 
-	# Fall back to plain text file
-	return 'text/plain';
+	# Finally fall back to plain text file
+	unless ( defined $mime or length $mime ) {
+		$mime = 'text/plain';
+	}
+
+	# If we found Perl 5 we might need to second-guess it and check
+	# for it actually being Perl 6.
+	if ( $mime eq 'application/x-perl' and $param{perl6} ) {
+		if ( $class->guess_isperl6($text) ) {
+			$mime = 'application/x-perl6';
+		}
+	}
+
+	return $mime;
 }
 
-sub perl_mime_type {
+sub guess_content {
 	my $class = shift;
 	my $text  = shift;
 
-	# Sometimes Perl 6 will look like Perl 5
-	# But only do this test if the lang_perl6_auto_detection is enabled.
-	my $config = Padre::Config->read;
-	if ( $config->lang_perl6_auto_detection and is_perl6($text) ) {
-		return 'application/x-perl6';
-	} else {
+	# Working on content with malformed/bad UTF-8 chars may drop warnings
+	# which just say that there are bad UTF-8 chars in the file currently
+	# being checked. Maybe they are no UTF-8 chars at all but just a line
+	# of bits and Padre/Perl simply has the wrong point of view (UTF-8),
+	# so we drop these warnings:
+	local $SIG{__WARN__} = sub {
+
+		# Die if we throw a bad codepoint - this is a binary file.
+		if ( $_[0] =~ /Code point .* is not Unicode/ ) {
+			die $_[0];
+		} elsif ( $_[0] !~ /Malformed UTF\-8 char/ ) {
+			return;
+			# print STDERR "$_[0] while looking for mime type of $file";
+		}
+	};
+
+	# Is this a script of some kind?
+	if ( $text =~ /\A#!.*\bperl6?\b/m ) {
 		return 'application/x-perl';
 	}
+	if ( $text =~ /\A#!.*\bsh\b.*(?:\n.*)?\nexec wish/m ) {
+		return 'application/x-tcl';
+	}
+	if ( $text =~ /\A#!.*\bwish\b/m ) {
+		return 'application/x-tcl';
+	}
+	if ( $text =~ /\A#!.*\b(?:z|k|ba|t?c|da)?sh\b/m ) {
+		return 'application/x-shellscript';
+	}
+	if ( $text =~ /\A#!.*\bpython\b/m ) {
+		return 'text/x-python';
+	}
+	if ( $text =~ /\A#!.*\bruby\b/m ) {
+		return 'application/x-ruby';
+	}
+
+	# YAML will start with a ---
+	if ( $text =~ /\A---/ ) {
+		return 'text/x-yaml';
+	}
+
+	# Try to identify Perl Scripts based on soft criterias as a last resort
+	# TO DO: Improve the tests
+	SCOPE: {
+		my $score = 0;
+		if ( $text =~ /^package\s+[\w:]+;/ ) {
+			$score += 2;
+		}
+		if ( $text =~ /\b(use \w+(\:\:\w+)*.+?\;[\r\n][\r\n.]*){3,}/ ) {
+			$score += 2;
+		}
+		if ( $text =~ /\buse \w+(\:\:\w+)*.+?\;/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /\brequire ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /\=\~ ?[sm]?\// ) {
+			$score += 1;
+		}
+		if ( $text =~ /\bmy [\$\%\@]/ ) {
+			$score += 0.5;
+		}
+		if ( $text =~ /\bmy \$self\b/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /\bforeach\s+my\s+\$\w+/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /\bour \$VERSION\b/ ) {
+			$score += 1;
+		}
+		if ( $text =~ /1\;[\r\n]+$/ ) {
+			$score += 0.5;
+		}
+		if ( $text =~ /\$\w+\{/ ) {
+			$score += 0.5;
+		}
+		if ( $text =~ /\bsplit[ \(]\// ) {
+			$score += 0.5;
+		}
+		if ( $score >= 2 ) {
+			return 'application/x-perl';
+		}
+	}
+
+	# Look for Template::Toolkit syntax
+	#  - traditional syntax:
+	my $TT = qr/(?:PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b/;
+	if ( $text =~ /\[\%[\+\-\=\~]? $TT\b .* [\+\-\=\~]?\%\]/ ) {
+		return 'text/x-perltt';
+	}
+
+	#  - default alternate styles (match 2 tags)
+	if ( $text =~ /(\%\%[\+\-\=\~]? $TT .* [\+\-\=\~]?\%\%.*){2}/s ) {
+		return 'text/x-perltt';
+	}
+	if ( $text =~ /(\[\*[\+\-\=\~]? $TT .* [\+\-\=\~]?\*\].*){2}/s ) {
+		return 'text/x-perltt';
+	}
+
+	#  - other languages defaults (match 3 tags)
+	if ( $text =~ /(\<([\?\%])[\+\-\=\~]? $TT .* [\+\-\=\~]?\1\>.*){3}/s ) {
+		return 'text/x-perltt';
+	}
+	if ( $text =~ /(\<\%[\+\-\=\~]? $TT .* [\+\-\=\~]?\>.*){3}/s ) {
+		return 'text/x-perltt';
+	}
+	if ( $text =~ /(\<\!\-\-[\+\-\=\~]? $TT .* [\+\-\=\~]?\-\-\>.*){3}/s ) {
+		return 'text/x-perltt';
+	}
+
+	#  - traditional, but lowercase syntax (3 tags)
+	if ( $text =~ /(\[\%[\+\-\=\~]? $TT .* [\+\-\=\~]?\%\].*){3}/si ) {
+		return 'text/x-perltt';
+	}
+
+	# Try to recognize XHTML
+	if ( $text =~ /\A<\?xml version="\d+\.\d+" encoding=".+"\?>/m ) {
+		return 'text/html' if $text =~ /^<!DOCTYPE html/m;
+	}
+
+	# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
+	if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
+
+		# Is it Template Toolkit HTML?
+		# Only try to text the default [% %]
+		if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
+			return 'text/x-perltt';
+		}
+
+		return 'text/html';
+	}
+
+	# Try to detect plain CSS without HTML around it
+	if ( $text !~ /\<\w+\/?\>/ ) {
+		if ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ ) {
+			return 'text/css';
+		}
+	}
+
+	# LUA detection
+	SCOPE: {
+		my $lua_score = 0;
+		for ( 'end', 'it', 'in', 'nil', 'repeat', '...', '~=' ) {
+			$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
+		}
+		$lua_score += 2.01
+			if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
+		$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
+		$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
+		return 'text/x-lua' if $lua_score >= 5;
+	}
+
+	return '';
 }
 
 # naive sub to decide if a piece of code is Perl 6 or Perl 5.
 # Perl 6:   use v6; class ..., module ...
 # maybe also grammar ...
 # but make sure that is real code and not just a comment or doc in some perl 5 code...
-sub is_perl6 {
-	my $text = shift;
+sub guess_isperl6 {
+	my $class = shift;
+	my $text  = shift;
 
 	# empty/undef text is not Perl 6 :)
-	return if not $text;
+	return 0 unless $text;
 
 	# Perl 6 POD
 	return 1 if $text =~ /^=begin\s+pod/msx;
 
 	# Needed for eg/perl5_with_perl6_example.pod
-	return if $text =~ /^=head[12]/msx;
+	return 0 if $text =~ /^=head[12]/msx;
 
 	# =cut is a sure sign for Perl 5 code (moritz++)
-	return if $text =~ /^=cut/msx;
+	return 0 if $text =~ /^=cut/msx;
 
 	# Special case: If MooseX::Declare is there, then we're in Perl 5 land
-	return if $text =~ /^\s*use\s+MooseX::Declare/msx;
+	return 0 if $text =~ /^\s*use\s+MooseX::Declare/msx;
 
 	# Perl 6 'use v6;'
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
@@ -769,7 +809,7 @@ sub is_perl6 {
 	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 
 	# Not Perl 6 for sure...
-	return;
+	return 0;
 }
 
 1;
