@@ -231,7 +231,7 @@ sub update_variables {
 
 			$item->SetId($index);
 			$self->{variables}->InsertItem($item);
-			$self->{variables}->SetItemTextColour( $index, DARK_GREEN );
+			$self->{variables}->SetItemTextColour( $index, BLUE );
 
 			$self->{variables}->SetItem( $index,   0, $var );
 			$self->{variables}->SetItem( $index++, 1, $auto_var_val_ref->{$var} );
