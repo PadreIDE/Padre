@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 04:10-0800\n"
+"POT-Creation-Date: 2011-11-24 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -653,7 +653,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:643
+#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:660
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -699,7 +699,7 @@ msgstr ""
 msgid "- DEPRECATED!"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:280
+#: lib/Padre/Wx/FBP/Debugger.pm:249
 msgid ".        Return to the executed line."
 msgstr ""
 
@@ -1510,7 +1510,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:617
+#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:634
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1685,19 +1685,16 @@ msgstr ""
 msgid "Debug Output"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:431
+#: lib/Padre/Wx/FBP/Debugger.pm:474
 msgid "Debug-Output Options"
 msgstr ""
 
 #: lib/Padre/Wx/Debug.pm:97 lib/Padre/Wx/Panel/Debugger.pm:76
+#: lib/Padre/Wx/Panel/Debugger.pm:106
 msgid "Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:106
-msgid "Debugger RC2"
-msgstr ""
-
-#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:263
+#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:272
 msgid "Debugger is already running"
 msgstr ""
 
@@ -1707,7 +1704,7 @@ msgstr ""
 msgid "Debugger not running"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:326
+#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:335
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -1958,7 +1955,7 @@ msgstr ""
 msgid "Dutch (Belgium)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:380
+#: lib/Padre/Wx/FBP/Debugger.pm:400
 msgid ""
 "E\n"
 "Display all thread ids the current one will be identified: <n>."
@@ -2276,15 +2273,15 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:676
+#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:693
 msgid "Expr"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:268
+#: lib/Padre/Wx/FBP/Debugger.pm:328
 msgid "Expression To Evaluate"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:675
+#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:692
 msgid "Expression:"
 msgstr ""
 
@@ -2945,7 +2942,7 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:320
+#: lib/Padre/Wx/FBP/Debugger.pm:289
 msgid ""
 "L [abw]\n"
 "List (default all) actions, breakpoints and watch expressions"
@@ -3417,7 +3414,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:267
+#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:276
 msgid "Not a Perl document"
 msgstr ""
 
@@ -4892,7 +4889,7 @@ msgid "Shorten the common path in window list"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/VCS.pm:247 lib/Padre/Wx/FBP/Breakpoints.pm:152
-#: lib/Padre/Wx/FBP/Debugger.pm:404
+#: lib/Padre/Wx/FBP/Debugger.pm:444
 msgid "Show"
 msgstr ""
 
@@ -5360,7 +5357,7 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:340
+#: lib/Padre/Wx/FBP/Debugger.pm:380
 msgid ""
 "T\n"
 "Produce a stack backtrace."
@@ -5484,6 +5481,15 @@ msgstr ""
 
 #: lib/Padre/Config.pm:1503
 msgid "Toggle document differences feature"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Debugger.pm:340
+msgid ""
+"Toggle running breakpoints (update DB)\n"
+"b\n"
+"Sets breakpoint on current line\n"
+"B line\n"
+"Delete a breakpoint from the specified line."
 msgstr ""
 
 #: lib/Padre/Config.pm:1494
@@ -5921,12 +5927,21 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:249
+#: lib/Padre/Wx/FBP/Debugger.pm:420
 msgid ""
-"p expr\n"
+"o\n"
+"Display all options."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Debugger.pm:309
+msgid ""
+"p expr \n"
 "Same as print {$DB::OUT} expr in the current package. In particular, because "
-"this is just Perl's own print function, this means that nested data "
-"structures and objects are not dumped, unlike with the x command."
+"this is just Perl's own print function.\n"
+"\n"
+"x [maxdepth] expr\n"
+"Evaluates its expression in list context and dumps out the result in a "
+"pretty-printed fashion. Nested data structures are printed out recursively,"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Breakpoints.pm:106
@@ -5962,7 +5977,7 @@ msgstr ""
 msgid "unloaded"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:300
+#: lib/Padre/Wx/FBP/Debugger.pm:269
 msgid "v [line]    View window around line."
 msgstr ""
 
