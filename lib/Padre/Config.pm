@@ -1419,7 +1419,7 @@ setting(
 	name    => 'feature_debug2',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 1,
 	help    => _T('Toggle Debug2'),
 );
 
