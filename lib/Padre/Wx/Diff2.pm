@@ -3,6 +3,7 @@ package Padre::Wx::Diff2;
 use 5.008;
 use strict;
 use warnings;
+use Algorithm::Diff         ();
 use Padre::Wx               ();
 use Padre::Wx::FBP::Diff    ();
 use Wx::Scintilla::Constant ();
