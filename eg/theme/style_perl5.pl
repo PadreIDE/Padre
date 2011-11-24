@@ -11,7 +11,9 @@ use feature 'unicode_strings';
 use diagnostics;
 use Data::Printer { caller_info => 1, colored => 1, };
 
-my $STYLE_DEFAULT = text;
+use attributes qw(get reftype);   # import 'get' and 'reftype' subroutines
+
+my $STYLE_DEFAULT = 'text';
 my $STYLE_BRACELIGHT;
 my $STYLE_BRACEBAD;
 
@@ -43,7 +45,7 @@ my $SCE_PL_WORD; # use my sub for while else print return if chomp shift
 say 'sample text';
 print "sample text\n";
 sub function {
-	return;
+	...
 }
 
 my $SCE_PL_STRING = "string";
@@ -56,9 +58,9 @@ my $SCE_PL_IDENTIFIER; #struct $variable @array %hash
 
 my $SCE_PL_SCALAR;
 my @SCE_PL_ARRAY;
-$SCE_PL_ARRAY[100]; # indexed
+$SCE_PL_ARRAY[100] = []; # indexed
 my %SCE_PL_HASH;
-$SCE_PL_HASH{keyname};
+$SCE_PL_HASH{keyname} = ();
 
 
 my $SCE_PL_SYMBOLTABLE;
@@ -96,12 +98,14 @@ my @SCE_PL_STRING_QW = qw( word list );
 my $escaped = "Hello World\n";
 
 sub function_prototyped($$&) {
-	
+	...
 }
 
-sub function_attrib : SomeAttributes(etc) {
-	
+sub function_attrib : method {
+	...
 }
+
+
 
 # what PL is lexing STDOUT?
 format STDOUT =
@@ -111,7 +115,6 @@ format STDOUT =
 
 open( FILEHANDLE, '<' , 'data.txt' );
 print FILEHANDLE "\r\n";
-
 
 1;
 
