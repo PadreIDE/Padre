@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-23 20:10-0800\n"
+"POT-Creation-Date: 2011-11-24 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3300,7 +3300,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: lib/Padre/Wx/Diff2.pm:28 lib/Padre/Wx/Dialog/Diff.pm:32
+#: lib/Padre/Wx/Diff2.pm:29 lib/Padre/Wx/Dialog/Diff.pm:32
 msgid "Next difference"
 msgstr ""
 
@@ -3983,7 +3983,7 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: lib/Padre/Wx/Diff2.pm:26 lib/Padre/Wx/Dialog/Diff.pm:26
+#: lib/Padre/Wx/Diff2.pm:27 lib/Padre/Wx/Dialog/Diff.pm:26
 msgid "Previous difference"
 msgstr ""
 
