@@ -2128,7 +2128,7 @@ the even version for the release, even during development.
     - Fixed bookmark-related crash (#172) (SvenDowideit)
     - Fixed syntax-checker related focus glitch (#173) (SvenDowideit)
     - Removed JavaScript plugin from the main distribution (SZABGAB)
-    - Major menu refactoring. Each menu is now implemented in a seperate
+    - Major menu refactoring. Each menu is now implemented in a separate
       class, with independant ->refresh methods and much improved
       encapsulation as a result. (ADAMK)
     - Rewrote the Padre bootstrap sequence. Not only does Padre start in

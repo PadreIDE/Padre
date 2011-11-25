@@ -50,7 +50,7 @@ for ( 1 .. 10 ) {
 	# surrounded by them.
 
 	# If you write more than one line of sourcecode between { and }, write this
-	# sourcecode as seperate lines. Perl dosn't care, but you and others need to
+	# sourcecode as separate lines. Perl dosn't care, but you and others need to
 	# be able to read it without scrolling thousend columns to the right.
 
 	# It might look like a waste of time, but if you put spaces or tabs before each

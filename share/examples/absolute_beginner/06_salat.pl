@@ -65,7 +65,7 @@ sub cut {
 }
 
 # Here we got two arguments, the foot and the cut style. Many arguments must be
-# seperated by commas.
+# separated by commas.
 
 cut "green salat",        "stripes";
 cut "a tomato",           "pieces";

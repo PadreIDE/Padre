@@ -36,7 +36,7 @@ my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime( 
 # names. It's a good idea to follow this way even if there is no technical
 # requirement to do so.
 #
-# This line has many variables all shown in a comma (,) seperated list. Their
+# This line has many variables all shown in a comma (,) separated list. Their
 # names tell you what they contain:
 #  - $sec for the seconds
 #  - $min for the minutes

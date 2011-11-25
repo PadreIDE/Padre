@@ -838,7 +838,7 @@ setting(
 	store => Padre::Constant::HUMAN,
 
 	# This lives here until a better place is found:
-	# This is a list of toolbar items, seperated by ;
+	# This is a list of toolbar items, separated by ;
 	# The following items are supported:
 	#   action
 	#     Insert the action
