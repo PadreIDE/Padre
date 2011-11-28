@@ -94,18 +94,21 @@ sub new {
 ######################################################################
 # GUI Methods
 
-sub relocale {
+sub refresh {
 	my $self = shift;
 
-	# Fetch all the titles and overwrite
-	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
-		my $editor   = $self->GetPage($i)   or next;
-		my $document = $editor->{Document}  or next;
-		my $title    = $document->get_title or next;
-		$self->SetPageText( $i, $title );
+	# Hand off to the refresh_notebook method for each
+	# of the individual editors.
+	foreach my $editor ( $self->editors ) {
+		$editor->refresh_notebook;
 	}
 
 	return;
+}
+
+# Do a normal refresh on relocale, that should be enough
+sub relocale {
+	$_[0]->refresh;
 }
 
 

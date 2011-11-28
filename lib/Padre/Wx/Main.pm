@@ -1484,6 +1484,7 @@ sub refresh {
 	# Refresh the remaining elements while the background tasks
 	# are running for the other elements.
 	$self->refresh_title($current);
+	$self->refresh_notebook($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 
@@ -1789,6 +1790,20 @@ sub refresh_menu_plugins {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->menu->plugins->refresh($self);
+}
+
+=head2 C<refresh_notebook>
+
+    $main->refresh_notebook
+
+Force a refresh of the notebook panel titles
+
+=cut
+
+sub refresh_notebook {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->notebook->refresh;
 }
 
 =head3 C<refresh_windowlist>

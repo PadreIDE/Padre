@@ -258,6 +258,7 @@ sub method_trim {
 	if ( defined $pending->{refresh} ) {
 		delete $pending->{refresh_menu};
 		delete $pending->{refresh_toolbar};
+		delete $pending->{refresh_notebook};
 		delete $pending->{refresh_status};
 		delete $pending->{refresh_functions};
 		delete $pending->{refresh_directory};
