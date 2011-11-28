@@ -85,7 +85,7 @@ sub _create_controls {
 	$self->{line_mode} = Wx::RadioBox->new(
 		$self,               -1, Wx::gettext('Position type'),
 		Wx::DefaultPosition, Wx::DefaultSize,
-		[ Wx::gettext('Line number'), Wx::gettext('Character position') ]
+		[ _ln(), _cp() ]
 	);
 
 	# OK button (obviously)
@@ -190,7 +190,7 @@ sub _on_ok_button {
 	my $self = shift;
 
 	# Fetch values
-	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
+	my $line_mode = $self->{line_mode}->GetStringSelection eq _ln();
 	my $value = $self->{goto_text}->GetValue;
 
 	# Destroy the dialog
@@ -229,11 +229,11 @@ sub _on_ok_button {
 sub _update_label {
 	my $self      = shift;
 	my $line_mode = $self->{line_mode}->GetStringSelection;
-	if ( $line_mode eq Wx::gettext('Line number') ) {
+	if ( $line_mode eq _ln() ) {
 		$self->{goto_label}
 			->SetLabel( sprintf( Wx::gettext('&Enter a line number between 1 and %s:'), $self->{max_line_number} ) );
 		$self->{current}->SetLabel( sprintf( Wx::gettext('Current line number: %s'), $self->{current_line_number} ) );
-	} elsif ( $line_mode eq Wx::gettext('Character position') ) {
+	} elsif ( $line_mode eq _cp() ) {
 		$self->{goto_label}
 			->SetLabel( sprintf( Wx::gettext('&Enter a position between 1 and %s:'), $self->{max_position} ) );
 		$self->{current}->SetLabel( sprintf( Wx::gettext('Current position: %s'), $self->{current_position} ) );
@@ -248,7 +248,7 @@ sub _update_label {
 sub _validate {
 	my $self = shift;
 
-	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
+	my $line_mode = $self->{line_mode}->GetStringSelection eq _ln();
 	my $value = $self->{goto_text}->GetValue;
 
 	# If it is empty, do not warn about it but disable it though
@@ -339,6 +339,8 @@ sub show {
 
 	return;
 }
+sub _ln { Wx::gettext('Line number') }
+sub _cp { Wx::gettext('Character position') }
 
 1;
 
