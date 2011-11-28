@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-24 12:10-0800\n"
+"POT-Creation-Date: 2011-11-27 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1922,7 +1922,7 @@ msgstr ""
 msgid "Document Tools (Right)"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7075
+#: lib/Padre/Wx/Main.pm:7079
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -2037,11 +2037,11 @@ msgstr ""
 msgid "Encode Document to &utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7097
+#: lib/Padre/Wx/Main.pm:7101
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7096
+#: lib/Padre/Wx/Main.pm:7100
 msgid "Encode to:"
 msgstr ""
 
@@ -2148,14 +2148,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7055
+#: lib/Padre/Wx/Main.pm:7059
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:7040
+#: lib/Padre/Wx/Main.pm:7044
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -3257,7 +3257,7 @@ msgstr ""
 msgid "Ne&w"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6876
+#: lib/Padre/Wx/Main.pm:6880
 msgid "Need to select text in order to translate to hex"
 msgstr ""
 
