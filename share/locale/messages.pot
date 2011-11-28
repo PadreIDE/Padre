@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-27 20:11-0800\n"
+"POT-Creation-Date: 2011-11-28 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1191,7 +1191,7 @@ msgstr ""
 msgid "Character classes"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:236
+#: lib/Padre/Wx/Dialog/Goto.pm:343
 msgid "Character position"
 msgstr ""
 
@@ -3008,8 +3008,7 @@ msgstr ""
 msgid "Line break mode"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
-#: lib/Padre/Wx/Dialog/Goto.pm:232 lib/Padre/Wx/Dialog/Goto.pm:251
+#: lib/Padre/Wx/Dialog/Goto.pm:342
 msgid "Line number"
 msgstr ""
 
