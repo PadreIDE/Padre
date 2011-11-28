@@ -13,7 +13,7 @@ use Padre::Util       ('_T');
 use Padre::Feature    ();
 use Padre::Current    ();
 use Padre::Constant   ();
-use Padre::MIME  ();
+use Padre::MIME       ();
 use Padre::Wx         ();
 use Padre::Wx::Menu   ();
 use Padre::Wx::Action ();
@@ -2084,7 +2084,7 @@ sub init {
 			need_runable => 1,
 			need_file    => 1,
 			toolbar      => 'actions/morpho3',
-			label        => _T('Launch Debugger'),
+			label        => _T('&Launch Debugger'),
 			comment      => _T('Launch Debugger'),
 
 			#shortcut     => 'Shift-F5',
@@ -2104,7 +2104,7 @@ sub init {
 			need_runable => 1,
 			need_file    => 1,
 			toolbar      => 'actions/breakpoints',
-			label        => _T('Set Breakpoints'),
+			label        => _T('Set Breakpoints (&b)'),
 			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
@@ -2132,6 +2132,16 @@ sub init {
 				if ( $_[0]->{panel_debugger} ) {
 					$_[0]->{panel_debugger}->on_quit_debugger_clicked();
 				}
+			},
+		) if $main->config->feature_debug2;
+
+		# Add our interesting and helpful wiki
+		Padre::Wx::Action->new(
+			name       => 'debug.visit_debug_wiki',
+			label      => _T('Visit Debug &Wiki...'),
+			comment    => _T('Open interesting and helpful Padre Wiki in your default web browser'),
+			menu_event => sub {
+				Padre::Wx::launch_browser( 'http://padre.perlide.org/trac/wiki/Features/Perl5Debugger' );
 			},
 		) if $main->config->feature_debug2;
 

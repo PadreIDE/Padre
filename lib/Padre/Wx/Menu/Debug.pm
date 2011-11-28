@@ -32,15 +32,15 @@ sub new {
 	$self->{panel_breakpoints} = $self->add_menu_action(
 		'debug.panel_breakpoints',
 	);
-	
+
 	$self->{panel_debug_output} = $self->add_menu_action(
 		'debug.panel_debug_output',
 	);
-	
+
 	$self->{panel_debugger} = $self->add_menu_action(
 		'debug.panel_debugger',
 	);
-	
+
 	$self->AppendSeparator if $main->config->feature_debug2;
 
 	$self->{launch} = $self->add_menu_action(
@@ -51,13 +51,17 @@ sub new {
 		'debug.set_breakpoints',
 	);
 
-	$self->AppendSeparator if $main->config->feature_debug2;
+	# $self->AppendSeparator if $main->config->feature_debug2;
 
 	$self->{quit2} = $self->add_menu_action(
 		'debug.quit2',
 	);
 
 	$self->AppendSeparator if $main->config->feature_debug2;
+
+	$self->{visit_debug_wiki} = $self->add_menu_action(
+		'debug.visit_debug_wiki',
+	);
 
 	$self->{step_in} = $self->add_menu_action(
 		'debug.step_in',
@@ -135,15 +139,16 @@ sub refresh {
 	my $current  = Padre::Current::_CURRENT(@_);
 	my $config   = $current->config;
 	my $document = Padre::Current::_CURRENT(@_)->document;
-	my $hasdoc   = $document ? 1 : 0;	
+	my $hasdoc   = $document ? 1 : 0;
 
-	$self->{panel_breakpoints}->Check( $config->main_panel_breakpoints ) if $main->config->feature_debug2;
+	$self->{panel_breakpoints}->Check( $config->main_panel_breakpoints )   if $main->config->feature_debug2;
 	$self->{panel_debug_output}->Check( $config->main_panel_debug_output ) if $main->config->feature_debug2;
-	$self->{panel_debugger}->Check( $config->main_panel_debugger ) if $main->config->feature_debug2;
-	
-	$self->{launch}->Enable(1)          if $main->config->feature_debug2;
+	$self->{panel_debugger}->Check( $config->main_panel_debugger )         if $main->config->feature_debug2;
+
+	$self->{launch}->Enable(1)           if $main->config->feature_debug2;
 	$self->{set_breakpoints}->Enable(1) if $main->config->feature_debug2;
-	$self->{quit2}->Enable(1)           if $main->config->feature_debug2;
+	$self->{quit2}->Enable(1)            if $main->config->feature_debug2;
+	$self->{visit_debug_wiki}->Enable(1) if $main->config->feature_debug2;
 
 	if ( !$main->config->feature_debug2 ) {
 		$self->{step_in}->Enable($hasdoc);
