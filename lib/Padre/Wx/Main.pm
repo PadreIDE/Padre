@@ -6621,11 +6621,15 @@ If no package name is provided, the user will be asked for the name to use.
 sub start_perl5_module {
 	my $self   = shift;
 	my $module = shift;
-	unless ($module) {
+	unless ( defined Params::Util::_STRING($module) ) {
 		$module = $self->prompt(
 			Wx::gettext('Module name:'),
 			Wx::gettext('New Module'),
 		);
+	}
+	unless ( defined Params::Util::_STRING($module) ) {
+		# If we still don't have a module name abort
+		return;
 	}
 
 	# Generate the code from the module template
