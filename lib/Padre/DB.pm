@@ -18,8 +18,9 @@ BEGIN {
 	}
 }
 
-# Need truncate
-use ORLite 1.48 ();
+# Force newer ORLite and SQLite for performance improvements
+use DBD::SQLite 1.35 ();
+use ORLite      1.51 ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
 use ORLite::Migrate 1.08 {
@@ -42,15 +43,6 @@ BEGIN {
 		Padre::Unload::unload('ORLite::Migrate::Timeline');
 	}
 }
-
-# Overlay classes to enhance the ORLite defaults
-use Padre::DB::Plugin             ();
-use Padre::DB::Bookmark           ();
-use Padre::DB::History            ();
-use Padre::DB::HostConfig         ();
-use Padre::DB::LastPositionInFile ();
-use Padre::DB::Session            ();
-use Padre::DB::SessionFile        ();
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.26';
@@ -93,16 +85,20 @@ sub find_snippets {
 	return $class->selectall_arrayref( $sql, {}, @bind );
 }
 
-#
-# Vacuum database to keep it small and fast
-#
+# Vacuum database to keep it small and fast.
+# This will generally be run every time Padre shuts down, so may
+# contains bits and pieces of things other than the actual VACUUM.
 sub vacuum {
-	TRACE("VACUUM database") if DEBUG;
-	my $page_size = Padre::DB->pragma("page_size");
-	Padre::DB->do("VACUUM");
-	if (DEBUG) {
+	if ( DEBUG ) {
+		TRACE("VACUUM ANALYZE database");
+		my $page_size = Padre::DB->pragma("page_size");
+		Padre::DB->do('VACUUM');
+		Padre::DB->do('ANAYLZE');
 		my $diff = Padre::DB->pragma('page_size') - $page_size;
-		TRACE("Page count difference after VACUUM: $diff");
+		TRACE("Page count difference after VACUUM ANALYZE: $diff");
+	} else {
+		Padre::DB->do('VACUUM');
+		Padre::DB->do('ANAYLZE');
 	}
 	return;
 }

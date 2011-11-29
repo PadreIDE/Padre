@@ -30,6 +30,10 @@ the even version for the release, even during development.
       and can be loaded and used in background threads more easily (ADAMK)
     - Added Debug2 interface, you will need Debug::Client 0.15, please view wiki
       for more information (BOWTIE)
+    - Force upgrades to DBD::SQLite 1.35 and ORLite 1.51 for major performance
+      improvements which should make Padre block less (ADAMK)
+    - In addition to VACUUM on shutdown, also ANALYZE for a further small
+      performance improvement (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
