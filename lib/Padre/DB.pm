@@ -28,7 +28,7 @@ use ORLite::Migrate 1.08 {
 	file         => Padre::Constant::CONFIG_HOST,
 	timeline     => 'Padre::DB::Timeline',
 	tables       => [ 'Modules' ],
-	user_version => 14, # Confirm we have the correct schema version
+	user_version => 13, # Confirm we have the correct schema version
 	array        => 1,  # Smaller faster array objects
 	xsaccessor   => 0,  # XS acceleration for the generated code
 	shim         => 1,  # Overlay classes can fully override methods

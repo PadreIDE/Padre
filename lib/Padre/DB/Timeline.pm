@@ -17,17 +17,6 @@ our @ISA     = 'ORLite::Migrate::Timeline';
 ######################################################################
 # Schema Migration (reverse chronological for readability)
 
-sub upgrade14 {
-	my $self = shift;
-
-	# Reindex to take advantage of SQLite 3.7.8 improvements
-	# to indexing speed and layout that arrived between the
-	# release of Padre 0.92 and 0.94
-	$self->do('REINDEX');
-
-	return 1;
-}
-
 sub upgrade13 {
 	my $self = shift;
 
@@ -35,6 +24,11 @@ sub upgrade13 {
 	# Scintilla and the pressure to have highlighter plugins
 	# is greatly reduced.
 	$self->do('DROP TABLE syntax_highlight');
+
+	# Reindex to take advantage of SQLite 3.7.8 improvements
+	# to indexing speed and layout that arrived between the
+	# release of Padre 0.92 and 0.94
+	$self->do('REINDEX');
 
 	return 1;
 }
