@@ -93,12 +93,12 @@ sub vacuum {
 		TRACE("VACUUM ANALYZE database");
 		my $page_size = Padre::DB->pragma("page_size");
 		Padre::DB->do('VACUUM');
-		Padre::DB->do('ANAYLZE');
+		Padre::DB->do('ANALYZE');
 		my $diff = Padre::DB->pragma('page_size') - $page_size;
 		TRACE("Page count difference after VACUUM ANALYZE: $diff");
 	} else {
 		Padre::DB->do('VACUUM');
-		Padre::DB->do('ANAYLZE');
+		Padre::DB->do('ANALYZE');
 	}
 	return;
 }
