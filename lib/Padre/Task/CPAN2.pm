@@ -5,9 +5,6 @@ use strict;
 use warnings;
 use Padre::Task     ();
 use Padre::Constant ();
-use Padre::Pod2HTML ();
-use LWP::UserAgent  ();
-use JSON::XS        ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.93';
@@ -137,9 +134,11 @@ sub metacpan_autocomplete {
 	);
 
 	# Convert ElasticSearch Perl query to a JSON request
+	require JSON::XS;
 	my $json_request = JSON::XS::encode_json( \%payload );
 
 	# POST the json request to api.metacpan.org
+	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 
@@ -171,6 +170,7 @@ sub metacpan_pod {
 	my ( $module, $download_url ) = ( $rec->{module}, $rec->{download_url} );
 
 	# Load module's POD using MetaCPAN API
+	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
@@ -191,6 +191,7 @@ sub metacpan_pod {
 	my $pod = $response->decoded_content;
 
 	# Convert POD to HTML
+	require Padre::Pod2HTML;
 	my $pod_html = Padre::Pod2HTML->pod2html($pod);
 
 	# Find the SYNOPSIS section
@@ -220,6 +221,7 @@ sub metacpan_recent {
 	my $self = shift;
 
 	# Load most recent distributions using MetaCPAN API
+	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
@@ -236,6 +238,7 @@ sub metacpan_recent {
 	}
 
 	# Decode json response then cleverly map it for the average joe :)
+	require JSON::XS;
 	my $data = JSON::XS::decode_json( $response->decoded_content );
 	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
 
@@ -266,9 +269,11 @@ sub metacpan_favorite {
 	);
 
 	# Convert ElasticSearch Perl query to a JSON request
+	require JSON::XS;
 	my $json_request = JSON::XS::encode_json( \%payload );
 
 	# Load most favorite distributions using MetaCPAN API
+	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
