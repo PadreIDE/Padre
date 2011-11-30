@@ -88,22 +88,22 @@ sub new {
 		$edit_copy
 	);
 
-	$self->add_menu_action(
+	$self->{copy_filename} = $self->add_menu_action(
 		$edit_copy,
 		'edit.copy_filename',
 	);
 
-	$self->add_menu_action(
+	$self->{copy_basename} = $self->add_menu_action(
 		$edit_copy,
 		'edit.copy_basename',
 	);
 
-	$self->add_menu_action(
+	$self->{copy_dirname} = $self->add_menu_action(
 		$edit_copy,
 		'edit.copy_dirname',
 	);
 
-	$self->add_menu_action(
+	$self->{copy_content} = $self->add_menu_action(
 		$edit_copy,
 		'edit.copy_content',
 	);
@@ -372,6 +372,12 @@ sub refresh {
 	$self->{undo}->Enable($editor);
 	$self->{redo}->Enable($editor);
 	$self->{paste}->Enable($editor);
+
+	# Copy specials
+	$self->{copy_filename}->Enable($hasdoc);
+	$self->{copy_basename}->Enable($hasdoc);
+	$self->{copy_dirname}->Enable($hasdoc);
+	$self->{copy_content}->Enable($hasdoc);
 
 	return 1;
 }
