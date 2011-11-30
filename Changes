@@ -35,6 +35,7 @@ the even version for the release, even during development.
     - In addition to VACUUM on shutdown, also ANALYZE for a further small
       performance improvement (ADAMK)
     - Removed redundant Module Tools/Install CPAN Module (AZAWAWI)
+    - Spanish tramslation from atylerrice (GCI student)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
