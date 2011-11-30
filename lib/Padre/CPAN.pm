@@ -49,11 +49,6 @@ sub get_modules {
 	return \@modules;
 }
 
-sub install {
-	require CPAN;
-	CPAN::Shell->install( $_[1] );
-}
-
 sub cpan_config {
 	my $class = shift;
 	my $main  = shift;

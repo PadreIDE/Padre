@@ -6733,27 +6733,6 @@ sub action {
 	return 1;
 }
 
-=head3 C<install_cpan>
-
-    $main->install_cpan( $module );
-
-Install C<$module> from C<CPAN>.
-
-Note: this method may not belong here...
-
-=cut
-
-sub install_cpan {
-	my $main   = shift;
-	my $module = shift;
-
-	# Run with the same Perl that launched Padre
-	local $ENV{AUTOMATED_TESTING} = 1;
-	Padre::CPAN->new->install($module);
-
-	return;
-}
-
 =pod
 
 =head3 C<setup_bindings>
