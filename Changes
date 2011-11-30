@@ -36,7 +36,10 @@ the even version for the release, even during development.
       performance improvement (ADAMK)
     - Removed redundant Module Tools/Install CPAN Module (AZAWAWI)
     - Spanish tramslation from atylerrice (GCI student)
-
+    - Added watch items to Debug2 interface, requires Debug::Client 0.16,
+      also reintroduced S for loaded
+      please view wiki for more information (BOWTIE)
+      
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
     - Padre::MimeTypes replaced by Padre::MIME and Padre::Wx::Scintilla (ADAMK)
