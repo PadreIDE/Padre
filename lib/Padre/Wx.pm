@@ -48,7 +48,7 @@ BEGIN {
 use constant {
 	DEFAULT_COLOUR => Wx::Colour->new( 0xFF, 0xFF, 0xFF ),
 	NULL_FONT      => Wx::Font->new( Wx::NullFont ),
-	EDITOR_FONT    => Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
+	EDITOR_FONT    => Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
 };
 
 
@@ -121,7 +121,7 @@ sub editor_font {
 	# Attempt to apply the font string
 	local $@;
 	eval {
-		my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+		my $font = Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 		$font->SetNativeFontInfoUserDesc($string);
 		return $font if $font->IsOk;
 	};

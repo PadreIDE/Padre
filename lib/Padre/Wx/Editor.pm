@@ -638,7 +638,7 @@ sub setup_common {
 	}
 
 	# Set the font
-	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+	my $font = Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 	if ( defined $config->editor_font and length $config->editor_font > 0 ) {
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}

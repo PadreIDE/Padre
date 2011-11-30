@@ -420,7 +420,7 @@ sub style_busy {
 
 sub set_font {
 	my $self = shift;
-	my $font = Wx::Font->new( 10, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
+	my $font = Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 	my $name = $self->config->editor_font;
 	if ( defined $name and length $name ) {
 		$font->SetNativeFontInfoUserDesc($name);
