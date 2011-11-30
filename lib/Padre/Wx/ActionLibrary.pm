@@ -2513,19 +2513,6 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name       => 'plugins.install_cpan',
-		label      => _T("&Install CPAN Module"),
-		comment    => _T('Install a Perl module from CPAN'),
-		menu_event => sub {
-			require Padre::CPAN;
-			require Padre::Wx::CPAN;
-			my $cpan = Padre::CPAN->new;
-			my $gui = Padre::Wx::CPAN->new( $cpan, $_[0] );
-			$gui->show;
-		}
-	);
-
-	Padre::Wx::Action->new(
 		name       => 'plugins.install_local',
 		label      => _T("Install L&ocal Distribution"),
 		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),

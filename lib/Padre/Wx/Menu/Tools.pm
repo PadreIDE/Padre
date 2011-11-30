@@ -70,11 +70,6 @@ sub new {
 
 	$self->add_menu_action(
 		$modules,
-		'plugins.install_cpan',
-	);
-
-	$self->add_menu_action(
-		$modules,
 		'plugins.install_local',
 	);
 
