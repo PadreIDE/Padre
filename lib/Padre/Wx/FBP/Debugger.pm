@@ -297,37 +297,6 @@ sub new {
 		},
 	);
 
-	$self->{evaluate_expression} = Wx::BitmapButton->new(
-		$self,
-		-1,
-		Wx::NullBitmap,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::BU_AUTODRAW,
-	);
-	$self->{evaluate_expression}->SetToolTip(
-		Wx::gettext("p expr \nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n\nx [maxdepth] expr\nEvaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,")
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{evaluate_expression},
-		sub {
-			shift->on_evaluate_expression_clicked(@_);
-		},
-	);
-
-	$self->{expression} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		[ 130, -1 ],
-	);
-	$self->{expression}->SetToolTip(
-		Wx::gettext("Expression To Evaluate")
-	);
-
 	$self->{running_bp} = Wx::BitmapButton->new(
 		$self,
 		-1,
@@ -417,7 +386,7 @@ sub new {
 		Wx::BU_AUTODRAW,
 	);
 	$self->{display_options}->SetToolTip(
-		Wx::gettext("o\nDisplay all options.")
+		Wx::gettext("o\nDisplay all options.\n\no booloption ...\nSet each listed Boolean option to the value 1.\n\no anyoption? ...\nPrint out the value of one or more options.\n\no option=value ...\nSet the value of one or more options. If the value has internal whitespace, it should be quoted. For example, you could set o pager=\"less -MQeicsNfr\" to call less with those specific options. You may use either single or double quotes, but if you do, you must escape any embedded instances of same sort of quote you began with, as well as any escaping any escapes that immediately precede that quote but which are not meant to escape the quote itself. In other words, you follow single-quoting rules irrespective of the quote; eg: o option='this isn't bad' or o option=\"She said, \"Isn't it?\"\" .\n\nFor historical reasons, the =value is optional, but defaults to 1 only where it is safe to do so--that is, mostly for Boolean options. It is always better to assign a specific value using = . The option can be abbreviated, but for clarity probably should not be. Several options can be set together. See Configurable Options for a list of these.")
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -426,6 +395,105 @@ sub new {
 		sub {
 			shift->on_display_options_clicked(@_);
 		},
+	);
+
+	$self->{m_staticline32} = Wx::StaticLine->new(
+		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
+	$self->{evaluate_expression} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{evaluate_expression}->SetToolTip(
+		Wx::gettext("p expr \nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n\nx [maxdepth] expr\nEvaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{evaluate_expression},
+		sub {
+			shift->on_evaluate_expression_clicked(@_);
+		},
+	);
+
+	$self->{sub_names} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{sub_names}->SetToolTip(
+		Wx::gettext("S [[!]regex]\nList subroutine names [not] matching the regex.")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{sub_names},
+		sub {
+			shift->on_sub_names_clicked(@_);
+		},
+	);
+
+	$self->{watchpoints} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{watchpoints}->SetToolTip(
+		Wx::gettext("w expr\nAdd a global watch-expression. Whenever a watched global changes the debugger will stop and display the old and new values.\n\nW expr\nDelete watch-expression\nW *\nDelete all watch-expressions.")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{watchpoints},
+		sub {
+			shift->on_watchpoints_clicked(@_);
+		},
+	);
+
+	$self->{raw} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::BU_AUTODRAW,
+	);
+	$self->{raw}->SetToolTip(
+		Wx::gettext("Raw\nYou can enter what ever debug command you want!")
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{raw},
+		sub {
+			shift->on_raw_clicked(@_);
+		},
+	);
+
+	$self->{expression} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		[ 130, -1 ],
+	);
+	$self->{expression}->SetToolTip(
+		Wx::gettext("Expression To Evaluate")
 	);
 
 	my $button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
@@ -454,12 +522,6 @@ sub new {
 	$bSizer11->Add( $self->{view_around}, 0, Wx::ALL, 5 );
 	$bSizer11->Add( $self->{list_action}, 0, Wx::ALL, 5 );
 
-	my $doo = Wx::FlexGridSizer->new( 0, 2, 0, 0 );
-	$doo->SetFlexibleDirection(Wx::BOTH);
-	$doo->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$doo->Add( $self->{evaluate_expression}, 0, Wx::ALL, 5 );
-	$doo->Add( $self->{expression}, 1, Wx::ALL, 5 );
-
 	my $option_button_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$option_button_sizer->Add( $self->{running_bp}, 0, Wx::ALL, 5 );
 	$option_button_sizer->Add( $self->{module_versions}, 0, Wx::ALL, 5 );
@@ -467,7 +529,16 @@ sub new {
 	$option_button_sizer->Add( $self->{all_threads}, 0, Wx::ALL, 5 );
 	$option_button_sizer->Add( $self->{display_options}, 0, Wx::ALL, 5 );
 
-	my $file_11 = Wx::StaticBoxSizer->new(
+	my $with_options = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$with_options->Add( $self->{evaluate_expression}, 0, Wx::ALL, 5 );
+	$with_options->Add( $self->{sub_names}, 0, Wx::ALL, 5 );
+	$with_options->Add( $self->{watchpoints}, 0, Wx::ALL, 5 );
+	$with_options->Add( $self->{raw}, 0, Wx::ALL, 5 );
+
+	my $expression = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$expression->Add( $self->{expression}, 1, Wx::ALL, 5 );
+
+	my $debug_output_options = Wx::StaticBoxSizer->new(
 		Wx::StaticBox->new(
 			$self,
 			-1,
@@ -475,15 +546,17 @@ sub new {
 		),
 		Wx::VERTICAL,
 	);
-	$file_11->Add( $bSizer11, 0, Wx::EXPAND, 5 );
-	$file_11->Add( $doo, 1, 0, 5 );
-	$file_11->Add( $option_button_sizer, 0, Wx::EXPAND, 5 );
+	$debug_output_options->Add( $bSizer11, 0, Wx::EXPAND, 5 );
+	$debug_output_options->Add( $option_button_sizer, 0, Wx::EXPAND, 5 );
+	$debug_output_options->Add( $self->{m_staticline32}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$debug_output_options->Add( $with_options, 0, Wx::EXPAND, 5 );
+	$debug_output_options->Add( $expression, 0, Wx::EXPAND, 5 );
 
 	my $bSizer10 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer10->Add( $button_sizer, 0, Wx::EXPAND, 5 );
 	$bSizer10->Add( $self->{variables}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer10->Add( $checkbox_sizer, 0, Wx::EXPAND, 5 );
-	$bSizer10->Add( $file_11, 0, Wx::EXPAND, 5 );
+	$bSizer10->Add( $debug_output_options, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer10);
 	$self->Layout;
@@ -551,10 +624,6 @@ sub on_list_action_clicked {
 	$_[0]->main->error('Handler method on_list_action_clicked for event list_action.OnButtonClick not implemented');
 }
 
-sub on_evaluate_expression_clicked {
-	$_[0]->main->error('Handler method on_evaluate_expression_clicked for event evaluate_expression.OnButtonClick not implemented');
-}
-
 sub on_running_bp_clicked {
 	$_[0]->main->error('Handler method on_running_bp_clicked for event running_bp.OnButtonClick not implemented');
 }
@@ -573,6 +642,22 @@ sub on_all_threads_clicked {
 
 sub on_display_options_clicked {
 	$_[0]->main->error('Handler method on_display_options_clicked for event display_options.OnButtonClick not implemented');
+}
+
+sub on_evaluate_expression_clicked {
+	$_[0]->main->error('Handler method on_evaluate_expression_clicked for event evaluate_expression.OnButtonClick not implemented');
+}
+
+sub on_sub_names_clicked {
+	$_[0]->main->error('Handler method on_sub_names_clicked for event sub_names.OnButtonClick not implemented');
+}
+
+sub on_watchpoints_clicked {
+	$_[0]->main->error('Handler method on_watchpoints_clicked for event watchpoints.OnButtonClick not implemented');
+}
+
+sub on_raw_clicked {
+	$_[0]->main->error('Handler method on_raw_clicked for event raw.OnButtonClick not implemented');
 }
 
 1;

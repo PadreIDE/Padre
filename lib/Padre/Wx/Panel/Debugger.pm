@@ -15,7 +15,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.15 ();
+use Debug::Client 0.16 ();
 
 # use Data::Printer { caller_info => 1, colored => 1, };
 
@@ -176,16 +176,28 @@ sub set_up {
 	$self->{trace}->Disable;
 	$self->{evaluate_expression}->SetBitmapLabel( Padre::Wx::Icon::find('actions/pux') );
 	$self->{evaluate_expression}->Disable;
+	$self->{expression}->SetValue(BLANK);
 	$self->{expression}->Disable;
 
 	$self->{running_bp}->SetBitmapLabel( Padre::Wx::Icon::find('actions/bub') );
 	$self->{running_bp}->Disable;
 
-	# $self->{running_bp_delete}->SetBitmapLabel( Padre::Wx::Icon::find('actions/42-b') );
-	# $self->{running_bp_delete}->Disable;
+	$self->{sub_names}->SetBitmapLabel( Padre::Wx::Icon::find('actions/53-s') );
+	$self->{sub_names}->Disable;
 
 	$self->{display_options}->SetBitmapLabel( Padre::Wx::Icon::find('actions/6f-o') );
 	$self->{display_options}->Disable;
+
+	# $self->{add_watch}->SetBitmapLabel( Padre::Wx::Icon::find('actions/77-w') );
+	# $self->{add_watch}->Disable;
+
+	# # 	$self->{delete_watch}->SetBitmapLabel( Padre::Wx::Icon::find('actions/57-w') );
+	# $self->{delete_watch}->Disable;
+
+	$self->{watchpoints}->SetBitmapLabel( Padre::Wx::Icon::find('actions/wuw') );
+	$self->{watchpoints}->Disable;
+	$self->{raw}->SetBitmapLabel( Padre::Wx::Icon::find('actions/raw') );
+	$self->{raw}->Disable;
 
 	# Setup columns names and order here
 	my @column_headers = qw( Variable Value );
@@ -300,7 +312,7 @@ sub debug_perl {
 
 	# Set up the debugger
 	my $host = 'localhost';
-	my $port = 12345 + int rand(1000); # TODO make this configurable?
+	my $port = 24642 + int rand(1000); # TODO make this configurable?
 	SCOPE: {
 		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
 		$main->run_command( $document->get_command( { debug => 1 } ) );
@@ -441,7 +453,11 @@ sub debug_quit {
 
 	$self->{running_bp}->Disable;
 
-	# $self->{running_bp_delete}->Disable;
+	# $self->{add_watch}->Disable;
+	# $self->{delete_watch}->Disable;
+	$self->{raw}->Disable;
+	$self->{watchpoints}->Disable;
+	$self->{sub_names}->Disable;
 	$self->{display_options}->Disable;
 
 	$self->{step_in}->Hide;
@@ -995,7 +1011,11 @@ sub on_debug_clicked {
 
 	$self->{running_bp}->Enable;
 
-	# $self->{running_bp_delete}->Enable;
+	# $self->{add_watch}->Enable;
+	# $self->{delete_watch}->Enable;
+	$self->{raw}->Enable;
+	$self->{watchpoints}->Enable;
+	$self->{sub_names}->Enable;
 	$self->{display_options}->Enable;
 
 	$self->{debug}->Hide;
@@ -1165,38 +1185,11 @@ sub on_list_action_clicked {
 }
 
 #######
-# Event handler on_evaluate_expression_clicked p|x
-#######
-sub on_evaluate_expression_clicked {
-	my $self = shift;
-	my $main = $self->main;
-
-	if ( $self->{expression}->GetValue() ne "" ) {
-
-		$main->{panel_debug_output}->debug_output(
-			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
-	} else {
-		$main->{panel_debug_output}->debug_output( '$_ = ' . $self->{client}->get_value() );
-	}
-
-	return;
-}
-#######
-# Event handler on_stacktrace_clicked i
-#######
-# sub on_nested_parents_clicked {
-# my $self = shift;
-# my $main = $self->main;
-
-# # 	$main->{panel_debug_output}->debug_output( $self->{client}->__send('i') );
-
-# # 	return;
-# }
-#######
 # Event handler on_running_bp_set_clicked b|B
 #######
 sub on_running_bp_clicked {
 	my $self     = shift;
+	my $main     = $self->main;
 	my $editor   = $self->current->editor;
 	my $document = $self->current->document;
 	$self->{current_file} = $document->filename;
@@ -1233,18 +1226,10 @@ sub on_running_bp_clicked {
 	if ( $bp_action{action} eq 'delete' ) {
 		$self->{client}->remove_breakpoint( $self->{current_file}, $bp_action{line} );
 	}
+
+	$main->{panel_debug_output}->debug_output( $self->{client}->__send('L b') );
 	return;
 }
-#######
-# Event handler on_running_bp_delete_clicked B
-#######
-# sub on_running_bp_delete_clicked {
-# my $self = shift;
-
-# # 	return;
-# }
-
-
 #######
 # Event handler on_module_versions_clicked M
 #######
@@ -1285,10 +1270,163 @@ sub on_display_options_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np('o') );
+	# if ( $self->{expression}->GetValue() eq "" ) {
+	$main->{panel_debug_output}->debug_output( $self->{client}->get_options() );
+
+	# } else {
+	# $main->{panel_debug_output}->debug_output( $self->{client}->set_option( $self->{expression}->GetValue() ) );
+	# }
+
+	#reset expression
+	# $self->expression->SetValue(BLANK);
+	return;
+}
+
+
+#######
+# Event handler on_evaluate_expression_clicked p|x
+#######
+sub on_evaluate_expression_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	if ( $self->{expression}->GetValue() eq "" ) {
+		$main->{panel_debug_output}->debug_output( '$_ = ' . $self->{client}->get_value() );
+	} else {
+		$main->{panel_debug_output}->debug_output(
+			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
+	}
+
+	#reset expression
+	# $self->expression->SetValue(BLANK);
+	return;
+}
+#######
+# Event handler on_sub_names_clicked S
+#######
+sub on_sub_names_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	$main->{panel_debug_output}
+		->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue() ) );
+
+	#reset expression
+	# $self->expression->SetValue(BLANK);
+	return;
+}
+#######
+# Event handler on_watchpoints_clicked w|W
+#######
+sub on_watchpoints_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	if ( $self->{expression}->GetValue() ne "" ) {
+		if ( $self->{expression}->GetValue() eq "*" ) {
+			$main->{panel_debug_output}
+				->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
+
+			#reset expression
+			# $self->expression->SetValue(BLANK);
+			return;
+		}
+
+		# this is nasty, there must be a better way
+		my $exp = "\\" . $self->{expression}->GetValue();
+
+		if ( $self->{client}->__send('L w') =~ m/$exp/gm ) {
+			my $del_watch = $self->{client}->__send( 'W ' . $self->{expression}->GetValue() );
+			if ($del_watch) {
+				$main->{panel_debug_output}->debug_output($del_watch);
+			} else {
+				$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+			}
+
+			#reset expression
+			# $self->expression->SetValue(BLANK);
+			return;
+		} else {
+
+			$self->{client}->__send( 'w ' . $self->{expression}->GetValue() );
+			$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+
+			#reset expression
+			# $self->expression->SetValue(BLANK);
+			return;
+		}
+	} else {
+		$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+	}
+
+	#reset expression
+	# $self->expression->SetValue(BLANK);
+	return;
+}
+
+#######
+# Event handler on_raw_clicked raw
+#######
+sub on_raw_clicked {
+	my $self = shift;
+	my $main = $self->main;
+
+	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 
 	return;
 }
+
+#######
+# Event handler on_stacktrace_clicked i
+#######
+# sub on_nested_parents_clicked {
+# my $self = shift;
+# my $main = $self->main;
+
+# # 	$main->{panel_debug_output}->debug_output( $self->{client}->__send('i') );
+
+# # 	return;
+# }
+#######
+# Event handler on_running_bp_delete_clicked B
+#######
+# sub on_running_bp_delete_clicked {
+# my $self = shift;
+
+# # 	return;
+# }
+#######
+# Event handler on_add_watch_clicked w
+#######
+# sub on_add_watch_clicked {
+# my $self = shift;
+# my $main = $self->main;
+
+# # 	if ( $self->{expression}->GetValue() ne "" ) {
+
+# # 		$main->{panel_debug_output}->debug_output( $self->{client}->__send( 'w ' . $self->{expression}->GetValue() ) );
+# }
+
+# # 	#reset expression
+# $self->expression->SetValue(BLANK);
+# return;
+# }
+#######
+# Event handler on_delete_watch_clicked W
+#######
+# sub on_delete_watch_clicked {
+# my $self = shift;
+# my $main = $self->main;
+
+# # 	if ( $self->{expression}->GetValue() ne "" ) {
+
+# # 		$main->{panel_debug_output}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
+# }
+
+# # 	#reset expression
+# $self->expression->SetValue(BLANK);
+# return;
+# }
 
 
 1;
