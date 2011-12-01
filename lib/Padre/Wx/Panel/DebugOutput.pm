@@ -124,6 +124,10 @@ sub debug_output {
 	
 	# don't use following as it triggers an event
 	# $self->{output}->AppendText($out_text . "\n");
+	
+	# auto focus to panel debug output
+	$self->main->panel_debug_output->SetFocus;
+	
 	return;
 }
 
