@@ -87,7 +87,7 @@ sub new {
 	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
 	$preview->{Document}->set_editor( $self->preview );
 	$preview->SetLexer('application/x-perl');
-	$preview->SetText(<<'HERE'
+	$preview->SetText(<<'HERE' . '__END__');
 #!/usr/bin/perl
 
 use strict;
@@ -106,9 +106,7 @@ sub main {
 	}
 }
 
-__END__
 HERE
-	);
 	$preview->SetReadOnly(1);
 
 	# Build the list of configuration dialog elements.
