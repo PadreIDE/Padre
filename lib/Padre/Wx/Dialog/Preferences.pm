@@ -108,6 +108,7 @@ sub main {
 
 HERE
 	$preview->SetReadOnly(1);
+	$preview->Show(1);
 
 	# Build the list of configuration dialog elements.
 	# We assume all public dialog elements will match a wx widget with
