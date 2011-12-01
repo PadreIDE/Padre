@@ -1,6 +1,6 @@
 package Padre::Unload;
 
-# Inlined version of Class::Unload with a few more tricks up it's sleeve
+# Inlined version of Class::Unload with a few more tricks up its sleeve
 
 use 5.008;
 use strict;
