@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-30 20:10-0800\n"
+"POT-Creation-Date: 2011-12-01 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,7 +199,7 @@ msgid "&Clear Selection Marks"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:271 lib/Padre/Wx/Browser.pm:109
-#: lib/Padre/Wx/Replace.pm:190 lib/Padre/Wx/Menu/File.pm:128
+#: lib/Padre/Wx/Replace.pm:190 lib/Padre/Wx/Menu/File.pm:134
 #: lib/Padre/Wx/Dialog/DocStats.pm:58 lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:119
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
@@ -279,7 +279,7 @@ msgstr ""
 msgid "&Enter a position between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:281
+#: lib/Padre/Wx/Menu/File.pm:286
 msgid "&File"
 msgstr ""
 
@@ -473,7 +473,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:243
+#: lib/Padre/Wx/Menu/File.pm:248
 msgid "&Recent Files"
 msgstr ""
 
@@ -2107,7 +2107,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1192 lib/Padre/Wx/Editor.pm:737
+#: lib/Padre/Document.pm:1186 lib/Padre/Wx/Editor.pm:737
 #: lib/Padre/Wx/Main.pm:5172 lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:356 lib/Padre/Wx/Dialog/Sync.pm:78
 #: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
@@ -2172,7 +2172,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:1007
+#: lib/Padre/Document.pm:1003
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2183,7 +2183,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:957
+#: lib/Padre/Document.pm:953
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2379,7 +2379,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:383
+#: lib/Padre/Wx/Menu/File.pm:388
 #, perl-format
 msgid "File %s not found."
 msgstr ""
@@ -3429,7 +3429,7 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:78
+#: lib/Padre/Wx/Menu/File.pm:84
 msgid "O&pen"
 msgstr ""
 
@@ -3550,7 +3550,7 @@ msgstr ""
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:384
+#: lib/Padre/Wx/Menu/File.pm:389
 msgid "Open cancelled"
 msgstr ""
 
@@ -4091,7 +4091,7 @@ msgid ""
 "You can enter what ever debug command you want!"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:167
+#: lib/Padre/Wx/Menu/File.pm:180
 msgid "Re&load"
 msgstr ""
 
@@ -4540,7 +4540,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1526
+#: lib/Padre/Document.pm:1516
 msgid "Save Warning"
 msgstr ""
 
@@ -5209,7 +5209,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:2076 lib/Padre/Document.pm:2077
+#: lib/Padre/Document.pm:2148 lib/Padre/Document.pm:2149
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5421,7 +5421,7 @@ msgid ""
 "save your work and restart Padre."
 msgstr ""
 
-#: lib/Padre/Document.pm:979
+#: lib/Padre/Document.pm:975
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5609,7 +5609,7 @@ msgstr ""
 msgid "Unmodified"
 msgstr ""
 
-#: lib/Padre/Document.pm:1724
+#: lib/Padre/Document.pm:1796
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5764,14 +5764,14 @@ msgstr ""
 msgid "Visit Perl Websites..."
 msgstr ""
 
-#: lib/Padre/Document.pm:1522
+#: lib/Padre/Document.pm:1512
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:985 lib/Padre/Wx/Syntax.pm:43
+#: lib/Padre/Document.pm:981 lib/Padre/Wx/Syntax.pm:43
 #: lib/Padre/Wx/Main.pm:3256 lib/Padre/Wx/Main.pm:3971
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
