@@ -43,6 +43,12 @@ sub new {
 		Wx::gettext('Ne&w'),
 		$file_new,
 	);
+
+	$self->{duplicate} = $self->add_menu_action(
+		$file_new,
+		'file.duplicate',
+	);
+
 	$self->add_menu_action(
 		$file_new,
 		'file.new_p5_script',
@@ -158,6 +164,13 @@ sub new {
 		'file.close_some',
 	);
 
+	$file_close->AppendSeparator;
+
+	$self->{delete} = $self->add_menu_action(
+		$file_close,
+		'file.delete',
+	);
+
 	### End of close submenu
 
 	# Reload file(s)
@@ -184,14 +197,6 @@ sub new {
 	);
 
 	### End of reload submenu
-
-	$self->{duplicate} = $self->add_menu_action(
-		'file.duplicate',
-	);
-
-	$self->{delete} = $self->add_menu_action(
-		'file.delete',
-	);
 
 	$self->AppendSeparator;
 

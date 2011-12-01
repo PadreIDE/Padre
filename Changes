@@ -39,6 +39,8 @@ the even version for the release, even during development.
     - Added watch items to Debug2 interface, requires Debug::Client 0.16,
       also reintroduced S for loaded
       please view wiki for more information (BOWTIE)
+    - Moved rarely used "Dupliate" and "Delete" file menu options to
+      "new" and "close" submenus (SEWI)
       
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

@@ -151,18 +151,18 @@ requires 'threads'                  => '1.71';
 requires 'threads::shared'          => '1.33';
 requires 'URI'                      => '0';
 requires 'version'                  => '0.80';
-requires 'Win32'                    => '0.31' if win32;
-requires 'Win32::Shortcut'          => '0.07' if win32;
-requires 'Win32::TieRegistry'       => '0.26' if win32;
-requires 'Wx'                       => '0.9901';
-requires 'Wx::Perl::ProcessStream'  => '0.29';
-requires 'Wx::Scintilla'            => '0.34';
-requires 'YAML::Tiny'               => '1.32';
-test_requires 'Test::More'          => '0.88';
-test_requires 'Test::MockObject'    => '1.09';
-test_requires 'Test::Script'        => '1.07';
-test_requires 'Test::Exception'     => '0.27';
-test_requires 'Test::NoWarnings'    => '0.084';
+requires 'Win32'              => '0.31' if win32;
+requires 'Win32::Shortcut'    => '0.07' if win32;
+requires 'Win32::TieRegistry' => '0.26' if win32;
+requires 'Wx'                 => '0.9901';
+requires 'Wx::Perl::ProcessStream' => '0.29';
+requires 'Wx::Scintilla'           => '0.34';
+requires 'YAML::Tiny'              => '1.32';
+test_requires 'Test::More'         => '0.88';
+test_requires 'Test::MockObject'   => '1.09';
+test_requires 'Test::Script'       => '1.07';
+test_requires 'Test::Exception'    => '0.27';
+test_requires 'Test::NoWarnings'   => '0.084';
 
 # Special dependencies
 
