@@ -1,7 +1,5 @@
 package Padre::Document;
 
-=pod
-
 =head1 NAME
 
 Padre::Document - Padre Document API
@@ -924,9 +922,7 @@ use Class::XSAccessor {
 	},
 };
 
-=pod
-
-=head2 C<new>
+=head2 new
 
   my $doc = Padre::Document->new(
       filename => $file,
@@ -1175,9 +1171,7 @@ sub default_newline_type {
 	$self->current->config->default_line_ending;
 }
 
-=pod
-
-=head2 C<error>
+=head2 error
 
     $document->error( $msg );
 
@@ -1289,11 +1283,9 @@ sub timestamp_now {
 	return $file->mtime;
 }
 
-=pod
+=head2 load_file
 
-=head2 C<load_file>
-
- $doc->load_file;
+    $doc->load_file;
 
 Loads the current file.
 
@@ -1379,9 +1371,7 @@ sub newline {
 	return "\n";
 }
 
-=pod
-
-=head2 C<autocomplete_matching_char>
+=head2 autocomplete_matching_char
 
 The first argument needs to be a reference to the editor this method should
 work on.
@@ -1565,9 +1555,7 @@ sub save_file {
 	return 1;
 }
 
-=pod
-
-=head2 C<write>
+=head2 write
 
 Writes the document to an arbitrary local file using the same semantics
 as when we do a full file save.
@@ -1597,9 +1585,7 @@ sub write {
 	$file->write( $text, $encoding );
 }
 
-=pod
-
-=head2 C<reload>
+=head2 reload
 
 Reload the current file discarding changes in the editor.
 
@@ -1649,18 +1635,45 @@ sub remove_tempfile {
 #####################################################################
 # Basic Content Manipulation
 
+=head2 text_get
+
+  my $string = $document->text_get;
+
+The C<text_get> method returns the content of the document as a simple
+plain scalar string.
+
+=cut
+
 sub text_get {
 	$_[0]->editor->GetText;
 }
+
+=head2 text_length
+
+  my $chars = $document->GetLength;
+
+The C<text_length> method returns the size of the document in characters.
+
+Note that this is the character length of the document and not the byte
+size of the document. The byte size of the file when saved is likely to
+differ from the character size.
+
+=cut
 
 sub text_length {
 	$_[0]->editor->GetLength;
 }
 
-sub text_set {
-	$_[0]->editor->SetText( $_[1] );
-	$_[0]->editor->refresh_notebook;
-}
+=head2 text_like
+
+  my $cool = $document->text_like( qr/(?:robot|ninja|pirate)/i );
+
+The C<text_like> method takes a regular expression and tests the document
+to see if it matches.
+
+Returns true if the document matches the regular express, or false if not.
+
+=cut
 
 sub text_like {
 	my $self = shift;
@@ -1680,14 +1693,63 @@ sub text_with_one_nl {
 	return $text;
 }
 
-# Don't use this method if you can avoid it, as it is relatively
-# slow and runs in the foreground. Do whatever work you need to do
-# and produce the delta in the background first, and only apply it
-# the delta in the foreground via text_delta instead.
+=head2 text_set
+
+  $document->text_set("This is an\nentirely new document");
+
+The C<text_set> method takes a content string and does a complete atomic
+replacement of the document with new and entirely different content.
+
+It uses a simple and direct approach which is fast but is not aware of
+context such as the current cursor position and the undo buffer.
+
+As a result, it is only appropriate for use when a document is being
+changed for new content that is completely and utterly different.
+
+To change a document to a new version that is similar to the old one
+(such as when you are doing refactoring tasks) the alternative
+L</text_replace> or ideally L</text_delta> should be used instead.
+
+=cut
+
+sub text_set {
+	my $self   = shift;
+	my $editor = $self->editor or return;
+	$editor->SetText(shift);
+	$editor->refresh_notebook;
+	return 1;
+}
+
+=head2 text_replace
+
+  $document->text_replace("This is a\nmodified document");
+
+The C<text_replace> method takes content as a string and incrementally
+modifies the current document to look like the new content.
+
+The logic for this process is done with a L<Padre::Delta> object created
+using L<Algorithm::Diff> and is run in the foreground. Because this blocks
+the entire IDE it is considered relatively slow and expensive, and is
+particularly bad for large documents.
+
+But because it is by the most simple way of applying changes to a document
+and does not require locks or background tasks, this method has a role to
+play in early implementations of new logic.
+
+Once functionality using C<text_replace> has matured, you should consider
+moving it into a background task which emits a L<Padre::Delta> and then
+use C<text_delta> to apply the change to the editor in the foreground.
+
+Returns true if changes were made to the current document, or false if the
+new document is identical to the existing one and no change was needed.
+
+=cut
+
 sub text_replace {
 	my $self = shift;
 	my $to   = shift;
 	my $from = $self->text_get;
+	return 0 if $to eq $from;
 
 	# Generate a delta and apply it
 	require Padre::Delta;
@@ -1695,14 +1757,24 @@ sub text_replace {
 	return $self->text_delta($delta);
 }
 
+=head2 text_delta
+
+The C<text_delta> method takes a single L<Padre::Delta> object as a
+parameter and applies it to the current document.
+
+Returns true if the document was changed, false if passed the null delta
+and no changes were needed, or C<undef> if not passed a L<Padre::Delta>.
+
+=cut
+
 sub text_delta {
-	my $self = shift;
+	my $self  = shift;
 	my $delta = Params::Util::_INSTANCE( shift, 'Padre::Delta' ) or return;
-	unless ( $delta->null ) {
-		my $editor = $self->editor;
-		$delta->to_editor($editor);
-		$editor->refresh_notebook;
-	}
+	return 0 if $delta->null;
+
+	my $editor = $self->editor;
+	$delta->to_editor($editor);
+	$editor->refresh_notebook;
 	return 1;
 }
 
@@ -1754,7 +1826,7 @@ sub get_indentation_style {
 	return $style;
 }
 
-=head2 C<get_indentation_level_string>
+=head2 get_indentation_level_string
 
 Calculates the string that should be used to indent a given
 number of levels for this document.
@@ -1792,7 +1864,7 @@ sub get_indentation_level_string {
 	return $indent;
 }
 
-=head2 C<event_on_char>
+=head2 event_on_char
 
 NOT IMPLEMENTED IN THE BASE CLASS
 
@@ -1808,7 +1880,7 @@ Returns nothing.
 
 Cf. C<Padre::Document::Perl> for an example.
 
-=head2 C<event_on_context_menu>
+=head2 event_on_context_menu
 
 NOT IMPLEMENTED IN THE BASE CLASS
 
@@ -1824,7 +1896,7 @@ context menu (C<Wx::Menu>) and the event.
 
 Returns nothing.
 
-=head2 C<event_on_left_up>
+=head2 event_on_left_up
 
 NOT IMPLEMENTED IN THE BASE CLASS
 
@@ -1911,7 +1983,7 @@ sub guess_mimetype {
 	);
 }
 
-=head2 C<guess_indentation_style>
+=head2 guess_indentation_style
 
 Automatically infer the indentation style of the document using
 L<Text::FindIndent>.
@@ -1972,7 +2044,7 @@ sub guess_indentation_style {
 	return $style;
 }
 
-=head2 C<guess_filename>
+=head2 guess_filename
 
   my $name = $document->guess_filename
 
@@ -2002,7 +2074,7 @@ sub guess_filename {
 	return undef;
 }
 
-=head2 C<guess_subpath>
+=head2 guess_subpath
 
   my $subpath = $document->guess_subpath;
 
