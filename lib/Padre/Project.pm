@@ -10,7 +10,7 @@ use Padre::Constant ();
 use Padre::Current  ();
 
 our $VERSION    = '0.93';
-our $COMPATIBLE = '0.81';
+our $COMPATIBLE = '0.93';
 
 
 
@@ -21,7 +21,7 @@ our $COMPATIBLE = '0.81';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Flag to indicate this root is specifically provided by a user
 	# and is not intuited.
@@ -130,6 +130,14 @@ sub config {
 # Locate the "primary" file, if the project has one
 sub headline {
 	return undef;
+}
+
+# As above but an absolute path
+sub headline_path {
+	my $self     = shift;
+	my $headline = $self->headline;
+	return undef unless defined $headline;
+	File::Spec->catfile( $self->root, $headline );
 }
 
 # Intuit the distribution version if possible

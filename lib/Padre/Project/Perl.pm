@@ -29,8 +29,9 @@ sub _headline {
 
 	# The intuitive approach is to find the top-most .pm file
 	# in the lib directory.
-	my $cursor = File::Spec->catdir( $root, 'lib' );
-	unless ( -d $cursor ) {
+	my $cursor = 'lib';
+	my $dir    = File::Spec->catdir( $root, $cursor );
+	unless ( -d $dir ) {
 
 		# Weird-looking Perl distro...
 		return undef;
@@ -38,7 +39,7 @@ sub _headline {
 
 	while (1) {
 		local *DIRECTORY;
-		opendir( DIRECTORY, $cursor ) or last;
+		opendir( DIRECTORY, $dir ) or last;
 		my @files = readdir(DIRECTORY) or last;
 		closedir(DIRECTORY) or last;
 
@@ -55,7 +56,7 @@ sub _headline {
 		my $candidate = undef;
 		foreach my $file (@files) {
 			next if $file =~ /\./;
-			my $path = File::Spec->catdir( $cursor, $file );
+			my $path = File::Spec->catdir( $dir, $file );
 			next unless -d $path;
 			if ($candidate) {
 
@@ -69,6 +70,7 @@ sub _headline {
 		# Did we find a single candidate?
 		last unless $candidate;
 		$cursor = $candidate;
+		$dir    = File::Spec->catdir( $root, $cursor );
 	}
 
 	return undef;
@@ -78,7 +80,8 @@ sub version {
 	my $self = shift;
 
 	# Look for a version declaration in the headline module for the project.
-	my $file = $self->headline or return undef;
+	my $file = $self->headline_path;
+	return undef unless defined $file;
 	Padre::Util::parse_variable( $file, 'VERSION' );
 }
 
@@ -92,7 +95,8 @@ sub _module {
 	my $self = shift;
 
 	# Look for a package declaration in the headline module for the project
-	my $file = $self->headline or return undef;
+	my $file = $self->headline_path;
+	return undef unless defined $file;
 	local $/ = "\n";
 	local $_;
 	open( my $fh, '<', $file ) #-# no critic (RequireBriefOpen)
@@ -133,7 +137,7 @@ sub distribution {
 # Directory Integration
 
 sub ignore_rule {
-	my $super = shift->SUPER::ignore_rule;
+	my $super = shift->SUPER::ignore_rule(@_);
 	return sub {
 
 		# Do the checks from our parent
@@ -152,7 +156,7 @@ sub ignore_rule {
 
 sub ignore_skip {
 	my $self = shift;
-	my $rule = $self->SUPER::ignore_skip();
+	my $rule = $self->SUPER::ignore_skip(@_);
 
 	# Ignore typical build files
 	push @$rule, '(?:^|\\/)(?:blib|_build|inc|Makefile(?:\.old)?|pm_to_blib|MYMETA\.(?:yml|json))\z';
