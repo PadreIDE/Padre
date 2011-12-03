@@ -2080,29 +2080,38 @@ sub init {
 
 		Padre::Wx::Action->new(
 			name         => 'debug.launch',
-			need_editor  => 1,
-			need_runable => 1,
-			need_file    => 1,
+			need => sub {
+				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+					return 1;
+				} else {
+					return 0;
+				}
+			},
 			toolbar      => 'actions/morpho3',
 			label        => _T('&Launch Debugger'),
 			comment      => _T('Launch Debugger'),
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->show_panel_breakpoints(1);
-				if ( $_[0]->{panel_breakpoints} ) {
-					$_[0]->{panel_breakpoints}->on_refresh_click();
-				}
-				$_[0]->show_panel_debugger(1);
-				$_[0]->{panel_debugger}->on_debug_clicked();
+					$_[0]->show_panel_breakpoints(1);
+					if ( $_[0]->{panel_breakpoints} ) {
+						$_[0]->{panel_breakpoints}->on_refresh_click();
+					}
+					$_[0]->show_panel_debugger(1);
+					$_[0]->{panel_debugger}->on_debug_clicked();
+
 			},
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
 			name         => 'debug.set_breakpoints',
-			need_editor  => 1,
-			need_runable => 1,
-			need_file    => 1,
+			need => sub {
+				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+					return 1;
+				} else {
+					return 0;
+				}
+			},
 			toolbar      => 'actions/breakpoints',
 			label        => _T('Set Breakpoints (&b)'),
 			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
@@ -2141,7 +2150,7 @@ sub init {
 			label      => _T('Visit Debug &Wiki...'),
 			comment    => _T('Open interesting and helpful Padre Wiki in your default web browser'),
 			menu_event => sub {
-				Padre::Wx::launch_browser( 'http://padre.perlide.org/trac/wiki/Features/Perl5Debugger' );
+				Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Features/Perl5Debugger');
 			},
 		) if $main->config->feature_debug2;
 
