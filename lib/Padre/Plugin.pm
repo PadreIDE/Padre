@@ -858,7 +858,9 @@ method.
 =cut
 
 sub ide {
-	$IDE{ Scalar::Util::refaddr( $_[0] ) };
+	$IDE{ Scalar::Util::refaddr( $_[0] ) }
+	or
+	Carp::croak("Called ->ide or related method on non-existance plugin'$_[0]'");
 }
 
 =pod
@@ -871,14 +873,7 @@ L<Padre::Wx::Main> (main window) object.
 =cut
 
 sub main {
-	my $self = shift;
-
-	# TODO sometimes Padre crashes here claiming that thing is undef:
-	if ( not defined $IDE{ Scalar::Util::refaddr($self) } ) {
-		Carp::cluck("UNDEF !!! $_[0]");
-		return $self->main; # fixes warning from badcode tests
-	}
-	$IDE{ Scalar::Util::refaddr($self) }->wx->main;
+	$_[0]->ide->wx->main;
 }
 
 =pod
