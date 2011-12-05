@@ -302,7 +302,7 @@ plug-in has changed while Padre was running.
 
 sub load_plugins {
 	my $self = shift;
-	my $lock = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
+	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
 
 	# Put the plug-in directory first in the load order
 	my $plugin_dir = $self->plugin_dir;
