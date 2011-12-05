@@ -232,7 +232,8 @@ sub document {
 		return $mime->{document} if $mime->{document};
 	} while ( $mime = $mime->super );
 
-	die "Failed to find a document class for '" . $self->type . "'";
+	# die "Failed to find a document class for '" . $self->type . "'";
+	return undef;
 }
 
 sub plugin {

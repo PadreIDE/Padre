@@ -2079,42 +2079,49 @@ sub init {
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
-			name         => 'debug.launch',
+			name => 'debug.launch',
 			need => sub {
-				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+				eval { Padre::Current->document->filename };
+				if ($@) {
+					return 0;
+				} elsif ( Padre::Current->document->mimetype =~ m/perl/ ) {
 					return 1;
 				} else {
 					return 0;
 				}
 			},
-			toolbar      => 'actions/morpho3',
-			label        => _T('&Launch Debugger'),
-			comment      => _T('Launch Debugger'),
+			toolbar => 'actions/morpho3',
+			label   => _T('&Launch Debugger'),
+			comment => _T('Launch Debugger'),
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-					$_[0]->show_panel_breakpoints(1);
-					if ( $_[0]->{panel_breakpoints} ) {
-						$_[0]->{panel_breakpoints}->on_refresh_click();
-					}
-					$_[0]->show_panel_debugger(1);
-					$_[0]->{panel_debugger}->on_debug_clicked();
+				$_[0]->show_panel_breakpoints(1);
+				if ( $_[0]->{panel_breakpoints} ) {
+					$_[0]->{panel_breakpoints}->on_refresh_click();
+				}
+				$_[0]->show_panel_debugger(1);
+				$_[0]->{panel_debugger}->on_debug_clicked();
 
 			},
 		) if $main->config->feature_debug2;
 
 		Padre::Wx::Action->new(
-			name         => 'debug.set_breakpoints',
+			name => 'debug.set_breakpoints',
 			need => sub {
+				eval { Padre::Current->document->filename };
+				if ($@) {
+					return 0;
+				}
 				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
 					return 1;
 				} else {
 					return 0;
 				}
 			},
-			toolbar      => 'actions/breakpoints',
-			label        => _T('Set Breakpoints (&b)'),
-			comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
+			toolbar => 'actions/breakpoints',
+			label   => _T('Set Breakpoints (&b)'),
+			comment => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
 				if ( $_[0]->{panel_breakpoints} ) {
