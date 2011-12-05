@@ -41,7 +41,9 @@ the even version for the release, even during development.
       please view wiki for more information (BOWTIE)
     - Moved rarely used "Dupliate" and "Delete" file menu options to
       "new" and "close" submenus (SEWI)
-      
+    - Try to avoid failing silently when there are major load-time failures
+      and on Win32 ask if we can reset configuration directory (ADAMK)
+
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
     - Padre::MimeTypes replaced by Padre::MIME and Padre::Wx::Scintilla (ADAMK)
