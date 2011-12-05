@@ -97,6 +97,10 @@ END_USAGE
 	exit(1);
 }
 
+# Lock in the home and constants, which are needed for everything else
+local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
+require Padre::Constant;
+
 # Padre version
 if ($VERSION) {
 	require Padre;
@@ -116,10 +120,6 @@ if ($VERSION) {
 	}
 	exit(0);
 }
-
-# Lock in the home and constants, which are needed for everything else
-local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
-require Padre::Constant;
 
 # Destroy and reinitialise our config directory
 if ($RESET) {
