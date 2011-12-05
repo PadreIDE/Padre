@@ -8,7 +8,7 @@ use warnings;
 $| = 1;
 
 use utf8;
-
+use Padre::Util              ();
 use Padre::Constant          ();
 use Padre::Wx                ();
 use Padre::Wx::Icon          ();
@@ -260,6 +260,8 @@ sub update_variables {
 			$self->{variables}->SetItem( $index++, 1, $auto_x_var_ref->{$var} );
 		}
 	}
+
+	# Tidy the list
 	Padre::Util::tidy_list( $self->{variables} );
 
 	return;
@@ -1371,7 +1373,14 @@ sub on_raw_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
+	if ( $self->{expression}->GetValue() =~ m/^h.?(\w*)/s ) {
+		$main->{panel_debug_output}->debug_output( $self->{client}->get_h_var($1) );
+	} else {
+
+		$main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
+	}
+
+	# $main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 
 	return;
 }
