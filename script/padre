@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Carp ();
 
+use constant WIN32 => !!( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ );
+
 local $| = 1;
 local $SIG{__DIE__} =
 	$ENV{PADRE_DIE}
@@ -160,7 +162,7 @@ SCOPE: {
 		# Handle a few specialised cases we understand
 		if ( $@ =~ /Schema user_version mismatch/ ) {
 			message("Padre configuration database schema invalid");
-			if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
+			if ( WIN32 ) {
 				require Win32;
 				my $rv = Win32::MsgBox(
 					"Reset your configuration to try and fix it?",
@@ -203,7 +205,7 @@ $ide->run;
 
 sub message {
 	my $message = shift;
-	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
+	if ( WIN32 ) {
 		# No console under wperl, so use native Win32 messaging
 		require Win32;
 		Win32::MsgBox($message, 0, "Padre"); 
