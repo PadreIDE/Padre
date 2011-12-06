@@ -36,6 +36,7 @@ use Padre::Constant        ();
 use Padre::Current         ();
 use Padre::Util            ();
 use Padre::PluginHandle    ();
+use Padre::DB              ();
 use Padre::Wx              ();
 use Padre::Wx::Menu::Tools ();
 
@@ -81,7 +82,7 @@ First argument should be a Padre object.
 =cut
 
 sub new {
-	my $class = shift;
+	my $class  = shift;
 	my $parent = Params::Util::_INSTANCE( shift, 'Padre' )
 		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
@@ -266,16 +267,13 @@ sub shutdown {
 
 	foreach my $module ( $self->plugin_order ) {
 		my $plugin = $self->_plugin($module);
+		my $db     = Padre::DB::Plugin->load($module);
 		if ( $plugin->enabled ) {
-			Padre::DB::Plugin->update_enabled(
-				$module => 1,
-			);
+			$db->update( enabled => 1 );
 			$self->plugin_disable($plugin);
 
 		} elsif ( $plugin->disabled ) {
-			Padre::DB::Plugin->update_enabled(
-				$module => 0,
-			);
+			$db->update( enabled => 1 );
 		}
 	}
 
@@ -735,12 +733,12 @@ sub unload_plugin {
 sub _unload_plugin {
 	my $self   = shift;
 	my $handle = $self->_plugin(shift);
-	my $module = $handle->class;
+	my $lock   = $self->main->lock('DB');
 
 	# Remember if we are enabled or not
-	my $enabled = $handle->enabled ? 1 : 0;
-	Padre::DB::Plugin->update_enabled(
-		$module => $enabled,
+	my $module = $handle->class;
+	Padre::DB::Plugin->load($module)->update(
+		enabled => $handle->enabled ? 1 : 0,
 	);
 
 	# Disable if needed
@@ -767,11 +765,12 @@ sub plugin_enable {
 	my $self   = shift;
 	my $module = shift;
 	my $handle = $self->_plugin($module) or return;
+	my $lock   = $self->main->lock('DB');
 	my $result = $handle->enable;
 
 	# Update the last-enabled version each time it is enabled
-	Padre::DB::Plugin->update_version(
-		$module => $handle->version,
+	Padre::DB::Plugin->load($module)->update(
+		version => $handle->version,
 	);
 
 	return $result;
@@ -832,7 +831,10 @@ sub plugin_db {
 
 	# Get the plug-in, and from there the config
 	my $plugin = $self->_plugin($module);
-	my $object = Padre::DB::Plugin->load($module);
+	my $object = eval {
+		local $@;
+		Padre::DB::Plugin->load($module);
+	};
 	return $object if $object;
 	return Padre::DB::Plugin->create(
 		name => $plugin->class,

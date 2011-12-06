@@ -6,6 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                  ();
+use Padre::DB             ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::HtmlWindow ();
@@ -319,8 +320,8 @@ sub _plugin_disable {
 	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
 	my $plugin = $self->{plugin}->class;
 
-	# disable plug-in
-	Padre::DB::Plugin->update_enabled( $plugin => 0 );
+	# Disable plugin (the database bit should not be here)
+	Padre::DB::Plugin->load($plugin)->update( enabled => 0 );
 	$self->{manager}->plugin_disable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
@@ -338,7 +339,7 @@ sub _plugin_enable {
 	my $plugin = $self->{plugin}->class;
 
 	# Enable plug-in
-	Padre::DB::Plugin->update_enabled( $plugin => 1 );
+	Padre::DB::Plugin->load($plugin)->update( enabled => 1 );
 	$self->{manager}->plugin_enable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
