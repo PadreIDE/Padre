@@ -9,15 +9,15 @@ Padre::Plugin - Padre plug-in API 2.2
 =head1 SYNOPSIS
 
   package Padre::Plugin::Foo;
-
+  
   use strict;
   use base 'Padre::Plugin';
-
+  
   # The plug-in name to show in the Plug-in Manager and menus
   sub plugin_name {
       'Example Plug-in';
   }
-
+  
   # Declare the Padre interfaces this plug-in uses
   sub padre_interfaces {
       'Padre::Plugin'         => 0.91,
@@ -25,7 +25,7 @@ Padre::Plugin - Padre plug-in API 2.2
       'Padre::Wx::Main'       => 0.91,
       'Padre::DB'             => 0.91,
   }
-
+  
   # The command structure to show in the Plug-ins menu
   sub menu_plugins_simple {
       my $self = shift;
@@ -36,7 +36,7 @@ Padre::Plugin - Padre plug-in API 2.2
           ],
       ];
   }
-
+  
   1;
 
 =cut
@@ -52,7 +52,6 @@ use Params::Util   ();
 use YAML::Tiny     ();
 use Padre::DB      ();
 use Padre::Wx      ();
-use Padre::Unload  ();
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.43';
@@ -228,6 +227,7 @@ disabled unless the user has specifically allowed experimental plug-ins.
 sub unload {
 	my $either = shift;
 	foreach my $package (@_) {
+		require Padre::Unload;
 		Padre::Unload::unload($package);
 	}
 	return 1;

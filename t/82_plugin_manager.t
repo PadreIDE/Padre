@@ -51,7 +51,7 @@ SCOPE: {
 	# Load the plugin
 	ok( !$manager->load_plugin('Padre::Plugin::My'), 'Loaded My Plugin' );
 	is( keys %{ $manager->plugins }, 1, 'Loaded something' );
-	my $handle = $manager->_plugin('Padre::Plugin::My');
+	my $handle = $manager->handle('Padre::Plugin::My');
 	isa_ok( $handle, 'Padre::PluginHandle' );
 	is( $handle->class, 'Padre::Plugin::My', 'Loaded My Plugin' );
 	ok( $handle->disabled, 'My Plugin is disabled' );
@@ -79,7 +79,7 @@ SCOPE: {
 		or diag( Dumper( \$manager->plugins ) );
 
 	ok( !exists $manager->plugins->{'Development::Tools'}, 'no second level plugin' );
-	is( $manager->_plugin('Padre::Plugin::TestPlugin')->class, 'Padre::Plugin::TestPlugin' );
+	is( $manager->handle('Padre::Plugin::TestPlugin')->class, 'Padre::Plugin::TestPlugin' );
 	ok( !defined $manager->plugins->{'Test::Plugin'}, 'no second level plugin' );
 
 	# try load again

@@ -7,6 +7,7 @@ use Carp           ();
 use Params::Util   ();
 use Padre::Current ();
 use Padre::Locale  ();
+use Padre::DB      ();
 
 our $VERSION = '0.93';
 
@@ -19,6 +20,7 @@ use Class::XSAccessor {
 	getters => {
 		class  => 'class',
 		object => 'object',
+		db     => 'db',
 	},
 	accessors => {
 		errstr => 'errstr',
@@ -34,7 +36,7 @@ use Class::XSAccessor {
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self = bless { @_ }, $class;
 	$self->{status} = 'unloaded';
 	$self->{errstr} = '';
 
@@ -42,14 +44,35 @@ sub new {
 	if ( exists $self->{name} ) {
 		Carp::confess("PluginHandle->name should no longer be used (foo)");
 	}
-	unless ( Params::Util::_CLASS( $self->class ) ) {
+	my $module = $self->class;
+	my $object = $self->object;
+	unless ( Params::Util::_CLASS($module) ) {
 		Carp::croak("Missing or invalid class param for Padre::PluginHandle");
 	}
-	if ( defined $self->object and not Params::Util::_INSTANCE( $self->object, $self->class ) ) {
+	if ( defined $object and not Params::Util::_INSTANCE( $object, $module ) ) {
 		Carp::croak("Invalid object param for Padre::PluginHandle");
 	}
 	unless ( _STATUS( $self->status ) ) {
 		Carp::croak("Missing or invalid status param for Padre::PluginHandle");
+	}
+
+	# Load or create the database configuration for the plugin
+	unless ( Params::Util::_INSTANCE($self->db, 'Padre::DB::Plugin') ) {
+		local $@;
+		$self->{db} = eval {
+			Padre::DB::Plugin->load($module);
+		};
+		$self->{db} ||= Padre::DB::Plugin->create(
+			name => $module,
+
+			# Track the last version of the plugin that we were
+			# able to successfully enable (nothing to start with)
+			version => undef,
+
+			# Having undef here means no preference yet
+			enabled => undef,
+			config  => undef,
+		);
 	}
 
 	return $self;
@@ -83,7 +106,7 @@ sub status {
 sub status_localized {
 	my ($self) = @_;
 
-	# we're forced to have a hash of translation so that gettext
+	# We are forced to have a hash of translation so that gettext
 	# tools can extract those to be localized.
 	my %translation = (
 		error        => Wx::gettext('error'),
@@ -93,6 +116,7 @@ sub status_localized {
 		disabled     => Wx::gettext('disabled'),
 		enabled      => Wx::gettext('enabled'),
 	);
+
 	return $translation{ $self->{status} };
 }
 
@@ -166,7 +190,13 @@ sub version {
 	my $object = $self->object;
 
 	# Prefer the version from the loaded plugin
-	return $object->VERSION if $object;
+	if ( $object ) {
+		local $@;
+		my $rv = eval {
+			$object->VERSION;
+		};
+		return $rv;
+	}
 
 	# Intuit the version by reading the actual file
 	require Class::Inspector;
@@ -350,6 +380,15 @@ sub disable {
 
 
 	return 0;
+}
+
+sub unload {
+	require Padre::Unload;
+	Padre::Unload::unload( $_[0]->class );
+}
+
+sub update {
+	shift->db->update(@_);
 }
 
 

@@ -17,10 +17,6 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 
 # API NOTES:
 # - This class uses english-style verb_noun method naming
-#
-# MAINTAINER NOTES:
-# - Don't delete the commented-out PAR-related code, we're turning it
-#   back on at some point.
 
 use 5.008;
 use strict;
@@ -92,8 +88,6 @@ sub new {
 		plugin_dir                => Padre::Constant::PLUGIN_DIR,
 		plugin_order              => [],
 		plugins_with_context_menu => {},
-
-		#par_loaded               => 0,
 		@_,
 	}, $class;
 
@@ -180,7 +174,7 @@ sub plugin_order {
 	return @{ $self->{plugin_order} };
 }
 
-sub plugin_objects {
+sub handles {
 	map { $_[0]->{plugins}->{$_} } $_[0]->plugin_order;
 }
 
@@ -200,15 +194,15 @@ sub relocale {
 	my $self   = shift;
 	my $locale = $self->main->{locale};
 
-	foreach my $plugin ( $self->plugin_objects ) {
+	foreach my $handle ( $self->handles ) {
 
 		# Only process enabled plug-ins
-		next unless $plugin->enabled;
+		next unless $handle->enabled;
 
 		# Add the plug-in locale dir to search path
-		my $object = $plugin->{object};
-		if ( $object->can('plugin_directory_locale') ) {
-			my $dir = $object->plugin_directory_locale;
+		my $plugin = $handle->{object};
+		if ( $plugin->can('plugin_directory_locale') ) {
+			my $dir = $plugin->plugin_directory_locale;
 			if ( defined $dir and -d $dir ) {
 				$locale->AddCatalogLookupPathPrefix($dir);
 			}
@@ -216,7 +210,7 @@ sub relocale {
 
 		# Add the plug-in catalog to the locale
 		my $code   = Padre::Locale::rfc4646();
-		my $prefix = $plugin->locale_prefix;
+		my $prefix = $handle->locale_prefix;
 		$locale->AddCatalog("$prefix-$code");
 	}
 
@@ -265,15 +259,13 @@ sub shutdown {
 	my $self = shift;
 	my $lock = $self->main->lock('DB');
 
-	foreach my $module ( $self->plugin_order ) {
-		my $plugin = $self->_plugin($module);
-		my $db     = Padre::DB::Plugin->load($module);
-		if ( $plugin->enabled ) {
-			$db->update( enabled => 1 );
-			$self->plugin_disable($plugin);
+	foreach my $handle ( $self->handles ) {
+		if ( $handle->enabled ) {
+			$handle->update( enabled => 1 );
+			$self->plugin_disable($handle);
 
-		} elsif ( $plugin->disabled ) {
-			$db->update( enabled => 1 );
+		} elsif ( $handle->disabled ) {
+			$handle->update( enabled => 0 );
 		}
 	}
 
@@ -351,24 +343,6 @@ sub load_plugins {
 		}
 	}
 
-	# Disabled until someone other than tsee wants to use PAR plug-ins :)
-	# $self->_load_plugins_from_par;
-	if ( my @failed = $self->failed ) {
-
-		# Until such time as we can show an error message
-		# in a smarter way, this gets annoying.
-		# Every time you start the editor, we tell you what
-		# we DIDN'T do...
-		# Turn this back on once we can track these over time
-		# and only report on plug-ins that USED to work but now
-		# have started to fail.
-		# $self->parent->wx->main->error(
-		#     Wx::gettext("Failed to load the following plug-in(s):\n")
-		#     . join "\n", @failed
-		# ) unless $ENV{HARNESS_ACTIVE};
-		return;
-	}
-
 	return;
 }
 
@@ -387,8 +361,7 @@ sub reload_plugins {
 
 	# Do not use the reload_plugin method since that
 	# refreshes the menu every time.
-	my $plugins = $self->plugins;
-	foreach my $module ( sort keys %$plugins ) {
+	foreach my $module ( $self->plugin_order ) {
 		$self->_unload_plugin($module);
 		$self->_load_plugin($module);
 		$self->enable_editors($module);
@@ -424,7 +397,7 @@ List of new plug-ins:
 
 END_MSG
 
-		$self->parent->wx->main->message(
+		$self->main->message(
 			$msg,
 			Wx::gettext('New plug-ins detected')
 		);
@@ -437,70 +410,19 @@ END_MSG
 
 =head2 C<failed>
 
-Returns the plug-in names (without C<Padre::Plugin::> prefixed) of all plug-ins
-that the editor attempted to load but failed. Note that after a failed
-attempt, the plug-in is usually disabled in the configuration and not loaded
-again when the editor is restarted.
+Returns the list of all plugins that the editor attempted to load but
+failed. Note that after a failed attempt, the plug-in is usually disabled
+in the configuration and not loaded again when the editor is restarted.
 
 =cut
 
 sub failed {
-	my $self    = shift;
-	my $plugins = $self->plugins;
-	return grep { $plugins->{$_}->status eq 'error' or $plugins->{$_}->status eq 'incompatible' } sort keys %$plugins;
+	return map {
+		$_->class
+	} grep {
+		$_->error or $_->incompatible
+	} $_[0]->handles;
 }
-
-
-
-
-
-######################################################################
-# PAR Integration
-
-# NOTE:
-# Temporarily disabled until we actually start using PAR for plug-ins.
-# Don't delete this code or tsee will be very sad.
-
-## Attempt to load all plug-ins that sit as .par files in the
-## .padre/plugins/ folder
-#sub _load_plugins_from_par {
-#    my ($self) = @_;
-#    $self->_setup_par;
-#
-#    my $plugin_dir = $self->plugin_dir;
-#    opendir my $dh, $plugin_dir or return;
-#    while ( my $file = readdir $dh ) {
-#        if ( $file =~ /^\w+\.par$/i ) {
-#            # Only single-level plug-ins for now.
-#            my $parfile = File::Spec->catfile( $plugin_dir, $file );
-#            PAR->import($parfile);
-#            $file =~ s/\.par$//i;
-#            $file =~ s/-/::/g;
-#
-#            # Caller must refresh plug-in menu
-#            $self->_load_plugin($file);
-#        }
-#    }
-#    closedir($dh);
-#    return;
-#}
-#
-## Load the PAR module and setup the cache directory.
-#sub _setup_par {
-#    my ($self) = @_;
-#
-#    return if $self->{par_loaded};
-#
-#    # Setup the PAR environment:
-#    require PAR;
-#    my $plugin_dir = $self->plugin_dir;
-#    my $cache_dir = File::Spec->catdir( $plugin_dir, 'cache' );
-#    $ENV{PAR_GLOBAL_TEMP} = $cache_dir;
-#    File::Path::mkpath($cache_dir) unless -e $cache_dir;
-#    $ENV{PAR_TEMP} = $cache_dir;
-#
-#    $self->{par_loaded} = 1;
-#}
 
 
 
@@ -521,7 +443,7 @@ menu, etc.
 
 sub load_plugin {
 	my $self = shift;
-	my $lock = $self->main->lock('refresh_menu_plugins');
+	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
 	$self->_load_plugin(@_);
 }
 
@@ -533,15 +455,16 @@ sub load_plugin {
 # a very specific and controlled series of steps. Splitting this up
 # would just make the process harder to understand, so please don't.
 sub _load_plugin {
-	my $self   = shift;
-	my $module = shift;
+	my $self    = shift;
+	my $module  = shift;
+	my $main    = $self->main;
+	my $plugins = $self->plugins;
 
 	# Shortcut and skip if loaded
-	my $plugins = $self->plugins;
 	return if $plugins->{$module};
 
 	# Create the plug-in object (and flush the old sort order)
-	my $plugin = $plugins->{$module} = Padre::PluginHandle->new(
+	my $handle = $plugins->{$module} = Padre::PluginHandle->new(
 		class => $module,
 	);
 	delete $self->{plugin_order};
@@ -553,46 +476,45 @@ sub _load_plugin {
 		local $SIG{__WARN__} = sub () { };
 		eval "use $module ();";
 	}
-
-	# Did it compile?
 	if ($@) {
-		$plugin->errstr(
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Crashed while loading: %s"),
 				$module, $@,
 			)
 		);
-		$plugin->status('error');
+		$handle->status('error');
 		return;
 	}
 
+	# Is the module versioned?
 	unless ( defined $module->VERSION ) {
-		$plugin->errstr(
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Plugin is empty or unversioned"),
 				$module,
 			)
 		);
-		$plugin->status('error');
+		$handle->status('error');
 		return;
 	}
 
 	# Plug-in must be a Padre::Plugin subclass
 	unless ( $module->isa('Padre::Plugin') ) {
-		$plugin->errstr(
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Not a Padre::Plugin subclass"),
 				$module,
 			)
 		);
-		$plugin->status('error');
+		$handle->status('error');
 		return;
 	}
 
 	# Is the plugin compatible with this Padre
 	my $compatible = $self->compatible($module);
 	if ($compatible) {
-		$plugin->errstr(
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Not compatible with Padre %s - %s"),
 				$module,
@@ -600,63 +522,56 @@ sub _load_plugin {
 				$compatible,
 			)
 		);
-		$plugin->status('incompatible');
+		$handle->status('incompatible');
 		return;
 	}
 
 	# Attempt to instantiate the plug-in
-	my $object = eval { $module->new( $self->{parent} ); };
+	my $plugin = eval {
+		$module->new( $self->{parent} );
+	};
 	if ($@) {
-		$plugin->errstr(
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Crashed while instantiating: %s"),
 				$module, $@,
 			)
 		);
-		$plugin->status('error');
+		$handle->status('error');
 		return;
 	}
-	unless ( Params::Util::_INSTANCE( $object, 'Padre::Plugin' ) ) {
-		$plugin->errstr(
+	unless ( Params::Util::_INSTANCE( $plugin, 'Padre::Plugin' ) ) {
+		$handle->errstr(
 			sprintf(
 				Wx::gettext("%s - Failed to instantiate plug-in"),
 				$module,
 			)
 		);
-		$plugin->status('error');
+		$handle->status('error');
 		return;
 	}
 
 	# Plug-in is now loaded
-	$plugin->{object} = $object;
-	$plugin->status('loaded');
+	$handle->{object} = $plugin;
+	$handle->status('loaded');
 
-	# Should we try to enable the plug-in
-	my $config = $self->plugin_db( $plugin->class );
-	unless ( defined $config->enabled ) {
-
-		# Do not enable by default
-		$config->set( enabled => 0 );
-	}
-
-	# NOTE: This violates encapsulation. The plugin manager should be
-	# manipulated from the outside, it shouldn't introspect it's parent IDE
-	unless ( $config->enabled ) {
-		$plugin->status('disabled');
+	# Return unless we will enable the plugin
+	unless ( $handle->db->enabled ) {
+		$handle->status('disabled');
 		return;
 	}
 
 	# Add a new directory for locale to search translation catalogs.
-	if ( $object->can('plugin_directory_locale') ) {
-		my $dir = $object->plugin_directory_locale;
+	if ( $plugin->can('plugin_directory_locale') ) {
+		my $dir = $plugin->plugin_directory_locale;
 		if ( defined $dir and -d $dir ) {
-			my $locale = $self->main->{locale};
+			my $locale = $main->{locale};
 			$locale->AddCatalogLookupPathPrefix($dir);
 		}
 	}
 
 	# FINALLY we can enable the plug-in
-	$self->plugin_enable($plugin);
+	$self->plugin_enable($handle);
 
 	return 1;
 }
@@ -726,24 +641,22 @@ menu, etc.
 sub unload_plugin {
 	my $self = shift;
 	my $lock = $self->main->lock('refresh_menu_plugins');
+
 	$self->_unload_plugin(@_);
 }
 
 # the guts of unload_plugin which don't refresh the menu
 sub _unload_plugin {
 	my $self   = shift;
-	my $handle = $self->_plugin(shift);
+	my $handle = $self->handle(shift);
 	my $lock   = $self->main->lock('DB');
 
-	# Remember if we are enabled or not
-	my $module = $handle->class;
-	Padre::DB::Plugin->load($module)->update(
-		enabled => $handle->enabled ? 1 : 0,
-	);
-
-	# Disable if needed
+	# Save state and disable if needed
 	if ( $handle->enabled ) {
+		$handle->update( enabled => 1 );
 		$handle->disable;
+	} else {
+		$handle->update( enabled => 0 );
 	}
 
 	# Destruct the plug-in
@@ -752,10 +665,10 @@ sub _unload_plugin {
 	}
 
 	# Unload the plug-in class itself
-	Padre::Unload::unload($module);
+	$handle->unload;
 
 	# Finally, remove the handle (and flush the sort order)
-	delete $self->{plugins}->{$module};
+	delete $self->{plugins}->{ $handle->class };
 	delete $self->{plugin_order};
 
 	return 1;
@@ -763,22 +676,18 @@ sub _unload_plugin {
 
 sub plugin_enable {
 	my $self   = shift;
-	my $module = shift;
-	my $handle = $self->_plugin($module) or return;
-	my $lock   = $self->main->lock('DB');
+	my $handle = $self->handle(shift) or return;
 	my $result = $handle->enable;
 
 	# Update the last-enabled version each time it is enabled
-	Padre::DB::Plugin->load($module)->update(
-		version => $handle->version,
-	);
+	$handle->db->update( version => $handle->version );
 
 	return $result;
 }
 
 sub plugin_disable {
-	my $self = shift;
-	my $handle = $self->_plugin(shift) or return;
+	my $self   = shift;
+	my $handle = $self->handle(shift) or return;
 	$handle->disable;
 }
 
@@ -793,60 +702,12 @@ is passed in as first argument.
 
 sub reload_plugin {
 	my $self   = shift;
+	my $handle = self->handle(shift) or return;
 	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
-	my $module = shift;
-	$self->_unload_plugin($module);
-	$self->_load_plugin($module)   or return;
-	$self->enable_editors($module) or return;
+	$self->_unload_plugin($handle);
+	$self->_load_plugin($handle)   or return;
+	$self->enable_editors($handle) or return;
 	return 1;
-}
-
-=pod
-
-=head2 C<plugin_db>
-
-Given a plug-in name or namespace, returns a hash reference
-which corresponds to the configuration section in the Padre
-database of that plug-in. Any modifications of that
-hash reference will, on normal exit, be serialized and
-written back to the database file.
-
-If the plug-in name is omitted and this method is called from
-a plug-in namespace, the plug-in name is determine automatically.
-
-=cut
-
-sub plugin_db {
-	my $self   = shift;
-	my $module = shift;
-
-	# Infer the plug-in name from caller if not provided
-	unless ( defined $module ) {
-		my ($package) = caller();
-		unless ( $package =~ /^Padre::Plugin::/ ) {
-			Carp::croak("Cannot infer the name of the plug-in for which the configuration has been requested");
-		}
-		$module = $package;
-	}
-
-	# Get the plug-in, and from there the config
-	my $plugin = $self->_plugin($module);
-	my $object = eval {
-		local $@;
-		Padre::DB::Plugin->load($module);
-	};
-	return $object if $object;
-	return Padre::DB::Plugin->create(
-		name => $plugin->class,
-
-		# Track the last version of the plugin that we were
-		# able to successfully enable (nothing to start with)
-		version => undef,
-
-		# Having undef here means no preference yet
-		enabled => undef,
-		config  => undef,
-	);
 }
 
 # Fire a event on all active plugins
@@ -854,34 +715,15 @@ sub plugin_event {
 	my $self  = shift;
 	my $event = shift;
 
-	foreach my $module ( keys %{ $self->{plugins} } ) {
-
-		# TODO: Re-enable the commented out error messages when the failing modules
-		#       are fixed.
-
-		my $plugin = $self->{plugins}->{$module};
-		if ( !ref($plugin) ) {
-
-			# $self->_error($plugin,Wx::gettext('Not found in plugin list!'));
-			next;
-		}
-
-		my $object = $plugin->{object};
-		if ( !ref($object) ) {
-
-			# $self->_error($plugin,Wx::gettext('Plugin object missing!'));
-			next;
-		}
-
-		next unless $plugin->{status};
-		next unless $plugin->{status} eq 'enabled';
+	foreach my $handle ( $self->handles ) {
+		next unless $handle->enabled;
 
 		eval {
-			return if not $object->can($event);
-			$object->$event(@_);
+			my $plugin = $handle->{object};
+			$plugin->$event(@_) if $plugin->can($event);
 		};
 		if ($@) {
-			$self->_error( $plugin, sprintf( Wx::gettext('Plugin error on event %s: %s'), $event, $@ ) );
+			$self->_error( $handle, sprintf( Wx::gettext('Plugin error on event %s: %s'), $event, $@ ) );
 			next;
 		}
 	}
@@ -944,24 +786,6 @@ sub _error {
 sub editor_enable {
 	my $self   = shift;
 	my $editor = shift;
-
-	#	foreach my $module ( keys %{ $self->{plugins} } ) {
-	#		my $plugin = $self->{plugins}->{$module} or return;
-	#		my $object = $plugin->{object}           or return;
-	#		next unless $plugin->{status};
-	#		next unless $plugin->{status} eq 'enabled';
-	#		eval {
-	#			return if not $object->can('editor_enable');
-	#			$object->editor_enable( $editor, $editor->{Document} );
-	#		};
-	#		if ($@) {
-	#			warn $@;
-	#
-	#			# TO DO: report the plug-in error!
-	#		}
-	#	}
-	#	return;
-
 	return $self->plugin_event( 'editor_enable', $editor, $editor->{Document} );
 }
 
@@ -972,25 +796,29 @@ sub editor_disable {
 }
 
 sub enable_editors_for_all {
-	my $self    = shift;
-	my $plugins = $self->plugins;
-	foreach my $module ( keys %$plugins ) {
-		$self->enable_editors($module);
+	my $self = shift;
+	foreach my $handle ( $self->handles ) {
+		$self->enable_editors($handle);
 	}
 	return 1;
 }
 
 sub enable_editors {
 	my $self   = shift;
-	my $module = shift;
-	my $plugin = $self->plugins->{$module} or return;
-	my $object = $plugin->{object} or return;
-	return unless ( $plugin->{status} and $plugin->{status} eq 'enabled' );
+	my $handle = $self->handle(shift) or return;
+	return unless $handle->enabled;
+
+	# Does the plugin support editor_enabled?
+	my $plugin = $handle->{object} or return;
+	return 1 unless $plugin->can('editor_enable');
+
 	foreach my $editor ( $self->main->editors ) {
-		if ( $object->can('editor_enable') ) {
-			$object->editor_enable( $editor, $editor->{Document} );
-		}
+		local $@;
+		eval {
+			$plugin->editor_enable( $editor, $editor->{Document} );
+		};
 	}
+
 	return 1;
 }
 
@@ -1006,15 +834,14 @@ sub get_menu {
 	my $self   = shift;
 	my $main   = shift;
 	my $module = shift;
+	my $handle = $self->handle($module);
+	return () unless $handle->enabled;
+	return () unless $handle->{object}->can('menu_plugins');
 
-	my $plugin = $self->_plugin($module);
-	return () unless $plugin and $plugin->{status} eq 'enabled';
-	return () unless $plugin->{object}->can('menu_plugins');
-
-	my @menu = eval { $plugin->{object}->menu_plugins($main) };
+	my @menu = eval { $handle->{object}->menu_plugins($main) };
 	if ($@) {
-		$plugin->errstr( Wx::gettext('Error when calling menu for plug-in ') . "'$module': $@" );
-		$plugin->{status} = 'error';
+		$handle->errstr( Wx::gettext('Error when calling menu for plug-in ') . "'$module': $@" );
+		$handle->{status} = 'error';
 
 		# TO DO: make sure these error messages show up somewhere or it will drive
 		# crazy anyone trying to write a plug-in
@@ -1120,8 +947,8 @@ sub on_context_menu {
 
 	my $plugin_handles = $self->plugins;
 	foreach my $plugin_name ( keys %$plugins ) {
-		my $plugin = $plugin_handles->{$plugin_name}->object;
-		$plugin->event_on_context_menu( $doc, $editor, $menu, $event );
+		my $handle = $plugin_handles->{$plugin_name}->object;
+		$handle->event_on_context_menu( $doc, $editor, $menu, $event );
 	}
 	return ();
 }
@@ -1202,7 +1029,7 @@ sub test_a_plugin {
 ######################################################################
 # Support Functions
 
-sub _plugin {
+sub handle {
 	my $self = shift;
 	my $it   = shift;
 

@@ -154,7 +154,7 @@ sub add {
 	my $need    = 1;
 	my $manager = Padre->ide->plugin_manager;
 	foreach my $module ( $manager->plugin_order ) {
-		my $plugin = $manager->_plugin($module);
+		my $plugin = $manager->handle($module);
 		next unless $plugin->enabled;
 
 		# Generate the menu for the plugin
