@@ -223,15 +223,18 @@ sub enable {
 		Carp::croak("Cannot enable plug-in '$self'");
 	}
 
-	# add the plugin catalog to the locale
-	my $locale  = Padre::Current->main->{locale};
+	# Add the plugin catalog to the locale
+	my $main    = Padre::Current->main;
+	my $locale  = $main->{locale};
 	my $code    = Padre::Locale::rfc4646();
 	my $prefix  = $self->locale_prefix;
-	my $manager = Padre->ide->plugin_manager;
+	my $manager = $main->ide->plugin_manager;
 	$locale->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
-	eval { $self->object->plugin_enable; };
+	eval {
+		$self->object->plugin_enable;
+	};
 	if ($@) {
 
 		# Crashed during plugin enable
@@ -248,46 +251,65 @@ sub enable {
 
 	# If the plugin defines document types, register them.
 	# Skip document registration on error.
-	eval {
-		my @documents = $self->object->registered_documents;
-		if (@documents) {
-			require Padre::MIME;
-		}
-		while (@documents) {
-			my $type  = shift @documents;
-			my $class = shift @documents;
-			Padre::MIME->find($type)->plugin($class);
-		}
+	my @documents = eval {
+		$self->object->registered_documents;
 	};
+	if ( $@ ) {
+		# Crashed during document registration
+		$self->status('error');
+		$self->errstr(
+			Wx::gettext("Failed to enable plug-in '%s': %s"),
+			$self->class,
+			$@,
+		);
+		return 0;
+	}
+	while (@documents) {
+		my $type  = shift @documents;
+		my $class = shift @documents;
+		require Padre::MIME;
+		Padre::MIME->find($type)->plugin($class);
+	}
 
 	# If the plugin defines syntax highlighters, register them.
 	# Skip highlighter registration on error.
 	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
-	eval {
-		my @highlighters = $self->object->provided_highlighters;
-		if ( @highlighters ) {
-			require Padre::Wx::Scintilla;
-			while ( @highlighters ) {
-				my $module = shift @highlighters;
-				my $params = shift @highlighters;
-				Padre::Wx::Scintilla->add_highlighter( $module, $params );
-			}
-		}
+	my @highlighters = eval {
+		$self->object->provided_highlighters;
 	};
+	if ( $@ ) {
+		# Crashed during highlighter registration
+		$self->status('error');
+		$self->errstr(
+			Wx::gettext("Failed to enable plug-in '%s': %s"),
+			$self->class,
+			$@,
+		);
+		return 0;
+	}
+	while ( @highlighters ) {
+		my $module = shift @highlighters;
+		my $params = shift @highlighters;
+		require Padre::Wx::Scintilla;
+		Padre::Wx::Scintilla->add_highlighter( $module, $params );
+	}
 
 	# If the plugin has a hook for the context menu, cache it
 	if ( $self->object->can('event_on_context_menu') ) {
-		my $cxt_menu_hook_cache = $manager->plugins_with_context_menu;
+		my $cxt_menu_hook_cache = eval {
+			$manager->plugins_with_context_menu;
+		};
 		$cxt_menu_hook_cache->{ $self->class } = 1;
 	}
 
 	# Look for Padre hooks
 	if ( $self->object->can('padre_hooks') ) {
-		my $hooks = $self->object->padre_hooks;
-
+		my $hooks = eval {
+			$self->object->padre_hooks;
+		};
 		if ( ref($hooks) ne 'HASH' ) {
-			$manager->main->error(
+			$main->error(
 				sprintf(
 					Wx::gettext('Plugin %s returned %s instead of a hook list on ->padre_hooks'), $self->class, $hooks
 				)
@@ -298,7 +320,7 @@ sub enable {
 		for my $hookname ( keys( %{$hooks} ) ) {
 
 			if ( !$Padre::PluginManager::PADRE_HOOKS{$hookname} ) {
-				$manager->main->error(
+				$main->error(
 					sprintf( Wx::gettext('Plugin %s tried to register invalid hook %s'), $self->class, $hookname ) );
 				next;
 			}
@@ -306,7 +328,7 @@ sub enable {
 			for my $hook ( ( ref( $hooks->{$hookname} ) eq 'ARRAY' ) ? @{ $hooks->{$hookname} } : $hooks->{$hookname} )
 			{
 				if ( ref($hook) ne 'CODE' ) {
-					$manager->main->error(
+					$main->error(
 						sprintf( Wx::gettext('Plugin %s tried to register non-CODE hook %s'), $self->class, $hookname )
 					);
 					next;
