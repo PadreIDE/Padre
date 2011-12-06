@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 00:10-0800\n"
+"POT-Creation-Date: 2011-12-06 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2320,12 +2320,13 @@ msgstr ""
 msgid "Failed to delete POD fragment"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:351
+#: lib/Padre/PluginHandle.pm:373
 #, perl-format
 msgid "Failed to disable plug-in '%s': %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:241
+#: lib/Padre/PluginHandle.pm:244 lib/Padre/PluginHandle.pm:261
+#: lib/Padre/PluginHandle.pm:285
 #, perl-format
 msgid "Failed to enable plug-in '%s': %s"
 msgstr ""
@@ -3890,17 +3891,17 @@ msgstr ""
 msgid "Plugin %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:292
+#: lib/Padre/PluginHandle.pm:314
 #, perl-format
 msgid "Plugin %s returned %s instead of a hook list on ->padre_hooks"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:302
+#: lib/Padre/PluginHandle.pm:324
 #, perl-format
 msgid "Plugin %s tried to register invalid hook %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:310
+#: lib/Padre/PluginHandle.pm:332
 #, perl-format
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
