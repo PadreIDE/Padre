@@ -92,6 +92,10 @@ sub new {
 		'plugins.plugin_manager',
 	);
 
+	$self->add_menu_action(
+		'plugins.plugin_manager2',
+	);
+
 	# Create the plugin tools submenu
 	my $tools = Wx::Menu->new;
 	$self->Append(
