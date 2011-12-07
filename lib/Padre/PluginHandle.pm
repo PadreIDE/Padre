@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Carp           ();
 use Params::Util   ();
+use Padre::Util    ('_T');
 use Padre::Current ();
 use Padre::Locale  ();
 use Padre::DB      ();
@@ -19,11 +20,8 @@ use overload
 use Class::XSAccessor {
 	getters => {
 		class  => 'class',
-		object => 'object',
 		db     => 'db',
-	},
-	accessors => {
-		errstr => 'errstr',
+		plugin => 'plugin',
 	},
 };
 
@@ -36,21 +34,23 @@ use Class::XSAccessor {
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_ }, $class;
-	$self->{status} = 'unloaded';
-	$self->{errstr} = '';
+	my $self = bless {
+		@_,
+		status => 'unloaded',
+		errstr => [ '' ],
+	}, $class;
 
 	# Check params
 	if ( exists $self->{name} ) {
 		Carp::confess("PluginHandle->name should no longer be used (foo)");
 	}
 	my $module = $self->class;
-	my $object = $self->object;
+	my $plugin = $self->plugin;
 	unless ( Params::Util::_CLASS($module) ) {
 		Carp::croak("Missing or invalid class param for Padre::PluginHandle");
 	}
-	if ( defined $object and not Params::Util::_INSTANCE( $object, $module ) ) {
-		Carp::croak("Invalid object param for Padre::PluginHandle");
+	if ( defined $plugin and not Params::Util::_INSTANCE( $plugin, $module ) ) {
+		Carp::croak("Invalid plugin param for Padre::PluginHandle");
 	}
 	unless ( _STATUS( $self->status ) ) {
 		Carp::croak("Missing or invalid status param for Padre::PluginHandle");
@@ -104,7 +104,7 @@ sub status {
 }
 
 sub status_localized {
-	my ($self) = @_;
+	my $self = shift;
 
 	# We are forced to have a hash of translation so that gettext
 	# tools can extract those to be localized.
@@ -155,7 +155,30 @@ sub can_disable {
 
 sub can_editor {
 	$_[0]->{status} eq 'enabled'
-		and $_[0]->{object}->can('editor_enable');
+		and $_[0]->{plugin}->can('editor_enable');
+}
+
+sub can_context {
+	$_[0]->{status} eq 'enabled'
+	and
+	$_[0]->{plugin}->can('event_on_context_menu')
+}
+
+sub errstr {
+	my $self = shift;
+
+	# Set the error string
+	if ( @_ ) {
+		$self->{errstr} = [ @_ ];
+		return 1;
+	}
+
+	# Delay the translating sprintf and rerun each time,
+	# so that plugin errors can appear in the currently active language
+	# instead of the language at the time of the error.
+	my @copy = @{ $self->{errstr} };
+	my $text = Wx::gettext(shift @copy);
+	return sprintf($text, @copy);
 }
 
 
@@ -164,6 +187,19 @@ sub can_editor {
 
 ######################################################################
 # Interface Methods
+
+# Wrap any can call in an eval as the plugin might have a custom
+# can method and we need to be paranoid around plugins.
+sub plugin_can {
+	my $self   = shift;
+	my $plugin = $self->{plugin} or return undef;
+
+	# Ignore errors and flatten to a boolean
+	local $@;
+	return !! eval {
+		$plugin->can(shift)
+	};
+}
 
 sub plugin_icon {
 	my $self = shift;
@@ -176,24 +212,25 @@ sub plugin_icon {
 }
 
 sub plugin_name {
-	my $self   = shift;
-	my $object = $self->object;
-	if ( $object and $object->can('plugin_name') ) {
-		return $object->plugin_name;
+	my $self = shift;
+	if ( $self->plugin_can('plugin_name') ) {
+		local $@;
+		return scalar eval {
+			$self->plugin->plugin_name
+		};
 	} else {
 		return $self->class;
 	}
 }
 
 sub version {
-	my $self   = shift;
-	my $object = $self->object;
+	my $self = shift;
 
 	# Prefer the version from the loaded plugin
-	if ( $object ) {
+	if ( $self->plugin_can('VERSION') ) {
 		local $@;
 		my $rv = eval {
-			$object->VERSION;
+			$self->plugin->VERSION;
 		};
 		return $rv;
 	}
@@ -224,27 +261,24 @@ sub enable {
 	}
 
 	# Add the plugin catalog to the locale
-	my $main    = Padre::Current->main;
-	my $locale  = $main->{locale};
-	my $code    = Padre::Locale::rfc4646();
 	my $prefix  = $self->locale_prefix;
-	my $manager = $main->ide->plugin_manager;
-	$locale->AddCatalog("$prefix-$code");
+	my $code    = Padre::Locale::rfc4646();
+	my $current = $self->current;
+	my $main    = $current->main;
+	$main->{locale}->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
 	eval {
-		$self->object->plugin_enable;
+		$self->plugin->plugin_enable;
 	};
 	if ($@) {
 
 		# Crashed during plugin enable
 		$self->status('error');
 		$self->errstr(
-			sprintf(
-				Wx::gettext("Failed to enable plug-in '%s': %s"),
-				$self->class,
-				$@,
-			)
+			_T("Failed to enable plug-in '%s': %s"),
+			$self->class,
+			$@,
 		);
 		return 0;
 	}
@@ -252,13 +286,13 @@ sub enable {
 	# If the plugin defines document types, register them.
 	# Skip document registration on error.
 	my @documents = eval {
-		$self->object->registered_documents;
+		$self->plugin->registered_documents;
 	};
 	if ( $@ ) {
 		# Crashed during document registration
 		$self->status('error');
 		$self->errstr(
-			Wx::gettext("Failed to enable plug-in '%s': %s"),
+			_T("Failed to enable plug-in '%s': %s"),
 			$self->class,
 			$@,
 		);
@@ -276,13 +310,13 @@ sub enable {
 	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
 	my @highlighters = eval {
-		$self->object->provided_highlighters;
+		$self->plugin->registered_highlighters;
 	};
 	if ( $@ ) {
 		# Crashed during highlighter registration
 		$self->status('error');
 		$self->errstr(
-			Wx::gettext("Failed to enable plug-in '%s': %s"),
+			_T("Failed to enable plug-in '%s': %s"),
 			$self->class,
 			$@,
 		);
@@ -295,28 +329,23 @@ sub enable {
 		Padre::Wx::Scintilla->add_highlighter( $module, $params );
 	}
 
-	# If the plugin has a hook for the context menu, cache it
-	if ( $self->object->can('event_on_context_menu') ) {
-		my $cxt_menu_hook_cache = eval {
-			$manager->plugins_with_context_menu;
-		};
-		$cxt_menu_hook_cache->{ $self->class } = 1;
-	}
-
 	# Look for Padre hooks
-	if ( $self->object->can('padre_hooks') ) {
+	if ( $self->plugin->can('padre_hooks') ) {
 		my $hooks = eval {
-			$self->object->padre_hooks;
+			$self->plugin->padre_hooks;
 		};
 		if ( ref($hooks) ne 'HASH' ) {
 			$main->error(
 				sprintf(
-					Wx::gettext('Plugin %s returned %s instead of a hook list on ->padre_hooks'), $self->class, $hooks
+					Wx::gettext('Plugin %s returned %s instead of a hook list on ->padre_hooks'),
+					$self->class,
+					$hooks,
 				)
 			);
 			return;
 		}
 
+		my $manager = $current->ide->plugin_manager;
 		for my $hookname ( keys( %{$hooks} ) ) {
 
 			if ( !$Padre::PluginManager::PADRE_HOOKS{$hookname} ) {
@@ -333,10 +362,13 @@ sub enable {
 					);
 					next;
 				}
-				push @{ $manager->{hooks}->{$hookname} }, [ $self->object, $hook ];
+				push @{ $manager->{hooks}->{$hookname} }, [ $self->plugin, $hook ];
 			}
 		}
 	}
+
+	# Update the last-enabled version each time it is enabled
+	$self->update( version => $self->version );
 
 	# Update the status
 	$self->status('enabled');
@@ -351,11 +383,8 @@ sub disable {
 		Carp::croak("Cannot disable plug-in '$self'");
 	}
 
-	# NOTE: Horribly violates encapsulation
-	my $manager = Padre->ide->plugin_manager;
-
 	# If the plugin defines document types, deregister them
-	my @documents = $self->object->registered_documents;
+	my @documents = $self->plugin->registered_documents;
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
@@ -363,32 +392,28 @@ sub disable {
 	}
 
 	# Call the plugin's own disable method
-	eval { $self->object->plugin_disable; };
+	eval { $self->plugin->plugin_disable; };
 	if ($@) {
 
 		# Crashed during plugin disable
 		$self->status('error');
 		$self->errstr(
-			sprintf(
-				Wx::gettext("Failed to disable plug-in '%s': %s"),
-				$self->class,
-				$@,
-			)
+			_T("Failed to disable plug-in '%s': %s"),
+			$self->class,
+			$@,
 		);
 		return 1;
 	}
 
-	# If the plugin has a hook for the context menu, cache it
-	my $cxt_menu_hook_cache = $manager->plugins_with_context_menu;
-	delete $cxt_menu_hook_cache->{ $self->class };
-
 	# Remove hooks
 	# The ->padre_hooks method may not return constant values, scanning the hook
 	# tree is much safer than removing the hooks reported _now_
+	# NOTE: Horribly violates encapsulation
+	my $manager = $self->current->ide->plugin_manager;
 	for my $hookname ( keys( %{ $manager->{hooks} } ) ) {
 		my @new_list;
 		for my $hook ( @{ $manager->{hooks}->{$hookname} } ) {
-			next if $hook->[0] eq $self->object;
+			next if $hook->[0] eq $self->plugin;
 			push @new_list, $hook;
 		}
 		$manager->{hooks}->{$hookname} = \@new_list;
@@ -397,9 +422,6 @@ sub disable {
 	# Update the status
 	$self->status('disabled');
 	$self->errstr('');
-
-	# Save the last version we successfully enabled to the database
-
 
 	return 0;
 }
@@ -419,6 +441,14 @@ sub update {
 
 ######################################################################
 # Support Methods
+
+sub current {
+	if ( $_[0]->{plugin} ) {
+		return $_[0]->{plugin}->current;
+	} else {
+		return Padre::Current->new;
+	}
+}
 
 sub _STATUS {
 	Params::Util::_STRING( $_[0] ) or return;

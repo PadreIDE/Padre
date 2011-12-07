@@ -83,11 +83,10 @@ sub new {
 		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
 	my $self = bless {
-		parent                    => $parent,
-		plugins                   => {},
-		plugin_dir                => Padre::Constant::PLUGIN_DIR,
-		plugin_order              => [],
-		plugins_with_context_menu => {},
+		parent       => $parent,
+		plugins      => {},
+		plugin_dir   => Padre::Constant::PLUGIN_DIR,
+		plugin_order => [],
 		@_,
 	}, $class;
 
@@ -115,21 +114,13 @@ L<Padre::PluginHandle>.
 
 This hash is only populated after C<load_plugins()> was called.
 
-=head2 C<plugins_with_context_menu>
-
-Returns a hash (reference) with the names of all plug-ins as
-keys which define a hook for the context menu.
-
-See L<Padre::Plugin>.
-
 =cut
 
 use Class::XSAccessor {
 	getters => {
-		parent                    => 'parent',
-		plugin_dir                => 'plugin_dir',
-		plugins                   => 'plugins',
-		plugins_with_context_menu => 'plugins_with_context_menu',
+		parent     => 'parent',
+		plugin_dir => 'plugin_dir',
+		plugins    => 'plugins',
 	},
 };
 
@@ -200,9 +191,8 @@ sub relocale {
 		next unless $handle->enabled;
 
 		# Add the plug-in locale dir to search path
-		my $plugin = $handle->{object};
-		if ( $plugin->can('plugin_directory_locale') ) {
-			my $dir = $plugin->plugin_directory_locale;
+		if ( $handle->plugin_can('plugin_directory_locale') ) {
+			my $dir = $handle->plugin->plugin_directory_locale;
 			if ( defined $dir and -d $dir ) {
 				$locale->AddCatalogLookupPathPrefix($dir);
 			}
@@ -552,7 +542,7 @@ sub _load_plugin {
 	}
 
 	# Plug-in is now loaded
-	$handle->{object} = $plugin;
+	$handle->{plugin} = $plugin;
 	$handle->status('loaded');
 
 	# Return unless we will enable the plugin
@@ -562,7 +552,7 @@ sub _load_plugin {
 	}
 
 	# Add a new directory for locale to search translation catalogs.
-	if ( $plugin->can('plugin_directory_locale') ) {
+	if ( $handle->plugin_can('plugin_directory_locale') ) {
 		my $dir = $plugin->plugin_directory_locale;
 		if ( defined $dir and -d $dir ) {
 			my $locale = $main->{locale};
@@ -641,7 +631,6 @@ menu, etc.
 sub unload_plugin {
 	my $self = shift;
 	my $lock = $self->main->lock('refresh_menu_plugins');
-
 	$self->_unload_plugin(@_);
 }
 
@@ -660,8 +649,8 @@ sub _unload_plugin {
 	}
 
 	# Destruct the plug-in
-	if ( defined $handle->{object} ) {
-		$handle->{object} = undef;
+	if ( defined $handle->plugin ) {
+		$handle->{plugin} = undef;
 	}
 
 	# Unload the plug-in class itself
@@ -677,12 +666,7 @@ sub _unload_plugin {
 sub plugin_enable {
 	my $self   = shift;
 	my $handle = $self->handle(shift) or return;
-	my $result = $handle->enable;
-
-	# Update the last-enabled version each time it is enabled
-	$handle->db->update( version => $handle->version );
-
-	return $result;
+	$handle->enable;
 }
 
 sub plugin_disable {
@@ -717,13 +701,20 @@ sub plugin_event {
 
 	foreach my $handle ( $self->handles ) {
 		next unless $handle->enabled;
+		next unless $handle->plugin_can($event);
 
 		eval {
-			my $plugin = $handle->{object};
-			$plugin->$event(@_) if $plugin->can($event);
+			$handle->plugin->$event(@_);
 		};
 		if ($@) {
-			$self->_error( $handle, sprintf( Wx::gettext('Plugin error on event %s: %s'), $event, $@ ) );
+			$self->_error(
+				$handle,
+				sprintf(
+					Wx::gettext('Plugin error on event %s: %s'),
+					$event,
+					$@,
+				)
+			);
 			next;
 		}
 	}
@@ -807,15 +798,12 @@ sub enable_editors {
 	my $self   = shift;
 	my $handle = $self->handle(shift) or return;
 	return unless $handle->enabled;
-
-	# Does the plugin support editor_enabled?
-	my $plugin = $handle->{object} or return;
-	return 1 unless $plugin->can('editor_enable');
+	return unless $handle->plugin_can('editor_enable');
 
 	foreach my $editor ( $self->main->editors ) {
 		local $@;
 		eval {
-			$plugin->editor_enable( $editor, $editor->{Document} );
+			$handle->plugin->editor_enable( $editor, $editor->{Document} );
 		};
 	}
 
@@ -833,15 +821,20 @@ sub enable_editors {
 sub get_menu {
 	my $self   = shift;
 	my $main   = shift;
-	my $module = shift;
-	my $handle = $self->handle($module);
+	my $handle = $self->handle(shift) or return ();
 	return () unless $handle->enabled;
-	return () unless $handle->{object}->can('menu_plugins');
+	return () unless $handle->plugin_can('menu_plugins');
 
-	my @menu = eval { $handle->{object}->menu_plugins($main) };
+	my @menu = eval {
+		$handle->plugin->menu_plugins($main);
+	};
 	if ($@) {
-		$handle->errstr( Wx::gettext('Error when calling menu for plug-in ') . "'$module': $@" );
 		$handle->{status} = 'error';
+		$handle->errstr(
+			_T('Error when calling menu for plug-in %s: %s'),
+			$handle->class,
+			$@,
+		);
 
 		# TO DO: make sure these error messages show up somewhere or it will drive
 		# crazy anyone trying to write a plug-in
@@ -939,17 +932,15 @@ that have one for plug-in specific manipulation of the context menu.
 =cut
 
 sub on_context_menu {
-	my $self    = shift;
-	my $plugins = $self->plugins_with_context_menu;
-	return if not keys %$plugins;
+	my $self = shift;
 
-	my ( $doc, $editor, $menu, $event ) = @_;
-
-	my $plugin_handles = $self->plugins;
-	foreach my $plugin_name ( keys %$plugins ) {
-		my $handle = $plugin_handles->{$plugin_name}->object;
-		$handle->event_on_context_menu( $doc, $editor, $menu, $event );
+	foreach my $handle ( $self->handles ) {
+		next unless $handle->can_context;
+		foreach my $handle ( $self->handles ) {
+			$handle->plugin->event_on_context_menu(@_);
+		}
 	}
+
 	return ();
 }
 

@@ -2443,10 +2443,7 @@ sub init {
 		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
-			Padre::Wx::Dialog::PluginManager->new(
-				$_[0],
-				$_[0]->ide->plugin_manager,
-			)->show;
+			Padre::Wx::Dialog::PluginManager->run($_[0]);
 		},
 	);
 

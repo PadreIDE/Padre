@@ -23,12 +23,41 @@ our @ISA     = qw{
 
 
 ######################################################################
+# Class Methods
+
+sub run {
+	my $class = shift;
+	my $main  = shift;
+	my $self  = $class->new($main);
+
+	# Refresh the plugin list
+	$self->_update_list;
+
+	# Select first item in the list. we don't need to test if
+	# there's at least a plug-in, since there will always be
+	# 'my plug-in'
+	if ( $self->{list}->GetItemCount ) {
+		$self->{list}->Select(0, 1);
+	}
+
+	# Show the dialog
+	$self->ShowModal;
+	$self->Destroy;
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
 # Constructor
 
 sub new {
 	my $class   = shift;
 	my $main    = shift;
-	my $manager = shift;
+	my $manager = $main->ide->plugin_manager;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
@@ -47,12 +76,6 @@ sub new {
 	# Set basic dialog properties
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 	$self->SetMinSize( [ 750, 550 ] );
-
-	# Store plug-in manager
-	$self->{manager} = $manager;
-	unless ( $manager->isa('Padre::PluginManager') ) {
-		Carp::croak("Missing or invalid Padre::PluginManager object");
-	}
 
 	# Dialog Controls
 
@@ -196,21 +219,8 @@ sub new {
 	return $self;
 }
 
-# -- public methods
-
-sub show {
-	my $self = shift;
-
-	$self->_update_list;
-
-	# select first item in the list. we don't need to test if
-	# there's at least a plug-in, since there will always be
-	# 'my plug-in'
-	my $item = $self->{list}->GetItem(0);
-	$item->SetState(Wx::LIST_STATE_SELECTED);
-	$self->{list}->SetItem($item);
-
-	$self->ShowModal;
+sub plugin_manager {
+	$_[0]->main->ide->plugin_manager;
 }
 
 # GUI Handlers
@@ -228,17 +238,17 @@ sub list_item_selected {
 	my $event    = shift;
 	my $fullname = $event->GetLabel;
 	my $module   = $self->{plugin_class}->{$fullname};
-	my $plugin   = $self->{manager}->plugins->{$module};
-	$self->{plugin} = $plugin;          # storing selected plug-in
+	my $handle   = $self->plugin_manager->handle($module);
+	$self->{plugin} = $handle;          # storing selected plug-in
 	$self->{row}    = $event->GetIndex; # storing selected row
 
 	# Updating plug-in name in right pane
-	$self->{label}->SetLabel( $plugin->plugin_name );
+	$self->{label}->SetLabel( $handle->plugin_name );
 
 	# Update plug-in documentation
 	require Padre::Browser;
 	my $browser = Padre::Browser->new;
-	my $class   = $plugin->class;
+	my $class   = $handle->class;
 	my $doc     = $browser->resolve($class);
 	my $output  = eval { $browser->browse($doc) };
 	my $html =
@@ -294,7 +304,10 @@ sub button_main {
 #
 sub button_preferences {
 	my $self = shift;
-	eval { $self->{plugin}->object->plugin_preferences; };
+	local $@;
+	eval {
+		$self->{plugin}->plugin->plugin_preferences;
+	};
 	if ($@) {
 		$self->{plugin}->errstr($@);
 		$self->show_error_message;
@@ -318,11 +331,11 @@ sub button_close {
 sub _plugin_disable {
 	my $self   = shift;
 	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
-	my $plugin = $self->{plugin}->class;
+	my $handle = $self->{plugin};
 
 	# Disable plugin (the database bit should not be here)
-	Padre::DB::Plugin->load($plugin)->update( enabled => 0 );
-	$self->{manager}->plugin_disable($plugin);
+	$handle->update( enabled => 0 );
+	$self->plugin_manager->plugin_disable($handle);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
@@ -336,11 +349,11 @@ sub _plugin_disable {
 sub _plugin_enable {
 	my $self   = shift;
 	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
-	my $plugin = $self->{plugin}->class;
+	my $handle = $self->{plugin};
 
 	# Enable plug-in
-	Padre::DB::Plugin->load($plugin)->update( enabled => 1 );
-	$self->{manager}->plugin_enable($plugin);
+	$handle->update( enabled => 1 );
+	$self->plugin_manager->plugin_enable($handle);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
@@ -394,38 +407,37 @@ sub _update_list {
 		$icon{$name} = ++$i;
 	}
 
-	# Get list of plug-ins, and sort it. Note that $self->{manager}->plugins
+	# Get list of plug-ins, and sort it. Note that $self->plugin_manager->plugins
 	# names is sorted (with my plug-in first), and that perl sort is now
 	# stable: sorting on another criterion will keep the alphabetical order
 	# if new criterion is not enough.
-	my $plugins = $self->{manager}->plugins;
-	my @plugins = map { $plugins->{$_} } $self->{manager}->plugin_order;
+	my @handles = $self->plugin_manager->handles;
 	if ( $self->{sortcolumn} == 1 ) {
 
 		#		no warnings;
 		# We see ??? in the version field for modules that don't have a version number or were not loaded
-		@plugins =
+		@handles =
 			map  { $_->[0] }
 			sort { $a->[1] <=> $b->[1] }
-			map  { [ $_, version->new( ( $_->version && $_->version ne '???' ) || 0 ) ] } @plugins;
+			map  { [ $_, version->new( ( $_->version && $_->version ne '???' ) || 0 ) ] } @handles;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
-		@plugins = sort { $a->status cmp $b->status } @plugins;
+		@handles = sort { $a->status cmp $b->status } @handles;
 	}
 	if ( $self->{sortreverse} ) {
-		@plugins = reverse @plugins;
+		@handles = reverse @handles;
 	}
 
 	# Clear plug-in list & fill it again
 	my $idx          = -1;
 	my %plugin_class = ();
 	$self->{list}->DeleteAllItems;
-	foreach my $plugin (@plugins) {
-		$plugin_class{ $plugin->plugin_name } = $plugin->class;
+	foreach my $handle ( @handles ) {
+		$plugin_class{ $handle->plugin_name } = $handle->class;
 
 		# Check if plug-in is supplying its own icon
 		my $position = 0;
-		my $icon     = $plugin->plugin_icon;
+		my $icon     = $handle->plugin_icon;
 		if ( defined $icon ) {
 			$self->{imagelist}->Add($icon);
 			$position = $self->{imagelist}->GetImageCount - 1;
@@ -434,17 +446,17 @@ sub _update_list {
 		# Inserting the plug-in in the list
 		$self->{list}->InsertStringImageItem(
 			++$idx,
-			$plugin->plugin_name,
+			$handle->plugin_name,
 			$position,
 		);
 		$self->{list}->SetItem(
 			$idx, 1,
-			$plugin->version || '???'
+			$handle->version || '???'
 		);
 		$self->{list}->SetItem(
 			$idx, 2,
-			$plugin->status_localized,
-			$icon{ $plugin->status },
+			$handle->status_localized,
+			$icon{ $handle->status },
 		);
 	}
 
@@ -474,16 +486,13 @@ sub _update_list {
 #
 sub _update_plugin_state {
 	my $self   = shift;
-	my $plugin = $self->{plugin};
-
-	# my $list   = $self->{list};
-	# my $item   = $list->GetItem( $self->{row}, 2 );
+	my $handle = $self->{plugin};
 
 	# Updating buttons
 	my $button_main        = $self->{button_main};
 	my $button_preferences = $self->{button_preferences};
 
-	if ( $plugin->error ) {
+	if ( $handle->error ) {
 
 		# Plug-in is in error state
 		$self->{action} = 'show_error_message';
@@ -491,11 +500,7 @@ sub _update_plugin_state {
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('error'), 3 );
 
-		# $item->SetText( Wx::gettext('error') );
-		# $item->SetImage(3);
-		# $list->SetItem($item);
-
-	} elsif ( $plugin->incompatible ) {
+	} elsif ( $handle->incompatible ) {
 
 		# Plugin is incompatible
 		$self->{action} = 'show_error_message';
@@ -503,14 +508,10 @@ sub _update_plugin_state {
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('incompatible'), 5 );
 
-		# $item->SetText( Wx::gettext('incompatible') );
-		# $item->SetImage(5);
-		# $list->SetItem($item);
-
 	} else {
 
 		# Plug-in is working...
-		if ( $plugin->enabled ) {
+		if ( $handle->enabled ) {
 
 			# ...and enabled
 			$self->{action} = '_plugin_disable';
@@ -518,21 +519,13 @@ sub _update_plugin_state {
 			$button_main->Enable;
 			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('enabled'), 1 );
 
-			# $item->SetText( Wx::gettext('enabled') );
-			# $item->SetImage(1);
-			# $list->SetItem($item);
-
-		} elsif ( $plugin->can_enable ) {
+		} elsif ( $handle->can_enable ) {
 
 			# ...and disabled
 			$self->{action} = '_plugin_enable';
 			$button_main->SetLabel( Wx::gettext('&Enable') );
 			$button_main->Enable;
 			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('disabled'), 2 );
-
-			# $item->SetText( Wx::gettext('disabled') );
-			# $item->SetImage(2);
-			# $list->SetItem($item);
 
 		} else {
 
@@ -541,15 +534,12 @@ sub _update_plugin_state {
 		}
 
 		# Updating preferences button
-		if ( $plugin->object->can('plugin_preferences') ) {
+		if ( $handle->plugin_can('plugin_preferences') ) {
 			$button_preferences->Enable;
 		} else {
 			$button_preferences->Disable;
 		}
 	}
-
-	# Update the list item
-	# $self->_update_list;
 
 	# Force window to recompute layout. indeed, changes are that plug-in
 	# name has a different length, and thus should be recentered.
