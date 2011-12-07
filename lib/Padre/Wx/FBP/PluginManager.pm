@@ -30,7 +30,7 @@ sub new {
 		Wx::gettext("Plug-in Manager"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::DEFAULT_DIALOG_STYLE,
+		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 	$self->SetSizeHints( [ 750, 500 ], Wx::DefaultSize );
 
