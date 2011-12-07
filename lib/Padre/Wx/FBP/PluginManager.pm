@@ -132,10 +132,10 @@ sub new {
 	);
 
 	my $bSizer111 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer111->Add( $self->{plugin_name}, 0, Wx::ALL, 5 );
-	$bSizer111->Add( $self->{plugin_version}, 0, Wx::ALL, 5 );
+	$bSizer111->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
+	$bSizer111->Add( $self->{plugin_version}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
 	$bSizer111->Add( 50, 0, 1, Wx::EXPAND, 5 );
-	$bSizer111->Add( $self->{plugin_status}, 0, Wx::ALL, 5 );
+	$bSizer111->Add( $self->{plugin_status}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
 
 	my $bSizer113 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer113->Add( $self->{action}, 0, Wx::ALL, 5 );

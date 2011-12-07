@@ -34,16 +34,25 @@ sub run {
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
+	my $list  = $self->{list};
+
+	# This is a core dialog so apply the Padre icon
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
+
+	# Make the heading fonts larger
+	$self->{plugin_name}->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" )
+	);
+	$self->{plugin_status}->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" )
+	);
 
 	# Do an initial refresh of the plugin list
 	$self->refresh;
 
 	# Select the first plugin and focus on the list
-	if ( $self->{list}->GetCount ) {
-		$self->{list}->Select(0);
-	}
-	$self->{list}->SetFocus;
+	$list->Select(0) if $list->GetCount;
+	$list->SetFocus;
 
 	# Prepare to be shown
 	$self->SetSize( [ 750, 500 ] );
@@ -61,8 +70,19 @@ sub refresh {
 
 	# Fill the list from the plugin handles
 	foreach my $handle ( $self->ide->plugin_manager->handles ) {
-		$list->Append( $handle->plugin_name );
+		$list->Append( $handle->plugin_name, $handle->class );
 	}
+
+	return 1;
+}
+
+sub refresh_details {
+	my $self   = shift;
+	my $handle = $self->selected or return;
+
+	# Update the header fields
+	$self->{plugin_name}    = $handle->plugin_name;
+	$self->{plugin_version} = $handle->version;
 
 	return 1;
 }
@@ -73,6 +93,26 @@ sub refresh {
 
 ######################################################################
 # Event Handlers
+
+
+
+
+
+######################################################################
+# Support Methods
+
+sub selected {
+	my $self = shift;
+
+	# Find the selection
+	my $list = $self->{list};
+	my $item = $list->GetSelection;
+	return if $item == Wx::NOT_FOUND;
+
+	# Load the plugin handle for the selection
+	my $module = $list->GetClientData($item);
+	$self->ide->plugin_manager->handle($module);
+}
 
 1;
 
