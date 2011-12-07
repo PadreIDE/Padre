@@ -83,23 +83,31 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_htmlWin3} = Wx::HtmlWindow->new(
+	$self->{whtml} = Wx::HtmlWindow->new(
 		$self->{details},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::HW_SCROLLBAR_AUTO,
 	);
 
-	$self->{button_main} = Wx::Button->new(
+	$self->{action} = Wx::Button->new(
 		$self->{details},
 		-1,
 		Wx::gettext("Enable"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{action}->SetDefault;
 
-	$self->{m_button50} = Wx::Button->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{action},
+		sub {
+			shift->action_clicked(@_);
+		},
+	);
+
+	$self->{preferences} = Wx::Button->new(
 		$self->{details},
 		-1,
 		Wx::gettext("Preferences"),
@@ -107,9 +115,17 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{preferences},
+		sub {
+			shift->preferences_clicked(@_);
+		},
+	);
+
 	$self->{m_button51} = Wx::Button->new(
 		$self->{details},
-		-1,
+		Wx::ID_CANCEL,
 		Wx::gettext("Close"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -122,14 +138,14 @@ sub new {
 	$bSizer111->Add( $self->{plugin_status}, 0, Wx::ALL, 5 );
 
 	my $bSizer113 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer113->Add( $self->{button_main}, 0, Wx::ALL, 5 );
-	$bSizer113->Add( $self->{m_button50}, 0, Wx::BOTTOM | Wx::RIGHT | Wx::TOP, 5 );
+	$bSizer113->Add( $self->{action}, 0, Wx::ALL, 5 );
+	$bSizer113->Add( $self->{preferences}, 0, Wx::BOTTOM | Wx::RIGHT | Wx::TOP, 5 );
 	$bSizer113->Add( 50, 0, 1, Wx::EXPAND, 5 );
 	$bSizer113->Add( $self->{m_button51}, 0, Wx::ALL, 5 );
 
 	my $bSizer110 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer110->Add( $bSizer111, 0, Wx::EXPAND, 5 );
-	$bSizer110->Add( $self->{m_htmlWin3}, 1, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer110->Add( $self->{whtml}, 1, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer110->Add( $bSizer113, 0, Wx::EXPAND, 5 );
 
 	$self->{details}->SetSizerAndFit($bSizer110);
@@ -150,6 +166,14 @@ sub new {
 
 sub refresh_details {
 	$_[0]->main->error('Handler method refresh_details for event list.OnListBox not implemented');
+}
+
+sub action_clicked {
+	$_[0]->main->error('Handler method action_clicked for event action.OnButtonClick not implemented');
+}
+
+sub preferences_clicked {
+	$_[0]->main->error('Handler method preferences_clicked for event preferences.OnButtonClick not implemented');
 }
 
 1;
