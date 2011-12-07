@@ -2447,6 +2447,16 @@ sub init {
 		},
 	);
 
+	Padre::Wx::Action->new(
+		name       => 'plugins.plugin_manager2',
+		label      => _T('&Plug-in Manager 2'),
+		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::PluginManager2;
+			Padre::Wx::Dialog::PluginManager2->run($_[0]);
+		},
+	);
+
 	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plug-ins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
