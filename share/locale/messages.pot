@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 20:10-0800\n"
+"POT-Creation-Date: 2011-12-07 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 msgid "%s. Line: %s File: %s - %s"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2827 lib/Padre/Plugin/Devel.pm:109
+#: lib/Padre/Wx/ActionLibrary.pm:2837 lib/Padre/Plugin/Devel.pm:109
 msgid "&About"
 msgstr ""
 
@@ -211,11 +211,11 @@ msgstr ""
 msgid "&Comment Out"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2714
+#: lib/Padre/Wx/ActionLibrary.pm:2724
 msgid "&Context Help"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2585
+#: lib/Padre/Wx/ActionLibrary.pm:2595
 msgid "&Context Menu"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "&Edit"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2464
+#: lib/Padre/Wx/ActionLibrary.pm:2474
 msgid "&Edit My Plug-in"
 msgstr ""
 
@@ -319,7 +319,7 @@ msgstr ""
 msgid "&Go to Element"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2693 lib/Padre/Wx/Menu/Help.pm:115
+#: lib/Padre/Wx/ActionLibrary.pm:2703 lib/Padre/Wx/Menu/Help.pm:115
 msgid "&Help"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 msgid "&Next Difference"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2562
+#: lib/Padre/Wx/ActionLibrary.pm:2572
 msgid "&Next File"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "&POSIX Character classes"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2738
+#: lib/Padre/Wx/ActionLibrary.pm:2748
 msgid "&Padre Support (English)"
 msgstr ""
 
@@ -445,11 +445,15 @@ msgstr ""
 msgid "&Plug-in Manager"
 msgstr ""
 
+#: lib/Padre/Wx/ActionLibrary.pm:2452
+msgid "&Plug-in Manager 2"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2397 lib/Padre/Wx/Dialog/PluginManager.pm:155
 msgid "&Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2573
+#: lib/Padre/Wx/ActionLibrary.pm:2583
 msgid "&Previous File"
 msgstr ""
 
@@ -494,7 +498,7 @@ msgstr ""
 msgid "&Regular expression:"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2481
+#: lib/Padre/Wx/ActionLibrary.pm:2491
 msgid "&Reload My Plug-in"
 msgstr ""
 
@@ -555,7 +559,7 @@ msgstr ""
 msgid "&Search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2702
+#: lib/Padre/Wx/ActionLibrary.pm:2712
 msgid "&Search Help"
 msgstr ""
 
@@ -596,11 +600,11 @@ msgstr ""
 msgid "&Toggle Comment"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:194
+#: lib/Padre/Wx/Menu/Tools.pm:198
 msgid "&Tools"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2804
+#: lib/Padre/Wx/ActionLibrary.pm:2814
 msgid "&Translate Padre..."
 msgstr ""
 
@@ -636,7 +640,7 @@ msgstr ""
 msgid "&View Document As..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2762
+#: lib/Padre/Wx/ActionLibrary.pm:2772
 msgid "&Win32 Questions (English)"
 msgstr ""
 
@@ -660,7 +664,7 @@ msgid ""
 "then try again."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2521
+#: lib/Padre/Wx/ActionLibrary.pm:2531
 msgid "(Re)load &Current Plug-in"
 msgstr ""
 
@@ -1066,7 +1070,7 @@ msgstr ""
 msgid "Burak Gursoy"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2727
+#: lib/Padre/Wx/ActionLibrary.pm:2737
 msgid "C&urrent Document"
 msgstr ""
 
@@ -1265,7 +1269,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:113 lib/Padre/Wx/FBP/About.pm:727
+#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:727
 #: lib/Padre/Wx/FBP/Sync.pm:267 lib/Padre/Wx/FBP/Diff.pm:94
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
@@ -1541,7 +1545,7 @@ msgstr ""
 msgid "Could not find project root"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2471
+#: lib/Padre/Wx/ActionLibrary.pm:2481
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
@@ -2017,7 +2021,7 @@ msgstr ""
 msgid "Empty regex"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:97
+#: lib/Padre/Wx/FBP/PluginManager.pm:96
 msgid "Enable"
 msgstr ""
 
@@ -2656,19 +2660,19 @@ msgstr ""
 msgid "Go to"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2668
+#: lib/Padre/Wx/ActionLibrary.pm:2678
 msgid "Go to &Command Line Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2610
+#: lib/Padre/Wx/ActionLibrary.pm:2620
 msgid "Go to &Functions Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2679
+#: lib/Padre/Wx/ActionLibrary.pm:2689
 msgid "Go to &Main Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2622
+#: lib/Padre/Wx/ActionLibrary.pm:2632
 msgid "Go to &Todo Window"
 msgstr ""
 
@@ -2676,19 +2680,19 @@ msgstr ""
 msgid "Go to Bookmar&k..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2599
+#: lib/Padre/Wx/ActionLibrary.pm:2609
 msgid "Go to CPAN E&xplorer Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2635
+#: lib/Padre/Wx/ActionLibrary.pm:2645
 msgid "Go to O&utline Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2646
+#: lib/Padre/Wx/ActionLibrary.pm:2656
 msgid "Go to Ou&tput Window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2657
+#: lib/Padre/Wx/ActionLibrary.pm:2667
 msgid "Go to S&yntax Check Window"
 msgstr ""
 
@@ -2720,7 +2724,7 @@ msgstr ""
 msgid "Help Search"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2805
+#: lib/Padre/Wx/ActionLibrary.pm:2815
 msgid "Help by translating Padre to your local language"
 msgstr ""
 
@@ -2828,11 +2832,11 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2540
+#: lib/Padre/Wx/ActionLibrary.pm:2550
 msgid "Install &Remote Distribution"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2530
+#: lib/Padre/Wx/ActionLibrary.pm:2540
 msgid "Install L&ocal Distribution"
 msgstr ""
 
@@ -3239,7 +3243,7 @@ msgstr ""
 msgid "Multi-line (&m)"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2465
+#: lib/Padre/Wx/ActionLibrary.pm:2475
 msgid ""
 "My Plug-in is a plug-in where developers could extend their Padre "
 "installation"
@@ -3475,7 +3479,7 @@ msgstr ""
 msgid "Only one POD fragment, will not try to merge"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2550
+#: lib/Padre/Wx/ActionLibrary.pm:2560
 msgid "Open &CPAN Config File"
 msgstr ""
 
@@ -3503,7 +3507,7 @@ msgstr ""
 msgid "Open &URL..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2551
+#: lib/Padre/Wx/ActionLibrary.pm:2561
 msgid "Open CPAN::MyConfig.pm for manual editing by experts"
 msgstr ""
 
@@ -3560,7 +3564,7 @@ msgstr ""
 msgid "Open all the files listed in the recent files list"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2456
+#: lib/Padre/Wx/ActionLibrary.pm:2466
 msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
 msgstr ""
 
@@ -3597,7 +3601,7 @@ msgstr ""
 msgid "Open interesting and helpful Padre Wiki in your default web browser"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2777
+#: lib/Padre/Wx/ActionLibrary.pm:2787
 msgid "Open interesting and helpful Perl websites in your default web browser"
 msgstr ""
 
@@ -3609,19 +3613,19 @@ msgstr ""
 msgid "Open session"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2740
+#: lib/Padre/Wx/ActionLibrary.pm:2750
 msgid ""
 "Open the Padre live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2752
+#: lib/Padre/Wx/ActionLibrary.pm:2762
 msgid ""
 "Open the Perl live support chat in your web browser and talk to others who "
 "may help you with your problem"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2764
+#: lib/Padre/Wx/ActionLibrary.pm:2774
 msgid ""
 "Open the Perl/Win32 live support chat in your web browser and talk to others "
 "who may help you with your problem"
@@ -3704,11 +3708,11 @@ msgstr ""
 msgid "Override Shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2750
+#: lib/Padre/Wx/ActionLibrary.pm:2760
 msgid "P&erl Help"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:99
+#: lib/Padre/Wx/Menu/Tools.pm:103
 msgid "P&lug-in Tools"
 msgstr ""
 
@@ -3882,7 +3886,7 @@ msgstr ""
 msgid "Please wait..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2455
+#: lib/Padre/Wx/ActionLibrary.pm:2465
 msgid "Plug-in &List (CPAN)"
 msgstr ""
 
@@ -3982,7 +3986,7 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:105
+#: lib/Padre/Wx/FBP/PluginManager.pm:113
 msgid "Preferences"
 msgstr ""
 
@@ -4044,11 +4048,11 @@ msgstr ""
 msgid "Punctuation characters"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2563
+#: lib/Padre/Wx/ActionLibrary.pm:2573
 msgid "Put focus on the next tab to the right"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2574
+#: lib/Padre/Wx/ActionLibrary.pm:2584
 msgid "Put focus on the previous tab to the left"
 msgstr ""
 
@@ -4118,7 +4122,7 @@ msgstr ""
 msgid "Re&load"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2512
+#: lib/Padre/Wx/ActionLibrary.pm:2522
 msgid "Re&load All Plug-ins"
 msgstr ""
 
@@ -4126,7 +4130,7 @@ msgstr ""
 msgid "Re&place in Files..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2490
+#: lib/Padre/Wx/ActionLibrary.pm:2500
 msgid "Re&set My plug-in"
 msgstr ""
 
@@ -4228,7 +4232,7 @@ msgstr ""
 msgid "Reload all files currently open"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2513
+#: lib/Padre/Wx/ActionLibrary.pm:2523
 msgid "Reload all plug-ins from &disk"
 msgstr ""
 
@@ -4244,7 +4248,7 @@ msgstr ""
 msgid "Reload some files"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2522
+#: lib/Padre/Wx/ActionLibrary.pm:2532
 msgid "Reloads (or initially loads) the current plug-in"
 msgstr ""
 
@@ -4374,15 +4378,15 @@ msgstr ""
 msgid "Replacing '%s' in '%s'..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2787
+#: lib/Padre/Wx/ActionLibrary.pm:2797
 msgid "Report a New &Bug"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2497
+#: lib/Padre/Wx/ActionLibrary.pm:2507
 msgid "Reset My plug-in"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2491
+#: lib/Padre/Wx/ActionLibrary.pm:2501
 msgid "Reset the My plug-in to the default"
 msgstr ""
 
@@ -4650,7 +4654,7 @@ msgstr ""
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2703
+#: lib/Padre/Wx/ActionLibrary.pm:2713
 msgid "Search the Perl help pages (perldoc)"
 msgstr ""
 
@@ -4788,7 +4792,7 @@ msgstr ""
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2788
+#: lib/Padre/Wx/ActionLibrary.pm:2798
 msgid "Send a bug report to the Padre developer team"
 msgstr ""
 
@@ -4850,35 +4854,35 @@ msgid ""
 "Set focus to the line where the current statement is in the debugging process"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2600
+#: lib/Padre/Wx/ActionLibrary.pm:2610
 msgid "Set the focus to the \"CPAN Explorer\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2669
+#: lib/Padre/Wx/ActionLibrary.pm:2679
 msgid "Set the focus to the \"Command Line\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2611
+#: lib/Padre/Wx/ActionLibrary.pm:2621
 msgid "Set the focus to the \"Functions\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2636
+#: lib/Padre/Wx/ActionLibrary.pm:2646
 msgid "Set the focus to the \"Outline\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2647
+#: lib/Padre/Wx/ActionLibrary.pm:2657
 msgid "Set the focus to the \"Output\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2658
+#: lib/Padre/Wx/ActionLibrary.pm:2668
 msgid "Set the focus to the \"Syntax Check\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2623
+#: lib/Padre/Wx/ActionLibrary.pm:2633
 msgid "Set the focus to the \"Todo\" window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2680
+#: lib/Padre/Wx/ActionLibrary.pm:2690
 msgid "Set the focus to the main editor window"
 msgstr ""
 
@@ -5081,7 +5085,7 @@ msgstr ""
 msgid "Show diff window!"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2828
+#: lib/Padre/Wx/ActionLibrary.pm:2838
 msgid "Show information about Padre"
 msgstr ""
 
@@ -5117,15 +5121,15 @@ msgid ""
 "output window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2728
+#: lib/Padre/Wx/ActionLibrary.pm:2738
 msgid "Show the POD (Perldoc) version of the current document"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2694
+#: lib/Padre/Wx/ActionLibrary.pm:2704
 msgid "Show the Padre help"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2443
+#: lib/Padre/Wx/ActionLibrary.pm:2443 lib/Padre/Wx/ActionLibrary.pm:2453
 msgid "Show the Padre plug-in manager to enable or disable plug-ins"
 msgstr ""
 
@@ -5133,7 +5137,7 @@ msgstr ""
 msgid "Show the command line window"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2715
+#: lib/Padre/Wx/ActionLibrary.pm:2725
 msgid "Show the help article for the current context"
 msgstr ""
 
@@ -5208,7 +5212,7 @@ msgstr ""
 msgid "Simulate Background &Exception"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2586
+#: lib/Padre/Wx/ActionLibrary.pm:2596
 msgid "Simulate a right mouse button click to open the context menu"
 msgstr ""
 
@@ -5465,7 +5469,7 @@ msgstr ""
 msgid "This document does not contain any POD"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2482
+#: lib/Padre/Wx/ActionLibrary.pm:2492
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
@@ -5719,11 +5723,11 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2531
+#: lib/Padre/Wx/ActionLibrary.pm:2541
 msgid "Using CPAN.pm to install a CPAN like package opened locally"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2541
+#: lib/Padre/Wx/ActionLibrary.pm:2551
 msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
 msgstr ""
 
@@ -5763,11 +5767,11 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2795
+#: lib/Padre/Wx/ActionLibrary.pm:2805
 msgid "View All &Open Bugs"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2796
+#: lib/Padre/Wx/ActionLibrary.pm:2806
 msgid "View all known and currently unsolved bugs in Padre"
 msgstr ""
 
@@ -5783,7 +5787,7 @@ msgstr ""
 msgid "Visit Debug &Wiki..."
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2776
+#: lib/Padre/Wx/ActionLibrary.pm:2786
 msgid "Visit Perl Websites..."
 msgstr ""
 
@@ -5800,7 +5804,7 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:2495
+#: lib/Padre/Wx/ActionLibrary.pm:2505
 msgid ""
 "Warning! This will delete all the changes you made to 'My plug-in' and "
 "replace it with the default code that comes with your installation of Padre"
