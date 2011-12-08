@@ -44,12 +44,12 @@ sub new {
 		'debug.launch',
 	);
 
-	$self->{set_breakpoints} = $self->add_menu_action(
-		'debug.set_breakpoints',
+	$self->{set_breakpoint} = $self->add_menu_action(
+		'debug.set_breakpoint',
 	);
 
-	$self->{quit2} = $self->add_menu_action(
-		'debug.quit2',
+	$self->{quit} = $self->add_menu_action(
+		'debug.quit',
 	);
 
 	$self->AppendSeparator;
@@ -78,8 +78,8 @@ sub refresh {
 	$self->{panel_debugger}->Check( $config->main_panel_debugger );
 
 	$self->{launch}->Enable(1);
-	$self->{set_breakpoints}->Enable(1);
-	$self->{quit2}->Enable(1);
+	$self->{set_breakpoint}->Enable(1);
+	$self->{quit}->Enable(1);
 
 	$self->{visit_debug_wiki}->Enable(1);
 
