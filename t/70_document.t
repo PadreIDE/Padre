@@ -14,6 +14,10 @@ sub editor_file_size_limit {
 	return 500000;
 }
 
+sub lang_perl6_auto_detection {
+	return 0;
+}
+
 package main;
 
 use strict;

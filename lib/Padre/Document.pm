@@ -967,7 +967,7 @@ sub new {
 
 			# Test script must be able to pass an alternate config object
 			# NOTE: Since when do we support per-document configuration objects?
-			my $config = $self->{config} || $self->current->config;
+			my $config = $self->{config} || $self->config;
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
 				my $ret = Wx::MessageBox(
 					sprintf(
@@ -1044,6 +1044,10 @@ sub rebless {
 
 sub current {
 	Padre::Current->new( document => $_[0] );
+}
+
+sub config {
+	$_[0]->{config} or $_[0]->current->config
 }
 
 sub mime {
@@ -1168,7 +1172,7 @@ sub default_newline_type {
 		return Padre::Constant::NEWLINE;
 	}
 
-	$self->current->config->default_line_ending;
+	$self->config->default_line_ending;
 }
 
 =head2 error
@@ -1806,7 +1810,7 @@ sub get_title {
 # TO DO: experimental
 sub get_indentation_style {
 	my $self   = shift;
-	my $config = $self->current->config;
+	my $config = $self->config;
 
 	# TO DO: (document >) project > config
 
@@ -1976,10 +1980,10 @@ sub filename_relative {
 # Maybe we need to remove this sub.
 sub guess_mimetype {
 	my $self = shift;
-	Padre::MIME->guess(
+	Padre::MIME->detect(
 		text  => $self->{original_content},
 		file  => $self->file,
-		perl6 => $self->current->config->lang_perl6_auto_detection,
+		perl6 => $self->config->lang_perl6_auto_detection,
 	);
 }
 
@@ -2012,7 +2016,7 @@ sub guess_indentation_style {
 	}
 
 	my $style;
-	my $config = $self->current->config;
+	my $config = $self->config;
 	if ( $indentation =~ /^t\d+/ ) { # we only do ONE tab
 		$style = {
 			use_tabs    => 1,

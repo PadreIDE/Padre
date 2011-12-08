@@ -550,13 +550,12 @@ Padre::MIME->create(
 #####################################################################
 # MIME Type Detection
 
-sub guess {
+sub detect {
 	my $class = shift;
 	my %param = @_;
-	my $text  = $param{text};
-	my $file  = $param{file};
 
 	# Could be a Padre::File object with an identified mime type
+	my $file = $param{file};
 	if ( ref $file ) {
 		# The mime might already be identified
 		my $mime = $file->mime;
@@ -587,9 +586,10 @@ sub guess {
 	# Fall back on deriving the type from the content.
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
+	my $text = $param{text};
 	if ( not defined $mime and defined $text ) {
 		$mime = eval {
-			$class->guess_content($text)
+			$class->detect_content($text)
 		};
 		return undef if $@;
 	}
@@ -608,7 +608,7 @@ sub guess {
 	# If we found Perl 5 we might need to second-guess it and check
 	# for it actually being Perl 6.
 	if ( $mime eq 'application/x-perl' and $param{perl6} ) {
-		if ( $class->guess_isperl6($text) ) {
+		if ( $class->detect_perl6($text) ) {
 			$mime = 'application/x-perl6';
 		}
 	}
@@ -616,7 +616,7 @@ sub guess {
 	return $mime;
 }
 
-sub guess_content {
+sub detect_content {
 	my $class = shift;
 	my $text  = shift;
 
@@ -740,9 +740,10 @@ sub guess_content {
 		return 'text/x-perltt';
 	}
 
-	# Try to recognize XHTML
-	if ( $text =~ /\A<\?xml version="\d+\.\d+" encoding=".+"\?>/m ) {
+	# Recognise XML and variants
+	if ( $text =~ /\A<\?xml\b>/s ) {
 		return 'text/html' if $text =~ /^<!DOCTYPE html/m;
+		return 'text/xml';
 	}
 
 	# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
@@ -784,7 +785,7 @@ sub guess_content {
 # Perl 6:   use v6; class ..., module ...
 # maybe also grammar ...
 # but make sure that is real code and not just a comment or doc in some perl 5 code...
-sub guess_isperl6 {
+sub detect_perl6 {
 	my $class = shift;
 	my $text  = shift;
 

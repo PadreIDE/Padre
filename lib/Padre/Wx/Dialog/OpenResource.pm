@@ -578,7 +578,7 @@ sub render {
 
 			# display package name if it is a Perl file
 			my $pkg = '';
-			my $mime_type = Padre::MIME->guess(
+			my $mime_type = Padre::MIME->detect(
 				file  => $file,
 				perl6 => $self->config->lang_perl6_auto_detection,
 			);
@@ -608,7 +608,7 @@ sub render {
 			} else {
 
 				# display package name if it is a Perl file
-				my $mime_type = Padre::MIME->guess(
+				my $mime_type = Padre::MIME->detect(
 					file => $file,
 					perl6 => $self->config->lang_perl6_auto_detection,
 				);
