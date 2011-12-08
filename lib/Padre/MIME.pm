@@ -17,7 +17,6 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config ();
 use Padre::Locale::T;
 
 our $VERSION    = '0.93';
