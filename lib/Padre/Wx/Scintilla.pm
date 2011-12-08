@@ -117,7 +117,7 @@ my %LEXER = (
 	'application/x-bml'         => Wx::Scintilla::Constant::SCLEX_NULL,
 	'text/x-bat'                => Wx::Scintilla::Constant::SCLEX_BATCH,     # CONFIRMED
 	'text/x-csrc'               => Wx::Scintilla::Constant::SCLEX_CPP,       # CONFIRMED
-	'text/x-cobol'              => Wx::Scintilla::Constant::SCLEX_COBOL,     # CONFIRMED 
+	'text/x-cobol'              => Wx::Scintilla::Constant::SCLEX_COBOL,     # CONFIRMED
 	'text/x-c++src'             => Wx::Scintilla::Constant::SCLEX_CPP,       # CONFIRMED
 	'text/css'                  => Wx::Scintilla::Constant::SCLEX_CSS,       # CONFIRMED
 	'text/x-eiffel'             => Wx::Scintilla::Constant::SCLEX_EIFFEL,    # CONFIRMED
@@ -175,8 +175,170 @@ sub lexer {
 ######################################################################
 # Key Words
 
-# Take mostly from src/scite/src/ properties files
+# Taken mostly from src/scite/src/ properties files.
+# Keyword lists are defined here in MIME type order
 my %KEYWORDS = ();
+
+$KEYWORDS{'application/php'} = [
+	[ qw{
+		and array as bool boolean break case cfunction class const
+		continue declare default die directory do double echo else
+		elseif empty enddeclare endfor endforeach endif endswitch
+		endwhile eval exit extends false float for foreach function
+		global goto if include include_once int integer isset list
+		namespace new null object old_function or parent print real
+		require require_once resource return static stdclass string
+		switch true unset use var while xor abstract catch clone
+		exception final implements interface php_user_filter private
+		protected public this throw try __class__ __dir__ __file__
+		__function__ __line__ __method__ __namespace__ __sleep
+		__wakeup
+	} ],
+];
+
+$KEYWORDS{'application/javascript'} = [
+	[ qw{
+		abstract boolean break byte case catch char class
+		const continue debugger default delete do double else enum
+		export extends final finally float for function goto if
+		implements import in instanceof int interface long native
+		new package private protected public return short static
+		super switch synchronized this throw throws transient try
+		typeof var void volatile while with
+	} ],
+];
+
+# Inspired from Perl 6 vim syntax file
+# https://github.com/petdance/vim-perl/blob/master/syntax/perl6.vim
+$KEYWORDS{'application/x-perl6'} = [
+	[
+
+		# Perl 6 routine declaration keywords
+		qw{macro sub submethod method multi proto only rule token regex category},
+
+		# Perl 6 module keywords
+		qw{module class role package enum grammar slang subset},
+
+		# Perl 6 variable keywords
+		qw{self},
+
+		# Perl 6 include keywords
+		qw{use require},
+
+		# Perl 6 conditional keywords
+		qw{if else elsif unless},
+
+		# Perl 6 variable storage keywords
+		qw{let my our state temp has constant},
+
+		# Perl 6 repeat keywords
+		qw{for loop repeat while until gather given},
+
+		# Perl flow control keywords
+		qw{take do when next last redo return contend maybe defer
+			default exit make continue break goto leave async lift},
+
+		# Perl 6 type constraints keywords
+		qw{is as but trusts of returns handles where augment supersede},
+
+		# Perl 6 closure traits keywords
+		qw{BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP
+			UNDO NEXT LAST PRE POST END CATCH CONTROL TEMP},
+
+		# Perl 6 exception keywords
+		qw{die fail try warn},
+
+		# Perl 6 property keywords
+		qw{prec irs ofs ors export deep binary unary reparsed rw parsed cached
+			readonly defequiv will ref copy inline tighter looser equiv assoc
+			required},
+
+		# Perl 6 number keywords
+		qw{NaN Inf},
+
+		# Perl 6 pragma keywords
+		qw{oo fatal},
+
+		# Perl 6 type keywords
+		qw{Object Any Junction Whatever Capture Match
+			Signature Proxy Matcher Package Module Class
+			Grammar Scalar Array Hash KeyHash KeySet KeyBag
+			Pair List Seq Range Set Bag Mapping Void Undef
+			Failure Exception Code Block Routine Sub Macro
+			Method Submethod Regex Str Blob Char Byte
+			Codepoint Grapheme StrPos StrLen Version Num
+			Complex num complex Bit bit bool True False
+			Increasing Decreasing Ordered Callable AnyChar
+			Positional Associative Ordering KeyExtractor
+			Comparator OrderingPair IO KitchenSink Role
+			Int int int1 int2 int4 int8 int16 int32 int64
+			Rat rat rat1 rat2 rat4 rat8 rat16 rat32 rat64
+			Buf buf buf1 buf2 buf4 buf8 buf16 buf32 buf64
+			UInt uint uint1 uint2 uint4 uint8 uint16 uint32
+			uint64 Abstraction utf8 utf16 utf32},
+
+		# Perl 6 operator keywords
+		qw{div x xx mod also leg cmp before after eq ne le lt
+			gt ge eqv ff fff and andthen Z X or xor
+			orelse extra m mm rx s tr},
+	],
+];
+
+# Ruby keywords
+# The list is obtained from src/scite/src/ruby.properties
+$KEYWORDS{'application/x-ruby'} = [
+	[   qw{
+			__FILE__ and def end in or self unless __LINE__ begin defined?
+			ensure module redo super until BEGIN break do false next rescue
+			then when END case else for nil retry true while alias class
+			elsif if not return undef yield
+			}
+	]
+];
+
+# VB keyword list is obtained from src/scite/src/vb.properties
+$KEYWORDS{'text/vbscript'} = [
+	[ qw{
+		addressof alias and as attribute base begin binary
+		boolean byref byte byval call case cdbl cint clng compare const csng cstr currency
+		date decimal declare defbool defbyte defcur
+		defdate defdbl defdec defint deflng defobj defsng defstr defvar dim do double each else
+		elseif empty end enum eqv erase error event exit explicit false for friend function get
+		global gosub goto if imp implements in input integer is len let lib like load lock long
+		loop lset me mid midb mod new next not nothing null object on option optional or paramarray
+		preserve print private property public raiseevent randomize redim rem resume return rset
+		seek select set single static step stop string sub text then time to true type typeof
+		unload until variant wend while with withevents xor
+	} ],
+];
+
+# ActionScript keyword list is obtained from src/scite/src/cpp.properties
+$KEYWORDS{'text/x-actionscript'} = [
+	[   qw{
+		add and break case catch class continue default delete do
+		dynamic else eq extends false finally for function ge get gt if implements import in
+		instanceof interface intrinsic le lt ne new not null or private public return
+		set static super switch this throw true try typeof undefined var void while with
+		}
+	],
+	[   qw{
+		Array Arguments Accessibility Boolean Button Camera Color
+		ContextMenu ContextMenuItem Date Error Function Key LoadVars LocalConnection Math
+		Microphone Mouse MovieClip MovieClipLoader NetConnection NetStream Number Object
+		PrintJob Selection SharedObject Sound Stage String StyleSheet System TextField
+		TextFormat TextSnapshot Video Void XML XMLNode XMLSocket
+		_accProps _focusrect _global _highquality _parent _quality _root _soundbuftime
+		arguments asfunction call capabilities chr clearInterval duplicateMovieClip
+		escape eval fscommand getProperty getTimer getURL getVersion gotoAndPlay gotoAndStop
+		ifFrameLoaded Infinity -Infinity int isFinite isNaN length loadMovie loadMovieNum
+		loadVariables loadVariablesNum maxscroll mbchr mblength mbord mbsubstring MMExecute
+		NaN newline nextFrame nextScene on onClipEvent onUpdate ord parseFloat parseInt play
+		prevFrame prevScene print printAsBitmap printAsBitmapNum printNum random removeMovieClip
+		scroll set setInterval setProperty startDrag stop stopAllSounds stopDrag substring
+		targetPath tellTarget toggleHighQuality trace unescape unloadMovie unLoadMovieNum updateAfterEvent
+		}
+	],
+];
 
 # Ada keyword list is obtained from src/scite/src/ada.properties
 $KEYWORDS{'text/x-adasrc'} = [
@@ -185,7 +347,7 @@ $KEYWORDS{'text/x-adasrc'} = [
 		qw{
 			abort abstract accept access aliased all array at begin body
 			case constant declare delay delta digits do else elsif end entry exception exit for
-			function generic goto if in is limited loop new null of others out package 
+			function generic goto if in is limited loop new null of others out package
 			pragma private procedure protected raise range record renames requeue return reverse
 			select separate subtype tagged task terminate then type until use when while with
 		},
@@ -193,6 +355,32 @@ $KEYWORDS{'text/x-adasrc'} = [
 		# Ada Operators
 		qw{abs and mod not or rem xor},
 	],
+];
+
+$KEYWORDS{'text/x-csharp'} = [
+	[
+
+		# C# keywords
+		qw{
+			abstract as base bool break by byte case catch char
+			checked class const continue decimal default delegate
+			do double else enum equals event explicit extern
+			false finally fixed float for foreach goto if
+			implicit in int interface internal into is lock long
+			namespace new null object on operator out override
+			params private protected public readonly ref return sbyte
+			sealed short sizeof stackalloc static string struct
+			switch this throw true try typeof uint ulong unchecked unsafe
+			ushort using virtual void volatile while
+		},
+
+		# C# contextual keywords
+		qw{
+			add alias ascending descending dynamic from
+			get global group into join let orderby partial
+			remove select set value var where yield
+		}
+	]
 ];
 
 # COBOL keyword list is obtained from src/scite/src/cobol.properties
@@ -298,32 +486,155 @@ $KEYWORDS{'text/x-csrc'} = [
 	} ]
 ];
 
-$KEYWORDS{'application/php'} = [
+# Haskell keyword list is obtained from src/scite/src/haskell.properties
+$KEYWORDS{'text/x-haskell'} = [
+	[
+
+		# Haskell 98
+		qw{case class data default deriving do else hiding if
+			import in infix infixl infixr instance let module
+			newtype of then type where forall foreign
+			}
+	],
+	[
+
+		# Haskell Foreign Function Interface (FFI) (
+		qw{export label dynamic safe threadsafe unsafe stdcall ccall prim}
+	],
+];
+
+# Java keyword list is obtained from src/scite/src/cpp.properties
+$KEYWORDS{'text/x-java'} = [
 	[ qw{
-		and array as bool boolean break case cfunction class const
-		continue declare default die directory do double echo else
-		elseif empty enddeclare endfor endforeach endif endswitch
-		endwhile eval exit extends false float for foreach function
-		global goto if include include_once int integer isset list
-		namespace new null object old_function or parent print real
-		require require_once resource return static stdclass string
-		switch true unset use var while xor abstract catch clone
-		exception final implements interface php_user_filter private
-		protected public this throw try __class__ __dir__ __file__
-		__function__ __line__ __method__ __namespace__ __sleep
-		__wakeup
+		abstract assert boolean break byte case catch char class
+		const continue default do double else enum extends final
+		finally float for goto if implements import instanceof int
+		interface long native new package private protected public
+		return short static strictfp super switch synchronized this
+		throw throws transient try var void volatile while
+	} ]
+];
+
+# Pascal keyword list is obtained from src/scite/src/pascal.properties
+$KEYWORDS{'text/x-pascal'} = [
+	[
+
+		# Pascal keywords
+		qw{absolute abstract and array as asm assembler automated begin case
+			cdecl class const constructor deprecated destructor dispid dispinterface div do downto
+			dynamic else end except export exports external far file final finalization finally for
+			forward function goto if implementation in inherited initialization inline interface is
+			label library message mod near nil not object of on or out overload override packed
+			pascal platform private procedure program property protected public published raise
+			record register reintroduce repeat resourcestring safecall sealed set shl shr static
+			stdcall strict string then threadvar to try type unit unsafe until uses var varargs
+			virtual while with xor
+			},
+
+		# Smart pascal highlighting
+		qw{add default implements index name nodefault read readonly
+			remove stored write writeonly},
+
+		# Pascal package
+		#TODO only package dpk should get this list
+		qw{package contains requires},
+	],
+];
+
+$KEYWORDS{'text/x-perl'} = [
+	# Perl Keywords
+	[ qw{
+		NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
+		BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept
+		alarm and atan2 bind binmode bless caller chdir chmod chomp chop
+		chown chr chroot close closedir cmp connect continue cos crypt
+		dbmclose dbmopen defined delete die do dump each else elsif endgrent
+		endhostent endnetent endprotoent endpwent endservent eof eq eval
+		exec exists exit exp fcntl fileno flock for foreach fork format
+		formline ge getc getgrent getgrgid getgrnam gethostbyaddr gethostbyname
+		gethostent getlogin getnetbyaddr getnetbyname getnetent getpeername
+		getpgrp getppid getpriority getprotobyname getprotobynumber getprotoent
+		getpwent getpwnam getpwuid getservbyname getservbyport getservent
+		getsockname getsockopt glob gmtime goto grep gt hex if index
+		int ioctl join keys kill last lc lcfirst le length link listen
+		local localtime lock log lstat lt map mkdir msgctl msgget msgrcv
+		msgsnd my ne next no not oct open opendir or ord our pack package
+		pipe pop pos print printf prototype push quotemeta qu
+		rand read readdir readline readlink readpipe recv redo
+		ref rename require reset return reverse rewinddir rindex rmdir
+		scalar seek seekdir select semctl semget semop send setgrent
+		sethostent setnetent setpgrp setpriority setprotoent setpwent
+		setservent setsockopt shift shmctl shmget shmread shmwrite shutdown
+		sin sleep socket socketpair sort splice split sprintf sqrt srand
+		stat study sub substr symlink syscall sysopen sysread sysseek
+		system syswrite tell telldir tie tied time times truncate
+		uc ucfirst umask undef unless unlink unpack unshift untie until
+		use utime values vec wait waitpid wantarray warn while write
+		xor given when default say state UNITCHECK
 	} ],
 ];
 
-$KEYWORDS{'application/javascript'} = [
+# 8 different keyword lists for povray
+$KEYWORDS{'text/x-povray'} = [
+	# structure keyword1 == SCE_POV_DIRECTIVE
+	[qw( declare local undef default macro if else while end
+	include version debug error warning switch case range break
+	ifdef indef  fopen fclose read write render statistics )],
+
+	# objects  SCE_POV_WORD2
+	[
+	qw(blob  box bicubic_patch object light_source
+	camera  cylinder cubic global_settings height_field
+	isosurface julia_fractal sor sphere sphere_sweep superellipsoid
+	torus triangle quadric quartic sky_sphere plane poly polygon ),
+
+	qw(
+	looks_like bounded_by contained_by clipped_by
+	),
+	qw(
+	union intersection difference
+	)
+	],
+
+	# patterns  SCE_POV_WORD3
+	[qw( agate bozo checker cells bumps brick facets dents crackle
+	hexagon gradient granite  spotted spiral1 ripples marble
+	leopard spiral2 wrinkles)],
+
+	# transforms  SCE_POV_WORD4
+	[qw( translate rotate scale transform matrix point_at look_at )],
+
+	# modifiers - SCE_POV_WORD5
+	[qw(
+
+	)],
+
+	## float functions - SCE_POV_WORD6
+	[qw(
+	abs acos acosh asc asin asinh atan atanh atan2 ceil cos cosh defined
+	degrees dimensions dimension_size div exp file_exists floor int inside
+	ln log max min mod pow radians rand seed select sin sinh sqrt strcmp strlen
+	tan tanh val vdot vlength ),
+	## vector functions
+	qw( min_extent max_extent trace vaxis_rotate vcross vrotate
+	vnormalize vturbulence ),
+	## string functions
+	qw( chr concat str strlwr strupr substr vstr )
+	],
+
+	## reserved identifiers SCE_POV_WORD7
+	[qw(
+	x y z red green blue alpha filter rgb rgbf rgba rgbfa u v
+	)],
+];
+
+# Python keywords
+# The list is obtained from src/scite/src/python.properties
+$KEYWORDS{'text/x-python'} = [
 	[ qw{
-		abstract boolean break byte case catch char class
-		const continue debugger default delete do double else enum
-		export extends final finally float for function goto if
-		implements import in instanceof int interface long native
-		new package private protected public return short static
-		super switch synchronized this throw throws transient try
-		typeof var void volatile while with
+		and as assert break class continue def del elif
+		else except exec finally for from global if import in is lambda None
+		not or pass print raise return try while with yield
 	} ],
 ];
 
@@ -360,7 +671,7 @@ sub _MIME {
 	}
 	return Padre::MIME->find($it);
 }
-	
+
 sub _TYPE {
 	my $it = shift;
 	if ( Params::Util::_INSTANCE($it, 'Padre::Document') ) {

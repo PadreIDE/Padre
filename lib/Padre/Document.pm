@@ -800,7 +800,7 @@ my %SCINTILLA_KEY_WORDS = (
 				orelse extra m mm rx s tr},
 		],
 	],
-	
+
 	# 8 different keyword lists for povray
 	'text/x-povray' => [
 		# structure keyword1 == SCE_POV_DIRECTIVE
