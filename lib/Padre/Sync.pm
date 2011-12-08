@@ -27,7 +27,6 @@ use JSON::XS       ();
 use LWP::UserAgent ();
 use HTTP::Cookies  ();
 use HTTP::Request::Common qw/GET POST DELETE PUT/;
-use Padre::Util     ();
 use Padre::Current  ();
 use Padre::Constant ();
 

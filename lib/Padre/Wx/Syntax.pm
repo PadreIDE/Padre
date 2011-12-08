@@ -675,7 +675,10 @@ sub select_next_problem {
 	}
 
 	# Select the line in the editor
-	Padre::Util::select_line_in_editor( $line_to_select, $editor ) if $line_to_select;
+	if ( $line_to_select ) {
+		$editor->goto_line_centerize($line_to_select);
+		$editor->SetFocus;
+	}
 }
 
 1;

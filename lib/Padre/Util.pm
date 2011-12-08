@@ -38,7 +38,7 @@ use vars qw{ $VERSION $COMPATIBLE };
 
 BEGIN {
 	$VERSION    = '0.93';
-	$COMPATIBLE = '0.81';
+	$COMPATIBLE = '0.93';
 }
 
 our @ISA       = 'Exporter';
@@ -524,17 +524,6 @@ sub process_memory {
 	return;
 }
 
-# Select and focus on the line within the editor provided
-sub select_line_in_editor {
-	my $line   = shift;
-	my $editor = shift;
-	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-	$editor->SetFocus;
-
-	return;
-}
-
 =pod
 
 =head2 C<run_in_directory>
@@ -687,21 +676,6 @@ sub run_in_directory_two {
 	return $ret_ioe{error} if ( $return_option eq 2 );
 	return \%ret_ioe;
 
-}
-
-sub tidy_list {
-	my $list = shift;
-
-	require Padre::Wx;
-	for ( 0 .. $list->GetColumnCount - 1 ) {
-		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE_USEHEADER() );
-		my $header_width = $list->GetColumnWidth($_);
-		$list->SetColumnWidth( $_, Wx::LIST_AUTOSIZE() );
-		my $column_width = $list->GetColumnWidth($_);
-		$list->SetColumnWidth( $_, ( $header_width >= $column_width ) ? $header_width : $column_width );
-	}
-
-	return;
 }
 
 1;

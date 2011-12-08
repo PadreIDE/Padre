@@ -43,6 +43,9 @@ the even version for the release, even during development.
       "new" and "close" submenus (SEWI)
     - Try to avoid failing silently when there are major load-time failures
       and on Win32 ask if we can reset configuration directory (ADAMK)
+    - Fixed detection of XML files with non-.xml extensions (ADAMK)
+    - Moved Wx-specific code out of Padre::Util into Padre::Wx::Util (ADAMK)
+    - Moving the _T function to the dedicated Padre::Locale::T (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

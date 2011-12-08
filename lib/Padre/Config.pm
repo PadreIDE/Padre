@@ -15,12 +15,13 @@ use File::Spec             ();
 use Scalar::Util           ();
 use Params::Util           ();
 use Padre::Constant        ();
-use Padre::Util            ('_T');
+use Padre::Util            ();
 use Padre::Current         ();
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
+use Padre::Locale::T;
 use Padre::Logger;
 
 our $VERSION = '0.93';

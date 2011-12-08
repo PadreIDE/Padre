@@ -14,6 +14,9 @@ our @ISA     = qw{
 };
 
 
+
+
+
 #####################################################################
 # Padre::Document Task Integration
 
@@ -37,7 +40,7 @@ sub get_function_regex {
 sub get_command {
 	my $self    = shift;
 	my $arg_ref = shift || {};
-	my $config  = $self->current->config;
+	my $config  = $self->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename =

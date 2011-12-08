@@ -244,9 +244,8 @@ sub _select_next_prev_difference {
 		}
 	}
 	if ( defined $line_to_select ) {
-
 		# Select the line in the editor and show the diff box
-		Padre::Util::select_line_in_editor( $line_to_select, $editor );
+		$editor->goto_line_centerize($line_to_select);
 		$self->show_diff_box( $line_to_select, $editor );
 	} else {
 		$self->{main}->error( Wx::gettext('No changes found') );

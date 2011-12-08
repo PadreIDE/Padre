@@ -11,6 +11,7 @@ use utf8;
 use Padre::Util              ();
 use Padre::Constant          ();
 use Padre::Wx                ();
+use Padre::Wx::Util          ();
 use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
@@ -207,7 +208,7 @@ sub set_up {
 	}
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{variables} );
+	Padre::Wx::Util::tidy_list( $self->{variables} );
 
 	return;
 }
@@ -262,7 +263,7 @@ sub update_variables {
 	}
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{variables} );
+	Padre::Wx::Util::tidy_list( $self->{variables} );
 
 	return;
 }

@@ -449,10 +449,9 @@ sub add_subtree {
 sub select_line_in_editor {
 	my $self   = shift;
 	my $line   = shift;
-	my $editor = $self->current->editor;
+	my $editor = $self->current->editor or return;
 	if (   defined $line
 		&& ( $line =~ /^\d+$/o )
-		&& ( defined $editor )
 		&& ( $line <= $editor->GetLineCount ) )
 	{
 		$line--;

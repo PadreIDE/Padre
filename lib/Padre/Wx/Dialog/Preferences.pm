@@ -6,6 +6,7 @@ use warnings;
 use Padre::Locale               ();
 use Padre::Document             ();
 use Padre::Wx                   ();
+use Padre::Wx::Util             ();
 use Padre::Wx::Role::Config     ();
 use Padre::Wx::FBP::Preferences ();
 use Padre::Wx::Choice::Theme    ();
@@ -149,7 +150,7 @@ HERE
 	$self->_update_list;
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{list} );
+	Padre::Wx::Util::tidy_list( $self->{list} );
 
 	return $self;
 }

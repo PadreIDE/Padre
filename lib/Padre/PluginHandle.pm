@@ -7,8 +7,8 @@ use Carp           ();
 use Params::Util   ();
 use Padre::Util    ('_T');
 use Padre::Current ();
-use Padre::Locale  ();
 use Padre::DB      ();
+use Padre::Locale  ();
 
 our $VERSION = '0.93';
 

@@ -4,8 +4,9 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
 use Padre::Wx             ();
+use Padre::Wx::Util       ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::FBP::VCS   ();
 use Padre::Task::VCS      ();
 use Padre::Logger;
@@ -77,7 +78,7 @@ sub new {
 	$self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{list} );
+	Padre::Wx::Util::tidy_list( $self->{list} );
 
 	# Update the checkboxes with their corresponding values in the
 	# configuration
@@ -328,7 +329,7 @@ sub render {
 	$self->set_icon_image( $self->{sort_column}, $self->{sort_desc} );
 
 	# Tidy the list
-	Padre::Util::tidy_list($list);
+	Padre::Wx::Util::tidy_list($list);
 
 	return 1;
 }

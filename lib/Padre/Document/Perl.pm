@@ -148,7 +148,7 @@ sub set_highlighter {
 	# configuration variable
 	my $limit;
 	if ( $module eq 'Padre::Document::Perl::PPILexer' ) {
-		$limit = $self->current->config->lang_perl5_lexer_ppi_limit;
+		$limit = $self->config->lang_perl5_lexer_ppi_limit;
 	} elsif ( $module eq 'Padre::Document::Perl::Lexer' ) {
 		$limit = 4000;
 	} elsif ( $module eq 'Padre::Plugin::Kate' ) {
@@ -328,7 +328,7 @@ sub get_command {
 	my $arg_ref = shift || {};
 	my $debug   = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
 	my $trace   = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
-	my $config  = $self->current->config;
+	my $config  = $self->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename =
@@ -415,7 +415,7 @@ sub get_interpreter {
 	my $arg_ref = shift || {};
 	my $debug   = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
 	my $trace   = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
-	my $config  = $self->current->config;
+	my $config  = $self->config;
 
 	# The configuration value is cheaper to get compared to cperl(),
 	# try it first.

@@ -17,8 +17,8 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config  ();
-use Padre::Util    ('_T');
+use Padre::Config ();
+use Padre::Locale::T;
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
@@ -741,7 +741,7 @@ sub detect_content {
 	}
 
 	# Recognise XML and variants
-	if ( $text =~ /\A<\?xml\b>/s ) {
+	if ( $text =~ /\A<\?xml\b/s ) {
 		return 'text/html' if $text =~ /^<!DOCTYPE html/m;
 		return 'text/xml';
 	}

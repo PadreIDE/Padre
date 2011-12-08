@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Util                 ();
 use Padre::Wx                   ();
+use Padre::Wx::Util             ();
 use Padre::Wx::Icon             ();
 use Padre::Wx::Role::View       ();
 use Padre::Wx::FBP::Breakpoints ();
@@ -156,7 +157,7 @@ sub set_up {
 	}
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{list} );
+	Padre::Wx::Util::tidy_list( $self->{list} );
 
 	return;
 }
@@ -416,7 +417,7 @@ sub _update_list {
 			}
 		}
 
-		Padre::Util::tidy_list( $self->{list} );
+		Padre::Wx::Util::tidy_list( $self->{list} );
 	}
 
 	return;

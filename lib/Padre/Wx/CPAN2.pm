@@ -5,11 +5,12 @@ use strict;
 use warnings;
 use Padre::Constant        ();
 use Padre::Role::Task      ();
-use Padre::Wx::Role::View  ();
 use Padre::Wx              ();
-use Padre::Task::CPAN2     ();
+use Padre::Wx::Util        ();
+use Padre::Wx::Role::View  ();
 use Padre::Wx::Role::Dwell ();
 use Padre::Wx::FBP::CPAN   ();
+use Padre::Task::CPAN2     ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.93';
@@ -79,9 +80,9 @@ sub new {
 	);
 
 	# Tidy the list
-	Padre::Util::tidy_list( $self->{search_list} );
-	Padre::Util::tidy_list( $self->{recent_list} );
-	Padre::Util::tidy_list( $self->{favorite_list} );
+	Padre::Wx::Util::tidy_list( $self->{search_list} );
+	Padre::Wx::Util::tidy_list( $self->{recent_list} );
+	Padre::Wx::Util::tidy_list( $self->{favorite_list} );
 
 	return $self;
 }
@@ -352,7 +353,7 @@ sub _update_ui {
 			$list->SetColumnWidth( 0, 140 );
 			$list->SetColumnWidth( 1, 50 );
 		} else {
-			Padre::Util::tidy_list($list);
+			Padre::Wx::Util::tidy_list($list);
 		}
 		$list->Show;
 		$self->Layout;
