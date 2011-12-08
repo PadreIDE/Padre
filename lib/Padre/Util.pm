@@ -300,6 +300,7 @@ sub get_matches {
 
 	my $pair;
 	if ($backward) {
+		require List::Util;
 		$pair = List::Util::first { $to > $_->[1] } reverse @matches;
 		if ( not $pair and @matches ) {
 			$pair = $matches[-1];
@@ -489,29 +490,6 @@ sub find_perldiag_translations {
 	}
 	my @tr = sort keys %languages;
 	return @tr;
-}
-
-### DEPRECATED
-sub get_project_rcs {
-	if ( $VERSION > 0.84 ) {
-		warn "Deprecated Padre::Util::get_project_rcs called by " . scalar caller();
-	}
-	require Padre::Current;
-	my $manager = Padre::Current->ide->project_manager;
-	my $project = $manager->from_root(shift) or return;
-	return $project->vcs;
-}
-
-### DEPRECATED
-sub get_project_dir {
-	if ( $VERSION > 0.84 ) {
-		warn "Deprecated Padre::Util::get_project_dir called by " . scalar caller();
-	}
-	require Padre::Current;
-	my $file    = shift or return;
-	my $manager = Padre::Current->ide->project_manager;
-	my $project = $manager->from_file($file) or return;
-	return $project->root;
 }
 
 
