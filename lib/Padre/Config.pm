@@ -868,16 +868,9 @@ setting(
 		. 'search.quick_menu_access;' . '|;'
 		. 'run.run_document;'
 		. 'run.stop;' . '|;'
-		. 'debug.step_in;'
-		. 'debug.step_over;'
-		. 'debug.step_out;'
-		. 'debug.run;'
-		. 'debug.set_breakpoint;'
-		. 'debug.display_value;'
-		. 'debug.quit;'. '|;'
 		. 'debug.launch;'
-		. 'debug.set_breakpoints;'
-		. 'debug.quit2;'. '|;'
+		. 'debug.set_breakpoint;'
+		. 'debug.quit;'. '|;'
 );
 
 # Directory Tree Settings
@@ -1416,13 +1409,13 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
-setting(
-	name    => 'feature_debug2',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 1,
-	help    => _T('Toggle Debug2'),
-);
+# setting(
+	# name    => 'feature_debug2',
+	# type    => Padre::Constant::BOOLEAN,
+	# store   => Padre::Constant::HUMAN,
+	# default => 1,
+	# help    => _T('Toggle Debug2'),
+# );
 
 # Enable experimental quick fix system.
 setting(

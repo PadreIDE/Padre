@@ -323,35 +323,25 @@ sub new {
 	$self->_show_vcs( $config->main_vcs ) if $config->feature_vcs_support;
 	$self->_show_cpan_explorer( $config->main_cpan_explorer )
 		if $config->feature_cpan_explorer;
-	$self->_show_panel_breakpoints( $config->main_panel_breakpoints )
-		if $config->feature_debug2;
-	$self->_show_panel_debug_output( $config->main_panel_debug_output )
-		if $config->feature_debug2;
-	$self->_show_panel_debugger( $config->main_panel_debugger )
-		if $config->feature_debug2;
-		
+	$self->_show_panel_breakpoints( $config->main_panel_breakpoints );
+	$self->_show_panel_debug_output( $config->main_panel_debug_output );
+	$self->_show_panel_debugger( $config->main_panel_debugger );
+
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
 
 	# This require is only here so it can follow this constructor
 	# when it moves to being created on demand.
 	if (Padre::Feature::DEBUGGER) {
-		require Padre::Wx::Debugger;
-		$self->{debugger} = Padre::Wx::Debugger->new;
-		if ( $config->feature_debug2 ) {
 
-			#Reset the value to the default setting
-			my $name  = "main_toolbar_items";
-			my $value = $config->main_toolbar_items;
-			if ( $value !~ m/quit2/ ) {
-				my $debug2_tools = 'debug.launch;' . 'debug.set_breakpoints;' . 'debug.quit2;'. '|;';
-				$value .= $debug2_tools;
-				$config->apply($name, $value);
-				#$self->rebuild_toolbar();
-				#why dose this fail with following message
-				#Can't use an undefined value as a HASH reference at Padre/lib/Padre/Wx/ActionLibrary.pm line 2024.
-			}
-		}
+		#Reset the value to the default setting
+		my $name  = "main_toolbar_items";
+		my $value = $config->main_toolbar_items;
+		# if ( $value !~ m/quit2/ ) {
+			# my $debug2_tools = 'debug.launch;' . 'debug.set_breakpoints;' . 'debug.quit;' . '|;';
+			# $value .= $debug2_tools;
+			$config->apply( $name, $value );
+		# }
 	}
 
 	# We need an event immediately after the window opened
@@ -562,28 +552,28 @@ use Class::XSAccessor {
 	predicates => {
 
 		# Needed for lazily-constructed GUI elements
-		has_about             => 'about',
-		has_left              => 'left',
-		has_right             => 'right',
-		has_bottom            => 'bottom',
-		has_panel_breakpoints => 'panel_breakpoints',
+		has_about              => 'about',
+		has_left               => 'left',
+		has_right              => 'right',
+		has_bottom             => 'bottom',
+		has_panel_breakpoints  => 'panel_breakpoints',
 		has_panel_debug_output => 'panel_debug_output',
 		has_panel_debugger     => 'panel_debugger',
-		has_output            => 'output',
-		has_command_line      => 'command_line',
-		has_syntax            => 'syntax',
-		has_vcs               => 'vcs',
-		has_cpan_explorer     => 'cpan_explorer',
-		has_functions         => 'functions',
-		has_todo              => 'todo',
-		has_debugger          => 'debugger',
-		has_find              => 'find',
-		has_findfast          => 'findfast',
-		has_replace           => 'replace',
-		has_outline           => 'outline',
-		has_directory         => 'directory',
-		has_findinfiles       => 'findinfiles',
-		has_replaceinfiles    => 'replaceinfiles',
+		has_output             => 'output',
+		has_command_line       => 'command_line',
+		has_syntax             => 'syntax',
+		has_vcs                => 'vcs',
+		has_cpan_explorer      => 'cpan_explorer',
+		has_functions          => 'functions',
+		has_todo               => 'todo',
+		has_debugger           => 'debugger',
+		has_find               => 'find',
+		has_findfast           => 'findfast',
+		has_replace            => 'replace',
+		has_outline            => 'outline',
+		has_directory          => 'directory',
+		has_findinfiles        => 'findinfiles',
+		has_replaceinfiles     => 'replaceinfiles',
 	},
 	getters => {
 
@@ -744,13 +734,12 @@ sub panel_debug_output {
 }
 
 sub panel_debugger {
-    my $self = shift;
-    unless ( defined $self->{panel_debugger} ) {
-        require Padre::Wx::Panel::Debugger;
-        $self->{panel_debugger}
-            = Padre::Wx::Panel::Debugger->new($self);
-    }
-    return $self->{panel_debugger};
+	my $self = shift;
+	unless ( defined $self->{panel_debugger} ) {
+		require Padre::Wx::Panel::Debugger;
+		$self->{panel_debugger} = Padre::Wx::Panel::Debugger->new($self);
+	}
+	return $self->{panel_debugger};
 }
 
 sub diff {
@@ -2673,7 +2662,7 @@ sub show_panel_breakpoints {
 	$self->_show_panel_breakpoints($show);
 	$self->aui->Update;
 
-return;
+	return;
 }
 
 sub _show_panel_breakpoints {
@@ -2698,6 +2687,7 @@ otherwise. If C<$visible> is not provided, the method defaults to show
 the panel.
 
 =cut
+
 sub show_panel_debug_output {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
@@ -2709,7 +2699,7 @@ sub show_panel_debug_output {
 	$self->_show_panel_debug_output($show);
 	$self->aui->Update;
 
-return;
+	return;
 }
 
 sub _show_panel_debug_output {
@@ -2736,29 +2726,28 @@ the panel.
 =cut
 
 sub show_panel_debugger {
-    my $self = shift;
-    my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-    unless ( $show == $self->menu->debug->{panel_debugger}->IsChecked ) {
-        $self->menu->debug->{panel_debugger}->Check($show);
-    }
+	my $self = shift;
+	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $show == $self->menu->debug->{panel_debugger}->IsChecked ) {
+		$self->menu->debug->{panel_debugger}->Check($show);
+	}
 
-    $self->config->set( main_panel_debugger => $show );
-    $self->_show_panel_debugger($show);
-    $self->aui->Update;
+	$self->config->set( main_panel_debugger => $show );
+	$self->_show_panel_debugger($show);
+	$self->aui->Update;
 
-    return;
+	return;
 }
 
 sub _show_panel_debugger {
-    my $self = shift;
-    my $lock = $self->lock('UPDATE');
-    if ( $_[0] ) {
-        $self->right->show( $self->panel_debugger );
-    }
-    elsif ( $self->has_panel_debugger ) {
-        $self->right->hide( $self->panel_debugger );
-        delete $self->{panel_debugger};
-    }
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+	if ( $_[0] ) {
+		$self->right->show( $self->panel_debugger );
+	} elsif ( $self->has_panel_debugger ) {
+		$self->right->hide( $self->panel_debugger );
+		delete $self->{panel_debugger};
+	}
 }
 
 
@@ -3800,7 +3789,7 @@ sub on_comment_block {
 		$self->error(
 			sprintf(
 				Wx::gettext('Could not determine the comment character for %s document type'),
-				Wx::gettext($document->mime->name),
+				Wx::gettext( $document->mime->name ),
 			)
 		);
 		return;
@@ -6643,6 +6632,7 @@ sub start_perl5_module {
 		);
 	}
 	unless ( defined Params::Util::_STRING($module) ) {
+
 		# If we still don't have a module name abort
 		return;
 	}
