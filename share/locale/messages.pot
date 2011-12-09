@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-08 16:10-0800\n"
+"POT-Creation-Date: 2011-12-08 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -705,10 +705,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:249
 msgid ".        Return to the executed line."
-msgstr ""
-
-#: lib/Padre/Wx/FBP/PluginManager.pm:74
-msgid "1.2.3.4"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:86
@@ -1848,6 +1844,10 @@ msgstr ""
 msgid "Dirk De Nijs"
 msgstr ""
 
+#: lib/Padre/PluginHandle.pm:27
+msgid "Disabled"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "Disk"
 msgstr ""
@@ -2020,7 +2020,7 @@ msgstr ""
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:80
+#: lib/Padre/PluginHandle.pm:28
 msgid "Enabled"
 msgstr ""
 
@@ -2106,14 +2106,15 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:1190 lib/Padre/Wx/Editor.pm:737
-#: lib/Padre/Wx/Main.pm:5161 lib/Padre/Wx/Role/Dialog.pm:95
-#: lib/Padre/Wx/Dialog/PluginManager.pm:370 lib/Padre/Wx/Dialog/Sync.pm:78
-#: lib/Padre/Wx/Dialog/Sync.pm:86 lib/Padre/Wx/Dialog/Sync.pm:99
-#: lib/Padre/Wx/Dialog/Sync.pm:118 lib/Padre/Wx/Dialog/Sync.pm:142
-#: lib/Padre/Wx/Dialog/Sync.pm:153 lib/Padre/Wx/Dialog/Sync.pm:163
-#: lib/Padre/Wx/Dialog/Sync.pm:183 lib/Padre/Wx/Dialog/Sync.pm:194
-#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
+#: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:1190
+#: lib/Padre/Wx/Editor.pm:737 lib/Padre/Wx/Main.pm:5161
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:370
+#: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
+#: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
+#: lib/Padre/Wx/Dialog/Sync.pm:142 lib/Padre/Wx/Dialog/Sync.pm:153
+#: lib/Padre/Wx/Dialog/Sync.pm:163 lib/Padre/Wx/Dialog/Sync.pm:183
+#: lib/Padre/Wx/Dialog/Sync.pm:194 lib/Padre/Wx/Dialog/Sync.pm:205
+#: lib/Padre/Wx/Dialog/Sync.pm:216
 msgid "Error"
 msgstr ""
 
@@ -2134,6 +2135,7 @@ msgid "Error loading perl filter dialog."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:256
+#: lib/Padre/Wx/Dialog/PluginManager2.pm:143
 #, perl-format
 msgid "Error loading pod for class '%s': %s"
 msgstr ""
@@ -2304,13 +2306,13 @@ msgstr ""
 msgid "Failed to delete POD fragment"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:401
+#: lib/Padre/PluginHandle.pm:395
 #, perl-format
 msgid "Failed to disable plug-in '%s': %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:279 lib/Padre/PluginHandle.pm:295
-#: lib/Padre/PluginHandle.pm:319
+#: lib/Padre/PluginHandle.pm:273 lib/Padre/PluginHandle.pm:289
+#: lib/Padre/PluginHandle.pm:313
 #, perl-format
 msgid "Failed to enable plug-in '%s': %s"
 msgstr ""
@@ -2748,6 +2750,10 @@ msgid ""
 "Disable all warnings:  -X"
 msgstr ""
 
+#: lib/Padre/PluginHandle.pm:26
+msgid "Incompatible"
+msgstr ""
+
 #: lib/Padre/Config.pm:943
 msgid "Indent Deeply"
 msgstr ""
@@ -3001,6 +3007,10 @@ msgstr ""
 msgid ""
 "List the files that match the current selection and let the user pick one to "
 "open"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:25
+msgid "Loaded"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:236
@@ -3860,17 +3870,17 @@ msgstr ""
 msgid "Plugin %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:340
+#: lib/Padre/PluginHandle.pm:334
 #, perl-format
 msgid "Plugin %s returned %s instead of a hook list on ->padre_hooks"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:353
+#: lib/Padre/PluginHandle.pm:347
 #, perl-format
 msgid "Plugin %s tried to register invalid hook %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:361
+#: lib/Padre/PluginHandle.pm:355
 #, perl-format
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
@@ -3878,10 +3888,6 @@ msgstr ""
 #: lib/Padre/PluginManager.pm:747
 #, perl-format
 msgid "Plugin %s, hook %s returned an emtpy error message"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/PluginManager.pm:65
-msgid "Plugin Name"
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:714
@@ -5511,6 +5517,10 @@ msgstr ""
 msgid "Unknown error from "
 msgstr ""
 
+#: lib/Padre/PluginHandle.pm:24
+msgid "Unloaded"
+msgstr ""
+
 #: lib/Padre/Wx/VCS.pm:242
 msgid "Unmodified"
 msgstr ""
@@ -5799,7 +5809,7 @@ msgstr ""
 msgid "cpanm is unexpectedly not installed"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:116 lib/Padre/Wx/Dialog/PluginManager.pm:528
+#: lib/Padre/Wx/Dialog/PluginManager.pm:528
 msgid "disabled"
 msgstr ""
 
@@ -5807,11 +5817,11 @@ msgstr ""
 msgid "e.g."
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:117 lib/Padre/Wx/Dialog/PluginManager.pm:520
+#: lib/Padre/Wx/Dialog/PluginManager.pm:520
 msgid "enabled"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:112 lib/Padre/Wx/Dialog/PluginManager.pm:501
+#: lib/Padre/Wx/Dialog/PluginManager.pm:501
 msgid "error"
 msgstr ""
 
@@ -5819,12 +5829,8 @@ msgstr ""
 msgid "fresh"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:115 lib/Padre/Wx/Dialog/PluginManager.pm:509
+#: lib/Padre/Wx/Dialog/PluginManager.pm:509
 msgid "incompatible"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:114
-msgid "loaded"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:83
@@ -5906,10 +5912,6 @@ msgstr ""
 msgid ""
 "t\n"
 "Toggle trace mode (see also the AutoTrace option)."
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:113
-msgid "unloaded"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:269
