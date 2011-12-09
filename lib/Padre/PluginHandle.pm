@@ -5,17 +5,11 @@ use strict;
 use warnings;
 use Carp           ();
 use Params::Util   ();
-use Padre::Util    ('_T');
+use Padre::Util    ();
 use Padre::Current ();
-use Padre::DB      ();
-use Padre::Locale  ();
+use Padre::Locale::T;
 
 our $VERSION = '0.93';
-
-use overload
-	'bool' => sub () {1},
-	'""' => 'plugin_name',
-	'fallback' => 0;
 
 use Class::XSAccessor {
 	getters => {
@@ -24,6 +18,15 @@ use Class::XSAccessor {
 		plugin => 'plugin',
 	},
 };
+
+my %STATUS = (
+	error        => Wx::gettext('Error'),
+	unloaded     => Wx::gettext('Unloaded'),
+	loaded       => Wx::gettext('Loaded'),
+	incompatible => Wx::gettext('Incompatible'),
+	disabled     => Wx::gettext('Disabled'),
+	enabled      => Wx::gettext('Enabled'),
+);
 
 
 
@@ -59,6 +62,7 @@ sub new {
 	# Load or create the database configuration for the plugin
 	unless ( Params::Util::_INSTANCE($self->db, 'Padre::DB::Plugin') ) {
 		local $@;
+		require Padre::DB;
 		$self->{db} = eval {
 			Padre::DB::Plugin->load($module);
 		};
@@ -105,19 +109,8 @@ sub status {
 
 sub status_localized {
 	my $self = shift;
-
-	# We are forced to have a hash of translation so that gettext
-	# tools can extract those to be localized.
-	my %translation = (
-		error        => Wx::gettext('error'),
-		unloaded     => Wx::gettext('unloaded'),
-		loaded       => Wx::gettext('loaded'),
-		incompatible => Wx::gettext('incompatible'),
-		disabled     => Wx::gettext('disabled'),
-		enabled      => Wx::gettext('enabled'),
-	);
-
-	return $translation{ $self->{status} };
+	my $text = $STATUS{ $self->{status} } or return;
+	return Wx::gettext($text);
 }
 
 sub error {
@@ -261,6 +254,7 @@ sub enable {
 	}
 
 	# Add the plugin catalog to the locale
+	require Padre::Locale;
 	my $prefix  = $self->locale_prefix;
 	my $code    = Padre::Locale::rfc4646();
 	my $current = $self->current;

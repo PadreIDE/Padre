@@ -47,7 +47,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			shift->refresh_details(@_);
+			shift->refresh_plugin(@_);
 		},
 	);
 
@@ -62,7 +62,7 @@ sub new {
 	$self->{plugin_name} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		Wx::gettext("Plugin Name"),
+		'',
 	);
 	$self->{plugin_name}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -71,13 +71,13 @@ sub new {
 	$self->{plugin_version} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		Wx::gettext("1.2.3.4"),
+		'',
 	);
 
 	$self->{plugin_status} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		Wx::gettext("Enabled"),
+		'',
 	);
 	$self->{plugin_status}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -131,11 +131,12 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $bSizer111 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer111->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
-	$bSizer111->Add( $self->{plugin_version}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
-	$bSizer111->Add( 50, 0, 1, Wx::EXPAND, 5 );
-	$bSizer111->Add( $self->{plugin_status}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
+	$self->{labels} = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$self->{labels}->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
+	$self->{labels}->Add( 5, 0, 0, Wx::EXPAND, 5 );
+	$self->{labels}->Add( $self->{plugin_version}, 0, Wx::ALIGN_BOTTOM | Wx::BOTTOM | Wx::RIGHT, 6 );
+	$self->{labels}->Add( 50, 0, 1, Wx::EXPAND, 5 );
+	$self->{labels}->Add( $self->{plugin_status}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
 
 	my $bSizer113 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer113->Add( $self->{action}, 0, Wx::ALL, 5 );
@@ -144,7 +145,7 @@ sub new {
 	$bSizer113->Add( $self->{m_button51}, 0, Wx::ALL, 5 );
 
 	my $bSizer110 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer110->Add( $bSizer111, 0, Wx::EXPAND, 5 );
+	$bSizer110->Add( $self->{labels}, 0, Wx::EXPAND, 5 );
 	$bSizer110->Add( $self->{whtml}, 1, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer110->Add( $bSizer113, 0, Wx::EXPAND, 5 );
 
@@ -164,8 +165,8 @@ sub new {
 	return $self;
 }
 
-sub refresh_details {
-	$_[0]->main->error('Handler method refresh_details for event list.OnListBox not implemented');
+sub refresh_plugin {
+	$_[0]->main->error('Handler method refresh_plugin for event list.OnListBox not implemented');
 }
 
 sub action_clicked {
