@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-08 12:10-0800\n"
+"POT-Creation-Date: 2011-12-08 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -657,7 +657,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:407 lib/Padre/Wx/Panel/Debugger.pm:679
+#: lib/Padre/Wx/Panel/Debugger.pm:679
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1518,7 +1518,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:389 lib/Padre/Wx/Panel/Debugger.pm:653
+#: lib/Padre/Wx/Panel/Debugger.pm:653
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1565,11 +1565,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:5160
 msgid "Could not save file: "
-msgstr ""
-
-#: lib/Padre/Wx/Debugger.pm:226
-#, perl-format
-msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN2.pm:224
@@ -1697,22 +1692,15 @@ msgstr ""
 msgid "Debug-Output Options"
 msgstr ""
 
-#: lib/Padre/Wx/Debug.pm:97 lib/Padre/Wx/Panel/Debugger.pm:77
-#: lib/Padre/Wx/Panel/Debugger.pm:107
+#: lib/Padre/Wx/Panel/Debugger.pm:77 lib/Padre/Wx/Panel/Debugger.pm:107
 msgid "Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:79 lib/Padre/Wx/Panel/Debugger.pm:287
+#: lib/Padre/Wx/Panel/Debugger.pm:287
 msgid "Debugger is already running"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:275
-#: lib/Padre/Wx/Debugger.pm:299 lib/Padre/Wx/Debugger.pm:333
-#: lib/Padre/Wx/Debugger.pm:353
-msgid "Debugger not running"
-msgstr ""
-
-#: lib/Padre/Wx/Debugger.pm:138 lib/Padre/Wx/Panel/Debugger.pm:350
+#: lib/Padre/Wx/Panel/Debugger.pm:350
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -2269,7 +2257,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:440 lib/Padre/Wx/Panel/Debugger.pm:712
+#: lib/Padre/Wx/Panel/Debugger.pm:712
 msgid "Expr"
 msgstr ""
 
@@ -2277,7 +2265,7 @@ msgstr ""
 msgid "Expression To Evaluate"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:439 lib/Padre/Wx/Panel/Debugger.pm:711
+#: lib/Padre/Wx/Panel/Debugger.pm:711
 msgid "Expression:"
 msgstr ""
 
@@ -3390,7 +3378,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:83 lib/Padre/Wx/Panel/Debugger.pm:291
+#: lib/Padre/Wx/Panel/Debugger.pm:291
 msgid "Not a Perl document"
 msgstr ""
 
@@ -5341,13 +5329,6 @@ msgstr ""
 msgid "The bookmark '%s' no longer exists"
 msgstr ""
 
-#: lib/Padre/Wx/Debugger.pm:191
-msgid ""
-"The debugger is not running.\n"
-"You can start the debugger using one of the commands 'Step In', 'Step Over', "
-"or 'Run till Breakpoint' in the Debug menu."
-msgstr ""
-
 #: lib/Padre/Wx/Directory.pm:590
 msgid ""
 "The directory browser got an undef object and may stop working now. Please "
@@ -5629,12 +5610,8 @@ msgstr ""
 msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
 msgstr ""
 
-#: lib/Padre/Wx/Debug.pm:123 lib/Padre/Wx/Dialog/Advanced.pm:113
+#: lib/Padre/Wx/Dialog/Advanced.pm:113
 msgid "Value"
-msgstr ""
-
-#: lib/Padre/Wx/Debug.pm:122
-msgid "Variable"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1912
