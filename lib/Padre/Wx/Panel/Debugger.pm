@@ -413,16 +413,6 @@ sub running {
 	return !!$self->current->editor;
 }
 
-####### v1
-# sub debug_perl_jumpt_to
-#######
-sub debug_perl_jumpt_to {
-	my $self = shift;
-	$self->running or return;
-	$self->_set_debugger;
-	return;
-}
-
 #######
 # sub debug_quit
 #######
@@ -700,22 +690,6 @@ sub display_value {
 	return;
 }
 
-####### v1
-#TODO Debug -> menu when in trunk
-#######
-sub debug_perl_evaluate_expression {
-	my $self = shift;
-	$self->running or return;
-
-	my $expression = $self->main->prompt(
-		Wx::gettext('Expression:'),
-		Wx::gettext('Expr'),
-		'EVAL_EXPRESSION'
-	);
-	$self->{client}->execute_code($expression);
-
-	return;
-}
 #######
 # Method quit
 #######
