@@ -20,12 +20,12 @@ use Class::XSAccessor {
 };
 
 my %STATUS = (
-	error        => Wx::gettext('Error'),
-	unloaded     => Wx::gettext('Unloaded'),
-	loaded       => Wx::gettext('Loaded'),
-	incompatible => Wx::gettext('Incompatible'),
-	disabled     => Wx::gettext('Disabled'),
-	enabled      => Wx::gettext('Enabled'),
+	error        => _T('Error'),
+	unloaded     => _T('Unloaded'),
+	loaded       => _T('Loaded'),
+	incompatible => _T('Incompatible'),
+	disabled     => _T('Disabled'),
+	enabled      => _T('Enabled'),
 );
 
 
