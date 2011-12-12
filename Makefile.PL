@@ -169,9 +169,6 @@ test_requires 'Test::NoWarnings'   => '0.084';
 # In the Padre.ppd file we need to list IO-stringy instead
 requires 'IO::Scalar' => '2.110';
 
-# Temporarily disabled as we have cloned a private copy
-# requires 'ORLite::Migrate' => '1.06';
-
 # Add later, once we native support portability
 # requires 'Portable' => '0.12' if win32;
 
