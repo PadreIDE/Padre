@@ -216,7 +216,7 @@ sub plugin_name {
 	}
 }
 
-sub version {
+sub plugin_version {
 	my $self = shift;
 
 	# Prefer the version from the loaded plugin
@@ -362,7 +362,7 @@ sub enable {
 	}
 
 	# Update the last-enabled version each time it is enabled
-	$self->update( version => $self->version );
+	$self->update( version => $self->plugin_version );
 
 	# Update the status
 	$self->status('enabled');

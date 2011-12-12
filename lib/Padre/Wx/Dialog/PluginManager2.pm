@@ -90,7 +90,7 @@ sub refresh_plugin {
 
 		# Update the details fields
 		$self->{plugin_name}->SetLabel( $handle->plugin_name );
-		$self->{plugin_version}->SetLabel( $handle->version );
+		$self->{plugin_version}->SetLabel( $handle->plugin_version );
 		$self->{plugin_status}->SetLabel( $handle->status_localized );
 		$self->{details}->Layout;
 

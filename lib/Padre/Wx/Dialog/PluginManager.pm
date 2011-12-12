@@ -419,7 +419,7 @@ sub _update_list {
 		@handles =
 			map  { $_->[0] }
 			sort { $a->[1] <=> $b->[1] }
-			map  { [ $_, version->new( ( $_->version && $_->version ne '???' ) || 0 ) ] } @handles;
+			map  { [ $_, version->new( ( $_->plugin_version && $_->plugin_version ne '???' ) || 0 ) ] } @handles;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
 		@handles = sort { $a->status cmp $b->status } @handles;
@@ -451,7 +451,7 @@ sub _update_list {
 		);
 		$self->{list}->SetItem(
 			$idx, 1,
-			$handle->version || '???'
+			$handle->plugin_version || '???'
 		);
 		$self->{list}->SetItem(
 			$idx, 2,
