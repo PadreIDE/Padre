@@ -28,7 +28,7 @@ sub new {
 		-1,
 		Wx::gettext("About"),
 		Wx::DefaultPosition,
-		[ 600, 640 ],
+		Wx::DefaultSize,
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
@@ -50,13 +50,12 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 91, 0, "" )
 	);
 
-	$self->{app_name} = Wx::StaticText->new(
+	$self->{splash} = Wx::StaticBitmap->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Padre:-"),
-	);
-	$self->{app_name}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+		Wx::NullBitmap,
+		Wx::DefaultPosition,
+		[ 400, 250 ],
 	);
 
 	$self->{m_staticText6511} = Wx::StaticText->new(
@@ -80,27 +79,10 @@ sub new {
 	$self->{creator} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Gabor Szabo"),
+		Wx::gettext("G\x{e1}bor Szab\x{f3}"),
 	);
 
-	$self->{splash} = Wx::StaticBitmap->new(
-		$self->{padre},
-		-1,
-		Wx::NullBitmap,
-		Wx::DefaultPosition,
-		[ 400, 250 ],
-	);
-
-	$self->{m_staticText67} = Wx::StaticText->new(
-		$self->{padre},
-		-1,
-		Wx::gettext("Blue butterfly on a green leaf splash image is based on work \nby Jerry Charlotte (blackbutterfly)"),
-	);
-	$self->{m_staticText67}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
-	);
-
-	$self->{m_staticline27} = Wx::StaticLine->new(
+	$self->{m_staticline271} = Wx::StaticLine->new(
 		$self->{padre},
 		-1,
 		Wx::DefaultPosition,
@@ -114,18 +96,19 @@ sub new {
 		Wx::gettext("Copyright 2008–2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
 	);
 
-	$self->{m_staticline28} = Wx::StaticLine->new(
+	$self->{m_staticText67} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::gettext("Blue butterfly on a green leaf splash image is based on work \nby Jerry Charlotte (blackbutterfly)"),
+	);
+	$self->{m_staticText67}->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
 	);
 
 	$self->{m_staticText35} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("\"Padre contains icons from GNOME, you can redistribute it and/or \nmodify then under the terms of the GNU General Public License as published by the \nFree Software Foundation; version 2 dated June, 1991.\""),
+		Wx::gettext("Padre contains icons from GNOME, you can redistribute it and/or \nmodify then under the terms of the GNU General Public License as published by the \nFree Software Foundation; version 2 dated June, 1991."),
 	);
 
 	$self->{development} = Wx::Panel->new(
@@ -136,62 +119,28 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{m_staticText47} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Core Team"),
-	);
-	$self->{m_staticText47}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
-	);
-
-	$self->{m_staticline1} = Wx::StaticLine->new(
-		$self->{development},
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
-	);
-
 	$self->{m_staticText1} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Gabor Szabo: Project Manager"),
+		Wx::gettext("G\x{e1}bor Szab\x{f3}"),
 	);
 
 	$self->{m_staticText2} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Adam Kennedy: Chief Bugger"),
+		Wx::gettext("Adam Kennedy"),
 	);
 
 	$self->{m_staticText3} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Ahmad Zawawi: Developer"),
+		Wx::gettext("Ahmad Zawawi"),
 	);
 
 	$self->{m_staticText4} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("Peter Lavender: Release Manager"),
-	);
-
-	$self->{m_staticText471} = Wx::StaticText->new(
-		$self->{development},
-		-1,
-		Wx::gettext("Developers"),
-	);
-	$self->{m_staticText471}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
-	);
-
-	$self->{m_staticline11} = Wx::StaticLine->new(
-		$self->{development},
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
+		Wx::gettext("Peter Lavender"),
 	);
 
 	$self->{m_staticText66} = Wx::StaticText->new(
@@ -716,7 +665,7 @@ sub new {
 		Wx::DefaultSize,
 		Wx::TE_MULTILINE | Wx::TE_NO_VSCROLL | Wx::TE_READONLY,
 	);
-	$self->{output}->SetMinSize( [ -1, 400 ] );
+	$self->{output}->SetMinSize( Wx::DefaultSize );
 	$self->{output}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
 	);
@@ -731,44 +680,32 @@ sub new {
 	$close_button->SetDefault;
 
 	my $bSizer471 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer471->Add( $self->{app_name}, 0, Wx::ALL, 5 );
-	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::ALL, 5 );
+	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
 
 	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
 	$bSizer4711->Add( $self->{creator}, 0, Wx::ALL, 5 );
 
 	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
-	$bSizer81->Add( $self->{m_staticline27}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
-	$bSizer81->Add( $self->{m_staticline28}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
 
 	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::TOP, 5 );
 	$bSizer17->Add( $bSizer471, 0, Wx::EXPAND, 5 );
 	$bSizer17->Add( $bSizer4711, 0, Wx::EXPAND, 5 );
-	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::ALL, 5 );
-	$bSizer17->Add( $bSizer81, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $bSizer81, 1, Wx::EXPAND, 5 );
 
 	$self->{padre}->SetSizerAndFit($bSizer17);
 	$self->{padre}->Layout;
 
-	my $bSizer6 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer6->Add( $self->{m_staticText47}, 0, Wx::ALL, 5 );
-	$bSizer6->Add( $self->{m_staticline1}, 0, Wx::EXPAND | Wx::ALL, 5 );
-
-	my $gSizer2 = Wx::GridSizer->new( 0, 2, 0, 0 );
-	$gSizer2->Add( $self->{m_staticText1}, 0, Wx::ALL, 5 );
-	$gSizer2->Add( $self->{m_staticText2}, 0, Wx::ALL, 5 );
-	$gSizer2->Add( $self->{m_staticText3}, 0, Wx::ALL, 5 );
-	$gSizer2->Add( $self->{m_staticText4}, 0, Wx::ALL, 5 );
-
-	my $bSizer61 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer61->Add( $self->{m_staticText471}, 0, Wx::ALL, 5 );
-	$bSizer61->Add( $self->{m_staticline11}, 0, Wx::EXPAND | Wx::ALL, 5 );
-
-	my $gSizer3 = Wx::GridSizer->new( 0, 4, 0, 0 );
+	my $gSizer3 = Wx::GridSizer->new( 0, 3, 0, 0 );
+	$gSizer3->Add( $self->{m_staticText1}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText2}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText3}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText4}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText66}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText571}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText69}, 0, Wx::ALL, 5 );
@@ -801,9 +738,6 @@ sub new {
 	$gSizer3->Add( $self->{m_staticText54}, 0, Wx::ALL, 5 );
 
 	my $bSizer3 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer3->Add( $bSizer6, 0, Wx::EXPAND, 5 );
-	$bSizer3->Add( $gSizer2, 0, Wx::ALIGN_LEFT | Wx::EXPAND, 5 );
-	$bSizer3->Add( $bSizer61, 0, Wx::EXPAND, 5 );
 	$bSizer3->Add( $gSizer3, 0, Wx::EXPAND, 5 );
 
 	$self->{development}->SetSizerAndFit($bSizer3);
@@ -910,19 +844,19 @@ sub new {
 	$gSizer311->Add( $bSizer62215, 0, 0, 4 );
 
 	my $bSizer31 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer31->Add( $gSizer311, 0, Wx::EXPAND, 2 );
+	$bSizer31->Add( $gSizer311, 0, Wx::EXPAND, 0 );
 
 	$self->{translation}->SetSizerAndFit($bSizer31);
 	$self->{translation}->Layout;
 
 	my $bSizer32 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer32->Add( $self->{output}, 0, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 10 );
+	$bSizer32->Add( $self->{output}, 1, Wx::ALIGN_CENTER | Wx::ALL | Wx::EXPAND, 10 );
 
 	$self->{Information}->SetSizerAndFit($bSizer32);
 	$self->{Information}->Layout;
 
-	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 1 );
-	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 0 );
+	$self->{notebook}->AddPage( $self->{padre}, Wx::gettext("Padre"), 0 );
+	$self->{notebook}->AddPage( $self->{development}, Wx::gettext("Development"), 1 );
 	$self->{notebook}->AddPage( $self->{translation}, Wx::gettext("Translation"), 0 );
 	$self->{notebook}->AddPage( $self->{Information}, Wx::gettext("Information"), 0 );
 
@@ -934,7 +868,7 @@ sub new {
 	$bSizer45->Add( $self->{notebook}, 0, Wx::EXPAND | Wx::ALL, 5 );
 	$bSizer45->Add( $buttons, 1, Wx::EXPAND, 5 );
 
-	$self->SetSizer($bSizer45);
+	$self->SetSizerAndFit($bSizer45);
 	$self->Layout;
 
 	return $self;
@@ -942,10 +876,6 @@ sub new {
 
 sub notebook {
 	$_[0]->{notebook};
-}
-
-sub app_name {
-	$_[0]->{app_name};
 }
 
 sub creator {

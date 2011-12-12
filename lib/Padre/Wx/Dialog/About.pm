@@ -70,8 +70,6 @@ sub run {
 #######
 sub _set_up {
 	my $self = shift;
-	
-	$self->app_name->SetLabel("Padre $VERSION:-");
 
 	# load the image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
