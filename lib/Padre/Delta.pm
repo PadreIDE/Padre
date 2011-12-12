@@ -99,56 +99,48 @@ sub from_diff {
 	my @targets = ();
 
 	# Build the series of target replacements
+	my $delta = 0;
 	while ( @_ ) {
-		my @hunk = @{shift()};
-		while ( @hunk ) {
-			my $target = {
-				start => 0,
-				end   => 0,
-				text  => '',
-			};
+		my $hunk = shift;
+		foreach my $change ( @$hunk ) {
+			my $operation = $change->[0];
+			my $position  = $change->[1];
+			my $text      = $change->[2] . "\n";
+			my $previous  = $targets[-1];
 
-			if ( $hunk[0]->[0] eq '+' ) {
-				# If there is a stray addition chunk,
-				# the position of the addition is the end
-				# of the previous hunk, so just pop off the
-				# previous target. If there is no previous
-				# target the default at start 0 will suffice.
-				if ( @targets ) {
-					$target = pop @targets;
+			if ( $operation eq '-' ) {
+				my $start = $position + $delta--;
+				if ( $previous and $previous->{end} == $start ) {
+					$previous->{end}++;
+					next;
 				}
-
-			} else {
-
-				# The change starts with a removal block
-				my $change = shift @hunk;
-				my $mode   = $change->[0];
-				my $line   = $change->[1];
-				my $text   = $change->[2];
-				$target->{start} = $line;
-				$target->{end}   = $line + 1;
-
-				# Append any additional removal rows
-				while ( @hunk and $hunk[0]->[0] eq '-' ) {
-					unless ( $hunk[0]->[1] == $target->{end} ) {
-						last;
-					}
-					shift @hunk;
-					$target->{end}++;
-				}
+				push @targets, {
+					start => $start,
+					end   => $start + 1,
+					text  => '',
+				};
+				next;
 			}
 
-			# Append any additional addition rows
-			while ( @hunk and $hunk[0]->[0] eq '+' ) {
-				$target->{text} .= shift(@hunk)->[2] . "\n";
+			if ( $operation eq '+' ) {
+				if ( $previous and $previous->{end} == $position ) {
+					$previous->{text} .= $text;
+				} else {
+					push @targets, {
+						start => $position,
+						end   => $position,
+						text  => $text,
+					};
+				}
+				$delta++;
+				next;
 			}
 
-			# This completes one entire target replace unit
-			push @targets, $target;
+			die "Unknown operation: '$operation'";
 		}
 	}
 
-	return $class->new( 'line', reverse @targets );
+	return $class->new( 'line', @targets );
 }
 
 =pod

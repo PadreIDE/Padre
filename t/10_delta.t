@@ -4,9 +4,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 10;
 use Test::NoWarnings;
 use t::lib::Padre;
+use Padre;
 use Padre::Delta;
 
 
@@ -87,9 +88,24 @@ END_TEXT
 
 # Create the FROM-->TO delta and see if it actually changes FROM to TO
 SCOPE: {
+	# Create the delta
 	my $delta = Padre::Delta->from_scalars( \$FROM => \$TO );
-	my @from  = split /\n/, $FROM;
-	my @to    = split /\n/, $TO;
-	$delta->to_lines(\@from);
-	is_deeply( \@from, \@to, 'Delta applied correctly' );
+	isa_ok( $delta, 'Padre::Delta' );
+
+	# Create an IDE editor to apply it to
+	my $padre = Padre->new;
+	isa_ok( $padre, 'Padre' );
+	my $main = $padre->wx->main;
+	isa_ok( $main, 'Padre::Wx::Main' );
+	$main->setup_editor;
+	my $editor = $main->current->editor;
+	isa_ok( $editor, 'Padre::Wx::Editor' );
+
+	# Apply the delta to the FROM text
+	$editor->SetText($FROM);
+	$delta->to_editor($editor);
+
+	# Do we get the TO text
+	my $result = $editor->GetText;
+	is( $result, $TO, 'Padre::Delta applies to editor correctly' );
 }
