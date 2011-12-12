@@ -2172,6 +2172,18 @@ sub stats {
 #####################################################################
 # Document Manipulation Methods
 
+# Apply an arbitrary transform
+sub transform {
+	my $self   = shift;
+	my %args   = @_;
+	my $driver = Params::Util::_DRIVER( delete $args{class}, 'Padre::Transform' ) or return;
+	my $editor = $self->editor;
+	my $input  = $editor->GetText;
+	my $delta  = $driver->new(%args)->scalar_delta(\$input);
+	$delta->to_editor($editor);
+	return 1;
+}
+
 # Delete all leading spaces.
 # Passes through to the editor by default, and is only defined in the
 # document class so that document classes can overload and do special stuff.
