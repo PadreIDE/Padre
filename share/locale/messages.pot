@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-10 12:10-0800\n"
+"POT-Creation-Date: 2011-12-11 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,14 +24,6 @@ msgstr ""
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:128
-msgid ""
-"\"Padre contains icons from GNOME, you can redistribute it and/or \n"
-"modify then under the terms of the GNU General Public License as published "
-"by the \n"
-"Free Software Foundation; version 2 dated June, 1991.\""
 msgstr ""
 
 #: lib/Padre/Config.pm:472
@@ -681,11 +673,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:191
+#: lib/Padre/Wx/Dialog/About.pm:159
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:196
+#: lib/Padre/Wx/Dialog/About.pm:164
 msgid "(unsupported)"
 msgstr ""
 
@@ -745,7 +737,7 @@ msgstr ""
 msgid "ALT"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:356
+#: lib/Padre/Wx/FBP/About.pm:305
 msgid "Aaron Trevena"
 msgstr ""
 
@@ -766,8 +758,8 @@ msgstr ""
 msgid "Action: %s"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:165
-msgid "Adam Kennedy: Chief Bugger"
+#: lib/Padre/Wx/FBP/About.pm:131
+msgid "Adam Kennedy"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:334
@@ -790,19 +782,15 @@ msgstr ""
 msgid "Against"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:397
+#: lib/Padre/Wx/FBP/About.pm:137 lib/Padre/Wx/FBP/About.pm:346
 msgid "Ahmad Zawawi"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:171
-msgid "Ahmad Zawawi: Developer"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:145
 msgid "Alarm"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:260
+#: lib/Padre/Wx/FBP/About.pm:209
 msgid "Alexandr Ciornii"
 msgstr ""
 
@@ -859,15 +847,15 @@ msgstr ""
 msgid "Alternation"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:538
+#: lib/Padre/Wx/FBP/About.pm:487
 msgid "Amir E. Aharoni"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:224
+#: lib/Padre/Wx/FBP/About.pm:173
 msgid "Andrew Bramble"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:685
+#: lib/Padre/Wx/FBP/About.pm:634
 msgid "Andrew Shitov"
 msgstr ""
 
@@ -911,7 +899,7 @@ msgstr ""
 msgid "Apply one of the quick fixes for the current document"
 msgstr ""
 
-#: lib/Padre/Locale.pm:157 lib/Padre/Wx/FBP/About.pm:388
+#: lib/Padre/Locale.pm:157 lib/Padre/Wx/FBP/About.pm:337
 msgid "Arabic"
 msgstr ""
 
@@ -1003,11 +991,11 @@ msgstr ""
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:368
+#: lib/Padre/Wx/FBP/About.pm:317
 msgid "Blake Willmarth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:97
+#: lib/Padre/Wx/FBP/About.pm:102
 msgid ""
 "Blue butterfly on a green leaf splash image is based on work \n"
 "by Jerry Charlotte (blackbutterfly)"
@@ -1033,11 +1021,11 @@ msgstr ""
 msgid "Breakpoints"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:230 lib/Padre/Wx/FBP/About.pm:643
+#: lib/Padre/Wx/FBP/About.pm:179 lib/Padre/Wx/FBP/About.pm:592
 msgid "Breno G. de Oliveira"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:272
+#: lib/Padre/Wx/FBP/About.pm:221
 msgid "Brian Cassidy"
 msgstr ""
 
@@ -1062,7 +1050,7 @@ msgstr ""
 msgid "Builds the current project, then run all tests."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:296 lib/Padre/Wx/FBP/About.pm:700
+#: lib/Padre/Wx/FBP/About.pm:245 lib/Padre/Wx/FBP/About.pm:649
 msgid "Burak Gursoy"
 msgstr ""
 
@@ -1115,7 +1103,7 @@ msgstr ""
 msgid "Case-insensitive matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:266 lib/Padre/Wx/FBP/About.pm:628
+#: lib/Padre/Wx/FBP/About.pm:215 lib/Padre/Wx/FBP/About.pm:577
 msgid "Cezary Morga"
 msgstr ""
 
@@ -1228,11 +1216,11 @@ msgstr ""
 msgid "Chinese"
 msgstr ""
 
-#: lib/Padre/Locale.pm:441 lib/Padre/Wx/FBP/About.pm:403
+#: lib/Padre/Locale.pm:441 lib/Padre/Wx/FBP/About.pm:352
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:451 lib/Padre/Wx/FBP/About.pm:424
+#: lib/Padre/Locale.pm:451 lib/Padre/Wx/FBP/About.pm:373
 msgid "Chinese (Traditional)"
 msgstr ""
 
@@ -1240,11 +1228,11 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:278
+#: lib/Padre/Wx/FBP/About.pm:227
 msgid "Chris Dolan"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:418
+#: lib/Padre/Wx/FBP/About.pm:367
 msgid "Chuanren Wu"
 msgstr ""
 
@@ -1252,7 +1240,7 @@ msgstr ""
 msgid "Cl&ose Window on Hit"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:332
+#: lib/Padre/Wx/FBP/About.pm:281
 msgid "Claudio Ramirez"
 msgstr ""
 
@@ -1265,7 +1253,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:727
+#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:676
 #: lib/Padre/Wx/FBP/Sync.pm:267 lib/Padre/Wx/FBP/Diff.pm:94
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
@@ -1376,7 +1364,7 @@ msgstr ""
 msgid "Commit file/directory to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:151
+#: lib/Padre/Wx/Dialog/About.pm:125
 msgid "Config"
 msgstr ""
 
@@ -1489,14 +1477,10 @@ msgstr ""
 msgid "Copy the current tab into a new document"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:114
+#: lib/Padre/Wx/FBP/About.pm:96
 msgid ""
 "Copyright 2008–2011 The Padre Development Team Padre is free software; \n"
 "you can redistribute it and/or modify it under the same terms as Perl 5."
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:142
-msgid "Core Team"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:193
@@ -1580,7 +1564,7 @@ msgstr ""
 msgid "Create a bookmark in the current file current row"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:74
+#: lib/Padre/Wx/FBP/About.pm:73
 msgid "Created by:"
 msgstr ""
 
@@ -1656,7 +1640,7 @@ msgid ""
 "is added in the place where the selection was."
 msgstr ""
 
-#: lib/Padre/Locale.pm:167 lib/Padre/Wx/FBP/About.pm:439
+#: lib/Padre/Locale.pm:167 lib/Padre/Wx/FBP/About.pm:388
 msgid "Czech"
 msgstr ""
 
@@ -1787,11 +1771,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:183
-msgid "Developers"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:925
+#: lib/Padre/Wx/FBP/About.pm:859
 msgid "Development"
 msgstr ""
 
@@ -1840,7 +1820,7 @@ msgstr ""
 msgid "Directory:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:463
+#: lib/Padre/Wx/FBP/About.pm:412
 msgid "Dirk De Nijs"
 msgstr ""
 
@@ -1857,7 +1837,7 @@ msgid "Display Value"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN2.pm:205 lib/Padre/Wx/CPAN2.pm:214
-#: lib/Padre/Wx/CPAN2.pm:223 lib/Padre/Wx/Dialog/About.pm:175
+#: lib/Padre/Wx/CPAN2.pm:223 lib/Padre/Wx/Dialog/About.pm:145
 msgid "Distribution"
 msgstr ""
 
@@ -1938,7 +1918,7 @@ msgstr ""
 msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
 msgstr ""
 
-#: lib/Padre/Locale.pm:351 lib/Padre/Wx/FBP/About.pm:454
+#: lib/Padre/Locale.pm:351 lib/Padre/Wx/FBP/About.pm:403
 msgid "Dutch"
 msgstr ""
 
@@ -2084,7 +2064,7 @@ msgstr ""
 msgid "English (United States)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:670
+#: lib/Padre/Wx/FBP/About.pm:619
 msgid "Enrique Nell"
 msgstr ""
 
@@ -2349,7 +2329,7 @@ msgstr ""
 msgid "Favorite"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:236 lib/Padre/Wx/FBP/About.pm:412
+#: lib/Padre/Wx/FBP/About.pm:185 lib/Padre/Wx/FBP/About.pm:361
 msgid "Fayland Lam"
 msgstr ""
 
@@ -2573,7 +2553,7 @@ msgstr ""
 msgid "Found %s unloaded modules"
 msgstr ""
 
-#: lib/Padre/Locale.pm:283 lib/Padre/Wx/FBP/About.pm:469
+#: lib/Padre/Locale.pm:283 lib/Padre/Wx/FBP/About.pm:418
 msgid "French"
 msgstr ""
 
@@ -2597,19 +2577,11 @@ msgstr ""
 msgid "Functions"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:83
-msgid "Gabor Szabo"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:159
-msgid "Gabor Szabo: Project Manager"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:362 lib/Padre/Wx/FBP/About.pm:649
+#: lib/Padre/Wx/FBP/About.pm:311 lib/Padre/Wx/FBP/About.pm:598
 msgid "Gabriel Vieira"
 msgstr ""
 
-#: lib/Padre/Locale.pm:187 lib/Padre/Wx/FBP/About.pm:490
+#: lib/Padre/Locale.pm:187 lib/Padre/Wx/FBP/About.pm:439
 msgid "German"
 msgstr ""
 
@@ -2665,15 +2637,19 @@ msgstr ""
 msgid "Guess from Current Document"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:553
+#: lib/Padre/Wx/FBP/About.pm:502
 msgid "Gyorgy Pasztor"
 msgstr ""
 
-#: lib/Padre/Locale.pm:293 lib/Padre/Wx/FBP/About.pm:517
+#: lib/Padre/Wx/FBP/About.pm:82 lib/Padre/Wx/FBP/About.pm:125
+msgid "Gábor Szabó"
+msgstr ""
+
+#: lib/Padre/Locale.pm:293 lib/Padre/Wx/FBP/About.pm:466
 msgid "Hebrew"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:254 lib/Padre/Wx/FBP/About.pm:499
+#: lib/Padre/Wx/FBP/About.pm:203 lib/Padre/Wx/FBP/About.pm:448
 msgid "Heiko Jansen"
 msgstr ""
 
@@ -2717,7 +2693,7 @@ msgstr ""
 msgid "How many spaces for each tab:"
 msgstr ""
 
-#: lib/Padre/Locale.pm:303 lib/Padre/Wx/FBP/About.pm:544
+#: lib/Padre/Locale.pm:303 lib/Padre/Wx/FBP/About.pm:493
 msgid "Hungarian"
 msgstr ""
 
@@ -2762,7 +2738,7 @@ msgstr ""
 msgid "Indentation width (in columns)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:927
+#: lib/Padre/Wx/FBP/About.pm:861
 msgid "Information"
 msgstr ""
 
@@ -2829,11 +2805,11 @@ msgstr ""
 msgid "Introduce Temporary Variable"
 msgstr ""
 
-#: lib/Padre/Locale.pm:317 lib/Padre/Wx/FBP/About.pm:559
+#: lib/Padre/Locale.pm:317 lib/Padre/Wx/FBP/About.pm:508
 msgid "Italian"
 msgstr ""
 
-#: lib/Padre/Locale.pm:327 lib/Padre/Wx/FBP/About.pm:574
+#: lib/Padre/Locale.pm:327 lib/Padre/Wx/FBP/About.pm:523
 msgid "Japanese"
 msgstr ""
 
@@ -2841,7 +2817,7 @@ msgstr ""
 msgid "JavaScript Files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:206 lib/Padre/Wx/FBP/About.pm:478
+#: lib/Padre/Wx/FBP/About.pm:155 lib/Padre/Wx/FBP/About.pm:427
 msgid "Jerome Quelin"
 msgstr ""
 
@@ -2865,27 +2841,27 @@ msgstr ""
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:338
+#: lib/Padre/Wx/FBP/About.pm:287
 msgid "Kaare Rasmussen"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:350
+#: lib/Padre/Wx/FBP/About.pm:299
 msgid "Kartik Thakore"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:308 lib/Padre/Wx/FBP/About.pm:598
+#: lib/Padre/Wx/FBP/About.pm:257 lib/Padre/Wx/FBP/About.pm:547
 msgid "Keedi Kim"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:302 lib/Padre/Wx/FBP/About.pm:583
+#: lib/Padre/Wx/FBP/About.pm:251 lib/Padre/Wx/FBP/About.pm:532
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:180
+#: lib/Padre/Wx/Dialog/About.pm:150
 msgid "Kernel"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:242
+#: lib/Padre/Wx/FBP/About.pm:191
 msgid "Kevin Dawson"
 msgstr ""
 
@@ -2901,7 +2877,7 @@ msgstr ""
 msgid "Kilobytes (kB)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:613
+#: lib/Padre/Wx/FBP/About.pm:562
 msgid "Kjetil Skotheim"
 msgstr ""
 
@@ -2909,7 +2885,7 @@ msgstr ""
 msgid "Klingon"
 msgstr ""
 
-#: lib/Padre/Locale.pm:337 lib/Padre/Wx/FBP/About.pm:589
+#: lib/Padre/Locale.pm:337 lib/Padre/Wx/FBP/About.pm:538
 msgid "Korean"
 msgstr ""
 
@@ -3065,7 +3041,7 @@ msgstr ""
 msgid "Make the letters smaller in the editor window"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:448
+#: lib/Padre/Wx/FBP/About.pm:397
 msgid "Marcela Maslanova"
 msgstr ""
 
@@ -3132,11 +3108,11 @@ msgstr ""
 msgid "Matched text:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:433
+#: lib/Padre/Wx/FBP/About.pm:382
 msgid "Matthew Lien"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:314
+#: lib/Padre/Wx/FBP/About.pm:263
 msgid "Max Maischein"
 msgstr ""
 
@@ -3376,7 +3352,7 @@ msgstr ""
 msgid "Normal"
 msgstr ""
 
-#: lib/Padre/Locale.pm:371 lib/Padre/Wx/FBP/About.pm:604
+#: lib/Padre/Locale.pm:371 lib/Padre/Wx/FBP/About.pm:553
 msgid "Norwegian"
 msgstr ""
 
@@ -3420,11 +3396,11 @@ msgstr ""
 msgid "Offer completions to the current string. See Preferences"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:320 lib/Padre/Wx/FBP/About.pm:484
+#: lib/Padre/Wx/FBP/About.pm:269 lib/Padre/Wx/FBP/About.pm:433
 msgid "Olivier Mengue"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:526
+#: lib/Padre/Wx/FBP/About.pm:475
 msgid "Omer Zak"
 msgstr ""
 
@@ -3685,11 +3661,11 @@ msgstr ""
 msgid "PPI Standard"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:664
+#: lib/Padre/Wx/FBP/About.pm:613
 msgid "Paco Alguacil"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:924 lib/Padre/Wx/Dialog/Form.pm:98
+#: lib/Padre/Wx/FBP/About.pm:858 lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr ""
 
@@ -3709,8 +3685,12 @@ msgstr ""
 msgid "Padre Sync"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:56
-msgid "Padre:-"
+#: lib/Padre/Wx/FBP/About.pm:111
+msgid ""
+"Padre contains icons from GNOME, you can redistribute it and/or \n"
+"modify then under the terms of the GNU General Public License as published "
+"by the \n"
+"Free Software Foundation; version 2 dated June, 1991."
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:137
@@ -3755,11 +3735,11 @@ msgstr ""
 msgid "Path"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:284
+#: lib/Padre/Wx/FBP/About.pm:233
 msgid "Patrick Donelan"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:326
+#: lib/Padre/Wx/FBP/About.pm:275
 msgid "Paweł Murias"
 msgstr ""
 
@@ -3783,7 +3763,7 @@ msgstr ""
 msgid "Perl 5 &Test"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:65
+#: lib/Padre/Wx/FBP/About.pm:64
 msgid "Perl Application Development and Refactoring Environment"
 msgstr ""
 
@@ -3811,12 +3791,12 @@ msgstr ""
 msgid "Persian (Iran)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:344
+#: lib/Padre/Wx/FBP/About.pm:293
 msgid "Petar Shangov"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:177
-msgid "Peter Lavender: Release Manager"
+#: lib/Padre/Wx/FBP/About.pm:143
+msgid "Peter Lavender"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Sync.pm:141
@@ -3891,7 +3871,7 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: lib/Padre/Locale.pm:381 lib/Padre/Wx/FBP/About.pm:619
+#: lib/Padre/Locale.pm:381 lib/Padre/Wx/FBP/About.pm:568
 msgid "Polish"
 msgstr ""
 
@@ -3899,7 +3879,7 @@ msgstr ""
 msgid "Popularity Contest Report"
 msgstr ""
 
-#: lib/Padre/Locale.pm:391 lib/Padre/Wx/FBP/About.pm:634
+#: lib/Padre/Locale.pm:391 lib/Padre/Wx/FBP/About.pm:583
 msgid "Portuguese (Brazil)"
 msgstr ""
 
@@ -4057,7 +4037,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:197
+#: lib/Padre/Wx/Dialog/About.pm:165
 msgid "RAM"
 msgstr ""
 
@@ -4445,11 +4425,11 @@ msgstr ""
 msgid "Runs the current document and shows its output in the output panel."
 msgstr ""
 
-#: lib/Padre/Locale.pm:411 lib/Padre/Wx/FBP/About.pm:676
+#: lib/Padre/Locale.pm:411 lib/Padre/Wx/FBP/About.pm:625
 msgid "Russian"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:248
+#: lib/Padre/Wx/FBP/About.pm:197
 msgid "Ryan Niebur"
 msgstr ""
 
@@ -4611,7 +4591,7 @@ msgstr ""
 msgid "Searching for '%s' in '%s'..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:200 lib/Padre/Wx/FBP/About.pm:505
+#: lib/Padre/Wx/FBP/About.pm:149 lib/Padre/Wx/FBP/About.pm:454
 msgid "Sebastian Willing"
 msgstr ""
 
@@ -4830,7 +4810,7 @@ msgstr ""
 msgid "Shift"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:532
+#: lib/Padre/Wx/FBP/About.pm:481
 msgid "Shlomi Fish"
 msgstr ""
 
@@ -5100,7 +5080,7 @@ msgstr ""
 msgid "Showing the splash image during start-up"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:568
+#: lib/Padre/Wx/FBP/About.pm:517
 msgid "Simone Blandino"
 msgstr ""
 
@@ -5193,7 +5173,7 @@ msgstr ""
 msgid "Spaces to &Tabs..."
 msgstr ""
 
-#: lib/Padre/Locale.pm:249 lib/Padre/Wx/FBP/About.pm:655
+#: lib/Padre/Locale.pm:249 lib/Padre/Wx/FBP/About.pm:604
 msgid "Spanish"
 msgstr ""
 
@@ -5226,7 +5206,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:212
+#: lib/Padre/Wx/FBP/About.pm:161
 msgid "Steffen Muller"
 msgstr ""
 
@@ -5370,7 +5350,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:192
+#: lib/Padre/Wx/Dialog/About.pm:160
 msgid "Threads"
 msgstr ""
 
@@ -5419,7 +5399,7 @@ msgstr ""
 msgid "Toggle version control system support"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:290
+#: lib/Padre/Wx/FBP/About.pm:239
 msgid "Tom Eliaz"
 msgstr ""
 
@@ -5427,7 +5407,7 @@ msgstr ""
 msgid "Trace"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:926
+#: lib/Padre/Wx/FBP/About.pm:860
 msgid "Translation"
 msgstr ""
 
@@ -5435,7 +5415,7 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#: lib/Padre/Locale.pm:421 lib/Padre/Wx/FBP/About.pm:691
+#: lib/Padre/Locale.pm:421 lib/Padre/Wx/FBP/About.pm:640
 msgid "Turkish"
 msgstr ""
 
@@ -5782,7 +5762,7 @@ msgstr ""
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:218 lib/Padre/Wx/FBP/About.pm:511
+#: lib/Padre/Wx/FBP/About.pm:167 lib/Padre/Wx/FBP/About.pm:460
 msgid "Zeno Gantner"
 msgstr ""
 
@@ -5793,7 +5773,7 @@ msgid ""
 "line or subroutine."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:374
+#: lib/Padre/Wx/FBP/About.pm:323
 msgid "code4pay"
 msgstr ""
 
