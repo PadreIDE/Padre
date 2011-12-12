@@ -23,7 +23,12 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION = '0.93';
+our $VERSION    = '0.93';
+our $COMPATIBLE = '0.93';
+
+
+
+
 
 #####################################################################
 # Constructor
@@ -43,29 +48,60 @@ sub new {
 	bless {@_}, $class;
 }
 
+
+
+
+
 #####################################################################
 # Main Methods
 
 =pod
 
-=head2 apply
+=head2 scalar_delta
 
-  $transform->apply( $padre_document );
+  my $delta = $transform->scalar_delta($input_ref);
 
-The C<apply> method takes a L<Padre::Document> object and modifies it
-in place. Returns true if the document was changed, false if not,
-or throws an exception on error.
+The C<scalar_delta> method takes a reference to a C<SCALAR> as the only
+parameter and changes the document.
+
+If the transform class does not implement a C<scalar_delta> itself the default
+implementation will pass the call through to C<scalar_scalar> and then convert
+the result to a L<Padre::Delta> object itself.
+
+Returns a new L<Padre::Delta> as output, or throws an exception on error.
 
 =cut
 
-sub apply {
-	my $self = shift;
-	my $document = Params::Util::_INSTANCE( shift, 'Padre::Document' );
-	unless ($document) {
-		die 'Did not provide a Padre::Document object to apply';
-	}
+sub scalar_delta {
+	my $self   = shift;
+	my $input  = shift;
+	my $output = $self->scalar_scalar($input);
 
-	# Null transform
+	# Convert the regular scalar output to a delta
+	require Padre::Delta;
+	return Padre::Delta->new unless $output;
+	return Padre::Delta->from_scalars( $input => $output );
+}
+
+=pod
+
+=head2 scalar_scalar
+
+  my $output_ref = $transform->scalar_scalar($input_ref);
+
+The C<scalar_scalar> method takes a reference to a C<SCALAR> as the only
+parameter and changes the document.
+
+Returns a new reference to a C<SCALAR> as output, false if there is no change
+to the document, or throws an exception on error.
+
+=cut
+
+sub scalar_scalar {
+	my $self  = shift;
+	my $input = shift;
+
+	# No change to the document by default
 
 	return '';
 }
