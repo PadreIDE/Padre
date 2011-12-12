@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 21;
+	plan tests => 20;
 }
 
 use Test::NoWarnings;
@@ -41,7 +41,6 @@ isa_ok( $output, 'Wx::TextCtrl' );
 SCOPE: {
 	use utf8;
 
-	$dialog->_set_up;
 	is( $dialog->creator->GetLabel,       'Gábor Szabó',     'Check utf8 name for Gabor Szabo' );
 	is( $dialog->ahmad_zawawi->GetLabel,  'أحمد محمد زواوي', 'Check utf8 name for Ahmad Zawawi' );
 	is( $dialog->jerome_quelin->GetLabel, 'Jérôme Quelin',   'Check utf8 name for Jerome Quelin' );
@@ -51,7 +50,7 @@ SCOPE: {
 #######
 # let's check our subs/methods.
 #######
-my @subs = qw( _core_info _set_up _information _translation _wx_info new run );
+my @subs = qw( _core_info _information _translation _wx_info new run );
 
 use_ok( 'Padre::Wx::Dialog::About', @subs );
 
