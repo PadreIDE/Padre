@@ -7007,7 +7007,7 @@ sub filter_tool {
 		my $newtext = $self->_filter_tool_run( $cmd, \$text );
 
 		if ( defined($newtext) and ( $newtext ne '' ) ) {
-			$document->text_set($newtext);
+			$document->text_replace($newtext);
 		}
 	}
 

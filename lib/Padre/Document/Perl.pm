@@ -68,7 +68,7 @@ sub ppi_dump {
 }
 
 sub ppi_set {
-	my $self = shift;
+	my $self     = shift;
 	my $document = Params::Util::_INSTANCE( shift, 'PPI::Document' );
 	unless ($document) {
 		Carp::croak('Did not provide a PPI::Document');
@@ -76,6 +76,17 @@ sub ppi_set {
 
 	# Serialize and overwrite the current text
 	$self->text_set( $document->serialize );
+}
+
+sub ppi_replace {
+	my $self     = shift;
+	my $document = Params::Util::_INSTANCE( shift, 'PPI::Document' );
+	unless ($document) {
+		Carp::croak('Did not provide a PPI::Document');
+	}
+
+	# Serialize and overwrite the current text
+	$self->text_replace( $document->serialize );	
 }
 
 sub ppi_find {
@@ -98,7 +109,7 @@ sub ppi_transform {
 	unless ( $transform->document($document) ) {
 		Carp::croak("Transform failed");
 	}
-	$self->ppi_set($document);
+	$self->ppi_replace($document);
 
 	return 1;
 }

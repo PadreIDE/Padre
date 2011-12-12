@@ -187,31 +187,30 @@ sub to_editor {
 	my $editor  = shift;
 	my $mode    = $self->{mode};
 	my $targets = $self->{targets};
-	my $changed = 0;
 
-	if ( $mode eq 'position' ) {
-		# Apply positions based on raw positions
-		foreach my $target (@$targets) {
-			$editor->SetTargetStart( $target->{start} );
-			$editor->SetTargetEnd( $target->{end} );
-			$editor->BeginUndoAction unless $changed++;
-			$editor->ReplaceTarget( $target->{text} );
-		}
+	# Shortcut if nothing to do
+	return if $self->null;
 
-	} elsif ( $mode eq 'line' ) {
+	if ( $mode eq 'line' ) {
 		# Apply positions based on lines
+		$editor->BeginUndoAction;
 		foreach my $target (@$targets) {
 			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
 			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
-			$editor->BeginUndoAction unless $changed++;
 			$editor->ReplaceTarget( $target->{text} );
 		}
+		$editor->EndUndoAction;
 
-	} else {
-		die "Unexpected delta mode '$mode'";
+	} elsif ( $mode eq 'position' ) {
+		# Apply positions based on raw character positions
+		$editor->BeginUndoAction;
+		foreach my $target (@$targets) {
+			$editor->SetTargetStart( $target->{start} );
+			$editor->SetTargetEnd( $target->{end} );
+			$editor->ReplaceTarget( $target->{text} );
+		}
+		$editor->EndUndoAction;
 	}
-
-	$editor->EndUndoAction if $changed;
 
 	return;
 }
