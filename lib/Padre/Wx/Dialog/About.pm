@@ -20,9 +20,6 @@ use constant {
 	OFFSET => 24,
 };
 
-#######
-# new
-#######
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
@@ -31,20 +28,23 @@ sub new {
 	# was selected in wxFormBuilder.
 	$self->notebook->ChangeSelection(0);
 
+	# Load the platform-adaptive splash image
+	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
+
+	# Set the system information
+	$self->{output}->ChangeValue( $self->_information );
+
+	# Set the translators
+	$self->_translation;
+
 	$self->CenterOnParent;
 
 	return $self;
 }
 
-#######
-# Method run
-#######
 sub run {
 	my $self    = shift;
 	my $current = $self->current;
-
-	# auto-fill dialogue
-	$self->_set_up();
 
 	# Show the dialog
 	my $result = $self->ShowModal;
@@ -65,27 +65,6 @@ sub run {
 	return;
 }
 
-#######
-# Method _set_up
-#######
-sub _set_up {
-	my $self = shift;
-
-	# load the image
-	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
-
-	$self->creator->SetLabel('Gábor Szabó');
-
-	$self->_translation();
-
-	$self->_information();
-
-	return;
-}
-
-#######
-# Composed Method _translation
-#######
 sub _translation {
 	my $self = shift;
 	
@@ -132,9 +111,6 @@ sub _translation {
 	return;
 }
 
-#######
-# Composed Method _core_info
-#######
 sub _information {
 	my $self = shift;
 
@@ -148,13 +124,9 @@ sub _information {
 	$output .= sprintf "%*s %s\n", OFFSET, 'PPI', $PPI::VERSION;
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 
-	$self->{output}->ChangeValue($output);
-	return;
+	return $output;
 }
 
-#######
-# Composed Method _core_info
-#######
 sub _core_info {
 	my $self = shift;
 
@@ -180,8 +152,6 @@ sub _core_info {
 
 	# Yes, THIS variable should have this upper case char :-)
 	my $perl_version = $^V || $];
-
-	# $perl_version = "$perl_version";
 	$perl_version =~ s/^v//;
 	$output .= sprintf "%*s %s\n", OFFSET, 'Perl', $perl_version;
 
@@ -197,9 +167,6 @@ sub _core_info {
 	return $output;
 }
 
-#######
-# Composed Method _wx_info
-#######
 sub _wx_info {
 	my $self = shift;
 
@@ -223,9 +190,6 @@ sub _wx_info {
 
 	return $output;
 }
-
-
-
 
 1;
 
