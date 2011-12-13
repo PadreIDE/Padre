@@ -884,6 +884,25 @@ sub replace {
 
 =pod
 
+=head3 C<replace2>
+
+    my $dialog = $main->replace2;
+
+Return current replace dialog. Create a new one if needed.
+
+=cut
+
+sub replace2 {
+	my $self = shift;
+	unless ( defined $self->{replace2} ) {
+		require Padre::Wx::Dialog::Replace;
+		$self->{replace2} = Padre::Wx::Dialog::Replace->new($self);
+	}
+	return $self->{replace2};
+}
+
+=pod
+
 =head2 Public Methods
 
 =head3 C<load_files>

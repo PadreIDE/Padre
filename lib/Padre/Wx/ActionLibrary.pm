@@ -1245,6 +1245,16 @@ sub init {
 		},
 	);
 
+	Padre::Wx::Action->new(
+		name        => 'search.replace2',
+		need_editor => 1,
+		label       => _T('Replace 2...'),
+		comment     => _T('Find a text and replace it'),
+		menu_event  => sub {
+			$_[0]->replace2->run;
+		},
+	);
+
 	# Recursive Search
 
 	Padre::Wx::Action->new(
