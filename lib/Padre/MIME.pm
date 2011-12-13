@@ -542,6 +542,12 @@ Padre::MIME->create(
 	supertype => 'text/plain',
 );
 
+Padre::MIME->create(
+	type      => 'xml/x-wxformbuilder',
+	name      => 'wxFormBuilder',
+	supertype => 'text/xml',
+);
+
 
 
 
@@ -741,7 +747,11 @@ sub detect_content {
 
 	# Recognise XML and variants
 	if ( $text =~ /\A<\?xml\b/s ) {
+		# Detect XML formats without XML namespace declarations
 		return 'text/html' if $text =~ /^<!DOCTYPE html/m;
+		return 'xml/x-wxformbuilder' if $text =~ /<wxFormBuilder_Project>/;
+
+		# Fall through to generic XML
 		return 'text/xml';
 	}
 
