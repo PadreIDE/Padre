@@ -122,7 +122,7 @@ if ($RESET) {
 if ($DESKTOP) {
 	require Padre::Desktop;
 	unless ( Padre::Desktop::desktop() ) {
-		message("--desktop not implemented for $^O");
+		error("--desktop not implemented for $^O");
 	}
 	exit(1);
 }
@@ -161,7 +161,7 @@ SCOPE: {
 		# Major startup failure!
 		# Handle a few specialised cases we understand
 		if ( $@ =~ /Schema user_version mismatch/ ) {
-			message("Padre configuration database schema invalid");
+			error("Padre configuration database schema invalid");
 			if ( WIN32 ) {
 				require Win32;
 				my $rv = Win32::MsgBox(
@@ -171,7 +171,7 @@ SCOPE: {
 				if ( $rv == 6 ) {
 					require File::Remove;
 					File::Remove::remove( \1, Padre::Constant::CONFIG_DIR() );
-					message("Configuration directory reset");
+					error("Configuration directory reset");
 				}
 			}
 			exit(1);
@@ -180,7 +180,7 @@ SCOPE: {
 		# Handle other generic errors
 		my $message = $@;
 		$message =~ s/ at .*?line.*$//;
-		message("Major Startup Error: '$message'");
+		error("Major Startup Error: '$message'");
 		exit(1);
 	}
 }
@@ -204,6 +204,18 @@ $ide->run;
 # Support Functions
 
 sub message {
+	my $message = shift;
+	if ( WIN32 ) {
+		# No console under wperl, so use native Win32 messaging
+		require Win32;
+		Win32::MsgBox($message, 0, "Padre"); 
+	} else {
+		print $message . "\n";
+	}
+	return 1;
+}
+
+sub error {
 	my $message = shift;
 	if ( WIN32 ) {
 		# No console under wperl, so use native Win32 messaging

@@ -13,6 +13,7 @@ package Padre::Task::Transform;
 # 6. Return the delta to the foreground
 # 7. Apply the delta to the editor and release the lock
 
+use 5.008;
 use strict;
 use warnings;
 use Storable          ();

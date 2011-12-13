@@ -258,7 +258,7 @@ sub new {
 
 	# Apply settings based on configuration
 	# TO DO: Make this suck less (because it really does suck a lot)
-	$self->setup_common;
+	$self->setup_config;
 
 	return $self;
 }
@@ -567,6 +567,17 @@ sub set_document {
 	return;
 }
 
+sub SetWordChars {
+	my $self = shift;
+	my $document = shift;
+	if ( $document ) {
+		$self->SUPER::SetWordChars( $document->scintilla_word_chars );
+	} else {
+		$self->SUPER::SetWordChars('');
+	}
+	return;
+}
+
 sub SetLexer {
 	my $self  = shift;
 	my $lexer = shift;
@@ -579,6 +590,29 @@ sub SetLexer {
 	}
 	if ( Params::Util::_NUMBER($lexer) ) {
 		return $self->SUPER::SetLexer($lexer);
+	}
+	return;
+}
+
+sub SetKeyWords {
+	my $self = shift;
+
+	# Handle the pass through case
+	return shift->SUPER::SetKeyWords(@_) if @_ == 3;
+
+	# Handle the higher order cases
+	my $keywords = shift;
+	if ( Params::Util::_INSTANCE($keywords, 'Padre::Document') ) {
+		$keywords = $keywords->mimetype;
+	}
+	unless ( Params::Util::_ARRAY0($keywords) ) {
+		require Padre::Wx::Scintilla;
+		$keywords = Padre::Wx::Scintilla->keywords($keywords);
+	}
+	if ( Params::Util::_ARRAY($keywords) ) {
+		foreach my $i ( 0 .. $#$keywords ) {
+			$self->SUPER::SetKeyWords( $i, $keywords->[$i] );
+		}
 	}
 	return;
 }
@@ -610,7 +644,7 @@ sub config {
 }
 
 # Apply global configuration settings to the editor
-sub setup_common {
+sub setup_config {
 	my $self   = shift;
 	my $config = $self->config;
 
@@ -663,17 +697,15 @@ sub setup_document {
 	my $config   = $self->config;
 	my $document = $self->{Document};
 
+	# Reset word characters, most languages don't change it
+	$self->SetWordChars('');
+
 	# Configure lexing for the editor based on the document type
 	if ($document) {
 		$self->SetLexer($document);
 		$self->SetStyleBits( $self->GetStyleBitsNeeded );
-		$self->SetWordChars( $document->scintilla_word_chars );
-
-		# Set all the lexer keywords lists that the document provides
-		my $key_words = $document->scintilla_key_words;
-		for my $i ( 0 .. $#$key_words ) {
-			$self->SetKeyWords( $i, join( ' ', @{ $key_words->[$i] } ) );
-		}
+		$self->SetWordChars($document);
+		$self->SetKeyWords($document);
 
 		# Setup indenting
 		my $indent = $document->get_indentation_style;
@@ -685,10 +717,9 @@ sub setup_document {
 		# Please enable it when the lexer is changed because it is
 		# the one that creates the code folding for that particular
 		# document
-		$self->show_folding( $config->editor_folding )
-			if Padre::Feature::FOLDING;
-	} else {
-		$self->SetWordChars('');
+		if ( Padre::Feature::FOLDING ) {
+			$self->show_folding( $config->editor_folding );
+		}
 	}
 
 	# Apply the current style to the editor

@@ -179,8 +179,11 @@ sub lexer {
 # Keyword lists are defined here in MIME type order
 my %KEYWORDS = ();
 
+# Support for the unknown mime type
+$KEYWORDS{''} = [ ];
+
 $KEYWORDS{'application/php'} = [
-	[ qw{
+	q{
 		and array as bool boolean break case cfunction class const
 		continue declare default die directory do double echo else
 		elseif empty enddeclare endfor endforeach endif endswitch
@@ -193,11 +196,11 @@ $KEYWORDS{'application/php'} = [
 		protected public this throw try __class__ __dir__ __file__
 		__function__ __line__ __method__ __namespace__ __sleep
 		__wakeup
-	} ],
+	},
 ];
 
 $KEYWORDS{'application/javascript'} = [
-	[ qw{
+	q{
 		abstract boolean break byte case catch char class
 		const continue debugger default delete do double else enum
 		export extends final finally float for function goto if
@@ -205,62 +208,62 @@ $KEYWORDS{'application/javascript'} = [
 		new package private protected public return short static
 		super switch synchronized this throw throws transient try
 		typeof var void volatile while with
-	} ],
+	},
 ];
 
 # Inspired from Perl 6 vim syntax file
 # https://github.com/petdance/vim-perl/blob/master/syntax/perl6.vim
 $KEYWORDS{'application/x-perl6'} = [
-	[
+	join( '', 
 
 		# Perl 6 routine declaration keywords
-		qw{macro sub submethod method multi proto only rule token regex category},
+		q{macro sub submethod method multi proto only rule token regex category},
 
 		# Perl 6 module keywords
-		qw{module class role package enum grammar slang subset},
+		q{module class role package enum grammar slang subset},
 
 		# Perl 6 variable keywords
-		qw{self},
+		q{self},
 
 		# Perl 6 include keywords
-		qw{use require},
+		q{use require},
 
 		# Perl 6 conditional keywords
-		qw{if else elsif unless},
+		q{if else elsif unless},
 
 		# Perl 6 variable storage keywords
-		qw{let my our state temp has constant},
+		q{let my our state temp has constant},
 
 		# Perl 6 repeat keywords
-		qw{for loop repeat while until gather given},
+		q{for loop repeat while until gather given},
 
 		# Perl flow control keywords
-		qw{take do when next last redo return contend maybe defer
+		q{take do when next last redo return contend maybe defer
 			default exit make continue break goto leave async lift},
 
 		# Perl 6 type constraints keywords
-		qw{is as but trusts of returns handles where augment supersede},
+		q{is as but trusts of returns handles where augment supersede},
 
 		# Perl 6 closure traits keywords
-		qw{BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP
+		q{BEGIN CHECK INIT START FIRST ENTER LEAVE KEEP
 			UNDO NEXT LAST PRE POST END CATCH CONTROL TEMP},
 
 		# Perl 6 exception keywords
-		qw{die fail try warn},
+		q{die fail try warn},
 
 		# Perl 6 property keywords
-		qw{prec irs ofs ors export deep binary unary reparsed rw parsed cached
+		q{prec irs ofs ors export deep binary unary reparsed rw parsed cached
 			readonly defequiv will ref copy inline tighter looser equiv assoc
 			required},
 
 		# Perl 6 number keywords
-		qw{NaN Inf},
+		q{NaN Inf},
 
 		# Perl 6 pragma keywords
-		qw{oo fatal},
+		q{oo fatal},
 
 		# Perl 6 type keywords
-		qw{Object Any Junction Whatever Capture Match
+		q{Object Any Junction Whatever Capture Match
 			Signature Proxy Matcher Package Module Class
 			Grammar Scalar Array Hash KeyHash KeySet KeyBag
 			Pair List Seq Range Set Bag Mapping Void Undef
@@ -278,27 +281,27 @@ $KEYWORDS{'application/x-perl6'} = [
 			uint64 Abstraction utf8 utf16 utf32},
 
 		# Perl 6 operator keywords
-		qw{div x xx mod also leg cmp before after eq ne le lt
+		q{div x xx mod also leg cmp before after eq ne le lt
 			gt ge eqv ff fff and andthen Z X or xor
 			orelse extra m mm rx s tr},
-	],
+	)
 ];
 
 # Ruby keywords
 # The list is obtained from src/scite/src/ruby.properties
 $KEYWORDS{'application/x-ruby'} = [
-	[   qw{
+	q{
 			__FILE__ and def end in or self unless __LINE__ begin defined?
 			ensure module redo super until BEGIN break do false next rescue
 			then when END case else for nil retry true while alias class
 			elsif if not return undef yield
 			}
-	]
+	
 ];
 
 # VB keyword list is obtained from src/scite/src/vb.properties
 $KEYWORDS{'text/vbscript'} = [
-	[ qw{
+	q{
 		addressof alias and as attribute base begin binary
 		boolean byref byte byval call case cdbl cint clng compare const csng cstr currency
 		date decimal declare defbool defbyte defcur
@@ -309,19 +312,19 @@ $KEYWORDS{'text/vbscript'} = [
 		preserve print private property public raiseevent randomize redim rem resume return rset
 		seek select set single static step stop string sub text then time to true type typeof
 		unload until variant wend while with withevents xor
-	} ],
+	},
 ];
 
 # ActionScript keyword list is obtained from src/scite/src/cpp.properties
 $KEYWORDS{'text/x-actionscript'} = [
-	[   qw{
+	q{
 		add and break case catch class continue default delete do
 		dynamic else eq extends false finally for function ge get gt if implements import in
 		instanceof interface intrinsic le lt ne new not null or private public return
 		set static super switch this throw true try typeof undefined var void while with
 		}
-	],
-	[   qw{
+	,
+	q{
 		Array Arguments Accessibility Boolean Button Camera Color
 		ContextMenu ContextMenuItem Date Error Function Key LoadVars LocalConnection Math
 		Microphone Mouse MovieClip MovieClipLoader NetConnection NetStream Number Object
@@ -337,61 +340,57 @@ $KEYWORDS{'text/x-actionscript'} = [
 		scroll set setInterval setProperty startDrag stop stopAllSounds stopDrag substring
 		targetPath tellTarget toggleHighQuality trace unescape unloadMovie unLoadMovieNum updateAfterEvent
 		}
-	],
+	,
 ];
 
 # Ada keyword list is obtained from src/scite/src/ada.properties
 $KEYWORDS{'text/x-adasrc'} = [
-	[
-		# Ada keywords
-		qw{
-			abort abstract accept access aliased all array at begin body
-			case constant declare delay delta digits do else elsif end entry exception exit for
-			function generic goto if in is limited loop new null of others out package
-			pragma private procedure protected raise range record renames requeue return reverse
-			select separate subtype tagged task terminate then type until use when while with
-		},
 
-		# Ada Operators
-		qw{abs and mod not or rem xor},
-	],
+	# Ada keywords
+	q{
+		abort abstract accept access aliased all array at begin body
+		case constant declare delay delta digits do else elsif end entry exception exit for
+		function generic goto if in is limited loop new null of others out package
+		pragma private procedure protected raise range record renames requeue return reverse
+		select separate subtype tagged task terminate then type until use when while with
+	} .
+
+	# Ada Operators
+	q{abs and mod not or rem xor},
 ];
 
 $KEYWORDS{'text/x-csharp'} = [
-	[
+	# C# keywords
+	q{
+		abstract as base bool break by byte case catch char
+		checked class const continue decimal default delegate
+		do double else enum equals event explicit extern
+		false finally fixed float for foreach goto if
+		implicit in int interface internal into is lock long
+		namespace new null object on operator out override
+		params private protected public readonly ref return sbyte
+		sealed short sizeof stackalloc static string struct
+		switch this throw true try typeof uint ulong unchecked unsafe
+		ushort using virtual void volatile while
+	} .
 
-		# C# keywords
-		qw{
-			abstract as base bool break by byte case catch char
-			checked class const continue decimal default delegate
-			do double else enum equals event explicit extern
-			false finally fixed float for foreach goto if
-			implicit in int interface internal into is lock long
-			namespace new null object on operator out override
-			params private protected public readonly ref return sbyte
-			sealed short sizeof stackalloc static string struct
-			switch this throw true try typeof uint ulong unchecked unsafe
-			ushort using virtual void volatile while
-		},
-
-		# C# contextual keywords
-		qw{
-			add alias ascending descending dynamic from
-			get global group into join let orderby partial
-			remove select set value var where yield
-		}
-	]
+	# C# contextual keywords
+	q{
+		add alias ascending descending dynamic from
+		get global group into join let orderby partial
+		remove select set value var where yield
+	}
 ];
 
 # COBOL keyword list is obtained from src/scite/src/cobol.properties
 $KEYWORDS{'text/x-cobol'} = [
-	[ qw{
+	q{
 		configuration data declaratives division environment
 		environment-division file file-control function i-o i-o-control
 		identification input input-output linkage local-storage output procedure
 		program program-id receive-control section special-names working-storage
-	} ],
-	[ qw{
+	},
+	q{
 		accept add alter apply assign call chain close compute continue
 		control convert copy count delete display divide draw drop eject else
 		enable end-accept end-add end-call end-chain end-compute end-delete
@@ -404,8 +403,8 @@ $KEYWORDS{'text/x-cobol'} = [
 		reserve reset return rewind rewrite rollback run search seek select send
 		set sort start stop store string subtract sum suppress terminate then
 		transform unlock unstring update use wait when wrap write
-	} ],
-	[ qw{
+	},
+	q{
 		access acquire actual address advancing after all allowing
 		alphabet alphabetic alphabetic-lower alphabetic-upper alphanumeric
 		alphanumeric-edited also alternate and any are area areas as ascending at
@@ -468,12 +467,12 @@ $KEYWORDS{'text/x-cobol'} = [
 		upsi-5 upsi-6 upsi-7 usage user using value values variable varying
 		when-compiled window with words write-only write-verify writerszero zero
 		zero-fill zeros zeroes
-	} ],
+	},
 ];
 
 # C/C++ keyword list is obtained from src/scite/src/cpp.properties
 $KEYWORDS{'text/x-csrc'} = [
-	[ qw{
+	q{
 		and and_eq asm auto bitand bitor bool break
 		case catch char class compl const const_cast continue
 		default delete do double dynamic_cast else enum explicit
@@ -483,44 +482,40 @@ $KEYWORDS{'text/x-csrc'} = [
 		signed sizeof static static_cast struct switch template this
 		throw true try typedef typeid typename union unsigned using
 		virtual void volatile wchar_t while xor xor_eq
-	} ]
+	}
 ];
 
 # Haskell keyword list is obtained from src/scite/src/haskell.properties
 $KEYWORDS{'text/x-haskell'} = [
-	[
-
-		# Haskell 98
-		qw{case class data default deriving do else hiding if
-			import in infix infixl infixr instance let module
-			newtype of then type where forall foreign
-			}
-	],
-	[
+	# Haskell 98
+	q{case class data default deriving do else hiding if
+		import in infix infixl infixr instance let module
+		newtype of then type where forall foreign
+		}
+	,
+	
 
 		# Haskell Foreign Function Interface (FFI) (
-		qw{export label dynamic safe threadsafe unsafe stdcall ccall prim}
-	],
+		q{export label dynamic safe threadsafe unsafe stdcall ccall prim}
+	,
 ];
 
 # Java keyword list is obtained from src/scite/src/cpp.properties
 $KEYWORDS{'text/x-java'} = [
-	[ qw{
+	q{
 		abstract assert boolean break byte case catch char class
 		const continue default do double else enum extends final
 		finally float for goto if implements import instanceof int
 		interface long native new package private protected public
 		return short static strictfp super switch synchronized this
 		throw throws transient try var void volatile while
-	} ]
+	}
 ];
 
 # Pascal keyword list is obtained from src/scite/src/pascal.properties
 $KEYWORDS{'text/x-pascal'} = [
-	[
-
 		# Pascal keywords
-		qw{absolute abstract and array as asm assembler automated begin case
+		q{absolute abstract and array as asm assembler automated begin case
 			cdecl class const constructor deprecated destructor dispid dispinterface div do downto
 			dynamic else end except export exports external far file final finalization finally for
 			forward function goto if implementation in inherited initialization inline interface is
@@ -529,21 +524,20 @@ $KEYWORDS{'text/x-pascal'} = [
 			record register reintroduce repeat resourcestring safecall sealed set shl shr static
 			stdcall strict string then threadvar to try type unit unsafe until uses var varargs
 			virtual while with xor
-			},
+			} .
 
 		# Smart pascal highlighting
-		qw{add default implements index name nodefault read readonly
-			remove stored write writeonly},
+		q{add default implements index name nodefault read readonly
+			remove stored write writeonly} .
 
 		# Pascal package
 		#TODO only package dpk should get this list
-		qw{package contains requires},
-	],
+		q{package contains requires},
 ];
 
-$KEYWORDS{'text/x-perl'} = [
+$KEYWORDS{'application/x-perl'} = [
 	# Perl Keywords
-	[ qw{
+	q{
 		NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
 		BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept
 		alarm and atan2 bind binmode bless caller chdir chmod chomp chop
@@ -571,79 +565,174 @@ $KEYWORDS{'text/x-perl'} = [
 		uc ucfirst umask undef unless unlink unpack unshift untie until
 		use utime values vec wait waitpid wantarray warn while write
 		xor given when default say state UNITCHECK
-	} ],
+	},
 ];
 
 # 8 different keyword lists for povray
 $KEYWORDS{'text/x-povray'} = [
 	# structure keyword1 == SCE_POV_DIRECTIVE
-	[qw( declare local undef default macro if else while end
-	include version debug error warning switch case range break
-	ifdef indef  fopen fclose read write render statistics )],
+	q{
+		declare local undef default macro if else while end
+		include version debug error warning switch case range break
+		ifdef indef  fopen fclose read write render statistics
+	},
 
 	# objects  SCE_POV_WORD2
-	[
-	qw(blob  box bicubic_patch object light_source
-	camera  cylinder cubic global_settings height_field
-	isosurface julia_fractal sor sphere sphere_sweep superellipsoid
-	torus triangle quadric quartic sky_sphere plane poly polygon ),
-
-	qw(
-	looks_like bounded_by contained_by clipped_by
-	),
-	qw(
-	union intersection difference
-	)
-	],
+	q{
+		blob  box bicubic_patch object light_source
+		camera  cylinder cubic global_settings height_field
+		isosurface julia_fractal sor sphere sphere_sweep superellipsoid
+		torus triangle quadric quartic sky_sphere plane poly polygon
+	} .
+	q{
+		looks_like bounded_by contained_by clipped_by
+	} .
+	q{
+		union intersection difference
+	},
 
 	# patterns  SCE_POV_WORD3
-	[qw( agate bozo checker cells bumps brick facets dents crackle
-	hexagon gradient granite  spotted spiral1 ripples marble
-	leopard spiral2 wrinkles)],
+	q{
+		agate bozo checker cells bumps brick facets dents crackle
+		hexagon gradient granite  spotted spiral1 ripples marble
+		leopard spiral2 wrinkles
+	},
 
 	# transforms  SCE_POV_WORD4
-	[qw( translate rotate scale transform matrix point_at look_at )],
+	q{
+		translate rotate scale transform matrix point_at look_at
+	},
 
 	# modifiers - SCE_POV_WORD5
-	[qw(
+	q{
 
-	)],
+	},
 
 	## float functions - SCE_POV_WORD6
-	[qw(
-	abs acos acosh asc asin asinh atan atanh atan2 ceil cos cosh defined
-	degrees dimensions dimension_size div exp file_exists floor int inside
-	ln log max min mod pow radians rand seed select sin sinh sqrt strcmp strlen
-	tan tanh val vdot vlength ),
+	q{
+		abs acos acosh asc asin asinh atan atanh atan2 ceil cos cosh defined
+		degrees dimensions dimension_size div exp file_exists floor int inside
+		ln log max min mod pow radians rand seed select sin sinh sqrt strcmp strlen
+		tan tanh val vdot vlength
+	} .
+
 	## vector functions
-	qw( min_extent max_extent trace vaxis_rotate vcross vrotate
-	vnormalize vturbulence ),
+	q{
+		min_extent max_extent trace vaxis_rotate vcross vrotate
+		vnormalize vturbulence
+	} .
+
 	## string functions
-	qw( chr concat str strlwr strupr substr vstr )
-	],
+	q{
+		chr concat str strlwr strupr substr vstr
+	},
 
 	## reserved identifiers SCE_POV_WORD7
-	[qw(
-	x y z red green blue alpha filter rgb rgbf rgba rgbfa u v
-	)],
+	q{
+		x y z red green blue alpha filter rgb rgbf rgba rgbfa u v
+	},
 ];
 
 # Python keywords
 # The list is obtained from src/scite/src/python.properties
 $KEYWORDS{'text/x-python'} = [
-	[ qw{
+	q{
 		and as assert break class continue def del elif
 		else except exec finally for from global if import in is lambda None
 		not or pass print raise return try while with yield
-	} ],
+	},
 ];
 
 # YAML keyword list is obtained from src/scite/src/yaml.properties
 $KEYWORDS{'text/x-yaml'} = [
-	[ qw{
+	q{
 		true false yes no
-	} ],
+	},
 ];
+
+# HTML keywords contains all kinds of things
+$KEYWORDS{'text/html'} = [
+	join( ' ',
+		# HTML elements
+		q{a abbr acronym address applet area b base basefont
+			bdo big blockquote body br button caption center
+			cite code col colgroup dd del dfn dir div dl dt em
+			fieldset font form frame frameset h1 h2 h3 h4 h5 h6
+			head hr html i iframe img input ins isindex kbd label
+			legend li link map menu meta noframes noscript
+			object ol optgroup option p param pre q s samp
+			script select small span strike strong style sub sup
+			table tbody td textarea tfoot th thead title tr tt u ul
+			var xml xmlns
+			},
+
+		# HTML attributes
+		q{abbr accept-charset accept accesskey action align alink
+			alt archive axis background bgcolor border
+			cellpadding cellspacing char charoff charset checked cite
+			class classid clear codebase codetype color cols colspan
+			compact content coords
+			data datafld dataformatas datapagesize datasrc datetime
+			declare defer dir disabled enctype event
+			face for frame frameborder
+			headers height href hreflang hspace http-equiv
+			id ismap label lang language leftmargin link longdesc
+			marginwidth marginheight maxlength media method multiple
+			name nohref noresize noshade nowrap
+			object onblur onchange onclick ondblclick onfocus
+			onkeydown onkeypress onkeyup onload onmousedown
+			onmousemove onmouseover onmouseout onmouseup
+			onreset onselect onsubmit onunload
+			profile prompt readonly rel rev rows rowspan rules
+			scheme scope selected shape size span src standby start style
+			summary tabindex target text title topmargin type usemap
+			valign value valuetype version vlink vspace width
+			text password checkbox radio submit reset
+			file hidden image
+			^data-
+			},
+
+		# HTML 5 elements
+		q{
+			address article aside audio base canvas command details datalist embed
+			figure figcaption footer header hgroup keygen mark menu meter nav output
+			progress ruby rt rp section source time video wbr
+			},
+
+		# HTML 5 attributes
+		q{
+			async autocomplete autofocus contenteditable contextmenu draggable
+			form formaction formenctype formmethod formnovalidate formtarget
+			list manifest max min novalidate pattern placeholder
+			required reversed role sandbox scoped seamless sizes spellcheck srcdoc step
+			},
+	),
+
+	# Embedded Javascript
+	$KEYWORDS{'application/javascript'}->[0],
+
+	# Embedded Python
+	q{
+		and as assert break class continue def del elif
+		else except exec finally for from global if import in is lambda None
+		not or pass print raise return try while with yield
+	},
+
+	# Embedded VBScript
+	$KEYWORDS{'text/vbscript'}->[0],
+
+	# Embedded PHP
+	$KEYWORDS{'application/php'}->[0],
+];
+
+# Clean the keywords
+foreach my $list ( values %KEYWORDS ) {
+	foreach my $i ( 0 .. $#$list ) {
+		$list->[$i] =~ s/\A\s+//;
+		$list->[$i] =~ s/\s+\Z//;
+		$list->[$i] =~ s/\s+/ /g;
+	}
+}
 
 sub keywords {
 	my $mime = _MIME($_[1]);
