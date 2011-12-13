@@ -231,9 +231,7 @@ sub editor_search_down {
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_pos_centerize($start);
-	$editor->SetSelection( $start, $end );
-	return 1;
+	$editor->goto_selection_centerize( $start, $end );
 }
 
 sub editor_search_up {
@@ -253,9 +251,7 @@ sub editor_search_up {
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_pos_centerize($start);
-	$editor->SetSelection( $start, $end );
-	return 1;
+	$editor->goto_selection_centerize( $start, $end );
 }
 
 sub editor_replace {
@@ -436,12 +432,12 @@ sub matches {
 	if ( $_[0] ) {
 
 		# Search backwards
-		$pair = List::Util::first { $to > $_->[1] } reverse @matches;
+		$pair = List::Util::first { $from >= $_->[1] } reverse @matches;
 		$pair = $matches[-1] unless $pair;
 	} else {
 
 		# Search forwards
-		$pair = List::Util::first { $from < $_->[0] } @matches;
+		$pair = List::Util::first { $to <= $_->[0] } @matches;
 		$pair = $matches[0] unless $pair;
 	}
 

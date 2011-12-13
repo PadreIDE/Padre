@@ -48,6 +48,8 @@ the even version for the release, even during development.
     - Moving the _T function to the dedicated Padre::Locale::T (ADAMK)
     - Plugin Manager converted to use wxFormBuilder (ADAMK)
     - The Replace dialogs don't use Find Fast term unless visible (ADAMK)
+    - Search results now match correctly at the first position (ADAMK)
+    - Search match caret is now at the start of the match selection (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

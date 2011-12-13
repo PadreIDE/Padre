@@ -1493,6 +1493,26 @@ sub has_function {
 	defined shift->find_function(@_);
 }
 
+sub position {
+	my $self = shift;
+	my $pos  = shift;
+	my $max  = $self->GetLength;
+	$pos = 0 unless $pos;
+	$pos = 0 unless $pos > 0;
+	$pos = $max if $pos > $max;
+	return int $pos;
+}
+
+sub line {
+	my $self = shift;
+	my $line = shift;
+	my $max  = $self->GetLineCount;
+	$line = 0 unless $line;
+	$line = 0 unless $line > 0;
+	$line = $max if $line > $max;
+	return int $line;
+}
+
 sub goto_function {
 	my $self  = shift;
 	my $start = $self->find_function(shift);
@@ -1511,19 +1531,40 @@ sub goto_line_centerize {
 # CREDIT: Borrowed from Kephra
 sub goto_pos_centerize {
 	my $self = shift;
-	my $pos  = shift;
-	my $max  = $self->GetLength;
-	$pos = 0 unless $pos or $pos < 0;
-	$pos = $max if $pos > $max;
+	my $pos  = $self->position(shift);
+	my $line = $self->LineFromPosition($pos);
 
+	# Set the selection
 	$self->SetCurrentPos($pos);
-	$self->SearchAnchor;
+	$self->SetAnchor($pos);
 
-	my $line = $self->GetCurrentLine;
-	$self->ScrollToLine( $line - $self->LinesOnScreen / 2 );
-	$self->EnsureVisible($line);
+	# Move to the position
+	$self->ScrollToLine(
+		$self->line( $line - $self->LinesOnScreen / 2 )
+	);
+	$self->SetFocus;
+
+	return 1;
+}
+
+sub goto_selection_centerize {
+	my $self  = shift;
+	my $spos  = $self->position(shift);
+	my $epos  = $self->position(shift);
+	my $sline = $self->LineFromPosition($spos);
+	my $eline = $self->LineFromPosition($epos);
+
+	# Set the selection
+	$self->SetCurrentPos($spos);
+	$self->SetAnchor($epos);
+
+	# Move to the mid-point of the selection as a starting point.
+	# If the selection is bigger than the screen,
+	# move the caret back onto the screen.
+	$self->ScrollToLine(
+		$self->line( ( $sline + $eline - $self->LinesOnScreen ) / 2 )
+	);
 	$self->EnsureCaretVisible;
-	$self->SetSelection( $pos, $pos );
 	$self->SetFocus;
 
 	return 1;
@@ -1964,8 +2005,7 @@ BEGIN {
 		my $filename = $file->filename;
 		my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);
 		return unless defined $position;
-		$self->SetCurrentPos($position);
-		$self->SetSelection( $position, $position );
+		$self->goto_pos_centerize($position);
 		}
 		if Padre::Feature::CURSORMEMORY;
 }

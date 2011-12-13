@@ -1238,7 +1238,6 @@ sub init {
 		need_editor => 1,
 		label       => _T('&Replace...'),
 		comment     => _T('Find a text and replace it'),
-		shortcut    => 'Ctrl-R',
 		toolbar     => 'actions/edit-find-replace',
 		menu_event  => sub {
 			$_[0]->replace->find;
@@ -1250,6 +1249,7 @@ sub init {
 		need_editor => 1,
 		label       => _T('Replace 2...'),
 		comment     => _T('Find a text and replace it'),
+		shortcut    => 'Ctrl-R',
 		menu_event  => sub {
 			$_[0]->replace2->run;
 		},
