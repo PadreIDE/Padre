@@ -44,8 +44,11 @@ my %HIGHLIGHTER = (
 );
 
 sub highlighter {
-	my $type = _TYPE($_[1]);
-	return $HIGHLIGHTER{$type};
+	my $mime = _MIME($_[1]);
+	foreach my $type ( $mime->superpath ) {
+		return $HIGHLIGHTER{$type} if $HIGHLIGHTER{$type};
+	}
+	return undef;
 }
 
 sub add_highlighter {
@@ -161,11 +164,19 @@ my %LEXER = (
 
 # Must ALWAYS return a valid lexer (defaulting to AUTOMATIC as a last resort)
 sub lexer {
-	my $type = _TYPE($_[1]);
-	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $type;
-	return Wx::Scintilla::Constant::SCLEX_CONTAINER if $HIGHLIGHTER{$type};
-	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $LEXER{$type};
-	return $LEXER{$type};
+	my $mime = _MIME($_[1]);
+	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $mime->type;
+
+	# Search the mime type super path for a lexer
+	foreach my $type ( $mime->superpath ) {
+		if ( $HIGHLIGHTER{$type} ) {
+			return Wx::Scintilla::Constant::SCLEX_CONTAINER;
+		}
+		return $LEXER{$type} if $LEXER{$type};
+	}
+
+	# Fall through to Scintilla's autodetection
+	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC;
 }
 
 
