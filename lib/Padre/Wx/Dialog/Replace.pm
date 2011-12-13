@@ -9,6 +9,13 @@ use Padre::Wx::FBP::Replace ();
 our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::FBP::Replace';
 
+use constant GOOD => Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_WINDOW );
+use constant BAD  => Wx::Colour->new(
+	GOOD->Red,
+	int( GOOD->Green * 0.5 ),
+	int( GOOD->Blue  * 0.5 ),
+);
+
 
 
 
@@ -83,10 +90,25 @@ sub run {
 # values are valid
 sub refresh {
 	my $self = shift;
-	my $show = $self->{find_term}->GetValue ne '' ? 1 : 0;
-	$self->{find_next}->Enable($show);
-	$self->{replace}->Enable($show);
-	$self->{replace_all}->Enable($show);
+	my $lock = Wx::WindowUpdateLocker->new( $self->{find_term} );
+
+	if ( $self->as_search ) {
+		$self->{find_term}->SetBackgroundColour(GOOD);
+		$self->{find_next}->Enable(1);
+		$self->{replace}->Enable(1);
+		$self->{replace_all}->Enable(1);
+		
+	} else {
+		if ( $self->{find_term}->GetValue ne '' ) {
+			$self->{find_term}->SetBackgroundColour(BAD);
+		} else {
+			$self->{find_term}->SetBackgroundColour(GOOD);
+		}
+		$self->{find_next}->Enable(0);
+		$self->{replace}->Enable(0);
+		$self->{replace_all}->Enable(0);
+	}
+
 	return;
 }
 
