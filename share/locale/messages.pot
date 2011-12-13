@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-13 04:10-0800\n"
+"POT-Creation-Date: 2011-12-13 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgid "&Cancel"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:128 lib/Padre/Wx/FBP/Find.pm:88
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:153 lib/Padre/Wx/FBP/Replace.pm:113
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:153 lib/Padre/Wx/FBP/Replace.pm:105
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgid "&Regex Editor"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:120 lib/Padre/Wx/FBP/Find.pm:72
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:145 lib/Padre/Wx/FBP/Replace.pm:64
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:145 lib/Padre/Wx/FBP/Replace.pm:113
 msgid "&Regular Expression"
 msgstr ""
 
@@ -490,7 +490,7 @@ msgid "&Rename Variable..."
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:169 lib/Padre/Wx/FBP/ReplaceInFiles.pm:169
-#: lib/Padre/Wx/FBP/Replace.pm:170
+#: lib/Padre/Wx/FBP/Replace.pm:146
 msgid "&Replace"
 msgstr ""
 
@@ -1218,7 +1218,7 @@ msgstr ""
 msgid "Chuanren Wu"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:96 lib/Padre/Wx/FBP/Replace.pm:129
+#: lib/Padre/Wx/FBP/Find.pm:96
 msgid "Cl&ose Window on Hit"
 msgstr ""
 
@@ -2433,7 +2433,7 @@ msgid "Find &Method Declaration"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1204 lib/Padre/Wx/FBP/Find.pm:112
-#: lib/Padre/Wx/FBP/Replace.pm:153
+#: lib/Padre/Wx/FBP/Replace.pm:129
 msgid "Find &Next"
 msgstr ""
 
@@ -2454,7 +2454,7 @@ msgstr ""
 msgid "Find Unmatched &Brace"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1240 lib/Padre/Wx/ActionLibrary.pm:1252
+#: lib/Padre/Wx/ActionLibrary.pm:1240 lib/Padre/Wx/ActionLibrary.pm:1251
 msgid "Find a text and replace it"
 msgstr ""
 
@@ -2492,7 +2492,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1621
+#: lib/Padre/Wx/Editor.pm:1662
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -3289,7 +3289,7 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:541 lib/Padre/Wx/Replace.pm:588
-#: lib/Padre/Wx/Dialog/Find.pm:71
+#: lib/Padre/Wx/Dialog/Find.pm:71 lib/Padre/Wx/Dialog/Replace.pm:145
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -4221,16 +4221,12 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:135
+#: lib/Padre/Wx/Replace.pm:135 lib/Padre/Wx/FBP/Replace.pm:162
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1251
+#: lib/Padre/Wx/ActionLibrary.pm:1250
 msgid "Replace 2..."
-msgstr ""
-
-#: lib/Padre/Wx/FBP/Replace.pm:137
-msgid "Replace All"
 msgstr ""
 
 #: lib/Padre/Document/Perl.pm:899 lib/Padre/Document/Perl.pm:948
@@ -4241,7 +4237,7 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:64 lib/Padre/Wx/FBP/Replace.pm:80
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:64 lib/Padre/Wx/FBP/Replace.pm:72
 msgid "Replace With:"
 msgstr ""
 
@@ -4263,12 +4259,12 @@ msgstr ""
 msgid "Replace in Files"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:579
+#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:136
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:579
+#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:136
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4506,7 +4502,6 @@ msgid "Search"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:121 lib/Padre/Wx/FBP/Find.pm:80
-#: lib/Padre/Wx/FBP/Replace.pm:121
 msgid "Search &Backwards"
 msgstr ""
 
@@ -4525,7 +4520,8 @@ msgid "Search again for '%s'"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:542 lib/Padre/Wx/Replace.pm:584
-#: lib/Padre/Wx/Replace.pm:589
+#: lib/Padre/Wx/Replace.pm:589 lib/Padre/Wx/Dialog/Replace.pm:141
+#: lib/Padre/Wx/Dialog/Replace.pm:146
 msgid "Search and Replace"
 msgstr ""
 
@@ -5728,7 +5724,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1605
+#: lib/Padre/Wx/Editor.pm:1646
 msgid "You must select a range of lines"
 msgstr ""
 
