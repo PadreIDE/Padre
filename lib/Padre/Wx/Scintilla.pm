@@ -48,7 +48,7 @@ sub highlighter {
 	foreach my $type ( $mime->superpath ) {
 		return $HIGHLIGHTER{$type} if $HIGHLIGHTER{$type};
 	}
-	return undef;
+	return '';
 }
 
 sub add_highlighter {
