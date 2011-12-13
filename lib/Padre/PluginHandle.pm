@@ -240,6 +240,17 @@ sub plugin_version {
 	return '???';
 }
 
+# Wrapper over the void context call to preferences
+sub plugin_preferences {
+	my $self = shift;
+	if ( $self->plugin_can('plugin_preferences') ) {
+		local $@;
+		eval {
+			$self->plugin->plugin_preferences
+		};
+	}
+}
+
 
 
 

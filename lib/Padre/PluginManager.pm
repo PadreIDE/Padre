@@ -676,6 +676,20 @@ sub plugin_disable {
 	$handle->disable;
 }
 
+sub user_enable {
+	my $self   = shift;
+	my $handle = $self->handle(shift) or return;
+	$handle->update( enabled => 1 );
+	$self->plugin_enable($handle);
+}
+
+sub user_disable {
+	my $self   = shift;
+	my $handle = $self->handle(shift) or return;
+	$handle->update( enabled => 0 );
+	$self->plugin_disable($handle);
+}
+
 =pod
 
 =head2 C<reload_plugin>
