@@ -69,14 +69,7 @@ sub run {
 	$main->show_findfast(0);
 
 	# Show the dialog
-	my $result = $self->ShowModal;
-
-	# As we leave the Find dialog, return the user to the current editor
-	# window so they don't need to click it.
-	my $editor = $self->current->editor;
-	$editor->SetFocus if $editor;
-
-	return;
+	$self->Show;
 }
 
 
@@ -127,7 +120,37 @@ sub replace_clicked {
 
 sub replace_all_clicked {
 	my $self = shift;
+	my $main = $self->main;
 
+	# Generate the search object
+	my $search = $self->as_search;
+	unless ($search) {
+		$main->error('Not a valid search');
+		return;
+	}
+
+	# Apply the search to the current editor
+	my $changes = $main->replace_all($search);
+	if ($changes) {
+		my $message_text =
+			$changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
+
+		# remark: It would be better to use gettext for plural handling, but wxperl does not seem to support this at the moment.
+		$main->info(
+			sprintf( $message_text, $changes ),
+			Wx::gettext('Search and Replace')
+		);
+	} else {
+		$main->info(
+			sprintf( Wx::gettext('No matches found for "%s".'), $self->{find_text}->GetValue ),
+			Wx::gettext('Search and Replace'),
+		);
+	}
+
+	# Move the focus back to the search text
+	# so they can change it if they want.
+	$self->{find_text}->SetFocus;
+	return;
 }
 
 
