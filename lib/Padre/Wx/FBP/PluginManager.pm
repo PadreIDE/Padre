@@ -97,7 +97,6 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
-	$self->{action}->SetDefault;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -123,13 +122,14 @@ sub new {
 		},
 	);
 
-	$self->{m_button51} = Wx::Button->new(
+	$self->{cancel} = Wx::Button->new(
 		$self->{details},
-		Wx::ID_CANCEL,
+		-1,
 		Wx::gettext("Close"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{cancel}->SetDefault;
 
 	$self->{labels} = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{labels}->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
@@ -142,7 +142,7 @@ sub new {
 	$bSizer113->Add( $self->{action}, 0, Wx::ALL, 5 );
 	$bSizer113->Add( $self->{preferences}, 0, Wx::BOTTOM | Wx::RIGHT | Wx::TOP, 5 );
 	$bSizer113->Add( 50, 0, 1, Wx::EXPAND, 5 );
-	$bSizer113->Add( $self->{m_button51}, 0, Wx::ALL, 5 );
+	$bSizer113->Add( $self->{cancel}, 0, Wx::ALL, 5 );
 
 	my $bSizer110 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer110->Add( $self->{labels}, 0, Wx::EXPAND, 5 );
