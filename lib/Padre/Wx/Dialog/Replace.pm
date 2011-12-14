@@ -113,43 +113,45 @@ sub refresh {
 }
 
 sub find_next_clicked {
-	my $self = shift;
-	my $main = $self->main;
-
-	# Generate the search object
-	my $search = $self->as_search;
-	unless ($search) {
-		$main->error('Not a valid search');
-
-		# Move the focus back to the search text
-		# so they can tweak their search.
-		$self->{find_term}->SetFocus;
-		return;
-	}
+	my $self   = shift;
+	my $main   = $self->main;
+	my $search = $self->as_search or return;
 
 	# Apply the search to the current editor
 	if ( $main->search_next($search) ) {
 		$self->{find_term}->SaveValue;
+		$self->{replace}->SetFocus;
 	}
 
 	return;
 }
 
 sub replace_clicked {
-	my $self = shift;
+	my $self   = shift;
+	my $main   = $self->main;
+	my $search = $self->as_search or return;
 
+	# Just replace once
+	unless ( $main->replace_next($search) ) {
+		$main->message(
+			sprintf(
+				Wx::gettext('No matches found for "%s".'),
+				$self->{find_term}->GetValue,
+			),
+			Wx::gettext('Search and Replace'),
+		);
+	}
+
+	# Move the focus back to the search text
+	# so they can change it if they want.
+	$self->{find_term}->SetFocus;
+	return;
 }
 
 sub replace_all_clicked {
-	my $self = shift;
-	my $main = $self->main;
-
-	# Generate the search object
-	my $search = $self->as_search;
-	unless ($search) {
-		$main->error('Not a valid search');
-		return;
-	}
+	my $self   = shift;
+	my $main   = $self->main;
+	my $search = $self->as_search or return;
 
 	# Apply the search to the current editor
 	my $changes = $main->replace_all($search);
