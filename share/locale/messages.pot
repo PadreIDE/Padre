@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-13 16:10-0800\n"
+"POT-Creation-Date: 2011-12-13 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -358,7 +358,7 @@ msgstr ""
 msgid "&Newline Same Column"
 msgstr ""
 
-#: lib/Padre/Wx/FindFast.pm:179
+#: lib/Padre/Wx/FindFast.pm:179 lib/Padre/Wx/FBP/FindFast.pm:86
 msgid "&Next"
 msgstr ""
 
@@ -432,6 +432,10 @@ msgstr ""
 msgid "&Preferences"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/FindFast.pm:70
+msgid "&Previous"
+msgstr ""
+
 #: lib/Padre/Wx/ActionLibrary.pm:2356
 msgid "&Previous File"
 msgstr ""
@@ -490,7 +494,7 @@ msgid "&Rename Variable..."
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:169 lib/Padre/Wx/FBP/ReplaceInFiles.pm:169
-#: lib/Padre/Wx/FBP/Replace.pm:146
+#: lib/Padre/Wx/FBP/Replace.pm:154
 msgid "&Replace"
 msgstr ""
 
@@ -1055,7 +1059,7 @@ msgstr ""
 #: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:153
 #: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:137
 #: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:178
-#: lib/Padre/Wx/FBP/Replace.pm:178
+#: lib/Padre/Wx/FBP/Replace.pm:186
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -1235,7 +1239,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:676
+#: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:676
 #: lib/Padre/Wx/FBP/Sync.pm:267 lib/Padre/Wx/FBP/Diff.pm:94
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
@@ -2433,7 +2437,7 @@ msgid "Find &Method Declaration"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1204 lib/Padre/Wx/FBP/Find.pm:112
-#: lib/Padre/Wx/FBP/Replace.pm:129
+#: lib/Padre/Wx/FBP/Replace.pm:137
 msgid "Find &Next"
 msgstr ""
 
@@ -2484,7 +2488,7 @@ msgid ""
 "there."
 msgstr ""
 
-#: lib/Padre/Wx/FindFast.pm:143 lib/Padre/Wx/FBP/FindFast.pm:53
+#: lib/Padre/Wx/FindFast.pm:143 lib/Padre/Wx/FBP/FindFast.pm:47
 msgid "Find:"
 msgstr ""
 
@@ -3054,10 +3058,6 @@ msgstr ""
 msgid "Match 1 or more times"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindFast.pm:109
-msgid "Match Case"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:108
 msgid "Match at least m but not more than n times"
 msgstr ""
@@ -3213,10 +3213,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:142
 msgid "Newline"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/FindFast.pm:92
-msgid "Next"
 msgstr ""
 
 #: lib/Padre/Wx/Diff2.pm:29 lib/Padre/Wx/Dialog/Diff.pm:32
@@ -3890,7 +3886,7 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:113
+#: lib/Padre/Wx/FBP/PluginManager.pm:112
 msgid "Preferences"
 msgstr ""
 
@@ -3904,10 +3900,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:92
 msgid "Preview:"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/FindFast.pm:76
-msgid "Previous"
 msgstr ""
 
 #: lib/Padre/Wx/Diff2.pm:27 lib/Padre/Wx/Dialog/Diff.pm:26
@@ -4221,7 +4213,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:135 lib/Padre/Wx/FBP/Replace.pm:162
+#: lib/Padre/Wx/Replace.pm:135 lib/Padre/Wx/FBP/Replace.pm:170
 msgid "Replace &All"
 msgstr ""
 
@@ -5708,10 +5700,6 @@ msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
 "at least 0.20 by typing\n"
 "cpan Wx::Perl::ProcessStream"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/FindFast.pm:37
-msgid "X"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Special.pm:68
