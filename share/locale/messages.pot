@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-13 08:10-0800\n"
+"POT-Creation-Date: 2011-12-13 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3289,7 +3289,7 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:541 lib/Padre/Wx/Replace.pm:588
-#: lib/Padre/Wx/Dialog/Find.pm:71 lib/Padre/Wx/Dialog/Replace.pm:145
+#: lib/Padre/Wx/Dialog/Find.pm:71 lib/Padre/Wx/Dialog/Replace.pm:167
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -4259,12 +4259,12 @@ msgstr ""
 msgid "Replace in Files"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:136
+#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:158
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:136
+#: lib/Padre/Wx/Replace.pm:579 lib/Padre/Wx/Dialog/Replace.pm:158
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4520,8 +4520,8 @@ msgid "Search again for '%s'"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:542 lib/Padre/Wx/Replace.pm:584
-#: lib/Padre/Wx/Replace.pm:589 lib/Padre/Wx/Dialog/Replace.pm:141
-#: lib/Padre/Wx/Dialog/Replace.pm:146
+#: lib/Padre/Wx/Replace.pm:589 lib/Padre/Wx/Dialog/Replace.pm:163
+#: lib/Padre/Wx/Dialog/Replace.pm:168
 msgid "Search and Replace"
 msgstr ""
 
