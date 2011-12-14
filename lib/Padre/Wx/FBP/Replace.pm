@@ -115,6 +115,14 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{find_regex},
+		sub {
+			shift->refresh(@_);
+		},
+	);
+
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,

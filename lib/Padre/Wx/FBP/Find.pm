@@ -151,7 +151,7 @@ sub new {
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{find_next}, 0, Wx::ALL, 5 );
 	$buttons->Add( $self->{find_all}, 0, Wx::ALL, 5 );
-	$buttons->Add( 20, 0, 1, Wx::EXPAND, 5 );
+	$buttons->Add( 30, 0, 1, Wx::EXPAND, 5 );
 	$buttons->Add( $self->{cancel}, 0, Wx::ALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);

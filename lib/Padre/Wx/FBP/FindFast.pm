@@ -12,6 +12,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use File::ShareDir ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -31,20 +32,13 @@ sub new {
 		Wx::NO_BORDER | Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{cancel} = Wx::Button->new(
+	$self->{cancel} = Wx::BitmapButton->new(
 		$self,
-		-1,
-		Wx::gettext("X"),
+		Wx::ID_CANCEL,
+		Wx::Bitmap->new( File::ShareDir::dist_file( "Padre", "icons/padre/16x16/actions/x-document-close.png" ), Wx::BITMAP_TYPE_ANY ),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{cancel},
-		sub {
-			shift->close_clicked(@_);
-		},
+		Wx::NO_BORDER,
 	);
 
 	$self->{find_label} = Wx::StaticText->new(
@@ -53,7 +47,7 @@ sub new {
 		Wx::gettext("Find:"),
 	);
 
-	$self->{find_text} = Wx::TextCtrl->new(
+	$self->{find_term} = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
@@ -64,7 +58,7 @@ sub new {
 
 	Wx::Event::EVT_TEXT(
 		$self,
-		$self->{find_text},
+		$self->{find_term},
 		sub {
 			shift->find_text_changed(@_);
 		},
@@ -73,7 +67,7 @@ sub new {
 	$self->{find_previous} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Previous"),
+		Wx::gettext("&Previous"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -89,7 +83,7 @@ sub new {
 	$self->{find_next} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("Next"),
+		Wx::gettext("&Next"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -103,22 +97,13 @@ sub new {
 		},
 	);
 
-	$self->{find_case} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext("Match Case"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
 	my $bSizer79 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_LEFT | Wx::ALL, 5 );
 	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bSizer79->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( $self->{find_text}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer79->Add( $self->{find_term}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( $self->{find_case}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizerAndFit($bSizer79);
@@ -127,8 +112,8 @@ sub new {
 	return $self;
 }
 
-sub find_text {
-	$_[0]->{find_text};
+sub find_term {
+	$_[0]->{find_term};
 }
 
 sub find_previous {
@@ -139,16 +124,8 @@ sub find_next {
 	$_[0]->{find_next};
 }
 
-sub find_case {
-	$_[0]->{find_case};
-}
-
-sub close_clicked {
-	$_[0]->main->error('Handler method close_clicked for event cancel.OnButtonClick not implemented');
-}
-
 sub find_text_changed {
-	$_[0]->main->error('Handler method find_text_changed for event find_text.OnText not implemented');
+	$_[0]->main->error('Handler method find_text_changed for event find_term.OnText not implemented');
 }
 
 sub find_previous_clicked {
