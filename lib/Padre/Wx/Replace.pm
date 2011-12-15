@@ -21,7 +21,7 @@ use Params::Util qw{_STRING};
 use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::Main        ();
-use Padre::Wx::History::ComboBox ();
+use Padre::Wx::ComboBox::History ();
 our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
@@ -53,7 +53,7 @@ sub new {
 	);
 
 	# The text to search for
-	$self->{find_text} = Padre::Wx::History::ComboBox->new(
+	$self->{find_text} = Padre::Wx::ComboBox::History->new(
 		$self,
 		-1,
 		'',
@@ -63,7 +63,7 @@ sub new {
 	);
 
 	# The text to replace with
-	$self->{replace_text} = Padre::Wx::History::ComboBox->new(
+	$self->{replace_text} = Padre::Wx::ComboBox::History->new(
 		$self,
 		-1,
 		'',

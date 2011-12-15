@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 34 );
+plan( tests => 35 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -33,7 +33,8 @@ use_ok('Padre::Wx::Printout');
 use_ok('Padre::Wx::Dialog::PluginManager');
 use_ok('Padre::Wx::Dialog::Preferences');
 use_ok('Padre::Wx::History::TextEntryDialog');
-use_ok('Padre::Wx::History::ComboBox');
+use_ok('Padre::Wx::ComboBox::History');
+use_ok('Padre::Wx::ComboBox::FindTerm');
 use_ok('Padre');
 use_ok('Padre::Pod2HTML');
 use_ok('Padre::Plugin::Devel');

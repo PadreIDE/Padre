@@ -23,7 +23,7 @@ use Padre::Wx;
 my $mock_history_combobox = Test::MockObject->new();
 $mock_history_combobox->set_isa('Wx::ComboBox');
 
-use_ok('Padre::Wx::History::ComboBox');
+use_ok('Padre::Wx::ComboBox::History');
 
 SCOPE: {
 
@@ -35,7 +35,7 @@ SCOPE: {
 	$mock_history_combobox->{type} = 'test1';
 
 	# WHEN
-	my $value = Padre::Wx::History::ComboBox::SaveValue($mock_history_combobox);
+	my $value = Padre::Wx::ComboBox::History::SaveValue($mock_history_combobox);
 
 	# THEN
 	is( $value, 'foo', "SaveValue returned correct value" );
@@ -53,7 +53,7 @@ SCOPE: {
 	$mock_history_combobox->{type} = 'test2';
 
 	# WHEN
-	my $value = Padre::Wx::History::ComboBox::SaveValue($mock_history_combobox);
+	my $value = Padre::Wx::ComboBox::History::SaveValue($mock_history_combobox);
 
 	# THEN
 	is( $value, 'foo', "SaveValue returned correct value" );

@@ -557,7 +557,7 @@ The code for drag and drop
 holds an editor text control instance (one for each buffer/file).
 This is a subclass of L<Wx::Scintilla::TextCtrl> also known as Scintilla.
 
-=item L<Padre::Wx::History::ComboBox>
+=item L<Padre::Wx::ComboBox::History>
 
 =item L<Padre::Wx::History::TextEntryDialog>
 

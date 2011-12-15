@@ -12,7 +12,8 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx::History::ComboBox ();
+use Padre::Wx::ComboBox::FindTerm ();
+use Padre::Wx::ComboBox::History ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -39,7 +40,7 @@ sub new {
 		Wx::gettext("Search &Term:"),
 	);
 
-	$self->{find_term} = Padre::Wx::History::ComboBox->new(
+	$self->{find_term} = Padre::Wx::ComboBox::FindTerm->new(
 		$self,
 		-1,
 		"",
@@ -72,7 +73,7 @@ sub new {
 		Wx::gettext("Replace With:"),
 	);
 
-	$self->{replace_term} = Padre::Wx::History::ComboBox->new(
+	$self->{replace_term} = Padre::Wx::ComboBox::History->new(
 		$self,
 		-1,
 		"",

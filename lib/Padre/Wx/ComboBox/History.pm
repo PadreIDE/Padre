@@ -1,14 +1,14 @@
-package Padre::Wx::History::ComboBox;
+package Padre::Wx::ComboBox::History;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::History::ComboBox - A history-enabled Wx combobox
+Padre::Wx::ComboBox::History - A history-enabled Wx combobox
 
 =head1 SYNOPSIS
 
-  $dialog->{search_text} = Padre::Wx::History::ComboBox->new(
+  $dialog->{search_text} = Padre::Wx::ComboBox::History->new(
       $self,
       -1,
       '', # Use the last history value
@@ -19,7 +19,7 @@ Padre::Wx::History::ComboBox - A history-enabled Wx combobox
 
 =head1 DESCRIPTION
 
-Padre::Wx::History::ComboBox is a normal Wx ComboBox widget, but enhanced
+Padre::Wx::ComboBox::History is a normal Wx ComboBox widget, but enhanced
 with the ability to remember previously entered values and present the
 previous values as options the next time it is used.
 
