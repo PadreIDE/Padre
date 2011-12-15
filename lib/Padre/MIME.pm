@@ -606,7 +606,7 @@ sub detect {
 	}
 
 	# Finally fall back to plain text file
-	unless ( defined $mime or length $mime ) {
+	unless ( defined $mime and length $mime ) {
 		$mime = 'text/plain';
 	}
 
