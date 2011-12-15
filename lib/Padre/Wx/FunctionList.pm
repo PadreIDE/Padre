@@ -80,9 +80,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			my ( $this, $event ) = @_;
-			$self->on_list_item_activated($event);
-			return;
+			$self->on_list_item_activated($_[1]);
 		}
 	);
 
@@ -102,53 +100,16 @@ sub new {
 	Wx::Event::EVT_KEY_UP(
 		$self->{list},
 		sub {
-			my ( $this, $event ) = @_;
-
-			my $code = $event->GetKeyCode;
-			if ( $code == Wx::K_RETURN ) {
-				$self->on_list_item_activated($event);
-			} elsif ( $code == Wx::K_ESCAPE ) {
-
-				# Escape key clears search and returns focus
-				# to the editor
-				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
-			}
-
-			$event->Skip(1);
-			return;
-		}
+			$self->on_search_key_up($_[1]);
+		},
 	);
 
 	# Handle char events in search box
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
-			my ( $this, $event ) = @_;
-
-			my $code = $event->GetKeyCode;
-			if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
-
-				# Up/Down and return keys focus on the functions lists
-				$self->{list}->SetFocus;
-				my $selection = $self->{list}->GetSelection;
-				if ( $selection == -1 && $self->{list}->GetCount > 0 ) {
-					$selection = 0;
-				}
-				$self->{list}->Select($selection);
-			} elsif ( $code == Wx::K_ESCAPE ) {
-
-				# Escape key clears search and returns focus
-				# to the editor
-				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
-			}
-
-			$event->Skip(1);
-			return;
-		}
+			$self->on_search_char($_[1]);
+		},
 	);
 
 	# React to user search
@@ -197,6 +158,54 @@ sub view_stop {
 #####################################################################
 # Event Handlers
 
+sub on_search_key_up {
+	my $self  = shift;
+	my $event = shift;
+	my $code  = $event->GetKeyCode;
+
+	if ( $code == Wx::K_RETURN ) {
+		$self->on_list_item_activated($event);
+		$self->{search}->SetValue('');
+
+	} elsif ( $code == Wx::K_ESCAPE ) {
+
+		# Escape key clears search and returns focus
+		# to the editor
+		$self->{search}->SetValue('');
+		my $editor = $self->current->editor;
+		$editor->SetFocus if $editor;
+	}
+
+	$event->Skip(1);
+}
+
+sub on_search_char {
+	my $self  = shift;
+	my $event = shift;
+	my $code  = $event->GetKeyCode;
+
+	if ( $code == Wx::K_DOWN || $code == Wx::K_UP || $code == Wx::K_RETURN ) {
+
+		# Up/Down and return keys focus on the functions lists
+		$self->{list}->SetFocus;
+		my $selection = $self->{list}->GetSelection;
+		if ( $selection == -1 && $self->{list}->GetCount > 0 ) {
+			$selection = 0;
+		}
+		$self->{list}->Select($selection);
+
+	} elsif ( $code == Wx::K_ESCAPE ) {
+
+		# Escape key clears search and returns focus
+		# to the editor
+		$self->{search}->SetValue('');
+		my $editor = $self->current->editor;
+		$editor->SetFocus if $editor;
+	}
+
+	$event->Skip(1);
+}
+
 sub on_list_item_activated {
 	my $self   = shift;
 	my $event  = shift;
@@ -211,17 +220,17 @@ sub on_list_item_activated {
 	return;
 }
 
-# Sets the focus on the search field
-sub focus_on_search {
-	$_[0]->{search}->SetFocus;
-}
-
 
 
 
 
 ######################################################################
 # General Methods
+
+# Sets the focus on the search field
+sub focus_on_search {
+	$_[0]->{search}->SetFocus;
+}
 
 sub gettext_label {
 	Wx::gettext('Functions');

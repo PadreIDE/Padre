@@ -60,6 +60,8 @@ the even version for the release, even during development.
     - Added main window deactivation hook to hide Find Fast panel (ADAMK)
     - Added main window activation hook to rescan the directory tree,
       rerun syntax checking, and rerun vcs indicators (ADAMK)
+    - Hitting enter in the Function List search box will clear the search
+      after you have been taken to the first function (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
