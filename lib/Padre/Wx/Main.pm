@@ -242,6 +242,18 @@ sub new {
 		$self->SetIcon(Padre::Wx::Icon::PADRE);
 	}
 
+	# Activate Padre after a period not showing the window
+	Wx::Event::EVT_ACTIVATE(
+		$self,
+		sub {
+			if ( $_[1]->GetActive ) {
+				return shift->on_activate(@_);
+			} else {
+				return shift->on_deactivate(@_);
+			}
+		},
+	);
+
 	# Deal with someone closing the window
 	Wx::Event::EVT_CLOSE(
 		$self,
@@ -1487,7 +1499,9 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_outline($current);
 	$self->refresh_diff($current);
-	$self->refresh_vcs($current) if $self->config->feature_vcs_support;
+	if ( $self->config->feature_vcs_support ) {
+		$self->refresh_vcs($current);
+	}
 
 	# Refresh the remaining elements while the background tasks
 	# are running for the other elements.
@@ -3920,11 +3934,58 @@ sub on_goto {
 	return;
 }
 
+=head3 C<on_activate>
+
+The C<on_activate> method is called when Padre has been in the background
+for some period of time, and has just returned to the foreground.
+
+It calls a subset of refresh methods where something may have been changed
+by the user while they were using some other program that wasn't Padre.
+
+=cut
+
+sub on_activate {
+	TRACE( $_[0] ) if DEBUG;
+	my $self    = shift;
+	my $current = $self->current;
+
+	# The file system may have changed, refresh the directory list
+	# and recompile the foreground file.
+	$self->refresh_directory($current);
+	$self->refresh_syntaxcheck($current);
+
+	# They may be using an external VCS tool
+	if ( $self->config->feature_vcs_support ) {
+		$self->refresh_vcs($current);
+	}
+
+	return 1;
+}
+
+=head3 C<on_deactivate>
+
+The C<on_deactivate> method is called when the user has switched away from
+Padre to some other application.
+
+Currently all this does is hide away from short-lived tools like Fast Find
+if they are open, so that when the user returns it is not to a stale
+UI context.
+
+=cut
+
+sub on_deactivate {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+
+	# Hide the Find Fast panel if it is showing
+	$self->show_findfast(0);
+
+	return 1;
+}
+
 =pod
 
 =head3 C<on_close_window>
-
-    $main->on_close_window( $event );
 
 Callback when window is about to be closed. This is our last chance to
 veto the C<$event> close, e.g. when some files are not yet saved.
