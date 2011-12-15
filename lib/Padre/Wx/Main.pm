@@ -890,7 +890,7 @@ sub findfast2 {
 	my $self = shift;
 	unless ( defined $self->{findfast2} ) {
 		require Padre::Wx::Panel::FindFast;
-		$self->{findfast2} = Padre::Wx::Panel::FindFast->new;
+		$self->{findfast2} = Padre::Wx::Panel::FindFast->new($self);
 	}
 	return $self->{findfast2};
 }

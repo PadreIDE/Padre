@@ -1431,7 +1431,7 @@
                 </object>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="bg"></property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
@@ -1479,14 +1479,14 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer79</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxALIGN_LEFT|wxALL</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxBitmapButton" expanded="0">
                         <property name="bg"></property>
@@ -1520,7 +1520,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style">wxNO_BORDER</property>
-                        <event name="OnButtonClick"></event>
+                        <event name="OnButtonClick">on_cancel</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1546,21 +1546,11 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
-                    <property name="flag">wxALL|wxEXPAND</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
-                    <object class="spacer" expanded="0">
-                        <property name="height">0</property>
-                        <property name="permission">protected</property>
-                        <property name="width">0</property>
-                    </object>
-                </object>
-                <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
-                    <property name="proportion">0</property>
-                    <object class="wxStaticText" expanded="0">
+                    <object class="wxStaticText" expanded="1">
                         <property name="bg"></property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
@@ -1572,7 +1562,7 @@
                         <property name="label">Find:</property>
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
-                        <property name="name">find_label</property>
+                        <property name="name">m_staticText154</property>
                         <property name="permission">protected</property>
                         <property name="pos"></property>
                         <property name="size"></property>
@@ -1614,7 +1604,7 @@
                 </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
                     <property name="proportion">1</property>
                     <object class="wxTextCtrl" expanded="0">
                         <property name="bg"></property>
@@ -1674,7 +1664,7 @@
                 </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxButton" expanded="0">
                         <property name="bg"></property>
@@ -1731,7 +1721,7 @@
                 </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL</property>
                     <property name="proportion">0</property>
                     <object class="wxButton" expanded="0">
                         <property name="bg"></property>
@@ -1784,16 +1774,6 @@
                         <event name="OnSetFocus"></event>
                         <event name="OnSize"></event>
                         <event name="OnUpdateUI"></event>
-                    </object>
-                </object>
-                <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALL|wxEXPAND</property>
-                    <property name="proportion">0</property>
-                    <object class="spacer" expanded="0">
-                        <property name="height">0</property>
-                        <property name="permission">protected</property>
-                        <property name="width">0</property>
                     </object>
                 </object>
             </object>

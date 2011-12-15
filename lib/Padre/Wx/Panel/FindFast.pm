@@ -27,10 +27,12 @@ sub new {
 		$self,
 		Padre::Wx->aui_pane_info(
 			Name           => 'footer',
+			PaneBorder     => 0,
+			Resizable      => 1,
 			CaptionVisible => 0,
 			Layer          => 1,
 			PaneBorder     => 0,
-		)->Bottom->Fixed->Hide,
+		)->Bottom->Hide,
 	);
 
 	return $self;
@@ -45,17 +47,14 @@ sub new {
 
 sub show {
 	my $self = shift;
+	my $aui  = $self->main->aui;
 
 	# Reset the content of the panel
 	$self->{find_term}->SetValue('');
 	$self->{find_term}->SetFocus;
 
-	# When showing always give focus to the term
-	$self->{find_term}->SetFocus;
-
 	# Show the AUI pane
-	my $aui  = $self->main->aui;
-	$aui->Find('footer')->Show;
+	$aui->GetPane('footer')->Show;
 	$aui->Update;
 
 	return 1;
@@ -63,11 +62,10 @@ sub show {
 
 sub hide {
 	my $self = shift;
+	my $aui  = $self->main->aui;
 
 	# Hide the AUI pane
-	# Show the panel
-	my $aui  = $self->main->aui;
-	$aui->Find('footer')->Hide;
+	$aui->GetPane('footer')->Hide;
 	$aui->Update;
 
 	return 1;

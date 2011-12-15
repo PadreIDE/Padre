@@ -41,7 +41,15 @@ sub new {
 		Wx::NO_BORDER,
 	);
 
-	$self->{find_label} = Wx::StaticText->new(
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{cancel},
+		sub {
+			shift->on_cancel(@_);
+		},
+	);
+
+	$self->{m_staticText154} = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Find:"),
@@ -98,13 +106,11 @@ sub new {
 	);
 
 	my $bSizer79 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_LEFT | Wx::ALL, 5 );
-	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$bSizer79->Add( $self->{find_label}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( $self->{find_term}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer79->Add( 0, 0, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
+	$bSizer79->Add( $self->{m_staticText154}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer79->Add( $self->{find_term}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
+	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
+	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	$self->SetSizerAndFit($bSizer79);
 	$self->Layout;
@@ -122,6 +128,10 @@ sub find_previous {
 
 sub find_next {
 	$_[0]->{find_next};
+}
+
+sub on_cancel {
+	$_[0]->main->error('Handler method on_cancel for event cancel.OnButtonClick not implemented');
 }
 
 sub find_text_changed {
