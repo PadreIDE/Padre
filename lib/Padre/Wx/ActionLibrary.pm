@@ -1893,8 +1893,8 @@ sub init {
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('extract_subroutine') or return;
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+			require Padre::Wx::TextEntryDialog::History;
+			my $dialog = Padre::Wx::TextEntryDialog::History->new(
 				$_[0],
 				Wx::gettext('Name for the new subroutine'),
 				Wx::gettext('Extract Subroutine'),
@@ -1916,8 +1916,8 @@ sub init {
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$document->can('introduce_temporary_variable') or return;
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+			require Padre::Wx::TextEntryDialog::History;
+			my $dialog = Padre::Wx::TextEntryDialog::History->new(
 				$_[0],
 				Wx::gettext('Variable Name'),
 				Wx::gettext('Introduce Temporary Variable'),

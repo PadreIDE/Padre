@@ -32,7 +32,7 @@ use_ok('Padre::Wx::HtmlWindow');
 use_ok('Padre::Wx::Printout');
 use_ok('Padre::Wx::Dialog::PluginManager');
 use_ok('Padre::Wx::Dialog::Preferences');
-use_ok('Padre::Wx::History::TextEntryDialog');
+use_ok('Padre::Wx::TextEntryDialog::History');
 use_ok('Padre::Wx::ComboBox::History');
 use_ok('Padre::Wx::ComboBox::FindTerm');
 use_ok('Padre');

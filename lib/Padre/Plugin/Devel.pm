@@ -22,7 +22,7 @@ sub padre_interfaces {
 		'Padre::Plugin'                       => 0.91,
 		'Padre::Wx'                           => 0.91,
 		'Padre::Wx::Main'                     => 0.91,
-		'Padre::Wx::History::TextEntryDialog' => 0.85,
+		'Padre::Wx::TextEntryDialog::History' => 0.85,
 	);
 }
 

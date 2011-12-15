@@ -2873,8 +2873,8 @@ Note: it probably needs to be combined with C<run_command()> itself.
 sub on_run_command {
 	my $self = shift;
 
-	require Padre::Wx::History::TextEntryDialog;
-	my $dialog = Padre::Wx::History::TextEntryDialog->new(
+	require Padre::Wx::TextEntryDialog::History;
+	my $dialog = Padre::Wx::TextEntryDialog::History->new(
 		$self,
 		Wx::gettext("Command line"),
 		Wx::gettext("Run setup"),
@@ -3520,8 +3520,8 @@ sub prompt {
 	my $subtitle = shift || "Subtitle";
 	my $key      = shift || "GENERIC";
 
-	require Padre::Wx::History::TextEntryDialog;
-	my $dialog = Padre::Wx::History::TextEntryDialog->new(
+	require Padre::Wx::TextEntryDialog::History;
+	my $dialog = Padre::Wx::TextEntryDialog::History->new(
 		$self, $title, $subtitle, $key,
 	);
 	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
@@ -6494,8 +6494,8 @@ sub on_tab_and_space {
 		? Wx::gettext('Space to Tab')
 		: Wx::gettext('Tab to Space');
 
-	require Padre::Wx::History::TextEntryDialog;
-	my $dialog = Padre::Wx::History::TextEntryDialog->new(
+	require Padre::Wx::TextEntryDialog::History;
+	my $dialog = Padre::Wx::TextEntryDialog::History->new(
 		$self,
 		Wx::gettext('How many spaces for each tab:'),
 		$title, $type,

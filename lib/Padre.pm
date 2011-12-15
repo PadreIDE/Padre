@@ -559,7 +559,7 @@ This is a subclass of L<Wx::Scintilla::TextCtrl> also known as Scintilla.
 
 =item L<Padre::Wx::ComboBox::History>
 
-=item L<Padre::Wx::History::TextEntryDialog>
+=item L<Padre::Wx::TextEntryDialog::History>
 
 =item L<Padre::Wx::Main>
 

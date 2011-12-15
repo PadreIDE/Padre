@@ -1,4 +1,4 @@
-package Padre::Wx::History::TextEntryDialog;
+package Padre::Wx::TextEntryDialog::History;
 
 use 5.008;
 use strict;
