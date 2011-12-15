@@ -3611,12 +3611,26 @@ sub search_next {
 		return !!$search->search_next($editor);
 	}
 
-	# Multiple lines are also done the obvious way
+	# If we have an active search and the current selection
+	# matches it in it's entirety, then we run the current search
+	# again and don't make a new one.
+	# NOTE: This will fail for a number of regex cases, but is better then
+	# not doing a check like this at all. Upgrade it later.
+	my $matched = $editor->matched;
+	if ( $search and $matched and $search->equals( $matched->[0] ) ) {
+		if ( $matched->[1] == $position1 and $matched->[2] == $position2 ) {
+			# Continue the existing search from the end of the match
+			$editor->SetSelection( $position2, $position2 );
+			return !!$search->search_next($editor);
+		}
+	}
+
+	# For multiple lines we search for the first match inside of the range
 	my $line1 = $editor->LineFromPosition($position1);
 	my $line2 = $editor->LineFromPosition($position2);
 	unless ( $line1 == $line2 ) {
 		return unless $search;
-		return !!$self->search_next($editor);
+		return !!$search->search_next($editor);
 	}
 
 	# Case-specific search for the current selection

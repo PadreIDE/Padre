@@ -54,6 +54,9 @@ the even version for the release, even during development.
     - Correctly apply mime type inheritance for Scintilla lexers (ADAMK)
     - Added shared Padre::Wx::ComboBox::FindTerm widget for search dialogs,
       that will hint when the search term is an illegal regex (ADAMK)
+    - Hitting F3 after a search dialog is closed will repeat the search from
+      the dialog with all settings (regex, etc) until the user changes a
+      document or moves the selection off the previous selected result (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

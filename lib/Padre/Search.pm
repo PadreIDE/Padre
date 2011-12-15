@@ -29,6 +29,7 @@ use 5.008;
 use strict;
 use warnings;
 use Encode       ();
+use Scalar::Util ();
 use List::Util   ();
 use Params::Util ();
 
@@ -104,7 +105,13 @@ sub search_regex {
 	return $search_regex;
 }
 
+sub equals {
+	my $self   = shift;
+	my $search = Params::Util::_INSTANCE(shift, 'Padre::Search') or return;
+	return Scalar::Util::refaddr($self) == Scalar::Util::refaddr($search);
+}
 
+	
 
 
 
@@ -231,7 +238,7 @@ sub editor_search_down {
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_selection_centerize( $start, $end );
+	$editor->match( $self, $start, $end );
 }
 
 sub editor_search_up {
@@ -251,7 +258,7 @@ sub editor_search_up {
 	return unless defined $start;
 
 	# Highlight the found item
-	$editor->goto_selection_centerize( $start, $end );
+	$editor->match( $self, $start, $end );
 }
 
 sub editor_replace {
@@ -391,7 +398,11 @@ sub scalar_count_all {
   my ($first_char, $last_char, @all) = $search->matches(
       $search_text,
       $search_regexp,
-      $
+      $from,
+      $to,
+      $reverse,
+  );
+
 Parameters:
 
 * The text in which we need to search

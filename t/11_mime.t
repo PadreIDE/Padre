@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 238;
+use Test::More tests => 243;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::MIME;

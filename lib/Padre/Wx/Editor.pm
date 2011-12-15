@@ -383,7 +383,15 @@ sub on_char {
 # Called on any change to text.
 # NOTE: This gets called twice for every change, it may be a bug.
 sub on_change {
-	$_[0]->dwell_start( 'on_change_dwell', $_[0]->config->editor_dwell );
+	my $self = shift;
+
+	# Tickle the dwell for all the dependant gui refreshing
+	$self->dwell_start( 'on_change_dwell', $self->config->editor_dwell );
+
+	# If the document changes, memory of search matches are reset
+	delete $self->{match};
+
+	return;
 }
 
 # Fires half a second after the user stops typing or otherwise stops changing
@@ -751,6 +759,26 @@ sub SetZoom {
 	my @rv   = $self->SUPER::SetZoom(@_);
 	$self->refresh_line_numbers;
 	return @rv;
+}
+
+# Indicate a selection based on a search match and remember where it was
+# so we know whether to continue or start a new search next time they hit F3
+sub match {
+	my $self   = shift;
+	my $search = shift;
+	my $from   = shift;
+	my $to     = shift;
+
+	# Set the selection
+	$self->goto_selection_centerize( $from, $to );
+
+	# Save the match details
+	$self->{matched} = [ $search, $from, $to ];
+}
+
+# Fetch the search result the current selection is a match for, if any
+sub matched {
+	$_[0]->{matched};
 }
 
 # convenience methods
