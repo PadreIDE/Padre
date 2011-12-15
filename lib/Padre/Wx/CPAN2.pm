@@ -673,8 +673,7 @@ sub _on_char_search {
 		# Escape key clears search and returns focus
 		# to the editor
 		$self->{search}->SetValue('');
-		my $editor = $self->current->editor;
-		$editor->SetFocus if $editor;
+		$self->main->editor_focus;
 	}
 	$event->Skip(1);
 	return;
@@ -689,8 +688,7 @@ sub _on_char_list {
 		# Escape key clears search and returns focus
 		# to the editor
 		$self->{search}->SetValue('');
-		my $editor = $self->current->editor;
-		$editor->SetFocus if $editor;
+		$self->main->editor_focus;
 	}
 
 	$event->Skip(1);

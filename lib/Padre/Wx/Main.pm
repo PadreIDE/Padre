@@ -30,13 +30,10 @@ use Cwd                       ();
 use Carp                      ();
 use Config                    ();
 use File::Spec                ();
-use File::HomeDir             ();
 use File::Basename            ();
 use File::Temp                ();
-use List::Util                ();
 use Scalar::Util              ();
 use Params::Util              ();
-use Time::HiRes               ();
 use Wx::Scintilla::Constant   ();
 use Padre::Constant           ();
 use Padre::Util               ('_T');
@@ -175,6 +172,7 @@ sub new {
 	# NOTE: If changing the directory fails, ignore errors for now,
 	#       since that means we have WAY bigger problems.
 	if (Padre::Constant::WIN32) {
+		require File::HomeDir;
 		chdir( File::HomeDir->my_home );
 	}
 
@@ -3030,7 +3028,6 @@ sub on_run_tests {
 
 		# This is needed since prove does not work with path containing
 		# spaces. Please see ticket:582
-		require File::Temp;
 		require File::Glob::Windows;
 
 		my $tempfile = File::Temp->new( UNLINK => 0 );
@@ -3085,7 +3082,6 @@ sub on_run_this_test {
 
 		# This is needed since prove does not work with path containing
 		# spaces. Please see ticket:582
-		require File::Temp;
 		my $tempfile = File::Temp->new( UNLINK => 0 );
 		print $tempfile $filename;
 		close $tempfile;
@@ -4313,7 +4309,7 @@ sub setup_editor {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
-		#		$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
+		# 	$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
 
 		# Use Padre::File to get the real filenames
 		my $file_obj = Padre::File->new($file);
@@ -4432,9 +4428,8 @@ sub on_deparse {
 		return;
 	}
 	use Capture::Tiny qw(capture);
-	use File::Temp qw(tempdir);
 
-	my $dir = tempdir( CLEANUP => 1 );
+	my $dir = File::Temp::tempdir( CLEANUP => 1 );
 	my $file = "$dir/file";
 	if ( open my $fh, '>', $file ) {
 		print $fh $text;
@@ -6090,6 +6085,24 @@ sub editor_whitespace {
 
 	$self->menu->view->refresh;
 
+	return;
+}
+
+=pod
+
+=head2 C<editor_focus>
+
+    $main->editor_focus;
+
+Return focus to the current editor, if one exists. This method is provided
+as a convenience for dialog writers who wish to return focus.
+
+=cut
+
+sub editor_focus {
+	my $self = shift;
+	my $editor = $self->current->editor;
+	$editor->SetFocus if $editor;
 	return;
 }
 

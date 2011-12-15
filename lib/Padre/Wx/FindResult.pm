@@ -160,7 +160,6 @@ sub select_line {
 
 	return if not $editor;
 
-	$editor->EnsureVisible($line);
 	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
 }

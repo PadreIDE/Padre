@@ -487,8 +487,7 @@ sub close {
 
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
-	my $editor = $self->current->editor;
-	$editor->SetFocus if $editor;
+	$self->main->editor_focus;
 
 	return;
 }

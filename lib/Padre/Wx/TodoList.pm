@@ -109,8 +109,7 @@ sub new {
 				# Escape key clears search and returns focus
 				# to the editor
 				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
+				$self->main->editor_focus;
 			}
 
 			$event->Skip(1);
@@ -141,8 +140,7 @@ sub new {
 				# Escape key clears search and returns the
 				# focus to the editor.
 				$self->{search}->SetValue('');
-				my $editor = $self->current->editor;
-				$editor->SetFocus if $editor;
+				$self->main->editor_focus;
 			}
 
 			$event->Skip(1);

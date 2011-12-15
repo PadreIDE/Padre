@@ -35,11 +35,10 @@ sub new {
 # Method run
 #######
 sub run {
-	my $self    = shift;
-	my $current = $self->current;
+	my $self = shift;
 
 	# auto-fill dialogue
-	$self->set_up();
+	$self->set_up;
 
 	# TODO but I want nonModal, ie $self->Show;
 	# Show the dialog
@@ -49,8 +48,7 @@ sub run {
 
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
-		my $editor = $current->editor;
-		$editor->SetFocus if $editor;
+		$self->main->editor_focus;
 
 		# Clean up
 		$self->Destroy;

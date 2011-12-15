@@ -104,7 +104,7 @@ sub run {
 	$self->refresh;
 
 	# Hide the Fast Find if visible
-	$self->main->show_findfast(0);
+	$main->show_findfast(0);
 
 	# Show the dialog
 	my $result = $self->ShowModal;
@@ -112,15 +112,13 @@ sub run {
 
 		# As we leave the dialog return the user to the current editor
 		# window so they don't need to click it.
-		my $editor = $current->editor;
-		$editor->SetFocus if $editor;
-
+		$main->editor_focus;
 		return;
 	}
 
 	# Run the search in the Replace in Files tool
-	$self->main->show_replaceinfiles;
-	$self->main->replaceinfiles->replace(
+	$main->show_replaceinfiles;
+	$main->replaceinfiles->replace(
 		root    => $self->find_directory->SaveValue,
 		search  => $self->as_search,
 		replace => $self->replace_term->GetValue,

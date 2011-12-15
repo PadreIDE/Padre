@@ -2463,8 +2463,7 @@ sub init {
 		comment    => _T('Set the focus to the main editor window'),
 		shortcut   => 'Alt-M',
 		menu_event => sub {
-			my $editor = $_[0]->current->editor or return;
-			$editor->SetFocus;
+			$_[0]->editor_focus;
 		},
 	);
 

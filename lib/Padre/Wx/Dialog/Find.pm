@@ -117,15 +117,14 @@ sub key_up {
 # Main Methods
 
 sub run {
-	my $self    = shift;
-	my $current = $self->current;
-	my $config  = $current->config;
+	my $self = shift;
+	my $main = $self->main;
 
 	# Clear
 	$self->{cycle_ctrl_f} = 0;
 
 	# Do they have a specific search term in mind?
-	my $text = $current->text;
+	my $text = $self->current->text;
 	$text = '' if $text =~ /\n/;
 
 	# Clear out and reset the search term box
@@ -136,14 +135,13 @@ sub run {
 	$self->refresh;
 
 	# Hide the Fast Find if visible
-	$self->main->show_findfast(0);
+	$main->show_findfast(0);
 
 	# Show the dialog
-	my $result = $self->ShowModal;
-	# As we leave the Find dialog, return the user to the current editor
-	# window so they don't need to click it.
-	my $editor = $self->current->editor;
-	$editor->SetFocus if $editor;
+	$self->ShowModal;
+
+	# Return to the current editor
+	$main->editor_focus;
 
 	return;
 }
