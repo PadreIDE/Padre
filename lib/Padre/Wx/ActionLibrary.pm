@@ -1168,13 +1168,11 @@ sub init {
 				my $text = $main->current->text;
 				$text = '' if $text =~ /\n/;
 
-				# Clear out and reset the search term box
-				my $findfast = $main->findfast;
-				$findfast->find_term->ChangeValue($text);
-				$findfast->find_term->SelectAll;
+				# Set the search term if we have one
 				if ( length $text ) {
-					$findfast->search_next;
+					$main->findfast->search_start($text);
 				}
+
 				return;
 			}
 

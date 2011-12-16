@@ -49,12 +49,16 @@ sub new {
 
 sub cancel {
 	TRACE('cancel') if DEBUG;
-	my $self      = shift;
-	my $selection = delete $self->{selection};
-	if ( $selection ) {
-		my $editor = $self->current->editor;
-		$editor->goto_selection_centerize(@$selection) if $editor;
+	my $self   = shift;
+	my $before = delete $self->{before};
+	my $editor = $self->current->editor or return;
+
+	# Go back to where we were before if there is no match on close
+	unless ( length $editor->GetSelectedText ) {
+		$editor->goto_selection_centerize(@$before) if $before;
 	}
+
+	# Shift focus to the editor
 	$self->main->editor_focus;
 	$self->hide;
 }
@@ -92,13 +96,10 @@ sub on_text {
 	my $editor = $self->current->editor or return;
 	my $lock   = $self->lock_update;
 
-	# Reset the search
-	$self->{find_term}->SetBackgroundColour( $self->base_colour );
-
-	# Handle the empty case
-	if ( $self->{find_term}->GetValue eq '' ) {
-		$self->{find_next}->Enable(0);
-		$self->{find_previous}->Enable(0);
+	# Do we have a search
+	unless ( $self->refresh ) {
+		# Reset the background colour
+		$self->{find_term}->SetBackgroundColour( $self->base_colour );
 
 		# Clear any existing select to prevent
 		# showing a stale match result.
@@ -112,17 +113,25 @@ sub on_text {
 	}
 
 	# Restart the search for each change
-	$editor->SetSelection( 0, 0 );
-	if ( $self->main->search_next( $self->as_search ) ) {
-		$self->{find_next}->Enable(1);
-		$self->{find_previous}->Enable(1);
-	} else {
+	unless ( $self->{find_term}->GetValue eq $editor->GetSelectedText ) {
+		$editor->SetSelection( 0, 0 );
+	}
+	unless ( $self->main->search_next( $self->as_search ) ) {
 		$self->{find_term}->SetBackgroundColour( $self->bad_colour );
-		$self->{find_next}->Enable(0);
-		$self->{find_previous}->Enable(0);
 	}
 	$self->{find_term}->SetFocus;
 
+	return;
+}
+
+# Start a fresh search with some text
+sub search_start {
+	TRACE('search_start') if DEBUG;
+	my $self = shift;
+	my $text = shift;
+	my $lock = $self->lock_update;
+	$self->{find_term}->SetValue($text);
+	$self->{find_term}->SelectAll;
 	return;
 }
 
@@ -157,13 +166,13 @@ sub show {
 	my $editor = $self->current->editor or return;
 
 	# Capture the selection location before we opened the panel
-	$self->{selection} = [ $editor->GetSelection ];
+	$self->{before} = [ $editor->GetSelection ];
 
-	# Reset the content of the panel
-	unless ( $self->{find_term}->GetValue eq '' ) {
-		$self->{find_term}->SetValue('');
-	}
+	# Reset the panel
+	$self->{find_term}->ChangeValue('');
+	$self->{find_term}->SetBackgroundColour( $self->base_colour );
 	$self->{find_term}->SetFocus;
+	$self->refresh;
 
 	# Show the AUI pane
 	$aui->GetPane('footer')->Show;
@@ -177,6 +186,14 @@ sub hide {
 	# Hide the AUI pane
 	$aui->GetPane('footer')->Hide;
 	$aui->Update;
+}
+
+sub refresh {
+	my $self = shift;
+	my $show = $self->as_search ? 1 : 0;
+	$self->{find_next}->Enable($show);
+	$self->{find_previous}->Enable($show);
+	return $show;
 }
 
 
