@@ -116,10 +116,11 @@ sub on_text {
 	unless ( $self->{find_term}->GetValue eq $editor->GetSelectedText ) {
 		$editor->SetSelection( 0, 0 );
 	}
+
+	# Run the search
 	unless ( $self->main->search_next( $self->as_search ) ) {
 		$self->{find_term}->SetBackgroundColour( $self->bad_colour );
 	}
-	$self->{find_term}->SetFocus;
 
 	return;
 }
