@@ -1452,7 +1452,7 @@
             <property name="validator_style">wxFILTER_NONE</property>
             <property name="validator_type">wxDefaultValidator</property>
             <property name="validator_variable"></property>
-            <property name="window_extra_style"></property>
+            <property name="window_extra_style">wxWS_EX_BLOCK_EVENTS</property>
             <property name="window_name"></property>
             <property name="window_style">wxNO_BORDER|wxTAB_TRAVERSAL</property>
             <event name="OnChar"></event>
@@ -1485,8 +1485,8 @@
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
+                    <property name="border">3</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxBitmapButton" expanded="0">
                         <property name="bg"></property>
@@ -1547,8 +1547,8 @@
                     </object>
                 </object>
                 <object class="sizeritem" expanded="1">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT</property>
+                    <property name="border">3</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxStaticText" expanded="1">
                         <property name="bg"></property>
@@ -1563,7 +1563,7 @@
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
                         <property name="name">m_staticText154</property>
-                        <property name="permission">protected</property>
+                        <property name="permission">none</property>
                         <property name="pos"></property>
                         <property name="size"></property>
                         <property name="style"></property>
@@ -1603,8 +1603,8 @@
                     </object>
                 </object>
                 <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
+                    <property name="border">3</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT</property>
                     <property name="proportion">1</property>
                     <object class="wxTextCtrl" expanded="0">
                         <property name="bg"></property>
@@ -1622,7 +1622,7 @@
                         <property name="permission">public</property>
                         <property name="pos"></property>
                         <property name="size"></property>
-                        <property name="style">wxTE_NO_VSCROLL</property>
+                        <property name="style">wxTE_NO_VSCROLL|wxTE_PROCESS_ENTER</property>
                         <property name="subclass"></property>
                         <property name="tooltip"></property>
                         <property name="validator_data_type"></property>
@@ -1633,11 +1633,11 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnChar"></event>
+                        <event name="OnChar">on_char</event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
                         <event name="OnKeyDown"></event>
-                        <event name="OnKeyUp"></event>
+                        <event name="OnKeyUp">on_key_up</event>
                         <event name="OnKillFocus"></event>
                         <event name="OnLeaveWindow"></event>
                         <event name="OnLeftDClick"></event>
@@ -1655,7 +1655,7 @@
                         <event name="OnRightUp"></event>
                         <event name="OnSetFocus"></event>
                         <event name="OnSize"></event>
-                        <event name="OnText">find_text_changed</event>
+                        <event name="OnText">on_text</event>
                         <event name="OnTextEnter"></event>
                         <event name="OnTextMaxLen"></event>
                         <event name="OnTextURL"></event>
@@ -1663,8 +1663,8 @@
                     </object>
                 </object>
                 <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxRIGHT</property>
+                    <property name="border">3</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxButton" expanded="0">
                         <property name="bg"></property>
@@ -1680,7 +1680,7 @@
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
                         <property name="name">find_previous</property>
-                        <property name="permission">public</property>
+                        <property name="permission">protected</property>
                         <property name="pos"></property>
                         <property name="size"></property>
                         <property name="style"></property>
@@ -1693,7 +1693,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">find_previous_clicked</event>
+                        <event name="OnButtonClick">on_previous</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1720,14 +1720,14 @@
                     </object>
                 </object>
                 <object class="sizeritem" expanded="0">
-                    <property name="border">5</property>
-                    <property name="flag">wxALIGN_CENTER_VERTICAL</property>
+                    <property name="border">3</property>
+                    <property name="flag">wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxButton" expanded="0">
                         <property name="bg"></property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
-                        <property name="default">1</property>
+                        <property name="default">0</property>
                         <property name="enabled">1</property>
                         <property name="fg"></property>
                         <property name="font"></property>
@@ -1737,7 +1737,7 @@
                         <property name="maximum_size"></property>
                         <property name="minimum_size"></property>
                         <property name="name">find_next</property>
-                        <property name="permission">public</property>
+                        <property name="permission">protected</property>
                         <property name="pos"></property>
                         <property name="size"></property>
                         <property name="style"></property>
@@ -1750,7 +1750,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">find_next_clicked</event>
+                        <event name="OnButtonClick">on_next</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>

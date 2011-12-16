@@ -271,7 +271,7 @@ sub on_context_menu {
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
-	} else { #Wx::CommandEvent
+	} else {
 		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
 	}
 }

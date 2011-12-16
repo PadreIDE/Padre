@@ -484,11 +484,7 @@ Hide dialog.
 sub close {
 	my $self = shift;
 	$self->Hide;
-
-	# As we leave the Find dialog, return the user to the current editor
-	# window so they don't need to click it.
 	$self->main->editor_focus;
-
 	return;
 }
 

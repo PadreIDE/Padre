@@ -53,15 +53,14 @@ sub directory {
 		Wx::gettext("Select Directory"),
 		$default,
 	);
-	my $result = $dialog->ShowModal;
-	$dialog->Destroy;
 
 	# Update the dialog
+	my $result = $dialog->ShowModal;
 	unless ( $result == Wx::ID_CANCEL ) {
 		$self->find_directory->SetValue( $dialog->GetPath );
 	}
 
-	return;
+	$dialog->Destroy;
 }
 
 

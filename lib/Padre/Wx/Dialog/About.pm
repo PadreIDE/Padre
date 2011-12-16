@@ -52,11 +52,7 @@ sub run {
 		# As we leave the About dialog, return the user to the current editor
 		# window so they don't need to click it.
 		$self->main->editor_focus;
-
-		# Clean up
 		$self->Destroy;
-
-		return;
 	}
 
 	return;
@@ -109,18 +105,14 @@ sub _translation {
 }
 
 sub _information {
-	my $self = shift;
-
+	my $self   = shift;
 	my $output = "\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'Padre', $VERSION;
-
-	$output .= $self->_core_info();
-	$output .= $self->_wx_info();
-
+	$output .= $self->_core_info;
+	$output .= $self->_wx_info;
 	$output .= "Other...\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'PPI', $PPI::VERSION;
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
-
 	return $output;
 }
 
@@ -189,8 +181,6 @@ sub _wx_info {
 }
 
 1;
-
-__END__
 
 # Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE

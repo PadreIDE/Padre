@@ -360,7 +360,7 @@ sub open_file_at_line {
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
-				if ( defined($line) ) {
+				if ( defined $line ) {
 					$editor->EnsureVisible($line);
 					$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 				}

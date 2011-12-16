@@ -194,7 +194,6 @@ sub view_close {
 
 sub on_list_item_activated {
 	my $self   = shift;
-	my $event  = shift;
 	my $editor = $self->current->editor or return;
 	my $nth    = $self->{list}->GetSelection;
 	my $todo   = $self->{model}->[$nth] or return;

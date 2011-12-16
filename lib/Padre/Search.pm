@@ -38,7 +38,7 @@ our $COMPATIBLE = '0.64';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Check params
 	unless ( defined $self->find_term ) {
@@ -111,7 +111,7 @@ sub equals {
 	return Scalar::Util::refaddr($self) == Scalar::Util::refaddr($search);
 }
 
-	
+
 
 
 

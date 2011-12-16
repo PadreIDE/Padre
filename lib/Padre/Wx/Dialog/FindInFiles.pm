@@ -109,11 +109,10 @@ sub run {
 	$self->refresh;
 
 	# Hide the Fast Find if visible
-	$self->main->show_findfast(0);
+	$main->show_findfast(0);
 
 	# Show the dialog
 	my $result = $self->ShowModal;
-
 	if ( $result == Wx::ID_CANCEL ) {
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
@@ -122,8 +121,8 @@ sub run {
 	}
 
 	# Run the search in the Find in Files tool
-	$self->main->show_findinfiles;
-	$self->main->findinfiles->search(
+	$main->show_findinfiles;
+	$main->findinfiles->search(
 		root   => $self->find_directory->SaveValue,
 		search => $self->as_search,
 	);

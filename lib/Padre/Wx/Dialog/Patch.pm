@@ -43,17 +43,12 @@ sub run {
 	# TODO but I want nonModal, ie $self->Show;
 	# Show the dialog
 	my $result = $self->ShowModal;
-
 	if ( $result == Wx::ID_CANCEL ) {
 
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
 		$self->main->editor_focus;
-
-		# Clean up
 		$self->Destroy;
-
-		return;
 	}
 
 	return;

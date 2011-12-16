@@ -49,7 +49,7 @@ sub new {
 		},
 	);
 
-	$self->{m_staticText154} = Wx::StaticText->new(
+	my $m_staticText154 = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Find:"),
@@ -61,14 +61,28 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_NO_VSCROLL,
+		Wx::TE_NO_VSCROLL | Wx::TE_PROCESS_ENTER,
+	);
+
+	Wx::Event::EVT_CHAR(
+		$self->{find_term},
+		sub {
+			$self->on_char($_[1]);
+		},
+	);
+
+	Wx::Event::EVT_KEY_UP(
+		$self->{find_term},
+		sub {
+			$self->on_key_up($_[1]);
+		},
 	);
 
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{find_term},
 		sub {
-			shift->find_text_changed(@_);
+			shift->on_text(@_);
 		},
 	);
 
@@ -84,7 +98,7 @@ sub new {
 		$self,
 		$self->{find_previous},
 		sub {
-			shift->find_previous_clicked(@_);
+			shift->on_previous(@_);
 		},
 	);
 
@@ -95,22 +109,21 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
-	$self->{find_next}->SetDefault;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{find_next},
 		sub {
-			shift->find_next_clicked(@_);
+			shift->on_next(@_);
 		},
 	);
 
 	my $bSizer79 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
-	$bSizer79->Add( $self->{m_staticText154}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer79->Add( $self->{find_term}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
-	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::RIGHT, 5 );
-	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$bSizer79->Add( $self->{cancel}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 3 );
+	$bSizer79->Add( $m_staticText154, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 3 );
+	$bSizer79->Add( $self->{find_term}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 3 );
+	$bSizer79->Add( $self->{find_previous}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 3 );
+	$bSizer79->Add( $self->{find_next}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 3 );
 
 	$self->SetSizerAndFit($bSizer79);
 	$self->Layout;
@@ -122,28 +135,28 @@ sub find_term {
 	$_[0]->{find_term};
 }
 
-sub find_previous {
-	$_[0]->{find_previous};
-}
-
-sub find_next {
-	$_[0]->{find_next};
-}
-
 sub on_cancel {
 	$_[0]->main->error('Handler method on_cancel for event cancel.OnButtonClick not implemented');
 }
 
-sub find_text_changed {
-	$_[0]->main->error('Handler method find_text_changed for event find_term.OnText not implemented');
+sub on_char {
+	$_[0]->main->error('Handler method on_char for event find_term.OnChar not implemented');
 }
 
-sub find_previous_clicked {
-	$_[0]->main->error('Handler method find_previous_clicked for event find_previous.OnButtonClick not implemented');
+sub on_key_up {
+	$_[0]->main->error('Handler method on_key_up for event find_term.OnKeyUp not implemented');
 }
 
-sub find_next_clicked {
-	$_[0]->main->error('Handler method find_next_clicked for event find_next.OnButtonClick not implemented');
+sub on_text {
+	$_[0]->main->error('Handler method on_text for event find_term.OnText not implemented');
+}
+
+sub on_previous {
+	$_[0]->main->error('Handler method on_previous for event find_previous.OnButtonClick not implemented');
+}
+
+sub on_next {
+	$_[0]->main->error('Handler method on_next for event find_next.OnButtonClick not implemented');
 }
 
 1;
