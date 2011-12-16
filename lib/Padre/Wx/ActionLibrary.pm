@@ -1161,7 +1161,7 @@ sub init {
 			my $main = shift;
 
 			# Ctrl-F first press, show fast find
-			unless ( $main->has_findfast and $main->findfast->visible ) {
+			unless ( $main->has_findfast and $main->findfast->IsShown ) {
 				$main->show_findfast;
 
 				# Do they have a specific search term in mind?
@@ -1170,10 +1170,10 @@ sub init {
 
 				# Clear out and reset the search term box
 				my $findfast = $main->findfast;
-				$findfast->{entry}->ChangeValue($text);
-				$findfast->{entry}->SelectAll;
+				$findfast->find_term->ChangeValue($text);
+				$findfast->find_term->SelectAll;
 				if ( length $text ) {
-					$findfast->search('next');
+					$findfast->on_next;
 				}
 				return;
 			}
@@ -1182,7 +1182,7 @@ sub init {
 			require Padre::Wx::Dialog::Find;
 			my $find = Padre::Wx::Dialog::Find->new($main);
 			$find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
-			$find->find_term->SetValue( $main->findfast->{entry}->GetValue );
+			$find->find_term->SetValue( $main->findfast->find_term->GetValue );
 			$find->run;
 			my $term = $find->find_term->GetValue;
 			$find->Destroy;

@@ -579,7 +579,6 @@ use Class::XSAccessor {
 		has_debugger           => 'debugger',
 		has_find               => 'find',
 		has_findfast           => 'findfast',
-		has_findfast2          => 'findfast2',
 		has_replace            => 'replace',
 		has_outline            => 'outline',
 		has_directory          => 'directory',
@@ -868,29 +867,10 @@ Return current quick find dialog. Create a new one if needed.
 sub findfast {
 	my $self = shift;
 	unless ( defined $self->{findfast} ) {
-		require Padre::Wx::FindFast;
-		$self->{findfast} = Padre::Wx::FindFast->new;
+		require Padre::Wx::Panel::FindFast;
+		$self->{findfast} = Padre::Wx::Panel::FindFast->new($self);
 	}
 	return $self->{findfast};
-}
-
-=pod
-
-=head3 C<findfast2>
-
-    my $find = $main->findfast2;
-
-Return current quick find dialog. Create a new one if needed.
-
-=cut
-
-sub findfast2 {
-	my $self = shift;
-	unless ( defined $self->{findfast2} ) {
-		require Padre::Wx::Panel::FindFast;
-		$self->{findfast2} = Padre::Wx::Panel::FindFast->new($self);
-	}
-	return $self->{findfast2};
 }
 
 =pod
@@ -2463,39 +2443,11 @@ to show the panel.
 sub show_findfast {
 	my $self    = shift;
 	my $show    = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $visible = $self->has_findfast && $self->findfast->visible;
+	my $visible = $self->has_findfast && $self->findfast->IsShown;
 	if ( $show and not $visible ) {
-		$self->findfast->_show_panel;
-		$self->aui->Update;
+		$self->findfast->show;
 	} elsif ( $visible and not $show ) {
-		$self->findfast->_hide_panel;
-		$self->aui->Update;
-	}
-	return;
-}
-
-=pod
-
-=head3 C<show_findfast>
-
-    $main->show_findfast( $visible );
-
-Show the Fast Find panel at the bottom of the editor area if C<$visible> is
-true. Hide it otherwise. If C<$visible> is not provided, the method defaults
-to show the panel.
-
-=cut
-
-sub show_findfast2 {
-	my $self    = shift;
-	my $show    = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $visible = $self->has_findfast2 && $self->findfast2->IsShown;
-	if ( $show and not $visible ) {
-		$self->findfast2->show;
-		$self->aui->Update;
-	} elsif ( $visible and not $show ) {
-		$self->findfast2->hide;
-		$self->aui->Update;
+		$self->findfast->hide;
 	}
 	return;
 }
