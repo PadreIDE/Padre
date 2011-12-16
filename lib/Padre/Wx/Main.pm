@@ -25,7 +25,6 @@ the available methods that can be applied to it besides the added ones
 use 5.008005;
 use strict;
 use warnings;
-use FindBin;
 use Cwd                       ();
 use Carp                      ();
 use Config                    ();
@@ -36,7 +35,7 @@ use Scalar::Util              ();
 use Params::Util              ();
 use Wx::Scintilla::Constant   ();
 use Padre::Constant           ();
-use Padre::Util               ('_T');
+use Padre::Util               ();
 use Padre::Perl               ();
 use Padre::Locale             ();
 use Padre::Current            ();
@@ -57,6 +56,7 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Conduit  ();
 use Padre::Wx::Role::Dialog   ();
+use Padre::Locale::T;
 use Padre::Logger;
 
 our $VERSION    = '0.93';

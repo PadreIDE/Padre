@@ -108,6 +108,7 @@ sub plugin_directory_share {
 	if ( $ENV{PADRE_DEV} ) {
 		my $bin = do {
 			no warnings;
+			require FindBin;
 			$FindBin::Bin;
 		};
 		my $root = File::Spec->catdir(

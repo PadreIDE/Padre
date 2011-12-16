@@ -26,7 +26,6 @@ use strict;
 use warnings;
 use Carp            ();
 use Exporter        ();
-use FindBin         ();
 use Cwd             ();
 use File::Spec      ();
 use List::Util      ();
@@ -412,6 +411,7 @@ sub share {
 	my $plugin = shift;
 
 	if ( $ENV{PADRE_DEV} ) {
+		require FindBin;
 		my $root = File::Spec->rel2abs(
 			File::Spec->catdir(
 				$FindBin::Bin,
