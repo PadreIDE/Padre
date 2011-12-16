@@ -159,8 +159,7 @@ sub new {
 	# This prevents tons of ide->config
 	$self->{config} = $config;
 
-	# Remember where the editor started from,
-	# this could be handy later.
+	# Remember where the editor started from this could be handy later.
 	$self->{cwd} = Cwd::cwd();
 
 	# There is a directory locking problem on Win32.

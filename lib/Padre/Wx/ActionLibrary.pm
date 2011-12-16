@@ -1204,12 +1204,7 @@ sub init {
 		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
-			my $found = $_[0]->search_next;
-
-			# If we can't find another match, show a message
-			if ( defined $found and not $found ) {
-				$_[0]->message( Wx::gettext('Did not find any matches.') );
-			}
+			$_[0]->search_next;
 		},
 	);
 

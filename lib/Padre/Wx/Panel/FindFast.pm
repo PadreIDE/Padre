@@ -47,22 +47,6 @@ sub new {
 ######################################################################
 # Event Handlers
 
-sub cancel {
-	TRACE('cancel') if DEBUG;
-	my $self   = shift;
-	my $before = delete $self->{before};
-	my $editor = $self->current->editor or return;
-
-	# Go back to where we were before if there is no match on close
-	unless ( length $editor->GetSelectedText ) {
-		$editor->goto_selection_centerize(@$before) if $before;
-	}
-
-	# Shift focus to the editor
-	$self->main->editor_focus;
-	$self->hide;
-}
-
 sub on_char {
 	my $self  = shift;
 	my $event = shift;
@@ -123,6 +107,27 @@ sub on_text {
 	}
 
 	return;
+}
+
+sub on_kill_focus {
+	my $self = shift;
+	$self->hide;
+}
+
+sub cancel {
+	TRACE('cancel') if DEBUG;
+	my $self   = shift;
+	my $before = delete $self->{before};
+	my $editor = $self->current->editor or return;
+
+	# Go back to where we were before if there is no match on close
+	unless ( length $editor->GetSelectedText ) {
+		$editor->goto_selection_centerize(@$before) if $before;
+	}
+
+	# Shift focus to the editor
+	$self->main->editor_focus;
+	$self->hide;
 }
 
 # Start a fresh search with some text
