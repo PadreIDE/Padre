@@ -1593,7 +1593,6 @@ sub goto_selection_centerize {
 		$self->line( ( $sline + $eline - $self->LinesOnScreen ) / 2 )
 	);
 	$self->EnsureCaretVisible;
-	$self->SetFocus;
 
 	return 1;
 }

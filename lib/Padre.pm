@@ -538,7 +538,7 @@ is the L<Wx::App> subclass. Does not really do much.
 
 This is the main Find dialog
 
-=item L<Padre::Wx::FindFast>
+=item L<Padre::Wx::Panel::FindFast>
 
 This is the newer Firefox like inline search box.
 

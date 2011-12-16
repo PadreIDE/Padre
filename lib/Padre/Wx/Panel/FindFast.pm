@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Search            ();
 use Padre::Wx::FBP::FindFast ();
+use Padre::Logger;
 
 our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::FBP::FindFast';
@@ -47,44 +48,78 @@ sub new {
 # Event Handlers
 
 sub on_cancel {
-	my $self = shift;
-	$self->hide;
+	my $self      = shift;
+	my $selection = delete $self->{selection};
+	if ( $selection ) {
+		my $editor = $self->current->editor;
+		$editor->goto_selection_centerize(@$selection) if $editor;
+	}
 	$self->main->editor_focus;
+	$self->hide;
 }
 
 sub on_char {
 	my $self  = shift;
 	my $event = shift;
-	$event->Skip(1);
-}
 
-sub on_key_up {
-	my $self = shift;
-	my $event = shift;
-	if ( $event->GetKeyCode == Wx::K_RETURN and not $event->HasModifiers) {
-		$self->on_text;
+	unless ( $event->HasModifiers) {
+		my $key = $event->GetKeyCode;
+
+		# Advance to the next match on enter
+		if ( $key == Wx::K_RETURN ) {
+			TRACE('on_char (return)') if DEBUG;
+			if ( $self->{find_next}->IsEnabled ) {
+				$self->on_next;
+			}
+			return $event->Skip(0);
+		}
+
+		# Return to the editor on escape
+		if ( $key == Wx::K_ESCAPE ) {
+			TRACE('on_char (escape)') if DEBUG;
+			$self->on_cancel;
+			return $event->Skip(0);
+		}
 	}
 
 	$event->Skip(1);
 }
 
+sub on_key_up {
+	my $self  = shift;
+	my $event = shift;
+	my $key   = $event->GetKeyCode;
+	TRACE("on_key_up (KeyCode $key)") if DEBUG;
+	$event->Skip(1);
+}
+
 sub on_text {
+	TRACE('on_text') if DEBUG;
 	my $self   = shift;
 	my $editor = $self->current->editor or return;
 	my $lock   = $self->lock_update;
 
 	# Reset the search
-	$editor->SetSelection( 0, 0 );
 	$self->{find_term}->SetBackgroundColour( $self->base_colour );
 
 	# Handle the empty case
 	if ( $self->{find_term}->GetValue eq '' ) {
 		$self->{find_next}->Enable(0);
 		$self->{find_previous}->Enable(0);
+
+		# Clear any existing select to prevent
+		# showing a stale match result.
+		my $position = $editor->GetCurrentPos;
+		my $anchor   = $editor->GetAnchor;
+		unless ( $position == $anchor ) {
+			$editor->SetAnchor($position);
+		}
+
 		return;
 	}
 
 	# Restart the search for each change
+	$editor->SetSelection( 0, 0 );
 	if ( $self->main->search_next( $self->as_search ) ) {
 		$self->{find_next}->Enable(1);
 		$self->{find_previous}->Enable(1);
@@ -100,16 +135,20 @@ sub on_text {
 
 # Advance the search to the next match
 sub on_next {
+	TRACE('on_next') if DEBUG;
 	my $self   = shift;
+	my $search = $self->as_search or return;
 	my $editor = $self->current->editor or return;
-	$self->main->search_next( $self->as_search );
+	$self->main->search_next($search);
 }
 
 # Advance the search to the previous match
 sub on_previous {
+	TRACE('on_previous') if DEBUG;
 	my $self   = shift;
+	my $search = $self->as_search or return;
 	my $editor = $self->current->editor or return;
-	$self->main->search_previous( $self->as_search );
+	$self->main->search_previous($search);
 }
 
 
@@ -120,11 +159,17 @@ sub on_previous {
 # Main Methods
 
 sub show {
-	my $self = shift;
-	my $aui  = $self->main->aui;
+	my $self   = shift;
+	my $aui    = $self->main->aui;
+	my $editor = $self->current->editor or return;
+
+	# Capture the selection location before we opened the panel
+	$self->{selection} = [ $editor->GetSelection ];
 
 	# Reset the content of the panel
-	$self->{find_term}->SetValue('');
+	unless ( $self->{find_term}->GetValue eq '' ) {
+		$self->{find_term}->SetValue('');
+	}
 	$self->{find_term}->SetFocus;
 
 	# Show the AUI pane
