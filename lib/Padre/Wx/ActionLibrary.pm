@@ -9,7 +9,6 @@ use strict;
 use warnings;
 use File::Spec        ();
 use Params::Util      ();
-use Padre::Util       ('_T');
 use Padre::Feature    ();
 use Padre::Current    ();
 use Padre::Constant   ();
@@ -17,6 +16,7 @@ use Padre::MIME       ();
 use Padre::Wx         ();
 use Padre::Wx::Menu   ();
 use Padre::Wx::Action ();
+use Padre::Locale::T;
 use Padre::Logger;
 
 our $VERSION = '0.93';
@@ -1173,7 +1173,7 @@ sub init {
 				$findfast->find_term->ChangeValue($text);
 				$findfast->find_term->SelectAll;
 				if ( length $text ) {
-					$findfast->on_next;
+					$findfast->search_next;
 				}
 				return;
 			}
