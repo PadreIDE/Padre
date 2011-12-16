@@ -29,7 +29,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::NO_BORDER | Wx::TAB_TRAVERSAL,
+		Wx::NO_BORDER,
 	);
 
 	$self->{cancel} = Wx::BitmapButton->new(
@@ -45,7 +45,7 @@ sub new {
 		$self,
 		$self->{cancel},
 		sub {
-			shift->on_cancel(@_);
+			shift->cancel(@_);
 		},
 	);
 
@@ -61,20 +61,13 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_NO_VSCROLL | Wx::TE_PROCESS_ENTER,
+		Wx::TE_NO_VSCROLL | Wx::TE_PROCESS_ENTER | Wx::WANTS_CHARS,
 	);
 
 	Wx::Event::EVT_CHAR(
 		$self->{find_term},
 		sub {
 			$self->on_char($_[1]);
-		},
-	);
-
-	Wx::Event::EVT_KEY_UP(
-		$self->{find_term},
-		sub {
-			$self->on_key_up($_[1]);
 		},
 	);
 
@@ -98,7 +91,7 @@ sub new {
 		$self,
 		$self->{find_previous},
 		sub {
-			shift->on_previous(@_);
+			shift->search_previous(@_);
 		},
 	);
 
@@ -114,7 +107,7 @@ sub new {
 		$self,
 		$self->{find_next},
 		sub {
-			shift->on_next(@_);
+			shift->search_next(@_);
 		},
 	);
 
@@ -135,28 +128,24 @@ sub find_term {
 	$_[0]->{find_term};
 }
 
-sub on_cancel {
-	$_[0]->main->error('Handler method on_cancel for event cancel.OnButtonClick not implemented');
+sub cancel {
+	$_[0]->main->error('Handler method cancel for event cancel.OnButtonClick not implemented');
 }
 
 sub on_char {
 	$_[0]->main->error('Handler method on_char for event find_term.OnChar not implemented');
 }
 
-sub on_key_up {
-	$_[0]->main->error('Handler method on_key_up for event find_term.OnKeyUp not implemented');
-}
-
 sub on_text {
 	$_[0]->main->error('Handler method on_text for event find_term.OnText not implemented');
 }
 
-sub on_previous {
-	$_[0]->main->error('Handler method on_previous for event find_previous.OnButtonClick not implemented');
+sub search_previous {
+	$_[0]->main->error('Handler method search_previous for event find_previous.OnButtonClick not implemented');
 }
 
-sub on_next {
-	$_[0]->main->error('Handler method on_next for event find_next.OnButtonClick not implemented');
+sub search_next {
+	$_[0]->main->error('Handler method search_next for event find_next.OnButtonClick not implemented');
 }
 
 1;

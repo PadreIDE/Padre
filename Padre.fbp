@@ -1454,7 +1454,7 @@
             <property name="validator_variable"></property>
             <property name="window_extra_style">wxWS_EX_BLOCK_EVENTS</property>
             <property name="window_name"></property>
-            <property name="window_style">wxNO_BORDER|wxTAB_TRAVERSAL</property>
+            <property name="window_style">wxNO_BORDER</property>
             <event name="OnChar"></event>
             <event name="OnEnterWindow"></event>
             <event name="OnEraseBackground"></event>
@@ -1520,7 +1520,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style">wxNO_BORDER</property>
-                        <event name="OnButtonClick">on_cancel</event>
+                        <event name="OnButtonClick">cancel</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1632,12 +1632,12 @@
                         <property name="value"></property>
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
-                        <property name="window_style"></property>
+                        <property name="window_style">wxWANTS_CHARS</property>
                         <event name="OnChar">on_char</event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
                         <event name="OnKeyDown"></event>
-                        <event name="OnKeyUp">on_key_up</event>
+                        <event name="OnKeyUp"></event>
                         <event name="OnKillFocus"></event>
                         <event name="OnLeaveWindow"></event>
                         <event name="OnLeftDClick"></event>
@@ -1693,7 +1693,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">on_previous</event>
+                        <event name="OnButtonClick">search_previous</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
@@ -1750,7 +1750,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnButtonClick">on_next</event>
+                        <event name="OnButtonClick">search_next</event>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>

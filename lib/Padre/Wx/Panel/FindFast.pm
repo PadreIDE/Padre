@@ -47,7 +47,8 @@ sub new {
 ######################################################################
 # Event Handlers
 
-sub on_cancel {
+sub cancel {
+	TRACE('cancel') if DEBUG;
 	my $self      = shift;
 	my $selection = delete $self->{selection};
 	if ( $selection ) {
@@ -69,7 +70,7 @@ sub on_char {
 		if ( $key == Wx::K_RETURN ) {
 			TRACE('on_char (return)') if DEBUG;
 			if ( $self->{find_next}->IsEnabled ) {
-				$self->on_next;
+				$self->search_next;
 			}
 			return $event->Skip(0);
 		}
@@ -77,19 +78,11 @@ sub on_char {
 		# Return to the editor on escape
 		if ( $key == Wx::K_ESCAPE ) {
 			TRACE('on_char (escape)') if DEBUG;
-			$self->on_cancel;
+			$self->cancel;
 			return $event->Skip(0);
 		}
 	}
 
-	$event->Skip(1);
-}
-
-sub on_key_up {
-	my $self  = shift;
-	my $event = shift;
-	my $key   = $event->GetKeyCode;
-	TRACE("on_key_up (KeyCode $key)") if DEBUG;
 	$event->Skip(1);
 }
 
@@ -134,8 +127,8 @@ sub on_text {
 }
 
 # Advance the search to the next match
-sub on_next {
-	TRACE('on_next') if DEBUG;
+sub search_next {
+	TRACE('search_next') if DEBUG;
 	my $self   = shift;
 	my $search = $self->as_search or return;
 	my $editor = $self->current->editor or return;
@@ -143,8 +136,8 @@ sub on_next {
 }
 
 # Advance the search to the previous match
-sub on_previous {
-	TRACE('on_previous') if DEBUG;
+sub search_previous {
+	TRACE('search_previous') if DEBUG;
 	my $self   = shift;
 	my $search = $self->as_search or return;
 	my $editor = $self->current->editor or return;
@@ -195,7 +188,6 @@ sub hide {
 
 sub as_search {
 	my $self = shift;
-	require Padre::Search;
 	Padre::Search->new(
 		find_term => $self->{find_term}->GetValue,
 		find_case => 1,
