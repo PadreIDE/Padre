@@ -69,15 +69,21 @@ sub new {
 	}, $class;
 }
 
+sub cancel {
+	delete $_[0]->{scrolly};
+}
+
 sub DESTROY {
 
 	# Return the scroll position to the previous position
 	### NOTE: This just sets it to the top for now.
-	$_[0]->{object}->SetScrollPos(
-		Wx::VERTICAL,
-		$_[0]->{scrolly},
-		0,
-	);
+	if ( defined $_[0]->{object} and defined $_[0]->{scrolly} ) {
+		$_[0]->{object}->SetScrollPos(
+			Wx::VERTICAL,
+			$_[0]->{scrolly},
+			0,
+		);
+	}
 
 	# We don't need to explicitly release the Wx lock, it will be
 	# deleted (and thus have it's own DESTROY logic fire) during
