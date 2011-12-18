@@ -116,18 +116,36 @@ sub on_kill_focus {
 
 sub cancel {
 	TRACE('cancel') if DEBUG;
-	my $self   = shift;
-	my $before = delete $self->{before};
-	my $editor = $self->current->editor or return;
+	my $self = shift;
 
 	# Go back to where we were before if there is no match on close
-	unless ( length $editor->GetSelectedText ) {
-		$editor->goto_selection_centerize(@$before) if $before;
-	}
+	$self->restore;
+	delete $self->{before};
 
 	# Shift focus to the editor
 	$self->main->editor_focus;
 	$self->hide;
+}
+
+sub restore {
+	TRACE('restore') if DEBUG;
+	my $self   = shift;
+	my $before = $self->{before} or return;
+	my $editor = $self->current->editor or return;
+	$editor->GetCurrentPos == $editor->GetAnchor or return;
+	$editor->GetLineCount  == $before->{lines} or return;
+
+	# Set the selection
+	my $lock = $editor->lock_update;
+	$editor->SetCurrentPos( $before->{pos} );
+	$editor->SetAnchor( $before->{anchor} );
+
+	# Scroll to get the selection to the original position
+	unless ( $editor->GetFirstDocumentLine == $before->{first} ) {
+		$editor->ScrollToLine( $before->{first} );
+	}
+
+	return 1;
 }
 
 # Start a fresh search with some text
@@ -172,7 +190,12 @@ sub show {
 	my $editor = $self->current->editor or return;
 
 	# Capture the selection location before we opened the panel
-	$self->{before} = [ $editor->GetSelection ];
+	$self->{before} = {
+		lines  => $editor->GetLineCount,
+		pos    => $editor->GetCurrentPos,
+		anchor => $editor->GetAnchor,
+		first  => $editor->GetFirstDocumentLine,
+	};
 
 	# Reset the panel
 	$self->{find_term}->ChangeValue('');

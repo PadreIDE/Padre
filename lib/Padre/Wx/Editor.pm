@@ -747,6 +747,10 @@ sub setup_document {
 ######################################################################
 # General Methods
 
+sub GetFirstDocumentLine {
+	$_[0]->DocLineFromVisible( $_[0]->GetFirstVisibleLine );
+}
+
 # Take a temporary readonly lock on the object
 sub lock_readonly {
 	require Padre::Wx::Editor::Lock;
