@@ -5,8 +5,8 @@ package Padre::Wx::TreeCtrl;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                       ();
-use Padre::Wx::TreeCtrl::ScrollLock ();
+use Padre::Wx             ();
+use Padre::Wx::ScrollLock ();
 
 our $VERSION = '0.93';
 our @ISA     = 'Wx::TreeCtrl';
@@ -19,7 +19,7 @@ our @ISA     = 'Wx::TreeCtrl';
 # ScrollLock Integration
 
 sub lock_scroll {
-	Padre::Wx::TreeCtrl::ScrollLock->new( $_[0] );
+	Padre::Wx::ScrollLock->new( $_[0] );
 }
 
 

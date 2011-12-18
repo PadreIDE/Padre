@@ -1,10 +1,10 @@
-package Padre::Wx::TreeCtrl::ScrollLock;
+package Padre::Wx::ScrollLock;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::TreeCtrl::ScrollLock - Scroll-free transactions for tree controls
+Padre::Wx::ScrollLock - Lock objects to prevent unintended scrolling
 
 =head1 SYNOPSIS
 
@@ -18,31 +18,28 @@ Padre::Wx::TreeCtrl::ScrollLock - Scroll-free transactions for tree controls
 
 =head1 DESCRIPTION
 
-Ny default a Wx TreeCtrl object will auto-scroll to the location of an
+By default several Wx objects will auto-scroll to the location of an
 expand event or similar actions, as if it had been triggered by a human.
-
-For trees which are supposed to expanding or moving around on their own,
-this looks quite bizarre.
 
 This class provides an implementation of a "scroll lock" for short-lived
 sections of fully self-contained code that will be updating the structure
-of a tree control.
+or content of a tree control or other scrolling object.
 
 When created, the lock will create a Wx update locker for speed and flicker
-free changes to the tree. It will additionally remember the current scroll
-position of the tree.
+free changes to the object. It will also remember the current scroll
+position of the object.
 
 When destroyed, the lock will move the scroll position back to the original
 location if it has been changed in the process of an operation and then
 release the update lock.
 
-The result is that all operations on the tree should occur with the
+The result is that all operations on the object should occur with the
 tree appearing to stay fixed in place.
 
 Note that the lock MUST be short-lived, as it does not integrate with
 the rest of Padre's locking system. You should already have all the data
-needed to change the tree prepared and ready to go before you create the
-tree lock.
+needed to change the object prepared and ready to go before you create the
+lock.
 
 =cut
 
@@ -55,17 +52,20 @@ use Padre::Wx    ();
 our $VERSION = '0.93';
 
 sub new {
-	my $class = shift;
-	my $tree  = shift;
-	unless ( Params::Util::_INSTANCE( $tree, 'Wx::TreeCtrl' ) ) {
-		die "Did not provide a Wx::TreeCtrl to lock";
+	my $class  = shift;
+	my $object = shift;
+	unless ( Params::Util::_INSTANCE( $object, 'Wx::Window' ) ) {
+		die "Did not provide a Wx::Window to lock";
+	}
+	unless ( $object->can('SetScrollPos') ) {
+		die "Did not provide a Wx::Window with a SetScrollPos method";
 	}
 
 	# Create the object and record the scroll position
 	return bless {
-		tree    => $tree,
-		scrolly => $tree->GetScrollPos(Wx::VERTICAL),
-		locker  => Wx::WindowUpdateLocker->new($tree),
+		object  => $object,
+		scrolly => $object->GetScrollPos(Wx::VERTICAL),
+		locker  => Wx::WindowUpdateLocker->new($object),
 	}, $class;
 }
 
@@ -73,7 +73,7 @@ sub DESTROY {
 
 	# Return the scroll position to the previous position
 	### NOTE: This just sets it to the top for now.
-	$_[0]->{tree}->SetScrollPos(
+	$_[0]->{object}->SetScrollPos(
 		Wx::VERTICAL,
 		$_[0]->{scrolly},
 		0,

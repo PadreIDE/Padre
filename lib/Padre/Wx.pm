@@ -171,6 +171,12 @@ sub launch_irc {
 	return;
 }
 
+# Launch a browser window for a local file
+sub launch_file {
+	require URI::file;
+	launch_browser( URI::file->new_abs(shift) );
+}
+
 1;
 
 =pod
