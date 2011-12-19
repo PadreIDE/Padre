@@ -16,31 +16,14 @@ our @ISA     = qw{
 
 
 ######################################################################
-# Constructor
-
-sub new {
-	my $class = shift;
-	my $self  = $class->SUPER::new(@_);
-
-	# Prepare to be shown.
-	$self->CenterOnParent;
-
-	Wx::Event::EVT_KEY_UP(
-		$self,
-		sub {
-			shift->key_up(@_);
-		},
-	);
-
-	return $self;
-}
-
-
-
-
-
-######################################################################
 # Event Handlers
+
+sub on_close {
+	my $self  = shift;
+	my $event = shift;
+	$self->main->editor_focus;
+	$event->Skip(1);
+}
 
 sub find_next_clicked {
 	my $self   = shift;
@@ -79,33 +62,6 @@ sub find_next_clicked {
 	return;
 }
 
-sub key_up {
-	my $self  = shift;
-	my $event = shift;
-	my $mod   = $event->GetModifiers || 0;
-	my $code  = $event->GetKeyCode;
-
-	# A fixed key binding isn't good at all.
-	# TODO: Change this to the action's keybinding
-
-	# Handle Ctrl-F only
-	return unless ( $mod == 2 ) and ( $code == 70 );
-
-	if ( $self->{wait_ctrl_f} ) {
-
-		# Ctrl-F in the editor window triggers a menu action which is fired before the key is up again
-		# This skips the key_up event for the menu ctrl-f
-		$self->{wait_ctrl_f} = 0;
-		return;
-	}
-
-	$self->{cycle_ctrl_f} = 1;
-
-	$self->Hide;
-
-	return;
-}
-
 
 
 
@@ -116,31 +72,25 @@ sub key_up {
 sub run {
 	my $self = shift;
 	my $main = $self->main;
+	my $text = '';
 
-	# Clear
-	$self->{cycle_ctrl_f} = 0;
+	# If Find Fast is showing inherit settings from it
+	if ( $main->has_findfast and $main->findfast->IsShown ) {
+		$text = $main->findfast->find_term->GetValue;
+		$main->show_findfast(0);
 
-	# Do they have a specific search term in mind?
-	my $text = $self->current->text;
-	$text = '' if $text =~ /\n/;
+	} else {
+		$text = $self->current->text;
+		$text = '' if $text =~ /\n/;
+	}
 
 	# Clear out and reset the search term box
 	$self->find_term->refresh($text);
 	$self->find_term->SetFocus;
-
-	# Refresh
 	$self->refresh;
 
-	# Hide the Fast Find if visible
-	$main->show_findfast(0);
-
 	# Show the dialog
-	$self->ShowModal;
-
-	# Return to the current editor
-	$main->editor_focus;
-
-	return;
+	$self->Show;
 }
 
 # Ensure the find button is only enabled if the field values are valid
@@ -158,7 +108,7 @@ sub as_search {
 		find_term    => $self->find_term->GetValue,
 		find_case    => $self->find_case->GetValue,
 		find_regex   => $self->find_regex->GetValue,
-		find_reverse => $self->find_reverse->GetValue
+		find_reverse => $self->find_reverse->GetValue,
 	);
 }
 

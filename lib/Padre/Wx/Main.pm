@@ -576,12 +576,12 @@ use Class::XSAccessor {
 		has_functions          => 'functions',
 		has_todo               => 'todo',
 		has_debugger           => 'debugger',
-		has_find               => 'find',
-		has_findfast           => 'findfast',
-		has_replace            => 'replace',
 		has_outline            => 'outline',
 		has_directory          => 'directory',
+		has_find               => 'find',
+		has_findfast           => 'findfast',
 		has_findinfiles        => 'findinfiles',
+		has_replace            => 'replace',
 		has_replaceinfiles     => 'replaceinfiles',
 	},
 	getters => {
@@ -791,15 +791,6 @@ sub directory {
 	return $self->{directory};
 }
 
-sub findinfiles {
-	my $self = shift;
-	unless ( defined $self->{findinfiles} ) {
-		require Padre::Wx::FindInFiles;
-		$self->{findinfiles} = Padre::Wx::FindInFiles->new($self);
-	}
-	return $self->{findinfiles};
-}
-
 sub replaceinfiles {
 	my $self = shift;
 	unless ( defined $self->{replaceinfiles} ) {
@@ -838,9 +829,9 @@ sub help_search {
 
 =head3 C<find>
 
-    my $find = $main->find;
+    my $dialog = $main->find;
 
-Returns the find dialog, creating a new one if needed.
+Returns the Find dialog, creating it if needed.
 
 =cut
 
@@ -859,7 +850,7 @@ sub find {
 
     my $find = $main->findfast;
 
-Return current quick find dialog. Create a new one if needed.
+Returns the Fast Find panel, creating it if needed.
 
 =cut
 
@@ -870,6 +861,25 @@ sub findfast {
 		$self->{findfast} = Padre::Wx::Panel::FindFast->new($self);
 	}
 	return $self->{findfast};
+}
+
+=pod
+
+=head2 C<findinfiles>
+
+    my $dialog = $main->findinfiles;
+
+Returns the Find in Files dialog, creating it if needed.
+
+=cut
+
+sub findinfiles {
+	my $self = shift;
+	unless ( defined $self->{findinfiles} ) {
+		require Padre::Wx::Dialog::FindInFiles;
+		$self->{findinfiles} = Padre::Wx::Dialog::FindInFiles->new($self);
+	}
+	return $self->{findinfiles};
 }
 
 =pod

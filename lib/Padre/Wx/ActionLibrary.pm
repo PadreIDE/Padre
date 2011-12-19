@@ -1177,21 +1177,16 @@ sub init {
 			}
 
 			# Ctrl-F second press, show full find dialog
-			require Padre::Wx::Dialog::Find;
-			my $find = Padre::Wx::Dialog::Find->new($main);
-			$find->{wait_ctrl_f} = 1; # (($event->GetModifiers == 2) and ($event->getKeyCode == 70)) ? 1 : 0;
-			$find->find_term->SetValue( $main->findfast->find_term->GetValue );
-			$find->run;
-			my $term = $find->find_term->GetValue;
-			$find->Destroy;
-			return unless $find->{cycle_ctrl_f};
+			unless ( $main->has_find and $main->find->IsShown ) {
+				$main->find->run;
+				return;
+			}
 
-			# Ctrl-F this press, show find in files dialog
-			require Padre::Wx::Dialog::FindInFiles;
-			my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
-			$findinfiles->find_term->SetValue($term);
-			$findinfiles->run;
-			$findinfiles->Destroy;
+			# Ctrl-F third press, show find in files dialog
+			unless ( $main->has_findinfiles and $main->findinfiles->IsShown ) {
+				$main->findinfiles->run;
+				return;
+			}
 
 			return;
 		},
@@ -1684,20 +1679,21 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name => 'view.close_panel',
-
-		# label       => _T('&Full Screen'),
-		comment => _T('Close the highest priority panel (usually using ESC key)'),
-
-		# shortcut    => 'ESC', # handled by Padre::Wx::Main
+		name       => 'view.close_panel',
+		comment    => _T('Close the highest priority dialog or panel'),
 		menu_event => sub {
 			my $main = shift;
 
-			if ( $main->findfast->visible ) {
-				$main->findfast->_hide_panel;
-			} elsif ( $main->has_output ) {
-				$main->show_output(0);
+			if ( $main->has_findfast and $main->findfast->IsShown ) {
+				$main->findfast->hide;
+				return;
 			}
+
+			if ( $main->has_output ) {
+				$main->show_output(0);
+				return;
+			}
+
 			return;
 		},
 	);

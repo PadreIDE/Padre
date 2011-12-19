@@ -33,6 +33,13 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
+	Wx::Event::EVT_CLOSE(
+		$self,
+		sub {
+			shift->on_close(@_);
+		},
+	);
+
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
@@ -139,6 +146,14 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{cancel},
+		sub {
+			shift->on_close(@_);
+		},
+	);
+
 	my $fgSizer2 = Wx::FlexGridSizer->new( 2, 2, 0, 10 );
 	$fgSizer2->AddGrowableCol(1);
 	$fgSizer2->SetFlexibleDirection(Wx::BOTH);
@@ -197,6 +212,10 @@ sub find_next {
 
 sub find_all {
 	$_[0]->{find_all};
+}
+
+sub on_close {
+	$_[0]->main->error('Handler method on_close for event Padre::Wx::FBP::Find.OnClose not implemented');
 }
 
 sub refresh {
