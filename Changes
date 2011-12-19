@@ -63,6 +63,8 @@ the even version for the release, even during development.
     - Hitting enter in the Function List search box will clear the search
       after you have been taken to the first function (ADAMK)
     - Converted the FindFast panel to wxFormBuilder (ADAMK)
+    - When Find Fast is closed, return scroll and selection to the original
+      location (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
