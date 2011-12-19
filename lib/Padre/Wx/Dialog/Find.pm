@@ -43,18 +43,15 @@ sub new {
 # Event Handlers
 
 sub find_next_clicked {
-	my $self = shift;
-	my $main = $self->main;
-
-	# Generate the search object
+	my $self   = shift;
+	my $main   = $self->main;
 	my $search = $self->as_search;
-	unless ($search) {
-		$main->error('Not a valid search');
-
+	if ( $search ) {
+		$self->find_term->SaveValue;
+	} else {
 		# Move the focus back to the search text
 		# so they can tweak their search.
 		$self->find_term->SetFocus;
-
 		return;
 	}
 
@@ -158,7 +155,7 @@ sub refresh {
 sub as_search {
 	my $self = shift;
 	Padre::Search->new(
-		find_term    => $self->find_term->SaveValue,
+		find_term    => $self->find_term->GetValue,
 		find_case    => $self->find_case->GetValue,
 		find_regex   => $self->find_regex->GetValue,
 		find_reverse => $self->find_reverse->GetValue
