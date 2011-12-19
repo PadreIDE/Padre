@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-16 08:11-0800\n"
+"POT-Creation-Date: 2011-12-18 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2069,7 +2069,7 @@ msgid "Epoch"
 msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:520
-#: lib/Padre/Wx/Editor.pm:796 lib/Padre/Wx/Main.pm:5247
+#: lib/Padre/Wx/Editor.pm:800 lib/Padre/Wx/Main.pm:5247
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
 #: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
@@ -2492,7 +2492,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1689
+#: lib/Padre/Wx/Editor.pm:1693
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -3281,7 +3281,7 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:536 lib/Padre/Wx/Replace.pm:583
-#: lib/Padre/Wx/Dialog/Find.pm:71 lib/Padre/Wx/Dialog/Replace.pm:116
+#: lib/Padre/Wx/Dialog/Find.pm:68 lib/Padre/Wx/Dialog/Replace.pm:116
 #: lib/Padre/Wx/Dialog/Replace.pm:147
 #, perl-format
 msgid "No matches found for \"%s\"."
@@ -4482,7 +4482,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Directory.pm:514
 #: lib/Padre/Wx/FBP/CPAN.pm:269 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:385
-#: lib/Padre/Wx/Dialog/Find.pm:74
+#: lib/Padre/Wx/Dialog/Find.pm:71
 msgid "Search"
 msgstr ""
 
@@ -5705,7 +5705,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1673
+#: lib/Padre/Wx/Editor.pm:1677
 msgid "You must select a range of lines"
 msgstr ""
 
