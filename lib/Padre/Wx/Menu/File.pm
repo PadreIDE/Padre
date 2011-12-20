@@ -307,7 +307,7 @@ sub refresh {
 	$self->{save_as}->Enable($document);
 	$self->{save_intuition}->Enable($document);
 	$self->{save_all}->Enable($document);
-	$self->{print}->Enable($document);
+	#$self->{print}->Enable($document);
 	defined( $self->{open_session} ) and $self->{open_selection}->Enable($document);
 	defined( $self->{save_session} ) and $self->{save_session}->Enable($document);
 	$self->{docstat}->Enable($document);
