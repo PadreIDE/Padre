@@ -36,10 +36,8 @@ use Params::Util              ();
 use Wx::Scintilla::Constant   ();
 use Padre::Constant           ();
 use Padre::Util               ();
-use Padre::Perl               ();
 use Padre::Locale             ();
 use Padre::Current            ();
-use Padre::Document           ();
 use Padre::DB                 ();
 use Padre::Feature            ();
 use Padre::Locker             ();
@@ -1631,8 +1629,7 @@ sub process_template_frequent {
 	if ( $template =~ /\%s/ ) {
 		my $sub = '';
 		if ($document) {
-			my $text = $document->text_get;
-
+			my $text   = $document->text_get;
 			my $editor = $document->editor;
 			my $pos    = $editor->GetCurrentPos;
 			my $first  = $editor->PositionFromLine(0);
@@ -2924,11 +2921,11 @@ sub on_run_tdd_tests {
 	chdir $project_dir;
 
 	# TODO maybe add save file(s) to this action?
-
-	my $perl =
-		$self->config
-		->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
+	# TODO make this the user selected perl also
+	# do it in Padre::Document::Perl::get_command
+	my $perl = $self->config->run_perl_cmd;
 	unless ($perl) {
+		require Padre::Perl;
 		$perl = Padre::Perl::cperl();
 	}
 
@@ -4297,6 +4294,7 @@ sub setup_editor {
 		}
 	}
 
+	require Padre::Document;
 	my $document = Padre::Document->new( filename => $file ) or return;
 	$file ||= ''; # to avoid warnings
 	if ( $document->errstr ) {
