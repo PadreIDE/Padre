@@ -65,6 +65,8 @@ the even version for the release, even during development.
     - Converted the FindFast panel to wxFormBuilder (ADAMK)
     - When Find Fast is closed, return scroll and selection to the original
       location (ADAMK)
+    - Syntax check status is reflected in the label for the Syntax Check
+      output so you can see the result when it is not at the front (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

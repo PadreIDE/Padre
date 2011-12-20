@@ -539,17 +539,13 @@ sub lock_update {
 }
 
 sub set_label_bitmap {
-
-	# Temporarily disabled (ADAMK)
-	# commented to prevent perl critic test from failing (AZAWAWI)
-	#TODO enable? :)
-	# my $self     = shift;
-	# my $name     = shift;
-	# my $icon     = $ICON{$name} or return;
-	# my $method   = $self->view_panel;
-	# my $panel    = $self->main->$method();
-	# my $position = $panel->GetPageIndex($self);
-	# $panel->SetPageBitmap( $position, $icon );
+	my $self     = shift;
+	my $name     = shift;
+	my $icon     = $ICON{$name} or return;
+	my $method   = $self->view_panel;
+	my $panel    = $self->main->$method();
+	my $position = $panel->GetPageIndex($self);
+	$panel->SetPageBitmap( $position, $icon );
 }
 
 # Show the current line error/warning if it exists or hide the previous annotation
