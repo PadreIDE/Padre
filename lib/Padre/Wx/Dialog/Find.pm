@@ -42,22 +42,17 @@ sub find_next_clicked {
 	my $result = $main->search_next($search);
 
 	# If we're only searching once, we won't need the dialog any more
-	if ( $self->find_first->GetValue ) {
-		$self->Hide;
+	$main->info(
+		sprintf(
+			Wx::gettext('No matches found for "%s".'),
+			$self->find_term->GetValue,
+		),
+		Wx::gettext('Search')
+	);
 
-	} elsif ( not $result ) {
-		$main->info(
-			sprintf(
-				Wx::gettext('No matches found for "%s".'),
-				$self->find_term->GetValue,
-			),
-			Wx::gettext('Search')
-		);
-
-		# Move the focus back to the search text
-		# so they can tweak their search.
-		$self->find_term->SetFocus;
-	}
+	# Move the focus back to the search text
+	# so they can tweak their search.
+	$self->find_term->SetFocus;
 
 	return;
 }

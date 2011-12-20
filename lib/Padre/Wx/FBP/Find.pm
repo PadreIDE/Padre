@@ -97,14 +97,6 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	$self->{find_first} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext("Cl&ose Window on Hit"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
 	my $m_staticline1 = Wx::StaticLine->new(
 		$self,
 		-1,
@@ -161,7 +153,6 @@ sub new {
 	$fgSizer2->Add( $self->{find_regex}, 1, Wx::ALL, 5 );
 	$fgSizer2->Add( $self->{find_reverse}, 1, Wx::ALL, 5 );
 	$fgSizer2->Add( $self->{find_case}, 1, Wx::ALL, 5 );
-	$fgSizer2->Add( $self->{find_first}, 1, Wx::ALL, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{find_next}, 0, Wx::ALL, 5 );
@@ -200,10 +191,6 @@ sub find_reverse {
 
 sub find_case {
 	$_[0]->{find_case};
-}
-
-sub find_first {
-	$_[0]->{find_first};
 }
 
 sub find_next {
