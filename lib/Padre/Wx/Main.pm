@@ -874,8 +874,8 @@ Returns the Find in Files dialog, creating it if needed.
 sub findinfiles {
 	my $self = shift;
 	unless ( defined $self->{findinfiles} ) {
-		require Padre::Wx::Dialog::FindInFiles;
-		$self->{findinfiles} = Padre::Wx::Dialog::FindInFiles->new($self);
+		require Padre::Wx::FindInFiles;
+		$self->{findinfiles} = Padre::Wx::FindInFiles->new($self);
 	}
 	return $self->{findinfiles};
 }
@@ -3379,7 +3379,8 @@ sub open_session {
 		$progress->update( $file_no, $document->file );
 		TRACE( "Opening '" . $document->file . "' for $document" ) if DEBUG;
 		my $filename = $document->file;
-		my $file     = Padre::File->new($filename);
+		require Padre::File;
+		my $file = Padre::File->new($filename);
 		next unless defined($file);
 		next unless $file->exists;
 		my $id = $self->setup_editor($filename);
@@ -4270,6 +4271,7 @@ sub setup_editor {
 		# 	$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
 
 		# Use Padre::File to get the real filenames
+		require Padre::File;
 		my $file_obj = Padre::File->new($file);
 		if ( defined($file_obj) and ref($file_obj) and $file_obj->exists ) {
 			my $id = $self->editor_of_file( $file_obj->{filename} );
@@ -6252,9 +6254,9 @@ C<$file>, or C<undef> if file is not opened currently.
 =cut
 
 sub editor_of_file {
+	require Padre::File;
 	my $self     = shift;
-	my $filename = shift;
-	my $file     = Padre::File->new($filename); # This reformats our filename
+	my $file     = Padre::File->new(shift); # This reformats our filename
 	my $notebook = $self->notebook;
 	foreach my $id ( $self->pageids ) {
 		my $editor   = $notebook->GetPage($id) or return;
