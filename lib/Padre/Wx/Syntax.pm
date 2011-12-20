@@ -99,9 +99,9 @@ sub new {
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
-		ok          => $images->Add( Padre::Wx::Icon::icon(OK) ),
-		error       => $images->Add( Padre::Wx::Icon::icon(ERROR) ),
-		warning     => $images->Add( Padre::Wx::Icon::icon(WARNING) ),
+		ok          => $images->Add( Padre::Wx::Icon::find(OK) ),
+		error       => $images->Add( Padre::Wx::Icon::find(ERROR) ),
+		warning     => $images->Add( Padre::Wx::Icon::find(WARNING) ),
 		diagnostics => $images->Add(
 			Wx::ArtProvider::GetBitmap(
 				'wxART_GO_FORWARD',
