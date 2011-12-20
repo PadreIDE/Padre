@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-19 08:10-0800\n"
+"POT-Creation-Date: 2011-12-19 20:16-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1057,7 +1057,7 @@ msgid "CTRL"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:154
-#: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:144
+#: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:136
 #: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:179
 #: lib/Padre/Wx/FBP/Replace.pm:187
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
@@ -1220,10 +1220,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:367
 msgid "Chuanren Wu"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/Find.pm:103
-msgid "Cl&ose Window on Hit"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:281
@@ -2424,7 +2420,7 @@ msgstr ""
 msgid "Find"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:136
+#: lib/Padre/Wx/FBP/Find.pm:128
 msgid "Find &All"
 msgstr ""
 
@@ -2432,7 +2428,7 @@ msgstr ""
 msgid "Find &Method Declaration"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1197 lib/Padre/Wx/FBP/Find.pm:119
+#: lib/Padre/Wx/ActionLibrary.pm:1197 lib/Padre/Wx/FBP/Find.pm:111
 #: lib/Padre/Wx/FBP/Replace.pm:138
 msgid "Find &Next"
 msgstr ""
@@ -3281,7 +3277,7 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:536 lib/Padre/Wx/Replace.pm:583
-#: lib/Padre/Wx/Dialog/Find.pm:51 lib/Padre/Wx/Dialog/Replace.pm:116
+#: lib/Padre/Wx/Dialog/Find.pm:47 lib/Padre/Wx/Dialog/Replace.pm:116
 #: lib/Padre/Wx/Dialog/Replace.pm:147
 #, perl-format
 msgid "No matches found for \"%s\"."
@@ -4482,7 +4478,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Directory.pm:514
 #: lib/Padre/Wx/FBP/CPAN.pm:269 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:385
-#: lib/Padre/Wx/Dialog/Find.pm:54
+#: lib/Padre/Wx/Dialog/Find.pm:50
 msgid "Search"
 msgstr ""
 
