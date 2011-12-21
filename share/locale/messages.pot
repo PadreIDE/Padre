@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-20 08:10-0800\n"
+"POT-Creation-Date: 2011-12-20 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2510,12 +2510,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:439
+#: lib/Padre/Wx/Syntax.pm:446
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:442
+#: lib/Padre/Wx/Syntax.pm:449
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2918,7 +2918,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:504
+#: lib/Padre/Wx/Syntax.pm:511
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -3249,12 +3249,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:422
+#: lib/Padre/Wx/Syntax.pm:429
 #, perl-format
 msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:427
+#: lib/Padre/Wx/Syntax.pm:434
 #, perl-format
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
@@ -5210,7 +5210,7 @@ msgstr ""
 msgid "Switch language to system default"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:242
+#: lib/Padre/Wx/Syntax.pm:243
 msgid "Syntax Check"
 msgstr ""
 
