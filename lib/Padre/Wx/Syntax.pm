@@ -165,6 +165,7 @@ sub view_stop {
 	# Clear out any state and tasks
 	$self->task_reset;
 	$self->clear;
+	$self->set_label_bitmap(undef);
 
 	# Remove the editor margins
 	foreach my $editor ( $self->main->editors ) {
@@ -242,6 +243,14 @@ sub gettext_label {
 	Wx::gettext('Syntax Check');
 }
 
+sub disable {
+	my $self = shift;
+	$self->clear;
+	$self->set_label_bitmap(undef);
+	$self->{tree}->Hide;
+	return;
+}
+
 # Remove all markers and empty the list
 sub clear {
 	my $self    = shift;
@@ -298,16 +307,14 @@ sub refresh {
 
 	# Hide the widgets when no files are open
 	unless ($document) {
-		$self->clear;
-		$tree->Hide;
+		$self->disable;
 		return;
 	}
 
 	# Is there a syntax check task for this document type
 	my $task = $document->task_syntax;
 	unless ($task) {
-		$self->clear;
-		$tree->Hide;
+		$self->disable;
 		return;
 	}
 
@@ -540,8 +547,8 @@ sub lock_update {
 
 sub set_label_bitmap {
 	my $self     = shift;
-	my $name     = shift;
-	my $icon     = $ICON{$name} or return;
+	my $name     = shift || '';
+	my $icon     = $ICON{$name} || Wx::NullBitmap;
 	my $method   = $self->view_panel;
 	my $panel    = $self->main->$method();
 	my $position = $panel->GetPageIndex($self);
