@@ -3953,6 +3953,7 @@ sub on_activate {
 	# The file system may have changed, refresh the directory list
 	# and recompile the foreground file.
 	$self->refresh_directory($current);
+	$self->refresh_diff($current);
 	$self->refresh_syntaxcheck($current);
 
 	# They may be using an external VCS tool
