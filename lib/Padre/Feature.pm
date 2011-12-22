@@ -47,12 +47,13 @@ constant->import(
 	{
 
 		# Bloaty features users can disable
-		BOOKMARK     => $config->feature_bookmark,
-		CURSORMEMORY => $config->feature_cursormemory,
-		DEBUGGER     => $config->feature_debugger,
-		FOLDING      => $config->feature_folding,
-		FONTSIZE     => $config->feature_fontsize,
-		SESSION      => $config->feature_session,
+		BOOKMARK           => $config->feature_bookmark,
+		CURSORMEMORY       => $config->feature_cursormemory,
+		DEBUGGER           => $config->feature_debugger,
+		FOLDING            => $config->feature_folding,
+		FONTSIZE           => $config->feature_fontsize,
+		SESSION            => $config->feature_session,
+		SYNTAX_ANNOTATIONS => $config->feature_syntax_check_annotations,
 
 		# Experimental features users can enable
 		QUICK_FIX       => $config->feature_quick_fix,

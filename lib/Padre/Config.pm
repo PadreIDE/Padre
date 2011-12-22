@@ -24,11 +24,13 @@ use Padre::Config::Upgrade ();
 use Padre::Locale::T;
 use Padre::Logger;
 
-our $VERSION = '0.93';
+our $VERSION    = '0.93';
+our $COMPATIBLE = '0.93';
 
 our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );
 
 BEGIN {
+	# die "Foo";
 
 	# Master storage of the settings
 	%SETTING = ();

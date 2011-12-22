@@ -92,9 +92,11 @@ sub new {
 	$self->{show_stderr}->Hide;
 
 	# Additional properties
-	$self->{model}       = {};
-	$self->{annotations} = ();
-	$self->{length}      = -1;
+	$self->{model}  = {};
+	$self->{length} = -1;
+	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		$self->{annotations} = {};
+	}
 
 	# Prepare the available images
 	my $images = Wx::ImageList->new( 16, 16 );
@@ -117,13 +119,11 @@ sub new {
 			),
 		),
 	};
-	my $tree = $self->{tree};
-	$tree->AssignImageList($images);
-
+	$self->{tree}->AssignImageList($images);
 	$self->Hide;
 
 	if (Padre::Feature::STYLE_GUI) {
-		$self->main->theme->apply($tree);
+		$main->theme->apply($self->{tree});
 	}
 
 	return $self;
@@ -189,8 +189,7 @@ sub on_tree_item_selection_changed {
 	my $issue = $self->{tree}->GetPlData($item);
 
 	if ( $issue and $issue->{diagnostics} ) {
-		my $diag = $issue->{diagnostics};
-		$self->_update_help_page($diag);
+		$self->_update_help_page( $issue->{diagnostics} );
 	} else {
 		$self->_update_help_page;
 	}
@@ -213,7 +212,7 @@ sub on_tree_item_activated {
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {
-			$self->select_next_problem( $line - 1 );
+			$_[0]->select_next_problem( $line - 1 );
 			Wx::Event::EVT_IDLE( $self, undef );
 		},
 	);
@@ -230,6 +229,8 @@ sub show_stderr {
 		$main->output->SetSelection( 0, 0 );
 		$main->show_output(1);
 	}
+
+	return;
 }
 
 
@@ -253,19 +254,17 @@ sub disable {
 
 # Remove all markers and empty the list
 sub clear {
-	my $self    = shift;
-	my $lock    = $self->lock_update;
-	my $feature = $self->config->feature_syntax_check_annotations;
+	my $self = shift;
+	my $lock = $self->lock_update;
 
 	# Remove the margins and indicators for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll(Padre::Constant::MARKER_ERROR);
 		$editor->MarkerDeleteAll(Padre::Constant::MARKER_WARN);
 
+		# Clear out all indicators
 		my $len = $editor->GetTextLength;
 		if ( $len > 0 ) {
-
-			# Clear out all indicators
 			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_WARNING);
 			$editor->IndicatorClearRange( 0, $len );
 			$editor->SetIndicatorCurrent(Padre::Constant::INDICATOR_ERROR);
@@ -273,10 +272,15 @@ sub clear {
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		$editor->AnnotationClearAll if $feature;
+		if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+			$editor->AnnotationClearAll;
+		}
 	}
 
-	$self->{annotations} = () if $feature;
+	# Reset the annotation store
+	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		$self->{annotations} = {};
+	}
 
 	# Remove all items from the tool
 	$self->{tree}->DeleteAllItems;
@@ -348,10 +352,9 @@ sub refresh {
 sub task_finish {
 	my $self = shift;
 	my $task = shift;
-	$self->{model} = $task->{model};
 
 	# Properly validate and warn about older deprecated syntax models
-	if ( Params::Util::_ARRAY0( $self->{model} ) ) {
+	if ( Params::Util::_ARRAY0( $task->{model} ) ) {
 
 		# Warn about the old array object from syntax task in debug mode
 		TRACE(    q{Syntax checker tasks should now return a hash containing an 'issues' array reference}
@@ -359,14 +362,16 @@ sub task_finish {
 			if DEBUG;
 
 		# TODO remove compatibility for older syntax checker model
-		if ( scalar @{ $self->{model} } == 0 ) {
+		if ( scalar @{ $task->{model} } == 0 ) {
 			$self->{model} = {};
 		} else {
 			$self->{model} = {
-				issues => $self->{model},
+				issues => $task->{model},
 				stderr => undef,
 			};
 		}
+	} else {
+		$self->{model} = $task->{model};
 	}
 
 	$self->render;
@@ -374,32 +379,28 @@ sub task_finish {
 
 sub render {
 	my $self     = shift;
-	my $elapsed  = Time::HiRes::time- $self->{task_start_time};
+	my $elapsed  = Time::HiRes::time - $self->{task_start_time};
 	my $model    = $self->{model} || {};
 	my $current  = $self->current;
 	my $editor   = $current->editor or return;
 	my $document = $current->document;
 	my $filename = $current->filename;
 	my $lock     = $self->lock_update;
-	my $feature  = $self->config->feature_syntax_check_annotations;
 
-	if ($feature) {
-
-		# Show only the current error/warning annotation when you move or click on a line
-		my $syntax = $self;
+	# Show only the current error/warning annotation when you move or click on a line
+	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
 		Wx::Event::EVT_LEFT_UP(
 			$editor,
 			sub {
-				my $self  = shift;
-				my $event = shift;
-				$syntax->_show_current_annotation(1);
-				$event->Skip(1);
+				$_[0]->main->syntax->_show_current_annotation(1);
+				$_[1]->Skip(1);
 			}
 		);
+
 		Wx::Event::EVT_KEY_UP(
 			$editor,
 			sub {
-				$syntax->_show_current_annotation(1);
+				$_[0]->main->syntax->_show_current_annotation(1);
 			}
 		);
 	}
@@ -411,8 +412,9 @@ sub render {
 	# Flush old results
 	$self->clear;
 
-	my $tree = $self->{tree};
-	my $root = $tree->AddRoot('Root');
+	my $tree   = $self->{tree};
+	my $images = $self->{images};
+	my $root   = $tree->AddRoot('Root');
 
 	# If there are no errors or warnings, clear the syntax checker pane
 	unless ( Params::Util::_HASH($model) ) {
@@ -435,91 +437,102 @@ sub render {
 				sprintf( Wx::gettext('No errors or warnings found within %3.2f secs.'), $elapsed )
 			);
 		}
-		$tree->SetItemImage( $root, $self->{images}->{ok} );
+		$tree->SetItemImage( $root, $images->{ok} );
 		$self->set_label_bitmap('ok');
 		return;
 	}
 
+	$tree->SetItemImage( $root, $images->{root} );
 	$tree->SetItemText(
 		$root,
-		(   defined $filename
+		defined($filename)
 			? sprintf(
-				Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'), scalar @{ $model->{issues} }, $filename,
-				$elapsed
-				)
-			: sprintf( Wx::gettext('Found %d issue(s) within %3.2f secs.'), scalar @{ $model->{issues} }, $elapsed )
-		)
+				Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'),
+				scalar @{ $model->{issues} },
+				$filename,
+				$elapsed,
+			)
+			: sprintf(
+				Wx::gettext('Found %d issue(s) within %3.2f secs.'),
+				scalar @{ $model->{issues} },
+				$elapsed,
+			)
 	);
-	$tree->SetItemImage( $root, $self->{images}->{root} );
 
-	$self->{annotations} = ();
-	my $i       = 0;
+	# Reset the annotations
+	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		$self->{annotations} = {};
+	}
+
 	my $worst   = 'ok';
 	my $maxline = $editor->GetLineCount;
 	my @issues  = sort { $a->{line} <=> $b->{line} } @{ $model->{issues} };
-	ISSUE:
 	foreach my $issue (@issues) {
-		my $line = $issue->{line} - 1;
-		if ( $line > $maxline ) {
-			$line = $maxline;
-		}
-		my $type       = exists $issue->{type} ? $issue->{type} : 'F';
-		my $marker     = $MESSAGE{$type}->{marker};
-		my $is_warning = $marker == Padre::Constant::MARKER_WARN;
-		$editor->MarkerAdd( $line, $marker );
+		my $line    = $issue->{line} - 1;
+		my $message = $MESSAGE{ $issue->{type} || 'F' };
+		my $warn    = $message->{marker} == Padre::Constant::MARKER_WARN;
 
 		# Is this the worst thing we have encountered?
 		unless ( $worst eq 'error' ) {
-			if ($is_warning) {
-				$worst = 'warning';
-			} else {
-				$worst = 'error';
-			}
+			$worst = $warn ? 'warning' : 'error';
 		}
 
-		# Underline the syntax warning/error line with an orange or red squiggle indicator
-		my $start  = $editor->PositionFromLine($line);
-		my $indent = $editor->GetLineIndentPosition($line);
-		my $end    = $editor->GetLineEndPosition($line);
-
-		# Change only the indicators
-		$editor->SetIndicatorCurrent(
-			$is_warning ? Padre::Constant::INDICATOR_WARNING : Padre::Constant::INDICATOR_ERROR );
-		$editor->IndicatorFillRange( $indent, $end - $indent );
-
-		# Collect annotations for later display
-		# One annotated line contains multiple errors/warnings
-		if ($feature) {
-			my $message = $issue->message;
-			my $char_style =
-				$is_warning
-				? sprintf( '%c', Padre::Constant::PADRE_WARNING() )
-				: sprintf( '%c', Padre::Constant::PADRE_ERROR() );
-			unless ( $self->{annotations}->{$line} ) {
-				$self->{annotations}->{$line} = {
-					message => $message,
-					style   => $char_style x length($message),
-				};
-			} else {
-				$self->{annotations}->{$line}->{message} .= "\n$message";
-				$self->{annotations}->{$line}->{style} .= $char_style x ( length($message) + 1 );
-			}
-		}
-
-		my $item = $tree->AppendItem(
+		# Create the basic tree entry
+		my $image = $warn ? $images->{warning} : $images->{error};
+		my $item  = $tree->AppendItem(
 			$root,
 			sprintf(
 				Wx::gettext('Line %d:   (%s)   %s'),
 				$line + 1,
-				$MESSAGE{$type}->{label},
+				$message->{label},
 				$issue->{message}
 			),
-			$is_warning ? $self->{images}->{warning} : $self->{images}->{error}
+			$image,
 		);
 		$tree->SetPlData( $item, $issue );
+
+		# Skip everything except for the current file
+		next unless $issue->{file} eq '-';
+		next unless $issue->{line} <= $maxline;
+
+		# Underline the syntax warning/error line with an orange or red squiggle indicator
+		my $start     = $editor->PositionFromLine($line);
+		my $indent    = $editor->GetLineIndentPosition($line);
+		my $end       = $editor->GetLineEndPosition($line);
+		my $indicator = $warn
+			? Padre::Constant::INDICATOR_WARNING
+			: Padre::Constant::INDICATOR_ERROR;
+
+		# Change only the indicators
+		$editor->SetIndicatorCurrent( $indicator );
+		$editor->IndicatorFillRange( $indent, $end - $indent );
+		$editor->MarkerAdd( $line, $message->{marker} );
+
+		# Collect annotations for later display
+		# One annotated line contains multiple errors/warnings
+		if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+			my $message = $issue->message;
+			my $style   = sprintf( '%c', $warn
+				? Padre::Constant::PADRE_WARNING
+				: Padre::Constant::PADRE_ERROR
+			);
+
+			if ( $self->{annotations}->{$line} ) {
+				$self->{annotations}->{$line}->{message} .= "\n$message";
+				$self->{annotations}->{$line}->{style} .= $style x ( length($message) + 1 );
+			} else {
+				$self->{annotations}->{$line} = {
+					message => $message,
+					style   => $style x length($message),
+				};
+			}
+		}
 	}
 
-	$self->_show_current_annotation(0) if $feature;
+	# Hide the annotations
+	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		$self->_show_current_annotation(0);
+	}
 
 	# Enable standard error output display button
 	unless ( $self->{show_stderr}->IsShown ) {
@@ -557,22 +570,24 @@ sub set_label_bitmap {
 }
 
 # Show the current line error/warning if it exists or hide the previous annotation
-sub _show_current_annotation {
-	my ( $self, $syntax_shown ) = @_;
-	my $editor = $self->main->current->editor;
+BEGIN {
+	*_show_current_annotation = sub {
+		my $self       = shift;
+		my $shown      = shift;
+		my $editor     = $self->main->current->editor;
+		my $line       = $editor->LineFromPosition( $editor->GetCurrentPos );
+		my $annotation = $self->{annotations}->{$line};
+		my $visible    = Wx::Scintilla::ANNOTATION_HIDDEN;
+		$editor->AnnotationClearAll;
+		if ($annotation) {
+			$editor->AnnotationSetText( $line, $annotation->{message} );
+			$editor->AnnotationSetStyles( $line, $annotation->{style} );
+			$visible = Wx::Scintilla::ANNOTATION_BOXED;
+			$self->_show_syntax_without_focus if $shown;
+		}
 
-	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
-	my $annotation   = $self->{annotations}->{$current_line};
-	my $visible      = Wx::Scintilla::ANNOTATION_HIDDEN;
-	$editor->AnnotationClearAll;
-	if ($annotation) {
-		$editor->AnnotationSetText( $current_line, $annotation->{message} );
-		$editor->AnnotationSetStyles( $current_line, $annotation->{style} );
-		$visible = Wx::Scintilla::ANNOTATION_BOXED;
-		$self->_show_syntax_without_focus if $syntax_shown;
-	}
-
-	$editor->AnnotationSetVisible($visible);
+		$editor->AnnotationSetVisible($visible);
+	};
 }
 
 # Shows the non-visible syntax check tab without

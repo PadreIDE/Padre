@@ -68,6 +68,8 @@ the even version for the release, even during development.
     - Syntax check status is reflected in the label for the Syntax Check
       output so you can see the result when it is not at the front (ADAMK)
     - Converted the Document Statistics dialog to wxFormBuilder (ADAMK)
+    - When syntax check fails, only show markers for the errors in the file
+      that is being displayed in the editor (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
