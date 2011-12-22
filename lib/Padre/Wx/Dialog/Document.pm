@@ -70,8 +70,14 @@ sub refresh {
 	$self->{newline_type}->SetLabel( $document->newline_type );
 
 	# Update the overall document statistics
-	$self->{document_lines} = $editor->GetLineCount;
-	$self->{document_bytes} = $editor->GetLength;
+	my $text  = $editor->GetText;
+	my @words = $text =~ /(\w+)/g;
+	$text =~ s/\s//g;
+	$self->{document_bytes}->SetLabel( $editor->GetLength );
+	$self->{document_characters}->SetLabel( length $editor->GetText );
+	$self->{document_visible}->SetLabel( length $text );
+	$self->{document_lines}->SetLabel( $editor->GetLineCount );
+	$self->{document_words}->SetLabel( scalar @words );
 
 	return;
 }

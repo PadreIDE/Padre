@@ -67,7 +67,7 @@ sub new {
 		Wx::gettext("Document Class"),
 	);
 
-	$self->{document_type} = Wx::StaticText->new(
+	$self->{document_class} = Wx::StaticText->new(
 		$self,
 		-1,
 		'',
@@ -259,7 +259,7 @@ sub new {
 	$fgSizer21->Add( $m_staticText156, 0, Wx::ALL, 5 );
 	$fgSizer21->Add( $self->{document_type}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer21->Add( $m_staticText158, 0, Wx::ALL, 5 );
-	$fgSizer21->Add( $self->{document_type}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer21->Add( $self->{document_class}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer21->Add( $m_staticText160, 0, Wx::ALL, 5 );
 	$fgSizer21->Add( $self->{mime_type}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer21->Add( $m_staticText162, 0, Wx::ALL, 5 );
