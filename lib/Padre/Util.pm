@@ -433,22 +433,6 @@ sub share {
 		return $plugin_dir;
 	}
 
-	#    if ( defined $ENV{PADRE_PAR_PATH} ) {
-	#        # File::ShareDir new style path
-	#        my $path = File::Spec->catdir(
-	#            $ENV{PADRE_PAR_PATH},
-	#            'inc', 'auto', 'share', 'dist', 'Padre'
-	#        );
-	#        return $path if -d $path;
-	#
-	#        # File::ShareDir old style path
-	#        $path = File::Spec->catdir(
-	#            $ENV{PADRE_PAR_PATH},
-	#            'inc', 'share'
-	#        );
-	#        return $path if -d $path;
-	#    }
-
 	# Rely on automatic handling of everything
 	require File::ShareDir;
 	if ($plugin) {
@@ -536,7 +520,9 @@ popups on each execution. on non-win32 platforms, it runs a C<system>
 command.
 
 Returns 1 on success and 0 on failure.
+
 =cut
+
 sub run_in_directory {
 	my ( $cmd, $directory ) = @_;
 
