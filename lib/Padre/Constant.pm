@@ -69,14 +69,16 @@ use constant {
 };
 
 # Scintilla Marker Allocation
+# The markers will be layered on top of each other with the highest
+# value sitting topmost on any resulting stack of markers.
 use constant {
-	MARKER_ERROR      => 1,
-	MARKER_WARN       => 2,
-	MARKER_LOCATION   => 3, # current location of the debugger
-	MARKER_BREAKPOINT => 4, # location of the debugger breakpoint
-	MARKER_ADDED      => 5, # Line added
-	MARKER_CHANGED    => 6, # Line changed
-	MARKER_DELETED    => 7, # Line deleted
+	MARKER_WARN          => 1,
+	MARKER_ERROR         => 2,
+	MARKER_ADDED         => 3, # Line added
+	MARKER_CHANGED       => 4, # Line changed
+	MARKER_DELETED       => 5, # Line deleted
+	MARKER_LOCATION      => 6, # current location of the debugger
+	MARKER_BREAKPOINT    => 7, # location of the debugger breakpoint
 	MARKER_NOT_BREAKABLE => 8, # location of the debugger not break able
 };
 
