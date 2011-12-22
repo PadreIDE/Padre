@@ -396,18 +396,19 @@ sub on_change {
 
 # Fires half a second after the user stops typing or otherwise stops changing
 sub on_change_dwell {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $editor = $main->current->editor;
+	my $self    = shift;
+	my $main    = $self->main;
+	my $current = $main->current;
+	my $editor  = $current->editor;
 
 	# Only trigger tool refresh actions if we are the active document
 	if ( $editor and $self->GetId == $editor->GetId ) {
 		$self->refresh_line_numbers;
-		$main->refresh_functions;
-		$main->refresh_outline;
-		$main->refresh_syntaxcheck;
-		$main->refresh_todo;
-		$main->refresh_diff;
+		$main->refresh_functions($current);
+		$main->refresh_outline($current);
+		$main->refresh_syntaxcheck($current);
+		$main->refresh_todo($current);
+		$main->refresh_diff($current);
 	}
 
 	return;
