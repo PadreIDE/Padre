@@ -1410,13 +1410,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
-# setting(
-	# name    => 'feature_debug2',
-	# type    => Padre::Constant::BOOLEAN,
-	# store   => Padre::Constant::HUMAN,
-	# default => 1,
-	# help    => _T('Toggle Debug2'),
-# );
 
 # Enable experimental quick fix system.
 setting(
