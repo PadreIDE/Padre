@@ -16,12 +16,35 @@ our @ISA     = qw{
 
 
 ######################################################################
+# Constructor
+
+sub new {
+	my $class = shift;
+	my $self  = $class->SUPER::new(@_);
+	$self->CenterOnParent;
+	return $self;
+}
+
+
+
+
+
+######################################################################
 # Event Handlers
 
 sub on_close {
 	my $self  = shift;
 	my $event = shift;
 	$self->main->editor_focus;
+	$event->Skip(1);
+}
+
+sub on_key_up {
+	my $self = shift;
+	my $event = shift;
+
+	$DB::single = 1;
+
 	$event->Skip(1);
 }
 
@@ -67,24 +90,19 @@ sub find_next_clicked {
 sub run {
 	my $self = shift;
 	my $main = $self->main;
-	my $text = '';
+	my $find = $self->find_term;
 
 	# If Find Fast is showing inherit settings from it
 	if ( $main->has_findfast and $main->findfast->IsShown ) {
-		$text = $main->findfast->find_term->GetValue;
+		$find->refresh( $main->findfast->find_term->GetValue );
 		$main->show_findfast(0);
-
 	} else {
-		$text = $self->current->text;
-		$text = '' if $text =~ /\n/;
+		$find->refresh( $self->current->text );
 	}
 
-	# Clear out and reset the search term box
-	$self->find_term->refresh($text);
-	$self->find_term->SetFocus;
+	# Refresh and show the dialog
 	$self->refresh;
-
-	# Show the dialog
+	$find->SetFocus;
 	$self->Show;
 }
 

@@ -34,6 +34,13 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
+	Wx::Event::EVT_KEY_UP(
+		$self,
+		sub {
+			shift->on_key_up(@_);
+		},
+	);
+
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
@@ -215,6 +222,10 @@ sub find_case {
 
 sub find {
 	$_[0]->{find};
+}
+
+sub on_key_up {
+	$_[0]->main->error('Handler method on_key_up for event Padre::Wx::FBP::FindInFiles.OnKeyUp not implemented');
 }
 
 sub refresh {

@@ -34,6 +34,13 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
+	Wx::Event::EVT_CLOSE(
+		$self,
+		sub {
+			shift->on_close(@_);
+		},
+	);
+
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
@@ -245,6 +252,10 @@ sub find_next {
 
 sub replace {
 	$_[0]->{replace};
+}
+
+sub on_close {
+	$_[0]->main->error('Handler method on_close for event Padre::Wx::FBP::Replace.OnClose not implemented');
 }
 
 sub refresh {

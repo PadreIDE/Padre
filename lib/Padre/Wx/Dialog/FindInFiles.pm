@@ -20,14 +20,6 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
-
-	# Default the search directory to the root of the current project
-	my $project = $self->current->project;
-	if ( defined $project ) {
-		$self->find_directory->SetValue( $project->root );
-	}
-
-	# Prepare to be shown
 	$self->CenterOnParent;
 
 	Wx::Event::EVT_KEY_UP(
@@ -81,35 +73,26 @@ sub directory {
 sub run {
 	my $self    = shift;
 	my $main    = $self->main;
+	my $find    = $self->find_term;
 	my $current = $self->current;
 
-	# Clear
-	$self->{cycle_ctrl_f} = 0;
-
-	# Do they have a specific search term in mind?
-	my $text = $current->text;
-	unless ( defined $text ) {
-		$text = '';
-	}
-	unless ( length $text ) {
-		if ( $main->has_findfast and $main->findfast->visible ) {
-			my $fast = $main->findfast->find_term;
-			$text = $fast if length $fast;	
-		}
-	}
-	if ( $text =~ /\n/ ) {
-		$text = '';
-	}
-
 	# Clear out and reset the search term box
-	$self->find_term->refresh($text);
-	$self->find_term->SetFocus;
+	if ( $main->has_findfast and $main->findfast->IsShown ) {
+		$find->refresh( $main->findfast->find_term->GetValue );
+		$main->show_findfast(0);
+	} else {
+		$find->refresh( $current->text );
+	}
+
+	# Default the search directory to the root of the current project
+	my $project = $current->project;
+	if ( defined $project ) {
+		$self->find_directory->SetValue( $project->root );
+	}
 
 	# Update the user interface
 	$self->refresh;
-
-	# Hide the Fast Find if visible
-	$main->show_findfast(0);
+	$find->SetFocus;
 
 	# Show the dialog
 	my $result = $self->ShowModal;
@@ -120,13 +103,14 @@ sub run {
 		return;
 	}
 
-	# Run the search in the Find in Files tool
+	# Run the search in the Find in Files view
 	$main->show_findinfiles;
 	$main->findinfiles->search(
 		root   => $self->find_directory->SaveValue,
 		search => $self->as_search,
 	);
 
+	$main->editor_focus;
 	return;
 }
 
@@ -160,8 +144,6 @@ sub key_up {
 	# Handle Ctrl-F only
 	return unless $mod == 2;
 	return unless $code == 70;
-
-	$self->{cycle_ctrl_f} = 1;
 
 	$self->Hide;
 

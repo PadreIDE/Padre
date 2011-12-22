@@ -186,8 +186,6 @@ sub search_previous {
 
 sub show {
 	my $self   = shift;
-	my $main   = $self->main;
-	my $aui    = $main->aui;
 	my $editor = $self->current->editor or return;
 
 	# Capture the selection location before we opened the panel
@@ -205,6 +203,7 @@ sub show {
 	$self->refresh;
 
 	# Show the AUI pane
+	my $aui = $self->main->aui;
 	$aui->GetPane('footer')->Show;
 	$aui->Update;
 }

@@ -19,10 +19,7 @@ our @ISA     = 'Padre::Wx::FBP::Replace';
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
-
-	# Prepare to be shown
 	$self->CenterOnParent;
-
 	return $self;
 }
 
@@ -34,39 +31,25 @@ sub new {
 # Main Methods
 
 sub run {
-	my $self    = shift;
-	my $main    = $self->main;
-	my $current = $self->current;
-	my $config  = $current->config;
+	my $self = shift;
+	my $main = $self->main;
+	my $find = $self->find_term;
 
-	# Do they have a specific search term in mind?
-	my $text = $current->text;
-	unless ( defined $text ) {
-		$text = '';
-	}
-	unless ( length $text ) {
-		if ( $main->has_findfast and $main->findfast->visible ) {
-			my $fast = $main->findfast->find_term;
-			$text = $fast if length $fast;	
-		}
-	}
-	if ( $text =~ /\n/ ) {
-		$text = '';
-	}
-
-	# Clear out and reset the search term box
-	$self->{find_term}->refresh($text);
-	if ( length $text ) {
-		$self->{replace_term}->SetFocus;
+	# If Find Fast is showing inherit settings from it
+	if ( $main->has_findfast and $main->findfast->IsShown ) {
+		$find->refresh( $main->findfast->find_term->GetValue );
+		$main->show_findfast(0);
 	} else {
-		$self->{find_term}->SetFocus;
+		$find->refresh( $self->current->text );
 	}
 
-	# Do an initial refresh to hide unusable buttons
+	# Refresh the dialog and prepare to show
 	$self->refresh;
-
-	# Hide the Fast Find if visible
-	$main->show_findfast(0);
+	if ( length $find->GetValue ) {
+		$self->replace_term->SetFocus;
+	} else {
+		$find->SetFocus;
+	}
 
 	# Show the dialog
 	$self->Show;
@@ -78,6 +61,13 @@ sub run {
 
 ######################################################################
 # Event Handlers
+
+sub on_close {
+	my $self  = shift;
+	my $event = shift;
+	$self->main->editor_focus;
+	$event->Skip(1);
+}
 
 # Makes sure the find button is only enabled when the field
 # values are valid

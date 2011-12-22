@@ -20,16 +20,7 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
-
-	# Default the search directory to the root of the current project
-	my $project = $self->current->project;
-	if ( defined $project ) {
-		$self->find_directory->SetValue( $project->root );
-	}
-
-	# Prepare to be shown
 	$self->CenterOnParent;
-
 	return $self;
 }
 
@@ -73,37 +64,30 @@ sub directory {
 sub run {
 	my $self    = shift;
 	my $main    = $self->main;
+	my $find    = $self->find_term;
 	my $current = $self->current;
-	my $config  = $current->config;
 
-	# Do they have a specific search term in mind?
-	my $text = $current->text;
-	unless ( defined $text ) {
-		$text = '';
-	}
-	unless ( length $text ) {
-		if ( $main->has_findfast and $main->findfast->visible  ) {
-			my $fast = $main->findfast->find_term;
-			$text = $fast if length $fast;	
-		}
-	}
-	if ( $text =~ /\n/ ) {
-		$text = '';
+	# Inherit the search term from the other search tools
+	if ( $main->has_findfast and $main->findfast->IsShown ) {
+		$find->refresh( $main->findfast->find_term->GetValue );
+		$main->show_findfast(0);
+	} else {
+		$find->refresh( $current->text );
 	}
 
-	# Clear out and reset the search term box
-	$self->find_term->refresh($text);
-	if ( length $text ) {
+	# Default the search directory to the root of the current project
+	my $project = $current->project;
+	if ( defined $project ) {
+		$self->find_directory->SetValue( $project->root );
+	}
+
+	# Refresh the dialog and prepare to show
+	$self->refresh;
+	if ( length $find->GetValue ) {
 		$self->replace_term->SetFocus;
 	} else {
-		$self->find_term->SetFocus;
+		$find->SetFocus;
 	}
-
-	# Update the user interface
-	$self->refresh;
-
-	# Hide the Fast Find if visible
-	$main->show_findfast(0);
 
 	# Show the dialog
 	my $result = $self->ShowModal;
@@ -123,6 +107,7 @@ sub run {
 		replace => $self->replace_term->GetValue,
 	);
 
+	$main->editor_focus;
 	return;
 }
 

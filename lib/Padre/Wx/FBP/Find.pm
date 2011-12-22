@@ -40,6 +40,13 @@ sub new {
 		},
 	);
 
+	Wx::Event::EVT_KEY_UP(
+		$self,
+		sub {
+			shift->on_key_up(@_);
+		},
+	);
+
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
@@ -203,6 +210,10 @@ sub find_all {
 
 sub on_close {
 	$_[0]->main->error('Handler method on_close for event Padre::Wx::FBP::Find.OnClose not implemented');
+}
+
+sub on_key_up {
+	$_[0]->main->error('Handler method on_key_up for event Padre::Wx::FBP::Find.OnKeyUp not implemented');
 }
 
 sub refresh {

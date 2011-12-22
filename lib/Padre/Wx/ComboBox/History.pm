@@ -70,13 +70,15 @@ sub new {
 sub refresh {
 	my $self = shift;
 	my $text = shift;
+	$text = '' unless defined $text;
+	$text = '' if $text =~ /\n/;
 
 	# Refresh the recent values
 	my @recent = Padre::DB::History->recent( $self->{type} );
 
 	# Update the Wx object from the list
 	$self->Clear;
-	if ( defined $text and length $text ) {
+	if ( length $text ) {
 		$self->SetValue($text);
 		unless ( grep { $text eq $_ } @recent ) {
 			$self->Append($text);
@@ -95,7 +97,7 @@ sub SaveValue {
 	my $value = $self->GetValue;
 
 	# If this is a value is not in our existing recent list, save it
-	if ( defined $value and length $value ) {
+	if ( length $value ) {
 		if ( $self->FindString($value) == Wx::NOT_FOUND ) {
 			Padre::DB::History->create(
 				type => $self->{type},
