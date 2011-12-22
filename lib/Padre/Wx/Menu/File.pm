@@ -269,7 +269,7 @@ sub new {
 
 	# Word Stats
 	$self->{docstat} = $self->add_menu_action(
-		'file.doc_stat',
+		'file.properties',
 	);
 
 	$self->AppendSeparator;

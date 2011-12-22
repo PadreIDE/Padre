@@ -6469,30 +6469,6 @@ sub on_aui_pane_close {
 
 =pod
 
-=head3 C<on_doc_stats>
-
-    $main->on_doc_stats;
-
-Compute various stats about current document, and display them in a
-message. No return value.
-
-=cut
-
-sub on_doc_stats {
-	my ($self) = @_;
-
-	my $doc = $self->current->document;
-	if ( not $doc ) {
-		$self->message( Wx::gettext('No file is open'), Wx::gettext('Stats') );
-		return;
-	}
-
-	require Padre::Wx::Dialog::DocStats;
-	Padre::Wx::Dialog::DocStats->new($self)->Show;
-}
-
-=pod
-
 =head3 C<on_tab_and_space>
 
     $main->on_tab_and_space( $style );

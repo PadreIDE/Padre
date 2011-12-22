@@ -537,13 +537,14 @@ sub init {
 	# Word Stats
 
 	Padre::Wx::Action->new(
-		name        => 'file.doc_stat',
+		name        => 'file.properties',
 		label       => _T('&Document Statistics'),
 		comment     => _T('Word count and other statistics of the current document'),
 		need_editor => 1,
 		toolbar     => 'actions/document-properties',
 		menu_event  => sub {
-			$_[0]->on_doc_stats;
+			require Padre::Wx::Dialog::Document;
+			Padre::Wx::Dialog::Document->run($_[0]);
 		},
 	);
 

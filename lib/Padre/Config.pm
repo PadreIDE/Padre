@@ -863,7 +863,6 @@ setting(
 		. 'search.find;'
 		. 'search.replace;' . '|;'
 		. 'edit.comment_toggle;' . '|;'
-		. 'file.doc_stat;' . '|;'
 		. 'search.open_resource;'
 		. 'search.quick_menu_access;' . '|;'
 		. 'run.run_document;'

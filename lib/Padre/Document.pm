@@ -666,10 +666,8 @@ sub load_file {
 
 	# if guess encoding fails then use 'utf-8'
 	require Padre::Locale;
-	$self->{encoding} = Padre::Locale::encoding_from_string($content);
-
-	#warn $self->{encoding};
 	require Encode;
+	$self->{encoding} = Padre::Locale::encoding_from_string($content);
 	$content = Encode::decode( $self->{encoding}, $content );
 
 	# Determine new line type using file content.
