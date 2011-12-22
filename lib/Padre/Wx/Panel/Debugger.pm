@@ -371,23 +371,23 @@ sub _set_debugger {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
 		if ( $self->main->{panel_breakpoints} ) {
-			$self->main->{panel_breakpoints}->on_refresh_click();
+			$self->main->{panel_breakpoints}->on_refresh_click;
 		}
 
 		# we only want to do this if we are loading other packages of ours
 		# $self->_bp_autoload();
 	}
 
-	$editor->goto_line_centerize( $row - 1 );
+	$editor->goto_line_centerize( $row );
 
 	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
 	# They should be reunited soon !!!! (or not)
 
-	$editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION() );
-	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_LOCATION() );
+	$editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION );
+	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_LOCATION );
 
 	# update variables and output
-	$self->_output_variables();
+	$self->_output_variables;
 
 	return 1;
 }
