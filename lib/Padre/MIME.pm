@@ -570,21 +570,32 @@ sub detect {
 		$file = $file->filename;
 	}
 
-	# Try derive the mime type from the file extension
+	# Use SVN metadata if we are allowed to
 	my $mime = undef;
-	if ( $file and $file =~ /\.([^.]+)$/ ) {
-		my $ext = lc $1;
-		$mime = $EXT{$ext} if $EXT{$ext};
+	if ( $param{svn} ) {
+		require Padre::SVN;
+		local $@;
+		eval {
+			$mime = Padre::SVN::file_mimetype($file);
+		};
+	}
 
-	} elsif ( $file ) {
-		# Try to derive the mime type from the basename
-		# Makefile is now highlighted as a Makefile
-		# Changelog files are now displayed as text files
-		require File::Basename;
-		my $basename = File::Basename::basename($file);
-		if ($basename) {
-			$mime = 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
-			$mime = 'text/plain'      if $basename =~ /^(changes|changelog)/i;
+	# Try derive the mime type from the file extension
+	if ( $file and not defined $mime ) {
+		if ( $file =~ /\.([^.]+)$/ ) {
+			my $ext = lc $1;
+			$mime = $EXT{$ext} if $EXT{$ext};
+
+		} else {
+			# Try to derive the mime type from the basename
+			# Makefile is now highlighted as a Makefile
+			# Changelog files are now displayed as text files
+			require File::Basename;
+			my $basename = File::Basename::basename($file);
+			if ($basename) {
+				$mime = 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+				$mime = 'text/plain'      if $basename =~ /^(changes|changelog)/i;
+			}
 		}
 	}
 

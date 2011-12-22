@@ -9,6 +9,12 @@ use File::Spec ();
 
 our $VERSION = '0.93';
 
+# Find the mime type for a file
+sub file_mimetype {
+	my $hash = file_props(shift);
+	return $hash->{'svn:mime-type'};
+}
+
 # Find and parse the properties file
 sub file_props {
 	my $file = shift;
