@@ -572,16 +572,12 @@ sub detect {
 
 	# Use SVN metadata if we are allowed to
 	my $mime = undef;
-	if ( $param{svn} ) {
-		require Padre::SVN;
-		local $@;
-		eval {
-			$mime = Padre::SVN::file_mimetype($file);
-		};
+	if ( $param{svn} and $file ) {
+		$mime = $class->detect_mimetype($file);
 	}
 
 	# Try derive the mime type from the file extension
-	if ( $file and not defined $mime ) {
+	if ( not defined $mime and $file ) {
 		if ( $file =~ /\.([^.]+)$/ ) {
 			my $ext = lc $1;
 			$mime = $EXT{$ext} if $EXT{$ext};
@@ -612,7 +608,7 @@ sub detect {
 
 	# Fallback mime-type of new files, should be configurable in the GUI
 	# TO DO: Make it configurable in the GUI :)
-	unless ( defined $mime or defined $file ) {
+	if ( not defined $mime and not defined $file ) {
 		$mime = 'application/x-perl';
 	}
 
@@ -629,6 +625,18 @@ sub detect {
 		}
 	}
 
+	return $mime;
+}
+
+sub detect_svn {
+	my $class = shift;
+	my $file  = shift;
+	my $mime  = undef;
+	local $@;
+	eval {
+		require Padre::SVN;
+		$mime = Padre::SVN::file_mimetype($file);
+	};
 	return $mime;
 }
 
