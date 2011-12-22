@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-20 20:10-0800\n"
+"POT-Creation-Date: 2011-12-21 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 msgid "&Brace Matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:82 lib/Padre/Wx/FBP/ReplaceInFiles.pm:107
+#: lib/Padre/Wx/FBP/FindInFiles.pm:89 lib/Padre/Wx/FBP/ReplaceInFiles.pm:107
 msgid "&Browse"
 msgstr ""
 
@@ -169,8 +169,8 @@ msgstr ""
 msgid "&Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:129 lib/Padre/Wx/FBP/Find.pm:95
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:154 lib/Padre/Wx/FBP/Replace.pm:106
+#: lib/Padre/Wx/FBP/FindInFiles.pm:136 lib/Padre/Wx/FBP/Find.pm:102
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:154 lib/Padre/Wx/FBP/Replace.pm:113
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:149 lib/Padre/Wx/FBP/FindInFiles.pm:145
+#: lib/Padre/Wx/Replace.pm:149 lib/Padre/Wx/FBP/FindInFiles.pm:152
 msgid "&Find"
 msgstr ""
 
@@ -472,8 +472,8 @@ msgstr ""
 msgid "&Regex Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:121 lib/Padre/Wx/FBP/Find.pm:79
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:146 lib/Padre/Wx/FBP/Replace.pm:114
+#: lib/Padre/Wx/FBP/FindInFiles.pm:128 lib/Padre/Wx/FBP/Find.pm:86
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:146 lib/Padre/Wx/FBP/Replace.pm:121
 msgid "&Regular Expression"
 msgstr ""
 
@@ -494,7 +494,7 @@ msgid "&Rename Variable..."
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:169 lib/Padre/Wx/FBP/ReplaceInFiles.pm:170
-#: lib/Padre/Wx/FBP/Replace.pm:155
+#: lib/Padre/Wx/FBP/Replace.pm:162
 msgid "&Replace"
 msgstr ""
 
@@ -1056,10 +1056,10 @@ msgstr ""
 msgid "CTRL"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:154
-#: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:136
+#: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:161
+#: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:143
 #: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:179
-#: lib/Padre/Wx/FBP/Replace.pm:187
+#: lib/Padre/Wx/FBP/Replace.pm:194
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -1794,7 +1794,7 @@ msgstr ""
 msgid "Directory"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:65 lib/Padre/Wx/FBP/ReplaceInFiles.pm:90
+#: lib/Padre/Wx/FBP/FindInFiles.pm:72 lib/Padre/Wx/FBP/ReplaceInFiles.pm:90
 msgid "Directory:"
 msgstr ""
 
@@ -2320,7 +2320,7 @@ msgstr ""
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:98 lib/Padre/Wx/FBP/ReplaceInFiles.pm:123
+#: lib/Padre/Wx/FBP/FindInFiles.pm:105 lib/Padre/Wx/FBP/ReplaceInFiles.pm:123
 msgid "File Types:"
 msgstr ""
 
@@ -2420,7 +2420,7 @@ msgstr ""
 msgid "Find"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:128
+#: lib/Padre/Wx/FBP/Find.pm:135
 msgid "Find &All"
 msgstr ""
 
@@ -2428,8 +2428,8 @@ msgstr ""
 msgid "Find &Method Declaration"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:1197 lib/Padre/Wx/FBP/Find.pm:111
-#: lib/Padre/Wx/FBP/Replace.pm:138
+#: lib/Padre/Wx/ActionLibrary.pm:1197 lib/Padre/Wx/FBP/Find.pm:118
+#: lib/Padre/Wx/FBP/Replace.pm:145
 msgid "Find &Next"
 msgstr ""
 
@@ -3277,8 +3277,8 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:536 lib/Padre/Wx/Replace.pm:583
-#: lib/Padre/Wx/Dialog/Find.pm:47 lib/Padre/Wx/Dialog/Replace.pm:116
-#: lib/Padre/Wx/Dialog/Replace.pm:147
+#: lib/Padre/Wx/Dialog/Find.pm:70 lib/Padre/Wx/Dialog/Replace.pm:106
+#: lib/Padre/Wx/Dialog/Replace.pm:137
 #, perl-format
 msgid "No matches found for \"%s\"."
 msgstr ""
@@ -4202,7 +4202,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:135 lib/Padre/Wx/FBP/Replace.pm:171
+#: lib/Padre/Wx/Replace.pm:135 lib/Padre/Wx/FBP/Replace.pm:178
 msgid "Replace &All"
 msgstr ""
 
@@ -4218,7 +4218,7 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:65 lib/Padre/Wx/FBP/Replace.pm:73
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:65 lib/Padre/Wx/FBP/Replace.pm:80
 msgid "Replace With:"
 msgstr ""
 
@@ -4240,12 +4240,12 @@ msgstr ""
 msgid "Replace in Files"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:574 lib/Padre/Wx/Dialog/Replace.pm:138
+#: lib/Padre/Wx/Replace.pm:574 lib/Padre/Wx/Dialog/Replace.pm:128
 #, perl-format
 msgid "Replaced %d match"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:574 lib/Padre/Wx/Dialog/Replace.pm:138
+#: lib/Padre/Wx/Replace.pm:574 lib/Padre/Wx/Dialog/Replace.pm:128
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -4478,16 +4478,16 @@ msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Directory.pm:514
 #: lib/Padre/Wx/FBP/CPAN.pm:269 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:385
-#: lib/Padre/Wx/Dialog/Find.pm:50
+#: lib/Padre/Wx/Dialog/Find.pm:73
 msgid "Search"
 msgstr ""
 
-#: lib/Padre/Wx/Replace.pm:121 lib/Padre/Wx/FBP/Find.pm:87
+#: lib/Padre/Wx/Replace.pm:121 lib/Padre/Wx/FBP/Find.pm:94
 msgid "Search &Backwards"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:40 lib/Padre/Wx/FBP/Find.pm:46
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:40 lib/Padre/Wx/FBP/Replace.pm:40
+#: lib/Padre/Wx/FBP/FindInFiles.pm:47 lib/Padre/Wx/FBP/Find.pm:53
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:40 lib/Padre/Wx/FBP/Replace.pm:47
 msgid "Search &Term:"
 msgstr ""
 
@@ -4501,8 +4501,8 @@ msgid "Search again for '%s'"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:537 lib/Padre/Wx/Replace.pm:579
-#: lib/Padre/Wx/Replace.pm:584 lib/Padre/Wx/Dialog/Replace.pm:119
-#: lib/Padre/Wx/Dialog/Replace.pm:143 lib/Padre/Wx/Dialog/Replace.pm:148
+#: lib/Padre/Wx/Replace.pm:584 lib/Padre/Wx/Dialog/Replace.pm:109
+#: lib/Padre/Wx/Dialog/Replace.pm:133 lib/Padre/Wx/Dialog/Replace.pm:138
 msgid "Search and Replace"
 msgstr ""
 
@@ -4567,8 +4567,8 @@ msgstr ""
 msgid "Select &All"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/FindInFiles.pm:60
-#: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:53
+#: lib/Padre/Wx/Dialog/FindInFiles.pm:52
+#: lib/Padre/Wx/Dialog/ReplaceInFiles.pm:44
 msgid "Select Directory"
 msgstr ""
 
