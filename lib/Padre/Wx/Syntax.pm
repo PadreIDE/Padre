@@ -318,6 +318,12 @@ sub refresh {
 		return;
 	}
 
+	# Shortcut if there is nothing in the document to compile
+	if ( $document->is_unused ) {
+		$self->disable;
+		return;
+	}
+
 	# Ensure the widget is visible
 	$tree->Show(1);
 
@@ -328,11 +334,6 @@ sub refresh {
 	# Clear out the syntax check window, leaving the margin as is
 	$tree->DeleteAllItems;
 	$self->_update_help_page;
-
-	# Shortcut if there is nothing in the document to compile
-	if ( $document->is_unused ) {
-		return;
-	}
 
 	# Fire the background task discarding old results
 	$self->{task_start_time} = Time::HiRes::time;
