@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-22 04:10-0800\n"
+"POT-Creation-Date: 2011-12-22 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1991,11 +1991,11 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1451
+#: lib/Padre/Config.pm:1444
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1470
+#: lib/Padre/Config.pm:1463
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
 msgstr ""
 
@@ -5171,12 +5171,12 @@ msgstr ""
 msgid "Special &Value..."
 msgstr ""
 
-#: lib/Padre/Config.pm:1461
+#: lib/Padre/Config.pm:1454
 msgid ""
 "Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled."
 msgstr ""
 
-#: lib/Padre/Config.pm:1480
+#: lib/Padre/Config.pm:1473
 msgid ""
 "Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled."
 msgstr ""
@@ -5319,11 +5319,11 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1452
+#: lib/Padre/Config.pm:1445
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1471
+#: lib/Padre/Config.pm:1464
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr ""
 
@@ -5347,19 +5347,19 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Config.pm:1525
+#: lib/Padre/Config.pm:1518
 msgid "Toggle Diff window feature that compares two buffers graphically"
 msgstr ""
 
-#: lib/Padre/Config.pm:1516
+#: lib/Padre/Config.pm:1509
 msgid "Toggle MetaCPAN CPAN explorer panel"
 msgstr ""
 
-#: lib/Padre/Config.pm:1534
+#: lib/Padre/Config.pm:1527
 msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
-#: lib/Padre/Config.pm:1498
+#: lib/Padre/Config.pm:1491
 msgid "Toggle document differences feature"
 msgstr ""
 
@@ -5372,11 +5372,11 @@ msgid ""
 "Delete a breakpoint from the specified line."
 msgstr ""
 
-#: lib/Padre/Config.pm:1489
+#: lib/Padre/Config.pm:1482
 msgid "Toggle syntax checker annotations in editor"
 msgstr ""
 
-#: lib/Padre/Config.pm:1507
+#: lib/Padre/Config.pm:1500
 msgid "Toggle version control system support"
 msgstr ""
 
