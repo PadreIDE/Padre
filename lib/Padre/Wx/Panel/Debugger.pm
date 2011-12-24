@@ -330,7 +330,8 @@ sub debug_perl {
 	$self->{client}->listener;
 
 	$self->{file} = $filename;
-
+	
+	#Todo list request Ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->get;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
@@ -378,7 +379,7 @@ sub _set_debugger {
 		# $self->_bp_autoload();
 	}
 
-	$editor->goto_line_centerize( $row );
+	$editor->goto_line_centerize( $row -1 );
 
 	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
 	# They should be reunited soon !!!! (or not)
@@ -485,7 +486,8 @@ sub debug_step_in {
 	# }
 	# return;
 	# }
-
+	
+	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_in;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
@@ -514,7 +516,8 @@ sub debug_step_over {
 	# return;
 	# }
 	# }
-
+	
+	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_over;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
@@ -542,7 +545,8 @@ sub debug_step_out {
 	# $main->error( Wx::gettext('Debugger not running') );
 	# return;
 	# }
-
+	
+	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_out;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
@@ -573,7 +577,8 @@ sub debug_run_till {
 	# return;
 	# }
 	# }
-
+	
+	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->run($param);
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
