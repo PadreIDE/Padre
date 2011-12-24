@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-22 16:10-0800\n"
+"POT-Creation-Date: 2011-12-24 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -635,7 +635,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:669
+#: lib/Padre/Wx/Panel/Debugger.pm:674
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1489,7 +1489,7 @@ msgstr ""
 msgid "Could not determine the comment character for %s document type"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:643
+#: lib/Padre/Wx/Panel/Debugger.pm:648
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1671,7 +1671,7 @@ msgstr ""
 msgid "Debugger is already running"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:350
+#: lib/Padre/Wx/Panel/Debugger.pm:351
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
