@@ -36,7 +36,7 @@ sub find_props {
 # Parse a property file
 sub parse_props {
 	my $file = shift;
-	open( FILE, '<', $file ) or die "Failed to open '$file'";
+	open( my $fh, '<', $file ) or die "Failed to open '$file'";
 
 	# Simple state parser
 	my %hash   = ();
@@ -44,7 +44,7 @@ sub parse_props {
 	my $vbytes = 0;
 	my $key    = undef;
 	my $value  = undef;
-	while ( my $line = <FILE> ) {
+	while ( my $line = <$fh> ) {
 		if ( $vbytes ) {
 			my $l = length $line;
 			if ( $l == $vbytes + 1 ) {
@@ -95,6 +95,8 @@ sub parse_props {
 		$kbytes = $1;
 		$key    = '';
 	}
+
+	close $fh;
 
 	return \%hash;
 }
