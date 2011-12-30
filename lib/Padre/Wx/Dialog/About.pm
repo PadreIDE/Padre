@@ -60,7 +60,7 @@ sub run {
 
 sub _translation {
 	my $self = shift;
-	
+
 	#TODO will all translators please add there name
 	# in native language please and uncommet please
 
@@ -111,8 +111,10 @@ sub _information {
 	$output .= $self->_core_info;
 	$output .= $self->_wx_info;
 	$output .= "Other...\n";
-	$output .= sprintf "%*s %s\n", OFFSET, 'PPI', $PPI::VERSION;
-	$output .= sprintf "%*s %s\n", OFFSET, 'Debug-Client', $Debug::Client::VERSION;
+	$output .= sprintf "%*s %s\n", OFFSET, 'PPI',   $PPI::VERSION;
+	if ( defined $Debug::Client::VERSION ) {
+		$output .= sprintf "%*s %s\n", OFFSET, 'Debug-Client', $Debug::Client::VERSION;
+	}
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 	return $output;
 }
@@ -167,7 +169,7 @@ sub _wx_info {
 	my $wx_widgets = Wx::wxVERSION_STRING();
 	$wx_widgets =~ s/^wx\w+\s+//;
 	$output .= sprintf "%*s %s\n", OFFSET, 'WxWidgets', $wx_widgets;
-	$output .= sprintf "%*s %s\n", OFFSET, 'unicode', Wx::wxUNICODE();
+	$output .= sprintf "%*s %s\n", OFFSET, 'unicode',   Wx::wxUNICODE();
 
 	require Alien::wxWidgets;
 	my $alien = $Alien::wxWidgets::VERSION;
