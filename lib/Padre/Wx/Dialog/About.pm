@@ -112,6 +112,7 @@ sub _information {
 	$output .= $self->_wx_info;
 	$output .= "Other...\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'PPI', $PPI::VERSION;
+	$output .= sprintf "%*s %s\n", OFFSET, 'Debug-Client', $Debug::Client::VERSION;
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 	return $output;
 }
