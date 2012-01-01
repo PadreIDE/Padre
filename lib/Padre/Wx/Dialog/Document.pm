@@ -10,6 +10,14 @@ use Padre::Wx::FBP::Document ();
 our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::FBP::Document';
 
+my @SELECTION_FIELDS = qw{
+	selection_label
+	selection_bytes
+	selection_characters
+	selection_visible
+	selection_lines
+	selection_words
+};
 
 
 
@@ -21,6 +29,11 @@ sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 	$self->CentreOnParent;
+
+	# Save the label colours for later
+	$self->{strong} = $self->{document_label}->GetForegroundColour;
+	$self->{weak}   = $self->{selection_label}->GetForegroundColour;
+
 	return $self;
 }
 
@@ -55,7 +68,7 @@ sub refresh {
 	# Find the document encoding
 	my $encoding = $document->encoding;
 	unless ( $encoding and $encoding ne 'ascii' ) {
-		$encoding = Padre::Locale::encoding_from_string();
+		$encoding = Padre::Locale::encoding_from_string( $editor->GetText );
 	}
 	unless ( $encoding and $encoding ne 'ascii' ) {
 		$encoding = "ASCII";
@@ -70,14 +83,45 @@ sub refresh {
 	$self->{newline_type}->SetLabel( $document->newline_type );
 
 	# Update the overall document statistics
-	my $text  = $editor->GetText;
-	my @words = $text =~ /(\w+)/g;
-	$text =~ s/\s//g;
-	$self->{document_bytes}->SetLabel( $editor->GetLength );
-	$self->{document_characters}->SetLabel( length $editor->GetText );
-	$self->{document_visible}->SetLabel( length $text );
-	$self->{document_lines}->SetLabel( $editor->GetLineCount );
-	$self->{document_words}->SetLabel( scalar @words );
+	SCOPE: {
+		my $text  = $editor->GetText;
+		my @words = $text =~ /(\w+)/g;
+		$text =~ s/\s//g;
+		$self->{document_bytes}->SetLabel( $editor->GetLength );
+		$self->{document_characters}->SetLabel( length $editor->GetText );
+		$self->{document_visible}->SetLabel( length $text );
+		$self->{document_lines}->SetLabel( $editor->GetLineCount );
+		$self->{document_words}->SetLabel( scalar @words );
+	}
+
+	# Update the selection statistics
+	SCOPE: {
+		my $text = $editor->GetSelectedText;
+		if ( length $text ) {
+			my @words = $text =~ /(\w+)/g;
+			$text =~ s/\s//g;
+			$self->{selection_bytes}->SetLabel( length $editor->GetSelectedText );
+			$self->{selection_characters}->SetLabel( length $editor->GetSelectedText );
+			$self->{selection_visible}->SetLabel( length $text );
+			$self->{selection_lines}->SetLabel( '?' );
+			$self->{selection_words}->SetLabel( scalar @words );
+		} else {
+			$self->{selection_bytes}->SetLabel(0);
+			$self->{selection_characters}->SetLabel(0);
+			$self->{selection_visible}->SetLabel(0);
+			$self->{selection_lines}->SetLabel(0);
+			$self->{selection_words}->SetLabel(0);
+		}
+
+		# Set the colour of the selection labels
+		my $colour = length($text) ? $self->{strong} : $self->{weak};
+		foreach my $field ( @SELECTION_FIELDS ) {
+			$self->{$field}->SetForegroundColour($colour);
+		}
+	}
+
+	# Recalculate the layout and fix the size
+	$self->Layout;
 
 	return;
 }

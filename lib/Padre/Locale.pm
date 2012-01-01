@@ -615,6 +615,7 @@ sub encoding_from_string {
 
 	# Because Encode::Guess is slow and expensive, do an initial fast
 	# regexp scan for the simplest and most common "ascii" encoding.
+	return 'ascii' unless defined $content;
 	return 'ascii' unless $content =~ /[^[:ascii:]]/;
 
 	# FIX ME

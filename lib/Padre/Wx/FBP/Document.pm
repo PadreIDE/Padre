@@ -117,16 +117,19 @@ sub new {
 		Wx::LI_HORIZONTAL,
 	);
 
-	my $m_staticText166 = Wx::StaticText->new(
+	$self->{document_label} = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Document"),
 	);
 
-	my $m_staticText167 = Wx::StaticText->new(
+	$self->{selection_label} = Wx::StaticText->new(
 		$self,
 		-1,
 		Wx::gettext("Selection"),
+	);
+	$self->{selection_label}->SetForegroundColour(
+		Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_GRAYTEXT )
 	);
 
 	my $m_staticText168 = Wx::StaticText->new(
@@ -227,22 +230,6 @@ sub new {
 		Wx::LI_HORIZONTAL,
 	);
 
-	$self->{refresh} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext("Refresh"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{refresh},
-		sub {
-			shift->refresh(@_);
-		},
-	);
-
 	$self->{cancel} = Wx::Button->new(
 		$self,
 		Wx::ID_CANCEL,
@@ -271,26 +258,25 @@ sub new {
 	$fgSizer22->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer22->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$fgSizer22->Add( 0, 0, 1, Wx::EXPAND, 5 );
-	$fgSizer22->Add( $m_staticText166, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $m_staticText167, 0, Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{document_label}, 0, Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_label}, 0, Wx::ALL, 5 );
 	$fgSizer22->Add( $m_staticText168, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $self->{document_lines}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$fgSizer22->Add( $self->{selection_lines}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer22->Add( $self->{document_lines}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_lines}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 	$fgSizer22->Add( $m_staticText171, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $self->{document_words}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$fgSizer22->Add( $self->{selection_words}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer22->Add( $self->{document_words}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_words}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 	$fgSizer22->Add( $m_staticText174, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $self->{document_characters}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$fgSizer22->Add( $self->{selection_characters}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer22->Add( $self->{document_characters}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_characters}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 	$fgSizer22->Add( $m_staticText177, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $self->{document_visible}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$fgSizer22->Add( $self->{selection_visible}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer22->Add( $self->{document_visible}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_visible}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 	$fgSizer22->Add( $m_staticText180, 0, Wx::ALL, 5 );
-	$fgSizer22->Add( $self->{document_bytes}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$fgSizer22->Add( $self->{selection_bytes}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer22->Add( $self->{document_bytes}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer22->Add( $self->{selection_bytes}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 
 	my $bSizer111 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer111->Add( $self->{refresh}, 0, Wx::ALL, 5 );
 	$bSizer111->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$bSizer111->Add( $self->{cancel}, 0, Wx::ALL, 5 );
 
@@ -310,10 +296,6 @@ sub new {
 	$self->Layout;
 
 	return $self;
-}
-
-sub refresh {
-	$_[0]->main->error('Handler method refresh for event refresh.OnButtonClick not implemented');
 }
 
 1;
