@@ -237,8 +237,8 @@ sub new {
 		$self->SetIcon(Padre::Wx::Icon::PADRE);
 	}
 
-	# Activate Padre after a period not showing the window
-	Wx::Event::EVT_ACTIVATE(
+	# Activate Padre after a period not showing Padre
+	Wx::Event::EVT_ACTIVATE_APP(
 		$self,
 		sub {
 			if ( $_[1]->GetActive ) {
