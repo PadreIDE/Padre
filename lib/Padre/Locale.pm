@@ -68,7 +68,7 @@ my %RFC4646;
 
 sub label {
 	my $name = shift;
-	return $RFC4646{$name}{utf8text} ? $RFC4646{$name}{utf8text} : $name;
+	return $RFC4646{$name}->{utf8text} ? $RFC4646{$name}->{utf8text} : $name;
 }
 
 BEGIN {
