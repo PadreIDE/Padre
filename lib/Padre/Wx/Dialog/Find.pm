@@ -42,9 +42,6 @@ sub on_close {
 sub on_key_up {
 	my $self = shift;
 	my $event = shift;
-
-	$DB::single = 1;
-
 	$event->Skip(1);
 }
 
