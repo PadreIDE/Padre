@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-30 12:10-0800\n"
+"POT-Creation-Date: 2012-01-01 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,8 +192,7 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:271 lib/Padre/Wx/Browser.pm:109
 #: lib/Padre/Wx/Replace.pm:190 lib/Padre/Wx/Menu/File.pm:134
-#: lib/Padre/Wx/Dialog/DocStats.pm:58 lib/Padre/Wx/Dialog/HelpSearch.pm:179
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:119
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179 lib/Padre/Wx/Dialog/PerlFilter.pm:119
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:276
 #: lib/Padre/Wx/Dialog/SessionManager.pm:303
 msgid "&Close"
@@ -596,10 +595,6 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:575
 msgid "&Undo"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:60
-msgid "&Update"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1075
@@ -1177,16 +1172,12 @@ msgstr ""
 msgid "Character set"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:171
+#: lib/Padre/Wx/FBP/Document.pm:174
 msgid "Characters (All)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:189
+#: lib/Padre/Wx/FBP/Document.pm:192
 msgid "Characters (Visible)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:106
-msgid "Characters (including whitespace)"
 msgstr ""
 
 #: lib/Padre/Document/Perl.pm:540
@@ -1245,7 +1236,7 @@ msgstr ""
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
 #: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:676
 #: lib/Padre/Wx/FBP/Sync.pm:267 lib/Padre/Wx/FBP/Diff.pm:94
-#: lib/Padre/Wx/FBP/Document.pm:249 lib/Padre/Wx/Dialog/FilterTool.pm:152
+#: lib/Padre/Wx/FBP/Document.pm:236 lib/Padre/Wx/Dialog/FilterTool.pm:152
 #: lib/Padre/Wx/Dialog/WindowList.pm:280
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Close"
@@ -1864,7 +1855,7 @@ msgstr ""
 msgid "Do you want to revert changes to '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:123 lib/Padre/Wx/Dialog/DocStats.pm:95
+#: lib/Padre/Wx/FBP/Document.pm:123
 msgid "Document"
 msgstr ""
 
@@ -1874,10 +1865,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Document.pm:29
 msgid "Document Information"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:31
-msgid "Document Statistics"
 msgstr ""
 
 #: lib/Padre/Wx/Right.pm:53
@@ -1895,10 +1882,6 @@ msgstr ""
 #: lib/Padre/Wx/Main.pm:7154
 #, perl-format
 msgid "Document encoded to (%s)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:133
-msgid "Document type"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:135
@@ -2023,7 +2006,7 @@ msgstr ""
 msgid "Encode to:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:91 lib/Padre/Wx/Dialog/DocStats.pm:131
+#: lib/Padre/Wx/FBP/Document.pm:91
 msgid "Encoding"
 msgstr ""
 
@@ -2341,7 +2324,7 @@ msgstr ""
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:207
+#: lib/Padre/Wx/FBP/Document.pm:210
 msgid "File Size (Bytes)"
 msgstr ""
 
@@ -2406,10 +2389,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:30
 msgid "File/Directory"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:39
-msgid "Filename"
 msgstr ""
 
 #: lib/Padre/Wx/Notebook.pm:70
@@ -2871,14 +2850,6 @@ msgstr ""
 msgid "Key Bindings"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:118
-msgid "Kibibytes (kiB)"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:114
-msgid "Kilobytes (kB)"
-msgstr ""
-
 #: lib/Padre/Wx/FBP/About.pm:562
 msgid "Kjetil Skotheim"
 msgstr ""
@@ -2953,16 +2924,11 @@ msgstr ""
 msgid "Line %d: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:129
-msgid "Line break mode"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Goto.pm:342
 msgid "Line number"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:135 lib/Padre/Wx/Dialog/DocStats.pm:98
-#: lib/Padre/Wx/Dialog/Special.pm:72
+#: lib/Padre/Wx/FBP/Document.pm:138 lib/Padre/Wx/Dialog/Special.pm:72
 msgid "Lines"
 msgstr ""
 
@@ -3337,10 +3303,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:127
 msgid "Non-capturing group"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:110
-msgid "Non-whitespace characters"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:135
@@ -4086,8 +4048,8 @@ msgstr ""
 msgid "Refactor"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:166 lib/Padre/Wx/FBP/Document.pm:233
-#: lib/Padre/Wx/FBP/CPAN.pm:125 lib/Padre/Wx/FBP/CPAN.pm:173
+#: lib/Padre/Wx/Directory.pm:166 lib/Padre/Wx/FBP/CPAN.pm:125
+#: lib/Padre/Wx/FBP/CPAN.pm:173
 msgid "Refresh"
 msgstr ""
 
@@ -4683,7 +4645,7 @@ msgid ""
 "inserted before."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:129 lib/Padre/Wx/Dialog/DocStats.pm:40
+#: lib/Padre/Wx/FBP/Document.pm:129
 msgid "Selection"
 msgstr ""
 
@@ -5697,7 +5659,7 @@ msgstr ""
 msgid "Word count and other statistics of the current document"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Document.pm:153 lib/Padre/Wx/Dialog/DocStats.pm:102
+#: lib/Padre/Wx/FBP/Document.pm:156
 msgid "Words"
 msgstr ""
 
@@ -5768,10 +5730,6 @@ msgid ""
 "Next. Executes over subroutine calls, until the beginning of the next "
 "statement. If an expression is supplied that includes function calls, those "
 "functions will be executed with stops before each statement."
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/DocStats.pm:179
-msgid "none"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:389
