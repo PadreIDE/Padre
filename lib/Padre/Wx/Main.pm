@@ -238,7 +238,7 @@ sub new {
 	}
 
 	# Activate Padre after a period not showing Padre
-	Wx::Event::EVT_ACTIVATE_APP(
+	Wx::Event::EVT_ACTIVATE(
 		$self,
 		sub {
 			if ( $_[1]->GetActive ) {
