@@ -773,18 +773,16 @@ sub init {
 		},
 	);
 
-	if ( $main->config->feature_document_diffs ) {
-		Padre::Wx::Action->new(
-			name        => 'edit.next_difference',
-			need_editor => 1,
-			label       => _T('&Next Difference'),
-			comment     => _T('Jump to the code that has been changed'),
-			shortcut    => 'Ctrl-,',
-			menu_event  => sub {
-				$_[0]->{diff}->select_next_difference if $_[0]->{diff};
-			},
-		);
-	}
+	Padre::Wx::Action->new(
+		name        => 'edit.next_difference',
+		need_editor => 1,
+		label       => _T('&Next Difference'),
+		comment     => _T('Jump to the code that has been changed'),
+		shortcut    => 'Ctrl-,',
+		menu_event  => sub {
+			$_[0]->{diff}->select_next_difference if $_[0]->{diff};
+		},
+	) if Padre::Feature::DIFF_DOCUMENT;
 
 	if (Padre::Feature::QUICK_FIX) {
 		Padre::Wx::Action->new(
@@ -1391,7 +1389,7 @@ sub init {
 		menu_event  => sub {
 			$_[0]->show_cpan_explorer( $_[0]->menu->view->{cpan_explorer}->IsChecked );
 		},
-	) if $main->config->feature_cpan_explorer;
+	) if Padre::Feature::CPAN;
 
 	Padre::Wx::Action->new(
 		name       => 'tools.diff_window',
@@ -1401,7 +1399,7 @@ sub init {
 			require Padre::Wx::Diff2;
 			Padre::Wx::Diff2->new( $_[0] )->show;
 		},
-	) if $main->config->feature_diff_window;
+	) if Padre::Feature::DIFF_WINDOW;
 
 	Padre::Wx::Action->new(
 		name        => 'view.todo',
@@ -1453,7 +1451,7 @@ sub init {
 		menu_event  => sub {
 			$_[0]->show_vcs( $_[0]->menu->view->{vcs}->IsChecked );
 		},
-	) if $main->config->feature_vcs_support;
+	) if Padre::Feature::VCS;
 
 	Padre::Wx::Action->new(
 		name        => 'view.statusbar',
@@ -2376,7 +2374,7 @@ sub init {
 			$_[0]->show_cpan_explorer(1);
 			$_[0]->cpan_explorer->focus_on_search;
 		},
-	) if $main->config->feature_cpan_explorer;
+	) if Padre::Feature::CPAN;
 
 	Padre::Wx::Action->new(
 		name       => 'window.goto_functions_window',

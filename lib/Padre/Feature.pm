@@ -53,12 +53,16 @@ constant->import(
 		FOLDING            => $config->feature_folding,
 		FONTSIZE           => $config->feature_fontsize,
 		SESSION            => $config->feature_session,
+		CPAN               => $config->feature_cpan_explorer,
+		VCS                => $config->feature_vcs_support,
+		DIFF_DOCUMENT      => $config->feature_document_diffs,
 		SYNTAX_ANNOTATIONS => $config->feature_syntax_check_annotations,
 
 		# Experimental features users can enable
 		QUICK_FIX       => $config->feature_quick_fix,
 		SYNC            => $config->feature_sync,
 		STYLE_GUI       => $config->feature_style_gui,
+		DIFF_WINDOW     => $config->feature_diff_window,
 		DEVEL_ENDSTATS  => $config->feature_devel_endstats,
 		DEVEL_TRACEUSE  => $config->feature_devel_traceuse,
 	}

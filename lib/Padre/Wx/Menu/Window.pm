@@ -9,6 +9,7 @@ use List::Util      ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ();
+use Padre::Feature  ();
 
 our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::Menu';
@@ -53,7 +54,7 @@ sub new {
 
 	$self->{window_goto_cpan_explorer_window} = $self->add_menu_action(
 		'window.goto_cpan_explorer_window',
-	) if $main->config->feature_cpan_explorer;
+	) if Padre::Feature::CPAN;
 
 	$self->{window_goto_functions_window} = $self->add_menu_action(
 		'window.goto_functions_window',

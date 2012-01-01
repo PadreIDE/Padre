@@ -47,8 +47,9 @@ sub new {
 		'view.command_line',
 	);
 
-	$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer')
-		if $main->config->feature_cpan_explorer;
+	if (Padre::Feature::CPAN) {
+		$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer');
+	}
 
 	$self->{functions} = $self->add_menu_action(
 		'view.functions',
@@ -74,8 +75,9 @@ sub new {
 		'view.todo',
 	);
 
-	$self->{vcs} = $self->add_menu_action('view.vcs')
-		if $main->config->feature_vcs_support;
+	if (Padre::Feature::VCS) {
+		$self->{vcs} = $self->add_menu_action('view.vcs');
+	}
 
 	$self->{toolbar} = $self->add_menu_action(
 		'view.toolbar',
@@ -265,9 +267,12 @@ sub refresh {
 	$self->{calltips}->Check( $config->editor_calltips );
 	$self->{command_line}->Check( $config->main_command_line );
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
-	$self->{vcs}->Check( $config->main_vcs ) if $config->feature_vcs_support;
-	$self->{cpan_explorer}->Check( $config->main_cpan_explorer )
-		if $config->feature_cpan_explorer;
+	if (Padre::Feature::VCS) {
+		$self->{vcs}->Check( $config->main_vcs );
+	}
+	if (Padre::Feature::CPAN) {
+		$self->{cpan_explorer}->Check( $config->main_cpan_explorer );
+	}
 	$self->{toolbar}->Check( $config->main_toolbar );
 
 	if (Padre::Feature::FOLDING) {

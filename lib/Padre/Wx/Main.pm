@@ -327,9 +327,12 @@ sub new {
 	$self->_show_output( $config->main_output );
 	$self->_show_command_line( $config->main_command_line );
 	$self->_show_syntaxcheck( $config->main_syntaxcheck );
-	$self->_show_vcs( $config->main_vcs ) if $config->feature_vcs_support;
-	$self->_show_cpan_explorer( $config->main_cpan_explorer )
-		if $config->feature_cpan_explorer;
+	if (Padre::Feature::VCS) {
+		$self->_show_vcs( $config->main_vcs );
+	}
+	if (Padre::Feature::CPAN) {
+		$self->_show_cpan_explorer( $config->main_cpan_explorer );	
+	}
 	$self->_show_panel_breakpoints( $config->main_panel_breakpoints );
 	$self->_show_panel_debug_output( $config->main_panel_debug_output );
 	$self->_show_panel_debugger( $config->main_panel_debugger );
@@ -1504,7 +1507,7 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_outline($current);
 	$self->refresh_diff($current);
-	if ( $self->config->feature_vcs_support ) {
+	if (Padre::Feature::VCS) {
 		$self->refresh_vcs($current);
 	}
 
@@ -2016,7 +2019,7 @@ since actual calculating differences is happening in the background.
 
 sub refresh_diff {
 	my $self = shift;
-	return unless $self->config->feature_document_diffs;
+	return unless Padre::Feature::DIFF_DOCUMENT;
 	return if $self->locked('REFRESH');
 	$self->diff->refresh( $_[0] or $self->current );
 	return;
@@ -3957,7 +3960,7 @@ sub on_activate {
 	$self->refresh_syntaxcheck($current);
 
 	# They may be using an external VCS tool
-	if ( $self->config->feature_vcs_support ) {
+	if (Padre::Feature::VCS) {
 		$self->refresh_vcs($current);
 	}
 

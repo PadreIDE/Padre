@@ -33,8 +33,8 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	if($main->config->feature_diff_window) {
-		# Differences window
+	# Differences window
+	if(Padre::Feature::DIFF_WINDOW) {
 		$self->add_menu_action(
 			'tools.diff_window',
 		);

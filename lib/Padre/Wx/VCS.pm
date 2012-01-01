@@ -3,6 +3,7 @@ package Padre::Wx::VCS;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx             ();
 use Padre::Wx::Util       ();
@@ -431,7 +432,7 @@ sub on_list_item_activated {
 				$main->{diff}->select_next_difference;
 				Wx::Event::EVT_IDLE( $main, undef );
 			},
-		) if $main->config->feature_document_diffs;
+		) if Padre::Feature::DIFF_DOCUMENT;
 
 	};
 	$main->error( Wx::gettext('Error while trying to perform Padre action') ) if $@;

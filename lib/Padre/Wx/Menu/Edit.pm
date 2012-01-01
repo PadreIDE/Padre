@@ -142,13 +142,11 @@ sub new {
 
 	$self->{next_difference} = $self->add_menu_action(
 		'edit.next_difference',
-	) if $main->config->feature_document_diffs;
+	) if Padre::Feature::DIFF_DOCUMENT;
 
-	if (Padre::Feature::QUICK_FIX) {
-		$self->{quick_fix} = $self->add_menu_action(
-			'edit.quick_fix',
-		);
-	}
+	$self->{quick_fix} = $self->add_menu_action(
+		'edit.quick_fix',
+	) if Padre::Feature::QUICK_FIX;
 
 	$self->{autocomp} = $self->add_menu_action(
 		'edit.autocomp',
