@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-01 08:10-0800\n"
+"POT-Creation-Date: 2012-01-01 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3273,7 +3273,7 @@ msgid "No match"
 msgstr ""
 
 #: lib/Padre/Wx/Replace.pm:536 lib/Padre/Wx/Replace.pm:583
-#: lib/Padre/Wx/Dialog/Find.pm:70 lib/Padre/Wx/Dialog/Replace.pm:106
+#: lib/Padre/Wx/Dialog/Find.pm:67 lib/Padre/Wx/Dialog/Replace.pm:106
 #: lib/Padre/Wx/Dialog/Replace.pm:137
 #, perl-format
 msgid "No matches found for \"%s\"."
@@ -4470,7 +4470,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:82 lib/Padre/Wx/Directory.pm:514
 #: lib/Padre/Wx/FBP/CPAN.pm:269 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:385
-#: lib/Padre/Wx/Dialog/Find.pm:73
+#: lib/Padre/Wx/Dialog/Find.pm:70
 msgid "Search"
 msgstr ""
 
