@@ -28,6 +28,7 @@ object that can independently search and/or replace in an editor object.
 use 5.008;
 use strict;
 use warnings;
+use Carp         ();
 use Encode       ();
 use Scalar::Util ();
 use List::Util   ();
@@ -144,9 +145,9 @@ sub replace_next {
 
 	# Select and move to the next match
 	if ( $self->find_reverse ) {
-		return $self->search_down(@_);
-	} else {
 		return $self->search_up(@_);
+	} else {
+		return $self->search_down(@_);
 	}
 }
 
@@ -172,27 +173,33 @@ sub replace_previous {
 # Content Abstraction
 
 sub search_down {
-	my $self = shift;
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
-		return $self->editor_search_down(@_);
-	}
-	die "Missing or invalid content object to search in";
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+	$self->editor_search_down( $editor, @_ );
 }
 
 sub search_up {
-	my $self = shift;
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
-		return $self->editor_search_up(@_);
-	}
-	die "Missing or invalid content object to search in";
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+	$self->editor_search_up( $editor, @_ );
 }
 
 sub replace {
-	my $self = shift;
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
-		return $self->editor_replace(@_);
-	}
-	die "Missing or invalid content object to search in";
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+	$self->editor_replace( $editor, @_ );
+}
+
+sub replace_down {
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+	$self->editor_replace_down( $editor, @_ );
+}
+
+sub replace_up {
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+	$self->editor_replace_up( $editor, @_ );
 }
 
 sub replace_all {
@@ -202,7 +209,7 @@ sub replace_all {
 	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
 		return $self->scalar_replace_all(@_);
 	}
-	die "Missing or invalid content object to search in";
+	die "Missing or invalid content object";
 }
 
 sub count_all {
@@ -212,7 +219,7 @@ sub count_all {
 	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
 		return $self->scalar_count_all(@_);
 	}
-	die "Missing or invalid content object to search in";
+	die "Missing or invalid content object";
 }
 
 
@@ -224,10 +231,7 @@ sub count_all {
 
 sub editor_search_down {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die "Failed to provide editor object to search in";
-	}
+	my $editor = _EDITOR(shift);
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
@@ -243,10 +247,7 @@ sub editor_search_down {
 
 sub editor_search_up {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die "Failed to provide editor object to search in";
-	}
+	my $editor = _EDITOR(shift);
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
@@ -261,12 +262,20 @@ sub editor_search_up {
 	$editor->match( $self, $start, $end );
 }
 
+sub editor_count_all {
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+
+	# Execute the regex search for all matches
+	$self->match_count(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+	);
+}
+
 sub editor_replace {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die "Failed to provide editor object to replace in";
-	}
+	my $editor = _EDITOR(shift);
 
 	# Execute the search
 	my ( $start, $end, @matches ) = $self->matches(
@@ -301,26 +310,21 @@ sub editor_replace {
 	$self->search_next($editor);
 }
 
-sub editor_count_all {
+sub editor_replace_down {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die "Failed to provide editor object to count in";
-	}
+	my $editor = _EDITOR(shift);
 
-	# Execute the regex search for all matches
-	$self->match_count(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-	);
+}
+
+sub editor_replace_up {
+	my $self   = shift;
+	my $editor = _EDITOR(shift);
+
 }
 
 sub editor_replace_all {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
-		die 'Failed to provide editor object to replace in';
-	}
+	my $editor = _EDITOR(shift);
 
 	# Execute the search for all matches
 	my ( undef, undef, @matches ) = $self->matches(
@@ -471,6 +475,20 @@ sub match_count {
 	my $regex = shift;
 	my $count = () = $text =~ /$regex/g;
 	return $count;
+}
+
+
+
+
+
+######################################################################
+# Support Functions
+
+sub _EDITOR {
+	unless ( Params::Util::_INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+		Carp::croak("Missing or invalid Padre::Ex::Editor param");
+	}
+	return $_[0];
 }
 
 1;
