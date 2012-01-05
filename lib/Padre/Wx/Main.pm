@@ -885,21 +885,21 @@ sub findinfiles {
 
 =pod
 
-=head3 C<replace2>
+=head3 C<replace>
 
-    my $dialog = $main->replace2;
+    my $dialog = $main->replace;
 
-Return current replace dialog. Create a new one if needed.
+Return current Find and Replace dialog. Create a new one if needed.
 
 =cut
 
-sub replace2 {
+sub replace {
 	my $self = shift;
-	unless ( defined $self->{replace2} ) {
+	unless ( defined $self->{replace} ) {
 		require Padre::Wx::Dialog::Replace;
-		$self->{replace2} = Padre::Wx::Dialog::Replace->new($self);
+		$self->{replace} = Padre::Wx::Dialog::Replace->new($self);
 	}
-	return $self->{replace2};
+	return $self->{replace};
 }
 
 =pod

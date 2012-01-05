@@ -47,8 +47,8 @@ sub new {
 	$self->AppendSeparator;
 
 	# Search and Replace
-	$self->{replace2} = $self->add_menu_action(
-		'search.replace2',
+	$self->{replace} = $self->add_menu_action(
+		'search.replace',
 	);
 
 	$self->AppendSeparator;
@@ -110,7 +110,6 @@ sub refresh {
 	$self->{find_next}->Enable($editor);
 	$self->{find_previous}->Enable($editor);
 	$self->{replace}->Enable($editor);
-	$self->{replace2}->Enable($editor);
 	$self->{goto}->Enable($editor);
 
 	# Bookmarks can only be placed on files on disk

@@ -1222,13 +1222,13 @@ sub init {
 	# Search and Replace
 
 	Padre::Wx::Action->new(
-		name        => 'search.replace2',
+		name        => 'search.replace',
 		need_editor => 1,
-		label       => _T('Replace 2...'),
-		comment     => _T('Find a text and replace it'),
+		label       => _T('Replace...'),
+		comment     => _T('Find text and replace it'),
 		shortcut    => 'Ctrl-R',
 		menu_event  => sub {
-			$_[0]->replace2->run;
+			$_[0]->replace->run;
 		},
 	);
 

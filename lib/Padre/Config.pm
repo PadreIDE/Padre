@@ -863,7 +863,7 @@ setting(
 		. 'edit.paste;'
 		. 'edit.select_all;' . '|;'
 		. 'search.find;'
-		. 'search.replace2;' . '|;'
+		. 'search.replace;' . '|;'
 		. 'edit.comment_toggle;' . '|;'
 		. 'search.open_resource;'
 		. 'search.quick_menu_access;' . '|;'
