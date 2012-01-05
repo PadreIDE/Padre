@@ -81,10 +81,10 @@ sub on_text {
 	my $lock   = $self->lock_update;
 
 	# Do we have a search
-	unless ( $self->refresh ) {
+	if ( $self->refresh ) {
 		# Reset the background colour
 		$self->{find_term}->SetBackgroundColour( $self->base_colour );
-
+	} else {
 		# Clear any existing select to prevent
 		# showing a stale match result.
 		my $position = $editor->GetCurrentPos;
