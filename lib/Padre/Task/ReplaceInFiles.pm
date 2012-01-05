@@ -164,6 +164,19 @@ sub run {
 			my $buffer = do { local $/; <$fh> };
 			close $fh;
 
+			# Is this the correct MIME type
+			if ( $self->{mime} ) {
+				require Padre::MIME;
+				my $type = Padre::MIME->detect(
+					file => $fullname,
+					text => $buffer,
+				);
+				unless ( defined $type and $type eq $self->{mime} ) {
+					TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
+					next;
+				}
+			}
+
 			# Allow the search object to do the main work
 			local $@;
 			my $count = eval { $self->{search}->replace_all( \$buffer ) };
