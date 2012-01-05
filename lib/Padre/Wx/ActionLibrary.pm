@@ -1198,7 +1198,6 @@ sub init {
 		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
-			$DB::single = 1;
 			$_[0]->search_next;
 		},
 	);
