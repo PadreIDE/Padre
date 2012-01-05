@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-05 00:10-0800\n"
+"POT-Creation-Date: 2012-01-05 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 msgid "&Brace Matching"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:89 lib/Padre/Wx/FBP/ReplaceInFiles.pm:107
+#: lib/Padre/Wx/FBP/FindInFiles.pm:90 lib/Padre/Wx/FBP/ReplaceInFiles.pm:108
 msgid "&Browse"
 msgstr ""
 
@@ -169,8 +169,8 @@ msgstr ""
 msgid "&Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:136 lib/Padre/Wx/FBP/Find.pm:95
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:154 lib/Padre/Wx/FBP/Replace.pm:113
+#: lib/Padre/Wx/FBP/FindInFiles.pm:137 lib/Padre/Wx/FBP/Find.pm:95
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:155 lib/Padre/Wx/FBP/Replace.pm:113
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -273,7 +273,7 @@ msgstr ""
 msgid "&Filter:"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:152
+#: lib/Padre/Wx/FBP/FindInFiles.pm:153
 msgid "&Find"
 msgstr ""
 
@@ -475,7 +475,7 @@ msgstr ""
 msgid "&Regex Editor"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:128 lib/Padre/Wx/FBP/ReplaceInFiles.pm:146
+#: lib/Padre/Wx/FBP/FindInFiles.pm:129 lib/Padre/Wx/FBP/ReplaceInFiles.pm:147
 msgid "&Regular Expression"
 msgstr ""
 
@@ -495,7 +495,7 @@ msgstr ""
 msgid "&Rename Variable..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:170 lib/Padre/Wx/FBP/Replace.pm:161
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:171 lib/Padre/Wx/FBP/Replace.pm:161
 msgid "&Replace"
 msgstr ""
 
@@ -787,6 +787,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4612 lib/Padre/Wx/Main.pm:4613
 #: lib/Padre/Wx/Main.pm:5000 lib/Padre/Wx/Main.pm:6195
+#: lib/Padre/Wx/Choice/Files.pm:19
 msgid "All Files"
 msgstr ""
 
@@ -1049,9 +1050,9 @@ msgstr ""
 msgid "CTRL"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:161
+#: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:162
 #: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:136
-#: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:179
+#: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:180
 #: lib/Padre/Wx/FBP/Replace.pm:194
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
@@ -1784,7 +1785,7 @@ msgstr ""
 msgid "Directory"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:72 lib/Padre/Wx/FBP/ReplaceInFiles.pm:90
+#: lib/Padre/Wx/FBP/FindInFiles.pm:73 lib/Padre/Wx/FBP/ReplaceInFiles.pm:91
 msgid "Directory:"
 msgstr ""
 
@@ -2318,7 +2319,7 @@ msgstr ""
 msgid "File Size (Bytes)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:105 lib/Padre/Wx/FBP/ReplaceInFiles.pm:123
+#: lib/Padre/Wx/FBP/FindInFiles.pm:106 lib/Padre/Wx/FBP/ReplaceInFiles.pm:124
 msgid "File Types:"
 msgstr ""
 
@@ -2443,7 +2444,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FindInFiles.pm:466 lib/Padre/Wx/FBP/FindInFiles.pm:31
+#: lib/Padre/Wx/FindInFiles.pm:466 lib/Padre/Wx/FBP/FindInFiles.pm:32
 msgid "Find in Files"
 msgstr ""
 
@@ -3708,7 +3709,7 @@ msgstr ""
 msgid "Perl Application Development and Refactoring Environment"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4593
+#: lib/Padre/Wx/Main.pm:4593 lib/Padre/Wx/Choice/Files.pm:21
 msgid "Perl Files"
 msgstr ""
 
@@ -4186,7 +4187,7 @@ msgstr ""
 msgid "Replace Operation Canceled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:65
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:66
 msgid "Replace With:"
 msgstr ""
 
@@ -4204,7 +4205,7 @@ msgstr ""
 msgid "Replace failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:228 lib/Padre/Wx/FBP/ReplaceInFiles.pm:31
+#: lib/Padre/Wx/ReplaceInFiles.pm:228 lib/Padre/Wx/FBP/ReplaceInFiles.pm:32
 msgid "Replace in Files"
 msgstr ""
 
@@ -4458,8 +4459,8 @@ msgstr ""
 msgid "Search &Backwards"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:47 lib/Padre/Wx/FBP/Find.pm:46
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:40 lib/Padre/Wx/FBP/Replace.pm:47
+#: lib/Padre/Wx/FBP/FindInFiles.pm:48 lib/Padre/Wx/FBP/Find.pm:46
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:41 lib/Padre/Wx/FBP/Replace.pm:47
 msgid "Search &Term:"
 msgstr ""
 
@@ -5220,7 +5221,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:4603
+#: lib/Padre/Wx/Main.pm:4603 lib/Padre/Wx/Choice/Files.pm:20
 msgid "Text Files"
 msgstr ""
 
