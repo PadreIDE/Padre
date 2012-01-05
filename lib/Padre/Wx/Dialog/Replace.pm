@@ -42,6 +42,7 @@ sub run {
 	} else {
 		$find->refresh( $self->current->text );
 	}
+	$self->replace_term->refresh('');
 
 	# Refresh the dialog and prepare to show
 	$self->refresh;
@@ -88,6 +89,7 @@ sub find_next_clicked {
 	# Apply the search to the current editor
 	if ( $self->main->search_next($search) ) {
 		$self->find_term->SaveValue;
+		$self->replace_term->SaveValue;
 	} else {
 		$self->no_matches;
 	}
@@ -119,10 +121,12 @@ sub replace_all_clicked {
 	# Apply the search to the current editor
 	my $changes = $main->replace_all($search);
 	if ($changes) {
-		my $message_text =
-			$changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
+		$self->find_term->SaveValue;
+		$self->replace_term->SaveValue;
 
 		# remark: It would be better to use gettext for plural handling, but wxperl does not seem to support this at the moment.
+		my $message_text =
+			$changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
 		$main->info(
 			sprintf( $message_text, $changes ),
 			Wx::gettext('Search and Replace')

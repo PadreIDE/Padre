@@ -55,8 +55,8 @@ sub new {
 	if ($type) {
 		$params[5] = [ Padre::DB::History->recent($type) ];
 
-		# Initial text defaults to first history item
-		$params[2] ||= $params[5]->[0] || '';
+		# Initial text defaults to empty string
+		$params[2] ||= '';
 	}
 
 	my $self = $class->SUPER::new(@params);

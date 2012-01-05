@@ -74,6 +74,7 @@ sub run {
 	} else {
 		$find->refresh( $current->text );
 	}
+	$self->replace_term->refresh('');
 
 	# Default the search directory to the root of the current project
 	my $project = $current->project;
