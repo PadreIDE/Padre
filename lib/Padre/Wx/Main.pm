@@ -885,25 +885,6 @@ sub findinfiles {
 
 =pod
 
-=head3 C<replace>
-
-    my $replace = $main->replace;
-
-Return current replace dialog. Create a new one if needed.
-
-=cut
-
-sub replace {
-	my $self = shift;
-	unless ( defined $self->{replace} ) {
-		require Padre::Wx::Replace;
-		$self->{replace} = Padre::Wx::Replace->new($self);
-	}
-	return $self->{replace};
-}
-
-=pod
-
 =head3 C<replace2>
 
     my $dialog = $main->replace2;
@@ -3739,18 +3720,17 @@ If no files are open, do nothing.
 =cut
 
 sub replace_next {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
 	} elsif (@_) {
-		die("Invalid argument to replace_next");
+		die "Invalid argument to replace_next";
 	}
-	if ( $self->search ) {
-		$self->search->replace_next($editor);
-	} else {
-		$self->replace->find;
-	}
+
+	# Replace if we can
+	my $search = $self->search or return;
+	$search->replace_next($editor);
 }
 
 =pod
@@ -3777,11 +3757,10 @@ sub replace_all {
 	} elsif (@_) {
 		die("Invalid argument to replace_all");
 	}
-	if ( $self->search ) {
-		$self->search->replace_all($editor);
-	} else {
-		$self->replace->find;
-	}
+
+	# Replace if we can
+	my $search = $self->search or return;
+	$search->replace_all($editor);
 }
 
 =pod

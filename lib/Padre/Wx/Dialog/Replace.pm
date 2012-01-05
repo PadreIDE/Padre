@@ -65,6 +65,7 @@ sub run {
 sub on_close {
 	my $self  = shift;
 	my $event = shift;
+	$self->Hide;
 	$self->main->editor_focus;
 	$event->Skip(1);
 }
@@ -74,21 +75,21 @@ sub on_close {
 sub refresh {
 	my $self = shift;
 	my $show = $self->as_search ? 1 : 0;
-	$self->{find_next}->Enable($show);
-	$self->{replace}->Enable($show);
-	$self->{replace_all}->Enable($show);
+	$self->find_next->Enable($show);
+	$self->replace->Enable($show);
+	$self->replace_all->Enable($show);
 	return;
 }
 
 sub find_next_clicked {
 	my $self   = shift;
-	my $main   = $self->main;
 	my $search = $self->as_search or return;
 
 	# Apply the search to the current editor
-	if ( $main->search_next($search) ) {
-		$self->{find_term}->SaveValue;
-		$self->{replace}->SetFocus;
+	if ( $self->main->search_next($search) ) {
+		$self->find_term->SaveValue;
+	} else {
+		$self->no_matches;
 	}
 
 	return;
@@ -96,23 +97,17 @@ sub find_next_clicked {
 
 sub replace_clicked {
 	my $self   = shift;
-	my $main   = $self->main;
 	my $search = $self->as_search or return;
 
-	# Just replace once
-	unless ( $main->replace_next($search) ) {
-		$main->message(
-			sprintf(
-				Wx::gettext('No matches found for "%s".'),
-				$self->{find_term}->GetValue,
-			),
-			Wx::gettext('Search and Replace'),
-		);
+	# Replace the current selection, or find the next match
+	# if the current selection is not a match.
+	if ( $self->main->replace_next($search) ) {
+		$self->find_term->SaveValue;
+		$self->replace_term->SaveValue;
+	} else {
+		$self->no_matches;
 	}
 
-	# Move the focus back to the search text
-	# so they can change it if they want.
-	$self->{find_term}->SetFocus;
 	return;
 }
 
@@ -134,14 +129,14 @@ sub replace_all_clicked {
 		);
 	} else {
 		$main->info(
-			sprintf( Wx::gettext('No matches found for "%s".'), $self->{find_text}->GetValue ),
+			sprintf( Wx::gettext('No matches found for "%s".'), $self->find_term->GetValue ),
 			Wx::gettext('Search and Replace'),
 		);
 	}
 
 	# Move the focus back to the search text
 	# so they can change it if they want.
-	$self->{find_text}->SetFocus;
+	$self->find_term->SetFocus;
 	return;
 }
 
@@ -152,14 +147,30 @@ sub replace_all_clicked {
 ######################################################################
 # Support Methods
 
+sub no_matches {
+	my $self = shift;
+
+	$self->main->message(
+		sprintf(
+			Wx::gettext('No matches found for "%s".'),
+			$self->find_term->GetValue,
+		),
+		Wx::gettext('Search and Replace'),
+	);
+
+	# Move the focus back to the search text
+	# so they can change it if they want.
+	$self->find_term->SetFocus;
+}
+
 # Generate a search object for the current dialog state
 sub as_search {
 	my $self = shift;
 	Padre::Search->new(
-		find_term    => $self->{find_term}->GetValue,
-		find_case    => $self->{find_case}->GetValue,
-		find_regex   => $self->{find_regex}->GetValue,
-		replace_term => $self->{replace_term}->GetValue,
+		find_term    => $self->find_term->GetValue,
+		find_case    => $self->find_case->GetValue,
+		find_regex   => $self->find_regex->GetValue,
+		replace_term => $self->replace_term->GetValue,
 	);
 }
 

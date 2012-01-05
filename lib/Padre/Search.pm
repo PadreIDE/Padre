@@ -35,7 +35,7 @@ use List::Util   ();
 use Params::Util ();
 
 our $VERSION    = '0.93';
-our $COMPATIBLE = '0.64';
+our $COMPATIBLE = '0.93';
 
 sub new {
 	my $class = shift;
@@ -139,29 +139,19 @@ sub search_previous {
 
 sub replace_next {
 	my $self = shift;
-
-	# Replace the currently selected match
-	$self->replace(@_);
-
-	# Select and move to the next match
 	if ( $self->find_reverse ) {
-		return $self->search_up(@_);
+		return $self->replace_up(@_);
 	} else {
-		return $self->search_down(@_);
+		return $self->replace_down(@_);
 	}
 }
 
 sub replace_previous {
 	my $self = shift;
-
-	# Replace the currently selected match
-	$self->replace(@_);
-
-	# Select and move to the next match
 	if ( $self->find_reverse ) {
-		return $self->search_up(@_);
+		return $self->replace_down(@_);
 	} else {
-		return $self->search_down(@_);
+		return $self->replace_up(@_);
 	}
 }
 
@@ -184,10 +174,20 @@ sub search_up {
 	$self->editor_search_up( $editor, @_ );
 }
 
+sub search_count {
+	my $self = shift;
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
+		return $self->editor_search_count(@_);
+	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
+		return $self->scalar_search_count(@_);
+	}
+	die "Missing or invalid content object";
+}
+
 sub replace {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
-	$self->editor_replace( $editor, @_ );
+	$self->editor_replace_down( $editor, @_ );
 }
 
 sub replace_down {
@@ -212,15 +212,6 @@ sub replace_all {
 	die "Missing or invalid content object";
 }
 
-sub count_all {
-	my $self = shift;
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
-		return $self->editor_count_all(@_);
-	} elsif ( Params::Util::_SCALAR0( $_[0] ) ) {
-		return $self->scalar_count_all(@_);
-	}
-	die "Missing or invalid content object";
-}
 
 
 
@@ -262,7 +253,7 @@ sub editor_search_up {
 	$editor->match( $self, $start, $end );
 }
 
-sub editor_count_all {
+sub editor_search_count {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
 
@@ -273,53 +264,98 @@ sub editor_count_all {
 	);
 }
 
-sub editor_replace {
+sub editor_replace_down {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
 
-	# Execute the search
+	# Execute the search so we can establish if we have already
+	# selected a match.
 	my ( $start, $end, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
 		$editor->GetSelection,
 	);
+	return unless @matches;
 
-	# Are they perfectly selecting a match already?
-	my $selection = [ $editor->GetSelection ];
-	if ( $selection->[0] != $selection->[1] ) {
-		if ( grep { $selection->[0] == $_->[0] and $selection->[1] == $_->[1] } @matches ) {
+	# Are we perfectly selecting a match already
+	my $selection_start = $editor->GetSelectionStart;
+	my $selection_end   = $editor->GetSelectionEnd;
+	unless ( $selection_start == $selection_end ) {
+		foreach my $i ( 0 .. $#matches ) {
+			my $match = $matches[$i];
+			next unless $match->[0] == $selection_start;
+			next unless $match->[1] == $selection_end;
 
-			# Yes, replace it
+			# The selection matches, replace it
 			$editor->ReplaceSelection( $self->replace_term );
 
-			# Move our selection to a point just before/after the replace,
-			# so that it doesn't double-match
-			if ( $self->find_reverse ) {
-				$editor->SetSelection( $start, $start );
-			} else {
+			# Shortcut if there are no more matches
+			return unless $#matches;
 
-				# TO DO: There might be unicode bugs in this.
-				# TO DO: Someone that understands needs to check.
-				$start = $start + length( $self->replace_term );
-				$editor->SetSelection( $start, $start );
+			# Move to the next match
+			if ( $i == $#matches ) {
+				# Wrap to the beginning of the document
+				$start = $matches[0]->[0];
+				$end   = $matches[0]->[1];
+			} else {
+				my $delta = $editor->GetSelectionEnd - $selection_end;
+				my $down  = $matches[$i + 1];
+				$start    = $down->[0] + $delta;
+				$end      = $down->[1] + $delta;
 			}
+
+			last;
 		}
 	}
 
-	# Move to the next match
-	$self->search_next($editor);
-}
-
-sub editor_replace_down {
-	my $self   = shift;
-	my $editor = _EDITOR(shift);
-
+	$editor->match( $self, $start, $end );
 }
 
 sub editor_replace_up {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
 
+	# Execute the search so we can establish if we have already
+	# selected a match.
+	my ( $start, $end, @matches ) = $self->matches(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+		$editor->GetSelection,
+	);
+	return unless @matches;
+
+	# Are we perfectly selecting a match already
+	my $selection_start = $editor->GetSelectionStart;
+	my $selection_end   = $editor->GetSelectionEnd;
+	unless ( $selection_start == $selection_end ) {
+		foreach my $i ( 0 .. $#matches ) {
+			my $match = $matches[$i];
+			next unless $match->[0] == $selection_start;
+			next unless $match->[1] == $selection_end;
+
+			# The selection matches, replace it
+			$editor->ReplaceSelection( $self->replace_term );
+
+			# Shortcut if there are no more matches
+			return unless $#matches;
+
+			# Move to the next match
+			if ( $i == 0 ) {
+				# Wrap to the end of the document
+				my $delta = $editor->GetSelectionEnd - $selection_end;
+				$start = $matches[-1]->[0] + $delta;
+				$end   = $matches[-1]->[1] + $delta;
+			} else {
+				my $up = $matches[$i - 1];
+				$start = $up->[0];
+				$end   = $up->[1];
+			}
+
+			last;
+		}
+	}
+
+	$editor->match( $self, $start, $end );
 }
 
 sub editor_replace_all {
@@ -356,6 +392,20 @@ sub editor_replace_all {
 #####################################################################
 # Scalar Interaction
 
+sub scalar_search_count {
+	my $self   = shift;
+	my $scalar = shift;
+	unless ( Params::Util::_SCALAR0($scalar) ) {
+		die "Failed to provide SCALAR to count in";
+	}
+
+	# Execute the regex search for all matches
+	$self->match_count(
+		$$scalar,
+		$self->search_regex,
+	);
+}
+
 sub scalar_replace_all {
 	my $self   = shift;
 	my $scalar = shift;
@@ -372,20 +422,6 @@ sub scalar_replace_all {
 
 	# Return the replace count
 	return $count;
-}
-
-sub scalar_count_all {
-	my $self   = shift;
-	my $scalar = shift;
-	unless ( Params::Util::_SCALAR0($scalar) ) {
-		die "Failed to provide SCALAR to count in";
-	}
-
-	# Execute the regex search for all matches
-	$self->match_count(
-		$$scalar,
-		$self->search_regex,
-	);
 }
 
 

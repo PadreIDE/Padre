@@ -1198,6 +1198,7 @@ sub init {
 		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
+			$DB::single = 1;
 			$_[0]->search_next;
 		},
 	);
@@ -1219,17 +1220,6 @@ sub init {
 	);
 
 	# Search and Replace
-
-	Padre::Wx::Action->new(
-		name        => 'search.replace',
-		need_editor => 1,
-		label       => _T('&Replace...'),
-		comment     => _T('Find a text and replace it'),
-		toolbar     => 'actions/edit-find-replace',
-		menu_event  => sub {
-			$_[0]->replace->find;
-		},
-	);
 
 	Padre::Wx::Action->new(
 		name        => 'search.replace2',

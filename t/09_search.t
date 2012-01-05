@@ -38,8 +38,8 @@ SCOPE: {
 	isa_ok( $search, 'Padre::Search' );
 
 	# Find a count of matches
-	my $count = $search->count_all( \$SAMPLE );
-	is( $count, 9, '->count_all ok' );
+	my $count = $search->search_count( \$SAMPLE );
+	is( $count, 9, '->search_count ok' );
 
 	# Find the list of matches
 	my @lines = $search->match_lines( $SAMPLE, $search->search_regex );
@@ -71,7 +71,7 @@ SCOPE: {
 	# There should now be 9 copies of abc in it instead
 	my $abc = Padre::Search->new(
 		find_term => 'abc',
-	)->count_all( \$copy );
+	)->search_count( \$copy );
 	is( $abc, 9, 'Found 9 copies of the replace_term' );
 }
 

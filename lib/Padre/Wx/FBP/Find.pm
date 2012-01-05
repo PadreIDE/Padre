@@ -40,13 +40,6 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_KEY_UP(
-		$self,
-		sub {
-			shift->on_key_up(@_);
-		},
-	);
-
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
@@ -83,7 +76,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("&Regular Expression"),
+		Wx::gettext("Regular E&xpression"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -115,7 +108,7 @@ sub new {
 	$self->{find_next} = Wx::Button->new(
 		$self,
 		Wx::ID_OK,
-		Wx::gettext("Find &Next"),
+		Wx::gettext("&Find Next"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -212,10 +205,6 @@ sub on_close {
 	$_[0]->main->error('Handler method on_close for event Padre::Wx::FBP::Find.OnClose not implemented');
 }
 
-sub on_key_up {
-	$_[0]->main->error('Handler method on_key_up for event Padre::Wx::FBP::Find.OnKeyUp not implemented');
-}
-
 sub refresh {
 	$_[0]->main->error('Handler method refresh for event find_term.OnText not implemented');
 }
@@ -226,7 +215,7 @@ sub find_next_clicked {
 
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

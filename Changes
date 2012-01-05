@@ -17,6 +17,10 @@ the even version for the release, even during development.
     - Completed the Padre::Delta module for applying document updates, diffs or
       other small automated changes to a document without moving the scroll
       position or cursor (ADAMK)
+    - Converted the FindFast panel to wxFormBuilder (ADAMK)
+    - Converted the Replace dialog to wxFormBuilder (ADAMK)
+    - Converted the Plugin Manager dialog to wxFormBuilder (ADAMK)
+    - Converted the Document Statistics dialog to wxFormBuilder (ADAMK)
     - The modification indicator on the notebook tab is now set correctly even
       during automated mass document changes (ADAMK)
     - Removed Padre::DB::SyntaxHighlighter as the need for custom highlighting
@@ -31,7 +35,7 @@ the even version for the release, even during development.
     - Added Debug2 interface, you will need Debug::Client 0.15, please view wiki
       for more information (BOWTIE)
     - Force upgrades to DBD::SQLite 1.35 and ORLite 1.51 for major performance
-      improvements which should make Padre block less (ADAMK)
+      improvements which should make Padre block a bit less (ADAMK)
     - In addition to VACUUM on shutdown, also ANALYZE for a further small
       performance improvement (ADAMK)
     - Removed redundant Module Tools/Install CPAN Module (AZAWAWI)
@@ -45,28 +49,25 @@ the even version for the release, even during development.
     - Fixed detection of XML files with non-.xml extensions (ADAMK)
     - Moved Wx-specific code out of Padre::Util into Padre::Wx::Util (ADAMK)
     - Moving the _T function to the dedicated Padre::Locale::T (ADAMK)
-    - Plugin Manager converted to use wxFormBuilder (ADAMK)
     - The Replace dialogs don't use Find Fast term unless visible (ADAMK)
     - Search results now match correctly at the first position (ADAMK)
     - Search match caret is now at the start of the match selection (ADAMK)
     - Added MIME type and content detection for wxFormBuilder files (ADAMK)
-    - Correctly apply mime type inheritance for Scintilla lexers (ADAMK)
+    - Scintilla lexer selection now obeys MIME type inheritance (ADAMK)
     - Added shared Padre::Wx::ComboBox::FindTerm widget for search dialogs,
       that will hint when the search term is an illegal regex (ADAMK)
-    - Hitting F3 after a search dialog is closed will repeat the search from
-      the dialog with all settings (regex, etc) until the user changes a
+    - Hitting F3 after a find or replace dialog is closed repeats the last
+      search with all settings (regex, etc) retained until the user changes a
       document or moves the selection off the previous selected result (ADAMK)
     - Added main window deactivation hook to hide Find Fast panel (ADAMK)
     - Added main window activation hook to rescan the directory tree, rerun
       syntax checking, and rerun vcs indicators (ADAMK)
     - Hitting enter in the Function List search box will clear the search after
       you have been taken to the first function (ADAMK)
-    - Converted the FindFast panel to wxFormBuilder (ADAMK)
     - When Find Fast is closed, return scroll and selection to the original
       location (ADAMK)
     - Syntax check status is reflected in the label for the Syntax Check output
       so you can see the result when it is not at the front (ADAMK)
-    - Converted the Document Statistics dialog to wxFormBuilder (ADAMK)
     - When syntax check fails, only show markers for the errors in the file that
       is being displayed in the editor (ADAMK)
 
@@ -75,6 +76,7 @@ the even version for the release, even during development.
     - Padre::MimeTypes replaced by Padre::MIME and Padre::Wx::Scintilla (ADAMK)
     - Padre::Project::headline method now returns the relative path, with the
       full path version moved to Padre::Project::headline_path (ADAMK)
+    - Padre::Search changes relating to "Replace" and "Count All" logic (ADAMK)
 
 0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)

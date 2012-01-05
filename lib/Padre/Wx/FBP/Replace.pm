@@ -77,7 +77,7 @@ sub new {
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Replace With:"),
+		Wx::gettext("Replace &With:"),
 	);
 
 	$self->{replace_term} = Padre::Wx::ComboBox::History->new(
@@ -118,7 +118,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("&Regular Expression"),
+		Wx::gettext("Regular E&xpression"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -142,11 +142,10 @@ sub new {
 	$self->{find_next} = Wx::Button->new(
 		$self,
 		Wx::ID_OK,
-		Wx::gettext("Find &Next"),
+		Wx::gettext("&Find Next"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
-	$self->{find_next}->SetDefault;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -163,6 +162,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{replace}->SetDefault;
 
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -194,6 +194,14 @@ sub new {
 		Wx::gettext("Cancel"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{cancel},
+		sub {
+			shift->on_close(@_);
+		},
 	);
 
 	my $fgSizer2 = Wx::FlexGridSizer->new( 2, 2, 0, 10 );
@@ -254,6 +262,10 @@ sub replace {
 	$_[0]->{replace};
 }
 
+sub replace_all {
+	$_[0]->{replace_all};
+}
+
 sub on_close {
 	$_[0]->main->error('Handler method on_close for event Padre::Wx::FBP::Replace.OnClose not implemented');
 }
@@ -276,7 +288,7 @@ sub replace_all_clicked {
 
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

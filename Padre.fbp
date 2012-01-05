@@ -733,7 +733,7 @@
             <event name="OnIdle"></event>
             <event name="OnInitDialog"></event>
             <event name="OnKeyDown"></event>
-            <event name="OnKeyUp">on_key_up</event>
+            <event name="OnKeyUp"></event>
             <event name="OnKillFocus"></event>
             <event name="OnLeaveWindow"></event>
             <event name="OnLeftDClick"></event>
@@ -965,7 +965,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">&amp;Regular Expression</property>
+                                        <property name="label">Regular E&amp;xpression</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_regex</property>
@@ -1201,7 +1201,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_OK</property>
-                                        <property name="label">Find &amp;Next</property>
+                                        <property name="label">&amp;Find Next</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_next</property>
@@ -3284,7 +3284,7 @@
                                 <property name="font"></property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Replace With:</property>
+                                <property name="label">Replace &amp;With:</property>
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">m_staticText3</property>
@@ -3529,7 +3529,7 @@
                                 <property name="font"></property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">&amp;Regular Expression</property>
+                                <property name="label">Regular E&amp;xpression</property>
                                 <property name="maximum_size"></property>
                                 <property name="minimum_size"></property>
                                 <property name="name">find_regex</property>
@@ -3643,13 +3643,13 @@
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
-                                        <property name="default">1</property>
+                                        <property name="default">0</property>
                                         <property name="enabled">1</property>
                                         <property name="fg"></property>
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_OK</property>
-                                        <property name="label">Find &amp;Next</property>
+                                        <property name="label">&amp;Find Next</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">find_next</property>
@@ -3700,7 +3700,7 @@
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
-                                        <property name="default">0</property>
+                                        <property name="default">1</property>
                                         <property name="enabled">1</property>
                                         <property name="fg"></property>
                                         <property name="font"></property>
@@ -3767,7 +3767,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">replace_all</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">public</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="style"></property>
@@ -3847,7 +3847,7 @@
                                         <property name="window_extra_style"></property>
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
-                                        <event name="OnButtonClick"></event>
+                                        <event name="OnButtonClick">on_close</event>
                                         <event name="OnChar"></event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
@@ -27143,7 +27143,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="1">
+        <object class="Dialog" expanded="0">
             <property name="bg"></property>
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
@@ -27201,16 +27201,16 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="1">
+            <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer109</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="1">
+                <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxBoxSizer" expanded="1">
+                    <object class="wxBoxSizer" expanded="0">
                         <property name="minimum_size"></property>
                         <property name="name">bSizer110</property>
                         <property name="orient">wxVERTICAL</property>
@@ -27325,11 +27325,11 @@
                                 <event name="OnUpdateUI"></event>
                             </object>
                         </object>
-                        <object class="sizeritem" expanded="1">
+                        <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
                             <property name="proportion">0</property>
-                            <object class="wxFlexGridSizer" expanded="1">
+                            <object class="wxFlexGridSizer" expanded="0">
                                 <property name="cols">2</property>
                                 <property name="flexible_direction">wxHORIZONTAL</property>
                                 <property name="growablecols">1</property>

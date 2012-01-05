@@ -47,9 +47,6 @@ sub new {
 	$self->AppendSeparator;
 
 	# Search and Replace
-	$self->{replace} = $self->add_menu_action(
-		'search.replace',
-	);
 	$self->{replace2} = $self->add_menu_action(
 		'search.replace2',
 	);

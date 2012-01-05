@@ -35,13 +35,8 @@ sub new {
 sub on_close {
 	my $self  = shift;
 	my $event = shift;
+	$self->Hide;
 	$self->main->editor_focus;
-	$event->Skip(1);
-}
-
-sub on_key_up {
-	my $self = shift;
-	my $event = shift;
 	$event->Skip(1);
 }
 
