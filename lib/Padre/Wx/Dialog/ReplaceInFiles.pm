@@ -103,9 +103,12 @@ sub run {
 	# Run the search in the Replace in Files tool
 	$main->show_replaceinfiles;
 	$main->replaceinfiles->replace(
-		root    => $self->find_directory->SaveValue,
 		search  => $self->as_search,
-		replace => $self->replace_term->GetValue,
+		replace => $self->replace_term->SaveValue,
+		root    => $self->find_directory->SaveValue,
+		mime    => $self->find_types->GetClientData(
+			$self->find_types->GetSelection
+		),
 	);
 
 	$main->editor_focus;
