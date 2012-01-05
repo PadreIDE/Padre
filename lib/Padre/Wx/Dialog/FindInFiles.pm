@@ -106,8 +106,11 @@ sub run {
 	# Run the search in the Find in Files view
 	$main->show_findinfiles;
 	$main->findinfiles->search(
-		root   => $self->find_directory->SaveValue,
 		search => $self->as_search,
+		root   => $self->find_directory->SaveValue,
+		mime   => $self->find_types->GetClientData(
+			$self->find_types->GetSelection
+		),
 	);
 
 	$main->editor_focus;

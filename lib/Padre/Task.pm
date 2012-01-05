@@ -547,7 +547,7 @@ desires of the task manager.
 =cut
 
 sub cancelled {
-	return 1 unless defined $_[0]->{handle};
+	return unless defined $_[0]->{handle};
 	return shift->{handle}->cancelled;
 }
 

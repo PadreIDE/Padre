@@ -12,6 +12,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::Choice::Files ();
 use Padre::Wx::ComboBox::FindTerm ();
 use Padre::Wx::ComboBox::History ();
 
@@ -105,14 +106,14 @@ sub new {
 		Wx::gettext("File Types:"),
 	);
 
-	$self->{find_types} = Wx::ComboBox->new(
+	$self->{find_types} = Padre::Wx::Choice::Files->new(
 		$self,
 		-1,
-		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
 	);
+	$self->{find_types}->SetSelection(0);
 
 	my $m_staticline2 = Wx::StaticLine->new(
 		$self,
@@ -238,7 +239,7 @@ sub directory {
 
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
