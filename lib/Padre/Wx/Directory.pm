@@ -228,7 +228,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Project');
 }
 
 sub view_close {
@@ -315,11 +315,6 @@ sub on_expand {
 
 ######################################################################
 # General Methods
-
-# Returns the window label
-sub gettext_label {
-	Wx::gettext('Project');
-}
 
 # The search term if we have one
 sub term {

@@ -83,7 +83,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Output');
 }
 
 sub view_close {
@@ -191,10 +191,6 @@ sub setup_bindings {
 
 #####################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('Output');
-}
 
 # From Sean Healy on wxPerl mailing list.
 # Tweaked to avoid strings copying as much as possible.

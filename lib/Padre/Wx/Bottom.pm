@@ -78,7 +78,7 @@ sub show {
 	# Add the page
 	$self->AddPage(
 		$page,
-		$page->gettext_label,
+		$page->view_label,
 		1,
 	);
 	if ( $page->can('view_icon') ) {
@@ -135,7 +135,7 @@ sub hide {
 sub refresh {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
-		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+		$self->SetPageText( $i, $self->GetPage($i)->view_label );
 	}
 	return;
 }
@@ -144,7 +144,7 @@ sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		my $tool = $self->GetPage($i);
-		$self->SetPageText( $i, $tool->gettext_label );
+		$self->SetPageText( $i, $tool->view_label );
 		if ( $tool->can('relocale') ) {
 			$tool->relocale;
 		} else {

@@ -8,8 +8,6 @@ use Padre::Wx             ();
 use Padre::Wx::FBP::Patch ();
 use Padre::Logger;
 
-# use Data::Printer { caller_info => 1 };
-
 our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::FBP::Patch
@@ -197,9 +195,6 @@ sub current_files {
 			$self->{open_file_info}->{$_}->{'changed'} = 1;
 		}
 	}
-
-	# nb enable Data::Printer above to use
-	# p $self->{open_file_info};
 
 	return;
 }

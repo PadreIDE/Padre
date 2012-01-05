@@ -141,7 +141,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Syntax Check');
 }
 
 sub view_close {
@@ -239,10 +239,6 @@ sub show_stderr {
 
 #####################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('Syntax Check');
-}
 
 sub disable {
 	my $self = shift;

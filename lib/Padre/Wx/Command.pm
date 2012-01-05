@@ -94,7 +94,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Command');
 }
 
 sub view_close {
@@ -257,11 +257,6 @@ sub outn {
 
 #####################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('Command');
-}
-
 
 sub select {
 	my $self   = shift;

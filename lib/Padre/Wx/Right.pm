@@ -81,7 +81,7 @@ sub show {
 	$self->InsertPage(
 		0,
 		$page,
-		$page->gettext_label,
+		$page->view_label,
 		1,
 	);
 
@@ -140,7 +140,7 @@ sub hide {
 sub refresh {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
-		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+		$self->SetPageText( $i, $self->GetPage($i)->view_label );
 	}
 	return;
 }
@@ -148,7 +148,7 @@ sub refresh {
 sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
-		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+		$self->SetPageText( $i, $self->GetPage($i)->view_label );
 	}
 
 	return;

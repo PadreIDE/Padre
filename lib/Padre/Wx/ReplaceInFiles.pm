@@ -209,7 +209,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Replace in Files');
 }
 
 sub view_close {
@@ -223,10 +223,6 @@ sub view_close {
 
 #####################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('Replace in Files');
-}
 
 sub select {
 	my $self   = shift;

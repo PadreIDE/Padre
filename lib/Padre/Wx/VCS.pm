@@ -110,7 +110,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('Version Control');
 }
 
 sub view_close {
@@ -139,10 +139,6 @@ sub on_refresh_click {
 
 #####################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('Version Control');
-}
 
 # Clear everything...
 sub clear {

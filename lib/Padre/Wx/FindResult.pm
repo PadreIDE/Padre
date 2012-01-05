@@ -9,7 +9,7 @@ Padre::Wx::FindResult - Find and list all occurrences
 =head1 DESCRIPTION
 
 C<Padre::Wx::FindResult> Displays a list of all the occurrences of term
-in a file.   Clicking on an item in the list will go to the line in that editor.
+in a file. Clicking on an item in the list will go to the line in that editor.
 
 =cut
 
@@ -19,7 +19,6 @@ use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Wx;
 use Wx::Event qw( EVT_BUTTON );
-
 
 our $VERSION = '0.93';
 our @ISA     = 'Wx::ListView';
@@ -37,7 +36,6 @@ use Class::XSAccessor {
 Create the new B<Find results> panel.
 
 =cut
-
 
 sub new {
 	my ( $class, $main, $lines, $editor ) = @_;
@@ -80,18 +78,18 @@ sub new {
 
 =pod
 
-=head3 C<gettext_label>
+=head3 C<view_label>
 
 Sets the label of the tab. Called automatically when the object is created.
 
 =cut
 
-sub gettext_label {
-	my ($self) = @_;
-
-	sprintf( Wx::gettext('Find Results (%s)'), $self->line_count );
+sub view_label {
+	sprintf(
+		Wx::gettext('Find Results (%s)'),
+		$_[0]->line_count,
+	);
 }
-
 
 =pod
 
@@ -105,10 +103,8 @@ Works out the correct column widths for the list columns.
 
 sub set_column_widths {
 	my $self = shift;
-
 	$self->SetColumnWidth( 0, Wx::LIST_AUTOSIZE );
 	$self->SetColumnWidth( 1, Wx::LIST_AUTOSIZE );
-
 	return;
 }
 

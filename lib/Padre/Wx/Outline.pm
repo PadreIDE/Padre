@@ -191,7 +191,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label;
+	Wx::gettext('Outline');
 }
 
 sub view_close {
@@ -289,10 +289,6 @@ sub render {
 # Sets the focus on the search field
 sub focus_on_search {
 	$_[0]->{search}->SetFocus;
-}
-
-sub gettext_label {
-	Wx::gettext('Outline');
 }
 
 sub clear {

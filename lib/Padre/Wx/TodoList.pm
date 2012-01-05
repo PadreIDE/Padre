@@ -177,7 +177,7 @@ sub view_panel {
 }
 
 sub view_label {
-	shift->gettext_label(@_);
+	Wx::gettext('To-do');
 }
 
 sub view_close {
@@ -211,10 +211,6 @@ sub on_list_item_activated {
 
 ######################################################################
 # General Methods
-
-sub gettext_label {
-	Wx::gettext('To-do');
-}
 
 # Sets the focus on the search field
 sub focus_on_search {

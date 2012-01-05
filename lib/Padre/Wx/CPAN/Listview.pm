@@ -46,10 +46,6 @@ sub main {
 	$_[0]->GetGrandParent;
 }
 
-#sub gettext_label {
-#	Wx::gettext('Syntax Check');
-#}
-
 sub clear {
 	my $self = shift;
 
