@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 54;
+	plan tests => 53;
 }
 
 use Test::NoWarnings;
@@ -49,7 +49,7 @@ my @subs =
 	qw( _bp_autoload  _debug_get_variable  _display_trace  _get_bp_db  _output_variables  
 	_set_debugger  _setup_db  debug_perl  debug_perl_show_value  debug_quit  debug_run_till  
 	debug_step_in  debug_step_out  debug_step_over  display_value  get_global_variables  
-	get_local_variables  gettext_label  on_all_threads_clicked  on_debug_clicked  
+	get_local_variables on_all_threads_clicked  on_debug_clicked  
 	on_display_options_clicked  on_display_value_clicked  on_dot_clicked  on_evaluate_expression_clicked  
 	on_list_action_clicked  on_module_versions_clicked  on_quit_debugger_clicked  
 	on_raw_clicked  on_run_till_clicked  on_running_bp_clicked  on_show_global_variables_checked  
