@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-07 11:47+0100\n"
+"POT-Creation-Date: 2012-01-07 14:55+0100\n"
 "PO-Revision-Date: 2011-03-08 12:00+0100\n"
 "Last-Translator: Zeno Gantner\n"
 "Language-Team: German\n"
@@ -56,7 +56,7 @@ msgstr ""
 msgid "$_ for both"
 msgstr "$_ für beide"
 
-#: lib/Padre/Wx/Diff.pm:111
+#: lib/Padre/Wx/Diff.pm:110
 #, perl-format
 msgid "%d line added"
 msgstr "%d Zeile hinzugefügt"
@@ -66,12 +66,12 @@ msgstr "%d Zeile hinzugefügt"
 msgid "%d line changed"
 msgstr "%d Zeile geändert"
 
-#: lib/Padre/Wx/Diff.pm:122
+#: lib/Padre/Wx/Diff.pm:120
 #, perl-format
 msgid "%d line deleted"
 msgstr "%d Zeile gelöscht"
 
-#: lib/Padre/Wx/Diff.pm:110
+#: lib/Padre/Wx/Diff.pm:109
 #, perl-format
 msgid "%d lines added"
 msgstr "%d Zeilen hinzugefügt"
@@ -81,7 +81,7 @@ msgstr "%d Zeilen hinzugefügt"
 msgid "%d lines changed"
 msgstr "%d Zeilen verändert"
 
-#: lib/Padre/Wx/Diff.pm:121
+#: lib/Padre/Wx/Diff.pm:119
 #, perl-format
 msgid "%d lines deleted"
 msgstr "%d Zeilen gelöscht"
@@ -244,6 +244,10 @@ msgstr "Entferne Leerzeichen am &Ende"
 msgid "&Deparse selection"
 msgstr "'&Deparse' Auswahl"
 
+#: lib/Padre/Wx/Dialog/PluginManager.pm:104
+msgid "&Disable"
+msgstr "&Deaktivieren"
+
 #: lib/Padre/Wx/ActionLibrary.pm:541
 msgid "&Document Statistics"
 msgstr "&Dokumenten-Statistik"
@@ -259,6 +263,11 @@ msgstr "&Editiere 'Mein Plugin'"
 #: lib/Padre/Wx/ActionLibrary.pm:2189
 msgid "&Edit with Regex Editor..."
 msgstr "Mit Regex-&Editor bearbeiten"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:110
+#: lib/Padre/Wx/Dialog/PluginManager.pm:116
+msgid "&Enable"
+msgstr "&Aktivieren"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:234
 #, perl-format
@@ -372,7 +381,7 @@ msgstr "&Neue Zeile, gleiche Spalte"
 
 #: lib/Padre/Wx/FBP/FindFast.pm:101
 msgid "&Next"
-msgstr "&Vor"
+msgstr "&Weiter"
 
 #: lib/Padre/Wx/ActionLibrary.pm:779
 msgid "&Next Difference"
@@ -569,6 +578,10 @@ msgstr "Neu zu ladende Dateien &auswählen:"
 #: lib/Padre/Wx/Dialog/Advanced.pm:172
 msgid "&Set"
 msgstr "&Setzen"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:98
+msgid "&Show Error Message"
+msgstr "&Zeige Fehlermeldung"
 
 #: lib/Padre/Wx/ActionLibrary.pm:906
 msgid "&Snippets..."
@@ -925,7 +938,7 @@ msgstr "Autor"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:969
 msgid "Auto detect Perl 6 files"
-msgstr ""
+msgstr "Perl-6-Dateien automatisch erkennen"
 
 #: lib/Padre/Wx/FBP/Preferences.pm:1324
 msgid "Auto-Complete"
@@ -1308,8 +1321,7 @@ msgstr "Einige Dateien schließen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1671
 msgid "Close the highest priority dialog or panel"
-msgstr ""
-"Schließe Dialog oder Panel mit der höchsten Priorität"
+msgstr "Schließe Dialog oder Panel mit der höchsten Priorität"
 
 #: lib/Padre/Wx/Dialog/Diff.pm:46
 msgid "Close this window"
@@ -2185,7 +2197,7 @@ msgstr "Fehler beim Ausführen der Aktion"
 msgid "Error while trying to perform Padre action: %s"
 msgstr "Fehler beim Ausführen der Aktion %s"
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:328
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:323
 msgid "Error:\n"
 msgstr "Fehler:\n"
 
@@ -3198,8 +3210,8 @@ msgid "Ne&w"
 msgstr "&Neu"
 
 #: lib/Padre/Wx/Main.pm:6937
-msgid "Need to select text in order to translate to hex"
-msgstr "Zur Umwandlung in Hexadezimalzahl muss Text markiert sein."
+msgid "Need to select text in order to translate numbers"
+msgstr "Zur Umwandlung muss Text ausgewählt sein."
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:129
 msgid "Negative lookahead assertion"
@@ -3253,7 +3265,7 @@ msgstr "Weder Build.PL noch Makefile.PL noch dist.ini wurden gefunden."
 msgid "No Help found"
 msgstr "Kein Hilfe-Dokument gefunden"
 
-#: lib/Padre/Wx/Diff.pm:254
+#: lib/Padre/Wx/Diff.pm:251
 msgid "No changes found"
 msgstr "Keine Änderungen gefunden"
 
@@ -3521,7 +3533,8 @@ msgstr "Im Dateimanager öffnen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2145
 msgid "Open interesting and helpful Padre Wiki in your default web browser"
-msgstr "Das interessante und hilfreiche Padre-Wiki im Standard-Webbrowser öffnen"
+msgstr ""
+"Das interessante und hilfreiche Padre-Wiki im Standard-Webbrowser öffnen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2536
 msgid "Open interesting and helpful Perl websites in your default web browser"
@@ -5673,7 +5686,7 @@ msgstr "Sichtbare Zeichen und Leerzeichen"
 
 #: lib/Padre/Wx/ActionLibrary.pm:2144
 msgid "Visit Debug &Wiki..."
-msgstr ""
+msgstr "Debug-Wiki besuchen..."
 
 #: lib/Padre/Wx/ActionLibrary.pm:2535
 msgid "Visit Perl Websites..."
@@ -5958,9 +5971,6 @@ msgstr ""
 
 #~ msgid "&Install CPAN Module"
 #~ msgstr "&Installiere CPAN-Modul"
-
-#~ msgid "&Show error message"
-#~ msgstr "&Zeige Fehlermeldung"
 
 #~ msgid "&Update"
 #~ msgstr "&Aktualisieren"
