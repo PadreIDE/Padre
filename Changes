@@ -74,6 +74,7 @@ the even version for the release, even during development.
       assumed replace term you probably don't want (ADAMK)
     - Recursive search and replace dialogs support type filtering (ADAMK)
     - Hex/decimal conversion: make error message generic (ZENOG)
+    - Plugin manager: complete translation (ZENOG)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

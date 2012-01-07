@@ -95,25 +95,25 @@ sub refresh_plugin {
 		# Update the action button
 		if ( $handle->error or $handle->incompatible ) {
 			$self->{action}->{method} = 'explain_selected';
-			$self->{action}->SetLabel('&Show Error Message');
+			$self->{action}->SetLabel( Wx::gettext('&Show Error Message') );
 			$self->{action}->Enable;
 			$self->{preferences}->Disable;
 
 		} elsif ( $handle->enabled ) {
 			$self->{action}->{method} = 'disable_selected';
-			$self->{action}->SetLabel('&Disable');
+			$self->{action}->SetLabel( Wx::gettext('&Disable') );
 			$self->{action}->Enable;
 			$self->{preferences}->Disable;
 
 		} elsif ( $handle->can_enable ) {
 			$self->{action}->{method} = 'enable_selected';
-			$self->{action}->SetLabel('&Enable');
+			$self->{action}->SetLabel( Wx::gettext('&Enable') );
 			$self->{action}->Enable;
 			$self->{preferences}->Enable;
 
 		} else {
 			$self->{action}->{method} = 'enable_selected';
-			$self->{action}->SetLabel('&Enable');
+			$self->{action}->SetLabel( Wx::gettext('&Enable') );
 			$self->{action}->Disable;
 			$self->{preferences}->Disable;
 		}
