@@ -6934,7 +6934,7 @@ sub show_as_numbers {
 
 	my $text = $current->text;
 	unless ($text) {
-		$self->message( Wx::gettext('Need to select text in order to translate to hex') );
+		$self->message( Wx::gettext('Need to select text in order to translate numbers') );
 		return;
 	}
 

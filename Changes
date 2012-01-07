@@ -73,6 +73,7 @@ the even version for the release, even during development.
     - The replace_term history combobox class no longer prepopulates with an
       assumed replace term you probably don't want (ADAMK)
     - Recursive search and replace dialogs support type filtering (ADAMK)
+    - Hex/decimal conversion: make error message generic (ZENOG)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
