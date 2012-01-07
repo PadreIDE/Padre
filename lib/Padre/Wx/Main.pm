@@ -1951,7 +1951,7 @@ sub refresh_todo {
 	return unless $self->has_todo;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{todo}->IsChecked;
-	$self->todo->refresh( @_ or $self->current );
+	$self->todo->refresh( $self->current );
 	return;
 }
 
