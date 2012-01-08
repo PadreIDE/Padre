@@ -1513,7 +1513,8 @@ sub find_function {
 	my $regex    = $document->get_function_regex($name) or return;
 
 	# Run the search
-	my ( $start, $end ) = Padre::Util::get_matches(
+	require Padre::Search;
+	my ( $start, $end ) = Padre::Search->matches(
 		$self->GetText,
 		$regex,
 		$self->GetSelection, # Provides two params

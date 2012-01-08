@@ -256,69 +256,6 @@ sub parse_variable {
 
 =pod
 
-=head2 C<get_matches>
-
-Parameters:
-
-=over
-
-=item * The text in which we need to search
-
-=item * The regular expression
-
-=item * The offset within the text where we the last match started so the next
-forward match must start after this.
-
-=item * The offset within the text where we the last match ended so the next
-backward match must end before this.
-
-=item * backward bit (1 = search backward, 0 = search forward) - Optional. Defaults to 0.
-
-=back
-
-=cut
-
-sub get_matches {
-	my ( $text, $regex, $from, $to, $backward ) = @_;
-	die 'missing parameters' if @_ < 4;
-
-	require Encode;
-	$text  = Encode::encode( 'utf-8', $text );
-	$regex = Encode::encode( 'utf-8', $regex );
-
-	my @matches = ();
-	while ( $text =~ /$regex/mg ) {
-		my $e = pos($text);
-		unless ( defined($1) ) {
-			print STDERR 'WARNING (' . join( ",", map { $_ || ''; } ( caller(0) ) ) . "): $regex has no \$1 match\n";
-			next;
-		}
-		my $s = $e - length($1);
-		push @matches, [ $s, $e ];
-	}
-
-	my $pair;
-	if ($backward) {
-		require List::Util;
-		$pair = List::Util::first { $to > $_->[1] } reverse @matches;
-		if ( not $pair and @matches ) {
-			$pair = $matches[-1];
-		}
-	} else {
-		$pair = List::Util::first { $from < $_->[0] } @matches;
-		if ( not $pair and @matches ) {
-			$pair = $matches[0];
-		}
-	}
-
-	my ( $start, $end );
-	( $start, $end ) = @$pair if $pair;
-
-	return ( $start, $end, @matches );
-}
-
-=pod
-
 =head2 C<_T>
 
 The C<_T> function is used for strings that you do not want to translate

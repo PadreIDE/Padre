@@ -18,12 +18,19 @@ foreach my $file ('Debugger.pm') {
 }
 
 use Padre::Util::CommandLine;
-use Cwd qw(abs_path);
-{
+use Cwd ();
+SCOPE: {
 	no warnings;
-	sub Cwd::cwd {$files_dir}
+	sub Cwd::cwd { $files_dir }
 }
 
-
-is Padre::Util::CommandLine::tab(':e'),             ':e Debugger.pm', 'TAB 1';
-is Padre::Util::CommandLine::tab(':e Debugger.pm'), ':e beginner/',   'TAB 2';
+is(
+	Padre::Util::CommandLine::tab(':e'),
+	':e Debugger.pm',
+	'TAB 1',
+);
+is(
+	Padre::Util::CommandLine::tab(':e Debugger.pm'),
+	':e beginner/',
+	'TAB 2',
+);

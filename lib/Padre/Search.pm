@@ -100,9 +100,10 @@ sub search_regex {
 	}
 
 	# Compile the regex
-	my $search_regex = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
+	my $search_regex = eval {
+		$self->find_case ? qr/$term/m : qr/$term/mi
+	};
 	return if $@;
-
 	return $search_regex;
 }
 

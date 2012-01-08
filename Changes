@@ -83,7 +83,8 @@ the even version for the release, even during development.
     - Padre::Project::headline method now returns the relative path, with the
       full path version moved to Padre::Project::headline_path (ADAMK)
     - Padre::Search changes relating to "Replace" and "Count All" logic (ADAMK)
-    - The long-deprecated gettext_label method has now been deleted (ADAMK)
+    - The long-deprecated gettext_label method has been deleted (ADAMK)
+    - The old search function Padre::Util::get_matches has beedn deleted (ADAMK)
 
 0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)

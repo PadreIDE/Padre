@@ -1057,7 +1057,8 @@ EOC
 
 	# with the change made
 	# locate the function:
-	my ( $start, $end ) = Padre::Util::get_matches(
+	require Padre::Search;
+	my ( $start, $end ) = Padre::Search->matches(
 		$editor->GetText,
 		$self->get_function_regex($subname),
 		$editor->GetSelection, # Provides two params

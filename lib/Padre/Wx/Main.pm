@@ -1619,11 +1619,13 @@ sub process_template_frequent {
 			my $first  = $editor->PositionFromLine(0);
 			my $prefix = $editor->GetTextRange( $first, $pos );
 
-			my ( $start, $end ) = Padre::Util::get_matches(
+			require Padre::Search;
+			my ( $start, $end ) = Padre::Search->matches(
 				$prefix,
 				$document->get_function_regex(qr/\w+/),
-				0, length($prefix),
-				1
+				0,
+				length($prefix),
+				1,
 			);
 			if ( defined $start and defined $end ) {
 				my $match = substr( $prefix, $start, ( $end - $start ) );
