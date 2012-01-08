@@ -421,13 +421,10 @@ sub find_perldiag_translations {
 # Logging and Debugging
 
 sub humanbytes {
-
-	my $Bytes = $_[0] || 0;
-
+	my $bytes = $_[0] || 0;
 	eval { require Format::Human::Bytes; };
-	return $Bytes if $@; # Doesn't look good, but works
-
-	return Format::Human::Bytes::base2( $Bytes, 1 );
+	return $bytes if $@; # Doesn't look good, but works
+	return Format::Human::Bytes::base2( $bytes, 1 );
 
 }
 
