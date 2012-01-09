@@ -24,15 +24,8 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Role::Task   ();
-use Padre::Wx           ();
-use Padre::Wx::Constant ();
-use Wx::Html            ();
-
-BEGIN {
-	# Now that we have loaded Wx::Html we need to rerun the constant
-	# loader to ensure the new style constants are correctly created.
-	Padre::Wx::Constant::load();
-}
+use Padre::Wx ();
+use Padre::Wx 'Html';
 
 our $VERSION = '0.93';
 our @ISA     = qw{

@@ -51,6 +51,17 @@ use constant {
 	EDITOR_FONT    => Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
 };
 
+sub import {
+	my $class = shift;
+	my @load  = grep { not $_->VERSION } map { "Wx::$_" } @_;
+	if ( @load ) {
+		local $@;
+		eval join "\n", map { "require $_;" } @load;
+		Padre::Wx::Constant::load();
+	}
+	return 1;
+}
+
 
 
 

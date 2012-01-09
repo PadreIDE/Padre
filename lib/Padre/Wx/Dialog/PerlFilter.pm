@@ -5,12 +5,9 @@ package Padre::Wx::Dialog::PerlFilter;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx             ();
+use Padre::Wx 'RichText';
 use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
-
-# RichTextCtrl
-use Wx::RichText ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{

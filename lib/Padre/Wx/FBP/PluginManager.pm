@@ -12,7 +12,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
-use Wx::Html ();
+use Padre::Wx 'Html';
 
 our $VERSION = '0.93';
 our @ISA     = qw{

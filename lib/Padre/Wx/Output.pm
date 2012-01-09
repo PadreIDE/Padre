@@ -14,9 +14,8 @@ use Params::Util          ();
 use Padre::Feature        ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx             ();
+use Padre::Wx 'RichText';
 use Padre::Logger;
-use Wx::RichText; # Is this necesary?
 
 our $VERSION = '0.93';
 our @ISA     = qw{
