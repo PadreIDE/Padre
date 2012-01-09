@@ -12,7 +12,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 use Padre::Wx::Role::Main ();
-use Wx::Html ();
+use Padre::Wx::HtmlWindow ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -33,7 +33,7 @@ sub new {
 		Wx::DEFAULT_FRAME_STYLE | Wx::RESIZE_BORDER | Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{html} = Wx::HtmlWindow->new(
+	$self->{html} = Padre::Wx::HtmlWindow->new(
 		$self,
 		-1,
 		Wx::DefaultPosition,

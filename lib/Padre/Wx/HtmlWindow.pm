@@ -23,25 +23,45 @@ methods.
 use 5.008;
 use strict;
 use warnings;
+use Padre::Role::Task   ();
 use Padre::Wx           ();
 use Padre::Wx::Constant ();
 use Wx::Html            ();
 
-our $VERSION = '0.93';
-our @ISA     = 'Wx::HtmlWindow';
-
-# Now that we have loaded Wx::Html we need to rerun the constant
-# loader to ensure the new style constants are correctly created.
 BEGIN {
+	# Now that we have loaded Wx::Html we need to rerun the constant
+	# loader to ensure the new style constants are correctly created.
 	Padre::Wx::Constant::load();
 }
+
+our $VERSION = '0.93';
+our @ISA     = qw{
+	Padre::Role::Task
+	Wx::HtmlWindow
+};
+
+use constant LOADING => <<'END_HTML';
+<html>
+<body>
+Loading...
+</body>
+</html>
+END_HTML
+
+use constant ERROR => <<'END_HTML';
+<html>
+<body>
+Failed to render page
+</body>
+</html>
+END_HTML
 
 
 
 
 
 #####################################################################
-# Loader Methods
+# Foreground Loader Methods
 
 =pod
 
@@ -88,6 +108,46 @@ sub load_pod {
 	my $self = shift;
 	require Padre::Pod2HTML;
 	$self->SetPage( Padre::Pod2HTML->pod2html( $_[0] ) );
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Background Loader Methods
+
+sub background_file {
+	my $self = shift;
+	my $file = shift;
+
+	# Spawn the rendering task
+	$self->task_reset;
+	$self->task_request(
+		task      => 'Padre::Task::Pod2HTML',
+		on_finish => 'background_finish',
+		file      => $file,
+	);
+
+	# Place a temporary message in the HTML window
+	$self->SetPage( LOADING );
+
+	return 1;
+}
+
+sub background_finish {
+	my $self = shift;
+	my $task = shift;
+
+	if ( $task->errstr ) {
+		$self->SetPage( $task->errstr );
+	} elsif ( $task->html ) {
+		$self->SetPage( $task->html );
+	} else {
+		$self->SetPage( ERROR );
+	}
+
 	return 1;
 }
 

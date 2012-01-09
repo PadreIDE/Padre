@@ -11,9 +11,8 @@ Padre::Wx::Frame::POD - Simple Single-Document Pod2HTML Viewer
   # Create the Pod viewing window
   my $frame = Padre::Wx::Frame::POD->new;
 
-  # Load a Pod file or document
-  $frame->load_file( 'file.pod' );
-  $frame->load_pod( "=head1 THIS IS POD!" );
+  # Load a document with POD in it
+  $frame->load_file('file.pod');
 
 =head1 DESCRIPTION
 
@@ -30,38 +29,16 @@ use strict;
 use warnings;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
+use Padre::Wx::FBP::POD   ();
 
 our $VERSION = '0.93';
-our @ISA     = 'Wx::Frame';
+our @ISA     = 'Padre::Wx::FBP::POD';
 
 =pod
 
 =head2 new
 
 The C<new> constructor creates a new, empty, frame for displaying Pod.
-
-=cut
-
-sub new {
-	my $class = shift;
-	my $self  = $class->SUPER::new(
-		undef,
-		-1,
-		'POD Viewer',
-		Wx::DefaultPosition,
-		[ 500, 500 ],
-	);
-
-	# Create the panel within the frame
-	$self->{panel} = Wx::Panel->new( $self, -1 );
-
-	# Create the HTML widget within the panel
-	$self->{html} = Padre::Wx::HtmlWindow->new( $self->{panel}, -1 );
-
-	return $self;
-}
-
-=pod
 
 =head2 load_file
 
@@ -73,23 +50,7 @@ The C<load_file> method loads a named file into the POD viewer.
 
 sub load_file {
 	my $self = shift;
-	$self->{html}->load_file(@_);
-}
-
-=pod
-
-=head2 load_pod
-
-  $frame->load_pod( $pod_string );
-
-The C<load_pod> method loads a document into the POD viewer by providing
-the entire document as a string.
-
-=cut
-
-sub load_pod {
-	my $self = shift;
-	$self->{html}->load_pod(@_);
+	$self->{html}->background_file(@_);
 }
 
 1;
