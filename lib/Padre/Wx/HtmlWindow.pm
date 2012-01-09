@@ -67,7 +67,7 @@ END_HTML
 
 =head2 load_file
 
-  $html_window->load_file( 'my.pod' );
+  $html_window->load_file('my.pod');
 
 The C<load_file> method takes a file name, loads the file, transforms
 it to HTML via the default Padre::Pod2HTML processor, and then loads
@@ -132,8 +132,22 @@ sub background_file {
 
 	# Place a temporary message in the HTML window
 	$self->SetPage( LOADING );
+}
 
-	return 1;
+sub background_pod {
+	my $self = shift;
+	my $text = shift;
+
+	# Spawn the rendering task
+	$self->task_reset;
+	$self->task_request(
+		task      => 'Padre::Task::Pod2HTML',
+		on_finish => 'background_finish',
+		text      => $text,
+	);
+
+	# Place a temporary message in the HTML window
+	$self->SetPage( LOADING );
 }
 
 sub background_finish {
