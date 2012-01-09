@@ -36,27 +36,42 @@ use Pod::Simple::XHTML ();
 our $VERSION = '0.93';
 our @ISA     = 'Pod::Simple::XHTML';
 
+
+
+
+
 #####################################################################
-# One-Shot Method
+# One-Shot Methods
+
+sub file2html {
+	my $class = shift;
+	my $file  = shift;
+	my $self  = $class->new(@_);
+
+	# Generate the HTML
+	$self->{html} = '';
+	$self->parse_file($file);
+	$self->clean_html;
+
+	return $self->{html};
+}
 
 sub pod2html {
 	my $class = shift;
 	my $input = shift;
 	my $self  = $class->new(@_);
 
+	# Generate the HTML
 	$self->{html} = '';
 	$self->parse_string_document($input);
-
-	#FIX ME: this takes care of a bug in Pod::Simple::XHTML
-	$self->{html} =~ s/<</&lt&lt;/g;
-	$self->{html} =~ s/< /&lt /g;
-	$self->{html} =~ s/<=/&lt=/g;
-
-	#FIX ME: this is incredibly bad, but the anchors are predictible
-	$self->{html} =~ s#<a href=".*?">|</a>##g;
+	$self->clean_html;
 
 	return $self->{html};
 }
+
+
+
+
 
 #####################################################################
 # Capture instead of print
@@ -74,8 +89,20 @@ sub new {
 	return $self;
 }
 
-#####################################################################
-# Customize HTML generation
+sub clean_html {
+	my $self = shift;
+	return unless defined $self->{html};
+
+	#FIX ME: this takes care of a bug in Pod::Simple::XHTML
+	$self->{html} =~ s/<</&lt&lt;/g;
+	$self->{html} =~ s/< /&lt /g;
+	$self->{html} =~ s/<=/&lt=/g;
+
+	#FIX ME: this is incredibly bad, but the anchors are predictible
+	$self->{html} =~ s/<a href=".*?">|<\/a>//g;
+
+	return 1;
+}
 
 1;
 
@@ -84,6 +111,7 @@ sub new {
 =head1 AUTHOR
 
 Adam Kennedy C<adamk@cpan.org>
+
 Ahmad M. Zawawi C<ahmad.zawawi@gmail.com>
 
 =head1 SEE ALSO
