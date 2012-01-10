@@ -870,17 +870,36 @@ sub findfast {
 
     my $dialog = $main->findinfiles;
 
-Returns the Find in Files results panel, creating it if needed.
+Returns the Find in Files dialog, creating it if needed.
 
 =cut
 
 sub findinfiles {
 	my $self = shift;
 	unless ( defined $self->{findinfiles} ) {
-		require Padre::Wx::Panel::FoundInFiles;
-		$self->{findinfiles} = Padre::Wx::Panel::FoundInFiles->new($self);
+		require Padre::Wx::Dialog::FindInFiles;
+		$self->{findinfiles} = Padre::Wx::Dialog::FindInFiles->new($self);
 	}
 	return $self->{findinfiles};
+}
+
+=pod
+
+=head2 C<foundinfiles>
+
+    my $panel = $main->foundinfiles;
+
+Returns the Find in Files results panel, creating it if needed.
+
+=cut
+
+sub foundinfiles {
+	my $self = shift;
+	unless ( defined $self->{foundinfiles} ) {
+		require Padre::Wx::Panel::FoundInFiles;
+		$self->{foundinfiles} = Padre::Wx::Panel::FoundInFiles->new($self);
+	}
+	return $self->{foundinfiles};
 }
 
 =pod
@@ -2446,9 +2465,9 @@ sub show_findfast {
 
 =pod
 
-=head3 C<show_findinfiles>
+=head3 C<show_foundinfiles>
 
-    $main->show_findinfiles( $visible );
+    $main->show_foundinfiles( $visible );
 
 Show the Find in Files panel at the bottom if C<$visible> is true.
 Hide it otherwise. If C<$visible> is not provided, the method defaults
@@ -2456,23 +2475,23 @@ to show the panel.
 
 =cut
 
-sub show_findinfiles {
+sub show_foundinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock('UPDATE');
-	$self->_show_findinfiles($show);
+	$self->_show_foundinfiles($show);
 	$self->aui->Update;
 	return;
 }
 
-sub _show_findinfiles {
+sub _show_foundinfiles {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->bottom->show( $self->findinfiles );
-	} elsif ( $self->has_findinfiles ) {
-		$self->bottom->hide( $self->findinfiles );
-		delete $self->{findinfiles};
+		$self->bottom->show( $self->foundinfiles );
+	} elsif ( $self->has_foundinfiles ) {
+		$self->bottom->hide( $self->foundinfiles);
+		delete $self->{foundinfiles};
 	}
 }
 

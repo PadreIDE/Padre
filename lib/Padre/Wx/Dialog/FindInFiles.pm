@@ -104,8 +104,8 @@ sub run {
 	}
 
 	# Run the search in the Find in Files view
-	$main->show_findinfiles;
-	$main->findinfiles->search(
+	$main->show_foundinfiles;
+	$main->foundinfiles->search(
 		search => $self->as_search,
 		root   => $self->find_directory->SaveValue,
 		mime   => $self->find_types->GetClientData(

@@ -35,10 +35,10 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 	my $panel = shift || $main->bottom;
-
-	my $self = $class->SUPER::new($panel);
+	my $self  = $class->SUPER::new($panel);
 
 	# Create the image list
+	my $tree   = $self->{tree};
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
 		folder => $images->Add(
@@ -63,10 +63,10 @@ sub new {
 			),
 		),
 	};
-	my $tree = $self->{tree};
 	$tree->AssignImageList($images);
 
 	# Create the render data store and timer
+	$self->{search}          = undef;
 	$self->{search_task}     = undef;
 	$self->{search_queue}    = [];
 	$self->{search_timer_id} = Wx::NewId();
@@ -81,7 +81,6 @@ sub new {
 			$self->search_timer( $_[1], $_[2] );
 		},
 	);
-	$self->{last_search} = undef;
 
 	# Initialise statistics
 	$self->{files}   = 0;
@@ -99,26 +98,23 @@ sub new {
 
 # Called when the "Repeat" button is clicked
 sub repeat_clicked {
-	my ( $self, $event ) = @_;
+	my $self  = shift;
+	my $event = shift;
 
-	my $last_search = $self->{last_search} or return;
-	my $main = $self->main;
+	# Stop any existing search
+	$self->stop_clicked($event);
 
-	require Padre::Wx::Dialog::FindInFiles;
-	my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
-	$main->findinfiles->search(
-		root   => $findinfiles->find_directory->SaveValue,
-		search => $last_search,
-	);
-	$findinfiles->Destroy;
+	# Run the previous search again
+	my $search = $self->{search} or return;
+	$self->search( %$search );
 }
 
 # Called when the "Expand all" button is clicked
 sub expand_all_clicked {
-	my ( $self, $event ) = @_;
-
-	my $tree = $self->{tree};
-	my $root = $tree->GetRootItem;
+	my $self  = shift;
+	my $event = shift;
+	my $tree  = $self->{tree};
+	my $root  = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
 		$tree->Expand($child);
@@ -131,10 +127,10 @@ sub expand_all_clicked {
 
 # Called when the "Collapse all" button is clicked
 sub collapse_all_clicked {
-	my ( $self, $event ) = @_;
-
-	my $tree = $self->{tree};
-	my $root = $tree->GetRootItem;
+	my $self  = shift;
+	my $event = shift;
+	my $tree  = $self->{tree};
+	my $root  = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
 		$tree->Collapse($child);
@@ -154,13 +150,13 @@ sub stop_clicked {
 
 # Handle the clicking of a find result
 sub item_clicked {
-	my ( $self, $event ) = @_;
-
+	my $self      = shift;
+	my $event     = shift;
 	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
 	my $dir       = $item_data->{dir}                           or return;
 	my $file      = $item_data->{file}                          or return;
 	my $line      = $item_data->{line};
-	my $msg = $item_data->{msg} || '';
+	my $msg       = $item_data->{msg} || '';
 
 	if ( defined $line ) {
 		$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
@@ -209,6 +205,9 @@ sub search {
 		my $project = $self->ide->project_manager->project( $param{root} );
 		$param{project} = $project if $project;
 	}
+
+	# Save a copy of the search in case we want to repeat it
+	$self->{search} = { %param };
 
 	# Kick off the search task
 	$self->task_reset;
@@ -268,7 +267,6 @@ sub search_finish {
 
 	# Display the summary
 	my $task = delete $self->{search_task} or return;
-	$self->{last_search} = $task->{search};
 	my $term = $task->{search}->find_term;
 	my $dir  = $task->{root};
 	my $tree = $self->{tree};
@@ -441,7 +439,7 @@ sub view_label {
 
 sub view_close {
 	$_[0]->task_reset;
-	$_[0]->main->show_findinfiles(0);
+	$_[0]->main->show_foundinfiles(0);
 }
 
 
