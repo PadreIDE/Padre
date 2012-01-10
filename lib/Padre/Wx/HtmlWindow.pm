@@ -27,8 +27,9 @@ use Padre::Role::Task   ();
 use Padre::Wx ();
 use Padre::Wx 'Html';
 
-our $VERSION = '0.93';
-our @ISA     = qw{
+our $VERSION    = '0.93';
+our $COMPATIBLE = '0.93';
+our @ISA        = qw{
 	Padre::Role::Task
 	Wx::HtmlWindow
 };
@@ -73,14 +74,17 @@ Returns true on success, or throws an exception on error.
 sub load_file {
 	my $self = shift;
 	my $file = shift;
-	my $pod;
-	SCOPE: {
-		local $/ = undef;
-		open( my $fh, '<', $file ) or die "Failed to open file";
-		$pod = <$fh>;
-		close($fh) or die "Failed to close file";
-	}
-	return $self->load_pod($pod);
+
+	# Spawn the rendering task
+	$self->task_reset;
+	$self->task_request(
+		task      => 'Padre::Task::Pod2HTML',
+		on_finish => '_finish',
+		file      => $file,
+	);
+
+	# Place a temporary message in the HTML window
+	$self->SetPage( LOADING );
 }
 
 =pod
@@ -99,43 +103,13 @@ Returns true on success, or throws an exception on error.
 
 sub load_pod {
 	my $self = shift;
-	require Padre::Pod2HTML;
-	$self->SetPage( Padre::Pod2HTML->pod2html( $_[0] ) );
-	return 1;
-}
-
-
-
-
-
-######################################################################
-# Background Loader Methods
-
-sub background_file {
-	my $self = shift;
-	my $file = shift;
-
-	# Spawn the rendering task
-	$self->task_reset;
-	$self->task_request(
-		task      => 'Padre::Task::Pod2HTML',
-		on_finish => 'background_finish',
-		file      => $file,
-	);
-
-	# Place a temporary message in the HTML window
-	$self->SetPage( LOADING );
-}
-
-sub background_pod {
-	my $self = shift;
 	my $text = shift;
 
 	# Spawn the rendering task
 	$self->task_reset;
 	$self->task_request(
 		task      => 'Padre::Task::Pod2HTML',
-		on_finish => 'background_finish',
+		on_finish => '_finish',
 		text      => $text,
 	);
 
@@ -143,7 +117,7 @@ sub background_pod {
 	$self->SetPage( LOADING );
 }
 
-sub background_finish {
+sub _finish {
 	my $self = shift;
 	my $task = shift;
 

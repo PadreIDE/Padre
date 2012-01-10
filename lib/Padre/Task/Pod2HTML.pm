@@ -28,12 +28,11 @@ sub new {
 			$self->{file} = File::Spec->rel2abs($self->{file});
 		}
 		unless ( -f $self->{file} and -r _ ) {
-			$self->{errstr} = "Missing or invalid file '$self->{file}'";
 			return undef;
 		}
 
-	} else {
-		$self->{errstr} = "Missing or invalid file name";
+	} elsif ( not defined $self->{text} ) {
+		return undef;
 	}
 
 	return $self;
@@ -60,16 +59,28 @@ sub errstr {
 
 sub run {
 	my $self = shift;
+	my $html = '';
 
 	# Generate the HTML
 	require Padre::Pod2HTML;
-	local $@;
-	my $html = eval {
-		Padre::Pod2HTML->file2html($self->{file});
-	};
-	if ( $@ ) {
-		$self->{errstr} = "Error while rendering '$self->{file}'";
-		return 1;
+	if ( defined $self->{file} ) {
+		local $@;
+		$html = eval {
+			Padre::Pod2HTML->file2html($self->{file});
+		};
+		if ( $@ ) {
+			$self->{errstr} = "Error while rendering '$self->{file}'";
+			return 1;
+		}
+	} else {
+		local $@;
+		$html = eval {
+			Padre::Pod2HTML->pod2html($self->{text});
+		};
+		if ( $@ ) {
+			$self->{errstr} = "Error while rendering POD";
+			return 1;
+		}
 	}
 
 	# Save the HTML and return

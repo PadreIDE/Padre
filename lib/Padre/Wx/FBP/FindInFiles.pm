@@ -35,12 +35,21 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
-	Wx::Event::EVT_KEY_UP(
+	$self->Connect(
 		$self,
+		-1,
+		Wx::EVT_KEY_UP,
 		sub {
 			shift->on_key_up(@_);
 		},
 	);
+
+	# Wx::Event::EVT_KEY_UP(
+		# $self,
+		# sub {
+			# shift->on_key_up(@_);
+		# },
+	# );
 
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
@@ -59,13 +68,22 @@ sub new {
 		],
 	);
 
-	Wx::Event::EVT_TEXT(
-		$self,
+	$self->Connect(
 		$self->{find_term},
+		-1,
+		Wx::EVT_COMMAND_TEXT_UPDATED,
 		sub {
 			shift->refresh(@_);
 		},
 	);
+
+	# Wx::Event::EVT_TEXT(
+		# $self,
+		# $self->{find_term},
+		# sub {
+			# shift->refresh(@_);
+		# },
+	# );
 
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
@@ -92,13 +110,22 @@ sub new {
 		[ 50, -1 ],
 	);
 
-	Wx::Event::EVT_BUTTON(
-		$self,
+	$self->Connect(
 		$self->{directory},
+		-1,
+		Wx::EVT_COMMAND_BUTTON_CLICKED,
 		sub {
 			shift->directory(@_);
 		},
 	);
+
+	# Wx::Event::EVT_BUTTON(
+		# $self,
+		# $self->{directory},
+		# sub {
+			# shift->directory(@_);
+		# },
+	# );
 
 	my $m_staticText4 = Wx::StaticText->new(
 		$self,
@@ -239,7 +266,7 @@ sub directory {
 
 1;
 
-# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

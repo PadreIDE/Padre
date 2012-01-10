@@ -76,6 +76,7 @@ the even version for the release, even during development.
     - Hex/decimal conversion: make error message generic (ZENOG)
     - Plugin manager: complete translation (ZENOG)
     - Update German translation (ZENOG)
+    - HTML for Padre::Wx::HtmlWindow is rendered in the background (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
