@@ -12,7 +12,8 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 53;
+	plan tests => 54;
+	use_ok( 'Debug::Client'   ,'0.16');
 }
 
 use Test::NoWarnings;
@@ -29,17 +30,6 @@ isa_ok( $main, 'Padre::Wx::Main' );
 # Create the debugger panel
 my $panel = new_ok( 'Padre::Wx::Panel::Debugger', [$main] );
 
-# # Check the radiobox properties
-# my $against = $dialog->against;
-# isa_ok( $against, 'Wx::RadioBox' );
-
-# # Check the file1 choice properties
-# my $file1 = $dialog->file1;
-# isa_ok( $file1, 'Wx::Choice' );
-
-# # Check the file2 choice properties
-# my $file2 = $dialog->file2;
-# isa_ok( $file2, 'Wx::Choice' );
 
 ######
 # let's check our subs/methods.
@@ -66,6 +56,6 @@ foreach my $subs (@subs) {
 
 # done_testing();
 
-# # 1;
+1;
 
-# # __END__
+__END__
