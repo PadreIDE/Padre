@@ -6,14 +6,11 @@ package Padre::Wx::Panel::FoundInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Basename               ();
 use File::Spec                   ();
 use Params::Util                 ();
+use Padre::Wx                    ();
 use Padre::Role::Task            ();
 use Padre::Wx::Role::View        ();
-use Padre::Wx::Role::Main        ();
-use Padre::Wx                    ();
-use Padre::Wx::TreeCtrl          ();
 use Padre::Wx::FBP::FoundInFiles ();
 use Padre::Logger;
 
@@ -96,13 +93,19 @@ sub new {
 ######################################################################
 # Event Handlers
 
+# Called when the "Stop search" button is clicked
+sub stop_clicked {
+	my $self = shift;
+	$self->task_reset;
+	$self->{stop}->Disable;
+}
+
 # Called when the "Repeat" button is clicked
 sub repeat_clicked {
 	my $self  = shift;
-	my $event = shift;
 
 	# Stop any existing search
-	$self->stop_clicked($event);
+	$self->stop_clicked(@_);
 
 	# Run the previous search again
 	my $search = $self->{search} or return;
@@ -114,6 +117,7 @@ sub expand_all_clicked {
 	my $self  = shift;
 	my $event = shift;
 	my $tree  = $self->{tree};
+	my $lock  = $tree->lock_scroll;
 	my $root  = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
@@ -130,6 +134,7 @@ sub collapse_all_clicked {
 	my $self  = shift;
 	my $event = shift;
 	my $tree  = $self->{tree};
+	my $lock  = $tree->lock_scroll;
 	my $root  = $tree->GetRootItem;
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
@@ -141,27 +146,20 @@ sub collapse_all_clicked {
 	$self->{collapse_all}->Disable;
 }
 
-# Called when the "Stop search" button is clicked
-sub stop_clicked {
-	my $self = shift;
-	$self->task_reset;
-	$self->{stop}->Disable;
-}
-
 # Handle the clicking of a find result
 sub item_clicked {
-	my $self      = shift;
-	my $event     = shift;
-	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
-	my $dir       = $item_data->{dir}                           or return;
-	my $file      = $item_data->{file}                          or return;
-	my $line      = $item_data->{line};
-	my $msg       = $item_data->{msg} || '';
+	my $self  = shift;
+	my $event = shift;
+	my $item  = $event->GetItem;
+	my $data  = $self->{tree}->GetPlData($item) or return;
+	my $dir   = $data->{dir}                    or return;
+	my $file  = $data->{file}                   or return;
+	my $path  = File::Spec->catfile( $dir, $file );
 
-	if ( defined $line ) {
-		$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
+	if ( defined $data->{line} ) {
+		$self->open_file_at_line($path, $data->{line} - 1 );
 	} else {
-		$self->open_file_at_line( File::Spec->catfile( $dir, $file ) );
+		$self->open_file_at_line($path);
 	}
 
 	return;
@@ -178,7 +176,7 @@ sub task_reset {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
-	# As a convenience, reset any timers used by task message processing
+	# Reset any timers used by task message processing
 	$self->{search_task}  = undef;
 	$self->{search_queue} = [];
 	$self->{search_timer}->Stop;
@@ -211,7 +209,6 @@ sub search {
 
 	# Kick off the search task
 	$self->task_reset;
-	$self->clear;
 	$self->task_request(
 		task       => 'Padre::Task::FindInFiles',
 		on_run     => 'search_run',
@@ -219,6 +216,11 @@ sub search {
 		on_finish  => 'search_finish',
 		%param,
 	);
+
+	# After a previous search with many results the clear method can be
+	# relatively slow, so instead of calling it first, delay calling it
+	# until after we have dispatched the search to the worker thread.
+	$self->clear;
 
 	$self->{tree}->AddRoot('Root');
 	$self->{status}->SetLabel(
@@ -280,6 +282,9 @@ sub search_finish {
 				$dir,
 			)
 		);
+
+		# Only enable collapse all when we have results
+		$self->{collapse_all}->Enable;
 	} else {
 		$self->{status}->SetLabel(
 			sprintf(
@@ -293,17 +298,9 @@ sub search_finish {
 	# Clear support variables
 	$self->task_reset;
 
-	# Enable the repeat search button again
+	# Enable repeat and disable stop
 	$self->{repeat}->Enable;
-	$self->{repeat}->SetToolTip( sprintf( Wx::gettext(q{Search again for '%s'}), $term ) );
-
-	# Disable the stop button
 	$self->{stop}->Disable;
-
-	# Only enable collapse all when we have results
-	if ( $self->{files} ) {
-		$self->{collapse_all}->Enable;
-	}
 
 	return 1;
 }
@@ -317,13 +314,11 @@ sub search_render {
 	my $queue = $self->{search_queue};
 	return unless @$queue;
 
-	# Lock the tree to reduce flicker and prevent auto-scrolling
-	my $lock = $tree->lock_scroll;
-
 	# Added to avoid crashes when calling methods on path objects
 	require Padre::Wx::Directory::Path;
 
 	# Add the file nodes to the tree
+	my $lock = $tree->lock_scroll;
 	foreach my $entry (@$queue) {
 		my $path  = shift @$entry;
 		my $name  = $path->name;
@@ -440,6 +435,7 @@ sub view_label {
 sub view_close {
 	$_[0]->task_reset;
 	$_[0]->main->show_foundinfiles(0);
+	$_[0]->clear;
 }
 
 
@@ -458,13 +454,16 @@ sub select {
 
 sub clear {
 	my $self = shift;
+	my $tree = $self->{tree};
+	my $lock = $tree->lock_scroll;
+
 	$self->{files}   = 0;
 	$self->{matches} = 0;
-
-	$self->{tree}->DeleteAllItems;
 	$self->{repeat}->Disable;
 	$self->{expand_all}->Disable;
 	$self->{collapse_all}->Disable;
+	$tree->DeleteAllItems;
+
 	return 1;
 }
 
