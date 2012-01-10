@@ -870,15 +870,15 @@ sub findfast {
 
     my $dialog = $main->findinfiles;
 
-Returns the Find in Files dialog, creating it if needed.
+Returns the Find in Files results panel, creating it if needed.
 
 =cut
 
 sub findinfiles {
 	my $self = shift;
 	unless ( defined $self->{findinfiles} ) {
-		require Padre::Wx::FindInFiles;
-		$self->{findinfiles} = Padre::Wx::FindInFiles->new($self);
+		require Padre::Wx::Panel::FoundInFiles;
+		$self->{findinfiles} = Padre::Wx::Panel::FoundInFiles->new($self);
 	}
 	return $self->{findinfiles};
 }

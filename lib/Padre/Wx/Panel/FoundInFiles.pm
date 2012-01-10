@@ -1,4 +1,4 @@
-package Padre::Wx::FindInFiles;
+package Padre::Wx::Panel::FoundInFiles;
 
 # Class for the output window at the bottom of Padre that is used to display
 # results from Find in Files searches.
