@@ -94,7 +94,7 @@ StyleSetForeground SCE_PL_STRING_QW             7f7f7f
 # Missing SCE_PL_FORMAT_IDENT     (41)
 # Missing SCE_PL_FORMAT           (42)
 
-# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
