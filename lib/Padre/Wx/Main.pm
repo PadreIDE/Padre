@@ -2489,7 +2489,7 @@ sub _show_foundinfiles {
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->bottom->show( $self->foundinfiles );
-	} elsif ( $self->has_foundinfiles ) {
+	} elsif ( $self->foundinfiles ) {
 		$self->bottom->hide( $self->foundinfiles);
 		delete $self->{foundinfiles};
 	}
