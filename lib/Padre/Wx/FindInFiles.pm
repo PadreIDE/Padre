@@ -6,22 +6,22 @@ package Padre::Wx::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Basename                      ();
-use File::Spec                          ();
-use Params::Util                        ();
-use Padre::Role::Task                   ();
-use Padre::Wx::Role::View               ();
-use Padre::Wx::Role::Main               ();
-use Padre::Wx                           ();
-use Padre::Wx::TreeCtrl                 ();
-use Padre::Wx::FBP::FindInFiles::Output ();
+use File::Basename               ();
+use File::Spec                   ();
+use Params::Util                 ();
+use Padre::Role::Task            ();
+use Padre::Wx::Role::View        ();
+use Padre::Wx::Role::Main        ();
+use Padre::Wx                    ();
+use Padre::Wx::TreeCtrl          ();
+use Padre::Wx::FBP::FoundInFiles ();
 use Padre::Logger;
 
 our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
-	Padre::Wx::FBP::FindInFiles::Output
+	Padre::Wx::FBP::FoundInFiles
 };
 
 
@@ -66,17 +66,6 @@ sub new {
 	my $tree = $self->{tree};
 	$tree->AssignImageList($images);
 
-	# Set the bitmap button icons
-	$self->{repeat}->SetBitmapLabel( Padre::Wx::Icon::find('actions/view-refresh') );
-	$self->{stop}->SetBitmapLabel( Padre::Wx::Icon::find('actions/stop') );
-	$self->{expand_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-in') );
-	$self->{collapse_all}->SetBitmapLabel( Padre::Wx::Icon::find('actions/zoom-out') );
-
-	# Set the button tooltips
-	$self->{stop}->SetToolTip( Wx::gettext('Stop search') );
-	$self->{expand_all}->SetToolTip( Wx::gettext('Expand all') );
-	$self->{collapse_all}->SetToolTip( Wx::gettext('Collapse all') );
-
 	# Create the render data store and timer
 	$self->{search_task}     = undef;
 	$self->{search_queue}    = [];
@@ -99,6 +88,87 @@ sub new {
 	$self->{matches} = 0;
 
 	return $self;
+}
+
+
+
+
+
+######################################################################
+# Event Handlers
+
+# Called when the "Repeat" button is clicked
+sub repeat_clicked {
+	my ( $self, $event ) = @_;
+
+	my $last_search = $self->{last_search} or return;
+	my $main = $self->main;
+
+	require Padre::Wx::Dialog::FindInFiles;
+	my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
+	$main->findinfiles->search(
+		root   => $findinfiles->find_directory->SaveValue,
+		search => $last_search,
+	);
+	$findinfiles->Destroy;
+}
+
+# Called when the "Expand all" button is clicked
+sub expand_all_clicked {
+	my ( $self, $event ) = @_;
+
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
+	while ( $child->IsOk ) {
+		$tree->Expand($child);
+		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
+	}
+
+	$self->{expand_all}->Disable;
+	$self->{collapse_all}->Enable;
+}
+
+# Called when the "Collapse all" button is clicked
+sub collapse_all_clicked {
+	my ( $self, $event ) = @_;
+
+	my $tree = $self->{tree};
+	my $root = $tree->GetRootItem;
+	my ( $child, $cookie ) = $tree->GetFirstChild($root);
+	while ( $child->IsOk ) {
+		$tree->Collapse($child);
+		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
+	}
+
+	$self->{expand_all}->Enable;
+	$self->{collapse_all}->Disable;
+}
+
+# Called when the "Stop search" button is clicked
+sub stop_clicked {
+	my $self = shift;
+	$self->task_reset;
+	$self->{stop}->Disable;
+}
+
+# Handle the clicking of a find result
+sub item_clicked {
+	my ( $self, $event ) = @_;
+
+	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
+	my $dir       = $item_data->{dir}                           or return;
+	my $file      = $item_data->{file}                          or return;
+	my $line      = $item_data->{line};
+	my $msg = $item_data->{msg} || '';
+
+	if ( defined $line ) {
+		$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
+	} else {
+		$self->open_file_at_line( File::Spec->catfile( $dir, $file ) );
+	}
+
+	return;
 }
 
 
@@ -315,25 +385,6 @@ sub search_render {
 	return 1;
 }
 
-# Handle the clicking of a find result
-sub on_find_result_clicked {
-	my ( $self, $event ) = @_;
-
-	my $item_data = $self->{tree}->GetPlData( $event->GetItem ) or return;
-	my $dir       = $item_data->{dir}                           or return;
-	my $file      = $item_data->{file}                          or return;
-	my $line      = $item_data->{line};
-	my $msg = $item_data->{msg} || '';
-
-	if ( defined $line ) {
-		$self->open_file_at_line( File::Spec->catfile( $dir, $file ), $line - 1 );
-	} else {
-		$self->open_file_at_line( File::Spec->catfile( $dir, $file ) );
-	}
-
-	return;
-}
-
 # Opens the file at the correct line position
 # If no line is given, the function just opens the file
 # and sets the focus to it.
@@ -373,71 +424,9 @@ sub open_file_at_line {
 	return;
 }
 
-# Called when the "Repeat" button is clicked
-sub on_repeat_click {
-	my ( $self, $event ) = @_;
 
-	my $last_search = $self->{last_search} or return;
-	my $main = $self->main;
 
-	require Padre::Wx::Dialog::FindInFiles;
-	my $findinfiles = Padre::Wx::Dialog::FindInFiles->new($main);
-	$main->findinfiles->search(
-		root   => $findinfiles->find_directory->SaveValue,
-		search => $last_search,
-	);
-	$findinfiles->Destroy;
-}
 
-# Called when the "Expand all" button is clicked
-sub on_expand_all_click {
-	my ( $self, $event ) = @_;
-
-	my $tree = $self->{tree};
-	my $root = $tree->GetRootItem;
-	my ( $child, $cookie ) = $tree->GetFirstChild($root);
-	while ( $child->IsOk ) {
-		$tree->Expand($child);
-		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
-	}
-
-	$self->_flip_button_state;
-}
-
-# Called when the "Collapse all" button is clicked
-sub on_collapse_all_click {
-	my ( $self, $event ) = @_;
-
-	my $tree = $self->{tree};
-	my $root = $tree->GetRootItem;
-	my ( $child, $cookie ) = $tree->GetFirstChild($root);
-	while ( $child->IsOk ) {
-		$tree->Collapse($child);
-		( $child, $cookie ) = $tree->GetNextChild( $root, $cookie );
-	}
-
-	$self->_flip_button_state;
-}
-
-sub _flip_button_state {
-	my $self = shift;
-
-	if ( $self->{expand_all}->IsEnabled ) {
-		$self->{expand_all}->Disable;
-		$self->{collapse_all}->Enable;
-	} else {
-		$self->{expand_all}->Enable;
-		$self->{collapse_all}->Disable;
-	}
-}
-
-# Called when the "Stop search" button is clicked
-sub on_stop_click {
-	my $self = shift;
-
-	$self->task_reset;
-	$self->{stop}->Disable;
-}
 
 ######################################################################
 # Padre::Wx::Role::View Methods
