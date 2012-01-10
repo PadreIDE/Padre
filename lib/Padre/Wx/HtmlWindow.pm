@@ -23,9 +23,10 @@ methods.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Role::Task   ();
+use Params::Util ();
 use Padre::Wx ();
 use Padre::Wx 'Html';
+use Padre::Role::Task ();
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
@@ -117,19 +118,43 @@ sub load_pod {
 	$self->SetPage( LOADING );
 }
 
-sub _finish {
-	my $self = shift;
-	my $task = shift;
+=pod
 
-	if ( $task->errstr ) {
-		$self->SetPage( $task->errstr );
-	} elsif ( $task->html ) {
-		$self->SetPage( $task->html );
-	} else {
-		$self->SetPage( ERROR );
+=head2 load_html
+
+  $html_window->load_html( "<head><body>Hello World!</body></html>" );
+
+The C<load_html> method takes a string of HTML content, and loads the
+HTML into the window.
+
+The method is provided mainly as a convenience, it's main role is to act
+as the callback handler for background rendering tasks.
+
+=cut
+
+sub load_html {
+	my $self = shift;
+	my $html = shift;
+
+	# Handle task callback events
+	if ( Params::Util::_INSTANCE($html, 'Padre::Task::Pod2HTML') ) {
+		if ( $html->errstr ) {
+			$html = $html->errstr;
+		} elsif ( $html->html ) {
+			$html = $html->html;
+		} else {
+			$html = ERROR;
+		}
 	}
 
-	return 1;
+	# Render the HTML document
+	if ( defined Params::Util::_STRING($html) ) {
+		$self->SetPage($html);
+		return 1;
+	}
+
+	# No idea what this is
+	return;
 }
 
 1;
