@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-11 04:10-0800\n"
+"POT-Creation-Date: 2012-01-11 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:475
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:477
 msgid "\".\" also matches newline"
 msgstr ""
 
@@ -32,18 +32,18 @@ msgid ""
 "and open the same files next time you launch Padre."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:479
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:481
 msgid "\"^\" and \"$\" match the start and end of any line inside the string"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:227
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:230
 msgid ""
 "# Input is in $_\n"
 "$_ = $_;\n"
 "# Output goes to $_\n"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:69
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:72
 msgid "$_ for both"
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 msgid "%s (%s changed)"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:331
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:337
 #, perl-format
 msgid "%s (%s results)"
 msgstr ""
@@ -192,8 +192,8 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:271 lib/Padre/Wx/Browser.pm:109
 #: lib/Padre/Wx/Menu/File.pm:134 lib/Padre/Wx/Dialog/HelpSearch.pm:179
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:116
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:273
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:119
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:275
 #: lib/Padre/Wx/Dialog/SessionManager.pm:303
 msgid "&Close"
 msgstr ""
@@ -404,15 +404,15 @@ msgstr ""
 msgid "&Open..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:226
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:228
 msgid "&Original text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:98
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:101
 msgid "&Output text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:79
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:81
 msgid "&POSIX Character classes"
 msgstr ""
 
@@ -432,7 +432,7 @@ msgstr ""
 msgid "&Perl"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:84
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:87
 msgid "&Perl filter source:"
 msgstr ""
 
@@ -456,7 +456,7 @@ msgstr ""
 msgid "&Print..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:98
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:100
 msgid "&Quantifiers"
 msgstr ""
 
@@ -488,7 +488,7 @@ msgstr ""
 msgid "&Regular Expression"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:166
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:168
 msgid "&Regular expression:"
 msgstr ""
 
@@ -508,7 +508,7 @@ msgstr ""
 msgid "&Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:247
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:249
 msgid "&Replace text with:"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgstr ""
 msgid "&Reset Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:257
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:259
 msgid "&Result from replace:"
 msgstr ""
 
@@ -691,7 +691,7 @@ msgstr ""
 msgid ".        Return to the executed line."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:83
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:85
 msgid "7-bit US-ASCII character"
 msgstr ""
 
@@ -705,11 +705,11 @@ msgstr ""
 msgid "A Dialog"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:117
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:119
 msgid "A comment"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:123
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:125
 msgid "A group"
 msgstr ""
 
@@ -721,7 +721,7 @@ msgstr ""
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:115
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:117
 msgid "A word boundary"
 msgstr ""
 
@@ -778,7 +778,7 @@ msgstr ""
 msgid "Ahmad Zawawi"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:142
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:144
 msgid "Alarm"
 msgstr ""
 
@@ -812,7 +812,7 @@ msgstr ""
 msgid "Allow the selection of another name to save the current document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:81
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:83
 msgid "Alphabetic characters"
 msgstr ""
 
@@ -824,11 +824,11 @@ msgstr ""
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:82
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:84
 msgid "Alphanumeric characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:93
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:95
 msgid "Alphanumeric characters plus \"_\""
 msgstr ""
 
@@ -836,7 +836,7 @@ msgstr ""
 msgid "Alt"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:111
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:113
 msgid "Alternation"
 msgstr ""
 
@@ -852,31 +852,31 @@ msgstr ""
 msgid "Andrew Shitov"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:69
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:71
 msgid "Any character except a newline"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:70
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any decimal digit"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:71
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:73
 msgid "Any non-digit"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:73
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:75
 msgid "Any non-whitespace character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:75
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:77
 msgid "Any non-word character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:72
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:74
 msgid "Any whitespace character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:74
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:76
 msgid "Any word character"
 msgstr ""
 
@@ -960,7 +960,7 @@ msgstr ""
 msgid "Background Tasks are running with high load"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:129
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:131
 msgid "Backreference to the nth group"
 msgstr ""
 
@@ -968,7 +968,7 @@ msgstr ""
 msgid "Backspace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:113
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:115
 msgid "Beginning of line"
 msgstr ""
 
@@ -1076,7 +1076,7 @@ msgstr ""
 msgid "Cannot set bookmark in unsaved document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:471
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:473
 msgid "Case-insensitive matching"
 msgstr ""
 
@@ -1160,7 +1160,7 @@ msgstr ""
 msgid "Change variable to U&sing_Underscores"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:67
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:69
 msgid "Character classes"
 msgstr ""
 
@@ -1168,7 +1168,7 @@ msgstr ""
 msgid "Character position"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:112
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:114
 msgid "Character set"
 msgstr ""
 
@@ -1322,7 +1322,7 @@ msgstr ""
 msgid "Command"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2886
+#: lib/Padre/Wx/Main.pm:2885
 msgid "Command line"
 msgstr ""
 
@@ -1375,11 +1375,11 @@ msgstr ""
 msgid "Contents of the window title"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:147
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:149
 msgid "Control character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:85
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:87
 msgid "Control characters"
 msgstr ""
 
@@ -1482,12 +1482,12 @@ msgstr ""
 msgid "Could not find file '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2952
+#: lib/Padre/Wx/Main.pm:2951
 msgid "Could not find perl executable"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2922 lib/Padre/Wx/Main.pm:2983
-#: lib/Padre/Wx/Main.pm:3037
+#: lib/Padre/Wx/Main.pm:2921 lib/Padre/Wx/Main.pm:2982
+#: lib/Padre/Wx/Main.pm:3036
 msgid "Could not find project root"
 msgstr ""
 
@@ -1570,11 +1570,11 @@ msgstr ""
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2977 lib/Padre/Wx/Main.pm:3028
+#: lib/Padre/Wx/Main.pm:2976 lib/Padre/Wx/Main.pm:3027
 msgid "Current document has no filename"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3031
+#: lib/Padre/Wx/Main.pm:3030
 msgid "Current document is not a .t file"
 msgstr ""
 
@@ -1770,7 +1770,7 @@ msgstr ""
 msgid "Diff successful, you should see a new tab in editor called %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:86
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:88
 msgid "Digits"
 msgstr ""
 
@@ -1829,7 +1829,7 @@ msgstr ""
 msgid "Do you want to commit?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3282
+#: lib/Padre/Wx/Main.pm:3281
 msgid "Do you want to continue?"
 msgstr ""
 
@@ -1954,7 +1954,7 @@ msgstr ""
 msgid "Email and confirmation do not match."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:650
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:651
 msgid "Empty regex"
 msgstr ""
 
@@ -2010,11 +2010,11 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:153
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:155
 msgid "End case modification/metacharacter quoting"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:114
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:116
 msgid "End of line"
 msgstr ""
 
@@ -2160,7 +2160,7 @@ msgstr ""
 msgid "Error while trying to perform Padre action: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:320
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:323
 msgid "Error:\n"
 msgstr ""
 
@@ -2177,11 +2177,11 @@ msgstr ""
 msgid "Escape"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:143
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:145
 msgid "Escape (Esc)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:136
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:138
 msgid "Escape characters"
 msgstr ""
 
@@ -2220,11 +2220,11 @@ msgstr ""
 msgid "Expression To Evaluate"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:482
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:484
 msgid "Extended (&x)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:484
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:486
 msgid ""
 "Extended regular expressions allow free formatting (whitespace is ignored) "
 "and comments"
@@ -2289,7 +2289,7 @@ msgstr ""
 msgid "Failed to merge the POD fragments"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3214
+#: lib/Padre/Wx/Main.pm:3213
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr ""
@@ -2440,7 +2440,7 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/FindInFiles.pm:32 lib/Padre/Wx/Panel/FoundInFiles.pm:432
+#: lib/Padre/Wx/FBP/FindInFiles.pm:32 lib/Padre/Wx/Panel/FoundInFiles.pm:439
 msgid "Find in Files"
 msgstr ""
 
@@ -2470,7 +2470,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1798
+#: lib/Padre/Wx/Editor.pm:1799
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2488,7 +2488,7 @@ msgid ""
 "offer to save it."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:143
 msgid "Form feed"
 msgstr ""
 
@@ -2548,7 +2548,7 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:487
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:489
 msgid "Global (&g)"
 msgstr ""
 
@@ -2592,7 +2592,7 @@ msgstr ""
 msgid "Go to S&yntax Check Window"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:121
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:123
 msgid "Grouping constructs"
 msgstr ""
 
@@ -2632,11 +2632,11 @@ msgstr ""
 msgid "Help not found."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:145
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:147
 msgid "Hex character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:94
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:96
 msgid "Hexadecimal digits"
 msgstr ""
 
@@ -2664,7 +2664,7 @@ msgstr ""
 msgid "If activated, do not allow moving around some of the windows"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:470
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:472
 msgid "Ignore case (&i)"
 msgstr ""
 
@@ -2717,14 +2717,14 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:66
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:69
 msgid "Input/output:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Snippet.pm:118 lib/Padre/Wx/FBP/Special.pm:78
 #: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:136
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:111
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:268
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:114
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:270
 msgid "Insert"
 msgstr ""
 
@@ -2966,7 +2966,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:146
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:148
 msgid "Long hex character"
 msgstr ""
 
@@ -2974,15 +2974,15 @@ msgstr ""
 msgid "Looking for Net::FTP..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:88
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:90
 msgid "Lowercase characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:149
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
 msgid "Lowercase next character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:151
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:153
 msgid "Lowercase till \\E"
 msgstr ""
 
@@ -3024,46 +3024,46 @@ msgstr ""
 msgid "Mark the place where the selection should start"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:100
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:102
 msgid "Match 0 or more times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:102
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:104
 msgid "Match 1 or 0 times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:101
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:103
 msgid "Match 1 or more times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:105
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:107
 msgid "Match at least m but not more than n times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:104
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:106
 msgid "Match at least n times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:103
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:105
 msgid "Match exactly m times"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:676
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:677
 #, perl-format
 msgid "Match failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:687
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:688
 #, perl-format
 msgid "Match warning in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:696
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:697
 #, perl-format
 msgid "Match with 0 width at character %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:233
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:235
 msgid "Matched text:"
 msgstr ""
 
@@ -3099,7 +3099,7 @@ msgstr ""
 msgid "Minimum length of suggestions"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:118 lib/Padre/Wx/Dialog/RegexEditor.pm:109
+#: lib/Padre/Wx/FBP/Preferences.pm:118 lib/Padre/Wx/Dialog/RegexEditor.pm:111
 msgid "Miscellaneous"
 msgstr ""
 
@@ -3123,7 +3123,7 @@ msgstr ""
 msgid "Move to other panel"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:478
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:480
 msgid "Multi-line (&m)"
 msgstr ""
 
@@ -3153,11 +3153,11 @@ msgstr ""
 msgid "Need to select text in order to translate numbers"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:126
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:128
 msgid "Negative lookahead assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:128
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:130
 msgid "Negative lookbehind assertion"
 msgstr ""
 
@@ -3185,7 +3185,7 @@ msgstr ""
 msgid "New plug-ins detected"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:139
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:141
 msgid "Newline"
 msgstr ""
 
@@ -3201,7 +3201,7 @@ msgstr ""
 msgid "No Autoindent"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2949
+#: lib/Padre/Wx/Main.pm:2948
 msgid "No Build.PL nor Makefile.PL nor dist.ini found"
 msgstr ""
 
@@ -3221,8 +3221,8 @@ msgstr ""
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2916 lib/Padre/Wx/Main.pm:2971
-#: lib/Padre/Wx/Main.pm:3022
+#: lib/Padre/Wx/Main.pm:2915 lib/Padre/Wx/Main.pm:2970
+#: lib/Padre/Wx/Main.pm:3021
 msgid "No document open"
 msgstr ""
 
@@ -3245,7 +3245,7 @@ msgstr ""
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3257
+#: lib/Padre/Wx/Main.pm:3256
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
@@ -3254,7 +3254,7 @@ msgstr ""
 msgid "No filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:715
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:716
 msgid "No match"
 msgstr ""
 
@@ -3264,7 +3264,7 @@ msgstr ""
 msgid "No matches found for \"%s\"."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3239
+#: lib/Padre/Wx/Main.pm:3238
 msgid "No open document"
 msgstr ""
 
@@ -3272,7 +3272,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:190 lib/Padre/Wx/Panel/FoundInFiles.pm:291
+#: lib/Padre/Wx/ReplaceInFiles.pm:190 lib/Padre/Wx/Panel/FoundInFiles.pm:297
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -3286,7 +3286,7 @@ msgstr ""
 msgid "No suggestions"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:124
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:126
 msgid "Non-capturing group"
 msgstr ""
 
@@ -3310,7 +3310,7 @@ msgstr ""
 msgid "Not a positive number."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:116
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:118
 msgid "Not a word boundary"
 msgstr ""
 
@@ -3334,7 +3334,7 @@ msgstr ""
 msgid "Obstructed"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:144
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:146
 msgid "Octal character"
 msgstr ""
 
@@ -3522,7 +3522,7 @@ msgstr ""
 msgid "Open with Default &System Editor"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3368
+#: lib/Padre/Wx/Main.pm:3367
 #, perl-format
 msgid "Opening session %s..."
 msgstr ""
@@ -3551,7 +3551,7 @@ msgstr ""
 msgid "Options:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:91
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:94
 msgid "Or&iginal text:"
 msgstr ""
 
@@ -3737,7 +3737,7 @@ msgstr ""
 msgid "Perl Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:30
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:33
 msgid "Perl Filter"
 msgstr ""
 
@@ -3844,11 +3844,11 @@ msgstr ""
 msgid "Positive Integer"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:125
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:127
 msgid "Positive lookahead assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:127
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:129
 msgid "Positive lookbehind assertion"
 msgstr ""
 
@@ -3914,7 +3914,7 @@ msgid ""
 "variable"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:90
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:92
 msgid "Punctuation characters"
 msgstr ""
 
@@ -3970,7 +3970,7 @@ msgstr ""
 msgid "Quit the process being debugged"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:154
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:156
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
@@ -4058,7 +4058,7 @@ msgstr ""
 msgid "Refresh the status of working copy files and directories"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:30
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:33
 msgid "Regex Editor"
 msgstr ""
 
@@ -4199,7 +4199,7 @@ msgstr ""
 msgid "Replace With:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:488
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:490
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
@@ -4208,7 +4208,7 @@ msgstr ""
 msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:760
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:761
 #, perl-format
 msgid "Replace failure in %s:  %s"
 msgstr ""
@@ -4256,7 +4256,7 @@ msgstr ""
 msgid "Reset to default shortcut"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3398
+#: lib/Padre/Wx/Main.pm:3397
 msgid "Restore focus..."
 msgstr ""
 
@@ -4264,7 +4264,7 @@ msgstr ""
 msgid "Restore pristine working copy file (undo most local edits)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:140
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:142
 msgid "Return"
 msgstr ""
 
@@ -4338,11 +4338,11 @@ msgid ""
 "the output panel."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:106
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:109
 msgid "Run filter"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2887
+#: lib/Padre/Wx/Main.pm:2886
 msgid "Run setup"
 msgstr ""
 
@@ -4493,7 +4493,7 @@ msgstr ""
 msgid "Search and replace text in all files below a given directory"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:278
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:284
 #, perl-format
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4525,7 +4525,7 @@ msgid ""
 "part."
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:228
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:234
 #, perl-format
 msgid "Searching for '%s' in '%s'..."
 msgstr ""
@@ -4774,7 +4774,7 @@ msgstr ""
 msgid "Show &Command Line"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:213
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:215
 msgid "Show &Description"
 msgstr ""
 
@@ -4866,7 +4866,7 @@ msgstr ""
 msgid "Show Standard Error"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:243
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:245
 msgid "Show Subs&titution"
 msgstr ""
 
@@ -5047,7 +5047,7 @@ msgstr ""
 msgid "Simulate a right mouse button click to open the context menu"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:474
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:476
 msgid "Single-line (&s)"
 msgstr ""
 
@@ -5108,7 +5108,7 @@ msgstr ""
 msgid "Space"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:84
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:86
 msgid "Space and tab"
 msgstr ""
 
@@ -5220,7 +5220,7 @@ msgid "TODO List"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:135
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:138
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:140
 msgid "Tab"
 msgstr ""
 
@@ -5417,7 +5417,7 @@ msgstr ""
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:148
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:150
 msgid "Unicode character 'name'"
 msgstr ""
 
@@ -5482,15 +5482,15 @@ msgstr ""
 msgid "Upper/Lo&wer Case"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:92
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:94
 msgid "Uppercase characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:150
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:152
 msgid "Uppercase next character"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:152
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:154
 msgid "Uppercase till \\E"
 msgstr ""
 
@@ -5570,11 +5570,11 @@ msgstr ""
 msgid "View all known and currently unsolved bugs in Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:87
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:89
 msgid "Visible characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:89
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:91
 msgid "Visible characters and spaces"
 msgstr ""
 
@@ -5594,7 +5594,7 @@ msgid ""
 msgstr ""
 
 #: lib/Padre/Document.pm:310 lib/Padre/Wx/Syntax.pm:43
-#: lib/Padre/Wx/Main.pm:3283 lib/Padre/Wx/Main.pm:4059
+#: lib/Padre/Wx/Main.pm:3282 lib/Padre/Wx/Main.pm:4059
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
 msgstr ""
@@ -5642,7 +5642,7 @@ msgstr ""
 msgid "Where did you hear about Padre?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:91
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:93
 msgid "Whitespace characters"
 msgstr ""
 
@@ -5670,7 +5670,7 @@ msgstr ""
 msgid "Writing file to FTP server..."
 msgstr ""
 
-#: lib/Padre/Wx/Output.pm:145 lib/Padre/Wx/Main.pm:3139
+#: lib/Padre/Wx/Output.pm:145 lib/Padre/Wx/Main.pm:3138
 #, perl-format
 msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
@@ -5688,7 +5688,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1782
+#: lib/Padre/Wx/Editor.pm:1783
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5822,11 +5822,11 @@ msgid ""
 "Intermitent Error, You can't FIRSTKEY with the %~ hash"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:73
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:76
 msgid "wrap in grep { }"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:72
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:75
 msgid "wrap in map { }"
 msgstr ""
 
