@@ -5666,7 +5666,7 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Appearance</property>
                                     <property name="select">0</property>
@@ -5682,7 +5682,7 @@
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_panel5</property>
-                                        <property name="permission">protected</property>
+                                        <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
                                         <property name="subclass"></property>
@@ -6640,7 +6640,7 @@
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Autocomplete</property>
                                     <property name="select">0</property>
@@ -7798,8 +7798,8 @@
                                 <object class="listbookpage" expanded="1">
                                     <property name="bitmap"></property>
                                     <property name="label">Behaviour</property>
-                                    <property name="select">0</property>
-                                    <object class="wxPanel" expanded="1">
+                                    <property name="select">1</property>
+                                    <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
@@ -8511,7 +8511,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALIGN_CENTER_VERTICAL|wxEXPAND</property>
+                                                        <property name="flag">wxALIGN_CENTER_VERTICAL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxDirPickerCtrl" expanded="0">
                                                             <property name="bg"></property>
@@ -9036,10 +9036,20 @@
                                                     <event name="OnUpdateUI"></event>
                                                 </object>
                                             </object>
+                                            <object class="sizeritem" expanded="0">
+                                                <property name="border">5</property>
+                                                <property name="flag">wxEXPAND</property>
+                                                <property name="proportion">0</property>
+                                                <object class="spacer" expanded="0">
+                                                    <property name="height">10</property>
+                                                    <property name="permission">protected</property>
+                                                    <property name="width">0</property>
+                                                </object>
+                                            </object>
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Editor Style</property>
                                     <property name="select">0</property>
@@ -9814,7 +9824,7 @@
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
                                                 <property name="flag">wxEXPAND</property>
-                                                <property name="proportion">1</property>
+                                                <property name="proportion">0</property>
                                                 <object class="spacer" expanded="0">
                                                     <property name="height">10</property>
                                                     <property name="permission">protected</property>
@@ -9882,7 +9892,7 @@
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Indentation</property>
                                     <property name="select">0</property>
@@ -11773,7 +11783,7 @@
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">File Handling</property>
                                     <property name="select">0</property>
@@ -12641,11 +12651,11 @@
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Language - Perl 5</property>
                                     <property name="select">0</property>
-                                    <object class="wxPanel" expanded="1">
+                                    <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
@@ -12692,7 +12702,7 @@
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
                                         <event name="OnUpdateUI"></event>
-                                        <object class="wxBoxSizer" expanded="1">
+                                        <object class="wxBoxSizer" expanded="0">
                                             <property name="minimum_size"></property>
                                             <property name="name">bSizer71</property>
                                             <property name="orient">wxVERTICAL</property>
@@ -13618,10 +13628,10 @@
                                         </object>
                                     </object>
                                 </object>
-                                <object class="listbookpage" expanded="1">
+                                <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Language - Perl 6</property>
-                                    <property name="select">1</property>
+                                    <property name="select">0</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -13633,7 +13643,7 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
-                                        <property name="name">m_panel5</property>
+                                        <property name="name">m_panel6</property>
                                         <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
@@ -13864,11 +13874,11 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="sizeritem" expanded="1">
+                        <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
-                            <property name="proportion">1</property>
-                            <object class="spacer" expanded="1">
+                            <property name="proportion">0</property>
+                            <object class="spacer" expanded="0">
                                 <property name="height">0</property>
                                 <property name="permission">protected</property>
                                 <property name="width">0</property>

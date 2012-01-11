@@ -41,7 +41,7 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	$self->{m_panel5} = Wx::Panel->new(
+	my $m_panel5 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
 		Wx::DefaultPosition,
@@ -50,7 +50,7 @@ sub new {
 	);
 
 	my $m_staticText186 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Function List"),
 	);
@@ -59,7 +59,7 @@ sub new {
 	);
 
 	my $m_staticline361 = Wx::StaticLine->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -67,13 +67,13 @@ sub new {
 	);
 
 	my $m_staticText6 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Sort Order:"),
 	);
 
 	$self->{main_functions_order} = Wx::Choice->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -82,7 +82,7 @@ sub new {
 	$self->{main_functions_order}->SetSelection(0);
 
 	my $m_staticText190 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("TODO List"),
 	);
@@ -91,7 +91,7 @@ sub new {
 	);
 
 	my $m_staticline40 = Wx::StaticLine->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -99,13 +99,13 @@ sub new {
 	);
 
 	my $m_staticText11 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Item Regular Expression:"),
 	);
 
 	$self->{todo_regexp} = Wx::TextCtrl->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		"",
 		Wx::DefaultPosition,
@@ -113,7 +113,7 @@ sub new {
 	);
 
 	my $m_staticText187 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Miscellaneous"),
 	);
@@ -122,7 +122,7 @@ sub new {
 	);
 
 	my $m_staticline37 = Wx::StaticLine->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -130,7 +130,7 @@ sub new {
 	);
 
 	$self->{window_list_shorten_path} = Wx::CheckBox->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Shorten the common path in window list"),
 		Wx::DefaultPosition,
@@ -138,7 +138,7 @@ sub new {
 	);
 
 	$self->{main_output_ansi} = Wx::CheckBox->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Coloured text in output window (ANSI)"),
 		Wx::DefaultPosition,
@@ -146,7 +146,7 @@ sub new {
 	);
 
 	$self->{info_on_statusbar} = Wx::CheckBox->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Show low priority info messages on status bar (not in a popup)"),
 		Wx::DefaultPosition,
@@ -154,13 +154,13 @@ sub new {
 	);
 
 	my $m_staticText7 = Wx::StaticText->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::gettext("Prefered language for error diagnostics"),
 	);
 
 	$self->{locale_perldiag} = Wx::Choice->new(
-		$self->{m_panel5},
+		$m_panel5,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -432,7 +432,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::DIRP_DEFAULT_STYLE,
 	);
-	$self->{default_projects_directory}->SetMinSize( Wx::DefaultSize );
 
 	my $m_staticText193 = Wx::StaticText->new(
 		$m_panel2,
@@ -1197,7 +1196,7 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $m_panel5 = Wx::Panel->new(
+	my $m_panel6 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
 		Wx::DefaultPosition,
@@ -1206,7 +1205,7 @@ sub new {
 	);
 
 	my $m_staticText391 = Wx::StaticText->new(
-		$m_panel5,
+		$m_panel6,
 		-1,
 		Wx::gettext("Language Integration"),
 	);
@@ -1215,7 +1214,7 @@ sub new {
 	);
 
 	my $m_staticline101 = Wx::StaticLine->new(
-		$m_panel5,
+		$m_panel6,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -1223,7 +1222,7 @@ sub new {
 	);
 
 	$self->{lang_perl6_auto_detection} = Wx::CheckBox->new(
-		$m_panel5,
+		$m_panel6,
 		-1,
 		Wx::gettext("Detect Perl 6 files"),
 		Wx::DefaultPosition,
@@ -1314,8 +1313,8 @@ sub new {
 	$bSizer116->Add( $self->{info_on_statusbar}, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $fgSizer32, 0, Wx::ALL | Wx::EXPAND, 5 );
 
-	$self->{m_panel5}->SetSizerAndFit($bSizer116);
-	$self->{m_panel5}->Layout;
+	$m_panel5->SetSizerAndFit($bSizer116);
+	$m_panel5->Layout;
 
 	my $fgSizer411 = Wx::FlexGridSizer->new( 6, 2, 5, 5 );
 	$fgSizer411->SetFlexibleDirection(Wx::BOTH);
@@ -1367,7 +1366,7 @@ sub new {
 	$fgSizer28->Add( $m_staticText8, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer28->Add( $self->{default_line_ending}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer28->Add( $m_staticText5, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
-	$fgSizer28->Add( $self->{default_projects_directory}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::EXPAND, 5 );
+	$fgSizer28->Add( $self->{default_projects_directory}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 
 	my $bSizer117 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer117->Add( $m_staticText191, 0, Wx::ALL, 5 );
@@ -1389,6 +1388,7 @@ sub new {
 	$bSizer117->Add( $m_staticText196, 0, Wx::ALL, 5 );
 	$bSizer117->Add( $m_staticline44, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer117->Add( $self->{save_autoclean}, 0, Wx::ALL, 5 );
+	$bSizer117->Add( 0, 10, 0, Wx::EXPAND, 5 );
 
 	$m_panel2->SetSizerAndFit($bSizer117);
 	$m_panel2->Layout;
@@ -1418,7 +1418,7 @@ sub new {
 	$bSizer4->Add( $m_staticline21, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer4->Add( $fgSizer4, 0, Wx::EXPAND, 0 );
 	$bSizer4->Add( $m_staticText331, 0, Wx::ALL, 5 );
-	$bSizer4->Add( 0, 10, 1, Wx::EXPAND, 5 );
+	$bSizer4->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer4->Add( $self->{preview}, 1, Wx::EXPAND, 5 );
 
 	$m_panel3->SetSizerAndFit($bSizer4);
@@ -1576,18 +1576,18 @@ sub new {
 	$bSizer711->Add( $m_staticline101, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer711->Add( $fgSizer711, 0, 0, 5 );
 
-	$m_panel5->SetSizerAndFit($bSizer711);
-	$m_panel5->Layout;
+	$m_panel6->SetSizerAndFit($bSizer711);
+	$m_panel6->Layout;
 
-	$self->{treebook}->AddPage( $self->{m_panel5}, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 1 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("File Handling"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Language - Perl 6"), 1 );
+	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("Language - Perl 6"), 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $self->{save}, 0, Wx::ALL, 5 );
@@ -1596,7 +1596,7 @@ sub new {
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $self->{treebook}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$vsizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$vsizer->Add( 0, 0, 0, Wx::EXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::ALIGN_RIGHT, 5 );
 
