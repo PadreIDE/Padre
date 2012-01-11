@@ -1333,8 +1333,7 @@ sub single_instance_command {
 			$editor ||= $self->setup_editors($line);
 		}
 
-		# Notify the client when we close
-		# this window
+		# Notify the client when we close this window
 		$self->{on_close_watchers} ||= {};
 		$self->{on_close_watchers}->{$line} ||= [];
 		push @{ $self->{on_close_watchers}->{$line} }, sub {
@@ -3470,7 +3469,7 @@ Some methods are inherited from L<Padre::Wx::Role::Dialog>.
 
 =head3 C<status>
 
-    $main->status( $msg );
+    $main->status($msg);
 
 Temporarily change the status bar leftmost block only to some message.
 
@@ -3486,10 +3485,11 @@ sub status {
 
 =head3 C<info>
 
-    $main->info( $msg );
+    $main->info($msg);
 
 Print a message on the status bar or within a dialog box depending on the
 users preferences setting.
+
 The dialog has only a OK button and there is no return value.
 
 =cut
@@ -6065,7 +6065,7 @@ as a convenience for dialog writers who wish to return focus.
 =cut
 
 sub editor_focus {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor;
 	$editor->SetFocus if $editor;
 	return;

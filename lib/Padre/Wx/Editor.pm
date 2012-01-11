@@ -1572,12 +1572,13 @@ sub uncomment_lines {
 }
 
 sub find_line {
-	my $self  = shift;
-	my $line  = shift;
-	my $text  = quotemeta shift;
-	my $regex = qr/^$text[\012\015]*\Z/;
+	my $self = shift;
+	my $line = shift;
+	return $line unless @_;
 
 	# Look for the text on the specific expected line
+	my $text  = quotemeta shift;
+	my $regex = qr/^$text[\012\015]*\Z/;
 	if ( $line == $self->line($line) ) {
 		if ( $self->GetLine($line) =~ $regex ) {
 			return $line;
@@ -1659,7 +1660,7 @@ sub goto_function {
 
 sub goto_line_centerize {
 	my $self = shift;
-	my $line = shift;
+	my $line = $self->find_line(@_);
 	$self->goto_pos_centerize(
 		$self->GetLineIndentPosition($line)
 	);

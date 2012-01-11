@@ -71,6 +71,7 @@ sub new {
 		$self,
 		$self->{search_timer_id},
 	);
+
 	Wx::Event::EVT_TIMER(
 		$self,
 		$self->{search_timer_id},
@@ -102,14 +103,14 @@ sub stop_clicked {
 
 # Called when the "Repeat" button is clicked
 sub repeat_clicked {
-	my $self  = shift;
+	my $self = shift;
 
 	# Stop any existing search
 	$self->stop_clicked(@_);
 
 	# Run the previous search again
 	my $search = $self->{search} or return;
-	$self->search( %$search );
+	$self->search(%$search);
 }
 
 # Called when the "Expand all" button is clicked
@@ -119,6 +120,7 @@ sub expand_all_clicked {
 	my $tree  = $self->{tree};
 	my $lock  = $tree->lock_scroll;
 	my $root  = $tree->GetRootItem;
+
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
 		$tree->Expand($child);
@@ -136,6 +138,7 @@ sub collapse_all_clicked {
 	my $tree  = $self->{tree};
 	my $lock  = $tree->lock_scroll;
 	my $root  = $tree->GetRootItem;
+
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
 		$tree->Collapse($child);
@@ -150,19 +153,22 @@ sub collapse_all_clicked {
 sub item_clicked {
 	my $self  = shift;
 	my $event = shift;
+	my $tree  = $self->{tree};
 	my $item  = $event->GetItem;
-	my $data  = $self->{tree}->GetPlData($item) or return;
-	my $dir   = $data->{dir}                    or return;
-	my $file  = $data->{file}                   or return;
+	my $data  = $tree->GetPlData($item) or return;
+	my $dir   = $data->{dir}            or return;
+	my $file  = $data->{file}           or return;
 	my $path  = File::Spec->catfile( $dir, $file );
 
 	if ( defined $data->{line} ) {
-		$self->open_file_at_line($path, $data->{line} - 1 );
+		my $line = $data->{line} - 1;
+		my $text = $data->{text};
+		$self->open_file_at_line( $path, $line, $text );
 	} else {
 		$self->open_file_at_line($path);
 	}
 
-	return;
+	$event->Skip(0);
 }
 
 
@@ -336,7 +342,8 @@ sub search_render {
 		my $file = $tree->AppendItem( $root, $label, $self->{images}->{file} );
 		$tree->SetPlData(
 			$file,
-			{   dir  => $dir,
+			{
+				dir  => $dir,
 				file => $name,
 			}
 		);
@@ -345,18 +352,20 @@ sub search_render {
 		foreach my $row (@$entry) {
 
 			# Tabs don't display properly
-			$row->[1] =~ s/\t/    /g;
+			my $msg = $row->[1];
+			$msg =~ s/\t/    /g;
 			my $line = $tree->AppendItem(
 				$file,
-				$row->[0] . ': ' . $row->[1],
+				"$row->[0]: $msg",
 				$self->{images}->{result},
 			);
 			$tree->SetPlData(
 				$line,
-				{   dir  => $dir,
+				{
+					dir  => $dir,
 					file => $name,
 					line => $row->[0],
-					msg  => $row->[1],
+					text => $row->[1],
 				}
 			);
 		}
@@ -382,10 +391,10 @@ sub search_render {
 # If no line is given, the function just opens the file
 # and sets the focus to it.
 sub open_file_at_line {
-	my ( $self, $file, $line ) = @_;
-
-	return unless -f $file;
+	my $self = shift;
+	my $file = shift;
 	my $main = $self->main;
+	return unless -f $file;
 
 	# Try to open the file now
 	my $editor;
@@ -400,16 +409,14 @@ sub open_file_at_line {
 
 	# Center the current position on the found result's line if an editor is found.
 	# NOTE: we are EVT_IDLE event to make sure we can do that after a file is opened.
-	if ($editor) {
+	if ( $editor and @_ ) {
+		my @params = @_;
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
-				if ( defined $line ) {
-					$editor->EnsureVisible($line);
-					$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-				}
+				$editor->goto_line_centerize(@params);
 				$editor->SetFocus;
-				Wx::Event::EVT_IDLE( $self, undef );
+				Wx::Event::EVT_IDLE( $_[0], undef );
 			},
 		);
 	}
