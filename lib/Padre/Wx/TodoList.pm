@@ -29,7 +29,7 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $panel = shift || $main->right;
+	my $panel = shift || $main->bottom;
 
 	# Create the parent panel, which will contain the search and tree
 	my $self = $class->SUPER::new(
@@ -177,7 +177,7 @@ sub view_panel {
 }
 
 sub view_label {
-	Wx::gettext('To-do');
+	Wx::gettext('To Do');
 }
 
 sub view_close {

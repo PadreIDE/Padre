@@ -2283,9 +2283,9 @@ sub _show_todo {
 	my $self = shift;
 	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
-		$self->right->show( $self->todo );
+		$self->bottom->show( $self->todo );
 	} elsif ( $self->has_todo ) {
-		$self->right->hide( $self->todo );
+		$self->bottom->hide( $self->todo );
 		delete $self->{todo};
 	}
 }
