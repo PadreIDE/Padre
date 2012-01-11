@@ -1506,6 +1506,44 @@ sub uncomment_lines {
 	return;
 }
 
+sub find_line {
+	my $self  = shift;
+	my $line  = shift;
+	my $text  = quotemeta shift;
+	my $regex = qr/^$text[\012\015]*\Z/;
+
+	# Look for the text on the specific expected line
+	if ( $line == $self->line($line) ) {
+		if ( $self->GetLine($line) =~ $regex ) {
+			return $line;
+		}
+	} else {
+		$line = $self->line($line);
+	}
+
+	# Search outwards from the expected line
+	my $max  = $self->GetLineCount;
+	my $low  = $line;
+	my $high = $line;
+	while ( $low >= 0 or $high <= $max ) {
+		# Search down one line
+		if ( $high <= $max ) {
+			if ( $self->GetLine($high) =~ $regex ) {
+				return $high;
+			}
+			$high++;
+		}
+		if ( $low >= 0 ) {
+			if ( $self->GetLine($low) =~ $regex ) {
+				return $low;
+			}
+			$low--;
+		}
+	}
+
+	return undef;
+}
+
 sub find_function {
 	my $self     = shift;
 	my $name     = shift;
@@ -1540,7 +1578,7 @@ sub position {
 sub line {
 	my $self = shift;
 	my $line = shift;
-	my $max  = $self->GetLineCount;
+	my $max  = $self->GetLineCount - 1;
 	$line = 0 unless $line;
 	$line = 0 unless $line > 0;
 	$line = $max if $line > $max;
