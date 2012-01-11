@@ -16,6 +16,9 @@ our @ISA     = qw{
 };
 
 
+
+
+
 ######################################################################
 # Constructor
 
@@ -54,7 +57,6 @@ sub new {
 
 	return $self;
 }
-
 
 #
 # A private method that returns a hash of regex groups along with their meaning
@@ -497,7 +499,6 @@ sub _modifier_keys {
 	return qw{ ignore_case single_line multi_line extended	global};
 }
 
-
 # -- public methods
 
 sub show {
@@ -787,14 +788,12 @@ Padre::Wx::Dialog::RegexEditor - dialog to make it easy to create a regular expr
 
 =head1 DESCRIPTION
 
-
 The C<Regex Editor> provides an interface to easily create regular
 expressions used in Perl.
 
 The user can insert a regular expression (the surrounding C</> characters are not
 needed) and a text. The C<Regex Editor> will automatically display the matching
 text in the bottom right window.
-
 
 At the top of the window the user can select any of the four
 regular expression modifiers:
