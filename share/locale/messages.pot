@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-10 00:10-0800\n"
+"POT-Creation-Date: 2012-01-10 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2466,7 +2466,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1695
+#: lib/Padre/Wx/Editor.pm:1733
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -5652,7 +5652,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1679
+#: lib/Padre/Wx/Editor.pm:1717
 msgid "You must select a range of lines"
 msgstr ""
 
