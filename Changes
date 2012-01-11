@@ -14,6 +14,7 @@ Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
 0.94 TBA
+    - Redesigned the Preferences dialog (ADAMK)
     - Completed the Padre::Delta module for applying document updates, diffs or
       other small automated changes to a document without moving the scroll
       position or cursor (ADAMK)
@@ -21,7 +22,6 @@ the even version for the release, even during development.
     - Converted the Replace dialog to wxFormBuilder (ADAMK)
     - Converted the Plugin Manager dialog to wxFormBuilder (ADAMK)
     - Converted the Document Statistics dialog to wxFormBuilder (ADAMK)
-    - Redesigned the Preferences dialog (ADAMK)
     - The modification indicator on the notebook tab is now set correctly even
       during automated mass document changes (ADAMK)
     - Removed Padre::DB::SyntaxHighlighter as the need for custom highlighting
