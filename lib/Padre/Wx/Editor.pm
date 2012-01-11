@@ -1,5 +1,21 @@
 package Padre::Wx::Editor;
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Editor - Padre document editor object
+
+=head1 DESCRIPTION
+
+B<Padre::Wx::Editor> implements the Scintilla-based document editor for
+Padre. It implements the majority of functionality relating to visualisation
+and navigation of documents.
+
+=head1 METHODS
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -203,15 +219,60 @@ sub new {
 	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_UNDERLINE, Wx::Scintilla::INDIC_PLAIN );
 
 	# Basic event bindings
-	Wx::Event::EVT_SET_FOCUS(  $self, sub { shift->on_set_focus(@_)    } );
-	Wx::Event::EVT_KILL_FOCUS( $self, sub { shift->on_kill_focus(@_)   } );
-	Wx::Event::EVT_KEY_UP(     $self, sub { shift->on_key_up(@_)       } );
-	Wx::Event::EVT_CHAR(       $self, sub { shift->on_char(@_)         } );
-	Wx::Event::EVT_MOTION(     $self, sub { shift->on_mouse_moving(@_) } );
-	Wx::Event::EVT_MOUSEWHEEL( $self, sub { shift->on_mousewheel(@_)   } );
-	Wx::Event::EVT_LEFT_DOWN(  $self, sub { shift->on_left_down(@_)    } );
-	Wx::Event::EVT_LEFT_UP(    $self, sub { shift->on_left_up(@_)      } );
-	Wx::Event::EVT_MIDDLE_UP(  $self, sub { shift->on_middle_up(@_)    } );
+	Wx::Event::EVT_SET_FOCUS(
+		$self,
+		sub {
+			shift->on_set_focus(@_);
+		},
+	);
+	Wx::Event::EVT_KILL_FOCUS(
+		$self,
+		sub {
+			shift->on_kill_focus(@_);
+		},
+	);
+	Wx::Event::EVT_KEY_UP(
+		$self,
+		sub {
+			shift->on_key_up(@_);
+		},
+	);
+	Wx::Event::EVT_CHAR(
+		$self,
+		sub {
+			shift->on_char(@_);
+		},
+	);
+	Wx::Event::EVT_MOTION(
+		$self,
+		sub {
+			shift->on_mouse_moving(@_);
+		},
+	);
+	Wx::Event::EVT_MOUSEWHEEL(
+		$self,
+		sub {
+			shift->on_mousewheel(@_);
+		},
+	);
+	Wx::Event::EVT_LEFT_DOWN(
+		$self,
+		sub {
+			shift->on_left_down(@_);
+		},
+	);
+	Wx::Event::EVT_LEFT_UP(
+		$self,
+		sub {
+			shift->on_left_up(@_);
+		},
+	);
+	Wx::Event::EVT_MIDDLE_UP(
+		$self,
+		sub {
+			shift->on_middle_up(@_);
+		},
+	);
 
 	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
 	if ( Padre::Constant::UNIX ) {
@@ -241,11 +302,15 @@ sub new {
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
 	$self->SetModEventMask(
-		Wx::Scintilla::SC_PERFORMED_USER | Wx::Scintilla::SC_PERFORMED_UNDO | Wx::Scintilla::SC_PERFORMED_REDO | Wx::Scintilla::SC_MOD_INSERTTEXT
-			| Wx::Scintilla::SC_MOD_DELETETEXT
+		Wx::Scintilla::SC_PERFORMED_USER |
+		Wx::Scintilla::SC_PERFORMED_UNDO |
+		Wx::Scintilla::SC_PERFORMED_REDO |
+		Wx::Scintilla::SC_MOD_INSERTTEXT |
+		Wx::Scintilla::SC_MOD_DELETETEXT
 	);
 	Wx::Event::EVT_STC_CHANGE(
-		$self, $self,
+		$self,
+		$self,
 		sub {
 			shift->on_change(@_);
 		},
