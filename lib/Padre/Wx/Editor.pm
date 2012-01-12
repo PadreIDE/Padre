@@ -328,6 +328,10 @@ sub new {
 	return $self;
 }
 
+sub document {
+	$_[0]->{Document};
+}
+
 sub notebook {
 	Params::Util::_INSTANCE($_[0]->GetParent, 'Padre::Wx::Notebook');
 }
@@ -820,7 +824,12 @@ sub setup_document {
 
 
 ######################################################################
-# General Methods
+# Selection and Introspection
+
+# Return the character at a given position as a perl string
+sub GetTextAt {
+	chr $_[0]->GetCharAt($_[1]);
+}
 
 sub GetSelectionLength {
 	$_[0]->GetSelectionStart - $_[0]->GetSelectionEnd;
@@ -830,18 +839,46 @@ sub GetFirstDocumentLine {
 	$_[0]->DocLineFromVisible( $_[0]->GetFirstVisibleLine );
 }
 
-# Take a temporary readonly lock on the object
-sub lock_readonly {
-	require Padre::Wx::Editor::Lock;
-	Padre::Wx::Editor::Lock->new(shift);
+sub get_selection_lines {
+	return (
+		$_[0]->get_selection_lines_start,
+		$_[0]->get_selection_lines_end,
+	);
 }
 
-# Recalculate the line number margins whenever we change the zoom level
-sub SetZoom {
-	my $self = shift;
-	my @rv   = $self->SUPER::SetZoom(@_);
-	$self->refresh_line_numbers;
-	return @rv;
+sub get_selection_lines_start {
+	$_[0]->LineFromPosition( $_[0]->GetSelectionStart );
+}
+
+sub get_selection_lines_end {
+	$_[0]->LineFromPosition( $_[0]->GetSelectionEnd );
+}
+
+sub get_selection_block {
+	my $self   = shift;
+	my $startp = $self->GetSelectionStart;
+	my $startl = $self->LineFromPosition($startp);
+	my $endp   = $self->GetSelectionEnd;
+	my $endl   = $self->LineFromPosition($endp);
+
+	# Do nothing unless the selection spans lines
+	return ( $startl, $endl ) if $startl == $endl;
+
+	# Trim off the bottom lines while no content is selected
+	while ( $endp == $self->PositionFromLine($endl) ) {
+		$endp = $self->GetLineEndPosition(--$endl);
+		return ( $startl, $endl ) if $startl == $endl;
+	}
+
+	# Trim off the top lines while no content is selected
+	while ( $startp == $self->GetLineEndPosition($startl) ) {
+		$startp = $self->PositionFromLine(++$startl);
+		return ( $startl, $endl ) if $startl == $endl;
+	}
+
+	# The final result is the range of lines containing content
+	# within the original selection.
+	return ( $startl, $endl );
 }
 
 # Indicate a selection based on a search match and remember where it was
@@ -864,10 +901,25 @@ sub matched {
 	$_[0]->{matched};
 }
 
-# convenience methods
-# return the character at a given position as a perl string
-sub get_character_at {
-	return chr $_[0]->GetCharAt( $_[1] );
+
+
+
+
+######################################################################
+# General Methods
+
+# Take a temporary readonly lock on the object
+sub lock_readonly {
+	require Padre::Wx::Editor::Lock;
+	Padre::Wx::Editor::Lock->new(shift);
+}
+
+# Recalculate the line number margins whenever we change the zoom level
+sub SetZoom {
+	my $self = shift;
+	my @rv   = $self->SUPER::SetZoom(@_);
+	$self->refresh_line_numbers;
+	return @rv;
 }
 
 # Error Message
@@ -926,10 +978,10 @@ sub get_brace_info {
 
 	# try the after position first (default one for BraceMatch)
 	my $is_after = 1;
-	my $brace    = $self->get_character_at($pos);
+	my $brace    = $self->GetTextAt($pos);
 	my $is_brace = $self->get_brace_type($brace);
 	if ( !$is_brace && $pos > 0 ) { # try the before position
-		$brace    = $self->get_character_at( --$pos );
+		$brace    = $self->GetTextAt( --$pos );
 		$is_brace = $self->get_brace_type($brace) or return undef;
 		$is_after = 0;
 	}
@@ -1456,6 +1508,116 @@ sub _convert_paste_eols {
 	return $paste;
 }
 
+# Toggle the commenting for the content block at the selection
+sub comment_block_toggle {
+	my $self = shift;
+
+	# Find the comment pattern for this file type
+	my $document = $self->document or return;
+	my $comment  = $document->get_comment_line_string or return;
+	if ( Params::Util::_ARRAY($comment) ) {
+		$comment = $comment->[0];
+	}
+
+	# Do we have a valid content block to work with
+	my ( $start, $end ) = $self->get_selection_block;
+	return if $start == $end;
+
+	# The block is uncommented if any non-blank line within it is
+	my $commented = qr/^\s*\Q$comment\E/;
+	foreach my $line ( $start .. $end ) {
+		my $text = $self->GetLine($line);
+		next unless $text =~ /\S/;
+		next if $text =~ $commented;
+
+		# Block is NOT commented, comment it
+		return $self->comment_block_indent( $start, $end );
+	}
+
+	# Block IS commented, uncomment it
+	return $self->comment_block_outdent( $start, $end );
+}
+
+# Indent commenting for a line range representing a block of code
+sub comment_block_indent {
+	my $self     = shift;
+	my $start    = shift;
+	my $end      = shift;
+	my $document = $self->document or return;
+	my $comment  = $document->get_comment_line_string or return;
+	my $lock     = $self->lock_update;
+
+	$self->BeginUndoAction;
+	if ( Params::Util::_ARRAY($comment) ) {
+		# Handle languages which use multi-line comment
+		$self->InsertText(
+			$self->GetLineEndPosition($end),
+			$comment->[1],
+		);
+		$self->InsertText(
+			$self->GetLineIndentPosition($start),
+			$comment->[0],
+		);
+
+	} else {
+		# Handle line-by-line comments
+		foreach my $line ( $end .. $start ) {
+			my $text = $self->GetLine($line);
+			next unless $line =~ /\S/;
+
+			# Insert the comment after the indent to retain safe tab
+			# usage for those people that use them.
+			$self->InsertText(
+				$self->GetLineIndentPosition($line),
+				$comment,
+			);
+		}
+	}
+	$self->EndUndoAction;
+
+	return 1;
+}
+
+# Outdent commenting for a line range representing a block of code
+sub comment_block_outdent {
+	my $self     = shift;
+	my $start    = shift;
+	my $end      = shift;
+	my $document = $self->document or return;
+	my $comment  = $document->get_comment_line_string or return;
+	my $lock     = $self->lock_update;
+
+	$self->BeginUndoAction;
+	if ( Params::Util::_ARRAY($comment) ) {
+		# Handle languages which use multi-line comment
+		# TO DO to be completed
+
+	} else {
+		# Handle line-by-line comments
+		my $regexp = /^(\s*)(\Q$comment\E\s*)/;
+		foreach my $line ( $start .. $end ) {
+			my $text = $self->GetLine($line);
+			next unless $text =~ /\S/;
+
+			# Special hack, don't uncomment #! lines
+			if ( $line == 0 and $text =~ /^#!/ ) {
+				next;
+			}
+
+			# Remove the comment characters
+			next unless $text =~ $regexp;
+			my $left  = $self->PositionFromLine($line) + length($1);
+			my $right = $left + length($2);
+			$self->SetTargetStart($left);
+			$self->SetTargetEnd($right);
+			$self->ReplaceTarget('');
+		}
+	}
+	$self->EndUndoAction;
+
+	return 1;
+}
+
 # Comment or uncomment text depending on the first selected line.
 # This is the most coherent way to handle mixed blocks (commented and
 # uncommented lines).
@@ -1611,7 +1773,9 @@ sub find_line {
 		}
 	}
 
-	return undef;
+	# If we can't find the content text anywhere,
+	# fall back to the explicit line number.
+	return $line;
 }
 
 sub find_function {
