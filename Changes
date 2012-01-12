@@ -84,7 +84,7 @@ the even version for the release, even during development.
     - Changed the order of the context menu entries to more closely match
       the typical ordering of other editors (ADAMK)
     - Refactored the comment logic to allow sloppier smart selection (ADAMK)
-    - Rationalised the search engines down to a single one (ADAMK)
+    - Migrated the Function List tool to use the Padre::Search internals (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
