@@ -83,6 +83,7 @@ the even version for the release, even during development.
     - The context menu now correctly appears at the cursor on Win32 (ADAMK)
     - Changed the order of the context menu entries to more closely match
       the typical ordering of other editors (ADAMK)
+    - Refactored the comment intuition logic to 
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

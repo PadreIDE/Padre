@@ -933,7 +933,7 @@ sub init {
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
-			$_[0]->on_comment_block('TOGGLE');
+			$_[0]->on_comment_toggle;
 		},
 	);
 

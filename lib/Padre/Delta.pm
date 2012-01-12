@@ -104,33 +104,25 @@ sub from_diff {
 		my $hunk = shift;
 		foreach my $change ( @$hunk ) {
 			my $operation = $change->[0];
-			my $position  = $change->[1];
+			my $pos       = $change->[1];
 			my $text      = $change->[2] . "\n";
 			my $previous  = $targets[-1];
 
 			if ( $operation eq '-' ) {
-				my $start = $position + $delta--;
-				if ( $previous and $previous->{end} == $start ) {
-					$previous->{end}++;
+				my $start = $pos + $delta--;
+				if ( $previous and $previous->[1] == $start ) {
+					$previous->[1]++;
 					next;
 				}
-				push @targets, {
-					start => $start,
-					end   => $start + 1,
-					text  => '',
-				};
+				push @targets, [ $start, $start + 1, '' ];
 				next;
 			}
 
 			if ( $operation eq '+' ) {
-				if ( $previous and $previous->{end} == $position ) {
-					$previous->{text} .= $text;
+				if ( $previous and $previous->[1] == $pos ) {
+					$previous->[2] .= $text;
 				} else {
-					push @targets, {
-						start => $position,
-						end   => $position,
-						text  => $text,
-					};
+					push @targets, [ $pos, $pos, $text ];
 				}
 				$delta++;
 				next;
@@ -198,9 +190,9 @@ sub to_editor {
 		# Apply positions based on lines
 		$editor->BeginUndoAction;
 		foreach my $target (@$targets) {
-			$editor->SetTargetStart( $editor->PositionFromLine( $target->{start} ) );
-			$editor->SetTargetEnd( $editor->PositionFromLine( $target->{end} ) );
-			$editor->ReplaceTarget( $target->{text} );
+			$editor->SetTargetStart( $editor->PositionFromLine( $target->[0] ) );
+			$editor->SetTargetEnd( $editor->PositionFromLine( $target->[1] ) );
+			$editor->ReplaceTarget( $target->[2] );
 		}
 		$editor->EndUndoAction;
 
@@ -208,9 +200,9 @@ sub to_editor {
 		# Apply positions based on raw character positions
 		$editor->BeginUndoAction;
 		foreach my $target (@$targets) {
-			$editor->SetTargetStart( $target->{start} );
-			$editor->SetTargetEnd( $target->{end} );
-			$editor->ReplaceTarget( $target->{text} );
+			$editor->SetTargetStart( $target->[0] );
+			$editor->SetTargetEnd( $target->[1] );
+			$editor->ReplaceTarget( $target->[2] );
 		}
 		$editor->EndUndoAction;
 	}

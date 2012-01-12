@@ -3865,6 +3865,15 @@ sub on_comment_block {
 	return;
 }
 
+sub on_comment_toggle {
+	my $self   = shift;
+	my $event  = shift;
+	my $editor = $self->current->editor or return;
+
+	# Hand off to the editor method to do the bulk of the work
+	$editor->comment_block_toggle;
+}
+
 =pod
 
 =head3 C<on_autocompletion>

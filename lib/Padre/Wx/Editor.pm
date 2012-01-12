@@ -1545,37 +1545,30 @@ sub comment_block_indent {
 	my $end      = shift;
 	my $document = $self->document or return;
 	my $comment  = $document->get_comment_line_string or return;
-	my $lock     = $self->lock_update;
+	my @targets  = ();
 
-	$self->BeginUndoAction;
 	if ( Params::Util::_ARRAY($comment) ) {
 		# Handle languages which use multi-line comment
-		$self->InsertText(
-			$self->GetLineEndPosition($end),
-			$comment->[1],
-		);
-		$self->InsertText(
-			$self->GetLineIndentPosition($start),
-			$comment->[0],
-		);
+		push @targets, [ $end,   $end,   $comment->[1] ];
+		push @targets, [ $start, $start, $comment->[0] ];
 
 	} else {
 		# Handle line-by-line comments
-		foreach my $line ( $end .. $start ) {
+		$comment .= ' ';
+		for ( my $line = $end; $line >= $start; $line-- ) {
 			my $text = $self->GetLine($line);
-			next unless $line =~ /\S/;
+			next unless $text =~ /\S/;
 
 			# Insert the comment after the indent to retain safe tab
 			# usage for those people that use them.
-			$self->InsertText(
-				$self->GetLineIndentPosition($line),
-				$comment,
-			);
+			my $pos = $self->GetLineIndentPosition($line);
+			push @targets, [ $pos, $pos, $comment ];
 		}
 	}
-	$self->EndUndoAction;
 
-	return 1;
+	# Apply the changes to the editor
+	require Padre::Delta;
+	Padre::Delta->new( position => @targets )->to_editor($self);
 }
 
 # Outdent commenting for a line range representing a block of code
@@ -1585,17 +1578,16 @@ sub comment_block_outdent {
 	my $end      = shift;
 	my $document = $self->document or return;
 	my $comment  = $document->get_comment_line_string or return;
-	my $lock     = $self->lock_update;
+	my @targets  = ();
 
-	$self->BeginUndoAction;
 	if ( Params::Util::_ARRAY($comment) ) {
 		# Handle languages which use multi-line comment
 		# TO DO to be completed
 
 	} else {
 		# Handle line-by-line comments
-		my $regexp = /^(\s*)(\Q$comment\E\s*)/;
-		foreach my $line ( $start .. $end ) {
+		my $regexp = qr/^(\s*)(\Q$comment\E[ \t]*)/;
+		for ( my $line = $end; $line >= $start; $line-- ) {
 			my $text = $self->GetLine($line);
 			next unless $text =~ /\S/;
 
@@ -1608,14 +1600,13 @@ sub comment_block_outdent {
 			next unless $text =~ $regexp;
 			my $left  = $self->PositionFromLine($line) + length($1);
 			my $right = $left + length($2);
-			$self->SetTargetStart($left);
-			$self->SetTargetEnd($right);
-			$self->ReplaceTarget('');
+			push @targets, [ $left, $right, '' ];
 		}
 	}
-	$self->EndUndoAction;
 
-	return 1;
+	# Apply the changes to the editor
+	require Padre::Delta;
+	Padre::Delta->new( position => @targets )->to_editor($self);
 }
 
 # Comment or uncomment text depending on the first selected line.
