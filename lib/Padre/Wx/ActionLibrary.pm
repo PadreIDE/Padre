@@ -2569,18 +2569,6 @@ sub init {
 
 	# Add the About
 
-	# Padre::Wx::Action->new(
-	# name       => 'help.about',
-	# id         => Wx::ID_ABOUT,
-	# label      => _T('&About'),
-	# comment    => _T('Show information about Padre'),
-	# menu_event => sub {
-	# $_[0]->about->ShowModal;
-	# },
-	# );
-
-	# Add the About2
-
 	Padre::Wx::Action->new(
 		name       => 'help.about',
 		label      => _T('&About'),
