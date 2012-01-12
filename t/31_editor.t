@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 24;
+use Test::More tests => 28;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -53,4 +53,14 @@ SCOPE: {
 	is( $editor->find_line( 6 => 'A' ), 6, '->find_line(0,A)' );
 	is( $editor->find_line( 7 => 'A' ), 6, '->find_line(0,A)' );
 	is( $editor->find_line( 8 => 'A' ), 6, '->find_line(0,A)' );
+
+	# Test ->GetTextAt
+	$editor->SetText("\n\n\nsub foo {\n\nsub foo {");
+	is( $editor->GetTextAt(1), "\n", '->GetTextAt(0)' );
+	is( $editor->GetTextAt(2), "\n", '->GetTextAt(1)' );
+	is( $editor->GetTextAt(3), 's',  '->GetTextAt(2)' );
+
+	# Test ->find_function
+	is( $editor->find_function('foo'), 3, '->find_function(foo)' );
+
 }

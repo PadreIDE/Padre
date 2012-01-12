@@ -465,14 +465,13 @@ sub matches {
 	die "missing parameters" if @_ < 4;
 
 	# Searches run in unicode
-	my $text = Encode::encode( 'utf-8', shift );
+	my $text  = Encode::encode( 'utf-8', shift );
+	my $regex = Encode::encode( 'utf-8', shift );
 
 	# Find all matches for the regex
-	my $regex = shift;
-	$regex = Encode::encode( 'utf-8', $regex );
 	my @matches = ();
 	while ( $text =~ /$regex/g ) {
-		push @matches, [ $-[0], $+[0] ];
+		push @matches, [ $-[-1], $+[-1] ];
 	}
 	unless (@matches) {
 		return ( undef, undef );
