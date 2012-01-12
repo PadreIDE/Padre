@@ -1487,13 +1487,13 @@ sub event_on_context_menu {
 	# when pressing Windows context "right click" key
 	my $pos = $editor->GetCurrentPos;
 
-	my $introduced_separator = 0;
+	my $separator = 0;
 
 	my ( $location, $token ) = $self->get_current_symbol($pos);
 
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
-		$menu->AppendSeparator unless $introduced_separator++;
+		$menu->AppendSeparator unless $separator++;
 
 		$menu->add_menu_action(
 			'perl.find_variable',
@@ -1533,6 +1533,8 @@ sub event_on_context_menu {
 	}
 
 	if ( defined $location and $token =~ /^\w+$/ ) {
+		$menu->AppendSeparator unless $separator++;
+
 		$menu->add_menu_action(
 			'perl.find_method',
 		);
@@ -1540,7 +1542,7 @@ sub event_on_context_menu {
 
 	# Is something selected
 	if ( $editor->GetSelectionLength ) {
-		$menu->AppendSeparator unless $introduced_separator++;
+		$menu->AppendSeparator unless $separator++;
 
 		$menu->add_menu_action(
 			'perl.introduce_temporary',
