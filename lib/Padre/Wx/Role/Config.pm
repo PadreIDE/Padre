@@ -22,7 +22,7 @@ sub config_load {
 		my $setting = $config->meta($name);
 		my $value   = $config->$name();
 		my $ctrl    = $self->$name();
-
+		
 		# Apply this one setting to this one widget
 		if ( $ctrl->can('config_load') ) {
 			# Allow specialised widgets to load their own setting
