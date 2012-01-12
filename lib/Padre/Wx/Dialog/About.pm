@@ -43,19 +43,16 @@ sub new {
 }
 
 sub run {
-	my $self = shift;
+	my $class = shift;
+	my $self  = $class->SUPER::new(@_);
 
 	# Show the dialog
-	my $result = $self->ShowModal;
-	if ( $result == Wx::ID_CANCEL ) {
+	$self->ShowModal;
 
-		# As we leave the About dialog, return the user to the current editor
-		# window so they don't need to click it.
-		$self->main->editor_focus;
-		$self->Destroy;
-	}
-
-	return;
+	# As we leave the About dialog, return the user to the current editor
+	# window so they don't need to click it.
+	$self->main->editor_focus;
+	$self->Destroy;
 }
 
 sub _translation {

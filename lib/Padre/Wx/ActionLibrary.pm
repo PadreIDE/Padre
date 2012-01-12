@@ -2582,18 +2582,13 @@ sub init {
 	# Add the About2
 
 	Padre::Wx::Action->new(
-		name    => 'help.about',
-		label   => _T('&About'),
-		comment => _T('Show information about Padre'),
-
+		name       => 'help.about',
+		label      => _T('&About'),
+		comment    => _T('Show information about Padre'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::About;
-			my $dialog = Padre::Wx::Dialog::About->new( $_[0] );
-			$dialog->run;
-			$dialog->Destroy;
-			return;
+			Padre::Wx::Dialog::About->run($_[0]);
 		},
-
 	);
 	return 1;
 }
