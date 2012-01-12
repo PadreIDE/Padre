@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-12 04:10-0800\n"
+"POT-Creation-Date: 2012-01-12 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -665,11 +665,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:149
+#: lib/Padre/Wx/Dialog/About.pm:164
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:154
+#: lib/Padre/Wx/Dialog/About.pm:169
 msgid "(unsupported)"
 msgstr ""
 
@@ -1342,7 +1342,7 @@ msgstr ""
 msgid "Commit file/directory to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:116
+#: lib/Padre/Wx/Dialog/About.pm:131
 msgid "Config"
 msgstr ""
 
@@ -1802,7 +1802,7 @@ msgid "Display Value"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN2.pm:205 lib/Padre/Wx/CPAN2.pm:214
-#: lib/Padre/Wx/CPAN2.pm:223 lib/Padre/Wx/Dialog/About.pm:135
+#: lib/Padre/Wx/CPAN2.pm:223 lib/Padre/Wx/Dialog/About.pm:150
 msgid "Distribution"
 msgstr ""
 
@@ -2535,6 +2535,10 @@ msgstr ""
 msgid "Functions"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/About.pm:82 lib/Padre/Wx/FBP/About.pm:125
+msgid "Gabor Szabo"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/About.pm:311 lib/Padre/Wx/FBP/About.pm:598
 msgid "Gabriel Vieira"
 msgstr ""
@@ -2597,10 +2601,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:502
 msgid "Gyorgy Pasztor"
-msgstr ""
-
-#: lib/Padre/Wx/FBP/About.pm:82 lib/Padre/Wx/FBP/About.pm:125
-msgid "Gábor Szabó"
 msgstr ""
 
 #: lib/Padre/Locale.pm:293 lib/Padre/Wx/FBP/About.pm:466
@@ -2827,7 +2827,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:140
+#: lib/Padre/Wx/Dialog/About.pm:155
 msgid "Kernel"
 msgstr ""
 
@@ -3973,7 +3973,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:155
+#: lib/Padre/Wx/Dialog/About.pm:170
 msgid "RAM"
 msgstr ""
 
@@ -5291,7 +5291,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:150
+#: lib/Padre/Wx/Dialog/About.pm:165
 msgid "Threads"
 msgstr ""
 
