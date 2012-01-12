@@ -183,13 +183,16 @@ sub from_scalars {
 # Main Methods
 
 sub to_editor {
-	my $self    = shift;
-	my $editor  = shift;
-	my $mode    = $self->{mode};
-	my $targets = $self->{targets};
+	my $self = shift;
 
 	# Shortcut if nothing to do
 	return if $self->null;
+
+	# Prepare to apply to the editor
+	my $editor  = shift;
+	my $mode    = $self->{mode};
+	my $targets = $self->{targets};
+	my $lock    = $editor->lock_update;
 
 	if ( $mode eq 'line' ) {
 		# Apply positions based on lines
@@ -212,7 +215,7 @@ sub to_editor {
 		$editor->EndUndoAction;
 	}
 
-	return;
+	return 1;
 }
 
 =pod
