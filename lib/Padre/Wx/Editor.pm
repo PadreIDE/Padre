@@ -600,10 +600,19 @@ sub on_context_menu {
 	require Padre::Wx::Menu::RightClick;
 	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
 
+	# Try to determine where to show the context menu
 	if ( $event->isa('Wx::MouseEvent') ) {
+		# Position is already window relative
 		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
-	} else { # Wx::CommandEvent
-		$self->PopupMenu( $menu->wx, 50, 50 ); # TO DO better location
+	} elsif ( $event->can('GetPosition') ) {
+		# Assume other event positions are screen relative
+		my $screen = $event->GetPosition;
+		my $client = $self->ScreenToClient($screen);
+		$self->PopupMenu( $menu->wx, $client->x, $client->y );
+	} else {
+		# Probably a wxCommandEvent
+		# TO DO Capture a better location from the mouse directly
+		$self->PopupMenu( $menu->wx, 50, 50 );
 	}
 }
 
@@ -812,6 +821,10 @@ sub setup_document {
 
 ######################################################################
 # General Methods
+
+sub GetSelectionLength {
+	$_[0]->GetSelectionStart - $_[0]->GetSelectionEnd;
+}
 
 sub GetFirstDocumentLine {
 	$_[0]->DocLineFromVisible( $_[0]->GetFirstVisibleLine );
@@ -1368,6 +1381,13 @@ sub convert_eols {
 	return 1;
 }
 
+sub CanPaste {
+	my $self = shift;
+	return 0 unless $self->SUPER::CanPaste;
+	return 0 unless $self->clipboard_length;
+	return 1;
+}
+
 sub Paste {
 	my $self = shift;
 
@@ -1434,48 +1454,6 @@ sub _convert_paste_eols {
 	}
 
 	return $paste;
-}
-
-sub put_text_to_clipboard {
-	my ( $self, $text, $clipboard ) = @_;
-	@_ = (); # Feeble attempt to kill Scalars Leaked
-
-	return if $text eq '';
-
-	my $config = $self->config;
-
-	$clipboard ||= 0;
-
-	# Backup last clipboard value:
-	$self->{Clipboard_Old} = $self->get_text_from_clipboard;
-
-	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
-
-	Wx::TheClipboard->Open;
-	Wx::TheClipboard->UsePrimarySelection($clipboard)
-		if $config->mid_button_paste;
-	Wx::TheClipboard->SetData( Wx::TextDataObject->new($text) );
-	Wx::TheClipboard->Close;
-
-	return;
-}
-
-sub get_text_from_clipboard {
-	my $self = shift;
-	my $text = '';
-	Wx::TheClipboard->Open;
-	if ( Wx::TheClipboard->IsSupported(Wx::DF_TEXT) ) {
-		my $data = Wx::TextDataObject->new;
-		if ( Wx::TheClipboard->GetData($data) ) {
-			$text = $data->GetText if defined $data;
-		}
-	}
-	if ( $text eq $self->GetSelectedText ) {
-		$text = $self->{Clipboard_Old};
-	}
-
-	Wx::TheClipboard->Close;
-	return $text;
 }
 
 # Comment or uncomment text depending on the first selected line.
@@ -1571,10 +1549,36 @@ sub uncomment_lines {
 	return;
 }
 
+=pod
+
+=head find_line
+
+  my $line_number = $editor->find_line( 123, "sub foo {" );
+
+The C<find_line> method locates a line in a document using a line number
+and the content of the line.
+
+It is intended for use in situations where a search function has determined
+that a particular line is of interest, but the document may have changed in
+the time since the original search was made.
+
+Starting at the suggested line, it will locate the line containing the text
+which is the closest to line provided. If no text is provided the method
+acts as a simple pass-through.
+
+Returns an integer line number guaranteed to exist in the document, or
+C<undef> if the hint text could not be found anywhere in the document.
+
+=cut
+
 sub find_line {
 	my $self = shift;
 	my $line = shift;
-	return $line unless @_;
+
+	# Handle the trivial case with no hint text
+	unless ( @_ ) {
+		return $self->line($line);
+	}
 
 	# Look for the text on the specific expected line
 	my $text  = quotemeta shift;
@@ -1631,6 +1635,24 @@ sub has_function {
 	defined shift->find_function(@_);
 }
 
+=pod
+
+=head2 position
+
+  my $position = $editor->position($untrusted);
+
+The C<position> method is used to clean parameters that are supposed to
+refer to a position within the editor. It takes what should be an numeric
+document position, constrains the value to the actual position range of
+the document, and removes any fractional characters.
+
+This method should generally be used when doing something to a document
+somewhere in it preferable aborting that functionality completely.
+
+Returns an integer character position guaranteed to exist in the document.
+
+=cut
+
 sub position {
 	my $self = shift;
 	my $pos  = shift;
@@ -1640,6 +1662,24 @@ sub position {
 	$pos = $max if $pos > $max;
 	return int $pos;
 }
+
+=pod
+
+=head2 line
+
+  my $line = $editor->line($untrusted);
+
+The C<line> method is used to clean parameters that are supposed to
+refer to a line within the editor. It takes what should be an numeric
+document line, constrains the value to the actual line range of
+the document, and removes any fractional characters.
+
+This method should generally be used when doing something to a document
+somewhere in it preferable aborting that functionality completely.
+
+Returns an integer line number guaranteed to exist in the document.
+
+=cut
 
 sub line {
 	my $self = shift;
@@ -1849,6 +1889,91 @@ sub needs_manual_colorize {
 		$_[0]->{needs_manual_colorize} = $_[1];
 	}
 	return $_[0]->{needs_manual_colorize};
+}
+
+
+
+
+
+######################################################################
+# Clipboard Methods
+
+# This is not necesarily the right place for these, since things other
+# than editors might want to make use of the clipboard.
+# But it will do for now as a starting point.
+
+=pod
+
+=head2 clipboard_length
+
+  my $chars = Padre::Wx::Editor->clipboard_length;
+
+The C<clipboard_length> method returns the number of characters of text
+currently in the clipboard, if any.
+
+Returns an integer number of characters, or zero if the clipboard is empty
+or contains non-text data.
+
+=cut
+
+sub clipboard_length {
+	my $class = shift;
+	my $chars = 0;
+
+	Wx::TheClipboard->Open;
+	if ( Wx::TheClipboard->IsSupported(Wx::DF_TEXT) ) {
+		my $data = Wx::TextDataObject->new;
+		if ( Wx::TheClipboard->GetData($data) ) {
+			$chars = $data->GetTextLength if defined $data;
+		}
+	}
+	Wx::TheClipboard->Close;
+
+	return $chars;
+}
+
+# TODO Change this to clipboard_set
+sub put_text_to_clipboard {
+	my ( $self, $text, $clipboard ) = @_;
+	@_ = (); # Feeble attempt to kill Scalars Leaked
+
+	return if $text eq '';
+
+	my $config = $self->config;
+
+	$clipboard ||= 0;
+
+	# Backup last clipboard value:
+	$self->{Clipboard_Old} = $self->get_text_from_clipboard;
+
+	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
+
+	Wx::TheClipboard->Open;
+	Wx::TheClipboard->UsePrimarySelection($clipboard)
+		if $config->mid_button_paste;
+	Wx::TheClipboard->SetData( Wx::TextDataObject->new($text) );
+	Wx::TheClipboard->Close;
+
+	return;
+}
+
+# TODO Change this to clipboard_text
+sub get_text_from_clipboard {
+	my $self = shift;
+	my $text = '';
+	Wx::TheClipboard->Open;
+	if ( Wx::TheClipboard->IsSupported(Wx::DF_TEXT) ) {
+		my $data = Wx::TextDataObject->new;
+		if ( Wx::TheClipboard->GetData($data) ) {
+			$text = $data->GetText if defined $data;
+		}
+	}
+	if ( $text eq $self->GetSelectedText ) {
+		$text = $self->{Clipboard_Old};
+	}
+
+	Wx::TheClipboard->Close;
+	return $text;
 }
 
 
@@ -2149,7 +2274,16 @@ BEGIN {
 
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut

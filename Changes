@@ -80,6 +80,9 @@ the even version for the release, even during development.
     - HTML for Padre::Wx::HtmlWindow is rendered in the background (ADAMK)
     - Clicking on a result from a Find in Files search will now find the
       correct line even if it has moved since the search was run (ADAMK)
+    - The context menu now correctly appears at the cursor on Win32 (ADAMK)
+    - Changed the order of the context menu entries to more closely match
+      the typical ordering of other editors (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

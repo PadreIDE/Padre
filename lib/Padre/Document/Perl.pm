@@ -1493,15 +1493,13 @@ sub event_on_context_menu {
 
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
-		$menu->AppendSeparator if not $introduced_separator++;
+		$menu->AppendSeparator unless $introduced_separator++;
 
 		$menu->add_menu_action(
-			$menu,
 			'perl.find_variable',
 		);
 
 		$menu->add_menu_action(
-			$menu,
 			'perl.rename_variable',
 		);
 
@@ -1532,33 +1530,23 @@ sub event_on_context_menu {
 			$style,
 			'perl.variable_from_camel_case_ucfirst',
 		);
-
-		# End variable style sub-menu
-	} # end if it's a variable
-
+	}
 
 	if ( defined $location and $token =~ /^\w+$/ ) {
 		$menu->add_menu_action(
-			$menu,
 			'perl.find_method',
 		);
 	}
 
-
-	my $select_start = $editor->GetSelectionStart;
-	my $select_end   = $editor->GetSelectionEnd;
-
 	# Is something selected
-	if ( $select_start != $select_end ) {
-		$menu->AppendSeparator if not $introduced_separator++;
+	if ( $editor->GetSelectionLength ) {
+		$menu->AppendSeparator unless $introduced_separator++;
 
 		$menu->add_menu_action(
-			$menu,
 			'perl.introduce_temporary',
 		);
 
 		$menu->add_menu_action(
-			$menu,
 			'perl.edit_with_regex_editor',
 		);
 	}

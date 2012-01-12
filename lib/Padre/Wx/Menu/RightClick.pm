@@ -13,59 +13,17 @@ our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::Menu';
 
 sub new {
-	my $class  = shift;
-	my $main   = shift;
-	my $editor = shift or return;
-	my $event  = shift;
+	my $class     = shift;
+	my $main      = shift;
+	my $editor    = shift or return;
+	my $event     = shift;
+	my $selection = $editor->GetSelectionLength ? 1 : 0;
 
-	# Create the empty menu as normal
+	# Create the empty menu
 	my $self = $class->SUPER::new(@_);
-
-	# Add additional properties
 	$self->{main} = $main;
 
-	my $selection = length( $editor->GetSelectedText ) > 0 ? 1 : 0;
-
-	# Undo/Redo
-	$self->{undo} = $self->add_menu_action(
-		'edit.undo',
-	);
-	unless ( $editor->CanUndo ) {
-		$self->{undo}->Enable(0);
-	}
-
-	$self->{redo} = $self->add_menu_action(
-		'edit.redo',
-	);
-	unless ( $editor->CanRedo ) {
-		$self->{redo}->Enable(0);
-	}
-
-	$self->AppendSeparator;
-
-	if ($selection) {
-		$self->{open_selection} = $self->add_menu_action(
-			'file.open_selection',
-		);
-	}
-
-	$self->{open_in_file_browser} = $self->add_menu_action(
-		'file.open_in_file_browser',
-	);
-
-	if (Padre::Constant::WIN32) {
-		$self->{open_in_command_line} = $self->add_menu_action(
-			'file.open_in_command_line',
-		);
-	}
-
-	$self->AppendSeparator;
-
-	$self->{find_in_files} = $self->add_menu_action(
-		'search.find_in_files',
-	);
-
-	$self->AppendSeparator;
+	# The core cut/paste entries the same as every other editor
 
 	$self->{cut} = $self->add_menu_action(
 		'edit.cut',
@@ -83,8 +41,7 @@ sub new {
 	$self->{paste} = $self->add_menu_action(
 		'edit.paste',
 	);
-	my $text = $editor->get_text_from_clipboard;
-	unless ( defined $text and length $text and $editor->CanPaste ) {
+	unless ( $editor->CanPaste ) {
 		$self->{paste}->Enable(0);
 	}
 
@@ -105,6 +62,20 @@ sub new {
 	$self->{uncomment} = $self->add_menu_action(
 		'edit.uncomment',
 	);
+
+	# Search, replace and navigation
+
+	if ($selection) {
+		$self->AppendSeparator;
+
+		$self->{open_selection} = $self->add_menu_action(
+			'file.open_selection',
+		);
+
+		$self->{find_in_files} = $self->add_menu_action(
+			'search.find_in_files',
+		);
+	}
 
 	my $config = $main->config;
 	if (    Padre::Feature::FOLDING
@@ -131,8 +102,6 @@ sub new {
 
 	my $document = $editor->{Document};
 	if ($document) {
-		$self->AppendSeparator;
-
 		if ( $document->can('event_on_context_menu') ) {
 			$document->event_on_context_menu( $editor, $self, $event );
 		}
