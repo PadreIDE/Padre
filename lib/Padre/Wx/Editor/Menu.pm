@@ -1,4 +1,4 @@
-package Padre::Wx::Menu::RightClick;
+package Padre::Wx::Editor::Menu;
 
 # Menu that shows up when user right-clicks with the mouse
 

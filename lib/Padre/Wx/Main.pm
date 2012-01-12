@@ -3803,75 +3803,22 @@ sub on_brace_matching {
 	shift->current->editor->goto_matching_brace;
 }
 
-=pod
-
-=head3 C<on_comment_block>
-
-    $main->on_comment_block;
-
-Performs one of the following depending the given operation
-
-=over 4
-
-=item * Uncomment or comment selected lines, depending on their current state.
-
-=item * Comment out selected lines unilaterally.
-
-=item * Uncomment selected lines unilaterally.
-
-=back
-
-=cut
-
-sub on_comment_block {
-	my ( $self, $operation ) = @_;
-	my $current         = $self->current;
-	my $editor          = $current->editor or return;
-	my $document        = $current->document;
-	my $selection_start = $editor->GetSelectionStart;
-	my $selection_end   = $editor->GetSelectionEnd;
-	my $length_before   = length $document->text_get;
-	my $begin_line      = $editor->LineFromPosition($selection_start);
-	my $end_line =
-		$editor->LineFromPosition( $selection_start == $selection_end ? $selection_end : $selection_end - 1 );
-	my $comment = $document->get_comment_line_string;
-
-	if ( not defined $comment ) {
-		$self->error(
-			sprintf(
-				Wx::gettext('Could not determine the comment character for %s document type'),
-				Wx::gettext( $document->mime->name ),
-			)
-		);
-		return;
-	}
-
-	if ( $operation eq 'TOGGLE' ) {
-		$editor->comment_toggle_lines( $begin_line, $end_line, $comment );
-	} elsif ( $operation eq 'COMMENT' ) {
-		$editor->comment_lines( $begin_line, $end_line, $comment );
-	} elsif ( $operation eq 'UNCOMMENT' ) {
-		$editor->uncomment_lines( $begin_line, $end_line, $comment );
-	} else {
-		TRACE("Invalid comment operation '$operation'") if DEBUG;
-	}
-
-	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection(
-			$selection_start,
-			$selection_end + ( length $document->text_get ) - $length_before
-		);
-	}
-	return;
+sub comment_toggle {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	$editor->comment_toggle;
 }
 
-sub on_comment_toggle {
+sub comment_indent {
 	my $self   = shift;
-	my $event  = shift;
 	my $editor = $self->current->editor or return;
+	$editor->comment_indent;
+}
 
-	# Hand off to the editor method to do the bulk of the work
-	$editor->comment_block_toggle;
+sub comment_outdent {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	$editor->comment_outdent;
 }
 
 =pod

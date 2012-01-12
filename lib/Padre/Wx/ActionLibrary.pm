@@ -933,7 +933,7 @@ sub init {
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
-			$_[0]->on_comment_toggle;
+			$_[0]->comment_toggle;
 		},
 	);
 
@@ -945,7 +945,7 @@ sub init {
 		comment        => _T('Comment out selected lines or the current line'),
 		shortcut       => 'Ctrl-M',
 		menu_event     => sub {
-			$_[0]->on_comment_block('COMMENT');
+			$_[0]->comment_indent;
 		},
 	);
 
@@ -957,7 +957,7 @@ sub init {
 		comment        => _T('Remove comment for selected lines or the current line'),
 		shortcut       => 'Ctrl-Shift-M',
 		menu_event     => sub {
-			$_[0]->on_comment_block('UNCOMMENT');
+			$_[0]->comment_outdent;
 		},
 	);
 

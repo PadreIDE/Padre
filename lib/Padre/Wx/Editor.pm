@@ -601,8 +601,8 @@ sub on_context_menu {
 	my $event = shift;
 	my $main  = $self->main;
 
-	require Padre::Wx::Menu::RightClick;
-	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
+	require Padre::Wx::Editor::Menu;
+	my $menu = Padre::Wx::Editor::Menu->new( $main, $self, $event );
 
 	# Try to determine where to show the context menu
 	if ( $event->isa('Wx::MouseEvent') ) {
@@ -1509,19 +1509,17 @@ sub _convert_paste_eols {
 }
 
 # Toggle the commenting for the content block at the selection
-sub comment_block_toggle {
-	my $self = shift;
-
-	# Find the comment pattern for this file type
+sub comment_toggle {
+	my $self     = shift;
 	my $document = $self->document or return;
 	my $comment  = $document->get_comment_line_string or return;
+	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
+
+	# Find the comment pattern for this file type
+	# TO DO This is a bit dodgy, and probably won't work
 	if ( Params::Util::_ARRAY($comment) ) {
 		$comment = $comment->[0];
 	}
-
-	# Do we have a valid content block to work with
-	my ( $start, $end ) = $self->get_selection_block;
-	return if $start == $end;
 
 	# The block is uncommented if any non-blank line within it is
 	my $commented = qr/^\s*\Q$comment\E/;
@@ -1531,22 +1529,21 @@ sub comment_block_toggle {
 		next if $text =~ $commented;
 
 		# Block is NOT commented, comment it
-		return $self->comment_block_indent( $start, $end );
+		return $self->comment_indent( $start, $end );
 	}
 
 	# Block IS commented, uncomment it
-	return $self->comment_block_outdent( $start, $end );
+	return $self->comment_outdent( $start, $end );
 }
 
 # Indent commenting for a line range representing a block of code
-sub comment_block_indent {
+sub comment_indent {
 	my $self     = shift;
-	my $start    = shift;
-	my $end      = shift;
 	my $document = $self->document or return;
 	my $comment  = $document->get_comment_line_string or return;
-	my @targets  = ();
+	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
+	my @targets = ();
 	if ( Params::Util::_ARRAY($comment) ) {
 		# Handle languages which use multi-line comment
 		push @targets, [ $end,   $end,   $comment->[1] ];
@@ -1572,14 +1569,13 @@ sub comment_block_indent {
 }
 
 # Outdent commenting for a line range representing a block of code
-sub comment_block_outdent {
+sub comment_outdent {
 	my $self     = shift;
-	my $start    = shift;
-	my $end      = shift;
 	my $document = $self->document or return;
 	my $comment  = $document->get_comment_line_string or return;
-	my @targets  = ();
+	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
+	my @targets = ();
 	if ( Params::Util::_ARRAY($comment) ) {
 		# Handle languages which use multi-line comment
 		# TO DO to be completed
@@ -1607,99 +1603,6 @@ sub comment_block_outdent {
 	# Apply the changes to the editor
 	require Padre::Delta;
 	Padre::Delta->new( position => @targets )->to_editor($self);
-}
-
-# Comment or uncomment text depending on the first selected line.
-# This is the most coherent way to handle mixed blocks (commented and
-# uncommented lines).
-sub comment_toggle_lines {
-	my ( $self, $begin, $end, $str ) = @_;
-
-	my $comment = ref $str eq 'ARRAY' ? $str->[0] : $str;
-
-	if ( $self->GetLine($begin) =~ /^\s*\Q$comment\E/ ) {
-		uncomment_lines(@_);
-	} else {
-		comment_lines(@_);
-	}
-}
-
-# $editor->comment_lines($begin, $end, $str);
-# $str is either # for perl or // for Javascript, etc.
-# $str might be ['<--', '-->] for html
-#
-# Change: for Single lines comments, it will (un)comment with indent:
-# <indent>$comment_characters<space>XXXXXXX
-# If someone has idee for commenting Haskell Guards in Single lines,
-# (well, ('-- |') is a symbol for haddock.) please fix it.
-#
-sub comment_lines {
-	my ( $self, $begin, $end, $str ) = @_;
-
-	$self->BeginUndoAction;
-	if ( ref $str eq 'ARRAY' ) {
-		my $pos = $self->PositionFromLine($begin);
-		$self->InsertText( $pos, $str->[0] );
-		$pos = $self->GetLineEndPosition($end);
-		$self->InsertText( $pos, $str->[1] );
-	} else {
-		foreach my $line ( $begin .. $end ) {
-			my $text = $self->GetLine($line);
-			if ( $text =~ /^(\s*)/ ) {
-				my $pos = $self->PositionFromLine($line);
-				$pos += length($1);
-				$self->InsertText( $pos, $str . ' ' );
-			}
-		}
-	}
-	$self->EndUndoAction;
-
-	return;
-}
-
-#
-# $editor->uncomment_lines($begin, $end, $str);
-#
-# uncomment lines $begin..$end
-# Change: see comments for `comment_lines()`
-#
-sub uncomment_lines {
-	my ( $self, $begin, $end, $str ) = @_;
-
-	$self->BeginUndoAction;
-	if ( ref $str eq 'ARRAY' ) {
-		my $first = $self->PositionFromLine($begin);
-		my $last  = $first + length( $str->[0] );
-		my $text  = $self->GetTextRange( $first, $last );
-		if ( $text eq $str->[0] ) {
-			$self->SetSelection( $first, $last );
-			$self->ReplaceSelection('');
-		}
-		$last  = $self->GetLineEndPosition($end);
-		$first = $last - length( $str->[1] );
-		$text  = $self->GetTextRange( $first, $last );
-		if ( $text eq $str->[1] ) {
-			$self->SetSelection( $first, $last );
-			$self->ReplaceSelection('');
-		}
-	} else {
-		foreach my $line ( $begin .. $end ) {
-			my $text = $self->GetLine($line);
-
-			# the first line starting with '#!' can't be uncommented!
-			next if ( $line == 0 && $text =~ /^#!/ );
-
-			if ( $text =~ /^(\s*)(\Q$str\E\s*)/ ) {
-				my $start = $self->PositionFromLine($line) + length($1);
-
-				$self->SetSelection( $start, $start + length($2) );
-				$self->ReplaceSelection('');
-			}
-		}
-	}
-	$self->EndUndoAction;
-
-	return;
 }
 
 =pod
