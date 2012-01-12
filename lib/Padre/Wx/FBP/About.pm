@@ -79,7 +79,7 @@ sub new {
 	$self->{creator} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("G\x{e1}bor Szab\x{f3}"),
+		Wx::gettext("Gabor Szabo"),
 	);
 
 	$self->{m_staticline271} = Wx::StaticLine->new(
@@ -122,7 +122,7 @@ sub new {
 	$self->{m_staticText1} = Wx::StaticText->new(
 		$self->{development},
 		-1,
-		Wx::gettext("G\x{e1}bor Szab\x{f3}"),
+		Wx::gettext("Gabor Szabo"),
 	);
 
 	$self->{m_staticText2} = Wx::StaticText->new(
