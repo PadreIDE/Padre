@@ -471,7 +471,7 @@ sub matches {
 	# Find all matches for the regex
 	my @matches = ();
 	while ( $text =~ /$regex/g ) {
-		push @matches, [ $-[-1], $+[-1] ];
+		push @matches, [ $-[0], $+[0] ];
 	}
 	unless (@matches) {
 		return ( undef, undef );
