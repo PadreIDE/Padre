@@ -325,7 +325,9 @@ sub new {
 	$self->_show_outline( $config->main_outline );
 	$self->_show_directory( $config->main_directory );
 	$self->_show_output( $config->main_output );
-	$self->_show_command_line( $config->main_command_line );
+	if (Padre::Feature::COMMAND) {
+		$self->_show_command_line( $config->main_command_line );
+	}
 	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 	if (Padre::Feature::VCS) {
 		$self->_show_vcs( $config->main_vcs );
@@ -671,13 +673,16 @@ sub output {
 	return $self->{output};
 }
 
-sub command_line {
-	my $self = shift;
-	unless ( defined $self->{command_line} ) {
-		require Padre::Wx::Command;
-		$self->{command_line} = Padre::Wx::Command->new($self);
-	}
-	return $self->{command_line};
+BEGIN {
+	no warnings 'once';
+	*command_line = sub {
+		my $self = shift;
+		unless ( defined $self->{command_line} ) {
+			require Padre::Wx::Command;
+			$self->{command_line} = Padre::Wx::Command->new($self);
+		}
+		return $self->{command_line};
+	} if Padre::Feature::COMMAND;
 }
 
 sub functions {

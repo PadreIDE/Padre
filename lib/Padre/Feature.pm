@@ -59,8 +59,9 @@ constant->import(
 		SYNTAX_ANNOTATIONS => $config->feature_syntax_check_annotations,
 
 		# Experimental features users can enable
-		QUICK_FIX       => $config->feature_quick_fix,
+		COMMAND         => $config->feature_command,
 		SYNC            => $config->feature_sync,
+		QUICK_FIX       => $config->feature_quick_fix,
 		STYLE_GUI       => $config->feature_style_gui,
 		DIFF_WINDOW     => $config->feature_diff_window,
 		DEVEL_ENDSTATS  => $config->feature_devel_endstats,

@@ -1345,9 +1345,9 @@ setting(
 # External tool integration
 
 setting(
-	name  => 'bin_shell',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'bin_shell',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => Padre::Constant::WIN32 ? 'cmd.exe' : '',
 );
 
@@ -1479,7 +1479,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	help    => _T('Toggle syntax checker annotations in editor')
+	help    => _T('Enable syntax checker annotations in the editor')
 );
 
 # Toggle document differences feature
@@ -1488,7 +1488,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	help    => _T('Toggle document differences feature')
+	help    => _T('Enable document differences feature')
 );
 
 # Toggle version control system (VCS) support
@@ -1497,7 +1497,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	help    => _T('Toggle version control system support')
+	help    => _T('Enable version control system support')
 );
 
 # Toggle MetaCPAN CPAN explorer panel
@@ -1506,7 +1506,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	help    => _T('Toggle MetaCPAN CPAN explorer panel'),
+	help    => _T('Enable the CPAN Explorer, powered by MetaCPAN'),
 );
 
 # Toggle Diff window feature
@@ -1516,6 +1516,15 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	help    => _T('Toggle Diff window feature that compares two buffers graphically'),
+);
+
+# Experimental command line interface
+setting(
+	name    => 'feature_command',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	help    => _T('Enable the experimental command line interface'),
 );
 
 # Toggle Perl 6 auto detection

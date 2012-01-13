@@ -85,6 +85,7 @@ the even version for the release, even during development.
       the typical ordering of other editors (ADAMK)
     - Refactored the comment logic to allow sloppier smart selection (ADAMK)
     - Migrated the Function List tool to use the Padre::Search internals (ADAMK)
+    - Hide the experimental command line feature in advanced preferences (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

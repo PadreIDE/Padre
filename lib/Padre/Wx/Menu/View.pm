@@ -43,9 +43,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
-	$self->{command_line} = $self->add_menu_action(
-		'view.command_line',
-	);
+	if (Padre::Feature::COMMAND) {
+		$self->{command_line} = $self->add_menu_action(
+			'view.command_line',
+		);
+	}
 
 	if (Padre::Feature::CPAN) {
 		$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer');
@@ -265,7 +267,9 @@ sub refresh {
 	$self->{lockinterface}->Check( $config->main_lockinterface );
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
 	$self->{calltips}->Check( $config->editor_calltips );
-	$self->{command_line}->Check( $config->main_command_line );
+	if (Padre::Feature::COMMAND) {
+		$self->{command_line}->Check( $config->main_command_line );
+	}
 	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
 	if (Padre::Feature::VCS) {
 		$self->{vcs}->Check( $config->main_vcs );
