@@ -20,27 +20,27 @@ use constant {
 	OFFSET => 24,
 };
 
-sub new {
-	my $class = shift;
-	my $self  = $class->SUPER::new(@_);
+# sub new {
+	# my $class = shift;
+	# my $self  = $class->SUPER::new(@_);
 
-	# Always show the first tab regardless of which one
-	# was selected in wxFormBuilder.
-	$self->notebook->ChangeSelection(0);
+	# # Always show the first tab regardless of which one
+	# # was selected in wxFormBuilder.
+	# $self->notebook->ChangeSelection(0);
 
-	# Load the platform-adaptive splash image
-	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
+	# # Load the platform-adaptive splash image
+	# $self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
 
-	# Set the system information
-	$self->{output}->ChangeValue( $self->_information );
+	# # Set the system information
+	# $self->{output}->ChangeValue( $self->_information );
 
-	# Set the translators
-	$self->_translation;
+	# # Set the translators
+	# $self->_translation;
 
-	$self->CenterOnParent;
+	# $self->CenterOnParent;
 
-	return $self;
-}
+	# return $self;
+# }
 
 sub run {
 	my $class = shift;
