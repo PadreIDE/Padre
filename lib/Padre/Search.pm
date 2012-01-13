@@ -461,26 +461,39 @@ Parameters:
 =cut
 
 sub matches {
-	my $self = shift;
-	die "missing parameters" if @_ < 4;
+	$_[0]->matches2(
+		text      => $_[1],
+		regex     => $_[2],
+		submatch  => 0,
+		from      => $_[3],
+		to        => $_[4],
+		backwards => $_[5],
+	);
+}
+
+sub matches2 {
+	my $self  = shift;
+	my %param = @_;
 
 	# Searches run in unicode
-	my $text  = Encode::encode( 'utf-8', shift );
-	my $regex = Encode::encode( 'utf-8', shift );
+	my $text  = Encode::encode( 'utf-8', $param{text}  );
+	my $regex = Encode::encode( 'utf-8', $param{regex} );
 
 	# Find all matches for the regex
-	my @matches = ();
+	my @matches  = ();
+	my $submatch = $param{submatch} || 0;
 	while ( $text =~ /$regex/g ) {
-		push @matches, [ $-[0], $+[0] ];
+		push @matches, [ $-[$submatch], $+[$submatch] ];
 	}
 	unless (@matches) {
 		return ( undef, undef );
 	}
 
 	my $pair = [];
-	my $from = shift || 0;
-	my $to   = shift || 0;
-	if ( $_[0] ) {
+	my $from = $param{from} || 0;
+	my $to   = $param{to}   || 0;
+
+	if ( $param{backwards} ) {
 
 		# Search backwards
 		$pair = List::Util::first { $from >= $_->[1] } reverse @matches;

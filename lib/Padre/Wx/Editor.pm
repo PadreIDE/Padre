@@ -1680,10 +1680,13 @@ sub find_function {
 
 	# Run the search
 	require Padre::Search;
-	my ( $start, $end ) = Padre::Search->matches(
-		$self->GetText,
-		$regex,
-		$self->GetSelection, # Provides two params
+	my ( $from,  $to  ) = $self->GetSelection;
+	my ( $start, $end ) = Padre::Search->matches2(
+		text     => $self->GetText,
+		regex    => $regex,
+		submatch => 1,
+		from     => $from,
+		to       => $to,
 	);
 
 	return $start;
