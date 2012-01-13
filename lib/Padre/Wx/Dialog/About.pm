@@ -52,7 +52,9 @@ sub run {
 
 	# Load the platform-adaptive splash image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
-
+	# $self->creator->SetLabel("G\x{e1}bor Szab\x{f3}"); # don't work
+	$self->creator->SetLabel('Gábor Szabó'); # works
+	
 	# Set the system information
 	$self->{output}->ChangeValue( $self->_information );
 
