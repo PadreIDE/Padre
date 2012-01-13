@@ -1644,11 +1644,12 @@ sub process_template_frequent {
 
 			require Padre::Search;
 			my ( $start, $end ) = Padre::Search->matches(
-				$prefix,
-				$document->get_function_regex(qr/\w+/),
-				0,
-				length($prefix),
-				1,
+				text      => $prefix,
+				regex     => $document->get_function_regex(qr/\w+/),
+				submatch  => 1,
+				from      => 0,
+				to        => length($prefix),
+				backwards => 1,
 			);
 			if ( defined $start and defined $end ) {
 				my $match = substr( $prefix, $start, ( $end - $start ) );

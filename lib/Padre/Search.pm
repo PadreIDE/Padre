@@ -30,8 +30,8 @@ use strict;
 use warnings;
 use Carp         ();
 use Encode       ();
-use Scalar::Util ();
 use List::Util   ();
+use Scalar::Util ();
 use Params::Util ();
 
 our $VERSION    = '0.93';
@@ -227,9 +227,10 @@ sub editor_search_down {
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-		$editor->GetSelection,
+		text  => $editor->GetText,
+		regex => $self->search_regex,
+		from  => $editor->GetSelectionStart,
+		to    => $editor->GetSelectionEnd,
 	);
 	return unless defined $start;
 
@@ -243,10 +244,11 @@ sub editor_search_up {
 
 	# Execute the search and move to the resulting location
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-		$editor->GetSelection,
-		'backwards'
+		text      => $editor->GetText,
+		regex     => $self->search_regex,
+		from      => $editor->GetSelectionStart,
+		to        => $editor->GetSelectionEnd,
+		backwards => 1,
 	);
 	return unless defined $start;
 
@@ -260,7 +262,7 @@ sub editor_search_count {
 
 	# Execute the regex search for all matches
 	$self->match_count(
-		$editor->GetTextRange( 0, $editor->GetLength ),
+		$editor->GetText,
 		$self->search_regex,
 	);
 }
@@ -268,24 +270,25 @@ sub editor_search_count {
 sub editor_replace_down {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
+	my $from   = $editor->GetSelectionStart;
+	my $to     = $editor->GetSelectionEnd;
 
 	# Execute the search so we can establish if we have already
 	# selected a match.
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-		$editor->GetSelection,
+		text  => $editor->GetText,
+		regex => $self->search_regex,
+		from  => $from,
+		to    => $from,
 	);
 	return unless @matches;
 
 	# Are we perfectly selecting a match already
-	my $selection_start = $editor->GetSelectionStart;
-	my $selection_end   = $editor->GetSelectionEnd;
-	unless ( $selection_start == $selection_end ) {
+	unless ( $from == $to ) {
 		foreach my $i ( 0 .. $#matches ) {
 			my $match = $matches[$i];
-			next unless $match->[0] == $selection_start;
-			next unless $match->[1] == $selection_end;
+			next unless $match->[0] == $from;
+			next unless $match->[1] == $to;
 
 			# The selection matches, replace it
 			$editor->ReplaceSelection( $self->replace_term );
@@ -299,7 +302,7 @@ sub editor_replace_down {
 				$start = $matches[0]->[0];
 				$end   = $matches[0]->[1];
 			} else {
-				my $delta = $editor->GetSelectionEnd - $selection_end;
+				my $delta = $editor->GetSelectionEnd - $to;
 				my $down  = $matches[$i + 1];
 				$start    = $down->[0] + $delta;
 				$end      = $down->[1] + $delta;
@@ -315,24 +318,25 @@ sub editor_replace_down {
 sub editor_replace_up {
 	my $self   = shift;
 	my $editor = _EDITOR(shift);
+	my $from   = $editor->GetSelectionStart;
+	my $to     = $editor->GetSelectionEnd;
 
 	# Execute the search so we can establish if we have already
 	# selected a match.
 	my ( $start, $end, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-		$editor->GetSelection,
+		text  => $editor->GetTextRange( 0, $editor->GetLength ),
+		regex => $self->search_regex,
+		from  => $from,
+		to    => $from,
 	);
 	return unless @matches;
 
 	# Are we perfectly selecting a match already
-	my $selection_start = $editor->GetSelectionStart;
-	my $selection_end   = $editor->GetSelectionEnd;
-	unless ( $selection_start == $selection_end ) {
+	unless ( $from == $to ) {
 		foreach my $i ( 0 .. $#matches ) {
 			my $match = $matches[$i];
-			next unless $match->[0] == $selection_start;
-			next unless $match->[1] == $selection_end;
+			next unless $match->[0] == $from;
+			next unless $match->[1] == $to;
 
 			# The selection matches, replace it
 			$editor->ReplaceSelection( $self->replace_term );
@@ -343,7 +347,7 @@ sub editor_replace_up {
 			# Move to the next match
 			if ( $i == 0 ) {
 				# Wrap to the end of the document
-				my $delta = $editor->GetSelectionEnd - $selection_end;
+				my $delta = $editor->GetSelectionEnd - $to;
 				$start = $matches[-1]->[0] + $delta;
 				$end   = $matches[-1]->[1] + $delta;
 			} else {
@@ -365,25 +369,18 @@ sub editor_replace_all {
 
 	# Execute the search for all matches
 	my ( undef, undef, @matches ) = $self->matches(
-		$editor->GetTextRange( 0, $editor->GetLength ),
-		$self->search_regex,
-		$editor->GetSelection
+		text  => $editor->GetTextRange( 0, $editor->GetLength ),
+		regex => $self->search_regex,
+		from  => $editor->GetSelectionStart,
+		to    => $editor->GetSelectionEnd,
 	);
+	return 0 unless @matches;
 
-	# Replace all matches as a single undo
-	if (@matches) {
-		my $replace = $self->replace_term;
-		$editor->BeginUndoAction;
-		foreach my $match ( reverse @matches ) {
-			$editor->SetTargetStart( $match->[0] );
-			$editor->SetTargetEnd( $match->[1] );
-			$editor->ReplaceTarget($replace);
-		}
-		$editor->EndUndoAction;
-	}
-
-	# Return the number of matches we replaced
-	return scalar @matches;
+	# Replace all matches, returning the number we replaced
+	my $replace = $self->replace_term;
+	@matches = map { [ @$_, $replace ] } reverse @matches;
+	require Padre::Delta;
+	Padre::Delta->new( position => @matches )->apply_editor($editor);
 }
 
 
@@ -437,11 +434,11 @@ sub scalar_replace_all {
 =head2 matches
 
   my ($first_char, $last_char, @all) = $search->matches(
-      $search_text,
-      $search_regexp,
-      $from,
-      $to,
-      $reverse,
+      text      => $search_text,
+      regex     => $search_regexp,
+      from      => $from,
+      to        => $to,
+      backwards => $reverse,
   );
 
 Parameters:
@@ -461,23 +458,12 @@ Parameters:
 =cut
 
 sub matches {
-	$_[0]->matches2(
-		text      => $_[1],
-		regex     => $_[2],
-		submatch  => 0,
-		from      => $_[3],
-		to        => $_[4],
-		backwards => $_[5],
-	);
-}
-
-sub matches2 {
 	my $self  = shift;
 	my %param = @_;
 
 	# Searches run in unicode
-	my $text  = Encode::encode( 'utf-8', $param{text}  );
-	my $regex = Encode::encode( 'utf-8', $param{regex} );
+	my $text  = Encode::encode( 'utf-8', delete $param{text}  );
+	my $regex = Encode::encode( 'utf-8', delete $param{regex} );
 
 	# Find all matches for the regex
 	my @matches  = ();

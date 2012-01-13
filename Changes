@@ -86,6 +86,8 @@ the even version for the release, even during development.
     - Refactored the comment logic to allow sloppier smart selection (ADAMK)
     - Migrated the Function List tool to use the Padre::Search internals (ADAMK)
     - Hide the experimental command line feature in advanced preferences (ADAMK)
+    - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
+    - Padre::Search::matches now supports submatch option (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

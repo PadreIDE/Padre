@@ -1042,14 +1042,10 @@ EOC
 	my $dialog = Padre::Wx::Dialog::RefactorSelectFunction->new( $editor->main, \@functions );
 	$dialog->show;
 	if ( $dialog->{cancelled} ) {
-
-		#$dialog->Destroy;
 		return ();
 	}
 
 	my $subname = $dialog->get_function_name;
-
-	#$dialog->Destroy;
 
 	# make the change to the selected text
 	$editor->BeginUndoAction; # do the edit atomically
@@ -1059,9 +1055,11 @@ EOC
 	# locate the function:
 	require Padre::Search;
 	my ( $start, $end ) = Padre::Search->matches(
-		$editor->GetText,
-		$self->get_function_regex($subname),
-		$editor->GetSelection, # Provides two params
+		text     => $editor->GetText,
+		regex    => $self->get_function_regex($subname),
+		submatch => 1,
+		from     => $editor->GetSelectionStart,
+		to       => $editor->GetSelectionEnd,
 	);
 	unless ( defined $start ) {
 

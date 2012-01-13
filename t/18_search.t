@@ -24,58 +24,116 @@ use Padre::Search ();
 # Basic tests for the core matches method
 
 SCOPE: {
-	my ( $start, $end, @matches ) = Padre::Search->matches( "abc", qr/x/, 0, 0 );
+	my ( $start, $end, @matches ) = Padre::Search->matches(
+		text  => "abc",
+		regex => qr/x/,
+		from  => 0,
+		to    => 0,
+	);
 	is_deeply( \@matches, [], 'no match' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abc", qr/(b)/, 0, 0 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abc",
+		regex => qr/(b)/,
+		from  => 0,
+		to    => 0,
+	);
 	is_deeply( \@matches, [ 1, 2, [ 1, 2 ] ], 'one match' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 0, 0 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abcbxb",
+		regex => qr/(b)/,
+		from  => 0,
+		to    => 0,
+	);
 	is_deeply( \@matches, [ 1, 2, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 1, 2 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abcbxb",
+		regex => qr/(b)/,
+		from  => 1,
+		to    => 2,
+	);
 	is_deeply( \@matches, [ 3, 4, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 3, 4 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abcbxb",
+		regex => qr/(b)/,
+		from  => 3,
+		to    => 4,
+	);
 	is_deeply( \@matches, [ 5, 6, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 5, 6 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abcbxb",
+		regex => qr/(b)/,
+		from  => 5,
+		to    => 6,
+	);
 	is_deeply( \@matches, [ 1, 2, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches, wrapping' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 5, 6, 1 );
+	my (@matches) = Padre::Search->matches(
+		text      => "abcbxb",
+		regex     => qr/(b)/,
+		from      => 5,
+		to        => 6,
+		backwards => 1,
+	);
 	is_deeply( \@matches, [ 3, 4, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches backwards' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b)/, 1, 2, 1 );
+	my (@matches) = Padre::Search->matches(
+		text      => "abcbxb",
+		regex     => qr/(b)/,
+		from      => 1,
+		to        => 2,
+		backwards => 1,
+	);
 	is_deeply( \@matches, [ 5, 6, [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ], 'three matches backwards wrapping' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b(.))/, 1, 2 );
+	my (@matches) = Padre::Search->matches(
+		text  => "abcbxb",
+		regex => qr/(b(.))/,
+		from  => 1,
+		to    => 2,
+	);
 	is_deeply( \@matches, [ 3, 5, [ 1, 3 ], [ 3, 5 ] ], '2 matches' );
 }
 
 SCOPE: {
-	my (@matches) = Padre::Search->matches( "abcbxb", qr/(b(.?))/, 1, 2, 1 );
+	my (@matches) = Padre::Search->matches(
+		text      => "abcbxb",
+		regex     => qr/(b(.?))/,
+		from      => 1,
+		to        => 2,
+		backwards => 1,
+	);
 	is_deeply( \@matches, [ 5, 6, [ 1, 3 ], [ 3, 5 ], [ 5, 6 ] ], 'three matches bw, wrap' );
 }
 
 SCOPE: {
 	my $str = qq( perl ("שלום"); perl );
-	my (@matches) = Padre::Search->matches( $str, qr/(perl)/, 0, 0 );
+	my (@matches) = Padre::Search->matches(
+		text  => $str,
+		regex => qr/(perl)/,
+		from  => 0,
+		to    => 0,
+	);
 
 	# TODO are these really correct numbers?
 	is_deeply( \@matches, [ 1, 5, [ 1, 5 ], [ 28, 32 ] ], 'two matches with unicode' );
@@ -84,7 +142,12 @@ SCOPE: {
 
 SCOPE: {
 	my $str = 'müssen';
-	my (@matches) = Padre::Search->matches( $str, qr/(üss)/, 0, 0 );
+	my (@matches) = Padre::Search->matches(
+		text  => $str,
+		regex => qr/(üss)/,
+		from  => 0,
+		to    => 0,
+	);
 	is_deeply( \@matches, [ 1, 7, [ 1, 7 ] ], 'one match with unicode regex' );
 	is( substr( $str, 1, 4 ), 'üss' );
 }
@@ -105,10 +168,10 @@ END_TEXT
 SCOPE: {
 	my $search = new_ok( 'Padre::Search', [ find_term => 'are' ] );
 	my ( $first_char, $last_char, @all ) = $search->matches(
-		$text,
-		qr/are/,
-		0,
-		length($text),
+		text  => $text,
+		regex => qr/are/,
+		from  => 0,
+		to    => length($text),
 	);
 
 	ok( $first_char, 'calling matches with proper parameters should work' );
@@ -136,10 +199,10 @@ SCOPE: {
 	my $sel_begin = 5;
 	my $sel_end   = 30;
 	my ( $first_char, $last_char, @all ) = $search->matches(
-		substr( $text, $sel_begin, $sel_end - $sel_begin ),
-		qr/are/,
-		0,
-		$sel_end - $sel_begin,
+		text  => substr( $text, $sel_begin, $sel_end - $sel_begin ),
+		regex => qr/are/,
+		from  => 0,
+		to    => $sel_end - $sel_begin,
 	);
 	ok( $first_char, 'calling matches with proper parameters should work' );
 	is( $first_char, 1, 'found relative entry at position 1' );

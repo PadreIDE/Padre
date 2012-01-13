@@ -207,7 +207,7 @@ sub to_editor {
 		$editor->EndUndoAction;
 	}
 
-	return 1;
+	return scalar @$targets;
 }
 
 =pod
