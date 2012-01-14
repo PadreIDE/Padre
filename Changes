@@ -33,7 +33,7 @@ the even version for the release, even during development.
       Padre::MimeTypes in background threads (ADAMK)
     - Rewrote MIME support as Padre::MIME, which does not rely on Padre::Config
       and can be loaded and used in background threads more easily (ADAMK)
-    - Added Debug2 interface, you will need Debug::Client 0.15, please view wiki
+    - Added Debug2 interface, you will need Debug::Client 0.16, please view wiki
       for more information (BOWTIE)
     - Force upgrades to DBD::SQLite 1.35 and ORLite 1.51 for major performance
       improvements which should make Padre block a bit less (ADAMK)
@@ -88,6 +88,7 @@ the even version for the release, even during development.
     - Hide the experimental command line feature in advanced preferences (ADAMK)
     - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
     - Padre::Search::matches now supports submatch option (ADAMK)
+    - Added basic tests for Debugger panels (BOWTIE)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
