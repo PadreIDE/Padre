@@ -2274,7 +2274,7 @@ sub view_show {
 
 	} elsif ( $self->$has() ) {
 		my $view   = $self->$name();
-		my $module = Scalar::Util::Blessed($view);
+		my $module = Scalar::Util::blessed($view);
 		my $panel  = $self->view_panel($module) or return;
 		my $lock   = $self->lock('UPDATE');
 		$self->$panel()->hide($view);

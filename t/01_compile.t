@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 35 );
+plan( tests => 37 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -24,6 +24,8 @@ diag( "Tests find Wx: $Wx::VERSION " . Wx::wxVERSION_STRING() );
 use_ok('t::lib::Padre');
 use_ok('Padre::Util');
 use_ok('Padre::Config');
+use_ok('Padre::Config::Apply');
+use_ok('Padre::Config::Project');
 use_ok('Padre::DB::Timeline');
 use_ok('Padre::DB');
 use_ok('Padre::Project');

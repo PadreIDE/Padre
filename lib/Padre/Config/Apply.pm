@@ -9,7 +9,7 @@ package Padre::Config::Apply;
 use 5.008;
 use strict;
 use warnings;
-ues Padre::Feature ();
+use Padre::Feature ();
 
 our $VERSION    = '0.93';
 our $COMPATIBLE = '0.93';
@@ -81,11 +81,14 @@ sub main_functions {
 }
 
 sub main_functions_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( functions => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_functions and $main->functions->IsShown ) {
+		$main->view_show( functions => 0 );
+		$main->view_show( functions => 1 );
+		$main->aui->Update;
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_functions_order {
@@ -102,11 +105,13 @@ sub main_outline {
 }
 
 sub main_outline_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( outline => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_outline and $main->outline->IsShown ) {
+		$main->view_show( outline => 0 );
+		$main->view_show( outline => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_directory {
@@ -119,11 +124,13 @@ sub main_directory {
 }
 
 sub main_directory_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( directory => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_directory and $main->directory->IsShown ) {
+		$main->view_show( directory => 0 );
+		$main->view_show( directory => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_directory_order {
@@ -144,11 +151,13 @@ sub main_output {
 }
 
 sub main_output_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( output => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_output and $main->output->IsShown ) {
+		$main->view_show( output => 0 );
+		$main->view_show( output => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_syntax {
@@ -161,11 +170,13 @@ sub main_syntax {
 }
 
 sub main_syntax_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( syntax => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_syntax and $main->syntax->IsShown ) {
+		$main->view_show( syntax => 0 );
+		$main->view_show( syntax => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_vcs {
@@ -178,11 +189,13 @@ sub main_vcs {
 }
 
 sub main_vcs_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( vcs => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_vcs and $main->vcs->IsShown ) {
+		$main->view_show( vcs => 0 );
+		$main->view_show( vcs => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_cpan {
@@ -195,11 +208,13 @@ sub main_cpan {
 }
 
 sub main_cpan_panel {
-	my $main  = shift;
-	my $value = shift;
-	$main->view_show( cpan => $value );
-	$main->Layout;
-	$main->Update;
+	my $main = shift;
+	if ( $main->has_cpan and $main->cpan->IsShown ) {
+		$main->view_show( cpan => 0 );
+		$main->view_show( cpan => 1 );
+		$main->Layout;
+		$main->Update;
+	}
 }
 
 sub main_panel_debug_breakpoints {
