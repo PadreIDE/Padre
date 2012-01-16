@@ -14,11 +14,11 @@ use Padre::Current ();
 
 our $VERSION = '0.93';
 
-
 sub read {
 	my %config = map { $_->name => $_->value } $_[0]->select;
 	return \%config;
 }
+
 sub write {
 	my $class = shift;
 	my $hash  = shift;
