@@ -238,13 +238,13 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->_show_todo( $config->main_todo );
-	$self->_show_functions( $config->main_functions );
-	$self->_show_outline( $config->main_outline );
-	$self->_show_directory( $config->main_directory );
-	$self->_show_output( $config->main_output );
+	$self->view_show( todo        => $config->main_todo        );
+	$self->view_show( functions   => $config->main_functions   );
+	$self->view_show( outline     => $config->main_outline     );
+	$self->view_show( directory   => $config->main_directory   );
+	$self->view_show( syntaxcheck => $config->main_syntaxcheck );
+	$self->view_show( output      => $config->main_output      );
 	$self->_show_command_line( $config->main_command_line );
-	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );

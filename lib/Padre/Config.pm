@@ -61,6 +61,12 @@ use Class::XSAccessor::Array {
 	}
 };
 
+my $PANEL_OPTIONS = {
+	left   => _T('Left Panel'),
+	right  => _T('Right Panel'),
+	bottom => _T('Bottom Panel'),
+};
+
 
 
 
@@ -602,9 +608,16 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{functions};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_functions($on);
+		$main->view_show( functions => $on );
 		$main->aui->Update;
 	},
+);
+setting(
+	name    => 'main_functions_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'right',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_functions_order',
@@ -630,15 +643,29 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{outline};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_outline($on);
+		$main->view_show( main_outline => $on );
 		$main->aui->Update;
 	},
+);
+setting(
+	name    => 'main_outline_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'right',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_todo',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+);
+setting(
+	name    => 'main_todo_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'right',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_directory',
@@ -650,7 +677,7 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{directory};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_directory($on);
+		$main->view_panel( directory => $on );
 		$main->aui->Update;
 	},
 );
@@ -672,10 +699,7 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'left',
-	options => {
-		'left'  => _T('Project Tools (Left)'),
-		'right' => _T('Document Tools (Right)'),
-	},
+	options => $PANEL_OPTIONS,
 	apply => sub {
 		my $main  = shift;
 		my $value = shift;
@@ -687,8 +711,8 @@ setting(
 		return 1 unless $directory->side ne $value;
 
 		# Hide and reshow the tool with the new setting
-		$directory->panel->hide($directory);
-		$main->directory_panel->show($directory);
+		$main->view_show( directory => 0 );
+		$main->view_show( directory => 1 );
 		$main->Layout;
 		$main->Update;
 
@@ -714,21 +738,28 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{output};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_output($on);
+		$main->view_show( output => $on );
 		$main->aui->Update;
 	},
 );
 setting(
-	name    => 'main_command_line',
-	type    => Padre::Constant::BOOLEAN,
+	name    => 'main_output_panel',
+	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => 'bottom',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_output_ansi',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
+);
+setting(
+	name    => 'main_command_line',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
 );
 setting(
 	name    => 'main_syntaxcheck',
@@ -740,9 +771,16 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{syntaxcheck};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_syntaxcheck($on);
+		$main->view_show( syntaxcheck => $on );
 		$main->aui->Update;
 	},
+);
+setting(
+	name    => 'main_syntaxcheck_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'bottom',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_vcs',
@@ -754,9 +792,16 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{vcs};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_vcs($on);
+		$main->view_show( vcs => $on );
 		$main->aui->Update;
 	},
+);
+setting(
+	name    => 'main_vcs_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'right',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_cpan_explorer',
@@ -768,9 +813,16 @@ setting(
 		my $on   = shift;
 		my $item = $main->menu->view->{cpan_explorer};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_cpan_explorer($on);
+		$main->view_show( cpan_explorer => $on );
 		$main->aui->Update;
 	},
+);
+setting(
+	name    => 'main_cpan_explorer_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'right',
+	options => $PANEL_OPTIONS,
 );
 setting(
 	name    => 'main_panel_breakpoints',

@@ -323,20 +323,20 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->_show_todo( $config->main_todo );
-	$self->_show_functions( $config->main_functions );
-	$self->_show_outline( $config->main_outline );
-	$self->_show_directory( $config->main_directory );
-	$self->_show_output( $config->main_output );
+	$self->view_show( todo        => $config->main_todo        );
+	$self->view_show( functions   => $config->main_functions   );
+	$self->view_show( outline     => $config->main_outline     );
+	$self->view_show( directory   => $config->main_directory   );
+	$self->view_show( syntaxcheck => $config->main_syntaxcheck );
+	$self->view_show( output      => $config->main_output      );
 	if (Padre::Feature::COMMAND) {
 		$self->_show_command_line( $config->main_command_line );
 	}
-	$self->_show_syntaxcheck( $config->main_syntaxcheck );
 	if (Padre::Feature::VCS) {
-		$self->_show_vcs( $config->main_vcs );
+		$self->view_show( vcs => $config->main_vcs );
 	}
 	if (Padre::Feature::CPAN) {
-		$self->_show_cpan_explorer( $config->main_cpan_explorer );	
+		$self->view_show( cpan_explorer => $config->main_cpan_explorer );
 	}
 	$self->_show_panel_breakpoints( $config->main_panel_breakpoints );
 	$self->_show_panel_debug_output( $config->main_panel_debug_output );
@@ -2251,6 +2251,39 @@ sub view_panel {
 
 =pod
 
+=head3 C<view_show>
+
+    $main->view_show( functions => 1 );
+
+The C<view_show> methods displays or hides a named view of the main window.
+
+=cut
+
+sub view_show {
+	my $self = shift;
+	my $name = shift;
+	my $show = shift;
+	my $has  = "has_$name";
+	if ( $show ) {
+		my $config = $self->config;
+		my $where  = "main_${name}_panel";
+		my $panel  = $config->$where();
+		my $lock   = $self->lock('UPDATE');
+		my $view   = $self->$name();
+		$self->$panel()->show($view);
+
+	} elsif ( $self->$has() ) {
+		my $view   = $self->$name();
+		my $module = Scalar::Util::Blessed($view);
+		my $panel  = $self->view_panel($module) or return;
+		my $lock   = $self->lock('UPDATE');
+		$self->$panel()->hide($view);
+		delete $self->{$name};
+	}
+}
+
+=pod
+
 =head3 C<view_hide>
 
     $main->view_hide($view_object);
@@ -2288,20 +2321,10 @@ sub show_functions {
 	}
 
 	$self->config->set( main_functions => $show );
-	$self->_show_functions($show);
+	$self->view_show( functions => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_functions {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->right->show( $self->functions );
-	} elsif ( $self->has_functions ) {
-		$self->view_hide( delete $self->{functions} );
-	}
 }
 
 =head3 C<show_todo>
@@ -2323,22 +2346,10 @@ sub show_todo {
 	}
 
 	$self->config->set( main_todo => $show );
-	$self->_show_todo($show);
+	$self->view_show( todo => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-# TODO This should be merged with _show_functions again
-sub _show_todo {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->todo );
-	} elsif ( $self->has_todo ) {
-		$self->bottom->hide( $self->todo );
-		delete $self->{todo};
-	}
 }
 
 =pod
@@ -2362,21 +2373,10 @@ sub show_outline {
 	}
 
 	$self->config->set( main_outline => $show );
-	$self->_show_outline($show);
+	$self->view_show( outline => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_outline {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->right->show( $self->outline );
-	} elsif ( $self->has_outline ) {
-		$self->right->hide( $self->outline );
-		delete $self->{outline};
-	}
 }
 
 =pod
@@ -2435,21 +2435,10 @@ sub show_directory {
 	}
 
 	$self->config->set( main_directory => $show );
-	$self->_show_directory($show);
+	$self->view_show( directory => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_directory {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->directory_panel->show( $self->directory );
-	} elsif ( $self->has_directory ) {
-		$self->directory_panel->hide( $self->directory );
-		delete $self->{directory};
-	}
 }
 
 =pod
@@ -2473,21 +2462,10 @@ sub show_output {
 	}
 
 	$self->config->set( main_output => $show );
-	$self->_show_output($show);
+	$self->view_show( output => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_output {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->output );
-	} elsif ( $self->has_output ) {
-		$self->bottom->hide( $self->output );
-		delete $self->{output};
-	}
 }
 
 =pod
@@ -2638,21 +2616,10 @@ sub show_syntaxcheck {
 	}
 
 	$self->config->set( main_syntaxcheck => $show );
-	$self->_show_syntaxcheck($show);
+	$self->view_show( syntaxcheck => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_syntaxcheck {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->syntax );
-	} elsif ( $self->has_syntax ) {
-		$self->bottom->hide( $self->syntax );
-		delete $self->{syntax};
-	}
 }
 
 =pod
@@ -2676,21 +2643,10 @@ sub show_vcs {
 	}
 
 	$self->config->set( main_vcs => $show );
-	$self->_show_vcs($show);
+	$self->view_show( vcs => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_vcs {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->right->show( $self->vcs );
-	} elsif ( $self->has_vcs ) {
-		$self->right->hide( $self->vcs );
-		delete $self->{vcs};
-	}
 }
 
 =pod
@@ -2713,21 +2669,10 @@ sub show_cpan_explorer {
 	}
 
 	$self->config->set( main_cpan_explorer => $show );
-	$self->_show_cpan_explorer($show);
+	$self->view_show( cpan_explorer => $show );
 	$self->aui->Update;
 
 	return;
-}
-
-sub _show_cpan_explorer {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->right->show( $self->cpan_explorer );
-	} elsif ( $self->has_cpan_explorer ) {
-		$self->right->hide( $self->cpan_explorer );
-		delete $self->{cpan_explorer};
-	}
 }
 
 =pod
