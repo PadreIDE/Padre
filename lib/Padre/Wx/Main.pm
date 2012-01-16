@@ -77,6 +77,9 @@ use constant {
 # Convenience until we get a config param or something
 use constant BACKUP_INTERVAL => 30;
 
+# The names of our tool panels
+use constant PANELS => qw{ left right bottom };
+
 =pod
 
 =head1 PUBLIC API
@@ -1136,10 +1139,6 @@ sub single_instance_address {
 		# return $address;
 	}
 }
-
-=pod
-
-my $single_instance_port = 4444;
 
 =pod
 
@@ -2222,6 +2221,54 @@ sub rebuild_toolbar {
 Those methods deal with the various panels that Padre provides, and
 allow to show or hide them.
 
+=head3 C<view_panel>
+
+    my $name = $main->view_panel('Padre::Wx::FunctionList');
+
+The C<view_panel> method locates the name of the panel in which a tool is
+currently being shown. We assume each tool is only being shown once.
+
+Returns the name of the panel in string form (such as 'left') or C<undef>
+if the view is not currently being shown.
+
+=cut
+
+sub view_panel {
+	my $self = shift;
+	my $view = shift;
+	foreach my $name ( PANELS ) {
+		my $has = "has_$name";
+		next unless $self->$has();
+		my $panel = $self->$name();
+		foreach my $window ( $panel->GetChildren ) {
+			next unless $window->isa($view);
+			return $name;
+		}
+		
+	}
+	return undef;
+}
+
+=pod
+
+=head3 C<view_hide>
+
+    $main->view_hide($view_object);
+
+The C<view_hide> method stops, closes and hides an instantiated, displayed
+and running tool view.
+
+=cut
+
+sub view_hide {
+	my $self = shift;
+	my $view = shift;
+
+	# Find the panel containing the view
+	my $name = $self->view_panel( Scalar::Util::blessed($view) ) or return;
+	$self->$name()->hide($view);
+}
+
 =head3 C<show_functions>
 
     $main->show_functions( $visible );
@@ -2253,8 +2300,7 @@ sub _show_functions {
 	if ( $_[0] ) {
 		$self->right->show( $self->functions );
 	} elsif ( $self->has_functions ) {
-		$self->right->hide( $self->functions );
-		delete $self->{functions};
+		$self->view_hide( delete $self->{functions} );
 	}
 }
 

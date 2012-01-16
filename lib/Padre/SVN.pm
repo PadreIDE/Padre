@@ -26,11 +26,19 @@ sub file_props {
 sub find_props {
 	my $file = shift;
 	my ( $v, $d, $f ) = File::Spec->splitpath($file);
-	return File::Spec->catpath(
+	my $path = File::Spec->catpath(
+		$v,
+		File::Spec->catdir( $d, '.svn', 'prop' ),
+		$f . '.svn-work',
+	);
+	return $path if -f $path;
+	$path = File::Spec->catpath(
 		$v,
 		File::Spec->catdir( $d, '.svn', 'prop-base' ),
 		$f . '.svn-base',
 	);
+	return $path if -f $path;
+	return undef;
 }
 
 # Parse a property file
