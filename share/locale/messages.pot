@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-15 20:15-0800\n"
+"POT-Creation-Date: 2012-01-16 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 msgid "\".\" also matches newline"
 msgstr ""
 
-#: lib/Padre/Config.pm:478
+#: lib/Padre/Config.pm:491
 msgid ""
 "\"Open session\" will ask which session (set of files) to open when you "
 "launch Padre."
 msgstr ""
 
-#: lib/Padre/Config.pm:480
+#: lib/Padre/Config.pm:493
 msgid ""
 "\"Previous open files\" will remember the open files when you close Padre "
 "and open the same files next time you launch Padre."
@@ -713,7 +713,7 @@ msgstr ""
 msgid "A group"
 msgstr ""
 
-#: lib/Padre/Config.pm:474
+#: lib/Padre/Config.pm:487
 msgid "A new empty file"
 msgstr ""
 
@@ -816,11 +816,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:629
+#: lib/Padre/Config.pm:642
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:630
+#: lib/Padre/Config.pm:643
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Close this window"
 msgstr ""
 
-#: lib/Padre/Config.pm:628
+#: lib/Padre/Config.pm:641
 msgid "Code Order"
 msgstr ""
 
@@ -1371,11 +1371,11 @@ msgstr ""
 msgid "Content Assist"
 msgstr ""
 
-#: lib/Padre/Config.pm:537
+#: lib/Padre/Config.pm:550
 msgid "Contents of the status bar"
 msgstr ""
 
-#: lib/Padre/Config.pm:526
+#: lib/Padre/Config.pm:539
 msgid "Contents of the window title"
 msgstr ""
 
@@ -1773,11 +1773,11 @@ msgstr ""
 msgid "Digits"
 msgstr ""
 
-#: lib/Padre/Config.pm:690
+#: lib/Padre/Config.pm:703
 msgid "Directories First"
 msgstr ""
 
-#: lib/Padre/Config.pm:691
+#: lib/Padre/Config.pm:704
 msgid "Directories Mixed"
 msgstr ""
 
@@ -1965,31 +1965,31 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1543
+#: lib/Padre/Config.pm:1556
 msgid "Enable document differences feature"
 msgstr ""
 
-#: lib/Padre/Config.pm:1496
+#: lib/Padre/Config.pm:1509
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1515
+#: lib/Padre/Config.pm:1528
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1534
+#: lib/Padre/Config.pm:1547
 msgid "Enable syntax checker annotations in the editor"
 msgstr ""
 
-#: lib/Padre/Config.pm:1561
+#: lib/Padre/Config.pm:1574
 msgid "Enable the CPAN Explorer, powered by MetaCPAN"
 msgstr ""
 
-#: lib/Padre/Config.pm:1579
+#: lib/Padre/Config.pm:1592
 msgid "Enable the experimental command line interface"
 msgstr ""
 
-#: lib/Padre/Config.pm:1552
+#: lib/Padre/Config.pm:1565
 msgid "Enable version control system support"
 msgstr ""
 
@@ -2700,7 +2700,7 @@ msgstr ""
 msgid "Incompatible"
 msgstr ""
 
-#: lib/Padre/Config.pm:996
+#: lib/Padre/Config.pm:1009
 msgid "Indent Deeply"
 msgstr ""
 
@@ -2720,7 +2720,7 @@ msgstr ""
 msgid "Indent on Newline:"
 msgstr ""
 
-#: lib/Padre/Config.pm:995
+#: lib/Padre/Config.pm:1008
 msgid "Indent to Same Depth"
 msgstr ""
 
@@ -3216,7 +3216,7 @@ msgstr ""
 msgid "Next difference"
 msgstr ""
 
-#: lib/Padre/Config.pm:994
+#: lib/Padre/Config.pm:1007
 msgid "No Autoindent"
 msgstr ""
 
@@ -3287,7 +3287,7 @@ msgstr ""
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Config.pm:475
+#: lib/Padre/Config.pm:488
 msgid "No open files"
 msgstr ""
 
@@ -3507,7 +3507,7 @@ msgstr ""
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Config.pm:476
+#: lib/Padre/Config.pm:489
 msgid "Open session"
 msgstr ""
 
@@ -3626,11 +3626,11 @@ msgstr ""
 msgid "POD Viewer"
 msgstr ""
 
-#: lib/Padre/Config.pm:1241 lib/Padre/Wx/Scintilla.pm:28
+#: lib/Padre/Config.pm:1254 lib/Padre/Wx/Scintilla.pm:28
 msgid "PPI Experimental"
 msgstr ""
 
-#: lib/Padre/Config.pm:1242 lib/Padre/Wx/Scintilla.pm:34
+#: lib/Padre/Config.pm:1255 lib/Padre/Wx/Scintilla.pm:34
 msgid "PPI Standard"
 msgstr ""
 
@@ -3899,7 +3899,7 @@ msgstr ""
 msgid "Previous difference"
 msgstr ""
 
-#: lib/Padre/Config.pm:473
+#: lib/Padre/Config.pm:486
 msgid "Previous open files"
 msgstr ""
 
@@ -4468,7 +4468,7 @@ msgstr ""
 msgid "Schedule the file or directory for deletion from the repository"
 msgstr ""
 
-#: lib/Padre/Config.pm:1240
+#: lib/Padre/Config.pm:1253
 msgid "Scintilla"
 msgstr ""
 
@@ -4748,7 +4748,7 @@ msgstr ""
 msgid "Sets the keyboard binding"
 msgstr ""
 
-#: lib/Padre/Config.pm:526 lib/Padre/Config.pm:537
+#: lib/Padre/Config.pm:539 lib/Padre/Config.pm:550
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
@@ -4943,11 +4943,11 @@ msgstr ""
 msgid "Show low priority info messages on status bar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1259
+#: lib/Padre/Config.pm:1272
 msgid "Show low-priority info messages on statusbar (not in a popup)"
 msgstr ""
 
-#: lib/Padre/Config.pm:874
+#: lib/Padre/Config.pm:887
 msgid "Show or hide the status bar at the bottom of the window."
 msgstr ""
 
@@ -5038,7 +5038,7 @@ msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 
-#: lib/Padre/Config.pm:460
+#: lib/Padre/Config.pm:473
 msgid "Showing the splash image during start-up"
 msgstr ""
 
@@ -5151,12 +5151,12 @@ msgstr ""
 msgid "Special &Value..."
 msgstr ""
 
-#: lib/Padre/Config.pm:1506
+#: lib/Padre/Config.pm:1519
 msgid ""
 "Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled."
 msgstr ""
 
-#: lib/Padre/Config.pm:1525
+#: lib/Padre/Config.pm:1538
 msgid ""
 "Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled."
 msgstr ""
@@ -5303,11 +5303,11 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1497
+#: lib/Padre/Config.pm:1510
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1516
+#: lib/Padre/Config.pm:1529
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr ""
 
@@ -5331,11 +5331,11 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Config.pm:1570
+#: lib/Padre/Config.pm:1583
 msgid "Toggle Diff window feature that compares two buffers graphically"
 msgstr ""
 
-#: lib/Padre/Config.pm:1588
+#: lib/Padre/Config.pm:1601
 msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
