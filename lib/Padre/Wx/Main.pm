@@ -330,7 +330,7 @@ sub new {
 	$self->view_show( syntax => $config->main_syntax );
 	$self->view_show( output      => $config->main_output      );
 	if (Padre::Feature::COMMAND) {
-		$self->_show_command_line( $config->main_command_line );
+		$self->_show_command( $config->main_command );
 	}
 	if (Padre::Feature::VCS) {
 		$self->view_show( vcs => $config->main_vcs );
@@ -575,7 +575,7 @@ use Class::XSAccessor {
 		has_panel_debug_output => 'panel_debug_output',
 		has_panel_debugger     => 'panel_debugger',
 		has_output             => 'output',
-		has_command_line       => 'command_line',
+		has_command       => 'command',
 		has_syntax             => 'syntax',
 		has_vcs                => 'vcs',
 		has_cpan               => 'cpan',
@@ -678,13 +678,13 @@ sub output {
 
 BEGIN {
 	no warnings 'once';
-	*command_line = sub {
+	*command = sub {
 		my $self = shift;
-		unless ( defined $self->{command_line} ) {
+		unless ( defined $self->{command} ) {
 			require Padre::Wx::Command;
-			$self->{command_line} = Padre::Wx::Command->new($self);
+			$self->{command} = Padre::Wx::Command->new($self);
 		}
-		return $self->{command_line};
+		return $self->{command};
 	} if Padre::Feature::COMMAND;
 }
 
@@ -2264,11 +2264,12 @@ sub view_show {
 	my $name = shift;
 	my $show = shift;
 	my $has  = "has_$name";
+
 	if ( $show ) {
 		my $config = $self->config;
 		my $where  = "main_${name}_panel";
 		my $panel  = $config->$where();
-		my $lock   = $self->lock('UPDATE');
+		my $lock   = $self->lock('UPDATE', 'AUI');
 		my $view   = $self->$name();
 		$self->$panel()->show($view);
 
@@ -2276,30 +2277,10 @@ sub view_show {
 		my $view   = $self->$name();
 		my $module = Scalar::Util::blessed($view);
 		my $panel  = $self->view_panel($module) or return;
-		my $lock   = $self->lock('UPDATE');
+		my $lock   = $self->lock('UPDATE', 'AUI');
 		$self->$panel()->hide($view);
-		delete $self->{$name};
+		delete($self->{$name})->Destroy;
 	}
-}
-
-=pod
-
-=head3 C<view_hide>
-
-    $main->view_hide($view_object);
-
-The C<view_hide> method stops, closes and hides an instantiated, displayed
-and running tool view.
-
-=cut
-
-sub view_hide {
-	my $self = shift;
-	my $view = shift;
-
-	# Find the panel containing the view
-	my $name = $self->view_panel( Scalar::Util::blessed($view) ) or return;
-	$self->$name()->hide($view);
 }
 
 =head3 C<show_functions>
@@ -2315,15 +2296,12 @@ the panel.
 sub show_functions {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_functions' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_functions' );
 	unless ( $show == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($show);
 	}
-
 	$self->config->set( main_functions => $show );
 	$self->view_show( functions => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2340,15 +2318,12 @@ the panel.
 sub show_todo {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_todo' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_todo' );
 	unless ( $show == $self->menu->view->{todo}->IsChecked ) {
 		$self->menu->view->{todo}->Check($show);
 	}
-
 	$self->config->set( main_todo => $show );
 	$self->view_show( todo => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2367,15 +2342,12 @@ the panel.
 sub show_outline {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_outline' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_outline' );
 	unless ( $show == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($show);
 	}
-
 	$self->config->set( main_outline => $show );
 	$self->view_show( outline => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2429,15 +2401,12 @@ the panel.
 sub show_directory {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_directory' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_directory' );
 	unless ( $show == $self->menu->view->{directory}->IsChecked ) {
 		$self->menu->view->{directory}->Check($show);
 	}
-
 	$self->config->set( main_directory => $show );
 	$self->view_show( directory => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2456,15 +2425,12 @@ the panel.
 sub show_output {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
 	unless ( $show == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($show);
 	}
-
 	$self->config->set( main_output => $show );
 	$self->view_show( output => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2507,21 +2473,9 @@ to show the panel.
 sub show_foundinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
-	$self->_show_foundinfiles($show);
-	$self->aui->Update;
+	my $lock = $self->lock( 'UPDATE', 'AUI' );
+	$self->view_show( foundinfiles => $show );
 	return;
-}
-
-sub _show_foundinfiles {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->foundinfiles );
-	} elsif ( $self->foundinfiles ) {
-		$self->bottom->hide( $self->foundinfiles);
-		delete $self->{foundinfiles};
-	}
 }
 
 =pod
@@ -2539,17 +2493,16 @@ to show the panel.
 sub show_replaceinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE');
+	my $lock = $self->lock( 'UPDATE', 'AUI' );
 	$self->view_show( replaceinfiles => $show );
-	$self->aui->Update;
 	return;
 }
 
 =pod
 
-=head3 C<show_command_line>
+=head3 C<show_command>
 
-    $main->show_command_line( $visible );
+    $main->show_command( $visible );
 
 Show the command panel at the bottom if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2557,32 +2510,17 @@ the panel.
 
 =cut
 
-sub show_command_line {
+sub show_command {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG' );
-	unless ( $show == $self->menu->view->{command_line}->IsChecked ) {
-		$self->menu->view->{command_line}->Check($show);
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
+	unless ( $show == $self->menu->view->{command}->IsChecked ) {
+		$self->menu->view->{command}->Check($show);
 	}
-
-	$self->config->set( main_command_line => $show );
-	$self->_show_command_line($show);
-	$self->aui->Update;
-
+	$self->config->set( main_command => $show );
+	$self->view_show( command => $show );
 	return;
 }
-
-sub _show_command_line {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->command_line );
-	} elsif ( $self->has_command_line ) {
-		$self->bottom->hide( $self->command_line );
-		delete $self->{command_line};
-	}
-}
-
 
 =pod
 
@@ -2599,15 +2537,12 @@ the panel.
 sub show_syntax {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_syntax' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_syntax' );
 	unless ( $show == $self->menu->view->{syntax}->IsChecked ) {
 		$self->menu->view->{syntax}->Check($show);
 	}
-
-	$self->config->set( main_syntaxc => $show );
+	$self->config->set( main_syntax => $show );
 	$self->view_show( syntax => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2626,15 +2561,12 @@ the panel.
 sub show_vcs {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_vcs' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_vcs' );
 	unless ( $show == $self->menu->view->{vcs}->IsChecked ) {
 		$self->menu->view->{vcs}->Check($show);
 	}
-
 	$self->config->set( main_vcs => $show );
 	$self->view_show( vcs => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2653,14 +2585,12 @@ the panel.
 sub show_cpan {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
 	unless ( $show == $self->menu->view->{cpan}->IsChecked ) {
 		$self->menu->view->{cpan}->Check($show);
 	}
-
 	$self->config->set( main_cpan => $show );
 	$self->view_show( cpan => $show );
-	$self->aui->Update;
-
 	return;
 }
 
@@ -2679,20 +2609,17 @@ the panel.
 sub show_panel_breakpoints {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
 	unless ( $show == $self->menu->debug->{panel_breakpoints}->IsChecked ) {
 		$self->menu->debug->{panel_breakpoints}->Check($show);
 	}
-
 	$self->config->set( main_panel_breakpoints => $show );
 	$self->_show_panel_breakpoints($show);
-	$self->aui->Update;
-
 	return;
 }
 
 sub _show_panel_breakpoints {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->left->show( $self->panel_breakpoints );
 	} elsif ( $self->has_panel_breakpoints ) {
@@ -2716,20 +2643,17 @@ the panel.
 sub show_panel_debug_output {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
 	unless ( $show == $self->menu->debug->{panel_debug_output}->IsChecked ) {
 		$self->menu->debug->{panel_debug_output}->Check($show);
 	}
-
 	$self->config->set( main_panel_debug_output => $show );
 	$self->_show_panel_debug_output($show);
-	$self->aui->Update;
-
 	return;
 }
 
 sub _show_panel_debug_output {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->bottom->show( $self->panel_debug_output );
 	} elsif ( $self->has_panel_debug_output ) {
@@ -2753,20 +2677,17 @@ the panel.
 sub show_panel_debugger {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
 	unless ( $show == $self->menu->debug->{panel_debugger}->IsChecked ) {
 		$self->menu->debug->{panel_debugger}->Check($show);
 	}
-
 	$self->config->set( main_panel_debugger => $show );
 	$self->_show_panel_debugger($show);
-	$self->aui->Update;
-
 	return;
 }
 
 sub _show_panel_debugger {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->right->show( $self->panel_debugger );
 	} elsif ( $self->has_panel_debugger ) {
@@ -4660,10 +4581,8 @@ Opens C<$filename> in the default system editor
 =cut
 
 sub on_open_with_default_system_editor {
-	my ( $self, $filename ) = @_;
-
 	require Padre::Util::FileBrowser;
-	Padre::Util::FileBrowser->open_with_default_system_editor($filename);
+	Padre::Util::FileBrowser->open_with_default_system_editor($_[1]);
 }
 
 =pod
@@ -4677,12 +4596,9 @@ Opens a command line/shell using the working directory of C<$filename>
 =cut
 
 sub on_open_in_command_line {
-	my ( $self, $filename ) = @_;
-
 	require Padre::Util::FileBrowser;
-	Padre::Util::FileBrowser->open_in_command_line($filename);
+	Padre::Util::FileBrowser->open_in_command_line($_[1]);
 }
-
 
 =pod
 
@@ -4710,7 +4626,6 @@ Opens the last closed file in similar fashion to Chrome and Firefox.
 
 sub on_open_last_closed_file {
 	my $self = shift;
-
 	my $last_closed_file = $self->{_last_closed_file} or return;
 	$self->setup_editor($last_closed_file);
 }

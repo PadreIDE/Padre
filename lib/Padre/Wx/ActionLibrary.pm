@@ -1361,12 +1361,12 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.command_line',
+		name        => 'view.command',
 		label       => _T('Show &Command Line'),
 		comment     => _T('Show the command line window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_command_line( $_[0]->menu->view->{command_line}->IsChecked );
+			$_[0]->show_command( $_[0]->menu->view->{command}->IsChecked );
 		},
 	);
 
@@ -2424,13 +2424,13 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name       => 'window.goto_command_line_window',
+		name       => 'window.goto_command_window',
 		label      => _T('Go to &Command Line Window'),
 		comment    => _T('Set the focus to the "Command Line" window'),
 		shortcut   => 'Alt-Z',
 		menu_event => sub {
-			$_[0]->show_command_line(1);
-			$_[0]->command_line->SetFocus;
+			$_[0]->show_command(1);
+			$_[0]->command->SetFocus;
 		},
 	);
 

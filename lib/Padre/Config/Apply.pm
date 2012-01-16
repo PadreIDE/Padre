@@ -75,19 +75,17 @@ sub main_functions {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{functions};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( functions => $on );
-	$main->aui->Update;
 }
 
 sub main_functions_panel {
 	my $main = shift;
 	if ( $main->has_functions and $main->functions->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI', 'refresh_functions' );
 		$main->view_show( functions => 0 );
 		$main->view_show( functions => 1 );
-		$main->aui->Update;
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -99,18 +97,17 @@ sub main_outline {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{outline};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( main_outline => $on );
-	$main->aui->Update;
 }
 
 sub main_outline_panel {
 	my $main = shift;
 	if ( $main->has_outline and $main->outline->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI', 'refresh_outline' );
 		$main->view_show( outline => 0 );
 		$main->view_show( outline => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -118,18 +115,17 @@ sub main_directory {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{directory};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_panel( directory => $on );
-	$main->aui->Update;
 }
 
 sub main_directory_panel {
 	my $main = shift;
 	if ( $main->has_directory and $main->directory->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI', 'refresh_directory' );
 		$main->view_show( directory => 0 );
 		$main->view_show( directory => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -145,18 +141,17 @@ sub main_output {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{output};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( output => $on );
-	$main->aui->Update;
 }
 
 sub main_output_panel {
 	my $main = shift;
 	if ( $main->has_output and $main->output->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI' );
 		$main->view_show( output => 0 );
 		$main->view_show( output => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -164,18 +159,17 @@ sub main_syntax {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{syntax};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( syntax => $on );
-	$main->aui->Update;
 }
 
 sub main_syntax_panel {
 	my $main = shift;
 	if ( $main->has_syntax and $main->syntax->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI', 'refresh_syntax' );
 		$main->view_show( syntax => 0 );
 		$main->view_show( syntax => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -183,18 +177,17 @@ sub main_vcs {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{vcs};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( vcs => $on );
-	$main->aui->Update;
 }
 
 sub main_vcs_panel {
 	my $main = shift;
 	if ( $main->has_vcs and $main->vcs->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI', 'refresh_vcs' );
 		$main->view_show( vcs => 0 );
 		$main->view_show( vcs => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -202,18 +195,17 @@ sub main_cpan {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->view->{cpan};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->view_show( cpan => $on );
-	$main->aui->Update;
 }
 
 sub main_cpan_panel {
 	my $main = shift;
 	if ( $main->has_cpan and $main->cpan->IsShown ) {
+		my $lock = $main->lock( 'UPDATE', 'AUI' );
 		$main->view_show( cpan => 0 );
 		$main->view_show( cpan => 1 );
-		$main->Layout;
-		$main->Update;
 	}
 }
 
@@ -221,27 +213,27 @@ sub main_panel_debug_breakpoints {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->debug->{panel_breakpoints};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->_show_panel_breakpoints($on);
-	$main->aui->Update;
 }
 
 sub main_panel_debug_output {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->debug->{panel_debug_output};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->_show_panel_debug_output($on);
-	$main->aui->Update;
 }
 
 sub main_panel_debugger {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->debug->{panel_debugger};
+	my $lock = $main->lock( 'UPDATE', 'AUI' );
 	$item->Check($on) if $on != $item->IsChecked;
 	$main->_show_panel_debugger($on);
-	$main->aui->Update;
 }
 
 sub main_toolbar {
@@ -288,12 +280,5 @@ sub editor_rightmargin {
 sub editor_style {
 	$_[0]->restyle;
 }
-
-
-
-
-
-######################################################################
-# Support Functions
 
 1;

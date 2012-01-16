@@ -48,8 +48,8 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Navigation
-	$self->{window_goto_command_line_window} = $self->add_menu_action(
-		'window.goto_command_line_window',
+	$self->{window_goto_command_window} = $self->add_menu_action(
+		'window.goto_command_window',
 	);
 
 	$self->{window_goto_cpan_window} = $self->add_menu_action(

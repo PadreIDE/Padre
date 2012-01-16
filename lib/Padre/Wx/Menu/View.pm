@@ -44,8 +44,8 @@ sub new {
 
 	# Show or hide GUI elements
 	if (Padre::Feature::COMMAND) {
-		$self->{command_line} = $self->add_menu_action(
-			'view.command_line',
+		$self->{command} = $self->add_menu_action(
+			'view.command',
 		);
 	}
 
@@ -268,7 +268,7 @@ sub refresh {
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
 	$self->{calltips}->Check( $config->editor_calltips );
 	if (Padre::Feature::COMMAND) {
-		$self->{command_line}->Check( $config->main_command_line );
+		$self->{command}->Check( $config->main_command );
 	}
 	$self->{syntax}->Check( $config->main_syntax );
 	if (Padre::Feature::VCS) {

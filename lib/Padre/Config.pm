@@ -529,14 +529,11 @@ setting(
 
 # Window
 setting(
-	name  => 'main_title',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'main_title',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ),
-	apply => sub {
-		$_[0]->lock('refresh_title');
-	},
-	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
+	help    => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
@@ -544,10 +541,7 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => '%m %f',
-	apply   => sub {
-		$_[0]->lock('refresh_title');
-	},
-	help => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
+	help    => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
@@ -556,16 +550,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 	startup => 1,
-	apply   => sub {
-		my $main  = shift;
-		my $value = shift;
-		if ($value) {
-			$main->single_instance_start;
-		} else {
-			$main->single_instance_stop;
-		}
-		return 1;
-	},
 );
 
 setting(
@@ -574,16 +558,6 @@ setting(
 	store   => Padre::Constant::HOST,
 	default => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
 	startup => 1,
-	apply   => sub {
-		my $main = shift;
-		if ( $main->config->main_singleinstance ) {
-
-			# Restart on the new port or the next attempt
-			# to use it will produce a new instance.
-			$main->single_instance_stop;
-			$main->single_instance_start;
-		}
-	},
 );
 
 setting(
@@ -591,40 +565,15 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	apply   => sub {
-		my $main  = shift;
-		my $value = shift;
-
-		# Update the lock status
-		$main->aui->lock_panels($value);
-
-		# The toolbar can't dynamically switch between
-		# tearable and non-tearable so rebuild it.
-		# TO DO: Review this assumption
-
-		# (Ticket #668)
-		no warnings;
-		if ($Padre::Wx::ToolBar::DOCKABLE) {
-			$main->rebuild_toolbar;
-		}
-
-		return 1;
-	}
 );
+
 setting(
 	name    => 'main_functions',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{functions};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( functions => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_functions_panel',
 	type    => Padre::Constant::ASCII,
@@ -632,6 +581,7 @@ setting(
 	default => 'right',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_functions_order',
 	type    => Padre::Constant::ASCII,
@@ -642,24 +592,15 @@ setting(
 		'alphabetical'              => _T('Alphabetical Order'),
 		'alphabetical_private_last' => _T('Alphabetical Order (Private Last)'),
 	},
-	apply => sub {
-		$_[0]->lock('refresh_functions');
-	}
 );
+
 setting(
 	name    => 'main_outline',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{outline};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( main_outline => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_outline_panel',
 	type    => Padre::Constant::ASCII,
@@ -667,12 +608,14 @@ setting(
 	default => 'right',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_todo',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+
 setting(
 	name    => 'main_todo_panel',
 	type    => Padre::Constant::ASCII,
@@ -680,20 +623,14 @@ setting(
 	default => 'right',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_directory',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{directory};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_panel( directory => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_directory_order',
 	type    => Padre::Constant::ASCII,
@@ -703,58 +640,30 @@ setting(
 		first => _T('Directories First'),
 		mixed => _T('Directories Mixed'),
 	},
-	apply => sub {
-		$_[0]->lock('refresh_directory');
-	},
 );
+
 setting(
 	name    => 'main_directory_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'left',
 	options => $PANEL_OPTIONS,
-	apply => sub {
-		my $main  = shift;
-		my $value = shift;
-
-		# Is it visible and on the wrong side?
-		return 1 unless $main->has_directory;
-		my $directory = $main->directory;
-		return 1 unless $directory->IsShown;
-		return 1 unless $directory->side ne $value;
-
-		# Hide and reshow the tool with the new setting
-		$main->view_show( directory => 0 );
-		$main->view_show( directory => 1 );
-		$main->Layout;
-		$main->Update;
-
-		return 1;
-	}
 );
+
 setting(
-	name  => 'main_directory_root',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HOST,
+	name    => 'main_directory_root',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
-	apply => sub {
-		$_[0]->lock('refresh_directory');
-	},
 );
+
 setting(
 	name    => 'main_output',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{output};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( output => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_output_panel',
 	type    => Padre::Constant::ASCII,
@@ -762,32 +671,36 @@ setting(
 	default => 'bottom',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_output_ansi',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
 setting(
-	name    => 'main_command_line',
+	name    => 'main_command',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+
+setting(
+	name    => 'main_command_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'bottom',
+	options => $PANEL_OPTIONS,
+);
+
 setting(
 	name    => 'main_syntax',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{syntax};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( syntax => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_syntax_panel',
 	type    => Padre::Constant::ASCII,
@@ -795,20 +708,14 @@ setting(
 	default => 'bottom',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_vcs',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{vcs};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( vcs => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_vcs_panel',
 	type    => Padre::Constant::ASCII,
@@ -816,20 +723,14 @@ setting(
 	default => 'right',
 	options => $PANEL_OPTIONS,
 );
+
 setting(
 	name    => 'main_cpan',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->view->{cpan};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( cpan => $on );
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_cpan_panel',
 	type    => Padre::Constant::ASCII,
@@ -837,48 +738,44 @@ setting(
 	default => 'right',
 	options => $PANEL_OPTIONS,
 );
+
+setting(
+	name    => 'main_foundinfiles_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'bottom',
+	options => $PANEL_OPTIONS,
+);
+
+setting(
+	name    => 'main_replaceinfiles_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'bottom',
+	options => $PANEL_OPTIONS,
+);
+
 setting(
 	name    => 'main_panel_breakpoints',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->debug->{panel_breakpoints};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_panel_breakpoints($on);
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_panel_debug_output',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->debug->{panel_debug_output};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_panel_debug_output($on);
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_panel_debugger',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		my $main = shift;
-		my $on   = shift;
-		my $item = $main->menu->debug->{panel_debugger};
-		$item->Check($on) if $on != $item->IsChecked;
-		$main->_show_panel_debugger($on);
-		$main->aui->Update;
-	},
 );
+
 setting(
 	name    => 'main_statusbar',
 	type    => Padre::Constant::BOOLEAN,
@@ -886,20 +783,18 @@ setting(
 	default => 1,
 	help    => _T('Show or hide the status bar at the bottom of the window.'),
 );
+
 setting(
 	name  => 'main_toolbar',
 	type  => Padre::Constant::BOOLEAN,
 	store => Padre::Constant::HUMAN,
-	apply => sub {
-		$_[0]->show_toolbar( $_[1] );
-	},
 
 	# Toolbars are not typically used for Mac apps.
 	# Hide it by default so Padre looks "more Mac'ish"
 	# NOTE: Or at least, so we were told. Opinions apparently vary.
 	default => Padre::Constant::MAC ? 0 : 1,
-
 );
+
 setting(
 	name  => 'main_toolbar_items',
 	type  => Padre::Constant::ASCII,
@@ -961,36 +856,24 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	apply   => sub {
-		$_[0]->editor_linenumbers( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_eol',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		$_[0]->editor_eol( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_whitespace',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		$_[0]->editor_whitespace( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_indentationguides',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		$_[0]->editor_indentationguides( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_calltips',
@@ -1014,16 +897,6 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		if ($Padre::Feature::VERSION) {
-			Padre::Feature::FOLDING() or return;
-		} else {
-			$_[0]->feature_folding or return;
-		}
-		if ( $_[0]->can('editor_folding') ) {
-			$_[0]->editor_folding( $_[1] );
-		}
-	},
 );
 setting(
 	name    => 'editor_fold_pod',
@@ -1050,9 +923,6 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
-	apply   => sub {
-		$_[0]->editor_currentline( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_currentline_color',
@@ -1077,9 +947,6 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
-	apply   => sub {
-		$_[0]->editor_rightmargin( $_[1] );
-	},
 );
 setting(
 	name    => 'editor_right_margin_column',
@@ -1350,9 +1217,6 @@ setting(
 	store   => Padre::Constant::HOST,
 	default => 'default',
 	options => Padre::Config->themes,
-	apply   => sub {
-		$_[0]->restyle;
-	},
 );
 
 # Window Geometry

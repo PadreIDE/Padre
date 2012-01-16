@@ -54,7 +54,7 @@ my @actions = (
 	'view.lockinterface,view.lockinterface',
 	'view.output,view.output',
 	'view.functions,view.functions',
-	'view.command_line,view.command_line',
+	'view.command,view.command',
 	'view.todo,view.todo',
 	'view.outline,view.outline',
 	'view.directory,internal.wait10,view.directory', # Let it prepare the list

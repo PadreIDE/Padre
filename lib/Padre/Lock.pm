@@ -14,6 +14,7 @@ sub new {
 
 	# Enable the locks
 	my $db     = 0;
+	my $aui    = 0;
 	my $config = 0;
 	my $busy   = 0;
 	my $update = 0;
@@ -21,10 +22,6 @@ sub new {
 		if ( $_ ne uc $_ ) {
 			$locker->method_increment($_);
 			push @$self, 'method_decrement';
-
-		} elsif ( $_ eq 'BUSY' ) {
-			$locker->busy_increment unless $busy;
-			$busy = 1;
 
 		} elsif ( $_ eq 'CONFIG' ) {
 
@@ -37,17 +34,25 @@ sub new {
 			$config = 1;
 			$db     = 1;
 
-		} elsif ( $_ eq 'DB' ) {
-			$locker->db_increment unless $db;
-			$db = 1;
+		} elsif ( $_ eq 'UPDATE' ) {
+			$locker->update_increment unless $update;
+			$update = 1;
 
 		} elsif ( $_ eq 'REFRESH' ) {
 			$locker->method_increment;
 			push @$self, 'method_decrement';
 
-		} elsif ( $_ eq 'UPDATE' ) {
-			$locker->update_increment unless $update;
-			$update = 1;
+		} elsif ( $_ eq 'DB' ) {
+			$locker->db_increment unless $db;
+			$db = 1;
+
+		} elsif ( $_ eq 'AUI' ) {
+			$locker->aui_increment unless $aui;
+			$aui = 1;
+
+		} elsif ( $_ eq 'BUSY' ) {
+			$locker->busy_increment unless $busy;
+			$busy = 1;
 
 		} else {
 			Carp::croak("Unknown or unsupported special lock '$_'");
@@ -67,6 +72,7 @@ sub new {
 	# Because configuration involves a database write, we always do it
 	# before we release the database lock.
 	push @$self, 'busy_decrement'   if $busy;
+	push @$self, 'aui_decrement'    if $aui;
 	push @$self, 'update_decrement' if $update;
 	push @$self, 'db_decrement'     if $db;
 	push @$self, 'config_decrement' if $config;

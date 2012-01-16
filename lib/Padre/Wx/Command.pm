@@ -98,7 +98,7 @@ sub view_label {
 }
 
 sub view_close {
-	shift->main->show_command_line(0);
+	shift->main->show_command(0);
 }
 
 

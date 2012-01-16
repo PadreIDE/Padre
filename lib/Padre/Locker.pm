@@ -32,6 +32,9 @@ sub new {
 		# Padre::Config Transaction lock
 		config_depth => 0,
 
+		# Padre::Wx::AuiManager Transaction lock
+		aui_depth => 0,
+
 		# Wx ->Update lock
 		update_depth  => 0,
 		update_locker => undef,
@@ -55,10 +58,12 @@ sub locked {
 	my $asset = shift;
 	if ( $asset eq 'UPDATE' ) {
 		return !!$self->{update_depth};
-	} elsif ( $asset eq 'BUSY' ) {
-		return !!$self->{busy_depth};
 	} elsif ( $asset eq 'REFRESH' ) {
 		return !!$self->{method_depth};
+	} elsif ( $asset eq 'AUI' ) {
+		return !!$self->{aui_depth};
+	} elsif ( $asset eq 'BUSY' ) {
+		return !!$self->{busy_depth};
 	} elsif ( $asset eq 'CONFIG' ) {
 		return !!$self->{config_depth};
 	} else {
@@ -75,7 +80,7 @@ sub locked {
 # might slow the shutdown process.
 sub shutdown {
 	my $self = shift;
-	my $lock = $self->lock( 'UPDATE', 'REFRESH', 'CONFIG' );
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'REFRESH', 'CONFIG' );
 
 	# If we have an update lock running, stop it manually now.
 	# If we don't do this, Win32 Padre will segfault on exit.
@@ -182,6 +187,28 @@ sub update_decrement {
 				$_->Layout foreach @notebook;
 			}
 		}
+	}
+	return;
+}
+
+sub aui_increment {
+	my $self = shift;
+	unless ( $self->{aui_depth}++ ) {
+		return if $self->{shutdown};
+
+		# Nothing to do at increment time
+	}
+	return;
+}
+
+sub aui_decrement {
+	my $self = shift;
+	unless ( --$self->{aui_depth} ) {
+		return if $self->{shutdown};
+
+		# Unlocked for the final time
+		$self->{owner}->aui->Update;
+		$self->{owner}->Layout;
 	}
 	return;
 }
