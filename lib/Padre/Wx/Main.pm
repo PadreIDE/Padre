@@ -2540,20 +2540,9 @@ sub show_replaceinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock('UPDATE');
-	$self->_show_replaceinfiles($show);
+	$self->view_show( replaceinfiles => $show );
 	$self->aui->Update;
 	return;
-}
-
-sub _show_replaceinfiles {
-	my $self = shift;
-	my $lock = $self->lock('UPDATE');
-	if ( $_[0] ) {
-		$self->bottom->show( $self->replaceinfiles );
-	} elsif ( $self->has_replaceinfiles ) {
-		$self->bottom->hide( $self->replaceinfiles );
-		delete $self->{replaceinfiles};
-	}
 }
 
 =pod
