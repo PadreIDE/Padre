@@ -89,6 +89,7 @@ the even version for the release, even during development.
     - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
     - Padre::Search::matches now supports submatch option (ADAMK)
     - Added basic tests for Debugger panels (BOWTIE)
+    - The location of most panel views can now be configured (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
