@@ -58,7 +58,7 @@ my @actions = (
 	'view.todo,view.todo',
 	'view.outline,view.outline',
 	'view.directory,internal.wait10,view.directory', # Let it prepare the list
-	'view.syntaxcheck,internal.wait10,view.syntaxcheck',
+	'view.syntax,internal.wait10,view.syntax',
 	'view.statusbar,view.statusbar',
 	'view.toolbar,view.toolbar',
 	'view.lines,view.lines',

@@ -212,7 +212,10 @@ sub clone {
 ######################################################################
 # Main Methods
 
-# Fetches an explicitly named default
+sub meta {
+	$SETTING{ $_[1] } or die("Missing or invalid setting name '$_[1]'");
+}
+
 sub default {
 	my $self = shift;
 	my $name = shift;
@@ -258,7 +261,7 @@ sub set {
 	# We don't need to do additional checks on Padre::Constant::ASCII
 	my $type  = $setting->type;
 	my $store = $setting->store;
-	if ( !defined($type) ) {
+	unless ( defined $type ) {
 		Carp::croak("Setting '$name' has undefined type");
 	}
 	if ( $type == Padre::Constant::BOOLEAN ) {
@@ -311,23 +314,33 @@ sub set {
 # to the application.
 sub apply {
 	TRACE( $_[0] ) if DEBUG;
-	my $self    = shift;
-	my $name    = shift;
-	my $value   = shift;
-	my $current = Padre::Current::_CURRENT(@_);
+	my $self = shift;
+	my $name = shift;
+	my $new  = shift;
 
-	# Set the config value
-	$self->set( $name => $value );
+	# Does the setting exist?
+	my $setting = $SETTING{$name};
+	unless ($setting) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
 
-	# Does this setting have an apply hook
-	my $code = $SETTING{$name}->apply;
-	$code->( $current->main, $value ) if $code;
+	my $old = $self->$name();
+	if ( $old ne $new ) {
+		# Set the config value
+		$self->set( $name => $new );
+
+		# Does this setting have an apply hook
+		my $code = do {
+			require Padre::Config::Apply;
+			Padre::Config::Apply->can($name);
+		};
+		if ( $code ) {
+			my $current = Padre::Current::_CURRENT(@_);
+			$code->( $current->main, $new, $old );
+		}
+	}
 
 	return 1;
-}
-
-sub meta {
-	$SETTING{ $_[1] } or die("Missing or invalid setting name '$_[1]'");
 }
 
 sub themes {
@@ -762,21 +775,21 @@ setting(
 	default => 0,
 );
 setting(
-	name    => 'main_syntaxcheck',
+	name    => 'main_syntax',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
 		my $main = shift;
 		my $on   = shift;
-		my $item = $main->menu->view->{syntaxcheck};
+		my $item = $main->menu->view->{syntax};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( syntaxcheck => $on );
+		$main->view_show( syntax => $on );
 		$main->aui->Update;
 	},
 );
 setting(
-	name    => 'main_syntaxcheck_panel',
+	name    => 'main_syntax_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'bottom',
@@ -804,21 +817,21 @@ setting(
 	options => $PANEL_OPTIONS,
 );
 setting(
-	name    => 'main_cpan_explorer',
+	name    => 'main_cpan',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 	apply   => sub {
 		my $main = shift;
 		my $on   = shift;
-		my $item = $main->menu->view->{cpan_explorer};
+		my $item = $main->menu->view->{cpan};
 		$item->Check($on) if $on != $item->IsChecked;
-		$main->view_show( cpan_explorer => $on );
+		$main->view_show( cpan => $on );
 		$main->aui->Update;
 	},
 );
 setting(
-	name    => 'main_cpan_explorer_panel',
+	name    => 'main_cpan_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'right',
@@ -1554,7 +1567,7 @@ setting(
 
 # Toggle MetaCPAN CPAN explorer panel
 setting(
-	name    => 'feature_cpan_explorer',
+	name    => 'feature_cpan',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,

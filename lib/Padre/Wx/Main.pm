@@ -327,7 +327,7 @@ sub new {
 	$self->view_show( functions   => $config->main_functions   );
 	$self->view_show( outline     => $config->main_outline     );
 	$self->view_show( directory   => $config->main_directory   );
-	$self->view_show( syntaxcheck => $config->main_syntaxcheck );
+	$self->view_show( syntax => $config->main_syntax );
 	$self->view_show( output      => $config->main_output      );
 	if (Padre::Feature::COMMAND) {
 		$self->_show_command_line( $config->main_command_line );
@@ -336,7 +336,7 @@ sub new {
 		$self->view_show( vcs => $config->main_vcs );
 	}
 	if (Padre::Feature::CPAN) {
-		$self->view_show( cpan_explorer => $config->main_cpan_explorer );
+		$self->view_show( cpan => $config->main_cpan );
 	}
 	$self->_show_panel_breakpoints( $config->main_panel_breakpoints );
 	$self->_show_panel_debug_output( $config->main_panel_debug_output );
@@ -578,7 +578,7 @@ use Class::XSAccessor {
 		has_command_line       => 'command_line',
 		has_syntax             => 'syntax',
 		has_vcs                => 'vcs',
-		has_cpan_explorer      => 'cpan_explorer',
+		has_cpan               => 'cpan',
 		has_functions          => 'functions',
 		has_todo               => 'todo',
 		has_debugger           => 'debugger',
@@ -724,13 +724,13 @@ sub vcs {
 	return $self->{vcs};
 }
 
-sub cpan_explorer {
+sub cpan {
 	my $self = shift;
-	unless ( defined $self->{cpan_explorer} ) {
+	unless ( defined $self->{cpan} ) {
 		require Padre::Wx::CPAN2;
-		$self->{cpan_explorer} = Padre::Wx::CPAN2->new($self);
+		$self->{cpan} = Padre::Wx::CPAN2->new($self);
 	}
-	return $self->{cpan_explorer};
+	return $self->{cpan};
 }
 
 sub panel_breakpoints {
@@ -1506,7 +1506,7 @@ sub refresh {
 	# which has a slightly positive effect on specialisation
 	# of background workers.
 	$self->refresh_directory($current);
-	$self->refresh_syntaxcheck($current);
+	$self->refresh_syntax($current);
 	$self->refresh_functions($current);
 	$self->refresh_outline($current);
 	$self->refresh_diff($current);
@@ -1738,20 +1738,20 @@ sub process_template {
 
 =pod
 
-=head3 C<refresh_syntaxcheck>
+=head3 C<refresh_syntax>
 
-    $main->refresh_syntaxcheck;
+    $main->refresh_syntax;
 
 Do a refresh of document syntax checking. This is a "rapid" change,
 since actual syntax check is happening in the background.
 
 =cut
 
-sub refresh_syntaxcheck {
+sub refresh_syntax {
 	my $self = shift;
 	return unless $self->has_syntax;
 	return if $self->locked('REFRESH');
-	return unless $self->menu->view->{syntaxcheck}->IsChecked;
+	return unless $self->menu->view->{syntax}->IsChecked;
 	$self->syntax->refresh( $_[0] or $self->current );
 	return;
 }
@@ -2228,7 +2228,7 @@ allow to show or hide them.
 The C<view_panel> method locates the name of the panel in which a tool is
 currently being shown. We assume each tool is only being shown once.
 
-Returns the name of the panel in string form (such as 'left') or C<undef>
+Returns the name of the panel in string form (such as 'left') or false
 if the view is not currently being shown.
 
 =cut
@@ -2246,7 +2246,7 @@ sub view_panel {
 		}
 		
 	}
-	return undef;
+	return '';
 }
 
 =pod
@@ -2586,9 +2586,9 @@ sub _show_command_line {
 
 =pod
 
-=head3 C<show_syntaxcheck>
+=head3 C<show_syntax>
 
-    $main->show_syntaxcheck( $visible );
+    $main->show_syntax( $visible );
 
 Show the syntax panel at the bottom if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2596,16 +2596,16 @@ the panel.
 
 =cut
 
-sub show_syntaxcheck {
+sub show_syntax {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_syntaxcheck' );
-	unless ( $show == $self->menu->view->{syntaxcheck}->IsChecked ) {
-		$self->menu->view->{syntaxcheck}->Check($show);
+	my $lock = $self->lock( 'UPDATE', 'CONFIG', 'refresh_syntax' );
+	unless ( $show == $self->menu->view->{syntax}->IsChecked ) {
+		$self->menu->view->{syntax}->Check($show);
 	}
 
-	$self->config->set( main_syntaxcheck => $show );
-	$self->view_show( syntaxcheck => $show );
+	$self->config->set( main_syntaxc => $show );
+	$self->view_show( syntax => $show );
 	$self->aui->Update;
 
 	return;
@@ -2640,9 +2640,9 @@ sub show_vcs {
 
 =pod
 
-=head3 C<show_cpan_explorer>
+=head3 C<show_cpan>
 
-    $main->show_cpan_explorer( $visible );
+    $main->show_cpan( $visible );
 
 Show the CPAN explorer panel at the bottom if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2650,15 +2650,15 @@ the panel.
 
 =cut
 
-sub show_cpan_explorer {
+sub show_cpan {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	unless ( $show == $self->menu->view->{cpan_explorer}->IsChecked ) {
-		$self->menu->view->{cpan_explorer}->Check($show);
+	unless ( $show == $self->menu->view->{cpan}->IsChecked ) {
+		$self->menu->view->{cpan}->Check($show);
 	}
 
-	$self->config->set( main_cpan_explorer => $show );
-	$self->view_show( cpan_explorer => $show );
+	$self->config->set( main_cpan => $show );
+	$self->view_show( cpan => $show );
 	$self->aui->Update;
 
 	return;
@@ -3899,7 +3899,7 @@ sub on_activate {
 	# and recompile the foreground file.
 	$self->refresh_directory($current);
 	$self->refresh_diff($current);
-	$self->refresh_syntaxcheck($current);
+	$self->refresh_syntax($current);
 
 	# They may be using an external VCS tool
 	if (Padre::Feature::VCS) {
@@ -4055,8 +4055,8 @@ sub on_close_window {
 	if ( $self->has_syntax ) {
 		$self->syntax->view_stop;
 	}
-	if ( $self->has_cpan_explorer ) {
-		$self->cpan_explorer->view_stop;
+	if ( $self->has_cpan ) {
+		$self->cpan->view_stop;
 	}
 	if ( $self->has_vcs ) {
 		$self->vcs->view_stop;

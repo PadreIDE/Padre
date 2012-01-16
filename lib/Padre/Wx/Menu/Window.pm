@@ -52,8 +52,8 @@ sub new {
 		'window.goto_command_line_window',
 	);
 
-	$self->{window_goto_cpan_explorer_window} = $self->add_menu_action(
-		'window.goto_cpan_explorer_window',
+	$self->{window_goto_cpan_window} = $self->add_menu_action(
+		'window.goto_cpan_window',
 	) if Padre::Feature::CPAN;
 
 	$self->{window_goto_functions_window} = $self->add_menu_action(

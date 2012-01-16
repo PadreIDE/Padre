@@ -53,7 +53,7 @@ constant->import(
 		FOLDING            => $config->feature_folding,
 		FONTSIZE           => $config->feature_fontsize,
 		SESSION            => $config->feature_session,
-		CPAN               => $config->feature_cpan_explorer,
+		CPAN               => $config->feature_cpan,
 		VCS                => $config->feature_vcs_support,
 		DIFF_DOCUMENT      => $config->feature_document_diffs,
 		SYNTAX_ANNOTATIONS => $config->feature_syntax_check_annotations,

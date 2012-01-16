@@ -475,7 +475,7 @@ sub on_change_dwell {
 		$self->refresh_line_numbers;
 		$main->refresh_functions($current);
 		$main->refresh_outline($current);
-		$main->refresh_syntaxcheck($current);
+		$main->refresh_syntax($current);
 		$main->refresh_todo($current);
 		$main->refresh_diff($current);
 	}
@@ -767,7 +767,7 @@ sub setup_config {
 	$self->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
 
 	# Enable the symbol margin if anything needs it
-	if ( Padre::Feature::DIFF_DOCUMENT or $config->main_syntaxcheck ) {
+	if ( Padre::Feature::DIFF_DOCUMENT or $config->main_syntax ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {
 			# Set margin 1 as a 16 pixel symbol margin
 			$self->SetMarginWidth( Padre::Constant::MARGIN_MARKER, 16 );

@@ -22,7 +22,6 @@ use Class::XSAccessor {
 			default
 			project
 			options
-			apply
 			help
 			}
 	],

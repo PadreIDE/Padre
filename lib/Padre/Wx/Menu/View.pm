@@ -50,7 +50,7 @@ sub new {
 	}
 
 	if (Padre::Feature::CPAN) {
-		$self->{cpan_explorer} = $self->add_menu_action('view.cpan_explorer');
+		$self->{cpan} = $self->add_menu_action('view.cpan');
 	}
 
 	$self->{functions} = $self->add_menu_action(
@@ -69,8 +69,8 @@ sub new {
 		'view.output',
 	);
 
-	$self->{syntaxcheck} = $self->add_menu_action(
-		'view.syntaxcheck',
+	$self->{syntax} = $self->add_menu_action(
+		'view.syntax',
 	);
 
 	$self->{todo} = $self->add_menu_action(
@@ -270,12 +270,12 @@ sub refresh {
 	if (Padre::Feature::COMMAND) {
 		$self->{command_line}->Check( $config->main_command_line );
 	}
-	$self->{syntaxcheck}->Check( $config->main_syntaxcheck );
+	$self->{syntax}->Check( $config->main_syntax );
 	if (Padre::Feature::VCS) {
 		$self->{vcs}->Check( $config->main_vcs );
 	}
 	if (Padre::Feature::CPAN) {
-		$self->{cpan_explorer}->Check( $config->main_cpan_explorer );
+		$self->{cpan}->Check( $config->main_cpan );
 	}
 	$self->{toolbar}->Check( $config->main_toolbar );
 

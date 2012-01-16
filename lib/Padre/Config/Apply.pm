@@ -80,6 +80,14 @@ sub main_functions {
 	$main->aui->Update;
 }
 
+sub main_functions_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( functions => $value );
+	$main->Layout;
+	$main->Update;
+}
+
 sub main_functions_order {
 	$_[0]->lock('refresh_functions');
 }
@@ -93,6 +101,14 @@ sub main_outline {
 	$main->aui->Update;
 }
 
+sub main_outline_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( outline => $value );
+	$main->Layout;
+	$main->Update;
+}
+
 sub main_directory {
 	my $main = shift;
 	my $on   = shift;
@@ -102,25 +118,16 @@ sub main_directory {
 	$main->aui->Update;
 }
 
-sub main_directory_order {
-	$_[0]->lock('refresh_directory');
-}
-
 sub main_directory_panel {
 	my $main  = shift;
 	my $value = shift;
-
-	# Is it visible and on the wrong side?
-	return 1 unless $main->has_directory;
-	my $directory = $main->directory;
-	return 1 unless $directory->IsShown;
-	return 1 unless $directory->side ne $value;
-
-	# Hide and reshow the tool with the new setting
-	$main->view_show( directory => 0 );
-	$main->view_show( directory => 1 );
+	$main->view_show( directory => $value );
 	$main->Layout;
 	$main->Update;
+}
+
+sub main_directory_order {
+	$_[0]->lock('refresh_directory');
 }
 
 sub main_directory_root {
@@ -136,13 +143,29 @@ sub main_output {
 	$main->aui->Update;
 }
 
-sub main_syntaxcheck {
+sub main_output_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( output => $value );
+	$main->Layout;
+	$main->Update;
+}
+
+sub main_syntax {
 	my $main = shift;
 	my $on   = shift;
-	my $item = $main->menu->view->{syntaxcheck};
+	my $item = $main->menu->view->{syntax};
 	$item->Check($on) if $on != $item->IsChecked;
-	$main->view_show( syntaxcheck => $on );
+	$main->view_show( syntax => $on );
 	$main->aui->Update;
+}
+
+sub main_syntax_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( syntax => $value );
+	$main->Layout;
+	$main->Update;
 }
 
 sub main_vcs {
@@ -154,13 +177,29 @@ sub main_vcs {
 	$main->aui->Update;
 }
 
-sub main_cpan_explorer {
+sub main_vcs_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( vcs => $value );
+	$main->Layout;
+	$main->Update;
+}
+
+sub main_cpan {
 	my $main = shift;
 	my $on   = shift;
-	my $item = $main->menu->view->{cpan_explorer};
+	my $item = $main->menu->view->{cpan};
 	$item->Check($on) if $on != $item->IsChecked;
-	$main->view_show( cpan_explorer => $on );
+	$main->view_show( cpan => $on );
 	$main->aui->Update;
+}
+
+sub main_cpan_panel {
+	my $main  = shift;
+	my $value = shift;
+	$main->view_show( cpan => $value );
+	$main->Layout;
+	$main->Update;
 }
 
 sub main_panel_debug_breakpoints {
@@ -181,7 +220,7 @@ sub main_panel_debug_output {
 	$main->aui->Update;
 }
 
-sub main_pane_debugger {
+sub main_panel_debugger {
 	my $main = shift;
 	my $on   = shift;
 	my $item = $main->menu->debug->{panel_debugger};

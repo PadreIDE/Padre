@@ -42,7 +42,7 @@ SCOPE: {
 	is( $config->main_directory       => 0 );
 	is( $config->main_output          => 0 );
 	is( $config->main_output_ansi     => 1 );
-	is( $config->main_syntaxcheck     => 0 );
+	is( $config->main_syntax          => 0 );
 	is( $config->main_statusbar       => 1 );
 
 	my $editor_font = $config->editor_font;

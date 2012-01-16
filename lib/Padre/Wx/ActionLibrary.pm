@@ -1371,12 +1371,12 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.cpan_explorer',
+		name        => 'view.cpan',
 		label       => _T('Show CPA&N Explorer'),
 		comment     => _T('Turn on CPAN explorer'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_cpan_explorer( $_[0]->menu->view->{cpan_explorer}->IsChecked );
+			$_[0]->show_cpan( $_[0]->menu->view->{cpan}->IsChecked );
 		},
 	) if Padre::Feature::CPAN;
 
@@ -1422,12 +1422,12 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name        => 'view.syntaxcheck',
+		name        => 'view.syntax',
 		label       => _T('Show S&yntax Check'),
 		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_syntaxcheck( $_[0]->menu->view->{syntaxcheck}->IsChecked );
+			$_[0]->show_syntax( $_[0]->menu->view->{syntax}->IsChecked );
 		},
 	);
 
@@ -2355,13 +2355,13 @@ sub init {
 	# Various Window navigation shortcuts
 
 	Padre::Wx::Action->new(
-		name       => 'window.goto_cpan_explorer_window',
+		name       => 'window.goto_cpan_window',
 		label      => _T('Go to CPAN E&xplorer Window'),
 		comment    => _T('Set the focus to the "CPAN Explorer" window'),
 		shortcut   => 'Alt-X',
 		menu_event => sub {
-			$_[0]->show_cpan_explorer(1);
-			$_[0]->cpan_explorer->focus_on_search;
+			$_[0]->show_cpan(1);
+			$_[0]->cpan->focus_on_search;
 		},
 	) if Padre::Feature::CPAN;
 
@@ -2418,7 +2418,7 @@ sub init {
 		comment    => _T('Set the focus to the "Syntax Check" window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
-			$_[0]->show_syntaxcheck(1);
+			$_[0]->show_syntax(1);
 			$_[0]->syntax->SetFocus;
 		},
 	);

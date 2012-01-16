@@ -103,7 +103,7 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->main->show_cpan_explorer(0);
+	$_[0]->main->show_cpan(0);
 }
 
 sub view_start {
@@ -561,7 +561,7 @@ sub on_synopsis_click {
 
 # Called when search text control is changed
 sub on_search_text {
-	$_[0]->main->cpan_explorer->dwell_start( 'refresh', 333 );
+	$_[0]->main->cpan->dwell_start( 'refresh', 333 );
 }
 
 # Called when the install button is clicked

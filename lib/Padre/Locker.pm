@@ -262,7 +262,7 @@ sub method_trim {
 		delete $pending->{refresh_status};
 		delete $pending->{refresh_functions};
 		delete $pending->{refresh_directory};
-		delete $pending->{refresh_syntaxcheck};
+		delete $pending->{refresh_syntax};
 		delete $pending->{refresh_outline};
 		delete $pending->{refresh_diff};
 		delete $pending->{refresh_vcs};
