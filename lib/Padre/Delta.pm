@@ -103,10 +103,9 @@ sub from_diff {
 	while ( @_ ) {
 		my $hunk = shift;
 		foreach my $change ( @$hunk ) {
+			my $previous  = $targets[-1];
 			my $operation = $change->[0];
 			my $pos       = $change->[1];
-			my $text      = $change->[2] . "\n";
-			my $previous  = $targets[-1];
 
 			if ( $operation eq '-' ) {
 				my $start = $pos + $delta--;
@@ -119,6 +118,7 @@ sub from_diff {
 			}
 
 			if ( $operation eq '+' ) {
+				my $text = $change->[2] . "\n";
 				if ( $previous and $previous->[1] == $pos ) {
 					$previous->[2] .= $text;
 				} else {
