@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Locale               ();
+use Padre::Feature              ();
 use Padre::Document             ();
 use Padre::Wx                   ();
 use Padre::Wx::Util             ();
@@ -35,6 +36,16 @@ sub run {
 	my $class = shift;
 	my $main  = shift;
 	my $self  = $class->new($main);
+
+	# Show the optional sections
+	if ( Padre::Feature::CPAN ) {
+		$self->{label_cpan}->Show;
+		$self->{main_cpan_panel}->Show;
+	}
+	if ( Padre::Feature::VCS ) {
+		$self->{label_vcs}->Show;
+		$self->{main_vcs_panel}->Show;
+	}
 
 	# Always show the first tab regardless of which one
 	# was selected in wxFormBuilder.

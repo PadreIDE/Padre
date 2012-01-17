@@ -329,6 +329,185 @@ sub new {
 		Wx::DefaultSize,
 	);
 
+	my $m_panel18 = Wx::Panel->new(
+		$self->{treebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	my $m_staticText1931 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Tool Positions"),
+	);
+	$m_staticText1931->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	my $m_staticline451 = Wx::StaticLine->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
+	my $m_staticText195 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Project Browser"),
+	);
+
+	$self->{main_directory_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_directory_panel}->SetSelection(0);
+
+	my $m_staticText194 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Function List"),
+	);
+
+	$self->{main_functions_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_functions_panel}->SetSelection(0);
+
+	my $m_staticText1961 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("File Outline"),
+	);
+
+	$self->{main_outline_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_outline_panel}->SetSelection(0);
+
+	my $m_staticText1971 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("To Do List"),
+	);
+
+	$self->{main_todo_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_todo_panel}->SetSelection(0);
+
+	$self->{label_cpan} = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("CPAN Explorer"),
+	);
+	$self->{label_cpan}->Hide;
+
+	$self->{main_cpan_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_cpan_panel}->SetSelection(0);
+	$self->{main_cpan_panel}->Hide;
+
+	$self->{label_vcs} = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Version Control"),
+	);
+	$self->{label_vcs}->Hide;
+
+	$self->{main_vcs_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_vcs_panel}->SetSelection(0);
+	$self->{main_vcs_panel}->Hide;
+
+	my $m_staticText201 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Syntax Check"),
+	);
+
+	$self->{main_syntax_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_syntax_panel}->SetSelection(0);
+
+	my $m_staticText202 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Output"),
+	);
+
+	$self->{main_output_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_output_panel}->SetSelection(0);
+
+	my $m_staticText203 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Find in Files"),
+	);
+
+	$self->{main_foundinfiles_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_foundinfiles_panel}->SetSelection(0);
+
+	my $m_staticText204 = Wx::StaticText->new(
+		$m_panel18,
+		-1,
+		Wx::gettext("Replace In Files"),
+	);
+
+	$self->{main_replaceinfiles_panel} = Wx::Choice->new(
+		$m_panel18,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		[],
+	);
+	$self->{main_replaceinfiles_panel}->SetSelection(0);
+
 	my $m_panel2 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -1353,6 +1532,38 @@ sub new {
 	$m_panel4->SetSizerAndFit($bSizer41);
 	$m_panel4->Layout;
 
+	my $fgSizer29 = Wx::FlexGridSizer->new( 10, 2, 5, 20 );
+	$fgSizer29->SetFlexibleDirection(Wx::BOTH);
+	$fgSizer29->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$fgSizer29->Add( $m_staticText195, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_directory_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText194, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_functions_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText1961, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_outline_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText1971, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_todo_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $self->{label_cpan}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_cpan_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $self->{label_vcs}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_vcs_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText201, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_syntax_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText202, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_output_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText203, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_foundinfiles_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $m_staticText204, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer29->Add( $self->{main_replaceinfiles_panel}, 0, 0, 5 );
+
+	my $bSizer118 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer118->Add( $m_staticText1931, 0, Wx::ALL, 5 );
+	$bSizer118->Add( $m_staticline451, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer118->Add( $fgSizer29, 0, Wx::ALL, 5 );
+
+	$m_panel18->SetSizerAndFit($bSizer118);
+	$m_panel18->Layout;
+
 	my $fgSizer30 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
 	$fgSizer30->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer30->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
@@ -1579,9 +1790,10 @@ sub new {
 	$m_panel6->SetSizerAndFit($bSizer711);
 	$m_panel6->Layout;
 
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 1 );
+	$self->{treebook}->AddPage( $m_panel18, Wx::gettext("AUI Layout"), 0 );
+	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
@@ -1671,6 +1883,46 @@ sub autocomplete_multiclosebracket {
 
 sub editor_fold_pod {
 	$_[0]->{editor_fold_pod};
+}
+
+sub main_directory_panel {
+	$_[0]->{main_directory_panel};
+}
+
+sub main_functions_panel {
+	$_[0]->{main_functions_panel};
+}
+
+sub main_outline_panel {
+	$_[0]->{main_outline_panel};
+}
+
+sub main_todo_panel {
+	$_[0]->{main_todo_panel};
+}
+
+sub main_cpan_panel {
+	$_[0]->{main_cpan_panel};
+}
+
+sub main_vcs_panel {
+	$_[0]->{main_vcs_panel};
+}
+
+sub main_syntax_panel {
+	$_[0]->{main_syntax_panel};
+}
+
+sub main_output_panel {
+	$_[0]->{main_output_panel};
+}
+
+sub main_foundinfiles_panel {
+	$_[0]->{main_foundinfiles_panel};
+}
+
+sub main_replaceinfiles_panel {
+	$_[0]->{main_replaceinfiles_panel};
 }
 
 sub startup_files {
