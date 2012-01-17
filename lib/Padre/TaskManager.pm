@@ -424,7 +424,7 @@ sub run {
 	my $handles = $self->{handles};
 	my $i       = 0;
 	while (@$queue) {
-		last if $i >= $#$queue;
+		last if $i > $#$queue;
 
 		# Shortcut if there is nowhere to run the task
 		if ( $self->{threads} ) {
