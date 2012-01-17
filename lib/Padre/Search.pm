@@ -380,7 +380,7 @@ sub editor_replace_all {
 	my $replace = $self->replace_term;
 	@matches = map { [ @$_, $replace ] } reverse @matches;
 	require Padre::Delta;
-	Padre::Delta->new( position => @matches )->apply_editor($editor);
+	Padre::Delta->new( position => @matches )->to_editor($editor);
 }
 
 
