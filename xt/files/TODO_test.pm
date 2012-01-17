@@ -239,12 +239,12 @@ sub new {
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
 	$self->show_view( todo      => $config->main_todo      );
-	$self->show_view( functions => $config->main_functions );
-	$self->show_view( outline   => $config->main_outline   );
-	$self->show_view( directory => $config->main_directory );
 	$self->show_view( syntax    => $config->main_syntax    );
 	$self->show_view( output    => $config->main_output    );
+	$self->show_view( outline   => $config->main_outline   );
 	$self->show_view( command   => $config->main_command   );
+	$self->show_view( functions => $config->main_functions );
+	$self->show_view( directory => $config->main_directory );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -260,7 +260,10 @@ sub new {
 	# to show it, it showed at the top) so now we always turn the status bar on
 	# at the beginning and hide it in the timer, if it was not needed
 	#$statusbar->Show;
-	my $timer = Wx::Timer->new( $self, Padre::Wx::Main::TIMER_POSTINIT );
+	my $timer = Wx::Timer->new(
+		$self,
+		Padre::Wx::Main::TIMER_POSTINIT,
+	);
 	Wx::Event::EVT_TIMER(
 		$self,
 		Padre::Wx::Main::TIMER_POSTINIT,

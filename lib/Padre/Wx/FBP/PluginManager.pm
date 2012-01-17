@@ -10,7 +10,6 @@ use 5.008005;
 use utf8;
 use strict;
 use warnings;
-use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx 'Html';
 
@@ -33,6 +32,7 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
 	$self->SetSizeHints( [ 750, 500 ], Wx::DefaultSize );
+	$self->SetMinSize( [ 750, 500 ] );
 
 	$self->{list} = Wx::ListBox->new(
 		$self,

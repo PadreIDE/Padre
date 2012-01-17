@@ -50,7 +50,9 @@ sub new {
 	}
 
 	if (Padre::Feature::CPAN) {
-		$self->{cpan} = $self->add_menu_action('view.cpan');
+		$self->{cpan} = $self->add_menu_action(
+			'view.cpan',
+		);
 	}
 
 	$self->{functions} = $self->add_menu_action(
@@ -253,32 +255,31 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
-	$self->{statusbar}->Check( $config->main_statusbar );
+	$self->{eol}->Check( $config->editor_eol );
+	$self->{todo}->Check( $config->main_todo );
 	$self->{lines}->Check( $config->editor_linenumbers );
+	$self->{output}->Check( $config->main_output );
+	$self->{syntax}->Check( $config->main_syntax );
+	$self->{outline}->Check( $config->main_outline );
+	$self->{toolbar}->Check( $config->main_toolbar );
+	$self->{calltips}->Check( $config->editor_calltips );
+	$self->{functions}->Check( $config->main_functions );
+	$self->{directory}->Check( $config->main_directory );
+	$self->{statusbar}->Check( $config->main_statusbar );
 	$self->{currentline}->Check( $config->editor_currentline );
 	$self->{rightmargin}->Check( $config->editor_right_margin_enable );
-	$self->{eol}->Check( $config->editor_eol );
 	$self->{whitespaces}->Check( $config->editor_whitespace );
-	$self->{output}->Check( $config->main_output );
-	$self->{outline}->Check( $config->main_outline );
-	$self->{directory}->Check( $config->main_directory );
-	$self->{functions}->Check( $config->main_functions );
-	$self->{todo}->Check( $config->main_todo );
 	$self->{lockinterface}->Check( $config->main_lockinterface );
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
-	$self->{calltips}->Check( $config->editor_calltips );
-	if (Padre::Feature::COMMAND) {
-		$self->{command}->Check( $config->main_command );
-	}
-	$self->{syntax}->Check( $config->main_syntax );
 	if (Padre::Feature::VCS) {
 		$self->{vcs}->Check( $config->main_vcs );
 	}
 	if (Padre::Feature::CPAN) {
 		$self->{cpan}->Check( $config->main_cpan );
 	}
-	$self->{toolbar}->Check( $config->main_toolbar );
-
+	if (Padre::Feature::COMMAND) {
+		$self->{command}->Check( $config->main_command );
+	}
 	if (Padre::Feature::FOLDING) {
 		my $folding = $config->editor_folding;
 		$self->{folding}->Check($folding);

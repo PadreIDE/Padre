@@ -329,7 +329,7 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $m_panel18 = Wx::Panel->new(
+	my $m_panel10 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
 		Wx::DefaultPosition,
@@ -338,7 +338,7 @@ sub new {
 	);
 
 	my $m_staticText1931 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Tool Positions"),
 	);
@@ -347,7 +347,7 @@ sub new {
 	);
 
 	my $m_staticline451 = Wx::StaticLine->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -355,13 +355,13 @@ sub new {
 	);
 
 	my $m_staticText195 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Project Browser"),
 	);
 
 	$self->{main_directory_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -370,13 +370,13 @@ sub new {
 	$self->{main_directory_panel}->SetSelection(0);
 
 	my $m_staticText194 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Function List"),
 	);
 
 	$self->{main_functions_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -385,13 +385,13 @@ sub new {
 	$self->{main_functions_panel}->SetSelection(0);
 
 	my $m_staticText1961 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("File Outline"),
 	);
 
 	$self->{main_outline_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -400,13 +400,13 @@ sub new {
 	$self->{main_outline_panel}->SetSelection(0);
 
 	my $m_staticText1971 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("To Do List"),
 	);
 
 	$self->{main_todo_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -415,14 +415,14 @@ sub new {
 	$self->{main_todo_panel}->SetSelection(0);
 
 	$self->{label_cpan} = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("CPAN Explorer"),
 	);
 	$self->{label_cpan}->Hide;
 
 	$self->{main_cpan_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -432,14 +432,14 @@ sub new {
 	$self->{main_cpan_panel}->Hide;
 
 	$self->{label_vcs} = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Version Control"),
 	);
 	$self->{label_vcs}->Hide;
 
 	$self->{main_vcs_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -449,13 +449,13 @@ sub new {
 	$self->{main_vcs_panel}->Hide;
 
 	my $m_staticText201 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Syntax Check"),
 	);
 
 	$self->{main_syntax_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -464,13 +464,13 @@ sub new {
 	$self->{main_syntax_panel}->SetSelection(0);
 
 	my $m_staticText202 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Output"),
 	);
 
 	$self->{main_output_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -479,13 +479,13 @@ sub new {
 	$self->{main_output_panel}->SetSelection(0);
 
 	my $m_staticText203 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Find in Files"),
 	);
 
 	$self->{main_foundinfiles_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -494,13 +494,13 @@ sub new {
 	$self->{main_foundinfiles_panel}->SetSelection(0);
 
 	my $m_staticText204 = Wx::StaticText->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::gettext("Replace In Files"),
 	);
 
 	$self->{main_replaceinfiles_panel} = Wx::Choice->new(
-		$m_panel18,
+		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -1561,8 +1561,8 @@ sub new {
 	$bSizer118->Add( $m_staticline451, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer118->Add( $fgSizer29, 0, Wx::ALL, 5 );
 
-	$m_panel18->SetSizerAndFit($bSizer118);
-	$m_panel18->Layout;
+	$m_panel10->SetSizerAndFit($bSizer118);
+	$m_panel10->Layout;
 
 	my $fgSizer30 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
 	$fgSizer30->SetFlexibleDirection(Wx::BOTH);
@@ -1792,7 +1792,7 @@ sub new {
 
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel18, Wx::gettext("AUI Layout"), 0 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("AUI Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );

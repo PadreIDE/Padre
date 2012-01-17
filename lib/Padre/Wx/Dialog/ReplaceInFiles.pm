@@ -101,7 +101,9 @@ sub run {
 	}
 
 	# Run the search in the Replace in Files tool
+	my $lock = $main->lock('DB');
 	$main->show_replaceinfiles;
+	$main->find_term->SaveValue;
 	$main->replaceinfiles->replace(
 		search  => $self->as_search,
 		replace => $self->replace_term->SaveValue,
@@ -112,7 +114,6 @@ sub run {
 	);
 
 	$main->editor_focus;
-	return;
 }
 
 # Makes sure the find button is only enabled when the field

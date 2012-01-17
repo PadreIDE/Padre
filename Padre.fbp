@@ -7810,7 +7810,7 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
-                                        <property name="name">m_panel18</property>
+                                        <property name="name">m_panel10</property>
                                         <property name="permission">none</property>
                                         <property name="pos"></property>
                                         <property name="size"></property>
@@ -24419,7 +24419,7 @@
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxEXPAND</property>
+                    <property name="flag">wxALL|wxEXPAND</property>
                     <property name="proportion">0</property>
                     <object class="wxBoxSizer" expanded="0">
                         <property name="minimum_size"></property>
@@ -24802,7 +24802,7 @@
                 </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxALL|wxEXPAND</property>
+                    <property name="flag">wxEXPAND|wxLEFT|wxRIGHT</property>
                     <property name="proportion">1</property>
                     <object class="wxListCtrl" expanded="0">
                         <property name="bg"></property>
@@ -24875,8 +24875,8 @@
                     </object>
                 </object>
                 <object class="sizeritem" expanded="0">
-                    <property name="border">2</property>
-                    <property name="flag">wxEXPAND</property>
+                    <property name="border">5</property>
+                    <property name="flag">wxEXPAND|wxLEFT|wxRIGHT</property>
                     <property name="proportion">0</property>
                     <object class="wxStaticBoxSizer" expanded="0">
                         <property name="id">wxID_ANY</property>
@@ -28989,11 +28989,11 @@
                                         <event name="OnUpdateUI"></event>
                                     </object>
                                 </object>
-                                <object class="sizeritem" expanded="1">
+                                <object class="sizeritem" expanded="0">
                                     <property name="border">5</property>
                                     <property name="flag">wxALL</property>
                                     <property name="proportion">0</property>
-                                    <object class="wxBitmapButton" expanded="1">
+                                    <object class="wxBitmapButton" expanded="0">
                                         <property name="bg"></property>
                                         <property name="bitmap"></property>
                                         <property name="context_help"></property>
@@ -29898,7 +29898,7 @@
                         </object>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
-                            <property name="flag">wxBOTTOM|wxEXPAND|wxTOP</property>
+                            <property name="flag">wxBOTTOM|wxEXPAND</property>
                             <property name="proportion">0</property>
                             <object class="wxStaticLine" expanded="0">
                                 <property name="bg"></property>
@@ -31564,7 +31564,7 @@
                         </object>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
-                            <property name="flag">wxBOTTOM|wxEXPAND|wxTOP</property>
+                            <property name="flag">wxEXPAND|wxTOP</property>
                             <property name="proportion">0</property>
                             <object class="wxStaticLine" expanded="0">
                                 <property name="bg"></property>
@@ -32019,7 +32019,7 @@
                 </object>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
-                    <property name="flag">wxEXPAND | wxALL</property>
+                    <property name="flag">wxEXPAND|wxLEFT|wxRIGHT|wxTOP</property>
                     <property name="proportion">0</property>
                     <object class="wxStaticLine" expanded="0">
                         <property name="bg"></property>

@@ -282,11 +282,11 @@ sub new {
 
 	my $bSizer110 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer110->Add( $self->{filename}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$bSizer110->Add( $self->{m_staticline30}, 0, Wx::BOTTOM | Wx::EXPAND | Wx::TOP, 5 );
+	$bSizer110->Add( $self->{m_staticline30}, 0, Wx::BOTTOM | Wx::EXPAND, 5 );
 	$bSizer110->Add( $fgSizer21, 0, Wx::EXPAND, 5 );
 	$bSizer110->Add( $self->{m_staticline31}, 0, Wx::BOTTOM | Wx::EXPAND | Wx::TOP, 5 );
 	$bSizer110->Add( $fgSizer22, 0, Wx::EXPAND, 5 );
-	$bSizer110->Add( $self->{m_staticline32}, 0, Wx::BOTTOM | Wx::EXPAND | Wx::TOP, 5 );
+	$bSizer110->Add( $self->{m_staticline32}, 0, Wx::EXPAND | Wx::TOP, 5 );
 	$bSizer110->Add( $bSizer111, 1, Wx::EXPAND, 5 );
 
 	my $bSizer109 = Wx::BoxSizer->new(Wx::HORIZONTAL);

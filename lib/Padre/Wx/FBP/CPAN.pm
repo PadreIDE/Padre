@@ -32,6 +32,13 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
+	Wx::Event::EVT_CHAR(
+		$self,
+		sub {
+			shift->on_search_text(@_);
+		},
+	);
+
 	$self->{m_notebook} = Wx::Notebook->new(
 		$self,
 		-1,
@@ -289,7 +296,7 @@ sub new {
 }
 
 sub on_search_text {
-	$_[0]->main->error('Handler method on_search_text for event search.OnText not implemented');
+	$_[0]->main->error('Handler method on_search_text for event Padre::Wx::FBP::CPAN.OnChar not implemented');
 }
 
 sub on_search_list_column_click {

@@ -85,9 +85,9 @@ use constant {
 
 =head2 new
 
-  my $manager = Padre::TaskManager->new(
-      conduit => $message_conduit,
-  );  
+    my $manager = Padre::TaskManager->new(
+        conduit => $message_conduit,
+    );  
 
 The C<new> constructor creates a new Task Manager instance. While it is
 theoretically possible to create more than one instance, in practice this
@@ -122,6 +122,7 @@ sub new {
 		handles => {}, # Handles for all active tasks
 		running => {}, # Mapping from tid back to parent handle
 		queue   => [], # Pending tasks to run in FIFO order
+		locks   => {}, # Tracks consumed locks
 	}, $class;
 
 	# Do the initialisation needed for the event conduit
@@ -172,7 +173,7 @@ sub maximum {
 
 =head2 start
 
-  $manager->start;
+    $manager->start;
 
 The C<start> method bootstraps the task manager, creating the master thread.
 
@@ -201,7 +202,7 @@ sub start {
 
 =head2 stop
 
-  $manager->stop;
+    $manager->stop;
 
 The C<stop> method shuts down the task manager, signalling active workers that
 they should do an elegant shutdown.
@@ -272,7 +273,7 @@ sub schedule {
 
 =head2 cancelled
 
-  $manager->cancelled( $owner );
+    $manager->cancelled( $owner );
 
 The C<cancelled> method is used with the "task ownership" feature of the
 L<Padre::Task> 3.0 API to signal tasks running in the background that
@@ -319,7 +320,7 @@ sub cancel {
 
 =head2 start_worker
 
-  my $worker = $manager->start_worker;
+    my $worker = $manager->start_worker;
 
 The C<start_worker> starts and returns a new registered L<Padre::TaskWorker>
 object, ready to execute a task or service in.
@@ -347,7 +348,7 @@ sub start_worker {
 
 =head2 stop_worker
 
-  $manager->stop_worker(1);
+    $manager->stop_worker(1);
 
 The C<stop_worker> method shuts down a single worker, which (unfortunately) at
 this time is indicated via the internal index position in the workers array.
@@ -375,7 +376,7 @@ sub stop_worker {
 
 =head2 kill_worker
 
-  $manager->kill_worker(1);
+    $manager->kill_worker(1);
 
 The C<kill_worker> method forcefully and immediately terminates a worker,
 and like C<stop_worker> the worker to kill is indicated by the internal
@@ -398,9 +399,136 @@ sub kill_worker {
 
 =pod
 
+=head2 run
+
+The C<run> method tells the Task Manager to sweep the queue of pending tasks
+and dispatch as many as possible to worker threads.
+
+Generally you should never need to call this method directly, as it will be
+called whenever you schedule a task or when a worker becomes available.
+
+Returns true if all pending tasks were dispatched, or false if any tasks
+remain on the queue.
+
+=cut
+
+sub run {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+
+	# Do nothing if we somehow arrive here when the task manager isn't on.
+	return 1 unless $self->{active};
+
+	# Try to dispatch tasks until we run out
+	my $queue   = $self->{queue};
+	my $handles = $self->{handles};
+	my $i       = 0;
+	while (@$queue) {
+		last if $i >= $#$queue;
+
+		# Shortcut if there is nowhere to run the task
+		if ( $self->{threads} ) {
+			if ( scalar keys %$handles >= $self->{maximum} ) {
+				TRACE('No more task handles available') if DEBUG;
+				return;
+			}
+		}
+
+		# Can we execute the task at this position in the queue?
+		unless ( $self->good_task($queue->[$i]) ) {
+			$i++;
+			next;
+		}
+
+		# Prepare the confirmed-good task
+		my $task   = splice( @$queue, $i, 1 );
+		my $handle = Padre::TaskHandle->new($task);
+		unless ( $handle->prepare ) {
+
+			# Task wishes to abort itself. Oblige it.
+			undef $handle;
+
+			# Move on to the next task
+			next;
+		}
+
+		# Register the handle for child messages
+		my $hid = $handle->hid;
+		TRACE("Handle $hid registered for messages") if DEBUG;
+		$handles->{$hid} = $handle;
+
+		if ( $self->{threads} ) {
+
+			# Find the next/best worker for the task
+			my $worker = $self->best_worker($handle);
+			if ($worker) {
+				TRACE( "Handle $hid allocated worker " . $worker->wid ) if DEBUG;
+			} else {
+				TRACE("Handle $hid has no worker") if DEBUG;
+				return;
+			}
+
+			# Prepare handle timing
+			$handle->start_time(time);
+
+			# Send the task to the worker for execution
+			$worker->send_task($handle);
+
+		} else {
+
+			# Prepare handle timing
+			$handle->start_time(time);
+
+			# Clone the handle so we don't impact the original
+			my $copy = Padre::TaskHandle->from_array( $handle->as_array );
+
+			# Execute the task (ignore the result) and signal as we go
+			local $@;
+			eval {
+				TRACE( "Handle " . $copy->hid . " calling ->start" ) if DEBUG;
+				$copy->start( [] );
+				TRACE( "Handle " . $copy->hid . " calling ->run" ) if DEBUG;
+				$copy->run;
+				TRACE( "Handle " . $copy->hid . " calling ->stop" ) if DEBUG;
+				$copy->stop;
+			};
+			if ($@) {
+				delete $copy->{queue};
+				delete $copy->{child};
+				TRACE($@) if DEBUG;
+			}
+		}
+	}
+
+	return 1;
+}
+
+=pod
+
+=head2 good_task
+
+    my $ok = $manager->good_task($task);
+
+The C<good_task> method takes a L<Padre::Task> object and determines if the
+task can be executed, given the resources available to the task manager.
+
+Returns a L<Padre::Task> object, or C<undef> if there is no task to execute.
+
+=cut
+
+sub good_task {
+	TRACE( $_[0] ) if DEBUG;
+	my $self = shift;
+	my $task = shift;
+
+	return 1;
+}
+
+=pod
+
 =head2 best_worker
 
-  my $worker = $manager->best_worker( $task_object );
+    my $worker = $manager->best_worker( $task_object );
 
 The C<best_worker> method is used to find the best worker from the worker pool
 for the execution of a particular task object.
@@ -471,113 +599,9 @@ sub best_worker {
 
 =pod
 
-=head2 run
-
-The C<step> method tells the Task Manager to attempt to process the queue of
-pending tasks and dispatch as many as possible.
-
-Generally you should never need to call this method directly, as it will be
-called whenever you schedule a task or when a worker becomes available.
-
-Returns true if all pending tasks were dispatched, or false if any tasks
-remain on the queue.
-
-=cut
-
-# TODO: If a very high number of tasks are added, this method may go into
-#       a very high depth recursion. Change this method to iterate via a
-#       while () loop instead at some point.
-
-sub run {
-	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-
-	# Do nothing if we somehow arrive here when the task manager isn't on.
-	return 1 unless $self->{active};
-
-	# Try to dispatch tasks until we run out
-	my $queue   = $self->{queue};
-	my $handles = $self->{handles};
-	while (@$queue) {
-
-		# Shortcut if there is nowhere to run the task
-		if ( $self->{threads} ) {
-			if ( scalar keys %$handles >= $self->{maximum} ) {
-				TRACE('No more task handles available') if DEBUG;
-				return;
-			}
-		}
-
-		# Fetch and prepare the next task
-		my $task   = shift @$queue;
-		my $handle = Padre::TaskHandle->new($task);
-		my $hid    = $handle->hid;
-
-		# Run the pre-run step in the main thread
-		unless ( $handle->prepare ) {
-
-			# Task wishes to abort itself. Oblige it.
-			undef $handle;
-
-			# Move on to the next task
-			next;
-		}
-
-		# Register the handle for child messages
-		TRACE("Handle $hid registered for messages") if DEBUG;
-		$handles->{$hid} = $handle;
-
-		if ( $self->{threads} ) {
-
-			# Find the next/best worker for the task
-			my $worker = $self->best_worker($handle);
-			if ($worker) {
-				TRACE( "Handle $hid allocated worker " . $worker->wid ) if DEBUG;
-			} else {
-				TRACE("Handle $hid has no worker") if DEBUG;
-				return;
-			}
-
-			# Prepare handle timing
-			$handle->start_time(time);
-
-			# Send the task to the worker for execution
-			$worker->send_task($handle);
-
-		} else {
-
-			# Prepare handle timing
-			$handle->start_time(time);
-
-			# Clone the handle so we don't impact the original
-			my $copy = Padre::TaskHandle->from_array( $handle->as_array );
-
-			# Execute the task (ignore the result) and signal as we go
-			local $@;
-			eval {
-				TRACE( "Handle " . $copy->hid . " calling ->start" ) if DEBUG;
-				$copy->start( [] );
-				TRACE( "Handle " . $copy->hid . " calling ->run" ) if DEBUG;
-				$copy->run;
-				TRACE( "Handle " . $copy->hid . " calling ->stop" ) if DEBUG;
-				$copy->stop;
-			};
-			if ($@) {
-				delete $copy->{queue};
-				delete $copy->{child};
-				TRACE($@) if DEBUG;
-			}
-		}
-	}
-
-	return 1;
-}
-
-=pod
-
 =head2 on_signal
 
-  $manager->on_signal( \@message );
+    $manager->on_signal( \@message );
 
 The C<on_signal> method is called from the conduit object and acts as a
 central distribution mechanism for messages coming from all child workers.

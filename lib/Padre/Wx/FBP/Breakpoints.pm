@@ -98,7 +98,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
-	$self->{list}->SetMinSize( Wx::DefaultSize );
 
 	$self->{show_project} = Wx::CheckBox->new(
 		$self,

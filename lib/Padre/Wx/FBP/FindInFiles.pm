@@ -35,21 +35,12 @@ sub new {
 		Wx::DEFAULT_DIALOG_STYLE,
 	);
 
-	$self->Connect(
+	Wx::Event::EVT_KEY_UP(
 		$self,
-		-1,
-		Wx::EVT_KEY_UP,
 		sub {
 			shift->on_key_up(@_);
 		},
 	);
-
-	# Wx::Event::EVT_KEY_UP(
-		# $self,
-		# sub {
-			# shift->on_key_up(@_);
-		# },
-	# );
 
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
@@ -68,22 +59,13 @@ sub new {
 		],
 	);
 
-	$self->Connect(
+	Wx::Event::EVT_TEXT(
+		$self,
 		$self->{find_term},
-		-1,
-		Wx::EVT_COMMAND_TEXT_UPDATED,
 		sub {
 			shift->refresh(@_);
 		},
 	);
-
-	# Wx::Event::EVT_TEXT(
-		# $self,
-		# $self->{find_term},
-		# sub {
-			# shift->refresh(@_);
-		# },
-	# );
 
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
@@ -110,22 +92,13 @@ sub new {
 		[ 50, -1 ],
 	);
 
-	$self->Connect(
+	Wx::Event::EVT_BUTTON(
+		$self,
 		$self->{directory},
-		-1,
-		Wx::EVT_COMMAND_BUTTON_CLICKED,
 		sub {
 			shift->directory(@_);
 		},
 	);
-
-	# Wx::Event::EVT_BUTTON(
-		# $self,
-		# $self->{directory},
-		# sub {
-			# shift->directory(@_);
-		# },
-	# );
 
 	my $m_staticText4 = Wx::StaticText->new(
 		$self,

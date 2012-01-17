@@ -253,9 +253,9 @@ sub new {
 	$checkbox_sizer->Add( $self->{show_ignored}, 0, Wx::ALL, 2 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
-	$main_sizer->Add( $button_sizer, 0, Wx::EXPAND, 5 );
-	$main_sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
-	$main_sizer->Add( $checkbox_sizer, 0, Wx::EXPAND, 2 );
+	$main_sizer->Add( $button_sizer, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$main_sizer->Add( $self->{list}, 1, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
+	$main_sizer->Add( $checkbox_sizer, 0, Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$main_sizer->Add( $self->{status}, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizer($main_sizer);

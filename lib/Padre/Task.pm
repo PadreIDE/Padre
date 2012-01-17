@@ -369,6 +369,26 @@ sub from_string {
 
 =pod
 
+=head2 locks
+
+The C<locks> method returns a list of locks that the task needs to reserve in
+order to execute safely.
+
+The meaning, usage, and available quantity of the required locks are tracked by
+the task manager. Enforcement of resource limits may be strict, or may only
+serve as hints to the scheduler.
+
+Returns a list of strings, or the null list if the task is light with trivial
+or no resource consumption.
+
+=cut
+
+sub locks {
+	return ();
+}
+
+=pod
+
 =head2 schedule
 
   $task->schedule;

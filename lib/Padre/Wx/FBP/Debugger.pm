@@ -178,7 +178,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
-	$self->{variables}->SetMinSize( Wx::DefaultSize );
 
 	$self->{show_local_variables} = Wx::CheckBox->new(
 		$self,

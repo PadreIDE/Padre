@@ -130,7 +130,7 @@ sub new {
 	my $bSizer119 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer119->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer119->Add( $self->{autosave}, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$bSizer119->Add( $self->{m_staticline46}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer119->Add( $self->{m_staticline46}, 0, Wx::EXPAND | Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
 	$bSizer119->Add( $bSizer120, 0, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer119);

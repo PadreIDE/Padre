@@ -67,19 +67,10 @@ sub new {
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
 	);
 
-	$self->{m_staticText65111} = Wx::StaticText->new(
-		$self->{padre},
-		-1,
-		Wx::gettext("Created by:"),
-	);
-	$self->{m_staticText65111}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 90, 0, "" )
-	);
-
 	$self->{creator} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Gabor Szabo"),
+		Wx::gettext("Created by G\x{e1}bor Szab\x{f3}"),
 	);
 
 	$self->{m_staticline271} = Wx::StaticLine->new(
@@ -93,7 +84,7 @@ sub new {
 	$self->{m_staticText34} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Copyright 2008–2012 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
+		Wx::gettext("Copyright 2008–2011 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
 	);
 
 	$self->{m_staticText67} = Wx::StaticText->new(
@@ -665,7 +656,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::TE_MULTILINE | Wx::TE_NO_VSCROLL | Wx::TE_READONLY,
 	);
-	$self->{output}->SetMinSize( Wx::DefaultSize );
 	$self->{output}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 76, 90, 90, 0, "" )
 	);
@@ -679,14 +669,6 @@ sub new {
 	);
 	$close_button->SetDefault;
 
-	my $bSizer471 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
-
-	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
-	$bSizer4711->Add( $self->{creator}, 0, Wx::ALL, 5 );
-
-	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer81->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
@@ -694,8 +676,9 @@ sub new {
 
 	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::TOP, 5 );
-	$bSizer17->Add( $bSizer471, 0, Wx::EXPAND, 5 );
-	$bSizer17->Add( $bSizer4711, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $self->{m_staticText6511}, 0, Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
+	$bSizer17->Add( $self->{creator}, 0, Wx::ALL, 5 );
+	$bSizer17->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 0 );
 	$bSizer17->Add( $bSizer81, 1, Wx::EXPAND, 5 );
 
 	$self->{padre}->SetSizerAndFit($bSizer17);

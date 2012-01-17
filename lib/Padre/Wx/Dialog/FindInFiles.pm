@@ -97,6 +97,7 @@ sub run {
 	# Show the dialog
 	my $result = $self->ShowModal;
 	if ( $result == Wx::ID_CANCEL ) {
+
 		# As we leave the Find dialog, return the user to the current editor
 		# window so they don't need to click it.
 		$main->editor_focus;
@@ -105,6 +106,7 @@ sub run {
 
 	# Run the search in the Find in Files view
 	$main->show_foundinfiles;
+	$main->find_term->SaveValue;
 	$main->foundinfiles->search(
 		search => $self->as_search,
 		root   => $self->find_directory->SaveValue,
@@ -114,7 +116,6 @@ sub run {
 	);
 
 	$main->editor_focus;
-	return;
 }
 
 # Makes sure the find button is only enabled when the field
