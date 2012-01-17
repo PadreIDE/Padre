@@ -770,7 +770,6 @@ sub on_metacpan_click {
 	return;
 }
 
-
 1;
 
 # Copyright 2008-2012 The Padre development team as listed in Padre.pm.
