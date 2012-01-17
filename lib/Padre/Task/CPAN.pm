@@ -141,8 +141,8 @@ sub metacpan_autocomplete {
 	require LWP::UserAgent;
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
-
 	$ua->env_proxy unless Padre::Constant::WIN32;
+
 	my $response = $ua->post(
 		'http://api.metacpan.org/v0/file/_search',
 		Content => $json_request,

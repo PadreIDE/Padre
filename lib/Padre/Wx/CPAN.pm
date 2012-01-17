@@ -10,7 +10,6 @@ use Padre::Wx::Util        ();
 use Padre::Wx::Role::View  ();
 use Padre::Wx::Role::Dwell ();
 use Padre::Wx::FBP::CPAN   ();
-use Padre::Task::CPAN      ();
 use Padre::Logger;
 
 our $VERSION = '0.93';
