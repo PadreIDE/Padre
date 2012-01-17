@@ -6,6 +6,13 @@ package Padre::Delta;
 
 Padre::Delta - A very simple diff object that can be applied to editors fast
 
+=head1 SYNOPSIS
+
+  my $editor = Padre::Current->editor;
+  my $from   = $editor->GetText;
+  my $to     = transform_function($from);
+  Padre::Delta->from_scalars( \$from => \$to )->to_editor($editor);
+
 =head1 DESCRIPTION
 
 As a refactoring IDE many different modules and tools may wish to calculate
@@ -174,11 +181,29 @@ sub from_scalars {
 ######################################################################
 # Main Methods
 
+=pod
+
+=head2 to_editor
+
+  my $changes = $delta->to_editor($editor);
+
+The C<to_editor> method applies the changes in a delta object to a
+L<Padre::Wx::Editor> instance.
+
+The changes are applied in the most simple and direct manner possible,
+wrapped in a single Undo action for easy of reversion, and in an update
+locker for speed.
+
+Return the number of changes made to the text contained in the editor,
+which may be zero in the case of a null delta.
+
+=cut
+
 sub to_editor {
 	my $self = shift;
 
 	# Shortcut if nothing to do
-	return if $self->null;
+	return 0 if $self->null;
 
 	# Prepare to apply to the editor
 	my $editor  = shift;
