@@ -2688,12 +2688,25 @@ sub editors {
     my @document = $main->documents;
 
 Return a list of all current documents, in the specific order
-they are open in the notepad.
+they are open in the notebook.
 
 =cut
 
 sub documents {
 	$_[0]->notebook->documents;
+}
+
+=pod
+
+=head3 C<documents_modified>
+
+Returns a list of all modified documents, in the specific order
+they are open in the notebook.
+
+=cut
+
+sub documents_modified {
+	grep { $_->is_modified } $_[0]->documents;
 }
 
 =pod
@@ -4744,7 +4757,7 @@ false otherwise.
 =cut
 
 sub on_save {
-	my $self = shift;
+	my $self     = shift;
 	my $document = shift || $self->current->document;
 	return unless $document;
 
@@ -4990,23 +5003,24 @@ saved, false otherwise.
 =cut
 
 sub on_save_all {
-	my $self = shift;
+	my $self     = shift;
+	my $notebook = $self->notebook;
+	my $selected = $notebook->GetSelection;
 
-	# TODO: Discuss this implementation
-	# trac ticket is: http://padre.perlide.org/trac/ticket/331
-	my $currentID = $self->notebook->GetSelection;
-	foreach my $id ( $self->pageids ) {
-		my $editor = $self->notebook->GetPage($id) or next;
+	# Are there any modified documents?
+	my @modified = $self->documents_modified or return 1;
 
-		my $doc = $editor->{Document}; # TO DO no accessor for document?
-		if ( $doc->is_modified ) {
-			$editor->SetFocus;
-			$self->on_save($doc) or return 0;
-		}
+	# Save the unmodified documents
+	foreach my $document ( @modified ) {
+		$self->on_save($document) or return 0;
 	}
 
-	# Set focus back to the currentDocument
-	$self->notebook->SetSelection($currentID);
+	# If we ended up with a different document in focus,
+	# return the focus to the original one.
+	unless ( $notebook->GetSelection == $selected ) {
+		$notebook->SetSelection($selected);
+		$self->editor_focus;
+	}
 
 	# Force-refresh backups (i.e. probably delete them)
 	$self->backup(1);
@@ -5018,7 +5032,7 @@ sub on_save_all {
 
 =head3 C<_save_buffer>
 
-    my $success = $main->_save_buffer( $id );
+    my $success = $main->_save_buffer($id);
 
 Try to save buffer in tab C<$id>. This is the method used underneath by
 all C<on_save_*()> methods. It will check if document has been updated

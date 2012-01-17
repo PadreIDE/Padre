@@ -19,15 +19,18 @@ our $VERSION = '0.93';
 ######################################################################
 # Constructor
 
-use Class::XSAccessor {
-	constructor => 'new',
-	getters     => {
-		dirname  => 'dirname',
-		fullname => 'fullname',
-	},
-};
+sub new {
+	my $class = shift;
+	bless { @_ }, $class;
+}
 
-# TO DO Write constructor that checks the config?
+sub dirname {
+	$_[0]->{dirname};
+}
+
+sub fullname {
+	$_[0]->{fullname};
+}
 
 sub read {
 	my $class = shift;
@@ -43,11 +46,10 @@ sub read {
 	return unless Params::Util::_HASH0($hash);
 
 	# Create the object, saving the file name and directory for later usage
-	my $dirname = File::Basename::dirname($fullname);
 	return $class->new(
 		%$hash,
-		dirname  => $dirname,
 		fullname => $fullname,
+		dirname  => File::Basename::dirname($fullname),
 	);
 }
 

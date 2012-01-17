@@ -20,7 +20,6 @@ use Padre::Current         ();
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Host    ();
-use Padre::Config::Upgrade ();
 use Padre::Locale::T;
 use Padre::Logger;
 
@@ -38,10 +37,6 @@ BEGIN {
 
 	# A cache for startup.yml settings
 	%STARTUP = ();
-
-	# The configuration revision.
-	# (Functionally similar to the database revision)
-	$REVISION = 1;
 
 	# Storage for the default config object
 	$SINGLETON = undef;
@@ -82,7 +77,7 @@ sub settings {
 #
 # setting( %params );
 #
-# create a new setting, with %params used to feed the new object.
+# Create a new setting, with %params used to feed the new object.
 #
 sub setting {
 
@@ -97,8 +92,11 @@ sub setting {
 	}
 
 	# Generate the accessor
-	eval $object->code;
-	Carp::croak("Failed to compile setting $object->{name}: $@") if $@;
+	SCOPE: {
+		local $@;
+		eval $object->code;
+		Carp::croak("Failed to compile setting $object->{name}: $@") if $@;
+	}
 
 	# Save the setting
 	$SETTING{$name} = $object;
@@ -156,8 +154,6 @@ sub read {
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
-
-		Padre::Config::Upgrade::check($SINGLETON);
 	}
 
 	return $SINGLETON;
@@ -168,11 +164,13 @@ sub write {
 	my $self = shift;
 
 	# Save the user configuration
-	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
+	delete $self->[Padre::Constant::HUMAN]->{version};
+	delete $self->[Padre::Constant::HUMAN]->{Version};
 	$self->[Padre::Constant::HUMAN]->write;
 
 	# Save the host configuration
-	$self->[Padre::Constant::HOST]->{version} = $REVISION;
+	delete $self->[Padre::Constant::HOST]->{version};
+	delete $self->[Padre::Constant::HOST]->{Version};
 	$self->[Padre::Constant::HOST]->write;
 
 	# Write the startup subset of the configuration.
@@ -184,7 +182,7 @@ sub write {
 		map { $_ => $self->$_() } sort keys %STARTUP
 	);
 	open( my $FILE, '>', Padre::Constant::CONFIG_STARTUP ) or return 1;
-	print $FILE map {"$_\n$startup{$_}\n"} sort keys %startup or return 1;
+	print $FILE map { "$_\n$startup{$_}\n" } sort keys %startup or return 1;
 	close $FILE or return 1;
 
 	return 1;

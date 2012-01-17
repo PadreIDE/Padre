@@ -13,15 +13,12 @@ use Padre::Constant ();
 
 our $VERSION = '0.93';
 
-# Config schema revision
-my $REVISION = 1;
-
 #
 # my $config = Padre::Config::Human->create;
 #
 sub create {
 	my $class = shift;
-	my $self = bless { version => $REVISION }, $class;
+	my $self = bless { }, $class;
 	$self->write;
 	return $self;
 }
@@ -33,7 +30,12 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = -e Padre::Constant::CONFIG_HUMAN ? eval { YAML::Tiny::LoadFile(Padre::Constant::CONFIG_HUMAN) } : {};
+	my $hash = {};
+	if ( -e Padre::Constant::CONFIG_HUMAN ) {
+	         $hash = eval {
+			YAML::Tiny::LoadFile(Padre::Constant::CONFIG_HUMAN);
+		};
+	}
 	unless ( Params::Util::_HASH0($hash) ) {
 		return;
 	}
@@ -50,14 +52,7 @@ sub read {
 sub clone {
 	my $self  = shift;
 	my $class = Scalar::Util::blessed($self);
-	return bless {%$self}, $class;
-}
-
-#
-# my $revision = $config->version;
-#
-sub version {
-	$_[0]->{version};
+	return bless { %$self }, $class;
 }
 
 #
@@ -69,7 +64,7 @@ sub write {
 	# Save the unblessed clone of the user configuration hash
 	YAML::Tiny::DumpFile(
 		Padre::Constant::CONFIG_HUMAN,
-		Storable::dclone( +{%$self} ),
+		Storable::dclone( +{ %$self } ),
 	);
 
 	return 1;
@@ -123,16 +118,6 @@ No parameters.
 =head2 Object methods
 
 =over 4
-
-=item version
-
-    my $revision = $config->version;
-
-Return the configuration schema revision. Indeed, we might want to have
-more structured configuration instead of a plain hash later on. Note that this
-version is stored with the other user preferences at the same level.
-
-No parameters.
 
 =item write
 

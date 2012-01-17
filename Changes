@@ -90,6 +90,7 @@ the even version for the release, even during development.
     - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
     - Padre::Search::matches now supports submatch option (ADAMK)
     - Added basic tests for Debugger panels (BOWTIE)
+    - Save All is much faster and won't flicker or defocus the cursor (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
@@ -100,6 +101,7 @@ the even version for the release, even during development.
     - The long-deprecated gettext_label method has been deleted (ADAMK)
     - The old search function Padre::Util::get_matches has beedn deleted (ADAMK)
     - Refactored most _show methods into a single show_view method (ADAMK)
+    - Removed the unused Padre::Config versioning system (ADAMK)
 
 0.92 2011.11.11
     - Wx::Scintilla is now stable and replaces Wx::STC in Padre (AZAWAWI)
