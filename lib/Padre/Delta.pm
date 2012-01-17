@@ -116,7 +116,7 @@ sub from_diff {
 
 			if ( $operation eq '-' ) {
 				my $start = $pos + $delta--;
-				if ( $previous and $previous->[1] == $start ) {
+				if ( $previous and $previous->[1] == $pos ) {
 					$previous->[1]++;
 					next;
 				}

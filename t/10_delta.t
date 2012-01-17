@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 10;
+use Test::More tests => 12;
 use Test::NoWarnings;
 use Test::LongString;
 use t::lib::Padre;
@@ -175,8 +175,6 @@ my $TO2 = <<'END_TEXT';
 
 	$self->{padre}->SetSizerAndFit($bSizer17);
 	$self->{padre}->Layout;
-}
-
 END_TEXT
 
 # Create the FROM-->TO delta and see if it actually changes FROM to TO
