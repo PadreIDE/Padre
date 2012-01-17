@@ -118,6 +118,11 @@ use constant {
 	CVS        => 'CVS',
 };
 
+# CPAN View Constants
+use constant {
+
+}
+
 # Portable Perl Support
 use constant PORTABLE => do {
 	no warnings 'once';

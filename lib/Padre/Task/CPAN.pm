@@ -1,26 +1,21 @@
-package Padre::Task::CPAN2;
+package Padre::Task::CPAN;
 
 use 5.008005;
 use strict;
 use warnings;
 use Padre::Task     ();
 use Padre::Constant ();
-use Padre::Logger qw(TRACE);
+use Padre::Logger;
 
 our $VERSION = '0.93';
 our @ISA     = 'Padre::Task';
 
-use constant {
+# Maximum number of MetaCPAN results
+use constant MAX_RESULTS => 20;
 
-	# Task commands
-	CPAN_SEARCH   => 'search',
-	CPAN_POD      => 'pod',
-	CPAN_RECENT   => 'recent',
-	CPAN_FAVORITE => 'favorite',
 
-	# Maximum number of MetaCPAN results
-	MAX_RESULTS => 20,
-};
+
+
 
 ######################################################################
 # Constructor
@@ -35,6 +30,10 @@ sub new {
 
 	return $self;
 }
+
+
+
+
 
 ######################################################################
 # Padre::Task Methods
@@ -52,23 +51,24 @@ sub run {
 	return unless defined $self->{query};
 	my $query = delete $self->{query};
 
-	if ( $command eq CPAN_SEARCH ) {
+	if ( $command eq 'search' ) {
 
 		# Autocomplete search using MetaCPAN JSON API
 		$self->{model} = $self->metacpan_autocomplete($query);
-	} elsif ( $command eq CPAN_POD ) {
+	} elsif ( $command eq 'pod' ) {
 
 		# Find the POD's HTML and SYNOPSIS section
 		# using MetaCPAN JSON API
 		$self->{model} = $self->metacpan_pod($query);
-	} elsif ( $command eq CPAN_RECENT ) {
+	} elsif ( $command eq 'recent' ) {
 
 		# Find MetaCPAN's top recent distributions
 		$self->{model} = $self->metacpan_recent;
-	} elsif ( $command eq CPAN_FAVORITE ) {
+	} elsif ( $command eq 'favorite' ) {
 
 		# Find MetaCPAN's top favorite distributions
 		$self->{model} = $self->metacpan_favorite;
+
 	} else {
 		TRACE("Unimplemented $command. Please fix!") if DEBUG;
 	}
@@ -293,7 +293,6 @@ sub metacpan_favorite {
 
 	return \@results;
 }
-
 
 1;
 

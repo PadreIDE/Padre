@@ -1,4 +1,4 @@
-package Padre::Wx::CPAN2;
+package Padre::Wx::CPAN;
 
 use 5.008;
 use strict;
@@ -10,8 +10,8 @@ use Padre::Wx::Util        ();
 use Padre::Wx::Role::View  ();
 use Padre::Wx::Role::Dwell ();
 use Padre::Wx::FBP::CPAN   ();
-use Padre::Task::CPAN2     ();
-use Padre::Logger qw(TRACE);
+use Padre::Task::CPAN      ();
+use Padre::Logger;
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -118,9 +118,9 @@ sub view_stop {
 	my $self = shift;
 
 	# Clear, reset running task and stop dwells
-	$self->clear(Padre::Task::CPAN2::CPAN_SEARCH);
-	$self->clear(Padre::Task::CPAN2::CPAN_RECENT);
-	$self->clear(Padre::Task::CPAN2::CPAN_FAVORITE);
+	$self->clear('search');
+	$self->clear('recent');
+	$self->clear('favorite');
 	$self->task_reset;
 	$self->dwell_stop('refresh'); # Just in case
 
@@ -243,11 +243,11 @@ sub focus_on_search {
 sub clear {
 	my ( $self, $command ) = @_;
 
-	if ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+	if ( $command eq 'recent' ) {
 		$self->{recent_list}->DeleteAllItems;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+	} elsif ( $command eq 'search' ) {
 		$self->{search_list}->DeleteAllItems;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+	} elsif ( $command eq 'favorite' ) {
 		$self->{favorite_list}->DeleteAllItems;
 	} else {
 		die "Unhandled $command in ->clear";
@@ -263,7 +263,7 @@ sub relocale {
 
 sub refresh {
 	my $self    = shift;
-	my $command = shift || Padre::Task::CPAN2::CPAN_SEARCH;
+	my $command = shift || 'search';
 	my $query   = shift || lc( $self->{search}->GetValue );
 
 	# Abort any in-flight checks
@@ -271,7 +271,7 @@ sub refresh {
 
 	# Start a background CPAN command task
 	$self->task_request(
-		task    => 'Padre::Task::CPAN2',
+		task    => 'Padre::Task::CPAN',
 		command => $command,
 		query   => $query,
 	);
@@ -280,20 +280,20 @@ sub refresh {
 }
 
 sub task_finish {
-	my $self = shift;
-	my $task = shift;
-
+	my $self    = shift;
+	my $task    = shift;
 	my $command = $task->{command};
-	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+
+	if ( $command eq 'search' ) {
 		$self->{search_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_search;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_POD ) {
+	} elsif ( $command eq 'pod' ) {
 		$self->{pod_model} = Params::Util::_HASH( $task->{model} ) or return;
 		$self->render_doc;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+	} elsif ( $command eq 'recent' ) {
 		$self->{recent_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_recent;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+	} elsif ( $command eq 'favorite' ) {
 		$self->{favorite_model} = Params::Util::_ARRAY0( $task->{model} ) or return;
 		$self->render_favorite;
 	} else {
@@ -306,7 +306,7 @@ sub render_search {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear(Padre::Task::CPAN2::CPAN_SEARCH);
+	$self->clear('search');
 
 	return unless $self->{search_model};
 
@@ -318,7 +318,7 @@ sub render_search {
 		$self->set_icon_image( $list, $sort_column, $self->{search_sort_desc} );
 
 		# and sort the model
-		$self->_sort_model(Padre::Task::CPAN2::CPAN_SEARCH);
+		$self->_sort_model('search');
 	}
 
 	my $model = $self->{search_model};
@@ -372,15 +372,15 @@ sub _sort_model {
 
 	my @model;
 	my ( $sort_column, $sort_desc );
-	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+	if ( $command eq 'search' ) {
 		@model       = @{ $self->{search_model} };
 		$sort_column = $self->{search_sort_column};
 		$sort_desc   = $self->{search_sort_desc};
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+	} elsif ( $command eq 'recent' ) {
 		@model       = @{ $self->{recent_model} };
 		$sort_column = $self->{recent_sort_column};
 		$sort_desc   = $self->{recent_sort_desc};
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+	} elsif ( $command eq 'favorite' ) {
 		@model       = @{ $self->{favorite_model} };
 		$sort_column = $self->{favorite_sort_column};
 		$sort_desc   = $self->{favorite_sort_desc};
@@ -391,12 +391,12 @@ sub _sort_model {
 
 		# Sort by distribution, name or term
 		@model = sort {
-			if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH )
+			if ( $command eq 'search' )
 			{
 				$a->{documentation} cmp $b->{documentation};
-			} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+			} elsif ( $command eq 'recent' ) {
 				$a->{name} cmp $b->{name};
-			} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+			} elsif ( $command eq 'favorite' ) {
 				$a->{term} cmp $b->{term};
 			}
 		} @model;
@@ -405,12 +405,12 @@ sub _sort_model {
 
 		# Sort by abstract or author
 		@model = sort {
-			if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH )
+			if ( $command eq 'search' )
 			{
 				$a->{author} cmp $b->{author};
-			} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+			} elsif ( $command eq 'recent' ) {
 				$a->{abstract} cmp $b->{abstract};
-			} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+			} elsif ( $command eq 'favorite' ) {
 				$a->{count} cmp $b->{count};
 			}
 		} @model;
@@ -427,11 +427,11 @@ sub _sort_model {
 	# Reverse the model if descending order is needed
 	@model = reverse @model if $sort_desc;
 
-	if ( $command eq Padre::Task::CPAN2::CPAN_SEARCH ) {
+	if ( $command eq 'search' ) {
 		$self->{search_model} = \@model;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_RECENT ) {
+	} elsif ( $command eq 'recent' ) {
 		$self->{recent_model} = \@model;
-	} elsif ( $command eq Padre::Task::CPAN2::CPAN_FAVORITE ) {
+	} elsif ( $command eq 'favorite' ) {
 		$self->{favorite_model} = \@model;
 	}
 
@@ -514,7 +514,7 @@ sub on_list_item_selected {
 	);
 	$doc->SetBackgroundColour(YELLOW_POD);
 
-	$self->refresh( Padre::Task::CPAN2::CPAN_POD,
+	$self->refresh( 'pod',
 		{   module       => $module,
 			download_url => $download_url,
 		},
@@ -588,7 +588,7 @@ sub on_install_click {
 
 # Called when the Refresh recent button is clicked
 sub on_refresh_recent_click {
-	$_[0]->refresh(Padre::Task::CPAN2::CPAN_RECENT);
+	$_[0]->refresh('recent');
 	return;
 }
 
@@ -598,7 +598,7 @@ sub render_recent {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear(Padre::Task::CPAN2::CPAN_RECENT);
+	$self->clear('recent');
 
 	return unless $self->{recent_model};
 
@@ -610,7 +610,7 @@ sub render_recent {
 		$self->set_icon_image( $list, $sort_column, $self->{recent_sort_desc} );
 
 		# and sort the model
-		$self->_sort_model(Padre::Task::CPAN2::CPAN_RECENT);
+		$self->_sort_model('recent');
 	}
 	my $model = $self->{recent_model};
 
@@ -697,7 +697,7 @@ sub _on_char_list {
 
 # Called when the Refresh favorite button is clicked
 sub on_refresh_favorite_click {
-	$_[0]->refresh(Padre::Task::CPAN2::CPAN_FAVORITE);
+	$_[0]->refresh('favorite');
 	return;
 }
 
@@ -707,7 +707,7 @@ sub render_favorite {
 
 	# Clear if needed. Please note that this is needed
 	# for sorting
-	$self->clear(Padre::Task::CPAN2::CPAN_FAVORITE);
+	$self->clear('favorite');
 
 	return unless $self->{favorite_model};
 
@@ -719,7 +719,7 @@ sub render_favorite {
 		$self->set_icon_image( $list, $sort_column, $self->{favorite_sort_desc} );
 
 		# and sort the model
-		$self->_sort_model(Padre::Task::CPAN2::CPAN_FAVORITE);
+		$self->_sort_model('favorite');
 	}
 	my $model = $self->{favorite_model};
 

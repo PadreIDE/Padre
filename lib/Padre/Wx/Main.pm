@@ -722,8 +722,8 @@ sub vcs {
 sub cpan {
 	my $self = shift;
 	unless ( defined $self->{cpan} ) {
-		require Padre::Wx::CPAN2;
-		$self->{cpan} = Padre::Wx::CPAN2->new($self);
+		require Padre::Wx::CPAN;
+		$self->{cpan} = Padre::Wx::CPAN->new($self);
 	}
 	return $self->{cpan};
 }
