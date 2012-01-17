@@ -669,7 +669,7 @@ sub new {
 	);
 	$close_button->SetDefault;
 
-	$bSizer81->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
 	$bSizer81->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
