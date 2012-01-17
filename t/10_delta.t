@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use Test::More tests => 10;
 use Test::NoWarnings;
+use Test::LongString;
 use t::lib::Padre;
 use Padre;
 use Padre::Delta;
@@ -57,7 +58,16 @@ SCOPE: {
 ######################################################################
 # Functional Test
 
-my $FROM = <<'END_TEXT';
+# Set up for the functional tests
+my $padre = Padre->new;
+isa_ok( $padre, 'Padre' );
+my $main = $padre->wx->main;
+isa_ok( $main, 'Padre::Wx::Main' );
+$main->setup_editor;
+my $editor = $main->current->editor;
+isa_ok( $editor, 'Padre::Wx::Editor' );
+
+my $FROM1 = <<'END_TEXT';
 a
 b
 c
@@ -71,7 +81,7 @@ j
 k
 END_TEXT
 
-my $TO = <<'END_TEXT';
+my $TO1 = <<'END_TEXT';
 a
 c
 d
@@ -89,23 +99,97 @@ END_TEXT
 # Create the FROM-->TO delta and see if it actually changes FROM to TO
 SCOPE: {
 	# Create the delta
-	my $delta = Padre::Delta->from_scalars( \$FROM => \$TO );
+	my $delta = Padre::Delta->from_scalars( \$FROM1 => \$TO1 );
 	isa_ok( $delta, 'Padre::Delta' );
 
-	# Create an IDE editor to apply it to
-	my $padre = Padre->new;
-	isa_ok( $padre, 'Padre' );
-	my $main = $padre->wx->main;
-	isa_ok( $main, 'Padre::Wx::Main' );
-	$main->setup_editor;
-	my $editor = $main->current->editor;
-	isa_ok( $editor, 'Padre::Wx::Editor' );
-
 	# Apply the delta to the FROM text
-	$editor->SetText($FROM);
+	$editor->SetText($FROM1);
 	$delta->to_editor($editor);
 
 	# Do we get the TO text
 	my $result = $editor->GetText;
-	is( $result, $TO, 'Padre::Delta applies to editor correctly' );
+	is_string( $result, $TO1 );
+}
+
+
+
+
+
+######################################################################
+# Regression Test
+
+my $FROM2 = <<'END_TEXT';
+	my $close_button = Wx::Button->new(
+		$self,
+		Wx::ID_CANCEL,
+		Wx::gettext("Close"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+	$close_button->SetDefault;
+
+	my $bSizer471 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer471->Add( $self->{m_staticText6511}, 0, Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
+
+	my $bSizer4711 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer4711->Add( $self->{m_staticText65111}, 0, Wx::ALL, 5 );
+	$bSizer4711->Add( $self->{creator}, 0, Wx::ALL, 5 );
+
+	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer81->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
+
+	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::TOP, 5 );
+	$bSizer17->Add( $bSizer471, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $bSizer4711, 0, Wx::EXPAND, 5 );
+	$bSizer17->Add( $bSizer81, 1, Wx::EXPAND, 5 );
+
+	$self->{padre}->SetSizerAndFit($bSizer17);
+	$self->{padre}->Layout;
+END_TEXT
+
+my $TO2 = <<'END_TEXT';
+	my $close_button = Wx::Button->new(
+		$self,
+		Wx::ID_CANCEL,
+		Wx::gettext("Close"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+	$close_button->SetDefault;
+
+	my $bSizer81 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer81->Add( $self->{m_staticText34}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText67}, 0, Wx::ALL, 5 );
+	$bSizer81->Add( $self->{m_staticText35}, 0, Wx::ALL, 5 );
+
+	my $bSizer17 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer17->Add( $self->{splash}, 0, Wx::ALIGN_CENTER | Wx::TOP, 5 );
+	$bSizer17->Add( $self->{m_staticText6511}, 0, Wx::LEFT | Wx::RIGHT | Wx::TOP, 5 );
+	$bSizer17->Add( $self->{creator}, 0, Wx::ALL, 5 );
+	$bSizer17->Add( $self->{m_staticline271}, 0, Wx::EXPAND | Wx::ALL, 0 );
+	$bSizer17->Add( $bSizer81, 1, Wx::EXPAND, 5 );
+
+	$self->{padre}->SetSizerAndFit($bSizer17);
+	$self->{padre}->Layout;
+}
+
+END_TEXT
+
+# Create the FROM-->TO delta and see if it actually changes FROM to TO
+SCOPE: {
+	# Create the delta
+	my $delta = Padre::Delta->from_scalars( \$FROM2 => \$TO2 );
+	isa_ok( $delta, 'Padre::Delta' );
+
+	# Apply the delta to the FROM text
+	$editor->SetText($FROM2);
+	$delta->to_editor($editor);
+
+	# Do we get the TO text
+	my $result = $editor->GetText;
+	is_string( $result, $TO2 );
 }
