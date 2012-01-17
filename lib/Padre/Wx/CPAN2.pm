@@ -108,7 +108,6 @@ sub view_close {
 
 sub view_start {
 	my $self = shift;
-
 	$self->{synopsis}->Hide;
 	$self->{metacpan}->Hide;
 	$self->{install}->Hide;
@@ -127,6 +126,10 @@ sub view_stop {
 
 	return;
 }
+
+
+
+
 
 #####################################################################
 # General Methods

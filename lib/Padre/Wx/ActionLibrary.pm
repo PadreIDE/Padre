@@ -2032,36 +2032,36 @@ sub init {
 	if (Padre::Feature::DEBUGGER) {
 
 		Padre::Wx::Action->new(
-			name        => 'debug.panel_breakpoints',
+			name        => 'debug.breakpoints',
 			label       => _T('Show Debug Breakpoints'),
 			comment     => _T('Turn on debug breakpoints panel'),
 			menu_method => 'AppendCheckItem',
 			menu_event  => sub {
-				$_[0]->show_panel_breakpoints( $_[0]->menu->debug->{panel_breakpoints}->IsChecked );
-				if ( $_[0]->{panel_breakpoints} ) {
-					$_[0]->{panel_breakpoints}->on_refresh_click();
+				$_[0]->show_breakpoints( $_[0]->menu->debug->{breakpoints}->IsChecked );
+				if ( $_[0]->{breakpoints} ) {
+					$_[0]->{breakpoints}->on_refresh_click();
 				}
 			},
 
 		);
 
 		Padre::Wx::Action->new(
-			name        => 'debug.panel_debug_output',
+			name        => 'debug.debugoutput',
 			label       => _T('Show Debug Output'),
 			comment     => _T('We should not need this menu item'),
 			menu_method => 'AppendCheckItem',
 			menu_event  => sub {
-				$_[0]->show_panel_debug_output( $_[0]->menu->debug->{panel_debug_output}->IsChecked );
+				$_[0]->show_debugoutput( $_[0]->menu->debug->{debugoutput}->IsChecked );
 			},
 		);
 
 		Padre::Wx::Action->new(
-			name        => 'debug.panel_debugger',
+			name        => 'debug.debugger',
 			label       => _T('Show Debugger'),
 			comment     => _T('We should not need this menu item'),
 			menu_method => 'AppendCheckItem',
 			menu_event  => sub {
-				$_[0]->show_panel_debugger( $_[0]->menu->debug->{panel_debugger}->IsChecked );
+				$_[0]->show_debugger( $_[0]->menu->debug->{debugger}->IsChecked );
 			},
 		);
 
@@ -2083,12 +2083,12 @@ sub init {
 
 			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				$_[0]->show_panel_breakpoints(1);
-				if ( $_[0]->{panel_breakpoints} ) {
-					$_[0]->{panel_breakpoints}->on_refresh_click();
+				$_[0]->show_breakpoints(1);
+				if ( $_[0]->{breakpoints} ) {
+					$_[0]->{breakpoints}->on_refresh_click();
 				}
-				$_[0]->show_panel_debugger(1);
-				$_[0]->{panel_debugger}->on_debug_clicked();
+				$_[0]->show_debugger(1);
+				$_[0]->{debugger}->on_debug_clicked();
 
 			},
 		);
@@ -2111,8 +2111,8 @@ sub init {
 			comment => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
-				if ( $_[0]->{panel_breakpoints} ) {
-					$_[0]->{panel_breakpoints}->on_set_breakpoints_clicked();
+				if ( $_[0]->{breakpoints} ) {
+					$_[0]->{breakpoints}->on_set_breakpoints_clicked();
 				} else {
 					require Padre::Breakpoints;
 					Padre::Breakpoints->set_breakpoints_clicked();
@@ -2124,16 +2124,14 @@ sub init {
 		Padre::Wx::Action->new(
 			name => 'debug.quit',
 			need => sub {
-				$main->{panel_debugger};
+				$main->{debugger};
 			},
 			toolbar => 'actions/red_cross',
 			label   => _T('Quit Debugger (&q)'),
 			comment => _T('Quit the process being debugged'),
-
-			#shortcut     => 'Shift-F5',
 			menu_event => sub {
-				if ( $_[0]->{panel_debugger} ) {
-					$_[0]->{panel_debugger}->on_quit_debugger_clicked();
+				if ( $_[0]->{debugger} ) {
+					$_[0]->{debugger}->on_quit_debugger_clicked;
 				}
 			},
 		);

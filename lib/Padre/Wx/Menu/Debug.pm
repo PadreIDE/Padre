@@ -13,6 +13,9 @@ our $VERSION = '0.93';
 our @ISA     = 'Padre::Wx::Menu';
 
 
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -26,16 +29,16 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	$self->{panel_breakpoints} = $self->add_menu_action(
-		'debug.panel_breakpoints',
+	$self->{breakpoints} = $self->add_menu_action(
+		'debug.breakpoints',
 	);
 
-	$self->{panel_debug_output} = $self->add_menu_action(
-		'debug.panel_debug_output',
+	$self->{debugoutput} = $self->add_menu_action(
+		'debug.debugoutput',
 	);
 
-	$self->{panel_debugger} = $self->add_menu_action(
-		'debug.panel_debugger',
+	$self->{debugger} = $self->add_menu_action(
+		'debug.debugger',
 	);
 
 	$self->AppendSeparator;
@@ -73,9 +76,9 @@ sub refresh {
 	my $document = Padre::Current::_CURRENT(@_)->document;
 	my $hasdoc   = $document ? 1 : 0;
 
-	$self->{panel_breakpoints}->Check( $config->main_panel_breakpoints );
-	$self->{panel_debug_output}->Check( $config->main_panel_debug_output );
-	$self->{panel_debugger}->Check( $config->main_panel_debugger );
+	$self->{breakpoints}->Check( $config->main_breakpoints );
+	$self->{debugoutput}->Check( $config->main_debugoutput );
+	$self->{debugger}->Check( $config->main_debugger );
 
 	$self->{launch}->Enable(1);
 	$self->{set_breakpoint}->Enable(1);

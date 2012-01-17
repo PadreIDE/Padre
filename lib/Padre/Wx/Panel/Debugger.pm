@@ -65,7 +65,7 @@ sub view_label {
 
 
 sub view_close {
-	$_[0]->main->show_panel_debugger(0);
+	$_[0]->main->show_debugger(0);
 }
 
 sub view_icon {
@@ -246,7 +246,7 @@ sub debug_perl {
 
 	# display panels
 	# $self->show_debug_output(1);
-	$main->show_panel_debug_output(1);
+	$main->show_debugoutput(1);
 
 	if ( $self->{client} ) {
 		$main->error( Wx::gettext('Debugger is already running') );
@@ -336,8 +336,8 @@ sub _set_debugger {
 	if ( $editor->{Document}->filename ne $file ) {
 		$main->setup_editor($file);
 		$editor = $main->current->editor;
-		if ( $self->main->{panel_breakpoints} ) {
-			$self->main->{panel_breakpoints}->on_refresh_click;
+		if ( $self->main->{breakpoints} ) {
+			$self->main->{breakpoints}->on_refresh_click;
 		}
 
 		# we only want to do this if we are loading other packages of ours
@@ -433,7 +433,7 @@ sub debug_quit {
 	$self->{debug}->Show;
 
 	# $self->show_debug_output(0);
-	$main->show_panel_debug_output(0);
+	$main->show_debugoutput(0);
 	return;
 }
 
@@ -457,12 +457,12 @@ sub debug_step_in {
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 		$self->debug_quit;
 		return;
 	}
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->buffer );
 	$self->_set_debugger;
 
 	return;
@@ -487,13 +487,13 @@ sub debug_step_over {
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 
 		$self->debug_quit;
 		return;
 	}
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->buffer );
 	$self->_set_debugger;
 
 	return;
@@ -516,13 +516,13 @@ sub debug_step_out {
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 
 		$self->debug_quit;
 		return;
 	}
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->buffer );
 	$self->_set_debugger;
 
 	return;
@@ -548,12 +548,12 @@ sub debug_run_till {
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 		$self->debug_quit;
 		return;
 	}
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->buffer );
 	$self->_set_debugger;
 
 	return;
@@ -578,7 +578,7 @@ sub _display_trace {
 
 		# $self->{trace_status} = $self->{client}->_set_option('frame=6');
 		$self->{trace_status} = $self->{client}->toggle_trace();
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 		return;
 	}
 
@@ -590,7 +590,7 @@ sub _display_trace {
 
 		# $self->{trace_status} = $self->{client}->_set_option('frame=1');
 		$self->{trace_status} = $self->{client}->toggle_trace();
-		$main->{panel_debug_output}->debug_status( $self->{trace_status} );
+		$main->{debugoutput}->debug_status( $self->{trace_status} );
 		return;
 	}
 
@@ -877,8 +877,8 @@ sub _get_bp_db {
 			}
 		}
 	}
-	if ( $self->main->{panel_breakpoints} ) {
-		$self->main->{panel_breakpoints}->on_refresh_click();
+	if ( $self->main->{breakpoints} ) {
+		$self->main->{breakpoints}->on_refresh_click();
 	}
 
 	#let's do some boot n braces
@@ -916,8 +916,8 @@ sub _bp_autoload {
 
 			#wright $tuples[$_][3] = 0
 			Padre::DB->do( 'update debug_breakpoints SET active = ? WHERE id = ?', {}, 0, $tuples[$_][0], );
-			if ( $self->main->{panel_breakpoints} ) {
-				$self->main->{panel_breakpoints}->on_refresh_click();
+			if ( $self->main->{breakpoints} ) {
+				$self->main->{breakpoints}->on_refresh_click();
 			}
 		}
 
@@ -938,7 +938,7 @@ sub on_debug_clicked {
 	$self->{quit_debugger}->Enable;
 
 	# $self->show_debug_output(1);
-	$main->show_panel_debug_output(1);
+	$main->show_debugoutput(1);
 	$self->{step_in}->Show;
 	$self->{step_over}->Show;
 	$self->{step_out}->Show;
@@ -968,8 +968,8 @@ sub on_debug_clicked {
 	$self->{debug}->Hide;
 	$self->debug_perl;
 	$main->aui->Update;
-	if ( $main->{panel_debug_output} ) {
-		$main->{panel_debug_output}->debug_output( $self->{client}->get_h_var('h') );
+	if ( $main->{debugoutput} ) {
+		$main->{debugoutput}->debug_output( $self->{client}->get_h_var('h') );
 	}
 
 	#let's reload our breakpoints
@@ -1043,7 +1043,7 @@ sub on_quit_debugger_clicked {
 	TRACE('quit_debugger_clicked') if DEBUG;
 	$self->debug_quit;
 
-	$main->show_panel_debug_output(0);
+	$main->show_debugoutput(0);
 
 	return;
 }
@@ -1104,7 +1104,7 @@ sub on_dot_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->show_line() );
+	$main->{debugoutput}->debug_output( $self->{client}->show_line() );
 
 	return;
 }
@@ -1115,7 +1115,7 @@ sub on_view_around_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->show_view() );
+	$main->{debugoutput}->debug_output( $self->{client}->show_view() );
 
 	return;
 }
@@ -1126,7 +1126,7 @@ sub on_list_action_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->show_breakpoints() );
+	$main->{debugoutput}->debug_output( $self->{client}->show_breakpoints() );
 
 	return;
 }
@@ -1142,8 +1142,8 @@ sub on_running_bp_clicked {
 	$self->{current_file} = $document->filename;
 
 	my $bp_action_ref;
-	if ( $self->main->{panel_breakpoints} ) {
-		$bp_action_ref = $self->main->{panel_breakpoints}->on_set_breakpoints_clicked();
+	if ( $self->main->{breakpoints} ) {
+		$bp_action_ref = $self->main->{breakpoints}->on_set_breakpoints_clicked();
 	} else {
 		require Padre::Breakpoints;
 		$bp_action_ref = Padre::Breakpoints->set_breakpoints_clicked();
@@ -1164,8 +1164,8 @@ sub on_running_bp_clicked {
 				'update debug_breakpoints SET active = ? WHERE filename = ? AND line_number = ?', {}, 0,
 				$self->{current_file}, $bp_action{line},
 			);
-			if ( $self->main->{panel_breakpoints} ) {
-				$self->main->{panel_breakpoints}->on_refresh_click();
+			if ( $self->main->{breakpoints} ) {
+				$self->main->{breakpoints}->on_refresh_click();
 			}
 
 		}
@@ -1174,7 +1174,7 @@ sub on_running_bp_clicked {
 		$self->{client}->remove_breakpoint( $self->{current_file}, $bp_action{line} );
 	}
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->__send('L b') );
+	$main->{debugoutput}->debug_output( $self->{client}->__send('L b') );
 	return;
 }
 #######
@@ -1184,7 +1184,7 @@ sub on_module_versions_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->__send('M') );
+	$main->{debugoutput}->debug_output( $self->{client}->__send('M') );
 
 	return;
 }
@@ -1195,7 +1195,7 @@ sub on_stacktrace_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->get_stack_trace() );
+	$main->{debugoutput}->debug_output( $self->{client}->get_stack_trace() );
 
 	return;
 }
@@ -1206,7 +1206,7 @@ sub on_all_threads_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}->debug_output( $self->{client}->__send_np('E') );
+	$main->{debugoutput}->debug_output( $self->{client}->__send_np('E') );
 
 	return;
 }
@@ -1218,10 +1218,10 @@ sub on_display_options_clicked {
 	my $main = $self->main;
 
 	# if ( $self->{expression}->GetValue() eq "" ) {
-	$main->{panel_debug_output}->debug_output( $self->{client}->get_options() );
+	$main->{debugoutput}->debug_output( $self->{client}->get_options() );
 
 	# } else {
-	# $main->{panel_debug_output}->debug_output( $self->{client}->set_option( $self->{expression}->GetValue() ) );
+	# $main->{debugoutput}->debug_output( $self->{client}->set_option( $self->{expression}->GetValue() ) );
 	# }
 
 	#reset expression
@@ -1238,9 +1238,9 @@ sub on_evaluate_expression_clicked {
 	my $main = $self->main;
 
 	if ( $self->{expression}->GetValue() eq "" ) {
-		$main->{panel_debug_output}->debug_output( '$_ = ' . $self->{client}->get_value() );
+		$main->{debugoutput}->debug_output( '$_ = ' . $self->{client}->get_value() );
 	} else {
-		$main->{panel_debug_output}->debug_output(
+		$main->{debugoutput}->debug_output(
 			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
 	}
 
@@ -1255,7 +1255,7 @@ sub on_sub_names_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{panel_debug_output}
+	$main->{debugoutput}
 		->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue() ) );
 
 	#reset expression
@@ -1271,7 +1271,7 @@ sub on_watchpoints_clicked {
 
 	if ( $self->{expression}->GetValue() ne "" ) {
 		if ( $self->{expression}->GetValue() eq "*" ) {
-			$main->{panel_debug_output}
+			$main->{debugoutput}
 				->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
 
 			#reset expression
@@ -1285,9 +1285,9 @@ sub on_watchpoints_clicked {
 		if ( $self->{client}->__send('L w') =~ m/$exp/gm ) {
 			my $del_watch = $self->{client}->__send( 'W ' . $self->{expression}->GetValue() );
 			if ($del_watch) {
-				$main->{panel_debug_output}->debug_output($del_watch);
+				$main->{debugoutput}->debug_output($del_watch);
 			} else {
-				$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+				$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 			}
 
 			#reset expression
@@ -1296,14 +1296,14 @@ sub on_watchpoints_clicked {
 		} else {
 
 			$self->{client}->__send( 'w ' . $self->{expression}->GetValue() );
-			$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+			$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 
 			#reset expression
 			# $self->expression->SetValue(BLANK);
 			return;
 		}
 	} else {
-		$main->{panel_debug_output}->debug_output( $self->{client}->__send('L w') );
+		$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 	}
 
 	#reset expression
@@ -1319,13 +1319,13 @@ sub on_raw_clicked {
 	my $main = $self->main;
 
 	if ( $self->{expression}->GetValue() =~ m/^h.?(\w*)/s ) {
-		$main->{panel_debug_output}->debug_output( $self->{client}->get_h_var($1) );
+		$main->{debugoutput}->debug_output( $self->{client}->get_h_var($1) );
 	} else {
 
-		$main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
+		$main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 	}
 
-	# $main->{panel_debug_output}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
+	# $main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 
 	return;
 }
@@ -1337,7 +1337,7 @@ sub on_raw_clicked {
 # my $self = shift;
 # my $main = $self->main;
 
-# # 	$main->{panel_debug_output}->debug_output( $self->{client}->__send('i') );
+# # 	$main->{debugoutput}->debug_output( $self->{client}->__send('i') );
 
 # # 	return;
 # }
@@ -1358,7 +1358,7 @@ sub on_raw_clicked {
 
 # # 	if ( $self->{expression}->GetValue() ne "" ) {
 
-# # 		$main->{panel_debug_output}->debug_output( $self->{client}->__send( 'w ' . $self->{expression}->GetValue() ) );
+# # 		$main->{debugoutput}->debug_output( $self->{client}->__send( 'w ' . $self->{expression}->GetValue() ) );
 # }
 
 # # 	#reset expression
@@ -1374,7 +1374,7 @@ sub on_raw_clicked {
 
 # # 	if ( $self->{expression}->GetValue() ne "" ) {
 
-# # 		$main->{panel_debug_output}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
+# # 		$main->{debugoutput}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
 # }
 
 # # 	#reset expression

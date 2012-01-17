@@ -53,7 +53,7 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->main->show_panel_debug_output(0);
+	$_[0]->main->show_debugoutput(0);
 }
 
 sub view_icon {
@@ -87,7 +87,7 @@ sub debug_output {
 	# $self->{output}->AppendText($out_text . "\n");
 	
 	# auto focus to panel debug output
-	$self->main->panel_debug_output->SetFocus;
+	$self->main->debugoutput->SetFocus;
 	
 	return;
 }
@@ -96,8 +96,8 @@ sub debug_output {
 # debug_status
 ########
 sub debug_status {
-	my $self = shift;
-	my $status =shift;
+	my $self   = shift;
+	my $status = shift;
 	$self->{status}->SetLabel($status);
 	return; 
 }

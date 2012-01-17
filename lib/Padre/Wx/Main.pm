@@ -323,24 +323,24 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->view_show( todo        => $config->main_todo        );
-	$self->view_show( functions   => $config->main_functions   );
-	$self->view_show( outline     => $config->main_outline     );
-	$self->view_show( directory   => $config->main_directory   );
-	$self->view_show( syntax => $config->main_syntax );
-	$self->view_show( output      => $config->main_output      );
-	if (Padre::Feature::COMMAND) {
-		$self->_show_command( $config->main_command );
+	$self->show_view( todo      => $config->main_todo      );
+	$self->show_view( functions => $config->main_functions );
+	$self->show_view( outline   => $config->main_outline   );
+	$self->show_view( directory => $config->main_directory );
+	$self->show_view( syntax    => $config->main_syntax    );
+	$self->show_view( output    => $config->main_output    );
+	if (Padre::Feature::COMMAND)                             {
+		$self->show_view( command => $config->main_command );
 	}
 	if (Padre::Feature::VCS) {
-		$self->view_show( vcs => $config->main_vcs );
+		$self->show_view( vcs => $config->main_vcs );
 	}
 	if (Padre::Feature::CPAN) {
-		$self->view_show( cpan => $config->main_cpan );
+		$self->show_view( cpan => $config->main_cpan );
 	}
-	$self->_show_panel_breakpoints( $config->main_panel_breakpoints );
-	$self->_show_panel_debug_output( $config->main_panel_debug_output );
-	$self->_show_panel_debugger( $config->main_panel_debugger );
+	$self->show_view( debugger    => $config->main_debugger );
+	$self->show_view( breakpoints => $config->main_breakpoints );
+	$self->show_view( debugoutput => $config->main_debugoutput );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $config->main_lockinterface );
@@ -349,14 +349,10 @@ sub new {
 	# when it moves to being created on demand.
 	if (Padre::Feature::DEBUGGER) {
 
-		#Reset the value to the default setting
+		# Reset the value to the default setting
 		my $name  = "main_toolbar_items";
 		my $value = $config->main_toolbar_items;
-		# if ( $value !~ m/quit2/ ) {
-			# my $debug2_tools = 'debug.launch;' . 'debug.set_breakpoints;' . 'debug.quit;' . '|;';
-			# $value .= $debug2_tools;
-			$config->apply( $name, $value );
-		# }
+		$config->apply( $name, $value );
 	}
 
 	# We need an event immediately after the window opened
@@ -567,28 +563,27 @@ use Class::XSAccessor {
 	predicates => {
 
 		# Needed for lazily-constructed GUI elements
-		has_about              => 'about',
-		has_left               => 'left',
-		has_right              => 'right',
-		has_bottom             => 'bottom',
-		has_panel_breakpoints  => 'panel_breakpoints',
-		has_panel_debug_output => 'panel_debug_output',
-		has_panel_debugger     => 'panel_debugger',
-		has_output             => 'output',
-		has_command       => 'command',
-		has_syntax             => 'syntax',
-		has_vcs                => 'vcs',
-		has_cpan               => 'cpan',
-		has_functions          => 'functions',
-		has_todo               => 'todo',
-		has_debugger           => 'debugger',
-		has_outline            => 'outline',
-		has_directory          => 'directory',
-		has_find               => 'find',
-		has_findfast           => 'findfast',
-		has_findinfiles        => 'findinfiles',
-		has_replace            => 'replace',
-		has_replaceinfiles     => 'replaceinfiles',
+		has_about          => 'about',
+		has_left           => 'left',
+		has_right          => 'right',
+		has_bottom         => 'bottom',
+		has_breakpoints    => 'breakpoints',
+		has_debugoutput    => 'debugoutput',
+		has_debugger       => 'debugger',
+		has_output         => 'output',
+		has_command        => 'command',
+		has_syntax         => 'syntax',
+		has_vcs            => 'vcs',
+		has_cpan           => 'cpan',
+		has_functions      => 'functions',
+		has_todo           => 'todo',
+		has_outline        => 'outline',
+		has_directory      => 'directory',
+		has_find           => 'find',
+		has_findfast       => 'findfast',
+		has_findinfiles    => 'findinfiles',
+		has_replace        => 'replace',
+		has_replaceinfiles => 'replaceinfiles',
 	},
 	getters => {
 
@@ -733,31 +728,31 @@ sub cpan {
 	return $self->{cpan};
 }
 
-sub panel_breakpoints {
+sub debugger {
 	my $self = shift;
-	unless ( defined $self->{panel_breakpoints} ) {
-		require Padre::Wx::Panel::Breakpoints;
-		$self->{panel_breakpoints} = Padre::Wx::Panel::Breakpoints->new($self);
-	}
-	return $self->{panel_breakpoints};
-}
-
-sub panel_debug_output {
-	my $self = shift;
-	unless ( defined $self->{panel_debug_output} ) {
-		require Padre::Wx::Panel::DebugOutput;
-		$self->{panel_debug_output} = Padre::Wx::Panel::DebugOutput->new($self);
-	}
-	return $self->{panel_debug_output};
-}
-
-sub panel_debugger {
-	my $self = shift;
-	unless ( defined $self->{panel_debugger} ) {
+	unless ( defined $self->{debugger} ) {
 		require Padre::Wx::Panel::Debugger;
-		$self->{panel_debugger} = Padre::Wx::Panel::Debugger->new($self);
+		$self->{debugger} = Padre::Wx::Panel::Debugger->new($self);
 	}
-	return $self->{panel_debugger};
+	return $self->{debugger};
+}
+
+sub breakpoints {
+	my $self = shift;
+	unless ( defined $self->{breakpoints} ) {
+		require Padre::Wx::Panel::Breakpoints;
+		$self->{breakpoints} = Padre::Wx::Panel::Breakpoints->new($self);
+	}
+	return $self->{breakpoints};
+}
+
+sub debugoutput {
+	my $self = shift;
+	unless ( defined $self->{debugoutput} ) {
+		require Padre::Wx::Panel::DebugOutput;
+		$self->{debugoutput} = Padre::Wx::Panel::DebugOutput->new($self);
+	}
+	return $self->{debugoutput};
 }
 
 sub diff {
@@ -767,19 +762,6 @@ sub diff {
 		$self->{diff} = Padre::Wx::Diff->new($self);
 	}
 	return $self->{diff};
-}
-
-BEGIN {
-	no warnings 'once';
-	*debugger = sub {
-		my $self = shift;
-		unless ( defined $self->{debug} ) {
-			require Padre::Wx::Debug;
-			$self->{debug} = Padre::Wx::Debug->new($self);
-		}
-		return $self->{debug};
-		}
-		if Padre::Feature::DEBUGGER;
 }
 
 sub outline {
@@ -2221,11 +2203,11 @@ sub rebuild_toolbar {
 Those methods deal with the various panels that Padre provides, and
 allow to show or hide them.
 
-=head3 C<view_panel>
+=head3 C<find_view>
 
-    my $name = $main->view_panel('Padre::Wx::FunctionList');
+    my $name = $main->find_view('Padre::Wx::FunctionList');
 
-The C<view_panel> method locates the name of the panel in which a tool is
+The C<find_view> method locates the name of the panel in which a tool is
 currently being shown. We assume each tool is only being shown once.
 
 Returns the name of the panel in string form (such as 'left') or false
@@ -2233,33 +2215,31 @@ if the view is not currently being shown.
 
 =cut
 
-sub view_panel {
+sub find_view {
 	my $self = shift;
-	my $view = shift;
+	my $page = shift;
 	foreach my $name ( PANELS ) {
 		my $has = "has_$name";
 		next unless $self->$has();
 		my $panel = $self->$name();
-		foreach my $window ( $panel->GetChildren ) {
-			next unless $window->isa($view);
+		if ( $panel->GetPageIndex($page) >= 0 ) {
 			return $name;
 		}
-		
 	}
 	return '';
 }
 
 =pod
 
-=head3 C<view_show>
+=head3 C<show_view>
 
-    $main->view_show( functions => 1 );
+    $main->show_view( functions => 1 );
 
-The C<view_show> methods displays or hides a named view of the main window.
+The C<show_view> methods displays or hides a named view of the main window.
 
 =cut
 
-sub view_show {
+sub show_view {
 	my $self = shift;
 	my $name = shift;
 	my $show = shift;
@@ -2268,20 +2248,24 @@ sub view_show {
 	if ( $show ) {
 		my $config = $self->config;
 		my $where  = "main_${name}_panel";
-		my $panel  = $config->$where();
 		my $lock   = $self->lock('UPDATE', 'AUI');
-		my $view   = $self->$name();
-		$self->$panel()->show($view);
+		my $page   = $self->$name();
+		my $panel  = $config->can($where)
+		           ? $config->$where()
+		           : $page->view_panel;
+		$self->$panel()->show($page);
 
 	} elsif ( $self->$has() ) {
-		my $view   = $self->$name();
-		my $module = Scalar::Util::blessed($view);
-		my $panel  = $self->view_panel($module) or return;
+		my $page   = $self->$name();
+		my $panel  = $self->find_view($page) or return;
 		my $lock   = $self->lock('UPDATE', 'AUI');
-		$self->$panel()->hide($view);
-		delete($self->{$name})->Destroy;
+		$self->$panel()->hide($page);
 	}
+
+	return;
 }
+
+=pod
 
 =head3 C<show_functions>
 
@@ -2296,14 +2280,14 @@ the panel.
 sub show_functions {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{functions};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_functions' );
-	unless ( $show == $self->menu->view->{functions}->IsChecked ) {
-		$self->menu->view->{functions}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_functions => $show );
-	$self->view_show( functions => $show );
-	return;
+	$self->show_view( functions => $show );
 }
+
+=pod
 
 =head3 C<show_todo>
 
@@ -2318,13 +2302,11 @@ the panel.
 sub show_todo {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{todo};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_todo' );
-	unless ( $show == $self->menu->view->{todo}->IsChecked ) {
-		$self->menu->view->{todo}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_todo => $show );
-	$self->view_show( todo => $show );
-	return;
+	$self->show_view( todo => $show );
 }
 
 =pod
@@ -2342,13 +2324,11 @@ the panel.
 sub show_outline {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{outline};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_outline' );
-	unless ( $show == $self->menu->view->{outline}->IsChecked ) {
-		$self->menu->view->{outline}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_outline => $show );
-	$self->view_show( outline => $show );
-	return;
+	$self->show_view( outline => $show );
 }
 
 =pod
@@ -2401,13 +2381,11 @@ the panel.
 sub show_directory {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{directory};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_directory' );
-	unless ( $show == $self->menu->view->{directory}->IsChecked ) {
-		$self->menu->view->{directory}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_directory => $show );
-	$self->view_show( directory => $show );
-	return;
+	$self->show_view( directory => $show );
 }
 
 =pod
@@ -2425,13 +2403,11 @@ the panel.
 sub show_output {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{output};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->view->{output}->IsChecked ) {
-		$self->menu->view->{output}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_output => $show );
-	$self->view_show( output => $show );
-	return;
+	$self->show_view( output => $show );
 }
 
 =pod
@@ -2474,8 +2450,7 @@ sub show_foundinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'AUI' );
-	$self->view_show( foundinfiles => $show );
-	return;
+	$self->show_view( foundinfiles => $show );
 }
 
 =pod
@@ -2494,8 +2469,7 @@ sub show_replaceinfiles {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	my $lock = $self->lock( 'UPDATE', 'AUI' );
-	$self->view_show( replaceinfiles => $show );
-	return;
+	$self->show_view( replaceinfiles => $show );
 }
 
 =pod
@@ -2513,13 +2487,11 @@ the panel.
 sub show_command {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{command};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->view->{command}->IsChecked ) {
-		$self->menu->view->{command}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_command => $show );
-	$self->view_show( command => $show );
-	return;
+	$self->show_view( command => $show );
 }
 
 =pod
@@ -2537,13 +2509,11 @@ the panel.
 sub show_syntax {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{syntax};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_syntax' );
-	unless ( $show == $self->menu->view->{syntax}->IsChecked ) {
-		$self->menu->view->{syntax}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_syntax => $show );
-	$self->view_show( syntax => $show );
-	return;
+	$self->show_view( syntax => $show );
 }
 
 =pod
@@ -2561,12 +2531,11 @@ the panel.
 sub show_vcs {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{vcs};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_vcs' );
-	unless ( $show == $self->menu->view->{vcs}->IsChecked ) {
-		$self->menu->view->{vcs}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_vcs => $show );
-	$self->view_show( vcs => $show );
+	$self->show_view( vcs => $show );
 	return;
 }
 
@@ -2585,20 +2554,19 @@ the panel.
 sub show_cpan {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->view->{cpan};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->view->{cpan}->IsChecked ) {
-		$self->menu->view->{cpan}->Check($show);
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
 	$self->config->set( main_cpan => $show );
-	$self->view_show( cpan => $show );
+	$self->show_view( cpan => $show );
 	return;
 }
 
 =pod
 
-=head3 C<show_panel_breakpoints>
+=head3 C<show_breakpoints>
 
-    $main->show_panel_breakpoints( $visible );
+    $main->show_breakpoints( $visible );
 
 Show the version control panel at the left if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2606,33 +2574,21 @@ the panel.
 
 =cut
 
-sub show_panel_breakpoints {
+sub show_breakpoints {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->debug->{breakpoints};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->debug->{panel_breakpoints}->IsChecked ) {
-		$self->menu->debug->{panel_breakpoints}->Check($show);
-	}
-	$self->config->set( main_panel_breakpoints => $show );
-	$self->_show_panel_breakpoints($show);
-	return;
-}
-
-sub _show_panel_breakpoints {
-	my $self = shift;
-	if ( $_[0] ) {
-		$self->left->show( $self->panel_breakpoints );
-	} elsif ( $self->has_panel_breakpoints ) {
-		$self->left->hide( $self->panel_breakpoints );
-		delete $self->{panel_breakpoints};
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
+	$self->config->set( main_breakpoints => $show );
+	$self->show_view( breakpoints => $show );
 }
 
 =pod
 
-=head3 C<show_panel_debug_output>
+=head3 C<show_debugoutput>
 
-    $main->show_panel_debug_output( $visible );
+    $main->show_debugoutput( $visible );
 
 Show the version control panel at the left if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2640,33 +2596,21 @@ the panel.
 
 =cut
 
-sub show_panel_debug_output {
+sub show_debugoutput {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->debug->{debugoutput};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->debug->{panel_debug_output}->IsChecked ) {
-		$self->menu->debug->{panel_debug_output}->Check($show);
-	}
-	$self->config->set( main_panel_debug_output => $show );
-	$self->_show_panel_debug_output($show);
-	return;
-}
-
-sub _show_panel_debug_output {
-	my $self = shift;
-	if ( $_[0] ) {
-		$self->bottom->show( $self->panel_debug_output );
-	} elsif ( $self->has_panel_debug_output ) {
-		$self->bottom->hide( $self->panel_debug_output );
-		delete $self->{panel_debug_output};
-	}
+	$item->Check($show) unless $show == $item->IsChecked;
+	$self->config->set( main_debugoutput => $show );
+	$self->show_view( debugoutput => $show );
 }
 
 =pod
 
-=head3 C<show_panel_debugger>
+=head3 C<show_debugger>
 
-    $main->show_panel_debugger( $visible );
+    $main->show_debugger( $visible );
 
 Show the version control panel at the left if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2674,28 +2618,15 @@ the panel.
 
 =cut
 
-sub show_panel_debugger {
+sub show_debugger {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $item = $self->menu->debug->{debugger};
 	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG' );
-	unless ( $show == $self->menu->debug->{panel_debugger}->IsChecked ) {
-		$self->menu->debug->{panel_debugger}->Check($show);
-	}
-	$self->config->set( main_panel_debugger => $show );
-	$self->_show_panel_debugger($show);
-	return;
+	$item->Check($show) unless $show == $item->IsChecked;
+	$self->config->set( main_debugger => $show );
+	$self->show_view( debugger => $show );
 }
-
-sub _show_panel_debugger {
-	my $self = shift;
-	if ( $_[0] ) {
-		$self->right->show( $self->panel_debugger );
-	} elsif ( $self->has_panel_debugger ) {
-		$self->right->hide( $self->panel_debugger );
-		delete $self->{panel_debugger};
-	}
-}
-
 
 =pod
 
@@ -7081,3 +7012,8 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
+
+# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

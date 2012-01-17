@@ -30,8 +30,6 @@ our $COMPATIBLE = '0.93';
 our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );
 
 BEGIN {
-	# die "Foo";
-
 	# Master storage of the settings
 	%SETTING = ();
 
@@ -756,21 +754,21 @@ setting(
 );
 
 setting(
-	name    => 'main_panel_breakpoints',
+	name    => 'main_breakpoints',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
 
 setting(
-	name    => 'main_panel_debug_output',
+	name    => 'main_debugoutput',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
 
 setting(
-	name    => 'main_panel_debugger',
+	name    => 'main_debugger',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,

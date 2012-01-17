@@ -56,7 +56,7 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->main->show_panel_breakpoints(0);
+	$_[0]->main->show_breakpoints(0);
 }
 
 sub view_icon {
