@@ -827,6 +827,117 @@ sub new {
 		-1,
 	);
 
+	my $m_panel11 = Wx::Panel->new(
+		$self->{treebook},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	my $m_staticText2041 = Wx::StaticText->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Bloat Reduction"),
+	);
+	$m_staticText2041->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	my $m_staticline471 = Wx::StaticLine->new(
+		$m_panel11,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
+	my $m_staticText205 = Wx::StaticText->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Optional features can be disabled to simplify the user interface, reduce memory consumption and make Padre run faster.\n\nChanges to features are only applied when Padre is restarted."),
+	);
+
+	$self->{feature_bookmark} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Bookmark Support"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_folding} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Code Folding"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_cursormemory} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Cursor Memory"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_session} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Session Support"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_syntax_check_annotations} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Syntax Check Annotations"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_document_diffs} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Editor Diff Feature"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_cpan} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("CPAN Explorer Tool"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_debugger} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Graphical Debugger Tool"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_vcs_support} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Version Control Tool"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{feature_fontsize} = Wx::CheckBox->new(
+		$m_panel11,
+		-1,
+		Wx::gettext("Change Font Size (Outside Preferences)"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
 	my $m_panel1 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -1635,6 +1746,25 @@ sub new {
 	$m_panel3->SetSizerAndFit($bSizer4);
 	$m_panel3->Layout;
 
+	my $bSizer121 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer121->Add( $m_staticText2041, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $m_staticline471, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer121->Add( $m_staticText205, 0, Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer121->Add( 0, 10, 0, Wx::EXPAND, 5 );
+	$bSizer121->Add( $self->{feature_bookmark}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_folding}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_cursormemory}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_session}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_syntax_check_annotations}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_document_diffs}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_cpan}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_debugger}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_vcs_support}, 0, Wx::ALL, 5 );
+	$bSizer121->Add( $self->{feature_fontsize}, 0, Wx::ALL, 5 );
+
+	$m_panel11->SetSizerAndFit($bSizer121);
+	$m_panel11->Layout;
+
 	my $fgSizer24 = Wx::FlexGridSizer->new( 2, 2, 5, 5 );
 	$fgSizer24->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer24->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
@@ -1790,11 +1920,12 @@ sub new {
 	$m_panel6->SetSizerAndFit($bSizer711);
 	$m_panel6->Layout;
 
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 1 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
 	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("AUI Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
+	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 1 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("File Handling"), 0 );
@@ -1987,6 +2118,46 @@ sub editor_currentline_color {
 
 sub preview {
 	$_[0]->{preview};
+}
+
+sub feature_bookmark {
+	$_[0]->{feature_bookmark};
+}
+
+sub feature_folding {
+	$_[0]->{feature_folding};
+}
+
+sub feature_cursormemory {
+	$_[0]->{feature_cursormemory};
+}
+
+sub feature_session {
+	$_[0]->{feature_session};
+}
+
+sub feature_syntax_check_annotations {
+	$_[0]->{feature_syntax_check_annotations};
+}
+
+sub feature_document_diffs {
+	$_[0]->{feature_document_diffs};
+}
+
+sub feature_cpan {
+	$_[0]->{feature_cpan};
+}
+
+sub feature_debugger {
+	$_[0]->{feature_debugger};
+}
+
+sub feature_vcs_support {
+	$_[0]->{feature_vcs_support};
+}
+
+sub feature_fontsize {
+	$_[0]->{feature_fontsize};
 }
 
 sub editor_indent_tab {
