@@ -15,6 +15,7 @@ the even version for the release, even during development.
 
 0.94 TBA
     - Redesigned the Preferences dialog (ADAMK)
+    - The location of most tools can now be configured (ADAMK)
     - Completed the Padre::Delta module for applying document updates, diffs or
       other small automated changes to a document without moving the scroll
       position or cursor (ADAMK)
@@ -89,7 +90,6 @@ the even version for the release, even during development.
     - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
     - Padre::Search::matches now supports submatch option (ADAMK)
     - Added basic tests for Debugger panels (BOWTIE)
-    - The location of most tools can now be configured (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
