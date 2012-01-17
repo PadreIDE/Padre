@@ -90,7 +90,9 @@ the even version for the release, even during development.
     - Padre::Search::editor_replace_all now uses Padre::Delta (ADAMK)
     - Padre::Search::matches now supports submatch option (ADAMK)
     - Added basic tests for Debugger panels (BOWTIE)
-    - Save All is much faster and won't flicker or defocus the cursor (ADAMK)
+    - Save All is much faster and won't flicker or defocus cursors (ADAMK)
+    - The Reload actions now restore cursor position (more) correctly and
+      don't defocus the current editor (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

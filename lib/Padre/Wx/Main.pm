@@ -4576,6 +4576,94 @@ sub on_open_last_closed_file {
 
 =pod
 
+=head3 C<reload_editor>
+
+    $main->reload_editor;
+
+Try to reload a file from disk. Display an error if something went wrong.
+
+Returns 1 on success and 0 in case of and error.
+
+=cut
+
+sub reload_editor {
+	my $self     = shift;
+	my $editor   = shift || $self->current->editor or return 0;
+	my $document = $editor->document or return 0;
+	my $lock     = $editor->lock_update;
+
+	# Capture where we are in the document
+	my $line = $editor->LineFromPosition( $editor->GetCurrentPos );
+
+	# Reload the document and propogate to the editor
+	unless ( $document->reload ) {
+		$self->error(
+			sprintf(
+				Wx::gettext("Could not reload file: %s"),
+				$document->errstr
+			)
+		);
+		return 0;
+	}
+	$editor->set_document($document);
+
+	# Restore the line position
+	my $position = $editor->PositionFromLine($line);
+	$editor->SetCurrentPos($position);
+	$editor->SetAnchor($position);
+
+	# Refresh the editor title to remove any unsaved marker
+	$editor->refresh_notebook;
+
+	return 1;
+}
+
+=pod
+
+=head3 C<reload_editors>
+
+    my $success = $main->reload_editors(@editors);
+
+Reloads a series of editors.
+
+Returns true upon success, false otherwise.
+
+=cut
+
+sub reload_editors {
+	my $self     = shift;
+	my @editors  = @_;
+
+	# Show a progress dialog as this may be long running
+	require Padre::Wx::Progress;
+	my $progress = Padre::Wx::Progress->new(
+		$self,
+		Wx::gettext('Reloading Files'),
+		$#editors,
+		lazy => 1,
+	);
+
+	# Interate through the reloads
+	my $lock     = $self->lock('REFRESH');
+	my $total    = scalar @editors;
+	my $notebook = $self->notebook;
+	foreach my $i ( 0 .. $#editors ) {
+		$progress->update( $i, ($i + 1) . "/$total" );
+		$self->reload_editor($editors[$i]) or return 0;
+	}
+
+	# Notify the plugin manager of the changed files
+	$self->ide->plugin_manager->plugin_event('editor_changed');
+
+	# Refresh everything once we are done
+	# TO DO Remove this once reload_editor is smart enough to refresh
+	$self->refresh;
+
+	return 1;
+}
+
+=pod
+
 =head3 C<reload_all>
 
     my $success = $main->reload_all;
@@ -4585,163 +4673,40 @@ Reload all open files from disk.
 =cut
 
 sub reload_all {
-	my $self  = shift;
-	my $skip  = shift;
-	my $lock  = $self->lock('UPDATE');
-	my @pages = $self->pageids;
-
-	require Padre::Wx::Progress;
-	my $progress = Padre::Wx::Progress->new(
-		$self, Wx::gettext('Reload all files'), $#pages,
-		lazy => 1
-	);
-
-	foreach my $no ( 0 .. $#pages ) {
-		$progress->update( $no, ( $no + 1 ) . '/' . scalar(@pages) );
-		$self->reload_file( $pages[$no] ) or return 0;
-	}
-
-	$self->refresh;
-
-	return 1;
+	my $self = shift;
+	$self->reload_editors( $self->editors );
 }
 
 =pod
 
-=head3 C<reload_some>
+=head2 C<reload_dialog>
 
-    my $success = $main->reload_some(@pages_to_reload);
+  $main->reload_dialog;
 
-Reloads the given documents. Return true upon success, false otherwise.
+Displays the "Reload Files" dialog, asking the user which files should
+be reloaded and reloading them as specified.
 
 =cut
 
-sub on_reload_some {
+sub reload_dialog {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE');
+	my %args = @_;
 
 	require Padre::Wx::Dialog::WindowList;
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
-		title      => Wx::gettext('Reload some files'),
+		title      => Wx::gettext('Reload Files'),
 		list_title => Wx::gettext('&Select files to reload:'),
-		buttons    => [ [ Wx::gettext('&Reload selected'), sub { $_[0]->main->reload_some(@_); } ] ],
+		buttons    => [
+			[
+				Wx::gettext('&Reload selected'),
+				sub {
+					$_[0]->main->reload_editors(@_);
+				},
+			],
+		],
+		%args,
 	)->show;
-}
-
-sub reload_some {
-	my $self         = shift;
-	my @reload_pages = @_;
-
-	my $notebook = $self->notebook;
-
-	my $manager = $self->{ide}->plugin_manager;
-
-	require Padre::Wx::Progress;
-	my $progress = Padre::Wx::Progress->new(
-		$self, Wx::gettext('Reload some'), $#reload_pages,
-		lazy => 1
-	);
-
-	SCOPE: {
-		my $lock = $self->lock('refresh');
-		foreach my $reload_page_no ( 0 .. $#reload_pages ) {
-			$progress->update( $reload_page_no, ( $reload_page_no + 1 ) . '/' . scalar(@reload_pages) );
-
-			foreach my $pageid ( $self->pageids ) {
-				my $page = $notebook->GetPage($pageid);
-				next unless defined($page);
-				next unless $page eq $reload_pages[$reload_page_no];
-				$self->reload_file($pageid) or return 0;
-			}
-		}
-	}
-
-	# Recalculate window title
-	$self->refresh_title;
-
-	$manager->plugin_event('editor_changed');
-
-	return 1;
-}
-
-
-=head3 C<reload_file>
-
-    $main->reload_file;
-
-Try to reload a file from disk. Display an error if something went wrong.
-
-
-Returns 1 on success and 0 in case of and error.
-
-=cut
-
-sub reload_file {
-	my $self = shift;
-	my $page = shift;
-
-	my $editor;
-	my $document;
-
-	if ( defined($page) ) {
-		my $notebook = $self->notebook;
-		$editor   = $notebook->GetPage($page) or return 0;
-		$document = $editor->{Document}       or return 0;
-	} else {
-		$document = $self->current->document or return 0;
-		$editor = $document->editor;
-	}
-
-	if (Padre::Feature::CURSORMEMORY) {
-		$editor->store_cursor_position;
-	}
-	if ( $document->reload ) {
-		$editor = $document->editor;
-		$editor->set_document($document);
-		if (Padre::Feature::CURSORMEMORY) {
-			$editor->restore_cursor_position;
-		}
-	} else {
-		$self->error(
-			sprintf(
-				Wx::gettext("Could not reload file: %s"),
-				$document->errstr
-			)
-		);
-	}
-	return 1;
-}
-
-=head3 C<on_reload_file>
-
-    $main->on_reload_file;
-
-Try to reload current file from disk. Display an error if something went wrong.
-No return value.
-
-=cut
-
-sub on_reload_file {
-	my $self = shift;
-
-	return $self->reload_file;
-}
-
-
-=head3 C<on_reload_all>
-
-    $main->on_reload_all;
-
-Reload all currently opened files from disk.
-No return value.
-
-=cut
-
-sub on_reload_all {
-	my $self = shift;
-
-	return $self->reload_all;
 }
 
 =pod
@@ -5281,7 +5246,14 @@ sub on_close_some {
 		$self,
 		title      => Wx::gettext('Close some files'),
 		list_title => Wx::gettext('Select files to close:'),
-		buttons    => [ [ 'Close selected', sub { $_[0]->main->close_some(@_); } ] ],
+		buttons    => [
+			[
+				'Close selected',
+				sub {
+					$_[0]->main->close_some(@_);
+				},
+			],
+		],
 	)->show;
 }
 
@@ -6413,45 +6385,7 @@ sub timer_check_overwrite {
 	return if $doc->{_already_popup_file_changed};
 
 	$doc->{_already_popup_file_changed} = 1;
-
-	#	my $Text;
-	#	if ( $file_state == -1 ) {
-	#		$Text = Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
-	#	} else {
-	#		$Text = Wx::gettext("File changed on disk since last saved. Do you want to reload it?");
-	#	}
-	#
-	#	my $ret = Wx::MessageBox(
-	#		$Text,
-	#		$doc->filename || Wx::gettext("File not in sync"),
-	#		Wx::YES_NO | Wx::CENTRE, $self,
-	#	);
-	#
-	#	if ( $ret == Wx::YES ) {
-	#		unless ( $doc->reload ) {
-	#			$self->error(
-	#				sprintf(
-	#					Wx::gettext("Could not reload file: %s"),
-	#					$doc->errstr
-	#				)
-	#			);
-	#		} else {
-	#			$doc->editor->set_document($doc);
-	#		}
-	#	} else {
-	#		$doc->{timestamp} = $doc->timestamp_now;
-	#	}
-
-	# Show dialog for file reload selection
-	require Padre::Wx::Dialog::WindowList;
-	my $winlist = Padre::Wx::Dialog::WindowList->new(
-		$self,
-		title      => Wx::gettext('Reload some files'),
-		list_title => Wx::gettext('&Select files to reload:'),
-		buttons    => [ [ Wx::gettext('&Reload selected'), sub { $_[0]->main->reload_some(@_); } ] ],
-	);
-	$winlist->{no_fresh} = 1;
-	$winlist->show;
+	$self->reload_dialog( no_fresh => 1 );
 
 	return;
 }

@@ -376,7 +376,7 @@ sub init {
 		label       => _T('Reload &File'),
 		comment     => _T('Reload current file from disk'),
 		menu_event  => sub {
-			$_[0]->on_reload_file;
+			$_[0]->reload_editor;
 		},
 	);
 
@@ -386,7 +386,7 @@ sub init {
 		label       => _T('Reload &All'),
 		comment     => _T('Reload all files currently open'),
 		menu_event  => sub {
-			$_[0]->on_reload_all;
+			$_[0]->reload_all;
 		},
 	);
 
@@ -396,7 +396,7 @@ sub init {
 		label       => _T('Reload &Some...'),
 		comment     => _T('Select some open files for reload'),
 		menu_event  => sub {
-			$_[0]->on_reload_some;
+			$_[0]->reload_dialog;
 		},
 	);
 

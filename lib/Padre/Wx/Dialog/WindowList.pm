@@ -3,7 +3,6 @@ package Padre::Wx::Dialog::WindowList;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
