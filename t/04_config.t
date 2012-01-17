@@ -5,7 +5,7 @@ use warnings;
 use constant NUMBER_OF_CONFIG_OPTIONS => 159;
 
 # Move of Debug to Run Menu
-use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 28;
+use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 24;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -31,8 +31,6 @@ isa_ok( $config,        'Padre::Config' );
 isa_ok( $config->host,  'Padre::Config::Host' );
 isa_ok( $config->human, 'Padre::Config::Human' );
 is( $config->project,        undef, '->project is undef' );
-is( $config->host->version,  undef, '->host->version is undef' );
-is( $config->human->version, undef, '->human->version is undef' );
 
 # Loading the config file should not result in Wx loading
 is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
@@ -69,10 +67,6 @@ ok( $config->write, '->write ok' );
 # Saving the config file should not result in Wx loading
 is( $Wx::VERSION, undef, 'Wx was not loaded during config write' );
 
-# Check that we have a version for the parts now
-is( $config->host->version,  1, '->host->version is set' );
-is( $config->human->version, 1, '->human->version is set' );
-
 # Set values on both the human and host sides
 ok( $config->set( main_lockinterface => 0 ),
 	'->set(human) ok',
@@ -96,6 +90,7 @@ is( $Wx::VERSION, undef, 'Wx is never loaded during config operations' );
 # Check clone support
 my $copy = $config->clone;
 is_deeply( $copy, $config, '->clone ok' );
+
 
 
 
