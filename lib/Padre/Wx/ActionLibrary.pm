@@ -149,7 +149,8 @@ sub init {
 		label      => _T('Perl 5 &Script'),
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
-			$_[0]->start_perl5_script;
+			require Padre::Document::Perl::Starter;
+			Padre::Document::Perl::Starter->new($_[0])->create_script;
 		},
 	);
 
@@ -158,16 +159,18 @@ sub init {
 		label      => _T('Perl 5 &Module'),
 		comment    => _T('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
-			$_[0]->start_perl5_module;
+			require Padre::Document::Perl::Starter;
+			Padre::Document::Perl::Starter->new($_[0])->create_module;
 		},
 	);
 
 	Padre::Wx::Action->new(
 		name       => 'file.new_p5_test',
 		label      => _T('Perl 5 &Test'),
-		comment    => _T('Open a document with a skeleton Perl 5 test  script'),
+		comment    => _T('Open a document with a skeleton Perl 5 test script'),
 		menu_event => sub {
-			$_[0]->start_perl5_test;
+			require Padre::Document::Perl::Starter;
+			Padre::Document::Perl::Starter->new($_[0])->create_test;
 		},
 	);
 
