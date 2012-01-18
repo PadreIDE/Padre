@@ -20,28 +20,6 @@ use constant {
 	OFFSET => 24,
 };
 
-# sub new {
-	# my $class = shift;
-	# my $self  = $class->SUPER::new(@_);
-
-	# # Always show the first tab regardless of which one
-	# # was selected in wxFormBuilder.
-	# $self->notebook->ChangeSelection(0);
-
-	# # Load the platform-adaptive splash image
-	# $self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
-
-	# # Set the system information
-	# $self->{output}->ChangeValue( $self->_information );
-
-	# # Set the translators
-	# $self->_translation;
-
-	# $self->CenterOnParent;
-
-	# return $self;
-# }
-
 sub run {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
@@ -53,7 +31,7 @@ sub run {
 	# Load the platform-adaptive splash image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
 	# $self->creator->SetLabel("G\x{e1}bor Szab\x{f3}"); # don't work
-	$self->creator->SetLabel('Gábor Szabó'); # works
+	$self->creator->SetLabel('Created by Gábor Szabó'); # works
 	
 	# Set the system information
 	$self->{output}->ChangeValue( $self->_information );
