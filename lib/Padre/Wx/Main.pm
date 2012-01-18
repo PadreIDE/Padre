@@ -582,6 +582,7 @@ use Class::XSAccessor {
 		has_find           => 'find',
 		has_findfast       => 'findfast',
 		has_findinfiles    => 'findinfiles',
+		has_foundinfiles   => 'foundinfiles',
 		has_replace        => 'replace',
 		has_replaceinfiles => 'replaceinfiles',
 	},

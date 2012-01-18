@@ -104,12 +104,15 @@ sub run {
 		return;
 	}
 
+	# Save user input for next time
+	$self->find_term->SaveValue;
+	$self->find_directory->SaveValue;
+
 	# Run the search in the Find in Files view
 	$main->show_foundinfiles;
-	$main->find_term->SaveValue;
 	$main->foundinfiles->search(
 		search => $self->as_search,
-		root   => $self->find_directory->SaveValue,
+		root   => $self->find_directory->GetValue,
 		mime   => $self->find_types->GetClientData(
 			$self->find_types->GetSelection
 		),
