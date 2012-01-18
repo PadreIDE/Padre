@@ -1923,7 +1923,7 @@ sub new {
 
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 0 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("AUI Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
