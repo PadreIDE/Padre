@@ -3772,6 +3772,9 @@ sub on_activate {
 		$self->refresh_vcs($current);
 	}
 
+	# Ensure we are focused on the current document
+	$self->editor_focus;
+
 	return 1;
 }
 
