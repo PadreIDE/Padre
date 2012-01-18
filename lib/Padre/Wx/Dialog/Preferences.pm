@@ -13,7 +13,7 @@ use Padre::Wx::FBP::Preferences ();
 use Padre::Wx::Choice::Theme    ();
 use Padre::Wx::Theme            ();
 use Padre::Wx::Role::Dialog     ();
-use Padre::Util                 ('_T');
+use Padre::Locale::T;
 use Padre::Logger;
 
 our $VERSION = '0.93';
@@ -75,7 +75,7 @@ sub run {
 	# Save back to configuration
 	$self->config_save($config);
 
-	# re-create menu to activate shortcuts
+	# Re-create menu to activate shortcuts
 	$self->_recreate_menubar;
 
 	# Clean up
@@ -253,7 +253,7 @@ sub guess {
 sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE');
+	my $lock = $self->preview->lock_update;
 	my $name = $self->choice('editor_style');
 	Padre::Wx::Theme->find($name)->apply( $self->preview );
 	return;
@@ -276,6 +276,9 @@ sub choice {
 	my @results = sort keys %$options;
 	return $results[ $ctrl->GetSelection ];
 }
+
+
+
 
 
 #######################################################################
