@@ -26,19 +26,23 @@ Shows a progress bar dialog to tell the user that we're doing something.
 use 5.008;
 use strict;
 use warnings;
+use Time::HiRes ();
 use Padre::Wx ();
 
-our $VERSION = '0.93';
+our $VERSION    = '0.93';
+our $COMPATIBLE = '0.93';
 
 =pod
 
 =head2 new
 
-  my $object = Padre::Wx::Progress->new($title, $max_count,
-               message => $default_message # optional
-               modal => 1, # optional
-               lazy  => 1, # optional
-               );
+    my $object = Padre::Wx::Progress->new(
+        $title,
+        $max_count,
+        message => $default_message # optional
+        modal => 1,                 # optional
+        lazy  => 1,                 # optional
+    );
 
 The C<new> constructor lets you create a new C<Padre::Wx::Progress> object.
 
@@ -66,42 +70,63 @@ Returns a new C<Padre::Wx::Progress> or dies on error.
 
 sub new {
 	my $class = shift;
-
 	my $main  = shift;
 	my $title = shift;
 	my $max   = shift;
 
-	my $self = bless { max => $max, title => $title, main => $main, start => time, @_ }, $class;
+	my $self = bless {
+		max   => $max,
+		title => $title,
+		main  => $main,
+		start => Time::HiRes::time(),
+		@_,
+	}, $class;
 
 	$self->{title}   ||= Wx::gettext('Please wait...');
 	$self->{message} ||= '';
 
-	# Lazy mode means: Create the progress bar only when it makes sense. If this is requested,
-	# don't create it here:
-	$self->_create_progress if !$self->{lazy};
+	# Lazy mode:
+	# Create the progress bar only when it makes sense.
+	# If this is requested don't create it here:
+	$self->dialog unless $self->{lazy};
 
 	return $self;
 }
 
-sub _create_progress {
+sub dialog {
 	my $self = shift;
+	unless ( defined $self->{dialog} ) {
+		# Don't display if inside the lazy window
+		if ( Time::HiRes::time() - $self->{start} < 1 ) {
+			return;
+		}
 
-	# Add some default flags:
-	my $flags = Wx::PD_ELAPSED_TIME | Wx::PD_ESTIMATED_TIME | Wx::PD_REMAINING_TIME | Wx::PD_AUTO_HIDE;
-	$flags |= Wx::PD_APP_MODAL if $self->{modal};
+		# Default flags
+		my $flags = Wx::PD_ELAPSED_TIME
+			  | Wx::PD_ESTIMATED_TIME
+			  | Wx::PD_REMAINING_TIME
+			  | Wx::PD_AUTO_HIDE;
+		if ( $self->{modal} ) {
+			$flags |= Wx::PD_APP_MODAL;
+		}
 
-	# Create the progress bar dialog:
-	$self->{dialog} = Wx::ProgressDialog->new(
-		$self->{title}, $self->{message},
-		$self->{max}, $self->{main}, $flags
-	);
+		# Create the Wx object
+		$self->{dialog} = Wx::ProgressDialog->new(
+			$self->{title},
+			$self->{message},
+			$self->{max},
+			$self->{main},
+			$flags,
+		);
+	}
+	$self->{dialog};
 }
 
 =pod
 
 =head2 update
 
-  $progress->update($value,$text);
+    $progress->update( $value, $text );
 
 Updates the progress bar with a new value and optional with a new text message.
 
@@ -110,33 +135,26 @@ The last message will stay if no new text is specified.
 =cut
 
 sub update {
-	my $self  = shift;
-	my $value = shift;
-	my $text  = shift;
-
-	if ( !defined( $self->{dialog} ) ) {
-
-		# Lazy mode: Don't waste CPU time for a box which is destroyed immed.
-		return 1 if $self->{start} >= ( time - 1 );
-		$self->_create_progress;
-	}
-
-	$self->{dialog}->Update( $value, $text );
-
-	return 1;
+	my $self   = shift;
+	my $dialog = $self->dialog or return 1;
+	$dialog->Update(@_);
 }
 
+# Simulate Wx destroy call
 sub Destroy {
-
-	# Simulate Wx's ->Destroy function
-	shift->DESTROY;
+	if ( defined $_[0]->{dialog} ) {
+		$_[0]->{dialog}->Hide;
+		$_[0]->{dialog}->Destroy;
+		delete $_[0]->{dialog};
+	}
 }
 
 sub DESTROY {
-	my $self = shift;
-
-	# Destroy (and hide )the dialog if it's still defined
-	$self->{dialog}->Destroy if defined( $self->{dialog} );
+	if ( defined $_[0]->{dialog} ) {
+		$_[0]->{dialog}->Hide;
+		$_[0]->{dialog}->Destroy;
+		delete $_[0]->{dialog};
+	}
 }
 
 1;
