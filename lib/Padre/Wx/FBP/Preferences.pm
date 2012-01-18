@@ -157,7 +157,7 @@ sub new {
 	my $m_staticText7 = Wx::StaticText->new(
 		$m_panel5,
 		-1,
-		Wx::gettext("Prefered language for error diagnostics"),
+		Wx::gettext("Preferred language for error diagnostics"),
 	);
 
 	$self->{locale_perldiag} = Wx::Choice->new(

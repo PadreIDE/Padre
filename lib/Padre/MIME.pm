@@ -485,7 +485,7 @@ Padre::MIME->create(
 );
 
 # text/xml specifically means "human-readable XML".
-# This is prefered to the more generic application/xml
+# This is preferred to the more generic application/xml
 Padre::MIME->create(
 	type      => 'text/xml',
 	name      => 'XML',

@@ -145,7 +145,7 @@ sub main {
 	$_[0]->parent->wx->main;
 }
 
-# Get the prefered plugin order.
+# Get the preferred plugin order.
 # The order calculation cost is higher than we might like,
 # so cache the result.
 sub plugin_order {
