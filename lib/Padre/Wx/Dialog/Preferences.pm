@@ -23,6 +23,32 @@ our @ISA     = qw{
 	Padre::Wx::FBP::Preferences
 };
 
+my @KEYS = (
+	_T('None'),
+	_T('Backspace'),
+	_T('Tab'),
+	_T('Space'),
+	_T('Up'),
+	_T('Down'),
+	_T('Left'),
+	_T('Right'),
+	_T('Insert'),
+	_T('Delete'),
+	_T('Home'),
+	_T('End'),
+	_T('PageUp'),
+	_T('PageDown'),
+	_T('Enter'),
+	_T('Escape'),
+	'F1', 'F2', 'F3', 'F4',
+	'F5', 'F6', 'F7', 'F8',
+	'F9', 'F10', 'F11', 'F12',
+	'A' .. 'Z',
+	'0' .. '9',
+	'~', '-', '=', '[', ']',
+	';', '\'', ',', '.', '/'
+);
+
 
 
 
@@ -65,6 +91,7 @@ sub run {
 		$sizer->Show( 2, 0 );
 		$sizer->Show( 3, 0 );
 		$sizer->Layout;
+		$self->{list}->tidy;
 	}
 
 	# Show the dialog
@@ -127,41 +154,28 @@ HERE
 	# a public method returning it.
 	$self->{names} = [ grep { $self->can($_) } $self->config->settings ];
 
-	#TODO access the panel by name instead of by index
-	$self->{keybindings_panel} = $self->{treebook}->GetPage(4)
-		or warn "Key bindings panel is not found!\n";
-
 	# Set some internal parameters for key bindings
-	$self->{sortcolumn}  = 0;
+	$self->{sortcolumn}  = 1;
 	$self->{sortreverse} = 0;
 
-	my @titles = qw(Action Description Shortcut);
-	foreach my $i ( 0 .. $#titles ) {
-		$self->{list}->InsertColumn( $i, Wx::gettext( $titles[$i] ) );
-		$self->{list}->SetColumnWidth( $i, Wx::LIST_AUTOSIZE );
-	}
-
-	# key choice list
-	my @keys = (
-		_T('None'),   _T('Backspace'), _T('Tab'),    _T('Space'),  _T('Up'),   _T('Down'),
-		_T('Left'),   _T('Right'),     _T('Insert'), _T('Delete'), _T('Home'), _T('End'),
-		_T('PageUp'), _T('PageDown'),  _T('Enter'),  _T('Escape'),
-		'F1',       'F2',       'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12',
-		'A' .. 'Z', '0' .. '9', '~',  '-',  '=',  '[',  ']',  ';',  '\'', ',',   '.',   '/'
-	);
-	$self->{keys} = \@keys;
-
-	my @translated_keys = map { Wx::gettext($_) } @keys;
-	for my $key (@translated_keys) {
+	# Fill the key choice list
+	for my $key ( map { Wx::gettext($_) } @KEYS ) {
 		$self->{key}->Append($key);
 	}
 	$self->{key}->SetSelection(0);
+
+	# Create the list columns
+	$self->{list}->init(
+		Wx::gettext('Shortcut'),
+		Wx::gettext('Action'),
+		Wx::gettext('Description'),
+	);
 
 	# Update the key bindings list
 	$self->_update_list;
 
 	# Tidy the list
-	Padre::Wx::Util::tidy_list( $self->{list} );
+	$self->{list}->tidy;
 
 	return $self;
 }
@@ -286,62 +300,69 @@ sub choice {
 
 # Private method to update the key bindings list view
 sub _update_list {
-	my $self   = shift;
+	my $self    = shift;
+	my $list    = $self->{list};
+	my $lock    = $list->lock_update;
+	my $actions = $self->ide->actions;
+	my @names   = keys %$actions;
+
+	# Build the data for the table
+	my @table = map { [
+		_translate_shortcut( $actions->{$_}->shortcut ),
+		$_,
+		$actions->{$_}->label_text,
+	] } keys %$actions;
+
+	# Apply term filtering
 	my $filter = quotemeta $self->{filter}->GetValue;
+	@table = grep {
+		$_->[0] =~ /$filter/i
+		or
+		$_->[1] =~ /$filter/i
+		or
+		$_->[2] =~ /$filter/i
+	} @table;
 
-	# Clear list
-	my $list = $self->{list};
-	$list->DeleteAllItems;
-
-	my $actions         = $self->ide->actions;
-	my $real_color      = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
-	my $alternate_color = Wx::Colour->new(
-		int( $real_color->Red * 0.9 ),
-		int( $real_color->Green * 0.9 ),
-		$real_color->Blue,
-	);
-	my $index = 0;
-
-	my @action_names = sort { $a cmp $b } keys %$actions;
-	if ( $self->{sortcolumn} == 1 ) {
-
-		# Sort by Descreption
-		@action_names = sort { $actions->{$a}->label_text cmp $actions->{$b}->label_text } keys %$actions;
-	}
-	if ( $self->{sortcolumn} == 2 ) {
-
-		# Sort by Shortcut
-		@action_names = sort {
-			_translate_shortcut( $actions->{$a}->shortcut || '' )
-				cmp _translate_shortcut( $actions->{$b}->shortcut || '' )
-		} keys %$actions;
-	}
+	# Apply sorting
+	@table = sort {
+		$a->[$self->{sortcolumn}] cmp $b->[$self->{sortcolumn}]
+	} @table;
 	if ( $self->{sortreverse} ) {
-		@action_names = reverse @action_names;
+		@table = reverse @table;
 	}
 
-	foreach my $action_name (@action_names) {
-		my $action = $actions->{$action_name};
-		my $shortcut = defined $action->shortcut ? $action->shortcut : '';
+	# Find the alternate row colour
+	my $color  = Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
+	my $altcol = Wx::Colour->new(
+		int( $color->Red * 0.9 ),
+		int( $color->Green * 0.9 ),
+		$color->Blue,
+	);
 
-		# Ignore key binding if it does not match the filter
-		next
-			if $action->label_text !~ /$filter/i
-				and $action_name !~ /$filter/i
-				and $shortcut !~ /$filter/i;
+	# Refill the table with the filtered list
+	my $index = -1;
+	$list->DeleteAllItems;
+	foreach my $row ( @table ) {
+		my $name   = $row->[1];
+		my $action = $actions->{$name};
 
-		# Add the key binding to the list control
-		$list->InsertStringItem( $index, $action_name );
-		$list->SetItem( $index, 1, $action->label_text );
-		$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
+		# Add the row to the list
+		$list->InsertStringItem( ++$index, $row->[0] );
+		$list->SetItem( $index, 1, $row->[1] );
+		$list->SetItem( $index, 2, $row->[2] );
 
 		# Non-default (i.e. overriden) shortcuts should have a bold font
-		my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
-		$self->_set_item_bold_font( $index, $non_default );
+		my $shortcut = $action->shortcut;
+		my $setting  = $action->shortcut_setting;
+		my $default  = $self->config->default($setting);
+		unless ( $shortcut eq $default ) {
+			$list->set_item_bold( $index, 1 );
+		}
 
 		# Alternating table colors
-		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
-		$index++;
+		unless ( $index % 2 ) {
+			$list->SetItemBackgroundColour( $index, $altcol );
+		}
 	}
 
 	return;
@@ -355,21 +376,6 @@ sub _translate_shortcut {
 	my $regular_key = @parts ? $parts[-1] : '';
 
 	return join '-', map { Wx::gettext($_) } @parts;
-}
-
-# Private method to set item to bold
-# Somehow SetItemFont is not there... hence i had to write this long workaround
-sub _set_item_bold_font {
-	my ( $self, $index, $bold ) = @_;
-
-	my $list = $self->{list};
-	my $item = $list->GetItem($index);
-	my $font = $item->GetFont;
-	$font->SetWeight( $bold ? Wx::FONTWEIGHT_BOLD : Wx::FONTWEIGHT_NORMAL );
-	$item->SetFont($font);
-	$list->SetItem($item);
-
-	return;
 }
 
 sub _on_list_col_click {
@@ -387,15 +393,14 @@ sub _on_list_col_click {
 
 # Private method to handle the selection of a key binding item
 sub _on_list_item_selected {
-	my $self  = shift;
-	my $event = shift;
+	my $self   = shift;
+	my $event  = shift;
+	my $list   = $self->{list};
+	my $index  = $list->GetFirstSelected;
+	my $name   = $list->GetItemText($index);
+	my $action = $self->ide->actions->{$name};
 
-	my $list        = $self->{list};
-	my $index       = $list->GetFirstSelected;
-	my $action_name = $list->GetItemText($index);
-	my $action      = $self->ide->actions->{$action_name};
-
-	my $shortcut = $self->ide->actions->{$action_name}->shortcut;
+	my $shortcut = $self->ide->actions->{$name}->shortcut;
 	$shortcut = '' if not defined $shortcut;
 
 	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
@@ -411,14 +416,13 @@ sub _on_list_item_selected {
 sub _update_shortcut_ui {
 	my ( $self, $shortcut ) = @_;
 
-	my @parts = split /-/, $shortcut;
+	my @parts       = split /-/, $shortcut;
 	my $regular_key = @parts ? $parts[-1] : '';
 
 	# Find the regular key index in the choice box
 	my $regular_index = 0;
-	my @keys          = @{ $self->{keys} };
-	for ( my $i = 0; $i < scalar @keys; $i++ ) {
-		if ( $regular_key eq $keys[$i] ) {
+	for ( my $i = 0; $i < scalar @KEYS; $i++ ) {
+		if ( $regular_key eq $KEYS[$i] ) {
 			$regular_index = $i;
 			last;
 		}
@@ -426,8 +430,8 @@ sub _update_shortcut_ui {
 
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
-	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
+	$self->{ctrl}->SetValue(  $shortcut =~ /Ctrl/  ? 1 : 0 );
+	$self->{alt}->SetValue(   $shortcut =~ /Alt/   ? 1 : 0 );
 	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
 
 	# Make sure the value and info sizer are not hidden
@@ -443,31 +447,30 @@ sub _update_shortcut_ui {
 
 # Private method to handle the pressing of the set value button
 sub _on_set_button {
-	my $self = shift;
-
-	my $index       = $self->{list}->GetFirstSelected;
-	my $action_name = $self->{list}->GetItemText($index);
+	my $self  = shift;
+	my $index = $self->{list}->GetFirstSelected;
+	my $name  = $self->{list}->GetItemText($index);
 
 	my @key_list = ();
 	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
 		push @key_list, $regular_key if $self->{ lc $regular_key }->GetValue;
 	}
 	my $key_index   = $self->{key}->GetSelection;
-	my $regular_key = $self->{keys}->[$key_index];
+	my $regular_key = $KEYS[$key_index];
 	push @key_list, $regular_key if not $regular_key eq 'None';
 	my $shortcut = join '-', @key_list;
 
-	$self->_try_to_set_binding( $action_name, $shortcut );
+	$self->_try_to_set_binding( $name, $shortcut );
 
 	return;
 }
 
 # Tries to set the binding and asks the user if he want to set the shortcut if has already be used elsewhere
 sub _try_to_set_binding {
-	my ( $self, $action_name, $shortcut ) = @_;
+	my ( $self, $name, $shortcut ) = @_;
 
 	my $other_action = $self->ide->shortcuts->{$shortcut};
-	if ( defined $other_action && $other_action->name ne $action_name ) {
+	if ( defined $other_action && $other_action->name ne $name ) {
 		return unless $self->yes_no(
 			sprintf(
 				Wx::gettext("The shortcut '%s' is already used by the action '%s'.\n"),
@@ -479,17 +482,17 @@ sub _try_to_set_binding {
 		$self->_set_binding( $other_action->name, '' );
 	}
 
-	$self->_set_binding( $action_name, $shortcut );
+	$self->_set_binding( $name, $shortcut );
 
 	return;
 }
 
 # Sets the key binding in Padre's configuration
 sub _set_binding {
-	my ( $self, $action_name, $shortcut ) = @_;
+	my ( $self, $name, $shortcut ) = @_;
 
 	my $shortcuts = $self->ide->shortcuts;
-	my $action    = $self->ide->actions->{$action_name};
+	my $action    = $self->ide->actions->{$name};
 
 	# modify shortcut registry
 	my $old_shortcut = $action->shortcut;
@@ -505,22 +508,21 @@ sub _set_binding {
 
 	# Update the action's UI
 	my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
-	$self->_update_action_ui( $action_name, $shortcut, $non_default );
+	$self->_update_action_ui( $name, $shortcut, $non_default );
 
 	return;
 }
 
 # Private method to update the UI from the provided preference
 sub _update_action_ui {
+	my ( $self, $name, $shortcut, $non_default ) = @_;
 
-	my ( $self, $action_name, $shortcut, $non_default ) = @_;
-
-	my $list = $self->{list};
-	my $index = $list->FindItem( -1, $action_name );
+	my $list  = $self->{list};
+	my $index = $list->FindItem( -1, $name );
 
 	$self->{button_reset}->Enable($non_default);
 	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
-	$self->_set_item_bold_font( $index, $non_default );
+	$list->set_item_bold( $index, $non_default );
 
 	$self->_update_shortcut_ui($shortcut);
 
@@ -532,24 +534,23 @@ sub _on_delete_button {
 	my $self = shift;
 
 	# Prepare the key binding
-	my $index       = $self->{list}->GetFirstSelected;
-	my $action_name = $self->{list}->GetItemText($index);
+	my $index = $self->{list}->GetFirstSelected;
+	my $name  = $self->{list}->GetItemText($index);
 
-	$self->_set_binding( $action_name, '' );
+	$self->_set_binding( $name, '' );
 
 	return;
 }
 
 # Private method to handle the pressing of the reset button
 sub _on_reset_button {
-	my $self = shift;
-
-	my $index       = $self->{list}->GetFirstSelected;
-	my $action_name = $self->{list}->GetItemText($index);
-	my $action      = $self->ide->actions->{$action_name};
+	my $self   = shift;
+	my $index  = $self->{list}->GetFirstSelected;
+	my $name   = $self->{list}->GetItemText($index);
+	my $action = $self->ide->actions->{$name};
 
 	$self->_try_to_set_binding(
-		$action_name,
+		$name,
 		$self->config->default( $action->shortcut_setting )
 	);
 
@@ -557,10 +558,11 @@ sub _on_reset_button {
 }
 
 # re-create menu to activate shortcuts
+# TO DO Massive encapsulation violation
 sub _recreate_menubar {
 	my $self = shift;
-
 	my $main = $self->main;
+
 	delete $main->{menu};
 	$main->{menu} = Padre::Wx::Menubar->new($main);
 	$main->SetMenuBar( $main->menu->wx );

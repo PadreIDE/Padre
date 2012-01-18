@@ -14,6 +14,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::Choice::Theme ();
 use Padre::Wx::Editor ();
+use Padre::Wx::ListView ();
 
 our $VERSION = '0.93';
 our @ISA     = qw{
@@ -1080,7 +1081,7 @@ sub new {
 	);
 	$self->{editor_autoindent}->SetSelection(0);
 
-	my $m_panel9 = Wx::Panel->new(
+	$self->{keybindings_panel} = Wx::Panel->new(
 		$self->{treebook},
 		-1,
 		Wx::DefaultPosition,
@@ -1089,13 +1090,13 @@ sub new {
 	);
 
 	my $m_staticText59 = Wx::StaticText->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("&Filter:"),
 	);
 
 	$self->{filter} = Wx::TextCtrl->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		"",
 		Wx::DefaultPosition,
@@ -1110,8 +1111,8 @@ sub new {
 		},
 	);
 
-	$self->{list} = Wx::ListView->new(
-		$m_panel9,
+	$self->{list} = Padre::Wx::ListView->new(
+		$self->{keybindings_panel},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -1135,13 +1136,13 @@ sub new {
 	);
 
 	$self->{shortcut_label} = Wx::StaticText->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("Shortcut:"),
 	);
 
 	$self->{ctrl} = Wx::CheckBox->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("Ctrl"),
 		Wx::DefaultPosition,
@@ -1149,7 +1150,7 @@ sub new {
 	);
 
 	$self->{alt} = Wx::CheckBox->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("Alt"),
 		Wx::DefaultPosition,
@@ -1157,13 +1158,13 @@ sub new {
 	);
 
 	$self->{plus1_label} = Wx::StaticText->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("+"),
 	);
 
 	$self->{shift} = Wx::CheckBox->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("Shift"),
 		Wx::DefaultPosition,
@@ -1171,13 +1172,13 @@ sub new {
 	);
 
 	$self->{plus2_label} = Wx::StaticText->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("+"),
 	);
 
 	$self->{key} = Wx::Choice->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -1186,7 +1187,7 @@ sub new {
 	$self->{key}->SetSelection(0);
 
 	$self->{button_set} = Wx::Button->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("S&et"),
 		Wx::DefaultPosition,
@@ -1205,7 +1206,7 @@ sub new {
 	);
 
 	$self->{button_delete} = Wx::Button->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("&Delete"),
 		Wx::DefaultPosition,
@@ -1224,7 +1225,7 @@ sub new {
 	);
 
 	$self->{button_reset} = Wx::Button->new(
-		$m_panel9,
+		$self->{keybindings_panel},
 		-1,
 		Wx::gettext("&Reset"),
 		Wx::DefaultPosition,
@@ -1738,7 +1739,7 @@ sub new {
 	my $bSizer4 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer4->Add( $fgSizer91, 0, Wx::EXPAND, 5 );
 	$bSizer4->Add( $m_staticline21, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer4->Add( $fgSizer4, 0, Wx::EXPAND, 0 );
+	$bSizer4->Add( $fgSizer4, 0, 0, 0 );
 	$bSizer4->Add( $m_staticText331, 0, Wx::ALL, 5 );
 	$bSizer4->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer4->Add( $self->{preview}, 1, Wx::EXPAND, 5 );
@@ -1835,8 +1836,8 @@ sub new {
 	$sizer->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$sizer->Add( $bottom_sizer, 0, Wx::EXPAND, 0 );
 
-	$m_panel9->SetSizerAndFit($sizer);
-	$m_panel9->Layout;
+	$self->{keybindings_panel}->SetSizerAndFit($sizer);
+	$self->{keybindings_panel}->Layout;
 
 	my $fgSizer34 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
 	$fgSizer34->SetFlexibleDirection(Wx::BOTH);
@@ -1925,9 +1926,9 @@ sub new {
 	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("AUI Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
-	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 1 );
+	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
-	$self->{treebook}->AddPage( $m_panel9, Wx::gettext("Key Bindings"), 0 );
+	$self->{treebook}->AddPage( $self->{keybindings_panel}, Wx::gettext("Key Bindings"), 1 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("File Handling"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("Language - Perl 6"), 0 );
