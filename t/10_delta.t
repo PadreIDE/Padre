@@ -6,7 +6,6 @@ use strict;
 use warnings;
 use Test::More tests => 12;
 use Test::NoWarnings;
-use Test::LongString;
 use t::lib::Padre;
 use Padre;
 use Padre::Delta;
@@ -189,5 +188,5 @@ SCOPE: {
 
 	# Do we get the TO text
 	my $result = $editor->GetText;
-	is_string( $result, $TO2 );
+	is( $result, $TO2, 'Delta applied correctly' );
 }
