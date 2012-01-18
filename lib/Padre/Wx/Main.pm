@@ -6381,11 +6381,11 @@ the document. No return value.
 =cut
 
 sub timer_check_overwrite {
-	my $self       = shift;
-	my $doc        = $self->current->document or return;
-	my $file_state = $doc->has_changed_on_disk;         # 1 = updated, 0 = unchanged, -1 = deleted
+	my $self  = shift;
+	my $doc   = $self->current->document or return;
+	my $state = $doc->has_changed_on_disk; # 1 = updated, 0 = unchanged, -1 = deleted
 
-	return unless $file_state;
+	return unless $state;
 	return if $doc->{_already_popup_file_changed};
 
 	$doc->{_already_popup_file_changed} = 1;
@@ -6436,7 +6436,7 @@ sub start_perl5_script {
 
 	# Generate the code from the script template
 	require Padre::Template;
-	my $code = Padre::Template->render('perl5/script.pl');
+	my $code = Padre::Template->render('perl5/script_pl.tt');
 
 	# Show the new file in a new editor window
 	$self->new_document_from_string( $code, 'application/x-perl' );
@@ -6461,20 +6461,20 @@ sub start_perl5_module {
 	my $module = shift;
 	unless ( defined Params::Util::_STRING($module) ) {
 		$module = $self->prompt(
-			Wx::gettext('Module name:'),
+			Wx::gettext('Module Name:'),
 			Wx::gettext('New Module'),
 		);
 	}
-	unless ( defined Params::Util::_STRING($module) ) {
 
-		# If we still don't have a module name abort
+	# If we still don't have a module name abort
+	unless ( defined Params::Util::_STRING($module) ) {
 		return;
 	}
 
 	# Generate the code from the module template
 	require Padre::Template;
 	my $code = Padre::Template->render(
-		'perl5/module.pm',
+		'perl5/module_pm.tt',
 		module => $module,
 	);
 
@@ -6499,7 +6499,7 @@ sub start_perl5_test {
 
 	# Generate the code from the script template
 	require Padre::Template;
-	my $code = Padre::Template->render('perl5/test.t');
+	my $code = Padre::Template->render('perl5/test_t.tt');
 
 	# Show the new file in a new editor window
 	$self->new_document_from_string( $code, 'application/x-perl' );
@@ -6522,7 +6522,7 @@ sub start_perl6_script {
 
 	# Generate the code from the script template
 	require Padre::Template;
-	my $code = Padre::Template->render('perl6/script.p6');
+	my $code = Padre::Template->render('perl6/script_p6.tt');
 
 	# Show the new file in a new editor window
 	$self->new_document_from_string( $code, 'application/x-perl6' );
@@ -6548,9 +6548,7 @@ sub action {
 
 	# Does the action exist
 	my $action = $self->ide->{actions}->{$name};
-	unless ($action) {
-		die "No such action '$name'";
-	}
+	die "No such action '$name'" unless $action;
 
 	# Execute the action
 	$action->menu_event->($self);
@@ -6586,10 +6584,6 @@ sub change_highlighter {
 	my $mime_type = shift;
 	my $module    = shift;
 
-	# Refresh the menu (and MIME_LEXER hook)
-	# probably no need for this
-	# $self->refresh;
-
 	# Update the colourise for each editor of the relevant mime-type
 	# Trying to delay the actual color updating for the
 	# pages that are not in focus till they get in focus
@@ -6620,8 +6614,8 @@ sub change_highlighter {
 
     $main->key_up( $event );
 
-Callback for when a key up C<$event> happens in Padre. This handles the various
-C<Ctrl>+key combinations used within Padre.
+Callback for when a key up C<$event> happens in Padre. This handles the
+various C<Ctrl>+key combinations used within Padre.
 
 =cut
 
@@ -6795,13 +6789,8 @@ sub new_document_from_string {
 
 	# Fill the document
 	$document->text_set($string);
-	if ($mimetype) {
-		$document->set_mimetype($mimetype);
-	}
-	if ($encoding) {
-		$document->set_encoding($encoding);
-	}
-
+	$document->set_mimetype($mimetype) if $mimetype;
+	$document->set_encoding($encoding) if $encoding;
 	$document->{original_content} = $document->text_get;
 	$document->editor->setup_document;
 	$document->rebless;
@@ -6811,36 +6800,29 @@ sub new_document_from_string {
 }
 
 sub filter_tool {
-	my $self = shift;
-	my $cmd  = shift;
+	my $self    = shift;
+	my $cmd     = shift;
+	my $current = $self->current;
 
-	return 0 if !defined($cmd);
+	return 0 unless defined $cmd;
 	return 0 if $cmd eq '';
 
-	my $text = $self->current->text;
-
-	if ( defined($text) and ( $text ne '' ) ) {
+	my $text = $current->text;
+	if ( defined $text and $text ne '' ) {
 
 		# Process a selection
-
 		my $newtext = $self->_filter_tool_run( $cmd, \$text );
-
-		if ( defined($newtext) and ( $newtext ne '' ) ) {
-
-			my $editor = $self->current->editor;
-			$editor->ReplaceSelection($newtext);
+		if ( defined $newtext and $newtext ne '' ) {
+			$current->editor->ReplaceSelection($newtext);
 		}
 
 	} else {
 
 		# No selection, process whole document
-
-		my $document = $self->current->document;
+		my $document = $current->document;
 		my $text     = $document->text_get;
-
-		my $newtext = $self->_filter_tool_run( $cmd, \$text );
-
-		if ( defined($newtext) and ( $newtext ne '' ) ) {
+		my $newtext  = $self->_filter_tool_run( $cmd, \$text );
+		if ( defined $newtext and $newtext ne '' ) {
 			$document->text_replace($newtext);
 		}
 	}
@@ -6851,7 +6833,7 @@ sub filter_tool {
 sub _filter_tool_run {
 	my $self = shift;
 	my $cmd  = shift;
-	my $text = shift; # reference to advoid copiing the content again
+	my $text = shift; # reference to avoid copying the content again
 
 	my $filter_in;
 	my $filter_out;
@@ -6859,22 +6841,30 @@ sub _filter_tool_run {
 
 	require IPC::Open3;
 	unless ( IPC::Open3::open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
-		$self->error( sprintf( Wx::gettext("Error running filter tool:\n%s"), $! ) );
+		$self->error(
+			sprintf(
+				Wx::gettext("Error running filter tool:\n%s"),
+				$!,
+			)
+		);
 		return;
 	}
 
 	print $filter_in ${$text};
 	CORE::close $filter_in; # Send EOF to tool
-	my $newtext = join( '', <$filter_out> );
+	my $newtext = join '', <$filter_out>;
 
-	if ( defined($filter_err) ) {
+	if ( defined $filter_err ) {
 
 		# The error channel may not exist
-
-		my $errtext = join( '', <$filter_err> );
-
-		if ( defined($errtext) and ( $errtext ne '' ) ) {
-			$self->error( sprintf( Wx::gettext( "Error returned by filter tool:\n%s", $errtext ) ) );
+		my $errtext = join '', <$filter_err>;
+		if ( defined $errtext and $errtext ne '' ) {
+			$self->error(
+				sprintf(
+					Wx::gettext("Error returned by filter tool:\n%s"),
+					$errtext,
+				)
+			);
 
 			# We may also have a result, so don't return here
 		}
@@ -6888,6 +6878,7 @@ sub encode {
 	my $self     = shift;
 	my $charset  = shift;
 	my $document = $self->current->document;
+
 	$document->{encoding} = $charset;
 	if ( $document->filename ) {
 		$document->save_file;

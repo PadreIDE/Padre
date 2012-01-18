@@ -110,7 +110,7 @@ sub new {
 		-1,
 		"",
 		Wx::DefaultPosition,
-		Wx::DefaultSize,
+		[ 400, -1 ],
 	);
 
 	my $m_staticText187 = Wx::StaticText->new(
@@ -157,7 +157,7 @@ sub new {
 	my $m_staticText7 = Wx::StaticText->new(
 		$m_panel5,
 		-1,
-		Wx::gettext("Preferred language for error diagnostics"),
+		Wx::gettext("Prefered language for error diagnostics"),
 	);
 
 	$self->{locale_perldiag} = Wx::Choice->new(
@@ -734,6 +734,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{editor_cursor_blink}->SetMaxLength(4);
 
 	$self->{editor_right_margin_enable} = Wx::CheckBox->new(
 		$m_panel3,
@@ -758,6 +759,7 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{editor_right_margin_column}->SetMaxLength(3);
 
 	Wx::Event::EVT_TEXT(
 		$self,
@@ -856,7 +858,7 @@ sub new {
 	my $m_staticText205 = Wx::StaticText->new(
 		$m_panel11,
 		-1,
-		Wx::gettext("Optional features can be disabled to simplify the user interface, reduce memory consumption and make Padre run faster.\n\nChanges to features are only applied when Padre is restarted."),
+		Wx::gettext("Optional features can be disabled to simplify the user interface,\nreduce memory consumption and make Padre run faster.\n\nChanges to features are only applied when Padre is restarted."),
 	);
 
 	$self->{feature_bookmark} = Wx::CheckBox->new(
@@ -1575,13 +1577,6 @@ sub new {
 	$fgSizer241->Add( $m_staticText6, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer241->Add( $self->{main_functions_order}, 0, Wx::EXPAND, 5 );
 
-	my $fgSizer26 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
-	$fgSizer26->AddGrowableCol(1);
-	$fgSizer26->SetFlexibleDirection(Wx::BOTH);
-	$fgSizer26->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$fgSizer26->Add( $m_staticText11, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer26->Add( $self->{todo_regexp}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT | Wx::EXPAND, 5 );
-
 	my $fgSizer32 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
 	$fgSizer32->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer32->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
@@ -1591,18 +1586,19 @@ sub new {
 	my $bSizer116 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer116->Add( $m_staticText186, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline361, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer116->Add( $fgSizer241, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer116->Add( $fgSizer241, 0, Wx::ALL, 5 );
 	$bSizer116->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer116->Add( $m_staticText190, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline40, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer116->Add( $fgSizer26, 0, Wx::EXPAND, 5 );
+	$bSizer116->Add( $m_staticText11, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
+	$bSizer116->Add( $self->{todo_regexp}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer116->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer116->Add( $m_staticText187, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline37, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer116->Add( $self->{window_list_shorten_path}, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $self->{main_output_ansi}, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $self->{info_on_statusbar}, 0, Wx::ALL, 5 );
-	$bSizer116->Add( $fgSizer32, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer116->Add( $fgSizer32, 0, Wx::ALL, 5 );
 
 	$m_panel5->SetSizerAndFit($bSizer116);
 	$m_panel5->Layout;
@@ -1639,7 +1635,7 @@ sub new {
 	$bSizer41->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer41->Add( $m_staticText35111, 0, Wx::ALL, 5 );
 	$bSizer41->Add( $m_staticline41111, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer41->Add( $fgSizer413, 0, Wx::EXPAND, 5 );
+	$bSizer41->Add( $fgSizer413, 0, 0, 5 );
 
 	$m_panel4->SetSizerAndFit($bSizer41);
 	$m_panel4->Layout;
@@ -1689,12 +1685,12 @@ sub new {
 	$fgSizer28->Add( $m_staticText8, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer28->Add( $self->{default_line_ending}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer28->Add( $m_staticText5, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
-	$fgSizer28->Add( $self->{default_projects_directory}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
+	$fgSizer28->Add( $self->{default_projects_directory}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::EXPAND, 5 );
 
 	my $bSizer117 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer117->Add( $m_staticText191, 0, Wx::ALL, 5 );
 	$bSizer117->Add( $m_staticline41, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer117->Add( $fgSizer30, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer117->Add( $fgSizer30, 0, Wx::ALL, 5 );
 	$bSizer117->Add( $self->{main_singleinstance}, 0, Wx::ALL, 5 );
 	$bSizer117->Add( $self->{startup_splash}, 0, Wx::ALL, 5 );
 	$bSizer117->Add( 0, 10, 0, Wx::EXPAND, 5 );
@@ -1728,16 +1724,16 @@ sub new {
 	$fgSizer4->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer4->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$fgSizer4->Add( $m_staticText10, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer4->Add( $self->{editor_cursor_blink}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer4->Add( $self->{editor_cursor_blink}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT | Wx::ALL, 5 );
 	$fgSizer4->Add( $self->{editor_right_margin_enable}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer4->Add( $self->{editor_right_margin_column}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer4->Add( $m_staticText17, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer4->Add( $self->{editor_font}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer4->Add( $self->{editor_font}, 0, Wx::ALL, 5 );
 	$fgSizer4->Add( $m_staticText18, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	my $bSizer4 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer4->Add( $fgSizer91, 0, Wx::EXPAND, 5 );
+	$bSizer4->Add( $fgSizer91, 0, 0, 5 );
 	$bSizer4->Add( $m_staticline21, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer4->Add( $fgSizer4, 0, 0, 0 );
 	$bSizer4->Add( $m_staticText331, 0, Wx::ALL, 5 );
@@ -1860,16 +1856,16 @@ sub new {
 	my $bSizer120 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer120->Add( $m_staticText197, 0, Wx::ALL, 5 );
 	$bSizer120->Add( $m_staticline45, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer120->Add( $fgSizer34, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer120->Add( $fgSizer34, 0, Wx::ALL, 5 );
 	$bSizer120->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer120->Add( $m_staticText198, 0, Wx::ALL, 5 );
 	$bSizer120->Add( $m_staticline46, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
-	$bSizer120->Add( $fgSizer35, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer120->Add( $fgSizer35, 0, Wx::ALL, 5 );
 	$bSizer120->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer120->Add( $m_staticText199, 0, Wx::ALL, 5 );
 	$bSizer120->Add( $m_staticline47, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer120->Add( $self->{file_ftp_passive}, 0, Wx::ALL, 5 );
-	$bSizer120->Add( $fgSizer36, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer120->Add( $fgSizer36, 0, Wx::ALL, 5 );
 
 	$m_panel8->SetSizerAndFit($bSizer120);
 	$m_panel8->Layout;
@@ -1923,12 +1919,12 @@ sub new {
 
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("AUI Layout"), 0 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 1 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
-	$self->{treebook}->AddPage( $self->{keybindings_panel}, Wx::gettext("Key Bindings"), 1 );
+	$self->{treebook}->AddPage( $self->{keybindings_panel}, Wx::gettext("Key Bindings"), 0 );
 	$self->{treebook}->AddPage( $m_panel8, Wx::gettext("File Handling"), 0 );
 	$self->{treebook}->AddPage( $m_panel7, Wx::gettext("Language - Perl 5"), 0 );
 	$self->{treebook}->AddPage( $m_panel6, Wx::gettext("Language - Perl 6"), 0 );
