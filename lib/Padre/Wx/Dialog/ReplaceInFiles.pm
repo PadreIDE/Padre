@@ -100,14 +100,18 @@ sub run {
 		return;
 	}
 
-	# Run the search in the Replace in Files tool
+	# Save user input for next time
 	my $lock = $main->lock('DB');
+	$self->find_term->SaveValue;
+	$self->find_directory->SaveValue;
+	$self->replace_term->SaveValue;
+
+	# Run the search in the Replace in Files tool
 	$main->show_replaceinfiles;
-	$main->find_term->SaveValue;
 	$main->replaceinfiles->replace(
 		search  => $self->as_search,
-		replace => $self->replace_term->SaveValue,
-		root    => $self->find_directory->SaveValue,
+		replace => $self->replace_term->GetValue,
+		root    => $self->find_directory->GetValue,
 		mime    => $self->find_types->GetClientData(
 			$self->find_types->GetSelection
 		),
@@ -128,7 +132,7 @@ sub as_search {
 	my $self = shift;
 	require Padre::Search;
 	Padre::Search->new(
-		find_term    => $self->find_term->SaveValue,
+		find_term    => $self->find_term->GetValue,
 		find_case    => $self->find_case->GetValue,
 		find_regex   => $self->find_regex->GetValue,
 		replace_term => $self->replace_term->GetValue,

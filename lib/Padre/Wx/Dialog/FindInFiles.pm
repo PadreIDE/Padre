@@ -105,6 +105,7 @@ sub run {
 	}
 
 	# Save user input for next time
+	my $lock = $main->lock('DB');
 	$self->find_term->SaveValue;
 	$self->find_directory->SaveValue;
 
