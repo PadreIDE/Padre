@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 08:10-0800\n"
+"POT-Creation-Date: 2012-01-19 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -880,7 +880,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1920
+#: lib/Padre/Wx/FBP/Preferences.pm:1919
 msgid "Appearance"
 msgstr ""
 
@@ -924,7 +924,7 @@ msgstr ""
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1921
+#: lib/Padre/Wx/FBP/Preferences.pm:1920
 msgid "Autocomplete"
 msgstr ""
 
@@ -972,7 +972,7 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1923
+#: lib/Padre/Wx/FBP/Preferences.pm:1922
 msgid "Behaviour"
 msgstr ""
 
@@ -1855,7 +1855,7 @@ msgstr ""
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:490
+#: lib/Padre/Wx/Dialog/Preferences.pm:488
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -1975,7 +1975,7 @@ msgstr ""
 msgid "Editor Session Support"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:693 lib/Padre/Wx/FBP/Preferences.pm:1924
+#: lib/Padre/Wx/FBP/Preferences.pm:693 lib/Padre/Wx/FBP/Preferences.pm:1923
 msgid "Editor Style"
 msgstr ""
 
@@ -2367,7 +2367,7 @@ msgstr ""
 msgid "Fayland Lam"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1925
+#: lib/Padre/Wx/FBP/Preferences.pm:1924
 msgid "Features"
 msgstr ""
 
@@ -2381,7 +2381,7 @@ msgstr ""
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1928
+#: lib/Padre/Wx/FBP/Preferences.pm:1927
 msgid "File Handling"
 msgstr ""
 
@@ -2779,7 +2779,7 @@ msgstr ""
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1926
+#: lib/Padre/Wx/FBP/Preferences.pm:1925
 msgid "Indentation"
 msgstr ""
 
@@ -2910,7 +2910,7 @@ msgstr ""
 msgid "Kevin Dawson"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1927
+#: lib/Padre/Wx/FBP/Preferences.pm:1926
 msgid "Key Bindings"
 msgstr ""
 
@@ -2940,11 +2940,11 @@ msgstr ""
 msgid "Lan&guage"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1929
+#: lib/Padre/Wx/FBP/Preferences.pm:1928
 msgid "Language - Perl 5"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1930
+#: lib/Padre/Wx/FBP/Preferences.pm:1929
 msgid "Language - Perl 6"
 msgstr ""
 
@@ -3678,7 +3678,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:491
+#: lib/Padre/Wx/Dialog/Preferences.pm:489
 msgid "Override Shortcut"
 msgstr ""
 
@@ -4556,7 +4556,7 @@ msgstr ""
 msgid "Scintilla"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1922
+#: lib/Padre/Wx/FBP/Preferences.pm:1921
 msgid "Screen Layout"
 msgstr ""
 
@@ -5375,7 +5375,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:487
+#: lib/Padre/Wx/Dialog/Preferences.pm:485
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
