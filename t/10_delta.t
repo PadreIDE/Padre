@@ -107,7 +107,7 @@ SCOPE: {
 
 	# Do we get the TO text
 	my $result = $editor->GetText;
-	is_string( $result, $TO1 );
+	is( $result, $TO1, 'Delta applied ok' );
 }
 
 
