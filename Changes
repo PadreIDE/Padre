@@ -94,6 +94,8 @@ the even version for the release, even during development.
       don't defocus the current editor (ADAMK)
     - The location of most tools can now be configured (ADAMK)
     - The bloat reduction features can now be configured (ADAMK)
+    - Fixed Ticket #1377 Search dialog claims unsuccessful search even
+      though it was successful (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
