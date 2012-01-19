@@ -136,7 +136,7 @@ sub create_module {
 	);
 
 	# Show the new file in a new editor window
-	$self->new_document_from_string(
+	$self->main->new_document_from_string(
 		$code => 'application/x-perl',
 	);
 }
