@@ -579,14 +579,13 @@ sub run_in_directory_two {
 	# Run command in directory
 	Padre::Util::run_in_directory( "@cmd", $directory );
 
-
-	use File::Slurp;
 	# Slurp command standard input and output
-	$ret_ioe{output} = File::Slurp::read_file $std_out->filename;
+	$ret_ioe{output} = slurp($std_out->filename);
 	# chomp $ret_ioe{output};
 
 	# Slurp command standard error
-	$ret_ioe{error} = File::Slurp::read_file $std_err->filename;
+	$ret_ioe{error} = slurp($std_err->filename);
+
 	# chomp $ret_ioe{error};
 	if ( $ret_ioe{error} && ( $return_option eq 1 ) ) {
 		$return_option = 2;

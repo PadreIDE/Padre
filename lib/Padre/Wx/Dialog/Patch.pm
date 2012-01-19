@@ -3,7 +3,7 @@ package Padre::Wx::Dialog::Patch;
 use 5.008;
 use strict;
 use warnings;
-use File::Slurp           ();
+use Padre::Util           ();
 use Padre::Wx             ();
 use Padre::Wx::FBP::Patch ();
 use Padre::Logger;
@@ -397,12 +397,12 @@ sub apply_patch {
 
 	if ( -e $file1_url ) {
 		TRACE("found file1 => $file1_name: $file1_url") if DEBUG;
-		$source = File::Slurp::read_file($file1_url);
+		$source = Padre::Util::slurp($file1_url);
 	}
 
 	if ( -e $file2_url ) {
 		TRACE("found file2 => $file2_name: $file2_url") if DEBUG;
-		$diff = File::Slurp::read_file($file2_url);
+		$diff = Padre::Util::slurp($file2_url);
 		unless ( $file2_url =~ /(patch|diff)$/sxm ) {
 			$main->info( Wx::gettext('Patch file should end in .patch or .diff, you should reselect & try again') );
 			return;
@@ -470,8 +470,10 @@ sub make_patch_diff {
 			TRACE($our_diff) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
-
-			File::Slurp::write_file( $patch_file, $our_diff );
+			local *PATCH;
+			open( PATCH, '>', $patch_file ) or die "open: $!";
+			print PATCH $our_diff;
+			close PATCH;
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
@@ -562,8 +564,10 @@ sub make_patch_svn {
 			TRACE($diff_str) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
-
-			File::Slurp::write_file( $patch_file, $diff_str );
+			local *PATCH;
+			open( PATCH, '>', $patch_file ) or die "open: $!";
+			print PATCH $diff_str;
+			close PATCH;
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
