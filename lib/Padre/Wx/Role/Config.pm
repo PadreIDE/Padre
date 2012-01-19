@@ -163,7 +163,7 @@ sub config_diff {
 
 		# Clean the new value and compare to the old
 		my $new = $self->config_clean( $setting, $value );
-		next if $new ne $old;
+		next if $new eq $old;
 
 		# We will change this setting
 		$diff{$name} = $new;
