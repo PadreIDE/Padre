@@ -7780,7 +7780,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Screen Layout</property>
-                                    <property name="select">1</property>
+                                    <property name="select">0</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -10341,7 +10341,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Editor Style</property>
-                                    <property name="select">0</property>
+                                    <property name="select">1</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -10585,14 +10585,14 @@
                                                 <object class="wxFlexGridSizer" expanded="0">
                                                     <property name="cols">2</property>
                                                     <property name="flexible_direction">wxBOTH</property>
-                                                    <property name="growablecols">0,1</property>
+                                                    <property name="growablecols">1</property>
                                                     <property name="growablerows"></property>
-                                                    <property name="hgap">10</property>
+                                                    <property name="hgap">20</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">fgSizer4</property>
                                                     <property name="non_flexible_grow_mode">wxFLEX_GROWMODE_SPECIFIED</property>
                                                     <property name="permission">none</property>
-                                                    <property name="rows">6</property>
+                                                    <property name="rows">4</property>
                                                     <property name="vgap">0</property>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
@@ -10652,7 +10652,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL</property>
+                                                        <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxTextCtrl" expanded="0">
                                                             <property name="bg"></property>
@@ -10669,7 +10669,7 @@
                                                             <property name="name">editor_cursor_blink</property>
                                                             <property name="permission">public</property>
                                                             <property name="pos"></property>
-                                                            <property name="size"></property>
+                                                            <property name="size">-1,-1</property>
                                                             <property name="style"></property>
                                                             <property name="subclass"></property>
                                                             <property name="tooltip"></property>
@@ -10769,7 +10769,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALL|wxEXPAND</property>
+                                                        <property name="flag">wxALL</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxTextCtrl" expanded="0">
                                                             <property name="bg"></property>
@@ -10885,7 +10885,7 @@
                                                     </object>
                                                     <object class="sizeritem" expanded="0">
                                                         <property name="border">5</property>
-                                                        <property name="flag">wxALL</property>
+                                                        <property name="flag">wxALL|wxEXPAND</property>
                                                         <property name="proportion">0</property>
                                                         <object class="wxFontPickerCtrl" expanded="0">
                                                             <property name="bg"></property>
@@ -10902,8 +10902,8 @@
                                                             <property name="name">editor_font</property>
                                                             <property name="permission">public</property>
                                                             <property name="pos"></property>
-                                                            <property name="size">-1,-1</property>
-                                                            <property name="style">wxFNTP_DEFAULT_STYLE</property>
+                                                            <property name="size">200,-1</property>
+                                                            <property name="style">wxFNTP_USE_TEXTCTRL</property>
                                                             <property name="subclass"></property>
                                                             <property name="tooltip"></property>
                                                             <property name="validator_data_type"></property>

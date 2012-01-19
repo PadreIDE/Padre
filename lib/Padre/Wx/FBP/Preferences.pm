@@ -780,8 +780,8 @@ sub new {
 		-1,
 		Wx::NullFont,
 		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::FNTP_DEFAULT_STYLE,
+		[ 200, -1 ],
+		Wx::FNTP_USE_TEXTCTRL,
 	);
 	$self->{editor_font}->SetMaxPointSize(100);
 
@@ -1718,17 +1718,16 @@ sub new {
 	$fgSizer91->Add( $m_staticText341, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer91->Add( $self->{editor_style}, 0, Wx::ALL, 5 );
 
-	my $fgSizer4 = Wx::FlexGridSizer->new( 6, 2, 0, 10 );
-	$fgSizer4->AddGrowableCol(0);
+	my $fgSizer4 = Wx::FlexGridSizer->new( 4, 2, 0, 20 );
 	$fgSizer4->AddGrowableCol(1);
 	$fgSizer4->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer4->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$fgSizer4->Add( $m_staticText10, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer4->Add( $self->{editor_cursor_blink}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALIGN_RIGHT | Wx::ALL, 5 );
+	$fgSizer4->Add( $self->{editor_cursor_blink}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer4->Add( $self->{editor_right_margin_enable}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer4->Add( $self->{editor_right_margin_column}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer4->Add( $self->{editor_right_margin_column}, 0, Wx::ALL, 5 );
 	$fgSizer4->Add( $m_staticText17, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$fgSizer4->Add( $self->{editor_font}, 0, Wx::ALL, 5 );
+	$fgSizer4->Add( $self->{editor_font}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer4->Add( $m_staticText18, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer4->Add( $self->{editor_currentline_color}, 0, Wx::ALL | Wx::EXPAND, 5 );
 
@@ -1919,9 +1918,9 @@ sub new {
 
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 1 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 1 );
 	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $self->{keybindings_panel}, Wx::gettext("Key Bindings"), 0 );

@@ -38,7 +38,7 @@ sub config_set {
 
 	# Apply to the relevant element
 	my $ctrl = $self->$name();
-	if ( $ctrl->can('config_load') ) {
+	if ( $ctrl->can('config_set') ) {
 		# Allow specialised widgets to load their own setting
 		$ctrl->config_set( $meta, $value );
 
