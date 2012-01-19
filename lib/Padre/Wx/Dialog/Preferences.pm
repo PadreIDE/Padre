@@ -268,8 +268,15 @@ sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $lock = $self->preview->lock_update;
+
+	# Reapply the theme
 	my $name = $self->choice('editor_style');
 	Padre::Wx::Theme->find($name)->apply( $self->preview );
+
+	# Apply the custom line color
+	my $colour = $self->editor_currentline_color->GetColour;
+	$self->preview->SetCaretLineBackground($colour);
+
 	return;
 }
 
