@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-18 08:10-0800\n"
+"POT-Creation-Date: 2012-01-18 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -799,7 +799,7 @@ msgid "All"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4444 lib/Padre/Wx/Main.pm:4445
-#: lib/Padre/Wx/Main.pm:4791 lib/Padre/Wx/Main.pm:5994
+#: lib/Padre/Wx/Main.pm:4791 lib/Padre/Wx/Main.pm:6009
 #: lib/Padre/Wx/Choice/Files.pm:19
 msgid "All Files"
 msgstr ""
@@ -1782,7 +1782,7 @@ msgstr ""
 msgid "Diff"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:478
+#: lib/Padre/Wx/Dialog/Patch.pm:480
 #, perl-format
 msgid "Diff successful, you should see a new tab in editor called %s"
 msgstr ""
@@ -1855,7 +1855,7 @@ msgstr ""
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:479
+#: lib/Padre/Wx/Dialog/Preferences.pm:486
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -1884,7 +1884,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6802
+#: lib/Padre/Wx/Main.pm:6817
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -2051,11 +2051,11 @@ msgstr ""
 msgid "Encode Document to &utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6824
+#: lib/Padre/Wx/Main.pm:6839
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6823
+#: lib/Padre/Wx/Main.pm:6838
 msgid "Encode to:"
 msgstr ""
 
@@ -2122,7 +2122,7 @@ msgid "Epoch"
 msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:520
-#: lib/Padre/Wx/Editor.pm:931 lib/Padre/Wx/Main.pm:5032
+#: lib/Padre/Wx/Editor.pm:925 lib/Padre/Wx/Main.pm:5032
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
 #: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
@@ -2163,14 +2163,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6778
+#: lib/Padre/Wx/Main.pm:6793
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6760
+#: lib/Padre/Wx/Main.pm:6775
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -2225,7 +2225,7 @@ msgstr ""
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6099 lib/Padre/Plugin/Devel.pm:247
+#: lib/Padre/Wx/Main.pm:6114 lib/Padre/Plugin/Devel.pm:247
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -2536,7 +2536,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1900
+#: lib/Padre/Wx/Editor.pm:1894
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2722,7 +2722,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6278
+#: lib/Padre/Wx/Main.pm:6293
 msgid "How many spaces for each tab:"
 msgstr ""
 
@@ -2834,7 +2834,7 @@ msgstr ""
 msgid "Internal Error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6100
+#: lib/Padre/Wx/Main.pm:6115
 msgid "Internal error"
 msgstr ""
 
@@ -3232,7 +3232,7 @@ msgstr ""
 msgid "Ne&w"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6606
+#: lib/Padre/Wx/Main.pm:6621
 msgid "Need to select text in order to translate numbers"
 msgstr ""
 
@@ -3546,7 +3546,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:976 lib/Padre/Wx/Main.pm:5992
+#: lib/Padre/PluginManager.pm:976 lib/Padre/Wx/Main.pm:6007
 msgid "Open file"
 msgstr ""
 
@@ -3678,7 +3678,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:480
+#: lib/Padre/Wx/Dialog/Preferences.pm:487
 msgid "Override Shortcut"
 msgstr ""
 
@@ -4491,7 +4491,7 @@ msgstr ""
 msgid "SQL Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:570
+#: lib/Padre/Wx/Dialog/Patch.pm:574
 #, perl-format
 msgid "SVN Diff successful. You should see a new tab in editor called %s."
 msgstr ""
@@ -5190,13 +5190,13 @@ msgid ""
 "Session %s is listed but there is no data"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:490
+#: lib/Padre/Wx/Dialog/Patch.pm:492
 msgid ""
 "Sorry Diff Failed, are you sure your choice of files was correct for this "
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:586
+#: lib/Padre/Wx/Dialog/Patch.pm:590
 msgid ""
 "Sorry, Diff failed. Are you sure your have access to the repository for this "
 "action"
@@ -5220,7 +5220,7 @@ msgstr ""
 msgid "Space and tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6272
+#: lib/Padre/Wx/Main.pm:6287
 msgid "Space to Tab"
 msgstr ""
 
@@ -5336,7 +5336,7 @@ msgstr ""
 msgid "Tab Spaces:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6273
+#: lib/Padre/Wx/Main.pm:6288
 msgid "Tab to Space"
 msgstr ""
 
@@ -5375,7 +5375,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:476
+#: lib/Padre/Wx/Dialog/Preferences.pm:483
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
@@ -5709,7 +5709,7 @@ msgid ""
 "replace it with the default code that comes with your installation of Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:528
+#: lib/Padre/Wx/Dialog/Patch.pm:530
 #, perl-format
 msgid ""
 "Warning: found SVN v%s but we require SVN v%s and it is now called \"Apache "
@@ -5792,7 +5792,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1884
+#: lib/Padre/Wx/Editor.pm:1878
 msgid "You must select a range of lines"
 msgstr ""
 
