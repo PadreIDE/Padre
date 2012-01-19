@@ -266,16 +266,20 @@ sub guess {
 # method for generating proper logical style objects.
 sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
-	my $self = shift;
-	my $lock = $self->preview->lock_update;
+	my $self    = shift;
+	my $preview = $self->preview;
+	my $lock    = $preview->lock_update;
 
 	# Reapply the theme
 	my $name = $self->choice('editor_style');
-	Padre::Wx::Theme->find($name)->apply( $self->preview );
+	Padre::Wx::Theme->find($name)->apply($preview);
 
 	# Apply the custom line color
 	my $colour = $self->editor_currentline_color->GetColour;
-	$self->preview->SetCaretLineBackground($colour);
+	$preview->SetCaretLineBackground($colour);
+
+	# Refresh the line number margin if needed
+	$preview->refresh_line_numbers;
 
 	return;
 }

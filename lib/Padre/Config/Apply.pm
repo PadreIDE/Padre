@@ -60,7 +60,7 @@ our $COMPATIBLE = '0.93';
 
 
 ######################################################################
-# Apply Methods
+# Apply Functions
 
 sub main_title {
 	$_[0]->lock('refresh_title');

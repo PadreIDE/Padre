@@ -422,6 +422,9 @@ sub apply {
 		my $bg = $object->current->config->editor_currentline_color;
 		$object->SetCaretLineBackground( Padre::Wx::color($bg) );
 
+		# Refresh the line numbers in case the font has changed
+		$object->refresh_line_numbers;
+
 	} else {
 		# This is a GUI style, chase the inheritance tree.
 		# Uses inlined Class::ISA algorithm as in Class::Inspector
