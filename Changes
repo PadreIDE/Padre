@@ -98,6 +98,8 @@ the even version for the release, even during development.
       though it was successful (ADAMK)
     - Fixed Ticket #1298 Changing font in preferences is not applied to
       existing editors (ADAMK)
+    - Fixed Ticket #1294 Space in text field for pref
+      "editor_right_margin_colum" stops Padre (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

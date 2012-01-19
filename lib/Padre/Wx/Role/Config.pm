@@ -6,7 +6,9 @@ package Padre::Wx::Role::Config;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Params::Util    ();
+use Padre::Constant ();
+use Padre::Wx       ();
 
 our $VERSION = '0.93';
 
@@ -158,12 +160,38 @@ sub config_diff {
 
 		# Skip if null
 		next unless defined $value;
-		next if $value eq $old;
-		$diff{$name} = $value;
+
+		# Clean the new value and compare to the old
+		my $new = $self->config_clean( $setting, $value );
+		next if $new ne $old;
+
+		# We will change this setting
+		$diff{$name} = $new;
 	}
 
 	return unless %diff;
 	return \%diff;
+}
+
+sub config_clean {
+	my $self    = shift;
+	my $setting = shift;
+	my $value   = shift;
+
+	# For various strictly formatted configuration values,
+	# attempt to determine a clean version.
+	if ( $setting->type == Padre::Constant::POSINT ) {
+		$value =~ s/[^0-9]//g;
+		$value =~ s/^0+//;
+		if ( Params::Util::_POSINT($value) ) {
+			return $value;
+		}
+
+		# Fall back to the setting default
+		return $setting->default;
+	}
+
+	return $value;
 }
 
 1;
