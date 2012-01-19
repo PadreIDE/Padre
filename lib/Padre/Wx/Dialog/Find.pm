@@ -54,7 +54,7 @@ sub find_next_clicked {
 	}
 
 	# Apply the search to the current editor
-	my $result = $main->search_next($search);
+	$main->search_next($search) and return;
 
 	# If we're only searching once, we won't need the dialog any more
 	$main->info(
