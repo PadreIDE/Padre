@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-18 20:10-0800\n"
+"POT-Creation-Date: 2012-01-19 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1855,7 +1855,7 @@ msgstr ""
 msgid "Do you want to delete '%s' from your repository"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:486
+#: lib/Padre/Wx/Dialog/Preferences.pm:490
 msgid "Do you want to override it with the selected action?"
 msgstr ""
 
@@ -3678,7 +3678,7 @@ msgstr ""
 msgid "Output View"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:487
+#: lib/Padre/Wx/Dialog/Preferences.pm:491
 msgid "Override Shortcut"
 msgstr ""
 
@@ -5375,7 +5375,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:483
+#: lib/Padre/Wx/Dialog/Preferences.pm:487
 #, perl-format
 msgid "The shortcut '%s' is already used by the action '%s'.\n"
 msgstr ""
