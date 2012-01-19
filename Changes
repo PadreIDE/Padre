@@ -101,6 +101,7 @@ the even version for the release, even during development.
     - Fixed Ticket #1294 Space in text field for pref
       "editor_right_margin_colum" stops Padre (ADAMK)
     - Fixed Ticket #1363 Miss depend - File::Slurp (ADAMK)
+    - The editor style preview now correctly updates in real time (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

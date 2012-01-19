@@ -126,7 +126,7 @@ sub new {
 	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
 	$preview->{Document}->set_editor( $self->preview );
 	$preview->SetLexer('application/x-perl');
-	$preview->SetText(<<'HERE' . '__END__');
+	$preview->SetText(<<'END_PERL' . '__END__');
 #!/usr/bin/perl
 
 use strict;
@@ -145,7 +145,7 @@ sub main {
 	}
 }
 
-HERE
+END_PERL
 	$preview->SetReadOnly(1);
 	$preview->Show(1);
 
@@ -267,21 +267,19 @@ sub guess {
 sub preview_refresh {
 	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
+	my $config  = $self->config;
 	my $preview = $self->preview;
 	my $lock    = $preview->lock_update;
 
-	# Reapply the theme
-	my $name = $self->choice('editor_style');
-	Padre::Wx::Theme->find($name)->apply($preview);
+	# Create a tailored theme
+	my $style = $self->choice('editor_style');
+	my $theme = Padre::Wx::Theme->find($style)->clone;
+	foreach ( 'editor_font', 'editor_currentline_color' ) {
+		$theme->{$_} = $self->config_get( $config->meta($_) );
+	}
 
-	# Apply the custom line color
-	my $colour = $self->editor_currentline_color->GetColour;
-	$preview->SetCaretLineBackground($colour);
-
-	# Refresh the line number margin if needed
-	$preview->refresh_line_numbers;
-
-	return;
+	# Apply the tailored theme
+	$theme->apply($preview);
 }
 
 

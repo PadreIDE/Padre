@@ -16,68 +16,78 @@ sub config_load {
 	my $self   = shift;
 	my $config = shift;
 
-	# Iterate over the specified config elements
 	foreach my $name (@_) {
-		next unless $self->can($name);
+		my $meta  = $config->meta($name);
+		my $value = $config->$name();
+		$self->config_set( $meta => $value );
+	}
 
-		# Get the Wx element for this option
-		my $setting = $config->meta($name);
-		my $value   = $config->$name();
-		my $ctrl    = $self->$name();
-		
-		# Apply this one setting to this one widget
-		if ( $ctrl->can('config_load') ) {
-			# Allow specialised widgets to load their own setting
-			$ctrl->config_load( $setting, $value );
+	return 1;
+}
 
-		} elsif ( $ctrl->isa('Wx::CheckBox') ) {
-			$ctrl->SetValue($value);
+sub config_set {
+	my $self  = shift;
+	my $meta  = shift;
+	my $value = shift;
+	my $name  = $meta->name;
 
-		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$ctrl->SetValue($value);
+	# Ignore config elements we don't have
+	unless ( $self->can($name) ) {
+		return undef;
+	}
 
-		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$ctrl->SetValue($value);
+	# Apply to the relevant element
+	my $ctrl = $self->$name();
+	if ( $ctrl->can('config_load') ) {
+		# Allow specialised widgets to load their own setting
+		$ctrl->config_set( $meta, $value );
 
-		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
-			$ctrl->SetPath($value);
+	} elsif ( $ctrl->isa('Wx::CheckBox') ) {
+		$ctrl->SetValue($value);
 
-		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
-			$ctrl->SetPath($value);
+	} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
+		$ctrl->SetValue($value);
 
-		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-			$ctrl->SetColour( 
-				Padre::Wx::color($value)
-			);
+	} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
+		$ctrl->SetValue($value);
 
-		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			my $font = Padre::Wx::native_font($value);
-			$ctrl->SetSelectedFont( $font ) if $font->IsOk;
+	} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
+		$ctrl->SetPath($value);
 
-		} elsif ( $ctrl->isa('Wx::Choice') ) {
-			my $options = $setting->options;
-			if ($options) {
-				$ctrl->Clear;
+	} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
+		$ctrl->SetPath($value);
 
-				# NOTE: This assumes that the list will not be
-				# sorted in Wx via a style flag and that the
-				# order of the fields should be that of the key
-				# and not of the translated label.
-				# Doing sort in Wx will probably break this.
-				foreach my $option ( sort keys %$options ) {
-					my $label = $options->{$option};
-					$ctrl->Append(
-						Wx::gettext($label),
-						$option,
-					);
-					next unless $option eq $value;
-					$ctrl->SetSelection( $ctrl->GetCount - 1 );
-				}
+	} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
+		$ctrl->SetColour( 
+			Padre::Wx::color($value)
+		);
+
+	} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
+		my $font = Padre::Wx::native_font($value);
+		$ctrl->SetSelectedFont($font) if $font->IsOk;
+
+	} elsif ( $ctrl->isa('Wx::Choice') ) {
+		my $options = $meta->options;
+		if ($options) {
+			$ctrl->Clear;
+
+			# NOTE: This assumes that the list will not be
+			# sorted in Wx via a style flag and that the
+			# order of the fields should be that of the key
+			# and not of the translated label.
+			# Doing sort in Wx will probably break this.
+			foreach my $option ( sort keys %$options ) {
+				my $label = $options->{$option};
+				$ctrl->Append(
+					Wx::gettext($label),
+					$option,
+				);
+				next unless $option eq $value;
+				$ctrl->SetSelection( $ctrl->GetCount - 1 );
 			}
-
-		} else {
-			next;
 		}
+	} else {
+		return 0;
 	}
 
 	return 1;
@@ -92,15 +102,12 @@ sub config_save {
 	my $diff = $self->config_diff( $config, @_ ) or return;
 
 	# Lock most of Padre so any apply handlers run quickly
-	my $lock = $self->main->lock( 'UPDATE', 'REFRESH', 'DB' );
+	my $lock = $self->main->lock( qw{ UPDATE REFRESH AUI CONFIG DB } );
 
 	# Apply the changes to the configuration
 	foreach my $name ( sort keys %$diff ) {
 		$config->apply( $name, $diff->{$name}, $current );
 	}
-
-	# Save the config file
-	$config->write;
 
 	return;
 }
@@ -111,76 +118,78 @@ sub config_diff {
 	my %diff   = ();
 
 	foreach my $name (@_) {
-		next unless $self->can($name);
+		my $meta = $config->meta($name);
 
-		# Get the Wx element for this option
-		my $setting = $config->meta($name);
-		my $old     = $config->$name();
-		my $ctrl    = $self->$name();
+		# Can we get a value from the control
+		my $new = $self->config_get($meta);
+		next unless defined $new;
 
-		# Don't capture options that are not shown,
-		# as this may result in falsely clearing them.
-		next unless $ctrl->IsEnabled;
-
-		# Extract the value from the control
-		my $value = undef;
-		if ( $ctrl->isa('Wx::CheckBox') ) {
-			$value = $ctrl->GetValue ? 1 : 0;
-
-		} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
-			$value = $ctrl->GetValue;
-
-		} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
-			$value = $ctrl->GetValue;
-
-		} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
-			$value = $ctrl->GetPath;
-
-		} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
-			$value = $ctrl->GetPath;
-
-		} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-			$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);
-			$value =~ s/^#// if defined $value;
-
-		} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
-			$value = $ctrl->GetSelectedFont->GetNativeFontInfoUserDesc;
-
-		} elsif ( $ctrl->isa('Wx::Choice') ) {
-			my $options = $setting->options;
-			if ($options) {
-				my @k = sort keys %$options;
-				my $i = $ctrl->GetSelection;
-				$value = $k[$i];
-			}
-		} else {
-
-			# To be completed
+		# Change the setting if different
+		unless ( $new eq $config->$name() ) {
+			$diff{$name} = $new;
 		}
-
-		# Skip if null
-		next unless defined $value;
-
-		# Clean the new value and compare to the old
-		my $new = $self->config_clean( $setting, $value );
-		next if $new eq $old;
-
-		# We will change this setting
-		$diff{$name} = $new;
 	}
 
 	return unless %diff;
 	return \%diff;
 }
 
-sub config_clean {
-	my $self    = shift;
-	my $setting = shift;
-	my $value   = shift;
+sub config_get {
+	my $self = shift;
+	my $meta = shift;
+	my $name = $meta->name;
+
+	# Ignore config elements we don't have
+	unless ( $self->can($name) ) {
+		return undef;
+	}
+
+	# Ignore controls that are disabled
+	my $ctrl = $self->$name();
+	unless ( $ctrl->IsEnabled ) {
+		return undef;
+	}
+
+	# Extract the value from the control
+	my $value = undef;
+	if ( $ctrl->isa('Wx::CheckBox') ) {
+		$value = $ctrl->GetValue ? 1 : 0;
+
+	} elsif ( $ctrl->isa('Wx::TextCtrl') ) {
+		$value = $ctrl->GetValue;
+
+	} elsif ( $ctrl->isa('Wx::SpinCtrl') ) {
+		$value = $ctrl->GetValue;
+
+	} elsif ( $ctrl->isa('Wx::FilePickerCtrl') ) {
+		$value = $ctrl->GetPath;
+
+	} elsif ( $ctrl->isa('Wx::DirPickerCtrl') ) {
+		$value = $ctrl->GetPath;
+
+	} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
+		$value = $ctrl->GetColour->GetAsString(Wx::C2S_HTML_SYNTAX);
+		$value =~ s/^#// if defined $value;
+
+	} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
+		$value = $ctrl->GetSelectedFont->GetNativeFontInfoUserDesc;
+
+	} elsif ( $ctrl->isa('Wx::Choice') ) {
+		my $options = $meta->options;
+		if ($options) {
+			my @k = sort keys %$options;
+			my $i = $ctrl->GetSelection;
+			$value = $k[$i];
+		}
+	}
+	unless ( defined $value ) {
+		return undef;
+	}
 
 	# For various strictly formatted configuration values,
 	# attempt to determine a clean version.
-	if ( $setting->type == Padre::Constant::POSINT ) {
+	my $type = $meta->type;
+	if ( $type == Padre::Constant::POSINT ) {
 		$value =~ s/[^0-9]//g;
 		$value =~ s/^0+//;
 		if ( Params::Util::_POSINT($value) ) {
@@ -188,7 +197,11 @@ sub config_clean {
 		}
 
 		# Fall back to the setting default
-		return $setting->default;
+		return $meta->default;
+
+	} else {
+		# Implement cleaning for many more data types
+
 	}
 
 	return $value;

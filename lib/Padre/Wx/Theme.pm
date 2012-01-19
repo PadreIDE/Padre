@@ -3,8 +3,9 @@ package Padre::Wx::Theme;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec       ();
+use Storable         ();
 use IO::File         ();
+use File::Spec       ();
 use Scalar::Util     ();
 use Params::Util     ();
 use Padre::Constant  ();
@@ -202,7 +203,7 @@ sub find {
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_, code => {} }, $class;
+	my $self  = bless { @_, code => {} }, $class;
 	unless ( defined $self->name ) {
 		die "No default en-gb name for style";
 	}
@@ -211,6 +212,12 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub clone {
+	my $self  = shift;
+	my $class = Scalar::Util::blessed($self);
+	return bless { %$self }, $class;
 }
 
 sub load {
@@ -414,12 +421,15 @@ sub apply {
 
 	if ( Params::Util::_INSTANCE( $object, 'Padre::Wx::Editor' ) ) {
 		# This is an editor style
-		my $document = $object->{Document} or return;
+		my $document = $object->document   or return;
 		my $mimetype = $document->mimetype or return;
 		$self->mime($mimetype)->apply($object);
 
 		# Apply custom caret line background color
-		my $bg = $object->current->config->editor_currentline_color;
+		my $bg = $self->{editor_currentline_color};
+		unless ( defined $bg ) {
+			$bg = $object->config->editor_currentline_color;
+		}
 		$object->SetCaretLineBackground( Padre::Wx::color($bg) );
 
 		# Refresh the line numbers in case the font has changed
@@ -458,15 +468,20 @@ sub clear {
 		# the basic font settings.
 		$object->StyleResetDefault;
 
-		# Reset the font from configuration (which Scintilla considers part of
-		# the "style" but Padre doesn't allow to be changed as a "style")
+		# Find the font to initialise with
+		my $editor_font = $self->{editor_font};
+		unless ( defined $editor_font ) {
+			$editor_font = $object->config->editor_font;
+		}
+
+		# Reset the font, which Scintilla considers part of the
+		# "style" but Padre doesn't allow to be changed as a "style"
 		require Padre::Wx;
-		my $config = $object->config;
-		my $font   = Padre::Wx::editor_font( $config->editor_font );
+		my $font = Padre::Wx::editor_font($editor_font);
 		$object->SetFont($font);
 		$object->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
 
-		# Clear all styles back to the default
+		# Reset all styles to the recently set default
 		$object->StyleClearAll;
 
 	} else {

@@ -19,7 +19,7 @@ our @ISA     = qw{
 # Provide a custom config_load hook so that Padre::Wx::Role::Config will let
 # let us load our own data instead of doing it for us.
 
-sub config_load {
+sub config_set {
 	my $self    = shift;
 	my $setting = shift;
 	my $value   = shift;
