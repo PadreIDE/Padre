@@ -894,6 +894,8 @@ sub match {
 
 	# Save the match details
 	$self->{matched} = [ $search, $from, $to ];
+
+	return 1;
 }
 
 # Fetch the search result the current selection is a match for, if any
