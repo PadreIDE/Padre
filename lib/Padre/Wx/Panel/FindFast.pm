@@ -236,7 +236,7 @@ sub as_search {
 	my $self = shift;
 	Padre::Search->new(
 		find_term => $self->{find_term}->GetValue,
-		find_case => 1,
+		find_case => 0,
 	);
 }
 
