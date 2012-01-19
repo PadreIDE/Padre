@@ -470,10 +470,9 @@ sub make_patch_diff {
 			TRACE($our_diff) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
-			local *PATCH;
-			open( PATCH, '>', $patch_file ) or die "open: $!";
-			print PATCH $our_diff;
-			close PATCH;
+			open( my $fh, '>', $patch_file ) or die "open: $!";
+			print $fh $our_diff;
+			close $fh;
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
@@ -564,10 +563,9 @@ sub make_patch_svn {
 			TRACE($diff_str) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
-			local *PATCH;
-			open( PATCH, '>', $patch_file ) or die "open: $!";
-			print PATCH $diff_str;
-			close PATCH;
+			open( my $fh, '>', $patch_file ) or die "open: $!";
+			print $fh $diff_str;
+			close $fh;
 			TRACE("writing file: $patch_file") if DEBUG;
 
 			$main->setup_editor($patch_file);
