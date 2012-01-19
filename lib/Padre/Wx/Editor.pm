@@ -758,14 +758,6 @@ sub setup_config {
 		$self->SetEdgeMode(Wx::Scintilla::EDGE_NONE);
 	}
 
-	# Set the font
-	my $font = Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
-	if ( defined $config->editor_font and length $config->editor_font > 0 ) {
-		$font->SetNativeFontInfoUserDesc( $config->editor_font );
-	}
-	$self->SetFont($font);
-	$self->StyleSetFont( Wx::Scintilla::STYLE_DEFAULT, $font );
-
 	# Enable the symbol margin if anything needs it
 	if ( Padre::Feature::DIFF_DOCUMENT or $config->main_syntax ) {
 		if ( $self->GetMarginWidth(1) == 0 ) {

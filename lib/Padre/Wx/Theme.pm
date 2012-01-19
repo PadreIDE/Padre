@@ -418,6 +418,10 @@ sub apply {
 		my $mimetype = $document->mimetype or return;
 		$self->mime($mimetype)->apply($object);
 
+		# Apply custom caret line background color
+		my $bg = $object->current->config->editor_currentline_color;
+		$object->SetCaretLineBackground( Padre::Wx::color($bg) );
+
 	} else {
 		# This is a GUI style, chase the inheritance tree.
 		# Uses inlined Class::ISA algorithm as in Class::Inspector

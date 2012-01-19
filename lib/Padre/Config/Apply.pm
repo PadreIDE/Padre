@@ -279,8 +279,16 @@ sub editor_currentline {
 	$_[0]->editor_currentline( $_[1] );
 }
 
+sub editor_currentline_color {
+	$_[0]->editor_currentline_color( $_[1] );
+}
+
 sub editor_rightmargin {
 	$_[0]->editor_rightmargin( $_[1] );
+}
+
+sub editor_font {
+	$_[0]->restyle;
 }
 
 sub editor_style {

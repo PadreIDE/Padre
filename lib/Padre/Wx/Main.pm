@@ -5714,6 +5714,21 @@ sub editor_currentline {
 	return;
 }
 
+sub editor_currentline_color {
+	my $self  = shift;
+	my $name  = shift;
+	my $lock  = $self->lock('CONFIG');
+	$self->config->set( editor_currentline_color => $name );
+
+	# Apply the color to all editors
+	my $color = Padre::Wx::color($name);
+	foreach my $editor ( $self->editors ) {
+		$editor->SetCaretLineBackground($color);
+	}
+
+	return;
+}
+
 =head3 C<editor_rightmargin>
 
     $main->editor_rightmargin(1);

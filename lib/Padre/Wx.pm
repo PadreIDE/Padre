@@ -112,8 +112,7 @@ sub native_font {
 	my $nfont = eval {
 		my $font = Wx::Font->new( Wx::NullFont );
 		$font->SetNativeFontInfoUserDesc($string);
-		die unless $font->IsOk;
-                return $font;
+		$font->IsOk ? $font : undef;
 	};
         return $nfont if $nfont;
 	return NULL_FONT;
@@ -128,12 +127,12 @@ sub editor_font {
 
 	# Attempt to apply the font string
 	local $@;
-	eval {
+	my $efont = eval {
 		my $font = Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL );
 		$font->SetNativeFontInfoUserDesc($string);
-		return $font if $font->IsOk;
+		$font->IsOk ? $font : undef;
 	};
-
+	return $efont if $efont;
 	return EDITOR_FONT;
 }
 
