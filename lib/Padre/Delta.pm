@@ -42,7 +42,66 @@ our $VERSION = '0.93';
 
 
 ######################################################################
-# Constructor
+# Constructors
+
+=pod
+
+    # Alter a document by line range, in loose form
+    my $delta1 = Padre::Delta->new(
+        'line',
+        [ 1, 1, 'Content'   ], # Insert a single line
+        [ 4, 3, ''          ], # Remove a single line
+        [ 6, 9, 'Alternate' ], # Replace three lines with one
+    )->tidy;
+    
+    # Alter a document by character range in tight form
+    my $delta2 = Padre::Delta->new(
+        'position',
+        [ 35, 37, 'fghjkl' ], # Replace two characters with six
+        [ 23, 27, ''       ], # Remove four characters
+        [ 12, 12, 'abcd'   ], # Insert four characters
+    );
+
+The C<new> constructor takes a replacement mode and a list of targets
+and returns the delta object, which can then be applied to a C<SCALAR>
+reference of L<Padre::Wx::Editor> object.
+
+The first parameter should be the replacement mode. This will be either
+C<'line'> for line range deltas as per the F<diff> program, or
+C<'position'> for character position range deltas which operate at a
+lower level and directly on top of the position system of L<Wx::Scintilla>.
+
+After the replacement mode, the constructor is provided with an arbitrarily
+sized list of replacement targets.
+
+Each replacement target should be an C<ARRAY> reference containing three
+elements which will be the start of the range to be removed, the end of the
+range to be removed, and the text to replace the range with.
+
+The start of the range must always be a lower value than the end of the
+range. While providing a high to low range may incidentall work on some
+operating systems, on others it can cause L<Wx::Scintilla> to segfault.
+
+Each replacement target will both remove existing content and replace it
+with new content. To achieve a simple insert, both range positions should
+be set to the same value at the position you wish to insert at. To achieve
+a simple deletion the replacement string should be set to the null string.
+
+The ordering of the replacement target is critically important. When the
+changes applied they will always be made naively and in the same order
+as supplied to the constructor.
+
+Because a change early in the document will alter the positions of all
+content after it, you should be very careful to ensure that your change
+makes sense if applied in the supplied order.
+
+If the positions of your replacement targets are not inherently
+precalculated to adjust for content changes, you should supply your
+changes from the bottom of the document upwards.
+
+Returns the new L<Padre::Delta> object.
+
+=cut
 
 sub new {
 	my $class = shift;
@@ -180,6 +239,48 @@ sub from_scalars {
 
 ######################################################################
 # Main Methods
+
+=pod
+
+=head2 tidy
+
+    Padre::Delta->new( line => @lines )->tidy->to_editor($editor);
+
+The C<tidy> method is provided as a convenience for situations where the
+quality of the replacement targets passed to the constructor is imperfect.
+
+To ensure that changes are applied quickly and editor objects are locked for
+the shortest time possible, the replacement targets in the delta are
+considered to have an inherent order and are always applied naively.
+
+For situations where the replacement targets do B<not> have an inherent
+order, applying them in the order provided will result in a corrupted
+transform.
+
+Calling tidy on a delta object will correct ranges that are not provided
+in low to high order and sort them so changes are applied from the bottom
+of the document upwards to avoid document corruption.
+
+Returns the same L<Padre::Delta> object as a convenience so that the tidy
+method can be used in changed calls as demonstrated above.
+
+=cut
+
+sub tidy {
+	my $self    = shift;
+	my $targets = $self->{targets};
+	                               
+	# Correct out-of-order ranges
+	foreach my $t ( @$targets ) {
+		next unless $t->[0] > $t->[1];
+		@$t = ( $t->[1], $t->[0], $t->[2] );
+	}
+
+	# Sort from bottom to top
+	@$targets = sort { $b->[0] <=> $a->[1] } @$targets;
+
+	return $self;
+}
 
 =pod
 

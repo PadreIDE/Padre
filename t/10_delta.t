@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 12;
+use Test::More tests => 14;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -21,6 +21,32 @@ SCOPE: {
 	my $null = Padre::Delta->new;
 	isa_ok( $null, 'Padre::Delta' );
 	ok( $null->null, '->null ok' );
+}
+
+
+
+
+
+######################################################################
+# Test the tidy method
+
+SCOPE: {
+	my $delta = Padre::Delta->new(
+		'position',
+		[ 1, 2, 'foo' ],
+		[ 8, 9, 'bar' ],
+		[ 6, 3, ''    ],
+	)->tidy;
+	isa_ok( $delta, 'Padre::Delta' );
+	is_deeply(
+		$delta->{targets},
+		[
+			[ 8, 9, 'bar' ],
+			[ 3, 6, ''    ],
+			[ 1, 2, 'foo' ],
+		],
+		'Targets are tidied correctly',
+	);
 }
 
 
