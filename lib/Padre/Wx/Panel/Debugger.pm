@@ -4,9 +4,6 @@ use 5.008;
 use strict;
 use warnings;
 
-# Turn on $OUTPUT_AUTOFLUSH
-# $| = 1;
-
 use utf8;
 use Padre::Util              ();
 use Padre::Constant          ();
@@ -17,7 +14,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.16 ();
-# use Data::Printer { caller_info => 1, colored => 1, };
+
 our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -154,12 +151,6 @@ sub set_up {
 	$self->{display_options}->SetBitmapLabel( Padre::Wx::Icon::find('actions/6f-o') );
 	$self->{display_options}->Disable;
 
-	# $self->{add_watch}->SetBitmapLabel( Padre::Wx::Icon::find('actions/77-w') );
-	# $self->{add_watch}->Disable;
-
-	# # 	$self->{delete_watch}->SetBitmapLabel( Padre::Wx::Icon::find('actions/57-w') );
-	# $self->{delete_watch}->Disable;
-
 	$self->{watchpoints}->SetBitmapLabel( Padre::Wx::Icon::find('actions/wuw') );
 	$self->{watchpoints}->Disable;
 	$self->{raw}->SetBitmapLabel( Padre::Wx::Icon::find('actions/raw') );
@@ -245,7 +236,6 @@ sub debug_perl {
 	my $editor   = $current->editor;
 
 	# display panels
-	# $self->show_debug_output(1);
 	$main->show_debugoutput(1);
 
 	if ( $self->{client} ) {
@@ -295,21 +285,17 @@ sub debug_perl {
 	$self->{client}->listener;
 
 	$self->{file} = $filename;
-	
+
 	#Todo list request Ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->get;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
 
-	## get bp's from db
-	## $self->_get_bp_db();
 	if ( $self->{set_bp} == 0 ) {
 
-		# # 		## get bp's from db
+		# get bp's from db
 		$self->_get_bp_db();
 		$self->{set_bp} = 1;
-
-		# # 		## say "set_bp debug run";
 	}
 
 	unless ( $self->_set_debugger ) {
@@ -330,9 +316,7 @@ sub _set_debugger {
 	my $current = $self->current;
 	my $editor  = $current->editor or return;
 	my $file    = $self->{client}->{filename} or return;
-	# p $file;
 	my $row     = $self->{client}->{row} or return;
-	# p $row;
 
 	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
@@ -346,12 +330,12 @@ sub _set_debugger {
 		# $self->_bp_autoload();
 	}
 
-	$editor->goto_line_centerize( $row -1 );
+	$editor->goto_line_centerize( $row - 1 );
 
 	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
 	# They should be reunited soon !!!! (or not)
 
-	$editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION );
+	$editor->MarkerDeleteAll(Padre::Constant::MARKER_LOCATION);
 	$editor->MarkerAdd( $row - 1, Padre::Constant::MARKER_LOCATION );
 
 	# update variables and output
@@ -369,12 +353,6 @@ sub running {
 
 	unless ( $self->{client} ) {
 
-		# $main->message(
-		# Wx::gettext(
-		# "The debugger is not running.\nYou can start the debugger using one of the commands 'Step In', 'Step Over', or 'Run till Breakpoint' in the Debug menu."
-		# ),
-		# Wx::gettext('Debugger not running')
-		# );
 		return;
 	}
 
@@ -390,9 +368,6 @@ sub debug_quit {
 	$self->running or return;
 
 	# Clean up the GUI artifacts
-	# $current->main->show_debug(0);
-	# $self->show_debug_output(0);
-	# $self->show_debug_variable(0);
 	$self->current->editor->MarkerDeleteAll( Padre::Constant::MARKER_LOCATION() );
 
 	# Detach the debugger
@@ -446,14 +421,6 @@ sub debug_step_in {
 	my $self = shift;
 	my $main = $self->main;
 
-	# unless ( $self->{client} ) {
-	# unless ( $self->debug_perl ) {
-	# $main->error( Wx::gettext('Debugger not running') );
-	# return;
-	# }
-	# return;
-	# }
-	
 	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_in;
 	if ( $module eq '<TERMINATED>' ) {
@@ -477,13 +444,6 @@ sub debug_step_over {
 	my $self = shift;
 	my $main = $self->main;
 
-	# unless ( $self->{client} ) {
-	# unless ( $self->debug_perl ) {
-	# $main->error( Wx::gettext('Debugger not running') );
-	# return;
-	# }
-	# }
-	
 	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_over;
 	if ( $module eq '<TERMINATED>' ) {
@@ -508,11 +468,6 @@ sub debug_step_out {
 	my $self = shift;
 	my $main = $self->main;
 
-	# unless ( $self->{client} ) {
-	# $main->error( Wx::gettext('Debugger not running') );
-	# return;
-	# }
-	
 	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->step_out;
 	if ( $module eq '<TERMINATED>' ) {
@@ -538,13 +493,6 @@ sub debug_run_till {
 	my $param = shift;
 	my $main  = $self->main;
 
-	# unless ( $self->{client} ) {
-	# unless ( $self->debug_perl ) {
-	# $main->error( Wx::gettext('Debugger not running') );
-	# return;
-	# }
-	# }
-	
 	#ToDo list request ouch
 	my ( $module, $file, $row, $content ) = $self->{client}->run($param);
 	if ( $module eq '<TERMINATED>' ) {
@@ -616,7 +564,6 @@ sub debug_perl_show_value {
 		return;
 	}
 
-	# say "text: $text => value: $value";
 	$self->main->message("$text = $value");
 
 	return;
@@ -629,11 +576,8 @@ sub _debug_get_variable {
 	my $self = shift;
 	my $document = $self->current->document or return;
 
-	#my $text = $current->text;
 	my ( $location, $text ) = $document->get_current_symbol;
 
-	# p $location;
-	# p $text;
 	if ( not $text or $text !~ m/^[\$@%\\]/smx ) {
 		$self->main->error(
 			sprintf(
@@ -727,8 +671,6 @@ sub _output_variables {
 		}
 	}
 
-	# }
-
 	$self->update_variables( $self->{var_val}, $self->{auto_var_val}, $self->{auto_x_var} );
 
 	return;
@@ -742,33 +684,18 @@ sub get_local_variables {
 
 	my $auto_values = $self->{client}->get_y_zero();
 
-	# p $auto_values;
-
 	$auto_values =~ s/^([\$\@\%]\w+)/:;$1/xmg;
-
-	# p $auto_values;
 
 	my @auto = split m/^:;/xm, $auto_values;
 
 	#remove ghost at begining
 	shift @auto;
 
-	# p @auto;
-
 	# This is better I think, it's quicker
 	$self->{auto_var_val} = {};
-	foreach (@auto) {
-		# $_ =~ m/ = /;
 
-		# # $` before and $' after $#
-		# if ( defined $` ) {
-			# if ( defined $' ) {
-				# $self->{auto_var_val}{$`} = $';
-			# } else {
-				# $self->{auto_var_val}{$`} = BLANK;
-			# }
-		# }
-		
+	foreach (@auto) {
+
 		$_ =~ m/(.*) = (.*)/sm;
 
 		if ( defined $1 ) {
@@ -792,36 +719,20 @@ sub get_global_variables {
 	my $var_regex   = '!(INC|ENV|SIG)';
 	my $auto_values = $self->{client}->get_x_vars($var_regex);
 
-	# p $auto_values;
-
 	$auto_values =~ s/^((?:[\$\@\%]\w+)|(?:[\$\@\%]\S+)|(?:File\w+))/:;$1/xmg;
-
-	# p $auto_values;
 
 	my @auto = split m/^:;/xm, $auto_values;
 
 	#remove ghost at begining
 	shift @auto;
 
-	# p @auto;
-
 	# This is better I think, it's quicker
 	$self->{auto_x_var} = {};
 
 	foreach (@auto) {
-		# $_ =~ m/ = | => /;
 
-		# $` before and $' after $#
-		# if ( defined $` ) {
-			# if ( defined $' ) {
-				# $self->{auto_x_var}{$`} = $';
-			# } else {
-				# $self->{auto_x_var}{$`} = BLANK;
-			# }
-		# }
-		
 		$_ =~ m/(.*)(?: = | => )(.*)/sm;
-		
+
 		if ( defined $1 ) {
 			if ( defined $2 ) {
 				$self->{auto_x_var}{$1} = $2;
@@ -831,7 +742,6 @@ sub get_global_variables {
 		}
 	}
 
-	# p $self->{auto_x_var};
 	return;
 }
 
@@ -1171,10 +1081,8 @@ sub on_running_bp_clicked {
 		$bp_action_ref = Padre::Breakpoints->set_breakpoints_clicked();
 	}
 
-	# p $bp_action_ref;
 	my %bp_action = %{$bp_action_ref};
 
-	# p $bp_action{action};
 	if ( $bp_action{action} eq 'add' ) {
 		my $result = $self->{client}->set_breakpoint( $self->{current_file}, $bp_action{line} );
 		if ( $result == 0 ) {
@@ -1239,15 +1147,8 @@ sub on_display_options_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	# if ( $self->{expression}->GetValue() eq "" ) {
 	$main->{debugoutput}->debug_output( $self->{client}->get_options() );
 
-	# } else {
-	# $main->{debugoutput}->debug_output( $self->{client}->set_option( $self->{expression}->GetValue() ) );
-	# }
-
-	#reset expression
-	# $self->expression->SetValue(BLANK);
 	return;
 }
 
@@ -1266,8 +1167,6 @@ sub on_evaluate_expression_clicked {
 			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
 	}
 
-	#reset expression
-	# $self->expression->SetValue(BLANK);
 	return;
 }
 #######
@@ -1277,11 +1176,8 @@ sub on_sub_names_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{debugoutput}
-		->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue() ) );
+	$main->{debugoutput}->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue() ) );
 
-	#reset expression
-	# $self->expression->SetValue(BLANK);
 	return;
 }
 #######
@@ -1293,11 +1189,8 @@ sub on_watchpoints_clicked {
 
 	if ( $self->{expression}->GetValue() ne "" ) {
 		if ( $self->{expression}->GetValue() eq "*" ) {
-			$main->{debugoutput}
-				->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
+			$main->{debugoutput}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
 
-			#reset expression
-			# $self->expression->SetValue(BLANK);
 			return;
 		}
 
@@ -1312,24 +1205,18 @@ sub on_watchpoints_clicked {
 				$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 			}
 
-			#reset expression
-			# $self->expression->SetValue(BLANK);
 			return;
 		} else {
 
 			$self->{client}->__send( 'w ' . $self->{expression}->GetValue() );
 			$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 
-			#reset expression
-			# $self->expression->SetValue(BLANK);
 			return;
 		}
 	} else {
 		$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 	}
 
-	#reset expression
-	# $self->expression->SetValue(BLANK);
 	return;
 }
 
@@ -1346,8 +1233,6 @@ sub on_raw_clicked {
 
 		$main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 	}
-
-	# $main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
 
 	return;
 }

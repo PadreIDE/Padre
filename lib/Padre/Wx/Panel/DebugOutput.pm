@@ -4,9 +4,6 @@ use 5.008;
 use strict;
 use warnings;
 
-# Turn on $OUTPUT_AUTOFLUSH
-# $| = 1;
-
 use utf8;
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::DebugOutput ();
