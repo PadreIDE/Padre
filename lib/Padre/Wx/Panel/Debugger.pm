@@ -696,13 +696,13 @@ sub get_local_variables {
 
 	foreach (@auto) {
 
-		$_ =~ m/(.*)(?: = )(.*)/sm;
+		$_ =~ m/(?<pre>.*)(?: = )(?<post>.*)/sm;
 
-		if ( defined $1 ) {
-			if ( defined $2 ) {
-				$self->{auto_var_val}{$1} = $2;
+		if ( defined $+{pre} ) {
+			if ( defined $+{post} ) {
+				$self->{auto_var_val}{$+{pre}} = $+{post};
 			} else {
-				$self->{auto_var_val}{$1} = BLANK;
+				$self->{auto_var_val}{$+{pre}} = BLANK;
 			}
 		}
 	}
@@ -731,13 +731,13 @@ sub get_global_variables {
 
 	foreach (@auto) {
 
-		$_ =~ m/(.*)(?: = | => )(.*)/sm;
+		$_ =~ m/(?<pre>.*)(?: = | => )(?<post>.*)/sm;
 
-		if ( defined $1 ) {
-			if ( defined $2 ) {
-				$self->{auto_x_var}{$1} = $2;
+		if ( defined $+{pre} ) {
+			if ( defined $+{post} ) {
+				$self->{auto_x_var}{$+{pre}} = $+{post};
 			} else {
-				$self->{auto_x_var}{$1} = BLANK;
+				$self->{auto_x_var}{$+{pre}} = BLANK;
 			}
 		}
 	}
