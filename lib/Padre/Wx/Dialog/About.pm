@@ -155,7 +155,7 @@ sub _core_info {
 sub _wx_info {
 	my $self = shift;
 
-	my $output .= "Wx...\n";
+	my $output = "Wx...\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'Wx', $Wx::VERSION;
 
 	# Reformat the native wxWidgets version string slightly
