@@ -79,19 +79,26 @@ sub add_menu_config {
 	my $self   = shift;
 	my $menu   = shift;
 	my $name   = shift;
-	my $value  = shift;
+	my $new    = shift;
 	my $label  = shift;
 
 	# Create the menu item
 	my $item = $menu->Append( -1, $label );
 
-	Wx::Event::EVT_MENU(
-		$self->{main},
-		$item,
-		sub {
-			Padre::Current->config->apply( $name => $value );
-		},
-	);
+	# Are we already set to this value?
+	my $old = $self->{main}->config->$name();
+	if ( $new eq $old ) {
+		$item->Enable(0);
+
+	} else {
+		Wx::Event::EVT_MENU(
+			$self->{main},
+			$item,
+			sub {
+				$_[0]->config->apply( $name => $new );
+			},
+		);
+	}
 
 	return $item;
 }
