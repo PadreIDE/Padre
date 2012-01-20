@@ -277,7 +277,7 @@ sub tidy {
 	}
 
 	# Sort from bottom to top
-	@$targets = sort { $b->[0] <=> $a->[1] } @$targets;
+	@$targets = sort { $b->[0] <=> $a->[0] } @$targets;
 
 	return $self;
 }
