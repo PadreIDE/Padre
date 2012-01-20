@@ -696,7 +696,7 @@ sub get_local_variables {
 
 	foreach (@auto) {
 
-		$_ =~ m/(.*) = (.*)/sm;
+		$_ =~ m/(.*)(?: = )(.*)/sm;
 
 		if ( defined $1 ) {
 			if ( defined $2 ) {
