@@ -102,6 +102,7 @@ the even version for the release, even during development.
       "editor_right_margin_colum" stops Padre (ADAMK)
     - Fixed Ticket #1363 Miss depend - File::Slurp (ADAMK)
     - The editor style preview now correctly updates in real time (ADAMK)
+    - Migrate the vertical align feature to Padre::Delta (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)

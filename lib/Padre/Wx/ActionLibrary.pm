@@ -1274,7 +1274,7 @@ sub init {
 		comment    => _T('Jump to a specific line number or character position'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
-			shift->on_goto(@_);
+			shift->goto->show;
 		},
 	);
 

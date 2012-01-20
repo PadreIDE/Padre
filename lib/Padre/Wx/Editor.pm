@@ -1911,8 +1911,8 @@ sub vertically_align {
 	# Find the latest position of the starting whitespace.
 	my $longest = List::Util::max map { $_->[0] } grep {$_} @position;
 
-	# Now lets line them up
-	$self->BeginUndoAction;
+	# Generate the target list to line them all up
+	my @targets = ();
 	foreach ( 0 .. $#line ) {
 		next unless $position[$_];
 		my $spaces = $longest - $position[$_]->[0] - $position[$_]->[1] + 1;
@@ -1922,21 +1922,16 @@ sub vertically_align {
 
 		my $insert = $self->PositionFromLine( $line[$_] ) + $position[$_]->[0] + 1;
 		if ( $spaces > 0 ) {
-			$self->SetTargetStart($insert);
-			$self->SetTargetEnd($insert);
-			$self->ReplaceTarget( ' ' x $spaces );
+			push @targets, [ $insert, $insert, ' ' x $spaces ];
 		} elsif ( $spaces < 0 ) {
-			$self->SetTargetStart($insert);
-			$self->SetTargetEnd( $insert - $spaces );
-			$self->ReplaceTarget('');
+			push @targets, [ $insert, $insert - $spaces, '' ];
 		}
 	}
-	$self->EndUndoAction;
 
-	# Move the selection to the new position
-	$self->SetSelection( $start, $start );
-
-	return;
+	# Apply the changes via a delta object
+	require Padre::Delta;
+	my $delta = Padre::Delta->new( position => reverse @targets );
+	$delta->to_editor($self);
 }
 
 sub needs_manual_colorize {

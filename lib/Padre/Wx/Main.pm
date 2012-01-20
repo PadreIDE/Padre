@@ -585,6 +585,7 @@ use Class::XSAccessor {
 		has_foundinfiles   => 'foundinfiles',
 		has_replace        => 'replace',
 		has_replaceinfiles => 'replaceinfiles',
+		has_goto           => 'goto',
 	},
 	getters => {
 
@@ -910,6 +911,25 @@ sub replace {
 		$self->{replace} = Padre::Wx::Dialog::Replace->new($self);
 	}
 	return $self->{replace};
+}
+
+=pod
+
+=head3 C<goto>
+
+    my $dialog = $main->goto;
+
+Return the Goto dialog. Create a new one if needed.
+
+=cut
+
+sub goto {
+	my $self = shift;
+	unless ( defined $self->{goto} ) {
+		require Padre::Wx::Dialog::Goto;
+		$self->{goto} = Padre::Wx::Dialog::Goto->new($self);
+	}
+	return $self->{goto};
 }
 
 =pod
@@ -3720,29 +3740,6 @@ sub on_autocompletion {
 		);
 
 	}
-	return;
-}
-
-=pod
-
-=head3 C<on_goto>
-
-    $main->on_goto;
-
-Prompt user for a line or character position, and jump to this line
-or character position in current document.
-
-=cut
-
-sub on_goto {
-	my $self = shift;
-
-	unless ( defined $self->{goto} ) {
-		require Padre::Wx::Dialog::Goto;
-		$self->{goto} = Padre::Wx::Dialog::Goto->new($self);
-	}
-	$self->{goto}->show;
-
 	return;
 }
 
