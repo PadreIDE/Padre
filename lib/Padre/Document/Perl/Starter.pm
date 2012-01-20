@@ -81,9 +81,9 @@ sub current {
 
 =pod
 
-=head2 new_document_script
+=head2 create_script
 
-    $starter->new_document_script;
+    $starter->create_script;
 
 Create a new blank Perl 5 script, applying the user's style preferences if
 possible.
@@ -100,9 +100,9 @@ sub create_script {
 
 =pod
 
-=head2 new_document_module
+=head2 create_module
 
-    $starter->start_perl5_module( module => $package );
+    $starter->create_module( module => $package );
 
 Create a new empty Perl 5 module, applying the user's style preferences if
 possible. If passed a package name, that module will be created.
@@ -143,9 +143,9 @@ sub create_module {
 
 =pod
 
-=head2 new_document_test
+=head2 create_test
 
-    $starter->new_document_test;
+    $starter->create_test;
 
 Create a new empty Perl 5 test, applying the user's style preferences if
 possible.
