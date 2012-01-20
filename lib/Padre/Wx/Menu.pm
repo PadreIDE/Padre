@@ -107,8 +107,7 @@ sub build_menu_from_actions {
 	my $self    = shift;
 	my $main    = shift;
 	my $actions = shift;
-
-	my $label = $actions->[0];
+	my $label   = $actions->[0];
 	$self->{main} = $main;
 	$self->_menu_actions_submenu( $main, $self->wx, $actions->[1] );
 	return ( $label, $self->wx );
