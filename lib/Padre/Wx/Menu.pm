@@ -53,7 +53,7 @@ sub add_menu_action {
 	my $self    = shift;
 	my $menu    = ( @_ > 1 ) ? shift : $self;
 	my $name    = shift;
-	my $actions = Padre::Current->ide->actions;
+	my $actions = $self->{main}->ide->actions;
 	my $action  = $actions->{$name} or return 0;
 	my $method  = $action->menu_method || 'Append';
 
@@ -69,6 +69,28 @@ sub add_menu_action {
 		$self->{main},
 		$item,
 		$action->menu_event,
+	);
+
+	return $item;
+}
+
+# Add a normal menu item to change a configuration variable
+sub add_menu_config {
+	my $self   = shift;
+	my $menu   = shift;
+	my $name   = shift;
+	my $value  = shift;
+	my $label  = shift;
+
+	# Create the menu item
+	my $item = $menu->Append( -1, $label );
+
+	Wx::Event::EVT_MENU(
+		$self->{main},
+		$item,
+		sub {
+			Padre::Current->config->apply( $name => $value );
+		},
 	);
 
 	return $item;

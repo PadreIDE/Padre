@@ -273,23 +273,12 @@ sub new {
 			shift->on_middle_up(@_);
 		},
 	);
-
-	# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
-	if ( Padre::Constant::UNIX ) {
-		Wx::Event::EVT_RIGHT_DOWN(
-			$self,
-			sub {
-				shift->on_context_menu(@_);
-			},
-		);
-	} else {
-		Wx::Event::EVT_CONTEXT_MENU(
-			$self,
-			sub {
-				shift->on_context_menu(@_);
-			},
-		);
-	}
+	Wx::Event::EVT_CONTEXT(
+		$self,
+		sub {
+			shift->on_context_menu(@_);
+		},
+	);
 
 	# Scintilla specific event bindings
 	Wx::Event::EVT_STC_DOUBLECLICK(
@@ -602,17 +591,19 @@ sub on_context_menu {
 	my $main  = $self->main;
 
 	require Padre::Wx::Editor::Menu;
-	my $menu = Padre::Wx::Editor::Menu->new( $main, $self, $event );
+	my $menu = Padre::Wx::Editor::Menu->new( $self, $event );
 
 	# Try to determine where to show the context menu
 	if ( $event->isa('Wx::MouseEvent') ) {
 		# Position is already window relative
 		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
+
 	} elsif ( $event->can('GetPosition') ) {
 		# Assume other event positions are screen relative
 		my $screen = $event->GetPosition;
 		my $client = $self->ScreenToClient($screen);
 		$self->PopupMenu( $menu->wx, $client->x, $client->y );
+
 	} else {
 		# Probably a wxCommandEvent
 		# TO DO Capture a better location from the mouse directly

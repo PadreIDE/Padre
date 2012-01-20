@@ -121,6 +121,14 @@ sub new {
 		}
 	);
 
+	# Right click menu
+	Wx::Event::EVT_CONTEXT(
+		$self,
+		sub {
+			$self->on_context_menu($_[1]);
+		},
+	);
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->theme->apply( $self->{list} );
 	}
@@ -216,6 +224,33 @@ sub on_list_item_activated {
 	}
 
 	return;
+}
+
+sub on_context_menu {
+	my $self  = shift;
+	my $event = shift;
+
+	require Padre::Wx::FunctionList::Menu;
+	my $menu = Padre::Wx::FunctionList::Menu->new( $self, $event );
+
+	# Try to determine where to show the context menu
+	if ( $event->isa('Wx::MouseEvent') ) {
+		# Position is already window relative
+		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
+
+	} elsif ( $event->can('GetPosition') ) {
+		# Assume other event positions are screen relative
+		my $screen = $event->GetPosition;
+		my $client = $self->ScreenToClient($screen);
+		$self->PopupMenu( $menu->wx, $client->x, $client->y );
+
+	} else {
+		# Probably a wxCommandEvent
+		# TO DO Capture a better location from the mouse directly
+		$self->PopupMenu( $menu->wx, 50, 50 );
+	}
+
+	$event->Skip(0);
 }
 
 

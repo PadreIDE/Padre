@@ -14,24 +14,18 @@ our @ISA     = 'Padre::Wx::Menu';
 
 sub new {
 	my $class     = shift;
-	my $main      = shift;
 	my $editor    = shift or return;
 	my $event     = shift;
 	my $selection = $editor->GetSelectionLength ? 1 : 0;
 
 	# Create the empty menu
 	my $self = $class->SUPER::new(@_);
-	$self->{main} = $main;
+	$self->{main} = $editor->main;
 
 	# The core cut/paste entries the same as every other editor
 
-	$self->{cut} = $self->add_menu_action(
-		'edit.cut',
-	);
-
-	$self->{copy} = $self->add_menu_action(
-		'edit.copy',
-	);
+	$self->{cut}  = $self->add_menu_action('edit.cut');
+	$self->{copy} = $self->add_menu_action('edit.copy');
 
 	unless ($selection) {
 		$self->{copy}->Enable(0);
@@ -77,7 +71,7 @@ sub new {
 		);
 	}
 
-	my $config = $main->config;
+	my $config = $self->{main}->config;
 	if (    Padre::Feature::FOLDING
 		and $event->isa('Wx::MouseEvent')
 		and $config->editor_folding )

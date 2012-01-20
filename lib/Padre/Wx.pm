@@ -5,9 +5,10 @@ package Padre::Wx;
 use 5.008;
 use strict;
 use warnings;
-use constant       ();
-use Params::Util   ();
-use Padre::Current ();
+use constant        ();
+use Params::Util    ();
+use Padre::Constant ();
+use Padre::Current  ();
 
 # Threading must be loaded before Wx loads
 use threads;
@@ -182,6 +183,20 @@ sub launch_irc {
 sub launch_file {
 	require URI::file;
 	launch_browser( URI::file->new_abs(shift) );
+}
+
+
+
+
+
+######################################################################
+# Wx::Event Convenience Functions
+
+# FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
+if ( Padre::Constant::UNIX ) {
+	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_RIGHT_DOWN;
+} else {
+	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_CONTEXT_MENU;
 }
 
 1;
