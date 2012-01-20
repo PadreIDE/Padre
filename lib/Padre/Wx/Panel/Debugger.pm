@@ -758,14 +758,24 @@ sub get_local_variables {
 	# This is better I think, it's quicker
 	$self->{auto_var_val} = {};
 	foreach (@auto) {
-		$_ =~ m/ = /;
+		# $_ =~ m/ = /;
 
-		# $` before and $' after $#
-		if ( defined $` ) {
-			if ( defined $' ) {
-				$self->{auto_var_val}{$`} = $';
+		# # $` before and $' after $#
+		# if ( defined $` ) {
+			# if ( defined $' ) {
+				# $self->{auto_var_val}{$`} = $';
+			# } else {
+				# $self->{auto_var_val}{$`} = BLANK;
+			# }
+		# }
+		
+		$_ =~ m/(.*) = (.*)/sm;
+
+		if ( defined $1 ) {
+			if ( defined $2 ) {
+				$self->{auto_var_val}{$1} = $2;
 			} else {
-				$self->{auto_var_val}{$`} = BLANK;
+				$self->{auto_var_val}{$1} = BLANK;
 			}
 		}
 	}
@@ -799,14 +809,24 @@ sub get_global_variables {
 	$self->{auto_x_var} = {};
 
 	foreach (@auto) {
-		$_ =~ m/ = | => /;
+		# $_ =~ m/ = | => /;
 
 		# $` before and $' after $#
-		if ( defined $` ) {
-			if ( defined $' ) {
-				$self->{auto_x_var}{$`} = $';
+		# if ( defined $` ) {
+			# if ( defined $' ) {
+				# $self->{auto_x_var}{$`} = $';
+			# } else {
+				# $self->{auto_x_var}{$`} = BLANK;
+			# }
+		# }
+		
+		$_ =~ m/(.*)(?: = | => )(.*)/sm;
+		
+		if ( defined $1 ) {
+			if ( defined $2 ) {
+				$self->{auto_x_var}{$1} = $2;
 			} else {
-				$self->{auto_x_var}{$`} = BLANK;
+				$self->{auto_x_var}{$1} = BLANK;
 			}
 		}
 	}
