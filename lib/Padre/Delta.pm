@@ -8,10 +8,10 @@ Padre::Delta - A very simple diff object that can be applied to editors fast
 
 =head1 SYNOPSIS
 
-  my $editor = Padre::Current->editor;
-  my $from   = $editor->GetText;
-  my $to     = transform_function($from);
-  Padre::Delta->from_scalars( \$from => \$to )->to_editor($editor);
+    my $editor = Padre::Current->editor;
+    my $from   = $editor->GetText;
+    my $to     = transform_function($from);
+    Padre::Delta->from_scalars( \$from => \$to )->to_editor($editor);
 
 =head1 DESCRIPTION
 
@@ -148,9 +148,9 @@ sub null {
 
 =head2 from_diff
 
-  my $delta = Padre::Delta->from_diff(
-      Algorithm::Diff::diff( \@from => \@to )
-  );
+    my $delta = Padre::Delta->from_diff(
+        Algorithm::Diff::diff( \@from => \@to )
+    );
 
 The C<from_diff> method takes a list of hunk structures as returned by the
 L<Algorithm::Diff> function C<diff> and creates a new delta that will apply
@@ -205,7 +205,7 @@ sub from_diff {
 
 =head2 from_scalars
 
-  my $delta = Padre::Delta->from_scalars( \$from => \$to );
+    my $delta = Padre::Delta->from_scalars( \$from => \$to );
 
 The C<from_scalars> method takes a pair of documents "from" and "to" and creates
 a L<Padre::Delta> object that when applied to document "from" will convert it
@@ -286,7 +286,7 @@ sub tidy {
 
 =head2 to_editor
 
-  my $changes = $delta->to_editor($editor);
+    my $changes = $delta->to_editor($editor);
 
 The C<to_editor> method applies the changes in a delta object to a
 L<Padre::Wx::Editor> instance.
