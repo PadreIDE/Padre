@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # Turn on $OUTPUT_AUTOFLUSH
-$| = 1;
+# $| = 1;
 
 use utf8;
 use Padre::Wx::Role::View;
