@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 20:10-0800\n"
+"POT-Creation-Date: 2012-01-20 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -641,7 +641,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:639
+#: lib/Padre/Wx/Panel/Debugger.pm:585
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -816,11 +816,11 @@ msgstr ""
 msgid "Alphabetic characters"
 msgstr ""
 
-#: lib/Padre/Config.pm:588
+#: lib/Padre/Config.pm:588 lib/Padre/Wx/FunctionList/Menu.pm:37
 msgid "Alphabetical Order"
 msgstr ""
 
-#: lib/Padre/Config.pm:589
+#: lib/Padre/Config.pm:589 lib/Padre/Wx/FunctionList/Menu.pm:42
 msgid "Alphabetical Order (Private Last)"
 msgstr ""
 
@@ -1318,7 +1318,7 @@ msgstr ""
 msgid "Close this window"
 msgstr ""
 
-#: lib/Padre/Config.pm:587
+#: lib/Padre/Config.pm:587 lib/Padre/Wx/FunctionList/Menu.pm:32
 msgid "Code Order"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgstr ""
 msgid "Could not delete: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:613
+#: lib/Padre/Wx/Panel/Debugger.pm:563
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1641,7 +1641,7 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/DebugOutput.pm:52
+#: lib/Padre/Wx/Panel/DebugOutput.pm:49
 msgid "Debug Output"
 msgstr ""
 
@@ -1649,15 +1649,15 @@ msgstr ""
 msgid "Debug-Output Options"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:63
+#: lib/Padre/Wx/Panel/Debugger.pm:60
 msgid "Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:252
+#: lib/Padre/Wx/Panel/Debugger.pm:242
 msgid "Debugger is already running"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:316
+#: lib/Padre/Wx/Panel/Debugger.pm:302
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -2122,7 +2122,7 @@ msgid "Epoch"
 msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:520
-#: lib/Padre/Wx/Editor.pm:925 lib/Padre/Wx/Main.pm:5029
+#: lib/Padre/Wx/Editor.pm:916 lib/Padre/Wx/Main.pm:5029
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
 #: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
@@ -2536,7 +2536,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1894
+#: lib/Padre/Wx/Editor.pm:1885
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -2602,7 +2602,7 @@ msgstr ""
 msgid "Function List"
 msgstr ""
 
-#: lib/Padre/Wx/FunctionList.pm:143
+#: lib/Padre/Wx/FunctionList.pm:151
 msgid "Functions"
 msgstr ""
 
@@ -3385,7 +3385,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:256
+#: lib/Padre/Wx/Panel/Debugger.pm:246
 msgid "Not a Perl document"
 msgstr ""
 
@@ -5792,7 +5792,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1878
+#: lib/Padre/Wx/Editor.pm:1869
 msgid "You must select a range of lines"
 msgstr ""
 
