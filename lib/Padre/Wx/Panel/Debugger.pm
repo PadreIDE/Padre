@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # Turn on $OUTPUT_AUTOFLUSH
-$| = 1;
+# $| = 1;
 
 use utf8;
 use Padre::Util              ();
@@ -17,7 +17,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.16 ();
-
+use Data::Printer { caller_info => 1, colored => 1, };
 our $VERSION = '0.93';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -330,7 +330,9 @@ sub _set_debugger {
 	my $current = $self->current;
 	my $editor  = $current->editor or return;
 	my $file    = $self->{client}->{filename} or return;
+	p $file;
 	my $row     = $self->{client}->{row} or return;
+	p $row;
 
 	# Open the file if needed
 	if ( $editor->{Document}->filename ne $file ) {
