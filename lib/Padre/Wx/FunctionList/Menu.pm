@@ -24,40 +24,15 @@ sub new {
 	my $self = $class->SUPER::new();
 	$self->{main} = $functions->main;
 
-	# Sorting options
+	# Preferences
 
-	$self->add_menu_config(
-		$self,
-		main_functions_order => 'original',
-		Wx::gettext('Code Order')
-	);
-	$self->add_menu_config(
-		$self,
-		main_functions_order => 'alphabetical',
-		Wx::gettext('Alphabetical Order'),
-	);
-	$self->add_menu_config(
-		$self,
-		main_functions_order => 'alphabetical_private_last',
-		Wx::gettext('Alphabetical Order (Private Last)'),
+	$self->append_config_options(
+		$self => 'main_functions_order',
 	);
 
-	# Temporarily disabled until we can add this for all tools
 	# $self->AppendSeparator;
-	# $self->add_menu_config(
-		 # $self,
-		 # main_functions_panel => 'left',
-		 # Wx::gettext('Left Panel'),
-	# );
-	# $self->add_menu_config(
-		 # $self,
-		 # main_functions_panel => 'right',
-		 # Wx::gettext('Right Panel'),
-	# );
-	# $self->add_menu_config(
-		 # $self,
-		 # main_functions_panel => 'bottom',
-		 # Wx::gettext('Bottom Panel'),
+	# $self->append_config_options(
+		# $self => 'main_functions_panel',
 	# );
 
 	return $self;

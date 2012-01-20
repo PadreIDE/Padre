@@ -74,8 +74,43 @@ sub add_menu_action {
 	return $item;
 }
 
-# Add a normal menu item to change a configuration variable
-sub add_menu_config {
+# Add a series of radio menu items for a configuration variable
+sub append_config_options {
+	my $self   = shift;
+	my $menu   = shift;
+	my $name   = shift;
+	my $config = $self->{main}->config;
+	my $old    = $config->$name();
+
+	# Get the set of (sorted) options
+	my $options = $config->meta($name)->options;
+	my @list    = sort {
+		$a->[1] cmp $b->[1]
+	} map {
+		[ $_, Wx::gettext($options->{$_}) ]
+	} keys %$options;
+
+	# Add the menu items
+	foreach my $option ( @list ) {
+		my $radio = $menu->AppendRadioItem( -1, $option->[1] );
+		my $new   = $option->[0];
+		if ( $new eq $old ) {
+			$radio->Check(1);
+		}
+		Wx::Event::EVT_MENU(
+			$self->{main},
+			$radio,
+			sub {
+				$_[0]->config->apply( $name => $new );
+			},
+		);
+	}
+
+	return;
+}
+
+# Add a normal menu item to change a configuration variable, not in use.
+sub append_config_option {
 	my $self   = shift;
 	my $menu   = shift;
 	my $name   = shift;
