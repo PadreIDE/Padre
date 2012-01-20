@@ -607,7 +607,7 @@ sub on_context_menu {
 	} else {
 		# Probably a wxCommandEvent
 		# TO DO Capture a better location from the mouse directly
-		$self->PopupMenu( $menu->wx, 50, 50 );
+		$self->PopupMenu( $menu->wx, 1, 1 );
 	}
 }
 
