@@ -144,6 +144,7 @@ my %LEXER = (
 	'application/x-psgi'        => Wx::Scintilla::Constant::SCLEX_PERL,      # CONFIRMED
 	'text/x-python'             => Wx::Scintilla::Constant::SCLEX_PYTHON,    # CONFIRMED
 	'application/x-php'         => Wx::Scintilla::Constant::SCLEX_PHPSCRIPT, # CONFIRMED
+	'application/x-r'           => Wx::Scintilla::Constant::SCLEX_R,         # CONFIRMED
 	'application/x-ruby'        => Wx::Scintilla::Constant::SCLEX_RUBY,      # CONFIRMED
 	'text/x-sql'                => Wx::Scintilla::Constant::SCLEX_SQL,       # CONFIRMED
 	'application/x-tcl'         => Wx::Scintilla::Constant::SCLEX_TCL,       # CONFIRMED
