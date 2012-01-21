@@ -77,6 +77,7 @@ my %EXT = (
 	mak   => 'text/x-makefile',
 	pod   => 'text/x-pod',
 	py    => 'text/x-python',
+        r     => 'text/x-r',
 	rb    => 'application/x-ruby',
 	sql   => 'text/x-sql',
 	tcl   => 'application/x-tcl',
@@ -450,6 +451,12 @@ Padre::MIME->create(
 Padre::MIME->create(
 	type      => 'application/x-php',
 	name      => 'PHP',
+	supertype => 'text/plain',
+);
+
+Padre::MIME->create(
+	type      => 'text/x-r',
+	name      => 'R',
 	supertype => 'text/plain',
 );
 

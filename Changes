@@ -104,6 +104,7 @@ the even version for the release, even during development.
     - The editor style preview now correctly updates in real time (ADAMK)
     - Migrate the vertical align feature to Padre::Delta (ADAMK)
     - Function List sort order can be changed via right click menu (ADAMK)
+    - Added support for the R statistics programming language (ADAMK)
 
 0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
