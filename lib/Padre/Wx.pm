@@ -22,7 +22,7 @@ use Wx::Event  (':everything');
 use Wx::AUI    ();
 use Wx::Socket ();
 
-our $VERSION    = '0.93';
+our $VERSION    = '0.94';
 our $COMPATIBLE = '0.43';
 
 BEGIN {

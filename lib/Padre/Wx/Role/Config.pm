@@ -10,7 +10,7 @@ use Params::Util    ();
 use Padre::Constant ();
 use Padre::Wx       ();
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 
 sub config_load {
 	my $self   = shift;

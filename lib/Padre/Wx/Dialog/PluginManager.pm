@@ -7,7 +7,7 @@ use Padre::Wx::Icon ();
 use Padre::Wx::FBP::PluginManager ();
 use Padre::Locale::T;
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
 

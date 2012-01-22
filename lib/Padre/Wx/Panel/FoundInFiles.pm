@@ -14,7 +14,7 @@ use Padre::Wx::Role::View        ();
 use Padre::Wx::FBP::FoundInFiles ();
 use Padre::Logger;
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View

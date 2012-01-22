@@ -30,7 +30,7 @@ use HTTP::Request::Common qw/GET POST DELETE PUT/;
 use Padre::Current  ();
 use Padre::Constant ();
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 
 
 

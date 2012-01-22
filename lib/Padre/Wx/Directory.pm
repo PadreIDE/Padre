@@ -15,7 +15,7 @@ use Padre::Wx::Role::Main          ();
 use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Logger;
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Dwell
@@ -570,56 +570,8 @@ sub browse_message {
 	my ( $child, $cookie ) = $tree->GetFirstChild($cursor);
 	my $position = 0;
 	while (@_) {
-		if ( $child->IsOk ) {
-
-			# Are we before, after, or a duplicate
-			my $chd = $tree->GetPlData($child);
-			if ( not defined $_[0] or not defined $chd ) {
-
-				# TODO: this should never happen, but it does and it crashes padre in the compare method
-				# when calling is_directory on the object.
-				warn
-					"Something is wrong as one of the directory objects is undef (position=$position, child=$child, chd=$chd)";
-				$self->main->error(
-					Wx::gettext(
-						'The directory browser got an undef object and may stop working now. Please save your work and restart Padre.'
-					)
-				);
-				last;
-			}
-			my $compare = $self->compare( $_[0], $chd );
-			if ( $compare > 0 ) {
-
-				# Deleted entry, remove the current position
-				my $delete = $child;
-				( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
-				$tree->Delete($delete);
-
-			} elsif ( $compare < 0 ) {
-
-				# New entry, insert before the current position
-				my $path = shift;
-				$tree->InsertItem(
-					$cursor,                           # Parent
-					$position,                         # Before
-					$path->name,                       # Label
-					$tree->{images}->{ $path->image }, # Icon
-					-1,                                # Icon (Selected)
-					Wx::TreeItemData->new($path),      # Embedded data
-				);
-				$position++;
-
-			} else {
-
-				# Already exists, discard the duplicate
-				( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
-				$position++;
-				shift @_;
-			}
-
-		} else {
-
-			# We are past the last entry
+		# Are we past the last entry?
+		unless ( $child->IsOk ) {
 			my $path = shift;
 			$tree->AppendItem(
 				$cursor,                           # Parent
@@ -628,6 +580,52 @@ sub browse_message {
 				-1,                                # Icon (Selected)
 				Wx::TreeItemData->new($path),      # Embedded data
 			);
+			next;
+		}
+
+		# Are we before, after, or a duplicate
+		my $chd = $tree->GetPlData($child);
+		if ( not defined $_[0] or not defined $chd ) {
+
+			# TODO: this should never happen, but it does and it crashes padre in the compare method
+			# when calling is_directory on the object.
+			unless ( defined $chd ) {
+				warn "GetPlData is bizarely undef for position=$position and child=$child";
+			}
+			$self->main->error(
+				Wx::gettext('Hit unfixed bug in directory browser, disabling it')
+			);
+			$self->main->show_directory(0);
+			return 1;
+		}
+		my $compare = $self->compare( $_[0], $chd );
+		if ( $compare > 0 ) {
+
+			# Deleted entry, remove the current position
+			my $delete = $child;
+			( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
+			$tree->Delete($delete);
+
+		} elsif ( $compare < 0 ) {
+
+			# New entry, insert before the current position
+			my $path = shift;
+			$tree->InsertItem(
+				$cursor,                           # Parent
+				$position,                         # Before
+				$path->name,                       # Label
+				$tree->{images}->{ $path->image }, # Icon
+				-1,                                # Icon (Selected)
+				Wx::TreeItemData->new($path),      # Embedded data
+			);
+			$position++;
+
+		} else {
+
+			# Already exists, discard the duplicate
+			( $child, $cookie ) = $tree->GetNextChild( $cursor, $cookie );
+			$position++;
+			shift @_;
 		}
 	}
 

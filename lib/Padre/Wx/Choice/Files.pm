@@ -9,7 +9,7 @@ use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 use Padre::Locale::T;
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Choice

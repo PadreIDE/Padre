@@ -8,7 +8,7 @@ use utf8;
 use Padre::Wx::Role::View;
 use Padre::Wx::FBP::DebugOutput ();
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 
 our @ISA = qw{
 	Padre::Wx::Role::View
