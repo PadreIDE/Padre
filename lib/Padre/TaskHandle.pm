@@ -11,7 +11,7 @@ use Storable                 ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
 
-our $VERSION  = '0.94';
+our $VERSION  = '0.95';
 our $SEQUENCE = 0;
 
 

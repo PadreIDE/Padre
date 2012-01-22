@@ -7,7 +7,7 @@ use Scalar::Util ();
 use Padre::Locale ();
 use Padre::Wx::FBP::Document ();
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = 'Padre::Wx::FBP::Document';
 
 my @SELECTION_FIELDS = qw{

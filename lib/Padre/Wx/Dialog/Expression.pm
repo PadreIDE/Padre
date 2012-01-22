@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::FBP::Expression ();
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = 'Padre::Wx::FBP::Expression';
 
 

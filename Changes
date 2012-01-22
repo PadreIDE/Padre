@@ -13,6 +13,10 @@ next production release, and synchronise their release to the Padre schedule.
 Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
+0.96 TBA
+
+0.95 Development version, not released
+
 0.94 2012.01.22
     - Redesigned the Preferences dialog (ADAMK)
     - Completed the Padre::Delta module for applying document updates, diffs or

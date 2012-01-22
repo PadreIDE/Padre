@@ -16,7 +16,7 @@ use Padre::Wx::Choice::Files ();
 use Padre::Wx::ComboBox::FindTerm ();
 use Padre::Wx::ComboBox::History ();
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

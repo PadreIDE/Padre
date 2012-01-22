@@ -19,7 +19,7 @@ use strict;
 use warnings;
 use Padre::Locale::T;
 
-our $VERSION    = '0.94';
+our $VERSION    = '0.95';
 our $COMPATIBLE = '0.93';
 
 # The MIME object store

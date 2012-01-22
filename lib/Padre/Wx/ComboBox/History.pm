@@ -43,7 +43,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::DB ();
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = 'Wx::ComboBox';
 
 sub new {

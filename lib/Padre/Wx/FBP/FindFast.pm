@@ -14,7 +14,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use File::ShareDir ();
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel

@@ -15,7 +15,7 @@ use Padre::Wx::Role::Main          ();
 use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Logger;
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Dwell

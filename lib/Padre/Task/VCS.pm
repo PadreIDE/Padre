@@ -9,7 +9,7 @@ use File::Temp  ();
 use File::Spec  ();
 use Padre::Logger;
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 our @ISA     = 'Padre::Task';
 
 use constant {
