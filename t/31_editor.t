@@ -4,7 +4,17 @@
 
 use strict;
 use warnings;
-use Test::More tests => 28;
+use Test::More;
+
+BEGIN {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+	plan( tests => 28 );
+}
+
+
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
