@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-21 04:10-0800\n"
+"POT-Creation-Date: 2012-01-21 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2714,6 +2714,10 @@ msgstr ""
 msgid "Highlight the line where the cursor is"
 msgstr ""
 
+#: lib/Padre/Wx/Directory.pm:596
+msgid "Hit unfixed bug in directory browser, disabling it"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Preferences.pm:37
 msgid "Home"
 msgstr ""
@@ -5359,12 +5363,6 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:110
 #, perl-format
 msgid "The bookmark '%s' no longer exists"
-msgstr ""
-
-#: lib/Padre/Wx/Directory.pm:585
-msgid ""
-"The directory browser got an undef object and may stop working now. Please "
-"save your work and restart Padre."
 msgstr ""
 
 #: lib/Padre/Document.pm:304
