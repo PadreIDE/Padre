@@ -49,15 +49,15 @@ local $ENV{LIBOVERLAY_SCROLLBAR} = ( $^O eq 'linux' ) ? 0 : $ENV{LIBOVERLAY_SCRO
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
-my $USAGE   = '';
-my $VERSION = '';
-my $HOME    = undef;
-my $RESET   = undef;
-my $SESSION = undef;
-my $PRELOAD = undef;
-my $DESKTOP = undef;
-my $ACTIONS = undef;
-my $LOCALE  = undef;
+my $USAGE       = '';
+my $SHOWVERSION = '';
+my $HOME        = undef;
+my $RESET       = undef;
+my $SESSION     = undef;
+my $PRELOAD     = undef;
+my $DESKTOP     = undef;
+my $ACTIONS     = undef;
+my $LOCALE      = undef;
 if ( grep {/^-/} @ARGV ) {
 
 	# Avoid loading Getopt::Long entirely if we can,
@@ -65,7 +65,7 @@ if ( grep {/^-/} @ARGV ) {
 	require Getopt::Long;
 	Getopt::Long::GetOptions(
 		'help|usage'    => \$USAGE,
-		'version'       => \$VERSION,
+		'version'       => \$SHOWVERSION,
 		'home=s'        => \$HOME,
 		'reset'         => \$RESET,
 		'session=s'     => \$SESSION,
@@ -108,7 +108,7 @@ local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
 require Padre::Constant;
 
 # Padre version
-if ($VERSION) {
+if ($SHOWVERSION) {
 	require Padre;
 	message("Perl Application Development and Refactoring Environment $Padre::VERSION\n");
 	exit(0);
