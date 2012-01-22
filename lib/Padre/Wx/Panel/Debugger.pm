@@ -260,7 +260,15 @@ sub debug_perl {
 
 	#TODO I think this is where the Fup filenames are comming from, see POD in main
 	# Get the filename
-	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+	# my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+
+	#changed due to define is deprecated in perl 5.15.7
+	my $filename;
+	if ( $document->{file} ) {
+		$filename = $document->{file}->filename;
+	} else {
+		$filename = undef;
+	}
 
 	# TODO: improve the message displayed to the user
 	# If the document is not saved, simply return for now
