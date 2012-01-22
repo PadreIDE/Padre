@@ -682,7 +682,7 @@ sub _output_variables {
 sub get_local_variables {
 	my $self = shift;
 
-	my $auto_values = $self->{client}->get_y_zero();
+	my $auto_values = $self->{client}->get_y_zero;
 
 	$auto_values =~ s/^([\$\@\%]\w+)/:;$1/xmg;
 
@@ -696,13 +696,13 @@ sub get_local_variables {
 
 	foreach (@auto) {
 
-		$_ =~ m/(?<pre>.*)(?: = )(?<post>.*)/sm;
+		$_ =~ m/(.*) = (.*)/sm;
 
-		if ( defined $+{pre} ) {
-			if ( defined $+{post} ) {
-				$self->{auto_var_val}{$+{pre}} = $+{post};
+		if ( defined $1 ) {
+			if ( defined $2 ) {
+				$self->{auto_var_val}->{$1} = $2;
 			} else {
-				$self->{auto_var_val}{$+{pre}} = BLANK;
+				$self->{auto_var_val}->{$1} = BLANK;
 			}
 		}
 	}
@@ -731,13 +731,13 @@ sub get_global_variables {
 
 	foreach (@auto) {
 
-		$_ =~ m/(?<pre>.*)(?: = | => )(?<post>.*)/sm;
+		$_ =~ m/(.*)(?: = | => )(.*)/sm;
 
-		if ( defined $+{pre} ) {
-			if ( defined $+{post} ) {
-				$self->{auto_x_var}{$+{pre}} = $+{post};
+		if ( defined $1 ) {
+			if ( defined $2 ) {
+				$self->{auto_x_var}->{$1} = $2;
 			} else {
-				$self->{auto_x_var}{$+{pre}} = BLANK;
+				$self->{auto_x_var}->{$1} = BLANK;
 			}
 		}
 	}
