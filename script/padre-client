@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-padre-client - client for Padre
+padre-client - Client for Padre
 
 =cut
 
@@ -16,7 +16,11 @@ use Carp            ();
 use Padre::Constant ();
 use Padre::Startup  ();
 
-our $VERSION = '0.55';
+our $VERSION = '0.94';
+
+
+
+
 
 #####################################################################
 # Client Startup Procedure

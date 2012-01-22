@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Carp ();
 
+our $VERSION = '0.94';
+
 use constant WIN32 => !!( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ );
 
 local $| = 1;
