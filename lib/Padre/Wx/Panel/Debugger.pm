@@ -264,7 +264,7 @@ sub debug_perl {
 
 	#changed due to define is deprecated in perl 5.15.7
 	my $filename;
-	if ( $document->{file} ) {
+	if ( defined $document->{file} ) {
 		$filename = $document->{file}->filename;
 	} else {
 		$filename = undef;
