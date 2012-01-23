@@ -5985,7 +5985,7 @@
                                                     <property name="font">,90,92,-1,70,0</property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">TODO List</property>
+                                                    <property name="label">Task List</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_staticText190</property>
@@ -6154,7 +6154,7 @@
                                                     <property name="maximum_size"></property>
                                                     <property name="maxlength">0</property>
                                                     <property name="minimum_size"></property>
-                                                    <property name="name">todo_regexp</property>
+                                                    <property name="name">main_tasks_regexp</property>
                                                     <property name="permission">public</property>
                                                     <property name="pos"></property>
                                                     <property name="size">400,-1</property>
@@ -7780,7 +7780,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Screen Layout</property>
-                                    <property name="select">0</property>
+                                    <property name="select">1</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -8308,7 +8308,7 @@
                                                             <property name="font"></property>
                                                             <property name="hidden">0</property>
                                                             <property name="id">wxID_ANY</property>
-                                                            <property name="label">To Do List</property>
+                                                            <property name="label">Task List</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
                                                             <property name="name">m_staticText1971</property>
@@ -8367,7 +8367,7 @@
                                                             <property name="id">wxID_ANY</property>
                                                             <property name="maximum_size"></property>
                                                             <property name="minimum_size"></property>
-                                                            <property name="name">main_todo_panel</property>
+                                                            <property name="name">main_tasks_panel</property>
                                                             <property name="permission">public</property>
                                                             <property name="pos"></property>
                                                             <property name="selection">0</property>
@@ -10341,7 +10341,7 @@
                                 <object class="listbookpage" expanded="0">
                                     <property name="bitmap"></property>
                                     <property name="label">Editor Style</property>
-                                    <property name="select">1</property>
+                                    <property name="select">0</property>
                                     <object class="wxPanel" expanded="0">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>
@@ -11655,7 +11655,7 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Editor Syntax Check Annotations</property>
+                                                    <property name="label">Editor Syntax Annotations</property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">feature_syntax_check_annotations</property>

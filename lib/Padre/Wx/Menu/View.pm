@@ -75,8 +75,8 @@ sub new {
 		'view.syntax',
 	);
 
-	$self->{todo} = $self->add_menu_action(
-		'view.todo',
+	$self->{tasks} = $self->add_menu_action(
+		'view.tasks',
 	);
 
 	if (Padre::Feature::VCS) {
@@ -256,7 +256,7 @@ sub refresh {
 
 	# Simple check state cases from configuration
 	$self->{eol}->Check( $config->editor_eol );
-	$self->{todo}->Check( $config->main_todo );
+	$self->{tasks}->Check( $config->main_tasks );
 	$self->{lines}->Check( $config->editor_linenumbers );
 	$self->{output}->Check( $config->main_output );
 	$self->{syntax}->Check( $config->main_syntax );

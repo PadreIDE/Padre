@@ -238,7 +238,7 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->show_view( todo      => $config->main_todo      );
+	$self->show_view( tasks     => $config->main_tasks      );
 	$self->show_view( syntax    => $config->main_syntax    );
 	$self->show_view( output    => $config->main_output    );
 	$self->show_view( outline   => $config->main_outline   );

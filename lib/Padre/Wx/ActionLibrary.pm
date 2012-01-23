@@ -1355,7 +1355,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name        => 'view.functions',
-		label       => _T('Show &Functions'),
+		label       => _T('Show &Function List'),
 		comment     => _T('Show a window listing all the functions in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
@@ -1394,12 +1394,12 @@ sub init {
 	) if Padre::Feature::DIFF_WINDOW;
 
 	Padre::Wx::Action->new(
-		name        => 'view.todo',
-		label       => _T('Show &To-do List'),
-		comment     => _T('Show a window listing all todo items in the current document'),
+		name        => 'view.tasks',
+		label       => _T('Show &Task List'),
+		comment     => _T('Show a window listing all task items in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->show_todo( $_[0]->menu->view->{todo}->IsChecked );
+			$_[0]->show_tasks( $_[0]->menu->view->{tasks}->IsChecked );
 		},
 	);
 
@@ -2375,19 +2375,6 @@ sub init {
 			$_[0]->refresh_functions( $_[0]->current );
 			$_[0]->show_functions(1);
 			$_[0]->functions->focus_on_search;
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name    => 'window.goto_todo_window',
-		label   => _T('Go to &Todo Window'),
-		comment => _T('Set the focus to the "Todo" window'),
-
-		#shortcut   => 'Alt-T', # conflicts with the Tools menu
-		menu_event => sub {
-			$_[0]->refresh_todo( $_[0]->current );
-			$_[0]->show_todo(1);
-			$_[0]->todo->focus_on_search;
 		},
 	);
 

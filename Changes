@@ -14,6 +14,9 @@ Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
 0.96 TBA
+    - The "Todo" or "To Do" or "To-do" or "TODO" list has always been a
+      problem when it comes to naming. Renamed to "Task List" to align
+      with Microsoft Visual Studio's solution to this problem (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

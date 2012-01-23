@@ -465,7 +465,7 @@ sub on_change_dwell {
 		$main->refresh_functions($current);
 		$main->refresh_outline($current);
 		$main->refresh_syntax($current);
-		$main->refresh_todo($current);
+		$main->refresh_tasks($current);
 		$main->refresh_diff($current);
 	}
 

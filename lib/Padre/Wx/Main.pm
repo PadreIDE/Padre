@@ -318,7 +318,7 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->show_view( todo      => $config->main_todo      );
+	$self->show_view( tasks     => $config->main_tasks      );
 	$self->show_view( functions => $config->main_functions );
 	$self->show_view( outline   => $config->main_outline   );
 	$self->show_view( directory => $config->main_directory );
@@ -503,7 +503,7 @@ Accessors to GUI elements:
 
 =item * C<functions>
 
-=item * C<todo>
+=item * C<tasks>
 
 =item * C<outline>
 
@@ -548,7 +548,7 @@ use Class::XSAccessor {
 		has_vcs            => 'vcs',
 		has_cpan           => 'cpan',
 		has_functions      => 'functions',
-		has_todo           => 'todo',
+		has_tasks          => 'tasks',
 		has_outline        => 'outline',
 		has_directory      => 'directory',
 		has_find           => 'find',
@@ -666,13 +666,13 @@ sub functions {
 	return $self->{functions};
 }
 
-sub todo {
+sub tasks {
 	my $self = shift;
-	unless ( defined $self->{todo} ) {
-		require Padre::Wx::TodoList;
-		$self->{todo} = Padre::Wx::TodoList->new($self);
+	unless ( defined $self->{tasks} ) {
+		require Padre::Wx::TaskList;
+		$self->{tasks} = Padre::Wx::TaskList->new($self);
 	}
-	return $self->{todo};
+	return $self->{tasks};
 }
 
 sub syntax {
@@ -1938,20 +1938,20 @@ sub refresh_functions {
 
 =pod
 
-=head3 C<refresh_todo>
+=head3 C<refresh_tasks>
 
-    $main->refresh_todo;
+    $main->refresh_tasks;
 
 Force a refresh of the TODO list on the right.
 
 =cut
 
-sub refresh_todo {
+sub refresh_tasks {
 	my $self = shift;
-	return unless $self->has_todo;
+	return unless $self->has_tasks;
 	return if $self->locked('REFRESH');
-	return unless $self->menu->view->{todo}->IsChecked;
-	$self->todo->refresh( $self->current );
+	return unless $self->menu->view->{tasks}->IsChecked;
+	$self->tasks->refresh( $self->current );
 	return;
 }
 
@@ -2282,9 +2282,9 @@ sub show_functions {
 
 =pod
 
-=head3 C<show_todo>
+=head3 C<show_tasks>
 
-    $main->show_todo( $visible );
+    $main->show_tasks( $visible );
 
 Show the I<to do> panel on the right if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
@@ -2292,14 +2292,14 @@ the panel.
 
 =cut
 
-sub show_todo {
+sub show_tasks {
 	my $self = shift;
 	my $show = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $item = $self->menu->view->{todo};
-	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_todo' );
+	my $item = $self->menu->view->{tasks};
+	my $lock = $self->lock( 'UPDATE', 'AUI', 'CONFIG', 'refresh_tasks' );
 	$item->Check($show) unless $show == $item->IsChecked;
-	$self->config->set( main_todo => $show );
-	$self->show_view( todo => $show );
+	$self->config->set( main_tasks => $show );
+	$self->show_view( tasks => $show );
 }
 
 =pod

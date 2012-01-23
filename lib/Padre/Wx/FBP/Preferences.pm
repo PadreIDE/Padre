@@ -85,7 +85,7 @@ sub new {
 	my $m_staticText190 = Wx::StaticText->new(
 		$m_panel5,
 		-1,
-		Wx::gettext("TODO List"),
+		Wx::gettext("Task List"),
 	);
 	$m_staticText190->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -105,7 +105,7 @@ sub new {
 		Wx::gettext("Item Regular Expression:"),
 	);
 
-	$self->{todo_regexp} = Wx::TextCtrl->new(
+	$self->{main_tasks_regexp} = Wx::TextCtrl->new(
 		$m_panel5,
 		-1,
 		"",
@@ -403,17 +403,17 @@ sub new {
 	my $m_staticText1971 = Wx::StaticText->new(
 		$m_panel10,
 		-1,
-		Wx::gettext("To Do List"),
+		Wx::gettext("Task List"),
 	);
 
-	$self->{main_todo_panel} = Wx::Choice->new(
+	$self->{main_tasks_panel} = Wx::Choice->new(
 		$m_panel10,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 		[],
 	);
-	$self->{main_todo_panel}->SetSelection(0);
+	$self->{main_tasks_panel}->SetSelection(0);
 
 	$self->{label_cpan} = Wx::StaticText->new(
 		$m_panel10,
@@ -896,7 +896,7 @@ sub new {
 	$self->{feature_syntax_check_annotations} = Wx::CheckBox->new(
 		$m_panel11,
 		-1,
-		Wx::gettext("Editor Syntax Check Annotations"),
+		Wx::gettext("Editor Syntax Annotations"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -1591,7 +1591,7 @@ sub new {
 	$bSizer116->Add( $m_staticText190, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline40, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer116->Add( $m_staticText11, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
-	$bSizer116->Add( $self->{todo_regexp}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 5 );
+	$bSizer116->Add( $self->{main_tasks_regexp}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::BOTTOM | Wx::LEFT | Wx::RIGHT, 5 );
 	$bSizer116->Add( 0, 10, 0, Wx::EXPAND, 5 );
 	$bSizer116->Add( $m_staticText187, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline37, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
@@ -1650,7 +1650,7 @@ sub new {
 	$fgSizer29->Add( $m_staticText1961, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer29->Add( $self->{main_outline_panel}, 0, 0, 5 );
 	$fgSizer29->Add( $m_staticText1971, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
-	$fgSizer29->Add( $self->{main_todo_panel}, 0, 0, 5 );
+	$fgSizer29->Add( $self->{main_tasks_panel}, 0, 0, 5 );
 	$fgSizer29->Add( $self->{label_cpan}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer29->Add( $self->{main_cpan_panel}, 0, 0, 5 );
 	$fgSizer29->Add( $self->{label_vcs}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
@@ -1918,9 +1918,9 @@ sub new {
 
 	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 0 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 1 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
-	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 1 );
+	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
 	$self->{treebook}->AddPage( $m_panel1, Wx::gettext("Indentation"), 0 );
 	$self->{treebook}->AddPage( $self->{keybindings_panel}, Wx::gettext("Key Bindings"), 0 );
@@ -1956,8 +1956,8 @@ sub main_functions_order {
 	$_[0]->{main_functions_order};
 }
 
-sub todo_regexp {
-	$_[0]->{todo_regexp};
+sub main_tasks_regexp {
+	$_[0]->{main_tasks_regexp};
 }
 
 sub window_list_shorten_path {
@@ -2024,8 +2024,8 @@ sub main_outline_panel {
 	$_[0]->{main_outline_panel};
 }
 
-sub main_todo_panel {
-	$_[0]->{main_todo_panel};
+sub main_tasks_panel {
+	$_[0]->{main_tasks_panel};
 }
 
 sub main_cpan_panel {

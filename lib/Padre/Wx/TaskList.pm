@@ -1,4 +1,4 @@
-package Padre::Wx::TodoList;
+package Padre::Wx::TaskList;
 
 use 5.008005;
 use strict;
@@ -39,7 +39,7 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	# Temporary store for the todo list.
+	# Temporary store for the task list.
 	$self->{model} = [];
 
 	# Remember the last document we were looking at
@@ -177,12 +177,12 @@ sub view_panel {
 }
 
 sub view_label {
-	Wx::gettext('To Do');
+	Wx::gettext('Task List');
 }
 
 sub view_close {
 	$_[0]->task_reset;
-	$_[0]->main->show_todo(0);
+	$_[0]->main->show_tasks(0);
 }
 
 
@@ -196,10 +196,10 @@ sub on_list_item_activated {
 	my $self   = shift;
 	my $editor = $self->current->editor or return;
 	my $nth    = $self->{list}->GetSelection;
-	my $todo   = $self->{model}->[$nth] or return;
+	my $task   = $self->{model}->[$nth] or return;
 
 	# Move the selection to where we last saw it
-	$editor->goto_pos_centerize( $todo->{pos} );
+	$editor->goto_pos_centerize( $task->{pos} );
 	$editor->SetFocus;
 
 	return;
@@ -248,7 +248,7 @@ sub refresh {
 
 	# Unlike the Function List widget we copied to make this,
 	# don't bother with a background task, since this is much quicker.
-	my $regexp = $current->config->todo_regexp;
+	my $regexp = $current->config->main_tasks_regexp;
 	my $text   = $document->text_get;
 	my @items  = ();
 	eval {
@@ -294,8 +294,8 @@ sub render {
 		$search->Show(1);
 		$list->Show(1);
 		$list->Clear;
-		foreach my $todo ( reverse @$model ) {
-			my $text = $todo->{text};
+		foreach my $task ( reverse @$model ) {
+			my $text = $task->{text};
 			if ( $text =~ /$string/i ) {
 				$list->Insert( $text, 0 );
 			}

@@ -606,14 +606,14 @@ setting(
 );
 
 setting(
-	name    => 'main_todo',
+	name    => 'main_tasks',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
 
 setting(
-	name    => 'main_todo_panel',
+	name    => 'main_tasks_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'right',
@@ -1156,7 +1156,7 @@ setting(
 	default => 0,
 );
 setting(
-	name    => 'todo_regexp',
+	name    => 'main_tasks_regexp',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => "#\\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \\t]*[:-]?)(?:[ \\t]*)(.*?)\\s*\$",
