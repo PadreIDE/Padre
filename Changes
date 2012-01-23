@@ -16,6 +16,7 @@ the even version for the release, even during development.
 0.96 TBA
 
 0.95 Development version, not released
+    - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
 
 0.94 2012.01.22
     - Redesigned the Preferences dialog (ADAMK)
@@ -702,7 +703,7 @@ the even version for the release, even during development.
 0.80 2011.01.29
     - use Text::FindIndent 0.10 to eliminate some warnings #1089 (SZABGAB)
     - Update German translation (ZENOG)
-    - Added a dwell timer via Padre::Wx::Role::Dwell (ADAMK)
+    - Added a dwell timer via Padre::Wx::Role::Timer (ADAMK)
     - The directory tree search box now has a 1/3rd second dwell (ADAMK)
     - Find in Files results convert tabs to 4 spaces to avoid the ugly
       squares in the results (ADAMK)

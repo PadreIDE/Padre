@@ -260,18 +260,7 @@ sub new {
 	# to show it, it showed at the top) so now we always turn the status bar on
 	# at the beginning and hide it in the timer, if it was not needed
 	#$statusbar->Show;
-	my $timer = Wx::Timer->new(
-		$self,
-		Padre::Wx::Main::TIMER_POSTINIT,
-	);
-	Wx::Event::EVT_TIMER(
-		$self,
-		Padre::Wx::Main::TIMER_POSTINIT,
-		sub {
-			$_[0]->timer_start;
-		},
-	);
-	$timer->Start( 1, 1 );
+	$self->dwell_start( timer_start => 1 );
 
 	return $self;
 }

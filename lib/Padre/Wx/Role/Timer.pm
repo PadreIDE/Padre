@@ -1,14 +1,14 @@
-package Padre::Wx::Role::Dwell;
+package Padre::Wx::Role::Timer;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::Role::Dwell - Convenience methods for implementing dwell timers
+Padre::Wx::Role::Timer - Convenience methods for working with Wx timers
 
 =head1 DESCRIPTION
 
-This role implements a set of methods for letting Wx objects in Padre
+This role implements a set of methods for letting L<Wx> objects in Padre
 implement dwell events on elements that do not otherwise natively
 support them.
 
@@ -44,7 +44,7 @@ my %ID = ();
 =head2 dwell_start
 
   # Half second dwell timer on a text input
-  $wx_object->dwell_start( 'on_text', 500 );
+  $wx_object->dwell_start( on_text => 500 );
 
 The C<dwell_start> method starts (or restarts) the dwell timer.
 
@@ -105,6 +105,49 @@ If there is no dwell for the named event the method will silently succeed.
 =cut
 
 sub dwell_stop {
+	my $self   = shift;
+	my $method = shift;
+	if ( $self->{$method} ) {
+		$self->{$method}->Stop;
+	}
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Poll Interface Methods
+
+sub poll_start {
+	my $self   = shift;
+	my $method = shift;
+	my $msec   = shift;
+
+	# If this is the first time the dwell event is being called
+	# create the timer object to support the alarm.
+	unless ( $self->{$method} ) {
+		# Fetch a usable id for the timer
+		my $name = ref($self) . '::' . $method;
+		my $id = ( $ID{$name} or $ID{$name} = Wx::NewId() );
+
+		# Create the reusable timer object
+		$self->{$method} = Wx::Timer->new( $self, $id );
+		Wx::Event::EVT_TIMER(
+			$self,
+			$id,
+			sub {
+				$self->$method();
+			},
+		);
+	}
+
+	# Start (or restart) the polling timer.
+	$self->{$method}->Start( $msec, 0 );
+}
+
+sub poll_stop {
 	my $self   = shift;
 	my $method = shift;
 	if ( $self->{$method} ) {

@@ -28,6 +28,7 @@ use Padre::TaskManager        ();
 use Padre::Task::Addition     ();
 use t::lib::Padre::NullWindow ();
 
+use constant TIMER_POSTINIT   => Wx::NewId();
 use constant TIMER_LASTRESORT => Wx::NewId();
 
 use_ok('Test::NoWarnings');
@@ -53,8 +54,8 @@ my $manager = Padre::TaskManager->new(
 isa_ok( $manager, 'Padre::TaskManager' );
 
 # Schedule the startup timer
-Wx::Event::EVT_TIMER( $wxapp, Padre::Wx::Main::TIMER_POSTINIT, \&startup );
-my $timer1 = Wx::Timer->new( $wxapp, Padre::Wx::Main::TIMER_POSTINIT );
+Wx::Event::EVT_TIMER( $wxapp, TIMER_POSTINIT, \&startup );
+my $timer1 = Wx::Timer->new( $wxapp, TIMER_POSTINIT );
 
 # Schedule the failure timeout
 Wx::Event::EVT_TIMER( $wxapp, TIMER_LASTRESORT, \&timeout );

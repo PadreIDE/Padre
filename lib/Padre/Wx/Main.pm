@@ -54,6 +54,7 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Conduit  ();
 use Padre::Wx::Role::Dialog   ();
+use Padre::Wx::Role::Timer    ();
 use Padre::Locale::T;
 use Padre::Logger;
 
@@ -62,17 +63,11 @@ our $COMPATIBLE = '0.91';
 our @ISA        = qw{
 	Padre::Wx::Role::Conduit
 	Padre::Wx::Role::Dialog
+	Padre::Wx::Role::Timer
 	Wx::Frame
 };
 
 use constant SECONDS => 1000;
-
-# Wx timer ids
-use constant {
-	TIMER_FILECHECK => Wx::NewId(),
-	TIMER_POSTINIT  => Wx::NewId(),
-	TIMER_NTH       => Wx::NewId(),
-};
 
 # Convenience until we get a config param or something
 use constant BACKUP_INTERVAL => 30;
@@ -362,15 +357,7 @@ sub new {
 	# at the beginning and hide it in the timer, if it was not needed
 	# TO DO: there might be better ways to fix that issue...
 	#$statusbar->Show;
-	my $timer = Wx::Timer->new( $self, TIMER_POSTINIT );
-	Wx::Event::EVT_TIMER(
-		$self,
-		TIMER_POSTINIT,
-		sub {
-			$_[0]->timer_start;
-		},
-	);
-	$timer->Start( 1, 1 );
+	$self->dwell_start( timer_start => 1 );
 
 	return $self;
 }
@@ -457,30 +444,15 @@ sub timer_start {
 	# Check for new plug-ins and alert the user to them
 	$manager->alert_new;
 
-	# Start the change detection timer
-	my $timer1 = Wx::Timer->new( $self, TIMER_FILECHECK );
-	Wx::Event::EVT_TIMER(
-		$self,
-		TIMER_FILECHECK,
-		sub {
-			$_[0]->timer_check_overwrite;
-		},
-	);
-	$timer1->Start( $config->update_file_from_disk_interval * SECONDS, 0 );
-
-	# Start the second-generation task manager
+	# Start the task manager
 	$self->ide->task_manager->start;
 
+	# Start the change detection timer
+	my $interval = $config->update_file_from_disk_interval * SECONDS;
+	$self->poll_start( timer_check_overwrite => $interval );
+
 	# Give a chance for post-start code to run, then do the nth-start logic
-	my $timer2 = Wx::Timer->new( $self, TIMER_NTH );
-	Wx::Event::EVT_TIMER(
-		$self,
-		TIMER_NTH,
-		sub {
-			$_[0]->timer_nth;
-		},
-	);
-	$timer2->Start( 1 * SECONDS, 1 );
+	$self->dwell_start( timer_nth => 5 * SECONDS );
 
 	return;
 }
@@ -3772,6 +3744,9 @@ sub on_activate {
 	# Ensure we are focused on the current document
 	$self->editor_focus;
 
+	# Start the file overwrite check timer
+	$self->poll_start( timer_check_overwrite => -1 );
+
 	return 1;
 }
 
@@ -3792,6 +3767,9 @@ sub on_deactivate {
 
 	# Hide the Find Fast panel if it is showing
 	$self->show_findfast(0);
+
+	# Stop polling for file changes
+	$self->poll_stop('timer_check_overwrite');
 
 	return 1;
 }

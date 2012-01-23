@@ -30,14 +30,14 @@ use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
-use Padre::Wx::Role::Dwell    ();
+use Padre::Wx::Role::Timer    ();
 use Padre::Logger;
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.91';
 our @ISA        = (
 	'Padre::Wx::Role::Main',
-	'Padre::Wx::Role::Dwell',
+	'Padre::Wx::Role::Timer',
 	'Wx::Scintilla::TextCtrl',
 );
 

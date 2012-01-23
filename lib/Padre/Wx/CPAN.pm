@@ -8,7 +8,7 @@ use Padre::Role::Task      ();
 use Padre::Wx              ();
 use Padre::Wx::Util        ();
 use Padre::Wx::Role::View  ();
-use Padre::Wx::Role::Dwell ();
+use Padre::Wx::Role::Timer ();
 use Padre::Wx::FBP::CPAN   ();
 use Padre::Logger;
 
@@ -16,7 +16,7 @@ our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
-	Padre::Wx::Role::Dwell
+	Padre::Wx::Role::Timer
 	Padre::Wx::FBP::CPAN
 };
 
