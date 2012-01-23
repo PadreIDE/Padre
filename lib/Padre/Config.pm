@@ -839,9 +839,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name  => 'default_projects_directory',
-	type  => Padre::Constant::PATH,
-	store => Padre::Constant::HOST,
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -849,9 +849,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name  => 'editor_font',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
+	name    => 'editor_font',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
 	default => Padre::Util::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
