@@ -173,7 +173,7 @@ sub new {
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
-	return 'right';
+	return 'bottom';
 }
 
 sub view_label {

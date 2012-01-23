@@ -616,8 +616,15 @@ setting(
 	name    => 'main_tasks_panel',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => 'right',
+	default => 'bottom',
 	options => $PANEL_OPTIONS,
+);
+
+setting(
+	name    => 'main_tasks_regexp',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => "#\\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \\t]*[:-]?)(?:[ \\t]*)(.*?)\\s*\$",
 );
 
 setting(
@@ -1155,12 +1162,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
-setting(
-	name    => 'main_tasks_regexp',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
-	default => "#\\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \\t]*[:-]?)(?:[ \\t]*)(.*?)\\s*\$",
-);
+
 setting(
 	name    => 'sessionmanager_sortorder',
 	type    => Padre::Constant::ASCII,
