@@ -533,14 +533,6 @@ setting(
 );
 
 setting(
-	name    => 'main_statusbar_template',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
-	default => '%m %f',
-	help    => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
-);
-
-setting(
 	name    => 'main_singleinstance',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
@@ -785,6 +777,14 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 	help    => _T('Show or hide the status bar at the bottom of the window.'),
+);
+
+setting(
+	name    => 'main_statusbar_template',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '%m %f',
+	help    => _T('Contents of the status bar') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
