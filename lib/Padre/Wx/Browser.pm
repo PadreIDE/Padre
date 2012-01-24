@@ -25,7 +25,6 @@ use URI                   ();
 use Encode                ();
 use Scalar::Util          ();
 use Params::Util          ();
-use Padre::Util           ('_T');
 use Padre::Browser        ();
 use Padre::Task::Browser  ();
 use Padre::Wx             ();
@@ -33,6 +32,7 @@ use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::AuiManager ();
 use Padre::Role::Task     ();
+use Padre::Locale::T;
 use Padre::Logger;
 
 our $VERSION = '0.95';
