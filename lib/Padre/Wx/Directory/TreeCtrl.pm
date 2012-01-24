@@ -6,12 +6,12 @@ use warnings;
 use File::Path                 ();
 use File::Spec                 ();
 use File::Basename             ();
-use Padre::Util                ('_T');
 use Padre::Constant            ();
 use Padre::Wx                  ();
 use Padre::Wx::TreeCtrl        ();
 use Padre::Wx::Role::Main      ();
 use Padre::Wx::Directory::Path ();
+use Padre::Locale::T;
 
 our $VERSION = '0.95';
 our @ISA     = qw{
