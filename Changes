@@ -17,6 +17,7 @@ the even version for the release, even during development.
     - The "Todo" or "To Do" or "To-do" or "TODO" list has always been a
       problem when it comes to naming. Renamed to "Task List" to align
       with Microsoft Visual Studio's solution to this problem (ADAMK)
+    - Removed borders from the Outline tool elements (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

@@ -38,6 +38,7 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+		Wx::SIMPLE_BORDER,
 	);
 
 	$self->{tree} = Padre::Wx::TreeCtrl->new(
@@ -45,7 +46,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_LINES_AT_ROOT | Wx::TR_SINGLE,
+		Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_LINES_AT_ROOT | Wx::TR_SINGLE | Wx::NO_BORDER,
 	);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
