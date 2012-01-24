@@ -304,36 +304,6 @@ sub _T {
 
 
 #####################################################################
-# Developer-Only Functions
-
-# This is pretty hacky
-sub svn_directory_revision {
-	my $dir = shift;
-
-	# Find the entries file
-	my $entries = File::Spec->catfile( $dir, '.svn', 'entries' );
-	return unless -f $entries;
-
-	# Find the headline revision
-	local $/ = undef;
-	open( my $fh, "<", $entries ) or return;
-	my $buffer = <$fh>;
-	close $fh;
-
-	# Find the first number after the first occurance of "dir".
-	unless ( $buffer =~ /\bdir\b\s+(\d+)/m ) {
-		return;
-	}
-
-	# Quote this to prevent certain aliasing bugs
-	return "$1";
-}
-
-
-
-
-
-#####################################################################
 # Shared Resources
 
 =head2 C<share>
