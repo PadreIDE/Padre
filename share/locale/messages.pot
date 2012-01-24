@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-23 08:10-0800\n"
+"POT-Creation-Date: 2012-01-23 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "%d lines deleted"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:145
+#: lib/Padre/Wx/ReplaceInFiles.pm:171
 #, perl-format
 msgid "%s (%s changed)"
 msgstr ""
@@ -87,7 +87,7 @@ msgstr ""
 msgid "%s (%s results)"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:153
+#: lib/Padre/Wx/ReplaceInFiles.pm:179
 #, perl-format
 msgid "%s (crashed)"
 msgstr ""
@@ -3355,7 +3355,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:190 lib/Padre/Wx/Panel/FoundInFiles.pm:297
+#: lib/Padre/Wx/ReplaceInFiles.pm:216 lib/Padre/Wx/Panel/FoundInFiles.pm:297
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -4298,7 +4298,7 @@ msgstr ""
 msgid "Replace all occurrences of the pattern"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:179
+#: lib/Padre/Wx/ReplaceInFiles.pm:205
 #, perl-format
 msgid "Replace complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4308,7 +4308,7 @@ msgstr ""
 msgid "Replace failure in %s:  %s"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:212 lib/Padre/Wx/FBP/ReplaceInFiles.pm:32
+#: lib/Padre/Wx/ReplaceInFiles.pm:238 lib/Padre/Wx/FBP/ReplaceInFiles.pm:32
 msgid "Replace in Files"
 msgstr ""
 
@@ -4326,7 +4326,7 @@ msgstr ""
 msgid "Replaced %d matches"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:120
+#: lib/Padre/Wx/ReplaceInFiles.pm:146
 #, perl-format
 msgid "Replacing '%s' in '%s'..."
 msgstr ""
