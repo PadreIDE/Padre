@@ -1,6 +1,6 @@
 package Padre::Breakpoints;
 
-# This module is in entirely the wrong place
+#ToDo Q is this package wrong in the wronge location
 
 use 5.008;
 use strict;
@@ -22,14 +22,11 @@ sub set_breakpoints_clicked {
 	my %bp_action;
 	$bp_action{line} = $bp_line;
 
-	# if ( $#{ $debug_breakpoints->select("WHERE filename = \"$current_file\" AND line_number = \"$bp_line\"") } >= 0 ) {
 	if ( $#{ $debug_breakpoints->select( "WHERE filename = ? AND line_number = ?", $current_file, $bp_line ) } >= 0 ) {
 
 		# say 'delete me';
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_BREAKPOINT() );
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
-
-		# $debug_breakpoints->delete("WHERE filename = \"$current_file\" AND line_number = \"$bp_line\"");
 		$debug_breakpoints->delete( "WHERE filename = ? AND line_number = ?", $current_file, $bp_line );
 		$bp_action{action} = 'delete';
 	} else {
@@ -48,21 +45,17 @@ sub set_breakpoints_clicked {
 	return \%bp_action;
 }
 
-#TODO finish when in trunk
 #######
 # function show_breakpoints
 # to be called when showing current file
+# update marging marker for this instance
 #######
 sub show_breakpoints {
 
 	my $editor            = Padre::Current->editor;
 	my $debug_breakpoints = ('Padre::DB::DebugBreakpoints');
 	my $current_file      = $editor->{Document}->filename;
-
-	# my $sql_select = "WHERE BY filename = \"$current_file\" ASC, line_number ASC";
 	my $sql_select = "WHERE BY filename = ? ASC, line_number ASC";
-
-	# my @tuples = $debug_breakpoints->select($sql_select);
 	my @tuples = $debug_breakpoints->select( $sql_select, $current_file );
 	
 	for ( 0 .. $#tuples ) {
@@ -75,6 +68,8 @@ sub show_breakpoints {
 	}
 	return;
 }
+
+#ToDo add update for all breakpoint margin markes in a single file
 
 1;
 
