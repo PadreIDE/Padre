@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-25 00:10-0800\n"
+"POT-Creation-Date: 2012-01-25 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgstr ""
 msgid "%s (%s changed)"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:327
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:326
 #, perl-format
 msgid "%s (%s results)"
 msgstr ""
@@ -2122,7 +2122,7 @@ msgid "Epoch"
 msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:520
-#: lib/Padre/Wx/Editor.pm:917 lib/Padre/Wx/Main.pm:4999
+#: lib/Padre/Wx/Editor.pm:918 lib/Padre/Wx/Main.pm:4999
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
 #: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
@@ -2536,7 +2536,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1886
+#: lib/Padre/Wx/Editor.pm:1887
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -3355,7 +3355,7 @@ msgstr ""
 msgid "No open files"
 msgstr ""
 
-#: lib/Padre/Wx/ReplaceInFiles.pm:218 lib/Padre/Wx/Panel/FoundInFiles.pm:287
+#: lib/Padre/Wx/ReplaceInFiles.pm:218 lib/Padre/Wx/Panel/FoundInFiles.pm:285
 #, perl-format
 msgid "No results found for '%s' inside '%s'"
 msgstr ""
@@ -4600,7 +4600,7 @@ msgstr ""
 msgid "Search and replace text in all files below a given directory"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:274
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:272
 #, perl-format
 msgid "Search complete, found '%s' %d time(s) in %d file(s) inside '%s'"
 msgstr ""
@@ -4632,7 +4632,7 @@ msgid ""
 "part."
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:224
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:222
 #, perl-format
 msgid "Searching for '%s' in '%s'..."
 msgstr ""
@@ -5775,7 +5775,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1870
+#: lib/Padre/Wx/Editor.pm:1871
 msgid "You must select a range of lines"
 msgstr ""
 
