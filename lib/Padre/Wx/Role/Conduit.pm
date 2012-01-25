@@ -140,7 +140,6 @@ sub on_signal {
 	return 1;
 }
 
-
 =pod
 
 =head2 signal
