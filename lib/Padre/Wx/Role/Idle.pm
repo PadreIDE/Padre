@@ -93,7 +93,7 @@ sub idle_method {
 		$self->Connect(
 			-1,
 			-1,
-			Wx::wxEVT_IDLE,
+			Wx::EVT_IDLE,
 			sub {
 				$_[0]->idle_handler($_[1]);
 			},
