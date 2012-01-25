@@ -120,7 +120,7 @@ provided only for completeness.
 =cut
 
 sub on_signal {
-	unless ( $HANDLER ) {
+	if ( $HANDLER ) {
 		# Deserialise the message from the Wx event so that our handler does not
 		# need to be aware we are implemented via Wx.
 		my $frozen  = $_[1]->GetData;
