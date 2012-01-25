@@ -272,7 +272,7 @@ sub show {
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
 		$self->_display_msg( Wx::gettext('Reading items. Please wait') );
-		$self->idle_call('_reindex');
+		$self->idle_method('_reindex');
 	}
 	$self->_search_text->SetFocus;
 

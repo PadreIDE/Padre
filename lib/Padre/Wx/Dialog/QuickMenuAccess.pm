@@ -269,7 +269,7 @@ sub _setup_events {
 	);
 
 	# Delay the slower stuff till we are idle
-	$self->idle_call('_update');
+	$self->idle_method('_update');
 }
 
 # Update match list

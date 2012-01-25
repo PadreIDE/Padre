@@ -428,7 +428,7 @@ sub _setup_events {
 		}
 	);
 
-	$self->idle_call('show_recent');
+	$self->idle_method('show_recent');
 }
 
 #
@@ -465,7 +465,7 @@ sub show {
 			$self->{search_text}->ChangeValue('');
 		}
 
-		$self->idle_call('show_recent');
+		$self->idle_method('show_recent');
 
 		$self->Show(1);
 	}

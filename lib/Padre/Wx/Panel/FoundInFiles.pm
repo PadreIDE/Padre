@@ -86,7 +86,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_call(
+			$_[0]->idle_method(
 				item_clicked => $_[1]->GetItem,
 			);
 		},

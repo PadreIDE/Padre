@@ -299,7 +299,7 @@ sub new {
 		$self,
 		-1,
 		sub {
-			$_[0]->idle_call('on_stc_updateui');
+			$_[0]->idle_method('on_stc_updateui');
 		}
 	);
 

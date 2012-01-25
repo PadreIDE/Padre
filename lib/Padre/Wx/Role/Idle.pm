@@ -9,14 +9,14 @@ Padre::Wx::Role::Idle - Role for delaying method calls until idle time
 =head1 SYNOPSIS
 
   # Manually schedule some work on idle
-  $self->idle_call( my_method => 'param' );
+  $self->idle_method( my_method => 'param' );
   
   # Delay work until idle time in response to an event
   Wx::Event::EVT_TREE_ITEM_ACTIVATED(
       $self,
       $self,
       sub {
-            shift->idle_call( my_method => 'param' );
+            shift->idle_method( my_method => 'param' );
       },
   );
   
@@ -48,25 +48,24 @@ use strict;
 use warnings;
 use Carp      ();
 use Padre::Wx ();
-use Padre::Logger;
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
 
 =pod
 
-=head2 idle_call
+=head2 idle_method
 
-  $self->idle_call( method_name => @params );
+  $self->idle_method( method_name => @params );
 
-The C<idle_call> method is used to schedule a method for execution at
+The C<idle_method> method is used to schedule a method for execution at
 idle time.
 
 The first parameter to the call should be the name of the method to be
 called on this object. The method will be checked before it is added to
 the queue to ensure that it exists.
 
-Any remaining parameters to C<idle_call> will be passed through as
+Any remaining parameters to C<idle_method> will be passed through as
 parameters to the specified method call.
 
 Please note that L<Wx::Event> objects B<must not be used> as paramters
@@ -75,12 +74,11 @@ the underlying Wx event structure for the event will no longer exist, and
 any attempt to call a method on the event object will segfault Perl.
 
 You should unpack any information you need from the L<Wx::Event> before
-making the call to C<idle_call> and pass it through as data instead.
+making the call to C<idle_method> and pass it through as data instead.
 
 =cut
 
-sub idle_call {
-	TRACE( $_[0] ) if DEBUG;
+sub idle_method {
 	my $self = shift;
 
 	if ( $self->{idle} ) {
@@ -125,7 +123,6 @@ type is made.
 =cut
 
 sub idle_handler {
-	TRACE($_[0]) if DEBUG;
 	my $self = shift;
 	my $idle = $self->{idle};
 

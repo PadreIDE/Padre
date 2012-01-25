@@ -88,7 +88,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			$_[0]->idle_call(
+			$_[0]->idle_method(
 				item_activated => $_[1]->GetIndex
 			);
 		},

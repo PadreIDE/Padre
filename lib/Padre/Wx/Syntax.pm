@@ -133,7 +133,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_call(
+			$_[0]->idle_method(
 				item_activated => $_[1]->GetItem
 			);
 		},
@@ -243,7 +243,7 @@ sub item_activated {
 	return if $editor->GetLineCount < $line;
 
 	# Select the problem after the event has finished
-	$self->idle_call( select_next_problem => $line - 1 );
+	$self->idle_method( select_next_problem => $line - 1 );
 }
 
 sub disable {
