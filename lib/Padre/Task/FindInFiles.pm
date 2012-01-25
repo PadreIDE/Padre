@@ -164,7 +164,7 @@ sub run {
 					text => $buffer,
 				);
 				unless ( defined $type and $type eq $self->{mime} ) {
-					TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
+					# TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
 					next;
 				}
 			}
@@ -174,8 +174,8 @@ sub run {
 				$buffer,
 				$self->{search}->search_regex,
 			);
-			TRACE( "Found " . scalar(@lines) . " matches in " . $fullname ) if DEBUG;
 			next unless @lines;
+			TRACE( "Found " . scalar(@lines) . " matches in " . $fullname ) if DEBUG;
 
 			# Found results, inform our owner
 			$self->tell_owner( $object, @lines );

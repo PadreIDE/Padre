@@ -947,7 +947,7 @@ sub load_files {
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
 		my $session = Padre::DB::Session->last_padre_session;
-		$self->open_session($session) if defined($session);
+		$self->open_session($session) if defined $session;
 		return;
 	}
 
@@ -1000,7 +1000,7 @@ L<Wx::WindowUpdateLocker> class.
 You should use an update lock during GUI construction/modification to
 prevent screen flicker. As a side effect of not updating, the GUI changes
 happen B<significantly> faster as well. Update locks should only be held for
-short periods of time, as the operating system will begin to treat your\
+short periods of time, as the operating system will begin to treat your
 application as "hung" if an update lock persists for more than a few
 seconds. In this situation, you may begin to see GUI corruption.
 

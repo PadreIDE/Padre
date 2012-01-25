@@ -244,14 +244,14 @@ sub search_run {
 }
 
 sub search_message {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
 	push @{ $self->{search_queue} }, [@_];
 }
 
 sub search_timer {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->search_render;
 }
 

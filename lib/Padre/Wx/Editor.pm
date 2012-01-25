@@ -373,6 +373,7 @@ sub on_set_focus {
 
 # When the focus is leaving the editor
 sub on_kill_focus {
+	TRACE($_[0]) if DEBUG;
 	my $self  = shift;
 	my $event = shift;
 

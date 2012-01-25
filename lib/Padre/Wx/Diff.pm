@@ -63,7 +63,7 @@ sub task_finish {
 		my $lines_added   = 0;
 		for my $diff ( @$chunk ) {
 			my ( $type, $line, $text ) = @$diff;
-			TRACE("$type, $line, $text") if DEBUG;
+			# TRACE("$type, $line, $text") if DEBUG;
 
 			unless ($marker_line) {
 				$marker_line = $line + $delta;
@@ -111,6 +111,7 @@ sub task_finish {
 			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_CHANGED, Padre::Constant::MARKER_DELETED );
 			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_ADDED );
 			$type = 'A';
+
 		} elsif ( $lines_deleted > 0 ) {
 
 			# Line(s) deleted
@@ -138,19 +139,23 @@ sub task_finish {
 		# Update the offset
 		$delta = $delta + $lines_added - $lines_deleted;
 
-		TRACE("$description at line #$marker_line") if DEBUG;
+		# TRACE("$description at line #$marker_line") if DEBUG;
 	}
 
 	$editor->SetMarginSensitive( 1, 1 );
 	my $myself = $self;
 	Wx::Event::EVT_STC_MARGINCLICK(
-		$editor, $editor,
+		$editor,
+		$editor,
 		sub {
 			my $self  = shift;
 			my $event = shift;
 
 			if ( $event->GetMargin == 1 ) {
-				$myself->show_diff_box( $editor->LineFromPosition( $event->GetPosition ), $editor );
+				$myself->show_diff_box(
+					$editor->LineFromPosition( $event->GetPosition ),
+					$editor,
+				);
 			}
 
 			# Keep processing
