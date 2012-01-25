@@ -349,6 +349,7 @@ sub on_set_focus {
 	# Try to avoid refreshing here, it is an excessive waste of resources.
 	# Instead, put them in the events that ACTUALLY change application
 	# state.
+	$self->on_change;
 
 	# TO DO
 	# This is called even if the mouse is moved away from padre and back

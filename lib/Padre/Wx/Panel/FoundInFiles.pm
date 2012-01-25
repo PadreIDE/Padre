@@ -127,11 +127,10 @@ sub repeat_clicked {
 
 # Called when the "Expand all" button is clicked
 sub expand_all_clicked {
-	my $self  = shift;
-	my $event = shift;
-	my $tree  = $self->{tree};
-	my $lock  = $tree->lock_scroll;
-	my $root  = $tree->GetRootItem;
+	my $self = shift;
+	my $tree = $self->{tree};
+	my $lock = $tree->lock_scroll;
+	my $root = $tree->GetRootItem;
 
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
@@ -145,11 +144,10 @@ sub expand_all_clicked {
 
 # Called when the "Collapse all" button is clicked
 sub collapse_all_clicked {
-	my $self  = shift;
-	my $event = shift;
-	my $tree  = $self->{tree};
-	my $lock  = $tree->lock_scroll;
-	my $root  = $tree->GetRootItem;
+	my $self = shift;
+	my $tree = $self->{tree};
+	my $lock = $tree->lock_scroll;
+	my $root = $tree->GetRootItem;
 
 	my ( $child, $cookie ) = $tree->GetFirstChild($root);
 	while ( $child->IsOk ) {
@@ -275,7 +273,7 @@ sub search_finish {
 				$term,
 				$self->{matches},
 				$self->{files},
-				$dir,
+				$task->{root},
 			)
 		);
 
@@ -286,7 +284,7 @@ sub search_finish {
 			sprintf(
 				Wx::gettext(q{No results found for '%s' inside '%s'}),
 				$term,
-				$dir,
+				$task->{root},
 			)
 		);
 	}
@@ -314,24 +312,27 @@ sub search_render {
 	require Padre::Wx::Directory::Path;
 
 	# Add the file nodes to the tree
-	my $lock = $tree->lock_scroll;
-	foreach my $entry (@$queue) {
+	my $images = $self->{images};
+	my $lock   = $tree->lock_scroll;
+	foreach my $entry ( @$queue ) {
 		my $path  = shift @$entry;
 		my $name  = $path->name;
 		my $dir   = File::Spec->catfile( $task->root, $path->dirs );
 		my $full  = File::Spec->catfile( $task->root, $path->path );
+		my $image = $images->{file};
 		my $lines = scalar @$entry;
-		my $label =
-			$lines > 1
-			? sprintf(
-			Wx::gettext('%s (%s results)'),
-			$full,
-			$lines,
-			)
-			: $full;
-		my $file = $tree->AppendItem( $root, $label, $self->{images}->{file} );
+		if ( $lines > 1 ) {
+			$full = sprintf(
+				Wx::gettext('%s (%s results)'),
+				$full,
+				$lines,
+			);
+		}
+
+		# Add the item to the tree
+		my $item = $tree->AppendItem( $root, $full, $image );
 		$tree->SetPlData(
-			$file,
+			$item,
 			{
 				dir  => $dir,
 				file => $name,
@@ -345,7 +346,7 @@ sub search_render {
 			my $msg = $row->[1];
 			$msg =~ s/\t/    /g;
 			my $line = $tree->AppendItem(
-				$file,
+				$item,
 				"$row->[0]: $msg",
 				$self->{images}->{result},
 			);
@@ -362,13 +363,12 @@ sub search_render {
 
 		# Expand nodes
 		$tree->Expand($root) unless $self->{files};
-		$tree->Expand($file);
+		$tree->Expand($item);
 
 		# Update statistics
 		$self->{matches} += $lines;
 		$self->{files}   += 1;
 
-		# Ensure both the root and the new file are expanded
 	}
 
 	# Flush the pending queue
@@ -419,9 +419,10 @@ sub view_label {
 }
 
 sub view_close {
-	$_[0]->task_reset;
-	$_[0]->main->show_foundinfiles(0);
-	$_[0]->clear;
+	my $self = shift;
+	$self->task_reset;
+	$self->main->show_foundinfiles(0);
+	$self->clear;
 }
 
 
@@ -433,13 +434,13 @@ sub view_close {
 
 # Handle the clicking of a find result
 sub item_clicked {
-	my $self  = shift;
-	my $item  = shift;
-	my $tree  = $self->{tree};
-	my $data  = $tree->GetPlData($item) or return;
-	my $dir   = $data->{dir}            or return;
-	my $file  = $data->{file}           or return;
-	my $path  = File::Spec->catfile( $dir, $file );
+	my $self = shift;
+	my $item = shift;
+	my $tree = $self->{tree};
+	my $data = $tree->GetPlData($item) or return;
+	my $dir  = $data->{dir}            or return;
+	my $file = $data->{file}           or return;
+	my $path = File::Spec->catfile( $dir, $file );
 
 	if ( defined $data->{line} ) {
 		my $line = $data->{line} - 1;
@@ -459,8 +460,7 @@ sub select {
 
 sub clear {
 	my $self = shift;
-	my $tree = $self->{tree};
-	my $lock = $tree->lock_scroll;
+	my $lock = $self->{tree}->lock_scroll;
 
 	$self->{files}   = 0;
 	$self->{matches} = 0;
