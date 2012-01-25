@@ -48,16 +48,18 @@ sub set_breakpoints_clicked {
 #######
 # function show_breakpoints
 # to be called when showing current file
-# update marging marker for this instance
 #######
 sub show_breakpoints {
 
 	my $editor            = Padre::Current->editor;
 	my $debug_breakpoints = ('Padre::DB::DebugBreakpoints');
 	my $current_file      = $editor->{Document}->filename;
-	my $sql_select = "WHERE BY filename = ? ASC, line_number ASC";
-	my @tuples = $debug_breakpoints->select( $sql_select, $current_file );
-	
+	my $sql_select = "WHERE filename = ? ORDER BY line_number ASC";
+	my @tuples = eval { $debug_breakpoints->select( $sql_select, $current_file ); };
+	if ($@){
+		return;
+	}
+
 	for ( 0 .. $#tuples ) {
 
 		if ( $tuples[$_][3] == 1 ) {
@@ -69,7 +71,6 @@ sub show_breakpoints {
 	return;
 }
 
-#ToDo add update for all breakpoint margin markes in a single file
 
 1;
 

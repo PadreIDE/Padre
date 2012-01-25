@@ -2124,6 +2124,8 @@ sub init {
 					return 0;
 				}
 				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+					require Padre::Breakpoints;
+					Padre::Breakpoints->show_breakpoints();
 					return 1;
 				} else {
 					return 0;
