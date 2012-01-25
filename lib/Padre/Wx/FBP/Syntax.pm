@@ -41,14 +41,6 @@ sub new {
 		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_SINGLE,
 	);
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self->{tree},
-		sub {
-			shift->on_tree_item_activated(@_);
-		},
-	);
-
 	Wx::Event::EVT_TREE_SEL_CHANGED(
 		$self,
 		$self->{tree},
@@ -96,10 +88,6 @@ sub new {
 	$self->Layout;
 
 	return $self;
-}
-
-sub on_tree_item_activated {
-	$_[0]->main->error('Handler method on_tree_item_activated for event tree.OnTreeItemActivated not implemented');
 }
 
 sub on_tree_item_selection_changed {

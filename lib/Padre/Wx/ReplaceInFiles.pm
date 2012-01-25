@@ -82,7 +82,7 @@ sub new {
 		$self,
 		$self,
 		sub {
-			$_[0]->idle_method(
+			$_[0]->idle_call(
 				item_clicked => $_[1]->GetItem,
 			);
 		},

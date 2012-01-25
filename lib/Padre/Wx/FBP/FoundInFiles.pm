@@ -161,10 +161,6 @@ sub stop_clicked {
 	$_[0]->main->error('Handler method stop_clicked for event stop.OnButtonClick not implemented');
 }
 
-sub item_clicked {
-	$_[0]->main->error('Handler method item_clicked for event tree.OnTreeItemActivated not implemented');
-}
-
 1;
 
 # Copyright 2008-2012 The Padre development team as listed in Padre.pm.

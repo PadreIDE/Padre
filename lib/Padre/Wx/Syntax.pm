@@ -8,9 +8,10 @@ use Wx::Scintilla          ();
 use Padre::Constant        ();
 use Padre::Feature         ();
 use Padre::Role::Task      ();
-use Padre::Wx::Role::View  ();
 use Padre::Wx              ();
 use Padre::Wx::Icon        ();
+use Padre::Wx::Role::Idle  ();
+use Padre::Wx::Role::View  ();
 use Padre::Wx::FBP::Syntax ();
 use Time::HiRes            ();
 use Padre::Logger;
@@ -18,6 +19,7 @@ use Padre::Logger;
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::Syntax
 };
@@ -126,6 +128,17 @@ sub new {
 		$main->theme->apply($self->{tree});
 	}
 
+	# Custom binding for the tree item activation
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self,
+		$self->{tree},
+		sub {
+			$_[0]->idle_call(
+				item_activated => $_[1]->GetItem
+			);
+		},
+	);
+
 	return $self;
 }
 
@@ -195,29 +208,6 @@ sub on_tree_item_selection_changed {
 	}
 }
 
-sub on_tree_item_activated {
-	my $self   = shift;
-	my $event  = shift;
-	my $item   = $event->GetItem or return;
-	my $issue  = $self->{tree}->GetPlData($item) or return;
-	my $editor = $self->current->editor or return;
-	my $line   = $issue->{line};
-
-	# Does it point to somewhere valid?
-	return unless defined $line;
-	return if $line !~ /^\d+$/o;
-	return if $editor->GetLineCount < $line;
-
-	# Select the problem after the event has finished
-	Wx::Event::EVT_IDLE(
-		$self,
-		sub {
-			$_[0]->select_next_problem( $line - 1 );
-			Wx::Event::EVT_IDLE( $self, undef );
-		},
-	);
-}
-
 sub show_stderr {
 	my $self   = shift;
 	my $event  = shift;
@@ -239,6 +229,28 @@ sub show_stderr {
 
 #####################################################################
 # General Methods
+
+sub item_activated {
+	my $self   = shift;
+	my $item   = shift or return;
+	my $issue  = $self->{tree}->GetPlData($item) or return;
+	my $editor = $self->current->editor or return;
+	my $line   = $issue->{line};
+
+	# Does it point to somewhere valid?
+	return unless defined $line;
+	return if $line !~ /^\d+$/o;
+	return if $editor->GetLineCount < $line;
+
+	# Select the problem after the event has finished
+	Wx::Event::EVT_IDLE(
+		$self,
+		sub {
+			$_[0]->select_next_problem( $line - 1 );
+			Wx::Event::EVT_IDLE( $self, undef );
+		},
+	);
+}
 
 sub disable {
 	my $self = shift;

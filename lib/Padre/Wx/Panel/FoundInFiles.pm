@@ -86,7 +86,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_method(
+			$_[0]->idle_call(
 				item_clicked => $_[1]->GetItem,
 			);
 		},
@@ -159,25 +159,6 @@ sub collapse_all_clicked {
 
 	$self->{expand_all}->Enable;
 	$self->{collapse_all}->Disable;
-}
-
-# Handle the clicking of a find result
-sub item_clicked {
-	my $self  = shift;
-	my $item  = shift;
-	my $tree  = $self->{tree};
-	my $data  = $tree->GetPlData($item) or return;
-	my $dir   = $data->{dir}            or return;
-	my $file  = $data->{file}           or return;
-	my $path  = File::Spec->catfile( $dir, $file );
-
-	if ( defined $data->{line} ) {
-		my $line = $data->{line} - 1;
-		my $text = $data->{text};
-		$self->open_file_at_line( $path, $line, $text );
-	} else {
-		$self->open_file_at_line($path);
-	}
 }
 
 
@@ -449,6 +430,25 @@ sub view_close {
 
 #####################################################################
 # General Methods
+
+# Handle the clicking of a find result
+sub item_clicked {
+	my $self  = shift;
+	my $item  = shift;
+	my $tree  = $self->{tree};
+	my $data  = $tree->GetPlData($item) or return;
+	my $dir   = $data->{dir}            or return;
+	my $file  = $data->{file}           or return;
+	my $path  = File::Spec->catfile( $dir, $file );
+
+	if ( defined $data->{line} ) {
+		my $line = $data->{line} - 1;
+		my $text = $data->{text};
+		$self->open_file_at_line( $path, $line, $text );
+	} else {
+		$self->open_file_at_line($path);
+	}
+}
 
 sub select {
 	my $self   = shift;

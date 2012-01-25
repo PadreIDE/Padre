@@ -49,14 +49,6 @@ sub new {
 		Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_LINES_AT_ROOT | Wx::TR_SINGLE | Wx::NO_BORDER,
 	);
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self->{tree},
-		sub {
-			shift->on_tree_item_activated(@_);
-		},
-	);
-
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $self->{search}, 0, Wx::EXPAND, 1 );
 	$main_sizer->Add( $self->{tree}, 1, Wx::ALL | Wx::EXPAND, 1 );
@@ -65,10 +57,6 @@ sub new {
 	$self->Layout;
 
 	return $self;
-}
-
-sub on_tree_item_activated {
-	$_[0]->main->error('Handler method on_tree_item_activated for event tree.OnTreeItemActivated not implemented');
 }
 
 1;

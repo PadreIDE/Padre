@@ -3018,7 +3018,7 @@
                         <event name="OnTreeEndDrag"></event>
                         <event name="OnTreeEndLabelEdit"></event>
                         <event name="OnTreeGetInfo"></event>
-                        <event name="OnTreeItemActivated">item_clicked</event>
+                        <event name="OnTreeItemActivated"></event>
                         <event name="OnTreeItemCollapsed"></event>
                         <event name="OnTreeItemCollapsing"></event>
                         <event name="OnTreeItemExpanded"></event>
@@ -18949,7 +18949,7 @@
                                 <event name="OnTreeEndDrag"></event>
                                 <event name="OnTreeEndLabelEdit"></event>
                                 <event name="OnTreeGetInfo"></event>
-                                <event name="OnTreeItemActivated">on_tree_item_activated</event>
+                                <event name="OnTreeItemActivated"></event>
                                 <event name="OnTreeItemCollapsed"></event>
                                 <event name="OnTreeItemCollapsing"></event>
                                 <event name="OnTreeItemExpanded"></event>
@@ -26079,7 +26079,7 @@
                         <event name="OnTreeEndDrag"></event>
                         <event name="OnTreeEndLabelEdit"></event>
                         <event name="OnTreeGetInfo"></event>
-                        <event name="OnTreeItemActivated">on_tree_item_activated</event>
+                        <event name="OnTreeItemActivated"></event>
                         <event name="OnTreeItemCollapsed"></event>
                         <event name="OnTreeItemCollapsing"></event>
                         <event name="OnTreeItemExpanded"></event>

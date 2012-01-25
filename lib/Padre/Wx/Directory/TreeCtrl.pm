@@ -71,7 +71,7 @@ sub new {
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self, $self,
 		sub {
-			$_[0]->idle_method(
+			$_[0]->idle_call(
 				on_tree_item_activated => $_[1]->GetItem,
 			);
 		}
