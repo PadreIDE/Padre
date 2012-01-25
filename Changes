@@ -22,7 +22,7 @@ the even version for the release, even during development.
     - Added Padre::Wx::Role::Idle and moved all tree ctrl item activate
       events to use it to evade a item_activated event bug (ADAMK)
     - Update Debug2 to use SQL parameter markers (tome) (BOWTIE) (r18075)
-    -  
+    - disable Debug2 tool-bar icons against unsaved files (tome) (BOWTIE) (r18075)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
