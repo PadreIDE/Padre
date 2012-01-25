@@ -25151,7 +25151,7 @@
                 </object>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="bg"></property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
@@ -25639,7 +25639,7 @@
                         <event name="OnListDeleteItem"></event>
                         <event name="OnListEndLabelEdit"></event>
                         <event name="OnListInsertItem"></event>
-                        <event name="OnListItemActivated">on_list_item_activated</event>
+                        <event name="OnListItemActivated"></event>
                         <event name="OnListItemDeselected"></event>
                         <event name="OnListItemFocused"></event>
                         <event name="OnListItemMiddleClick"></event>

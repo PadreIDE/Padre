@@ -243,13 +243,7 @@ sub item_activated {
 	return if $editor->GetLineCount < $line;
 
 	# Select the problem after the event has finished
-	Wx::Event::EVT_IDLE(
-		$self,
-		sub {
-			$_[0]->select_next_problem( $line - 1 );
-			Wx::Event::EVT_IDLE( $self, undef );
-		},
-	);
+	$self->idle_call( select_next_problem => $line - 1 );
 }
 
 sub disable {

@@ -3,15 +3,16 @@ package Padre::Wx::Dialog::HelpSearch;
 use 5.008;
 use strict;
 use warnings;
-
-# package exports and version
-our $VERSION = '0.95';
-our @ISA     = 'Wx::Dialog';
-
-# module imports
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Wx::HtmlWindow ();
+use Padre::Wx::Role::Idle ();
+
+our $VERSION = '0.95';
+our @ISA     = qw{
+	Padre::Wx::Role::Idle
+	Wx::Dialog
+};
 
 # accessors
 use Class::XSAccessor {
@@ -271,25 +272,24 @@ sub show {
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
 		$self->_display_msg( Wx::gettext('Reading items. Please wait') );
-		Wx::Event::EVT_IDLE(
-			$self,
-			sub {
-				$self->_index(undef);
-				if ( $self->_update_list_box ) {
-					$self->_search_text->Enable(1);
-					$self->_topic_selector->Enable(1);
-					$self->_list->Enable(1);
-					$self->_search_text->SetFocus;
-				} else {
-					$self->_search_text->ChangeValue('');
-				}
-				Wx::Event::EVT_IDLE( $self, undef );
-			}
-		);
+		$self->idle_call('_reindex');
 	}
 	$self->_search_text->SetFocus;
 
 	return;
+}
+
+sub _reindex {
+	my $self = shift;
+	$self->_index(undef);
+	if ( $self->_update_list_box ) {
+		$self->_search_text->Enable(1);
+		$self->_topic_selector->Enable(1);
+		$self->_list->Enable(1);
+		$self->_search_text->SetFocus;
+	} else {
+		$self->_search_text->ChangeValue('');
+	}	
 }
 
 #

@@ -81,15 +81,15 @@ making the call to C<idle_call> and pass it through as data instead.
 
 sub idle_call {
 	TRACE( $_[0] ) if DEBUG;
-	my $self     = shift;
-	my $method   = shift;
-	unless ( $self->can($method) ) {
-		Carp::croak("Method '$method' does not exist");
-	}
+	my $self = shift;
 
-	# If there is no idle queue create it and bind the event handler
-	unless ( $self->{idle} ) {
-		$self->{idle} = [ ];
+	if ( $self->{idle} ) {
+		# Add to the existing idle queue
+		push @{$self->{idle}}, [ @_ ];
+
+	} else {
+		# Create the idle queue and bind the event
+		$self->{idle} = [ [ @_ ] ];
 		$self->Connect(
 			-1,
 			-1,
@@ -99,11 +99,6 @@ sub idle_call {
 			},
 		);
 	}
-
-	# Add the method call to the idle queue
-	push @{$self->{idle}}, [ $method, @_ ];
-
-	return;
 }
 
 =pod

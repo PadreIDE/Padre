@@ -7,6 +7,7 @@ use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx             ();
 use Padre::Wx::Util       ();
+use Padre::Wx::Role::Idle ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::FBP::VCS   ();
 use Padre::Task::VCS      ();
@@ -15,6 +16,7 @@ use Padre::Logger;
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::VCS
 };
@@ -81,6 +83,17 @@ sub new {
 	# Tidy the list
 	Padre::Wx::Util::tidy_list( $self->{list} );
 
+	# Add the idle-delayed event handler
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self->{list},
+		sub {
+			$_[0]->idle_call(
+				item_activated => $_[1]->GetIndex
+			);
+		},
+	);
+
 	# Update the checkboxes with their corresponding values in the
 	# configuration
 	my $config = $main->config;
@@ -130,12 +143,20 @@ sub view_stop {
 	return;
 }
 
+
+
+
+
 #####################################################################
 # Event Handlers
 
 sub on_refresh_click {
 	$_[0]->main->vcs->refresh( $_[0]->current );
 }
+
+
+
+
 
 #####################################################################
 # General Methods
@@ -405,12 +426,13 @@ sub set_icon_image {
 	return;
 }
 
-sub on_list_item_activated {
-	my ( $self, $event ) = @_;
-
-	my $main     = $self->main;
-	my $rec      = $self->{model}->[ $self->{list}->GetItemData( $event->GetIndex ) ] or return;
+sub item_activated {
+	my $self     = shift;
+	my $index    = shift;
+	my $data     = $self->{list}->GetItemData($index);
+	my $rec      = $self->{model}->[$data];
 	my $filename = $rec->{fullpath};
+	my $main     = $self->main;
 	eval {
 
 		# Try to open the file now
@@ -421,17 +443,10 @@ sub on_list_item_activated {
 			$main->setup_editor($filename);
 		}
 
-		# Select the next difference after opening the file
-		Wx::Event::EVT_IDLE(
-			$main,
-			sub {
-				$main->{diff}->select_next_difference;
-				Wx::Event::EVT_IDLE( $main, undef );
-			},
-		) if Padre::Feature::DIFF_DOCUMENT;
-
 	};
-	$main->error( Wx::gettext('Error while trying to perform Padre action') ) if $@;
+	$main->error(
+		Wx::gettext('Error while trying to perform Padre action')
+	) if $@;
 }
 
 # Called when "Show normal" checkbox is clicked

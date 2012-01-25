@@ -55,6 +55,7 @@ use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Conduit  ();
 use Padre::Wx::Role::Dialog   ();
 use Padre::Wx::Role::Timer    ();
+use Padre::Wx::Role::Idle     ();
 use Padre::Locale::T;
 use Padre::Logger;
 
@@ -64,6 +65,7 @@ our @ISA        = qw{
 	Padre::Wx::Role::Conduit
 	Padre::Wx::Role::Dialog
 	Padre::Wx::Role::Timer
+	Padre::Wx::Role::Idle
 	Wx::Frame
 };
 
@@ -294,20 +296,10 @@ sub new {
 	# This is primarily due to a defect http://trac.wxwidgets.org/ticket/4272:
 	# No status bar updates during STC_PAINTED, which we appear to hit on UPDATEUI.
 	Wx::Event::EVT_STC_UPDATEUI(
-		$self, -1,
-		sub {
-			shift->{_do_update_ui} = 1;
-		}
-	);
-
-	Wx::Event::EVT_IDLE(
 		$self,
+		-1,
 		sub {
-			my $self = shift;
-			if ( $self->{_do_update_ui} ) {
-				$self->{_do_update_ui} = undef;
-				$self->on_stc_update_ui;
-			}
+			$_[0]->idle_call('on_stc_updateui');
 		}
 	);
 
@@ -6143,9 +6135,9 @@ sub on_stc_style_needed {
 
 =pod
 
-=head3 C<on_stc_update_ui>
+=head3 C<on_stc_updateui>
 
-    $main->on_stc_update_ui;
+    $main->on_stc_updateui;
 
 Handler called on every movement of the cursor. No return value.
 
@@ -6154,7 +6146,7 @@ Handler called on every movement of the cursor. No return value.
 # NOTE: Any blocking here is HIGHLY visible to the user
 # so you should be extremely cautious in here. Everything
 # in this sub should be super super fast.
-sub on_stc_update_ui {
+sub on_stc_updateui {
 	my $self = shift;
 
 	# Avoid recursion

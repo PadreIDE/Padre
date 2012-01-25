@@ -8,12 +8,14 @@ use Padre::DB             ();
 use Padre::Wx             ();
 use Padre::Wx::Icon       ();
 use Padre::Wx::HtmlWindow ();
+use Padre::Wx::Role::Idle ();
 use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
 # package exports and version
 our $VERSION = '0.95';
 our @ISA     = qw{
+	Padre::Wx::Role::Idle
 	Padre::Wx::Role::Main
 	Wx::Dialog
 };
@@ -266,43 +268,21 @@ sub _setup_events {
 		}
 	);
 
-	Wx::Event::EVT_IDLE(
-		$self,
-		sub {
-
-			# update matches list
-			$self->_update_list_box;
-
-			# focus on the search text box
-			$self->_search_text->SetFocus;
-
-			# unregister from idle event
-			Wx::Event::EVT_IDLE( $self, undef );
-		}
-	);
-
-	$self->_show_recent_while_idle;
-
+	# Delay the slower stuff till we are idle
+	$self->idle_call('_update');
 }
 
-#
-# Shows recently opened stuff while idle
-#
-sub _show_recent_while_idle {
+# Update match list
+sub _update {
 	my $self = shift;
 
-	Wx::Event::EVT_IDLE(
-		$self,
-		sub {
-			$self->_show_recently_opened_actions;
+	# Update lists
+	$self->_update_list_box;
+	$self->_show_recently_opened_actions;
 
-			# focus on the search text box
-			$self->_search_text->SetFocus;
+	# Focus back to the search text box
+	$self->_search_text->SetFocus;
 
-			# unregister from idle event
-			Wx::Event::EVT_IDLE( $self, undef );
-		}
-	);
 }
 
 #

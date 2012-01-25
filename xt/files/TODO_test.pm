@@ -219,7 +219,7 @@ sub new {
 	);
 
 	# Scintilla Event Hooks
-	Wx::Event::EVT_STC_UPDATEUI( $self, -1, \&on_stc_update_ui );
+	Wx::Event::EVT_STC_UPDATEUI( $self, -1, \&on_stc_updateui );
 	Wx::Event::EVT_STC_CHANGE( $self, -1, \&on_stc_change );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
 	Wx::Event::EVT_STC_CHARADDED( $self, -1, \&on_stc_char_added );
