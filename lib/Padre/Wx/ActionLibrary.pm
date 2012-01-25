@@ -150,7 +150,7 @@ sub init {
 		comment    => _T('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
 			require Padre::Document::Perl::Starter;
-			Padre::Document::Perl::Starter->new($_[0])->create_script;
+			Padre::Document::Perl::Starter->new( $_[0] )->create_script;
 		},
 	);
 
@@ -160,7 +160,7 @@ sub init {
 		comment    => _T('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
 			require Padre::Document::Perl::Starter;
-			Padre::Document::Perl::Starter->new($_[0])->create_module;
+			Padre::Document::Perl::Starter->new( $_[0] )->create_module;
 		},
 	);
 
@@ -170,7 +170,7 @@ sub init {
 		comment    => _T('Open a document with a skeleton Perl 5 test script'),
 		menu_event => sub {
 			require Padre::Document::Perl::Starter;
-			Padre::Document::Perl::Starter->new($_[0])->create_test;
+			Padre::Document::Perl::Starter->new( $_[0] )->create_test;
 		},
 	);
 
@@ -547,7 +547,7 @@ sub init {
 		toolbar     => 'actions/document-properties',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Document;
-			Padre::Wx::Dialog::Document->run($_[0]);
+			Padre::Wx::Dialog::Document->run( $_[0] );
 		},
 	);
 
@@ -2035,7 +2035,21 @@ sub init {
 	if (Padre::Feature::DEBUGGER) {
 
 		Padre::Wx::Action->new(
-			name        => 'debug.breakpoints',
+			name => 'debug.breakpoints',
+			need => sub {
+				eval { Padre::Current->document->filename };
+				if ($@) {
+					return 0;
+				}
+				if ( !defined( Padre::Current->document->filename ) ) {
+					return 0;
+				}
+				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+					return 1;
+				} else {
+					return 0;
+				}
+			},
 			label       => _T('Show Debug Breakpoints'),
 			comment     => _T('Turn on debug breakpoints panel'),
 			menu_method => 'AppendCheckItem',
@@ -2045,7 +2059,6 @@ sub init {
 					$_[0]->{breakpoints}->on_refresh_click();
 				}
 			},
-
 		);
 
 		Padre::Wx::Action->new(
@@ -2074,7 +2087,11 @@ sub init {
 				eval { Padre::Current->document->filename };
 				if ($@) {
 					return 0;
-				} elsif ( Padre::Current->document->mimetype =~ m/perl/ ) {
+				}
+				if ( !defined( Padre::Current->document->filename ) ) {
+					return 0;
+				}
+				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
 					return 1;
 				} else {
 					return 0;
@@ -2103,6 +2120,9 @@ sub init {
 				if ($@) {
 					return 0;
 				}
+				if ( !defined( Padre::Current->document->filename ) ) {
+					return 0;
+				}
 				if ( Padre::Current->document->mimetype =~ m/perl/ ) {
 					return 1;
 				} else {
@@ -2129,9 +2149,9 @@ sub init {
 			need => sub {
 				$main->{debugger};
 			},
-			toolbar => 'actions/red_cross',
-			label   => _T('Quit Debugger (&q)'),
-			comment => _T('Quit the process being debugged'),
+			toolbar    => 'actions/red_cross',
+			label      => _T('Quit Debugger (&q)'),
+			comment    => _T('Quit the process being debugged'),
 			menu_event => sub {
 				if ( $_[0]->{debugger} ) {
 					$_[0]->{debugger}->on_quit_debugger_clicked;
@@ -2204,7 +2224,7 @@ sub init {
 		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
-			Padre::Wx::Dialog::PluginManager->run($_[0]);
+			Padre::Wx::Dialog::PluginManager->run( $_[0] );
 		},
 	);
 
@@ -2563,7 +2583,7 @@ sub init {
 		comment    => _T('Show information about Padre'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::About;
-			Padre::Wx::Dialog::About->run($_[0]);
+			Padre::Wx::Dialog::About->run( $_[0] );
 		},
 	);
 	return 1;
