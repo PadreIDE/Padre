@@ -6,16 +6,44 @@ package Padre::Wx::Role::Conduit;
 
 Padre::Wx::Role::Conduit - Role to allow an object to receive Wx events
 
+=head1 SYNOPSIS
+
+  package My::MainFrame;
+  
+  use strict;
+  use Padre::Wx                ();
+  use Padre::Wx::Role::Conduit ();
+  use My::ChildHandler         ();
+  
+  our @ISA = qw{
+      Padre::Wx::Role::Conduit
+      Wx::Frame
+  };
+  
+  sub new {
+      my $class = shift;
+      my $self  = $class->SUPER::new(@_);
+  
+      # Register to receive events    
+      $self->conduit_init( My::ChildHander->singleton );
+  
+      return $self;
+  }
+
 =head1 DESCRIPTION
 
-This is a role that provides the functionality needed to receive Wx thread
-events.
+This role provides the functionality needed to receive L<Wx::PlThreadEvent>
+objects from child threads.
 
-However, you should only use this role once, in the parent process.
+You should only use this role once and once only in the parent process,
+and then allow that single event conduit to pass the events on to the other
+parts of your program, or to some dispatcher object that will do so.
 
 It is implemented as a role so that the functionality can be used across the
 main process and various testing classes (and will be easier to turn into a
 CPAN spinoff later).
+
+=head1 PARENT METHODS
 
 =cut
 
@@ -37,9 +65,20 @@ BEGIN {
 my $CONDUIT = undef;
 my $HANDLER = undef;
 
-sub handler {
-	$HANDLER = $_[1];
-}
+=pod
+
+=head2 conduit_init
+
+  $window->conduit_init($handler);
+
+The C<conduit_init> method is called on the parent receiving object once it
+has been created.
+
+It takes the handler that deserialised messages should be passed to once
+they have been extracted from the incoming L<Wx::PlThreadEvent> and
+deserialised into a message structure.
+
+=cut
 
 sub conduit_init {
 	TRACE( $_[0] ) if DEBUG;
@@ -49,17 +88,41 @@ sub conduit_init {
 	return 1;
 }
 
-sub signal {
-	TRACE( $_[0] ) if DEBUG;
-	if ($CONDUIT) {
-		$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) );
-	} elsif (DEBUG) {
-		TRACE("Cannot send Wx::PlThreadEvent as \$CONDUIT is undef");
-	}
-	return 1;
+=pod
+
+=head2 handler
+
+  my $handler = $window->handler;
+
+The C<handler> accessor is a convenience method that allows you to determine
+if a window has been initialised, and which message handler was bound to it.
+
+Returns the handler, or C<undef> if no handler was bound to the object.
+
+=cut
+
+sub handler {
+	$HANDLER = $_[1];
 }
 
-# Pass the event through to the event handler
+=pod
+
+=head2 on_signal
+
+  $window->on_signal( $pl_thread_event );
+
+The C<on_signal> method is called by the L<Wx> system on the parent object
+when a L<Wx::PlThreadEvent> arrives from a child thread.
+
+The default implementation will extra the packaged data for the event,
+deserialise it, and then pass off the C<on_signal> method of the handler.
+
+You might overload this method if you need to something exotic with the
+event handling, but this is highly unlikely and this documentation is
+provided only for completeness.
+
+=cut
+
 sub on_signal {
 	TRACE( $_[1] ) if DEBUG;
 	return 1 unless $HANDLER;
@@ -77,9 +140,41 @@ sub on_signal {
 	return 1;
 }
 
+
+=pod
+
+=head2 signal
+
+  Padre::Wx::Role::Conduit->signal( [ 'My message' ] );
+
+The static C<signal> method is called in child threads to send a message
+to the parent window. The message can be any legal Perl structure that has
+been serialised by the L<Storable> module.
+
+=cut
+
+sub signal {
+	TRACE( $_[0] ) if DEBUG;
+	if ($CONDUIT) {
+		$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) );
+	} elsif (DEBUG) {
+		TRACE("Cannot send Wx::PlThreadEvent as \$CONDUIT is undef");
+	}
+	return 1;
+}
+
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl 5 itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
