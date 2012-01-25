@@ -10,6 +10,7 @@ use File::Spec                   ();
 use Params::Util                 ();
 use Padre::Wx                    ();
 use Padre::Role::Task            ();
+use Padre::Wx::Role::Idle        ();
 use Padre::Wx::Role::View        ();
 use Padre::Wx::FBP::FoundInFiles ();
 use Padre::Logger;
@@ -17,6 +18,7 @@ use Padre::Logger;
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::FoundInFiles
 };
@@ -77,6 +79,16 @@ sub new {
 		$self->{search_timer_id},
 		sub {
 			$self->search_timer( $_[1], $_[2] );
+		},
+	);
+
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self,
+		$self->{tree},
+		sub {
+			$_[0]->idle_method(
+				item_clicked => $_[1]->GetItem,
+			);
 		},
 	);
 
@@ -152,9 +164,8 @@ sub collapse_all_clicked {
 # Handle the clicking of a find result
 sub item_clicked {
 	my $self  = shift;
-	my $event = shift;
+	my $item  = shift;
 	my $tree  = $self->{tree};
-	my $item  = $event->GetItem;
 	my $data  = $tree->GetPlData($item) or return;
 	my $dir   = $data->{dir}            or return;
 	my $file  = $data->{file}           or return;
@@ -167,8 +178,6 @@ sub item_clicked {
 	} else {
 		$self->open_file_at_line($path);
 	}
-
-	$event->Skip(0);
 }
 
 
@@ -408,19 +417,8 @@ sub open_file_at_line {
 	}
 
 	# Center the current position on the found result's line if an editor is found.
-	# NOTE: we are EVT_IDLE event to make sure we can do that after a file is opened.
-	if ( $editor and @_ ) {
-		my @params = @_;
-		Wx::Event::EVT_IDLE(
-			$self,
-			sub {
-				$editor->goto_line_centerize(@params);
-				$editor->SetFocus;
-				Wx::Event::EVT_IDLE( $_[0], undef );
-			},
-		);
-	}
-
+	$editor->goto_line_centerize(@_) if @_;
+	$editor->SetFocus;
 	return;
 }
 

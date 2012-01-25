@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use File::Spec            ();
 use Padre::Role::Task     ();
+use Padre::Wx::Role::Idle ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::TreeCtrl   ();
@@ -81,7 +82,9 @@ sub new {
 		$self,
 		$self,
 		sub {
-			shift->item_clicked(@_);
+			$_[0]->idle_method(
+				item_clicked => $_[1]->GetItem,
+			);
 		},
 	);
 
@@ -101,8 +104,7 @@ sub new {
 
 sub item_clicked {
 	my $self  = shift;
-	my $event = shift;
-	my $item  = $event->GetItem;
+	my $item  = shift;
 	my $data  = $self->GetPlData($item) or return;
 	my $dir   = $data->{dir}            or return;
 	my $file  = $data->{file}           or return;

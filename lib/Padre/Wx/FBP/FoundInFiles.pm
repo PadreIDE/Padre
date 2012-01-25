@@ -127,14 +127,6 @@ sub new {
 		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_HAS_BUTTONS | Wx::TR_HIDE_ROOT | Wx::TR_SINGLE,
 	);
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self->{tree},
-		sub {
-			shift->item_clicked(@_);
-		},
-	);
-
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$top_sizer->Add( $self->{status}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 2 );
 	$top_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
