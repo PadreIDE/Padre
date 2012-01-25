@@ -52,7 +52,6 @@ use strict;
 use warnings;
 use Storable ();
 use Wx       ();
-use Padre::Logger;
 
 our $VERSION = '0.95';
 
@@ -81,7 +80,6 @@ deserialised into a message structure.
 =cut
 
 sub conduit_init {
-	TRACE( $_[0] ) if DEBUG;
 	$CONDUIT = $_[0];
 	$HANDLER = $_[1];
 	Wx::Event::EVT_COMMAND( $CONDUIT, -1, $SIGNAL, \&on_signal );
@@ -92,12 +90,10 @@ sub conduit_init {
 
 =head2 handler
 
-  my $handler = $window->handler;
+  $window->handler($handler);
 
-The C<handler> accessor is a convenience method that allows you to determine
-if a window has been initialised, and which message handler was bound to it.
-
-Returns the handler, or C<undef> if no handler was bound to the object.
+The C<handler> accessor is a convenience method that allows you to change
+the message handler after the conduit has been initialised.
 
 =cut
 
@@ -124,19 +120,15 @@ provided only for completeness.
 =cut
 
 sub on_signal {
-	TRACE( $_[1] ) if DEBUG;
-	return 1 unless $HANDLER;
-
-	# Deserialise the message from the Wx event so that our handler does not
-	# need to be aware we are implemented via Wx.
-	my $frozen = $_[1]->GetData;
-	my $message = eval { Storable::thaw($frozen); };
-	if ($@) {
-		TRACE("Exception deserialising message '$frozen'") if DEBUG;
-		return;
+	unless ( $HANDLER ) {
+		# Deserialise the message from the Wx event so that our handler does not
+		# need to be aware we are implemented via Wx.
+		my $frozen  = $_[1]->GetData;
+		local $@;
+		my $message = eval { Storable::thaw($frozen) };
+		return if $@;
+		$HANDLER->on_signal($message);
 	}
-
-	$HANDLER->on_signal($message);
 	return 1;
 }
 
@@ -153,11 +145,10 @@ been serialised by the L<Storable> module.
 =cut
 
 sub signal {
-	TRACE( $_[0] ) if DEBUG;
 	if ($CONDUIT) {
-		$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) );
-	} elsif (DEBUG) {
-		TRACE("Cannot send Wx::PlThreadEvent as \$CONDUIT is undef");
+		$CONDUIT->AddPendingEvent(
+			Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] )
+		);
 	}
 	return 1;
 }
