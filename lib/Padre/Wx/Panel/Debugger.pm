@@ -841,8 +841,11 @@ sub _bp_autoload {
 	#TODO is there a better way
 	$self->{current_file} = $document->filename;
 
-	my $sql_select = "WHERE filename = \"$self->{current_file}\"";
-	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+	# my $sql_select = "WHERE filename = \"$self->{current_file}\"";
+	my $sql_select = "WHERE filename = ?";
+	
+	# my @tuples = $self->{debug_breakpoints}->select($sql_select);
+	my @tuples = $self->{debug_breakpoints}->select($sql_select, $self->{current_file});
 
 	for ( 0 .. $#tuples ) {
 

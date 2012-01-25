@@ -126,8 +126,10 @@ sub set_up {
 sub on_delete_not_breakable_clicked {
 	my $self       = shift;
 	my $editor     = $self->current->editor;
-	my $sql_select = "WHERE filename = \"$self->{current_file}\" AND active = 0";
-	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+	# my $sql_select = "WHERE filename = \"$self->{current_file}\" AND active = 0";
+	my $sql_select = "WHERE filename = ? AND active = 0";
+	# my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+	my @tuples     = $self->{debug_breakpoints}->select($sql_select, $self->{current_file});
 	my $index      = 0;
 
 	for ( 0 .. $#tuples ) {
@@ -143,7 +145,8 @@ sub on_delete_not_breakable_clicked {
 		);
 
 	}
-	$self->{debug_breakpoints}->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
+	# $self->{debug_breakpoints}->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
+	$self->{debug_breakpoints}->delete($sql_select, $self->{current_file});
 	$self->_update_list;
 	return;
 }
@@ -180,8 +183,12 @@ sub on_set_breakpoints_clicked {
 	$bp_action{line}      = $self->{current_line};
 
 	# dereferance array and test for contents
+	# if ($#{ $self->{debug_breakpoints}
+				# ->select("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"")
+		# } >= 0
+		# )
 	if ($#{ $self->{debug_breakpoints}
-				->select("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"")
+				->select("WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line} )
 		} >= 0
 		)
 	{
@@ -256,7 +263,8 @@ sub on_delete_project_bp_clicked {
 				$tuples[$_][2] - 1,
 				Padre::Constant::MARKER_NOT_BREAKABLE()
 			);
-			$self->{debug_breakpoints}->delete("WHERE filename = \"$tuples[$_][1]\" ");
+			# $self->{debug_breakpoints}->delete("WHERE filename = \"$tuples[$_][1]\" ");
+			$self->{debug_breakpoints}->delete("WHERE filename = ?", $tuples[$_][1]);
 		}
 	}
 
@@ -300,9 +308,10 @@ sub _add_bp_db {
 sub _delete_bp_db {
 	my $self = shift;
 
+	# $self->{debug_breakpoints}
+		# ->delete("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"");
 	$self->{debug_breakpoints}
-		->delete("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"");
-
+		->delete("WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line});
 	return;
 }
 
