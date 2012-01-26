@@ -21,10 +21,11 @@ the even version for the release, even during development.
     - Clicking a file in the Replace in Files output opens the file (ADAMK)
     - Added Padre::Wx::Role::Idle and moved all tree ctrl item activate
       events to use it to evade a item_activated event bug (ADAMK)
-    - Update Debug2 to use SQL parameter markers (tome) (BOWTIE) (r18075)
-    - disable Debug2 tool-bar icons against unsaved files (tome) (BOWTIE) (r18081)
-    - Debug2 now shows margin_marker breakpoints on file load (tome) (BOWTIE) (r18085)
-    - 
+    - Update Debug2 to use SQL parameter markers (tome, BOWTIE) (r18075)
+    - disable Debug2 tool-bar icons against unsaved files (tome, BOWTIE) (r18081)
+    - Debug2 now shows margin_marker breakpoints on file load (tome, BOWTIE) (r18085)
+    - tweaked on load to include reload and only once (BOWTIE)
+    - Debug2 now checks for perl files more thoroughly (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
