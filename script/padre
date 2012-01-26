@@ -110,7 +110,7 @@ require Padre::Constant;
 # Padre version
 if ($SHOWVERSION) {
 	require Padre;
-	message("Perl Application Development and Refactoring Environment $Padre::VERSION\n");
+	message("Perl Application Development and Refactoring Environment $Padre::VERSION");
 	exit(0);
 }
 
