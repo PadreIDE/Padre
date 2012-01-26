@@ -191,7 +191,7 @@ sub on_set_breakpoints_clicked {
 	my $editor   = $current->editor;
 	my %bp_action;
 
-	unless ( $document->mimetype =~ m/perl/ ) {
+	if ( $document->mimetype !~ m/perl/ ) {
 		return;
 	}
 

@@ -236,7 +236,7 @@ sub debug_perl {
 	my $editor   = $current->editor;
 
 	# test for valid perl document
-	unless ( $document->mimetype =~ m/perl/ ) {
+	if ( $document->mimetype !~ m/perl/ ) {
 		return;
 	}
 
@@ -884,7 +884,7 @@ sub on_debug_clicked {
 	my $main = $self->main;
 
 	# test for valid perl document
-	unless ( Padre::Current->document->mimetype =~ m/perl/ ) {
+	if ( Padre::Current->document->mimetype !~ m/perl/ ) {
 		return;
 	}
 	
