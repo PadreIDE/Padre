@@ -4592,6 +4592,15 @@ sub reload_editor {
 	$editor->SetCurrentPos($position);
 	$editor->SetAnchor($position);
 
+	if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+		require Padre::Breakpoints;
+		Padre::Breakpoints->show_breakpoints();
+		foreach my $editor ( $self->editors ) {
+			$editor->SetMarginWidth( 1, 16 );
+		}
+		return;
+	}
+
 	# Refresh the editor title to remove any unsaved marker
 	$editor->refresh_notebook;
 
