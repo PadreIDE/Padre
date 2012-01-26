@@ -235,6 +235,11 @@ sub debug_perl {
 	my $document = $current->document;
 	my $editor   = $current->editor;
 
+	# test for valid perl document
+	unless ( $document->mimetype =~ m/perl/ ) {
+		return;
+	}
+
 	# display panels
 	$main->show_debugoutput(1);
 
@@ -843,9 +848,9 @@ sub _bp_autoload {
 
 	# my $sql_select = "WHERE filename = \"$self->{current_file}\"";
 	my $sql_select = "WHERE filename = ?";
-	
+
 	# my @tuples = $self->{debug_breakpoints}->select($sql_select);
-	my @tuples = $self->{debug_breakpoints}->select($sql_select, $self->{current_file});
+	my @tuples = $self->{debug_breakpoints}->select( $sql_select, $self->{current_file} );
 
 	for ( 0 .. $#tuples ) {
 
@@ -878,8 +883,13 @@ sub on_debug_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
+	# test for valid perl document
+	unless ( Padre::Current->document->mimetype =~ m/perl/ ) {
+		return;
+	}
+	
 	$self->{quit_debugger}->Enable;
-
+	
 	# $self->show_debug_output(1);
 	$main->show_debugoutput(1);
 	$self->{step_in}->Show;

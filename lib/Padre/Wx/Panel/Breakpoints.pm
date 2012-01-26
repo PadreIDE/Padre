@@ -65,7 +65,6 @@ sub view_icon {
 
 sub view_start {
 	my $self = shift;
-	# my $lock = $self->lock_update;
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
@@ -77,17 +76,14 @@ sub view_start {
 
 sub view_stop {
 	my $self = shift;
-	# my $lock = $self->lock_update;
 
-	# Clear out any state and tasks
-	# $self->task_reset;
-	# $self->clear;
-	# $self->set_label_bitmap(undef);
+	# my $lock = $self->lock_update;
 
 	# Remove the editor margins
 	# foreach my $editor ( $self->main->editors ) {
-		# $editor->SetMarginWidth( 1, 0 );
+	# $editor->SetMarginWidth( 1, 0 );
 	# }
+	
 	return;
 }
 
@@ -134,7 +130,7 @@ sub set_up {
 
 	# Tidy the list
 	Padre::Wx::Util::tidy_list( $self->{list} );
-	
+
 	#ToDo I am prat, tidy_headers is for ListView not ListCtrl, need to ask alias
 	# $self->{list}->tidy_headers;
 
@@ -147,11 +143,11 @@ sub set_up {
 # event handler delete_not_breakable_clicked
 #######
 sub on_delete_not_breakable_clicked {
-	my $self   = shift;
-	my $editor = $self->current->editor;
+	my $self       = shift;
+	my $editor     = $self->current->editor;
 	my $sql_select = "WHERE filename = ? AND active = 0";
-	my @tuples = $self->{debug_breakpoints}->select( $sql_select, $self->{current_file} );
-	my $index = 0;
+	my @tuples     = $self->{debug_breakpoints}->select( $sql_select, $self->{current_file} );
+	my $index      = 0;
 
 	for ( 0 .. $#tuples ) {
 
@@ -176,7 +172,7 @@ sub on_delete_not_breakable_clicked {
 sub on_refresh_click {
 	my $self     = shift;
 	my $document = $self->current->document;
-	
+
 	$self->{project_dir}  = $document->project_dir;
 	$self->{current_file} = $document->filename;
 
@@ -194,8 +190,12 @@ sub on_set_breakpoints_clicked {
 	my $document = $current->document;
 	my $editor   = $current->editor;
 	my %bp_action;
-	$self->_setup_db;
 
+	unless ( $document->mimetype =~ m/perl/ ) {
+		return;
+	}
+
+	$self->_setup_db;
 	$self->{current_file} = $document->filename;
 	$self->{current_line} = $editor->GetCurrentLine + 1;
 	$bp_action{line}      = $self->{current_line};
@@ -330,7 +330,7 @@ sub _delete_bp_db {
 sub _update_list {
 	my $self   = shift;
 	my $editor = $self->current->editor;
-	
+
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
 
