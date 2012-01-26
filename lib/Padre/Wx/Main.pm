@@ -4122,6 +4122,12 @@ sub setup_editor {
 	if (Padre::Feature::CURSORMEMORY) {
 		$editor->restore_cursor_position;
 	}
+	
+	if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+		require Padre::Breakpoints;
+		Padre::Breakpoints->show_breakpoints();
+		return;
+	}
 
 	# Notify plugins
 	$plugins->plugin_event('editor_changed');
