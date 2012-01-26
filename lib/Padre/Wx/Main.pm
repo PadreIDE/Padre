@@ -4126,6 +4126,9 @@ sub setup_editor {
 	if ( Padre::Current->document->mimetype =~ m/perl/ ) {
 		require Padre::Breakpoints;
 		Padre::Breakpoints->show_breakpoints();
+		foreach my $editor ( $self->editors ) {
+			$editor->SetMarginWidth( 1, 16 );
+		}
 		return;
 	}
 

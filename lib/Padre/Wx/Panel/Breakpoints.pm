@@ -64,10 +64,30 @@ sub view_icon {
 }
 
 sub view_start {
+	my $self = shift;
+	# my $lock = $self->lock_update;
+
+	# Add the margins for the syntax markers
+	foreach my $editor ( $self->main->editors ) {
+		$editor->SetMarginWidth( 1, 16 );
+	}
+
 	return;
 }
 
 sub view_stop {
+	my $self = shift;
+	# my $lock = $self->lock_update;
+
+	# Clear out any state and tasks
+	# $self->task_reset;
+	# $self->clear;
+	# $self->set_label_bitmap(undef);
+
+	# Remove the editor margins
+	# foreach my $editor ( $self->main->editors ) {
+		# $editor->SetMarginWidth( 1, 0 );
+	# }
 	return;
 }
 
@@ -114,6 +134,9 @@ sub set_up {
 
 	# Tidy the list
 	Padre::Wx::Util::tidy_list( $self->{list} );
+	
+	#ToDo I am prat, tidy_headers is for ListView not ListCtrl, need to ask alias
+	# $self->{list}->tidy_headers;
 
 	return;
 }
@@ -124,13 +147,11 @@ sub set_up {
 # event handler delete_not_breakable_clicked
 #######
 sub on_delete_not_breakable_clicked {
-	my $self       = shift;
-	my $editor     = $self->current->editor;
-	# my $sql_select = "WHERE filename = \"$self->{current_file}\" AND active = 0";
+	my $self   = shift;
+	my $editor = $self->current->editor;
 	my $sql_select = "WHERE filename = ? AND active = 0";
-	# my @tuples     = $self->{debug_breakpoints}->select($sql_select);
-	my @tuples     = $self->{debug_breakpoints}->select($sql_select, $self->{current_file});
-	my $index      = 0;
+	my @tuples = $self->{debug_breakpoints}->select( $sql_select, $self->{current_file} );
+	my $index = 0;
 
 	for ( 0 .. $#tuples ) {
 
@@ -143,10 +164,8 @@ sub on_delete_not_breakable_clicked {
 			$tuples[$_][2] - 1,
 			Padre::Constant::MARKER_NOT_BREAKABLE()
 		);
-
 	}
-	# $self->{debug_breakpoints}->delete("WHERE filename = \"$self->{current_file}\" AND active = 0");
-	$self->{debug_breakpoints}->delete($sql_select, $self->{current_file});
+	$self->{debug_breakpoints}->delete( $sql_select, $self->{current_file} );
 	$self->_update_list;
 	return;
 }
@@ -157,7 +176,7 @@ sub on_delete_not_breakable_clicked {
 sub on_refresh_click {
 	my $self     = shift;
 	my $document = $self->current->document;
-
+	
 	$self->{project_dir}  = $document->project_dir;
 	$self->{current_file} = $document->filename;
 
@@ -177,18 +196,12 @@ sub on_set_breakpoints_clicked {
 	my %bp_action;
 	$self->_setup_db;
 
-	# $self->running or return;
 	$self->{current_file} = $document->filename;
 	$self->{current_line} = $editor->GetCurrentLine + 1;
 	$bp_action{line}      = $self->{current_line};
 
-	# dereferance array and test for contents
-	# if ($#{ $self->{debug_breakpoints}
-				# ->select("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"")
-		# } >= 0
-		# )
 	if ($#{ $self->{debug_breakpoints}
-				->select("WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line} )
+				->select( "WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line} )
 		} >= 0
 		)
 	{
@@ -229,11 +242,9 @@ sub on_show_project_click {
 	if ( $event->IsChecked ) {
 		$self->{show_project} = 1;
 		$self->{delete_project_bp}->Enable;
-
 	} else {
 		$self->{show_project} = 0;
 		$self->{delete_project_bp}->Disable;
-
 	}
 
 	$self->on_refresh_click;
@@ -263,8 +274,7 @@ sub on_delete_project_bp_clicked {
 				$tuples[$_][2] - 1,
 				Padre::Constant::MARKER_NOT_BREAKABLE()
 			);
-			# $self->{debug_breakpoints}->delete("WHERE filename = \"$tuples[$_][1]\" ");
-			$self->{debug_breakpoints}->delete("WHERE filename = ?", $tuples[$_][1]);
+			$self->{debug_breakpoints}->delete( "WHERE filename = ?", $tuples[$_][1] );
 		}
 	}
 
@@ -308,10 +318,8 @@ sub _add_bp_db {
 sub _delete_bp_db {
 	my $self = shift;
 
-	# $self->{debug_breakpoints}
-		# ->delete("WHERE filename = \"$self->{current_file}\" AND line_number = \"$self->{current_line}\"");
 	$self->{debug_breakpoints}
-		->delete("WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line});
+		->delete( "WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line} );
 	return;
 }
 
@@ -322,7 +330,7 @@ sub _delete_bp_db {
 sub _update_list {
 	my $self   = shift;
 	my $editor = $self->current->editor;
-
+	
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
 
@@ -354,7 +362,7 @@ sub _update_list {
 				$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
 				$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 
-				# TODO comment out just on show for now, do not remove
+				#Do not remove comment, just on show for now, do not remove
 				# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
 
 			}
@@ -375,7 +383,7 @@ sub _update_list {
 					$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
 					$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 
-					# TODO comment out just on show for now, do not remove
+					#Do not remove comment, just on show for now, do not remove
 					# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
 
 				}
