@@ -181,9 +181,10 @@ sub view_stop {
 	$self->set_label_bitmap(undef);
 
 	# Remove the editor margins
-	foreach my $editor ( $self->main->editors ) {
-		$editor->SetMarginWidth( 1, 0 );
-	}
+	# commeted out as other functions pigy-back on this
+	# foreach my $editor ( $self->main->editors ) {
+		# $editor->SetMarginWidth( 1, 0 );
+	# }
 
 	return;
 }
