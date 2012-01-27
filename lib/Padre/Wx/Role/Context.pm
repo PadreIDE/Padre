@@ -1,6 +1,16 @@
 package Padre::Wx::Role::Context;
 
-# Role for creating context menus for objects
+=pod
+
+=head1 NAME
+
+Padre::Wx::Role::Context - Role for Wx objects that implement context menus
+
+=head1 DESCRIPTION
+
+=head1 METHODS
+
+=cut
 
 use 5.008;
 use strict;
@@ -17,6 +27,35 @@ our $COMPATIBLE = '0.95';
 ######################################################################
 # Main Methods
 
+=pod
+
+=head2 context_bind
+
+    sub new {
+        my $class = shift;
+        my $self  = $class->SUPER::new(@_);
+    
+        $self->context_bind('my_menu');
+    
+        return $self;
+    }
+    
+    sub my_menu {
+        # Fill the menu here
+    }
+
+The C<context_bind> method binds an context menu event to default
+menu creation and popup logic, and specifies the method that should be
+called to fill the context menu with the menu entries.
+
+It takes a single optional parameter of the method to be called to fill
+the menu.
+
+If no method is provided then the method C<context_menu> will be bound
+to the context menu event by default.
+
+=cut
+
 sub context_bind {
 	my $self   = shift;
 	my $method = shift || 'context_menu';
@@ -26,14 +65,25 @@ sub context_bind {
 	Wx::Event::EVT_CONTEXT(
 		$self,
 		sub {
-			$_[0]->context_popup( $_[1], $method );
+			shift->context_popup($method);
 		},
 	);
 }
 
+=pod
+
+=head2 context_popup
+
+    $self->context_popup('context_menu');
+
+The C<context_popup> menu triggers the immediate display of the popup
+menu for the object. It takes a compulsory single parameter, which should
+be the method to be used to fill the menu with entries.
+
+=cut
+
 sub context_popup {
 	my $self   = shift;
-	my $event  = shift;
 	my $method = shift;
 
 	# Create the empty menu
@@ -46,15 +96,24 @@ sub context_popup {
 	$self->PopupMenu( $menu => Wx::DefaultPosition );
 }
 
-# Default implementation of the method to allow it to be legal
+=pod
+
+=head2 context_menu
+
+The C<context_menu> method is the default method called to fill a context
+menu with menu entries.
+
+It should be overloaded in any class that uses the context menu role.
+
+A minimalist default implementation is provided which will show a single
+meny entry to launch the C<About Padre> dialog.
+
+=cut
+
 sub context_menu {
 	my $self = shift;
 	my $menu = shift;
-
-	# Always do something...
 	$self->context_append_action( $menu => 'help.about' );
-
-	return;
 }
 
 
@@ -64,6 +123,26 @@ sub context_menu {
 ######################################################################
 # Menu Construction Methods
 
+=pod
+
+=head2 context_append_function
+
+    $self->context_append_function(
+        $menu,
+        Wx::gettext('Do Something'),
+        sub {
+            # Do something
+        },
+    );
+
+The C<context_append_function> method adds a menu entry bound to an
+arbitrary function call.
+
+The function will be passed the parent object (C<$self> in the above
+example) and the event object.
+
+=cut
+
 sub context_append_function {
 	my ( $self, $menu, $label, $function ) = @_;
 	Wx::Event::EVT_MENU(
@@ -72,6 +151,23 @@ sub context_append_function {
 		$function,
 	);
 }
+
+=pod
+
+=head2 context_append_method
+
+    $self->context_append_method
+        $menu,
+        Wx::gettext('Do Something'),
+        'my_method',
+    );
+
+The C<context_append_method> method adds a mene entry bound to a named
+method on the object.
+
+The method will be passed the event object.
+
+=cut
 
 sub context_append_method {
 	my ( $self, $menu, $label, $method ) = @_;
@@ -83,6 +179,23 @@ sub context_append_method {
 		},
 	);
 }
+
+=pod
+
+=head2 context_append_action
+
+    $self->context_append_action(
+        $menu,
+        'help.about',
+    );
+
+The C<context_append_action> method adds a menu entry bound to execute a
+named action from L<Padre::Wx::ActionLibrary>.
+
+The menu entry created as a result of this call is functionally identical
+to a normal menu entry from the menu bar on the main window.
+
+=cut
 
 sub context_append_action {
 	my $self   = shift;
@@ -108,6 +221,23 @@ sub context_append_action {
 		$action->menu_event,
 	);
 }
+
+=pod
+
+=head2 context_append_options
+
+    $self->context_append_options(
+        $menu,
+        'main_functions_panel',
+    );
+
+The C<context_append_options> method adds a group of several radio menu
+entries that allow changing a configuration preference immediately.
+
+The current value of the configuration preference will be checked in the
+radio group for information purposes.
+
+=cut
 
 sub context_append_options {
 	my $self   = shift;
@@ -143,7 +273,16 @@ sub context_append_options {
 
 1;
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl 5 itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
