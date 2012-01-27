@@ -28,6 +28,7 @@ the even version for the release, even during development.
     - Debug2 now shows margin_marker breakpoints on file load (tome, BOWTIE) (r18085)
     - tweaked on load to include reload and only once (BOWTIE)
     - Debug2 now checks for perl files more thoroughly (BOWTIE)
+    - Added proper POD documentation for Padre::Cache (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
