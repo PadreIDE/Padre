@@ -51,18 +51,18 @@ sub add_file {
 ######################################################################
 # SLOC Counters
 
-sub sloc_perl5 {
+sub count_perl5 {
 	my $self  = shift;
 	my $text  = shift;
 	my %count = (
-		'text/x-pod'  => 0,
+		'text/x-pod'         => 0,
 		'application/x-perl' => 0,
-		'comment'     => 0,
-		'blank'       => 0,
+		'comment'            => 0,
+		'blank'              => 0,
 	);
 
 	my $code = 1;
-	foreach my $line ( split /\n/, $$text ) {
+	foreach my $line ( split /\n/, $$text, -1 ) {
 		if ( $line !~ /\S/ ) {
 			$count{'blank'}++;
 			next;
@@ -72,22 +72,26 @@ sub sloc_perl5 {
 			$code = 1;
 			next;
 		}
-		if ( $line =~ /^=\w+/ ) {
-			$count{'text/x-pod'}++;
-			$code = 0;
-			next;
-		}
-		if ( $code and $line =~ /\s*#/ ) {
-			$count{'comment'}++;
+		if ( $code ) {
+			if ( $line =~ /^=\w+/ ) {
+				$count{'text/x-pod'}++;
+				$code = 0;
+				next;
+			}
+			if ( $line =~ /^\s*#/ ) {
+				$count{'comment'}++;
+			} else {
+				$count{'application/x-perl'}++;
+			}
 		} else {
-			$count{'application/x-perl'}++;
-		}			
+			$count{'text/x-pod'}++;
+		}
 	}
 
 	return \%count;
 }
 
-sub sloc_csharp {
+sub count_csharp {
 	my $self  = shift;
 	my $text  = shift;
 	my %count = (
@@ -109,7 +113,7 @@ sub sloc_csharp {
 	return \%count;
 }
 
-sub sloc_text {
+sub count_text {
 	my $self  = shift;
 	my $text  = shift;
 	my %count  = (
@@ -117,15 +121,12 @@ sub sloc_text {
 		'blank'      => 0,
 	);
 
-	# Iterate through the file
 	foreach my $line ( split /\n/, $$text ) {
 		if ( $line !~ /\S/ ) {
 			$count{'blank'}++;
-		} elsif ( $line =~ /\s*\/\// ) {
-			$count{'comment'}++;
 		} else {
-			$count{'text/x-csharp'}++;
-		}			
+			$count{'text/plain'}++;
+		}
 	}
 
 	return \%count;		
