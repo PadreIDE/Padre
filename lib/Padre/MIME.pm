@@ -580,7 +580,8 @@ sub detect {
 	# Use SVN metadata if we are allowed to
 	my $mime = undef;
 	if ( $param{svn} and $file ) {
-		$mime = $class->detect_mimetype($file);
+		require Padre::SVN;
+		$mime = Padre::SVN::file_mimetype($file);
 	}
 
 	# Try derive the mime type from the file extension
@@ -816,7 +817,7 @@ sub detect_content {
 	return '';
 }
 
-# naive sub to decide if a piece of code is Perl 6 or Perl 5.
+# Naive sub to decide if a piece of code is Perl 6 or Perl 5.
 # Perl 6:   use v6; class ..., module ...
 # maybe also grammar ...
 # but make sure that is real code and not just a comment or doc in some perl 5 code...
@@ -824,7 +825,7 @@ sub detect_perl6 {
 	my $class = shift;
 	my $text  = shift;
 
-	# empty/undef text is not Perl 6 :)
+	# Empty/undef text is not Perl 6 :)
 	return 0 unless $text;
 
 	# Perl 6 POD

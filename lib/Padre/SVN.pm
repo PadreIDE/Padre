@@ -18,7 +18,7 @@ sub file_mimetype {
 # Find and parse the properties file
 sub file_props {
 	my $file = shift;
-	my $base = find_props($file);
+	my $base = find_props($file) or return undef;
 	return parse_props($base);
 }
 
@@ -28,7 +28,7 @@ sub find_props {
 	my ( $v, $d, $f ) = File::Spec->splitpath($file);
 	my $path = File::Spec->catpath(
 		$v,
-		File::Spec->catdir( $d, '.svn', 'prop' ),
+		File::Spec->catdir( $d, '.svn', 'props' ),
 		$f . '.svn-work',
 	);
 	return $path if -f $path;
