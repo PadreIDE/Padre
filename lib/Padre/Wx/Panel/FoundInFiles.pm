@@ -467,7 +467,7 @@ sub clear {
 	$self->{repeat}->Disable;
 	$self->{expand_all}->Disable;
 	$self->{collapse_all}->Disable;
-	$tree->DeleteAllItems;
+	$self->{tree}->DeleteAllItems;
 
 	return 1;
 }
