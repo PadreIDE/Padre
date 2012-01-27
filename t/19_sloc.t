@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 4;
 use Test::NoWarnings;
 use File::Spec::Functions;
 use t::lib::Padre;
@@ -20,8 +20,21 @@ use Padre::SLOC;
 my $sloc = Padre::SLOC->new;
 isa_ok( $sloc, 'Padre::SLOC' );
 
+# Check Perl 5 line count in the trivial case
+my $count = $sloc->count_perl5(\' ');
+is_deeply(
+	$count,
+	{
+		'application/x-perl' => 0,
+		'text/x-pod'         => 0,
+		'comment'            => 0,
+		'blank'              => 1,
+	},
+	'Got expected Perl 5 line count',
+);
+
 # Check Perl 5 line count
-my $count = $sloc->count_perl5(\<<'END_PERL');
+$count = $sloc->count_perl5(\<<'END_PERL');
 # A comment
 
 =pod
