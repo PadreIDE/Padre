@@ -29,6 +29,8 @@ the even version for the release, even during development.
     - tweaked on load to include reload and only once (BOWTIE)
     - Debug2 now checks for perl files more thoroughly (BOWTIE)
     - Added proper POD documentation for Padre::Cache (ADAMK)
+    - Delay clearing the outline content so it doesn't flicker so heavily
+      all of the time (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

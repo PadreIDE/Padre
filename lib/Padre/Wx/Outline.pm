@@ -3,15 +3,16 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util            ();
-use Params::Util            ();
-use Padre::Feature          ();
-use Padre::Role::Task       ();
-use Padre::Wx               ();
-use Padre::Wx::Role::Idle   ();
-use Padre::Wx::Role::View   ();
-use Padre::Wx::Role::Main   ();
-use Padre::Wx::FBP::Outline ();
+use Scalar::Util             ();
+use Params::Util             ();
+use Padre::Feature           ();
+use Padre::Role::Task        ();
+use Padre::Wx                ();
+use Padre::Wx::Role::Idle    ();
+use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Main    ();
+use Padre::Wx::Role::Context ();
+use Padre::Wx::FBP::Outline  ();
 use Padre::Logger;
 
 our $VERSION = '0.95';
@@ -20,6 +21,7 @@ our @ISA     = qw{
 	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::Context
 	Padre::Wx::FBP::Outline
 };
 
@@ -110,6 +112,8 @@ sub new {
 		}
 	);
 
+	$self->context_bind;
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->theme->apply($self);
 	}
@@ -178,6 +182,19 @@ sub on_tree_item_right_click {
 
 
 ######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+	$self->context_append_options( $menu => 'main_outline_panel' );
+}
+
+
+
+
+
+######################################################################
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
@@ -220,9 +237,10 @@ sub task_finish {
 }
 
 sub render {
-	my $self        = shift;
-	my $data        = $self->{data};
-	my $search_term = quotemeta $self->{search}->GetValue;
+	my $self = shift;
+	my $data = $self->{data};
+	my $term = quotemeta $self->{search}->GetValue;
+	my $lock = Wx::WindowUpdateLocker->new($self->{tree});
 
 	# Clear any old content
 	$self->clear;
@@ -309,9 +327,6 @@ sub refresh {
 	# Cancel any existing outline task
 	$self->task_reset;
 
-	# Always clear! :)
-	$self->clear;
-
 	# Hide the widgets when no files are open
 	unless ($document) {
 		$self->disable;
@@ -342,8 +357,10 @@ sub refresh {
 }
 
 sub disable {
-	$_[0]->{search}->Hide;
-	$_[0]->{tree}->Hide;
+	my $self = shift;
+	$self->{search}->Hide;
+	$self->{tree}->Hide;
+	$self->clear;
 }
 
 sub enable {
@@ -360,7 +377,7 @@ sub enable {
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
 	my $tree        = $self->{tree};
-	my $search_term = quotemeta $self->{search}->GetValue;
+	my $term = quotemeta $self->{search}->GetValue;
 	my $images      = $self->{images};
 
 	my %type_caption = (
@@ -412,7 +429,7 @@ sub add_subtree {
 
 		foreach my $item (@sorted_entries) {
 			my $name = $item->{name};
-			next if $name !~ /$search_term/;
+			next if $name !~ /$term/;
 			my $item = $tree->AppendItem(
 				$type_elem,
 				$name, -1, -1,
@@ -428,7 +445,7 @@ sub add_subtree {
 		}
 	}
 	if ( defined $type_elem ) {
-		if ( length $search_term > 0 ) {
+		if ( length $term > 0 ) {
 			$tree->Expand($type_elem);
 		} else {
 			if ( $type eq 'methods' ) {
