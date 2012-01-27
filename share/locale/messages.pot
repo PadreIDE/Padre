@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-26 12:10-0800\n"
+"POT-Creation-Date: 2012-01-26 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -786,7 +786,7 @@ msgstr ""
 msgid "Alexandr Ciornii"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:81
+#: lib/Padre/Wx/Syntax.pm:83
 msgid "Alien Error"
 msgstr ""
 
@@ -1740,7 +1740,7 @@ msgstr ""
 msgid "Deleted"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:51
+#: lib/Padre/Wx/Syntax.pm:53
 msgid "Deprecation"
 msgstr ""
 
@@ -2355,7 +2355,7 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:63
+#: lib/Padre/Wx/Syntax.pm:65
 msgid "Fatal Error"
 msgstr ""
 
@@ -2558,12 +2558,12 @@ msgstr ""
 msgid "Form feed"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:453
+#: lib/Padre/Wx/Syntax.pm:474
 #, perl-format
 msgid "Found %d issue(s) in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:459
+#: lib/Padre/Wx/Syntax.pm:480
 #, perl-format
 msgid "Found %d issue(s) within %3.2f secs."
 msgstr ""
@@ -2602,7 +2602,7 @@ msgstr ""
 msgid "Function List"
 msgstr ""
 
-#: lib/Padre/Wx/FunctionList.pm:151
+#: lib/Padre/Wx/FunctionList.pm:148
 msgid "Functions"
 msgstr ""
 
@@ -2830,7 +2830,7 @@ msgstr ""
 msgid "Integer"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:69
+#: lib/Padre/Wx/Syntax.pm:71
 msgid "Internal Error"
 msgstr ""
 
@@ -2982,7 +2982,7 @@ msgid ""
 "ident for the new line."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:488
+#: lib/Padre/Wx/Syntax.pm:509
 #, perl-format
 msgid "Line %d:   (%s)   %s"
 msgstr ""
@@ -3318,12 +3318,12 @@ msgstr ""
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:435
+#: lib/Padre/Wx/Syntax.pm:456
 #, perl-format
 msgid "No errors or warnings found in %s within %3.2f secs."
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:440
+#: lib/Padre/Wx/Syntax.pm:461
 #, perl-format
 msgid "No errors or warnings found within %3.2f secs."
 msgstr ""
@@ -3670,7 +3670,7 @@ msgstr ""
 msgid "Outline"
 msgstr ""
 
-#: lib/Padre/Wx/Output.pm:85 lib/Padre/Wx/FBP/Preferences.pm:470
+#: lib/Padre/Wx/Output.pm:89 lib/Padre/Wx/FBP/Preferences.pm:470
 msgid "Output"
 msgstr ""
 
@@ -4837,7 +4837,7 @@ msgstr ""
 msgid "Several placeholders like the filename can be used"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:57
+#: lib/Padre/Wx/Syntax.pm:59
 msgid "Severe Warning"
 msgstr ""
 
@@ -5305,7 +5305,7 @@ msgstr ""
 msgid "Switch language to system default"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:157 lib/Padre/Wx/FBP/Preferences.pm:455
+#: lib/Padre/Wx/Syntax.pm:161 lib/Padre/Wx/FBP/Preferences.pm:455
 msgid "Syntax Check"
 msgstr ""
 
@@ -5641,7 +5641,7 @@ msgstr ""
 msgid "Vertically &Align Selected"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:75
+#: lib/Padre/Wx/Syntax.pm:77
 msgid "Very Fatal Error"
 msgstr ""
 
@@ -5680,7 +5680,7 @@ msgid ""
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:310 lib/Padre/Wx/Syntax.pm:45
+#: lib/Padre/Document.pm:310 lib/Padre/Wx/Syntax.pm:47
 #: lib/Padre/Wx/Main.pm:3118 lib/Padre/Wx/Main.pm:3837
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5757,7 +5757,7 @@ msgstr ""
 msgid "Writing file to FTP server..."
 msgstr ""
 
-#: lib/Padre/Wx/Output.pm:145 lib/Padre/Wx/Main.pm:2974
+#: lib/Padre/Wx/Output.pm:165 lib/Padre/Wx/Main.pm:2974
 #, perl-format
 msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
