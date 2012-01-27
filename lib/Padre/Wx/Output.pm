@@ -8,19 +8,21 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Encode                ();
-use File::Spec            ();
-use Params::Util          ();
-use Padre::Feature        ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
+use Encode                   ();
+use File::Spec               ();
+use Params::Util             ();
+use Padre::Feature           ();
+use Padre::Wx::Role::Main    ();
+use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Context ();
 use Padre::Wx 'RichText';
 use Padre::Logger;
 
 our $VERSION = '0.95';
 our @ISA     = qw{
-	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::View
+	Padre::Wx::Role::Context
 	Wx::RichTextCtrl
 };
 
@@ -63,6 +65,8 @@ sub new {
 		},
 	);
 
+	$self->context_bind;
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->theme->apply($self);
 	}
@@ -87,6 +91,22 @@ sub view_label {
 
 sub view_close {
 	shift->main->show_output(0);
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_options( $menu => 'main_output_panel' );
+
+	return;
 }
 
 

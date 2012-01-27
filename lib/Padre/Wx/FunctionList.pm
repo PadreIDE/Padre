@@ -10,6 +10,7 @@ use Padre::Feature        ();
 use Padre::Role::Task     ();
 use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
+use Padre::Wx::Role::Context ();
 use Padre::Wx             ();
 
 our $VERSION = '0.95';
@@ -17,6 +18,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::Context
 	Wx::Panel
 };
 
@@ -121,13 +123,8 @@ sub new {
 		}
 	);
 
-	# Right click menu
-	Wx::Event::EVT_CONTEXT(
-		$self,
-		sub {
-			$self->on_context_menu($_[1]);
-		},
-	);
+	# Bind the context menu
+	$self->context_bind;
 
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->theme->apply( $self->{list} );
@@ -157,6 +154,26 @@ sub view_close {
 
 sub view_stop {
 	$_[0]->task_reset;
+}
+
+
+
+
+
+#####################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_options( $menu => 'main_functions_order' );
+
+	$menu->AppendSeparator;
+
+	$self->context_append_options( $menu => 'main_functions_panel' );
+
+	return;
 }
 
 

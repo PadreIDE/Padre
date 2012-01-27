@@ -3,17 +3,18 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util           ();
-use Wx::Scintilla          ();
-use Padre::Constant        ();
-use Padre::Feature         ();
-use Padre::Role::Task      ();
-use Padre::Wx              ();
-use Padre::Wx::Icon        ();
-use Padre::Wx::Role::Idle  ();
-use Padre::Wx::Role::View  ();
-use Padre::Wx::FBP::Syntax ();
-use Time::HiRes            ();
+use Params::Util             ();
+use Wx::Scintilla            ();
+use Padre::Constant          ();
+use Padre::Feature           ();
+use Padre::Role::Task        ();
+use Padre::Wx                ();
+use Padre::Wx::Icon          ();
+use Padre::Wx::Role::Idle    ();
+use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Context ();
+use Padre::Wx::FBP::Syntax   ();
+use Time::HiRes              ();
 use Padre::Logger;
 
 our $VERSION = '0.95';
@@ -21,6 +22,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Context
 	Padre::Wx::FBP::Syntax
 };
 
@@ -139,6 +141,8 @@ sub new {
 		},
 	);
 
+	$self->context_bind;
+
 	return $self;
 }
 
@@ -185,6 +189,23 @@ sub view_stop {
 	# foreach my $editor ( $self->main->editors ) {
 		# $editor->SetMarginWidth( 1, 0 );
 	# }
+
+	return;
+}
+
+
+
+
+
+#####################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	# Configure the display order
+	$self->context_append_options( $menu => 'main_syntax_panel' );
 
 	return;
 }
