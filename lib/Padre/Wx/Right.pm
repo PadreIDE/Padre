@@ -46,7 +46,7 @@ sub new {
 			Floatable      => $unlock,
 			Dockable       => $unlock,
 			Movable        => $unlock,
-			BestSize       => [ 235, -1 ],
+			BestSize       => [ 260, -1 ],
 			)->Right->Hide,
 	);
 	$aui->caption(
