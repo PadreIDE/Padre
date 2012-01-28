@@ -6,7 +6,6 @@ use strict;
 use warnings;
 use Test::More tests => 4;
 use Test::NoWarnings;
-use File::Spec::Functions;
 use t::lib::Padre;
 use Padre::SLOC;
 

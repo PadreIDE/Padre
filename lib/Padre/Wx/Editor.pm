@@ -204,19 +204,40 @@ sub new {
 
 	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
-	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_SMART_HIGHLIGHT, Wx::Scintilla::INDIC_ROUNDBOX );
+	$self->IndicatorSetStyle(
+		Padre::Constant::INDICATOR_SMART_HIGHLIGHT,
+		Wx::Scintilla::INDIC_ROUNDBOX,
+	);
 
 	# Indicator #1, Orange squiggle for warning highlighting
-	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_WARNING, ORANGE );
-	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_WARNING, Wx::Scintilla::INDIC_SQUIGGLE );
+	$self->IndicatorSetForeground(
+		Padre::Constant::INDICATOR_WARNING,
+		ORANGE,
+	);
+	$self->IndicatorSetStyle(
+		Padre::Constant::INDICATOR_WARNING,
+		Wx::Scintilla::INDIC_SQUIGGLE,
+	);
 
 	# Indicator #2, Red squiggle for error highlighting
-	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_ERROR, RED );
-	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_ERROR, Wx::Scintilla::INDIC_SQUIGGLE );
+	$self->IndicatorSetForeground(
+		Padre::Constant::INDICATOR_ERROR,
+		RED,
+	);
+	$self->IndicatorSetStyle(
+		Padre::Constant::INDICATOR_ERROR,
+		Wx::Scintilla::INDIC_SQUIGGLE,
+	);
 
 	# Indicator #3, underline for mouse-clickable tokens
-	$self->IndicatorSetForeground( Padre::Constant::INDICATOR_UNDERLINE, BLUE );
-	$self->IndicatorSetStyle( Padre::Constant::INDICATOR_UNDERLINE, Wx::Scintilla::INDIC_PLAIN );
+	$self->IndicatorSetForeground(
+		Padre::Constant::INDICATOR_UNDERLINE,
+		BLUE,
+	);
+	$self->IndicatorSetStyle(
+		Padre::Constant::INDICATOR_UNDERLINE,
+		Wx::Scintilla::INDIC_PLAIN,
+	);
 
 	# Basic event bindings
 	Wx::Event::EVT_SET_FOCUS(
@@ -337,7 +358,7 @@ sub on_set_focus {
 	TRACE() if DEBUG;
 	my $self     = shift;
 	my $event    = shift;
-	my $document = $self->{Document} or return;
+	my $document = $self->document or return;
 	TRACE( "Focus received file:" . $document->get_title ) if DEBUG;
 
 	# Update the line number width
@@ -412,7 +433,7 @@ sub on_key_up {
 	}
 
 	# Doc specific processing
-	my $doc = $self->{Document} or return;
+	my $doc = $self->document or return;
 	if ( $doc->can('event_key_up') ) {
 		$doc->event_key_up( $self, $event );
 	}
@@ -431,7 +452,7 @@ sub on_char {
 	# in the editor
 	$self->smart_highlight_hide;
 
-	my $document = $self->{Document} or return;
+	my $document = $self->document or return;
 	if ( $document->can('event_on_char') ) {
 		$document->event_on_char( $self, $event );
 	}
@@ -480,7 +501,7 @@ sub on_mouse_moving {
 	my $event = shift;
 
 	if ( $event->Moving ) {
-		my $doc = $self->{Document} or return;
+		my $doc = $self->document or return;
 		if ( $doc->can('event_mouse_moving') ) {
 			$doc->event_mouse_moving( $self, $event );
 		}
@@ -540,7 +561,7 @@ sub on_left_up {
 		}
 	}
 
-	my $doc = $self->{Document};
+	my $doc = $self->document;
 	if ( $doc and $doc->can('event_on_left_up') ) {
 		$doc->event_on_left_up( $self, $event );
 	}
@@ -574,7 +595,7 @@ sub on_middle_up {
 		$self->Paste;
 	}
 
-	my $doc = $self->{Document};
+	my $doc = $self->document;
 	if ( $doc->can('event_on_middle_up') ) {
 		$doc->event_on_middle_up( $self, $event );
 	}
@@ -767,7 +788,7 @@ sub setup_config {
 sub setup_document {
 	my $self     = shift;
 	my $config   = $self->config;
-	my $document = $self->{Document};
+	my $document = $self->document;
 
 	# Reset word characters, most languages don't change it
 	$self->SetWordChars('');
@@ -1118,7 +1139,7 @@ sub select_to_matching_brace {
 
 sub refresh_notebook {
 	my $self     = shift;
-	my $document = $self->{Document} or return;
+	my $document = $self->document or return;
 	my $notebook = Params::Util::_INSTANCE(
 		$self->GetParent,
 		'Padre::Wx::Notebook',
@@ -1233,10 +1254,10 @@ sub _auto_indent {
 	my $prev_line = $self->LineFromPosition($pos) - 1;
 	return if $prev_line < 0;
 
-	my $indent_style = $self->{Document}->get_indentation_style;
+	my $indent_style = $self->document->get_indentation_style;
 
 	my $content = $self->GetLine($prev_line);
-	my $eol     = $self->{Document}->newline;
+	my $eol     = $self->document->newline;
 	$content =~ s/$eol$//;
 	my $indent = ( $content =~ /^(\s+)/ ? $1 : '' );
 
@@ -1275,7 +1296,7 @@ sub _auto_deindent {
 	my $pos  = $self->GetCurrentPos;
 	my $line = $self->LineFromPosition($pos);
 
-	my $indent_style = $self->{Document}->get_indentation_style;
+	my $indent_style = $self->document->get_indentation_style;
 
 	my $content = $self->GetLine($line);
 	my $indent = ( $content =~ /^(\s+)/ ? $1 : '' );
@@ -1410,7 +1431,7 @@ sub convert_eols {
 	my $mode    = $WXEOL{$newline};
 
 	# Apply the change to the underlying document
-	my $document = $self->{Document} or return;
+	my $document = $self->document or return;
 	$document->set_newline_type($newline);
 
 	# Convert and Set the EOL mode in the editor
@@ -1662,7 +1683,7 @@ sub find_line {
 sub find_function {
 	my $self     = shift;
 	my $name     = shift;
-	my $document = $self->{Document} or return;
+	my $document = $self->document or return;
 	my $regex    = $document->get_function_regex($name) or return;
 
 	# Run the search
@@ -2288,7 +2309,7 @@ BEGIN {
 	#
 	*store_cursor_position = sub {
 		my $self     = shift;
-		my $document = $self->{Document} or return;
+		my $document = $self->document or return;
 		my $file     = $document->{file} or return;
 		Padre::DB::LastPositionInFile->set_last_pos(
 			$file->filename,
@@ -2305,7 +2326,7 @@ BEGIN {
 	#
 	*restore_cursor_position = sub {
 		my $self     = shift;
-		my $document = $self->{Document} or return;
+		my $document = $self->document or return;
 		my $file     = $document->{file} or return;
 		my $filename = $file->filename;
 		my $position = Padre::DB::LastPositionInFile->get_last_pos($filename);

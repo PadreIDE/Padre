@@ -17,7 +17,7 @@ use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 use Padre::SVN;
 
-my $t = catfile( 't', '12_svn.t' );
+my $t = catfile( 't', '11_svn.t' );
 ok( -f $t, "Found file $t" );
 
 

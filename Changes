@@ -31,6 +31,10 @@ the even version for the release, even during development.
     - Added proper POD documentation for Padre::Cache (ADAMK)
     - Delay clearing the outline content so it doesn't flicker so heavily
       all of the time (ADAMK)
+    - Added a dozen or so new file types to Padre::MIME, including
+      several that we explicitly do not support (ADAMK)
+    - Added Padre::Comment to hold a registry of, and logic about, the
+      different comment styles in supported documents (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
