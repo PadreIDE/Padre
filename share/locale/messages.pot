@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 04:10-0800\n"
+"POT-Creation-Date: 2012-01-28 08:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -974,6 +974,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:1922
 msgid "Behaviour"
+msgstr ""
+
+#: lib/Padre/MIME.pm:887
+msgid "Binary File"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:308
@@ -2121,8 +2125,8 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:520
-#: lib/Padre/Wx/Editor.pm:918 lib/Padre/Wx/Main.pm:5017
+#: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:455
+#: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5017
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:78 lib/Padre/Wx/Dialog/Sync.pm:86
 #: lib/Padre/Wx/Dialog/Sync.pm:99 lib/Padre/Wx/Dialog/Sync.pm:118
@@ -2188,7 +2192,7 @@ msgstr ""
 msgid "Error while calling %s %s"
 msgstr ""
 
-#: lib/Padre/Document.pm:332
+#: lib/Padre/Document.pm:282
 msgid ""
 "Error while determining MIME type.\n"
 "This is possibly an encoding problem.\n"
@@ -2199,7 +2203,7 @@ msgstr ""
 msgid "Error while loading Aspect, is it installed?"
 msgstr ""
 
-#: lib/Padre/Document.pm:282
+#: lib/Padre/Document.pm:232
 msgid "Error while opening file: no file object"
 msgstr ""
 
@@ -2536,7 +2540,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1887
+#: lib/Padre/Wx/Editor.pm:1908
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -4516,7 +4520,7 @@ msgstr ""
 msgid "Save Sess&ion..."
 msgstr ""
 
-#: lib/Padre/Document.pm:848
+#: lib/Padre/Document.pm:783
 msgid "Save Warning"
 msgstr ""
 
@@ -4845,7 +4849,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MIME.pm:390
+#: lib/Padre/MIME.pm:1037
 msgid "Shell Script"
 msgstr ""
 
@@ -5171,7 +5175,7 @@ msgstr ""
 msgid "Skip version control system files"
 msgstr ""
 
-#: lib/Padre/Document.pm:1480 lib/Padre/Document.pm:1481
+#: lib/Padre/Document.pm:1415 lib/Padre/Document.pm:1416
 msgid "Skipped for large files"
 msgstr ""
 
@@ -5345,7 +5349,7 @@ msgstr ""
 msgid "Task List"
 msgstr ""
 
-#: lib/Padre/MIME.pm:257
+#: lib/Padre/MIME.pm:880
 msgid "Text"
 msgstr ""
 
@@ -5358,7 +5362,7 @@ msgstr ""
 msgid "The bookmark '%s' no longer exists"
 msgstr ""
 
-#: lib/Padre/Document.pm:304
+#: lib/Padre/Document.pm:254
 #, perl-format
 msgid ""
 "The file %s you are trying to open is %s bytes large. It is over the "
@@ -5479,7 +5483,7 @@ msgstr ""
 msgid "Type a help &keyword to read:"
 msgstr ""
 
-#: lib/Padre/MIME.pm:31
+#: lib/Padre/MIME.pm:40
 msgid "UNKNOWN"
 msgstr ""
 
@@ -5526,7 +5530,7 @@ msgstr ""
 msgid "Unmodified"
 msgstr ""
 
-#: lib/Padre/Document.pm:1128
+#: lib/Padre/Document.pm:1063
 #, perl-format
 msgid "Unsaved %d"
 msgstr ""
@@ -5673,14 +5677,14 @@ msgstr ""
 msgid "Visit Perl Websites..."
 msgstr ""
 
-#: lib/Padre/Document.pm:844
+#: lib/Padre/Document.pm:779
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
 "abort saving?"
 msgstr ""
 
-#: lib/Padre/Document.pm:310 lib/Padre/Wx/Syntax.pm:47
+#: lib/Padre/Document.pm:260 lib/Padre/Wx/Syntax.pm:47
 #: lib/Padre/Wx/Main.pm:3118 lib/Padre/Wx/Main.pm:3837
 #: lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
@@ -5775,12 +5779,16 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1871
+#: lib/Padre/Wx/Editor.pm:1892
 msgid "You must select a range of lines"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3836
 msgid "You still have a running process. Do you want to kill it and exit?"
+msgstr ""
+
+#: lib/Padre/MIME.pm:1214
+msgid "ZIP Archive"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:158 lib/Padre/Wx/FBP/About.pm:451
