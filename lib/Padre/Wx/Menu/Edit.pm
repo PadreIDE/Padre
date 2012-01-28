@@ -321,7 +321,7 @@ sub refresh {
 	my $editor   = $current->editor || 0;
 	my $document = $current->document;
 	my $hasdoc   = $document ? 1 : 0;
-	my $comment  = $hasdoc ? ( $document->get_comment_line_string ? 1 : 0 ) : 0;
+	my $comment  = $hasdoc ? ( $document->mime->comment ? 1 : 0 ) : 0;
 	my $newline  = $hasdoc ? $document->newline_type : '';
 	my $quickfix = $hasdoc && $document->can('get_quick_fix_provider');
 

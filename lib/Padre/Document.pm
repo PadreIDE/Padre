@@ -142,56 +142,6 @@ our $COMPATIBLE = '0.91';
 
 
 
-######################################################################
-# Basic Language Support
-
-my %COMMENT_LINE_STRING = (
-	'text/x-abc'                => '\\',
-	'text/x-actionscript'       => '//',
-	'text/x-adasrc'             => '--',
-	'text/x-asm'                => '#',
-	'text/x-bat'                => 'REM',
-	'application/x-bibtex'      => '%',
-	'application/x-bml'         => [ '<?_c', '_c?>' ],
-	'text/x-csrc'               => '//',
-	'text/x-cobol'              => '      *',
-	'text/x-config'             => '#',
-	'text/x-csharp'             => '//',
-	'text/css'                  => [ '/*', '*/' ],
-	'text/x-c++src'             => '//',
-	'text/x-eiffel'             => '--',
-	'text/x-forth'              => '\\',
-	'text/x-fortran'            => '!',
-	'text/x-haskell'            => '--',
-	'text/html'                 => [ '<!--', '-->' ],
-	'application/javascript'    => '//',
-	'application/x-latex'       => '%',
-	'text/x-java'               => '//',
-	'application/x-lisp'        => ';',
-	'text/x-lua'                => '--',
-	'text/x-makefile'           => '#',
-	'text/x-matlab'             => '%',
-	'text/x-pascal'             => [ '{', '}' ],
-	'application/x-perl'        => '#',
-	'application/x-perl6'       => '#',
-	'text/x-perltt'             => [ '<!--', '-->' ],
-	'text/x-perlxs'             => '//',
-	'application/x-php'         => '#',
-	'text/x-pod'                => '#',
-	'text/x-python'             => '#',
-	'application/x-ruby'        => '#',
-	'application/x-shellscript' => '#',
-	'text/x-sql'                => '--',
-	'application/x-tcl'         => [ 'if 0 {', '}' ],
-	'text/vbscript'             => "'",
-	'text/xml'                  => [ '<!--', '-->' ],
-	'text/x-yaml'               => '#',
-);
-
-
-
-
-
 #####################################################################
 # Task Integration
 
@@ -402,21 +352,6 @@ sub get_calltip_keywords {
 
 sub get_function_regex {
 	return '';
-}
-
-#
-# $doc->get_comment_line_string;
-#
-# this is of course dependant on the language, and thus it's actually
-# done in the subclasses. however, we provide base empty methods in
-# order for padre not to crash if user wants to un/comment lines with
-# a document type that did not define those methods.
-#
-# TO DO Remove this base method
-sub get_comment_line_string {
-	my $self = shift;
-	my $mime = $self->mimetype or return;
-	$COMMENT_LINE_STRING{$mime} or return;
 }
 
 

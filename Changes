@@ -40,6 +40,7 @@ the even version for the release, even during development.
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
     - Removed Padre::Wx::Role::Form which was intended as a replacement for
       Padre::Wx::Dialog but was never used by anyone for anything (ADAMK)
+    - Removed Padre::Document::get_comment_line_string (ADAMK)
 
 0.94 2012.01.22
     - Redesigned the Preferences dialog (ADAMK)

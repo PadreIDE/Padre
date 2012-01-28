@@ -1520,7 +1520,7 @@ sub _convert_paste_eols {
 sub comment_toggle {
 	my $self     = shift;
 	my $document = $self->document or return;
-	my $comment  = $document->get_comment_line_string or return;
+	my $comment  = $document->mime->comment or return;
 	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
 	# Find the comment pattern for this file type
@@ -1548,7 +1548,7 @@ sub comment_toggle {
 sub comment_indent {
 	my $self     = shift;
 	my $document = $self->document or return;
-	my $comment  = $document->get_comment_line_string or return;
+	my $comment  = $document->mime->comment or return;
 	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
 	my @targets = ();
@@ -1580,7 +1580,7 @@ sub comment_indent {
 sub comment_outdent {
 	my $self     = shift;
 	my $document = $self->document or return;
-	my $comment  = $document->get_comment_line_string or return;
+	my $comment  = $document->mime->comment or return;
 	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
 	my @targets = ();
