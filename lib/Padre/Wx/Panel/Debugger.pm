@@ -876,14 +876,15 @@ sub _bp_autoload {
 
 #######
 # Event Handler _on_list_item_selected
-# p|x the varaible
+# equivalent to p|x the varaible
 #######
 sub _on_list_item_selected {
 	my $self          = shift;
 	my $event         = shift;
+	my $main          = $self->main;
 	my $variable_name = $event->GetItem->GetText;
 
-	$self->on_evaluate_expression_clicked($variable_name);
+	$main->{debugoutput}->debug_output( $variable_name . " = " . $self->{client}->get_value($variable_name) );
 
 	return;
 }
@@ -1192,13 +1193,10 @@ sub on_display_options_clicked {
 # Event handler on_evaluate_expression_clicked p|x
 #######
 sub on_evaluate_expression_clicked {
-	my $self          = shift;
-	my $variable_name = shift;
-	my $main          = $self->main;
+	my $self = shift;
+	my $main = $self->main;
 
-	if ( defined $variable_name ) {
-		$main->{debugoutput}->debug_output( $variable_name . " = " . $self->{client}->get_value($variable_name) );
-	} elsif ( $self->{expression}->GetValue() eq "" ) {
+	if ( $self->{expression}->GetValue() eq "" ) {
 		$main->{debugoutput}->debug_output( '$_ = ' . $self->{client}->get_value() );
 	} else {
 		$main->{debugoutput}->debug_output(
