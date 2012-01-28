@@ -884,7 +884,7 @@ sub on_debug_clicked {
 	my $main = $self->main;
 
 	# test for valid perl document
-	if ( Padre::Current->document->mimetype !~ m/perl/ ) {
+	if ( $main->current->document->mimetype !~ m/perl/ ) {
 		return;
 	}
 	

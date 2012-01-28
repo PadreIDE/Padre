@@ -132,7 +132,7 @@ sub idle_handler {
 
 		# Remove the idle handler if there are no other calls
 		unless ( @$idle ) {
-			$self->Disconnect( -1, -1, Wx::wxEVT_IDLE );
+			$self->Disconnect( -1, -1, Wx::EVT_IDLE );
 			delete $self->{idle};
 		}
 

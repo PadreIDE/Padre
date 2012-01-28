@@ -4122,10 +4122,10 @@ sub setup_editor {
 	if (Padre::Feature::CURSORMEMORY) {
 		$editor->restore_cursor_position;
 	}
-	
-	if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+
+	if ( $document->mimetype =~ m/perl/ ) {
 		require Padre::Breakpoints;
-		Padre::Breakpoints->show_breakpoints();
+		Padre::Breakpoints->show_breakpoints;
 		foreach my $editor ( $self->editors ) {
 			$editor->SetMarginWidth( 1, 16 );
 		}
@@ -4592,7 +4592,7 @@ sub reload_editor {
 	$editor->SetCurrentPos($position);
 	$editor->SetAnchor($position);
 
-	if ( Padre::Current->document->mimetype =~ m/perl/ ) {
+	if ( $document->mimetype =~ m/perl/ ) {
 		require Padre::Breakpoints;
 		Padre::Breakpoints->show_breakpoints();
 		foreach my $editor ( $self->editors ) {

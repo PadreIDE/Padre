@@ -243,7 +243,7 @@ C<application/xml> for tightly packed XML files not intended to opened
 
 C<application/octet-stream> for binary files (that cannot be opened)
 
-=back 4
+=back
 
 At the time of creation, new MIME type objects (even anonymous ones) must
 inherit from a registered MIME type if the C<supertype> param is provided.

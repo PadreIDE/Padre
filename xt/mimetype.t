@@ -48,7 +48,7 @@ my %test_files = (
 );
 
 my %existing_test_files = (
-	'broken.bin'                     => undef,               # regression test for ticket #900
+	'broken.bin' => '', # regression test for ticket #900
 	'rename_variable_stress_test.pl' => 'application/x-perl',
 );
 
