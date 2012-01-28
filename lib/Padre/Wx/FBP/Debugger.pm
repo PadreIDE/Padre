@@ -179,6 +179,14 @@ sub new {
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{variables},
+		sub {
+			shift->_on_list_item_selected(@_);
+		},
+	);
+
 	$self->{show_local_variables} = Wx::CheckBox->new(
 		$self,
 		-1,
@@ -597,6 +605,10 @@ sub on_display_value_clicked {
 
 sub on_quit_debugger_clicked {
 	$_[0]->main->error('Handler method on_quit_debugger_clicked for event quit_debugger.OnButtonClick not implemented');
+}
+
+sub _on_list_item_selected {
+	$_[0]->main->error('Handler method _on_list_item_selected for event variables.OnListItemSelected not implemented');
 }
 
 sub on_show_local_variables_checked {

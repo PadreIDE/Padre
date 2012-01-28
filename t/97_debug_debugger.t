@@ -12,7 +12,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 54;
+	plan tests => 55;
 	use_ok( 'Debug::Client'   ,'0.16');
 }
 
@@ -36,7 +36,7 @@ my $panel = new_ok( 'Padre::Wx::Panel::Debugger', [$main] );
 ######
 
 my @subs =
-	qw( _bp_autoload  _debug_get_variable  _display_trace  _get_bp_db  _output_variables  
+	qw( _bp_autoload  _debug_get_variable  _display_trace  _get_bp_db  _on_list_item_selected _output_variables  
 	_set_debugger  _setup_db  debug_perl  debug_perl_show_value  debug_quit  debug_run_till  
 	debug_step_in  debug_step_out  debug_step_over  display_value  get_global_variables  
 	get_local_variables on_all_threads_clicked  on_debug_clicked  

@@ -28240,7 +28240,7 @@
                 </object>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="bg"></property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
@@ -28288,7 +28288,7 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer10</property>
                 <property name="orient">wxVERTICAL</property>
@@ -28795,7 +28795,7 @@
                         <event name="OnListItemFocused"></event>
                         <event name="OnListItemMiddleClick"></event>
                         <event name="OnListItemRightClick"></event>
-                        <event name="OnListItemSelected"></event>
+                        <event name="OnListItemSelected">_on_list_item_selected</event>
                         <event name="OnListKeyDown"></event>
                         <event name="OnMiddleDClick"></event>
                         <event name="OnMiddleDown"></event>

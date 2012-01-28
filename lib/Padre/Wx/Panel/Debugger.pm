@@ -14,7 +14,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.16 ();
-
+use Data::Printer { caller_info => 1, colored => 1, };
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -874,6 +874,20 @@ sub _bp_autoload {
 	return;
 }
 
+#######
+# Event Handler _on_list_item_selected
+# p|x the varaible
+#######
+sub _on_list_item_selected {
+	my $self          = shift;
+	my $event         = shift;
+	my $variable_name = $event->GetItem->GetText;
+
+	$self->on_evaluate_expression_clicked($variable_name);
+
+	return;
+}
+
 ###############################################
 # event handler top row
 #######
@@ -887,9 +901,9 @@ sub on_debug_clicked {
 	if ( $main->current->document->mimetype !~ m/perl/ ) {
 		return;
 	}
-	
+
 	$self->{quit_debugger}->Enable;
-	
+
 	# $self->show_debug_output(1);
 	$main->show_debugoutput(1);
 	$self->{step_in}->Show;
@@ -1178,10 +1192,13 @@ sub on_display_options_clicked {
 # Event handler on_evaluate_expression_clicked p|x
 #######
 sub on_evaluate_expression_clicked {
-	my $self = shift;
-	my $main = $self->main;
+	my $self          = shift;
+	my $variable_name = shift;
+	my $main          = $self->main;
 
-	if ( $self->{expression}->GetValue() eq "" ) {
+	if ( defined $variable_name ) {
+		$main->{debugoutput}->debug_output( $variable_name . " = " . $self->{client}->get_value($variable_name) );
+	} elsif ( $self->{expression}->GetValue() eq "" ) {
 		$main->{debugoutput}->debug_output( '$_ = ' . $self->{client}->get_value() );
 	} else {
 		$main->{debugoutput}->debug_output(
