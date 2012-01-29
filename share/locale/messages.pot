@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 08:10-0800\n"
+"POT-Creation-Date: 2012-01-28 16:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -687,7 +687,7 @@ msgstr ""
 msgid "- DEPRECATED!"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:248
+#: lib/Padre/Wx/FBP/Debugger.pm:256
 msgid ".        Return to the executed line."
 msgstr ""
 
@@ -1649,7 +1649,7 @@ msgstr ""
 msgid "Debug Output"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:544
+#: lib/Padre/Wx/FBP/Debugger.pm:552
 msgid "Debug-Output Options"
 msgstr ""
 
@@ -1917,7 +1917,7 @@ msgstr ""
 msgid "Dutch (Belgium)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:368
+#: lib/Padre/Wx/FBP/Debugger.pm:376
 msgid ""
 "E\n"
 "Display all thread ids the current one will be identified: <n>."
@@ -2277,7 +2277,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:495
+#: lib/Padre/Wx/FBP/Debugger.pm:503
 msgid "Expression To Evaluate"
 msgstr ""
 
@@ -2930,7 +2930,7 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:288
+#: lib/Padre/Wx/FBP/Debugger.pm:296
 msgid ""
 "L [abw]\n"
 "List (default all) actions, breakpoints and watch expressions"
@@ -3068,7 +3068,7 @@ msgstr ""
 msgid "Lowercase till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:328
+#: lib/Padre/Wx/FBP/Debugger.pm:336
 msgid ""
 "M\n"
 "Display all loaded modules and their versions."
@@ -4081,7 +4081,7 @@ msgstr ""
 msgid "RAM"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:476
+#: lib/Padre/Wx/FBP/Debugger.pm:484
 msgid ""
 "Raw\n"
 "You can enter what ever debug command you want!"
@@ -4473,7 +4473,7 @@ msgstr ""
 msgid "Ryan Niebur"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:436
+#: lib/Padre/Wx/FBP/Debugger.pm:444
 msgid ""
 "S [[!]regex]\n"
 "List subroutine names [not] matching the regex."
@@ -4874,7 +4874,7 @@ msgid "Shorten the common path in window list"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/VCS.pm:247 lib/Padre/Wx/FBP/Breakpoints.pm:151
-#: lib/Padre/Wx/FBP/Debugger.pm:511
+#: lib/Padre/Wx/FBP/Debugger.pm:519
 msgid "Show"
 msgstr ""
 
@@ -4942,7 +4942,7 @@ msgstr ""
 msgid "Show Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:204
+#: lib/Padre/Wx/FBP/Debugger.pm:212
 msgid "Show Global Variables"
 msgstr ""
 
@@ -4950,7 +4950,7 @@ msgstr ""
 msgid "Show Line &Numbers"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:185
+#: lib/Padre/Wx/FBP/Debugger.pm:193
 msgid "Show Local Variables (y 0)"
 msgstr ""
 
@@ -5317,7 +5317,7 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:348
+#: lib/Padre/Wx/FBP/Debugger.pm:356
 msgid ""
 "T\n"
 "Produce a stack backtrace."
@@ -5419,7 +5419,7 @@ msgstr ""
 msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:308
+#: lib/Padre/Wx/FBP/Debugger.pm:316
 msgid ""
 "Toggle running breakpoints (update DB)\n"
 "b\n"
@@ -5436,7 +5436,7 @@ msgstr ""
 msgid "Tool Positions"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:223
+#: lib/Padre/Wx/FBP/Debugger.pm:231
 msgid "Trace"
 msgstr ""
 
@@ -5826,7 +5826,7 @@ msgid ""
 "functions will be executed with stops before each statement."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:388
+#: lib/Padre/Wx/FBP/Debugger.pm:396
 msgid ""
 "o\n"
 "Display all options.\n"
@@ -5855,7 +5855,7 @@ msgid ""
 "See Configurable Options for a list of these."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:416
+#: lib/Padre/Wx/FBP/Debugger.pm:424
 msgid ""
 "p expr \n"
 "Same as print {$DB::OUT} expr in the current package. In particular, because "
@@ -5889,17 +5889,17 @@ msgstr ""
 msgid "show breakpoints in project"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:228
+#: lib/Padre/Wx/FBP/Debugger.pm:236
 msgid ""
 "t\n"
 "Toggle trace mode (see also the AutoTrace option)."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:268
+#: lib/Padre/Wx/FBP/Debugger.pm:276
 msgid "v [line]    View window around line."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:456
+#: lib/Padre/Wx/FBP/Debugger.pm:464
 msgid ""
 "w expr\n"
 "Add a global watch-expression. Whenever a watched global changes the "
@@ -5911,7 +5911,7 @@ msgid ""
 "Delete all watch-expressions."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:209
+#: lib/Padre/Wx/FBP/Debugger.pm:217
 msgid ""
 "working now with some gigery pokery to get around\n"
 "Intermitent Error, You can't FIRSTKEY with the %~ hash"
@@ -5929,7 +5929,7 @@ msgstr ""
 msgid "wxPerl &Live Support"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:190
+#: lib/Padre/Wx/FBP/Debugger.pm:198
 msgid ""
 "y [level [vars]]\n"
 "Display all (or some) lexical variables (mnemonic: mY variables) in the "
