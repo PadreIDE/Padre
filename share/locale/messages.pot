@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 16:10-0800\n"
+"POT-Creation-Date: 2012-01-29 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -976,7 +976,7 @@ msgstr ""
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/MIME.pm:887
+#: lib/Padre/MIME.pm:885
 msgid "Binary File"
 msgstr ""
 
@@ -2540,7 +2540,7 @@ msgstr ""
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1908
+#: lib/Padre/Wx/Editor.pm:1906
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
@@ -4849,7 +4849,7 @@ msgstr ""
 msgid "Share your preferences between multiple computers"
 msgstr ""
 
-#: lib/Padre/MIME.pm:1037
+#: lib/Padre/MIME.pm:1035
 msgid "Shell Script"
 msgstr ""
 
@@ -5349,7 +5349,7 @@ msgstr ""
 msgid "Task List"
 msgstr ""
 
-#: lib/Padre/MIME.pm:880
+#: lib/Padre/MIME.pm:878
 msgid "Text"
 msgstr ""
 
@@ -5779,7 +5779,7 @@ msgid ""
 "This is highly experimental and not supported by most servers."
 msgstr ""
 
-#: lib/Padre/Wx/Editor.pm:1892
+#: lib/Padre/Wx/Editor.pm:1890
 msgid "You must select a range of lines"
 msgstr ""
 
@@ -5787,7 +5787,7 @@ msgstr ""
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr ""
 
-#: lib/Padre/MIME.pm:1214
+#: lib/Padre/MIME.pm:1212
 msgid "ZIP Archive"
 msgstr ""
 
