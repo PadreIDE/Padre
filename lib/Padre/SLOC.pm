@@ -1,9 +1,12 @@
 package Padre::SLOC;
 
+# A basic Source Lines of Code counter/accumulator
+
 use 5.008;
 use strict;
 use warnings;
-use Padre::MIME ();
+use Params::Util ();
+use Padre::MIME  ();
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
@@ -17,39 +20,110 @@ our $COMPATIBLE = '0.95';
 
 sub new {
 	my $class = shift;
-	return bless {
-		total => { },
-	}, $class;
+	return bless { }, $class;
 }
 
-sub add_count {
+
+
+
+
+######################################################################
+# Statistics Capture
+
+sub add {
 	my $self  = shift;
 	my $add   = shift;
-	my $total = $self->{total};
 	foreach my $key ( sort keys %$add ) {
 		next unless $add->{$key};
-		$total->{$key} ||= 0;
-		$total->{$key} += $add->{$key};
+		$self->{$key} ||= 0;
+		$self->{$key} += $add->{$key};
 	}
 	return 1;
 }
 
-sub add_scalar {
+sub add_text {
 	my $self = shift;
 	my $text = shift;
+	my $mime = shift;
 
 	# Normalise newlines
 	$$text =~ s/(?:\015{1,2}\012|\015|\012)/\n/sg;
 
+	# Detect MIME if not provided
+	$mime ||= Padre::MIME->detect(
+		text => $$text,
+	);
+
+	# Get the line count for the file
+	my $count = $self->count_mime( $text, $mime );
+
+	# Add the line counts for the scalar
+	$self->add($count);
+}
+
+sub add_document {
+	my $self     = shift;
+	my $document = shift;
+	my $text     = $document->text_get or return;
+	my $mime     = $document->mime     or return;
+	$self->add_text( \$text, $mime );
+}
+
+sub add_editor {
+	my $self   = shift;
+	my $editor = shift;
+	my $document = $editor->document or return;
+	$self->add_document($document);
 }
 
 sub add_file {
 	my $self = shift;
 	my $file = shift;
-	my $type = Padre::MIME->detect(
-		file => $file,
+	unless ( Params::Util::_INSTANCE($file, 'Padre::File') ) {
+		require Padre::File::Local;
+		$file = Padre::File::Local->new($file);
+	}
+
+	# Load the file
+	my $text = $file->read;
+	return unless defined $text;
+
+	# Detect the MIME type
+	my $mime = Padre::MIME->detect(
+		file => $file->filename,
+		text => $text,
 	);
-	
+
+	$self->add_text( $mime, \$text );
+}
+
+
+
+
+
+######################################################################
+# Statistics Reporting
+
+sub report_languages {
+	my $self  = shift;
+	my %hash  = ();
+	foreach my $key ( sort keys %$self ) {
+		my ($lang, $type) = split /\s+/, $key;
+		$hash{$lang} ||= 0;
+		$hash{$lang} += $self->{$key};
+	}
+	return \%hash;
+}
+
+sub report_types {
+	my $self = shift;
+	my %hash  = ();
+	foreach my $key ( sort keys %$self ) {
+		my ($lang, $type) = split /\s+/, $key;
+		$hash{$type} ||= 0;
+		$hash{$type} += $self->{$key};
+	}
+	return \%hash;
 }
 
 
@@ -61,9 +135,23 @@ sub add_file {
 
 sub count_mime {
 	my $self = shift;
-	my $mime = shift;
 	my $text = shift;
+	my $mime = shift;
 
+	# Dispatch to language-specific counting methods
+	if ( $mime->type eq 'application/x-perl' ) {
+		return $self->count_perl5( $text, $mime );
+	}
+	if ( $mime->type eq 'text/pod' ) {
+		return $self->count_perl5( $text, $mime );
+	}
+
+	# Fall back to the generic counting methods
+	if ( $mime->comment ) {
+		return $self->count_commented( $text, $mime );
+	} else {
+		return $self->count_uncommented( $text, $mime );
+	}
 }
 
 sub count_perl5 {
@@ -108,8 +196,8 @@ sub count_perl5 {
 # Find SLOC information for languages which have comments
 sub count_commented {
 	my $self    = shift;
-	my $mime    = shift;
 	my $text    = shift;
+	my $mime    = shift;
 	my $type    = $mime->type;
 	my $comment = $mime->comment or return undef;
 	my $matches = $comment->line_match;
@@ -132,11 +220,11 @@ sub count_commented {
 	return \%count;
 }
 
-# Find SLOC information for languages which do not have comments	
+# Find SLOC information for languages which do not have comments
 sub count_uncommented {
 	my $self  = shift;
-	my $mime  = shift;
 	my $text  = shift;
+	my $mime  = shift;
 	my $type  = $mime->type;
 	my %count = (
 		"$type code"  => 0,
@@ -151,7 +239,7 @@ sub count_uncommented {
 		}
 	}
 
-	return \%count;		
+	return \%count;
 }
 
 1;

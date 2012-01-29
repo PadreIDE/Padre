@@ -1550,8 +1550,8 @@ sub comment_indent {
 	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 	if ( $right ) {
 		# Handle languages which use multi-line comment
-		push @targets, [ $end,   $end,   $left  ];
-		push @targets, [ $start, $start, $right ];
+		push @targets, [ $end,   $end,   "$left "  ];
+		push @targets, [ $start, $start, " $right" ];
 
 	} else {
 		# Handle line-by-line comments
@@ -1563,7 +1563,7 @@ sub comment_indent {
 			# Insert the comment after the indent to retain safe tab
 			# usage for those people that use them.
 			my $pos = $self->GetLineIndentPosition($line);
-			push @targets, [ $pos, $pos, $left ];
+			push @targets, [ $pos, $pos, "$left " ];
 		}
 	}
 
@@ -1588,7 +1588,7 @@ sub comment_outdent {
 
 	} else {
 		# Handle line-by-line comments
-		my $regexp = qr/^(\s*)(\Q$left\E[ \t]*)/;
+		my $regexp = qr/^(\s*)(\Q$left\E ?)/;
 		for ( my $line = $end; $line >= $start; $line-- ) {
 			my $text = $self->GetLine($line);
 			next unless $text =~ /\S/;
