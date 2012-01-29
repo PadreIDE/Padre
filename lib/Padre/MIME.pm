@@ -490,9 +490,8 @@ known for the MIME type.
 
 sub comment {
 	require Padre::Comment;
-	my $self = shift;
-	$self->{comment} or
-	$self->{comment} = Padre::Comment->find($self);
+	$_[0]->{comment} or
+	$_[0]->{comment} = Padre::Comment->find($_[0]);
 }
 
 
