@@ -14,7 +14,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.16 ();
-use Data::Printer { caller_info => 1, colored => 1, };
+
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -882,9 +882,12 @@ sub _on_list_item_selected {
 	my $self          = shift;
 	my $event         = shift;
 	my $main          = $self->main;
-	my $variable_name = $event->GetItem->GetText;
+	my $variable_name = $event->GetText;
 
-	$main->{debugoutput}->debug_output( $variable_name . " = " . $self->{client}->get_value($variable_name) );
+	#ToDo can we tidy the output up a bit more, esp refs
+	my $variable_value = $self->{client}->get_value($variable_name);
+
+	$main->{debugoutput}->debug_output( $variable_name . " = " . $variable_value );
 
 	return;
 }
