@@ -883,9 +883,9 @@ sub _on_list_item_selected {
 	my $event         = shift;
 	my $main          = $self->main;
 	my $variable_name = $event->GetText;
-
-	#ToDo can we tidy the output up a bit more, esp refs
-	my $variable_value = $self->{client}->get_value($variable_name);
+	
+	#ToDo that's much better, inspired by task_manager, I think the next step is playing with DB::
+	my $variable_value = $self->{client}->__send_np("x \\".$variable_name);
 
 	$main->{debugoutput}->debug_output( $variable_name . " = " . $variable_value );
 
