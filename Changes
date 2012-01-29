@@ -35,7 +35,7 @@ the even version for the release, even during development.
       several that we explicitly do not support (ADAMK)
     - Added Padre::Comment to hold a registry of, and logic about, the
       different comment styles in supported documents (ADAMK)
-    - Add display Varable data from click in debugger panel (BOWTIE)
+    - Added display variable data from click in debugger panel (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
