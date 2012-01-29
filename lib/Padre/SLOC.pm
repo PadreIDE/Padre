@@ -8,10 +8,6 @@ use Padre::MIME ();
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
 
-my %COMMENT = (
-	'text/x-pod' => 1,
-);
-
 
 
 
@@ -22,8 +18,20 @@ my %COMMENT = (
 sub new {
 	my $class = shift;
 	return bless {
-		count => { },
+		total => { },
 	}, $class;
+}
+
+sub add_count {
+	my $self  = shift;
+	my $add   = shift;
+	my $total = $self->{total};
+	foreach my $key ( sort keys %$add ) {
+		next unless $add->{$key};
+		$total->{$key} ||= 0;
+		$total->{$key} += $add->{$key};
+	}
+	return 1;
 }
 
 sub add_scalar {
@@ -51,34 +59,46 @@ sub add_file {
 ######################################################################
 # SLOC Counters
 
+sub count_mime {
+	my $self = shift;
+	my $mime = shift;
+	my $text = shift;
+
+}
+
 sub count_perl5 {
 	my $self  = shift;
 	my $text  = shift;
 	my %count = (
-		'text/x-pod'         => 0,
-		'application/x-perl' => 0,
-		'comment'            => 0,
-		'blank'              => 0,
+		'text/pod comment'           => 0,
+		'text/pod blank'             => 0,
+		'application/x-perl code'    => 0,
+		'application/x-perl comment' => 0,
+		'application/x-perl blank'   => 0,
 	);
 
 	my $code = 1;
 	foreach my $line ( split /\n/, $$text, -1 ) {
 		if ( $line !~ /\S/ ) {
-			$count{'blank'}++;
+			if ( $code ) {
+				$count{'application/x-perl blank'}++;
+			} else {
+				$count{'text/pod blank'}++;
+			}
 		} elsif ( $line =~ /^=cut\s*/ ) {
-			$count{'text/x-pod'}++;
+			$count{'text/pod comment'}++;
 			$code = 1;
 		} elsif ( $code ) {
 			if ( $line =~ /^=\w+/ ) {
-				$count{'text/x-pod'}++;
+				$count{'text/pod comment'}++;
 				$code = 0;
 			} elsif ( $line =~ /^\s*#/ ) {
-				$count{'comment'}++;
+				$count{'application/x-perl comment'}++;
 			} else {
-				$count{'application/x-perl'}++;
+				$count{'application/x-perl code'}++;
 			}
 		} else {
-			$count{'text/x-pod'}++;
+			$count{'text/pod comment'}++;
 		}
 	}
 
@@ -94,18 +114,18 @@ sub count_commented {
 	my $comment = $mime->comment or return undef;
 	my $matches = $comment->line_match;
 	my %count   = (
-		$type   => 0,
-		comment => 0,
-		blank   => 0,
+		"$type code"    => 0,
+		"$type comment" => 0,
+		"$type blank"   => 0,
 	);
 
 	foreach my $line ( split /\n/, $$text ) {
 		if ( $line !~ /\S/ ) {
-			$count{blank}++;
+			$count{"$type blank"}++;
 		} elsif ( $line =~ $matches ) {
-			$count{comment}++;
+			$count{"$type comment"}++;
 		} else {
-			$count{$type}++;
+			$count{"$type code"}++;
 		}
 	}
 
@@ -119,15 +139,15 @@ sub count_uncommented {
 	my $text  = shift;
 	my $type  = $mime->type;
 	my %count = (
-		$type => 0,
-		blank => 0,
+		"$type code"  => 0,
+		"$type blank" => 0,
 	);
 
 	foreach my $line ( split /\n/, $$text ) {
 		if ( $line !~ /\S/ ) {
-			$count{blank}++;
+			$count{"$type blank"}++;
 		} else {
-			$count{$type}++;
+			$count{"$type code"}++;
 		}
 	}
 
