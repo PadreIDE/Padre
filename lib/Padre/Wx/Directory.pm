@@ -590,7 +590,9 @@ sub browse_message {
 			# TODO: this should never happen, but it does and it crashes padre in the compare method
 			# when calling is_directory on the object.
 			unless ( defined $chd ) {
-				warn "GetPlData is bizarely undef for position=$position and child=$child";
+				my $label   = $tree->GetItemLabel($child) || 'undef';
+				my $project = $self->current->project->root;
+				warn "GetPlData is bizarely undef for position=$position, child=$child, label=$label, project=$project";
 			}
 			$self->main->error(
 				Wx::gettext('Hit unfixed bug in directory browser, disabling it')
