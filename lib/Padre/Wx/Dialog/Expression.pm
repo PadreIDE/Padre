@@ -4,10 +4,15 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Wx                  ();
+use Padre::Wx::ScrollLock      ();
+use Padre::Wx::Role::Timer     ();
 use Padre::Wx::FBP::Expression ();
 
 our $VERSION = '0.95';
-our @ISA     = 'Padre::Wx::FBP::Expression';
+our @ISA     = qw{
+	Padre::Wx::Role::Timer
+	Padre::Wx::FBP::Expression
+};
 
 
 
@@ -23,7 +28,13 @@ sub on_combobox {
 sub on_text {
 	my $self  = shift;
 	my $event = shift;
-	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
+	if ( $self->{watch}->GetValue ) {
+		$self->{watch}->SetValue(0);
+		$self->watch_clicked;
+	}
+	$self->{code}->SetBackgroundColour(
+		Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW)
+	);
 	$self->Refresh;
 	$event->Skip(1);
 }
@@ -32,16 +43,37 @@ sub on_text_enter {
 	my $self  = shift;
 	my $event = shift;
 	$self->run;
-	$self->Refresh;
 	$event->Skip(1);
 }
 
-sub on_evaluate {
+sub evaluate_clicked {
 	my $self  = shift;
 	my $event = shift;
 	$self->run;
-	$self->Refresh;
 	$event->Skip(1);
+}
+
+sub watch_clicked {
+	my $self  = shift;
+	my $event = shift;
+	if ( $self->{watch}->GetValue ) {
+		$self->dwell_start( 'watch_timer' => 1000 );
+	} else {
+		$self->dwell_stop( 'watch_timer' );
+	}
+	$event->Skip(1) if $event;
+}
+
+sub watch_timer {
+	my $self  = shift;
+	my $event = shift;
+	if ( $self->IsShown ) {
+		$self->run;
+	}
+	if ( $self->{watch}->GetValue ) {
+		$self->dwell_start( 'watch_timer' => 1000 );
+	}
+	return;
 }
 
 
@@ -52,28 +84,37 @@ sub on_evaluate {
 # Main Methods
 
 sub run {
-	my $self = shift;
-	my $code = $self->{code}->GetValue;
+	my $self  = shift;
+	my $code  = $self->{code}->GetValue;
+	my @locks = (
+		Wx::WindowUpdateLocker->new($self->{code}),
+		Wx::WindowUpdateLocker->new($self->{output}),
+	);
 
 	# Reset the expression and blank old output
-	$self->{output}->SetValue('');
-	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
+	$self->{code}->SetBackgroundColour(
+		Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW)
+	);
 
 	# Execute the code and handle errors
 	local $@;
 	my @rv = eval $code;
 	if ($@) {
+		$self->{output}->SetValue('');
 		$self->error($@);
 		return;
 	}
 
 	# Dump to the output window
 	require Devel::Dumpvar;
-	$self->{output}->SetValue( Devel::Dumpvar->new( to => 'return' )->dump(@rv) );
-	$self->{output}->SetSelection( 0, 0 );
+	$self->{output}->ChangeValue( Devel::Dumpvar->new( to => 'return' )->dump(@rv) );
+	unless ( $self->{watch}->GetValue ) {
+		$self->{output}->SetSelection( 0, 0 );
+	}
 
 	# Success
 	$self->{code}->SetBackgroundColour( Wx::Colour->new('#CCFFCC') );
+	$self->Refresh;
 
 	return;
 }

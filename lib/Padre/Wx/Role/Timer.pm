@@ -27,7 +27,8 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.95';
+our $VERSION    = '0.95';
+our $COMPATIBLE = '0.95';
 
 # Track timer Wx id values for each dwell event
 my %ID = ();
@@ -82,7 +83,7 @@ sub dwell_start {
 		Wx::Event::EVT_TIMER(
 			$self, $id,
 			sub {
-				$self->$method();
+				$self->$method() if $self->can($method);
 			},
 		);
 	}
