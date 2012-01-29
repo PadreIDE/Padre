@@ -1519,18 +1519,12 @@ sub _convert_paste_eols {
 # Toggle the commenting for the content block at the selection
 sub comment_toggle {
 	my $self     = shift;
-	my $document = $self->document or return;
+	my $document = $self->document          or return;
 	my $comment  = $document->mime->comment or return;
 	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 
-	# Find the comment pattern for this file type
-	# TO DO This is a bit dodgy, and probably won't work
-	if ( Params::Util::_ARRAY($comment) ) {
-		$comment = $comment->[0];
-	}
-
 	# The block is uncommented if any non-blank line within it is
-	my $commented = qr/^\s*\Q$comment\E/;
+	my $commented = $comment->line_match;
 	foreach my $line ( $start .. $end ) {
 		my $text = $self->GetLine($line);
 		next unless $text =~ /\S/;
@@ -1547,15 +1541,17 @@ sub comment_toggle {
 # Indent commenting for a line range representing a block of code
 sub comment_indent {
 	my $self     = shift;
-	my $document = $self->document or return;
+	my $document = $self->document          or return;
 	my $comment  = $document->mime->comment or return;
-	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
+	my $left     = $comment->left;
+	my $right    = $comment->right;
+	my @targets  = ();
 
-	my @targets = ();
-	if ( Params::Util::_ARRAY($comment) ) {
+	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
+	if ( $right ) {
 		# Handle languages which use multi-line comment
-		push @targets, [ $end,   $end,   $comment->[1] ];
-		push @targets, [ $start, $start, $comment->[0] ];
+		push @targets, [ $end,   $end,   $left  ];
+		push @targets, [ $start, $start, $right ];
 
 	} else {
 		# Handle line-by-line comments
@@ -1567,7 +1563,7 @@ sub comment_indent {
 			# Insert the comment after the indent to retain safe tab
 			# usage for those people that use them.
 			my $pos = $self->GetLineIndentPosition($line);
-			push @targets, [ $pos, $pos, $comment ];
+			push @targets, [ $pos, $pos, $left ];
 		}
 	}
 
@@ -1579,18 +1575,20 @@ sub comment_indent {
 # Outdent commenting for a line range representing a block of code
 sub comment_outdent {
 	my $self     = shift;
-	my $document = $self->document or return;
+	my $document = $self->document          or return;
 	my $comment  = $document->mime->comment or return;
-	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
+	my $left     = $comment->left;
+	my $right    = $comment->right;
+	my @targets  = ();
 
-	my @targets = ();
+	my ( $start, $end ) = @_ ? @_ : $self->get_selection_block;
 	if ( Params::Util::_ARRAY($comment) ) {
 		# Handle languages which use multi-line comment
 		# TO DO to be completed
 
 	} else {
 		# Handle line-by-line comments
-		my $regexp = qr/^(\s*)(\Q$comment\E[ \t]*)/;
+		my $regexp = qr/^(\s*)(\Q$left\E[ \t]*)/;
 		for ( my $line = $end; $line >= $start; $line-- ) {
 			my $text = $self->GetLine($line);
 			next unless $text =~ /\S/;

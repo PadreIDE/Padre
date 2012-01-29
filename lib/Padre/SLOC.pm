@@ -8,9 +8,9 @@ use Padre::MIME ();
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
 
-my %DOCUMENTATION = map { $_ => 1 } qw{
-	text/x-pod
-};
+my %COMMENT = (
+	'text/x-pod' => 1,
+);
 
 
 
@@ -65,20 +65,14 @@ sub count_perl5 {
 	foreach my $line ( split /\n/, $$text, -1 ) {
 		if ( $line !~ /\S/ ) {
 			$count{'blank'}++;
-			next;
-		}
-		if ( $line =~ /^=cut\s*/ ) {
+		} elsif ( $line =~ /^=cut\s*/ ) {
 			$count{'text/x-pod'}++;
 			$code = 1;
-			next;
-		}
-		if ( $code ) {
+		} elsif ( $code ) {
 			if ( $line =~ /^=\w+/ ) {
 				$count{'text/x-pod'}++;
 				$code = 0;
-				next;
-			}
-			if ( $line =~ /^\s*#/ ) {
+			} elsif ( $line =~ /^\s*#/ ) {
 				$count{'comment'}++;
 			} else {
 				$count{'application/x-perl'}++;
@@ -91,41 +85,49 @@ sub count_perl5 {
 	return \%count;
 }
 
-sub count_csharp {
-	my $self  = shift;
-	my $text  = shift;
-	my %count = (
-		'text/x-csharp' => 0,
-		'comment'       => 0,
-		'blank'         => 0,
+# Find SLOC information for languages which have comments
+sub count_commented {
+	my $self    = shift;
+	my $mime    = shift;
+	my $text    = shift;
+	my $type    = $mime->type;
+	my $comment = $mime->comment or return undef;
+	my $matches = $comment->line_match;
+	my %count   = (
+		$type   => 0,
+		comment => 0,
+		blank   => 0,
 	);
 
 	foreach my $line ( split /\n/, $$text ) {
 		if ( $line !~ /\S/ ) {
-			$count{'blank'}++;
-		} elsif ( $line =~ /\s*\/\// ) {
-			$count{'comment'}++;
+			$count{blank}++;
+		} elsif ( $line =~ $matches ) {
+			$count{comment}++;
 		} else {
-			$count{'text/x-csharp'}++;
-		}			
+			$count{$type}++;
+		}
 	}
 
 	return \%count;
 }
 
-sub count_text {
+# Find SLOC information for languages which do not have comments	
+sub count_uncommented {
 	my $self  = shift;
+	my $mime  = shift;
 	my $text  = shift;
-	my %count  = (
-		'text/plain' => 0,
-		'blank'      => 0,
+	my $type  = $mime->type;
+	my %count = (
+		$type => 0,
+		blank => 0,
 	);
 
 	foreach my $line ( split /\n/, $$text ) {
 		if ( $line !~ /\S/ ) {
-			$count{'blank'}++;
+			$count{blank}++;
 		} else {
-			$count{'text/plain'}++;
+			$count{$type}++;
 		}
 	}
 

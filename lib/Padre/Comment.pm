@@ -22,22 +22,258 @@ comment styles of supported mime types.
 use 5.008;
 use strict;
 use warnings;
+use List::Util   ();
+use Params::Util ();
+use Padre::MIME  ();
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
 
-my %MIME = (
+my %MIME = ();
+my %KEYS = ();
+
+
+
+
+
+######################################################################
+# Static Methods
+
+sub register {
+	my $class = shift;
+	while ( @_ ) {
+		my $type = shift;
+		my $key  = shift;
+		unless ( $MIME{$type} = $KEYS{$key} ) {
+			die "$type: Comment style '$key' does not exist";
+		}
+	}
+	return 1;
+}
+
+=pod
+
+=head2 registered
+
+  my @registered = Padre::Comment->registered;
+
+The C<registered> method returns the list of all registered MIME types
+that have a comment style distinct from their parent supertype.
+
+=cut
+
+sub registered {
+	keys %MIME;
+}
+
+=pod
+
+=head2 get
+
+  my $comment = Padre::Comment->get('application/x-perl');
+
+The C<get> method finds a comment for a specific MIME type. This method
+checks only the specific string and does not follow the superpath of the
+mime type. For a full powered lookup, use the C<find> method.
+
+Returns a L<Padre::Comment> object or C<undef> if the mime type does not
+have a distinct comment string.
+
+=cut
+
+sub get {
+	$MIME{ $_[1] || '' };
+}
+
+sub find {
+	my $class = shift;
+	my $mime  = Params::Util::_INSTANCE($_[0], 'Padre::MIME')
+		|| Padre::MIME->find($_[0]) or return undef;
+	foreach my $type ( $mime->superpath ) {
+		return $MIME{$type} if $MIME{$type}
+	}
+	return undef;
+}
+
+
+
+
+
+######################################################################
+# Constructors and Accessors
+
+sub new {
+	my $class = shift;
+	my $self  = bless { @_ }, $class;
+
+	# Check params
+	unless ( defined $self->{key} ) {
+		die "Missing or invalid 'key' param";
+	}
+	unless ( defined $self->{left} ) {
+		die "Missing or invalid 'left' param";
+	}
+	unless ( defined $self->{right} ) {
+		die "Missing or invalid 'right' param";
+	}
+
+	return $self;
+}
+
+sub create {
+	my $class = shift;
+	my $self  = $class->new(@_);
+	my $key   = $self->key;
+	if ( $KEYS{$key} ) {
+		die "Attempted to create duplicate comment style '$key'";
+	}
+	$KEYS{$key} = $self;
+}
+
+sub key {
+	$_[0]->{key};
+}
+
+sub left {
+	$_[0]->{left};
+}
+
+sub right {
+	$_[0]->{right};
+}
+
+
+
+
+
+######################################################################
+# Regex Generators
+
+sub line_match {
+	my $self = shift;
+	unless ( defined $self->{line_match} ) {
+		my $left  = $self->left;
+		my $right = $self->right;
+		if ( $right ) {
+			$self->{line_match} = qr/^\s*\Q$left\E.*\Q$right\E$/;
+		} elsif ( $left =~ /^\s/ ) {
+			$self->{line_match} = qr/^\Q$left/;
+		} else {
+			$self->{line_match} = qr/^\s*\Q$left/;
+		}
+	}
+	return $self->{line_match};
+}
+
+
+
+
+
+######################################################################
+# Comment Registry
+
+Padre::Comment->create(
+	key   => '#',
+	left  => '#',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '\\',
+	left  => '\\',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '//',
+	left  => '//',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '--',
+	left  => '--',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => 'REM',
+	left  => 'REM',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '%',
+	left  => '%',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '      *',
+	left  => '      *',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '/* */',
+	left  => '/*',
+	right => '*/',
+);
+
+Padre::Comment->create(
+	key   => '!',
+	left  => '!',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => ';',
+	left  => ';',
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '{ }',
+	left  => '{',
+	right => '}',
+);
+
+Padre::Comment->create(
+	key   => "'",
+	left  => "'",
+	right => '',
+);
+
+Padre::Comment->create(
+	key   => '<!-- -->',
+	left  => '<!--',
+	right => '-->',
+);
+
+Padre::Comment->create(
+	key   => '<?_c _c?>',
+	left  => '<?_c',
+	right => '_c?>',
+);
+
+Padre::Comment->create(
+	key   => 'if 0 { }',
+	left  => 'if 0 {',
+	right => '}',
+);
+
+Padre::Comment->register(
 	'text/x-abc'                => '\\',
 	'text/x-actionscript'       => '//',
 	'text/x-adasrc'             => '--',
 	'text/x-asm'                => '#',
 	'text/x-bat'                => 'REM',
 	'application/x-bibtex'      => '%',
-	'application/x-bml'         => [ '<?_c', '_c?>' ],
+	'application/x-bml'         => '<?_c _c?>',
 	'text/x-csrc'               => '//',
 	'text/x-cobol'              => '      *',
 	'text/x-config'             => '#',
-	'text/css'                  => [ '/*', '*/' ],
+	'text/css'                  => '/* */',
 	'text/x-eiffel'             => '--',
 	'text/x-forth'              => '\\',
 	'text/x-fortran'            => '!',
@@ -47,73 +283,26 @@ my %MIME = (
 	'text/x-lua'                => '--',
 	'text/x-makefile'           => '#',
 	'text/x-matlab'             => '%',
-	'text/x-pascal'             => [ '{', '}' ],
+	'text/x-pascal'             => '{ }',
 	'application/x-pasm'        => '#',
 	'application/x-perl'        => '#',
 	'application/x-perl6'       => '#',
 	'application/x-pir'         => '#',
-	'text/x-perltt'             => [ '<!--', '-->' ],
+	'text/x-perltt'             => '<!-- -->',
 	'application/x-php'         => '#',
 	'text/x-pod'                => '#',
 	'text/x-povray'             => '//',
 	'text/x-python'             => '#',
 	'text/x-r'                  => '#',
 	'application/x-ruby'        => '#',
-	'text/sgml'                 => [ '<!--', '-->' ],
+	'text/sgml'                 => '<!-- -->',
 	'application/x-shellscript' => '#',
 	'text/x-sql'                => '--',
-	'application/x-tcl'         => [ 'if 0 {', '}' ],
+	'application/x-tcl'         => 'if 0 { }',
 	'text/vbscript'             => "'",
-	'text/xml'                  => [ '<!--', '-->' ],
+	'text/xml'                  => '<!-- -->',
 	'text/x-yaml'               => '#',
 );
-
-
-
-
-
-######################################################################
-# Static Methods
-
-=pod
-
-=head2 types
-
-  my @registered = Padre::Comment->types;
-
-The C<types> method returns the list of all registered MIME types that
-have comments distinct from their parent supertypes.
-
-=cut
-
-sub types {
-	keys %MIME;
-}
-
-=pod
-
-=head2 find
-
-  my $comment = Padre::Comment->find('application/x-perl');
-
-The C<find> method returns the comment string for a provided mime type.
-
-This method returns only the specific string and does not follow the
-superpath of the mime type. For access to the comment in a high quality
-manner you should obtain the comment via the mime type object as follows:
-
-  my $comment = Padre::MIME->find('application/x-csharp')->comment;
-
-Returns a comment string, or C<undef> if the mime type does not have a
-distinct comment string.
-
-=cut
-
-sub find {
-	my $class = shift;
-	my $type  = shift;
-	return $MIME{$type};
-}
 
 1;
 
