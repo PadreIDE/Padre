@@ -443,12 +443,12 @@ sub tell_child {
 }
 
 sub tell_owner {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	shift->signal( OWNER => @_ );
 }
 
 sub tell_status {
-	TRACE( $_[0] ) if DEBUG;
+	# TRACE( $_[0] ) if DEBUG;
 	shift->signal( STATUS => @_ ? @_ : '' );
 }
 
