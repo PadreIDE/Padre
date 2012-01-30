@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 00:10-0800\n"
+"POT-Creation-Date: 2012-01-30 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgid "&Cancel"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/FindInFiles.pm:137 lib/Padre/Wx/FBP/Find.pm:95
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:155 lib/Padre/Wx/FBP/Replace.pm:113
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:155 lib/Padre/Wx/FBP/Replace.pm:121
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -286,7 +286,7 @@ msgstr ""
 msgid "&Find"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:111 lib/Padre/Wx/FBP/Replace.pm:145
+#: lib/Padre/Wx/FBP/Find.pm:111 lib/Padre/Wx/FBP/Replace.pm:153
 msgid "&Find Next"
 msgstr ""
 
@@ -504,7 +504,7 @@ msgstr ""
 msgid "&Rename Variable..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:171 lib/Padre/Wx/FBP/Replace.pm:161
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:171 lib/Padre/Wx/FBP/Replace.pm:169
 msgid "&Replace"
 msgstr ""
 
@@ -880,7 +880,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1919
+#: lib/Padre/Wx/FBP/Preferences.pm:1921
 msgid "Appearance"
 msgstr ""
 
@@ -924,7 +924,7 @@ msgstr ""
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1920
+#: lib/Padre/Wx/FBP/Preferences.pm:1922
 msgid "Autocomplete"
 msgstr ""
 
@@ -972,7 +972,7 @@ msgstr ""
 msgid "Beginning of line"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1922
+#: lib/Padre/Wx/FBP/Preferences.pm:1924
 msgid "Behaviour"
 msgstr ""
 
@@ -982,6 +982,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:308
 msgid "Blake Willmarth"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/SLOC.pm:91
+msgid "Blank:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Preferences.pm:844
@@ -1070,7 +1074,7 @@ msgstr ""
 #: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:162
 #: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:136
 #: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:180
-#: lib/Padre/Wx/FBP/Replace.pm:194
+#: lib/Padre/Wx/FBP/Replace.pm:202
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
@@ -1251,8 +1255,9 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
 #: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:666
-#: lib/Padre/Wx/FBP/Sync.pm:267 lib/Padre/Wx/FBP/Diff.pm:94
-#: lib/Padre/Wx/FBP/Document.pm:254 lib/Padre/Wx/FBP/SessionManager.pm:119
+#: lib/Padre/Wx/FBP/SLOC.pm:111 lib/Padre/Wx/FBP/Sync.pm:267
+#: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
+#: lib/Padre/Wx/FBP/SessionManager.pm:119
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:279
 #: lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Close"
@@ -1326,6 +1331,10 @@ msgstr ""
 msgid "Code Order"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/SLOC.pm:67
+msgid "Code:"
+msgstr ""
+
 #: lib/Padre/Wx/FBP/FoundInFiles.pm:91
 msgid "Collapse All"
 msgstr ""
@@ -1356,6 +1365,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:935
 msgid "Comment out/remove comment for selected lines or the current line"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/SLOC.pm:79
+msgid "Comments:"
 msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:499
@@ -1979,7 +1992,7 @@ msgstr ""
 msgid "Editor Session Support"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:693 lib/Padre/Wx/FBP/Preferences.pm:1923
+#: lib/Padre/Wx/FBP/Preferences.pm:693 lib/Padre/Wx/FBP/Preferences.pm:1925
 msgid "Editor Style"
 msgstr ""
 
@@ -2246,7 +2259,7 @@ msgstr ""
 msgid "Escape characters"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Expression.pm:72
+#: lib/Padre/Wx/FBP/Expression.pm:80
 msgid "Evaluate"
 msgstr ""
 
@@ -2371,7 +2384,7 @@ msgstr ""
 msgid "Fayland Lam"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1924
+#: lib/Padre/Wx/FBP/Preferences.pm:1926
 msgid "Features"
 msgstr ""
 
@@ -2385,7 +2398,7 @@ msgstr ""
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1927
+#: lib/Padre/Wx/FBP/Preferences.pm:1929
 msgid "File Handling"
 msgstr ""
 
@@ -2454,6 +2467,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Notebook.pm:70
 msgid "Files"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/SLOC.pm:55
+msgid "Files:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:130
@@ -2742,7 +2759,7 @@ msgstr ""
 msgid "Ignore case (&i)"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:252 lib/Padre/Wx/FBP/VCS.pm:213
+#: lib/Padre/Wx/VCS.pm:252 lib/Padre/Wx/FBP/VCS.pm:205
 msgid "Ignored"
 msgstr ""
 
@@ -2783,7 +2800,7 @@ msgstr ""
 msgid "Indent to Same Depth"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1925
+#: lib/Padre/Wx/FBP/Preferences.pm:1927
 msgid "Indentation"
 msgstr ""
 
@@ -2914,7 +2931,7 @@ msgstr ""
 msgid "Kevin Dawson"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1926
+#: lib/Padre/Wx/FBP/Preferences.pm:1928
 msgid "Key Bindings"
 msgstr ""
 
@@ -2944,11 +2961,11 @@ msgstr ""
 msgid "Lan&guage"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1928
+#: lib/Padre/Wx/FBP/Preferences.pm:1930
 msgid "Language - Perl 5"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1929
+#: lib/Padre/Wx/FBP/Preferences.pm:1931
 msgid "Language - Perl 6"
 msgstr ""
 
@@ -3377,7 +3394,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:247 lib/Padre/Wx/FBP/VCS.pm:181
+#: lib/Padre/Wx/VCS.pm:247 lib/Padre/Wx/FBP/VCS.pm:173
 msgid "Normal"
 msgstr ""
 
@@ -3999,6 +4016,10 @@ msgstr ""
 msgid "Project Browser - Was known as the Directory Tree"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/SLOC.pm:29
+msgid "Project Statistics"
+msgstr ""
+
 #: lib/Padre/Wx/Left.pm:53
 msgid "Project Tools"
 msgstr ""
@@ -4165,7 +4186,7 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:79 lib/Padre/Wx/FBP/Replace.pm:121
+#: lib/Padre/Wx/FBP/Find.pm:79 lib/Padre/Wx/FBP/Replace.pm:129
 msgid "Regular E&xpression"
 msgstr ""
 
@@ -4274,11 +4295,11 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Replace.pm:178
+#: lib/Padre/Wx/FBP/Replace.pm:186
 msgid "Replace &All"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Replace.pm:80
+#: lib/Padre/Wx/FBP/Replace.pm:88
 msgid "Replace &With:"
 msgstr ""
 
@@ -4560,7 +4581,7 @@ msgstr ""
 msgid "Scintilla"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Preferences.pm:1921
+#: lib/Padre/Wx/FBP/Preferences.pm:1923
 msgid "Screen Layout"
 msgstr ""
 
@@ -4873,7 +4894,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:247 lib/Padre/Wx/FBP/Breakpoints.pm:151
+#: lib/Padre/Wx/FBP/VCS.pm:239 lib/Padre/Wx/FBP/Breakpoints.pm:151
 #: lib/Padre/Wx/FBP/Debugger.pm:519
 msgid "Show"
 msgstr ""
@@ -5553,7 +5574,7 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:253 lib/Padre/Wx/VCS.pm:267 lib/Padre/Wx/FBP/VCS.pm:197
+#: lib/Padre/Wx/VCS.pm:253 lib/Padre/Wx/VCS.pm:267 lib/Padre/Wx/FBP/VCS.pm:189
 msgid "Unversioned"
 msgstr ""
 
@@ -5707,7 +5728,7 @@ msgid ""
 "Subversion\""
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Expression.pm:88
+#: lib/Padre/Wx/FBP/Expression.pm:96
 msgid "Watch"
 msgstr ""
 
