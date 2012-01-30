@@ -50,6 +50,14 @@ sub new {
 		Wx::TE_PROCESS_ENTER,
 	);
 
+	Wx::Event::EVT_COMBOBOX(
+		$self,
+		$self->{code},
+		sub {
+			shift->on_combobox(@_);
+		},
+	);
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{code},
@@ -124,6 +132,10 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub on_combobox {
+	$_[0]->main->error('Handler method on_combobox for event code.OnCombobox not implemented');
 }
 
 sub on_text {

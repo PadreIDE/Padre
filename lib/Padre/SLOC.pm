@@ -61,21 +61,6 @@ sub add_text {
 	$self->add($count);
 }
 
-sub add_document {
-	my $self     = shift;
-	my $document = shift;
-	my $text     = $document->text_get or return;
-	my $mime     = $document->mime     or return;
-	$self->add_text( \$text, $mime );
-}
-
-sub add_editor {
-	my $self   = shift;
-	my $editor = shift;
-	my $document = $editor->document or return;
-	$self->add_document($document);
-}
-
 sub add_file {
 	my $self = shift;
 	my $file = shift;
@@ -89,12 +74,28 @@ sub add_file {
 	return unless defined $text;
 
 	# Detect the MIME type
-	my $mime = Padre::MIME->detect(
+	my $type = Padre::MIME->detect(
 		file => $file->filename,
 		text => $text,
-	);
+	) or return;
 
-	$self->add_text( $mime, \$text );
+	# Hand off to the more generic method
+	$self->add_text( \$text, Padre::MIME->find($type) );
+}
+
+sub add_document {
+	my $self     = shift;
+	my $document = shift;
+	my $text     = $document->text_get or return;
+	my $mime     = $document->mime     or return;
+	$self->add_text( \$text, $mime );
+}
+
+sub add_editor {
+	my $self   = shift;
+	my $editor = shift;
+	my $document = $editor->document or return;
+	$self->add_document($document);
 }
 
 
@@ -117,8 +118,8 @@ sub total_code {
 }
 
 sub report_languages {
-	my $self  = shift;
-	my %hash  = ();
+	my $self = shift;
+	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
 		my ($lang, $type) = split /\s+/, $key;
 		$hash{$lang} ||= 0;
@@ -129,7 +130,7 @@ sub report_languages {
 
 sub report_types {
 	my $self = shift;
-	my %hash  = ();
+	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
 		my ($lang, $type) = split /\s+/, $key;
 		$hash{$type} ||= 0;

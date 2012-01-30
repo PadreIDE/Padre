@@ -58,6 +58,14 @@ sub new {
 		],
 	);
 
+	Wx::Event::EVT_COMBOBOX(
+		$self,
+		$self->{find_term},
+		sub {
+			shift->refresh(@_);
+		},
+	);
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{find_term},
@@ -271,7 +279,7 @@ sub on_close {
 }
 
 sub refresh {
-	$_[0]->main->error('Handler method refresh for event find_term.OnText not implemented');
+	$_[0]->main->error('Handler method refresh for event find_term.OnCombobox not implemented');
 }
 
 sub find_next_clicked {

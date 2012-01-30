@@ -31,7 +31,7 @@ sub new {
 		Wx::TAB_TRAVERSAL,
 	);
 
-	$self->{m_searchCtrl1} = Wx::SearchCtrl->new(
+	$self->{search} = Wx::SearchCtrl->new(
 		$self,
 		-1,
 		"",
@@ -40,9 +40,9 @@ sub new {
 		Wx::STATIC_BORDER,
 	);
 	unless ( Wx::MAC ) {
-		$self->{m_searchCtrl1}->ShowSearchButton(1);
+		$self->{search}->ShowSearchButton(1);
 	}
-	$self->{m_searchCtrl1}->ShowCancelButton(0);
+	$self->{search}->ShowCancelButton(0);
 
 	$self->{tree} = Wx::TreeCtrl->new(
 		$self,
@@ -53,7 +53,7 @@ sub new {
 	);
 
 	my $bSizer122 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer122->Add( $self->{m_searchCtrl1}, 0, Wx::EXPAND, 5 );
+	$bSizer122->Add( $self->{search}, 0, Wx::EXPAND, 5 );
 	$bSizer122->Add( $self->{tree}, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizer($bSizer122);

@@ -1679,6 +1679,7 @@ sub new {
 	$fgSizer30->Add( $self->{startup_files}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::EXPAND, 5 );
 
 	my $fgSizer28 = Wx::FlexGridSizer->new( 2, 2, 5, 5 );
+	$fgSizer28->SetMinSize( [ 400, -1 ] );
 	$fgSizer28->AddGrowableCol(1);
 	$fgSizer28->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer28->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
@@ -1870,6 +1871,7 @@ sub new {
 	$m_panel8->Layout;
 
 	my $fgSizer25 = Wx::FlexGridSizer->new( 2, 2, 5, 5 );
+	$fgSizer25->SetMinSize( [ 500, -1 ] );
 	$fgSizer25->AddGrowableCol(1);
 	$fgSizer25->SetFlexibleDirection(Wx::BOTH);
 	$fgSizer25->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);

@@ -167,14 +167,6 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{list},
-		sub {
-			shift->on_list_item_activated(@_);
-		},
-	);
-
 	$self->{show_normal} = Wx::CheckBox->new(
 		$self,
 		-1,
@@ -290,10 +282,6 @@ sub on_refresh_click {
 
 sub on_list_column_click {
 	$_[0]->main->error('Handler method on_list_column_click for event list.OnListColClick not implemented');
-}
-
-sub on_list_item_activated {
-	$_[0]->main->error('Handler method on_list_item_activated for event list.OnListItemActivated not implemented');
 }
 
 sub on_show_normal_click {

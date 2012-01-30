@@ -10,6 +10,7 @@ use Padre::Role::Task      ();
 use Padre::Wx::Role::Main  ();
 use Padre::Wx::Role::Timer ();
 use Padre::Wx::FBP::SLOC   ();
+use Padre::Logger;
 
 our $VERSION = '0.95';
 our @ISA     = qw{
@@ -46,36 +47,39 @@ sub new {
 sub refresh {
 	my $self = shift;
 
+	# Find the current project
+	my $project = $self->current->project;
+	return unless defined $project;
+
+	# Set the project title
+	$self->{root}->SetLabel( $project->root );
+
 	# Reset any existing state
 	$self->clear;
 
-	# Find the current project
-	my $project = $self->current->project or return;
-
-	# Set the project title
-	$self->{root} = $project->root;
-
 	# Kick off the SLOC counting task
 	$self->task_request(
-		task    => 'Padre::Task::SLOC',
-		project => $project,
+		task       => 'Padre::Task::SLOC',
+		on_message => 'refresh_message',
+		on_finish  => 'refresh_finish',
+		project    => $project,
 	);
 
 	# Start the render timer
-	$self->poll_start( render => 1000 );
+	$self->poll_start( render => 250 );
 
 	return 1;
 }
 
-sub task_message {
-	my $self = shift;
-	my $task = shift;
-	my $path = shift;
-	my $sloc = shift;
+sub refresh_message {
+	$_[0]->{count}++;
+	$_[0]->{sloc}->add($_[3]);
+}
 
-	$DB::single = 1;
-
-	1;
+# Do a final render and end the poll loop
+sub refresh_finish {
+	$_[0]->poll_stop('render');
+	$_[0]->render;
 }
 
 
@@ -104,9 +108,22 @@ sub clear {
 	my $self = shift;
 	$self->poll_stop('render');
 	$self->task_reset;
-	$self->{files} = 0;
+	$self->{count} = 0;
 	$self->{sloc}  = Padre::SLOC->new;
-	return 1;
+	$self->render;
 }
 
+sub render {
+	my $self = shift;
+	my $lock = $self->lock_update;
+	my $sloc = $self->{sloc}->report_types;
+	$self->{files}->SetLabel( $self->{count} );
+	$self->{code}->SetLabel( $sloc->{code} || 0 );
+	$self->{comment}->SetLabel( $sloc->{comment} || 0 );
+	$self->{blank}->SetLabel( $sloc->{blank} || 0 );
+	$self->Fit;
+	$self->Layout;
+	return 1;
+}
+	
 1;
