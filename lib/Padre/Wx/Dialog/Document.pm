@@ -3,8 +3,9 @@ package Padre::Wx::Dialog::Document;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util ();
-use Padre::Locale ();
+use Scalar::Util             ();
+use Padre::SLOC              ();
+use Padre::Locale            ();
 use Padre::Wx::FBP::Document ();
 
 our $VERSION = '0.95';
@@ -17,6 +18,7 @@ my @SELECTION_FIELDS = qw{
 	selection_visible
 	selection_lines
 	selection_words
+	selection_sloc
 };
 
 
@@ -87,30 +89,40 @@ sub refresh {
 		my $text  = $editor->GetText;
 		my @words = $text =~ /(\w+)/g;
 		$text =~ s/\s//g;
+		my $sloc = Padre::SLOC->new;
+		$sloc->add_document($document);
+
 		$self->{document_bytes}->SetLabel( $editor->GetLength );
 		$self->{document_characters}->SetLabel( length $editor->GetText );
 		$self->{document_visible}->SetLabel( length $text );
 		$self->{document_lines}->SetLabel( $editor->GetLineCount );
 		$self->{document_words}->SetLabel( scalar @words );
+		$self->{document_sloc}->SetLabel( $sloc->total_code );
 	}
 
 	# Update the selection statistics
 	SCOPE: {
 		my $text = $editor->GetSelectedText;
 		if ( length $text ) {
+			my $sloc = Padre::SLOC->new;
+			$sloc->add_text( \$text, $document->mime );
 			my @words = $text =~ /(\w+)/g;
 			$text =~ s/\s//g;
+			my @lines = $editor->get_selection_lines;
 			$self->{selection_bytes}->SetLabel( length $editor->GetSelectedText );
 			$self->{selection_characters}->SetLabel( length $editor->GetSelectedText );
 			$self->{selection_visible}->SetLabel( length $text );
-			$self->{selection_lines}->SetLabel( '?' );
+			$self->{selection_lines}->SetLabel( $lines[1] - $lines[0] + 1 );
 			$self->{selection_words}->SetLabel( scalar @words );
+			$self->{selection_sloc}->SetLabel( $sloc->total_code );
+
 		} else {
 			$self->{selection_bytes}->SetLabel(0);
 			$self->{selection_characters}->SetLabel(0);
 			$self->{selection_visible}->SetLabel(0);
 			$self->{selection_lines}->SetLabel(0);
 			$self->{selection_words}->SetLabel(0);
+			$self->{selection_sloc}->SetLabel(0);
 		}
 
 		# Set the colour of the selection labels

@@ -104,6 +104,18 @@ sub add_file {
 ######################################################################
 # Statistics Reporting
 
+sub total_code {
+	my $self  = shift;
+	my $total = 0;
+	foreach my $key ( sort keys %$self ) {
+		my ($lang, $type) = split /\s+/, $key;
+		if ( $type eq 'code' ) {
+			$total += $self->{$key};
+		}
+	}
+	return $total;
+}
+
 sub report_languages {
 	my $self  = shift;
 	my %hash  = ();
