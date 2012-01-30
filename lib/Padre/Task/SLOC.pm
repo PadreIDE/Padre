@@ -1,11 +1,11 @@
-package Padre::Task::FindInFiles;
+package Padre::Task::SLOC;
 
 use 5.008;
 use strict;
 use warnings;
 use File::Spec    ();
 use Padre::Task   ();
-use Padre::Search ();
+use Padre::SLOC   ();
 use Padre::Logger;
 
 our $VERSION = '0.95';
@@ -40,15 +40,6 @@ sub new {
 		$self->{maxsize} = Padre::Current->config->editor_file_size_limit;
 	}
 
-	# Create the embedded search object
-	unless ( $self->{search} ) {
-		$self->{search} = Padre::Search->new(
-			find_term  => $self->{find_term},
-			find_case  => $self->{find_case},
-			find_regex => $self->{find_regex},
-		) or return;
-	}
-
 	return $self;
 }
 
@@ -80,7 +71,7 @@ sub run {
 
 		# Abort the task if we've been cancelled
 		if ( $self->cancelled ) {
-			TRACE(__PACKAGE__ . 'task has been cancelled') if DEBUG;
+			TRACE(__PACKAGE__ . ' task has been cancelled') if DEBUG;
 			$self->tell_status;
 			return 1;
 
@@ -109,7 +100,7 @@ sub run {
 
 			# Abort the task if we've been cancelled
 			if ( $self->cancelled ) {
-				TRACE(__PACKAGE__ . 'task has been cancelled') if DEBUG;
+				TRACE(__PACKAGE__ . ' task has been cancelled') if DEBUG;
 				$self->tell_status;
 				return 1;
 			}
@@ -150,40 +141,16 @@ sub run {
 				next;
 			}
 
-			# Read the entire file
-			open( my $fh, '<', $fullname ) or next;
-			my $buffer = do { local $/; <$fh> };
-			close $fh;
-
-			# Is this the correct MIME type
-			if ( $self->{mime} ) {
-				require Padre::MIME;
-				my $type = Padre::MIME->detect(
-					file => $fullname,
-					text => $buffer,
-				);
-				unless ( defined $type and $type eq $self->{mime} ) {
-					# TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
-					next;
-				}
-			}
-
-			# Hand off to the compiled search object
-			my @lines = $self->{search}->match_lines(
-				$buffer,
-				$self->{search}->search_regex,
-			);
-			next unless @lines;
-			TRACE( "Found " . scalar(@lines) . " matches in " . $fullname ) if DEBUG;
+			# Scan the code for this file
+			my $sloc = Padre::SLOC->new;
+			$sloc->add_file($fullname) or next;
 
 			# Found results, inform our owner
-			$self->tell_owner( $object, @lines );
+			$self->tell_owner( $object, $sloc );
 
-			# If the task wants manual output capture as well,
-			# then save the result as well.
-			if ( $output ) {
-				push @$output, [ $object, @lines ];
-			}
+			# If the task wants totals calculated in the
+			# background then do them now.
+			$output->add($sloc) if $output;
 		}
 		unshift @queue, @children;
 	}
