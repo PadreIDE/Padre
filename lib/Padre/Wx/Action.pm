@@ -122,7 +122,7 @@ sub label_text {
 
 # Translate on the fly when requested
 sub comment {
-	Wx::gettext( $_[0]->{comment} );
+	defined $_[0]->{comment} ? Wx::gettext( $_[0]->{comment} ) : undef;
 }
 
 # Label for use with menu (with shortcut)

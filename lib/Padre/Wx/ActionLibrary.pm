@@ -1329,6 +1329,15 @@ sub init {
 		},
 	);
 
+	Padre::Wx::Action->new(
+		name       => 'search.sloccount',
+		label      => _T('SLOC &Count'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::SLOC;
+			Padre::Wx::Dialog::SLOC->run($_[0]);
+		},
+	);
+
 	# Can the user move stuff around
 
 	Padre::Wx::Action->new(

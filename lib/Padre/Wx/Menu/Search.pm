@@ -87,6 +87,12 @@ sub new {
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
+		'search.sloccount',
+	);
+
+	$self->AppendSeparator;
+
+	$self->add_menu_action(
 		'search.open_resource',
 	);
 
