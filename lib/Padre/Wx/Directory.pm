@@ -12,6 +12,7 @@ use Padre::Wx                      ();
 use Padre::Wx::Role::Timer         ();
 use Padre::Wx::Role::View          ();
 use Padre::Wx::Role::Main          ();
+use Padre::Wx::Role::Context       ();
 use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Logger;
 
@@ -21,6 +22,7 @@ our @ISA     = qw{
 	Padre::Wx::Role::Timer
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::Context
 	Wx::Panel
 };
 
@@ -118,9 +120,6 @@ sub new {
 		},
 	);
 
-	# Create the search control menu
-	$search->SetMenu( $self->new_menu );
-
 	# Create the tree control
 	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
 	$self->{tree}->SetPlData(
@@ -147,43 +146,13 @@ sub new {
 	$self->SetSizerAndFit($sizerh);
 	$sizerh->SetSizeHints($self);
 
+	$self->context_bind;
+
 	if (Padre::Feature::STYLE_GUI) {
 		$self->main->theme->apply( $self->{tree} );
 	}
 
 	return $self;
-}
-
-# We need to create the menu whenever our locale changes
-sub new_menu {
-	my $self = shift;
-	my $menu = Wx::Menu->new;
-
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append(
-			-1,
-			Wx::gettext('Refresh'),
-		),
-		sub {
-			$_[0]->rebrowse;
-		},
-	);
-
-	$menu->AppendSeparator;
-
-	Wx::Event::EVT_MENU(
-		$self,
-		$menu->Append(
-			-1,
-			Wx::gettext('Move to other panel'),
-		),
-		sub {
-			$_[0]->move;
-		},
-	);
-
-	return $menu;
 }
 
 
@@ -239,6 +208,33 @@ sub view_stop {
 	TRACE( $_[0] ) if DEBUG;
 	$_[0]->task_reset;
 	$_[0]->dwell_stop('on_text'); # Just in case
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_method(
+		$menu,
+		Wx::gettext('Refresh'),
+		'rebrowse',
+	);
+
+	$menu->AppendSeparator;
+
+	$self->context_append_options(
+		$menu,
+		'main_directory_panel',
+	);
+
+	return;
 }
 
 
@@ -508,9 +504,6 @@ sub relocale {
 	if ( Padre::Util::DISTRO() ne 'UBUNTU' ) {
 		$search->SetDescriptiveText( Wx::gettext('Search') );
 	}
-
-	# Rebuild the menu
-	$search->SetMenu( $self->new_menu );
 
 	return 1;
 }
@@ -795,30 +788,6 @@ sub side {
 		return 'right';
 	}
 	die "Bad parent panel";
-}
-
-# Moves the panel to the other side.
-# To prevent corrupting the layout engine we do this in a specific order.
-# Hide, Reconfigure, Show
-# TO DO: This results in loss of all state, and the need to rescan the tree.
-# Come up with a saner approach to migrating views between arbitrary panels
-# that we can expand out so all views can potentially be moved around.
-sub move {
-	TRACE( $_[0] ) if DEBUG;
-	my $self   = shift;
-	my $main   = $self->main;
-	my $config = $main->config;
-	my $side   = $config->main_directory_panel;
-	$main->show_directory(0);
-	if ( $side eq 'left' ) {
-		$config->apply( main_directory_panel => 'right' );
-	} elsif ( $side eq 'right' ) {
-		$config->apply( main_directory_panel => 'left' );
-	} else {
-		die "Bad main_directory_panel setting '$side'";
-	}
-	$main->show_directory(1);
-	return 1;
 }
 
 # Compare two paths to see which should be first

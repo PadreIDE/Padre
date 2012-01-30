@@ -6,6 +6,7 @@ use warnings;
 use Padre::Role::Task        ();
 use Padre::Wx::Role::Idle    ();
 use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Context ();
 use Padre::Wx::FBP::TaskList ();
 
 our $VERSION    = '0.95';
@@ -14,6 +15,7 @@ our @ISA        = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Context
 	Padre::Wx::FBP::TaskList
 };
 
@@ -76,6 +78,8 @@ sub new {
 	# Register for refresh calls
 	$main->add_refresh_listener($self);
 
+	$self->context_bind;
+
 	return $self;
 }
 
@@ -97,6 +101,22 @@ sub view_label {
 sub view_close {
 	$_[0]->task_reset;
 	$_[0]->main->show_tasks(0);
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_options( $menu => 'main_tasks_panel' );
+
+	return;
 }
 
 

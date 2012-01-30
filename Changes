@@ -38,6 +38,7 @@ the even version for the release, even during development.
     - Added display variable data from click in debugger panel (BOWTIE)
     - The Evaluate Expression dialog now has a "Watch" feature (ADAMK)
     - Added Padre::SLOC for calculating Source Lines of Code metrics (ADAMK)
+    - Completed right click relocation of panels for the main tools (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

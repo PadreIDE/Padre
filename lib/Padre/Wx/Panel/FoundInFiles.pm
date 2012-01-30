@@ -12,6 +12,7 @@ use Padre::Wx                    ();
 use Padre::Role::Task            ();
 use Padre::Wx::Role::Idle        ();
 use Padre::Wx::Role::View        ();
+use Padre::Wx::Role::Context     ();
 use Padre::Wx::FBP::FoundInFiles ();
 use Padre::Logger;
 
@@ -20,6 +21,7 @@ our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Context
 	Padre::Wx::FBP::FoundInFiles
 };
 
@@ -91,6 +93,8 @@ sub new {
 			);
 		},
 	);
+
+	# $self->context_bind;
 
 	# Initialise statistics
 	$self->{files}   = 0;
@@ -177,6 +181,22 @@ sub task_reset {
 
 	# Reset normally as well
 	$self->SUPER::task_reset(@_);
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_options( $menu => 'main_foundinfiles_panel' );
+
+	return;
 }
 
 

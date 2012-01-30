@@ -6,20 +6,23 @@ package Padre::Wx::ReplaceInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec            ();
-use Padre::Role::Task     ();
-use Padre::Wx::Role::Idle ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
-use Padre::Wx::TreeCtrl   ();
-use Padre::Wx             ();
+use File::Spec               ();
+use Padre::Role::Task        ();
+use Padre::Wx::Role::Idle    ();
+use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Main    ();
+use Padre::Wx::Role::Context ();
+use Padre::Wx::TreeCtrl      ();
+use Padre::Wx                ();
 use Padre::Logger;
 
 our $VERSION = '0.95';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::Idle
 	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
+	Padre::Wx::Role::Context
 	Padre::Wx::TreeCtrl
 };
 
@@ -88,6 +91,8 @@ sub new {
 		},
 	);
 
+	# $self->context_bind;
+
 	# Inialise statistics
 	$self->{files}   = 0;
 	$self->{matches} = 0;
@@ -110,6 +115,42 @@ sub item_clicked {
 	my $file  = $data->{file}           or return;
 	my $path  = File::Spec->catfile( $dir, $file );
 	$self->main->setup_editor($path);
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'bottom';
+}
+
+sub view_label {
+	Wx::gettext('Replace in Files');
+}
+
+sub view_close {
+	$_[0]->task_reset;
+	$_[0]->main->show_replaceinfiles(0);
+}
+
+
+
+
+
+######################################################################
+# Padre::Wx::Role::Context Methods
+
+sub context_menu {
+	my $self = shift;
+	my $menu = shift;
+
+	$self->context_append_options( $menu => 'main_foundinfiles_panel' );
+
+	return;
 }
 
 
@@ -223,26 +264,6 @@ sub replace_finish {
 	}
 
 	return 1;
-}
-
-
-
-
-
-######################################################################
-# Padre::Wx::Role::View Methods
-
-sub view_panel {
-	return 'bottom';
-}
-
-sub view_label {
-	Wx::gettext('Replace in Files');
-}
-
-sub view_close {
-	$_[0]->task_reset;
-	$_[0]->main->show_replaceinfiles(0);
 }
 
 
