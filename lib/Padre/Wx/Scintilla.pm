@@ -198,7 +198,7 @@ $KEYWORDS{'application/php'} = [
 	q{
 		and array as bool boolean break case cfunction class const
 		continue declare default die directory do double echo else
-		elseif empty enddeclare endfor endforeach endif endswitch
+		elsif empty enddeclare endfor endforeach endif endswitch
 		endwhile eval exit extends false float for foreach function
 		global goto if include include_once int integer isset list
 		namespace new null object old_function or parent print real
