@@ -30,6 +30,11 @@ BEGIN {
 # stuff above here no longer needed.
 configure_requires 'ExtUtils::MakeMaker' => '6.52';
 
+# Force an explicit configure_requires dependency on module that is
+# SUPPOSED to be in the Perl core but that some Perl vendors seem to
+# be splitting out into separate modules (spotted first on centos)
+configure_requires 'ExtUtils::Embed' => '1.250601';
+
 # the above line does not seem to force an upgrade
 # the below code might work but not tested
 #eval "use ExtUtils::MakeMaker ()"; # avoid importing prompt() and other subs
