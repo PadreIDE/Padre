@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 12:10-0800\n"
+"POT-Creation-Date: 2012-02-01 20:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,6 +212,10 @@ msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:679
 msgid "&Copy"
+msgstr ""
+
+#: lib/Padre/Wx/ActionLibrary.pm:1334
+msgid "&Count Lines of Code"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Debug.pm:68
@@ -665,11 +669,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:144
+#: lib/Padre/Wx/Dialog/About.pm:145
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:149
+#: lib/Padre/Wx/Dialog/About.pm:153
 msgid "(unsupported)"
 msgstr ""
 
@@ -1375,7 +1379,7 @@ msgstr ""
 msgid "Commit file/directory to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:111
+#: lib/Padre/Wx/Dialog/About.pm:112
 msgid "Config"
 msgstr ""
 
@@ -1841,7 +1845,7 @@ msgid "Display Value"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN.pm:207 lib/Padre/Wx/CPAN.pm:216 lib/Padre/Wx/CPAN.pm:225
-#: lib/Padre/Wx/Dialog/About.pm:130
+#: lib/Padre/Wx/Dialog/About.pm:131
 msgid "Distribution"
 msgstr ""
 
@@ -2923,7 +2927,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:135
+#: lib/Padre/Wx/Dialog/About.pm:136
 msgid "Kernel"
 msgstr ""
 
@@ -4094,7 +4098,7 @@ msgstr ""
 msgid "R/W"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:150
+#: lib/Padre/Wx/Dialog/About.pm:155
 msgid "RAM"
 msgstr ""
 
@@ -4506,10 +4510,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:82
 msgid "SHIFT"
-msgstr ""
-
-#: lib/Padre/Wx/ActionLibrary.pm:1334
-msgid "SLOC &Count"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4409
@@ -5424,7 +5424,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:145
+#: lib/Padre/Wx/Dialog/About.pm:146
 msgid "Threads"
 msgstr ""
 
