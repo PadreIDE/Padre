@@ -6,6 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::SLOC            ();
+use Padre::Locale::Format  ();
 use Padre::Role::Task      ();
 use Padre::Wx::Role::Main  ();
 use Padre::Wx::Role::Timer ();
@@ -112,10 +113,18 @@ sub render {
 	my $lock = $self->lock_update;
 	my $sloc = $self->{sloc}->report_types;
 
-	$self->{files}->SetLabel( $self->{count} );
-	$self->{code}->SetLabel( $sloc->{code} || 0 );
-	$self->{comment}->SetLabel( $sloc->{comment} || 0 );
-	$self->{blank}->SetLabel( $sloc->{blank} || 0 );
+	$self->{files}->SetLabel(
+		Padre::Locale::Format::integer( $self->{count} )
+	);
+	$self->{code}->SetLabel(
+		Padre::Locale::Format::integer( $sloc->{code} || 0 )
+	);
+	$self->{comment}->SetLabel(
+		Padre::Locale::Format::integer( $sloc->{comment} || 0 )
+	);
+	$self->{blank}->SetLabel(
+		Padre::Locale::Format::integer( $sloc->{blank} || 0 )
+	);
 
 	$self->Fit;
 	$self->Layout;

@@ -39,6 +39,8 @@ the even version for the release, even during development.
     - The Evaluate Expression dialog now has a "Watch" feature (ADAMK)
     - Added Padre::SLOC for calculating Source Lines of Code metrics (ADAMK)
     - Completed right click relocation of panels for the main tools (ADAMK)
+    - Added Padre::Locale::Format for localising the display of numbers,
+      and datetime values (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
