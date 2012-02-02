@@ -1331,7 +1331,7 @@ sub init {
 
 	Padre::Wx::Action->new(
 		name       => 'search.sloccount',
-		label      => _T('SLOC &Count'),
+		label      => _T('&Count Lines of Code'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::SLOC;
 			Padre::Wx::Dialog::SLOC->run($_[0]);
