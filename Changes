@@ -41,12 +41,15 @@ the even version for the release, even during development.
     - Completed right click relocation of panels for the main tools (ADAMK)
     - Added Padre::Locale::Format for localising the display of numbers,
       and datetime values (ADAMK)
+    - Inlined the small amount of code we use from Format::Human::Bytes and
+      remove the dependency (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
     - Removed Padre::Wx::Role::Form which was intended as a replacement for
       Padre::Wx::Dialog but was never used by anyone for anything (ADAMK)
     - Removed Padre::Document::get_comment_line_string (ADAMK)
+    - Padre::Util::humanbytes is not Padre::Locale::Format::bytes (ADAMK)
 
 0.94 2012.01.22
     - Redesigned the Preferences dialog (ADAMK)

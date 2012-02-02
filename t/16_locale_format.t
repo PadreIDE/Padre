@@ -2,12 +2,18 @@
 
 use strict;
 use warnings;
-use Test::More tests => 19;
+use Test::More tests => 31;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Locale::Format;
 
-# Format a simple integer
+
+
+
+
+######################################################################
+# Integers
+
 my @integer = (
 	''        => '',
 	'Hello'   => 'Hello',
@@ -37,4 +43,36 @@ while ( @integer ) {
 	my $want  = shift @integer;
 	my $have  = Padre::Locale::Format::integer($input);
 	is( $have, $want, "integer $input --> $want" );
+}
+
+
+
+
+
+######################################################################
+# Bytes
+
+my @bytes = (
+	'' => '',
+	'Hello'    => 'Hello',
+	'0'        => '0B',
+	'1'        => '1B',
+	'10'       => '10B',
+	'100'      => '100B',
+	'1000'     => '1000B',
+	'10000'    => '9.8kB',
+	'100000'   => '97.7kB',
+	'1000000'  => '976.6kB',
+	'10000000' => '9.5MB',
+);
+is(
+	Padre::Locale::Format::bytes(undef),
+	'',
+	"bytes undef --> ''",
+);
+while ( @bytes ) {
+	my $input = shift @bytes;
+	my $want  = shift @bytes;
+	my $have  = Padre::Locale::Format::bytes($input);
+	is( $have, $want, "bytes $input --> $want" );
 }

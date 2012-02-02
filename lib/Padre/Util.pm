@@ -390,14 +390,6 @@ sub find_perldiag_translations {
 ######################################################################
 # Logging and Debugging
 
-sub humanbytes {
-	my $bytes = $_[0] || 0;
-	eval { require Format::Human::Bytes; };
-	return $bytes if $@; # Doesn't look good, but works
-	return Format::Human::Bytes::base2( $bytes, 1 );
-
-}
-
 # Returns the memory currently used by this application:
 sub process_memory {
 	if (Padre::Constant::UNIX) {

@@ -109,7 +109,6 @@ requires 'File::Temp'               => '0.20';
 requires 'File::Which'              => '1.08';
 requires 'File::pushd'              => '1.00';
 requires 'FindBin'                  => 0;
-requires 'Format::Human::Bytes'     => '0.06';
 requires 'Getopt::Long'             => 0;
 requires 'HTML::Entities'           => '3.57';
 requires 'HTML::Parser'             => '3.58';

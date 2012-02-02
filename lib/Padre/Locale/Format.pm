@@ -19,6 +19,7 @@ our $COMPATIBLE = '0.95';
 
 my %FORMAT = (
 	en_GB => {
+		number_decimal_symbol        => '.',
 		number_digit_grouping        => '333',
 		number_digit_grouping_symbol => ',',
 		number_negative_symbol       => '-',
@@ -71,6 +72,32 @@ sub integer {
 	}
 
 	return $text;
+}
+
+sub bytes {
+	my $text    = shift;
+	my $rfc4646 = shift || 'en_GB';
+	my $format  = $FORMAT{$rfc4646} || $FORMAT{en_GB};
+
+	# Shortcut unusual cases
+	unless ( defined Params::Util::_STRING($text) ) {
+		return '';
+	}
+	unless ( $text =~ /^\d+\z/ ) {
+		return $text;
+	}
+
+	if ( $text > 8192000000000 ) {
+		return sprintf( '%0.1f', $text / 1099511627776 ) . "TB";
+	} elsif ( $text > 8192000000 ) {
+		return sprintf( '%0.1f', $text / 1073741824 ) . "GB";
+	} elsif ( $text > 8192000 ) {
+		return sprintf( '%0.1f', $text / 1048576 ) . "MB";
+	} elsif ( $text > 8192 ) {
+		return sprintf( '%0.1f', $text / 1024 ) . "kB";
+	} else {
+		return $text . "B";
+	}
 }
 
 1;

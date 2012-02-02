@@ -5,10 +5,11 @@ use strict;
 use warnings;
 use utf8;
 use Config;
+use PPI                     ();
 use Padre::Wx               ();
 use Wx::Perl::ProcessStream ();
 use Padre::Util             ();
-use PPI                     ();
+use Padre::Locale::Format   ();
 use Padre::Wx::FBP::About   ();
 
 our $VERSION = '0.95';
@@ -146,7 +147,11 @@ sub _core_info {
 
 	# Calculate the current memory in use across all threads
 	my $ram = Padre::Util::process_memory();
-	$ram = $ram ? Padre::Util::humanbytes($ram) : Wx::gettext('(unsupported)');
+	if ( $ram ) {
+		$ram = Padre::Locale::Format::bytes($ram);
+	} else {
+		$ram = Wx::gettext('(unsupported)');
+	}
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext("RAM"), $ram;
 
 	return $output;
