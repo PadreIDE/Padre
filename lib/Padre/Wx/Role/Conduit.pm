@@ -151,6 +151,17 @@ sub signal {
 		);
 	}
 	return 1;
+
+	# NOTE: Crashes like the following have been observed.
+	# 
+	# Free to wrong pool 8d60100 not 963e10 at
+	# C:/strawberry/perl/site/lib/Padre/Wx/Role/Conduit.pm line 153.
+	# Attempt to free unreferenced scalar: SV 0x2099354,
+	# Perl interpreter: 0x4f2c2b4
+	# at C:/strawberry/perl/site/lib/Padre/Wx/Role/Conduit.pm line 153.
+	#
+	# It appears that the destruction of the Wx::PlThreadEvent can
+	# cause segfaults in some situations.
 }
 
 1;
