@@ -238,6 +238,26 @@ StyleSetForeground SCE_CSS_SINGLESTRING         202020
 StyleSetForeground SCE_CSS_IDENTIFIER2          202020
 StyleSetForeground SCE_CSS_ATTRIBUTE            202020
 
+#inspired by gvim with bash/pluigin
+style application/x-shellscript
+include text/plain
+StyleSetForeground SCE_SH_DEFAULT				000000
+StyleSetForeground SCE_SH_ERROR					ff0000 # red
+StyleSetForeground SCE_SH_COMMENTLINE			0000ff # blue
+StyleSetForeground SCE_SH_NUMBER				B452CD #
+StyleSetForeground SCE_SH_WORD					A52A2A #red/brown
+StyleSetBold SCE_SH_WORD						1
+StyleSetForeground SCE_SH_STRING				ff17ff #"pink-ish"
+#StyleSetBold SCE_SH_STRING						1
+StyleSetForeground SCE_SH_CHARACTER				ff17ff #'pink-ish'
+StyleSetForeground SCE_SH_OPERATOR				000000 # black
+StyleSetForeground SCE_SH_IDENTIFIER			008B8B # cyan-ish
+StyleSetForeground SCE_SH_SCALAR				A233F6 # magentish ##ff17ff # pink-ish
+StyleSetForeground SCE_SH_PARAM					A233F6 # magentish
+StyleSetForeground SCE_SH_BACKTICKS				ff0000 # red
+StyleSetForeground SCE_SH_HERE_DELIM			00ff00
+StyleSetForeground SCE_SH_HERE_Q				000000
+
 # Copyright 2008-2012 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
