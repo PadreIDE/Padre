@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-01 20:10-0800\n"
+"POT-Creation-Date: 2012-02-03 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2735,7 +2735,7 @@ msgstr ""
 msgid "Highlight the line where the cursor is"
 msgstr ""
 
-#: lib/Padre/Wx/Directory.pm:591
+#: lib/Padre/Wx/Directory.pm:595
 msgid "Hit unfixed bug in directory browser, disabling it"
 msgstr ""
 
@@ -5281,7 +5281,7 @@ msgstr ""
 
 #: lib/Padre/Wx/VCS.pm:53 lib/Padre/Wx/FBP/Sync.pm:52
 #: lib/Padre/Wx/FBP/DebugOutput.pm:37 lib/Padre/Wx/Dialog/Advanced.pm:111
-#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:60
+#: lib/Padre/Wx/CPAN/Listview.pm:35 lib/Padre/Wx/CPAN/Listview.pm:59
 msgid "Status"
 msgstr ""
 
