@@ -11,6 +11,26 @@ use Padre::MIME  ();
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.95';
 
+# Differentiate content between different types
+my %CONTENT = (
+	'application/javascript' => 'code',
+	'application/x-pasm'     => 'code',
+	'application/x-perl'     => 'code',
+	'application/x-perl6'    => 'code',
+	'application/x-php'      => 'code',
+	'application/x-ruby'     => 'code',
+	'application/x-tcl'      => 'code',
+	'text/x-actionscript'    => 'code',
+	'text/x-adasrc'          => 'code',
+	'text/x-cobol'           => 'code',
+	'text/x-csrc'            => 'code',
+	'text/x-haskell'         => 'code',
+	'text/x-java'            => 'code',
+	'text/x-pascal'          => 'code',
+	'text/x-perlxs'          => 'code',
+	'text/x-python'          => 'code',
+);
+
 
 
 
@@ -105,12 +125,12 @@ sub add_editor {
 ######################################################################
 # Statistics Reporting
 
-sub total_code {
+sub total_content {
 	my $self  = shift;
 	my $total = 0;
 	foreach my $key ( sort keys %$self ) {
 		my ($lang, $type) = split /\s+/, $key;
-		if ( $type eq 'code' ) {
+		if ( $type eq 'content' ) {
 			$total += $self->{$key};
 		}
 	}
@@ -144,7 +164,10 @@ sub smart_types {
 	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
 		my ($lang, $type) = split /\s+/, $key;
-		next if $lang eq 'text/plain';
+		next unless $CONTENT{$lang};
+		if ( $type eq 'content' ) {
+			$type = $CONTENT{$lang};
+		}
 		$hash{$type} ||= 0;
 		$hash{$type} += $self->{$key};
 	}
@@ -167,7 +190,7 @@ sub count_mime {
 	if ( $mime->type eq 'application/x-perl' ) {
 		return $self->count_perl5( $text, $mime );
 	}
-	if ( $mime->type eq 'text/pod' ) {
+	if ( $mime->type eq 'text/x-pod' ) {
 		return $self->count_perl5( $text, $mime );
 	}
 
@@ -183,35 +206,35 @@ sub count_perl5 {
 	my $self  = shift;
 	my $text  = shift;
 	my %count = (
-		'text/pod comment'           => 0,
-		'text/pod blank'             => 0,
-		'application/x-perl code'    => 0,
+		'text/x-pod comment'         => 0,
+		'text/x-pod blank'           => 0,
+		'application/x-perl content' => 0,
 		'application/x-perl comment' => 0,
 		'application/x-perl blank'   => 0,
 	);
 
-	my $code = 1;
+	my $content = 1;
 	foreach my $line ( split /\n/, $$text, -1 ) {
 		if ( $line !~ /\S/ ) {
-			if ( $code ) {
+			if ( $content ) {
 				$count{'application/x-perl blank'}++;
 			} else {
-				$count{'text/pod blank'}++;
+				$count{'text/x-pod blank'}++;
 			}
 		} elsif ( $line =~ /^=cut\s*/ ) {
-			$count{'text/pod comment'}++;
-			$code = 1;
-		} elsif ( $code ) {
+			$count{'text/x-pod comment'}++;
+			$content = 1;
+		} elsif ( $content ) {
 			if ( $line =~ /^=\w+/ ) {
-				$count{'text/pod comment'}++;
-				$code = 0;
+				$count{'text/x-pod comment'}++;
+				$content = 0;
 			} elsif ( $line =~ /^\s*#/ ) {
 				$count{'application/x-perl comment'}++;
 			} else {
-				$count{'application/x-perl code'}++;
+				$count{'application/x-perl content'}++;
 			}
 		} else {
-			$count{'text/pod comment'}++;
+			$count{'text/x-pod comment'}++;
 		}
 	}
 
@@ -227,7 +250,7 @@ sub count_commented {
 	my $comment = $mime->comment or return undef;
 	my $matches = $comment->line_match;
 	my %count   = (
-		"$type code"    => 0,
+		"$type content"    => 0,
 		"$type comment" => 0,
 		"$type blank"   => 0,
 	);
@@ -238,7 +261,7 @@ sub count_commented {
 		} elsif ( $line =~ $matches ) {
 			$count{"$type comment"}++;
 		} else {
-			$count{"$type code"}++;
+			$count{"$type content"}++;
 		}
 	}
 
@@ -252,7 +275,7 @@ sub count_uncommented {
 	my $mime  = shift;
 	my $type  = $mime->type;
 	my %count = (
-		"$type code"  => 0,
+		"$type content"  => 0,
 		"$type blank" => 0,
 	);
 
@@ -260,7 +283,7 @@ sub count_uncommented {
 		if ( $line !~ /\S/ ) {
 			$count{"$type blank"}++;
 		} else {
-			$count{"$type code"}++;
+			$count{"$type content"}++;
 		}
 	}
 

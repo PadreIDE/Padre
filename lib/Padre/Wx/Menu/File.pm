@@ -267,9 +267,14 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Word Stats
+	# Document Statistics
 	$self->{docstat} = $self->add_menu_action(
 		'file.properties',
+	);
+
+	# Project Statistics
+	$self->add_menu_action(
+		'file.sloccount',
 	);
 
 	$self->AppendSeparator;

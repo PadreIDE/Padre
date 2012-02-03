@@ -551,6 +551,15 @@ sub init {
 		},
 	);
 
+	Padre::Wx::Action->new(
+		name       => 'file.sloccount',
+		label      => _T('&Project Statistics'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::SLOC;
+			Padre::Wx::Dialog::SLOC->run($_[0]);
+		},
+	);
+
 	# Exiting
 
 	Padre::Wx::Action->new(
@@ -1326,15 +1335,6 @@ sub init {
 		menu_event => sub {
 			require Padre::Wx::Dialog::QuickMenuAccess;
 			Padre::Wx::Dialog::QuickMenuAccess->new( $_[0] )->ShowModal;
-		},
-	);
-
-	Padre::Wx::Action->new(
-		name       => 'search.sloccount',
-		label      => _T('&Count Lines of Code'),
-		menu_event => sub {
-			require Padre::Wx::Dialog::SLOC;
-			Padre::Wx::Dialog::SLOC->run($_[0]);
 		},
 	);
 

@@ -64,7 +64,7 @@ sub new {
 	my $m_staticText213 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Code:"),
+		Wx::gettext("Code Lines:"),
 	);
 
 	$self->{code} = Wx::StaticText->new(
@@ -76,7 +76,7 @@ sub new {
 	my $m_staticText215 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Comments:"),
+		Wx::gettext("Comments Lines:"),
 	);
 
 	$self->{comment} = Wx::StaticText->new(
@@ -88,10 +88,75 @@ sub new {
 	my $m_staticText217 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Blank:"),
+		Wx::gettext("Blank Lines:"),
 	);
 
 	$self->{blank} = Wx::StaticText->new(
+		$self,
+		-1,
+		'',
+	);
+
+	my $m_staticText218 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Constructive Cost Model (COCOMO)"),
+	);
+	$m_staticText218->SetFont(
+		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
+	);
+
+	my $m_staticline50 = Wx::StaticLine->new(
+		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::LI_HORIZONTAL,
+	);
+
+	my $m_staticText219 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Mythical Man Months:"),
+	);
+
+	$self->{pax_months} = Wx::StaticText->new(
+		$self,
+		-1,
+		'',
+	);
+
+	my $m_staticText221 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Estimated Project Years:"),
+	);
+
+	$self->{cal_years} = Wx::StaticText->new(
+		$self,
+		-1,
+		'',
+	);
+
+	my $m_staticText223 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Number of Developers:"),
+	);
+
+	$self->{dev_count} = Wx::StaticText->new(
+		$self,
+		-1,
+		'',
+	);
+
+	my $m_staticText225 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Development Cost (USD):"),
+	);
+
+	$self->{dev_cost} = Wx::StaticText->new(
 		$self,
 		-1,
 		'',
@@ -127,6 +192,19 @@ sub new {
 	$fgSizer29->Add( $m_staticText217, 0, Wx::EXPAND, 5 );
 	$fgSizer29->Add( $self->{blank}, 0, Wx::ALIGN_RIGHT, 5 );
 
+	my $fgSizer30 = Wx::FlexGridSizer->new( 4, 2, 10, 20 );
+	$fgSizer30->AddGrowableCol(1);
+	$fgSizer30->SetFlexibleDirection(Wx::HORIZONTAL);
+	$fgSizer30->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
+	$fgSizer30->Add( $m_staticText219, 0, Wx::EXPAND, 5 );
+	$fgSizer30->Add( $self->{pax_months}, 0, Wx::ALIGN_RIGHT, 5 );
+	$fgSizer30->Add( $m_staticText221, 0, Wx::EXPAND, 5 );
+	$fgSizer30->Add( $self->{cal_years}, 0, Wx::ALIGN_RIGHT, 5 );
+	$fgSizer30->Add( $m_staticText223, 0, Wx::EXPAND, 5 );
+	$fgSizer30->Add( $self->{dev_count}, 0, Wx::ALIGN_RIGHT, 5 );
+	$fgSizer30->Add( $m_staticText225, 0, Wx::EXPAND, 5 );
+	$fgSizer30->Add( $self->{dev_cost}, 0, Wx::ALIGN_RIGHT, 5 );
+
 	my $bSizer124 = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$bSizer124->SetMinSize( [ 150, -1 ] );
 	$bSizer124->Add( 0, 0, 1, Wx::EXPAND, 5 );
@@ -135,7 +213,11 @@ sub new {
 	my $bSizer123 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer123->Add( $self->{root}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer123->Add( $m_staticline48, 0, Wx::EXPAND, 5 );
-	$bSizer123->Add( $fgSizer29, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer123->Add( $fgSizer29, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer123->Add( 0, 10, 0, Wx::EXPAND, 5 );
+	$bSizer123->Add( $m_staticText218, 0, Wx::ALL, 5 );
+	$bSizer123->Add( $m_staticline50, 0, Wx::BOTTOM | Wx::EXPAND, 5 );
+	$bSizer123->Add( $fgSizer30, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer123->Add( $m_staticline49, 0, Wx::EXPAND, 5 );
 	$bSizer123->Add( $bSizer124, 0, Wx::EXPAND, 5 );
 

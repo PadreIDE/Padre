@@ -97,7 +97,7 @@ sub refresh {
 		$self->{document_visible}->SetLabel( length $text );
 		$self->{document_lines}->SetLabel( $editor->GetLineCount );
 		$self->{document_words}->SetLabel( scalar @words );
-		$self->{document_sloc}->SetLabel( $sloc->total_code );
+		$self->{document_sloc}->SetLabel( $sloc->total_content );
 	}
 
 	# Update the selection statistics
@@ -114,7 +114,7 @@ sub refresh {
 			$self->{selection_visible}->SetLabel( length $text );
 			$self->{selection_lines}->SetLabel( $lines[1] - $lines[0] + 1 );
 			$self->{selection_words}->SetLabel( scalar @words );
-			$self->{selection_sloc}->SetLabel( $sloc->total_code );
+			$self->{selection_sloc}->SetLabel( $sloc->total_content );
 
 		} else {
 			$self->{selection_bytes}->SetLabel(0);

@@ -45,6 +45,7 @@ the even version for the release, even during development.
       remove the dependency (ADAMK)
     - Switching to the thread-safe Wx::PostEvent when sending events from
       the background, which should dramatically reduce segfaults (DOOTSON)
+    - Added COCOMO modelling to the project statistics dialog (ADAMK)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

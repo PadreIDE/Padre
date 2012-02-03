@@ -24,10 +24,11 @@ my $count = $sloc->count_perl5(\' ');
 is_deeply(
 	$count,
 	{
-		'application/x-perl' => 0,
-		'text/x-pod'         => 0,
-		'comment'            => 0,
-		'blank'              => 1,
+		'application/x-perl blank'   => 1,
+		'application/x-perl comment' => 0,
+		'application/x-perl content' => 0,
+		'text/x-pod blank'           => 0,
+		'text/x-pod comment'         => 0,
 	},
 	'Got expected Perl 5 line count',
 );
@@ -52,10 +53,11 @@ END_PERL
 is_deeply(
 	$count,
 	{
-		'application/x-perl' => 2,
-		'text/x-pod'         => 4,
-		'comment'            => 2,
-		'blank'              => 7,
+		'application/x-perl blank'   => 4,
+		'application/x-perl comment' => 2,
+		'application/x-perl content' => 2,
+		'text/x-pod blank'           => 3,
+		'text/x-pod comment'         => 4,
 	},
 	'Got expected Perl 5 line count',
 );
