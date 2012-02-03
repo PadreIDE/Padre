@@ -74,11 +74,9 @@ Get the L<Padre::Wx::Main> main window that this object is a child of.
 =cut
 
 sub main {
-	my $main = shift->GetParent;
-	while ( not Params::Util::_INSTANCE( $main, 'Padre::Wx::Main' ) ) {
-		$main = $main->GetParent or return Padre::Current->main;
-	}
-	return $main;
+	my $main = Wx::GetTopLevelParent(shift);
+	return $main if Params::Util::_INSTANCE($main, 'Padre::Wx::Main');
+	return $main->GetParent;
 }
 
 =pod

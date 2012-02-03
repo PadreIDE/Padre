@@ -3,12 +3,15 @@ package Padre::Wx::CPAN::Listview;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
+use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.95';
-our @ISA     = 'Wx::ListView';
+our @ISA     = qw{
+	Padre::Wx::Role::Main
+	Wx::ListView
+};
 
 sub new {
 	my $class = shift;
@@ -40,10 +43,6 @@ sub new {
 
 sub bottom {
 	$_[0]->GetParent;
-}
-
-sub main {
-	$_[0]->GetGrandParent;
 }
 
 sub clear {
@@ -94,7 +93,7 @@ sub on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
 	my $line  = $event->GetItem->GetText;
-	print STDERR "L: $line\n";
+	# print STDERR "L: $line\n";
 	$self->{cpan}->install($line);
 
 	#	my $item = $self->GetFocusedItem;

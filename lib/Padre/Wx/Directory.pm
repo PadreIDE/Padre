@@ -193,7 +193,7 @@ sub task_request {
 # Padre::Wx::Role::View Methods
 
 sub view_panel {
-	shift->side(@_);
+	'left';
 }
 
 sub view_label {
@@ -780,19 +780,6 @@ sub find_render {
 
 ######################################################################
 # Panel Migration (Experimental)
-
-# What side of the application are we on
-sub side {
-	my $self  = shift;
-	my $panel = $self->GetParent;
-	if ( $panel->isa('Padre::Wx::Left') ) {
-		return 'left';
-	}
-	if ( $panel->isa('Padre::Wx::Right') ) {
-		return 'right';
-	}
-	die "Bad parent panel";
-}
 
 # Compare two paths to see which should be first
 sub compare {
