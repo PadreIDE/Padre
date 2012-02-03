@@ -111,7 +111,7 @@ sub clear {
 sub render {
 	my $self = shift;
 	my $lock = $self->lock_update;
-	my $sloc = $self->{sloc}->report_types;
+	my $sloc = $self->{sloc}->smart_types;
 
 	$self->{files}->SetLabel(
 		Padre::Locale::Format::integer( $self->{count} )

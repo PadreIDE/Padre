@@ -139,6 +139,18 @@ sub report_types {
 	return \%hash;
 }
 
+sub smart_types {
+	my $self = shift;
+	my %hash = ();
+	foreach my $key ( sort keys %$self ) {
+		my ($lang, $type) = split /\s+/, $key;
+		next if $lang eq 'text/plain';
+		$hash{$type} ||= 0;
+		$hash{$type} += $self->{$key};
+	}
+	return \%hash;
+}
+
 
 
 
