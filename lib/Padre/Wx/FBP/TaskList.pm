@@ -49,7 +49,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TR_DEFAULT_STYLE,
+		Wx::TR_DEFAULT_STYLE | Wx::NO_BORDER,
 	);
 
 	my $bSizer122 = Wx::BoxSizer->new(Wx::VERTICAL);

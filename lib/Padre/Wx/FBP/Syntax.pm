@@ -38,7 +38,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_SINGLE,
+		Wx::TR_FULL_ROW_HIGHLIGHT | Wx::TR_SINGLE | Wx::NO_BORDER,
 	);
 
 	Wx::Event::EVT_TREE_SEL_CHANGED(
@@ -54,7 +54,7 @@ sub new {
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::STATIC_BORDER,
+		Wx::NO_BORDER,
 	);
 
 	$self->{show_stderr} = Wx::Button->new(

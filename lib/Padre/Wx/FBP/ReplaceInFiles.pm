@@ -141,18 +141,18 @@ sub new {
 		Wx::LI_HORIZONTAL,
 	);
 
-	$self->{find_regex} = Wx::CheckBox->new(
-		$self,
-		-1,
-		Wx::gettext("&Regular Expression"),
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
 		Wx::gettext("&Case Sensitive"),
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+	);
+
+	$self->{find_regex} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext("&Regular Expression"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -237,12 +237,12 @@ sub find_types {
 	$_[0]->{find_types};
 }
 
-sub find_regex {
-	$_[0]->{find_regex};
-}
-
 sub find_case {
 	$_[0]->{find_case};
+}
+
+sub find_regex {
+	$_[0]->{find_regex};
 }
 
 sub replace {

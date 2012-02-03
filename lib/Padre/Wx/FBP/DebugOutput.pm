@@ -43,15 +43,15 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		Wx::TE_MULTILINE | Wx::TE_READONLY,
+		Wx::TE_MULTILINE | Wx::TE_READONLY | Wx::NO_BORDER,
 	);
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 8 );
+	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 2 );
-	$main_sizer->Add( $self->{output}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$main_sizer->Add( $self->{output}, 1, Wx::ALL | Wx::EXPAND, 0 );
 
 	$self->SetSizer($main_sizer);
 	$self->Layout;
