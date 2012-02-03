@@ -9,6 +9,7 @@ use utf8;
 
 # Non-Padre modules we need in order to do the single-instance
 # check should be loaded early to simplify the load order.
+use version       ();
 use Carp          ();
 use Cwd           ();
 use File::Spec    ();
@@ -21,7 +22,6 @@ use DBD::SQLite   ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TO DO: Bug report dispatched. Likely to be fixed in 0.77.
-use version ();
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.81';
@@ -34,7 +34,7 @@ use Padre::DB       ();
 use Padre::Logger;
 
 # Generate faster accessors
-use Class::XSAccessor 1.05 {
+use Class::XSAccessor 1.13 {
 	getters => {
 		original_cwd    => 'original_cwd',
 		opts            => 'opts',
