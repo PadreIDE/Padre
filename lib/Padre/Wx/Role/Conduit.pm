@@ -136,7 +136,9 @@ sub on_signal {
 
 =head2 signal
 
-  Padre::Wx::Role::Conduit->signal( [ 'My message' ] );
+  Padre::Wx::Role::Conduit->signal(
+      Storable::freeze( [ 'My message' ] )
+  );
 
 The static C<signal> method is called in child threads to send a message
 to the parent window. The message can be any legal Perl structure that has
