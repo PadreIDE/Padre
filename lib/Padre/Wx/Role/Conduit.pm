@@ -147,6 +147,9 @@ been serialised by the L<Storable> module.
 =cut
 
 sub signal {
+	# We use Wx::PostEvent rather than AddPendingEvent because this
+	# function passes the data through a thread-safe stash.
+	# Using AddPendingEvent directly will cause occasional segfaults.
 	Wx::PostEvent(
 		$CONDUIT,
 		Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ),
