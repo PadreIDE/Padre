@@ -580,8 +580,12 @@ sub browse_message {
 		my $chd = $tree->GetPlData($child);
 		if ( not defined $_[0] or not defined $chd ) {
 
-			# TODO: this should never happen, but it does and it crashes padre in the compare method
-			# when calling is_directory on the object.
+			# NOTE: This should never happen, but it does and it
+			# crashes padre in the compare method when calling
+			# is_directory on the object.
+			# This should have been fixed by commit #18174 but
+			# we will leave this code for a while in case it
+			# isn't actually fixed.
 			unless ( defined $chd ) {
 				my $label   = $tree->GetItemText($child) || 'undef';
 				my $project = $self->current->project->root;
