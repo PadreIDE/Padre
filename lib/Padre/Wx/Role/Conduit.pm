@@ -150,10 +150,17 @@ sub signal {
 	# We use Wx::PostEvent rather than AddPendingEvent because this
 	# function passes the data through a thread-safe stash.
 	# Using AddPendingEvent directly will cause occasional segfaults.
-	Wx::PostEvent(
-		$CONDUIT,
-		Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ),
-	) if $CONDUIT;
+	if ( $CONDUIT ) {
+		Wx::PostEvent(
+			$CONDUIT,
+			Wx::PlThreadEvent->new(
+				-1,
+				$SIGNAL,
+				Storable::freeze($_[1]),
+			),
+		);
+	}
+	return 1;
 }
 
 1;

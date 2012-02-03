@@ -418,7 +418,7 @@ sub inbox {
 
 sub signal {
 	# TRACE( $_[0] ) if DEBUG;
-	Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid => @_ ] ) );
+	Padre::Wx::Role::Conduit->signal( [ shift->hid => @_ ] );
 }
 
 sub tell_parent {
