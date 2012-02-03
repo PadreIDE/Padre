@@ -737,6 +737,23 @@ $KEYWORDS{'text/html'} = [
 	$KEYWORDS{'application/php'}->[0],
 ];
 
+#ToDo this needs to be checked
+# Embedded BASH
+$KEYWORDS{'application/x-shellscript'} = [
+	q{
+		alias bg bind break builtin caller cd command compgen complete compopt
+		continue declare dirs disown echo enable eval exec exit export false
+		fc fg getopts hash help history jobs kill let local logout mapfile
+		popd printf pushd pwd read readarray readonly return set shift shopt
+		source suspend test times trap true type typeset ulimit umask unalias
+		unset wait
+	},
+	q{	awk grep sed
+	},	
+	q{	case done elif else esac for function select then time until while
+	},
+];
+
 # Clean the keywords
 foreach my $list ( values %KEYWORDS ) {
 	foreach my $i ( 0 .. $#$list ) {
