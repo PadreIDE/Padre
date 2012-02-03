@@ -43,6 +43,8 @@ the even version for the release, even during development.
       and datetime values (ADAMK)
     - Inlined the small amount of code we use from Format::Human::Bytes and
       remove the dependency (ADAMK)
+    - Switching to the thread-safe Wx::PostEvent when sending events from
+      the background, which should dramatically reduce segfaults (DOOTSON)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
