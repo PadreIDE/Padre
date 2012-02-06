@@ -141,7 +141,7 @@ sub key_up {
 
 	my $current = $self->current;
 	my $main    = $current->main;
-	my $project = $current->project;
+	my $project = $current->project or return;
 	my $item_id = $self->GetSelection;
 	my $data    = $self->GetPlData($item_id) or return;
 	my $file    = File::Spec->catfile( $project->root, $data->path );
