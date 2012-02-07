@@ -107,6 +107,7 @@ my %EXT = (
 	tex   => 'application/x-latex',
 	xs    => 'text/x-perlxs', # Define our own MIME type
 	tt    => 'text/x-perltt', # Define our own MIME type
+	tt2   => 'text/x-perltt', # Define our own MIME type
 	conf  => 'text/x-config',
 	sh    => 'application/x-shellscript',
 	ksh   => 'application/x-shellscript',
