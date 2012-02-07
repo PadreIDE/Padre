@@ -47,7 +47,7 @@ the even version for the release, even during development.
       the background, which should dramatically reduce segfaults (DOOTSON)
     - Added COCOMO modelling to the project statistics dialog (ADAMK)
     - Added BASH support to default.txt theme (BOWTIE)
-    
+    - variable data now shown in corresponding colour (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

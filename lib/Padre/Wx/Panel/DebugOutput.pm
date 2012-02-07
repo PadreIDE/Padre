@@ -20,6 +20,7 @@ use constant {
 	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
 	BLUE       => Wx::Colour->new('blue'),
 	GRAY       => Wx::Colour->new('gray'),
+	DARK_GRAY  => Wx::Colour->new( 0x7f, 0x7f, 0x7f ),
 	BLACK      => Wx::Colour->new('black'),
 };
 
@@ -76,19 +77,60 @@ sub debug_output {
 	my $self   = shift;
 	my $output = shift;
 
-	#TODO change to DARK_RED
 	$self->{output}->SetForegroundColour(RED);
 	$self->{output}->ChangeValue($output);
+		
+	# auto focus to panel debug output
+	$self->main->debugoutput->SetFocus;
 	
-	# don't use following as it triggers an event
-	# $self->{output}->AppendText($out_text . "\n");
+	return;
+}
+#######
+# Method debug_output_black
+#######
+sub debug_output_black {
+	my $self   = shift;
+	my $output = shift;
+
+	$self->{output}->SetForegroundColour(BLACK);
+	$self->{output}->ChangeValue($output);
+		
+	# auto focus to panel debug output
+	$self->main->debugoutput->SetFocus;
 	
+	return;
+}
+#######
+# Method debug_output_blue
+#######
+sub debug_output_blue {
+	my $self   = shift;
+	my $output = shift;
+
+	$self->{output}->SetForegroundColour(BLUE);
+	$self->{output}->ChangeValue($output);
+		
 	# auto focus to panel debug output
 	$self->main->debugoutput->SetFocus;
 	
 	return;
 }
 
+#######
+# Method debug_output_dark_gray
+#######
+sub debug_output_dark_gray {
+	my $self   = shift;
+	my $output = shift;
+
+	$self->{output}->SetForegroundColour(DARK_GRAY);
+	$self->{output}->ChangeValue($output);
+		
+	# auto focus to panel debug output
+	$self->main->debugoutput->SetFocus;
+	
+	return;
+}
 ########
 # debug_status
 ########

@@ -879,15 +879,26 @@ sub _bp_autoload {
 # equivalent to p|x the varaible
 #######
 sub _on_list_item_selected {
-	my $self          = shift;
-	my $event         = shift;
-	my $main          = $self->main;
+	my $self  = shift;
+	my $event = shift;
+	my $main  = $self->main;
+	my $index = $event->GetIndex + 1;
 	my $variable_name = $event->GetText;
-	
-	#ToDo that's much better, inspired by task_manager, I think the next step is playing with DB::
-	my $variable_value = $self->{client}->__send_np("x \\".$variable_name);
 
-	$main->{debugoutput}->debug_output( $variable_name . " = " . $variable_value );
+	#ToDo inspired by task_manager, I think the next step is playing with DB::
+	my $variable_value = $self->{client}->__send_np( "x \\" . $variable_name );
+	my $black_size = keys $self->{var_val};
+	my $blue_size  = keys $self->{auto_var_val};
+	# my $gray_size = keys $self->{auto_x_var};
+	# print "blach = $black_size, blue = $blue_size, gray = $gray_size \n";
+
+	if ( $index <= $black_size ) {
+		$main->{debugoutput}->debug_output_black( $variable_name . " = " . $variable_value );
+	} elsif ( $index <= ($black_size + $blue_size) ) {
+		$main->{debugoutput}->debug_output_blue( $variable_name . " = " . $variable_value );
+	} else {
+		$main->{debugoutput}->debug_output_dark_gray( $variable_name . " = " . $variable_value );
+	}
 
 	return;
 }
