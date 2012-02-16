@@ -18,6 +18,10 @@ sub lang_perl6_auto_detection {
 	return 0;
 }
 
+sub default_line_ending {
+	return 'Padre::Constant::NEWLINE';
+}
+
 package main;
 
 use strict;
@@ -45,7 +49,7 @@ my %MIMES = (
 	'eg/python/hello_py'              => 'text/x-python',
 );
 
-plan tests => 9 + scalar keys %MIMES;
+plan tests => 8 + scalar keys %MIMES;
 
 # This should only be used to skip dependencies out of the Document.pm - scope
 # which are not required for testing, like Padre->ide. Never skip larger blocks
@@ -82,7 +86,7 @@ my $doc_3    = Padre::Document->new(
 	config   => $config,
 );
 
-isa_ok( $doc_3, 'Padre::Document' );
+#isa_ok( $doc_3, 'Padre::Document' );
 isa_ok( $doc_3, 'Padre::Document::Perl' );
 is( $doc_3->filename, $file_3, 'filename' );
 
