@@ -19,16 +19,16 @@ class for user interface display.
 use 5.008;
 use strict;
 use warnings;
-use Carp           ();
-use File::Spec     ();
-use Scalar::Util   ();
-use Params::Util   ();
-use JSON::XS       ();
-use LWP::UserAgent ();
-use HTTP::Cookies  ();
-use HTTP::Request::Common qw/GET POST DELETE PUT/;
-use Padre::Current  ();
-use Padre::Constant ();
+use Carp                  ();
+use File::Spec            ();
+use Scalar::Util          ();
+use Params::Util          ();
+use JSON::XS              ();
+use LWP::UserAgent        ();
+use HTTP::Cookies         ();
+use HTTP::Request::Common ();
+use Padre::Current        ();
+use Padre::Constant       ();
 
 our $VERSION = '0.95';
 
@@ -149,9 +149,11 @@ sub register {
 
 	# this crashes if server is unavailable. FIXME
 	my $response = $self->ua->request(
-		POST "$server/register",
-		'Content-Type' => 'application/json',
-		'Content'      => $self->{json}->encode($params),
+		HTTP::Request::Common::POST(
+			"$server/register",
+			'Content-Type' => 'application/json',
+			'Content'      => $self->{json}->encode($params),
+		)
 	);
 	if ( $response->code == 201 ) {
 		return 'Account registered successfully. Please log in.';
@@ -185,7 +187,9 @@ sub login {
 		return 'Failure: cannot log in, user already logged in.';
 	}
 
-	my $response = $self->ua->request( POST "$server/login", $params );
+	my $response = $self->ua->request(
+		HTTP::Request::Common::POST( "$server/login", $params )
+	);
 
 	if ( $response->content !~ /Wrong username or password/i
 		and ( $response->code == 200 or $response->code == 302 ) )
@@ -216,7 +220,9 @@ sub logout {
 		return 'Failure: cannot logout, user not logged in.';
 	}
 
-	my $response = $self->ua->request( GET "$server/logout" );
+	my $response = $self->ua->request(
+		HTTP::Request::Common::GET("$server/logout")
+	);
 
 	if ( $response->code == 200 ) {
 		$self->{state} = 'not_logged_in';
@@ -246,7 +252,9 @@ sub server_delete {
 		return 'Failure: user not logged in.';
 	}
 
-	my $response = $self->ua->request( DELETE "$server/config" );
+	my $response = $self->ua->request(
+		HTTP::Request::Common::DELETE("$server/config")
+	);
 
 	if ( $response->code == 204 ) {
 		return 'Configuration deleted successfully.';
@@ -284,9 +292,11 @@ sub local_to_server {
 	}
 
 	my $response = $self->ua->request(
-		PUT "$server/config",
-		'Content-Type' => 'application/json',
-		'Content'      => $self->{json}->encode( \%h ),
+		HTTP::Request::Common::PUT(
+			"$server/config",
+			'Content-Type' => 'application/json',
+			'Content'      => $self->{json}->encode( \%h ),
+		)
 	);
 	if ( $response->code == 204 ) {
 		return 'Configuration uploaded successfully.';
@@ -317,8 +327,10 @@ sub server_to_local {
 	}
 
 	my $response = $self->ua->request(
-		GET "$server/config",
-		'Accept' => 'application/json',
+		HTTP::Request::Common::GET(
+			"$server/config",
+			'Accept' => 'application/json',
+		)
 	);
 
 	local $@;
