@@ -171,7 +171,11 @@ sub plugin_enable {
 		next if exists $ACTION{$name};
 
 		$ACTION{$name} = 0;
-		$action->add_event( sub { $ACTION{$name}++ } );
+		$action->add_event(
+			sub {
+				$ACTION{$name}++;
+			}
+		);
 	}
 
 	return 1;
@@ -243,7 +247,7 @@ sub _generate {
 	if ( defined $revision ) {
 
 		# This is a developer build
-		$report{'DEV'}            = 1;
+		$report{'dev'}            = 1;
 		$report{'padre.version'}  = $Padre::VERSION;
 		$report{'padre.revision'} = $revision;
 	} else {
@@ -284,6 +288,13 @@ sub _generate {
 sub report {
 	my $self   = shift;
 	my $report = $self->_generate;
+	my $server = $self->config->config_sync_server;
+	my $url    = join '/', $server, $VERSION, $report->{instance_id};
+
+	my $query  = {
+		instance_id => 
+		data => JSON::encode_json($report),
+	};
 
 	# TO DO: Enable as soon as the server is functional:
 	#	$self->task_request(

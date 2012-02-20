@@ -35,7 +35,7 @@ sub new {
 	my $m_staticText12 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Server"),
+		Wx::gettext("Server:"),
 	);
 
 	$self->{txt_remote} = Wx::TextCtrl->new(
@@ -49,7 +49,7 @@ sub new {
 	my $m_staticText13 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Status"),
+		Wx::gettext("Status:"),
 	);
 
 	$self->{lbl_status} = Wx::StaticText->new(
@@ -72,10 +72,10 @@ sub new {
 	my $m_staticText2 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Username"),
+		Wx::gettext("Email:"),
 	);
 
-	$self->{txt_login} = Wx::TextCtrl->new(
+	$self->{login_email} = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
@@ -86,10 +86,10 @@ sub new {
 	my $m_staticText3 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Password"),
+		Wx::gettext("Password:"),
 	);
 
-	$self->{txt_password} = Wx::TextCtrl->new(
+	$self->{login_password} = Wx::TextCtrl->new(
 		$self,
 		-1,
 		"",
@@ -114,54 +114,10 @@ sub new {
 		},
 	);
 
-	my $m_staticText5 = Wx::StaticText->new(
-		$self,
-		-1,
-		Wx::gettext("Username"),
-	);
-
-	$self->{txt_username} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-	);
-
-	my $m_staticText6 = Wx::StaticText->new(
-		$self,
-		-1,
-		Wx::gettext("Password"),
-	);
-
-	$self->{txt_pw} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_PASSWORD,
-	);
-
-	my $m_staticText7 = Wx::StaticText->new(
-		$self,
-		-1,
-		Wx::gettext("Confirm"),
-	);
-
-	$self->{txt_pw_confirm} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		"",
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::TE_PASSWORD,
-	);
-
 	my $m_staticText8 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Email"),
+		Wx::gettext("Email:"),
 	);
 
 	$self->{txt_email} = Wx::TextCtrl->new(
@@ -175,7 +131,7 @@ sub new {
 	my $m_staticText9 = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext("Confirm"),
+		Wx::gettext("Confirm:"),
 	);
 
 	$self->{txt_email_confirm} = Wx::TextCtrl->new(
@@ -184,6 +140,36 @@ sub new {
 		"",
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
+	);
+
+	my $m_staticText6 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Password:"),
+	);
+
+	$self->{txt_password} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_PASSWORD,
+	);
+
+	my $m_staticText7 = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Confirm:"),
+	);
+
+	$self->{txt_password_confirm} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		"",
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TE_PASSWORD,
 	);
 
 	$self->{btn_register} = Wx::Button->new(
@@ -291,9 +277,9 @@ sub new {
 	$fgSizer1->SetFlexibleDirection(Wx::HORIZONTAL);
 	$fgSizer1->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
 	$fgSizer1->Add( $m_staticText2, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
-	$fgSizer1->Add( $self->{txt_login}, 1, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer1->Add( $self->{login_email}, 1, Wx::ALL | Wx::EXPAND, 3 );
 	$fgSizer1->Add( $m_staticText3, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
-	$fgSizer1->Add( $self->{txt_password}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer1->Add( $self->{login_password}, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$fgSizer1->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$fgSizer1->Add( $self->{btn_login}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 3 );
 
@@ -311,16 +297,14 @@ sub new {
 	$fgSizer2->AddGrowableCol(1);
 	$fgSizer2->SetFlexibleDirection(Wx::HORIZONTAL);
 	$fgSizer2->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$fgSizer2->Add( $m_staticText5, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
-	$fgSizer2->Add( $self->{txt_username}, 0, Wx::ALL | Wx::EXPAND, 3 );
-	$fgSizer2->Add( $m_staticText6, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
-	$fgSizer2->Add( $self->{txt_pw}, 0, Wx::ALL | Wx::EXPAND, 3 );
-	$fgSizer2->Add( $m_staticText7, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
-	$fgSizer2->Add( $self->{txt_pw_confirm}, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$fgSizer2->Add( $m_staticText8, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
 	$fgSizer2->Add( $self->{txt_email}, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$fgSizer2->Add( $m_staticText9, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
 	$fgSizer2->Add( $self->{txt_email_confirm}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText6, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_password}, 0, Wx::ALL | Wx::EXPAND, 3 );
+	$fgSizer2->Add( $m_staticText7, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 3 );
+	$fgSizer2->Add( $self->{txt_password_confirm}, 0, Wx::ALL | Wx::EXPAND, 3 );
 	$fgSizer2->Add( 0, 0, 1, Wx::EXPAND, 5 );
 	$fgSizer2->Add( $self->{btn_register}, 0, Wx::ALIGN_RIGHT | Wx::ALL, 3 );
 

@@ -62,13 +62,10 @@ sub new {
 	# Create the useragent.
 	# We need this to handle login actions.
 	# Save cookies for state management from Padre session to session
-	# is this even wanted? remove at padre close?
-	my $ua = LWP::UserAgent->new;
-
-	#push @{ $ua->requests_redirectable }, 'POST';
-	$ua->timeout(5);
-	$ua->cookie_jar(
-		HTTP::Cookies->new(
+	# NOTE: Is this even wanted? Remove at padre close?
+	my $ua = LWP::UserAgent->new(
+		timeout    => 10,
+		cookie_jar => HTTP::Cookies->new(
 			file => File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
 				'lwp_cookies.dat',
@@ -79,9 +76,9 @@ sub new {
 
 	my $self = bless {
 		ide   => $ide,
+		json  => JSON::XS->new,
 		state => 'not_logged_in',
 		ua    => $ua,
-		json  => JSON::XS->new,
 		@_,
 	}, $class;
 
@@ -130,37 +127,37 @@ sub ua {
 
 Attempts to register a user account with the information provided on the
 Sync server. 
+
 Parameters: a list of key value pairs to be interpreted as POST parameters
-Returns error string if user state is already logged in or serverside error occurs.
+
+Returns error string if user state is already logged in or serverside error
+occurs.
 
 =cut
 
 sub register {
 	my $self   = shift;
-	my $params = shift;
-	my $server = $self->config->config_sync_server;
-
-	return 'Registration Failure'      unless %$params;
-	return 'Failure: no server found.' unless $server;
+	my %params = @_;
 
 	if ( $self->{state} ne 'not_logged_in' ) {
 		return 'Failure: cannot register account, user already logged in.';
 	}
 
-	# this crashes if server is unavailable. FIXME
-	my $response = $self->ua->request(
-		HTTP::Request::Common::POST(
-			"$server/register",
-			'Content-Type' => 'application/json',
-			'Content'      => $self->{json}->encode($params),
-		)
+	# BUG: This crashes if server is unavailable.
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->POST(
+		"$server/register",
+		'Content-Type' => 'application/json',
+		'Content'      => $self->{json}->encode(\%params),
 	);
 	if ( $response->code == 201 ) {
 		return 'Account registered successfully. Please log in.';
 	}
 
 	local $@;
-	my $h = eval { $self->{json}->decode( $response->content ) };
+	my $h = eval {
+		$self->{json}->decode( $response->content );
+	};
 
 	return "Registration failure(Server): $h->{error}" if $h->{error};
 	return "Registration failure(Padre): $@" if $@;
@@ -177,20 +174,14 @@ be updated if login successful.
 =cut
 
 sub login {
-	my $self   = shift;
-	my $params = [@_];
-	my $server = $self->config->config_sync_server;
-
-	return 'Failure: no server found.' unless $server;
+	my $self = shift;
 
 	if ( $self->{state} ne 'not_logged_in' ) {
 		return 'Failure: cannot log in, user already logged in.';
 	}
 
-	my $response = $self->ua->request(
-		HTTP::Request::Common::POST( "$server/login", $params )
-	);
-
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->POST( "$server/login", [ { @_ } ] );
 	if ( $response->content !~ /Wrong username or password/i
 		and ( $response->code == 200 or $response->code == 302 ) )
 	{
@@ -211,19 +202,14 @@ State will be updated.
 =cut
 
 sub logout {
-	my $self   = shift;
-	my $server = $self->config->config_sync_server;
-
-	return 'Failure: no server found.' if not $server;
+	my $self = shift;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: cannot logout, user not logged in.';
 	}
 
-	my $response = $self->ua->request(
-		HTTP::Request::Common::GET("$server/logout")
-	);
-
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->GET("$server/logout");
 	if ( $response->code == 200 ) {
 		$self->{state} = 'not_logged_in';
 		return 'Logged out successfully.';
@@ -243,19 +229,14 @@ Will fail if not logged in.
 =cut
 
 sub server_delete {
-	my $self   = shift;
-	my $server = $self->config->config_sync_server;
-
-	return 'Failure: no server found.' if not $server;
+	my $self = shift;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
-	my $response = $self->ua->request(
-		HTTP::Request::Common::DELETE("$server/config")
-	);
-
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->DELETE("$server/config");
 	if ( $response->code == 204 ) {
 		return 'Configuration deleted successfully.';
 	}
@@ -275,28 +256,19 @@ the Sync server.
 
 sub local_to_server {
 	my $self   = shift;
-	my $server = $self->config->config_sync_server;
-
-	return 'Failure: no server found.' if not $server;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
-	my $conf = $self->config->human;
-
-	# theres gotta be a better way to do this
-	my %h;
-	for my $k ( keys %$conf ) {
-		$h{$k} = $conf->{$k};
-	}
-
-	my $response = $self->ua->request(
-		HTTP::Request::Common::PUT(
-			"$server/config",
-			'Content-Type' => 'application/json',
-			'Content'      => $self->{json}->encode( \%h ),
-		)
+	# NOTE: There has be a better way to do this
+	my $conf     = $self->config->human;
+	my %copy     = %$conf;
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->PUT(
+		"$server/config",
+		'Content-Type' => 'application/json',
+		'Content'      => $self->{json}->encode( \%copy ),
 	);
 	if ( $response->code == 204 ) {
 		return 'Configuration uploaded successfully.';
@@ -316,21 +288,16 @@ TODO: is validation of config before replacement required?
 =cut
 
 sub server_to_local {
-	my $self   = shift;
-	my $config = $self->config;
-	my $server = $config->config_sync_server;
-
-	return 'Failure: no server found.' unless $server;
+	my $self = shift;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
 	}
 
-	my $response = $self->ua->request(
-		HTTP::Request::Common::GET(
-			"$server/config",
-			'Accept' => 'application/json',
-		)
+	my $server   = $self->server or return 'Failure: no server found.';
+	my $response = $self->GET(
+		"$server/config",
+		'Accept' => 'application/json',
 	);
 
 	local $@;
@@ -342,6 +309,7 @@ sub server_to_local {
 	delete $json->{Version};
 	delete $json->{version};
 	my @errors;
+	my $config = $self->config;
 	for my $key ( keys %$json ) {
 		my $meta = eval { $config->meta($key); };
 		unless ( $meta and $meta->store == Padre::Constant::HUMAN ) {
@@ -378,6 +346,44 @@ sub english_status {
 	return 'User is not currently logged into the system.' if $self->{state} eq 'not_logged_in';
 	return 'User is currently logged into the system.'     if $self->{state} eq 'logged_in';
 	return "State unknown: $self->{state}";
+}
+
+
+
+
+
+######################################################################
+# Support Methods
+
+sub server {
+	my $self   = shift;
+	my $server = $self->config->config_sync_server;
+	$server =~ s/\/$// if $server;
+	return $server;
+}
+
+sub GET {
+	shift->ua->request( 
+		HTTP::Request::Common::GET(@_)
+	);
+}
+
+sub POST {
+	shift->ua->request(
+		HTTP::Request::Common::POST(@_)
+	);
+}
+
+sub PUT {
+	shift->ua->request(
+		HTTP::Request::Common::PUT(@_)
+	);
+}
+
+sub DELETE {
+	shift->ua->request(
+		HTTP::Request::Common::DELETE(@_)
+	);
 }
 
 1;

@@ -16,14 +16,15 @@ sub new {
 
 	# Fill form elements from configuration
 	$self->{txt_remote}->SetValue( $config->config_sync_server );
-	$self->{txt_login}->SetFocus;
-	$self->{txt_login}->SetValue( $config->config_sync_username );
-	$self->{txt_password}->SetValue( $config->config_sync_password );
+	$self->{login_email}->SetFocus;
+	$self->{login_email}->SetValue( $config->identity_email );
+	$self->{login_password}->SetValue( $config->config_sync_password );
 
-	# registration prefill
-	$self->{txt_username}->SetValue( $config->identity_nickname );
-	$self->{txt_email}->SetValue( $config->identity_email );
-	$self->{txt_email_confirm}->SetValue( $config->identity_email );
+	# Registration prefill
+	unless ( $config->config_sync_password ) {
+		$self->{txt_email}->SetValue( $config->identity_email );
+		$self->{txt_email_confirm}->SetValue( $config->identity_email );
+	}
 
 	# Create the sync manager
 	$self->{sync} = Padre::Sync->new( $self->ide );
@@ -39,7 +40,7 @@ sub refresh {
 	my $sync = $self->{sync};
 
 	# Set up the form from the sync manager
-	$self->{lbl_status}->SetLabel( $self->{sync}->english_status );
+	$self->{lbl_status}->SetLabel( $sync->english_status );
 
 	# Are we logged in?
 	my $in = $sync->{state} eq 'logged_in' ? 1 : 0;
@@ -67,8 +68,8 @@ sub btn_login {
 		$self->config->apply( 'config_sync_server' => $server );
 	}
 
-	my $username = $self->{txt_login}->GetValue;
-	my $password = $self->{txt_password}->GetValue;
+	my $username = $self->{login_email}->GetValue;
+	my $password = $self->{login_password}->GetValue;
 
 	# Handle login / logout logic toggle
 	if ( $sync->{state} eq 'logged_in' ) {
@@ -93,7 +94,7 @@ sub btn_login {
 		return;
 	}
 
-	if ( not $username or not $password ) {
+	unless ( $username and $password ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Please input a valid value for both username and password') ),
 			Wx::gettext('Error'),
@@ -105,9 +106,8 @@ sub btn_login {
 
 	# Attempt login
 	my $rc = $sync->login(
-		{   username => $username,
-			password => $password,
-		}
+		username => $username,
+		password => $password,
 	);
 
 	$self->refresh;
@@ -119,24 +119,17 @@ sub btn_login {
 		Wx::OK,
 		$self,
 	);
-
 }
 
 sub btn_register {
-	my $self          = shift;
-	my $username      = $self->{txt_username}->GetValue;
-	my $pw            = $self->{txt_pw}->GetValue;
-	my $pw_confirm    = $self->{txt_pw_confirm}->GetValue;
-	my $email         = $self->{txt_email}->GetValue;
-	my $email_confirm = $self->{txt_email_confirm}->GetValue;
+	my $self             = shift;
+	my $email            = $self->{txt_email}->GetValue;
+	my $email_confirm    = $self->{txt_email_confirm}->GetValue;
+	my $password         = $self->{txt_password}->GetValue;
+	my $password_confirm = $self->{txt_password_confirm}->GetValue;
 
 	# Validation of inputs
-	if (   not $username
-		or not $pw
-		or not $pw_confirm
-		or not $email
-		or not $email_confirm )
-	{
+	unless ( $email and $email_confirm and $password and $password_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Please ensure all inputs have appropriate values.') ),
 			Wx::gettext('Error'),
@@ -147,7 +140,7 @@ sub btn_register {
 	}
 
 	# Not sure if password quality rules should be enforced at this level?
-	if ( $pw ne $pw_confirm ) {
+	unless ( $password eq $password_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Password and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -157,7 +150,7 @@ sub btn_register {
 		return;
 	}
 
-	if ( $email ne $email_confirm ) {
+	unless ( $email eq $email_confirm ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext('Email and confirmation do not match.') ),
 			Wx::gettext('Error'),
@@ -169,12 +162,10 @@ sub btn_register {
 
 	# Attempt registration
 	my $rc = $self->{sync}->register(
-		{   username         => $username,
-			password         => $pw,
-			password_confirm => $pw_confirm,
-			email            => $email,
-			email_confirm    => $email_confirm,
-		}
+		email            => $email,
+		email_confirm    => $email_confirm,
+		password         => $password,
+		password_confirm => $password_confirm,
 	);
 
 	# Print the return information
@@ -226,9 +217,9 @@ sub btn_ok {
 	my $config = $self->current->config;
 
 	# Save the server access defaults
-	$config->set( config_sync_server   => $self->{txt_remote}->GetValue );
-	$config->set( config_sync_username => $self->{txt_login}->GetValue );
-	$config->set( config_sync_password => $self->{txt_password}->GetValue );
+	$config->set( config_sync_server   => $self->{txt_remote}->GetValue     );
+	$config->set( identity_email       => $self->{login_email}->GetValue    );
+	$config->set( config_sync_password => $self->{login_password}->GetValue );
 
 	$self->Destroy;
 }
