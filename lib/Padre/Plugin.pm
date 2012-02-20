@@ -227,8 +227,8 @@ disabled unless the user has specifically allowed experimental plug-ins.
 # Convenience integration with Class::Unload
 sub unload {
 	my $either = shift;
+	require Padre::Unload;
 	foreach my $package (@_) {
-		require Padre::Unload;
 		Padre::Unload::unload($package);
 	}
 	return 1;
