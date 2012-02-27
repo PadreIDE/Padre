@@ -50,6 +50,8 @@ the even version for the release, even during development.
     - Variable data now shown in corresponding colour (BOWTIE)
     - Migrating to new ORLite 2.0 API (ADAMK)
     - Padre::Plugin::unload(@packages) now works (AZAWAWI)
+    - Padre::PluginHandel was only checking for error, 
+      not handling return = 0, it is now (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
