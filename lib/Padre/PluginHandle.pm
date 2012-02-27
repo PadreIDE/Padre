@@ -37,10 +37,10 @@ my %STATUS = (
 
 sub new {
 	my $class = shift;
-	my $self = bless {
+	my $self  = bless {
 		@_,
 		status => 'unloaded',
-		errstr => [ '' ],
+		errstr => [''],
 	}, $class;
 
 	# Check params
@@ -60,12 +60,10 @@ sub new {
 	}
 
 	# Load or create the database configuration for the plugin
-	unless ( Params::Util::_INSTANCE($self->db, 'Padre::DB::Plugin') ) {
+	unless ( Params::Util::_INSTANCE( $self->db, 'Padre::DB::Plugin' ) ) {
 		local $@;
 		require Padre::DB;
-		$self->{db} = eval {
-			Padre::DB::Plugin->load($module);
-		};
+		$self->{db} = eval { Padre::DB::Plugin->load($module); };
 		$self->{db} ||= Padre::DB::Plugin->create(
 			name => $module,
 
@@ -153,16 +151,15 @@ sub can_editor {
 
 sub can_context {
 	$_[0]->{status} eq 'enabled'
-	and
-	$_[0]->{plugin}->can('event_on_context_menu')
+		and $_[0]->{plugin}->can('event_on_context_menu');
 }
 
 sub errstr {
 	my $self = shift;
 
 	# Set the error string
-	if ( @_ ) {
-		$self->{errstr} = [ @_ ];
+	if (@_) {
+		$self->{errstr} = [@_];
 		return 1;
 	}
 
@@ -170,8 +167,8 @@ sub errstr {
 	# so that plugin errors can appear in the currently active language
 	# instead of the language at the time of the error.
 	my @copy = @{ $self->{errstr} };
-	my $text = Wx::gettext(shift @copy);
-	return sprintf($text, @copy);
+	my $text = Wx::gettext( shift @copy );
+	return sprintf( $text, @copy );
 }
 
 
@@ -184,14 +181,12 @@ sub errstr {
 # Wrap any can call in an eval as the plugin might have a custom
 # can method and we need to be paranoid around plugins.
 sub plugin_can {
-	my $self   = shift;
+	my $self = shift;
 	my $plugin = $self->{plugin} or return undef;
 
 	# Ignore errors and flatten to a boolean
 	local $@;
-	return !! eval {
-		$plugin->can(shift)
-	};
+	return !!eval { $plugin->can(shift) };
 }
 
 sub plugin_icon {
@@ -208,9 +203,7 @@ sub plugin_name {
 	my $self = shift;
 	if ( $self->plugin_can('plugin_name') ) {
 		local $@;
-		return scalar eval {
-			$self->plugin->plugin_name
-		};
+		return scalar eval { $self->plugin->plugin_name };
 	} else {
 		return $self->class;
 	}
@@ -222,9 +215,7 @@ sub plugin_version {
 	# Prefer the version from the loaded plugin
 	if ( $self->plugin_can('VERSION') ) {
 		local $@;
-		my $rv = eval {
-			$self->plugin->VERSION;
-		};
+		my $rv = eval { $self->plugin->VERSION; };
 		return $rv;
 	}
 
@@ -245,9 +236,7 @@ sub plugin_preferences {
 	my $self = shift;
 	if ( $self->plugin_can('plugin_preferences') ) {
 		local $@;
-		eval {
-			$self->plugin->plugin_preferences
-		};
+		eval { $self->plugin->plugin_preferences };
 	}
 }
 
@@ -273,9 +262,8 @@ sub enable {
 	$main->{locale}->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
-	eval {
-		$self->plugin->plugin_enable;
-	};
+	my $plugin_status;
+	eval { $plugin_status = $self->plugin->plugin_enable; };
 	if ($@) {
 
 		# Crashed during plugin enable
@@ -286,14 +274,25 @@ sub enable {
 			$@,
 		);
 		return 0;
+	} else {
+		if ( not $plugin_status ) {
+
+			# Prerequisites missing plug-in enable
+			$self->status('error');
+			$self->errstr(
+				_T("Prerequisites missing suggest you read the POD for '%s': %s"),
+				$self->class,
+				$@,
+			);
+			return 0;
+		}
 	}
 
 	# If the plugin defines document types, register them.
 	# Skip document registration on error.
-	my @documents = eval {
-		$self->plugin->registered_documents;
-	};
-	if ( $@ ) {
+	my @documents = eval { $self->plugin->registered_documents; };
+	if ($@) {
+
 		# Crashed during document registration
 		$self->status('error');
 		$self->errstr(
@@ -314,10 +313,9 @@ sub enable {
 	# Skip highlighter registration on error.
 	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
-	my @highlighters = eval {
-		$self->plugin->registered_highlighters;
-	};
-	if ( $@ ) {
+	my @highlighters = eval { $self->plugin->registered_highlighters; };
+	if ($@) {
+
 		# Crashed during highlighter registration
 		$self->status('error');
 		$self->errstr(
@@ -327,7 +325,7 @@ sub enable {
 		);
 		return 0;
 	}
-	while ( @highlighters ) {
+	while (@highlighters) {
 		my $module = shift @highlighters;
 		my $params = shift @highlighters;
 		require Padre::Wx::Scintilla;
@@ -336,9 +334,7 @@ sub enable {
 
 	# Look for Padre hooks
 	if ( $self->plugin->can('padre_hooks') ) {
-		my $hooks = eval {
-			$self->plugin->padre_hooks;
-		};
+		my $hooks = eval { $self->plugin->padre_hooks; };
 		if ( ref($hooks) ne 'HASH' ) {
 			$main->error(
 				sprintf(
