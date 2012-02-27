@@ -66,9 +66,7 @@ sub run_set {
 	# Save it to the database
 	SCOPE: {
 		my $transaction = $self->main->lock('DB');
-		Padre::DB::Bookmark->delete(
-			'where name = ?', $name,
-		);
+		Padre::DB::Bookmark->delete_where( 'name = ?', $name );
 		Padre::DB::Bookmark->create(
 			name => $name,
 			file => $path,

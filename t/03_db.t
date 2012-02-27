@@ -34,7 +34,7 @@ SCOPE: {
 	# test delete_recent
 	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, [ 'Test2.pm', 'Test.pm' ], 'files still remain after delete_recent pod';
-	ok( Padre::DB::History->delete( 'where type = ?', 'files' ) );
+	ok( Padre::DB::History->delete_where( 'type = ?', 'files' ) );
 	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, [], 'no files after delete_recent files';
 }

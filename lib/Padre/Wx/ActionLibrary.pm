@@ -533,7 +533,7 @@ sub init {
 		comment    => _T('Remove the entries from the recent files list'),
 		menu_event => sub {
 			my $lock = Padre::Current->main->lock( 'UPDATE', 'DB', 'refresh_recent' );
-			Padre::DB::History->delete( 'where type = ?', 'files' );
+			Padre::DB::History->delete_where( 'type = ?', 'files' );
 		},
 	);
 

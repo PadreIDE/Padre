@@ -3252,26 +3252,29 @@ associated to C<$session>. Note that C<$session> should already exist.
 =cut
 
 sub save_session {
-	my ( $self, $session, @session ) = @_;
+	my $self    = shift;
+	my $session = shift;
+	my $lock    = $self->lock('DB');
 
-	my $transaction = $self->lock('DB');
-	foreach my $file (@session) {
+	foreach my $file (@_) {
 		$file->set( session => $session->id );
 		$file->insert;
 	}
 
-	Padre::DB->do( 'UPDATE session SET last_update=? WHERE id=?', {}, time, $session->id );
-
+	Padre::DB->do(
+		'UPDATE session SET last_update = ? WHERE id = ?', {},
+		time, $session->id,
+	);
 }
 
 sub save_current_session {
 	my $self = shift;
+	$self->ide->{session_autosave} or return;
 
-	return if not $self->ide->{session_autosave};
-
+	my $lock = $self->lock('DB');
 	my ($session) = Padre::DB::Session->select(
 		'where id = ?',
-		$self->{ide}->{session}
+		$self->{ide}->{session},
 	);
 
 	$session ||= Padre::DB::Session->last_padre_session;
@@ -3282,13 +3285,13 @@ sub save_current_session {
 		return;
 	}
 
-	# session exist, remove all files associated to it
-	Padre::DB::SessionFile->delete(
-		'where session = ?',
-		$session->id
+	# Session exist, remove all files associated to it
+	Padre::DB::SessionFile->delete_where(
+		'session = ?',
+		$session->id,
 	);
 
-	# capture session and save it
+	# Capture session and save it
 	my @session = $self->capture_session;
 	$self->save_session( $session, @session );
 
@@ -3953,7 +3956,10 @@ sub update_last_session {
 	# Write the current session to the database
 	my $transaction = $self->lock('DB');
 	my $session     = Padre::DB::Session->last_padre_session;
-	Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
+	Padre::DB::SessionFile->delete_where(
+		'session = ?',
+		$session->id,
+	);
 	$self->save_session( $session, $self->capture_session );
 }
 

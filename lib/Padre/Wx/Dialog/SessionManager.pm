@@ -82,7 +82,7 @@ sub _on_butdelete_clicked {
 
 	# remove session: files, then session itself
 	my $transaction = $self->GetParent->lock('DB');
-	Padre::DB::SessionFile->delete( 'where session = ?', $current->id );
+	Padre::DB::SessionFile->delete_where( 'session = ?', $current->id );
 	$current->delete;
 
 	# update gui

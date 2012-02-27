@@ -67,38 +67,38 @@ sub _on_butclose_clicked {
 # handler called when the save button has been clicked.
 #
 sub _on_butsave_clicked {
-	my $self = shift;
-
+	my $self    = shift;
 	my $main    = $self->GetParent;
+	my $lock    = $main->lock('DB');
 	my $session = $self->_current_session;
 
 	# TO DO: This must be switched to use the main methods:
-
 	if ( defined $session ) {
 
 		# session exist, remove all files associated to it
-		Padre::DB::SessionFile->delete(
-			'where session = ?',
+		Padre::DB::SessionFile->delete_where(
+			'session = ?',
 			$session->id
 		);
 
 		# Save Session description:
 		Padre::DB->do(
-			'UPDATE session SET description=? WHERE id=?',
-			{}, $self->_text->GetValue, $session->id
+			'UPDATE session SET description = ? WHERE id = ?',
+			{},
+			$self->_text->GetValue,
+			$session->id,
 		);
 	} else {
 
 		# session did not exist, create a new one
-		$session = Padre::DB::Session->new(
+		$session = Padre::DB::Session->create(
 			name        => $self->_combo->GetValue,
 			description => $self->_text->GetValue,
 			last_update => time,
 		);
-		$session->insert;
 	}
 
-	# capture session and save it
+	# Capture session and save it
 	my @session = $main->capture_session;
 	$main->save_session( $session, @session );
 

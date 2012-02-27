@@ -385,8 +385,8 @@ sub on_recent {
 	# Because we filter for files that exist to generate the recent files
 	# list, anything that doesn't exist must have been deleted a short
 	# time ago. So we can remove it from history, it won't be coming back.
-	Padre::DB::History->delete(
-		'where name = ? and type = ?',
+	Padre::DB::History->delete_where(
+		'name = ? and type = ?',
 		$file, 'files',
 	);
 	Wx::MessageBox(

@@ -27,7 +27,7 @@ sub set_breakpoints_clicked {
 		# say 'delete me';
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_BREAKPOINT() );
 		$editor->MarkerDelete( $bp_line - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
-		$debug_breakpoints->delete( "WHERE filename = ? AND line_number = ?", $current_file, $bp_line );
+		$debug_breakpoints->delete_where( "filename = ? AND line_number = ?", $current_file, $bp_line );
 		$bp_action{action} = 'delete';
 	} else {
 

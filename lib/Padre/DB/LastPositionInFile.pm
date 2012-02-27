@@ -83,7 +83,7 @@ sub set_last_pos {
 	my $position = shift;
 
 	my $transaction = Padre::Current->main->lock('DB');
-	$class->delete( 'where name = ?', $file );
+	$class->delete_where( 'name = ?', $file );
 	$class->create(
 		name     => $file,
 		position => $position,

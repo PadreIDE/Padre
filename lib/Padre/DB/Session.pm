@@ -10,12 +10,15 @@ package Padre::DB::Session;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current ();
 
 our $VERSION = '0.95';
 
 my $PADRE_SESSION = 'padre-last';
 
 sub last_padre_session {
+	my $class       = shift;
+	my $transaction = Padre::Current->main->lock('DB');
 
 	# find last padre session
 	my ($padre) = Padre::DB::Session->select(
@@ -24,19 +27,20 @@ sub last_padre_session {
 	);
 
 	# no such session, create one
-	if ( not defined $padre ) {
-		$padre = Padre::DB::Session->new(
+	unless ( defined $padre ) {
+		$padre = $class->create(
 			name        => $PADRE_SESSION,
 			description => 'Last session within Padre',
 			last_update => time,
 		);
-		$padre->insert;
 	}
+
 	return $padre;
 }
 
 sub clear_last_session {
-	my $class = shift;
+	my $class       = shift;
+	my $transaction = Padre::Current->main->lock('DB');
 
 	# Find last padre session (shortcut if none)
 	my ($padre) = Padre::DB::Session->select(
@@ -45,27 +49,19 @@ sub clear_last_session {
 	) or return;
 
 	# Remove any files in the session
-	Padre::DB::SessionFile->delete(
-		'where session = ?',
-		$padre->id,
-	);
+	Padre::DB::SessionFile->delete_where( 'session = ?', $padre->id );
 
 	# Remove the session itself
-	Padre::DB::Session->delete(
-		'where name = ?',
-		$PADRE_SESSION,
-	);
+	$padre->delete;
 
 	return;
 }
 
 sub files {
-	my ($self) = @_;
-	my @files = Padre::DB::SessionFile->select(
+	Padre::DB::SessionFile->select(
 		'where session = ?',
-		$self->id
+		shift->id,
 	);
-	return @files;
 }
 
 1;
