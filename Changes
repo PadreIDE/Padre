@@ -52,6 +52,7 @@ the even version for the release, even during development.
     - Padre::Plugin::unload(@packages) now works (AZAWAWI)
     - Padre::PluginHandel was only checking for error, 
       not handling return = 0, it is now (BOWTIE)
+    - re-enable outline panel to display MooseX::Declare Method modifiers (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
