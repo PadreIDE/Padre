@@ -887,8 +887,8 @@ sub _on_list_item_selected {
 
 	#ToDo inspired by task_manager, I think the next step is playing with DB::
 	my $variable_value = $self->{client}->__send_np( "x \\" . $variable_name );
-	my $black_size = keys $self->{var_val};
-	my $blue_size  = keys $self->{auto_var_val};
+	my $black_size = keys %{ $self->{var_val} };
+	my $blue_size  = keys %{ $self->{auto_var_val} };
 	# my $gray_size = keys $self->{auto_x_var};
 	# print "blach = $black_size, blue = $blue_size, gray = $gray_size \n";
 
