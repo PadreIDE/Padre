@@ -486,6 +486,8 @@ sub config_read {
 
 	# Retrieve the config string from the database
 	my $class = Scalar::Util::blessed($self);
+	#convert p-p-xx-yy -> p-p-xx
+	$class =~ s/^(Padre::Plugin::)(\w+)(?:::.+)/$1$2/;
 	my @row   = Padre::DB->selectrow_array(
 		'select config from plugin where name = ?', {},
 		$class,
@@ -528,6 +530,8 @@ sub config_write {
 
 	# Write the config string to the database
 	my $class = Scalar::Util::blessed($self);
+	#convert p-p-xx-yy -> p-p-xx
+	$class =~ s/^(Padre::Plugin::)(\w+)(?:::.+)/$1$2/;
 	Padre::DB->do(
 		'update plugin set config = ? where name = ?', {},
 		$string, $class,
