@@ -53,6 +53,8 @@ the even version for the release, even during development.
     - Padre::PluginHandel was only checking for error, 
       not handling return = 0, it is now (BOWTIE)
     - re-enable outline panel to display MooseX::Declare Method modifiers (BOWTIE)
+    - convert p-p-xx-yy -> p-p-xx in P-Plugin make;s getting config easy (BOWTIE)
+    - 
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
