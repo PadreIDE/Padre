@@ -54,7 +54,7 @@ the even version for the release, even during development.
       not handling return = 0, it is now (BOWTIE)
     - re-enable outline panel to display MooseX::Declare Method modifiers (BOWTIE)
     - convert p-p-xx-yy -> p-p-xx in P-Plugin makeing getting config easy (BOWTIE)
-    - Require 5.010 as an experiement. (SZABGAB)
+    - Require 5.010 as an experiment. (SZABGAB)
     - 
 
 0.95 Development version, not released
