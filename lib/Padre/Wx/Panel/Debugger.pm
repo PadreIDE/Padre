@@ -13,7 +13,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.16 ();
+use Debug::Client 0.18 ();
 
 our $VERSION = '0.95';
 our @ISA     = qw{
@@ -95,7 +95,9 @@ sub set_up {
 
 	#turn off unless in project
 	$self->{show_global_variables}->Disable;
-
+	# $self->{local_variables}->Enable;
+	# $self->{local_variables} = 1;
+	
 	# Setup the debug button icons
 	$self->{debug}->SetBitmapLabel( Padre::Wx::Icon::find('actions/morpho2') );
 	$self->{debug}->Enable;
@@ -299,8 +301,9 @@ sub debug_perl {
 
 	$self->{file} = $filename;
 
-	#Todo list request Ouch
-	my ( $module, $file, $row, $content ) = $self->{client}->get;
+	#Now we ask where are we
+	$self->{client}->get;
+	$self->{client}->get_lineinfo;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
 
@@ -435,7 +438,11 @@ sub debug_step_in {
 	my $main = $self->main;
 
 	#ToDo list request ouch
-	my ( $module, $file, $row, $content ) = $self->{client}->step_in;
+	my @list_request;
+	eval { @list_request = $self->{client}->step_in(); };
+	my $module = $self->{client}->module;
+	$self->{client}->get_lineinfo;
+
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
@@ -458,7 +465,11 @@ sub debug_step_over {
 	my $main = $self->main;
 
 	#ToDo list request ouch
-	my ( $module, $file, $row, $content ) = $self->{client}->step_over;
+	my @list_request;
+	eval { @list_request = $self->{client}->step_over(); };
+	my $module = $self->{client}->module;
+	$self->{client}->get_lineinfo;
+
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
@@ -481,8 +492,12 @@ sub debug_step_out {
 	my $self = shift;
 	my $main = $self->main;
 
-	#ToDo list request ouch
-	my ( $module, $file, $row, $content ) = $self->{client}->step_out;
+	#ToDo list request ouch	
+	my @list_request;
+	eval { @list_request = $self->{client}->step_out(); };
+	my $module = $self->{client}->module;
+	$self->{client}->get_lineinfo;
+
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
@@ -506,8 +521,12 @@ sub debug_run_till {
 	my $param = shift;
 	my $main  = $self->main;
 
-	#ToDo list request ouch
-	my ( $module, $file, $row, $content ) = $self->{client}->run($param);
+	my @list_request;
+	eval { @list_request = $self->{client}->run($param); };
+
+	my $temp_buffer = $self->{client}->buffer;
+	my $module = $self->{client}->module;
+	$self->{client}->get_lineinfo;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->{trace_status} = 'Trace = off';
@@ -516,7 +535,7 @@ sub debug_run_till {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $temp_buffer );
 	$self->_set_debugger;
 
 	return;
