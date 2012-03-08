@@ -120,6 +120,12 @@ flock:
 fork:
  cmd: ()
  exp: Forks a new process. In the parent returns the process ID of the child. In the child returns 0.
+for:
+ cmd: (INITIALIZE; CHECK; STEP) { }
+ exp: C-style for loop
+foreach:
+ cmd: ITERATOR_SCALAR (LIST) { }
+ exp: Iterate over a list of values. The iterator is usually look like "my $var".
 format:
  cmd: (?)
  exp: Declare a picture format for use by the "write" function
