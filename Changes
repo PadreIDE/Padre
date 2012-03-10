@@ -61,6 +61,7 @@ the even version for the release, even during development.
       is now Perl 5.16.0 ready (BOWTIE)
     - Notify plugins when either a save-as (possible mime-type change) or new
       document event occurs (AZAWAWI)
+    - Update German translation (ZENOG)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
