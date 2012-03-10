@@ -62,6 +62,7 @@ the even version for the release, even during development.
     - Notify plugins when either a save-as (possible mime-type change) or new
       document event occurs (AZAWAWI)
     - Update German translation (ZENOG)
+    - Make show_local_variables default in Debug2 (BOWTIE)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

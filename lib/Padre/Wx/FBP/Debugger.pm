@@ -190,7 +190,7 @@ sub new {
 	$self->{show_local_variables} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext("Show Local Variables (y 0)"),
+		Wx::gettext("Show Local Variables"),
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
@@ -421,7 +421,7 @@ sub new {
 		Wx::BU_AUTODRAW,
 	);
 	$self->{evaluate_expression}->SetToolTip(
-		Wx::gettext("p expr \nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n\nx [maxdepth] expr\nEvaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,")
+		Wx::gettext("Evaluate expression\n\t\$ -> p\n\t\@ -> x\n\t% -> x\n\np expr \nSame as print {\$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n\nx [maxdepth] expr\nEvaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,")
 	);
 
 	Wx::Event::EVT_BUTTON(
@@ -569,6 +569,10 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+sub show_local_variables {
+	$_[0]->{show_local_variables};
 }
 
 sub trace {
