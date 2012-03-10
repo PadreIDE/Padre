@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-10 04:10-0800\n"
+"POT-Creation-Date: 2012-03-10 12:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -645,7 +645,7 @@ msgstr ""
 msgid "&wxWidgets %s Reference"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:617
+#: lib/Padre/Wx/Panel/Debugger.pm:618
 #, perl-format
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
@@ -1500,7 +1500,7 @@ msgstr ""
 msgid "Could not delete: '%s': %s"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:595
+#: lib/Padre/Wx/Panel/Debugger.pm:596
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr ""
@@ -1678,11 +1678,11 @@ msgstr ""
 msgid "Debugger"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:249
+#: lib/Padre/Wx/Panel/Debugger.pm:250
 msgid "Debugger is already running"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:318
+#: lib/Padre/Wx/Panel/Debugger.pm:319
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr ""
 
@@ -2285,6 +2285,22 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/Expression.pm:29
 msgid "Evaluate Expression"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/Debugger.pm:424
+msgid ""
+"Evaluate expression\n"
+"\t$ -> p\n"
+"\t@ -> x\n"
+"\t% -> x\n"
+"\n"
+"p expr \n"
+"Same as print {$DB::OUT} expr in the current package. In particular, because "
+"this is just Perl's own print function.\n"
+"\n"
+"x [maxdepth] expr\n"
+"Evaluates its expression in list context and dumps out the result in a "
+"pretty-printed fashion. Nested data structures are printed out recursively,"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4799
@@ -3422,7 +3438,7 @@ msgstr ""
 msgid "Norwegian"
 msgstr ""
 
-#: lib/Padre/Wx/Panel/Debugger.pm:253
+#: lib/Padre/Wx/Panel/Debugger.pm:254
 msgid "Not a Perl document"
 msgstr ""
 
@@ -4997,7 +5013,7 @@ msgid "Show Line &Numbers"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:193
-msgid "Show Local Variables (y 0)"
+msgid "Show Local Variables"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:1585
@@ -5907,17 +5923,6 @@ msgid ""
 "better to assign a specific value using = . The option can be abbreviated, "
 "but for clarity probably should not be. Several options can be set together. "
 "See Configurable Options for a list of these."
-msgstr ""
-
-#: lib/Padre/Wx/FBP/Debugger.pm:424
-msgid ""
-"p expr \n"
-"Same as print {$DB::OUT} expr in the current package. In particular, because "
-"this is just Perl's own print function.\n"
-"\n"
-"x [maxdepth] expr\n"
-"Evaluates its expression in list context and dumps out the result in a "
-"pretty-printed fashion. Nested data structures are printed out recursively,"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Breakpoints.pm:105
