@@ -23,9 +23,9 @@ the even version for the release, even during development.
       events to use it to evade a item_activated event bug (ADAMK)
     - Added Padre::Wx::Role::Context and changed most panel tools to use
       it for generating context menus (ADAMK)
-    - Update Debug2 to use SQL parameter markers (tome, BOWTIE) (r18075)
-    - disable Debug2 tool-bar icons against unsaved files (tome, BOWTIE) (r18081)
-    - Debug2 now shows margin_marker breakpoints on file load (tome, BOWTIE) (r18085)
+    - Update Debug2 to use SQL parameter markers (tome, BOWTIE)
+    - disable Debug2 tool-bar icons against unsaved files (tome, BOWTIE)
+    - Debug2 now shows margin_marker breakpoints on file load (tome, BOWTIE)
     - tweaked on load to include reload and only once (BOWTIE)
     - Debug2 now checks for perl files more thoroughly (BOWTIE)
     - Added proper POD documentation for Padre::Cache (ADAMK)
@@ -52,11 +52,15 @@ the even version for the release, even during development.
     - Padre::Plugin::unload(@packages) now works (AZAWAWI)
     - Padre::PluginHandel was only checking for error, 
       not handling return = 0, it is now (BOWTIE)
-    - re-enable outline panel to display MooseX::Declare Method modifiers (BOWTIE)
-    - convert p-p-xx-yy -> p-p-xx in P-Plugin makeing getting config easy (BOWTIE)
+    - Re-enable outline panel to display MooseX::Declare Method modifiers
+      (BOWTIE)
+    - Convert p-p-xx-yy -> p-p-xx in P-Plugin making getting config easy 
+      (BOWTIE)
     - Require 5.010 as an experiment. (SZABGAB)
-    - UpDate Debugger, Tests and Makefile to use Debug::Client 0.18, 
-      as this is now Perl 5.16.0 ready (BOWTIE)
+    - Update Debugger, tests and dependencies to use Debug::Client 0.18 as this
+      is now Perl 5.16.0 ready (BOWTIE)
+    - Notify plugins when a Padre save-as (possible mime-type change) event
+      occurs (AZAWAWI)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

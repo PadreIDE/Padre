@@ -4007,8 +4007,8 @@ sub setup_editors {
 		}
 	}
 
-	my $manager = $self->{ide}->plugin_manager;
-	$manager->plugin_event('editor_changed');
+	# Notify plugins that an editor has been changed
+	$self->{ide}->plugin_manager->plugin_event('editor_changed');
 
 	return;
 }
@@ -4838,6 +4838,9 @@ sub on_save_as {
 	}
 
 	$self->refresh;
+
+	# Notify plugins about a possible mimetype change
+	$self->{ide}->plugin_manager->plugin_event('editor_changed');
 
 	return 1;
 }
