@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-10 13:06+0100\n"
+"POT-Creation-Date: 2012-03-10 04:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,15 +162,15 @@ msgstr ""
 msgid "&Browse"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Preferences.pm:1561 lib/Padre/Wx/Dialog/Advanced.pm:190
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:153
-#: lib/Padre/Wx/Dialog/OpenResource.pm:183 lib/Padre/Wx/Dialog/Advanced.pm:190
-#: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/Goto.pm:100
-#: lib/Padre/Wx/FBP/Preferences.pm:1561
+#: lib/Padre/Wx/Dialog/OpenResource.pm:183 lib/Padre/Wx/Dialog/Goto.pm:100
+#: lib/Padre/Wx/Dialog/OpenURL.pm:70
 msgid "&Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:95 lib/Padre/Wx/FBP/FindInFiles.pm:137
-#: lib/Padre/Wx/FBP/Replace.pm:121 lib/Padre/Wx/FBP/ReplaceInFiles.pm:147
+#: lib/Padre/Wx/FBP/FindInFiles.pm:137 lib/Padre/Wx/FBP/Find.pm:95
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:147 lib/Padre/Wx/FBP/Replace.pm:121
 msgid "&Case Sensitive"
 msgstr ""
 
@@ -191,9 +191,10 @@ msgid "&Clear Selection Marks"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:274 lib/Padre/Wx/Browser.pm:109
-#: lib/Padre/Wx/Menu/File.pm:134 lib/Padre/Wx/Dialog/SessionManager.pm:303
-#: lib/Padre/Wx/Dialog/PerlFilter.pm:119 lib/Padre/Wx/Dialog/HelpSearch.pm:180
+#: lib/Padre/Wx/Menu/File.pm:134 lib/Padre/Wx/Dialog/HelpSearch.pm:180
+#: lib/Padre/Wx/Dialog/PerlFilter.pm:119
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:275
+#: lib/Padre/Wx/Dialog/SessionManager.pm:303
 msgid "&Close"
 msgstr ""
 
@@ -221,8 +222,8 @@ msgstr ""
 msgid "&Decrease Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/ActionLibrary.pm:369 lib/Padre/Wx/Dialog/SessionManager.pm:302
-#: lib/Padre/Wx/FBP/Preferences.pm:1213 lib/Padre/Wx/FBP/Bookmarks.pm:95
+#: lib/Padre/Wx/ActionLibrary.pm:369 lib/Padre/Wx/FBP/Preferences.pm:1213
+#: lib/Padre/Wx/FBP/Bookmarks.pm:95 lib/Padre/Wx/Dialog/SessionManager.pm:302
 msgid "&Delete"
 msgstr ""
 
@@ -277,7 +278,7 @@ msgstr ""
 msgid "&File..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:97 lib/Padre/Wx/FBP/Preferences.pm:1097
+#: lib/Padre/Wx/FBP/Preferences.pm:1097 lib/Padre/Wx/Dialog/Advanced.pm:97
 msgid "&Filter:"
 msgstr ""
 
@@ -386,8 +387,8 @@ msgid "&Next Problem"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:149
-#: lib/Padre/Wx/Dialog/OpenResource.pm:177 lib/Padre/Wx/Dialog/OpenURL.pm:62
-#: lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/OpenResource.pm:177 lib/Padre/Wx/Dialog/Goto.pm:93
+#: lib/Padre/Wx/Dialog/OpenURL.pm:62
 msgid "&OK"
 msgstr ""
 
@@ -507,7 +508,7 @@ msgstr ""
 msgid "&Rename Variable..."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Replace.pm:169 lib/Padre/Wx/FBP/ReplaceInFiles.pm:171
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:171 lib/Padre/Wx/FBP/Replace.pm:169
 msgid "&Replace"
 msgstr ""
 
@@ -515,7 +516,7 @@ msgstr ""
 msgid "&Replace text with:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:178 lib/Padre/Wx/FBP/Preferences.pm:1232
+#: lib/Padre/Wx/FBP/Preferences.pm:1232 lib/Padre/Wx/Dialog/Advanced.pm:178
 msgid "&Reset"
 msgstr ""
 
@@ -676,9 +677,9 @@ msgstr ""
 msgid "(unsupported)"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Preferences.pm:1165 lib/Padre/Wx/FBP/Preferences.pm:1179
 #: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
-#: lib/Padre/Wx/Dialog/Shortcut.pm:89 lib/Padre/Wx/FBP/Preferences.pm:1165
-#: lib/Padre/Wx/FBP/Preferences.pm:1179
+#: lib/Padre/Wx/Dialog/Shortcut.pm:89
 msgid "+"
 msgstr ""
 
@@ -703,8 +704,8 @@ msgstr ""
 msgid "<b>Loading %s...</b>"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Form.pm:32 lib/Padre/Wx/Dialog/Warning.pm:32
-#: lib/Padre/Wx/Dialog/Shortcut.pm:32
+#: lib/Padre/Wx/Dialog/Shortcut.pm:32 lib/Padre/Wx/Dialog/Form.pm:32
+#: lib/Padre/Wx/Dialog/Warning.pm:32
 msgid "A Dialog"
 msgstr ""
 
@@ -744,7 +745,7 @@ msgstr ""
 msgid "Abstract"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:170 lib/Padre/Wx/FBP/Patch.pm:47
+#: lib/Padre/Wx/FBP/Patch.pm:47 lib/Padre/Wx/Dialog/Preferences.pm:170
 msgid "Action"
 msgstr ""
 
@@ -919,7 +920,7 @@ msgstr ""
 msgid "Authentication"
 msgstr ""
 
-#: lib/Padre/Wx/CPAN.pm:208 lib/Padre/Wx/VCS.pm:55
+#: lib/Padre/Wx/VCS.pm:55 lib/Padre/Wx/CPAN.pm:208
 msgid "Author"
 msgstr ""
 
@@ -1074,11 +1075,11 @@ msgstr ""
 msgid "CTRL"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
-#: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/Find.pm:136
 #: lib/Padre/Wx/FBP/Snippet.pm:135 lib/Padre/Wx/FBP/FindInFiles.pm:162
-#: lib/Padre/Wx/FBP/Replace.pm:202 lib/Padre/Wx/FBP/ReplaceInFiles.pm:180
-#: lib/Padre/Wx/FBP/Bookmarks.pm:127
+#: lib/Padre/Wx/FBP/Bookmarks.pm:127 lib/Padre/Wx/FBP/Find.pm:136
+#: lib/Padre/Wx/FBP/Special.pm:95 lib/Padre/Wx/FBP/ReplaceInFiles.pm:180
+#: lib/Padre/Wx/FBP/Replace.pm:202
+#: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:126
 msgid "Cancel"
 msgstr ""
 
@@ -1256,12 +1257,13 @@ msgstr ""
 msgid "Click on the arrow for filter settings"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
+#: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:666
+#: lib/Padre/Wx/FBP/SLOC.pm:176 lib/Padre/Wx/FBP/Sync.pm:253
+#: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
+#: lib/Padre/Wx/FBP/SessionManager.pm:119
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:279
-#: lib/Padre/Wx/Dialog/SessionSave.pm:235 lib/Padre/Wx/FBP/Diff.pm:94
-#: lib/Padre/Wx/FBP/SessionManager.pm:119 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/Document.pm:254 lib/Padre/Wx/FBP/PluginManager.pm:128
-#: lib/Padre/Wx/FBP/About.pm:666 lib/Padre/Wx/FBP/SLOC.pm:176
-#: lib/Padre/Wx/FBP/Sync.pm:253 lib/Padre/Wx/FBP/Patch.pm:120
+#: lib/Padre/Wx/Dialog/SessionSave.pm:235
 msgid "Close"
 msgstr ""
 
@@ -1716,8 +1718,8 @@ msgstr ""
 msgid "Delay the action queue for 30 seconds"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:379
-#: lib/Padre/Wx/Dialog/Preferences.pm:36 lib/Padre/Wx/FBP/Sync.pm:236
+#: lib/Padre/Wx/FBP/Sync.pm:236 lib/Padre/Wx/Directory/TreeCtrl.pm:379
+#: lib/Padre/Wx/Dialog/Preferences.pm:36
 msgid "Delete"
 msgstr ""
 
@@ -1767,9 +1769,9 @@ msgstr ""
 msgid "Deprecation"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:238
 #: lib/Padre/Wx/Dialog/Preferences.pm:171
 #: lib/Padre/Wx/Dialog/SessionManager2.pm:29
+#: lib/Padre/Wx/Dialog/SessionManager.pm:238
 msgid "Description"
 msgstr ""
 
@@ -2148,7 +2150,7 @@ msgstr ""
 msgid "Epoch"
 msgstr ""
 
-#: lib/Padre/Document.pm:455 lib/Padre/PluginHandle.pm:23
+#: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:455
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5026
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:79 lib/Padre/Wx/Dialog/Sync.pm:87
@@ -2402,9 +2404,8 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Special.pm:64
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:363
-#: lib/Padre/Wx/Dialog/WindowList.pm:223
+#: lib/Padre/Wx/Dialog/WindowList.pm:223 lib/Padre/Wx/Dialog/Special.pm:64
 msgid "File"
 msgstr ""
 
@@ -2541,8 +2542,8 @@ msgstr ""
 msgid "Find in Fi&les..."
 msgstr ""
 
-#: lib/Padre/Wx/Panel/FoundInFiles.pm:438 lib/Padre/Wx/FBP/FindInFiles.pm:32
-#: lib/Padre/Wx/FBP/Preferences.pm:485
+#: lib/Padre/Wx/FBP/Preferences.pm:485 lib/Padre/Wx/FBP/FindInFiles.pm:32
+#: lib/Padre/Wx/Panel/FoundInFiles.pm:438
 msgid "Find in Files"
 msgstr ""
 
@@ -2827,10 +2828,10 @@ msgstr ""
 msgid "Input/output:"
 msgstr ""
 
+#: lib/Padre/Wx/FBP/Snippet.pm:118 lib/Padre/Wx/FBP/Special.pm:78
 #: lib/Padre/Wx/Menu/Edit.pm:119 lib/Padre/Wx/Dialog/Preferences.pm:35
 #: lib/Padre/Wx/Dialog/PerlFilter.pm:114
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:270 lib/Padre/Wx/FBP/Special.pm:78
-#: lib/Padre/Wx/FBP/Snippet.pm:118
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:270
 msgid "Insert"
 msgstr ""
 
@@ -3032,7 +3033,7 @@ msgstr ""
 msgid "Line number"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Special.pm:72 lib/Padre/Wx/FBP/Document.pm:138
+#: lib/Padre/Wx/FBP/Document.pm:138 lib/Padre/Wx/Dialog/Special.pm:72
 msgid "Lines"
 msgstr ""
 
@@ -3213,7 +3214,7 @@ msgstr ""
 msgid "Minimum length of suggestions"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:111 lib/Padre/Wx/FBP/Preferences.pm:119
+#: lib/Padre/Wx/FBP/Preferences.pm:119 lib/Padre/Wx/Dialog/RegexEditor.pm:111
 msgid "Miscellaneous"
 msgstr ""
 
@@ -3255,8 +3256,8 @@ msgstr ""
 msgid "NAME"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Special.pm:70 lib/Padre/Wx/Dialog/SessionManager.pm:237
-#: lib/Padre/Wx/Dialog/SessionManager2.pm:28
+#: lib/Padre/Wx/Dialog/SessionManager2.pm:28 lib/Padre/Wx/Dialog/Special.pm:70
+#: lib/Padre/Wx/Dialog/SessionManager.pm:237
 msgid "Name"
 msgstr ""
 
@@ -3292,7 +3293,7 @@ msgstr ""
 msgid "New Installation Survey"
 msgstr ""
 
-#: lib/Padre/Util/Template.pm:53 lib/Padre/Document/Perl/Starter.pm:123
+#: lib/Padre/Document/Perl/Starter.pm:123 lib/Padre/Util/Template.pm:53
 msgid "New Module"
 msgstr ""
 
@@ -3449,7 +3450,7 @@ msgstr ""
 msgid "O&pen"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/WhereFrom.pm:60 lib/Padre/Wx/FBP/Bookmarks.pm:86
+#: lib/Padre/Wx/FBP/Bookmarks.pm:86 lib/Padre/Wx/FBP/WhereFrom.pm:60
 msgid "OK"
 msgstr ""
 
@@ -3754,7 +3755,7 @@ msgstr ""
 msgid "Paco Alguacil"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Form.pm:98 lib/Padre/Wx/FBP/About.pm:841
+#: lib/Padre/Wx/FBP/About.pm:841 lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr ""
 
@@ -4440,8 +4441,8 @@ msgstr ""
 msgid "Ruby Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:369
 #: lib/Padre/Wx/Dialog/FilterTool.pm:151
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:369
 msgid "Run"
 msgstr ""
 
@@ -4622,8 +4623,8 @@ msgid "Script Files"
 msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:84 lib/Padre/Wx/Directory.pm:505
-#: lib/Padre/Wx/Dialog/Find.pm:65 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:365
-#: lib/Padre/Wx/FBP/CPAN.pm:276
+#: lib/Padre/Wx/FBP/CPAN.pm:276 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:365
+#: lib/Padre/Wx/Dialog/Find.pm:65
 msgid "Search"
 msgstr ""
 
@@ -4631,8 +4632,8 @@ msgstr ""
 msgid "Search &Backwards"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Find.pm:46 lib/Padre/Wx/FBP/FindInFiles.pm:48
-#: lib/Padre/Wx/FBP/Replace.pm:47 lib/Padre/Wx/FBP/ReplaceInFiles.pm:41
+#: lib/Padre/Wx/FBP/FindInFiles.pm:48 lib/Padre/Wx/FBP/Find.pm:46
+#: lib/Padre/Wx/FBP/ReplaceInFiles.pm:41 lib/Padre/Wx/FBP/Replace.pm:47
 msgid "Search &Term:"
 msgstr ""
 
@@ -4817,8 +4818,8 @@ msgstr ""
 msgid "Server:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:37
 #: lib/Padre/Wx/FBP/SessionManager.pm:29
+#: lib/Padre/Wx/Dialog/SessionManager.pm:37
 msgid "Session Manager"
 msgstr ""
 
@@ -4918,8 +4919,8 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Debugger.pm:519 lib/Padre/Wx/FBP/Breakpoints.pm:151
-#: lib/Padre/Wx/FBP/VCS.pm:239
+#: lib/Padre/Wx/FBP/VCS.pm:239 lib/Padre/Wx/FBP/Breakpoints.pm:151
+#: lib/Padre/Wx/FBP/Debugger.pm:519
 msgid "Show"
 msgstr ""
 
@@ -5303,9 +5304,9 @@ msgstr ""
 msgid "Startup"
 msgstr ""
 
-#: lib/Padre/Wx/VCS.pm:53 lib/Padre/Wx/Dialog/Advanced.pm:111
-#: lib/Padre/Wx/CPAN/Listview.pm:35 lib/Padre/Wx/CPAN/Listview.pm:59
-#: lib/Padre/Wx/FBP/DebugOutput.pm:37
+#: lib/Padre/Wx/VCS.pm:53 lib/Padre/Wx/FBP/DebugOutput.pm:37
+#: lib/Padre/Wx/Dialog/Advanced.pm:111 lib/Padre/Wx/CPAN/Listview.pm:35
+#: lib/Padre/Wx/CPAN/Listview.pm:59
 msgid "Status"
 msgstr ""
 
@@ -5397,8 +5398,8 @@ msgstr ""
 msgid "Tabs to &Spaces..."
 msgstr ""
 
-#: lib/Padre/Wx/TaskList.pm:184 lib/Padre/Wx/Panel/TaskList.pm:98
-#: lib/Padre/Wx/FBP/Preferences.pm:88 lib/Padre/Wx/FBP/Preferences.pm:406
+#: lib/Padre/Wx/TaskList.pm:184 lib/Padre/Wx/FBP/Preferences.pm:88
+#: lib/Padre/Wx/FBP/Preferences.pm:406 lib/Padre/Wx/Panel/TaskList.pm:98
 msgid "Task List"
 msgstr ""
 
