@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-09 20:10-0800\n"
+"POT-Creation-Date: 2012-03-10 00:10-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1913,7 +1913,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6811
+#: lib/Padre/Wx/Main.pm:6814
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr ""
@@ -2080,11 +2080,11 @@ msgstr ""
 msgid "Encode Document to &utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6833
+#: lib/Padre/Wx/Main.pm:6836
 msgid "Encode document to..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6832
+#: lib/Padre/Wx/Main.pm:6835
 msgid "Encode to:"
 msgstr ""
 
@@ -2192,14 +2192,14 @@ msgstr ""
 msgid "Error logging in on %s:%s: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6787
+#: lib/Padre/Wx/Main.pm:6790
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:6769
+#: lib/Padre/Wx/Main.pm:6772
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
