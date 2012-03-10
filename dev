@@ -100,8 +100,8 @@ if ($FULLTRACE) {
 
 # Rebuild translations
 if ($PLUGINS) {
-	print STDERR "Doing nasty evil things to enable plugins from svn.\n";
-	print STDERR "Always confirms bugs exist without -a before reporting.\n";
+	print STDERR "WARNING: Doing nasty evil things to enable plugins from svn.\n";
+	print STDERR "Please always confirm if a bug exists without the -a option before reporting it.\n";
 	my $dir = File::Basename::dirname( $ENV{PADRE_HOME} );
 	$dir =~ s/\bbranches$/trunk/;
 	if ( opendir my $dh, $dir ) {
