@@ -6719,6 +6719,9 @@ sub new_document_from_string {
 	$document->rebless;
 	$document->colourize;
 
+	# Notify plugins that an editor has been changed
+	$self->{ide}->plugin_manager->plugin_event('editor_changed');
+
 	return $document;
 }
 

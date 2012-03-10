@@ -59,8 +59,8 @@ the even version for the release, even during development.
     - Require 5.010 as an experiment. (SZABGAB)
     - Update Debugger, tests and dependencies to use Debug::Client 0.18 as this
       is now Perl 5.16.0 ready (BOWTIE)
-    - Notify plugins when a Padre save-as (possible mime-type change) event
-      occurs (AZAWAWI)
+    - Notify plugins when either a save-as (possible mime-type change) or new
+      document event occurs (AZAWAWI)
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
