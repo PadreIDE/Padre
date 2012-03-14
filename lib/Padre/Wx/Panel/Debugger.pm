@@ -98,7 +98,7 @@ sub set_up {
 	$self->{show_local_variables}->Enable;
 	$self->{show_local_variables}->SetValue(1);
 	$self->{local_variables} = 1;
-	
+
 	# Setup the debug button icons
 	$self->{debug}->SetBitmapLabel( Padre::Wx::Icon::find('actions/morpho2') );
 	$self->{debug}->Enable;
@@ -493,7 +493,7 @@ sub debug_step_out {
 	my $self = shift;
 	my $main = $self->main;
 
-	#ToDo list request ouch	
+	#ToDo list request ouch
 	my @list_request;
 	eval { @list_request = $self->{client}->step_out(); };
 	my $module = $self->{client}->module;
@@ -526,7 +526,7 @@ sub debug_run_till {
 	eval { @list_request = $self->{client}->run($param); };
 
 	my $temp_buffer = $self->{client}->buffer;
-	my $module = $self->{client}->module;
+	my $module      = $self->{client}->module;
 	$self->{client}->get_lineinfo;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
@@ -536,7 +536,7 @@ sub debug_run_till {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $temp_buffer );
+	$main->{debugoutput}->debug_output($temp_buffer);
 	$self->_set_debugger;
 
 	return;
@@ -634,7 +634,8 @@ sub display_value {
 	my $variable = $self->_debug_get_variable or return;
 
 	$self->{var_val}{$variable} = BLANK;
-	$self->update_variables( $self->{var_val} );
+	# $self->update_variables( $self->{var_val} );
+	$self->_output_variables;
 
 	return;
 }
@@ -899,22 +900,23 @@ sub _bp_autoload {
 # equivalent to p|x the varaible
 #######
 sub _on_list_item_selected {
-	my $self  = shift;
-	my $event = shift;
-	my $main  = $self->main;
-	my $index = $event->GetIndex + 1;
+	my $self          = shift;
+	my $event         = shift;
+	my $main          = $self->main;
+	my $index         = $event->GetIndex + 1;
 	my $variable_name = $event->GetText;
 
 	#ToDo inspired by task_manager, I think the next step is playing with DB::
 	my $variable_value = $self->{client}->__send_np( "x \\" . $variable_name );
-	my $black_size = keys %{ $self->{var_val} };
-	my $blue_size  = keys %{ $self->{auto_var_val} };
+	my $black_size     = keys %{ $self->{var_val} };
+	my $blue_size      = keys %{ $self->{auto_var_val} };
+
 	# my $gray_size = keys $self->{auto_x_var};
 	# print "blach = $black_size, blue = $blue_size, gray = $gray_size \n";
 
 	if ( $index <= $black_size ) {
 		$main->{debugoutput}->debug_output_black( $variable_name . " = " . $variable_value );
-	} elsif ( $index <= ($black_size + $blue_size) ) {
+	} elsif ( $index <= ( $black_size + $blue_size ) ) {
 		$main->{debugoutput}->debug_output_blue( $variable_name . " = " . $variable_value );
 	} else {
 		$main->{debugoutput}->debug_output_dark_gray( $variable_name . " = " . $variable_value );

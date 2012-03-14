@@ -64,6 +64,7 @@ the even version for the release, even during development.
     - Update German translation (ZENOG)
     - Make show_local_variables default in Debug2 (BOWTIE)
     - perl5db.pl needs to be given absolute filenames (BOWTIE)
+    - Debug2 now shows display_value on selection (BOWTIE)
     - 
 
 0.95 Development version, not released
