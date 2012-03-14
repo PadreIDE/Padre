@@ -63,6 +63,8 @@ the even version for the release, even during development.
       document event occurs (AZAWAWI)
     - Update German translation (ZENOG)
     - Make show_local_variables default in Debug2 (BOWTIE)
+    - perl5db.pl needs to be given absolute filenames (BOWTIE)
+    - 
 
 0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)

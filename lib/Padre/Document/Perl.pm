@@ -371,8 +371,15 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
-	my $shortname = File::Basename::basename($filename);
-
+	
+	# perl5db.pl needs to be given absolute filenames
+	my $shortname;
+	if ( $debug ){
+		$shortname = $filename;
+	} else {
+		$shortname = File::Basename::basename($filename);
+	}
+	
 	my @commands = (qq{"$perl"});
 	push @commands, '-d' if $debug;
 	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
