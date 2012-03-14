@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-27 08:10-0800\n"
+"POT-Creation-Date: 2012-03-14 04:10-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simone Blandino <simone.blandino@gmail.com>\n"
 "Language-Team:  <simone.blandino@gmail.com>\n"
@@ -662,7 +662,7 @@ msgstr "&A capo automatico per il file"
 msgid "&wxWidgets %s Reference"
 msgstr "Documentazione di riferimento &wxWidget %s"
 
-#: lib/Padre/Wx/Panel/Debugger.pm:598
+#: lib/Padre/Wx/Panel/Debugger.pm:618
 #, perl-format
 msgid "'%s' does not look like a variable. First select a variable in the code and then try again."
 msgstr "'%s' non sembra una variabile. Prima selezionate una variabile nel codice e riprovate."
@@ -827,12 +827,12 @@ msgstr "Tutto"
 #: lib/Padre/Wx/Main.pm:4426
 #: lib/Padre/Wx/Main.pm:4427
 #: lib/Padre/Wx/Main.pm:4782
-#: lib/Padre/Wx/Main.pm:6000
+#: lib/Padre/Wx/Main.pm:6003
 #: lib/Padre/Wx/Choice/Files.pm:19
 msgid "All Files"
 msgstr "Tutti i file"
 
-#: lib/Padre/Document/Perl.pm:540
+#: lib/Padre/Document/Perl.pm:547
 msgid "All braces appear to be matched"
 msgstr "Tutte le parentesi sembrano corrispondere"
 
@@ -1180,7 +1180,7 @@ msgstr "Modifica il terminatore di riga del documento corrente in quello utilizz
 msgid "Change the end of line character of the current document to those used in files on MS Windows"
 msgstr "Modifica il terminatore di riga del documento corrente in quello utilizzato per i file di MS Windows"
 
-#: lib/Padre/Document/Perl.pm:1508
+#: lib/Padre/Document/Perl.pm:1515
 msgid "Change variable style"
 msgstr "Modifica stile variabile"
 
@@ -1236,13 +1236,13 @@ msgstr "Caratteri (tutti)"
 msgid "Characters (Visible)"
 msgstr "Caratteri (visibili)"
 
-#: lib/Padre/Document/Perl.pm:541
+#: lib/Padre/Document/Perl.pm:548
 msgid "Check Complete"
 msgstr "Verifica completata"
 
-#: lib/Padre/Document/Perl.pm:610
-#: lib/Padre/Document/Perl.pm:666
-#: lib/Padre/Document/Perl.pm:685
+#: lib/Padre/Document/Perl.pm:617
+#: lib/Padre/Document/Perl.pm:673
+#: lib/Padre/Document/Perl.pm:692
 msgid "Check cancelled"
 msgstr "Verifica annullata"
 
@@ -1316,7 +1316,7 @@ msgstr "Chiudi &tutti i file"
 msgid "Close &this Project"
 msgstr "Chiudi ques&to progetto"
 
-#: lib/Padre/Wx/Main.pm:5196
+#: lib/Padre/Wx/Main.pm:5199
 msgid "Close all"
 msgstr "Chiudi tutto"
 
@@ -1352,11 +1352,11 @@ msgstr "Chiude il documento corrente e rimuove il file dal disco"
 msgid "Close other &Projects"
 msgstr "Chiudi tutti i &progetti meno questo"
 
-#: lib/Padre/Wx/Main.pm:5265
+#: lib/Padre/Wx/Main.pm:5268
 msgid "Close some"
 msgstr "Chiudi alcuni"
 
-#: lib/Padre/Wx/Main.pm:5242
+#: lib/Padre/Wx/Main.pm:5245
 msgid "Close some files"
 msgstr "Chiude alcuni file"
 
@@ -1540,7 +1540,7 @@ msgstr "Impossibile creare: '%s':  '%s'"
 msgid "Could not delete: '%s': %s"
 msgstr "Impossibile cancellare: '%s': %s"
 
-#: lib/Padre/Wx/Panel/Debugger.pm:576
+#: lib/Padre/Wx/Panel/Debugger.pm:596
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr "Impossibile valutare '%s'"
@@ -1586,7 +1586,7 @@ msgstr "Impossibile ricaricare il file %s"
 msgid "Could not rename: '%s' to '%s': %s"
 msgstr "Impossibile rinominare: '%s' in '%s0:  '%s'"
 
-#: lib/Padre/Wx/Main.pm:5022
+#: lib/Padre/Wx/Main.pm:5025
 msgid "Could not save file: "
 msgstr "Impossibile salvare il file:"
 
@@ -1623,7 +1623,7 @@ msgstr "Ctrl"
 msgid "Cu&t"
 msgstr "&Taglia"
 
-#: lib/Padre/Document/Perl.pm:684
+#: lib/Padre/Document/Perl.pm:691
 #, perl-format
 msgid "Current '%s' not found"
 msgstr "'%s' corrente non trovato"
@@ -1632,18 +1632,18 @@ msgstr "'%s' corrente non trovato"
 msgid "Current Directory: "
 msgstr "Cartella corrente:"
 
-#: lib/Padre/Document/Perl.pm:665
+#: lib/Padre/Document/Perl.pm:672
 msgid "Current cursor does not seem to point at a method"
 msgstr "Il cursore corrente non sembra puntare ad un metodo"
 
-#: lib/Padre/Document/Perl.pm:609
-#: lib/Padre/Document/Perl.pm:643
+#: lib/Padre/Document/Perl.pm:616
+#: lib/Padre/Document/Perl.pm:650
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Il cursore corrente non sembra puntare ad una variabile"
 
-#: lib/Padre/Document/Perl.pm:805
-#: lib/Padre/Document/Perl.pm:855
-#: lib/Padre/Document/Perl.pm:892
+#: lib/Padre/Document/Perl.pm:812
+#: lib/Padre/Document/Perl.pm:862
+#: lib/Padre/Document/Perl.pm:899
 msgid "Current cursor does not seem to point at a variable."
 msgstr "Il cursore corrente non sembra puntare ad una variabile."
 
@@ -1719,11 +1719,11 @@ msgstr "Opzioni di output del debug"
 msgid "Debugger"
 msgstr "Debugger"
 
-#: lib/Padre/Wx/Panel/Debugger.pm:247
+#: lib/Padre/Wx/Panel/Debugger.pm:250
 msgid "Debugger is already running"
 msgstr "Il debugger è già in esecuzione"
 
-#: lib/Padre/Wx/Panel/Debugger.pm:315
+#: lib/Padre/Wx/Panel/Debugger.pm:319
 msgid "Debugging failed. Did you check your program for syntax errors?"
 msgstr "Il debug è fallito. Avete verificato gli errori di sintassi del vostro programma?"
 
@@ -1911,7 +1911,7 @@ msgstr "Distribuzione"
 msgid "Do not show this again"
 msgstr "Non mostrare nuovamente"
 
-#: lib/Padre/Wx/Main.pm:5383
+#: lib/Padre/Wx/Main.pm:5386
 #, perl-format
 msgid "Do you really want to close and delete %s from disk?"
 msgstr "Desiderate davvero chiudere %s e cancellarlo dal disco?"
@@ -1963,7 +1963,7 @@ msgstr "Strumenti documento"
 msgid "Document Type"
 msgstr "Tipo documento"
 
-#: lib/Padre/Wx/Main.pm:6808
+#: lib/Padre/Wx/Main.pm:6814
 #, perl-format
 msgid "Document encoded to (%s)"
 msgstr "Documento codificato in (%s)"
@@ -2135,11 +2135,11 @@ msgstr "Codifica il documento con la modalità predefinita del &sistema"
 msgid "Encode Document to &utf-8"
 msgstr "Codifica il documento in &utf-8"
 
-#: lib/Padre/Wx/Main.pm:6830
+#: lib/Padre/Wx/Main.pm:6836
 msgid "Encode document to..."
 msgstr "Codifica il documento in..."
 
-#: lib/Padre/Wx/Main.pm:6829
+#: lib/Padre/Wx/Main.pm:6835
 msgid "Encode to:"
 msgstr "Codifica in:"
 
@@ -2210,7 +2210,7 @@ msgstr "Epoca"
 #: lib/Padre/PluginHandle.pm:23
 #: lib/Padre/Document.pm:455
 #: lib/Padre/Wx/Editor.pm:939
-#: lib/Padre/Wx/Main.pm:5023
+#: lib/Padre/Wx/Main.pm:5026
 #: lib/Padre/Wx/Role/Dialog.pm:95
 #: lib/Padre/Wx/Dialog/PluginManager.pm:209
 #: lib/Padre/Wx/Dialog/Sync.pm:79
@@ -2232,7 +2232,7 @@ msgstr "Errore"
 msgid "Error connecting to %s:%s: %s"
 msgstr "Errore di connessione a %s:%s: %s"
 
-#: lib/Padre/Wx/Main.pm:5399
+#: lib/Padre/Wx/Main.pm:5402
 #, perl-format
 msgid ""
 "Error deleting %s:\n"
@@ -2241,7 +2241,7 @@ msgstr ""
 "Errore cancellando %s:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:5610
+#: lib/Padre/Wx/Main.pm:5613
 msgid "Error loading perl filter dialog."
 msgstr "Errore nel caricamento della dialog del filtro perl"
 
@@ -2250,7 +2250,7 @@ msgstr "Errore nel caricamento della dialog del filtro perl"
 msgid "Error loading pod for class '%s': %s"
 msgstr "Errore nel caricamento del pod per la classe '%s': %s"
 
-#: lib/Padre/Wx/Main.pm:5581
+#: lib/Padre/Wx/Main.pm:5584
 msgid "Error loading regex editor."
 msgstr "Errore nel caricamento dell'editor di espressioni regolari"
 
@@ -2259,7 +2259,7 @@ msgstr "Errore nel caricamento dell'editor di espressioni regolari"
 msgid "Error logging in on %s:%s: %s"
 msgstr "Errore di login a  %s:%s: %s"
 
-#: lib/Padre/Wx/Main.pm:6784
+#: lib/Padre/Wx/Main.pm:6790
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
@@ -2268,7 +2268,7 @@ msgstr ""
 "Errore restituito dallo strumento filtro:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:6766
+#: lib/Padre/Wx/Main.pm:6772
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -2325,11 +2325,11 @@ msgstr "Errore nell'esecuzione di un'azione di Padre: %s"
 msgid "Error:\n"
 msgstr "Errore:\n"
 
-#: lib/Padre/Document/Perl.pm:503
+#: lib/Padre/Document/Perl.pm:510
 msgid "Error: "
 msgstr "Errore:"
 
-#: lib/Padre/Wx/Main.pm:6105
+#: lib/Padre/Wx/Main.pm:6108
 #: lib/Padre/Plugin/Devel.pm:247
 #, perl-format
 msgid "Error: %s"
@@ -2362,6 +2362,30 @@ msgstr "Valuta &espressione"
 #: lib/Padre/Wx/FBP/Expression.pm:29
 msgid "Evaluate Expression"
 msgstr "Valuta espressione"
+
+#: lib/Padre/Wx/FBP/Debugger.pm:424
+msgid ""
+"Evaluate expression\n"
+"\t$ -> p\n"
+"\t@ -> x\n"
+"\t% -> x\n"
+"\n"
+"p expr \n"
+"Same as print {$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n"
+"\n"
+"x [maxdepth] expr\n"
+"Evaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,"
+msgstr ""
+"Valuta espressione\n"
+"\t$ -> p\n"
+"\t@ -> x\n"
+"\t% -> x\n"
+"\n"
+"p espressione \n"
+"Come print {$DB::OUT} espressione nel package corrente. Si tratta semplicemente della funzione print di Perl.\n"
+"\n"
+"x [massima profondità] espressione\n"
+"Valuta espressione in un contesto di lista e mostra il risultato formattato in modo ordinato. Le strutture dati annidate vengono mostrate ricorsivamente"
 
 #: lib/Padre/Wx/Main.pm:4799
 msgid "Exist"
@@ -2407,7 +2431,7 @@ msgstr "Estrai subroutine"
 msgid "FTP Password"
 msgstr "Password FTP"
 
-#: lib/Padre/Wx/Main.pm:4916
+#: lib/Padre/Wx/Main.pm:4919
 #, perl-format
 msgid "Failed to create path '%s'"
 msgstr "Impossibile creare il percorso '%s'"
@@ -2513,7 +2537,7 @@ msgstr "Dimensione file (byte)"
 msgid "File Types:"
 msgstr "Tipi file:"
 
-#: lib/Padre/Wx/Main.pm:4902
+#: lib/Padre/Wx/Main.pm:4905
 msgid "File already exists"
 msgstr "Il file esiste già"
 
@@ -2521,11 +2545,11 @@ msgstr "Il file esiste già"
 msgid "File already exists. Overwrite it?"
 msgstr "Il file esiste già. Sovrascriverlo?"
 
-#: lib/Padre/Wx/Main.pm:5012
+#: lib/Padre/Wx/Main.pm:5015
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Il file è stato modificato su disco dall'ultimo salvataggio. Sovrascriverlo?"
 
-#: lib/Padre/Wx/Main.pm:5107
+#: lib/Padre/Wx/Main.pm:5110
 msgid "File changed. Do you want to save it?"
 msgstr "File modificato. Intendi salvarlo?"
 
@@ -2544,11 +2568,11 @@ msgstr "Il nome file %s contiene * o ? che sono caratteri speciali per molti com
 msgid "File name %s does not exist on disk. Skip?"
 msgstr "Il nome file %s non esiste su disco. Ignorarlo?"
 
-#: lib/Padre/Wx/Main.pm:5013
+#: lib/Padre/Wx/Main.pm:5016
 msgid "File not in sync"
 msgstr "File non sincronizzato"
 
-#: lib/Padre/Wx/Main.pm:5377
+#: lib/Padre/Wx/Main.pm:5380
 msgid "File was never saved and has no filename - can't delete from disk"
 msgstr "Il file non è mai stato salvato e non ha nome - impossibile cancellarlo da disco"
 
@@ -2650,7 +2674,7 @@ msgstr "Cerca dove è stata dichiarata la varibile selezionata usando \"my\" e v
 msgid "Find:"
 msgstr "Trova:"
 
-#: lib/Padre/Document/Perl.pm:941
+#: lib/Padre/Document/Perl.pm:948
 msgid "First character of selection does not seem to point at a token."
 msgstr "Il primo carattere della selezione non sembra puntare ad un token."
 
@@ -2846,7 +2870,7 @@ msgstr "Home"
 msgid "Host"
 msgstr "Host"
 
-#: lib/Padre/Wx/Main.pm:6284
+#: lib/Padre/Wx/Main.pm:6287
 msgid "How many spaces for each tab:"
 msgstr "Numero spazi per ogni tabulazione:"
 
@@ -2967,7 +2991,7 @@ msgstr "Intero"
 msgid "Internal Error"
 msgstr "Errore interno"
 
-#: lib/Padre/Wx/Main.pm:6106
+#: lib/Padre/Wx/Main.pm:6109
 msgid "Internal error"
 msgstr "Errore interno"
 
@@ -3375,7 +3399,7 @@ msgstr "Nome della nuova subroutine"
 msgid "Ne&w"
 msgstr "Nuo&vo"
 
-#: lib/Padre/Wx/Main.pm:6612
+#: lib/Padre/Wx/Main.pm:6615
 msgid "Need to select text in order to translate numbers"
 msgstr "Per convertire i numeri è necessario selezionare del testo"
 
@@ -3404,7 +3428,7 @@ msgstr "Indagine sulle nuove installazioni"
 msgid "New Module"
 msgstr "Nuovo modulo"
 
-#: lib/Padre/Document/Perl.pm:815
+#: lib/Padre/Document/Perl.pm:822
 msgid "New name"
 msgstr "Nuovo nome"
 
@@ -3441,11 +3465,11 @@ msgstr "Argomento non trovato"
 msgid "No changes found"
 msgstr "Nessuna modifica trovata"
 
-#: lib/Padre/Document/Perl.pm:645
+#: lib/Padre/Document/Perl.pm:652
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr "Impossibile trovare una dichiarazione per la variabile (lessicale?) specificata"
 
-#: lib/Padre/Document/Perl.pm:894
+#: lib/Padre/Document/Perl.pm:901
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr "Impossibile trovare una dichiarazione per la variabile (lessicale?) specificata."
 
@@ -3460,7 +3484,7 @@ msgstr "Nessun documento aperto"
 msgid "No documentation for '%s'"
 msgstr "Documentazione non disponibile per '%s'"
 
-#: lib/Padre/Document/Perl.pm:505
+#: lib/Padre/Document/Perl.pm:512
 msgid "No errors found."
 msgstr "Nessun errore trovato"
 
@@ -3537,7 +3561,7 @@ msgstr "Normale"
 msgid "Norwegian"
 msgstr "Norvegese"
 
-#: lib/Padre/Wx/Panel/Debugger.pm:251
+#: lib/Padre/Wx/Panel/Debugger.pm:254
 msgid "Not a Perl document"
 msgstr "Non è un documento Perl"
 
@@ -3708,7 +3732,7 @@ msgid "Open cancelled"
 msgstr "Apertura annullata"
 
 #: lib/Padre/PluginManager.pm:976
-#: lib/Padre/Wx/Main.pm:5998
+#: lib/Padre/Wx/Main.pm:6001
 msgid "Open file"
 msgstr "Apri file"
 
@@ -4437,8 +4461,8 @@ msgstr "Rinomina cartella"
 msgid "Rename file"
 msgstr "Rinomina file"
 
-#: lib/Padre/Document/Perl.pm:806
-#: lib/Padre/Document/Perl.pm:816
+#: lib/Padre/Document/Perl.pm:813
+#: lib/Padre/Document/Perl.pm:823
 msgid "Rename variable"
 msgstr "Rinomina variabile"
 
@@ -4470,8 +4494,8 @@ msgstr "Sostituisci con:"
 msgid "Replace In Files"
 msgstr "Sostituisci nei file"
 
-#: lib/Padre/Document/Perl.pm:900
-#: lib/Padre/Document/Perl.pm:949
+#: lib/Padre/Document/Perl.pm:907
+#: lib/Padre/Document/Perl.pm:956
 msgid "Replace Operation Canceled"
 msgstr "Operazione di sostituzione annullata"
 
@@ -4781,7 +4805,7 @@ msgstr "Cerca in &precedenza"
 msgid "Search &Term:"
 msgstr "&Termine da ricercare:"
 
-#: lib/Padre/Document/Perl.pm:651
+#: lib/Padre/Document/Perl.pm:658
 msgid "Search Canceled"
 msgstr "Ricerca annullata"
 
@@ -4901,7 +4925,7 @@ msgstr "Seleziona e inserisce un frammento nella posizione corrente"
 msgid "Select distribution to install"
 msgstr "Seleziona la distribuzione da installare"
 
-#: lib/Padre/Wx/Main.pm:5243
+#: lib/Padre/Wx/Main.pm:5246
 msgid "Select files to close:"
 msgstr "Seleziona il file da chiudere:"
 
@@ -4941,7 +4965,7 @@ msgstr ""
 msgid "Selection"
 msgstr "Selezione"
 
-#: lib/Padre/Document/Perl.pm:943
+#: lib/Padre/Document/Perl.pm:950
 msgid "Selection not part of a Perl statement?"
 msgstr "La selezione non è parte di un'istruzione Perl?"
 
@@ -5144,8 +5168,8 @@ msgid "Show Line &Numbers"
 msgstr "Mostra &numeri di riga"
 
 #: lib/Padre/Wx/FBP/Debugger.pm:193
-msgid "Show Local Variables (y 0)"
-msgstr "Mostra variabili locali (y 0)"
+msgid "Show Local Variables"
+msgstr "Mostra variabili locali"
 
 #: lib/Padre/Wx/ActionLibrary.pm:1585
 msgid "Show Ne&wlines"
@@ -5401,7 +5425,7 @@ msgstr "Spazio"
 msgid "Space and tab"
 msgstr "Spazi e tabulazioni"
 
-#: lib/Padre/Wx/Main.pm:6278
+#: lib/Padre/Wx/Main.pm:6281
 msgid "Space to Tab"
 msgstr "Da spazi a tabulazioni"
 
@@ -5521,7 +5545,7 @@ msgstr "Tab"
 msgid "Tab Spaces:"
 msgstr "Spazi delle tabulazioni"
 
-#: lib/Padre/Wx/Main.pm:6279
+#: lib/Padre/Wx/Main.pm:6282
 msgid "Tab to Space"
 msgstr "Da tabulazioni a spazi"
 
@@ -5584,7 +5608,7 @@ msgstr "Richiesta l'installazione di Devel::EndStats e il riavvio di Padre"
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr "Richiesta l'installazione di Devel::TraceUse e il riavvio di Padre"
 
-#: lib/Padre/Wx/Main.pm:5372
+#: lib/Padre/Wx/Main.pm:5375
 msgid "This type of file (URL) is missing delete support."
 msgstr "Questo tipo di file (URL) non supporta la cancellazione."
 
@@ -5709,9 +5733,9 @@ msgid "Unknown"
 msgstr "Sconosciuto"
 
 #: lib/Padre/PluginManager.pm:778
-#: lib/Padre/Document/Perl.pm:647
-#: lib/Padre/Document/Perl.pm:896
-#: lib/Padre/Document/Perl.pm:945
+#: lib/Padre/Document/Perl.pm:654
+#: lib/Padre/Document/Perl.pm:903
+#: lib/Padre/Document/Perl.pm:952
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
@@ -5733,7 +5757,7 @@ msgstr "Non modificato"
 msgid "Unsaved %d"
 msgstr "Da salvare %d"
 
-#: lib/Padre/Wx/Main.pm:5108
+#: lib/Padre/Wx/Main.pm:5111
 msgid "Unsaved File"
 msgstr "File da salvare"
 
@@ -5826,7 +5850,7 @@ msgstr "Valore"
 msgid "Variable Name"
 msgstr "Nome variabile"
 
-#: lib/Padre/Document/Perl.pm:856
+#: lib/Padre/Document/Perl.pm:863
 msgid "Variable case change"
 msgstr "Cambia capitalizzazione variabile"
 
@@ -6068,20 +6092,6 @@ msgstr ""
 "\n"
 "Per ragioni storiche, =valore è opzionale, ma assume il valore predefinito di 1 solo dove è sicuro farlo-- cioè principalmente per le opzioni booleane. È sempre meglio assegnare un valore preciso usando = . Le opzioni possono essere accorciate ma per chiarezza probabilmente non lo dovrebbero essere. Molte opzioni possono essere impostate insieme. Vedere Opzioni Configurabili per sapere quali."
 
-#: lib/Padre/Wx/FBP/Debugger.pm:424
-msgid ""
-"p expr \n"
-"Same as print {$DB::OUT} expr in the current package. In particular, because this is just Perl's own print function.\n"
-"\n"
-"x [maxdepth] expr\n"
-"Evaluates its expression in list context and dumps out the result in a pretty-printed fashion. Nested data structures are printed out recursively,"
-msgstr ""
-"p espressione \n"
-"Come print {$DB::OUT} espressione nel package corrente. Si tratta semplicemente della funzione print di Perl.\n"
-"\n"
-"x [massimaprofondità] espressione\n"
-"Valuta espressione nel contesto di lista e mostra il risultato formattato in modo leggibile. Le strutture dati annidate vengono mostrate ricorsivamente."
-
 #: lib/Padre/Wx/FBP/Breakpoints.pm:105
 msgid "project"
 msgstr "progetto"
@@ -6164,6 +6174,8 @@ msgstr ""
 "y [livello [variabili]]\n"
 "Mostra tutte (o alcune) variabili lessicali (dall'inglese: mY variables) nell'ambito corrente. Potete limitare le variabili mostrate con l'argomento 'variabili' che funziona esattamente come per i comandi V e X. Richiede la versione 0.08 o superiore del modulo PadWalker; verrete avvertiti se non è installato. L'output è formattato in modo leggibile nello stesso stile di V, ed è controllato dalle stesse opzioni."
 
+#~ msgid "Show Local Variables (y 0)"
+#~ msgstr "Mostra variabili locali (y 0)"
 #~ msgid "Username"
 #~ msgstr "Utente"
 #~ msgid "Code:"
