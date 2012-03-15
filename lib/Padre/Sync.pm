@@ -30,7 +30,8 @@ use HTTP::Request::Common ();
 use Padre::Current        ();
 use Padre::Constant       ();
 
-our $VERSION = '0.95';
+our $VERSION    = '0.95';
+our $COMPATIBLE = '0.95';
 
 
 
@@ -54,10 +55,8 @@ First argument should be a Padre object.
 
 sub new {
 	my $class = shift;
-	my $ide = Params::Util::_INSTANCE( shift, 'Padre' );
-	unless ($ide) {
-		Carp::croak("Creation of a Padre::Sync without a Padre not possible");
-	}
+	my $ide   = Params::Util::_INSTANCE( shift, 'Padre' );
+	Carp::croak("Failed to create Padre::Sync") unless $ide;
 
 	# Create the useragent.
 	# We need this to handle login actions.
@@ -76,7 +75,6 @@ sub new {
 
 	my $self = bless {
 		ide   => $ide,
-		json  => JSON::XS->new,
 		state => 'not_logged_in',
 		ua    => $ua,
 		@_,
@@ -148,7 +146,7 @@ sub register {
 	my $response = $self->POST(
 		"$server/register",
 		'Content-Type' => 'application/json',
-		'Content'      => $self->{json}->encode(\%params),
+		'Content'      => $self->encode(\%params),
 	);
 	if ( $response->code == 201 ) {
 		return 'Account registered successfully. Please log in.';
@@ -156,7 +154,7 @@ sub register {
 
 	local $@;
 	my $h = eval {
-		$self->{json}->decode( $response->content );
+		$self->decode( $response->content );
 	};
 
 	return "Registration failure(Server): $h->{error}" if $h->{error};
@@ -268,7 +266,7 @@ sub local_to_server {
 	my $response = $self->PUT(
 		"$server/config",
 		'Content-Type' => 'application/json',
-		'Content'      => $self->{json}->encode( \%copy ),
+		'Content'      => $self->encode( \%copy ),
 	);
 	if ( $response->code == 204 ) {
 		return 'Configuration uploaded successfully.';
@@ -302,7 +300,9 @@ sub server_to_local {
 
 	local $@;
 	my $json;
-	eval { $json = $self->{json}->decode( $response->content ); };
+	eval {
+		$json = $self->decode( $response->content );
+	};
 	return 'Failed to deserialize serverside configuration.' if $@;
 
 	# Apply each setting to the global config. should only be HUMAN settings
@@ -354,6 +354,14 @@ sub english_status {
 
 ######################################################################
 # Support Methods
+
+sub encode {
+	JSON::XS->new->encode($_[1]);
+}
+
+sub decode {
+	JSON::XS->new->decode($_[1]);
+}
 
 sub server {
 	my $self   = shift;
