@@ -37,6 +37,12 @@ sub apply {
 			next if $include->type eq 'no';
 			if ( not $include->pragma ) {
 				my $module = $include->module;
+				
+				#deal with ''
+				next if $module eq '';
+				#makes this Padre::Plugin freindly
+				next if $module =~ /^Padre::/;
+				
 				eval "require $module";
 				if ($@) {
 					push @items, {
@@ -79,7 +85,6 @@ sub apply {
 						}
 					}
 				}
-
 			}
 		}
 	}
