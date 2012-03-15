@@ -67,7 +67,8 @@ sub login {
 }
 
 sub login_finish {
-	my $self = shift;
+	my $self     = shift;
+	my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -95,7 +96,8 @@ sub logout {
 }
 
 sub logout_finish {
-	my $self = shift;
+	my $self     = shift;
+	my $response = shift->response or return;
 
 	# TODO: To be completed
 
