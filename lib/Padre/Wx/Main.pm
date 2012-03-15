@@ -3914,7 +3914,7 @@ sub on_close_window {
 	$config->set( nth_startup => $config->nth_startup + 1 );
 
 	# Write the configuration to disk
-	$ide->save_config;
+	$ide->config->save;
 	$event->Skip(1);
 
 	# Stop the task manager.
