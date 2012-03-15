@@ -35,8 +35,9 @@ our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor {
 	getters => {
-		request  => 'request',
-		response => 'response',
+		cookie_file => 'cookie_file',
+		request     => 'request',
+		response    => 'response',
 	}
 };
 

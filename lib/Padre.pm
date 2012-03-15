@@ -39,6 +39,7 @@ use Class::XSAccessor 1.13 {
 		task_manager    => 'task_manager',
 		plugin_manager  => 'plugin_manager',
 		project_manager => 'project_manager',
+		sync_manager    => 'sync_manager',
 	},
 	accessors => {
 		actions     => 'actions',
@@ -158,6 +159,12 @@ sub new {
 		maximum => $self->config->threads_maximum,
 		conduit => $wx->conduit,
 	);
+
+	# Create the sync manager
+	# require Padre::SyncManager;
+	# $self->{sync_manager} = Padre::SyncManager->new( 
+		# ide => $self,
+	# );
 
 	# Startup completed, let go of the database
 	Padre::DB->commit;
