@@ -80,6 +80,121 @@ sub login_finish {
 
 
 ######################################################################
+# Registration Task
+
+sub register {
+	my $self = shift;
+
+	# Reset task state and send the request
+	$self->task_reset;
+	$self->task_post(
+		url => 'register',
+		query => { }, # TODO: stuff
+		on_finish => 'register_finish',
+	);
+}
+
+sub register_finish {
+	my $self     = shift;
+	my $response = shift->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Configuration Pull Task
+
+sub pull {
+	my $self = shift;
+
+	# Fetch the server configuration
+	$self->task_reset;
+	$self->task_get(
+		url       => 'config',
+		on_finish => 'pull_finish',
+	);
+
+	return 1;
+}
+
+sub pull_finish {
+	my $self     = shift;
+	my $response = shift->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Configuration Push Task
+
+sub push {
+	my $self = shift;
+
+	# Send configuration to the server
+	$self->task_reset;
+	$self->task_put(
+		url       => 'config',
+		on_finish => 'push_finish',
+	);
+
+	return 1;
+}
+
+sub push_finish {
+	my $self     = shift;
+	my $response = shift->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Configuration Delete Task
+
+sub delete {
+	my $self = shift;
+
+	# Delete configuration from the server
+	$self->task_reset;
+	$self->task_delete(
+		url       => 'config',
+		on_finish => 'delete_finish',
+	);
+
+	return 1;
+}
+
+sub delete_finish {
+	my $self     = shift;
+	my $response = shift->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
 # Logout Task
 
 sub logout {
