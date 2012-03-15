@@ -9,8 +9,8 @@ Padre::Sync - Utility functions for handling remote Configuration Syncing
 =head1 DESCRIPTION
 
 The C<Padre::Sync> class contains logic for communicating with a remote 
-L<Madre::Sync> server. This class interacts with the L<Padre::Wx::Dialog::Sync>
-class for user interface display.
+L<Madre::Sync> server. This class interacts with the
+L<Padre::Wx::Dialog::Sync> class for user interface display.
 
 =head1 METHODS
 
@@ -220,8 +220,8 @@ sub logout {
 
 =head2 C<server_delete>
 
-Given a logged in session, will attempt to delete the config currently stored
-on the Sync server (if one currently exists).
+Given a logged in session, will attempt to delete the config currently
+stored on the Sync server (if one currently exists).
 Will fail if not logged in.
 
 =cut
@@ -279,8 +279,8 @@ sub local_to_server {
 
 =head2 C<server_to_local>
 
-Given a logged in session, will replace the local config with what is stored on 
-the server. 
+Given a logged in session, will replace the local config with what is stored
+on the server. 
 TODO: is validation of config before replacement required?
 
 =cut
@@ -305,7 +305,8 @@ sub server_to_local {
 	};
 	return 'Failed to deserialize serverside configuration.' if $@;
 
-	# Apply each setting to the global config. should only be HUMAN settings
+	# Apply each setting to the global config. should only be HUMAN
+	# settings.
 	delete $json->{Version};
 	delete $json->{version};
 	my @errors;
@@ -406,8 +407,8 @@ L<Padre>, L<Padre::Config>
 
 Copyright 2008-2012 The Padre development team as listed in Padre.pm.
 
-This program is free software; you can redistribute it and/or modify it under the
-same terms as Perl 5 itself.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl 5 itself.
 
 =cut
 
