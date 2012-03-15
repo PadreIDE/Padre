@@ -140,22 +140,16 @@ sub new {
 sub project {
 	my $self     = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $document = $self->document;
-	if ( defined $document ) {
-		return $document->project;
-	} else {
-		return;
-	}
+	return unless defined $document;
+	return $document->project;
 }
 
 # Get the text from the editor (and don't cache)
 sub text {
 	my $self   = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
-	if ( defined $editor ) {
-		return $editor->GetSelectedText;
-	} else {
-		return '';
-	}
+	return '' unless defined $editor;
+	return $editor->GetSelectedText;
 }
 
 # Get the title of the current editor window (and don't cache)
@@ -163,11 +157,8 @@ sub title {
 	my $self     = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $notebook = $self->notebook;
 	my $selected = $notebook->GetSelection;
-	if ( $selected >= 0 ) {
-		return $notebook->GetPageText($selected);
-	} else {
-		return;
-	}
+	return unless $selected >= 0;
+	return $notebook->GetPageText($selected);
 }
 
 # Get the filename from the document
@@ -224,8 +215,9 @@ sub editor {
 sub notebook {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{notebook} ) {
-		return unless defined $self->main;
-		$self->{notebook} = $self->main->notebook;
+		my $main = $self->main;
+		return unless defined $main;
+		$self->{notebook} = $main->notebook;
 	}
 	return $self->{notebook};
 }
@@ -260,30 +252,19 @@ sub main {
 	if ( defined $self->{main} ) {
 		return $self->{main};
 	}
-	if ( defined $self->{ide} ) {
-		return unless defined( $self->{ide}->wx );
-		return $self->{main} = $self->{ide}->wx->main;
-	}
-	if ( defined $self->{editor} ) {
-		return $self->{main} = $self->{editor}->main;
-	}
-	if ( defined $self->{document} ) {
-		my $editor = $self->{document}->{editor};
-		if ($editor) {
-			my $main = $editor->main;
-			return $self->{main} = $main if $main;
-		}
+	if ( $Wx::TheApp ) {
+		return $self->{main} = $Wx::TheApp->main;
 	}
 
 	# Last resort fallback
-	require Padre;
-
 	# Whe whole idea of loading Padre at this point does not look good.
 	# It should have already be done in the padre script so loading here again seems incorrect
 	# anyway. Does this only serve the testsing? ~ szabgab
+	warn "Unexpectedly creating Padre instance from Padre::Current->main";
+	require Padre;
 	$self->{ide} = Padre->ide;
-	return unless defined( $self->{ide}->wx );
-	return $self->{main} = $self->{ide}->wx->main;
+	return unless defined $Wx::TheApp;
+	return $self->{main} = $Wx::TheApp->main;
 }
 
 # Convenience method
@@ -296,9 +277,7 @@ sub ide {
 	if ( defined $self->{main} ) {
 		return $self->{ide} = $self->{main}->ide;
 	}
-	if (   defined $self->{document}
-		or defined $self->{editor} )
-	{
+	if ( defined $self->{document} or defined $self->{editor} ) {
 		return $self->{ide} = $self->main->ide;
 	}
 
