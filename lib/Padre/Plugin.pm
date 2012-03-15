@@ -329,7 +329,7 @@ sub registered_documents {
                 text/x-pod
             } ],
         },
-	'Padre::Plugin::MyPlugin::C' => {
+        'Padre::Plugin::MyPlugin::C' => {
             name => _T("My Highlighter"),
             mime => [ qw{
                 text/x-csrc
@@ -373,7 +373,6 @@ sub registered_highlighters {
         sub { Wx::MessageBox('sh sh sh sh', 'Mutley', Wx::OK, shift) },
     );
   }
-
 
 If implemented in a plug-in, this method will be called when a
 context menu is about to be displayed either because the user
