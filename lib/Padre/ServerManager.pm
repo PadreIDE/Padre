@@ -26,7 +26,8 @@ sub new {
 	my $class = shift;
 	my $self  = bless {
 		@_,
-		state => 'LOGOUT',
+		state   => 'LOGOUT',
+		version => undef,
 	}, $class;
 
 	# Check and default params
@@ -48,10 +49,42 @@ sub new {
 
 
 ######################################################################
+# Server Discovery
+
+sub version {
+	my $self = shift;
+	unless ( $self->{state} eq 'LOGOUT' ) {
+		# Not sure what to do with this...
+		return undef;
+	}
+
+	# Reset task state and send the request
+	$self->task_reset;
+	$self->task_get(
+		url       => 'version',
+		on_finish => 'login_finish',
+	);
+}
+
+sub version_finish {
+	my $self     = shift;
+	my $response = shift->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
 # Login Task
 
 sub login {
 	my $self = shift;
+
 	unless ( $self->{state} eq 'LOGOUT' ) {
 		# Not sure what to do with this...
 		return undef;
@@ -224,10 +257,80 @@ sub logout_finish {
 
 
 ######################################################################
-# Support Methods
+# Telemetry Task
 
-sub config {
-	$_[0]->{ide}->config;
+sub telemetry {
+	my $self = shift;
+
+	# Don't reset, telemetry occurs in parallel
+	$self->task_post(
+		url       => 'telemetry',
+		on_finish => 'telemetry_finish',
+	);
+}
+
+sub telemetry_finish {
+	my $self = shift;
+	my $response = $self->response or return;
+
+	# TODO: To be completed
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Padre::Task::LWP Integration
+
+sub task_get {
+	shift->task_request( 
+		method => 'GET',
+		@_,
+	);
+}
+
+sub task_put {
+	shift->task_request(
+		method => 'GET',
+		@_,
+		# TODO: Document content here
+	);
+}
+
+sub task_delete {
+	shift->task_request(
+		method => 'DELETE',
+		@_,
+	);
+}
+
+sub task_post {
+	my $self  = shift;
+	my %param = @_;
+	my $query = delete $param{query};
+	$query = $self->encode($query) if $query;
+
+	$self->task_request(
+		method => 'POST',
+		query  => $query,
+		@_,
+	);
+}
+
+sub task_request {
+	my $self   = shift;
+	my $server = $self->server or return;
+	my %param  = @_;
+	my $url    = join( '/', $server, delete $param{url} );
+	$self->SUPER::task_request(
+		%param,
+		task        => 'Padre::Task::LWP',
+		url         => $url,
+		cookie_file => $self->{cookie_file},
+	);
 }
 
 sub server {
@@ -237,32 +340,23 @@ sub server {
 	return $server;
 }
 
-sub task_get {
-	my $self   = shift;
-	my $server = $self->server or return;
-	my $url    = join( '/', $server, shift );
-
-	# Hand off to the normal task method
-	$self->task_request(
-		task        => 'Padre::Task::LWP',
-		cookie_file => $self->{cookie_file},
-		method      => 'GET',
-		url         => $url,
-	);
+sub config {
+	$_[0]->{ide}->config;
 }
 
-sub task_delete {
-	my $self = shift;
-	my $server = $self->server or return;
-	my $url    = join( '/', $server, shift );
+sub encode {
+	require JSON::XS;
+	JSON::XS->new->encode($_[1]);
+}
 
-	# Hand off to the normal task method
-	$self->task_request(
-		task        => 'Padre::Task::LWP',
-		cookie_file => $self->{cookie_file},
-		method      => 'DELETE',
-		url         => $url,
-	);
+sub decode {
+	require JSON::XS;
+	JSON::XS->new->decode($_[1]);
 }
 
 1;
+
+# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
