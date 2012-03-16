@@ -161,8 +161,8 @@ sub new {
 	);
 
 	# Create the sync manager
-	# require Padre::SyncManager;
-	# $self->{sync_manager} = Padre::SyncManager->new( 
+	# require Padre::ServerManager;
+	# $self->{sync_manager} = Padre::ServerManager->new( 
 		# ide => $self,
 	# );
 

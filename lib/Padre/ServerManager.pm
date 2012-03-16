@@ -1,4 +1,4 @@
-package Padre::SyncManager;
+package Padre::ServerManager;
 
 # Second generation Padre sync client, which operates via background tasks
 # and is not bound tightly to any front end GUI objects.
@@ -31,7 +31,7 @@ sub new {
 
 	# Check and default params
 	unless ( $self->{ide} ) {
-		Carp::croak("Did not provide ide param to Padre::SyncManager");
+		Carp::croak("Did not provide ide param to Padre::ServerManager");
 	}
 	unless ( $self->{cookie_file} ) {
 		$self->{cookie_file} = File::Spec->catfile(
