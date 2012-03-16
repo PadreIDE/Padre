@@ -139,13 +139,26 @@ sub run {
 	}
 	$self->{request} = $request;
 
+	# Hang on to the usage of cookies... do we really need this?
+	require HTTP::Cookies;
+	my $cookie_jar = undef;
+	if ( $self->cookie_file ) {
+		$cookie_jar = HTTP::Cookies->new(
+			file     => $self->cookie_file,
+			autosave => 1,
+		);
+	}
+
 	# Initialise the user agent
 	require LWP::UserAgent;
 	my $useragent = LWP::UserAgent->new(
-		agent   => "Padre/$VERSION",
-		timeout => 60,
+		agent      => "Padre/$VERSION",
+		timeout    => 60,
+		cookie_jar => $cookie_jar,
 	);
-	$useragent->env_proxy unless Padre::Constant::WIN32;
+	unless ( Padre::Constant::WIN32 ) {
+		$useragent->env_proxy;
+	}
 
 	# Execute the request.
 	# It's not up to us to judge success or failure at this point,
