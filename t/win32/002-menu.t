@@ -12,8 +12,6 @@ if ($@) {
 	plan( skip_all => 'Win32::GuiTest is required for this test' );
 }
 
-#plan( skip_all => 'test is currently broken' );
-
 use t::lib::Padre;
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
@@ -22,11 +20,7 @@ my $padre = t::lib::Padre::Win32::setup();
 
 plan tests => 5;
 
-#diag "Window id $padre";
-
 my $menu = GetMenu($padre);
-
-#diag "Menu id: $menu";
 
 # test File Menu
 my $submenu = GetSubMenu( $menu, 0 );

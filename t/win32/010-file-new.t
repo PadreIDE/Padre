@@ -13,8 +13,6 @@ if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
 
-#plan( skip_all => 'test is currently broken' );
-
 use t::lib::Padre;
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
@@ -44,18 +42,6 @@ SCOPE: {
 	sleep 1;
 
 	unlink $save_to;
-
-	#my @tabs = GetTabItems($padre);
-	#my @children = FindWindowLike($padre, 'Unsaved');
-	#my @children = GetChildWindows($padre);
-	#my @stc = FindWindowLike('', '', 'stcwindow');
-	#diag explain \@stc;
-	#foreach my $child (@children) {
-	#	diag sprintf "Child:  %8s  %s\n", $child, GetWindowText($child);
-	#}
-	#diag tree($padre);
-	#SendKeys("%{F4}");  # Alt-F4 to exit
-	#exit;
 
 	SendKeys($text);
 	MenuSelect("&File|&Save");
@@ -93,14 +79,6 @@ SCOPE: {
 	my $text_in_file = slurp($save_tox);
 	is( $text_in_file, $text, 'correct text in file' );
 }
-
-#{
-#	SendKeys("^{n}");  # Ctrl-n
-#	sleep 4;
-#	SendKeys("text");
-#	SendKeys("^{w}");  # Ctrl-w  closing the current window
-#}
-#
 
 MenuSelect("&File|&Close");
 
