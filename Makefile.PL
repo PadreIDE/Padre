@@ -73,7 +73,7 @@ name 'Padre';
 license 'perl';
 author 'Gabor Szabo';
 all_from 'lib/Padre.pm';
-requires 'perl' => '5.008005';
+requires 'perl' => '5.010000';
 
 # General dependencies
 requires 'Algorithm::Diff'          => '1.19';
