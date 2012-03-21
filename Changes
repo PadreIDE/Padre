@@ -65,6 +65,8 @@ the even version for the release, even during development.
     - Make show_local_variables default in Debug2 (BOWTIE)
     - perl5db.pl needs to be given absolute filenames (BOWTIE)
     - Debug2 now shows display_value on selection (BOWTIE)
+    - change Status-Bar 'R/W' to 'Read Write' (BOWTIE)
+    - add +1 to Current Line so % is display correctly in Status-Bar (BOWTIE)
     - 
 
 0.95 Development version, not released
