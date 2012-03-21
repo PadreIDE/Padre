@@ -408,7 +408,7 @@ sub is_read_only {
 	my $document = $self->current->document;
 	return '' unless defined($document);
 
-	return $document->is_readonly ? Wx::gettext('Read Only') : Wx::gettext('R/W  ');
+	return $document->is_readonly ? Wx::gettext('Read Only') : Wx::gettext('Read Write');
 }
 
 
