@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-14 04:10-0700\n"
+"POT-Creation-Date: 2012-03-21 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4135,10 +4135,6 @@ msgstr ""
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/StatusBar.pm:411
-msgid "R/W"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/About.pm:155
 msgid "RAM"
 msgstr ""
@@ -4167,6 +4163,10 @@ msgstr ""
 
 #: lib/Padre/Wx/StatusBar.pm:411
 msgid "Read Only"
+msgstr ""
+
+#: lib/Padre/Wx/StatusBar.pm:411
+msgid "Read Write"
 msgstr ""
 
 #: lib/Padre/File/FTP.pm:289
