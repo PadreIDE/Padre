@@ -307,7 +307,7 @@ sub update_pos {
 
 	$self->{Last_Pos} = $position;
 
-	my $line    = $editor->GetCurrentLine;
+	my $line    = $editor->GetCurrentLine + 1;
 	my $start   = $editor->PositionFromLine($line);
 	my $lines   = $editor->GetLineCount;
 	my $char    = $position - $start;
