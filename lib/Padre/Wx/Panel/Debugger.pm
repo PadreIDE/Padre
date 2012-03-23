@@ -939,6 +939,9 @@ sub on_debug_clicked {
 		return;
 	}
 
+	$self->debug_perl;
+	return unless $self->{client};
+
 	$self->{quit_debugger}->Enable;
 
 	# $self->show_debug_output(1);
@@ -970,7 +973,6 @@ sub on_debug_clicked {
 	$self->{display_options}->Enable;
 
 	$self->{debug}->Hide;
-	$self->debug_perl;
 	$main->aui->Update;
 	if ( $main->{debugoutput} ) {
 		$main->{debugoutput}->debug_output( $self->{client}->get_h_var('h') );
