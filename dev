@@ -80,8 +80,8 @@ my @cmd = (
 	qq[-I$FindBin::Bin/lib],
 	qq[-I$FindBin::Bin/blib/lib],
 	qq[-I$FindBin::Bin/blib/arch],
-	qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
+
 push @cmd, '-d:TraceUse'.($USE ? "=$USE" : '') if defined $USE;
 push @cmd, '-MPadre::Test' if $INVISIBLE;
 push @cmd, '-d'            if $DEBUG;
