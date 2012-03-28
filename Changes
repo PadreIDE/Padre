@@ -62,7 +62,7 @@ the even version for the release, even during development.
     - Notify plugins when either a save-as (possible mime-type change) or new
       document event occurs (AZAWAWI)
     - Update German translation (ZENOG)
-    - Make show_local_variables default in Debug2 (BOWTIE)
+    - Make show_local_variables default in Debug2 (BOWTIE) reverting
     - perl5db.pl needs to be given absolute filenames (BOWTIE)
     - Debug2 now shows display_value on selection (BOWTIE)
     - change Status-Bar 'R/W' to 'Read Write' (BOWTIE)
