@@ -71,7 +71,6 @@ use constant {
 
 
 
-
 #####################################################################
 
 =pod
@@ -307,11 +306,12 @@ sub update_pos {
 
 	$self->{Last_Pos} = $position;
 
-	my $line    = $editor->GetCurrentLine + 1;
+	my $line    = $editor->GetCurrentLine;
 	my $start   = $editor->PositionFromLine($line);
 	my $lines   = $editor->GetLineCount;
 	my $char    = $position - $start;
-	my $percent = int( 100 * $line / $lines );
+	my $percent = int( 100 * ($line + 1)/ $lines );
+	
 
 	my $format = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
 	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
