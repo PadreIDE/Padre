@@ -712,6 +712,8 @@ Keedi Kim - 김도형 (KEEDI)
 
 Kenichi Ishigaki - 石垣憲一 (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
 
+Kevin Dawson (BOWTIE) E<lt>bowtie@cpan.orgE<gt>
+
 Mark Grimes E<lt>mgrimes@cpan.orgE<gt>
 
 Max Maischein (CORION)
