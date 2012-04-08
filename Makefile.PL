@@ -163,6 +163,8 @@ requires 'Wx::Perl::ProcessStream' => '0.29';
 requires 'Wx::Scintilla'           => '0.34';
 requires 'YAML::Tiny'              => '1.32';
 test_requires 'Test::More'         => '0.88';
+# Ticket #1419: Padre and the soon to be Perl 5.16
+test_requires 'Test::Warn'         => '0.24';
 test_requires 'Test::MockObject'   => '1.09';
 test_requires 'Test::Script'       => '1.07';
 test_requires 'Test::Exception'    => '0.27';
