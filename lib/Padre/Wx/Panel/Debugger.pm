@@ -13,7 +13,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.18 ();
+use Debug::Client 0.20 ();
 
 our $VERSION = '0.95';
 our @ISA     = qw{

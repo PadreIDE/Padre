@@ -67,6 +67,7 @@ the even version for the release, even during development.
     - Debug2 now shows display_value on selection (BOWTIE)
     - change Status-Bar 'R/W' to 'Read Write' (BOWTIE)
     - add +1 to Current Line so % is display correctly in Status-Bar (BOWTIE)
+    - bumped Debug-Client requirement to 0.20 (BOWTIE)
     - 
 
 0.95 Development version, not released
