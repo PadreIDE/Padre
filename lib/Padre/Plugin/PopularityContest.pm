@@ -286,15 +286,16 @@ sub _generate {
 
 # Report data to server
 sub report {
-	my $self   = shift;
-	my $report = $self->_generate;
-	my $server = $self->config->config_sync_server;
-	my $url    = join '/', $server, $VERSION, $report->{instance_id};
+	my $self = shift;
 
-	my $query  = {
-		instance_id => 
-		data => JSON::encode_json($report),
-	};
+	#my $report = $self->_generate;
+	# my $server = $self->config->config_sync_server;
+	# my $url    = join '/', $server, $VERSION, $report->{instance_id};
+
+	# my $query  = {
+	# instance_id =>
+	# data => JSON::encode_json($report),
+	# };
 
 	# TO DO: Enable as soon as the server is functional:
 	#	$self->task_request(
