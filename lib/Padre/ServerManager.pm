@@ -62,7 +62,7 @@ sub version {
 	$self->task_reset;
 	$self->task_get(
 		url       => 'version',
-		on_finish => 'login_finish',
+		on_finish => 'version_finish',
 	);
 }
 
