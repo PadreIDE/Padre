@@ -68,7 +68,7 @@ sub version {
 
 sub version_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -101,7 +101,7 @@ sub login {
 
 sub login_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -129,7 +129,7 @@ sub register {
 
 sub register_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -158,7 +158,7 @@ sub pull {
 
 sub pull_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -187,7 +187,7 @@ sub push {
 
 sub push_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -216,7 +216,7 @@ sub delete {
 
 sub delete_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -245,7 +245,7 @@ sub logout {
 
 sub logout_finish {
 	my $self     = shift;
-	my $response = shift->response or return;
+	#my $response = shift->response or return;
 
 	# TODO: To be completed
 
@@ -271,7 +271,7 @@ sub telemetry {
 
 sub telemetry_finish {
 	my $self = shift;
-	my $response = $self->response or return;
+	#my $response = $self->response or return;
 
 	# TODO: To be completed
 
