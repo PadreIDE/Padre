@@ -19,6 +19,7 @@ BEGIN {
 	plan tests => 41;
 }
 use Test::NoWarnings;
+use t::lib::Padre;
 use Padre::TaskHandle     ();
 use Padre::Task::Addition ();
 use Padre::Logger;

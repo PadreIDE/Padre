@@ -20,6 +20,7 @@ BEGIN {
 	plan tests => 24;
 }
 
+use t::lib::Padre;
 use Padre::TaskHandle ();
 use Padre::Task::Eval ();
 use Padre::Logger;

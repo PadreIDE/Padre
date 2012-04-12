@@ -21,8 +21,8 @@ BEGIN {
 	}
 }
 use Time::HiRes 'sleep';
+use t::lib::Padre;
 use Padre::Logger;
-use Padre::TaskWorker ();
 use Padre::TaskWorker ();
 
 
