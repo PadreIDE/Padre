@@ -283,6 +283,7 @@ their results are no longer wanted.
 =cut
 
 sub cancel {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
 	my $owner = shift;
@@ -413,6 +414,7 @@ remain on the queue.
 =cut
 
 sub run {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
@@ -435,13 +437,13 @@ sub run {
 		}
 
 		# Can we execute the task at this position in the queue?
-		unless ( $self->good_task($queue->[$i]) ) {
+		unless ( $self->good_task( $queue->[$i] ) ) {
 			$i++;
 			next;
 		}
 
 		# Prepare the confirmed-good task
-		my $task   = splice( @$queue, $i, 1 );
+		my $task = splice( @$queue, $i, 1 );
 		my $handle = Padre::TaskHandle->new($task);
 		unless ( $handle->prepare ) {
 
@@ -517,6 +519,7 @@ Returns a L<Padre::Task> object, or C<undef> if there is no task to execute.
 =cut
 
 sub good_task {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
@@ -547,6 +550,7 @@ which the task can be run.
 =cut
 
 sub best_worker {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $handle  = shift;
@@ -619,6 +623,7 @@ state of the child worker.
 =cut
 
 sub on_signal {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $message = shift;

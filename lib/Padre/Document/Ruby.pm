@@ -50,8 +50,8 @@ sub get_command {
 
 	# Use console ruby
 	require File::Which;
-	my $ruby = File::Which::which('ruby') or 
-		die Wx::gettext("Cannot find ruby executable in your PATH");
+	my $ruby = File::Which::which('ruby')
+		or die Wx::gettext("Cannot find ruby executable in your PATH");
 	$ruby = qq{"$ruby"} if Padre::Constant::WIN32;
 
 	my $dir = File::Basename::dirname($filename);

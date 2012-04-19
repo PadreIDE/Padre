@@ -88,9 +88,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			$_[0]->idle_method(
-				item_activated => $_[1]->GetIndex
-			);
+			$_[0]->idle_method( item_activated => $_[1]->GetIndex );
 		},
 	);
 
@@ -444,9 +442,7 @@ sub item_activated {
 		}
 
 	};
-	$main->error(
-		Wx::gettext('Error while trying to perform Padre action')
-	) if $@;
+	$main->error( Wx::gettext('Error while trying to perform Padre action') ) if $@;
 }
 
 # Called when "Show normal" checkbox is clicked

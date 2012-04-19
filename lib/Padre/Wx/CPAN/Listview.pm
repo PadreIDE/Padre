@@ -93,6 +93,7 @@ sub on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
 	my $line  = $event->GetItem->GetText;
+
 	# print STDERR "L: $line\n";
 	$self->{cpan}->install($line);
 

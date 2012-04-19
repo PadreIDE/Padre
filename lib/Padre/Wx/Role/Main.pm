@@ -75,7 +75,7 @@ Get the L<Padre::Wx::Main> main window that this object is a child of.
 
 sub main {
 	my $main = Wx::GetTopLevelParent(shift);
-	return $main if Params::Util::_INSTANCE($main, 'Padre::Wx::Main');
+	return $main if Params::Util::_INSTANCE( $main, 'Padre::Wx::Main' );
 	return $main->GetParent;
 }
 
@@ -137,7 +137,7 @@ the element being update, which should be much less noticable.
 =cut
 
 sub lock_update {
-	Wx::WindowUpdateLocker->new($_[0]);
+	Wx::WindowUpdateLocker->new( $_[0] );
 }
 
 1;

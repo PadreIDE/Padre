@@ -184,7 +184,7 @@ sub metacpan_pod {
 			synopsis     => '',
 			distro       => $module,
 			download_url => $download_url,
-	};
+		};
 	}
 
 	# The pod text is here

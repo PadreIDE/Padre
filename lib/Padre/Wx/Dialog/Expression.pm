@@ -32,9 +32,7 @@ sub on_text {
 		$self->{watch}->SetValue(0);
 		$self->watch_clicked;
 	}
-	$self->{code}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW)
-	);
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
 	$self->Refresh;
 	$event->Skip(1);
 }
@@ -59,7 +57,7 @@ sub watch_clicked {
 	if ( $self->{watch}->GetValue ) {
 		$self->dwell_start( 'watch_timer' => 1000 );
 	} else {
-		$self->dwell_stop( 'watch_timer' );
+		$self->dwell_stop('watch_timer');
 	}
 	$event->Skip(1) if $event;
 }
@@ -87,14 +85,12 @@ sub run {
 	my $self  = shift;
 	my $code  = $self->{code}->GetValue;
 	my @locks = (
-		Wx::WindowUpdateLocker->new($self->{code}),
-		Wx::WindowUpdateLocker->new($self->{output}),
+		Wx::WindowUpdateLocker->new( $self->{code} ),
+		Wx::WindowUpdateLocker->new( $self->{output} ),
 	);
 
 	# Reset the expression and blank old output
-	$self->{code}->SetBackgroundColour(
-		Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW)
-	);
+	$self->{code}->SetBackgroundColour( Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW) );
 
 	# Execute the code and handle errors
 	local $@;

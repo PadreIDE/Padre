@@ -45,16 +45,16 @@ BEGIN {
 # Some default Wx objects
 use constant {
 	DEFAULT_COLOUR => Wx::Colour->new( 0xFF, 0xFF, 0xFF ),
-	NULL_FONT      => Wx::Font->new( Wx::NullFont ),
-	EDITOR_FONT    => Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
+	NULL_FONT      => Wx::Font->new(Wx::NullFont),
+	EDITOR_FONT => Wx::Font->new( 9, Wx::TELETYPE, Wx::NORMAL, Wx::NORMAL ),
 };
 
 sub import {
 	my $class = shift;
-	my @load  = grep { not $_->VERSION } map { "Wx::$_" } @_;
-	if ( @load ) {
+	my @load = grep { not $_->VERSION } map {"Wx::$_"} @_;
+	if (@load) {
 		local $@;
-		eval join "\n", map { "require $_;" } @load;
+		eval join "\n", map {"require $_;"} @load;
 		Padre::Wx::Constant::load();
 	}
 	return 1;
@@ -88,7 +88,7 @@ sub version_human {
 # Colour constructor
 sub color {
 	my $string = shift;
-	my @rgb    = ( 0xFF, 0xFF, 0xFF ); # Some default
+	my @rgb = ( 0xFF, 0xFF, 0xFF ); # Some default
 	if ( not defined $string ) {
 
 		# Carp::cluck("undefined color");
@@ -111,11 +111,11 @@ sub native_font {
 	# Attempt to apply the font string
 	local $@;
 	my $nfont = eval {
-		my $font = Wx::Font->new( Wx::NullFont );
+		my $font = Wx::Font->new(Wx::NullFont);
 		$font->SetNativeFontInfoUserDesc($string);
 		$font->IsOk ? $font : undef;
 	};
-        return $nfont if $nfont;
+	return $nfont if $nfont;
 	return NULL_FONT;
 }
 
@@ -193,7 +193,7 @@ sub launch_file {
 # Wx::Event Convenience Functions
 
 # FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
-if ( Padre::Constant::UNIX ) {
+if (Padre::Constant::UNIX) {
 	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_RIGHT_DOWN;
 } else {
 	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_CONTEXT_MENU;

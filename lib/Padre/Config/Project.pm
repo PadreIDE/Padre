@@ -21,7 +21,7 @@ our $VERSION = '0.95';
 
 sub new {
 	my $class = shift;
-	bless { @_ }, $class;
+	bless {@_}, $class;
 }
 
 sub dirname {

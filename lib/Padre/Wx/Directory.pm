@@ -563,6 +563,7 @@ sub browse_message {
 	my ( $child, $cookie ) = $tree->GetFirstChild($cursor);
 	my $position = 0;
 	while (@_) {
+
 		# Are we past the last entry?
 		unless ( $child->IsOk ) {
 			my $path = shift;
@@ -587,13 +588,11 @@ sub browse_message {
 			# we will leave this code for a while in case it
 			# isn't actually fixed.
 			unless ( defined $chd ) {
-				my $label   = $tree->GetItemText($child) || 'undef';
+				my $label = $tree->GetItemText($child) || 'undef';
 				my $project = $self->current->project->root;
 				warn "GetPlData is bizarely undef for position=$position, child=$child, label=$label, project=$project";
 			}
-			$self->main->error(
-				Wx::gettext('Hit unfixed bug in directory browser, disabling it')
-			);
+			$self->main->error( Wx::gettext('Hit unfixed bug in directory browser, disabling it') );
 			$self->main->show_directory(0);
 			return 1;
 		}

@@ -172,7 +172,7 @@ sub run {
 					text => $buffer,
 				);
 				unless ( defined $type and $type eq $self->{mime} ) {
-					TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
+					TRACE( "Skipped $fullname: Not a $self->{mime} (got " . ( $type || 'undef' ) . ")" ) if DEBUG;
 					next;
 				}
 			}

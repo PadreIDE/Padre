@@ -139,7 +139,7 @@ sub config_save {
 	my $diff = $self->config_diff( $config, @_ ) or return 0;
 
 	# Lock most of Padre so any apply handlers run quickly
-	my $lock = $self->main->lock( qw{ UPDATE REFRESH AUI CONFIG DB } );
+	my $lock = $self->main->lock(qw{ UPDATE REFRESH AUI CONFIG DB });
 
 	# Apply the changes to the configuration
 	foreach my $name ( sort keys %$diff ) {
@@ -304,6 +304,7 @@ sub config_get {
 		return $meta->default;
 
 	} else {
+
 		# Implement cleaning for many more data types
 
 	}
@@ -346,6 +347,7 @@ sub config_set {
 	# Apply to the relevant element
 	my $ctrl = $self->$name();
 	if ( $ctrl->can('config_set') ) {
+
 		# Allow specialised widgets to load their own setting
 		$ctrl->config_set( $meta, $value );
 
@@ -365,9 +367,7 @@ sub config_set {
 		$ctrl->SetPath($value);
 
 	} elsif ( $ctrl->isa('Wx::ColourPickerCtrl') ) {
-		$ctrl->SetColour( 
-			Padre::Wx::color($value)
-		);
+		$ctrl->SetColour( Padre::Wx::color($value) );
 
 	} elsif ( $ctrl->isa('Wx::FontPickerCtrl') ) {
 		my $font = Padre::Wx::native_font($value);

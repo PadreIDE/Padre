@@ -65,6 +65,7 @@ sub run {
 	my @recent = ();
 	foreach my $file ( @{ $self->{history} } ) {
 		next if $skip{$file};
+
 		# TRACE("Checking $file\n") if DEBUG;
 
 		# Abort the task if we've been cancelled

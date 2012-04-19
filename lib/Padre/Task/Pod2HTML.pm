@@ -24,8 +24,8 @@ sub new {
 
 	# We need either a file name or the POD
 	if ( defined $self->{file} ) {
-		unless ( File::Spec->file_name_is_absolute($self->{file}) ) {
-			$self->{file} = File::Spec->rel2abs($self->{file});
+		unless ( File::Spec->file_name_is_absolute( $self->{file} ) ) {
+			$self->{file} = File::Spec->rel2abs( $self->{file} );
 		}
 		unless ( -f $self->{file} and -r _ ) {
 			return undef;
@@ -65,19 +65,15 @@ sub run {
 	require Padre::Pod2HTML;
 	if ( defined $self->{file} ) {
 		local $@;
-		$html = eval {
-			Padre::Pod2HTML->file2html($self->{file});
-		};
-		if ( $@ ) {
+		$html = eval { Padre::Pod2HTML->file2html( $self->{file} ); };
+		if ($@) {
 			$self->{errstr} = "Error while rendering '$self->{file}'";
 			return 1;
 		}
 	} else {
 		local $@;
-		$html = eval {
-			Padre::Pod2HTML->pod2html($self->{text});
-		};
-		if ( $@ ) {
+		$html = eval { Padre::Pod2HTML->pod2html( $self->{text} ); };
+		if ($@) {
 			$self->{errstr} = "Error while rendering POD";
 			return 1;
 		}

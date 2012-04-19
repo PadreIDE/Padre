@@ -3,9 +3,9 @@ package Padre::Task::SLOC;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec    ();
-use Padre::Task   ();
-use Padre::SLOC   ();
+use File::Spec  ();
+use Padre::Task ();
+use Padre::SLOC ();
 use Padre::Logger;
 
 our $VERSION = '0.95';
@@ -71,7 +71,7 @@ sub run {
 
 		# Abort the task if we've been cancelled
 		if ( $self->cancelled ) {
-			TRACE(__PACKAGE__ . ' task has been cancelled') if DEBUG;
+			TRACE( __PACKAGE__ . ' task has been cancelled' ) if DEBUG;
 			$self->tell_status;
 			return 1;
 
@@ -100,7 +100,7 @@ sub run {
 
 			# Abort the task if we've been cancelled
 			if ( $self->cancelled ) {
-				TRACE(__PACKAGE__ . ' task has been cancelled') if DEBUG;
+				TRACE( __PACKAGE__ . ' task has been cancelled' ) if DEBUG;
 				$self->tell_status;
 				return 1;
 			}

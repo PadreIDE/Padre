@@ -144,6 +144,7 @@ L<Padre::TaskManager> instance.
 =cut
 
 sub task_manager {
+
 	# TRACE( $_[0] ) if DEBUG;
 	return $_[0]->can('current')
 		? $_[0]->current->ide->task_manager
@@ -159,6 +160,7 @@ The C<task_revision> accessor returns the current task revision for an object.
 =cut
 
 sub task_revision {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
@@ -192,6 +194,7 @@ allowing them to terminate elegantly (if they handle
 =cut
 
 sub task_reset {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	if ( $self->{task_revision} ) {
@@ -246,6 +249,7 @@ Any other parameters are passed through the constructor method of the task.
 =cut
 
 sub task_request {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self  = shift;
 	my %param = @_;

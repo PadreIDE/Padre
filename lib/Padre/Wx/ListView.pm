@@ -11,7 +11,7 @@ our $VERSION = '0.95';
 our @ISA     = 'Wx::ListView';
 
 sub lock_update {
-	Wx::WindowUpdateLocker->new($_[0]);
+	Wx::WindowUpdateLocker->new( $_[0] );
 }
 
 # Set all columns at once and autosize

@@ -24,7 +24,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util ();
-use Padre::Wx ();
+use Padre::Wx    ();
 use Padre::Wx 'Html';
 use Padre::Role::Task ();
 
@@ -85,7 +85,7 @@ sub load_file {
 	);
 
 	# Place a temporary message in the HTML window
-	$self->SetPage( LOADING );
+	$self->SetPage(LOADING);
 }
 
 =pod
@@ -115,7 +115,7 @@ sub load_pod {
 	);
 
 	# Place a temporary message in the HTML window
-	$self->SetPage( LOADING );
+	$self->SetPage(LOADING);
 }
 
 =pod
@@ -137,7 +137,7 @@ sub load_html {
 	my $html = shift;
 
 	# Handle task callback events
-	if ( Params::Util::_INSTANCE($html, 'Padre::Task::Pod2HTML') ) {
+	if ( Params::Util::_INSTANCE( $html, 'Padre::Task::Pod2HTML' ) ) {
 		if ( $html->errstr ) {
 			$html = $html->errstr;
 		} elsif ( $html->html ) {

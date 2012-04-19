@@ -83,7 +83,7 @@ sub view_stop {
 	# foreach my $editor ( $self->main->editors ) {
 	# $editor->SetMarginWidth( 1, 0 );
 	# }
-	
+
 	return;
 }
 
@@ -153,6 +153,7 @@ sub on_delete_not_breakable_clicked {
 	);
 
 	for ( 0 .. $#tuples ) {
+
 		# say 'delete me';
 		$editor->MarkerDelete(
 			$tuples[$_][2] - 1,
@@ -262,10 +263,10 @@ sub on_show_project_click {
 # event handler delete_project_bp_clicked
 #######
 sub on_delete_project_bp_clicked {
-	my $self       = shift;
-	my $lock       = $self->main->lock('DB');
-	my $editor     = $self->current->editor;
-	my @tuples     = $self->{debug_breakpoints}->select(
+	my $self   = shift;
+	my $lock   = $self->main->lock('DB');
+	my $editor = $self->current->editor;
+	my @tuples = $self->{debug_breakpoints}->select(
 		'ORDER BY filename ASC',
 	);
 

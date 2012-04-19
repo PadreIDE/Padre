@@ -22,7 +22,7 @@ use Class::XSAccessor {
 };
 
 sub new {
-	my $class = shift;
+	my $class  = shift;
 	my $object = shift;
 	unless ( Params::Util::_INSTANCE( $object, 'Wx::Scintilla::TextCtrl' ) ) {
 		die "Did not provide a Wx::Scintilla::TextCtrl to lock";
@@ -34,14 +34,15 @@ sub new {
 
 	# Find the relative offset of the start of the selection from the
 	# top of the screen.
-	my $start  = $position > $anchor ? $anchor : $position;
-	my $end    = $position > $anchor ? $position : $anchor;
-	my $first  = $object->GetFirstVisibleLine;
+	my $start = $position > $anchor ? $anchor   : $position;
+	my $end   = $position > $anchor ? $position : $anchor;
+	my $first = $object->GetFirstVisibleLine;
 	my $vfirst = $object->VisibleFromDocLine($first);
 	my $vstart = $object->VisibleFromDocLine($start);
 	my $screen = $object->GetLinesOnScreen;
 	my $vdelta = $vstart - $vfirst;
 	unless ( $vdelta >= 0 and $vdelta <= $screen ) {
+
 		# Select start is not visible on screen, do not store
 		$vdelta = undef;
 	}

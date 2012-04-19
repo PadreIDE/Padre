@@ -320,6 +320,7 @@ sub load {
 		X11     => Wx::wxX11,
 	);
 	foreach ( keys %constants ) {
+
 		# Prevent duplicates on 2nd or later runs
 		delete $constants{$_} if defined $seen{$_};
 	}

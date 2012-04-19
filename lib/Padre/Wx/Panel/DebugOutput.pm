@@ -79,10 +79,10 @@ sub debug_output {
 
 	$self->{output}->SetForegroundColour(RED);
 	$self->{output}->ChangeValue($output);
-		
+
 	# auto focus to panel debug output
 	$self->main->debugoutput->SetFocus;
-	
+
 	return;
 }
 #######
@@ -94,10 +94,10 @@ sub debug_output_black {
 
 	$self->{output}->SetForegroundColour(BLACK);
 	$self->{output}->ChangeValue($output);
-		
+
 	# auto focus to panel debug output
 	$self->main->debugoutput->SetFocus;
-	
+
 	return;
 }
 #######
@@ -109,10 +109,10 @@ sub debug_output_blue {
 
 	$self->{output}->SetForegroundColour(BLUE);
 	$self->{output}->ChangeValue($output);
-		
+
 	# auto focus to panel debug output
 	$self->main->debugoutput->SetFocus;
-	
+
 	return;
 }
 
@@ -125,10 +125,10 @@ sub debug_output_dark_gray {
 
 	$self->{output}->SetForegroundColour(DARK_GRAY);
 	$self->{output}->ChangeValue($output);
-		
+
 	# auto focus to panel debug output
 	$self->main->debugoutput->SetFocus;
-	
+
 	return;
 }
 ########
@@ -138,7 +138,7 @@ sub debug_status {
 	my $self   = shift;
 	my $status = shift;
 	$self->{status}->SetLabel($status);
-	return; 
+	return;
 }
 
 1;

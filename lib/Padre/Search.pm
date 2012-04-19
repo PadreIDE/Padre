@@ -39,7 +39,7 @@ our $COMPATIBLE = '0.93';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check params
 	unless ( defined $self->find_term ) {
@@ -100,16 +100,14 @@ sub search_regex {
 	}
 
 	# Compile the regex
-	my $search_regex = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
+	my $search_regex = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
 	return if $@;
 	return $search_regex;
 }
 
 sub equals {
-	my $self   = shift;
-	my $search = Params::Util::_INSTANCE(shift, 'Padre::Search') or return;
+	my $self = shift;
+	my $search = Params::Util::_INSTANCE( shift, 'Padre::Search' ) or return;
 	return Scalar::Util::refaddr($self) == Scalar::Util::refaddr($search);
 }
 
@@ -217,7 +215,6 @@ sub replace_all {
 
 
 
-
 #####################################################################
 # Editor Interaction
 
@@ -298,14 +295,15 @@ sub editor_replace_down {
 
 			# Move to the next match
 			if ( $i == $#matches ) {
+
 				# Wrap to the beginning of the document
 				$start = $matches[0]->[0];
 				$end   = $matches[0]->[1];
 			} else {
 				my $delta = $editor->GetSelectionEnd - $to;
-				my $down  = $matches[$i + 1];
-				$start    = $down->[0] + $delta;
-				$end      = $down->[1] + $delta;
+				my $down  = $matches[ $i + 1 ];
+				$start = $down->[0] + $delta;
+				$end   = $down->[1] + $delta;
 			}
 
 			last;
@@ -346,12 +344,13 @@ sub editor_replace_up {
 
 			# Move to the next match
 			if ( $i == 0 ) {
+
 				# Wrap to the end of the document
 				my $delta = $editor->GetSelectionEnd - $to;
 				$start = $matches[-1]->[0] + $delta;
 				$end   = $matches[-1]->[1] + $delta;
 			} else {
-				my $up = $matches[$i - 1];
+				my $up = $matches[ $i - 1 ];
 				$start = $up->[0];
 				$end   = $up->[1];
 			}
@@ -462,11 +461,11 @@ sub matches {
 	my %param = @_;
 
 	# Searches run in unicode
-	my $text  = Encode::encode( 'utf-8', delete $param{text}  );
+	my $text  = Encode::encode( 'utf-8', delete $param{text} );
 	my $regex = Encode::encode( 'utf-8', delete $param{regex} );
 
 	# Find all matches for the regex
-	my @matches  = ();
+	my @matches = ();
 	my $submatch = $param{submatch} || 0;
 	while ( $text =~ /$regex/g ) {
 		push @matches, [ $-[$submatch], $+[$submatch] ];
@@ -477,7 +476,7 @@ sub matches {
 
 	my $pair = [];
 	my $from = $param{from} || 0;
-	my $to   = $param{to}   || 0;
+	my $to   = $param{to} || 0;
 
 	if ( $param{backwards} ) {
 
@@ -520,7 +519,7 @@ sub match_count {
 # Support Functions
 
 sub _EDITOR {
-	unless ( Params::Util::_INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+	unless ( Params::Util::_INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		Carp::croak("Missing or invalid Padre::Ex::Editor param");
 	}
 	return $_[0];

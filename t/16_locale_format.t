@@ -15,16 +15,16 @@ use Padre::Locale::Format;
 # Integers
 
 my @integer = (
-	''        => '',
-	'Hello'   => 'Hello',
-	'0'       => '0',
-	'1'       => '1',
-	'12'      => '12',
-	'123'     => '123',
-	'1234'    => '1,234',
-	'12345'   => '12,345',
-	'123456'  => '123,456',
-	'1234567' => '1,234,567',
+	''         => '',
+	'Hello'    => 'Hello',
+	'0'        => '0',
+	'1'        => '1',
+	'12'       => '12',
+	'123'      => '123',
+	'1234'     => '1,234',
+	'12345'    => '12,345',
+	'123456'   => '123,456',
+	'1234567'  => '1,234,567',
 	'-1'       => '-1',
 	'-12'      => '-12',
 	'-123'     => '-123',
@@ -33,12 +33,11 @@ my @integer = (
 	'-123456'  => '-123,456',
 	'-1234567' => '-1,234,567',
 );
-is(
-	Padre::Locale::Format::integer(undef),
+is( Padre::Locale::Format::integer(undef),
 	'',
 	"integer undef --> ''",
 );
-while ( @integer ) {
+while (@integer) {
 	my $input = shift @integer;
 	my $want  = shift @integer;
 	my $have  = Padre::Locale::Format::integer($input);
@@ -53,7 +52,7 @@ while ( @integer ) {
 # Bytes
 
 my @bytes = (
-	'' => '',
+	''         => '',
 	'Hello'    => 'Hello',
 	'0'        => '0B',
 	'1'        => '1B',
@@ -65,12 +64,11 @@ my @bytes = (
 	'1000000'  => '976.6kB',
 	'10000000' => '9.5MB',
 );
-is(
-	Padre::Locale::Format::bytes(undef),
+is( Padre::Locale::Format::bytes(undef),
 	'',
 	"bytes undef --> ''",
 );
-while ( @bytes ) {
+while (@bytes) {
 	my $input = shift @bytes;
 	my $want  = shift @bytes;
 	my $have  = Padre::Locale::Format::bytes($input);

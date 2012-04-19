@@ -68,7 +68,7 @@ sub _on_ok_button_clicked {
 	# Open the selected menu item if the user pressed OK
 	my $selection = $self->_list->GetSelection;
 	return if $selection == Wx::NOT_FOUND;
-	my $action    = $self->_list->GetClientData($selection);
+	my $action = $self->_list->GetClientData($selection);
 	$self->Hide;
 	my %actions     = %{ Padre::ide->actions };
 	my $menu_action = $actions{ $action->{name} };
@@ -88,7 +88,7 @@ sub _on_ok_button_clicked {
 
 			eval { &$event($main); };
 			if ($@) {
-				$main->error(sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ));
+				$main->error( sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ) );
 				TRACE("Error while trying to perform Padre action: $@") if DEBUG;
 			} else {
 

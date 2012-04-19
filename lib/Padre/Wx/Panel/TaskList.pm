@@ -69,9 +69,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_method(
-				item_clicked => $_[1]->GetItem
-			);
+			$_[0]->idle_method( item_clicked => $_[1]->GetItem );
 		},
 	);
 
@@ -163,7 +161,8 @@ sub refresh {
 	SCOPE: {
 		local $@;
 		eval {
-			while ( $text =~ /$regexp/gim ) {
+			while ( $text =~ /$regexp/gim )
+			{
 				push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
 			}
 		};
@@ -233,8 +232,8 @@ sub item_clicked {
 	my $item   = shift or return;
 	my $tree   = $self->{tree};
 	my $data   = $tree->GetPlData($item) or return;
-	my $line   = $data->{line}           or return;
-	my $editor = $self->current->editor  or return;
+	my $line   = $data->{line} or return;
+	my $editor = $self->current->editor or return;
 	$editor->goto_pos_centerize($line);
 	$editor->SetFocus;
 }

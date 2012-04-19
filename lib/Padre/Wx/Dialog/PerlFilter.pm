@@ -296,31 +296,36 @@ sub run {
 
 	local $@;
 
-	my $code = eval "use utf8;package ".__PACKAGE__."::Sandbox;sub{$source\n}";
+	my $code = eval "use utf8;package " . __PACKAGE__ . "::Sandbox;sub{$source\n}";
 
 	unless ($@) {
 		if ( $filter_mode == $self->{filter_mode_values}->{default} ) {
 			$result_text = eval {
-				local $_  = $original_text;
+				local $_ = $original_text;
 				$code->();
-				$_
-			}
+				$_;
+			};
 		} elsif ( $filter_mode == $self->{filter_mode_values}->{std} ) {
 
 			# TODO: use STDIN/STDOUT
 			#		$_ = $original_text;
 			#		$result_text = eval $source;
 		} elsif ( $filter_mode == $self->{filter_mode_values}->{map} ) {
-			$result_text = eval { join( $nl, map { $code->() } split( /$nl/, $original_text ) ) };
+			$result_text = eval {
+				join( $nl, map { $code->() } split( /$nl/, $original_text ) );
+			};
 		} elsif ( $filter_mode == $self->{filter_mode_values}->{grep} ) {
-			$result_text = eval { join( $nl, grep { $code->() } split( /$nl/, $original_text ) ) };
+			$result_text = eval {
+				join( $nl, grep { $code->() } split( /$nl/, $original_text ) );
+			};
 		}
 	}
 
 	# Common eval error handling
 	if ($@) {
+
 		# TODO: Set text color red
-		$self->{result_text}->SetValue(Wx::gettext("Error:\n") . $@);
+		$self->{result_text}->SetValue( Wx::gettext("Error:\n") . $@ );
 	} elsif ( defined $result_text ) {
 		$self->{result_text}->SetValue($result_text);
 	} else {

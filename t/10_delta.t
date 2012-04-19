@@ -42,14 +42,13 @@ SCOPE: {
 		'position',
 		[ 1, 2, 'foo' ],
 		[ 8, 9, 'bar' ],
-		[ 6, 3, ''    ],
+		[ 6, 3, '' ],
 	)->tidy;
 	isa_ok( $delta, 'Padre::Delta' );
 	is_deeply(
 		$delta->{targets},
-		[
-			[ 8, 9, 'bar' ],
-			[ 3, 6, ''    ],
+		[   [ 8, 9, 'bar' ],
+			[ 3, 6, '' ],
 			[ 1, 2, 'foo' ],
 		],
 		'Targets are tidied correctly',
@@ -65,22 +64,19 @@ SCOPE: {
 
 SCOPE: {
 	my $delta = Padre::Delta->from_diff(
-		[
-			[ '-', 8, 'use 5.008;' ],
+		[   [ '-', 8, 'use 5.008;' ],
 			[ '+', 8, 'use 5.008005;' ],
 			[ '+', 9, 'use utf8;' ],
 		],
-		[
-			[ '-', 36, "\t\tWx::gettext(\"Set Bookmark\") . \":\"," ],
+		[   [ '-', 36, "\t\tWx::gettext(\"Set Bookmark\") . \":\"," ],
 			[ '+', 37, "\t\tWx::gettext(\"Set Bookmark:\")," ],
 		],
-		[
-			[ '-', 36, "\t\tWx::gettext(\"Existing Bookmark\") . \":\"," ],
+		[   [ '-', 36, "\t\tWx::gettext(\"Existing Bookmark\") . \":\"," ],
 			[ '+', 37, "\t\tWx::gettext(\"Existing Bookmark:\")," ],
 		],
 	);
 	isa_ok( $delta, 'Padre::Delta' );
-	ok( ! $delta->null, '->null false' );
+	ok( !$delta->null, '->null false' );
 }
 
 
@@ -130,6 +126,7 @@ END_TEXT
 
 # Create the FROM-->TO delta and see if it actually changes FROM to TO
 SCOPE: {
+
 	# Create the delta
 	my $delta = Padre::Delta->from_scalars( \$FROM1 => \$TO1 );
 	isa_ok( $delta, 'Padre::Delta' );
@@ -211,6 +208,7 @@ END_TEXT
 
 # Create the FROM-->TO delta and see if it actually changes FROM to TO
 SCOPE: {
+
 	# Create the delta
 	my $delta = Padre::Delta->from_scalars( \$FROM2 => \$TO2 );
 	isa_ok( $delta, 'Padre::Delta' );

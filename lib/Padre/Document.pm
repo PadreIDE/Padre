@@ -122,8 +122,8 @@ or to set it to "Default by extension".
 use 5.008;
 use strict;
 use warnings;
-use Carp                    ();
-use File::Spec          3.2 (); # 3.21 needed for volume-safe abs2rel
+use Carp ();
+use File::Spec 3.2 (); # 3.21 needed for volume-safe abs2rel
 use File::Temp              ();
 use Params::Util            ();
 use Wx::Scintilla::Constant ();
@@ -315,9 +315,7 @@ sub rebless {
 	}
 
 	require Padre::Wx::Scintilla;
-	$self->set_highlighter(
-		Padre::Wx::Scintilla->highlighter($self)
-	);
+	$self->set_highlighter( Padre::Wx::Scintilla->highlighter($self) );
 
 	return;
 }
@@ -327,11 +325,11 @@ sub current {
 }
 
 sub config {
-	$_[0]->{config} or $_[0]->current->config
+	$_[0]->{config} or $_[0]->current->config;
 }
 
 sub mime {
-	Padre::MIME->find($_[0]->mimetype);
+	Padre::MIME->find( $_[0]->mimetype );
 }
 
 # Abstract methods, each subclass should implement it
@@ -380,7 +378,7 @@ sub colourize {
 	my $self   = shift;
 	my $editor = $self->editor;
 	require Padre::Wx::Scintilla;
-	my $lexer  = Padre::Wx::Scintilla->lexer( $self->mimetype );
+	my $lexer = Padre::Wx::Scintilla->lexer( $self->mimetype );
 	$editor->SetLexer($lexer);
 	TRACE("colourize called") if DEBUG;
 
@@ -397,7 +395,8 @@ sub colourize {
 sub colorize {
 	my $self   = shift;
 	my $module = $self->highlighter;
-	unless ( $module ) {
+	unless ($module) {
+
 		# TO DO sometime this happens when I open Padre with several file
 		# I think this can be somehow related to the quick (or slow ?) switching of
 		# what is the current document while the code is still running.
@@ -414,7 +413,7 @@ sub colorize {
 		eval "use $module";
 		if ($@) {
 			my $name = $self->{file} ? $self->{file}->filename : $self->get_title;
-			Carp::cluck( "Could not load module '$module' for file '$name'\n" );
+			Carp::cluck("Could not load module '$module' for file '$name'\n");
 			return;
 		}
 	}
@@ -980,7 +979,7 @@ L</text_replace> or ideally L</text_delta> should be used instead.
 =cut
 
 sub text_set {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->editor or return;
 	$editor->SetText(shift);
 	$editor->refresh_notebook;
@@ -1035,7 +1034,7 @@ and no changes were needed, or C<undef> if not passed a L<Padre::Delta>.
 =cut
 
 sub text_delta {
-	my $self  = shift;
+	my $self = shift;
 	my $delta = Params::Util::_INSTANCE( shift, 'Padre::Delta' ) or return;
 	return 0 if $delta->null;
 
@@ -1442,7 +1441,7 @@ sub transform {
 	my $driver = Params::Util::_DRIVER( delete $args{class}, 'Padre::Transform' ) or return;
 	my $editor = $self->editor;
 	my $input  = $editor->GetText;
-	my $delta  = $driver->new(%args)->scalar_delta(\$input);
+	my $delta  = $driver->new(%args)->scalar_delta( \$input );
 	$delta->to_editor($editor);
 	return 1;
 }

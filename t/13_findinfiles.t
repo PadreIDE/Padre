@@ -8,9 +8,9 @@ use Test::More tests => 7;
 use Test::NoWarnings;
 use File::Spec ();
 use t::lib::Padre;
-use Padre::MIME ();
-use Padre::Project::Perl ();
-use Padre::Search ();
+use Padre::MIME              ();
+use Padre::Project::Perl     ();
+use Padre::Search            ();
 use Padre::Task::FindInFiles ();
 
 
@@ -21,7 +21,7 @@ use Padre::Task::FindInFiles ();
 # Mainly check support for MIME filtering in Padre::Task::FindInFiles
 
 SCOPE: {
-	my $output = [ ];
+	my $output = [];
 	my $task   = Padre::Task::FindInFiles->new(
 		project => Padre::Project::Perl->new(
 			root     => File::Spec->curdir,
@@ -33,14 +33,14 @@ SCOPE: {
 			find_term => 'Foo',
 			find_case => 1,
 		),
-		output  => $output,
+		output => $output,
 	);
 	isa_ok( $task, 'Padre::Task::FindInFiles' );
 
 	# Execute the task in the foreground
 	ok( scalar( $task->prepare ), '->prepare ok' );
-	ok( scalar( $task->run     ), '->run ok'     );
-	ok( scalar( $task->finish  ), '->finish ok'  );
+	ok( scalar( $task->run ),     '->run ok' );
+	ok( scalar( $task->finish ),  '->finish ok' );
 
 	# Between 10 and 30 Perl files (20 at time of writing) contain
 	# the term Foo. You may need to adjust these numbers later.

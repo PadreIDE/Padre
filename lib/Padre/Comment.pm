@@ -41,7 +41,7 @@ my %KEYS = ();
 
 sub register {
 	my $class = shift;
-	while ( @_ ) {
+	while (@_) {
 		my $type = shift;
 		my $key  = shift;
 		unless ( $MIME{$type} = $KEYS{$key} ) {
@@ -87,10 +87,10 @@ sub get {
 
 sub find {
 	my $class = shift;
-	my $mime  = Params::Util::_INSTANCE($_[0], 'Padre::MIME')
-		|| Padre::MIME->find($_[0]) or return undef;
+	my $mime = Params::Util::_INSTANCE( $_[0], 'Padre::MIME' ) || Padre::MIME->find( $_[0] )
+		or return undef;
 	foreach my $type ( $mime->superpath ) {
-		return $MIME{$type} if $MIME{$type}
+		return $MIME{$type} if $MIME{$type};
 	}
 	return undef;
 }
@@ -104,7 +104,7 @@ sub find {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check params
 	unless ( defined $self->{key} ) {
@@ -154,7 +154,7 @@ sub line_match {
 	unless ( defined $self->{line_match} ) {
 		my $left  = $self->left;
 		my $right = $self->right;
-		if ( $right ) {
+		if ($right) {
 			$self->{line_match} = qr/^\s*\Q$left\E.*\Q$right\E$/;
 		} elsif ( $left =~ /^\s/ ) {
 			$self->{line_match} = qr/^\Q$left/;

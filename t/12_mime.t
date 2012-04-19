@@ -15,7 +15,7 @@ use Padre::MIME;
 
 
 ######################################################################
-# Basic checks 
+# Basic checks
 
 # Check an known-bad type
 my $unknown = Padre::MIME->find('foo/bar');
@@ -28,7 +28,7 @@ foreach my $type ( sort Padre::MIME->types ) {
 	my $mime = Padre::MIME->find($type);
 	isa_ok( $mime, 'Padre::MIME' );
 	is( $mime->type, $type, "$type: ->type ok" );
-	ok( $mime->name, "$type: ->name ok" );
+	ok( $mime->name,           "$type: ->name ok" );
 	ok( defined $mime->binary, "$type: ->binary ok" );
 	SKIP: {
 		skip( 'Binary files are not supported', 1 ) if $mime->binary;
@@ -60,7 +60,7 @@ SCOPE: {
 
 # Detect the mime type using svn metadata
 SKIP: {
-	skip("Not an SVN checkout", 3) unless -e '.svn';
+	skip( "Not an SVN checkout", 3 ) unless -e '.svn';
 
 	my $file = catfile( 't', 'perl', 'zerolengthperl' );
 	ok( -f $file, "Found zero length perl file $file" );
@@ -72,5 +72,5 @@ SKIP: {
 		file => $file,
 		svn  => 1,
 	);
-	is( $type2, 'application/x-perl', '->detect(zerolengthsvn)' );	
+	is( $type2, 'application/x-perl', '->detect(zerolengthsvn)' );
 }

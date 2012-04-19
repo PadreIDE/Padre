@@ -74,7 +74,7 @@ if ( grep {/^-/} @ARGV ) {
 		'locale=s'      => \$LOCALE,
 
 		# Keep this sekrit for now --ADAMK
-		'preload'       => \$PRELOAD,
+		'preload' => \$PRELOAD,
 	) or $USAGE = 1;
 }
 
@@ -159,12 +159,13 @@ SCOPE: {
 		#		call qr/^Padre::(?:Locker|Wx::Progress)::/
 		#	);
 	};
-	if ( $@ ) {
+	if ($@) {
+
 		# Major startup failure!
 		# Handle a few specialised cases we understand
 		if ( $@ =~ /Schema user_version mismatch/ ) {
 			error("Padre configuration database schema invalid");
-			if ( WIN32 ) {
+			if (WIN32) {
 				require Win32;
 				my $rv = Win32::MsgBox(
 					"Reset your configuration to try and fix it?",
@@ -207,10 +208,11 @@ $ide->run;
 
 sub message {
 	my $message = shift;
-	if ( WIN32 ) {
+	if (WIN32) {
+
 		# No console under wperl, so use native Win32 messaging
 		require Win32;
-		Win32::MsgBox($message, 0, "Padre"); 
+		Win32::MsgBox( $message, 0, "Padre" );
 	} else {
 		print $message . "\n";
 	}
@@ -219,10 +221,11 @@ sub message {
 
 sub error {
 	my $message = shift;
-	if ( WIN32 ) {
+	if (WIN32) {
+
 		# No console under wperl, so use native Win32 messaging
 		require Win32;
-		Win32::MsgBox($message, 0, "Padre"); 
+		Win32::MsgBox( $message, 0, "Padre" );
 	} else {
 		print STDERR $message . "\n";
 	}

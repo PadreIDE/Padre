@@ -156,7 +156,7 @@ sub run {
 		timeout    => 60,
 		cookie_jar => $cookie_jar,
 	);
-	unless ( Padre::Constant::WIN32 ) {
+	unless (Padre::Constant::WIN32) {
 		$useragent->env_proxy;
 	}
 

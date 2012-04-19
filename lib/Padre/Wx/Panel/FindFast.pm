@@ -34,7 +34,7 @@ sub new {
 			CaptionVisible => 0,
 			Layer          => 1,
 			PaneBorder     => 0,
-		)->Bottom->Hide,
+			)->Bottom->Hide,
 	);
 
 	return $self;
@@ -51,7 +51,7 @@ sub on_char {
 	my $self  = shift;
 	my $event = shift;
 
-	unless ( $event->HasModifiers) {
+	unless ( $event->HasModifiers ) {
 		my $key = $event->GetKeyCode;
 
 		# Advance to the next match on enter
@@ -82,9 +82,11 @@ sub on_text {
 
 	# Do we have a search
 	if ( $self->refresh ) {
+
 		# Reset the background colour
 		$self->{find_term}->SetBackgroundColour( $self->base_colour );
 	} else {
+
 		# Clear any existing select to prevent
 		# showing a stale match result.
 		my $position = $editor->GetCurrentPos;
@@ -133,7 +135,7 @@ sub restore {
 	my $before = $self->{before} or return;
 	my $editor = $self->current->editor or return;
 	$editor->GetCurrentPos == $editor->GetAnchor or return;
-	$editor->GetLineCount  == $before->{lines} or return;
+	$editor->GetLineCount == $before->{lines} or return;
 
 	# Set the selection
 	my $lock = $editor->lock_update;
@@ -185,7 +187,7 @@ sub search_previous {
 # Main Methods
 
 sub show {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 
 	# Capture the selection location before we opened the panel
@@ -251,7 +253,7 @@ sub lock_update {
 }
 
 sub base_colour {
-	Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_WINDOW );
+	Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 }
 
 sub bad_colour {
@@ -260,7 +262,7 @@ sub bad_colour {
 	return Wx::Colour->new(
 		$base->Red,
 		int( $base->Green * 0.5 ),
-		int( $base->Blue  * 0.5 ),
+		int( $base->Blue * 0.5 ),
 	);
 }
 

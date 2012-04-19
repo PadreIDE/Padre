@@ -42,10 +42,10 @@ use File::Spec ();
 # Padre::Wx should not implement anything using Wx modules.
 # We make an exception in this case, because we're only using the locale
 # logic in Wx, which isn't related to widgets anyway.
-use Padre::Constant  ();
-use Padre::Util      ();
-use Padre::Config    ();
-use Padre::Wx        ();
+use Padre::Constant ();
+use Padre::Util     ();
+use Padre::Config   ();
+use Padre::Wx       ();
 use Padre::Locale::T;
 use Padre::Logger;
 

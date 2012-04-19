@@ -54,6 +54,7 @@ sub new {
 sub version {
 	my $self = shift;
 	unless ( $self->{state} eq 'LOGOUT' ) {
+
 		# Not sure what to do with this...
 		return undef;
 	}
@@ -67,7 +68,8 @@ sub version {
 }
 
 sub version_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -86,6 +88,7 @@ sub login {
 	my $self = shift;
 
 	unless ( $self->{state} eq 'LOGOUT' ) {
+
 		# Not sure what to do with this...
 		return undef;
 	}
@@ -94,13 +97,14 @@ sub login {
 	$self->task_reset;
 	$self->task_post(
 		url       => 'login',
-		query     => { }, # TODO: stuff
+		query     => {},            # TODO: stuff
 		on_finish => 'login_finish',
 	);
 }
 
 sub login_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -121,14 +125,15 @@ sub register {
 	# Reset task state and send the request
 	$self->task_reset;
 	$self->task_post(
-		url => 'register',
-		query => { }, # TODO: stuff
+		url       => 'register',
+		query     => {},               # TODO: stuff
 		on_finish => 'register_finish',
 	);
 }
 
 sub register_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -157,7 +162,8 @@ sub pull {
 }
 
 sub pull_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -186,7 +192,8 @@ sub push {
 }
 
 sub push_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -215,7 +222,8 @@ sub delete {
 }
 
 sub delete_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -244,7 +252,8 @@ sub logout {
 }
 
 sub logout_finish {
-	my $self     = shift;
+	my $self = shift;
+
 	#my $response = shift->response or return;
 
 	# TODO: To be completed
@@ -271,6 +280,7 @@ sub telemetry {
 
 sub telemetry_finish {
 	my $self = shift;
+
 	#my $response = $self->response or return;
 
 	# TODO: To be completed
@@ -286,7 +296,7 @@ sub telemetry_finish {
 # Padre::Task::LWP Integration
 
 sub task_get {
-	shift->task_request( 
+	shift->task_request(
 		method => 'GET',
 		@_,
 	);
@@ -296,6 +306,7 @@ sub task_put {
 	shift->task_request(
 		method => 'GET',
 		@_,
+
 		# TODO: Document content here
 	);
 }
@@ -346,12 +357,12 @@ sub config {
 
 sub encode {
 	require JSON::XS;
-	JSON::XS->new->encode($_[1]);
+	JSON::XS->new->encode( $_[1] );
 }
 
 sub decode {
 	require JSON::XS;
-	JSON::XS->new->decode($_[1]);
+	JSON::XS->new->decode( $_[1] );
 }
 
 1;

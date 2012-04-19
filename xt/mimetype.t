@@ -48,16 +48,13 @@ my %test_files = (
 );
 
 my %existing_test_files = (
-	'broken.bin' => '', # regression test for ticket #900
+	'broken.bin'                     => '',                  # regression test for ticket #900
 	'rename_variable_stress_test.pl' => 'application/x-perl',
 );
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
-my $tests = 2 * @files
-	+ scalar( keys %test_texts ) 
-	+ scalar( keys %test_files )
-	+ scalar( keys %existing_test_files )
-	+ 1;
+my $tests =
+	2 * @files + scalar( keys %test_texts ) + scalar( keys %test_files ) + scalar( keys %existing_test_files ) + 1;
 
 plan( tests => $tests );
 
@@ -70,16 +67,14 @@ Padre::MIME->find('application/x-perl6')->plugin(__PACKAGE__);
 foreach my $file (@files) {
 	$file = "lib/$file";
 	my $text = slurp($file);
-	is(
-		Padre::MIME->detect(
+	is( Padre::MIME->detect(
 			text => $text,
 			file => $file,
 		),
 		'application/x-perl',
 		"$file with filename",
 	);
-	is(
-		Padre::MIME->detect(
+	is( Padre::MIME->detect(
 			text => $text,
 		),
 		'application/x-perl',
@@ -89,8 +84,7 @@ foreach my $file (@files) {
 
 # Some fixed test texts
 foreach my $text ( sort( keys(%test_texts) ) ) {
-	is(
-		Padre::MIME->detect(
+	is( Padre::MIME->detect(
 			text => $text,
 		),
 		$test_texts{$text},
@@ -100,8 +94,7 @@ foreach my $text ( sort( keys(%test_texts) ) ) {
 
 # Some fixed test filenames
 foreach my $file ( sort keys %test_files ) {
-	is(
-		Padre::MIME->detect(
+	is( Padre::MIME->detect(
 			file => $file,
 		),
 		$test_files{$file},
@@ -120,8 +113,7 @@ foreach my $file ( sort keys %existing_test_files ) {
 		$text = Encode::decode( $encoding, $text );
 	}
 
-	is(
-		Padre::MIME->detect(
+	is( Padre::MIME->detect(
 			text => $text,
 		),
 		$existing_test_files{$file},

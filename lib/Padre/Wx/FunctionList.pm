@@ -3,15 +3,15 @@ package Padre::Wx::FunctionList;
 use 5.008005;
 use strict;
 use warnings;
-use Carp                  ();
-use Scalar::Util          ();
-use Params::Util          ();
-use Padre::Feature        ();
-use Padre::Role::Task     ();
-use Padre::Wx::Role::View ();
-use Padre::Wx::Role::Main ();
+use Carp                     ();
+use Scalar::Util             ();
+use Params::Util             ();
+use Padre::Feature           ();
+use Padre::Role::Task        ();
+use Padre::Wx::Role::View    ();
+use Padre::Wx::Role::Main    ();
 use Padre::Wx::Role::Context ();
-use Padre::Wx             ();
+use Padre::Wx                ();
 
 our $VERSION = '0.95';
 our @ISA     = qw{
@@ -82,7 +82,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			$self->on_list_item_activated($_[1]);
+			$self->on_list_item_activated( $_[1] );
 		}
 	);
 
@@ -102,7 +102,7 @@ sub new {
 	Wx::Event::EVT_KEY_UP(
 		$self->{list},
 		sub {
-			$self->on_search_key_up($_[1]);
+			$self->on_search_key_up( $_[1] );
 		},
 	);
 
@@ -110,7 +110,7 @@ sub new {
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
-			$self->on_search_char($_[1]);
+			$self->on_search_char( $_[1] );
 		},
 	);
 
@@ -252,16 +252,19 @@ sub on_context_menu {
 
 	# Try to determine where to show the context menu
 	if ( $event->isa('Wx::MouseEvent') ) {
+
 		# Position is already window relative
 		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
 
 	} elsif ( $event->can('GetPosition') ) {
+
 		# Assume other event positions are screen relative
 		my $screen = $event->GetPosition;
 		my $client = $self->ScreenToClient($screen);
 		$self->PopupMenu( $menu->wx, $client->x, $client->y );
 
 	} else {
+
 		# Probably a wxCommandEvent
 		# TO DO Capture a better location from the mouse directly
 		$self->PopupMenu( $menu->wx, 50, 50 );

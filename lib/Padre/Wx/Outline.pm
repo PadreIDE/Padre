@@ -68,9 +68,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_method(
-				item_activated => $_[1]->GetItem
-			);
+			$_[0]->idle_method( item_activated => $_[1]->GetItem );
 		},
 	);
 
@@ -129,19 +127,18 @@ sub new {
 # Event Handlers
 
 sub on_tree_item_right_click {
-	my $self   = shift;
-	my $event  = shift;
-	my $tree   = $self->{tree};
-	my $item   = $event->GetItem         or return;
-	my $data   = $tree->GetPlData($item) or return;
-	my $show   = 0;
-	my $menu   = Wx::Menu->new;
+	my $self  = shift;
+	my $event = shift;
+	my $tree  = $self->{tree};
+	my $item  = $event->GetItem or return;
+	my $data  = $tree->GetPlData($item) or return;
+	my $show  = 0;
+	my $menu  = Wx::Menu->new;
 
 	if ( defined $data->{line} and $data->{line} > 0 ) {
 		my $goto = $menu->Append( -1, Wx::gettext('&Go to Element') );
 		Wx::Event::EVT_MENU(
-			$self,
-			$goto,
+			$self, $goto,
 			sub {
 				$self->item_activated($item);
 			},
@@ -152,8 +149,7 @@ sub on_tree_item_right_click {
 	if ( defined $data->{type} and $data->{type} =~ /^(?:modules|pragmata)$/ ) {
 		my $pod = $menu->Append( -1, Wx::gettext('Open &Documentation') );
 		Wx::Event::EVT_MENU(
-			$self,
-			$pod,
+			$self, $pod,
 			sub {
 
 				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
@@ -240,7 +236,7 @@ sub render {
 	my $self = shift;
 	my $data = $self->{data};
 	my $term = quotemeta $self->{search}->GetValue;
-	my $lock = Wx::WindowUpdateLocker->new($self->{tree});
+	my $lock = Wx::WindowUpdateLocker->new( $self->{tree} );
 
 	# Clear any old content
 	$self->clear;
@@ -303,7 +299,7 @@ sub item_activated {
 	my $item = shift or return;
 	my $tree = $self->{tree};
 	my $data = $tree->GetPlData($item) or return;
-	my $line = $data->{line}           or return;
+	my $line = $data->{line} or return;
 	$self->select_line_in_editor($line);
 }
 
@@ -376,9 +372,9 @@ sub enable {
 
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
-	my $tree        = $self->{tree};
-	my $term = quotemeta $self->{search}->GetValue;
-	my $images      = $self->{images};
+	my $tree   = $self->{tree};
+	my $term   = quotemeta $self->{search}->GetValue;
+	my $images = $self->{images};
 
 	my %type_caption = (
 		pragmata   => Wx::gettext('Pragmata'),

@@ -29,6 +29,7 @@ our $COMPATIBLE = '0.93';
 our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );
 
 BEGIN {
+
 	# Master storage of the settings
 	%SETTING = ();
 
@@ -182,7 +183,7 @@ sub write {
 		map { $_ => $self->$_() } sort keys %STARTUP
 	);
 	open( my $FILE, '>', Padre::Constant::CONFIG_STARTUP ) or return 1;
-	print $FILE map { "$_\n$startup{$_}\n" } sort keys %startup or return 1;
+	print $FILE map {"$_\n$startup{$_}\n"} sort keys %startup or return 1;
 	close $FILE or return 1;
 
 	return 1;
@@ -322,6 +323,7 @@ sub apply {
 
 	my $old = $self->$name();
 	if ( $old ne $new ) {
+
 		# Set the config value
 		$self->set( $name => $new );
 
@@ -330,7 +332,7 @@ sub apply {
 			require Padre::Config::Apply;
 			Padre::Config::Apply->can($name);
 		};
-		if ( $code ) {
+		if ($code) {
 			my $current = Padre::Current::_CURRENT(@_);
 			$code->( $current->main, $new, $old );
 		}
@@ -340,7 +342,7 @@ sub apply {
 }
 
 sub themes {
-	my $class = shift;
+	my $class          = shift;
 	my $core_directory = Padre::Util::sharedir('themes');
 	my $user_directory = File::Spec->catdir(
 		Padre::Constant::CONFIG_DIR,
@@ -525,11 +527,11 @@ setting(
 
 # Window
 setting(
-	name    => 'main_title',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	name  => 'main_title',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
 	default => ( Padre::Constant::PORTABLE ? 'Padre Portable' : 'Padre' ),
-	help    => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
+	help => _T('Contents of the window title') . _T('Several placeholders like the filename can be used'),
 );
 
 setting(
@@ -646,9 +648,9 @@ setting(
 );
 
 setting(
-	name    => 'main_directory_root',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HOST,
+	name  => 'main_directory_root',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -834,14 +836,14 @@ setting(
 		. 'run.stop;' . '|;'
 		. 'debug.launch;'
 		. 'debug.set_breakpoint;'
-		. 'debug.quit;'. '|;'
+		. 'debug.quit;' . '|;'
 );
 
 # Directory Tree Settings
 setting(
-	name    => 'default_projects_directory',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
+	name  => 'default_projects_directory',
+	type  => Padre::Constant::PATH,
+	store => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 
@@ -849,9 +851,9 @@ setting(
 
 # The default editor font should be Consolas 10pt on Vista and Windows 7
 setting(
-	name    => 'editor_font',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	name  => 'editor_font',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
 	default => Padre::Util::DISTRO =~ /^WIN(?:VISTA|7)$/ ? 'consolas 10' : '',
 );
 setting(
@@ -1188,9 +1190,9 @@ setting(
 	default => 9,
 );
 setting(
-	name    => 'threads_stacksize',
-	type    => Padre::Constant::INTEGER,
-	store   => Padre::Constant::HOST,
+	name  => 'threads_stacksize',
+	type  => Padre::Constant::INTEGER,
+	store => Padre::Constant::HOST,
 	default => Padre::Constant::WIN32 ? 4194304 : 0,
 	startup => 1,
 );
@@ -1272,9 +1274,9 @@ setting(
 # External tool integration
 
 setting(
-	name    => 'bin_shell',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
+	name  => 'bin_shell',
+	type  => Padre::Constant::PATH,
+	store => Padre::Constant::HOST,
 	default => Padre::Constant::WIN32 ? 'cmd.exe' : '',
 );
 

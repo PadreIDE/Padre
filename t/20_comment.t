@@ -9,7 +9,9 @@ use Params::Util;
 use t::lib::Padre;
 use Padre::MIME;
 use Padre::Comment;
+
 BEGIN {
+
 	# Calculate the plan automatically
 	my $types = scalar Padre::MIME->types;
 	my $tests = $types * 7 + 1;
@@ -38,14 +40,9 @@ foreach my $type ( sort Padre::MIME->types ) {
 	is( $mime->type, $type, "$type: Found Padre::MIME" );
 
 	SKIP: {
+
 		# We are only interested in cases where there are multiple comments
-		my @path = map {
-			$_->key
-		} grep {
-			defined $_
-		} map {
-			Padre::Comment->get($_)
-		} $mime->superpath;
+		my @path = map { $_->key } grep { defined $_ } map { Padre::Comment->get($_) } $mime->superpath;
 
 		# Skip on various conditions
 		if ( $mime->binary ) {
@@ -57,7 +54,7 @@ foreach my $type ( sort Padre::MIME->types ) {
 		ok( scalar(@path), "$type: Found at least one comment" );
 
 		# Look for nested duplicates
-		my $bad = grep { $path[$_-1] eq $path[$_] } ( 1 .. $#path );
+		my $bad = grep { $path[ $_ - 1 ] eq $path[$_] } ( 1 .. $#path );
 		is( $bad, 0, "$type: No duplicate comments in the path" );
 
 		# Can we find the comment object via the find method

@@ -102,12 +102,12 @@ sub new {
 	$self->add_menu_action(
 		'help.about',
 	);
-	
+
 	# Add the About2
 	$self->add_menu_action(
 		'help.about2',
 	);
-	
+
 	return $self;
 }
 

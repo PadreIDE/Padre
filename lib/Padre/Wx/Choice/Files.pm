@@ -16,8 +16,8 @@ our @ISA     = qw{
 };
 
 use constant OPTIONS => (
-	[ _T('All Files'), ''                    ],
-	[ _T('Text Files'), 'text/plain'         ],
+	[ _T('All Files'),  '' ],
+	[ _T('Text Files'), 'text/plain' ],
 	[ _T('Perl Files'), 'application/x-perl' ],
 );
 
@@ -27,7 +27,7 @@ sub new {
 
 	# Fill the type data
 	$self->Clear;
-	foreach my $type ( OPTIONS ) {
+	foreach my $type (OPTIONS) {
 		$self->Append( Wx::gettext( $type->[0] ), $type->[1] );
 	}
 	$self->SetSelection(0);

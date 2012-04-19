@@ -39,7 +39,7 @@ sub new {
 	my $self  = $class->SUPER::new($panel);
 
 	# Create the image list
-	my $tree   = $self->{tree};
+	my $tree = $self->{tree};
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{images} = {
 		folder => $images->Add(
@@ -219,7 +219,7 @@ sub search {
 	}
 
 	# Save a copy of the search in case we want to repeat it
-	$self->{search} = { %param };
+	$self->{search} = {%param};
 
 	# Kick off the search task
 	$self->task_reset;
@@ -262,6 +262,7 @@ sub search_run {
 }
 
 sub search_message {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
@@ -269,6 +270,7 @@ sub search_message {
 }
 
 sub search_timer {
+
 	# TRACE( $_[0] ) if DEBUG;
 	$_[0]->search_render;
 }
@@ -334,7 +336,7 @@ sub search_render {
 	# Add the file nodes to the tree
 	my $images = $self->{images};
 	my $lock   = $tree->lock_scroll;
-	foreach my $entry ( @$queue ) {
+	foreach my $entry (@$queue) {
 		my $path  = shift @$entry;
 		my $name  = $path->name;
 		my $dir   = File::Spec->catfile( $task->root, $path->dirs );
@@ -353,8 +355,7 @@ sub search_render {
 		my $item = $tree->AppendItem( $root, $full, $image );
 		$tree->SetPlData(
 			$item,
-			{
-				dir  => $dir,
+			{   dir  => $dir,
 				file => $name,
 			}
 		);
@@ -372,8 +373,7 @@ sub search_render {
 			);
 			$tree->SetPlData(
 				$line,
-				{
-					dir  => $dir,
+				{   dir  => $dir,
 					file => $name,
 					line => $row->[0],
 					text => $row->[1],
@@ -458,8 +458,8 @@ sub item_clicked {
 	my $item = shift;
 	my $tree = $self->{tree};
 	my $data = $tree->GetPlData($item) or return;
-	my $dir  = $data->{dir}            or return;
-	my $file = $data->{file}           or return;
+	my $dir  = $data->{dir} or return;
+	my $file = $data->{file} or return;
 	my $path = File::Spec->catfile( $dir, $file );
 
 	if ( defined $data->{line} ) {

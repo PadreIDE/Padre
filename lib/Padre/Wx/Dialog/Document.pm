@@ -64,7 +64,7 @@ sub refresh {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document or return;
-	my $editor   = $current->editor   or return;
+	my $editor   = $current->editor or return;
 	my $mime     = $document->mime;
 
 	# Find the document encoding
@@ -81,12 +81,12 @@ sub refresh {
 	$self->{document_type}->SetLabel( $mime->name );
 	$self->{document_class}->SetLabel( Scalar::Util::blessed($document) );
 	$self->{mime_type}->SetLabel( $mime->type );
-	$self->{encoding}->SetLabel( $encoding );
+	$self->{encoding}->SetLabel($encoding);
 	$self->{newline_type}->SetLabel( $document->newline_type );
 
 	# Update the overall document statistics
 	SCOPE: {
-		my $text  = $editor->GetText;
+		my $text = $editor->GetText;
 		my @words = $text =~ /(\w+)/g;
 		$text =~ s/\s//g;
 		my $sloc = Padre::SLOC->new;
@@ -127,7 +127,7 @@ sub refresh {
 
 		# Set the colour of the selection labels
 		my $colour = length($text) ? $self->{strong} : $self->{weak};
-		foreach my $field ( @SELECTION_FIELDS ) {
+		foreach my $field (@SELECTION_FIELDS) {
 			$self->{$field}->SetForegroundColour($colour);
 		}
 	}

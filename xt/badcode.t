@@ -272,28 +272,29 @@ foreach my $module ( sort keys %modules ) {
 		my %seen   = ();
 		my $tokens = $document->find(
 			sub {
+
 				# Start with a candidate foo method name
 				$_[1]->isa('PPI::Token::Word') or return '';
-				my $method = $_[1]->content    or return '';
-				_IDENTIFIER($method)           or return '';
-				$seen{$method}++              and return '';
-				Padre::Current->can($method)   or return '';
-				$module->can($method)          or return '';
+				my $method = $_[1]->content or return '';
+				_IDENTIFIER($method) or return '';
+				$seen{$method}++ and return '';
+				Padre::Current->can($method) or return '';
+				$module->can($method) or return '';
 
 				# First method to the left
 				my $rightop = $_[1]->sprevious_sibling or return '';
-				$rightop->isa('PPI::Token::Operator')  or return '';
-				$rightop->content eq '->'              or return '';
+				$rightop->isa('PPI::Token::Operator') or return '';
+				$rightop->content eq '->' or return '';
 
 				# The ->current method call
 				my $current = $rightop->sprevious_sibling or return '';
-				$current->isa('PPI::Token::Word')      or return '';
-				$current->content eq 'current'         or return '';
+				$current->isa('PPI::Token::Word') or return '';
+				$current->content eq 'current' or return '';
 
 				# Second method to the left
 				my $leftop = $current->sprevious_sibling or return '';
-				$leftop->isa('PPI::Token::Operator')  or return '';
-				$leftop->content eq '->'              or return '';
+				$leftop->isa('PPI::Token::Operator') or return '';
+				$leftop->content eq '->' or return '';
 
 				# $self on the far left
 				my $variable = $leftop->sprevious_sibling or return '';
@@ -304,19 +305,19 @@ foreach my $module ( sort keys %modules ) {
 				# Alternatively, $_[0] on the far left
 				$variable->isa('PPI::Structure::Subscript') or return '';
 				my $subscript = $variable;
-				$subscript->content eq '[0]'                or return '';
-				$variable  = $subscript->sprevious_sibling  or return '';
-				$variable->isa('PPI::Token::Magic')         or return '';
-				$variable->content eq '$_'                  or return '';
-				$variable->sprevious_sibling               and return '';
+				$subscript->content eq '[0]' or return '';
+				$variable = $subscript->sprevious_sibling or return '';
+				$variable->isa('PPI::Token::Magic') or return '';
+				$variable->content eq '$_' or return '';
+				$variable->sprevious_sibling and return '';
 
 				# In the form sub foo { $_[0]...
-				my $statement = $variable->parent    or return '';
-				$statement->isa('PPI::Statement')    or return '';
-				my $block = $statement->parent       or return '';
+				my $statement = $variable->parent or return '';
+				$statement->isa('PPI::Statement') or return '';
+				my $block = $statement->parent or return '';
 				$block->isa('PPI::Structure::Block') or return '';
-				my $sub = $block->parent             or return '';
-				$sub->isa('PPI::Statement::Sub')     or return '';
+				my $sub = $block->parent or return '';
+				$sub->isa('PPI::Statement::Sub') or return '';
 
 				return 1;
 			}
@@ -324,7 +325,7 @@ foreach my $module ( sort keys %modules ) {
 
 		# Filter the tokens to get the method list
 		my @bad = ();
-		if ( $tokens ) {
+		if ($tokens) {
 			@bad = map { $_->content } @$tokens;
 		}
 

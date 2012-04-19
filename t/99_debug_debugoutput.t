@@ -33,8 +33,7 @@ my $panel = new_ok( 'Padre::Wx::Panel::DebugOutput', [$main] );
 #######
 # let's check our subs/methods.
 #######
-my @subs =
-	qw( debug_output debug_output_blue debug_output_black debug_output_dark_gray debug_status   
+my @subs = qw( debug_output debug_output_blue debug_output_black debug_output_dark_gray debug_status
 	view_close  view_icon  view_label  view_panel view_start view_stop );
 
 use_ok( 'Padre::Wx::Panel::DebugOutput', @subs );

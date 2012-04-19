@@ -107,7 +107,7 @@ sub new {
 	my $class = shift;
 	return bless {
 		mode    => shift,
-		targets => [ @_ ],
+		targets => [@_],
 	}, $class;
 }
 
@@ -141,7 +141,7 @@ other response indicating a failure to apply the transform or similar response.
 =cut
 
 sub null {
-	! scalar @{ $_[0]->{targets} };
+	!scalar @{ $_[0]->{targets} };
 }
 
 =pod
@@ -166,9 +166,9 @@ sub from_diff {
 
 	# Build the series of target replacements
 	my $delta = 0;
-	while ( @_ ) {
+	while (@_) {
 		my $hunk = shift;
-		foreach my $change ( @$hunk ) {
+		foreach my $change (@$hunk) {
 			my $previous  = $targets[-1];
 			my $operation = $change->[0];
 			my $pos       = $change->[1];
@@ -269,9 +269,9 @@ method can be used in changed calls as demonstrated above.
 sub tidy {
 	my $self    = shift;
 	my $targets = $self->{targets};
-	                               
+
 	# Correct out-of-order ranges
-	foreach my $t ( @$targets ) {
+	foreach my $t (@$targets) {
 		next unless $t->[0] > $t->[1];
 		@$t = ( $t->[1], $t->[0], $t->[2] );
 	}
@@ -313,6 +313,7 @@ sub to_editor {
 	my $lock    = $editor->lock_update;
 
 	if ( $mode eq 'line' ) {
+
 		# Apply positions based on lines
 		$editor->BeginUndoAction;
 		foreach my $target (@$targets) {
@@ -323,6 +324,7 @@ sub to_editor {
 		$editor->EndUndoAction;
 
 	} elsif ( $mode eq 'position' ) {
+
 		# Apply positions based on raw character positions
 		$editor->BeginUndoAction;
 		foreach my $target (@$targets) {

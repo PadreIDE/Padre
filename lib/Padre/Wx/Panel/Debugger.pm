@@ -96,11 +96,12 @@ sub set_up {
 	#turn off unless in project
 	$self->{show_global_variables}->Disable;
 	$self->{show_local_variables}->Enable;
+
 	# $self->{show_local_variables}->SetValue(1);
 	# $self->{local_variables} = 1;
 	$self->{show_local_variables}->SetValue(0);
 	$self->{local_variables} = 0;
-	
+
 	# Setup the debug button icons
 	$self->{debug}->SetBitmapLabel( Padre::Wx::Icon::find('actions/morpho2') );
 	$self->{debug}->Enable;
@@ -636,6 +637,7 @@ sub display_value {
 	my $variable = $self->_debug_get_variable or return;
 
 	$self->{var_val}{$variable} = BLANK;
+
 	# $self->update_variables( $self->{var_val} );
 	$self->_output_variables;
 

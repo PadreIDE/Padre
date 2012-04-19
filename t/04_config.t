@@ -30,7 +30,7 @@ my $config = Padre::Config->read;
 isa_ok( $config,        'Padre::Config' );
 isa_ok( $config->host,  'Padre::Config::Host' );
 isa_ok( $config->human, 'Padre::Config::Human' );
-is( $config->project,        undef, '->project is undef' );
+is( $config->project, undef, '->project is undef' );
 
 # Loading the config file should not result in Wx loading
 is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );

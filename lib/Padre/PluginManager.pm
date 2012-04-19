@@ -79,7 +79,7 @@ First argument should be a Padre object.
 =cut
 
 sub new {
-	my $class  = shift;
+	my $class = shift;
 	my $parent = Params::Util::_INSTANCE( shift, 'Padre' )
 		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
@@ -408,11 +408,7 @@ in the configuration and not loaded again when the editor is restarted.
 =cut
 
 sub failed {
-	return map {
-		$_->class
-	} grep {
-		$_->error or $_->incompatible
-	} $_[0]->handles;
+	return map { $_->class } grep { $_->error or $_->incompatible } $_[0]->handles;
 }
 
 
@@ -518,9 +514,7 @@ sub _load_plugin {
 	}
 
 	# Attempt to instantiate the plug-in
-	my $plugin = eval {
-		$module->new( $self->{parent} );
-	};
+	my $plugin = eval { $module->new( $self->{parent} ); };
 	if ($@) {
 		$handle->errstr(
 			sprintf(
@@ -665,26 +659,26 @@ sub _unload_plugin {
 }
 
 sub plugin_enable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle(shift) or return;
 	$handle->enable;
 }
 
 sub plugin_disable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle(shift) or return;
 	$handle->disable;
 }
 
 sub user_enable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle(shift) or return;
 	$handle->update( enabled => 1 );
 	$self->plugin_enable($handle);
 }
 
 sub user_disable {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle(shift) or return;
 	$handle->update( enabled => 0 );
 	$self->plugin_disable($handle);
@@ -718,9 +712,7 @@ sub plugin_event {
 		next unless $handle->enabled;
 		next unless $handle->plugin_can($event);
 
-		eval {
-			$handle->plugin->$event(@_);
-		};
+		eval { $handle->plugin->$event(@_); };
 		if ($@) {
 			$self->_error(
 				$handle,
@@ -810,16 +802,14 @@ sub enable_editors_for_all {
 }
 
 sub enable_editors {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->handle(shift) or return;
 	return unless $handle->enabled;
 	return unless $handle->plugin_can('editor_enable');
 
 	foreach my $editor ( $self->main->editors ) {
 		local $@;
-		eval {
-			$handle->plugin->editor_enable( $editor, $editor->{Document} );
-		};
+		eval { $handle->plugin->editor_enable( $editor, $editor->{Document} ); };
 	}
 
 	return 1;
@@ -840,9 +830,7 @@ sub get_menu {
 	return () unless $handle->enabled;
 	return () unless $handle->plugin_can('menu_plugins');
 
-	my @menu = eval {
-		$handle->plugin->menu_plugins($main);
-	};
+	my @menu = eval { $handle->plugin->menu_plugins($main); };
 	if ($@) {
 		$handle->{status} = 'error';
 		$handle->errstr(

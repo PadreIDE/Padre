@@ -98,7 +98,7 @@ sub new {
 	# Additional properties
 	$self->{model}  = {};
 	$self->{length} = -1;
-	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+	if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 		$self->{annotations} = {};
 	}
 
@@ -127,7 +127,7 @@ sub new {
 	$self->Hide;
 
 	if (Padre::Feature::STYLE_GUI) {
-		$main->theme->apply($self->{tree});
+		$main->theme->apply( $self->{tree} );
 	}
 
 	# Custom binding for the tree item activation
@@ -135,9 +135,7 @@ sub new {
 		$self,
 		$self->{tree},
 		sub {
-			$_[0]->idle_method(
-				item_activated => $_[1]->GetItem
-			);
+			$_[0]->idle_method( item_activated => $_[1]->GetItem );
 		},
 	);
 
@@ -187,7 +185,7 @@ sub view_stop {
 	# Remove the editor margins
 	# commeted out as other functions pigy-back on this
 	# foreach my $editor ( $self->main->editors ) {
-		# $editor->SetMarginWidth( 1, 0 );
+	# $editor->SetMarginWidth( 1, 0 );
 	# }
 
 	return;
@@ -296,13 +294,13 @@ sub clear {
 		}
 
 		# Clear all annotations if it is available and the feature is enabled
-		if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 			$editor->AnnotationClearAll;
 		}
 	}
 
 	# Reset the annotation store
-	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+	if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 		$self->{annotations} = {};
 	}
 
@@ -403,7 +401,7 @@ sub task_finish {
 
 sub render {
 	my $self     = shift;
-	my $elapsed  = Time::HiRes::time - $self->{task_start_time};
+	my $elapsed  = Time::HiRes::time- $self->{task_start_time};
 	my $model    = $self->{model} || {};
 	my $current  = $self->current;
 	my $editor   = $current->editor or return;
@@ -412,7 +410,7 @@ sub render {
 	my $lock     = $self->lock_update;
 
 	# Show only the current error/warning annotation when you move or click on a line
-	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+	if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 		Wx::Event::EVT_LEFT_UP(
 			$editor,
 			sub {
@@ -470,21 +468,21 @@ sub render {
 	$tree->SetItemText(
 		$root,
 		defined($filename)
-			? sprintf(
-				Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'),
-				scalar @{ $model->{issues} },
-				$filename,
-				$elapsed,
+		? sprintf(
+			Wx::gettext('Found %d issue(s) in %s within %3.2f secs.'),
+			scalar @{ $model->{issues} },
+			$filename,
+			$elapsed,
 			)
-			: sprintf(
-				Wx::gettext('Found %d issue(s) within %3.2f secs.'),
-				scalar @{ $model->{issues} },
-				$elapsed,
-			)
+		: sprintf(
+			Wx::gettext('Found %d issue(s) within %3.2f secs.'),
+			scalar @{ $model->{issues} },
+			$elapsed,
+		)
 	);
 
 	# Reset the annotations
-	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+	if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 		$self->{annotations} = {};
 	}
 
@@ -503,7 +501,7 @@ sub render {
 
 		# Create the basic tree entry
 		my $image = $warn ? $images->{warning} : $images->{error};
-		my $item  = $tree->AppendItem(
+		my $item = $tree->AppendItem(
 			$root,
 			sprintf(
 				Wx::gettext('Line %d:   (%s)   %s'),
@@ -520,23 +518,25 @@ sub render {
 		next unless $issue->{line} <= $maxline;
 
 		# Underline the syntax warning/error line with an orange or red squiggle indicator
-		my $start     = $editor->PositionFromLine($line);
-		my $indent    = $editor->GetLineIndentPosition($line);
-		my $end       = $editor->GetLineEndPosition($line);
-		my $indicator = $warn
+		my $start  = $editor->PositionFromLine($line);
+		my $indent = $editor->GetLineIndentPosition($line);
+		my $end    = $editor->GetLineEndPosition($line);
+		my $indicator =
+			$warn
 			? Padre::Constant::INDICATOR_WARNING
 			: Padre::Constant::INDICATOR_ERROR;
 
 		# Change only the indicators
-		$editor->SetIndicatorCurrent( $indicator );
+		$editor->SetIndicatorCurrent($indicator);
 		$editor->IndicatorFillRange( $indent, $end - $indent );
 		$editor->MarkerAdd( $line, $message->{marker} );
 
 		# Collect annotations for later display
 		# One annotated line contains multiple errors/warnings
-		if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+		if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 			my $message = $issue->message;
-			my $style   = sprintf( '%c', $warn
+			my $style   = sprintf(
+				'%c', $warn
 				? Padre::Constant::PADRE_WARNING
 				: Padre::Constant::PADRE_ERROR
 			);
@@ -554,7 +554,7 @@ sub render {
 	}
 
 	# Hide the annotations
-	if ( Padre::Feature::SYNTAX_ANNOTATIONS ) {
+	if (Padre::Feature::SYNTAX_ANNOTATIONS) {
 		$self->_show_current_annotation(0);
 	}
 
@@ -718,7 +718,7 @@ sub select_next_problem {
 	}
 
 	# Select the line in the editor
-	if ( $line_to_select ) {
+	if ($line_to_select) {
 		$editor->goto_line_centerize($line_to_select);
 		$editor->SetFocus;
 	}

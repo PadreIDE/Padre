@@ -10,7 +10,7 @@ our $VERSION = '0.95';
 
 sub new {
 	my $class = shift;
-	my $self  = bless [ ], $class;
+	my $self = bless [], $class;
 	return $self;
 }
 
@@ -26,7 +26,7 @@ sub list {
 }
 
 sub include {
-	my $self = shift;
+	my $self  = shift;
 	my $style = shift;
 	push @$self, $style->list;
 	return 1;

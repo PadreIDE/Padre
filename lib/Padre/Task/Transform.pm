@@ -2,7 +2,7 @@ package Padre::Task::Transform;
 
 # A Transform task is used to automatically calculate and apply a change
 # to the content of a Padre::Wx::Transform.
-# 
+#
 # It does so via the following steps:
 #
 # 1. Apply a readonly lock to the editor
@@ -29,13 +29,13 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 
 	# We must have an owner and it must be an editor
-	my $editor = Padre::Role::Task->task_owner($self->{owner});
-	unless ( Params::Util::_INSTANCE($editor, 'Padre::Wx::Editor') ) {
+	my $editor = Padre::Role::Task->task_owner( $self->{owner} );
+	unless ( Params::Util::_INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die "Task owner is not a Padre::Wx::Editor object";
 	}
 
 	# Check the transform object
-	unless ( Params::Util::_INSTANCE($self->{transform}, 'Padre::Transform') ) {
+	unless ( Params::Util::_INSTANCE( $self->{transform}, 'Padre::Transform' ) ) {
 		die "The transform param is not a Padre::Transform object";
 	}
 
@@ -56,9 +56,9 @@ sub prepare {
 }
 
 sub run {
-	my $self   = shift;
-	my $input  = delete $self->{input};
-	my $delta  = $self->transform->scalar_delta($input);
+	my $self  = shift;
+	my $input = delete $self->{input};
+	my $delta = $self->transform->scalar_delta($input);
 	$self->{delta} = $delta;
 	return 1;
 }
@@ -66,7 +66,7 @@ sub run {
 # Apply the resulting delta to the editor, if it still exists
 sub finish {
 	my $self   = shift;
-	my $editor = Padre::Role::Task->task_owner($self->{owner}) or return;
+	my $editor = Padre::Role::Task->task_owner( $self->{owner} ) or return;
 	my $delta  = $self->{delta} or return;
 	$delta->to_editor($editor);
 	return 1;

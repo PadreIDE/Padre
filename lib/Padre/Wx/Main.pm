@@ -296,8 +296,7 @@ sub new {
 	# This is primarily due to a defect http://trac.wxwidgets.org/ticket/4272:
 	# No status bar updates during STC_PAINTED, which we appear to hit on UPDATEUI.
 	Wx::Event::EVT_STC_UPDATEUI(
-		$self,
-		-1,
+		$self, -1,
 		sub {
 			$_[0]->idle_method('on_stc_updateui');
 		}
@@ -310,13 +309,13 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->show_view( tasks     => $config->main_tasks      );
+	$self->show_view( tasks     => $config->main_tasks );
 	$self->show_view( functions => $config->main_functions );
-	$self->show_view( outline   => $config->main_outline   );
+	$self->show_view( outline   => $config->main_outline );
 	$self->show_view( directory => $config->main_directory );
-	$self->show_view( syntax    => $config->main_syntax    );
-	$self->show_view( output    => $config->main_output    );
-	if (Padre::Feature::COMMAND)                             {
+	$self->show_view( syntax    => $config->main_syntax );
+	$self->show_view( output    => $config->main_output );
+	if (Padre::Feature::COMMAND) {
 		$self->show_view( command => $config->main_command );
 	}
 	if (Padre::Feature::VCS) {
@@ -646,7 +645,8 @@ BEGIN {
 			$self->{command} = Padre::Wx::Command->new($self);
 		}
 		return $self->{command};
-	} if Padre::Feature::COMMAND;
+		}
+		if Padre::Feature::COMMAND;
 }
 
 sub functions {
@@ -2203,7 +2203,7 @@ if the view is not currently being shown.
 sub find_view {
 	my $self = shift;
 	my $page = shift;
-	foreach my $name ( PANELS ) {
+	foreach my $name (PANELS) {
 		my $has = "has_$name";
 		next unless $self->$has();
 		my $panel = $self->$name();
@@ -2230,20 +2230,21 @@ sub show_view {
 	my $show = shift;
 	my $has  = "has_$name";
 
-	if ( $show ) {
+	if ($show) {
 		my $config = $self->config;
 		my $where  = "main_${name}_panel";
-		my $lock   = $self->lock('UPDATE', 'AUI');
+		my $lock   = $self->lock( 'UPDATE', 'AUI' );
 		my $page   = $self->$name();
-		my $panel  = $config->can($where)
-		           ? $config->$where()
-		           : $page->view_panel;
+		my $panel =
+			  $config->can($where)
+			? $config->$where()
+			: $page->view_panel;
 		$self->$panel()->show($page);
 
 	} elsif ( $self->$has() ) {
-		my $page   = $self->$name();
-		my $panel  = $self->find_view($page) or return;
-		my $lock   = $self->lock('UPDATE', 'AUI');
+		my $page  = $self->$name();
+		my $panel = $self->find_view($page) or return;
+		my $lock  = $self->lock( 'UPDATE', 'AUI' );
 		$self->$panel()->hide($page);
 	}
 
@@ -3478,6 +3479,7 @@ sub search_next {
 	my $matched = $editor->matched;
 	if ( $search and $matched and $search->equals( $matched->[0] ) ) {
 		if ( $matched->[1] == $position1 and $matched->[2] == $position2 ) {
+
 			# Continue the existing search from the end of the match
 			$editor->SetSelection( $position2, $position2 );
 			return !!$search->search_next($editor);
@@ -3580,7 +3582,7 @@ If no files are open, do nothing.
 =cut
 
 sub replace_next {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
@@ -3643,19 +3645,19 @@ sub on_brace_matching {
 }
 
 sub comment_toggle {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	$editor->comment_toggle;
 }
 
 sub comment_indent {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	$editor->comment_indent;
 }
 
 sub comment_outdent {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	$editor->comment_outdent;
 }
@@ -4512,7 +4514,7 @@ Opens C<$filename> in the default system editor
 
 sub on_open_with_default_system_editor {
 	require Padre::Util::FileBrowser;
-	Padre::Util::FileBrowser->open_with_default_system_editor($_[1]);
+	Padre::Util::FileBrowser->open_with_default_system_editor( $_[1] );
 }
 
 =pod
@@ -4527,7 +4529,7 @@ Opens a command line/shell using the working directory of C<$filename>
 
 sub on_open_in_command_line {
 	require Padre::Util::FileBrowser;
-	Padre::Util::FileBrowser->open_in_command_line($_[1]);
+	Padre::Util::FileBrowser->open_in_command_line( $_[1] );
 }
 
 =pod
@@ -4626,8 +4628,8 @@ Returns true upon success, false otherwise.
 =cut
 
 sub reload_editors {
-	my $self     = shift;
-	my @editors  = @_;
+	my $self    = shift;
+	my @editors = @_;
 
 	# Show a progress dialog as this may be long running
 	require Padre::Wx::Progress;
@@ -4643,8 +4645,8 @@ sub reload_editors {
 	my $total    = scalar @editors;
 	my $notebook = $self->notebook;
 	foreach my $i ( 0 .. $#editors ) {
-		$progress->update( $i, ($i + 1) . "/$total" );
-		$self->reload_editor($editors[$i]) or return 0;
+		$progress->update( $i, ( $i + 1 ) . "/$total" );
+		$self->reload_editor( $editors[$i] ) or return 0;
 	}
 
 	# Notify the plugin manager of the changed files
@@ -4693,8 +4695,7 @@ sub reload_dialog {
 		title      => Wx::gettext('Reload Files'),
 		list_title => Wx::gettext('&Select files to reload:'),
 		buttons    => [
-			[
-				Wx::gettext('&Reload selected'),
+			[   Wx::gettext('&Reload selected'),
 				sub {
 					$_[0]->main->reload_editors(@_);
 				},
@@ -4717,7 +4718,7 @@ false otherwise.
 =cut
 
 sub on_save {
-	my $self     = shift;
+	my $self = shift;
 	my $document = shift || $self->current->document;
 	return unless $document;
 
@@ -4974,7 +4975,7 @@ sub on_save_all {
 	my @modified = $self->documents_modified or return 1;
 
 	# Save the unmodified documents
-	foreach my $document ( @modified ) {
+	foreach my $document (@modified) {
 		$self->on_save($document) or return 0;
 	}
 
@@ -5245,8 +5246,7 @@ sub on_close_some {
 		title      => Wx::gettext('Close some files'),
 		list_title => Wx::gettext('Select files to close:'),
 		buttons    => [
-			[
-				'Close selected',
+			[   'Close selected',
 				sub {
 					$_[0]->main->close_some(@_);
 				},
@@ -5709,9 +5709,9 @@ sub editor_currentline {
 }
 
 sub editor_currentline_color {
-	my $self  = shift;
-	my $name  = shift;
-	my $lock  = $self->lock('CONFIG');
+	my $self = shift;
+	my $name = shift;
+	my $lock = $self->lock('CONFIG');
 	$self->config->set( editor_currentline_color => $name );
 
 	# Apply the color to all editors
@@ -6392,7 +6392,7 @@ the document. No return value.
 sub timer_check_overwrite {
 	my $self  = shift;
 	my $doc   = $self->current->document or return;
-	my $state = $doc->has_changed_on_disk; # 1 = updated, 0 = unchanged, -1 = deleted
+	my $state = $doc->has_changed_on_disk;         # 1 = updated, 0 = unchanged, -1 = deleted
 
 	return unless $state;
 	return if $doc->{_already_popup_file_changed};

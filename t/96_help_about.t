@@ -12,8 +12,9 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+
 	# plan tests => 20;
-	  plan tests => 9; # Migration to FPB
+	plan tests => 9; # Migration to FPB
 }
 
 use Test::NoWarnings;

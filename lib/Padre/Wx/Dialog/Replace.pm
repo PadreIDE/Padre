@@ -83,7 +83,7 @@ sub refresh {
 }
 
 sub find_next_clicked {
-	my $self   = shift;
+	my $self = shift;
 	my $search = $self->as_search or return;
 
 	# Apply the search to the current editor
@@ -98,7 +98,7 @@ sub find_next_clicked {
 }
 
 sub replace_clicked {
-	my $self   = shift;
+	my $self = shift;
 	my $search = $self->as_search or return;
 
 	# Replace the current selection, or find the next match
@@ -125,8 +125,7 @@ sub replace_all_clicked {
 		$self->replace_term->SaveValue;
 
 		# remark: It would be better to use gettext for plural handling, but wxperl does not seem to support this at the moment.
-		my $message_text =
-			$changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
+		my $message_text = $changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
 		$main->info(
 			sprintf( $message_text, $changes ),
 			Wx::gettext('Search and Replace')

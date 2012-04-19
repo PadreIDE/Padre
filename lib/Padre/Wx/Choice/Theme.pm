@@ -37,6 +37,7 @@ sub config_set {
 		# and not of the translated label.
 		# Doing sort in Wx will probably break this.
 		foreach my $option ( sort keys %$options ) {
+
 			# Don't localise the label as Padre::Wx::Theme will do
 			# the localisation for us in this special case.
 			my $label = $options->{$option};

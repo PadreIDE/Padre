@@ -20,24 +20,24 @@ BEGIN {
 
 # Force newer ORLite and SQLite for performance improvements
 use DBD::SQLite 1.35 ();
-use ORLite      1.51 ();
+use ORLite 1.51      ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
 use ORLite::Migrate 1.08 {
 	create       => 1,
 	file         => Padre::Constant::CONFIG_HOST,
 	timeline     => 'Padre::DB::Timeline',
-	tables       => [ 'Modules' ],
-	user_version => 13, # Confirm we have the correct schema version
-	array        => 1,  # Smaller faster array objects
-	xsaccessor   => 0,  # XS acceleration for the generated code
-	shim         => 1,  # Overlay classes can fully override methods
-	x_update     => 1,  # Experimental ->update support
+	tables       => ['Modules'],
+	user_version => 13,                          # Confirm we have the correct schema version
+	array        => 1,                           # Smaller faster array objects
+	xsaccessor   => 0,                           # XS acceleration for the generated code
+	shim         => 1,                           # Overlay classes can fully override methods
+	x_update     => 1,                           # Experimental ->update support
 }; #, '-DEBUG';
 
 # Free the timeline modules if we used them
 BEGIN {
-	if ( $Padre::DB::Timeline::VERSION ) {
+	if ($Padre::DB::Timeline::VERSION) {
 		require Padre::Unload;
 		Padre::Unload::unload('Padre::DB::Timeline');
 		Padre::Unload::unload('ORLite::Migrate::Timeline');
@@ -89,7 +89,7 @@ sub find_snippets {
 # This will generally be run every time Padre shuts down, so may
 # contains bits and pieces of things other than the actual VACUUM.
 sub vacuum {
-	if ( DEBUG ) {
+	if (DEBUG) {
 		TRACE("VACUUM ANALYZE database");
 		my $page_size = Padre::DB->pragma("page_size");
 		Padre::DB->do('VACUUM');

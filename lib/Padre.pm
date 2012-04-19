@@ -162,8 +162,8 @@ sub new {
 
 	# Create the sync manager
 	# require Padre::ServerManager;
-	# $self->{sync_manager} = Padre::ServerManager->new( 
-		# ide => $self,
+	# $self->{sync_manager} = Padre::ServerManager->new(
+	# ide => $self,
 	# );
 
 	# Startup completed, let go of the database

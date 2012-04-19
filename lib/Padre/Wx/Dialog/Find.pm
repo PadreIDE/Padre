@@ -44,9 +44,10 @@ sub find_next_clicked {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $search = $self->as_search;
-	if ( $search ) {
+	if ($search) {
 		$self->find_term->SaveValue;
 	} else {
+
 		# Move the focus back to the search text
 		# so they can tweak their search.
 		$self->find_term->SetFocus;
@@ -100,7 +101,7 @@ sub run {
 
 # Ensure the find button is only enabled if the field values are valid
 sub refresh {
-	my $self   = shift;
+	my $self = shift;
 	my $enable = $self->find_term->GetValue ne '';
 	$self->find_next->Enable($enable);
 	$self->find_all->Enable($enable);

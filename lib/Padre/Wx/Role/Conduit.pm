@@ -120,10 +120,11 @@ provided only for completeness.
 =cut
 
 sub on_signal {
-	if ( $HANDLER ) {
+	if ($HANDLER) {
+
 		# Deserialise the message from the Wx event so that our handler does not
 		# need to be aware we are implemented via Wx.
-		my $frozen  = $_[1]->GetData;
+		my $frozen = $_[1]->GetData;
 		local $@;
 		my $message = eval { Storable::thaw($frozen) };
 		return if $@;
@@ -147,16 +148,17 @@ been serialised by the L<Storable> module.
 =cut
 
 sub signal {
+
 	# We use Wx::PostEvent rather than AddPendingEvent because this
 	# function passes the data through a thread-safe stash.
 	# Using AddPendingEvent directly will cause occasional segfaults.
-	if ( $CONDUIT ) {
+	if ($CONDUIT) {
 		Wx::PostEvent(
 			$CONDUIT,
 			Wx::PlThreadEvent->new(
 				-1,
 				$SIGNAL,
-				Storable::freeze($_[1]),
+				Storable::freeze( $_[1] ),
 			),
 		);
 	}

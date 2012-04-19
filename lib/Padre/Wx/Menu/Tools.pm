@@ -34,7 +34,7 @@ sub new {
 	$self->{main} = $main;
 
 	# Differences window
-	if(Padre::Feature::DIFF_WINDOW) {
+	if (Padre::Feature::DIFF_WINDOW) {
 		$self->add_menu_action(
 			'tools.diff_window',
 		);

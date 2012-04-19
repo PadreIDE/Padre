@@ -40,12 +40,12 @@ my @KEYS = (
 	_T('PageDown'),
 	_T('Enter'),
 	_T('Escape'),
-	'F1', 'F2', 'F3', 'F4',
-	'F5', 'F6', 'F7', 'F8',
+	'F1', 'F2',  'F3',  'F4',
+	'F5', 'F6',  'F7',  'F8',
 	'F9', 'F10', 'F11', 'F12',
 	'A' .. 'Z',
 	'0' .. '9',
-	'~', '-', '=', '[', ']',
+	'~', '-',  '=', '[', ']',
 	';', '\'', ',', '.', '/'
 );
 
@@ -64,11 +64,11 @@ sub run {
 	my $self  = $class->new($main);
 
 	# Show the optional sections
-	if ( Padre::Feature::CPAN ) {
+	if (Padre::Feature::CPAN) {
 		$self->{label_cpan}->Show;
 		$self->{main_cpan_panel}->Show;
 	}
-	if ( Padre::Feature::VCS ) {
+	if (Padre::Feature::VCS) {
 		$self->{label_vcs}->Show;
 		$self->{main_vcs_panel}->Show;
 	}
@@ -126,7 +126,7 @@ sub new {
 	$preview->{Document} = Padre::Document->new( mimetype => 'application/x-perl', );
 	$preview->{Document}->set_editor( $self->preview );
 	$preview->SetLexer('application/x-perl');
-	$preview->SetText(<<'END_PERL' . '__END__');
+	$preview->SetText( <<'END_PERL' . '__END__' );
 #!/usr/bin/perl
 
 use strict;
@@ -316,26 +316,16 @@ sub _update_list {
 	my @names   = keys %$actions;
 
 	# Build the data for the table
-	my @table = map { [
-		_translate_shortcut( $actions->{$_}->shortcut ),
-		$_,
-		$actions->{$_}->label_text,
-	] } keys %$actions;
+	my @table =
+		map { [ _translate_shortcut( $actions->{$_}->shortcut ), $_, $actions->{$_}->label_text, ] } keys %$actions;
 
 	# Apply term filtering
 	my $filter = quotemeta $self->{filter}->GetValue;
-	@table = grep {
-		$_->[0] =~ /$filter/i
-		or
-		$_->[1] =~ /$filter/i
-		or
-		$_->[2] =~ /$filter/i
-	} @table;
+	@table =
+		grep { $_->[0] =~ /$filter/i or $_->[1] =~ /$filter/i or $_->[2] =~ /$filter/i } @table;
 
 	# Apply sorting
-	@table = sort {
-		$a->[$self->{sortcolumn}] cmp $b->[$self->{sortcolumn}]
-	} @table;
+	@table = sort { $a->[ $self->{sortcolumn} ] cmp $b->[ $self->{sortcolumn} ] } @table;
 	if ( $self->{sortreverse} ) {
 		@table = reverse @table;
 	}
@@ -351,7 +341,7 @@ sub _update_list {
 	# Refill the table with the filtered list
 	my $index = -1;
 	$list->DeleteAllItems;
-	foreach my $row ( @table ) {
+	foreach my $row (@table) {
 		my $name   = $row->[1];
 		my $action = $actions->{$name};
 
@@ -425,7 +415,7 @@ sub _on_list_item_selected {
 sub _update_shortcut_ui {
 	my ( $self, $shortcut ) = @_;
 
-	my @parts       = split /-/, $shortcut;
+	my @parts = split /-/, $shortcut;
 	my $regular_key = @parts ? $parts[-1] : '';
 
 	# Find the regular key index in the choice box
@@ -439,8 +429,8 @@ sub _update_shortcut_ui {
 
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue(  $shortcut =~ /Ctrl/  ? 1 : 0 );
-	$self->{alt}->SetValue(   $shortcut =~ /Alt/   ? 1 : 0 );
+	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
 	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
 
 	# Make sure the value and info sizer are not hidden
@@ -480,14 +470,15 @@ sub _try_to_set_binding {
 
 	my $other_action = $self->ide->shortcuts->{$shortcut};
 	if ( defined $other_action && $other_action->name ne $name ) {
-		return unless $self->yes_no(
+		return
+			unless $self->yes_no(
 			sprintf(
 				Wx::gettext("The shortcut '%s' is already used by the action '%s'.\n"),
 				$shortcut, $other_action->label_text
 				)
 				. Wx::gettext('Do you want to override it with the selected action?'),
 			Wx::gettext('Override Shortcut')
-		);
+			);
 		$self->_set_binding( $other_action->name, '' );
 	}
 
@@ -526,7 +517,7 @@ sub _set_binding {
 sub _update_action_ui {
 	my ( $self, $name, $shortcut, $non_default ) = @_;
 
-	my $list  = $self->{list};
+	my $list = $self->{list};
 	my $index = $list->FindItem( -1, $name );
 
 	$self->{button_reset}->Enable($non_default);

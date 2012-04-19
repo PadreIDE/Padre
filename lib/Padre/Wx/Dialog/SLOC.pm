@@ -74,7 +74,7 @@ sub refresh {
 
 sub refresh_message {
 	$_[0]->{count}++;
-	$_[0]->{sloc}->add($_[3]);
+	$_[0]->{sloc}->add( $_[3] );
 }
 
 # Do a final render and end the poll loop
@@ -113,43 +113,27 @@ sub render {
 	my $lock    = $self->lock_update;
 	my $sloc    = $self->{sloc}->smart_types;
 	my $count   = $self->{count};
-	my $code    = $sloc->{code}    || 0;
+	my $code    = $sloc->{code} || 0;
 	my $comment = $sloc->{comment} || 0;
-	my $blank   = $sloc->{blank}   || 0;
+	my $blank   = $sloc->{blank} || 0;
 
 	# Calculate Basic COCOMO Model values
-	my $pax_months = 2.4 * ($code / 1000) ** 1.05;
+	my $pax_months = 2.4 * ( $code / 1000 )**1.05;
 	my $pax_years  = $pax_months / 12;
-	my $cal_months = 2.5 * ($pax_months ** 0.38);
+	my $cal_months = 2.5 * ( $pax_months**0.38 );
 	my $cal_years  = $cal_months / 12;
 	my $dev_count  = $cal_months ? $pax_months / $cal_months : 0;
 	my $dev_salary = 56286;
 	my $dev_cost   = $pax_years * $dev_salary * 2.4;
 
-	$self->{files}->SetLabel(
-		Padre::Locale::Format::integer($count)
-	);
-	$self->{code}->SetLabel(
-		Padre::Locale::Format::integer($code)
-	);
-	$self->{comment}->SetLabel(
-		Padre::Locale::Format::integer($comment)
-	);
-	$self->{blank}->SetLabel(
-		Padre::Locale::Format::integer($blank)
-	);
-	$self->{pax_months}->SetLabel(
-		sprintf( '%0.2f', $pax_months )
-	);
-	$self->{cal_years}->SetLabel(
-		sprintf( '%0.2f', $cal_years )
-	);
-	$self->{dev_count}->SetLabel(
-		sprintf( '%0.2f', $dev_count )
-	);
-	$self->{dev_cost}->SetLabel(
-		'$' . Padre::Locale::Format::integer( int $dev_cost )
-	);
+	$self->{files}->SetLabel( Padre::Locale::Format::integer($count) );
+	$self->{code}->SetLabel( Padre::Locale::Format::integer($code) );
+	$self->{comment}->SetLabel( Padre::Locale::Format::integer($comment) );
+	$self->{blank}->SetLabel( Padre::Locale::Format::integer($blank) );
+	$self->{pax_months}->SetLabel( sprintf( '%0.2f', $pax_months ) );
+	$self->{cal_years}->SetLabel( sprintf( '%0.2f', $cal_years ) );
+	$self->{dev_count}->SetLabel( sprintf( '%0.2f', $dev_count ) );
+	$self->{dev_cost}->SetLabel( '$' . Padre::Locale::Format::integer( int $dev_cost ) );
 
 	$self->Fit;
 	$self->Layout;

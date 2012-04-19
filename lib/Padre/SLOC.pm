@@ -40,7 +40,7 @@ my %CONTENT = (
 
 sub new {
 	my $class = shift;
-	return bless { }, $class;
+	return bless {}, $class;
 }
 
 
@@ -51,8 +51,8 @@ sub new {
 # Statistics Capture
 
 sub add {
-	my $self  = shift;
-	my $add   = shift;
+	my $self = shift;
+	my $add  = shift;
 	foreach my $key ( sort keys %$add ) {
 		next unless $add->{$key};
 		$self->{$key} ||= 0;
@@ -84,7 +84,7 @@ sub add_text {
 sub add_file {
 	my $self = shift;
 	my $file = shift;
-	unless ( Params::Util::_INSTANCE($file, 'Padre::File') ) {
+	unless ( Params::Util::_INSTANCE( $file, 'Padre::File' ) ) {
 		require Padre::File::Local;
 		$file = Padre::File::Local->new($file);
 	}
@@ -107,13 +107,13 @@ sub add_document {
 	my $self     = shift;
 	my $document = shift;
 	my $text     = $document->text_get or return;
-	my $mime     = $document->mime     or return;
+	my $mime     = $document->mime or return;
 	$self->add_text( \$text, $mime );
 }
 
 sub add_editor {
-	my $self   = shift;
-	my $editor = shift;
+	my $self     = shift;
+	my $editor   = shift;
 	my $document = $editor->document or return;
 	$self->add_document($document);
 }
@@ -129,7 +129,7 @@ sub total_content {
 	my $self  = shift;
 	my $total = 0;
 	foreach my $key ( sort keys %$self ) {
-		my ($lang, $type) = split /\s+/, $key;
+		my ( $lang, $type ) = split /\s+/, $key;
 		if ( $type eq 'content' ) {
 			$total += $self->{$key};
 		}
@@ -141,7 +141,7 @@ sub report_languages {
 	my $self = shift;
 	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
-		my ($lang, $type) = split /\s+/, $key;
+		my ( $lang, $type ) = split /\s+/, $key;
 		$hash{$lang} ||= 0;
 		$hash{$lang} += $self->{$key};
 	}
@@ -152,7 +152,7 @@ sub report_types {
 	my $self = shift;
 	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
-		my ($lang, $type) = split /\s+/, $key;
+		my ( $lang, $type ) = split /\s+/, $key;
 		$hash{$type} ||= 0;
 		$hash{$type} += $self->{$key};
 	}
@@ -163,7 +163,7 @@ sub smart_types {
 	my $self = shift;
 	my %hash = ();
 	foreach my $key ( sort keys %$self ) {
-		my ($lang, $type) = split /\s+/, $key;
+		my ( $lang, $type ) = split /\s+/, $key;
 		next unless $CONTENT{$lang};
 		if ( $type eq 'content' ) {
 			$type = $CONTENT{$lang};
@@ -216,7 +216,7 @@ sub count_perl5 {
 	my $content = 1;
 	foreach my $line ( split /\n/, $$text, -1 ) {
 		if ( $line !~ /\S/ ) {
-			if ( $content ) {
+			if ($content) {
 				$count{'application/x-perl blank'}++;
 			} else {
 				$count{'text/x-pod blank'}++;
@@ -224,7 +224,7 @@ sub count_perl5 {
 		} elsif ( $line =~ /^=cut\s*/ ) {
 			$count{'text/x-pod comment'}++;
 			$content = 1;
-		} elsif ( $content ) {
+		} elsif ($content) {
 			if ( $line =~ /^=\w+/ ) {
 				$count{'text/x-pod comment'}++;
 				$content = 0;
@@ -250,7 +250,7 @@ sub count_commented {
 	my $comment = $mime->comment or return undef;
 	my $matches = $comment->line_match;
 	my %count   = (
-		"$type content"    => 0,
+		"$type content" => 0,
 		"$type comment" => 0,
 		"$type blank"   => 0,
 	);
@@ -275,8 +275,8 @@ sub count_uncommented {
 	my $mime  = shift;
 	my $type  = $mime->type;
 	my %count = (
-		"$type content"  => 0,
-		"$type blank" => 0,
+		"$type content" => 0,
+		"$type blank"   => 0,
 	);
 
 	foreach my $line ( split /\n/, $$text ) {

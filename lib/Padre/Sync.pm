@@ -55,7 +55,7 @@ First argument should be a Padre object.
 
 sub new {
 	my $class = shift;
-	my $ide   = Params::Util::_INSTANCE( shift, 'Padre' );
+	my $ide = Params::Util::_INSTANCE( shift, 'Padre' );
 	Carp::croak("Failed to create Padre::Sync") unless $ide;
 
 	# Create the useragent.
@@ -142,20 +142,18 @@ sub register {
 	}
 
 	# BUG: This crashes if server is unavailable.
-	my $server   = $self->server or return 'Failure: no server found.';
+	my $server = $self->server or return 'Failure: no server found.';
 	my $response = $self->POST(
 		"$server/register",
 		'Content-Type' => 'application/json',
-		'Content'      => $self->encode(\%params),
+		'Content'      => $self->encode( \%params ),
 	);
 	if ( $response->code == 201 ) {
 		return 'Account registered successfully. Please log in.';
 	}
 
 	local $@;
-	my $h = eval {
-		$self->decode( $response->content );
-	};
+	my $h = eval { $self->decode( $response->content ); };
 
 	return "Registration failure(Server): $h->{error}" if $h->{error};
 	return "Registration failure(Padre): $@" if $@;
@@ -178,8 +176,8 @@ sub login {
 		return 'Failure: cannot log in, user already logged in.';
 	}
 
-	my $server   = $self->server or return 'Failure: no server found.';
-	my $response = $self->POST( "$server/login", [ { @_ } ] );
+	my $server = $self->server or return 'Failure: no server found.';
+	my $response = $self->POST( "$server/login", [ {@_} ] );
 	if ( $response->content !~ /Wrong username or password/i
 		and ( $response->code == 200 or $response->code == 302 ) )
 	{
@@ -206,7 +204,7 @@ sub logout {
 		return 'Failure: cannot logout, user not logged in.';
 	}
 
-	my $server   = $self->server or return 'Failure: no server found.';
+	my $server = $self->server or return 'Failure: no server found.';
 	my $response = $self->GET("$server/logout");
 	if ( $response->code == 200 ) {
 		$self->{state} = 'not_logged_in';
@@ -233,7 +231,7 @@ sub server_delete {
 		return 'Failure: user not logged in.';
 	}
 
-	my $server   = $self->server or return 'Failure: no server found.';
+	my $server = $self->server or return 'Failure: no server found.';
 	my $response = $self->DELETE("$server/config");
 	if ( $response->code == 204 ) {
 		return 'Configuration deleted successfully.';
@@ -253,7 +251,7 @@ the Sync server.
 =cut
 
 sub local_to_server {
-	my $self   = shift;
+	my $self = shift;
 
 	if ( $self->{state} ne 'logged_in' ) {
 		return 'Failure: user not logged in.';
@@ -292,7 +290,7 @@ sub server_to_local {
 		return 'Failure: user not logged in.';
 	}
 
-	my $server   = $self->server or return 'Failure: no server found.';
+	my $server = $self->server or return 'Failure: no server found.';
 	my $response = $self->GET(
 		"$server/config",
 		'Accept' => 'application/json',
@@ -300,9 +298,7 @@ sub server_to_local {
 
 	local $@;
 	my $json;
-	eval {
-		$json = $self->decode( $response->content );
-	};
+	eval { $json = $self->decode( $response->content ); };
 	return 'Failed to deserialize serverside configuration.' if $@;
 
 	# Apply each setting to the global config. should only be HUMAN
@@ -357,11 +353,11 @@ sub english_status {
 # Support Methods
 
 sub encode {
-	JSON::XS->new->encode($_[1]);
+	JSON::XS->new->encode( $_[1] );
 }
 
 sub decode {
-	JSON::XS->new->decode($_[1]);
+	JSON::XS->new->decode( $_[1] );
 }
 
 sub server {
@@ -372,27 +368,19 @@ sub server {
 }
 
 sub GET {
-	shift->ua->request( 
-		HTTP::Request::Common::GET(@_)
-	);
+	shift->ua->request( HTTP::Request::Common::GET(@_) );
 }
 
 sub POST {
-	shift->ua->request(
-		HTTP::Request::Common::POST(@_)
-	);
+	shift->ua->request( HTTP::Request::Common::POST(@_) );
 }
 
 sub PUT {
-	shift->ua->request(
-		HTTP::Request::Common::PUT(@_)
-	);
+	shift->ua->request( HTTP::Request::Common::PUT(@_) );
 }
 
 sub DELETE {
-	shift->ua->request(
-		HTTP::Request::Common::DELETE(@_)
-	);
+	shift->ua->request( HTTP::Request::Common::DELETE(@_) );
 }
 
 1;

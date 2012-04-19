@@ -57,7 +57,7 @@ to the context menu event by default.
 =cut
 
 sub context_bind {
-	my $self   = shift;
+	my $self = shift;
 	my $method = shift || 'context_menu';
 	unless ( defined $method and $self->can($method) ) {
 		die "Missing or invalid content menu method '$method'";
@@ -205,7 +205,7 @@ sub context_append_action {
 
 	# Create the menu item object
 	my $method = $action->menu_method || 'Append';
-	my $item   = $menu->$method(
+	my $item = $menu->$method(
 		$action->id,
 		$action->label_menu,
 	);
@@ -248,22 +248,17 @@ sub context_append_options {
 
 	# Get the set of (sorted) options
 	my $options = $config->meta($name)->options;
-	my @list    = sort {
-		$a->[1] cmp $b->[1]
-	} map {
-		[ $_, Wx::gettext($options->{$_}) ]
-	} keys %$options;
+	my @list = sort { $a->[1] cmp $b->[1] } map { [ $_, Wx::gettext( $options->{$_} ) ] } keys %$options;
 
 	# Add the menu items
-	foreach my $option ( @list ) {
+	foreach my $option (@list) {
 		my $radio = $menu->AppendRadioItem( -1, $option->[1] );
-		my $new   = $option->[0];
+		my $new = $option->[0];
 		if ( $new eq $old ) {
 			$radio->Check(1);
 		}
 		Wx::Event::EVT_MENU(
-			$self,
-			$radio,
+			$self, $radio,
 			sub {
 				shift->config->apply( $name => $new );
 			},

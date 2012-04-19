@@ -20,11 +20,10 @@ my $sloc = Padre::SLOC->new;
 isa_ok( $sloc, 'Padre::SLOC' );
 
 # Check Perl 5 line count in the trivial case
-my $count = $sloc->count_perl5(\' ');
+my $count = $sloc->count_perl5( \' ' );
 is_deeply(
 	$count,
-	{
-		'application/x-perl blank'   => 1,
+	{   'application/x-perl blank'   => 1,
 		'application/x-perl comment' => 0,
 		'application/x-perl content' => 0,
 		'text/x-pod blank'           => 0,
@@ -34,7 +33,7 @@ is_deeply(
 );
 
 # Check Perl 5 line count
-$count = $sloc->count_perl5(\<<'END_PERL');
+$count = $sloc->count_perl5( \<<'END_PERL');
 # A comment
 
 =pod
@@ -52,8 +51,7 @@ exit(0);
 END_PERL
 is_deeply(
 	$count,
-	{
-		'application/x-perl blank'   => 4,
+	{   'application/x-perl blank'   => 4,
 		'application/x-perl comment' => 2,
 		'application/x-perl content' => 2,
 		'text/x-pod blank'           => 3,

@@ -40,7 +40,7 @@ sub new {
 	);
 
 	$self->AppendSeparator;
-	
+
 	$self->{window_right_click} = $self->add_menu_action(
 		'window.right_click',
 	);

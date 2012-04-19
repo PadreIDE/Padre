@@ -11,11 +11,10 @@ our @ISA     = qw{
 };
 
 
-sub event_on_context_menu
-{
+sub event_on_context_menu {
 	my ( $self, $editor, $menu, $event ) = @_;
 	$menu->{patch_diff} = $menu->add_menu_action(
-	    'edit.patch_diff',
+		'edit.patch_diff',
 	);
 }
 

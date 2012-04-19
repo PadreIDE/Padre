@@ -217,8 +217,8 @@ sub btn_ok {
 	my $config = $self->current->config;
 
 	# Save the server access defaults
-	$config->set( config_sync_server   => $self->{txt_remote}->GetValue     );
-	$config->set( identity_email       => $self->{login_email}->GetValue    );
+	$config->set( config_sync_server   => $self->{txt_remote}->GetValue );
+	$config->set( identity_email       => $self->{login_email}->GetValue );
 	$config->set( config_sync_password => $self->{login_password}->GetValue );
 
 	$self->Destroy;

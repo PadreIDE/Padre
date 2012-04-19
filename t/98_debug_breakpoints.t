@@ -33,10 +33,9 @@ my $panel = new_ok( 'Padre::Wx::Panel::Breakpoints', [$main] );
 #######
 # let's check our subs/methods.
 #######
-my @subs =
-	qw( _add_bp_db _delete_bp_db _setup_db _update_list on_delete_not_breakable_clicked
-	on_delete_project_bp_clicked on_refresh_click on_set_breakpoints_clicked 
-	on_show_project_click set_up   
+my @subs = qw( _add_bp_db _delete_bp_db _setup_db _update_list on_delete_not_breakable_clicked
+	on_delete_project_bp_clicked on_refresh_click on_set_breakpoints_clicked
+	on_show_project_click set_up
 	view_close  view_icon  view_label  view_panel view_start view_stop );
 
 use_ok( 'Padre::Wx::Panel::Breakpoints', @subs );

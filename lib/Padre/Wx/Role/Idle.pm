@@ -82,18 +82,19 @@ sub idle_method {
 	my $self = shift;
 
 	if ( $self->{idle} ) {
+
 		# Add to the existing idle queue
-		push @{$self->{idle}}, [ @_ ];
+		push @{ $self->{idle} }, [@_];
 
 	} else {
+
 		# Create the idle queue and bind the event
-		$self->{idle} = [ [ @_ ] ];
+		$self->{idle} = [ [@_] ];
 		$self->Connect(
-			-1,
-			-1,
+			-1, -1,
 			Wx::EVT_IDLE,
 			sub {
-				$_[0]->idle_handler($_[1]);
+				$_[0]->idle_handler( $_[1] );
 			},
 		);
 	}
@@ -127,11 +128,11 @@ sub idle_handler {
 	my $idle = $self->{idle};
 
 	# Process one item on the idle queue per idle call
-	if ( $idle ) {
+	if ($idle) {
 		my $call = shift @$idle;
 
 		# Remove the idle handler if there are no other calls
-		unless ( @$idle ) {
+		unless (@$idle) {
 			$self->Disconnect( -1, -1, Wx::EVT_IDLE );
 			delete $self->{idle};
 		}
@@ -141,7 +142,7 @@ sub idle_handler {
 		$self->$method(@$call);
 	}
 
-	return !! $self->{idle};
+	return !!$self->{idle};
 }
 
 1;

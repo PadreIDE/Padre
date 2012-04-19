@@ -177,16 +177,14 @@ SCOPE: {
 	ok( $first_char, 'calling matches with proper parameters should work' );
 	is( $first_char, 6, 'found first entry at position 6' );
 	is( $last_char,  9, 'found first entry ending at position 9' );
-	is(
-		substr( $text, $first_char, $last_char - $first_char ),
+	is( substr( $text, $first_char, $last_char - $first_char ),
 		'are',
 		'position is correct',
 	);
 
 	is_deeply(
 		\@all,
-		[
-			[ 6,  9 ],
+		[   [ 6,  9 ],
 			[ 23, 26 ],
 			[ 47, 50 ],
 		],
@@ -207,16 +205,14 @@ SCOPE: {
 	ok( $first_char, 'calling matches with proper parameters should work' );
 	is( $first_char, 1, 'found relative entry at position 1' );
 	is( $last_char,  4, 'found relative entry ending at position 4' );
-	is(
-		substr( $text, $first_char + $sel_begin, $last_char - $first_char ),
+	is( substr( $text, $first_char + $sel_begin, $last_char - $first_char ),
 		'are',
 		'relative position is correct',
 	);
 
 	is_deeply(
 		\@all,
-		[
-			[ 1,  4 ],
+		[   [ 1,  4 ],
 			[ 18, 21 ],
 		],
 		'matches returns a correct relative structure (within selection)',

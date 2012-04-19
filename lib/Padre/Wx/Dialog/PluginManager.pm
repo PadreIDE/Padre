@@ -3,7 +3,7 @@ package Padre::Wx::Dialog::PluginManager;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx::Icon ();
+use Padre::Wx::Icon               ();
 use Padre::Wx::FBP::PluginManager ();
 use Padre::Locale::T;
 
@@ -45,12 +45,8 @@ sub new {
 	$self->CenterOnParent;
 
 	# Make the heading fonts larger
-	$self->{plugin_name}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" )
-	);
-	$self->{plugin_status}->SetFont(
-		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" )
-	);
+	$self->{plugin_name}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
+	$self->{plugin_status}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
 
 	# Do an initial refresh of the plugin list
 	$self->refresh;
@@ -73,7 +69,7 @@ sub new {
 # Event Handlers
 
 sub refresh_plugin {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->selected or return;
 
 	# Update the basic fields
@@ -132,11 +128,12 @@ sub refresh_plugin {
 	# TODO Convert this to a background task later
 	local $@;
 	my $output = eval { $browser->browse($doc) };
-	my $html   = $@
+	my $html =
+		$@
 		? sprintf(
-			Wx::gettext("Error loading pod for class '%s': %s"),
-			$class,
-			$@,
+		Wx::gettext("Error loading pod for class '%s': %s"),
+		$class,
+		$@,
 		)
 		: $output->body;
 	$self->{whtml}->SetPage($html);
@@ -145,13 +142,13 @@ sub refresh_plugin {
 }
 
 sub action_clicked {
-	my $self   = shift;
+	my $self = shift;
 	my $method = $self->{action}->{method} or return;
 	$self->$method();
 }
 
 sub preferences_clicked {
-	my $self   = shift;
+	my $self = shift;
 	my $handle = $self->selected or return;
 
 	$handle->plugin_preferences;
@@ -196,8 +193,8 @@ sub disable_selected {
 }
 
 sub explain_selected {
-	my $self    = shift;
-	my $handle  = $self->selected or return;
+	my $self = shift;
+	my $handle = $self->selected or return;
 
 	# @INC gets printed out between () remove that for now
 	my $message = $handle->errstr;

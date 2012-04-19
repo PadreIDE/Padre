@@ -84,16 +84,12 @@ sub append_config_options {
 
 	# Get the set of (sorted) options
 	my $options = $config->meta($name)->options;
-	my @list    = sort {
-		$a->[1] cmp $b->[1]
-	} map {
-		[ $_, Wx::gettext($options->{$_}) ]
-	} keys %$options;
+	my @list = sort { $a->[1] cmp $b->[1] } map { [ $_, Wx::gettext( $options->{$_} ) ] } keys %$options;
 
 	# Add the menu items
-	foreach my $option ( @list ) {
+	foreach my $option (@list) {
 		my $radio = $menu->AppendRadioItem( -1, $option->[1] );
-		my $new   = $option->[0];
+		my $new = $option->[0];
 		if ( $new eq $old ) {
 			$radio->Check(1);
 		}
@@ -111,11 +107,11 @@ sub append_config_options {
 
 # Add a normal menu item to change a configuration variable, not in use.
 sub append_config_option {
-	my $self   = shift;
-	my $menu   = shift;
-	my $name   = shift;
-	my $new    = shift;
-	my $label  = shift;
+	my $self  = shift;
+	my $menu  = shift;
+	my $name  = shift;
+	my $new   = shift;
+	my $label = shift;
 
 	# Create the menu item
 	my $item = $menu->Append( -1, $label );

@@ -138,7 +138,7 @@ sub new {
 
 # Get the project from the document (and don't cache)
 sub project {
-	my $self     = ref( $_[0] ) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $document = $self->document;
 	return unless defined $document;
 	return $document->project;
@@ -146,7 +146,7 @@ sub project {
 
 # Get the text from the editor (and don't cache)
 sub text {
-	my $self   = ref( $_[0] ) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
 	return '' unless defined $editor;
 	return $editor->GetSelectedText;
@@ -252,7 +252,7 @@ sub main {
 	if ( defined $self->{main} ) {
 		return $self->{main};
 	}
-	if ( $Wx::TheApp ) {
+	if ($Wx::TheApp) {
 		return $self->{main} = $Wx::TheApp->main;
 	}
 

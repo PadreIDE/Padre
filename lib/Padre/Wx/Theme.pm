@@ -203,7 +203,7 @@ sub find {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_, code => {} }, $class;
+	my $self = bless { @_, code => {} }, $class;
 	unless ( defined $self->name ) {
 		die "No default en-gb name for style";
 	}
@@ -217,7 +217,7 @@ sub new {
 sub clone {
 	my $self  = shift;
 	my $class = Scalar::Util::blessed($self);
-	return bless { %$self }, $class;
+	return bless {%$self}, $class;
 }
 
 sub load {
@@ -326,7 +326,7 @@ sub parse {
 
 			# General commands that are passed a single colour
 			my $color = Padre::Wx::color( shift @list );
-			$style->add( $cmd => [ $color ] );
+			$style->add( $cmd => [$color] );
 
 		} elsif ( $PARAM{$cmd}->[1] eq 'style,color' ) {
 
@@ -420,6 +420,7 @@ sub apply {
 	$self->clear($object);
 
 	if ( Params::Util::_INSTANCE( $object, 'Padre::Wx::Editor' ) ) {
+
 		# This is an editor style
 		my $document = $object->document   or return;
 		my $mimetype = $document->mimetype or return;
@@ -436,16 +437,16 @@ sub apply {
 		$object->refresh_line_numbers;
 
 	} else {
+
 		# This is a GUI style, chase the inheritance tree.
 		# Uses inlined Class::ISA algorithm as in Class::Inspector
 		my $class = Scalar::Util::blessed($object);
-		my @queue = ( $class );
+		my @queue = ($class);
 		my %seen  = ( $class => 1 );
 		while ( my $package = shift @queue ) {
 			no strict 'refs';
-			unshift @queue, grep { ! $seen{$_}++ }
-				map { s/^::/main::/; s/\'/::/g; $_ }
-				( @{"${package}::ISA"} );
+			unshift @queue, grep { !$seen{$_}++ }
+				map { s/^::/main::/; s/\'/::/g; $_ } ( @{"${package}::ISA"} );
 
 			# Apply the first style that patches
 			my $style = $self->{mime}->{$package} or next;
@@ -485,6 +486,7 @@ sub clear {
 		$object->StyleClearAll;
 
 	} else {
+
 		# Reset the GUI element colours back to defaults
 		### Disabled as it blacks the directory tree for some reason
 		# $object->SetForegroundColour( Wx::NullColour );

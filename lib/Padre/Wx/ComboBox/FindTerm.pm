@@ -3,7 +3,7 @@ package Padre::Wx::ComboBox::FindTerm;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx                    ();
 use Padre::Wx::ComboBox::History ();
 
 our $VERSION = '0.95';
@@ -22,8 +22,7 @@ sub new {
 
 	# Bind some default behaviour for all of these objects
 	Wx::Event::EVT_TEXT(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_text(@_);
 		},
@@ -51,9 +50,9 @@ sub on_text {
 
 	# Show the bad colour if there is an illegal search
 	if ( $self->GetValue eq '' or $self->GetParent->as_search ) {
-		$self->SetBackgroundColour($self->base_colour);
+		$self->SetBackgroundColour( $self->base_colour );
 	} else {
-		$self->SetBackgroundColour($self->bad_colour);
+		$self->SetBackgroundColour( $self->bad_colour );
 	}
 
 	$event->Skip(1);
@@ -67,7 +66,7 @@ sub on_text {
 # Support Methods
 
 sub base_colour {
-	Wx::SystemSettings::GetColour( Wx::SYS_COLOUR_WINDOW );
+	Wx::SystemSettings::GetColour(Wx::SYS_COLOUR_WINDOW);
 }
 
 sub bad_colour {
@@ -76,7 +75,7 @@ sub bad_colour {
 	return Wx::Colour->new(
 		$base->Red,
 		int( $base->Green * 0.5 ),
-		int( $base->Blue  * 0.5 ),
+		int( $base->Blue * 0.5 ),
 	);
 }
 

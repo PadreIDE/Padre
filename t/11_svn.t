@@ -5,6 +5,7 @@
 use strict;
 use warnings;
 use Test::More;
+
 BEGIN {
 	if ( -d '.svn' ) {
 		plan tests => 4;
@@ -25,7 +26,7 @@ ok( -f $t, "Found file $t" );
 
 
 ######################################################################
-# Basic checks 
+# Basic checks
 
 # Find the property file
 my $file = Padre::SVN::find_props($t);

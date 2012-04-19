@@ -53,19 +53,21 @@ sub integer {
 
 	# Does this locale support grouping
 	if ( $format->{number_digit_grouping} eq '333' ) {
+
 		# Apply 123,456,789 style grouping
 		my $g = $format->{number_digit_grouping_symbol};
 		$text =~ s/(\d)(\d\d\d)$/$1$g$2/;
-		while ( 1 ) {
+		while (1) {
 			$text =~ s/(\d)(\d\d\d\Q$g\E)/$1$g$2/ or last;
 		}
 	}
 
 	# Apply negation formatting
-	if ( $negative ) {
+	if ($negative) {
 		if ( $format->{number_negative_format} eq '- 1.1' ) {
 			$text = "$format->{number_negative_symbol} $text";
 		} else {
+
 			# Default to negative format '-1.1'
 			$text = "$format->{number_negative_symbol}$text";
 		}

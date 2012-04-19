@@ -44,10 +44,10 @@ my %skip_files = (
 	'Padre/Document/Perl/Beginner.pm' => 'Beginner error checks contain bad samples',
 
 	#TODO cpanm sets AUTOMATED_TESTING and these files are bad :)
-	'Padre/Document.pm'                 => 'PHP language keywords',
-	'Padre/Wx/Constant.pm'              => 'Bad substitution',
-	'Padre/Wx/Theme.pm'                 => 'Bad substitution',
-	'Padre/Wx/Dialog/Patch.pm'          => 'equals in an if',
+	'Padre/Document.pm'        => 'PHP language keywords',
+	'Padre/Wx/Constant.pm'     => 'Bad substitution',
+	'Padre/Wx/Theme.pm'        => 'Bad substitution',
+	'Padre/Wx/Dialog/Patch.pm' => 'equals in an if',
 );
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');

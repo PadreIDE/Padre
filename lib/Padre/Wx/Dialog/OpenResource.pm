@@ -116,7 +116,7 @@ sub ok_button {
 			}
 		};
 		if ($@) {
-			$main->error(sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ));
+			$main->error( sprintf( Wx::gettext('Error while trying to perform Padre action: %s'), $@ ) );
 			TRACE("Error while trying to perform Padre action: $@") if DEBUG;
 		} else {
 
@@ -567,7 +567,7 @@ sub render {
 		if ( $filename =~ /^$search_expr/i ) {
 
 			# display package name if it is a Perl file
-			my $pkg = '';
+			my $pkg       = '';
 			my $mime_type = Padre::MIME->detect(
 				file  => $file,
 				perl6 => $self->config->lang_perl6_auto_detection,
@@ -599,7 +599,7 @@ sub render {
 
 				# display package name if it is a Perl file
 				my $mime_type = Padre::MIME->detect(
-					file => $file,
+					file  => $file,
 					perl6 => $self->config->lang_perl6_auto_detection,
 				);
 				if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
@@ -608,7 +608,7 @@ sub render {
 						$pkg_name = "  ($1)";
 					}
 				} else {
-					next if $is_perl_package_expr;        # do nothing if input contains : or ::
+					next if $is_perl_package_expr; # do nothing if input contains : or ::
 				}
 			}
 

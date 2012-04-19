@@ -494,17 +494,17 @@ sub on_list_item_selected {
 	my ( $self, $event ) = @_;
 
 	my $list = $event->GetEventObject;
-	my ($download_url, $module);
+	my ( $download_url, $module );
 	if ( $list == $self->{recent_list} ) {
 		my @model = @{ $self->{recent_model} };
-		my $item = $model[ $event->GetIndex ];
+		my $item  = $model[ $event->GetIndex ];
 		$download_url = $item->{download_url};
-		$module = $item->{distribution};
+		$module       = $item->{distribution};
 		$module =~ s/-/::/g;
 	} else {
 		$module = $event->GetLabel;
 	}
-	my $doc    = $self->{doc};
+	my $doc = $self->{doc};
 	$doc->SetPage(
 		sprintf(
 			Wx::gettext(q{<b>Loading %s...</b>}),
@@ -513,7 +513,8 @@ sub on_list_item_selected {
 	);
 	$doc->SetBackgroundColour(YELLOW_POD);
 
-	$self->refresh( 'pod',
+	$self->refresh(
+		'pod',
 		{   module       => $module,
 			download_url => $download_url,
 		},
@@ -543,8 +544,8 @@ sub render_doc {
 	$self->{metacpan}->Show;
 	$self->{install}->Show;
 	$self->Layout;
-	$self->{SYNOPSIS} = $synopsis;
-	$self->{distro}   = $distro;
+	$self->{SYNOPSIS}     = $synopsis;
+	$self->{distro}       = $distro;
 	$self->{download_url} = $download_url;
 
 	return;
@@ -576,7 +577,7 @@ sub on_install_click {
 	require File::Which;
 	my $cpanm = File::Which::which('cpanm');
 	$cpanm = qq{"cpanm"} if Padre::Constant::WIN32;
-	if(defined $download_url) {
+	if ( defined $download_url ) {
 		$self->main->run_command("$cpanm $download_url");
 	} else {
 		$self->main->run_command("$cpanm $distro");

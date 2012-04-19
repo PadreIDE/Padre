@@ -556,7 +556,7 @@ sub init {
 		label      => _T('&Project Statistics'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::SLOC;
-			Padre::Wx::Dialog::SLOC->run($_[0]);
+			Padre::Wx::Dialog::SLOC->run( $_[0] );
 		},
 	);
 

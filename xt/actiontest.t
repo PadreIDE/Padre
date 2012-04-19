@@ -22,7 +22,7 @@ unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 }
 
 # if ( $^O eq 'MSWin32' ) {
-	# plan skip_all => 'Crashing currently blocks the entire test suite on Win32';
+# plan skip_all => 'Crashing currently blocks the entire test suite on Win32';
 # }
 
 my $devpl;

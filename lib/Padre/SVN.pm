@@ -53,15 +53,16 @@ sub parse_props {
 	my $key    = undef;
 	my $value  = undef;
 	while ( my $line = <$fh> ) {
-		if ( $vbytes ) {
+		if ($vbytes) {
 			my $l = length $line;
 			if ( $l == $vbytes + 1 ) {
+
 				# Perfect content length
 				chomp($line);
 				$hash{$key} = $value . $line;
-				$vbytes = 0;
-				$key    = undef;
-				$value  = undef;
+				$vbytes     = 0;
+				$key        = undef;
+				$value      = undef;
 				next;
 			}
 			if ( $l > $vbytes ) {
@@ -72,9 +73,10 @@ sub parse_props {
 			die "Found value longer than specified length";
 		}
 
-		if ( $kbytes ) {
+		if ($kbytes) {
 			my $l = length $line;
 			if ( $l == $kbytes + 1 ) {
+
 				# Perfect content length
 				chomp($line);
 				$key .= $line;

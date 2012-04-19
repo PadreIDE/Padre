@@ -57,12 +57,13 @@ sub task_finish {
 
 	my $delta = 0;
 	$self->{diffs} = {};
-	for my $chunk ( @$chunks ) {
+	for my $chunk (@$chunks) {
 		my $marker_line   = undef;
 		my $lines_deleted = 0;
 		my $lines_added   = 0;
-		for my $diff ( @$chunk ) {
+		for my $diff (@$chunk) {
 			my ( $type, $line, $text ) = @$diff;
+
 			# TRACE("$type, $line, $text") if DEBUG;
 
 			unless ($marker_line) {
@@ -97,7 +98,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines changed'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line changed'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_DELETED );
+			$editor->MarkerDelete( $marker_line, $_ )
+				for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_DELETED );
 			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_CHANGED );
 			$type = 'C';
 
@@ -108,7 +110,8 @@ sub task_finish {
 				$lines_added > 1
 				? sprintf( Wx::gettext('%d lines added'), $lines_added )
 				: sprintf( Wx::gettext('%d line added'),  $lines_added );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_CHANGED, Padre::Constant::MARKER_DELETED );
+			$editor->MarkerDelete( $marker_line, $_ )
+				for ( Padre::Constant::MARKER_CHANGED, Padre::Constant::MARKER_DELETED );
 			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_ADDED );
 			$type = 'A';
 
@@ -119,7 +122,8 @@ sub task_finish {
 				$lines_deleted > 1
 				? sprintf( Wx::gettext('%d lines deleted'), $lines_deleted )
 				: sprintf( Wx::gettext('%d line deleted'),  $lines_deleted );
-			$editor->MarkerDelete( $marker_line, $_ ) for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_CHANGED );
+			$editor->MarkerDelete( $marker_line, $_ )
+				for ( Padre::Constant::MARKER_ADDED, Padre::Constant::MARKER_CHANGED );
 			$editor->MarkerAdd( $marker_line, Padre::Constant::MARKER_DELETED );
 			$type = 'D';
 
@@ -145,8 +149,7 @@ sub task_finish {
 	$editor->SetMarginSensitive( 1, 1 );
 	my $myself = $self;
 	Wx::Event::EVT_STC_MARGINCLICK(
-		$editor,
-		$editor,
+		$editor, $editor,
 		sub {
 			my $self  = shift;
 			my $event = shift;
@@ -176,7 +179,7 @@ sub task_finish {
 sub clear {
 	my $self    = shift;
 	my $current = $self->{main}->current or return;
-	my $editor  = $current->editor       or return;
+	my $editor  = $current->editor or return;
 	my $lock    = $editor->lock_update;
 
 	$editor->MarkerDeleteAll(Padre::Constant::MARKER_ADDED);
@@ -249,6 +252,7 @@ sub _select_next_prev_difference {
 		}
 	}
 	if ( defined $line_to_select ) {
+
 		# Select the line in the editor and show the diff box
 		$editor->goto_line_centerize($line_to_select);
 		$self->show_diff_box( $line_to_select, $editor );

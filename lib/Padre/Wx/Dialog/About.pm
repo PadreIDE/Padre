@@ -24,16 +24,17 @@ use constant {
 sub run {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
-	
+
 	# Always show the first tab regardless of which one
 	# was selected in wxFormBuilder.
 	$self->notebook->ChangeSelection(0);
 
 	# Load the platform-adaptive splash image
 	$self->{splash}->SetBitmap( Wx::Bitmap->new( Padre::Util::splash, Wx::BITMAP_TYPE_PNG ) );
+
 	# $self->creator->SetLabel("G\x{e1}bor Szab\x{f3}"); # don't work
 	$self->creator->SetLabel('Created by Gábor Szabó'); # works
-	
+
 	# Set the system information
 	$self->{output}->ChangeValue( $self->_information );
 
@@ -41,7 +42,7 @@ sub run {
 	$self->_translation;
 
 	$self->CenterOnParent;
-	
+
 	# Show the dialog
 	$self->ShowModal;
 
@@ -105,10 +106,10 @@ sub _information {
 	$output .= $self->_wx_info;
 	$output .= "Other...\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'PPI',   $PPI::VERSION;
-	
+
 	require Debug::Client;
 	$output .= sprintf "%*s %s\n", OFFSET, 'Debug::Client', $Debug::Client::VERSION;
-	
+
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 	return $output;
 }
@@ -147,7 +148,7 @@ sub _core_info {
 
 	# Calculate the current memory in use across all threads
 	my $ram = Padre::Util::process_memory();
-	if ( $ram ) {
+	if ($ram) {
 		$ram = Padre::Locale::Format::bytes($ram);
 	} else {
 		$ram = Wx::gettext('(unsupported)');

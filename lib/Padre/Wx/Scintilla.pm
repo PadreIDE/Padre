@@ -44,7 +44,7 @@ my %HIGHLIGHTER = (
 );
 
 sub highlighter {
-	my $mime = _MIME($_[1]);
+	my $mime = _MIME( $_[1] );
 	foreach my $type ( $mime->superpath ) {
 		return $HIGHLIGHTER{$type} if $HIGHLIGHTER{$type};
 	}
@@ -66,15 +66,15 @@ sub add_highlighter {
 	unless ( Params::Util::_HASH($params) ) {
 		die "Missing or invalid highlighter params";
 	}
-	unless ( defined Params::Util::_STRING($params->{name}) ) {
+	unless ( defined Params::Util::_STRING( $params->{name} ) ) {
 		die "Missing or invalid highlighter name";
 	}
-	unless ( Params::Util::_ARRAY($params->{mime}) ) {
+	unless ( Params::Util::_ARRAY( $params->{mime} ) ) {
 		die "Missing or invalid highlighter mime list";
 	}
 
 	# Register the highlighter module
-	my %mime = map { $_ => 1 } @{$params->{mime}};
+	my %mime = map { $_ => 1 } @{ $params->{mime} };
 	$MODULE{$module} = {
 		name => $params->{name},
 		mime => \%mime,
@@ -154,9 +154,9 @@ my %LEXER = (
 	'text/x-yaml'               => Wx::Scintilla::Constant::SCLEX_YAML,      # CONFIRMED
 	'application/x-pir'         => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
 	'application/x-pasm'        => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
-	'application/x-perl6'       => 102, # TODO Wx::Scintilla::Constant::PERL_6
+	'application/x-perl6'       => 102,                                      # TODO Wx::Scintilla::Constant::PERL_6
 	'text/plain'                => Wx::Scintilla::Constant::SCLEX_NULL,      # CONFIRMED
-	# for the lack of a better XS lexer (vim?)
+	                                                                         # for the lack of a better XS lexer (vim?)
 	'text/x-perlxs'             => Wx::Scintilla::Constant::SCLEX_CPP,
 	'text/x-perltt'             => Wx::Scintilla::Constant::SCLEX_HTML,
 	'text/x-csharp'             => Wx::Scintilla::Constant::SCLEX_CPP,
@@ -165,7 +165,7 @@ my %LEXER = (
 
 # Must ALWAYS return a valid lexer (defaulting to AUTOMATIC as a last resort)
 sub lexer {
-	my $mime = _MIME($_[1]);
+	my $mime = _MIME( $_[1] );
 	return Wx::Scintilla::Constant::SCLEX_AUTOMATIC unless $mime->type;
 
 	# Search the mime type super path for a lexer
@@ -192,7 +192,7 @@ sub lexer {
 my %KEYWORDS = ();
 
 # Support for the unknown mime type
-$KEYWORDS{''} = [ ];
+$KEYWORDS{''} = [];
 
 $KEYWORDS{'application/php'} = [
 	q{
@@ -226,7 +226,8 @@ $KEYWORDS{'application/javascript'} = [
 # Inspired from Perl 6 vim syntax file
 # https://github.com/petdance/vim-perl/blob/master/syntax/perl6.vim
 $KEYWORDS{'application/x-perl6'} = [
-	join( '', 
+	join(
+		'',
 
 		# Perl 6 routine declaration keywords
 		q{macro sub submethod method multi proto only rule token regex category},
@@ -308,7 +309,7 @@ $KEYWORDS{'application/x-ruby'} = [
 			then when END case else for nil retry true while alias class
 			elsif if not return undef yield
 			}
-	
+
 ];
 
 # VB keyword list is obtained from src/scite/src/vb.properties
@@ -367,11 +368,12 @@ $KEYWORDS{'text/x-adasrc'} = [
 		select separate subtype tagged task terminate then type until use when while with
 	} .
 
-	# Ada Operators
-	q{abs and mod not or rem xor},
+		# Ada Operators
+		q{abs and mod not or rem xor},
 ];
 
 $KEYWORDS{'text/x-csharp'} = [
+
 	# C# keywords
 	q{
 		abstract as base bool break by byte case catch char
@@ -386,8 +388,8 @@ $KEYWORDS{'text/x-csharp'} = [
 		ushort using virtual void volatile while
 	} .
 
-	# C# contextual keywords
-	q{
+		# C# contextual keywords
+		q{
 		add alias ascending descending dynamic from
 		get global group into join let orderby partial
 		remove select set value var where yield
@@ -499,17 +501,17 @@ $KEYWORDS{'text/x-csrc'} = [
 
 # Haskell keyword list is obtained from src/scite/src/haskell.properties
 $KEYWORDS{'text/x-haskell'} = [
+
 	# Haskell 98
 	q{case class data default deriving do else hiding if
 		import in infix infixl infixr instance let module
 		newtype of then type where forall foreign
 		}
 	,
-	
 
-		# Haskell Foreign Function Interface (FFI) (
-		q{export label dynamic safe threadsafe unsafe stdcall ccall prim}
-	,
+
+	# Haskell Foreign Function Interface (FFI) (
+	q{export label dynamic safe threadsafe unsafe stdcall ccall prim},
 ];
 
 # Java keyword list is obtained from src/scite/src/cpp.properties
@@ -526,8 +528,9 @@ $KEYWORDS{'text/x-java'} = [
 
 # Pascal keyword list is obtained from src/scite/src/pascal.properties
 $KEYWORDS{'text/x-pascal'} = [
-		# Pascal keywords
-		q{absolute abstract and array as asm assembler automated begin case
+
+	# Pascal keywords
+	q{absolute abstract and array as asm assembler automated begin case
 			cdecl class const constructor deprecated destructor dispid dispinterface div do downto
 			dynamic else end except export exports external far file final finalization finally for
 			forward function goto if implementation in inherited initialization inline interface is
@@ -548,6 +551,7 @@ $KEYWORDS{'text/x-pascal'} = [
 ];
 
 $KEYWORDS{'application/x-perl'} = [
+
 	# Perl Keywords
 	q{
 		NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD
@@ -582,6 +586,7 @@ $KEYWORDS{'application/x-perl'} = [
 
 # 8 different keyword lists for povray
 $KEYWORDS{'text/x-povray'} = [
+
 	# structure keyword1 == SCE_POV_DIRECTIVE
 	q{
 		declare local undef default macro if else while end
@@ -595,11 +600,9 @@ $KEYWORDS{'text/x-povray'} = [
 		camera  cylinder cubic global_settings height_field
 		isosurface julia_fractal sor sphere sphere_sweep superellipsoid
 		torus triangle quadric quartic sky_sphere plane poly polygon
-	} .
-	q{
+	} . q{
 		looks_like bounded_by contained_by clipped_by
-	} .
-	q{
+	} . q{
 		union intersection difference
 	},
 
@@ -628,14 +631,14 @@ $KEYWORDS{'text/x-povray'} = [
 		tan tanh val vdot vlength
 	} .
 
-	## vector functions
-	q{
+		## vector functions
+		q{
 		min_extent max_extent trace vaxis_rotate vcross vrotate
 		vnormalize vturbulence
 	} .
 
-	## string functions
-	q{
+		## string functions
+		q{
 		chr concat str strlwr strupr substr vstr
 	},
 
@@ -664,7 +667,9 @@ $KEYWORDS{'text/x-yaml'} = [
 
 # HTML keywords contains all kinds of things
 $KEYWORDS{'text/html'} = [
-	join( ' ',
+	join(
+		' ',
+
 		# HTML elements
 		q{a abbr acronym address applet area b base basefont
 			bdo big blockquote body br button caption center
@@ -749,7 +754,7 @@ $KEYWORDS{'application/x-shellscript'} = [
 		unset wait
 	},
 	q{	awk grep sed
-	},	
+	},
 	q{	case done elif else esac for function select then time until while
 	},
 ];
@@ -764,7 +769,7 @@ foreach my $list ( values %KEYWORDS ) {
 }
 
 sub keywords {
-	my $mime = _MIME($_[1]);
+	my $mime = _MIME( $_[1] );
 	foreach my $type ( $mime->superpath ) {
 		next unless $KEYWORDS{$type};
 		return $KEYWORDS{$type};
@@ -781,10 +786,10 @@ sub keywords {
 
 sub _MIME {
 	my $it = shift;
-	if ( Params::Util::_INSTANCE($it, 'Padre::Document') ) {
+	if ( Params::Util::_INSTANCE( $it, 'Padre::Document' ) ) {
 		$it = $it->mime;
 	}
-	if ( Params::Util::_INSTANCE($it, 'Padre::MIME') ) {
+	if ( Params::Util::_INSTANCE( $it, 'Padre::MIME' ) ) {
 		return $it;
 	}
 	return Padre::MIME->find($it);
@@ -792,10 +797,10 @@ sub _MIME {
 
 sub _TYPE {
 	my $it = shift;
-	if ( Params::Util::_INSTANCE($it, 'Padre::Document') ) {
+	if ( Params::Util::_INSTANCE( $it, 'Padre::Document' ) ) {
 		$it = $it->mime;
 	}
-	if ( Params::Util::_INSTANCE($it, 'Padre::MIME') ) {
+	if ( Params::Util::_INSTANCE( $it, 'Padre::MIME' ) ) {
 		$it = $it->type;
 	}
 	return $it || '';

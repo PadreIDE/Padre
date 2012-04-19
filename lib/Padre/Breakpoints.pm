@@ -54,9 +54,9 @@ sub show_breakpoints {
 	my $editor            = Padre::Current->editor;
 	my $debug_breakpoints = ('Padre::DB::DebugBreakpoints');
 	my $current_file      = $editor->{Document}->filename;
-	my $sql_select = "WHERE filename = ? ORDER BY line_number ASC";
-	my @tuples = eval { $debug_breakpoints->select( $sql_select, $current_file ); };
-	if ($@){
+	my $sql_select        = "WHERE filename = ? ORDER BY line_number ASC";
+	my @tuples            = eval { $debug_breakpoints->select( $sql_select, $current_file ); };
+	if ($@) {
 		return;
 	}
 

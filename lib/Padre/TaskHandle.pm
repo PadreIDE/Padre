@@ -22,6 +22,7 @@ our $SEQUENCE = 0;
 # Constructor and Accessors
 
 sub new {
+
 	# TRACE( $_[0] ) if DEBUG;
 	bless {
 		hid  => ++$SEQUENCE,
@@ -86,6 +87,7 @@ sub idle_time {
 
 # Called in the child thread to set the task and handle up for processing.
 sub start {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	$self->{child} = 1;
@@ -110,6 +112,7 @@ sub stop {
 # Serialisation
 
 sub as_array {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->task;
@@ -121,6 +124,7 @@ sub as_array {
 }
 
 sub from_array {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
 	my $array = shift;
@@ -144,6 +148,7 @@ sub from_array {
 # Parent-Only Methods
 
 sub prepare {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->{task};
@@ -163,6 +168,7 @@ sub prepare {
 }
 
 sub on_started {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->{task};
@@ -175,6 +181,7 @@ sub on_started {
 }
 
 sub on_message {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $method = shift;
@@ -224,6 +231,7 @@ sub on_message {
 }
 
 sub on_status {
+
 	# TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 
@@ -250,6 +258,7 @@ sub on_status {
 }
 
 sub on_stopped {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
@@ -275,6 +284,7 @@ sub on_stopped {
 }
 
 sub finish {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->{task};
@@ -294,6 +304,7 @@ sub finish {
 # Worker-Only Methods
 
 sub run {
+
 	# TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->task;
@@ -417,6 +428,7 @@ sub inbox {
 # Bidirectional Communication
 
 sub signal {
+
 	# TRACE( $_[0] ) if DEBUG;
 	Padre::Wx::Role::Conduit->signal( [ shift->hid => @_ ] );
 }
@@ -443,11 +455,13 @@ sub tell_child {
 }
 
 sub tell_owner {
+
 	# TRACE( $_[0] ) if DEBUG;
 	shift->signal( OWNER => @_ );
 }
 
 sub tell_status {
+
 	# TRACE( $_[0] ) if DEBUG;
 	shift->signal( STATUS => @_ ? @_ : '' );
 }

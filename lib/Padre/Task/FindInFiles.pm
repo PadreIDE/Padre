@@ -80,7 +80,7 @@ sub run {
 
 		# Abort the task if we've been cancelled
 		if ( $self->cancelled ) {
-			TRACE(__PACKAGE__ . 'task has been cancelled') if DEBUG;
+			TRACE( __PACKAGE__ . 'task has been cancelled' ) if DEBUG;
 			$self->tell_status;
 			return 1;
 
@@ -109,7 +109,7 @@ sub run {
 
 			# Abort the task if we've been cancelled
 			if ( $self->cancelled ) {
-				TRACE(__PACKAGE__ . 'task has been cancelled') if DEBUG;
+				TRACE( __PACKAGE__ . 'task has been cancelled' ) if DEBUG;
 				$self->tell_status;
 				return 1;
 			}
@@ -163,6 +163,7 @@ sub run {
 					text => $buffer,
 				);
 				unless ( defined $type and $type eq $self->{mime} ) {
+
 					# TRACE("Skipped $fullname: Not a $self->{mime} (got " . ($type || 'undef') . ")") if DEBUG;
 					next;
 				}
@@ -181,7 +182,7 @@ sub run {
 
 			# If the task wants manual output capture as well,
 			# then save the result as well.
-			if ( $output ) {
+			if ($output) {
 				push @$output, [ $object, @lines ];
 			}
 		}

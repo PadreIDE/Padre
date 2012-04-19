@@ -485,9 +485,10 @@ sub config_read {
 
 	# Retrieve the config string from the database
 	my $class = Scalar::Util::blessed($self);
+
 	#convert p-p-xx-yy -> p-p-xx
 	$class =~ s/^(Padre::Plugin::)(\w+)(?:::.+)/$1$2/;
-	my @row   = Padre::DB->selectrow_array(
+	my @row = Padre::DB->selectrow_array(
 		'select config from plugin where name = ?', {},
 		$class,
 	);
@@ -529,6 +530,7 @@ sub config_write {
 
 	# Write the config string to the database
 	my $class = Scalar::Util::blessed($self);
+
 	#convert p-p-xx-yy -> p-p-xx
 	$class =~ s/^(Padre::Plugin::)(\w+)(?:::.+)/$1$2/;
 	Padre::DB->do(
@@ -863,8 +865,7 @@ method.
 
 sub ide {
 	$IDE{ Scalar::Util::refaddr( $_[0] ) }
-	or
-	Carp::croak("Called ->ide or related method on non-existance plugin'$_[0]'");
+		or Carp::croak("Called ->ide or related method on non-existance plugin'$_[0]'");
 }
 
 =pod

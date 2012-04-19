@@ -36,8 +36,8 @@ my %MIME = ();
 
 # The "Unknown" MIME type
 my $UNKNOWN = Padre::MIME->new(
-	type  => '',
-	name  => _T('UNKNOWN'),
+	type => '',
+	name => _T('UNKNOWN'),
 );
 
 # File extension to MIME type mapping
@@ -50,7 +50,7 @@ my %EXT = (
 	cmd   => 'text/x-bat',
 	bib   => 'application/x-bibtex',
 	bin   => 'application/octet-stream',
-	bml   => 'application/x-bml', # Livejournal templates
+	bml   => 'application/x-bml',        # Livejournal templates
 	c     => 'text/x-csrc',
 	h     => 'text/x-csrc',
 	cc    => 'text/x-c++src',
@@ -73,8 +73,8 @@ my %EXT = (
 	htm   => 'text/html',
 	html  => 'text/html',
 	hs    => 'text/x-haskell',
-	i     => 'text/x-csrc',   # Non-preprocessed C
-	ii    => 'text/x-c++src', # Non-preprocessed C
+	i     => 'text/x-csrc',              # Non-preprocessed C
+	ii    => 'text/x-c++src',            # Non-preprocessed C
 	java  => 'text/x-java',
 	js    => 'application/javascript',
 	json  => 'application/json',
@@ -93,21 +93,21 @@ my %EXT = (
 	sql   => 'text/x-sql',
 	tcl   => 'application/x-tcl',
 	patch => 'text/x-patch',
-	pks   => 'text/x-sql',         # PLSQL package spec
-	pkb   => 'text/x-sql',         # PLSQL package body
+	pks   => 'text/x-sql',               # PLSQL package spec
+	pkb   => 'text/x-sql',               # PLSQL package body
 	pl    => 'application/x-perl',
 	plx   => 'application/x-perl',
 	pm    => 'application/x-perl',
-	pmc   => 'application/x-perl', # Compiled Perl or gimme5
+	pmc   => 'application/x-perl',       # Compiled Perl or gimme5
 	pod   => 'text/x-pod',
 	pov   => 'text/x-povray',
 	psgi  => 'application/x-psgi',
 	sty   => 'application/x-latex',
 	t     => 'application/x-perl',
 	tex   => 'application/x-latex',
-	xs    => 'text/x-perlxs', # Define our own MIME type
-	tt    => 'text/x-perltt', # Define our own MIME type
-	tt2   => 'text/x-perltt', # Define our own MIME type
+	xs    => 'text/x-perlxs',            # Define our own MIME type
+	tt    => 'text/x-perltt',            # Define our own MIME type
+	tt2   => 'text/x-perltt',            # Define our own MIME type
 	conf  => 'text/x-config',
 	sh    => 'application/x-shellscript',
 	ksh   => 'application/x-shellscript',
@@ -120,7 +120,7 @@ my %EXT = (
 	zip   => 'application/zip',
 	pasm  => 'application/x-pasm',
 	pir   => 'application/x-pir',
-	p6    => 'application/x-perl6', # See Perl6/Spec/S01-overview.pod
+	p6    => 'application/x-perl6',      # See Perl6/Spec/S01-overview.pod
 	p6l   => 'application/x-perl6',
 	p6m   => 'application/x-perl6',
 	pl6   => 'application/x-perl6',
@@ -199,7 +199,7 @@ unknown type object will be returned.
 =cut
 
 sub find {
-	$MIME{$_[1]} || $UNKNOWN;
+	$MIME{ $_[1] } || $UNKNOWN;
 }
 
 
@@ -255,19 +255,19 @@ Returns a L<Padre::MIME> object, or throws an exception on error.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check the supertype and precalculate the supertype path
 	unless ( defined $self->{type} ) {
 		die "Missing or invalid MIME type";
 	}
 	if ( $self->{supertype} ) {
-		unless ( $MIME{$self->{supertype}} ) {
+		unless ( $MIME{ $self->{supertype} } ) {
 			die "MIME type '$self->{supertype}' does not exist";
 		}
 		$self->{superpath} = [
 			$self->{type},
-			$MIME{$self->{supertype}}->superpath,
+			$MIME{ $self->{supertype} }->superpath,
 		];
 	} else {
 		$self->{superpath} = [ $self->{type} ];
@@ -299,7 +299,7 @@ exception on error.
 sub create {
 	my $class = shift;
 	my $self  = $class->new(@_);
-	$MIME{$self->type} = $self;
+	$MIME{ $self->type } = $self;
 }
 
 =pod
@@ -388,7 +388,7 @@ supertype in some respect.
 =cut
 
 sub superpath {
-	@{$_[0]->{superpath}};
+	@{ $_[0]->{superpath} };
 }
 
 =pod
@@ -435,7 +435,7 @@ Returns true if the MIME type is binary or false if not.
 =cut
 
 sub binary {
-	!! grep { $_ eq 'application/octet-stream' } $_[0]->superpath;
+	!!grep { $_ eq 'application/octet-stream' } $_[0]->superpath;
 }
 
 =pod
@@ -491,8 +491,8 @@ known for the MIME type.
 
 sub comment {
 	require Padre::Comment;
-	$_[0]->{comment} or
-	$_[0]->{comment} = Padre::Comment->find($_[0]);
+	$_[0]->{comment}
+		or $_[0]->{comment} = Padre::Comment->find( $_[0] );
 }
 
 
@@ -539,6 +539,7 @@ sub detect {
 	# Could be a Padre::File object with an identified mime type
 	my $file = $param{file};
 	if ( ref $file ) {
+
 		# The mime might already be identified
 		my $mime = $file->mime;
 		return $mime if defined $mime;
@@ -561,6 +562,7 @@ sub detect {
 			$mime = $EXT{$ext} if $EXT{$ext};
 
 		} else {
+
 			# Try to derive the mime type from the basename
 			# Makefile is now highlighted as a Makefile
 			# Changelog files are now displayed as text files
@@ -578,9 +580,7 @@ sub detect {
 	# are obvious.
 	my $text = $param{text};
 	if ( not $mime and defined $text ) {
-		$mime = eval {
-			$class->detect_content($text)
-		};
+		$mime = eval { $class->detect_content($text) };
 		return '' if $@;
 	}
 
@@ -664,6 +664,7 @@ sub detect_content {
 			die $_[0];
 		} elsif ( $_[0] !~ /Malformed UTF\-8 char/ ) {
 			return;
+
 			# print STDERR "$_[0] while looking for mime type of $file";
 		}
 	};
@@ -779,8 +780,9 @@ sub detect_content {
 
 	# Recognise XML and variants
 	if ( $text =~ /\A<\?xml\b/s ) {
+
 		# Detect XML formats without XML namespace declarations
-		return 'text/html' if $text =~ /^<!DOCTYPE html/m;
+		return 'text/html'           if $text =~ /^<!DOCTYPE html/m;
 		return 'xml/x-wxformbuilder' if $text =~ /<wxFormBuilder_Project>/;
 
 		# Fall through to generic XML
@@ -874,15 +876,15 @@ sub detect_perl6 {
 
 # Plain text, which editable files inherit from
 Padre::MIME->create(
-	type      => 'text/plain',
-	name      => _T('Text'),
-	document  => 'Padre::Document',
+	type     => 'text/plain',
+	name     => _T('Text'),
+	document => 'Padre::Document',
 );
 
 # Binary files, which we cannot open at all
 Padre::MIME->create(
-	type      => 'application/octet-stream',
-	name      => _T('Binary File'),
+	type => 'application/octet-stream',
+	name => _T('Binary File'),
 );
 
 Padre::MIME->create(
@@ -1109,6 +1111,7 @@ Padre::MIME->create(
 	type      => 'text/rtf',
 	name      => 'RTF',
 	supertype => 'text/plain',
+
 	# magic     => "{\\rtf",
 );
 
@@ -1146,9 +1149,9 @@ Padre::MIME->create(
 # text/xml specifically means "human-readable XML".
 # This is preferred to the more generic application/xml
 Padre::MIME->create(
-	type      => 'text/xml',
-	name      => 'XML',
-	document  => 'Padre::Document',
+	type     => 'text/xml',
+	name     => 'XML',
+	document => 'Padre::Document',
 );
 
 Padre::MIME->create(

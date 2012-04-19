@@ -491,14 +491,14 @@ return type 0 hash_ref
 # function Padre::Util::run_in_directory_two
 #######
 sub run_in_directory_two {
-	my $cmd_line = shift;
-	my $location = shift;
+	my $cmd_line      = shift;
+	my $location      = shift;
 	my $return_option = shift;
 
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
-			$location = undef;
+			$location      = undef;
 		}
 
 	}
@@ -542,11 +542,12 @@ sub run_in_directory_two {
 	Padre::Util::run_in_directory( "@cmd", $directory );
 
 	# Slurp command standard input and output
-	$ret_ioe{output} = slurp($std_out->filename);
+	$ret_ioe{output} = slurp( $std_out->filename );
+
 	# chomp $ret_ioe{output};
 
 	# Slurp command standard error
-	$ret_ioe{error} = slurp($std_err->filename);
+	$ret_ioe{error} = slurp( $std_err->filename );
 
 	# chomp $ret_ioe{error};
 	if ( $ret_ioe{error} && ( $return_option eq 1 ) ) {
@@ -554,7 +555,7 @@ sub run_in_directory_two {
 	}
 
 	return $ret_ioe{output} if ( $return_option eq 1 );
-	return $ret_ioe{error} if ( $return_option eq 2 );
+	return $ret_ioe{error}  if ( $return_option eq 2 );
 	return \%ret_ioe;
 
 }

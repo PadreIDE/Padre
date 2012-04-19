@@ -82,8 +82,7 @@ sub new {
 	$self->AssignImageList($images);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			$_[0]->idle_method(
 				item_clicked => $_[1]->GetItem,
@@ -108,12 +107,12 @@ sub new {
 # Event Handlers
 
 sub item_clicked {
-	my $self  = shift;
-	my $item  = shift;
-	my $data  = $self->GetPlData($item) or return;
-	my $dir   = $data->{dir}            or return;
-	my $file  = $data->{file}           or return;
-	my $path  = File::Spec->catfile( $dir, $file );
+	my $self = shift;
+	my $item = shift;
+	my $data = $self->GetPlData($item) or return;
+	my $dir  = $data->{dir} or return;
+	my $file = $data->{file} or return;
+	my $path = File::Spec->catfile( $dir, $file );
 	$self->main->setup_editor($path);
 }
 

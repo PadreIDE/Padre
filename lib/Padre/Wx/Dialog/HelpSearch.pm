@@ -289,7 +289,7 @@ sub _reindex {
 		$self->_search_text->SetFocus;
 	} else {
 		$self->_search_text->ChangeValue('');
-	}	
+	}
 }
 
 #
@@ -309,9 +309,7 @@ sub _search {
 			}
 			if ( not $self->_help_provider ) {
 				$self->_display_msg(
-					Wx::gettext("Could not find a help provider for ") .
-					Wx::gettext($document->mime->name)
-				);
+					Wx::gettext("Could not find a help provider for ") . Wx::gettext( $document->mime->name ) );
 				return;
 			}
 		} else {

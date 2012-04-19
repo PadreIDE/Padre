@@ -27,7 +27,7 @@ use 5.008;
 use strict;
 use warnings;
 use Time::HiRes ();
-use Padre::Wx ();
+use Padre::Wx   ();
 
 our $VERSION    = '0.95';
 our $COMPATIBLE = '0.93';
@@ -96,16 +96,14 @@ sub new {
 sub dialog {
 	my $self = shift;
 	unless ( defined $self->{dialog} ) {
+
 		# Don't display if inside the lazy window
 		if ( Time::HiRes::time() - $self->{start} < 1 ) {
 			return;
 		}
 
 		# Default flags
-		my $flags = Wx::PD_ELAPSED_TIME
-			  | Wx::PD_ESTIMATED_TIME
-			  | Wx::PD_REMAINING_TIME
-			  | Wx::PD_AUTO_HIDE;
+		my $flags = Wx::PD_ELAPSED_TIME | Wx::PD_ESTIMATED_TIME | Wx::PD_REMAINING_TIME | Wx::PD_AUTO_HIDE;
 		if ( $self->{modal} ) {
 			$flags |= Wx::PD_APP_MODAL;
 		}
@@ -135,7 +133,7 @@ The last message will stay if no new text is specified.
 =cut
 
 sub update {
-	my $self   = shift;
+	my $self = shift;
 	my $dialog = $self->dialog or return 1;
 	$dialog->Update(@_);
 }

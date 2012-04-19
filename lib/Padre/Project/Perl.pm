@@ -30,7 +30,7 @@ sub _headline {
 	# The intuitive approach is to find the top-most .pm file
 	# in the lib directory.
 	my $cursor = 'lib';
-	my $dir    = File::Spec->catdir( $root, $cursor );
+	my $dir = File::Spec->catdir( $root, $cursor );
 	unless ( -d $dir ) {
 
 		# Weird-looking Perl distro...
@@ -70,7 +70,7 @@ sub _headline {
 		# Did we find a single candidate?
 		last unless $candidate;
 		$cursor = $candidate;
-		$dir    = File::Spec->catdir( $root, $cursor );
+		$dir = File::Spec->catdir( $root, $cursor );
 	}
 
 	return undef;

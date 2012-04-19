@@ -271,6 +271,7 @@ sub refresh {
 	$self->{whitespaces}->Check( $config->editor_whitespace );
 	$self->{lockinterface}->Check( $config->main_lockinterface );
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
+
 	if (Padre::Feature::VCS) {
 		$self->{vcs}->Check( $config->main_vcs );
 	}
@@ -329,17 +330,12 @@ sub refresh {
 }
 
 sub sorted {
-	my $self  = shift;
-	my %names = map {
-		$_ => Wx::gettext( Padre::MIME->find($_)->name )
-	} Padre::MIME->types;
+	my $self = shift;
+	my %names = map { $_ => Wx::gettext( Padre::MIME->find($_)->name ) } Padre::MIME->types;
 
 	# Can't do "return sort", must sort to a list first
-	my @sorted = sort {
-		( $b eq 'text/plain' ) <=> ( $a eq 'text/plain' )
-		or
-		$names{$a} cmp $names{$b}
-	} keys %names;
+	my @sorted =
+		sort { ( $b eq 'text/plain' ) <=> ( $a eq 'text/plain' ) or $names{$a} cmp $names{$b} } keys %names;
 
 	return @sorted;
 }
