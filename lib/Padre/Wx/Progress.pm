@@ -29,7 +29,7 @@ use warnings;
 use Time::HiRes ();
 use Padre::Wx   ();
 
-our $VERSION    = '0.96';
+our $VERSION    = '0.97';
 our $COMPATIBLE = '0.93';
 
 =pod

@@ -25,7 +25,7 @@ use strict;
 use warnings;
 use Padre::Constant ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
 if (Padre::Constant::WIN32) {

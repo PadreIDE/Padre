@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use File::Spec ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 
 my $PADRE = undef;
 

@@ -8,7 +8,7 @@ use Padre::Wx::Icon       ();
 use Padre::Wx::HtmlWindow ();
 use Padre::Wx::Role::Idle ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::Idle
 	Wx::Dialog

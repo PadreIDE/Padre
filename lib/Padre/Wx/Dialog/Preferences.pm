@@ -16,7 +16,7 @@ use Padre::Wx::Role::Dialog     ();
 use Padre::Locale::T;
 use Padre::Logger;
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::Role::Dialog

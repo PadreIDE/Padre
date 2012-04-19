@@ -10,7 +10,7 @@ use Padre::Wx::Icon             ();
 use Padre::Wx::Role::View       ();
 use Padre::Wx::FBP::Breakpoints ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::Breakpoints

@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Task::Outline ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = 'Padre::Task::Outline';
 
 

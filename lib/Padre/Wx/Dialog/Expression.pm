@@ -8,7 +8,7 @@ use Padre::Wx::ScrollLock      ();
 use Padre::Wx::Role::Timer     ();
 use Padre::Wx::FBP::Expression ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::Timer
 	Padre::Wx::FBP::Expression

@@ -14,7 +14,7 @@ use File::Temp      ();
 use Params::Util    ();
 use Padre::Logger qw(TRACE);
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = 'Padre::Task';
 
 ######################################################################

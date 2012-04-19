@@ -34,7 +34,7 @@ use List::Util   ();
 use Scalar::Util ();
 use Params::Util ();
 
-our $VERSION    = '0.96';
+our $VERSION    = '0.97';
 our $COMPATIBLE = '0.93';
 
 sub new {

@@ -16,7 +16,7 @@ use Padre::Wx::TreeCtrl      ();
 use Padre::Wx                ();
 use Padre::Logger;
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle

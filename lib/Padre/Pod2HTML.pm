@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use Pod::Simple::XHTML ();
 
-our $VERSION = '0.96';
+our $VERSION = '0.97';
 our @ISA     = 'Pod::Simple::XHTML';
 
 
