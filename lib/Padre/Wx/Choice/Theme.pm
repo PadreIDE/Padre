@@ -10,7 +10,7 @@ use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::Theme      ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Choice

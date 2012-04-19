@@ -52,7 +52,7 @@ use Params::Util    ();
 use Padre::Constant ();
 use Padre::Wx       ();
 
-our $VERSION    = '0.95';
+our $VERSION    = '0.96';
 our $COMPATIBLE = '0.93';
 
 =pod

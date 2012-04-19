@@ -20,7 +20,7 @@ use Storable          ();
 use Params::Util      ();
 use Padre::Role::Task ();
 
-our $VERSION    = '0.95';
+our $VERSION    = '0.96';
 our $COMPATIBLE = '0.93';
 our @ISA        = 'Padre::Task';
 

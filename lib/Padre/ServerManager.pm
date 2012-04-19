@@ -11,7 +11,7 @@ use File::Spec        ();
 use Padre::Constant   ();
 use Padre::Role::Task ();
 
-our $VERSION    = '0.95';
+our $VERSION    = '0.96';
 our $COMPATIBLE = '0.95';
 our @ISA        = 'Padre::Role::Task';
 

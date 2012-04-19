@@ -22,7 +22,7 @@ use warnings;
 use Padre::Wx             ();
 use Padre::Wx::ScrollLock ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = 'Wx::TreeCtrl';
 
 

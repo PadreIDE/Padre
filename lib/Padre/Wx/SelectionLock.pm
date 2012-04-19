@@ -7,7 +7,7 @@ use Params::Util  ();
 use Padre::Wx     ();
 use Wx::Scintilla ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 use Class::XSAccessor {
 	getters => {

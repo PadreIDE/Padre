@@ -33,7 +33,7 @@ use Padre::Wx::Role::Main     ();
 use Padre::Wx::Role::Timer    ();
 use Padre::Logger;
 
-our $VERSION    = '0.95';
+our $VERSION    = '0.96';
 our $COMPATIBLE = '0.91';
 our @ISA        = (
 	'Padre::Wx::Role::Main',

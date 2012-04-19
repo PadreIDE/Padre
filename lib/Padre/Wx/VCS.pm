@@ -13,7 +13,7 @@ use Padre::Wx::FBP::VCS   ();
 use Padre::Task::VCS      ();
 use Padre::Logger;
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle

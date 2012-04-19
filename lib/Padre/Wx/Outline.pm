@@ -15,7 +15,7 @@ use Padre::Wx::Role::Context ();
 use Padre::Wx::FBP::Outline  ();
 use Padre::Logger;
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Idle

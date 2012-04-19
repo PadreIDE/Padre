@@ -11,7 +11,7 @@ use YAML::Tiny      ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 #
 # my $config = Padre::Config::Human->create;

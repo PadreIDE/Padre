@@ -13,7 +13,7 @@ use Padre::Wx::Role::Main ();
 use Padre::Logger;
 
 # package exports and version
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Wx::Role::Idle
 	Padre::Wx::Role::Main

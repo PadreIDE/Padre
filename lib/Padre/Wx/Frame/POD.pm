@@ -31,7 +31,7 @@ use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 use Padre::Wx::FBP::POD   ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = 'Padre::Wx::FBP::POD';
 
 =pod

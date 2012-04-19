@@ -8,7 +8,7 @@ use Padre::SLOC              ();
 use Padre::Locale            ();
 use Padre::Wx::FBP::Document ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = 'Padre::Wx::FBP::Document';
 
 my @SELECTION_FIELDS = qw{

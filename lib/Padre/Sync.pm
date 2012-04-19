@@ -30,7 +30,7 @@ use HTTP::Request::Common ();
 use Padre::Current        ();
 use Padre::Constant       ();
 
-our $VERSION    = '0.95';
+our $VERSION    = '0.96';
 our $COMPATIBLE = '0.95';
 
 

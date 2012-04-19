@@ -15,7 +15,7 @@ use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::Debugger

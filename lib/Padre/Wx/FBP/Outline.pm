@@ -14,7 +14,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::TreeCtrl ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel

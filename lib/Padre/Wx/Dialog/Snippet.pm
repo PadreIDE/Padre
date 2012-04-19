@@ -7,7 +7,7 @@ use Params::Util            ();
 use Padre::DB               ();
 use Padre::Wx::FBP::Snippet ();
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA     = 'Padre::Wx::FBP::Snippet';
 
 
