@@ -13,6 +13,12 @@ next production release, and synchronise their release to the Padre schedule.
 Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
+0.98 TBA
+
+
+0.97 Development version, not released
+
+
 0.96 2012.04.19
     - The "Todo" or "To Do" or "To-do" or "TODO" list has always been a
       problem when it comes to naming. Renamed to "Task List" to align
