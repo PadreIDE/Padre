@@ -102,13 +102,18 @@ sub _information {
 	my $self   = shift;
 	my $output = "\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'Padre', $VERSION;
+
 	$output .= $self->_core_info;
 	$output .= $self->_wx_info;
+
 	$output .= "Other...\n";
 	$output .= sprintf "%*s %s\n", OFFSET, 'PPI',   $PPI::VERSION;
 
 	require Debug::Client;
 	$output .= sprintf "%*s %s\n", OFFSET, 'Debug::Client', $Debug::Client::VERSION;
+
+	require PPIx::EditorTools;
+	$output .= sprintf "%*s %s\n", OFFSET, 'PPIx::EditorTools', $PPIx::EditorTools::VERSION;
 
 	$output .= sprintf "%*s %s\n", OFFSET, Wx::gettext('Config'), Padre::Constant::CONFIG_DIR;
 	return $output;
