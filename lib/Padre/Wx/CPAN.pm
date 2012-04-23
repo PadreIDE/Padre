@@ -105,6 +105,10 @@ sub view_close {
 	$_[0]->main->show_cpan(0);
 }
 
+sub view_icon {
+	Padre::Wx::Icon::find('actions/metared');
+}
+
 sub view_start {
 	my $self = shift;
 	$self->{synopsis}->Hide;
