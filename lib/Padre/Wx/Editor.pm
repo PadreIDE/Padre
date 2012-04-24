@@ -550,11 +550,11 @@ sub on_left_up {
 	if ( Wx::GTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
-		if ( $config->mid_button_paste ) {
-			$self->put_text_to_clipboard( $text, 1 );
-		} else {
-			$self->put_text_to_clipboard($text);
-		}
+		# if ( $config->mid_button_paste ) {
+		# $self->put_text_to_clipboard( $text, 1 );
+		# } else {
+		# $self->put_text_to_clipboard($text);
+		# }
 	}
 
 	my $doc = $self->document;
@@ -2009,8 +2009,9 @@ sub put_text_to_clipboard {
 	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
 	Wx::TheClipboard->Open;
-	Wx::TheClipboard->UsePrimarySelection($clipboard)
-		if $config->mid_button_paste;
+
+	# Wx::TheClipboard->UsePrimarySelection($clipboard)
+	# if $config->mid_button_paste;
 	Wx::TheClipboard->SetData( Wx::TextDataObject->new($text) );
 	Wx::TheClipboard->Close;
 
@@ -2161,7 +2162,8 @@ BEGIN {
 			my $b = Wx::Colour->new("black");
 			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDEREND, Wx::Scintilla::SC_MARK_BOXPLUSCONNECTED, $w, $b );
 			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDEROPENMID, Wx::Scintilla::SC_MARK_BOXMINUSCONNECTED, $w,
-				$b );
+				$b
+			);
 			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERMIDTAIL, Wx::Scintilla::SC_MARK_TCORNER,  $w, $b );
 			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERTAIL,    Wx::Scintilla::SC_MARK_LCORNER,  $w, $b );
 			$self->MarkerDefine( Wx::Scintilla::SC_MARKNUM_FOLDERSUB,     Wx::Scintilla::SC_MARK_VLINE,    $w, $b );
