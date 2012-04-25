@@ -20,6 +20,7 @@ the even version for the release, even during development.
     - add PPIx::EditorTools to About Info (BOWTIE)
     - add an icon to CPAN Explorer panel tab (BOWTIE)
     - attempt to fix paste-buffer-clear-bug #1312 (SEWI)
+    - s/Update/update/ #1429 bennie++ (BOWTIE)
 
 
 0.96 2012.04.19

@@ -13,7 +13,7 @@ Padre::Wx::Progress - Tell the user that we're doing something
                lazy  => 1,
                );
 
-  $object->Update($done_count, $current_work_text);
+  $object->update($done_count, $current_work_text);
 
 =head1 DESCRIPTION
 
