@@ -110,7 +110,7 @@ sub check_wx_version {
 			return;
 		}
 		unless ( Wx::wxUNICODE() ) {
-			nono("Padre needs wxWidgest to be compiled with Unicode support (--enable-unicode)");
+			nono("Padre needs wxWidgets to be compiled with Unicode support (--enable-unicode)");
 		}
 	}
 
