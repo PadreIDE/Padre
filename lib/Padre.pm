@@ -804,6 +804,8 @@ Andrew Shitov
 
 Cezary Morga (THEREK)
 
+Marek Roszkowski (EviL) E<lt>evil@evil.devil.is-my.nameE<gt>
+
 =head3 Portuguese (Brazilian)
 
 Breno G. de Oliveira (GARU)
