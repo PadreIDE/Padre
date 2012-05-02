@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-23 08:10-0700\n"
+"POT-Creation-Date: 2012-05-02 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -669,11 +669,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:151
+#: lib/Padre/Wx/Dialog/About.pm:152
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:159
+#: lib/Padre/Wx/Dialog/About.pm:160
 msgid "(unsupported)"
 msgstr ""
 
@@ -1379,7 +1379,7 @@ msgstr ""
 msgid "Commit file/directory to repository?"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:118
+#: lib/Padre/Wx/Dialog/About.pm:119
 msgid "Config"
 msgstr ""
 
@@ -1853,7 +1853,7 @@ msgid "Display Value"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN.pm:211 lib/Padre/Wx/CPAN.pm:220 lib/Padre/Wx/CPAN.pm:229
-#: lib/Padre/Wx/Dialog/About.pm:137
+#: lib/Padre/Wx/Dialog/About.pm:138
 msgid "Distribution"
 msgstr ""
 
@@ -2955,7 +2955,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:142
+#: lib/Padre/Wx/Dialog/About.pm:143
 msgid "Kernel"
 msgstr ""
 
@@ -4135,7 +4135,7 @@ msgstr ""
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:161
+#: lib/Padre/Wx/Dialog/About.pm:162
 msgid "RAM"
 msgstr ""
 
@@ -5469,7 +5469,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:152
+#: lib/Padre/Wx/Dialog/About.pm:153
 msgid "Threads"
 msgstr ""
 
