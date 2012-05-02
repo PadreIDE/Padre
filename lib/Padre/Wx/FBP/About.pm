@@ -568,12 +568,6 @@ sub new {
 		Wx::gettext("Cezary Morga"),
 	);
 
-	$self->{marek_roszkowski} = Wx::StaticText->new(
-		$self->{translation},
-		-1;
-		Wx::gettext("Marek Roszkowski"),
-	);
-
 	$self->{m_staticText472212} = Wx::StaticText->new(
 		$self->{translation},
 		-1,

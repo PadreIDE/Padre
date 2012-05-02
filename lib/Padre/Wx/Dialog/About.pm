@@ -86,7 +86,7 @@ sub _translation {
 
 	# $self->kjetil_skotheim->SetLabel('');
 	# $self->cezary_morga->SetLabel('');
-	$self->marek_roszkowski->SetLabel('Marek Roszkowski');
+	# $self->marek_roszkowski->SetLabel('');
 	# $self->breno_g_de_oliveira->SetLabel('');
 	# $self->gabriel_vieira->SetLabel('');
 
