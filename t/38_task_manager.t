@@ -60,7 +60,7 @@ my $timer2 = Wx::Timer->new( $wxapp, TIMER_LASTRESORT );
 
 # Start the timers
 $timer1->Start( 1,     1 );
-$timer2->Start( 10000, 1 );
+$timer2->Start( 1000, 1 );
 
 
 
@@ -70,14 +70,14 @@ $timer2->Start( 10000, 1 );
 # Main Process
 
 # We start with no threads
-is( scalar( threads->list ), 0, 'No threads' );
+is( scalar( threads->list ), 0, 'We start with No threads' );
 
 # Enter the wx loop
 # $window->Show(1) if $window;
 $wxapp->MainLoop;
 
 # We end with no threads
-is( scalar( threads->list ), 0, 'No threads' );
+is( scalar( threads->list ), 0, 'We end with No threads' );
 
 
 
@@ -89,7 +89,7 @@ is( scalar( threads->list ), 0, 'No threads' );
 sub startup {
 
 	# Run the startup process
-	ok( $manager->start, '->start ok' );
+	ok( $manager->start, '->start, startup process ok' );
 	Time::HiRes::sleep(1);
 	is( scalar( threads->list ), 1, 'Three threads exists' );
 
@@ -101,10 +101,10 @@ sub startup {
 	isa_ok( $addition, 'Padre::Task::Addition' );
 
 	# Schedule the task (which should trigger it's execution)
-	ok( $manager->schedule($addition), '->schedule ok' );
-	is( $addition->{prepare}, 1, '->{prepare} is false' );
-	is( $addition->{run},     0, '->{run}     is false' );
-	is( $addition->{finish},  0, '->{finish}  is false' );
+	ok( $manager->schedule($addition), '->schedule startup ok' );
+	is( $addition->{prepare}, 1, '->{prepare} startup is false' ); #should this be true as 1
+	is( $addition->{run},     0, '->{run}     startup is false' );
+	is( $addition->{finish},  0, '->{finish}  startup is false' );
 }
 
 sub timeout {
@@ -112,9 +112,17 @@ sub timeout {
 	# Run the shutdown process
 	$timer1 = undef;
 	$timer2 = undef;
-	ok( $manager->stop,     '->stop ok' );
-	ok( $manager->waitjoin, '->waitjoin ok' );
+	ok( $manager->stop,     '->stop timeout ok' );
+	# we appire to hang here
+	ok( $manager->waitjoin, '->waitjoin timeout ok' );
 
 	# $window->Show(0) if $window;
 	$wxapp->ExitMainLoop;
 }
+
+
+done_testing();
+
+1;
+
+__END__
