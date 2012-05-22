@@ -1,6 +1,6 @@
 package Padre::Wx::Panel::Debugger;
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 
@@ -14,7 +14,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
-
+use Data::Printer { caller_info => 1, colored => 1, };
 our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -910,24 +910,32 @@ sub _on_list_item_selected {
 	my $index         = $event->GetIndex + 1;
 	my $variable_name = $event->GetText;
 
-	#ToDo inspired by task_manager, I think the next step is playing with DB::
-	my $variable_value = $self->{client}->__send_np( "x \\" . $variable_name );
-	my $black_size     = keys %{ $self->{var_val} };
-	my $blue_size      = keys %{ $self->{auto_var_val} };
+	#ToDo Changed to use current internal hashes instead of asking perl5db for value, this also gets around a bug with 'File::HomeDir has tied variables' clobbering x @rray giving an empty array
+	my $variable_value;
+	my $black_size = keys %{ $self->{var_val} };
+	my $blue_size  = keys %{ $self->{auto_var_val} };
 
-	# my $gray_size = keys $self->{auto_x_var};
-	# print "blach = $black_size, blue = $blue_size, gray = $gray_size \n";
-
-	if ( $index <= $black_size ) {
-		$main->{debugoutput}->debug_output_black( $variable_name . " = " . $variable_value );
-	} elsif ( $index <= ( $black_size + $blue_size ) ) {
-		$main->{debugoutput}->debug_output_blue( $variable_name . " = " . $variable_value );
-	} else {
-		$main->{debugoutput}->debug_output_dark_gray( $variable_name . " = " . $variable_value );
+	given ($index) {
+		when ( $_ <= $black_size ) {
+			$variable_value = $self->{var_val}->{$variable_name};
+			chomp $variable_value;
+			$main->{debugoutput}->debug_output_black( $variable_name . " = " . $variable_value );
+		}
+		when ( $_ <= ( $black_size + $blue_size ) ) {
+			$variable_value = $self->{auto_var_val}->{$variable_name};
+			chomp $variable_value;
+			$main->{debugoutput}->debug_output_blue( $variable_name . " = " . $variable_value );
+		}
+		default {
+			$variable_value = $self->{auto_x_var}->{$variable_name};
+			chomp $variable_value;
+			$main->{debugoutput}->debug_output_dark_gray( $variable_name . " = " . $variable_value );
+		}
 	}
 
 	return;
 }
+
 
 ###############################################
 # event handler top row
