@@ -1078,12 +1078,10 @@ sub on_show_local_variables_checked {
 
 	if ( $event->IsChecked ) {
 		$self->{local_variables} = 1;
-		$self->_output_variables;
 	} else {
 		$self->{local_variables} = 0;
-		$self->_output_variables;
 	}
-
+	$self->_output_variables;
 	return;
 }
 #######
@@ -1094,12 +1092,10 @@ sub on_show_global_variables_checked {
 
 	if ( $event->IsChecked ) {
 		$self->{global_variables} = 1;
-		$self->_output_variables;
 	} else {
 		$self->{global_variables} = 0;
-		$self->_output_variables;
 	}
-
+	$self->_output_variables;
 	return;
 }
 
