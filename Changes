@@ -17,6 +17,7 @@ the even version for the release, even during development.
     - Changed to use current internal hashes instead of asking perl5db for 
       value, this also gets around a bug with 'File::HomeDir has tied 
       variables' clobbering x @rray giving an empty array (BOWTIE)
+    - Update variables/values upon check box click (BOWTIE)
 
 
 0.97 Development version, not released

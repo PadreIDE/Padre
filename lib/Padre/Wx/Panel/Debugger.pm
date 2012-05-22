@@ -14,6 +14,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
+
 # use Data::Printer { caller_info => 1, colored => 1, };
 our $VERSION = '0.97';
 our @ISA     = qw{
@@ -86,8 +87,8 @@ sub set_up {
 	$self->{save}             = {};
 	$self->{trace_status}     = 'Trace = off';
 	$self->{var_val}          = {};
-	$self->{auto_var_val}     = {};
-	$self->{auto_x_var}       = {};
+	$self->{local_values}     = {};
+	$self->{global_values}    = {};
 	$self->{set_bp}           = 0;
 	$self->{fudge}            = 0;
 	$self->{local_variables}  = 0;
@@ -180,11 +181,11 @@ sub set_up {
 # display any relation db
 #######
 sub update_variables {
-	my $self             = shift;
-	my $var_val_ref      = shift;
-	my $auto_var_val_ref = shift;
-	my $auto_x_var_ref   = shift;
-	my $editor           = $self->current->editor;
+	my $self              = shift;
+	my $var_val_ref       = shift;
+	my $local_values_ref  = shift;
+	my $global_values_ref = shift;
+	my $editor            = $self->current->editor;
 
 	# clear ListCtrl items
 	$self->{variables}->DeleteAllItems;
@@ -202,25 +203,25 @@ sub update_variables {
 	}
 
 	if ( $self->{local_variables} == 1 ) {
-		foreach my $var ( keys %{$auto_var_val_ref} ) {
+		foreach my $var ( keys %{$local_values_ref} ) {
 
 			$item->SetId($index);
 			$self->{variables}->InsertItem($item);
 			$self->{variables}->SetItemTextColour( $index, BLUE );
 
 			$self->{variables}->SetItem( $index,   0, $var );
-			$self->{variables}->SetItem( $index++, 1, $auto_var_val_ref->{$var} );
+			$self->{variables}->SetItem( $index++, 1, $local_values_ref->{$var} );
 		}
 	}
 	if ( $self->{global_variables} == 1 ) {
-		foreach my $var ( keys %{$auto_x_var_ref} ) {
+		foreach my $var ( keys %{$global_values_ref} ) {
 
 			$item->SetId($index);
 			$self->{variables}->InsertItem($item);
 			$self->{variables}->SetItemTextColour( $index, DARK_GRAY );
 
 			$self->{variables}->SetItem( $index,   0, $var );
-			$self->{variables}->SetItem( $index++, 1, $auto_x_var_ref->{$var} );
+			$self->{variables}->SetItem( $index++, 1, $global_values_ref->{$var} );
 		}
 	}
 
@@ -422,10 +423,10 @@ sub debug_quit {
 	$self->{run_till}->Hide;
 	$self->{display_value}->Hide;
 
-	$self->{var_val}      = {};
-	$self->{auto_var_val} = {};
-	$self->{auto_x_var}   = {};
-	$self->update_variables( $self->{var_val}, $self->{auto_var_val}, $self->{auto_x_var} );
+	$self->{var_val}       = {};
+	$self->{local_values}  = {};
+	$self->{global_values} = {};
+	$self->update_variables( $self->{var_val}, $self->{local_values}, $self->{global_values} );
 
 	$self->{debug}->Show;
 
@@ -705,11 +706,11 @@ sub _output_variables {
 			$self->{show_global_variables}->Disable;
 
 			# get ride of stale values
-			$self->{auto_x_var} = {};
+			$self->{global_values} = {};
 		}
 	}
 
-	$self->update_variables( $self->{var_val}, $self->{auto_var_val}, $self->{auto_x_var} );
+	$self->update_variables( $self->{var_val}, $self->{local_values}, $self->{global_values} );
 
 	return;
 }
@@ -730,7 +731,7 @@ sub get_local_variables {
 	shift @auto;
 
 	# This is better I think, it's quicker
-	$self->{auto_var_val} = {};
+	$self->{local_values} = {};
 
 	foreach (@auto) {
 
@@ -738,9 +739,9 @@ sub get_local_variables {
 
 		if ( defined $1 ) {
 			if ( defined $2 ) {
-				$self->{auto_var_val}->{$1} = $2;
+				$self->{local_values}->{$1} = $2;
 			} else {
-				$self->{auto_var_val}->{$1} = BLANK;
+				$self->{local_values}->{$1} = BLANK;
 			}
 		}
 	}
@@ -765,7 +766,7 @@ sub get_global_variables {
 	shift @auto;
 
 	# This is better I think, it's quicker
-	$self->{auto_x_var} = {};
+	$self->{global_values} = {};
 
 	foreach (@auto) {
 
@@ -773,9 +774,9 @@ sub get_global_variables {
 
 		if ( defined $1 ) {
 			if ( defined $2 ) {
-				$self->{auto_x_var}->{$1} = $2;
+				$self->{global_values}->{$1} = $2;
 			} else {
-				$self->{auto_x_var}->{$1} = BLANK;
+				$self->{global_values}->{$1} = BLANK;
 			}
 		}
 	}
@@ -913,23 +914,23 @@ sub _on_list_item_selected {
 	#ToDo Changed to use current internal hashes instead of asking perl5db for value, this also gets around a bug with 'File::HomeDir has tied variables' clobbering x @rray giving an empty array
 	my $variable_value;
 	my $black_size = keys %{ $self->{var_val} };
-	my $blue_size  = keys %{ $self->{auto_var_val} };
+	my $blue_size  = keys %{ $self->{local_values} };
 
 	given ($index) {
 		when ( $_ <= $black_size ) {
 			$variable_value = $self->{var_val}->{$variable_name};
 			chomp $variable_value;
-			$main->{debugoutput}->debug_output_black( $variable_name . " = " . $variable_value );
+			$main->{debugoutput}->debug_output_black( $variable_name . ' = ' . $variable_value );
 		}
 		when ( $_ <= ( $black_size + $blue_size ) ) {
-			$variable_value = $self->{auto_var_val}->{$variable_name};
+			$variable_value = $self->{local_values}->{$variable_name};
 			chomp $variable_value;
-			$main->{debugoutput}->debug_output_blue( $variable_name . " = " . $variable_value );
+			$main->{debugoutput}->debug_output_blue( $variable_name . ' = ' . $variable_value );
 		}
 		default {
-			$variable_value = $self->{auto_x_var}->{$variable_name};
+			$variable_value = $self->{global_values}->{$variable_name};
 			chomp $variable_value;
-			$main->{debugoutput}->debug_output_dark_gray( $variable_name . " = " . $variable_value );
+			$main->{debugoutput}->debug_output_dark_gray( $variable_name . ' = ' . $variable_value );
 		}
 	}
 
@@ -1077,8 +1078,10 @@ sub on_show_local_variables_checked {
 
 	if ( $event->IsChecked ) {
 		$self->{local_variables} = 1;
+		$self->_output_variables;
 	} else {
 		$self->{local_variables} = 0;
+		$self->_output_variables;
 	}
 
 	return;
@@ -1091,8 +1094,10 @@ sub on_show_global_variables_checked {
 
 	if ( $event->IsChecked ) {
 		$self->{global_variables} = 1;
+		$self->_output_variables;
 	} else {
 		$self->{global_variables} = 0;
+		$self->_output_variables;
 	}
 
 	return;
