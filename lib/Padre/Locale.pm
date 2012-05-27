@@ -568,6 +568,8 @@ sub encoding_system_default {
 		} elsif ( $loc =~ /\./ ) {
 			my ( $language, $codeset ) = split /\./, $loc;
 			$encoding = $codeset;
+		} elsif ( uc $loc eq 'UTF-8') {
+			$encoding = 'utf-8';
 		}
 
 	} elsif (Padre::Constant::WIN32) {
