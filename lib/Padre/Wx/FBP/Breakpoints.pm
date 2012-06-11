@@ -99,6 +99,14 @@ sub new {
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_item_selected(@_);
+		},
+	);
+
 	$self->{show_project} = Wx::CheckBox->new(
 		$self,
 		-1,
@@ -177,6 +185,10 @@ sub on_refresh_click {
 
 sub on_set_breakpoints_clicked {
 	$_[0]->main->error('Handler method on_set_breakpoints_clicked for event set_breakpoints.OnButtonClick not implemented');
+}
+
+sub _on_list_item_selected {
+	$_[0]->main->error('Handler method _on_list_item_selected for event list.OnListItemSelected not implemented');
 }
 
 sub on_show_project_click {

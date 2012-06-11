@@ -353,7 +353,7 @@ sub _set_debugger {
 
 	$editor->goto_line_centerize( $row - 1 );
 
-	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
+	#### TODO this was taken from the Padre::Wx::Syntax::start() and changed a bit.
 	# They should be reunited soon !!!! (or not)
 
 	$editor->MarkerDeleteAll(Padre::Constant::MARKER_LOCATION);
@@ -1124,6 +1124,9 @@ sub on_dot_clicked {
 	my $main = $self->main;
 
 	$main->{debugoutput}->debug_output( $self->{client}->show_line() );
+	
+	#reset editor to dot location
+	$self->_set_debugger;
 
 	return;
 }

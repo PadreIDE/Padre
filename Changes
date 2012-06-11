@@ -18,6 +18,8 @@ the even version for the release, even during development.
       value, this also gets around a bug with 'File::HomeDir has tied 
       variables' clobbering x @rray giving an empty array (BOWTIE)
     - Update variables/values upon check box click (BOWTIE)
+    - Clicking on item in Breakpoint Panel now takes you to file and line (BOWTIE)
+    - dot in Debugger also sets focus in editor (BOWTIE)
 
 
 0.97 Development version, not released

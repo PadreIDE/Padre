@@ -1,6 +1,6 @@
 package Padre::Wx::Panel::Breakpoints;
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 use Padre::Util                 ();
@@ -293,6 +293,38 @@ sub on_delete_project_bp_clicked {
 	return;
 }
 
+#######
+# Event Handler _on_list_item_selected
+# equivalent to p|x the varaible
+#######
+sub _on_list_item_selected {
+	my $self          = shift;
+	my $event         = shift;
+	my $current       = $self->current;
+	my $editor        = $current->editor or return;
+	my $main          = $self->main;
+	my $index         = $event->GetIndex;          # zero based
+	my $variable_name = $event->GetText;
+
+	my $file = $self->{project_dir} . $variable_name or return;
+	my $row  = $self->{line_numbers}[$index]         or return;
+
+	# Open the file if needed
+	if ( $editor->{Document}->filename ne $file ) {
+		$main->setup_editor($file);
+		$editor = $main->current->editor;
+		if ( $self->main->{breakpoints} ) {
+			$self->main->{breakpoints}->on_refresh_click;
+		}
+	}
+
+	$editor->goto_line_centerize( $row - 1 );
+
+	$self->_update_list;
+
+	return;
+}
+
 ###############
 # Debug Breakpoint DB
 ########
@@ -349,8 +381,11 @@ sub _update_list {
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
 
-	my $sql_select = 'ORDER BY filename DESC, line_number DESC';
+	# my $sql_select = 'ORDER BY filename DESC, line_number DESC';
+	my $sql_select = 'ORDER BY filename ASC, line_number ASC';
 	my @tuples     = $self->{debug_breakpoints}->select($sql_select);
+
+	$self->{line_numbers} = [];
 
 	my $index = 0;
 	my $item  = Wx::ListItem->new;
@@ -376,9 +411,11 @@ sub _update_list {
 				$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
 				$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
 				$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
+				$self->{line_numbers}[$index] = $tuples[$_][2];
 
 				#Do not remove comment, just on show for now, do not remove
 				# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
+				$index++;
 
 			}
 
@@ -397,12 +434,14 @@ sub _update_list {
 					$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
 					$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
 					$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
+					$self->{line_numbers}[$index] = $tuples[$_][2];
 
 					#Do not remove comment, just on show for now, do not remove
 					# $self->{list}->SetItem( $index++, 2, ( $tuples[$_][3] ) );
-
+					$index++;
 				}
 			}
+
 		}
 
 		Padre::Wx::Util::tidy_list( $self->{list} );
