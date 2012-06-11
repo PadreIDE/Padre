@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 16:10-0700\n"
+"POT-Creation-Date: 2012-06-11 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1749,7 +1749,7 @@ msgstr ""
 msgid "Delete Session"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:130
+#: lib/Padre/Wx/FBP/Breakpoints.pm:138
 msgid "Delete all project Breakpoints"
 msgstr ""
 
@@ -4935,7 +4935,7 @@ msgstr ""
 msgid "Shorten the common path in window list"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/VCS.pm:239 lib/Padre/Wx/FBP/Breakpoints.pm:151
+#: lib/Padre/Wx/FBP/VCS.pm:239 lib/Padre/Wx/FBP/Breakpoints.pm:159
 #: lib/Padre/Wx/FBP/Debugger.pm:519
 msgid "Show"
 msgstr ""
@@ -5925,7 +5925,7 @@ msgid ""
 "See Configurable Options for a list of these."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:105
+#: lib/Padre/Wx/FBP/Breakpoints.pm:113
 msgid "project"
 msgstr ""
 
@@ -5944,7 +5944,7 @@ msgid ""
 "calls, it too will be single-stepped."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/Breakpoints.pm:110
+#: lib/Padre/Wx/FBP/Breakpoints.pm:118
 msgid "show breakpoints in project"
 msgstr ""
 
