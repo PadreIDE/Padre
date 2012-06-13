@@ -96,7 +96,7 @@ sub set_up {
 
 	#turn off unless in project
 	$self->{show_global_variables}->Disable;
-	$self->{show_local_variables}->Enable;
+	$self->{show_local_variables}->Disable;
 
 	# $self->{show_local_variables}->SetValue(1);
 	# $self->{local_variables} = 1;
@@ -422,7 +422,10 @@ sub debug_quit {
 	$self->{step_out}->Hide;
 	$self->{run_till}->Hide;
 	$self->{display_value}->Hide;
-
+	
+	$self->{show_global_variables}->Disable;
+	$self->{show_local_variables}->Disable;
+	
 	$self->{var_val}       = {};
 	$self->{local_values}  = {};
 	$self->{global_values} = {};
@@ -964,6 +967,8 @@ sub on_debug_clicked {
 	$self->{step_out}->Show;
 	$self->{run_till}->Show;
 	$self->{display_value}->Show;
+	
+	$self->{show_local_variables}->Enable;
 
 	$self->{trace}->Enable;
 	$self->{evaluate_expression}->Enable;
