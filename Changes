@@ -20,6 +20,8 @@ the even version for the release, even during development.
     - Update variables/values upon check box click (BOWTIE)
     - Clicking on item in Breakpoint Panel now takes you to file and line (BOWTIE)
     - dot in Debugger also sets focus in editor (BOWTIE)
+    - add (broken) to Convert Encodings in Edit menu dod+ (BOWTIE)
+    -
 
 
 0.97 Development version, not released
