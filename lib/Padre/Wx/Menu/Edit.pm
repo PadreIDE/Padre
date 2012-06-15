@@ -185,7 +185,7 @@ sub new {
 	$self->{convert_encoding} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Convert &Encoding'),
+		Wx::gettext('Convert &Encoding (broken)'),
 		$self->{convert_encoding}
 	);
 
