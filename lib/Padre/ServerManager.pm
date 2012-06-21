@@ -26,6 +26,8 @@ use constant {
 	SERVER_ERROR   => 'server_error',
 	LOGIN_SUCCESS  => 'login_success',
 	LOGIN_FAILURE  => 'login_failure',
+	PUSH_SUCCESS   => 'push_success',
+	PUSH_FAILURE   => 'push_failure',
 };
 
 
@@ -45,12 +47,6 @@ sub new {
 	# Check and default params
 	unless ( $self->{ide} ) {
 		Carp::croak("Did not provide ide param to Padre::ServerManager");
-	}
-	unless ( $self->{cookie_file} ) {
-		$self->{cookie_file} = File::Spec->catfile(
-			Padre::Constant::CONFIG_DIR,
-			'lwp_cookies.dat',
-		);
 	}
 
 	return $self;
@@ -87,7 +83,7 @@ sub version_finish {
 	my $response = shift->response;
 	my $json     = $self->decode($response);
 	unless ( $json ) {
-		return $self->publish( SERVER_ERROR => $response );
+		return $self->publish( SERVER_ERROR, $response );
 	}
 
 	$self->{server} = $json->{server};
@@ -113,7 +109,7 @@ sub login {
 	$self->task_reset;
 	$self->task_post(
 		on_finish => 'login_finish',
-		url       => 'login.json',
+		url       => 'login',
 		query     => {
 			email    => $email,
 			password => $password,
@@ -125,7 +121,7 @@ sub login_finish {
 	my $self     = shift;
 	my $response = shift->response;
 	my $json     = $self->decode($response);
-	
+
 	# Handle the positive case first, it is simpler
 	if ( $json ) {
 		$self->{user} = $json->{user};
@@ -214,11 +210,21 @@ sub pull_finish {
 sub push {
 	my $self = shift;
 
+	# Do we have the things we need
+	my $config   = $self->config;
+	my $email    = $config->identity_email       or return undef;
+	my $password = $config->config_sync_password or return undef;
+
 	# Send configuration to the server
 	$self->task_reset;
-	$self->task_put(
+	$self->task_post(
 		on_finish => 'push_finish',
 		url       => 'config',
+		query     => {
+			email    => $email,
+			password => $password,
+			data     => $self->encode( $self->config->human->as_hash ),
+		},
 	);
 
 	return 1;
@@ -228,10 +234,11 @@ sub push_finish {
 	my $self     = shift;
 	my $response = shift->response;
 	my $json     = $self->decode($response);
+	unless ( $json ) {
+		return $self->publish( PUSH_FAILURE );
+	}
 
-	# TODO: To be completed
-
-	$self->publish("on_push", $response);
+	return $self->publish( PUSH_SUCCESS, $json->{config} );
 }
 
 
@@ -335,15 +342,6 @@ sub task_get {
 	);
 }
 
-sub task_put {
-	shift->task_request(
-		method => 'GET',
-		@_,
-
-		# TODO: Document content here
-	);
-}
-
 sub task_delete {
 	shift->task_request(
 		method => 'DELETE',
@@ -354,13 +352,13 @@ sub task_delete {
 sub task_post {
 	my $self  = shift;
 	my %param = @_;
-	my $query = delete $param{query};
-	$query = $self->encode($query) if $query;
+	if ( $param{query} and $param{content_type} and $param{content_type} eq 'text/json' ) {
+		$param{query} = $self->encode($param{query});
+	}
 
 	$self->task_request(
 		method => 'POST',
-		query  => $query,
-		@_,
+		%param,
 	);
 }
 
@@ -368,12 +366,11 @@ sub task_request {
 	my $self   = shift;
 	my $server = $self->baseurl or return;
 	my %param  = @_;
-	my $url    = join( '/', $server, delete $param{url} );
+	my $url    = join( '/', $server, delete $param{url} ) . '.json';
 	$self->SUPER::task_request(
 		%param,
-		task        => 'Padre::Task::LWP',
-		url         => $url,
-		cookie_file => $self->{cookie_file},
+		task => 'Padre::Task::LWP',
+		url  => $url,
 	);
 }
 

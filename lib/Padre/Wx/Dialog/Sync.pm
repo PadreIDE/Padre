@@ -36,6 +36,8 @@ sub new {
 		Padre::ServerManager::SERVER_ERROR   => 'server_error',
 		Padre::ServerManager::LOGIN_SUCCESS  => 'login_success',
 		Padre::ServerManager::LOGIN_FAILURE  => 'login_failure',
+		Padre::ServerManager::PUSH_SUCCESS   => 'push_success',
+		Padre::ServerManager::PUSH_FAILURE   => 'push_failure',
 	} );
 
 	# Update form to match sync manager
@@ -118,15 +120,11 @@ sub btn_login {
 }
 
 sub login_success {
-	$DB::single = 1;
-	my $self = shift;
-	$self->refresh;
+	$_[0]->refresh;
 }
 
 sub login_failure {
-	$DB::single = 1;
-	my $self = shift;
-	$self->refresh;
+	$_[0]->refresh;
 }
 
 sub btn_register {
@@ -187,9 +185,23 @@ sub btn_register {
 
 sub btn_local {
 	my $self = shift;
-	my $rc   = $self->{server_manager}->local_to_server;
+	$self->{server_manager}->push;
+}
+
+sub push_success {
+	my $self = shift;
 	Wx::MessageBox(
-		sprintf( '%s', $rc ),
+		"Pushed configuration to the server",
+		Wx::gettext('Success'),
+		Wx::OK,
+		$self,
+	);
+}
+
+sub push_failure {
+	my $self = shift;
+	Wx::MessageBox(
+		"Upload failed",
 		Wx::gettext('Error'),
 		Wx::OK,
 		$self,
@@ -198,7 +210,7 @@ sub btn_local {
 
 sub btn_remote {
 	my $self = shift;
-	my $rc   = $self->{server_manager}->server_to_local;
+	my $rc   = $self->{server_manager}->pull;
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
@@ -209,7 +221,7 @@ sub btn_remote {
 
 sub btn_delete {
 	my $self = shift;
-	my $rc   = $self->{server_manager}->server_delete;
+	my $rc   = $self->{server_manager}->delete;
 	Wx::MessageBox(
 		sprintf( '%s', $rc ),
 		Wx::gettext('Error'),
