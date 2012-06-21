@@ -360,7 +360,7 @@ sub task_post {
 
 sub task_request {
 	my $self   = shift;
-	my $server = $self->server or return;
+	my $server = $self->baseurl or return;
 	my %param  = @_;
 	my $url    = join( '/', $server, delete $param{url} );
 	$self->SUPER::task_request(
@@ -371,7 +371,7 @@ sub task_request {
 	);
 }
 
-sub server {
+sub baseurl {
 	my $self   = shift;
 	my $server = $self->config->config_sync_server;
 	$server =~ s/\/$// if $server;

@@ -34,6 +34,8 @@ sub new {
 	$self->{server_manager}->subscribe( $self, {
 		server_version => 'server_version',
 		server_error   => 'server_error',
+		login_success  => 'login_success',
+		login_failure  => 'login_failure',
 	} );
 
 	# Update form to match sync manager
@@ -63,20 +65,19 @@ sub run {
 # Event Handlers
 
 sub btn_login {
-	my $self = shift;
-	my $server = $self->{server_manager};
+	my $self     = shift;
+	my $manager  = $self->{server_manager};
+	my $url      = $self->{txt_remote}->GetValue;
+	my $username = $self->{login_email}->GetValue;
+	my $password = $self->{login_password}->GetValue;
 
-	my $url = $self->{txt_remote}->GetValue;
 	if ( $url ne $self->config->config_sync_server ) {
 		$self->config->apply( 'config_sync_server' => $url );
 	}
 
-	my $username = $self->{login_email}->GetValue;
-	my $password = $self->{login_password}->GetValue;
-
 	# Handle login / logout logic toggle
-	if ( $server->{state} eq 'logged_in' ) {
-		if ( $server->logout =~ /success/ ) {
+	if ( $manager->user ) {
+		if ( $manager->logout =~ /success/ ) {
 			Wx::MessageBox(
 				sprintf('Successfully logged out.'),
 				Wx::gettext('Error'),
@@ -107,21 +108,25 @@ sub btn_login {
 		return;
 	}
 
-	# Attempt login
-	my $rc = $server->login(
+	# Start the login attempt
+	$manager->login(
 		username => $username,
 		password => $password,
 	);
 
 	$self->refresh;
+}
 
-	# Print the return information
-	Wx::MessageBox(
-		sprintf( '%s', $rc ),
-		Wx::gettext('Error'),
-		Wx::OK,
-		$self,
-	);
+sub login_success {
+	$DB::single = 1;
+	my $self = shift;
+	$self->refresh;
+}
+
+sub login_failure {
+	$DB::single = 1;
+	my $self = shift;
+	$self->refresh;
 }
 
 sub btn_register {
@@ -265,14 +270,14 @@ sub server_error {
 # GUI Methods
 
 sub refresh {
-	my $self = shift;
-	my $server = $self->{server_manager};
+	my $self    = shift;
+	my $manager = $self->{server_manager};
 
 	# Refresh the server status elements
 	$self->refresh_server;
 
 	# Are we logged in?
-	my $in = $server->{state} eq 'logged_in' ? 1 : 0;
+	my $in = $manager->user ? 1 : 0;
 	$self->{btn_login}->SetLabel( $in ? 'Logout' : 'Login' );
 	$self->{btn_local}->Enable($in);
 	$self->{btn_remote}->Enable($in);
@@ -284,6 +289,7 @@ sub refresh {
 sub refresh_server {
 	my $self    = shift;
 	my $manager = $self->{server_manager};
+
 	if ( $manager->user ) {
 		$self->{lbl_status}->SetLabel("Logged In");
 	} elsif ( $manager->server ) {
@@ -291,6 +297,7 @@ sub refresh_server {
 	} else {
 		$self->{lbl_status}->SetLabel("Server Unknown");
 	}
+
 	return 1;
 }
 
