@@ -160,10 +160,10 @@ sub new {
 		conduit => $wx->conduit,
 	);
 
-	# Create the sync manager
+	# Create the server manager
 	# require Padre::ServerManager;
-	# $self->{sync_manager} = Padre::ServerManager->new(
-	# ide => $self,
+	# $self->{server_manager} = Padre::ServerManager->new(
+		# ide => $self,
 	# );
 
 	# Startup completed, let go of the database

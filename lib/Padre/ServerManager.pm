@@ -6,14 +6,19 @@ package Padre::ServerManager;
 use 5.008;
 use strict;
 use warnings;
-use Carp              ();
-use File::Spec        ();
-use Padre::Constant   ();
-use Padre::Role::Task ();
+use Carp                ();
+use File::Spec          ();
+use JSON::XS            ();
+use Padre::Constant     ();
+use Padre::Role::Task   ();
+use Padre::Role::PubSub ();
 
 our $VERSION    = '0.97';
 our $COMPATIBLE = '0.95';
-our @ISA        = 'Padre::Role::Task';
+our @ISA        = qw{
+	Padre::Role::Task
+	Padre::Role::PubSub
+};
 
 
 
@@ -26,8 +31,8 @@ sub new {
 	my $class = shift;
 	my $self  = bless {
 		@_,
-		state   => 'LOGOUT',
 		version => undef,
+		user    => undef,
 	}, $class;
 
 	# Check and default params
@@ -44,6 +49,14 @@ sub new {
 	return $self;
 }
 
+sub server {
+	$_[0]->{server};
+}
+
+sub user {
+	$_[0]->{user};
+}
+
 
 
 
@@ -53,28 +66,25 @@ sub new {
 
 sub version {
 	my $self = shift;
-	unless ( $self->{state} eq 'LOGOUT' ) {
-
-		# Not sure what to do with this...
-		return undef;
-	}
 
 	# Reset task state and send the request
 	$self->task_reset;
 	$self->task_get(
-		url       => 'version',
 		on_finish => 'version_finish',
+		url       => 'version',
 	);
 }
 
 sub version_finish {
-	my $self = shift;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
+	unless ( $json ) {
+		return $self->publish("server_error", $response);
+	}
 
-	#my $response = shift->response or return;
-
-	# TODO: To be completed
-
-	return 1;
+	$self->{server} = $json->{server};
+	$self->publish("server_version", $self->{server}->{version});
 }
 
 
@@ -87,29 +97,38 @@ sub version_finish {
 sub login {
 	my $self = shift;
 
-	unless ( $self->{state} eq 'LOGOUT' ) {
-
-		# Not sure what to do with this...
-		return undef;
-	}
+	# Do we have the things we need
+	my $config   = $self->config;
+	my $email    = $config->identity_email       or return undef;
+	my $password = $config->config_sync_password or return undef;
 
 	# Reset task state and send the request
 	$self->task_reset;
 	$self->task_post(
-		url       => 'login',
-		query     => {},            # TODO: stuff
 		on_finish => 'login_finish',
+		url       => 'login.json',
+		query     => {
+			email    => $email,
+			password => $password,
+		},
 	);
 }
 
 sub login_finish {
-	my $self = shift;
+	$DB::single = 1;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
+	
+	# Handle the positive case first, it is simpler
+	if ( $json ) {
+		$self->{user} = $json->{user};
+		$self->publish("login_success");
+		return 1;
+	}
 
-	#my $response = shift->response or return;
-
-	# TODO: To be completed
-
-	return 1;
+	# Handle the failed login case
+	$self->publish("login_failure");
 }
 
 
@@ -122,23 +141,31 @@ sub login_finish {
 sub register {
 	my $self = shift;
 
+	# Do we have the things we need
+	my $config   = $self->config;
+	my $email    = $config->identity_email       or return undef;
+	my $password = $config->config_sync_password or return undef;
+
 	# Reset task state and send the request
 	$self->task_reset;
 	$self->task_post(
-		url       => 'register',
-		query     => {},               # TODO: stuff
 		on_finish => 'register_finish',
+		url       => 'register',
+		query     => {
+			email    => $email,
+			password => $password,
+		},
 	);
 }
 
 sub register_finish {
-	my $self = shift;
-
-	#my $response = shift->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_register", $response);
 }
 
 
@@ -154,21 +181,21 @@ sub pull {
 	# Fetch the server configuration
 	$self->task_reset;
 	$self->task_get(
-		url       => 'config',
 		on_finish => 'pull_finish',
+		url       => 'config',
 	);
 
 	return 1;
 }
 
 sub pull_finish {
-	my $self = shift;
-
-	#my $response = shift->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_pull", $response);
 }
 
 
@@ -184,21 +211,21 @@ sub push {
 	# Send configuration to the server
 	$self->task_reset;
 	$self->task_put(
-		url       => 'config',
 		on_finish => 'push_finish',
+		url       => 'config',
 	);
 
 	return 1;
 }
 
 sub push_finish {
-	my $self = shift;
-
-	#my $response = shift->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_push", $response);
 }
 
 
@@ -214,21 +241,21 @@ sub delete {
 	# Delete configuration from the server
 	$self->task_reset;
 	$self->task_delete(
-		url       => 'config',
 		on_finish => 'delete_finish',
+		url       => 'config',
 	);
 
 	return 1;
 }
 
 sub delete_finish {
-	my $self = shift;
-
-	#my $response = shift->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_delete", $response);
 }
 
 
@@ -244,21 +271,21 @@ sub logout {
 	# Allow a logout action no matter what state we are in
 	$self->task_reset;
 	$self->task_get(
-		url       => 'logout',
 		on_finish => 'logout_finish',
+		url       => 'logout',
 	);
 
 	return 1;
 }
 
 sub logout_finish {
-	my $self = shift;
-
-	#my $response = shift->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_logout", $response);
 }
 
 
@@ -273,19 +300,19 @@ sub telemetry {
 
 	# Don't reset, telemetry occurs in parallel
 	$self->task_post(
-		url       => 'telemetry',
 		on_finish => 'telemetry_finish',
+		url       => 'telemetry',
 	);
 }
 
 sub telemetry_finish {
-	my $self = shift;
-
-	#my $response = $self->response or return;
+	my $self     = shift;
+	my $response = shift->response;
+	my $json     = $self->decode($response);
 
 	# TODO: To be completed
 
-	return 1;
+	$self->publish("on_telemetry", $response);
 }
 
 
@@ -361,8 +388,21 @@ sub encode {
 }
 
 sub decode {
-	require JSON::XS;
-	JSON::XS->new->decode( $_[1] );
+	my $self     = shift;
+	my $response = shift or return undef;
+
+	require HTTP::Response;
+	$response->is_success or return undef;
+
+	local $@;
+	my $json = eval {
+		require JSON::XS;
+		JSON::XS->new->decode( $response->decoded_content );
+	};
+	if ( $@ or not $json ) {
+		return undef;
+	}
+	return $json;
 }
 
 1;
