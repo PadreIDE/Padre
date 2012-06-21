@@ -32,10 +32,10 @@ sub new {
 		ide => $self->ide,
 	);
 	$self->{server_manager}->subscribe( $self, {
-		server_version => 'server_version',
-		server_error   => 'server_error',
-		login_success  => 'login_success',
-		login_failure  => 'login_failure',
+		Padre::ServerManager::SERVER_VERSION => 'server_version',
+		Padre::ServerManager::SERVER_ERROR   => 'server_error',
+		Padre::ServerManager::LOGIN_SUCCESS  => 'login_success',
+		Padre::ServerManager::LOGIN_FAILURE  => 'login_failure',
 	} );
 
 	# Update form to match sync manager
@@ -243,6 +243,7 @@ sub server_check {
 	TRACE("Launching server check") if DEBUG;
 	my $self = shift;
 	$self->{txt_remote}->SetBackgroundColour($self->base_colour);
+	$self->{txt_remote}->Refresh;
 	$self->{server_manager}->version;
 	return 1;
 }
@@ -250,15 +251,17 @@ sub server_check {
 sub server_version {
 	TRACE("Got server_version callback") if DEBUG;
 	my $self = shift;
-	$self->{server_version} = $_[1];
 	$self->{txt_remote}->SetBackgroundColour($self->good_colour);
+	$self->{txt_remote}->Refresh;
+	$self->refresh;
 	return 1;
 }
 
 sub server_error {
 	TRACE("Got server_error callback") if DEBUG;
-	my $self   = shift;
+	my $self = shift;
 	$self->{txt_remote}->SetBackgroundColour($self->bad_colour);
+	$self->{txt_remote}->Refresh;
 	return 1;
 }
 
@@ -277,11 +280,19 @@ sub refresh {
 	$self->refresh_server;
 
 	# Are we logged in?
-	my $in = $manager->user ? 1 : 0;
+	my $in  = $manager->user ? 1 : 0;
+	my $out = $manager->user ? 0 : 1;
 	$self->{btn_login}->SetLabel( $in ? 'Logout' : 'Login' );
 	$self->{btn_local}->Enable($in);
 	$self->{btn_remote}->Enable($in);
 	$self->{btn_delete}->Enable($in);
+	$self->{login_email}->Enable($out);
+	$self->{login_password}->Enable($out);
+	$self->{txt_email}->Enable($out);
+	$self->{txt_email_confirm}->Enable($out);
+	$self->{txt_password}->Enable($out);
+	$self->{txt_password_confirm}->Enable($out);
+	$self->{btn_register}->Enable($out);
 
 	return 1;
 }

@@ -20,6 +20,13 @@ our @ISA        = qw{
 	Padre::Role::PubSub
 };
 
+# Subscribable Events
+use constant {
+	SERVER_VERSION => 'server_version',
+	SERVER_ERROR   => 'server_error',
+	LOGIN_SUCCESS  => 'login_success',
+	LOGIN_FAILURE  => 'login_failure',
+};
 
 
 
@@ -80,11 +87,11 @@ sub version_finish {
 	my $response = shift->response;
 	my $json     = $self->decode($response);
 	unless ( $json ) {
-		return $self->publish("server_error", $response);
+		return $self->publish( SERVER_ERROR => $response );
 	}
 
 	$self->{server} = $json->{server};
-	$self->publish("server_version", $self->{server}->{version});
+	$self->publish( SERVER_VERSION );
 }
 
 
@@ -115,7 +122,6 @@ sub login {
 }
 
 sub login_finish {
-	$DB::single = 1;
 	my $self     = shift;
 	my $response = shift->response;
 	my $json     = $self->decode($response);
@@ -123,12 +129,12 @@ sub login_finish {
 	# Handle the positive case first, it is simpler
 	if ( $json ) {
 		$self->{user} = $json->{user};
-		$self->publish("login_success");
+		$self->publish( LOGIN_SUCCESS );
 		return 1;
 	}
 
 	# Handle the failed login case
-	$self->publish("login_failure");
+	$self->publish( LOGIN_FAILURE );
 }
 
 
