@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-15 04:10-0700\n"
+"POT-Creation-Date: 2012-06-21 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2012,7 +2012,7 @@ msgstr ""
 msgid "Editor Syntax Annotations"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:155
+#: lib/Padre/Wx/Dialog/Sync.pm:158
 msgid "Email and confirmation do not match."
 msgstr ""
 
@@ -2153,12 +2153,12 @@ msgstr ""
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5027
 #: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:206
-#: lib/Padre/Wx/Dialog/Sync.pm:79 lib/Padre/Wx/Dialog/Sync.pm:87
-#: lib/Padre/Wx/Dialog/Sync.pm:100 lib/Padre/Wx/Dialog/Sync.pm:118
-#: lib/Padre/Wx/Dialog/Sync.pm:135 lib/Padre/Wx/Dialog/Sync.pm:146
-#: lib/Padre/Wx/Dialog/Sync.pm:156 lib/Padre/Wx/Dialog/Sync.pm:174
-#: lib/Padre/Wx/Dialog/Sync.pm:185 lib/Padre/Wx/Dialog/Sync.pm:196
-#: lib/Padre/Wx/Dialog/Sync.pm:207
+#: lib/Padre/Wx/Dialog/Sync.pm:82 lib/Padre/Wx/Dialog/Sync.pm:90
+#: lib/Padre/Wx/Dialog/Sync.pm:103 lib/Padre/Wx/Dialog/Sync.pm:121
+#: lib/Padre/Wx/Dialog/Sync.pm:138 lib/Padre/Wx/Dialog/Sync.pm:149
+#: lib/Padre/Wx/Dialog/Sync.pm:159 lib/Padre/Wx/Dialog/Sync.pm:177
+#: lib/Padre/Wx/Dialog/Sync.pm:188 lib/Padre/Wx/Dialog/Sync.pm:199
+#: lib/Padre/Wx/Dialog/Sync.pm:210
 msgid "Error"
 msgstr ""
 
@@ -3807,7 +3807,7 @@ msgstr ""
 msgid "PageUp"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:145
+#: lib/Padre/Wx/Dialog/Sync.pm:148
 msgid "Password and confirmation do not match."
 msgstr ""
 
@@ -3905,11 +3905,11 @@ msgstr ""
 msgid "Peter Lavender"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:134
+#: lib/Padre/Wx/Dialog/Sync.pm:137
 msgid "Please ensure all inputs have appropriate values."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:99
+#: lib/Padre/Wx/Dialog/Sync.pm:102
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
