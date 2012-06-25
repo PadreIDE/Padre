@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-21 16:10-0700\n"
+"POT-Creation-Date: 2012-06-25 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -310,7 +310,7 @@ msgstr ""
 msgid "&Go To..."
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:139
+#: lib/Padre/Wx/Outline.pm:133
 msgid "&Go to Element"
 msgstr ""
 
@@ -912,7 +912,7 @@ msgstr ""
 msgid "Assign the selected expression to a newly declared variable"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:383
+#: lib/Padre/Wx/Outline.pm:365
 msgid "Attributes"
 msgstr ""
 
@@ -3217,7 +3217,7 @@ msgstr ""
 msgid "MetaCPAN..."
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:382
+#: lib/Padre/Wx/Outline.pm:364
 msgid "Methods"
 msgstr ""
 
@@ -3249,7 +3249,7 @@ msgstr ""
 msgid "Module name:"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:381
+#: lib/Padre/Wx/Outline.pm:363
 msgid "Modules"
 msgstr ""
 
@@ -3497,7 +3497,7 @@ msgstr ""
 msgid "Open &CPAN Config File"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:150
+#: lib/Padre/Wx/Outline.pm:144
 msgid "Open &Documentation"
 msgstr ""
 
@@ -3722,7 +3722,7 @@ msgstr ""
 msgid "Out of range."
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:201 lib/Padre/Wx/Outline.pm:248
+#: lib/Padre/Wx/Outline.pm:189 lib/Padre/Wx/Outline.pm:233
 msgid "Outline"
 msgstr ""
 
@@ -4003,7 +4003,7 @@ msgstr ""
 msgid "Positive lookbehind assertion"
 msgstr ""
 
-#: lib/Padre/Wx/Outline.pm:380
+#: lib/Padre/Wx/Outline.pm:362
 msgid "Pragmata"
 msgstr ""
 
