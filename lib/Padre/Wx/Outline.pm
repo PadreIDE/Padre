@@ -1,6 +1,6 @@
 package Padre::Wx::Outline;
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 use Scalar::Util             ();
@@ -24,9 +24,6 @@ our @ISA     = qw{
 	Padre::Wx::Role::Context
 	Padre::Wx::FBP::Outline
 };
-
-
-
 
 
 ######################################################################
@@ -120,9 +117,6 @@ sub new {
 }
 
 
-
-
-
 #####################################################################
 # Event Handlers
 
@@ -174,9 +168,6 @@ sub on_tree_item_right_click {
 }
 
 
-
-
-
 ######################################################################
 # Padre::Wx::Role::Context Methods
 
@@ -185,9 +176,6 @@ sub context_menu {
 	my $menu = shift;
 	$self->context_append_options( $menu => 'main_outline_panel' );
 }
-
-
-
 
 
 ######################################################################
@@ -208,9 +196,6 @@ sub view_close {
 sub view_stop {
 	$_[0]->task_reset;
 }
-
-
-
 
 
 ######################################################################
@@ -286,9 +271,6 @@ sub render {
 
 	return;
 }
-
-
-
 
 
 ######################################################################
@@ -425,6 +407,10 @@ sub add_subtree {
 
 		foreach my $item (@sorted_entries) {
 			my $name = $item->{name};
+
+			#ToDo hack to remove double spacing caused by a stray has with no value, works with PPIx 0.15_02 but overwites 
+			$name =~ s/\n//;
+
 			next if $name !~ /$term/;
 			my $item = $tree->AppendItem(
 				$type_elem,
@@ -437,7 +423,6 @@ sub add_subtree {
 				)
 			);
 			$tree->SetItemImage( $item, $images->{file} );
-
 		}
 	}
 	if ( defined $type_elem ) {
