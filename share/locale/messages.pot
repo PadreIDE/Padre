@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-25 08:10-0700\n"
+"POT-Creation-Date: 2012-06-28 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,10 +354,6 @@ msgstr ""
 msgid "&Matching Menu Items:"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:67
-msgid "&Module Tools"
-msgstr ""
-
 #: lib/Padre/Wx/ActionLibrary.pm:1926
 msgid "&Move POD to __END__"
 msgstr ""
@@ -592,7 +588,7 @@ msgstr ""
 msgid "&Toggle Comment"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:198
+#: lib/Padre/Wx/Menu/Tools.pm:199
 msgid "&Tools"
 msgstr ""
 
@@ -3742,7 +3738,7 @@ msgstr ""
 msgid "P&erl Help"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Tools.pm:103
+#: lib/Padre/Wx/Menu/Tools.pm:104
 msgid "P&lug-in Tools"
 msgstr ""
 
