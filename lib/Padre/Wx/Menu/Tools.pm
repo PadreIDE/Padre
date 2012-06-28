@@ -61,29 +61,30 @@ sub new {
 	);
 
 	# Create the module tools submenu
-	my $modules = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext('&Module Tools'),
-		$modules,
-	);
+	#ToDo Commeted out as per #1433, redundent code needs to be removed
+	# my $modules = Wx::Menu->new;
+	# $self->Append(
+		# -1,
+		# Wx::gettext('&Module Tools'),
+		# $modules,
+	# );
 
-	$self->add_menu_action(
-		$modules,
-		'plugins.install_local',
-	);
+	# $self->add_menu_action(
+		# $modules,
+		# 'plugins.install_local',
+	# );
 
-	$self->add_menu_action(
-		$modules,
-		'plugins.install_remote',
-	);
+	# $self->add_menu_action(
+		# $modules,
+		# 'plugins.install_remote',
+	# );
 
-	$modules->AppendSeparator;
+	# $modules->AppendSeparator;
 
-	$self->add_menu_action(
-		$modules,
-		'plugins.cpan_config',
-	);
+	# $self->add_menu_action(
+		# $modules,
+		# 'plugins.cpan_config',
+	# );
 
 	$self->AppendSeparator;
 
