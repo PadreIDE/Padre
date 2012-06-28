@@ -22,6 +22,8 @@ the even version for the release, even during development.
     - dot in Debugger also sets focus in editor (BOWTIE)
     - add (broken) to Convert Encodings in Edit menu dod+ (BOWTIE)
     - remove double spacing caused by a stray has with no value (BOWTIE)
+    - Commented out Tools -> Module Tools see #1433 (BOWTIE)
+    -
 
 
 0.97 Development version, not released
