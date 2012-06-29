@@ -23,7 +23,7 @@ the even version for the release, even during development.
     - add (broken) to Convert Encodings in Edit menu dod+ (BOWTIE)
     - remove double spacing caused by a stray has with no value (BOWTIE)
     - Commented out Tools -> Module Tools see #1433 (BOWTIE)
-    -
+    - tweak test 14 to skip php elseif, make cpanm happy #1393 (BOWTIE)
 
 
 0.97 Development version, not released
