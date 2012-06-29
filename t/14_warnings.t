@@ -48,6 +48,7 @@ my %skip_files = (
 	'Padre/Wx/Constant.pm'     => 'Bad substitution',
 	'Padre/Wx/Theme.pm'        => 'Bad substitution',
 	'Padre/Wx/Dialog/Patch.pm' => 'equals in an if',
+	'Padre/Wx/Scintilla.pm'    => 'PHP language keywords -> elseif',
 );
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
