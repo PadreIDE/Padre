@@ -2945,9 +2945,14 @@ sub run_command {
 					system qq(xterm -sb -e "$cmd; sleep 1000" &);
 				}
 			}
-		} elsif (Padre::Constant::UNIX) {
+		} elsif (Padre::Constant::MAC) {
 
 			# tome
+			my $pwd = $self->current->document->project_dir();
+			$cmd =~ s/"/\\"/g;
+			# Applescript can throw spurious errors on STDERR: http://helpx.adobe.com/photoshop/kb/unit-type-conversion-error-applescript.html
+			system qq(osascript -e 'tell app "Terminal"\n\tdo script "cd $pwd; clear; $cmd;"\nend tell'\n); 
+ 	
 		} else {
 			system qq(xterm -sb -e "$cmd; sleep 1000" &);
 		}
