@@ -25,6 +25,8 @@ the even version for the release, even during development.
     - Commented out Tools -> Module Tools see #1433 (BOWTIE)
     - tweak test 14 to skip php elseif, make cpanm happy #1393 (BOWTIE)
     - Run script in native terminal in OsX #1434 (BENNIE)
+    - reapplied r19056 translator _EviL_ to About using wxFormBuilder (BOWTIE)
+    - 
     
 
 0.97 Development version, not released

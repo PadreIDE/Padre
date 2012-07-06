@@ -568,6 +568,12 @@ sub new {
 		Wx::gettext("Cezary Morga"),
 	);
 
+	$self->{marek_roszkowski} = Wx::StaticText->new(
+		$self->{translation},
+		-1,
+		Wx::gettext("Marek Roszkowski"),
+	);
+
 	$self->{m_staticText472212} = Wx::StaticText->new(
 		$self->{translation},
 		-1,
@@ -787,6 +793,7 @@ sub new {
 	my $bSizer62211 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62211->Add( $self->{m_staticText472211}, 0, Wx::ALL, 4 );
 	$bSizer62211->Add( $self->{cezary_morga}, 0, Wx::ALL, 2 );
+	$bSizer62211->Add( $self->{marek_roszkowski}, 0, Wx::ALL, 2 );
 
 	my $bSizer62212 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer62212->Add( $self->{m_staticText472212}, 0, Wx::ALL, 4 );
@@ -943,6 +950,10 @@ sub kjetil_skotheim {
 
 sub cezary_morga {
 	$_[0]->{cezary_morga};
+}
+
+sub marek_roszkowski {
+	$_[0]->{marek_roszkowski};
 }
 
 sub breno_g_de_oliveira {

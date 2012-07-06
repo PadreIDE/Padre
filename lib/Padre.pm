@@ -820,6 +820,8 @@ Enrique Nell (ENELL)
 
 Marcela Mašláňová (mmaslano)
 
+Marek Roszkowski (EviL) E<lt>evil@evil.devil.is-my.nameE<gt> 
+
 =head3 Norwegian
 
 Kjetil Skotheim (KJETIL)
