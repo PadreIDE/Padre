@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-05 12:10-0700\n"
+"POT-Creation-Date: 2012-07-06 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -848,7 +848,7 @@ msgstr ""
 msgid "Andrew Bramble"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:625
+#: lib/Padre/Wx/FBP/About.pm:631
 msgid "Andrew Shitov"
 msgstr ""
 
@@ -1018,7 +1018,7 @@ msgstr ""
 msgid "Breakpoints"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:170 lib/Padre/Wx/FBP/About.pm:583
+#: lib/Padre/Wx/FBP/About.pm:170 lib/Padre/Wx/FBP/About.pm:589
 msgid "Breno G. de Oliveira"
 msgstr ""
 
@@ -1047,7 +1047,7 @@ msgstr ""
 msgid "Builds the current project, then run all tests."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:236 lib/Padre/Wx/FBP/About.pm:640
+#: lib/Padre/Wx/FBP/About.pm:236 lib/Padre/Wx/FBP/About.pm:646
 msgid "Burak Gursoy"
 msgstr ""
 
@@ -1254,7 +1254,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:666
+#: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:672
 #: lib/Padre/Wx/FBP/SLOC.pm:176 lib/Padre/Wx/FBP/Sync.pm:253
 #: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
 #: lib/Padre/Wx/FBP/SessionManager.pm:119
@@ -1783,7 +1783,7 @@ msgstr ""
 msgid "Detect indent settings for each file"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:842
+#: lib/Padre/Wx/FBP/About.pm:849
 msgid "Development"
 msgstr ""
 
@@ -2124,7 +2124,7 @@ msgstr ""
 msgid "English (United States)"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:610
+#: lib/Padre/Wx/FBP/About.pm:616
 msgid "Enrique Nell"
 msgstr ""
 
@@ -2658,7 +2658,7 @@ msgstr ""
 msgid "Gabor Szabo"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:302 lib/Padre/Wx/FBP/About.pm:589
+#: lib/Padre/Wx/FBP/About.pm:302 lib/Padre/Wx/FBP/About.pm:595
 msgid "Gabriel Vieira"
 msgstr ""
 
@@ -2831,7 +2831,7 @@ msgstr ""
 msgid "Indentation"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:844
+#: lib/Padre/Wx/FBP/About.pm:851
 msgid "Information"
 msgstr ""
 
@@ -3132,6 +3132,10 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:388
 msgid "Marcela Maslanova"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/About.pm:574
+msgid "Marek Roszkowski"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:646
@@ -3762,11 +3766,11 @@ msgstr ""
 msgid "PPI Standard"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:604
+#: lib/Padre/Wx/FBP/About.pm:610
 msgid "Paco Alguacil"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:841 lib/Padre/Wx/Dialog/Form.pm:98
+#: lib/Padre/Wx/FBP/About.pm:848 lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr ""
 
@@ -3975,7 +3979,7 @@ msgstr ""
 msgid "Popularity Contest Report"
 msgstr ""
 
-#: lib/Padre/Locale.pm:391 lib/Padre/Wx/FBP/About.pm:574
+#: lib/Padre/Locale.pm:391 lib/Padre/Wx/FBP/About.pm:580
 msgid "Portuguese (Brazil)"
 msgstr ""
 
@@ -4522,7 +4526,7 @@ msgstr ""
 msgid "Runs the current document and shows its output in the output panel."
 msgstr ""
 
-#: lib/Padre/Locale.pm:411 lib/Padre/Wx/FBP/About.pm:616
+#: lib/Padre/Locale.pm:411 lib/Padre/Wx/FBP/About.pm:622
 msgid "Russian"
 msgstr ""
 
@@ -5289,7 +5293,7 @@ msgstr ""
 msgid "Spaces to &Tabs..."
 msgstr ""
 
-#: lib/Padre/Locale.pm:249 lib/Padre/Wx/FBP/About.pm:595
+#: lib/Padre/Locale.pm:249 lib/Padre/Wx/FBP/About.pm:601
 msgid "Spanish"
 msgstr ""
 
@@ -5509,7 +5513,7 @@ msgstr ""
 msgid "Trace"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/About.pm:843
+#: lib/Padre/Wx/FBP/About.pm:850
 msgid "Translation"
 msgstr ""
 
@@ -5517,7 +5521,7 @@ msgstr ""
 msgid "True"
 msgstr ""
 
-#: lib/Padre/Locale.pm:421 lib/Padre/Wx/FBP/About.pm:631
+#: lib/Padre/Locale.pm:421 lib/Padre/Wx/FBP/About.pm:637
 msgid "Turkish"
 msgstr ""
 
