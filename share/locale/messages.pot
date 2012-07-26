@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-06 12:10-0700\n"
+"POT-Creation-Date: 2012-07-26 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1807,7 +1807,7 @@ msgstr ""
 msgid "Diff"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:480
+#: lib/Padre/Wx/Dialog/Patch.pm:488
 #, perl-format
 msgid "Diff successful, you should see a new tab in editor called %s"
 msgstr ""
@@ -3827,12 +3827,12 @@ msgstr ""
 msgid "Patch"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:407
+#: lib/Padre/Wx/Dialog/Patch.pm:411
 msgid ""
 "Patch file should end in .patch or .diff, you should reselect & try again"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:422
+#: lib/Padre/Wx/Dialog/Patch.pm:430
 msgid "Patch successful, you should see a new tab in editor called Unsaved #"
 msgstr ""
 
@@ -4556,7 +4556,7 @@ msgstr ""
 msgid "SQL Files"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:576
+#: lib/Padre/Wx/Dialog/Patch.pm:587
 #, perl-format
 msgid "SVN Diff successful. You should see a new tab in editor called %s."
 msgstr ""
@@ -5251,19 +5251,19 @@ msgid ""
 "Session %s is listed but there is no data"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:492
+#: lib/Padre/Wx/Dialog/Patch.pm:500
 msgid ""
 "Sorry Diff Failed, are you sure your choice of files was correct for this "
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:593
+#: lib/Padre/Wx/Dialog/Patch.pm:605
 msgid ""
 "Sorry, Diff failed. Are you sure your have access to the repository for this "
 "action"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:434
+#: lib/Padre/Wx/Dialog/Patch.pm:442
 msgid ""
 "Sorry, patch failed, are you sure your choice of files was correct for this "
 "action"
@@ -5765,7 +5765,7 @@ msgid ""
 "replace it with the default code that comes with your installation of Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Patch.pm:531
+#: lib/Padre/Wx/Dialog/Patch.pm:538
 #, perl-format
 msgid ""
 "Warning: found SVN v%s but we require SVN v%s and it is now called \"Apache "
