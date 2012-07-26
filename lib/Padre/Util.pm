@@ -44,12 +44,6 @@ our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
 our $DISTRO    = undef;
 
-use Data::Printer {
-	caller_info => 1,
-	colored     => 1,
-};
-
-
 
 #####################################################################
 # Officially Supported Constants
