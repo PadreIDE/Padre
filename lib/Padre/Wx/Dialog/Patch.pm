@@ -133,7 +133,7 @@ sub on_action {
 
 		# as we can not added items to a radio-box,
 		# we can only enable & disable when radio-box enabled
-		unless ( $self->{svn_local} ) {
+		if ( !$self->{svn_local} ) {
 			$self->against->EnableItem( 1, 0 );
 		}
 		$self->against->SetSelection(0);
@@ -314,7 +314,7 @@ sub set_selection_file1 {
 	$self->{selection} = 0;
 	if ( $main->current->title =~ /(patch|diff)$/sxm ) {
 
-		my @pathch_target = split( /\./, $main->current->title, 2 );
+		my @pathch_target = split /\./, $main->current->title, 2;
 
 		# TODO this is a padre internal issue, remove obtuse leading space if exists
 		$pathch_target[0] =~ s/^\p{Space}{1}//;
@@ -478,7 +478,7 @@ sub make_patch_diff {
 			TRACE($our_diff) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
-			open( my $fh, '>', $patch_file ) or die "open: $!";
+			open my $fh, '>', $patch_file or die "open: $!";
 			print $fh $our_diff;
 			close $fh;
 			TRACE("writing file: $patch_file") if DEBUG;
@@ -513,29 +513,19 @@ sub test_svn {
 	my $main = $self->main;
 
 	$self->{svn_local} = 0;
-
-	my $svn_client_version = 0;
-	my $svn_client_info_ref;
 	my $required_svn_version = '1.6.2';
 
 	if ( File::Which::which('svn') ) {
 
 		# test svn version
-		# $svn_client_version = Padre::Util::run_in_directory_two('svn --version --quiet');
-		# $svn_client_version = Padre::Util::run_in_directory_two( cmd => 'svn --version --quiet', option => 0 );
-		$svn_client_info_ref = Padre::Util::run_in_directory_two( cmd => 'svn --version --quiet', option => 0 );
+		my $svn_client_info_ref = Padre::Util::run_in_directory_two( cmd => 'svn --version --quiet', option => '0' );
 		my %svn_client_info = %{$svn_client_info_ref};
 
-		# p $svn_client_info{error};
-		# p $svn_client_info{error};
 		if ( !$svn_client_info{error} ) {
-			chomp $svn_client_version;
 
-			# p $svn_client_info{output};
 			require Sort::Versions;
 
 			# This is so much better, now we are testing for version as well
-			# if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
 			if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_info{output}, ) == -1 ) {
 				TRACE("Found local SVN v$svn_client_info{output}, good to go.") if DEBUG;
 				$self->{svn_local} = 1;
@@ -573,22 +563,16 @@ sub make_patch_svn {
 
 	TRACE("file1_url to svn: $file1_url") if DEBUG;
 
-	# if (test_svn) {
 	if ( $self->{svn_local} ) {
 		TRACE('found local SVN, Good to go') if DEBUG;
 		my $diff_str_ref;
 
-		#TODO use run Padre::Util::run_in_directory_two
-		# if ( eval { $diff_str = qx{ svn diff $file1_url} } ) {
-		# if ( eval { $diff_str = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 ) } ) {
-		# if ( eval { $diff_str_ref = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 ) } ) {
 		try {
-			$diff_str_ref = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 );
+			$diff_str_ref = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => '0' );
 		};
 		my %svn_diff = %{$diff_str_ref};
 		if ( !$svn_diff{error} ) {
 
-			# p $svn_diff{output};
 			TRACE( $svn_diff{output} ) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
