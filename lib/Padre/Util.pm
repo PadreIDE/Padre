@@ -44,7 +44,10 @@ our @ISA       = 'Exporter';
 our @EXPORT_OK = '_T';
 our $DISTRO    = undef;
 
-
+# use Data::Printer {
+    # caller_info => 1,
+    # colored     => 1,
+# };
 
 
 
@@ -458,7 +461,7 @@ also
 	run_in_directory_two('...', type);
 
 return type 1 default, returns a string
-
+return type 2 error only for testing
 nb you might need to chomp result but thats for you.
 
 return type 0 hash_ref
@@ -491,10 +494,16 @@ return type 0 hash_ref
 # function Padre::Util::run_in_directory_two
 #######
 sub run_in_directory_two {
-	my $cmd_line      = shift;
-	my $location      = shift;
-	my $return_option = shift;
-
+	my %args = @_;
+	my $cmd_line      = $args{cmd};
+	my $location      = $args{dir};
+	my $return_option = $args{option};
+	# p $cmd_line;
+	# p $args{cmd};
+	# p $location;
+	# p $args{dir};
+	# p $return_option;
+	# p $args{option};
 	if ( defined $location ) {
 		if ( $location =~ /\d/ ) {
 			$return_option = $location;
@@ -542,14 +551,18 @@ sub run_in_directory_two {
 	Padre::Util::run_in_directory( "@cmd", $directory );
 
 	# Slurp command standard input and output
-	$ret_ioe{output} = slurp( $std_out->filename );
-
-	# chomp $ret_ioe{output};
+	$ret_ioe{output} = ${slurp( $std_out->filename )};
+	chomp $ret_ioe{output};
+	# p $ret_ioe{output};
 
 	# Slurp command standard error
-	$ret_ioe{error} = slurp( $std_err->filename );
-
+	$ret_ioe{error} = ${slurp( $std_err->filename )};
+	chomp $ret_ioe{error};
+	$ret_ioe{error} = $ret_ioe{error} ne "" ? $ret_ioe{error} : undef;
 	# chomp $ret_ioe{error};
+	# $ret_ioe{error} || undef;
+	# p $ret_ioe{error};
+	
 	if ( $ret_ioe{error} && ( $return_option eq 1 ) ) {
 		$return_option = 2;
 	}

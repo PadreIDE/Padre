@@ -7,6 +7,7 @@ use Padre::Util           ();
 use Padre::Wx             ();
 use Padre::Wx::FBP::Patch ();
 use Padre::Logger;
+use Try::Tiny;
 
 our $VERSION = '0.97';
 our @ISA     = qw{
@@ -281,12 +282,16 @@ sub file1_list_svn {
 
 	@{ $self->{file1_list_ref} } = ();
 	for ( 0 .. $self->{tab_cardinality} ) {
-		if (   ( $self->{open_file_info}->{$_}->{'vcs'} eq 'SVN' )
-			&& !( $self->{open_file_info}->{$_}->{'changed'} )
-			&& !( $self->{open_file_info}->{$_}->{'filename'} =~ /(patch|diff)$/sxm ) )
-		{
-			push @{ $self->{file1_list_ref} }, $self->{open_file_info}->{$_}->{'filename'};
-		}
+		try {
+			if ( $self->{open_file_info}->{$_}->{'vcs'} ) {
+				if (   ( $self->{open_file_info}->{$_}->{'vcs'} =~ /SVN/sxm )
+					&& !( $self->{open_file_info}->{$_}->{'changed'} )
+					&& !( $self->{open_file_info}->{$_}->{'filename'} =~ /(patch|diff)$/sxm ) )
+				{
+					push @{ $self->{file1_list_ref} }, $self->{open_file_info}->{$_}->{'filename'};
+				}
+			}
+		};
 	}
 
 	TRACE("file1_list_svn: @{ $self->{file1_list_ref} }") if DEBUG;
@@ -311,8 +316,7 @@ sub set_selection_file1 {
 
 		my @pathch_target = split( /\./, $main->current->title, 2 );
 
-		# TODO this is a padre internal issue
-		# remove obtuse leading space if exists
+		# TODO this is a padre internal issue, remove obtuse leading space if exists
 		$pathch_target[0] =~ s/^\p{Space}{1}//;
 		TRACE("Looking for File-1 to apply a patch to: $pathch_target[0]") if DEBUG;
 
@@ -397,12 +401,12 @@ sub apply_patch {
 
 	if ( -e $file1_url ) {
 		TRACE("found file1 => $file1_name: $file1_url") if DEBUG;
-		$source = Padre::Util::slurp($file1_url);
+		$source = ${ Padre::Util::slurp($file1_url) };
 	}
 
 	if ( -e $file2_url ) {
 		TRACE("found file2 => $file2_name: $file2_url") if DEBUG;
-		$diff = Padre::Util::slurp($file2_url);
+		$diff = ${ Padre::Util::slurp($file2_url) };
 		unless ( $file2_url =~ /(patch|diff)$/sxm ) {
 			$main->info( Wx::gettext('Patch file should end in .patch or .diff, you should reselect & try again') );
 			return;
@@ -413,7 +417,11 @@ sub apply_patch {
 
 		require Text::Patch;
 		my $our_patch;
-		if ( eval { $our_patch = Text::Patch::patch( $source, $diff, { STYLE => 'Unified' } ) } ) {
+
+		# p $source;
+		# p $diff;
+
+		if ( eval { $our_patch = Text::Patch::patch( $source, $diff, { STYLE => 'Unified', }, ) } ) {
 
 			TRACE($our_patch) if DEBUG;
 
@@ -506,30 +514,39 @@ sub test_svn {
 
 	$self->{svn_local} = 0;
 
-	my $svn_client_version   = 0;
+	my $svn_client_version = 0;
+	my $svn_client_info_ref;
 	my $required_svn_version = '1.6.2';
 
 	if ( File::Which::which('svn') ) {
 
 		# test svn version
-		$svn_client_version = Padre::Util::run_in_directory_two('svn --version --quiet');
-		if ($svn_client_version) {
+		# $svn_client_version = Padre::Util::run_in_directory_two('svn --version --quiet');
+		# $svn_client_version = Padre::Util::run_in_directory_two( cmd => 'svn --version --quiet', option => 0 );
+		$svn_client_info_ref = Padre::Util::run_in_directory_two( cmd => 'svn --version --quiet', option => 0 );
+		my %svn_client_info = %{$svn_client_info_ref};
+
+		# p $svn_client_info{error};
+		# p $svn_client_info{error};
+		if ( !$svn_client_info{error} ) {
 			chomp $svn_client_version;
 
+			# p $svn_client_info{output};
 			require Sort::Versions;
 
 			# This is so much better, now we are testing for version as well
-			if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
-				TRACE("Found local SVN v$svn_client_version, good to go.") if DEBUG;
+			# if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_version, ) == -1 ) {
+			if ( Sort::Versions::versioncmp( $required_svn_version, $svn_client_info{output}, ) == -1 ) {
+				TRACE("Found local SVN v$svn_client_info{output}, good to go.") if DEBUG;
 				$self->{svn_local} = 1;
 				return;
 			} else {
-				TRACE("Found SVN v$svn_client_version but require v$required_svn_version") if DEBUG;
+				TRACE("Found SVN v$svn_client_info{output} but require v$required_svn_version") if DEBUG;
 				$main->info(
 					sprintf(
 						Wx::gettext(
 							'Warning: found SVN v%s but we require SVN v%s and it is now called "Apache Subversion"'),
-						$svn_client_version,
+						$svn_client_info{output},
 						$required_svn_version
 					)
 				);
@@ -559,14 +576,24 @@ sub make_patch_svn {
 	# if (test_svn) {
 	if ( $self->{svn_local} ) {
 		TRACE('found local SVN, Good to go') if DEBUG;
-		my $diff_str;
-		if ( eval { $diff_str = qx{ svn diff $file1_url} } ) {
+		my $diff_str_ref;
 
-			TRACE($diff_str) if DEBUG;
+		#TODO use run Padre::Util::run_in_directory_two
+		# if ( eval { $diff_str = qx{ svn diff $file1_url} } ) {
+		# if ( eval { $diff_str = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 ) } ) {
+		# if ( eval { $diff_str_ref = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 ) } ) {
+		try {
+			$diff_str_ref = Padre::Util::run_in_directory_two( cmd => "svn diff $file1_url", option => 0 );
+		};
+		my %svn_diff = %{$diff_str_ref};
+		if ( !$svn_diff{error} ) {
+
+			# p $svn_diff{output};
+			TRACE( $svn_diff{output} ) if DEBUG;
 
 			my $patch_file = $file1_url . '.patch';
 			open( my $fh, '>', $patch_file ) or die "open: $!";
-			print $fh $diff_str;
+			print $fh $svn_diff{output};
 			close $fh;
 			TRACE("writing file: $patch_file") if DEBUG;
 
@@ -577,14 +604,15 @@ sub make_patch_svn {
 				)
 			);
 		} else {
-			TRACE("Error trying to get an SVN Diff: $@") if DEBUG;
+
+			TRACE("Error trying to get an SVN Diff: $svn_diff{error}") if DEBUG;
 
 			$output->AppendText("Patch Dialog failed to Complete.\n");
 			$output->AppendText("Your requested Action Diff against SVN, with following parameters.\n");
 			$output->AppendText("File-1: $file1_url \n");
 			$output->AppendText("What follows is the error I received from SVN, if any: \n");
-			if ($@) {
-				$output->AppendText($@);
+			if ( $svn_diff{error} ) {
+				$output->AppendText( $svn_diff{error} );
 			} else {
 				$output->AppendText("Sorry, Diff to SVN failed. There are any diffrences in this file: $file1_name");
 			}

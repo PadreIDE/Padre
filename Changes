@@ -27,7 +27,7 @@ the even version for the release, even during development.
     - Run script in native terminal in OsX #1434 (BENNIE)
     - reapplied r19056 translator _EviL_ to About using wxFormBuilder (BOWTIE)
     - continuity in page titles (BOWTIE)
-    -
+    - improve the error mesages in dialog patch (BOWTIE)
     
 
 0.97 Development version, not released
