@@ -496,8 +496,6 @@ return type 0 hash_ref
 sub run_in_directory_two {
 	my %args = @_;
 
-	$args{dir} ||= undef;
-
 	#create return hash ioe (input output error)
 	my %ret_ioe;
 	$ret_ioe{input} = $args{cmd};
@@ -519,7 +517,7 @@ sub run_in_directory_two {
 	my $std_err = File::Temp->new( UNLINK => 1 );
 
 	my $temp_dir = File::Temp->newdir();
-	my $directory = $args{dir} || $temp_dir;
+	my $directory = $args{dir} // $temp_dir;
 
 	my @cmd = (
 		$args{cmd},
