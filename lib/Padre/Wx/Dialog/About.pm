@@ -131,6 +131,7 @@ sub _core_info {
 
 	if ( $Config{osname} eq 'linux' ) {
 
+		# qx{...} ok here as linux
 		my $distro = qx{cat /etc/issue};
 		chomp($distro);
 		$distro =~ s/\\n \\l//g;

@@ -415,6 +415,8 @@ sub get_inc {
 	my $perl = $self->get_interpreter or return;
 
 	unless ( $inc{$perl} ) {
+		
+		#ToDo should we be using run_in_dir here? see Padre::Util
 		my $incs = qx{$perl -e "print join ';', \@INC"};
 		chomp $incs;
 		$inc{$perl} = [ split /;/, $incs ];
