@@ -101,7 +101,7 @@ sub _find_svn_status {
 	# Handle spaces in executable path under win32
 	$svn = qq{"$svn"} if Padre::Constant::WIN32;
 
-	#Now use run in dir
+	#Now uses run in dir
 	my $svn_info_ref = Padre::Util::run_in_directory_two(
 		cmd    => "$svn --no-ignore --verbose status", dir => $project_dir,
 		option => '0'
@@ -153,38 +153,21 @@ sub _find_git_status {
 
 	my @model = ();
 
-	# Create a temporary file for standard output redirection
-	my $out = File::Temp->new( UNLINK => 1 );
-	$out->close;
-
-	# Create a temporary file for standard error redirection
-	my $err = File::Temp->new( UNLINK => 1 );
-	$err->close;
-
 	# Find the git command line
 	my $git = File::Which::which('git') or return \@model;
 
 	# Handle spaces in executable path under win32
 	$git = qq{"$git"} if Padre::Constant::WIN32;
 
-	# run 'git status --short' command
-	my @cmd = (
-		$git,
-		'status',
-		'--short',
-		'1>' . $out->filename,
-		'2>' . $err->filename,
+	#Now uses run in dir
+	my $git_info_ref = Padre::Util::run_in_directory_two(
+		cmd    => "$git status --short", dir => $project_dir,
+		option => '0'
 	);
+	my %git_info = %{$git_info_ref};
 
-	# We need shell redirection (list context does not give that)
-	# Run command in directory
-	Padre::Util::run_in_directory( join( ' ', @cmd ), $project_dir );
-
-	# Slurp command standard input and output
-	my $stdout = Padre::Util::slurp $out->filename;
-
-	if ($stdout) {
-		for my $line ( split /^/, $$stdout ) {
+	if ( $git_info{output} ) {
+		for my $line ( split /^/, $git_info{output} ) {
 			chomp($line);
 			if ( $line =~ /^(..)\s+(.+?)(?:\s\->\s(.+?))?$/ ) {
 
