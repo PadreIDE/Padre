@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-26 12:10-0700\n"
+"POT-Creation-Date: 2012-07-27 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -665,11 +665,11 @@ msgstr ""
 msgid "(core)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:152
+#: lib/Padre/Wx/Dialog/About.pm:153
 msgid "(disabled)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:160
+#: lib/Padre/Wx/Dialog/About.pm:161
 msgid "(unsupported)"
 msgstr ""
 
@@ -804,7 +804,7 @@ msgstr ""
 msgid "All Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:547
+#: lib/Padre/Document/Perl.pm:549
 msgid "All braces appear to be matched"
 msgstr ""
 
@@ -1148,7 +1148,7 @@ msgid ""
 "files on MS Windows"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1515
+#: lib/Padre/Document/Perl.pm:1517
 msgid "Change variable style"
 msgstr ""
 
@@ -1204,12 +1204,12 @@ msgstr ""
 msgid "Characters (Visible)"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:548
+#: lib/Padre/Document/Perl.pm:550
 msgid "Check Complete"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:617 lib/Padre/Document/Perl.pm:673
-#: lib/Padre/Document/Perl.pm:692
+#: lib/Padre/Document/Perl.pm:619 lib/Padre/Document/Perl.pm:675
+#: lib/Padre/Document/Perl.pm:694
 msgid "Check cancelled"
 msgstr ""
 
@@ -1580,7 +1580,7 @@ msgstr ""
 msgid "Cu&t"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:691
+#: lib/Padre/Document/Perl.pm:693
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
@@ -1589,16 +1589,16 @@ msgstr ""
 msgid "Current Directory: "
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:672
+#: lib/Padre/Document/Perl.pm:674
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:616 lib/Padre/Document/Perl.pm:650
+#: lib/Padre/Document/Perl.pm:618 lib/Padre/Document/Perl.pm:652
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:812 lib/Padre/Document/Perl.pm:862
-#: lib/Padre/Document/Perl.pm:899
+#: lib/Padre/Document/Perl.pm:814 lib/Padre/Document/Perl.pm:864
+#: lib/Padre/Document/Perl.pm:901
 msgid "Current cursor does not seem to point at a variable."
 msgstr ""
 
@@ -1849,7 +1849,7 @@ msgid "Display Value"
 msgstr ""
 
 #: lib/Padre/Wx/CPAN.pm:211 lib/Padre/Wx/CPAN.pm:220 lib/Padre/Wx/CPAN.pm:229
-#: lib/Padre/Wx/Dialog/About.pm:138
+#: lib/Padre/Wx/Dialog/About.pm:139
 msgid "Distribution"
 msgstr ""
 
@@ -2245,7 +2245,7 @@ msgstr ""
 msgid "Error:\n"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:510
+#: lib/Padre/Document/Perl.pm:512
 msgid "Error: "
 msgstr ""
 
@@ -2580,7 +2580,7 @@ msgstr ""
 msgid "Find:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:948
+#: lib/Padre/Document/Perl.pm:950
 msgid "First character of selection does not seem to point at a token."
 msgstr ""
 
@@ -2950,7 +2950,7 @@ msgstr ""
 msgid "Kenichi Ishigaki"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:143
+#: lib/Padre/Wx/Dialog/About.pm:144
 msgid "Kernel"
 msgstr ""
 
@@ -3312,7 +3312,7 @@ msgstr ""
 msgid "New Module"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:822
+#: lib/Padre/Document/Perl.pm:824
 msgid "New name"
 msgstr ""
 
@@ -3348,11 +3348,11 @@ msgstr ""
 msgid "No changes found"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:652
+#: lib/Padre/Document/Perl.pm:654
 msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:901
+#: lib/Padre/Document/Perl.pm:903
 msgid "No declaration could be found for the specified (lexical?) variable."
 msgstr ""
 
@@ -3366,7 +3366,7 @@ msgstr ""
 msgid "No documentation for '%s'"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:512
+#: lib/Padre/Document/Perl.pm:514
 msgid "No errors found."
 msgstr ""
 
@@ -4134,7 +4134,7 @@ msgstr ""
 msgid "Quote (disable) pattern metacharacters till \\E"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:162
+#: lib/Padre/Wx/Dialog/About.pm:163
 msgid "RAM"
 msgstr ""
 
@@ -4319,7 +4319,7 @@ msgstr ""
 msgid "Rename file"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:813 lib/Padre/Document/Perl.pm:823
+#: lib/Padre/Document/Perl.pm:815 lib/Padre/Document/Perl.pm:825
 msgid "Rename variable"
 msgstr ""
 
@@ -4351,7 +4351,7 @@ msgstr ""
 msgid "Replace In Files"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:907 lib/Padre/Document/Perl.pm:956
+#: lib/Padre/Document/Perl.pm:909 lib/Padre/Document/Perl.pm:958
 msgid "Replace Operation Canceled"
 msgstr ""
 
@@ -4652,7 +4652,7 @@ msgstr ""
 msgid "Search &Term:"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:658
+#: lib/Padre/Document/Perl.pm:660
 msgid "Search Canceled"
 msgstr ""
 
@@ -4812,7 +4812,7 @@ msgstr ""
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:950
+#: lib/Padre/Document/Perl.pm:952
 msgid "Selection not part of a Perl statement?"
 msgstr ""
 
@@ -5472,7 +5472,7 @@ msgstr ""
 msgid "This type of file (URL) is missing delete support."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/About.pm:153
+#: lib/Padre/Wx/Dialog/About.pm:154
 msgid "Threads"
 msgstr ""
 
@@ -5585,8 +5585,8 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:770 lib/Padre/Document/Perl.pm:654
-#: lib/Padre/Document/Perl.pm:903 lib/Padre/Document/Perl.pm:952
+#: lib/Padre/PluginManager.pm:770 lib/Padre/Document/Perl.pm:656
+#: lib/Padre/Document/Perl.pm:905 lib/Padre/Document/Perl.pm:954
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
 msgstr ""
@@ -5698,7 +5698,7 @@ msgstr ""
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:863
+#: lib/Padre/Document/Perl.pm:865
 msgid "Variable case change"
 msgstr ""
 
