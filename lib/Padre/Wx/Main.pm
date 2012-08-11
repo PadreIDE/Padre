@@ -4599,27 +4599,6 @@ sub reload_editor {
 	# Capture where we are in the document
 	my $line = $editor->LineFromPosition( $editor->GetCurrentPos );
 
-	#if file dose not exsit close the tab
-	# print "processing file called $document->{filename}\n";
-	unless ( -e $document->{filename} ) {
-		my @labels = $self->current->notebook->labels;
-		for ( 0 .. $#labels ) {
-
-			# find tab index and delete tab
-			if ( $labels[$_][1] eq $document->{filename} ) {
-				# print "file names $labels[$_][1]\n";
-				# print "tab index $_\n";
-
-				$self->delete($_);
-
-				# $self->close($_);
-				# $self->notebook->DeletePage($_);
-			}
-		}
-
-		# print "did we delete file\n";
-	}
-
 	# Reload the document and propogate to the editor
 	unless ( $document->reload ) {
 		$self->error(
@@ -5144,7 +5123,7 @@ sub close {
 			}
 	);
 	TRACE( join ' ', "Closing ", ref $document, $document->filename || 'Unknown' ) if DEBUG;
-	say 'are we really here';
+
 	if ( $document->is_modified and not $document->is_unused ) {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
