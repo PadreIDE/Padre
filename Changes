@@ -29,6 +29,7 @@ the even version for the release, even during development.
     - continuity in page titles (BOWTIE)
     - improve the error mesages in dialog patch (BOWTIE)
     - some tweaks and POD to utils (BOWTIE)
+    - Fix Recreation of deleted file #1447 mj41++ (BOWTIE)
     
 
 0.97 Development version, not released

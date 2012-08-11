@@ -22,7 +22,9 @@ the available methods that can be applied to it besides the added ones
 
 =cut
 
-use 5.008005;
+use v5.10;
+
+# use 5.008005;
 use strict;
 use warnings;
 use Cwd                       ();
@@ -2950,9 +2952,10 @@ sub run_command {
 			# tome
 			my $pwd = $self->current->document->project_dir();
 			$cmd =~ s/"/\\"/g;
+
 			# Applescript can throw spurious errors on STDERR: http://helpx.adobe.com/photoshop/kb/unit-type-conversion-error-applescript.html
-			system qq(osascript -e 'tell app "Terminal"\n\tdo script "cd $pwd; clear; $cmd;"\nend tell'\n); 
- 	
+			system qq(osascript -e 'tell app "Terminal"\n\tdo script "cd $pwd; clear; $cmd;"\nend tell'\n);
+
 		} else {
 			system qq(xterm -sb -e "$cmd; sleep 1000" &);
 		}
@@ -4583,10 +4586,39 @@ sub reload_editor {
 	my $self     = shift;
 	my $editor   = shift || $self->current->editor or return 0;
 	my $document = $editor->document or return 0;
-	my $lock     = $editor->lock_update;
+
+	# If file doesn't exist close the tab
+	unless ( -e $document->{filename} ) {
+		my $id = $self->editor_of_file( $document->{filename} );
+		$self->delete($id);
+		return 1;
+	}
+
+	my $lock = $editor->lock_update;
 
 	# Capture where we are in the document
 	my $line = $editor->LineFromPosition( $editor->GetCurrentPos );
+
+	#if file dose not exsit close the tab
+	# print "processing file called $document->{filename}\n";
+	unless ( -e $document->{filename} ) {
+		my @labels = $self->current->notebook->labels;
+		for ( 0 .. $#labels ) {
+
+			# find tab index and delete tab
+			if ( $labels[$_][1] eq $document->{filename} ) {
+				# print "file names $labels[$_][1]\n";
+				# print "tab index $_\n";
+
+				$self->delete($_);
+
+				# $self->close($_);
+				# $self->notebook->DeletePage($_);
+			}
+		}
+
+		# print "did we delete file\n";
+	}
 
 	# Reload the document and propogate to the editor
 	unless ( $document->reload ) {
@@ -4598,6 +4630,7 @@ sub reload_editor {
 		);
 		return 0;
 	}
+
 	$editor->set_document($document);
 
 	# Restore the line position
@@ -4613,6 +4646,7 @@ sub reload_editor {
 		}
 		return;
 	}
+
 
 	# Refresh the editor title to remove any unsaved marker
 	$editor->refresh_notebook;
@@ -5110,7 +5144,7 @@ sub close {
 			}
 	);
 	TRACE( join ' ', "Closing ", ref $document, $document->filename || 'Unknown' ) if DEBUG;
-
+	say 'are we really here';
 	if ( $document->is_modified and not $document->is_unused ) {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
@@ -5119,7 +5153,11 @@ sub close {
 			$self,
 		);
 		if ( $ret == Wx::YES ) {
-			$self->on_save($document);
+
+			# see #1447
+			if ( -e $document->{filename} ) {
+				$self->on_save($document);
+			}
 		} elsif ( $ret == Wx::NO ) {
 
 			# just close it
@@ -5391,6 +5429,9 @@ sub delete {
 			Wx::gettext("Do you really want to close and delete %s from disk?"),
 			$filename
 		),
+
+		# see #1447
+		Wx::gettext("Warning"),
 		Wx::YES_NO | Wx::CANCEL | Wx::CENTRE,
 		$self,
 	);

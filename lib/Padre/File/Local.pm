@@ -205,7 +205,9 @@ sub splitall {
 
 sub readonly {
 	my $self = shift;
-	return 1 if ( !-w $self->{filename} );
+	# see #1447
+	# return 1 if ( !-w $self->{filename} );
+	return 1 if ( -e $self->{filename} && !-w $self->{filename} );
 }
 
 sub browse_url_join {
