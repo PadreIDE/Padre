@@ -30,7 +30,7 @@ the even version for the release, even during development.
     - improve the error mesages in dialog patch (BOWTIE)
     - some tweaks and POD to utils (BOWTIE)
     - Fix Recreation of deleted file #1447 mj41++ (BOWTIE)
-    - bug stopping reaload all in https://github.com/mj41/Padre/commit/72df6e7968 mj41++ nice catch (BOWTIE)
+    - bug stopping reaload all in #1447 mj41++ nice catch (BOWTIE)
     - Fix Reload of more than one file regression #1405 mj41++ (BOWTIE)
     
 
