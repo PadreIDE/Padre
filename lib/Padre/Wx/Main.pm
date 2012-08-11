@@ -4623,7 +4623,7 @@ sub reload_editor {
 		foreach my $editor ( $self->editors ) {
 			$editor->SetMarginWidth( 1, 16 );
 		}
-		return;
+		# return;
 	}
 
 
