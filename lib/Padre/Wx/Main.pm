@@ -4623,7 +4623,6 @@ sub reload_editor {
 		foreach my $editor ( $self->editors ) {
 			$editor->SetMarginWidth( 1, 16 );
 		}
-		# return;
 	}
 
 
@@ -4664,7 +4663,7 @@ sub reload_editors {
 	my $notebook = $self->notebook;
 	foreach my $i ( 0 .. $#editors ) {
 		$progress->update( $i, ( $i + 1 ) . "/$total" );
-		$self->reload_editor( $editors[$i] ) or return 0;
+		$self->reload_editor( $editors[$i] );
 	}
 
 	# Notify the plugin manager of the changed files
