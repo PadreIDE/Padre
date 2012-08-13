@@ -235,11 +235,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# Print files
-	# $self->{print} = $self->add_menu_action(
-	# 'file.print',
-	# );
+	$self->{print} = $self->add_menu_action(
+		'file.print',
+	);
 
-	# $self->AppendSeparator;
+	$self->AppendSeparator;
 
 	# Recent things
 	$self->{recentfiles} = Wx::Menu->new;
