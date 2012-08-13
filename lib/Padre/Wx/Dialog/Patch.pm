@@ -418,9 +418,6 @@ sub apply_patch {
 		require Text::Patch;
 		my $our_patch;
 
-		# p $source;
-		# p $diff;
-
 		if ( eval { $our_patch = Text::Patch::patch( $source, $diff, { STYLE => 'Unified', }, ) } ) {
 
 			TRACE($our_patch) if DEBUG;
