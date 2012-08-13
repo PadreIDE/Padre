@@ -32,6 +32,7 @@ the even version for the release, even during development.
     - Fix Recreation of deleted file #1447 mj41++ (BOWTIE)
     - bug stopping reaload all in #1447 mj41++ nice catch (BOWTIE)
     - Fix Reload of more than one file regression #1405 mj41++ (BOWTIE)
+    - update french translation (DOLMEN)
     
 
 0.97 Development version, not released
