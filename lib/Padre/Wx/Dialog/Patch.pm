@@ -426,8 +426,8 @@ sub apply_patch {
 			TRACE($our_patch) if DEBUG;
 
 			# Open the patched file as a new file
-			$main->new_document_from_string( $our_patch => 'application/x-perl', );
-			$main->info( Wx::gettext('Patch successful, you should see a new tab in editor called Unsaved #') );
+			my $doc = $main->new_document_from_string( $our_patch => 'application/x-perl', );
+			$main->info( sprintf(Wx::gettext('Patch successful, you should see a new tab in editor called %s'), $doc->get_title) );
 		} else {
 			TRACE("error trying to patch: $@") if DEBUG;
 
