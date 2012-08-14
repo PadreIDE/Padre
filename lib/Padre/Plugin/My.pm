@@ -1,33 +1,33 @@
 package Padre::Plugin::My;
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 use utf8;
-use Padre::Constant ();
 use Padre::Plugin   ();
-use Padre::Wx       ();
 
 our $VERSION = '0.97';
-our @ISA     = 'Padre::Plugin';
+use parent qw(Padre::Plugin);
 
 
 
-
-
-#####################################################################
-# Padre::Plugin Methods
-
+#######
+# Define Padre Interfaces required
+#######
 sub padre_interfaces {
 	return (
-		'Padre::Plugin'   => 0.66,
-		'Padre::Constant' => 0.66,
+		'Padre::Plugin'   => 0.94,
+		'Padre::Constant' => 0.94,
 	);
 }
 
+#######
+# Called by padre to know the plugin name
+#######
 sub plugin_name {
-	'My Plugin';
+	return Wx::gettext('My Plugin');
 }
+
 
 sub menu_plugins_simple {
 	my $self = shift;
@@ -40,9 +40,6 @@ sub menu_plugins_simple {
 		# ],
 	];
 }
-
-
-
 
 
 #####################################################################
@@ -117,8 +114,8 @@ does interesting stuff, please consider sharing it on C<CPAN>!
 
 =head1 COPYRIGHT & LICENSE
 
-Currently it's copyrighted © 2008-2010 by The Padre development team as
-listed in Padre.pm... But update it and it will become copyrighted © You
+Currently it's copyrighted (c) 2008-2010 by The Padre development team as
+listed in Padre.pm... But update it and it will become copyrighted (c) You
 C<< <you@example.com> >>! How exciting! :-)
 
 =cut
