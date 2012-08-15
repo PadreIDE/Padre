@@ -939,9 +939,10 @@ sub on_context_menu {
 
 	foreach my $handle ( $self->handles ) {
 		next unless $handle->can_context;
-		foreach my $handle ( $self->handles ) {
+		# commeted out, as it kills padre, only used in p-p-Git, see #1448
+		# foreach my $handle ( $self->handles ) {
 			$handle->plugin->event_on_context_menu(@_);
-		}
+		# }
 	}
 
 	return ();
