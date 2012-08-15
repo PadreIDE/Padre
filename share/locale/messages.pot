@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-14 12:10-0700\n"
+"POT-Creation-Date: 2012-08-15 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2379,7 +2379,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:916 lib/Padre/PluginManager.pm:1010
+#: lib/Padre/PluginManager.pm:916 lib/Padre/PluginManager.pm:1011
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -3606,7 +3606,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:964 lib/Padre/Wx/Main.pm:6025
+#: lib/Padre/PluginManager.pm:965 lib/Padre/Wx/Main.pm:6025
 msgid "Open file"
 msgstr ""
 
@@ -3937,7 +3937,7 @@ msgstr ""
 msgid "Plug-in Manager"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:984
+#: lib/Padre/PluginManager.pm:985
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
