@@ -13,9 +13,9 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.20 ();
+use Debug::Client 0.21 ();
 
-# use Data::Printer { caller_info => 1, colored => 1, };
+
 our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::View
@@ -302,12 +302,13 @@ sub debug_perl {
 		host => $host,
 		port => $port,
 	);
-	$self->{client}->listener;
+
+	# $self->{client}->listener;
 
 	$self->{file} = $filename;
 
 	#Now we ask where are we
-	$self->{client}->get;
+	# $self->{client}->get;
 	$self->{client}->get_lineinfo;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
@@ -315,7 +316,7 @@ sub debug_perl {
 	if ( $self->{set_bp} == 0 ) {
 
 		# get bp's from db
-		$self->_get_bp_db();
+		$self->_get_bp_db;
 		$self->{set_bp} = 1;
 	}
 
@@ -422,10 +423,10 @@ sub debug_quit {
 	$self->{step_out}->Hide;
 	$self->{run_till}->Hide;
 	$self->{display_value}->Hide;
-	
+
 	$self->{show_global_variables}->Disable;
 	$self->{show_local_variables}->Disable;
-	
+
 	$self->{var_val}       = {};
 	$self->{local_values}  = {};
 	$self->{global_values} = {};
@@ -459,7 +460,7 @@ sub debug_step_in {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
 	$self->_set_debugger;
 
 	return;
@@ -487,7 +488,7 @@ sub debug_step_over {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
 	$self->_set_debugger;
 
 	return;
@@ -515,7 +516,7 @@ sub debug_step_out {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
 	$self->_set_debugger;
 
 	return;
@@ -529,11 +530,20 @@ sub debug_run_till {
 	my $param = shift;
 	my $main  = $self->main;
 
+	# say 'debug run till';
+
 	my @list_request;
 	eval { @list_request = $self->{client}->run($param); };
 
-	my $temp_buffer = $self->{client}->buffer;
-	my $module      = $self->{client}->module;
+	# say 'list_request';
+	# p @list_request;
+	# eval { $self->{client}->run(); };
+
+	my $temp_buffer = $self->{client}->get_buffer;
+
+	# say 'temp_buffer';
+	# p $temp_buffer;
+	my $module = $self->{client}->module;
 	$self->{client}->get_lineinfo;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
@@ -683,7 +693,7 @@ sub _output_variables {
 
 	# only get local variables if required
 	if ( $self->{local_variables} == 1 ) {
-		$self->get_local_variables();
+		$self->get_local_variables;
 	}
 
 
@@ -703,7 +713,7 @@ sub _output_variables {
 		$self->{show_global_variables}->Enable;
 
 		if ( $self->{current_file} =~ m/pm$/ ) {
-			$self->get_global_variables();
+			$self->get_global_variables;
 
 		} else {
 			$self->{show_global_variables}->Disable;
@@ -967,7 +977,7 @@ sub on_debug_clicked {
 	$self->{step_out}->Show;
 	$self->{run_till}->Show;
 	$self->{display_value}->Show;
-	
+
 	$self->{show_local_variables}->Enable;
 
 	$self->{trace}->Enable;
@@ -1129,7 +1139,7 @@ sub on_dot_clicked {
 	my $main = $self->main;
 
 	$main->{debugoutput}->debug_output( $self->{client}->show_line() );
-	
+
 	#reset editor to dot location
 	$self->_set_debugger;
 
@@ -1220,7 +1230,7 @@ sub on_stacktrace_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{debugoutput}->debug_output( $self->{client}->get_stack_trace() );
+	$main->{debugoutput}->debug_output( $self->{client}->get_stack_trace );
 
 	return;
 }
@@ -1242,7 +1252,7 @@ sub on_display_options_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{debugoutput}->debug_output( $self->{client}->get_options() );
+	$main->{debugoutput}->debug_output( $self->{client}->get_options );
 
 	return;
 }
@@ -1255,11 +1265,17 @@ sub on_evaluate_expression_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
+	if ( $self->{client}->get_stack_trace =~ /ANON/ ) {
+		$main->{debugoutput}->debug_output(
+			' You appear to be inside an __ANON__, suggest you use "Show Local Variables" to view contents');
+		return;
+	}
+
 	if ( $self->{expression}->GetValue() eq "" ) {
-		$main->{debugoutput}->debug_output( '$_ = ' . $self->{client}->get_value() );
+		$main->{debugoutput}->debug_output( '$_ = ' . $self->{client}->get_value );
 	} else {
 		$main->{debugoutput}->debug_output(
-			$self->{expression}->GetValue() . " = " . $self->{client}->get_value( $self->{expression}->GetValue() ) );
+			$self->{expression}->GetValue . " = " . $self->{client}->get_value( $self->{expression}->GetValue ) );
 	}
 
 	return;
@@ -1271,7 +1287,7 @@ sub on_sub_names_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	$main->{debugoutput}->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue() ) );
+	$main->{debugoutput}->debug_output( $self->{client}->list_subroutine_names( $self->{expression}->GetValue ) );
 
 	return;
 }
@@ -1282,18 +1298,18 @@ sub on_watchpoints_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	if ( $self->{expression}->GetValue() ne "" ) {
-		if ( $self->{expression}->GetValue() eq "*" ) {
-			$main->{debugoutput}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue() ) );
+	if ( $self->{expression}->GetValue ne "" ) {
+		if ( $self->{expression}->GetValue eq "*" ) {
+			$main->{debugoutput}->debug_output( $self->{client}->__send( 'W ' . $self->{expression}->GetValue ) );
 
 			return;
 		}
 
 		# this is nasty, there must be a better way
-		my $exp = "\\" . $self->{expression}->GetValue();
+		my $exp = "\\" . $self->{expression}->GetValue;
 
 		if ( $self->{client}->__send('L w') =~ m/$exp/gm ) {
-			my $del_watch = $self->{client}->__send( 'W ' . $self->{expression}->GetValue() );
+			my $del_watch = $self->{client}->__send( 'W ' . $self->{expression}->GetValue );
 			if ($del_watch) {
 				$main->{debugoutput}->debug_output($del_watch);
 			} else {
@@ -1303,7 +1319,7 @@ sub on_watchpoints_clicked {
 			return;
 		} else {
 
-			$self->{client}->__send( 'w ' . $self->{expression}->GetValue() );
+			$self->{client}->__send( 'w ' . $self->{expression}->GetValue );
 			$main->{debugoutput}->debug_output( $self->{client}->__send('L w') );
 
 			return;
@@ -1322,11 +1338,11 @@ sub on_raw_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
-	if ( $self->{expression}->GetValue() =~ m/^h.?(\w*)/s ) {
+	if ( $self->{expression}->GetValue =~ m/^h.?(\w*)/s ) {
 		$main->{debugoutput}->debug_output( $self->{client}->get_h_var($1) );
 	} else {
 
-		$main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue() ) );
+		$main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue ) );
 	}
 
 	return;
