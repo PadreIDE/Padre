@@ -36,6 +36,7 @@ the even version for the release, even during development.
     - uncommented file.print to re-enable printing #1443 (BOWTIE)
     - update p-p-My to api v2 (BOWTIE)
     - commeted out, as it kills padre, only used in p-p-Git, see #1448 Manfred++ (BOWTIE)
+    - use Debug-Client 0.21 with several Debugger fixes (BOWTIE)
     
 
 0.97 Development version, not released
