@@ -299,16 +299,14 @@ sub debug_perl {
 	# Bootstrap the debugger
 	# require Debug::Client;
 	$self->{client} = Debug::Client->new(
-		host => $host,
-		port => $port,
+		host   => $host,
+		port   => $port,
+		listen => 1,
 	);
-
-	# $self->{client}->listener;
 
 	$self->{file} = $filename;
 
 	#Now we ask where are we
-	# $self->{client}->get;
 	$self->{client}->get_lineinfo;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
