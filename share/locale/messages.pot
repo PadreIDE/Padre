@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-20 04:10-0700\n"
+"POT-Creation-Date: 2012-08-20 20:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,7 +235,7 @@ msgstr ""
 msgid "&Deparse selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:100
+#: lib/Padre/Wx/Dialog/PluginManager.pm:137
 msgid "&Disable"
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 msgid "&Edit with Regex Editor..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:106
-#: lib/Padre/Wx/Dialog/PluginManager.pm:112
+#: lib/Padre/Wx/Dialog/PluginManager.pm:143
+#: lib/Padre/Wx/Dialog/PluginManager.pm:149
 msgid "&Enable"
 msgstr ""
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "&Set"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:94
+#: lib/Padre/Wx/Dialog/PluginManager.pm:131
 msgid "&Show Error Message"
 msgstr ""
 
@@ -1254,7 +1254,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:128 lib/Padre/Wx/FBP/About.pm:672
+#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:672
 #: lib/Padre/Wx/FBP/SLOC.pm:176 lib/Padre/Wx/FBP/Sync.pm:253
 #: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
 #: lib/Padre/Wx/FBP/SessionManager.pm:119
@@ -2020,7 +2020,7 @@ msgstr ""
 msgid "Empty regex"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:96
+#: lib/Padre/Wx/FBP/PluginManager.pm:97
 msgid "Enable"
 msgstr ""
 
@@ -2148,12 +2148,12 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5044
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:206
-#: lib/Padre/Wx/Dialog/Sync.pm:85 lib/Padre/Wx/Dialog/Sync.pm:93
-#: lib/Padre/Wx/Dialog/Sync.pm:106 lib/Padre/Wx/Dialog/Sync.pm:141
-#: lib/Padre/Wx/Dialog/Sync.pm:152 lib/Padre/Wx/Dialog/Sync.pm:162
-#: lib/Padre/Wx/Dialog/Sync.pm:180 lib/Padre/Wx/Dialog/Sync.pm:205
-#: lib/Padre/Wx/Dialog/Sync.pm:216 lib/Padre/Wx/Dialog/Sync.pm:227
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
+#: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
+#: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
+#: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
+#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
+#: lib/Padre/Wx/Dialog/Sync.pm:227
 msgid "Error"
 msgstr ""
 
@@ -2171,11 +2171,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:5637
 msgid "Error loading perl filter dialog."
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:134
-#, perl-format
-msgid "Error loading pod for class '%s': %s"
 msgstr ""
 
 #: lib/Padre/Wx/Main.pm:5608
@@ -4020,7 +4015,7 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:112
+#: lib/Padre/Wx/FBP/PluginManager.pm:113
 msgid "Preferences"
 msgstr ""
 
@@ -5931,6 +5926,18 @@ msgid ""
 "better to assign a specific value using = . The option can be abbreviated, "
 "but for clarity probably should not be. Several options can be set together. "
 "See Configurable Options for a list of these."
+msgstr ""
+
+#: lib/Padre/Wx/FBP/PluginManager.pm:66
+msgid "plugin name"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/PluginManager.pm:81
+msgid "plugin status"
+msgstr ""
+
+#: lib/Padre/Wx/FBP/PluginManager.pm:75
+msgid "plugin version"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Breakpoints.pm:113
