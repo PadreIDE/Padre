@@ -188,12 +188,13 @@ sub preferences_clicked {
 
 sub refresh {
 	my $self = shift;
-	
+
 	# Clear image list & fill it again
 	$self->{imagelist}->RemoveAll;
 
 	# Default plug-in icon
 	$self->{imagelist}->Add( Padre::Wx::Icon::find('status/padre-plugin') );
+
 	# my %icon = ( plugin => 0 );
 
 	# Clear ListCtrl items
@@ -211,8 +212,8 @@ sub refresh {
 		}
 		$item->SetId($index);
 		$self->{list}->InsertItem($item);
-		
-		
+
+
 		# Check if plug-in is supplying its own icon
 		my $position = 0;
 		my $icon     = $handle->plugin_icon;
@@ -220,13 +221,14 @@ sub refresh {
 			$self->{imagelist}->Add($icon);
 			$position = $self->{imagelist}->GetImageCount - 1;
 		}
+
 		# Inserting the plug-in in the list
 		$self->{list}->InsertStringImageItem(
 			$index,
 			$handle->plugin_name,
 			$position,
 		);
-		
+
 		given ( $handle->status ) {
 			when ( $_ eq 'enabled' )      { $self->{list}->SetItemTextColour( $index, BLUE ); }
 			when ( $_ eq 'disabled' )     { $self->{list}->SetItemTextColour( $index, BLACK ); }
@@ -235,13 +237,19 @@ sub refresh {
 		}
 
 		# $self->{list}->SetItem( $index,   0, $handle->plugin_name );
-		$self->{list}->SetItem( $index,   1, $handle->plugin_version || '???' );
-		$self->{list}->SetItem( $index,   2, $handle->status );
+		$self->{list}->SetItem( $index, 1, $handle->plugin_version || '???' );
+		$self->{list}->SetItem( $index, 2, $handle->status );
 		$self->{list}->SetItem( $index++, 3, $handle->class );
 
 		# Tidy the list
 		Padre::Wx::Util::tidy_list( $self->{list} );
 	}
+
+	#ToDo for a reasion I don't understand I get double the number of items, so let's kill them NOW
+	for ( $index .. $self->{list}->GetItemCount ) {
+		$self->{list}->DeleteItem($_);
+	}
+	$self->{list_count} = $index;
 
 	# Select the current list item
 	if ( $self->{list}->GetItemCount > 0 ) {
@@ -299,7 +307,13 @@ sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
 
-	$self->{list_focus} = $event->GetIndex; # zero based
+	#This protects Padre from crashing due to spurious blanks in list
+	if ( $event->GetIndex < $self->{list_count} ) {
+		$self->{list_focus} = $event->GetIndex; # zero based
+	} else {
+		return 1;
+	}
+
 	my $plugin_name = $event->GetText;
 	my $module_name;
 
