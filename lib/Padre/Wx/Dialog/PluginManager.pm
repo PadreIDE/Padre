@@ -63,7 +63,7 @@ sub new {
 	for my $column_header (@column_headers) {
 		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
 	}
-
+	# $self->{list}->SetFocus;
 	# # Column ascending/descending image
 	# my $images = Wx::ImageList->new( 16, 16 );
 	# $self->{images} = {
@@ -231,10 +231,24 @@ sub refresh {
 		$self->{list}->SetItem( $index++, 1, $handle->status );
 
 		# $self->{list}->SetItem( $index++, 2, $handle->class );
+		
+		#set some bit's if first time through
+		# if ( $self->{handle} eq 'empty' ) {
+			# if ( $handle->plugin_name eq 'My Plugin' ) {
+				# $self->{handle} = $handle;
+				# $self->{list}->SetItem( 'wxLIST_STATE_FOCUSED', 0 );
+			# }
+		# }		
 
 		# Tidy the list
 		Padre::Wx::Util::tidy_list( $self->{list} );
 	}
+	
+	# Select the first item
+	if ( $self->{list}->GetItemCount > 0 ) {
+		$self->{list}->SetItemState( 0, Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED );
+	}
+	
 	return 1;
 }
 
