@@ -40,6 +40,7 @@ the even version for the release, even during development.
     - PPIx-EditorTools bumped to 0.17, we now have Moose supprt in Outline #1435 buff3r++ dod++ (BOWTIE)
     - as per dod++ request keep outline attributes open by default (BOWTIE)
     - add padre icon to My Plugin (BOWTIE)
+    - updated Plugin Manager (BOWTIE)
     
 
 0.97 Development version, not released
