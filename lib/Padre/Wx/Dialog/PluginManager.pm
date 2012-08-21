@@ -70,33 +70,6 @@ sub new {
 		Wx::IMAGE_LIST_SMALL,
 	);
 
-
-
-
-	# $self->{list}->SetFocus;
-	# # Column ascending/descending image
-	# my $images = Wx::ImageList->new( 16, 16 );
-	# $self->{images} = {
-	# asc => $images->Add(
-	# Wx::ArtProvider::GetBitmap(
-	# 'wxART_GO_UP',
-	# 'wxART_OTHER_C',
-	# [ 16, 16 ],
-	# ),
-	# ),
-	# desc => $images->Add(
-	# Wx::ArtProvider::GetBitmap(
-	# 'wxART_GO_DOWN',
-	# 'wxART_OTHER_C',
-	# [ 16, 16 ],
-	# ),
-	# ),
-	# };
-	# $self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
-
-	# # Tidy the list
-	# Padre::Wx::Util::tidy_list( $self->{list} );
-
 	# Do an initial refresh of the plugin list_two
 	$self->refresh;
 	$self->refresh_plugin;
@@ -261,20 +234,10 @@ sub refresh {
 			when ( $_ eq 'error' )        { $self->{list}->SetItemTextColour( $index, RED ); }
 		}
 
-
-
 		# $self->{list}->SetItem( $index,   0, $handle->plugin_name );
 		$self->{list}->SetItem( $index,   1, $handle->plugin_version || '???' );
 		$self->{list}->SetItem( $index,   2, $handle->status );
 		$self->{list}->SetItem( $index++, 3, $handle->class );
-
-		#set some bit's if first time through
-		# if ( $self->{handle} eq 'empty' ) {
-		# if ( $handle->plugin_name eq 'My Plugin' ) {
-		# $self->{handle} = $handle;
-		# $self->{list}->SetItem( 'wxLIST_STATE_FOCUSED', 0 );
-		# }
-		# }
 
 		# Tidy the list
 		Padre::Wx::Util::tidy_list( $self->{list} );
