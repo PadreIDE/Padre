@@ -12,10 +12,6 @@ use Try::Tiny;
 our $VERSION = '0.97';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
-use Data::Printer {
-	caller_info => 1,
-	colored     => 1,
-};
 
 use constant {
 	RED        => Wx::Colour->new('red'),
