@@ -56,8 +56,8 @@ sub new {
 	$self->CenterOnParent;
 
 	# Make the heading fonts larger
-	$self->{plugin_name}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
-	$self->{plugin_status}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
+	# $self->{plugin_name}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
+	# $self->{plugin_status}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
 
 
 	# TODO Active should be droped, just on show for now
