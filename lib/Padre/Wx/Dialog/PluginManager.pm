@@ -58,7 +58,7 @@ sub new {
 	# TODO Active should be droped, just on show for now
 	# Setup columns names, Active should be droped, just and order here
 	# my @column_headers = qw( Path Line Active ); do not remove
-	my @column_headers = ( 'Plug-in Name', 'Status', 'Plug-in Class' );
+	my @column_headers = ( 'Plug-in Name', 'Version', 'Status', 'Plug-in Class' );
 	my $index = 0;
 	for my $column_header (@column_headers) {
 		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
@@ -209,6 +209,20 @@ sub preferences_clicked {
 
 sub refresh {
 	my $self = shift;
+	
+	my $image_list = Wx::ImageList->new( 16, 16, 1 );
+	# Generate icon array
+		foreach my $handle ( $self->ide->plugin_manager->handles ) {
+			
+			p $handle->plugin_name;
+			p $handle->plugin_icon;
+		# if ( $self->{handle} eq 'empty' ) {
+			# if ( $handle->plugin_name eq 'My Plugin' ) {
+				# $self->{handle} = $handle;
+			# }
+		# }
+	}
+	
 
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
@@ -234,8 +248,9 @@ sub refresh {
 		}
 
 		$self->{list}->SetItem( $index,   0, $handle->plugin_name );
-		$self->{list}->SetItem( $index,   1, $handle->status );
-		$self->{list}->SetItem( $index++, 2, $handle->class );
+		$self->{list}->SetItem( $index,   1, $handle->plugin_version );
+		$self->{list}->SetItem( $index,   2, $handle->status );
+		$self->{list}->SetItem( $index++, 3, $handle->class );
 
 		#set some bit's if first time through
 		# if ( $self->{handle} eq 'empty' ) {
