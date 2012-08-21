@@ -12,10 +12,10 @@ use Try::Tiny;
 our $VERSION = '0.97';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
-use Data::Printer {
-	caller_info => 1,
-	colored     => 1,
-};
+# use Data::Printer {
+	# caller_info => 1,
+	# colored     => 1,
+# };
 
 use constant {
 	RED        => Wx::Colour->new('red'),
@@ -102,7 +102,7 @@ sub new {
 sub refresh_plugin {
 	my $self = shift;
 
-	my $handle = $self->selected2 or return;
+	my $handle = $self->selected or return;
 
 	# Update the basic fields
 	SCOPE: {
@@ -178,7 +178,7 @@ sub action_clicked {
 
 	# say 'in action_clicked';
 	my $method = $self->{action}->{method} or return;
-	p $method;
+	# p $method;
 
 	# p $self->$method();
 	$self->$method();
@@ -187,8 +187,8 @@ sub action_clicked {
 sub preferences_clicked {
 	my $self = shift;
 
-	my $handle = $self->selected2 or return;
-	p $handle;
+	my $handle = $self->selected or return;
+	# p $handle;
 
 	# my $handle = $self->handle or return;
 	$handle->plugin_preferences;
@@ -242,7 +242,7 @@ sub refresh {
 sub enable_selected {
 	my $self = shift;
 
-	my $handle = $self->selected2 or return;
+	my $handle = $self->selected or return;
 	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
 
 	$self->ide->plugin_manager->user_enable($handle);
@@ -253,7 +253,7 @@ sub enable_selected {
 sub disable_selected {
 	my $self = shift;
 
-	my $handle = $self->selected2 or return;
+	my $handle = $self->selected or return;
 	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
 
 	$self->ide->plugin_manager->user_disable($handle);
@@ -264,7 +264,7 @@ sub disable_selected {
 sub explain_selected {
 	my $self = shift;
 
-	my $handle = $self->selected2 or return;
+	my $handle = $self->selected or return;
 
 	# @INC gets printed out between () remove that for now
 	my $message = $handle->errstr;
@@ -308,22 +308,7 @@ sub _on_list_item_selected {
 ######################################################################
 # Support Methods
 
-# sub selected {
-# my $self = shift;
-
-# # Find the selection
-# my $list_two = $self->{list_two};
-# my $item     = $list_two->GetSelection;
-# p $item;
-# return if $item == Wx::NOT_FOUND;
-
-# # Load the plugin handle for the selection
-# my $module = $list_two->GetClientData($item);
-# p $module;
-# $self->ide->plugin_manager->handle($module);
-# }
-
-sub selected2 {
+sub selected {
 	my $self = shift;
 
 	if ( defined $self->{handle} ) {
