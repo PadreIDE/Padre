@@ -29979,7 +29979,7 @@
                     <property name="flag">wxALL|wxEXPAND</property>
                     <property name="proportion">0</property>
                     <object class="wxBoxSizer" expanded="1">
-                        <property name="minimum_size">230,-1</property>
+                        <property name="minimum_size">240,-1</property>
                         <property name="name">bSizer109</property>
                         <property name="orient">wxVERTICAL</property>
                         <property name="permission">none</property>

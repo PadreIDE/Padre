@@ -133,7 +133,7 @@ sub new {
 	my $bSizer136 = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	my $bSizer109 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer109->SetMinSize( [ 230, -1 ] );
+	$bSizer109->SetMinSize( [ 240, -1 ] );
 	$bSizer109->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer109->Add( $bSizer136, 0, Wx::EXPAND, 5 );
 

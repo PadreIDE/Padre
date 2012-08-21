@@ -67,6 +67,16 @@ sub new {
 	# Select the first item in CrtList
 	$self->{list_focus} = 0;
 
+	# Image List
+	$self->{imagelist} = Wx::ImageList->new( 16, 16, 1 );
+	$self->{list}->AssignImageList(
+		$self->{imagelist},
+		Wx::IMAGE_LIST_SMALL,
+	);
+
+
+
+
 	# $self->{list}->SetFocus;
 	# # Column ascending/descending image
 	# my $images = Wx::ImageList->new( 16, 16 );
@@ -210,19 +220,12 @@ sub preferences_clicked {
 sub refresh {
 	my $self = shift;
 	
-	my $image_list = Wx::ImageList->new( 16, 16, 1 );
-	# Generate icon array
-		foreach my $handle ( $self->ide->plugin_manager->handles ) {
-			
-			p $handle->plugin_name;
-			p $handle->plugin_icon;
-		# if ( $self->{handle} eq 'empty' ) {
-			# if ( $handle->plugin_name eq 'My Plugin' ) {
-				# $self->{handle} = $handle;
-			# }
-		# }
-	}
-	
+	# Clear image list & fill it again
+	$self->{imagelist}->RemoveAll;
+
+	# Default plug-in icon
+	$self->{imagelist}->Add( Padre::Wx::Icon::find('status/padre-plugin') );
+	# my %icon = ( plugin => 0 );
 
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
@@ -239,7 +242,22 @@ sub refresh {
 		}
 		$item->SetId($index);
 		$self->{list}->InsertItem($item);
-
+		
+		
+		# Check if plug-in is supplying its own icon
+		my $position = 0;
+		my $icon     = $handle->plugin_icon;
+		if ( defined $icon ) {
+			$self->{imagelist}->Add($icon);
+			$position = $self->{imagelist}->GetImageCount - 1;
+		}
+		# Inserting the plug-in in the list
+		$self->{list}->InsertStringImageItem(
+			$index,
+			$handle->plugin_name,
+			$position,
+		);
+		
 		given ( $handle->status ) {
 			when ( $_ eq 'enabled' )      { $self->{list}->SetItemTextColour( $index, BLUE ); }
 			when ( $_ eq 'disabled' )     { $self->{list}->SetItemTextColour( $index, BLACK ); }
@@ -247,8 +265,10 @@ sub refresh {
 			when ( $_ eq 'error' )        { $self->{list}->SetItemTextColour( $index, RED ); }
 		}
 
-		$self->{list}->SetItem( $index,   0, $handle->plugin_name );
-		$self->{list}->SetItem( $index,   1, $handle->plugin_version );
+
+
+		# $self->{list}->SetItem( $index,   0, $handle->plugin_name );
+		$self->{list}->SetItem( $index,   1, $handle->plugin_version || '???' );
 		$self->{list}->SetItem( $index,   2, $handle->status );
 		$self->{list}->SetItem( $index++, 3, $handle->class );
 
