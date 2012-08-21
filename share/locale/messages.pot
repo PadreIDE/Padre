@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-20 20:10-0700\n"
+"POT-Creation-Date: 2012-08-21 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,7 +235,7 @@ msgstr ""
 msgid "&Deparse selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:137
+#: lib/Padre/Wx/Dialog/PluginManager.pm:132
 msgid "&Disable"
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 msgid "&Edit with Regex Editor..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:143
-#: lib/Padre/Wx/Dialog/PluginManager.pm:149
+#: lib/Padre/Wx/Dialog/PluginManager.pm:138
+#: lib/Padre/Wx/Dialog/PluginManager.pm:144
 msgid "&Enable"
 msgstr ""
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "&Set"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:131
+#: lib/Padre/Wx/Dialog/PluginManager.pm:126
 msgid "&Show Error Message"
 msgstr ""
 
