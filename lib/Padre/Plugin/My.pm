@@ -41,6 +41,11 @@ sub menu_plugins_simple {
 	];
 }
 
+# Core plugins may reuse the page icon
+sub plugin_icon {
+	require Padre::Wx::Icon;
+	Padre::Wx::Icon::find('logo');
+}
 
 #####################################################################
 # Custom Methods
