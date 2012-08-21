@@ -36,15 +36,28 @@ is( $config->project, undef, '->project is undef' );
 is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
 
 # Check that the defaults work
-my @names =
-	sort { length($a) <=> length($b) or $a cmp $b } keys %Padre::Config::SETTING;
+my @names = sort { length($a) <=> length($b) or $a cmp $b } keys %Padre::Config::SETTING;
 is( scalar(@names), NUMBER_OF_CONFIG_OPTIONS, 'Expected number of config options' );
 foreach my $name (@names) {
 	ok( defined( $config->$name() ), "->$name is defined" );
-	is( $config->$name(),
-		$Padre::Config::DEFAULT{$name},
-		"->$name defaults ok",
-	);
+	if (
+		$Portable::ENABLED
+		and
+		Padre::Config->meta($name)->type == Padre::Constant::PATH
+		and
+		defined $config->$name()
+	) {
+		ok(
+			$config->$name() =~ /$Padre::Config::DEFAULT{$name}$/,
+			"->$name defaults ok",
+		);
+	} else {
+		is(
+			$config->$name(),
+			$Padre::Config::DEFAULT{$name},
+			"->$name defaults ok",
+		);
+	}
 }
 
 # The config version number is a requirement for every config and
