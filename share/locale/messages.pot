@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-21 04:10-0700\n"
+"POT-Creation-Date: 2012-08-21 08:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,7 +235,7 @@ msgstr ""
 msgid "&Deparse selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:132
+#: lib/Padre/Wx/Dialog/PluginManager.pm:136
 msgid "&Disable"
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 msgid "&Edit with Regex Editor..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:138
-#: lib/Padre/Wx/Dialog/PluginManager.pm:144
+#: lib/Padre/Wx/Dialog/PluginManager.pm:142
+#: lib/Padre/Wx/Dialog/PluginManager.pm:148
 msgid "&Enable"
 msgstr ""
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "&Set"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:126
+#: lib/Padre/Wx/Dialog/PluginManager.pm:130
 msgid "&Show Error Message"
 msgstr ""
 
@@ -1254,7 +1254,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:129 lib/Padre/Wx/FBP/About.pm:672
+#: lib/Padre/Wx/FBP/PluginManager.pm:127 lib/Padre/Wx/FBP/About.pm:672
 #: lib/Padre/Wx/FBP/SLOC.pm:176 lib/Padre/Wx/FBP/Sync.pm:253
 #: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
 #: lib/Padre/Wx/FBP/SessionManager.pm:119
@@ -2020,7 +2020,7 @@ msgstr ""
 msgid "Empty regex"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:97
+#: lib/Padre/Wx/FBP/PluginManager.pm:95
 msgid "Enable"
 msgstr ""
 
@@ -4015,7 +4015,7 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:113
+#: lib/Padre/Wx/FBP/PluginManager.pm:111
 msgid "Preferences"
 msgstr ""
 
@@ -5928,15 +5928,15 @@ msgid ""
 "See Configurable Options for a list of these."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:66
+#: lib/Padre/Wx/FBP/PluginManager.pm:64
 msgid "plugin name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:81
+#: lib/Padre/Wx/FBP/PluginManager.pm:79
 msgid "plugin status"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:75
+#: lib/Padre/Wx/FBP/PluginManager.pm:73
 msgid "plugin version"
 msgstr ""
 
