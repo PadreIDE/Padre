@@ -12,10 +12,10 @@ use Try::Tiny;
 our $VERSION = '0.97';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
-# use Data::Printer {
-	# caller_info => 1,
-	# colored     => 1,
-# };
+use Data::Printer {
+	caller_info => 1,
+	colored     => 1,
+};
 
 use constant {
 	RED        => Wx::Colour->new('red'),
@@ -58,11 +58,15 @@ sub new {
 	# TODO Active should be droped, just on show for now
 	# Setup columns names, Active should be droped, just and order here
 	# my @column_headers = qw( Path Line Active ); do not remove
-	my @column_headers = ( 'Plug-in Name', 'Status' );
+	my @column_headers = ( 'Plug-in Name', 'Status', 'Plug-in Class' );
 	my $index = 0;
 	for my $column_header (@column_headers) {
 		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
 	}
+
+	# Select the first item in CrtList
+	$self->{list_focus} = 0;
+
 	# $self->{list}->SetFocus;
 	# # Column ascending/descending image
 	# my $images = Wx::ImageList->new( 16, 16 );
@@ -178,6 +182,7 @@ sub action_clicked {
 
 	# say 'in action_clicked';
 	my $method = $self->{action}->{method} or return;
+
 	# p $method;
 
 	# p $self->$method();
@@ -188,6 +193,7 @@ sub preferences_clicked {
 	my $self = shift;
 
 	my $handle = $self->selected or return;
+
 	# p $handle;
 
 	# my $handle = $self->handle or return;
@@ -228,27 +234,26 @@ sub refresh {
 		}
 
 		$self->{list}->SetItem( $index,   0, $handle->plugin_name );
-		$self->{list}->SetItem( $index++, 1, $handle->status );
+		$self->{list}->SetItem( $index,   1, $handle->status );
+		$self->{list}->SetItem( $index++, 2, $handle->class );
 
-		# $self->{list}->SetItem( $index++, 2, $handle->class );
-		
 		#set some bit's if first time through
 		# if ( $self->{handle} eq 'empty' ) {
-			# if ( $handle->plugin_name eq 'My Plugin' ) {
-				# $self->{handle} = $handle;
-				# $self->{list}->SetItem( 'wxLIST_STATE_FOCUSED', 0 );
-			# }
-		# }		
+		# if ( $handle->plugin_name eq 'My Plugin' ) {
+		# $self->{handle} = $handle;
+		# $self->{list}->SetItem( 'wxLIST_STATE_FOCUSED', 0 );
+		# }
+		# }
 
 		# Tidy the list
 		Padre::Wx::Util::tidy_list( $self->{list} );
 	}
-	
-	# Select the first item
+
+	# Select the current list item
 	if ( $self->{list}->GetItemCount > 0 ) {
-		$self->{list}->SetItemState( 0, Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED );
+		$self->{list}->SetItemState( $self->{list_focus}, Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED );
 	}
-	
+
 	return 1;
 }
 
@@ -300,6 +305,7 @@ sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
 
+	$self->{list_focus} = $event->GetIndex; # zero based
 	my $plugin_name = $event->GetText;
 	my $module_name;
 
