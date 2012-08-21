@@ -41,8 +41,6 @@ sub new {
 		Wx::DefaultSize,
 		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
-	$self->{list}->SetMinSize( [ 220, -1 ] );
-	$self->{list}->SetMaxSize( [ 320, -1 ] );
 
 	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
@@ -135,6 +133,7 @@ sub new {
 	my $bSizer136 = Wx::BoxSizer->new(Wx::VERTICAL);
 
 	my $bSizer109 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer109->SetMinSize( [ 220, -1 ] );
 	$bSizer109->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer109->Add( $bSizer136, 0, Wx::EXPAND, 5 );
 
