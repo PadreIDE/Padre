@@ -18,7 +18,7 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 # API NOTES:
 # - This class uses english-style verb_noun method naming
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 use Carp                   ();
@@ -38,7 +38,6 @@ use Padre::Wx::Menu::Tools ();
 use Padre::Locale::T;
 
 our $VERSION = '0.97';
-
 
 
 
@@ -695,7 +694,8 @@ is passed in as first argument.
 
 sub reload_plugin {
 	my $self   = shift;
-	my $handle = $self->handle(shift) or return;
+	my $handle = shift or return;
+
 	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
 	$self->_unload_plugin($handle);
 	$self->_load_plugin($handle)   or return;
