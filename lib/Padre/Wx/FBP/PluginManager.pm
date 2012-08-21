@@ -34,20 +34,19 @@ sub new {
 	$self->SetSizeHints( [ 750, 500 ], Wx::DefaultSize );
 	$self->SetMinSize( [ 750, 500 ] );
 
-	$self->{list} = Wx::ListBox->new(
+	$self->{list} = Wx::ListCtrl->new(
 		$self,
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
-		[],
-		Wx::LB_NEEDED_SB | Wx::LB_SINGLE,
+		Wx::LC_REPORT | Wx::LC_SINGLE_SEL,
 	);
 
-	Wx::Event::EVT_LISTBOX(
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
 		$self->{list},
 		sub {
-			shift->refresh_plugin(@_);
+			shift->_on_list_item_selected(@_);
 		},
 	);
 
@@ -62,7 +61,7 @@ sub new {
 	$self->{plugin_name} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		'',
+		Wx::gettext("plugin name"),
 	);
 	$self->{plugin_name}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -71,13 +70,13 @@ sub new {
 	$self->{plugin_version} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		'',
+		Wx::gettext("plugin version"),
 	);
 
 	$self->{plugin_status} = Wx::StaticText->new(
 		$self->{details},
 		-1,
-		'',
+		Wx::gettext("plugin status"),
 	);
 	$self->{plugin_status}->SetFont(
 		Wx::Font->new( Wx::NORMAL_FONT->GetPointSize, 70, 90, 92, 0, "" )
@@ -131,6 +130,13 @@ sub new {
 	);
 	$self->{cancel}->SetDefault;
 
+	my $bSizer136 = Wx::BoxSizer->new(Wx::VERTICAL);
+
+	my $bSizer109 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer109->SetMinSize( [ 320, -1 ] );
+	$bSizer109->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer109->Add( $bSizer136, 0, Wx::EXPAND, 5 );
+
 	$self->{labels} = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{labels}->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
 	$self->{labels}->Add( 5, 0, 0, Wx::EXPAND, 5 );
@@ -152,12 +158,12 @@ sub new {
 	$self->{details}->SetSizerAndFit($bSizer110);
 	$self->{details}->Layout;
 
-	my $bSizer109 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer109->Add( $self->{list}, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::TOP, 5 );
-	$bSizer109->Add( $self->{details}, 1, Wx::EXPAND, 0 );
+	my $bSizer135 = Wx::BoxSizer->new(Wx::VERTICAL);
+	$bSizer135->Add( $self->{details}, 1, Wx::EXPAND, 0 );
 
-	my $bSizer108 = Wx::BoxSizer->new(Wx::VERTICAL);
-	$bSizer108->Add( $bSizer109, 1, Wx::EXPAND, 5 );
+	my $bSizer108 = Wx::BoxSizer->new(Wx::HORIZONTAL);
+	$bSizer108->Add( $bSizer109, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer108->Add( $bSizer135, 1, Wx::ALL | Wx::EXPAND, 5 );
 
 	$self->SetSizerAndFit($bSizer108);
 	$self->Layout;
@@ -165,8 +171,8 @@ sub new {
 	return $self;
 }
 
-sub refresh_plugin {
-	$_[0]->main->error('Handler method refresh_plugin for event list.OnListBox not implemented');
+sub _on_list_item_selected {
+	$_[0]->main->error('Handler method _on_list_item_selected for event list.OnListItemSelected not implemented');
 }
 
 sub action_clicked {

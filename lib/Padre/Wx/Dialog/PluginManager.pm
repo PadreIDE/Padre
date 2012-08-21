@@ -1,22 +1,35 @@
 package Padre::Wx::Dialog::PluginManager;
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
+use Padre::Wx::Util               ();
 use Padre::Wx::Icon               ();
 use Padre::Wx::FBP::PluginManager ();
 use Padre::Locale::T;
+use Try::Tiny;
 
 our $VERSION = '0.97';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
+use Data::Printer {
+	caller_info => 1,
+	colored     => 1,
+};
 
-
+use constant {
+	RED        => Wx::Colour->new('red'),
+	DARK_GREEN => Wx::Colour->new( 0x00, 0x90, 0x00 ),
+	BLUE       => Wx::Colour->new('blue'),
+	GRAY       => Wx::Colour->new('gray'),
+	DARK_GRAY  => Wx::Colour->new( 0x7f, 0x7f, 0x7f ),
+	BLACK      => Wx::Colour->new('black'),
+};
 
 
 ######################################################################
 # Class Methods
-
+#####
 sub run {
 	my $class = shift;
 	my $self  = $class->new(@_);
@@ -26,16 +39,14 @@ sub run {
 }
 
 
-
-
-
 ######################################################################
 # Constructor
-
+#####
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
-	my $list  = $self->{list};
+
+	$self->{handle} = 'empty';
 
 	# This is a core dialog so apply the Padre icon
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -48,20 +59,45 @@ sub new {
 	$self->{plugin_name}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
 	$self->{plugin_status}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
 
-	# Do an initial refresh of the plugin list
+
+	# TODO Active should be droped, just on show for now
+	# Setup columns names, Active should be droped, just and order here
+	# my @column_headers = qw( Path Line Active ); do not remove
+	my @column_headers = ( 'Plug-in Name', 'Status' );
+	my $index          = 0;
+	for my $column_header (@column_headers) {
+		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
+	}
+
+	# # Column ascending/descending image
+	# my $images = Wx::ImageList->new( 16, 16 );
+	# $self->{images} = {
+	# asc => $images->Add(
+	# Wx::ArtProvider::GetBitmap(
+	# 'wxART_GO_UP',
+	# 'wxART_OTHER_C',
+	# [ 16, 16 ],
+	# ),
+	# ),
+	# desc => $images->Add(
+	# Wx::ArtProvider::GetBitmap(
+	# 'wxART_GO_DOWN',
+	# 'wxART_OTHER_C',
+	# [ 16, 16 ],
+	# ),
+	# ),
+	# };
+	# $self->{list}->AssignImageList( $images, Wx::IMAGE_LIST_SMALL );
+
+	# # Tidy the list
+	# Padre::Wx::Util::tidy_list( $self->{list} );
+
+	# Do an initial refresh of the plugin list_two
 	$self->refresh;
-
-	# Select the first plugin and focus on the list
-	$list->Select(0) if $list->GetCount;
-	$list->SetFocus;
-
-	# Show the details for the selected plugin
 	$self->refresh_plugin;
 
 	return $self;
 }
-
-
 
 
 
@@ -70,7 +106,8 @@ sub new {
 
 sub refresh_plugin {
 	my $self = shift;
-	my $handle = $self->selected or return;
+
+	my $handle = $self->selected2 or return;
 
 	# Update the basic fields
 	SCOPE: {
@@ -121,7 +158,7 @@ sub refresh_plugin {
 	# Find the documentation
 	require Padre::Browser;
 	my $browser = Padre::Browser->new;
-	my $class   = $handle->class;
+	my $class   = $handle->class // 'Padre::Plugin::My';
 	my $doc     = $browser->resolve($class);
 
 	# Render the documentation.
@@ -143,14 +180,22 @@ sub refresh_plugin {
 
 sub action_clicked {
 	my $self = shift;
+
+	# say 'in action_clicked';
 	my $method = $self->{action}->{method} or return;
+	p $method;
+
+	# p $self->$method();
 	$self->$method();
 }
 
 sub preferences_clicked {
 	my $self = shift;
-	my $handle = $self->selected or return;
 
+	my $handle = $self->selected2 or return;
+	p $handle;
+
+	# my $handle = $self->handle or return;
 	$handle->plugin_preferences;
 }
 
@@ -163,38 +208,67 @@ sub preferences_clicked {
 
 sub refresh {
 	my $self = shift;
-	my $list = $self->{list};
 
-	# Clear the existing list data
-	$list->Clear;
+	# Clear ListCtrl items
+	$self->{list}->DeleteAllItems;
 
-	# Fill the list from the plugin handles
+	my $index = 0;
+	my $item  = Wx::ListItem->new;
+
+	# Fill the list_two from the plugin handles
 	foreach my $handle ( $self->ide->plugin_manager->handles ) {
-		$list->Append( $handle->plugin_name, $handle->class );
-	}
+		if ( $self->{handle} eq 'empty' ) {
+			if ( $handle->plugin_name eq 'My Plugin' ) {
+				$self->{handle} = $handle;
+			}
+		}
+		$item->SetId($index);
+		$self->{list}->InsertItem($item);
 
+		given ( $handle->status ) {
+			when ( $_ eq 'enabled' )      { $self->{list}->SetItemTextColour( $index, BLUE ); }
+			when ( $_ eq 'disabled' )     { $self->{list}->SetItemTextColour( $index, BLACK ); }
+			when ( $_ eq 'incompatible' ) { $self->{list}->SetItemTextColour( $index, DARK_GRAY ); }
+			when ( $_ eq 'error' )        { $self->{list}->SetItemTextColour( $index, RED ); }
+		}
+
+		$self->{list}->SetItem( $index,   0, $handle->plugin_name );
+		$self->{list}->SetItem( $index++,   1, $handle->status );
+		# $self->{list}->SetItem( $index++, 2, $handle->class );
+
+		# Tidy the list
+		Padre::Wx::Util::tidy_list( $self->{list} );
+	}
 	return 1;
 }
 
+
 sub enable_selected {
-	my $self   = shift;
-	my $handle = $self->selected or return;
-	my $lock   = $self->main->lock( 'DB', 'refresh_menu_plugins' );
+	my $self = shift;
+
+	my $handle = $self->selected2 or return;
+	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
+	
 	$self->ide->plugin_manager->user_enable($handle);
+	$self->refresh;
 	$self->refresh_plugin;
 }
 
 sub disable_selected {
 	my $self   = shift;
-	my $handle = $self->selected or return;
+	
+	my $handle = $self->selected2 or return;
 	my $lock   = $self->main->lock( 'DB', 'refresh_menu_plugins' );
+	
 	$self->ide->plugin_manager->user_disable($handle);
+	$self->refresh;
 	$self->refresh_plugin;
 }
 
 sub explain_selected {
 	my $self = shift;
-	my $handle = $self->selected or return;
+
+	my $handle = $self->selected2 or return;
 
 	# @INC gets printed out between () remove that for now
 	my $message = $handle->errstr;
@@ -209,25 +283,62 @@ sub explain_selected {
 	);
 }
 
+#######
+# Event Handler _on_list_item_selected
+#######
+sub _on_list_item_selected {
+	my $self  = shift;
+	my $event = shift;
 
+	my $plugin_name = $event->GetText;
+	my $module_name;
+
+	# Find the plugin module given plugin name
+	foreach my $handle ( $self->ide->plugin_manager->handles ) {
+		if ( $handle->plugin_name eq $plugin_name ) {
+			$module_name = $handle->class;
+		}
+	}
+
+	$self->{handle} = $self->ide->plugin_manager->handle($module_name);
+	$self->refresh_plugin;
+
+	return 1;
+
+}
 
 
 
 ######################################################################
 # Support Methods
 
-sub selected {
+# sub selected {
+# my $self = shift;
+
+# # Find the selection
+# my $list_two = $self->{list_two};
+# my $item     = $list_two->GetSelection;
+# p $item;
+# return if $item == Wx::NOT_FOUND;
+
+# # Load the plugin handle for the selection
+# my $module = $list_two->GetClientData($item);
+# p $module;
+# $self->ide->plugin_manager->handle($module);
+# }
+
+sub selected2 {
 	my $self = shift;
 
-	# Find the selection
-	my $list = $self->{list};
-	my $item = $list->GetSelection;
-	return if $item == Wx::NOT_FOUND;
-
-	# Load the plugin handle for the selection
-	my $module = $list->GetClientData($item);
-	$self->ide->plugin_manager->handle($module);
+	if ( defined $self->{handle} ) {
+		return $self->{handle};
+	} else {
+		return 0;
+	}
 }
+
+
+
 
 1;
 
@@ -250,7 +361,7 @@ Padre will have a lot of plug-ins. First plug-in manager was not taking
 this into account, and the first plug-in manager window was too small &
 too crowded to show them all properly.
 
-This revamped plug-in manager is now using a list control, and thus can
+This revamped plug-in manager is now using a list_two control, and thus can
 show lots of plug-ins in an effective manner.
 
 Upon selection, the right pane will be updated with the plug-in name &
@@ -259,14 +370,14 @@ plug-in documentation. Two buttons will allow to de/activate the plug-in
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+Copyright 2008-2012 The Padre development team as list_twoed in Padre.pm.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl 5 itself.
 
 =cut
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2012 The Padre development team as list_twoed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
