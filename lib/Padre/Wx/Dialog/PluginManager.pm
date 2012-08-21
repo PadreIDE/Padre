@@ -52,19 +52,14 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Prepare to be shown
-	$self->SetSize( [ 750, 500 ] );
+	$self->SetSize( [ 760, 480 ] );
 	$self->CenterOnParent;
-
-	# Make the heading fonts larger
-	# $self->{plugin_name}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
-	# $self->{plugin_status}->SetFont( Wx::Font->new( Wx::NORMAL_FONT->GetPointSize + 4, 70, 90, 92, 0, "" ) );
-
 
 	# TODO Active should be droped, just on show for now
 	# Setup columns names, Active should be droped, just and order here
 	# my @column_headers = qw( Path Line Active ); do not remove
 	my @column_headers = ( 'Plug-in Name', 'Status' );
-	my $index          = 0;
+	my $index = 0;
 	for my $column_header (@column_headers) {
 		$self->{list}->InsertColumn( $index++, Wx::gettext($column_header) );
 	}
@@ -233,7 +228,8 @@ sub refresh {
 		}
 
 		$self->{list}->SetItem( $index,   0, $handle->plugin_name );
-		$self->{list}->SetItem( $index++,   1, $handle->status );
+		$self->{list}->SetItem( $index++, 1, $handle->status );
+
 		# $self->{list}->SetItem( $index++, 2, $handle->class );
 
 		# Tidy the list
@@ -248,18 +244,18 @@ sub enable_selected {
 
 	my $handle = $self->selected2 or return;
 	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
-	
+
 	$self->ide->plugin_manager->user_enable($handle);
 	$self->refresh;
 	$self->refresh_plugin;
 }
 
 sub disable_selected {
-	my $self   = shift;
-	
+	my $self = shift;
+
 	my $handle = $self->selected2 or return;
-	my $lock   = $self->main->lock( 'DB', 'refresh_menu_plugins' );
-	
+	my $lock = $self->main->lock( 'DB', 'refresh_menu_plugins' );
+
 	$self->ide->plugin_manager->user_disable($handle);
 	$self->refresh;
 	$self->refresh_plugin;
