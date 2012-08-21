@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-21 12:10-0700\n"
+"POT-Creation-Date: 2012-08-21 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,32 +92,32 @@ msgstr ""
 msgid "%s (crashed)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:520
+#: lib/Padre/PluginManager.pm:521
 #, perl-format
 msgid "%s - Crashed while instantiating: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:468
+#: lib/Padre/PluginManager.pm:469
 #, perl-format
 msgid "%s - Crashed while loading: %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:530
+#: lib/Padre/PluginManager.pm:531
 #, perl-format
 msgid "%s - Failed to instantiate plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:492
+#: lib/Padre/PluginManager.pm:493
 #, perl-format
 msgid "%s - Not a Padre::Plugin subclass"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:505
+#: lib/Padre/PluginManager.pm:506
 #, perl-format
 msgid "%s - Not compatible with Padre %s - %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:480
+#: lib/Padre/PluginManager.pm:481
 #, perl-format
 msgid "%s - Plugin is empty or unversioned"
 msgstr ""
@@ -235,7 +235,7 @@ msgstr ""
 msgid "&Deparse selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:142
+#: lib/Padre/Wx/Dialog/PluginManager.pm:115
 msgid "&Disable"
 msgstr ""
 
@@ -255,8 +255,8 @@ msgstr ""
 msgid "&Edit with Regex Editor..."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:148
-#: lib/Padre/Wx/Dialog/PluginManager.pm:154
+#: lib/Padre/Wx/Dialog/PluginManager.pm:121
+#: lib/Padre/Wx/Dialog/PluginManager.pm:127
 msgid "&Enable"
 msgstr ""
 
@@ -568,7 +568,7 @@ msgstr ""
 msgid "&Set"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:136
+#: lib/Padre/Wx/Dialog/PluginManager.pm:109
 msgid "&Show Error Message"
 msgstr ""
 
@@ -661,7 +661,7 @@ msgstr ""
 msgid "(Undefined)"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:769
+#: lib/Padre/PluginManager.pm:770
 msgid "(core)"
 msgstr ""
 
@@ -1527,7 +1527,7 @@ msgstr ""
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:894
+#: lib/Padre/PluginManager.pm:895
 msgid "Could not locate project directory."
 msgstr ""
 
@@ -2148,12 +2148,12 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5044
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/PluginManager.pm:326
-#: lib/Padre/Wx/Dialog/Sync.pm:85 lib/Padre/Wx/Dialog/Sync.pm:93
-#: lib/Padre/Wx/Dialog/Sync.pm:106 lib/Padre/Wx/Dialog/Sync.pm:141
-#: lib/Padre/Wx/Dialog/Sync.pm:152 lib/Padre/Wx/Dialog/Sync.pm:162
-#: lib/Padre/Wx/Dialog/Sync.pm:180 lib/Padre/Wx/Dialog/Sync.pm:205
-#: lib/Padre/Wx/Dialog/Sync.pm:216 lib/Padre/Wx/Dialog/Sync.pm:227
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
+#: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
+#: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
+#: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
+#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
+#: lib/Padre/Wx/Dialog/Sync.pm:227
 msgid "Error"
 msgstr ""
 
@@ -2196,7 +2196,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:837
+#: lib/Padre/PluginManager.pm:838
 #, perl-format
 msgid "Error when calling menu for plug-in %s: %s"
 msgstr ""
@@ -2374,7 +2374,7 @@ msgstr ""
 msgid "Failed to find your CPAN configuration"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:916 lib/Padre/PluginManager.pm:1011
+#: lib/Padre/PluginManager.pm:917 lib/Padre/PluginManager.pm:1012
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -3315,7 +3315,7 @@ msgstr ""
 msgid "New name"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:392
+#: lib/Padre/PluginManager.pm:393
 msgid "New plug-ins detected"
 msgstr ""
 
@@ -3383,7 +3383,7 @@ msgstr ""
 msgid "No execution mode was defined for this document type"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:891 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/PluginManager.pm:892 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
@@ -3601,7 +3601,7 @@ msgstr ""
 msgid "Open cancelled"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:965 lib/Padre/Wx/Main.pm:6025
+#: lib/Padre/PluginManager.pm:966 lib/Padre/Wx/Main.pm:6025
 msgid "Open file"
 msgstr ""
 
@@ -3932,12 +3932,12 @@ msgstr ""
 msgid "Plug-in Manager"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:985
+#: lib/Padre/PluginManager.pm:986
 #, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:780
+#: lib/Padre/PluginManager.pm:781
 #, perl-format
 msgid "Plugin %s"
 msgstr ""
@@ -3957,12 +3957,12 @@ msgstr ""
 msgid "Plugin %s tried to register non-CODE hook %s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:753
+#: lib/Padre/PluginManager.pm:754
 #, perl-format
 msgid "Plugin %s, hook %s returned an emtpy error message"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:720
+#: lib/Padre/PluginManager.pm:721
 #, perl-format
 msgid "Plugin error on event %s: %s"
 msgstr ""
@@ -5585,7 +5585,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:770 lib/Padre/Document/Perl.pm:656
+#: lib/Padre/PluginManager.pm:771 lib/Padre/Document/Perl.pm:656
 #: lib/Padre/Document/Perl.pm:905 lib/Padre/Document/Perl.pm:954
 #: lib/Padre/File/FTP.pm:145
 msgid "Unknown error"
@@ -5776,7 +5776,7 @@ msgstr ""
 msgid "Watch"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:382
+#: lib/Padre/PluginManager.pm:383
 msgid ""
 "We found several new plug-ins.\n"
 "In order to configure and enable them go to\n"
