@@ -38,6 +38,7 @@ the even version for the release, even during development.
     - commeted out, as it kills padre, only used in p-p-Git, see #1448 Manfred++ (BOWTIE)
     - use Debug-Client 0.21 with several Debugger fixes (BOWTIE)
     - PPIx-EditorTools bumped to 0.17, we now have Moose supprt in Outline #1435 buff3r++ dod++ (BOWTIE)
+    - as per dod++ request keep outline attributes open by default (BOWTIE)
     
 
 0.97 Development version, not released
