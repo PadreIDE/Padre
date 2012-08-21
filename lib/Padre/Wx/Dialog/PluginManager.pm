@@ -180,9 +180,6 @@ sub preferences_clicked {
 }
 
 
-
-
-
 ######################################################################
 # Main Methods
 
@@ -195,13 +192,10 @@ sub refresh {
 	# Default plug-in icon
 	$self->{imagelist}->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 
-	# my %icon = ( plugin => 0 );
-
 	# Clear ListCtrl items
 	$self->{list}->DeleteAllItems;
 
 	my $index = 0;
-	my $item  = Wx::ListItem->new;
 
 	# Fill the list_two from the plugin handles
 	foreach my $handle ( $self->ide->plugin_manager->handles ) {
@@ -210,9 +204,6 @@ sub refresh {
 				$self->{handle} = $handle;
 			}
 		}
-		$item->SetId($index);
-		$self->{list}->InsertItem($item);
-
 
 		# Check if plug-in is supplying its own icon
 		my $position = 0;
@@ -244,12 +235,6 @@ sub refresh {
 		# Tidy the list
 		Padre::Wx::Util::tidy_list( $self->{list} );
 	}
-
-	#ToDo for a reasion I don't understand I get double the number of items, so let's kill them NOW
-	for ( $index .. $self->{list}->GetItemCount ) {
-		$self->{list}->DeleteItem($_);
-	}
-	$self->{list_count} = $index;
 
 	# Select the current list item
 	if ( $self->{list}->GetItemCount > 0 ) {
@@ -306,13 +291,7 @@ sub explain_selected {
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-
-	#This protects Padre from crashing due to spurious blanks in list
-	if ( $event->GetIndex < $self->{list_count} ) {
-		$self->{list_focus} = $event->GetIndex; # zero based
-	} else {
-		return 1;
-	}
+	$self->{list_focus} = $event->GetIndex; # zero based
 
 	my $plugin_name = $event->GetText;
 	my $module_name;
