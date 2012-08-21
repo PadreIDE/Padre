@@ -41,7 +41,6 @@ our $VERSION = '0.97';
 
 
 
-
 #####################################################################
 # Contants and definitions
 
@@ -149,6 +148,7 @@ sub main {
 # so cache the result.
 sub plugin_order {
 	my $self = shift;
+
 	unless ( $self->{plugin_order} ) {
 
 		# Schwartzian transform that sorts the plugins by their
@@ -156,12 +156,13 @@ sub plugin_order {
 		$self->{plugin_order} = [
 			map { $_->[0] } sort {
 				( $b->[0] eq 'Padre::Plugin::My' ) <=> ( $a->[0] eq 'Padre::Plugin::My' )
-					or $a->[1] cmp $b->[1]
+					or $a->[0] cmp $b->[0]
 				} map {
 				[ $_->class, $_->plugin_name ]
 				} values %{ $self->{plugins} }
 		];
 	}
+
 	return @{ $self->{plugin_order} };
 }
 
