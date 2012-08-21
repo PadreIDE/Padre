@@ -408,7 +408,7 @@ sub add_subtree {
 		foreach my $item (@sorted_entries) {
 			my $name = $item->{name};
 
-			#ToDo hack to remove double spacing caused by a stray has with no value, works with PPIx 0.15_02 but overwites 
+			#ToDo hack to remove double spacing caused by a stray has with no value, works with PPIx 0.15_02 but overwites
 			$name =~ s/\n//;
 
 			next if $name !~ /$term/;
@@ -430,6 +430,8 @@ sub add_subtree {
 			$tree->Expand($type_elem);
 		} else {
 			if ( $type eq 'methods' ) {
+				$tree->Expand($type_elem);
+			} elsif ( $type eq 'attributes' ) {
 				$tree->Expand($type_elem);
 			} else {
 				if ( $tree->IsExpanded($type_elem) ) {
