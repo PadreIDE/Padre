@@ -41,6 +41,7 @@ the even version for the release, even during development.
     - as per dod++ request keep outline attributes open by default (BOWTIE)
     - add padre icon to My Plugin (BOWTIE)
     - updated Plugin Manager (BOWTIE)
+    - typo in Padre::PluginManager in reload_plugin crashed Padre, don't now (BOWTIE)
     
 
 0.97 Development version, not released
