@@ -37,7 +37,7 @@ use vars qw{ $VERSION $COMPATIBLE };
 
 BEGIN {
 	$VERSION    = '0.97';
-	$COMPATIBLE = '0.93';
+	$COMPATIBLE = '0.97';
 }
 
 our @ISA       = 'Exporter';
