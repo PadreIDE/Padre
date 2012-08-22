@@ -46,6 +46,7 @@ the even version for the release, even during development.
     - Typo in Padre::PluginManager in reload_plugin crashed Padre, don't now (BOWTIE)
     - Tweak Schwartzian transform to work on class names, makes more sense (BOWTIE)
     - Tests now pass on Strawberry Portable again (ADAMK)
+    - Due to changes P-Util-run_in_dir_2 bumped $COMPATIBLE = 0.97 (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
