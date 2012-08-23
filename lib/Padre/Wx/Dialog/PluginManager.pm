@@ -239,6 +239,7 @@ sub refresh {
 	# Select the current list item
 	if ( $self->{list}->GetItemCount > 0 ) {
 		$self->{list}->SetItemState( $self->{list_focus}, Wx::LIST_STATE_SELECTED, Wx::LIST_STATE_SELECTED );
+		$self->{list}->EnsureVisible( $self->{list_focus} );
 	}
 
 	return 1;
