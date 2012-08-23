@@ -34,8 +34,25 @@ sub new {
 	$self->SetSizeHints( [ 750, 500 ], Wx::DefaultSize );
 	$self->SetMinSize( [ 750, 500 ] );
 
-	$self->{list} = Wx::ListCtrl->new(
+	$self->{m_splitter2} = Wx::SplitterWindow->new(
 		$self,
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::SP_3D,
+	);
+	$self->{m_splitter2}->SetSashGravity(0.0);
+
+	$self->{m_panel5} = Wx::Panel->new(
+		$self->{m_splitter2},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
+	$self->{list} = Wx::ListCtrl->new(
+		$self->{m_panel5},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -50,8 +67,16 @@ sub new {
 		},
 	);
 
+	$self->{m_panel4} = Wx::Panel->new(
+		$self->{m_splitter2},
+		-1,
+		Wx::DefaultPosition,
+		Wx::DefaultSize,
+		Wx::TAB_TRAVERSAL,
+	);
+
 	$self->{details} = Wx::Panel->new(
-		$self,
+		$self->{m_panel4},
 		-1,
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
@@ -137,6 +162,9 @@ sub new {
 	$bSizer109->Add( $self->{list}, 1, Wx::ALL | Wx::EXPAND, 5 );
 	$bSizer109->Add( $bSizer136, 0, Wx::EXPAND, 5 );
 
+	$self->{m_panel5}->SetSizerAndFit($bSizer109);
+	$self->{m_panel5}->Layout;
+
 	$self->{labels} = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$self->{labels}->Add( $self->{plugin_name}, 0, Wx::ALIGN_BOTTOM | Wx::ALL, 5 );
 	$self->{labels}->Add( 5, 0, 0, Wx::EXPAND, 5 );
@@ -161,9 +189,17 @@ sub new {
 	my $bSizer135 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer135->Add( $self->{details}, 1, Wx::EXPAND, 0 );
 
+	$self->{m_panel4}->SetSizerAndFit($bSizer135);
+	$self->{m_panel4}->Layout;
+
+	$self->{m_splitter2}->SplitVertically(
+		$self->{m_panel5},
+		$self->{m_panel4},
+		220,
+	);
+
 	my $bSizer108 = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$bSizer108->Add( $bSizer109, 0, Wx::ALL | Wx::EXPAND, 5 );
-	$bSizer108->Add( $bSizer135, 1, Wx::ALL | Wx::EXPAND, 5 );
+	$bSizer108->Add( $self->{m_splitter2}, 1, Wx::EXPAND, 5 );
 
 	$self->SetSizerAndFit($bSizer108);
 	$self->Layout;
