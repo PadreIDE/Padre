@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-23 16:10-0700\n"
+"POT-Creation-Date: 2012-08-24 04:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1254,7 +1254,7 @@ msgid "Click on the arrow for filter settings"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Patch.pm:120 lib/Padre/Wx/FBP/Text.pm:56
-#: lib/Padre/Wx/FBP/PluginManager.pm:153 lib/Padre/Wx/FBP/About.pm:672
+#: lib/Padre/Wx/FBP/PluginManager.pm:152 lib/Padre/Wx/FBP/About.pm:672
 #: lib/Padre/Wx/FBP/SLOC.pm:176 lib/Padre/Wx/FBP/Sync.pm:253
 #: lib/Padre/Wx/FBP/Diff.pm:94 lib/Padre/Wx/FBP/Document.pm:254
 #: lib/Padre/Wx/FBP/SessionManager.pm:119
@@ -2020,7 +2020,7 @@ msgstr ""
 msgid "Empty regex"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:121
+#: lib/Padre/Wx/FBP/PluginManager.pm:120
 msgid "Enable"
 msgstr ""
 
@@ -4015,7 +4015,7 @@ msgstr ""
 msgid "Preference Name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:137
+#: lib/Padre/Wx/FBP/PluginManager.pm:136
 msgid "Preferences"
 msgstr ""
 
@@ -5928,15 +5928,15 @@ msgid ""
 "See Configurable Options for a list of these."
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:90
+#: lib/Padre/Wx/FBP/PluginManager.pm:89
 msgid "plugin name"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:105
+#: lib/Padre/Wx/FBP/PluginManager.pm:104
 msgid "plugin status"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/PluginManager.pm:99
+#: lib/Padre/Wx/FBP/PluginManager.pm:98
 msgid "plugin version"
 msgstr ""
 
