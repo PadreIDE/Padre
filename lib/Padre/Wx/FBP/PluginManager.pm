@@ -31,8 +31,8 @@ sub new {
 		Wx::DefaultSize,
 		Wx::DEFAULT_DIALOG_STYLE | Wx::RESIZE_BORDER,
 	);
-	$self->SetSizeHints( [ 750, 500 ], Wx::DefaultSize );
-	$self->SetMinSize( [ 750, 500 ] );
+	$self->SetSizeHints( [ 720, 460 ], Wx::DefaultSize );
+	$self->SetMinSize( [ 720, 460 ] );
 
 	$self->{m_splitter2} = Wx::SplitterWindow->new(
 		$self,
@@ -42,7 +42,6 @@ sub new {
 		Wx::SP_3D,
 	);
 	$self->{m_splitter2}->SetSashGravity(0.0);
-	$self->{m_splitter2}->SetMinimumPaneSize(200);
 
 	$self->{m_panel5} = Wx::Panel->new(
 		$self->{m_splitter2},
@@ -192,7 +191,7 @@ sub new {
 	$self->{m_splitter2}->SplitVertically(
 		$self->{m_panel5},
 		$self->{m_panel4},
-		220,
+		190,
 	);
 
 	my $bSizer108 = Wx::BoxSizer->new(Wx::HORIZONTAL);
