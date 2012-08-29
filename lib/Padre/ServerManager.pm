@@ -28,6 +28,8 @@ use constant {
 	LOGIN_FAILURE  => 'login_failure',
 	PUSH_SUCCESS   => 'push_success',
 	PUSH_FAILURE   => 'push_failure',
+	PULL_SUCCESS   => 'pull_success',
+	PULL_FAILURE   => 'pull_failure',
 };
 
 
@@ -178,26 +180,52 @@ sub register_finish {
 # Configuration Pull Task
 
 sub pull {
-	my $self = shift;
+	my $self     = shift;
+
+	# Do we have the things we need
+	my $config   = $self->config;
+	my $email    = $config->identity_email       or return undef;
+	my $password = $config->config_sync_password or return undef;
 
 	# Fetch the server configuration
 	$self->task_reset;
 	$self->task_get(
 		on_finish => 'pull_finish',
 		url       => 'config',
+		query     => {
+			email    => $email,
+			password => $password,
+		},
 	);
 
 	return 1;
-}
+} 
 
 sub pull_finish {
 	my $self     = shift;
+	my $config   = $self->config;
 	my $response = shift->response;
 	my $json     = $self->decode($response);
+	unless ( $json ) {
+		return $self->publish( PULL_FAILURE );
+	}
 
-	# TODO: To be completed
+	# Apply the server settings to the current instance
+	my $server = $json->{config};
+	if (Params::Util::_HASH0($server)) {
+		foreach my $name ( $config->settings ) {
+			my $meta = $config->meta($name);
+			if ($meta->store == Padre::Constant::HUMAN) {
+				if (exists $server->{$name}) {
+					$config->apply($name, $server->{$name});
+				} else {
+					$config->apply($name, $config->default($name));
+				}
+			}
+		}
+	}
 
-	$self->publish("on_pull", $response);
+	return $self->publish( PULL_SUCCESS, $json->{config} );
 }
 
 
