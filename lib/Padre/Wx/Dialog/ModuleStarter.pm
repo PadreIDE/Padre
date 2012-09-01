@@ -102,6 +102,13 @@ sub ok_clicked {
 			return;
 		}
 	}
+	
+	given ( $data->{builder_choice} ) {
+		
+		when ('Module::Install') { ... }
+		
+		}
+	
 
 	my $config = Padre->ide->config;
 	$config->set( 'identity_name',            $data->{author_name} );
@@ -167,3 +174,24 @@ sub ok_clicked {
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
 
+__END__
+
+#ToDo Dialog needs to support the following table
+
+licence list from Module::Build::API
+
+'apache',       ms		# does not work w/ Module::Build
+'artistic',				# does not work w/ Module::Build
+'artistic_2',			# does not work w/ Module::Build
+'bsd',			ms	
+'gpl',			ms	
+'lgpl',			ms	
+'mit',			ms
+'mozilla',				# does not work w/ Module::Build
+'open_source',			# does not work w/ Module::Build
+'perl',			ms
+'restrictive',			# does not work w/ Module::Build
+'unrestricted',			# does not work w/ Module::Build
+
+ms from module::starter::simple
+the previous comment # does not work w/ Module::Build dose not make sense

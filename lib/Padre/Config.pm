@@ -1722,17 +1722,17 @@ setting(
 	# (but don't load them in this module, it adds bloat)
 	options => {
 		'apache'       => _T('Apache License'),
-		'artistic'     => _T('Artistic License 1.0'),
-		'artistic_2'   => _T('Artistic License 2.0'),
+		#'artistic'     => _T('Artistic License 1.0'),
+		#'artistic_2'   => _T('Artistic License 2.0'),
 		'bsd'          => _T('Revised BSD License'),
 		'gpl'          => _T('GPL 2 or later'),
 		'lgpl'         => _T('LGPL 2.1 or later'),
 		'mit'          => _T('MIT License'),
-		'mozilla'      => _T('Mozilla Public License'),
+		#'mozilla'      => _T('Mozilla Public License'),
+		#'open_source'  => _T('Other Open Source'),
 		'perl'         => _T('The same as Perl itself'),
-		'open_source'  => _T('Other Open Source'),
-		'unrestricted' => _T('Other Unrestricted'),
-		'restrictive'  => _T('Proprietary/Restrictive'),
+		#'unrestricted' => _T('Other Unrestricted'),
+		#'restrictive'  => _T('Proprietary/Restrictive'),
 	},
 );
 
