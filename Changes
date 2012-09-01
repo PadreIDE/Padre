@@ -50,6 +50,7 @@ the even version for the release, even during development.
     - Add wx-SplitterWindow to Plugin Manager #1359 
     - Add backin Perl Distribution... this is the skeloton, dialog, with out function #1324 (BOWTIE)
     - We have a Perl Distribution... working as before (BOWTIE)
+    - comment out unsuppoeted m::s licences (BOWTIE)
     - 
     
 
