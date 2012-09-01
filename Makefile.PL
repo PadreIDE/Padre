@@ -125,6 +125,7 @@ requires 'LWP::UserAgent'           => '5.815';
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
+requires 'Module::Starter'          => '1.58';
 requires 'ORLite'                   => '1.96';
 requires 'ORLite::Migrate'          => '1.10';
 requires 'Params::Util'             => '0.33';

@@ -13,11 +13,6 @@ our @ISA     = qw{
 	Padre::Wx::FBP::ModuleStarter
 };
 
-use Data::Printer {
-	caller_info => 1,
-	colored     => 1,
-};
-
 
 #######
 # new
@@ -78,13 +73,13 @@ sub run {
 	return 1;
 }
 
-
+#######
+# event handeler for ok_clicked
+#######
 sub ok_clicked {
 	my ( $self, $event ) = @_;
 	my $main = $self->main;
 	my $data;
-
-	say 'we clicked OK';
 
 	$data->{module_name} = $self->module->GetValue();
 
@@ -95,8 +90,6 @@ sub ok_clicked {
 	$data->{license_choice} = $self->config_get( Padre::Current->config->meta('module_starter_license') );
 
 	$data->{directory} = $self->config_get( Padre::Current->config->meta('module_starter_directory') );
-
-	p $data;
 
 	# # TODO improve input validation !
 	my @fields = qw( module_name author_name email builder_choice license_choice );
@@ -117,15 +110,9 @@ sub ok_clicked {
 	$config->set( 'module_starter_license',   $data->{license_choice} );
 	$config->set( 'module_starter_directory', $data->{directory} );
 
-	# Clean up
-	$self->Destroy;
 	my $pwd = Cwd::cwd();
-
-	# my $parent_dir = $data->{directory} eq '' ? './' : $data->{directory};
 	my $parent_dir = $data->{directory} || './';
-	p $parent_dir;
 	chdir $parent_dir;
-
 
 	try {
 		require Module::Starter::App;
@@ -135,41 +122,9 @@ sub ok_clicked {
 			'--email',   $data->{email},
 			'--builder', $data->{builder_choice},
 			'--license', $data->{license_choice},
-
-			# ? $license_id{ $data->{license_choice} }
-			# : $data->{license_choice},
 		);
 		Module::Starter::App->run;
 	}
-
-
-# module-starter [options] 
-# Options: 
-    # --module=module  Module name (required, repeatable)
-    # --distro=name    Distribution name (optional)
-    # --dir=dirname    Directory name to create new module in (optional)
-    # --builder=module Build with 'ExtUtils::MakeMaker' or 'Module::Build'
-    # --eumm           Same as --builder=ExtUtils::MakeMaker
-    # --mb             Same as --builder=Module::Build
-    # --mi             Same as --builder=Module::Install
-    # --author=name    Author's name (required)
-    # --email=email    Author's email (required)
-    # --license=type   License under which the module will be distributed
-                     # (default is the same license as perl)
-    # --verbose        Print progress messages while working
-    # --force          Delete pre-existing files if needed
-    # --help           Show this message
-
-# Available Licenses: perl, bsd, gpl, lgpl, mit, apache 
-
-
-
-
-
-
-	# chdir $pwd;
-
-	# if ($@) {
 	catch {
 		Wx::MessageBox(
 			sprintf(
@@ -185,7 +140,7 @@ sub ok_clicked {
 	chdir $pwd;
 
 
-#Create dir structure
+	#Create dir structure
 	my $module_name = $data->{module_name};
 	($module_name) = split( ',', $module_name ); # for Foo::Bar,Foo::Bat
 	                                             # prepare Foo-Bar/lib/Foo/Bar.pm
@@ -200,66 +155,10 @@ sub ok_clicked {
 	$main->setup_editor($file);
 	$main->refresh;
 
-	return;
-}
-
-
-######################################################################
-# Constructor and Accessors
-
-# sub new {
-# my $self = shift->SUPER::new(@_);
-
-# # Focus on the module name
-# $self->module->SetFocus;
-
-# return $self;
-# }
-
-
-
-sub run_old {
-	my $class  = shift;
-	my $main   = shift;
-	my $self   = $class->new($main);
-	my $config = $main->config;
-
-	# Load preferences
-	$self->config_load(
-		$config, qw{
-			identity_name
-			identity_email
-			module_starter_directory
-			module_starter_builder
-			module_starter_license
-			}
-	);
-
-	# Show the dialog
-	$self->Fit;
-	$self->CentreOnParent;
-	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
-		return;
-	}
-
-	# Save preferences
-	$self->config_save(
-		$config, qw{
-			module_starter_directory
-			module_starter_builder
-			module_starter_license
-			}
-	);
-
-	# Generate the distribution
-	### TO BE COMPLETED
-
 	# Clean up
 	$self->Destroy;
-	return 1;
+	return;
 }
-
-
 
 1;
 
