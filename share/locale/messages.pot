@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-01 12:10-0700\n"
+"POT-Creation-Date: 2012-09-01 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -842,13 +842,6 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:478
 msgid "Amir E. Aharoni"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:138
-#, perl-format
-msgid ""
-"An error has occured while generating '%s':\n"
-"%s"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:164
@@ -2171,12 +2164,12 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5044
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/ModuleStarter.pm:141
-#: lib/Padre/Wx/Dialog/Sync.pm:85 lib/Padre/Wx/Dialog/Sync.pm:93
-#: lib/Padre/Wx/Dialog/Sync.pm:106 lib/Padre/Wx/Dialog/Sync.pm:141
-#: lib/Padre/Wx/Dialog/Sync.pm:152 lib/Padre/Wx/Dialog/Sync.pm:162
-#: lib/Padre/Wx/Dialog/Sync.pm:180 lib/Padre/Wx/Dialog/Sync.pm:205
-#: lib/Padre/Wx/Dialog/Sync.pm:216 lib/Padre/Wx/Dialog/Sync.pm:227
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
+#: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
+#: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
+#: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
+#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
+#: lib/Padre/Wx/Dialog/Sync.pm:227
 msgid "Error"
 msgstr ""
 
