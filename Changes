@@ -49,6 +49,8 @@ the even version for the release, even during development.
     - Due to changes P-Util-run_in_dir_2 bumped $COMPATIBLE = 0.97 (BOWTIE)
     - Add wx-SplitterWindow to Plugin Manager #1359 
     - Add backin Perl Distribution... this is the skeloton, dialog, with out function #1324 (BOWTIE)
+    - We have a Perl Distribution... working as before (BOWTIE)
+    - 
     
 
 0.97 Development version, not released
