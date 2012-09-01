@@ -103,11 +103,11 @@ sub ok_clicked {
 		}
 	}
 	
-	given ( $data->{builder_choice} ) {
+	# given ( $data->{builder_choice} ) {
 		
-		when ('Module::Install') { ... }
+		# when ('Module::Install') { ... }
 		
-		}
+		# }
 	
 
 	my $config = Padre->ide->config;
