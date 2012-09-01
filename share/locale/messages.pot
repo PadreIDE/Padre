@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-01 08:10-0700\n"
+"POT-Creation-Date: 2012-09-01 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Amir E. Aharoni"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:176
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:138
 #, perl-format
 msgid ""
 "An error has occured while generating '%s':\n"
@@ -905,14 +905,6 @@ msgstr ""
 
 #: lib/Padre/Locale.pm:157 lib/Padre/Wx/FBP/About.pm:328
 msgid "Arabic"
-msgstr ""
-
-#: lib/Padre/Config.pm:1725
-msgid "Artistic License 1.0"
-msgstr ""
-
-#: lib/Padre/Config.pm:1726
-msgid "Artistic License 2.0"
 msgstr ""
 
 #: lib/Padre/Wx/ActionLibrary.pm:500
@@ -2179,7 +2171,7 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5044
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/ModuleStarter.pm:179
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/ModuleStarter.pm:141
 #: lib/Padre/Wx/Dialog/Sync.pm:85 lib/Padre/Wx/Dialog/Sync.pm:93
 #: lib/Padre/Wx/Dialog/Sync.pm:106 lib/Padre/Wx/Dialog/Sync.pm:141
 #: lib/Padre/Wx/Dialog/Sync.pm:152 lib/Padre/Wx/Dialog/Sync.pm:162
@@ -2441,7 +2433,7 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:106
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:99
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr ""
@@ -3304,10 +3296,6 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
-#: lib/Padre/Config.pm:1731
-msgid "Mozilla Public License"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:480
 msgid "Multi-line (&m)"
 msgstr ""
@@ -3770,14 +3758,6 @@ msgstr ""
 msgid "Other (Please fill in here)"
 msgstr ""
 
-#: lib/Padre/Config.pm:1733
-msgid "Other Open Source"
-msgstr ""
-
-#: lib/Padre/Config.pm:1734
-msgid "Other Unrestricted"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:27
 msgid "Other event"
 msgstr ""
@@ -4149,10 +4129,6 @@ msgstr ""
 msgid ""
 "Prompt for a replacement variable name and replace all occurrences of this "
 "variable"
-msgstr ""
-
-#: lib/Padre/Config.pm:1735
-msgid "Proprietary/Restrictive"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:92
@@ -5532,7 +5508,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Config.pm:1732
+#: lib/Padre/Config.pm:1733
 msgid "The same as Perl itself"
 msgstr ""
 
@@ -5984,7 +5960,7 @@ msgstr ""
 msgid "fresh"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:107
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:100
 msgid "missing field"
 msgstr ""
 
