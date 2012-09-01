@@ -174,6 +174,19 @@ sub init {
 		},
 	);
 
+	# Split projects from files
+
+	Padre::Wx::Action->new(
+		name       => 'file.p5_modulestarter',
+		label      => _T('Perl Distribution...'),
+		comment    => _T('Setup a skeleton Perl distribution'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::ModuleStarter;
+			Padre::Wx::Dialog::ModuleStarter->run( $_[0] );
+		},
+	);
+
+
 	# Split by language
 
 	Padre::Wx::Action->new(

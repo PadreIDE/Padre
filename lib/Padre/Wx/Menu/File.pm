@@ -72,6 +72,16 @@ sub new {
 
 	### NOTE: Add support for plugins here
 
+	# Split projects from files
+	$file_new->AppendSeparator;
+
+
+	#ToDo Not yet finished
+	$self->add_menu_action(
+		$file_new,
+		'file.p5_modulestarter',
+	);
+
 	# Open things
 
 	$self->add_menu_action(

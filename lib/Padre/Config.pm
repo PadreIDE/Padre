@@ -1690,6 +1690,56 @@ setting(
 	default => '',
 );
 
+
+# Support for Module::Starter
+setting(
+	name    => 'module_starter_directory',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'module_starter_builder',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'Module::Install',
+	options => {
+		'ExtUtils::MakeMaker' => 'ExtUtils::MakeMaker',
+		'Module::Build'       => 'Module::Build',
+		'Module::Install'     => 'Module::Install',
+	},
+);
+setting(
+	name    => 'module_starter_license',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'perl',
+
+	# licenses list taken from
+	# http://search.cpan.org/dist/Module-Build/lib/Module/Build/API.pod
+	# even though it should be in http://module-build.sourceforge.net/META-spec.html
+	# and we should fetch it from Module::Start or maybe Software::License.
+	# (but don't load them in this module, it adds bloat)
+	options => {
+		'apache'       => _T('Apache License'),
+		'artistic'     => _T('Artistic License 1.0'),
+		'artistic_2'   => _T('Artistic License 2.0'),
+		'bsd'          => _T('Revised BSD License'),
+		'gpl'          => _T('GPL 2 or later'),
+		'lgpl'         => _T('LGPL 2.1 or later'),
+		'mit'          => _T('MIT License'),
+		'mozilla'      => _T('Mozilla Public License'),
+		'perl'         => _T('The same as Perl itself'),
+		'open_source'  => _T('Other Open Source'),
+		'unrestricted' => _T('Other Unrestricted'),
+		'restrictive'  => _T('Proprietary/Restrictive'),
+	},
+);
+
+
+
+
+
 1;
 
 __END__
