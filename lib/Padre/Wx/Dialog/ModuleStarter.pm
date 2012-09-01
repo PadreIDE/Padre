@@ -6,13 +6,13 @@ use warnings;
 use Padre::Wx::Role::Config       ();
 use Padre::Wx::FBP::ModuleStarter ();
 use Try::Tiny;
+use Module::Starter qw(Module::Starter::Simple);
 
-our $VERSION = '0.89';
+our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::FBP::ModuleStarter
 };
-
 
 #######
 # new
@@ -102,13 +102,13 @@ sub ok_clicked {
 			return;
 		}
 	}
-	
+
 	# given ( $data->{builder_choice} ) {
-		
-		# when ('Module::Install') { ... }
-		
-		# }
-	
+
+	# when ('Module::Install') { ... }
+
+	# }
+
 
 	my $config = Padre->ide->config;
 	$config->set( 'identity_name',            $data->{author_name} );
@@ -122,28 +122,42 @@ sub ok_clicked {
 	chdir $parent_dir;
 
 	try {
-		require Module::Starter::App;
-		local @ARGV = (
-			'--module',  $data->{module_name},
-			'--author',  $data->{author_name},
-			'--email',   $data->{email},
-			'--builder', $data->{builder_choice},
-			'--license', $data->{license_choice},
+		# require Module::Starter::App;
+		# local @ARGV = (
+		# '--module',  $data->{module_name},
+		# '--author',  $data->{author_name},
+		# '--email',   $data->{email},
+		# '--builder', $data->{builder_choice},
+		# '--license', $data->{license_choice},
+		# );
+		# Module::Starter::App->run;
+
+		my %ms_args = (
+			modules      => [ $data->{module_name} ],
+			author       => $data->{author_name},
+			email        => $data->{email},
+			builder      => $data->{builder_choice},
+			license      => $data->{license_choice},
+			basedir      => $data->{directory},
+			verbose      => 0,
+			ignores_type => ['manifest'],
 		);
-		Module::Starter::App->run;
-	}
-	catch {
-		Wx::MessageBox(
-			sprintf(
-				Wx::gettext("An error has occured while generating '%s':\n%s"),
-				$data->{module_name}, $_
-			),
-			Wx::gettext('Error'),
-			Wx::wxOK | Wx::wxCENTRE,
-			$main
-		);
-		return;
+		Module::Starter->create_distro(%ms_args);
 	};
+
+	# catch {
+		# Wx::MessageBox(
+			# sprintf(
+				# Wx::gettext("An error has occured while generating '%s':\n%s"),
+				# $data->{module_name}, $_
+			# ),
+			# Wx::gettext('Error'),
+			# Wx::wxOK | Wx::wxCENTRE,
+			# $main
+		# );
+		# return;
+	# };
+	
 	chdir $pwd;
 
 
