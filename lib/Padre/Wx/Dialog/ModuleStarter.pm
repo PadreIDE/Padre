@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx::Role::Config       ();
 use Padre::Wx::FBP::ModuleStarter ();
+use Try::Tiny;
 
 our $VERSION = '0.89';
 our @ISA     = qw{
@@ -16,7 +17,7 @@ use Data::Printer {
 	caller_info => 1,
 	colored     => 1,
 };
-use Carp::Always;
+
 
 #######
 # new
@@ -86,22 +87,16 @@ sub ok_clicked {
 	say 'we clicked OK';
 
 	$data->{module_name} = $self->module->GetValue();
-	
-	$data->{author_name}    = $self->config_get( Padre::Current->config->meta('identity_name') );
-	$data->{email}          = $self->config_get( Padre::Current->config->meta('identity_email') );
-	
+
+	$data->{author_name} = $self->config_get( Padre::Current->config->meta('identity_name') );
+	$data->{email}       = $self->config_get( Padre::Current->config->meta('identity_email') );
+
 	$data->{builder_choice} = $self->config_get( Padre::Current->config->meta('module_starter_builder') );
 	$data->{license_choice} = $self->config_get( Padre::Current->config->meta('module_starter_license') );
-	
-	$data->{directory}      = $self->config_get( Padre::Current->config->meta('module_starter_directory') );
-	
+
+	$data->{directory} = $self->config_get( Padre::Current->config->meta('module_starter_directory') );
+
 	p $data;
-
-
-	# my $data = $dialog->get_data;
-	# $dialog->Destroy;
-
-	# my $main = Padre->ide->wx->main;
 
 	# # TODO improve input validation !
 	my @fields = qw( module_name author_name email builder_choice license_choice );
@@ -115,57 +110,95 @@ sub ok_clicked {
 		}
 	}
 
-	# my $config = Padre->ide->config;
-	# $config->set( 'identity_name',            $data->{_author_name_} );
-	# $config->set( 'identity_email',           $data->{_email_} );
-	# $config->set( 'module_starter_builder',   $data->{_builder_choice_} );
-	# $config->set( 'module_starter_license',   $license_id{ $data->{_license_choice_} } );
-	# $config->set( 'module_starter_directory', $data->{_directory_} );
+	my $config = Padre->ide->config;
+	$config->set( 'identity_name',            $data->{author_name} );
+	$config->set( 'identity_email',           $data->{email} );
+	$config->set( 'module_starter_builder',   $data->{builder_choice} );
+	$config->set( 'module_starter_license',   $data->{license_choice} );
+	$config->set( 'module_starter_directory', $data->{directory} );
 
-	# my $pwd = Cwd::cwd();
-	# my $parent_dir = $data->{_directory_} eq '' ? './' : $data->{_directory_};
-	# chdir $parent_dir;
-	# eval {
-	# require Module::Starter::App;
-	# local @ARGV = (
-	# '--module',  $data->{_module_name_},
-	# '--author',  $data->{_author_name_},
-	# '--email',   $data->{_email_},
-	# '--builder', $data->{_builder_choice_},
-	# '--license', exists $license_id{ $data->{_license_choice_} }
-	# ? $license_id{ $data->{_license_choice_} }
-	# : $data->{_license_choice_},
-	# );
-	# Module::Starter::App->run;
-	# };
+	# Clean up
+	$self->Destroy;
+	my $pwd = Cwd::cwd();
+
+	# my $parent_dir = $data->{directory} eq '' ? './' : $data->{directory};
+	my $parent_dir = $data->{directory} || './';
+	p $parent_dir;
+	chdir $parent_dir;
+
+
+	try {
+		require Module::Starter::App;
+		local @ARGV = (
+			'--module',  $data->{module_name},
+			'--author',  $data->{author_name},
+			'--email',   $data->{email},
+			'--builder', $data->{builder_choice},
+			'--license', $data->{license_choice},
+
+			# ? $license_id{ $data->{license_choice} }
+			# : $data->{license_choice},
+		);
+		Module::Starter::App->run;
+	}
+
+
+# module-starter [options] 
+# Options: 
+    # --module=module  Module name (required, repeatable)
+    # --distro=name    Distribution name (optional)
+    # --dir=dirname    Directory name to create new module in (optional)
+    # --builder=module Build with 'ExtUtils::MakeMaker' or 'Module::Build'
+    # --eumm           Same as --builder=ExtUtils::MakeMaker
+    # --mb             Same as --builder=Module::Build
+    # --mi             Same as --builder=Module::Install
+    # --author=name    Author's name (required)
+    # --email=email    Author's email (required)
+    # --license=type   License under which the module will be distributed
+                     # (default is the same license as perl)
+    # --verbose        Print progress messages while working
+    # --force          Delete pre-existing files if needed
+    # --help           Show this message
+
+# Available Licenses: perl, bsd, gpl, lgpl, mit, apache 
+
+
+
+
+
+
 	# chdir $pwd;
 
 	# if ($@) {
-	# Wx::MessageBox(
-	# sprintf(
-	# Wx::gettext("An error has occured while generating '%s':\n%s"),
-	# $data->{_module_name_}, $@
-	# ),
-	# Wx::gettext('Error'),
-	# Wx::wxOK | Wx::wxCENTRE,
-	# $main
-	# );
-	# return;
-	# }
+	catch {
+		Wx::MessageBox(
+			sprintf(
+				Wx::gettext("An error has occured while generating '%s':\n%s"),
+				$data->{module_name}, $_
+			),
+			Wx::gettext('Error'),
+			Wx::wxOK | Wx::wxCENTRE,
+			$main
+		);
+		return;
+	};
+	chdir $pwd;
 
-	# my $module_name = $data->{_module_name_};
-	# ($module_name) = split( ',', $module_name ); # for Foo::Bar,Foo::Bat
-	# # prepare Foo-Bar/lib/Foo/Bar.pm
-	# my @parts = split( '::', $module_name );
-	# my $dir_name = join( '-', @parts );
-	# $parts[-1] .= '.pm';
-	# my $file = File::Spec->catfile( $parent_dir, $dir_name, 'lib', @parts );
-	# Padre::DB::History->create(
-	# type => 'files',
-	# name => $file,
-	# );
-	# $main->setup_editor($file);
-	# $main->refresh;
+
+#Create dir structure
+	my $module_name = $data->{module_name};
+	($module_name) = split( ',', $module_name ); # for Foo::Bar,Foo::Bat
+	                                             # prepare Foo-Bar/lib/Foo/Bar.pm
+	my @parts = split( '::', $module_name );
+	my $dir_name = join( '-', @parts );
+	$parts[-1] .= '.pm';
+	my $file = File::Spec->catfile( $parent_dir, $dir_name, 'lib', @parts );
+	Padre::DB::History->create(
+		type => 'files',
+		name => $file,
+	);
+	$main->setup_editor($file);
+	$main->refresh;
 
 	return;
 }
