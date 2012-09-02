@@ -53,6 +53,7 @@ the even version for the release, even during development.
     - comment out unsuppoeted m::s licences (BOWTIE)
     - apply fix1316-on_selection.patch mj41++  (BOWTIE)
     - decided apon using module-starter in Perl Distribution... so as to be able to handel the response (BOWTIE)
+    - Deal with multiple cvs module names in Perl Distribution... (BOWTIE)
     - 
     
 
