@@ -6,13 +6,13 @@ use warnings;
 use Padre::Wx::Role::Config       ();
 use Padre::Wx::FBP::ModuleStarter ();
 use Try::Tiny;
-use Module::Starter qw(Module::Starter::Simple);
 
 our $VERSION = '0.97';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::FBP::ModuleStarter
 };
+
 
 #######
 # new
@@ -78,7 +78,8 @@ sub run {
 #######
 sub ok_clicked {
 	my ( $self, $event ) = @_;
-	my $main = $self->main;
+	my $main   = $self->main;
+	my $output = $main->output;
 	my $data;
 
 	$data->{module_name} = $self->module->GetValue();
@@ -91,7 +92,8 @@ sub ok_clicked {
 
 	$data->{directory} = $self->config_get( Padre::Current->config->meta('module_starter_directory') );
 
-	# # TODO improve input validation !
+
+	#TODO improve input validation !, is this realy needed
 	my @fields = qw( module_name author_name email builder_choice license_choice );
 	foreach my $f (@fields) {
 		if ( not $data->{$f} ) {
@@ -103,13 +105,6 @@ sub ok_clicked {
 		}
 	}
 
-	# given ( $data->{builder_choice} ) {
-
-	# when ('Module::Install') { ... }
-
-	# }
-
-
 	my $config = Padre->ide->config;
 	$config->set( 'identity_name',            $data->{author_name} );
 	$config->set( 'identity_email',           $data->{email} );
@@ -117,48 +112,51 @@ sub ok_clicked {
 	$config->set( 'module_starter_license',   $data->{license_choice} );
 	$config->set( 'module_starter_directory', $data->{directory} );
 
-	my $pwd = Cwd::cwd();
 	my $parent_dir = $data->{directory} || './';
-	chdir $parent_dir;
 
+	my $ms;
 	try {
-		# require Module::Starter::App;
-		# local @ARGV = (
-		# '--module',  $data->{module_name},
-		# '--author',  $data->{author_name},
-		# '--email',   $data->{email},
-		# '--builder', $data->{builder_choice},
-		# '--license', $data->{license_choice},
-		# );
-		# Module::Starter::App->run;
 
-		my %ms_args = (
-			modules      => [ $data->{module_name} ],
-			author       => $data->{author_name},
-			email        => $data->{email},
-			builder      => $data->{builder_choice},
-			license      => $data->{license_choice},
-			basedir      => $data->{directory},
-			verbose      => 0,
-			ignores_type => ['manifest'],
+		require Padre::Util;
+		require Module::Starter;
+		my @cmd = (
+			'--module',  $data->{module_name},
+			'--author',  $data->{author_name},
+			'--email',   $data->{email},
+			'--builder', $data->{builder_choice},
+			'--license', $data->{license_choice},
+			'--verbose',
 		);
-		Module::Starter->create_distro(%ms_args);
-	};
 
-	# catch {
-		# Wx::MessageBox(
-			# sprintf(
-				# Wx::gettext("An error has occured while generating '%s':\n%s"),
-				# $data->{module_name}, $_
-			# ),
-			# Wx::gettext('Error'),
-			# Wx::wxOK | Wx::wxCENTRE,
-			# $main
-		# );
-		# return;
-	# };
-	
-	chdir $pwd;
+		$ms = Padre::Util::run_in_directory_two( cmd => "module-starter @cmd", dir => $data->{directory}, option => 0 );
+
+	}
+	catch {
+		Wx::MessageBox(
+			sprintf(
+				Wx::gettext("An error has occured while generating '%s':\n%s"),
+				$data->{module_name}, $_
+			),
+			Wx::gettext('Error'),
+			Wx::wxOK | Wx::wxCENTRE,
+			$main
+		);
+		return;
+	}
+	finally {
+		if ( $ms->{error} !~ /^Added to MANIFEST/ ) {
+			Wx::MessageBox(
+				sprintf( Wx::gettext("module-starter error: %s"), $ms->{error} ),
+				Wx::gettext('Error'),
+				Wx::wxOK | Wx::wxCENTRE,
+				$main
+			);
+		} else {
+			$main->show_output(1);
+			$output->clear;
+			$output->AppendText( $ms->{output} );
+		}
+	};
 
 
 	#Create dir structure
@@ -209,3 +207,33 @@ licence list from Module::Build::API
 
 ms from module::starter::simple
 the previous comment # does not work w/ Module::Build dose not make sense
+
+***********
+
+# require Padre::Util;
+# require Module::Starter;
+# my @cmd = (
+# '--module',  $data->{module_name},
+# '--author',  $data->{author_name},
+# '--email',   $data->{email},
+# '--builder', $data->{builder_choice},
+# '--license', $data->{license_choice},
+# '--verbose',
+# );
+
+# my $ms_ref = Padre::Util::run_in_directory_two(cmd => "module-starter @cmd", dir => $data->{directory}, option => 0);
+# p $ms_ref;
+
+*******
+# use Module::Starter qw(Module::Starter::Simple);
+# my %ms_args = (
+# modules      => [ $data->{module_name} ],
+# author       => $data->{author_name},
+# email        => $data->{email},
+# builder      => $data->{builder_choice},
+# license      => $data->{license_choice},
+# basedir      => $data->{directory},
+# verbose      => 1,
+# ignores_type => [ 'generic', 'manifest'],
+# );
+# Module::Starter->create_distro(%ms_args);
