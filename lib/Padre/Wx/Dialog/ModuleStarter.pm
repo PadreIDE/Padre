@@ -119,14 +119,24 @@ sub ok_clicked {
 
 		require Padre::Util;
 		require Module::Starter;
-		my @cmd = (
-			'--module',  $data->{module_name},
+		my @cmd;
+		
+		#Deal with multiple cvs module names
+		my @modules = split( /,\s*/, $data->{module_name} );
+		for (@modules) {
+			push @cmd,
+				(
+				'--module', $_,
+				);
+		}
+		push @cmd,
+			(
 			'--author',  '"' . $data->{author_name} . '"',
 			'--email',   $data->{email},
 			'--builder', $data->{builder_choice},
 			'--license', $data->{license_choice},
 			'--verbose',
-		);
+			);
 
 		$ms = Padre::Util::run_in_directory_two( cmd => "module-starter @cmd", dir => $data->{directory}, option => 0 );
 
