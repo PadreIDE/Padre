@@ -4289,6 +4289,11 @@ sub on_open_selection {
 	unless (@files) {
 		my $document = $current->document;
 		push @files, $document->guess_filename_to_open($text);
+		unless (@files) {
+			my $text_shortened = $text;
+			$text_shortened =~ s{::[^\:]+$}{};
+			push @files, $document->guess_filename_to_open($text_shortened);
+		}
 	}
 
 	unless (@files) {
