@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-02 08:10-0700\n"
+"POT-Creation-Date: 2012-09-02 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -842,6 +842,13 @@ msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:478
 msgid "Amir E. Aharoni"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:147
+#, perl-format
+msgid ""
+"An error has occured while generating '%s':\n"
+"%s"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/About.pm:164
@@ -2164,7 +2171,8 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5049
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/ModuleStarter.pm:150
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:160 lib/Padre/Wx/Dialog/Sync.pm:85
 #: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
 #: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
 #: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
@@ -2426,7 +2434,7 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:99
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:101
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr ""
@@ -5953,8 +5961,13 @@ msgstr ""
 msgid "fresh"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:100
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:102
 msgid "missing field"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:159
+#, perl-format
+msgid "module-starter error: %s"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/Debugger.pm:83
