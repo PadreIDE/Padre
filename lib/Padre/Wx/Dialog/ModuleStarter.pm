@@ -121,7 +121,7 @@ sub ok_clicked {
 		require Module::Starter;
 		my @cmd = (
 			'--module',  $data->{module_name},
-			'--author',  $data->{author_name},
+			'--author',  '"' . $data->{author_name} . '"',
 			'--email',   $data->{email},
 			'--builder', $data->{builder_choice},
 			'--license', $data->{license_choice},
