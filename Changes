@@ -52,7 +52,8 @@ the even version for the release, even during development.
     - We have a Perl Distribution... working as before (BOWTIE)
     - comment out unsuppoeted m::s licences (BOWTIE)
     - apply fix1316-on_selection.patch mj41++  (BOWTIE)
-    -
+    - decided apon using module-starter in Perl Distribution... so as to be able to handel the response (BOWTIE)
+    - 
     
 
 0.97 Development version, not released
