@@ -45,6 +45,10 @@ sub new {
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
+	$self->{module}->SetMinSize( [ 280, -1 ] );
+	$self->{module}->SetToolTip(
+		Wx::gettext("You can now add multiple module names, ie: Foo::Bar, Foo::Bar::Two (csv)")
+	);
 
 	$self->{m_staticText8} = Wx::StaticText->new(
 		$self,
@@ -103,14 +107,6 @@ sub new {
 		[],
 	);
 	$self->{module_starter_license}->SetSelection(0);
-
-	$self->{m_staticline3} = Wx::StaticLine->new(
-		$self,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		Wx::LI_HORIZONTAL,
-	);
 
 	$self->{m_staticText3} = Wx::StaticText->new(
 		$self,
@@ -175,17 +171,16 @@ sub new {
 	$fgSizer1->Add( $self->{module_starter_builder}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$fgSizer1->Add( $self->{m_staticText7}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL, 5 );
 	$fgSizer1->Add( $self->{module_starter_license}, 0, Wx::ALL | Wx::EXPAND, 5 );
+	$fgSizer1->Add( $self->{m_staticText3}, 0, Wx::ALL, 5 );
+	$fgSizer1->Add( $self->{module_starter_directory}, 0, Wx::ALL | Wx::EXPAND, 5 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::HORIZONTAL);
 	$buttons->Add( $ok, 0, Wx::ALL, 5 );
-	$buttons->Add( 100, 0, 0, Wx::EXPAND, 5 );
+	$buttons->Add( 100, 0, 1, Wx::EXPAND, 5 );
 	$buttons->Add( $cancel, 0, Wx::ALL, 5 );
 
 	my $vsizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$vsizer->Add( $fgSizer1, 1, Wx::EXPAND, 5 );
-	$vsizer->Add( $self->{m_staticline3}, 0, Wx::EXPAND | Wx::ALL, 5 );
-	$vsizer->Add( $self->{m_staticText3}, 0, Wx::ALL, 5 );
-	$vsizer->Add( $self->{module_starter_directory}, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$vsizer->Add( $m_staticline1, 0, Wx::ALL | Wx::EXPAND, 5 );
 	$vsizer->Add( $buttons, 0, Wx::EXPAND, 5 );
 
