@@ -13,7 +13,7 @@ use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
-use Debug::Client 0.21 ();
+use Debug::Client 0.20 ();
 
 
 our $VERSION = '0.97';
@@ -81,6 +81,9 @@ sub view_icon {
 sub set_up {
 	my $self = shift;
 	my $main = $self->main;
+
+	$self->{debug_client_version} = $Debug::Client::VERSION;
+	$self->{debug_client_version} =~ s/^(\d.\d{2}).*/$1/;
 
 	$self->{client}           = undef;
 	$self->{file}             = undef;
@@ -299,14 +302,23 @@ sub debug_perl {
 	# Bootstrap the debugger
 	# require Debug::Client;
 	$self->{client} = Debug::Client->new(
-		host   => $host,
-		port   => $port,
-		listen => 1,
+		host => $host,
+		port => $port,
+
+		# listen => 1,
 	);
 
+	#ToDo remove when Debug::Client 0.22 is released.
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$self->{client}->listener;
+	}
 	$self->{file} = $filename;
 
 	#Now we ask where are we
+	#ToDo remove when Debug::Client 0.22 is released.
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$self->{client}->get;
+	}
 	$self->{client}->get_lineinfo;
 
 	my $save = ( $self->{save}->{$filename} ||= {} );
@@ -458,7 +470,12 @@ sub debug_step_in {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	#ToDo remove when Debug::Client 0.22 is released.
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	} else {
+		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	}
 	$self->_set_debugger;
 
 	return;
@@ -486,7 +503,12 @@ sub debug_step_over {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	#ToDo remove when Debug::Client 0.22 is released.
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	} else {
+		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	}
 	$self->_set_debugger;
 
 	return;
@@ -514,7 +536,13 @@ sub debug_step_out {
 		return;
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	#ToDo remove when Debug::Client 0.22 is released.
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$main->{debugoutput}->debug_output( $self->{client}->buffer );
+	} else {
+		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	}
+
 	$self->_set_debugger;
 
 	return;
@@ -537,7 +565,14 @@ sub debug_run_till {
 	# p @list_request;
 	# eval { $self->{client}->run(); };
 
-	my $temp_buffer = $self->{client}->get_buffer;
+	#ToDo remove when Debug::Client 0.22 is released.
+	my $temp_buffer;
+	if ( $self->{debug_client_version} eq '0.20' ) {
+		$temp_buffer = $self->{client}->buffer;
+	} else {
+		$temp_buffer = $self->{client}->get_buffer;
+	}
+
 
 	# say 'temp_buffer';
 	# p $temp_buffer;
