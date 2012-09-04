@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-04 08:10-0700\n"
+"POT-Creation-Date: 2012-09-04 12:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Amir E. Aharoni"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:147
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:158
 #, perl-format
 msgid ""
 "An error has occured while generating '%s':\n"
@@ -887,7 +887,7 @@ msgstr ""
 msgid "Any word character"
 msgstr ""
 
-#: lib/Padre/Config.pm:1724
+#: lib/Padre/Config.pm:1727
 msgid "Apache License"
 msgstr ""
 
@@ -2055,31 +2055,31 @@ msgstr ""
 msgid "Enable Smart highlighting while typing"
 msgstr ""
 
-#: lib/Padre/Config.pm:1420
+#: lib/Padre/Config.pm:1423
 msgid "Enable document differences feature"
 msgstr ""
 
-#: lib/Padre/Config.pm:1373
+#: lib/Padre/Config.pm:1376
 msgid "Enable or disable the Run with Devel::EndStats if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1392
+#: lib/Padre/Config.pm:1395
 msgid "Enable or disable the Run with Devel::TraceUse if it is installed. "
 msgstr ""
 
-#: lib/Padre/Config.pm:1411
+#: lib/Padre/Config.pm:1414
 msgid "Enable syntax checker annotations in the editor"
 msgstr ""
 
-#: lib/Padre/Config.pm:1438
+#: lib/Padre/Config.pm:1441
 msgid "Enable the CPAN Explorer, powered by MetaCPAN"
 msgstr ""
 
-#: lib/Padre/Config.pm:1456
+#: lib/Padre/Config.pm:1459
 msgid "Enable the experimental command line interface"
 msgstr ""
 
-#: lib/Padre/Config.pm:1429
+#: lib/Padre/Config.pm:1432
 msgid "Enable version control system support"
 msgstr ""
 
@@ -2171,8 +2171,7 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5049
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/ModuleStarter.pm:150
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:160 lib/Padre/Wx/Dialog/Sync.pm:85
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
 #: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
 #: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
 #: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
@@ -2434,7 +2433,7 @@ msgstr ""
 msgid "Features"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:101
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:112
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr ""
@@ -2678,7 +2677,7 @@ msgstr ""
 msgid "Functions"
 msgstr ""
 
-#: lib/Padre/Config.pm:1728
+#: lib/Padre/Config.pm:1731
 msgid "GPL 2 or later"
 msgstr ""
 
@@ -3008,7 +3007,7 @@ msgid ""
 "List (default all) actions, breakpoints and watch expressions"
 msgstr ""
 
-#: lib/Padre/Config.pm:1729
+#: lib/Padre/Config.pm:1732
 msgid "LGPL 2.1 or later"
 msgstr ""
 
@@ -3158,7 +3157,7 @@ msgstr ""
 msgid "MIME Type"
 msgstr ""
 
-#: lib/Padre/Config.pm:1730
+#: lib/Padre/Config.pm:1733
 msgid "MIT License"
 msgstr ""
 
@@ -4494,7 +4493,7 @@ msgstr ""
 msgid "Revert this change"
 msgstr ""
 
-#: lib/Padre/Config.pm:1727
+#: lib/Padre/Config.pm:1730
 msgid "Revised BSD License"
 msgstr ""
 
@@ -5371,12 +5370,12 @@ msgstr ""
 msgid "Special &Value..."
 msgstr ""
 
-#: lib/Padre/Config.pm:1383
+#: lib/Padre/Config.pm:1386
 msgid ""
 "Specify Devel::EndStats options. 'feature_devel_endstats' must be enabled."
 msgstr ""
 
-#: lib/Padre/Config.pm:1402
+#: lib/Padre/Config.pm:1405
 msgid ""
 "Specify Devel::TraceUse options. 'feature_devel_traceuse' must be enabled."
 msgstr ""
@@ -5509,7 +5508,7 @@ msgid ""
 "may reduce performance. Do you still want to open the file?"
 msgstr ""
 
-#: lib/Padre/Config.pm:1733
+#: lib/Padre/Config.pm:1736
 msgid "The same as Perl itself"
 msgstr ""
 
@@ -5530,11 +5529,11 @@ msgstr ""
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Config.pm:1374
+#: lib/Padre/Config.pm:1377
 msgid "This requires an installed Devel::EndStats and a Padre restart"
 msgstr ""
 
-#: lib/Padre/Config.pm:1393
+#: lib/Padre/Config.pm:1396
 msgid "This requires an installed Devel::TraceUse and a Padre restart"
 msgstr ""
 
@@ -5554,11 +5553,11 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: lib/Padre/Config.pm:1447
+#: lib/Padre/Config.pm:1450
 msgid "Toggle Diff window feature that compares two buffers graphically"
 msgstr ""
 
-#: lib/Padre/Config.pm:1465
+#: lib/Padre/Config.pm:1468
 msgid "Toggle Perl 6 auto detection in Perl 5 files"
 msgstr ""
 
@@ -5966,11 +5965,11 @@ msgstr ""
 msgid "fresh"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:102
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:113
 msgid "missing field"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStarter.pm:159
+#: lib/Padre/Wx/Dialog/ModuleStarter.pm:167
 #, perl-format
 msgid "module-starter error: %s"
 msgstr ""
