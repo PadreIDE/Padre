@@ -1206,7 +1206,10 @@ setting(
 	name    => 'locale_perldiag',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => '',
+	default => 'en-gb',	
+	options => {
+		'en-gb' => 'English (United Kingdom)',
+	},
 );
 
 # Colour Data
