@@ -13,7 +13,7 @@ BEGIN {
 		exit 0;
 	}
 	plan tests => 55;
-	use_ok( 'Debug::Client', '0.20' );
+	use_ok( 'Debug::Client', '0.21' );
 }
 
 use Test::NoWarnings;
