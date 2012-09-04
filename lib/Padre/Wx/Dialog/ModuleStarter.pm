@@ -50,11 +50,20 @@ sub run {
 	# Show the dialog
 	$self->Fit;
 	$self->CentreOnParent;
-	if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+	my $result = $self->ShowModal;
+	if ( $result == Wx::ID_CANCEL ) {
+
+		# As we leave the Find dialog, return the user to the current editor
+		# window so they don't need to click it.
 		$self->main->editor_focus;
 		$self->Destroy;
 		return;
 	}
+	# if ( $self->ShowModal == Wx::wxID_CANCEL ) {
+		# $self->main->editor_focus;
+		# $self->Destroy;
+		# return;
+	# }
 
 	# Save preferences
 	$self->config_save(
@@ -99,9 +108,9 @@ sub ok_clicked {
 	my @fields = qw( module_name author_name email builder_choice license_choice );
 	foreach my $f (@fields) {
 		if ( not $data->{$f} ) {
-			Wx::MessageBox(
+			$main->message(
 				sprintf( Wx::gettext('Field %s was missing. Module not created.'), $f ),
-				Wx::gettext('missing field'), Wx::wxOK, $main
+				Wx::gettext('missing field'),
 			);
 			return;
 		}
