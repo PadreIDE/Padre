@@ -78,19 +78,21 @@ sub run {
 #######
 sub ok_clicked {
 	my ( $self, $event ) = @_;
-	my $main   = $self->main;
-	my $output = $main->output;
+	my $main    = $self->main;
+	my $current = $main->current;
+	my $config  = $main->config;
+	my $output  = $main->output;
 	my $data;
 
 	$data->{module_name} = $self->module->GetValue();
 
-	$data->{author_name} = $self->config_get( Padre::Current->config->meta('identity_name') );
-	$data->{email}       = $self->config_get( Padre::Current->config->meta('identity_email') );
+	$data->{author_name} = $self->config_get( $current->config->meta('identity_name') );
+	$data->{email}       = $self->config_get( $current->config->meta('identity_email') );
 
-	$data->{builder_choice} = $self->config_get( Padre::Current->config->meta('module_starter_builder') );
-	$data->{license_choice} = $self->config_get( Padre::Current->config->meta('module_starter_license') );
+	$data->{builder_choice} = $self->config_get( $current->config->meta('module_starter_builder') );
+	$data->{license_choice} = $self->config_get( $current->config->meta('module_starter_license') );
 
-	$data->{directory} = $self->config_get( Padre::Current->config->meta('module_starter_directory') );
+	$data->{directory} = $self->config_get( $current->config->meta('module_starter_directory') );
 
 
 	#TODO improve input validation !, is this realy needed
@@ -105,7 +107,7 @@ sub ok_clicked {
 		}
 	}
 
-	my $config = Padre->ide->config;
+	# my $config = Padre->ide->config;
 	$config->set( 'identity_name',            $data->{author_name} );
 	$config->set( 'identity_email',           $data->{email} );
 	$config->set( 'module_starter_builder',   $data->{builder_choice} );
@@ -120,7 +122,7 @@ sub ok_clicked {
 		require Padre::Util;
 		require Module::Starter;
 		my @cmd;
-		
+
 		#Deal with multiple cvs module names
 		my @modules = split( /,\s*/, $data->{module_name} );
 		for (@modules) {
@@ -142,24 +144,18 @@ sub ok_clicked {
 
 	}
 	catch {
-		Wx::MessageBox(
+		$main->error(
 			sprintf(
 				Wx::gettext("An error has occured while generating '%s':\n%s"),
 				$data->{module_name}, $_
 			),
-			Wx::gettext('Error'),
-			Wx::wxOK | Wx::wxCENTRE,
-			$main
 		);
 		return;
 	}
 	finally {
 		if ( $ms->{error} !~ /^Added to MANIFEST/ ) {
-			Wx::MessageBox(
+			$main->message(
 				sprintf( Wx::gettext("module-starter error: %s"), $ms->{error} ),
-				Wx::gettext('Error'),
-				Wx::wxOK | Wx::wxCENTRE,
-				$main
 			);
 		} else {
 			$main->show_output(1);
@@ -191,7 +187,7 @@ sub ok_clicked {
 
 1;
 
-# Copyright 2008-2011 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
