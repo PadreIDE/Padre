@@ -34,25 +34,27 @@ the even version for the release, even during development.
     - Fix Reload of more than one file regression #1405 mj41++ (BOWTIE)
     - Update french translation (DOLMEN)
     - Uncommented file.print to re-enable printing #1443 (BOWTIE)
-    - Update p-p-My to api v2 (BOWTIE)
+    - Update internal Padre::Plugin::My to API v2 (BOWTIE)
     - Commented out, as it kills padre, only used in p-p-Git, see #1448 Manfred++ (BOWTIE)
     - Use Debug-Client 0.21 with several Debugger fixes (BOWTIE)
-    - PPIx-EditorTools bumped to 0.17, we now have Moose support in Outline #1435 buff3r++ dod++ (BOWTIE)
+    - Bumped PPIx::EditorTools to 0.17 for enhanced Moose Outline support #1435
+      buff3r++ dod++ (BOWTIE)
     - As per dod++ request keep outline attributes open by default (BOWTIE)
     - Add padre icon to My Plugin (BOWTIE)
     - As per dod++ request keep outline attributes open by default (BOWTIE)
     - Add padre icon to My Plug-in (BOWTIE)
     - Updated Plug-in Manager (BOWTIE)
-    - Typo in Padre::PluginManager in reload_plugin crashed Padre, don't now (BOWTIE)
+    - Fix possible Padre crash in Padre::PluginManager::reload_plugin (BOWTIE)
     - Tweak Schwartzian transform to work on class names, makes more sense (BOWTIE)
     - Tests now pass on Strawberry Portable again (ADAMK)
-    - Due to changes P-Util-run_in_dir_2 bumped $COMPATIBLE = 0.97 (BOWTIE)
+    - Due to changes Padre::Util::run_in_dir_2 bumped $COMPATIBLE = 0.97 (BOWTIE)
     - Add wx-SplitterWindow to Plugin Manager #1359 
-    - Add backin Perl Distribution... this is the skeloton, dialog, with out function #1324 (BOWTIE)
-    - We have a Perl Distribution... working as before (BOWTIE)
-    - comment out unsuppoeted m::s licences (BOWTIE)
-    - apply fix1316-on_selection.patch mj41++  (BOWTIE)
-    - decided apon using module-starter in Perl Distribution... so as to be able to handel the response (BOWTIE)
+    - Add backin Perl Distribution... this is the skeloton, dialog, with out function #1324
+      (BOWTIE)
+    - Added back Perl Distribution using module-starter like before (BOWTIE)
+    - Comment out unsupported m::s licences (BOWTIE)
+    - Fix ticket #1316 "Ctrl+click do not open Perl module if clicked on full method/sub name"
+      mj41++ (BOWTIE)
     - Deal with multiple cvs module names in Perl Distribution... (BOWTIE)
     - 
     
