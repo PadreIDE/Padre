@@ -181,8 +181,6 @@ sub register_finish {
 
 sub pull {
 	my $self     = shift;
-
-	# Do we have the things we need
 	my $config   = $self->config;
 	my $email    = $config->identity_email       or return undef;
 	my $password = $config->config_sync_password or return undef;

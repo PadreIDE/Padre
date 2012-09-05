@@ -38,6 +38,8 @@ sub new {
 		Padre::ServerManager::LOGIN_FAILURE  => 'login_failure',
 		Padre::ServerManager::PUSH_SUCCESS   => 'push_success',
 		Padre::ServerManager::PUSH_FAILURE   => 'push_failure',
+		Padre::ServerManager::PULL_SUCCESS   => 'pull_success',
+		Padre::ServerManager::PULL_FAILURE   => 'pull_failure',
 	} );
 
 	# Update form to match sync manager
@@ -184,8 +186,7 @@ sub btn_register {
 }
 
 sub btn_local {
-	my $self = shift;
-	$self->{server_manager}->push;
+	$_[0]->{server_manager}->push;
 }
 
 sub push_success {
@@ -209,10 +210,23 @@ sub push_failure {
 }
 
 sub btn_remote {
+	$_[0]->{server_manager}->pull;
+}
+
+sub pull_success {
 	my $self = shift;
-	my $rc   = $self->{server_manager}->pull;
 	Wx::MessageBox(
-		sprintf( '%s', $rc ),
+		"Pulled configuration from the server",
+		Wx::gettext('Success'),
+		Wx::OK,
+		$self,
+	);
+}
+
+sub pull_failure {
+	my $self = shift;
+	Wx::MessageBox(
+		"Download failed",
 		Wx::gettext('Error'),
 		Wx::OK,
 		$self,
