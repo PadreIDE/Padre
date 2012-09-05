@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-04 12:10-0700\n"
+"POT-Creation-Date: 2012-09-05 00:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2031,7 +2031,7 @@ msgstr ""
 msgid "Email Address:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:161
+#: lib/Padre/Wx/Dialog/Sync.pm:163
 msgid "Email and confirmation do not match."
 msgstr ""
 
@@ -2171,12 +2171,12 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:23 lib/Padre/Document.pm:454
 #: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Main.pm:5049
-#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:85
-#: lib/Padre/Wx/Dialog/Sync.pm:93 lib/Padre/Wx/Dialog/Sync.pm:106
-#: lib/Padre/Wx/Dialog/Sync.pm:141 lib/Padre/Wx/Dialog/Sync.pm:152
-#: lib/Padre/Wx/Dialog/Sync.pm:162 lib/Padre/Wx/Dialog/Sync.pm:180
-#: lib/Padre/Wx/Dialog/Sync.pm:205 lib/Padre/Wx/Dialog/Sync.pm:216
-#: lib/Padre/Wx/Dialog/Sync.pm:227
+#: lib/Padre/Wx/Role/Dialog.pm:95 lib/Padre/Wx/Dialog/Sync.pm:87
+#: lib/Padre/Wx/Dialog/Sync.pm:95 lib/Padre/Wx/Dialog/Sync.pm:108
+#: lib/Padre/Wx/Dialog/Sync.pm:143 lib/Padre/Wx/Dialog/Sync.pm:154
+#: lib/Padre/Wx/Dialog/Sync.pm:164 lib/Padre/Wx/Dialog/Sync.pm:182
+#: lib/Padre/Wx/Dialog/Sync.pm:206 lib/Padre/Wx/Dialog/Sync.pm:230
+#: lib/Padre/Wx/Dialog/Sync.pm:241
 msgid "Error"
 msgstr ""
 
@@ -3858,7 +3858,7 @@ msgstr ""
 msgid "Parent Directory:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:151
+#: lib/Padre/Wx/Dialog/Sync.pm:153
 msgid "Password and confirmation do not match."
 msgstr ""
 
@@ -3961,11 +3961,11 @@ msgstr ""
 msgid "Peter Lavender"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:140
+#: lib/Padre/Wx/Dialog/Sync.pm:142
 msgid "Please ensure all inputs have appropriate values."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:105
+#: lib/Padre/Wx/Dialog/Sync.pm:107
 msgid "Please input a valid value for both username and password"
 msgstr ""
 
@@ -5430,7 +5430,7 @@ msgstr ""
 msgid "Sub-tracing stopped"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Sync.pm:195
+#: lib/Padre/Wx/Dialog/Sync.pm:196 lib/Padre/Wx/Dialog/Sync.pm:220
 msgid "Success"
 msgstr ""
 
