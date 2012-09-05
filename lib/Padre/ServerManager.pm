@@ -209,7 +209,7 @@ sub pull_finish {
 	}
 
 	# Apply the server settings to the current instance
-	my $server = $json->{config};
+	my $server = $json->{config}->{data};
 	if (Params::Util::_HASH0($server)) {
 		foreach my $name ( $config->settings ) {
 			my $meta = $config->meta($name);
