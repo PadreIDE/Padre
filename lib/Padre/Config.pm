@@ -1653,21 +1653,21 @@ setting(
 setting(
 	name    => 'config_sync_server',
 	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	store   => Padre::Constant::HOST,
 	default => 'http://sync.perlide.org/',
 );
 
 setting(
 	name    => 'config_sync_username',
 	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	store   => Padre::Constant::HOST,
 	default => '',
 );
 
 setting(
 	name    => 'config_sync_password',
 	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	store   => Padre::Constant::HOST,
 	default => '',
 );
 
