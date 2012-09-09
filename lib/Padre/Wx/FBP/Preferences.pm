@@ -154,21 +154,6 @@ sub new {
 		Wx::DefaultSize,
 	);
 
-	my $m_staticText7 = Wx::StaticText->new(
-		$m_panel5,
-		-1,
-		Wx::gettext("Prefered language for error diagnostics"),
-	);
-
-	$self->{locale_perldiag} = Wx::Choice->new(
-		$m_panel5,
-		-1,
-		Wx::DefaultPosition,
-		Wx::DefaultSize,
-		[],
-	);
-	$self->{locale_perldiag}->SetSelection(0);
-
 	my $m_panel4 = Wx::Panel->new(
 		$self->{treebook},
 		-1,
@@ -1577,12 +1562,6 @@ sub new {
 	$fgSizer241->Add( $m_staticText6, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
 	$fgSizer241->Add( $self->{main_functions_order}, 0, Wx::EXPAND, 5 );
 
-	my $fgSizer32 = Wx::FlexGridSizer->new( 1, 2, 5, 5 );
-	$fgSizer32->SetFlexibleDirection(Wx::BOTH);
-	$fgSizer32->SetNonFlexibleGrowMode(Wx::FLEX_GROWMODE_SPECIFIED);
-	$fgSizer32->Add( $m_staticText7, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
-	$fgSizer32->Add( $self->{locale_perldiag}, 0, Wx::ALIGN_CENTER_VERTICAL, 5 );
-
 	my $bSizer116 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer116->Add( $m_staticText186, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $m_staticline361, 0, Wx::BOTTOM | Wx::EXPAND | Wx::LEFT | Wx::RIGHT, 5 );
@@ -1598,7 +1577,6 @@ sub new {
 	$bSizer116->Add( $self->{window_list_shorten_path}, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $self->{main_output_ansi}, 0, Wx::ALL, 5 );
 	$bSizer116->Add( $self->{info_on_statusbar}, 0, Wx::ALL, 5 );
-	$bSizer116->Add( $fgSizer32, 0, Wx::ALL, 5 );
 
 	$m_panel5->SetSizerAndFit($bSizer116);
 	$m_panel5->Layout;
@@ -1918,9 +1896,9 @@ sub new {
 	$m_panel6->SetSizerAndFit($bSizer711);
 	$m_panel6->Layout;
 
-	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 0 );
+	$self->{treebook}->AddPage( $m_panel5, Wx::gettext("Appearance"), 1 );
 	$self->{treebook}->AddPage( $m_panel4, Wx::gettext("Autocomplete"), 0 );
-	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 1 );
+	$self->{treebook}->AddPage( $m_panel10, Wx::gettext("Screen Layout"), 0 );
 	$self->{treebook}->AddPage( $m_panel2, Wx::gettext("Behaviour"), 0 );
 	$self->{treebook}->AddPage( $m_panel3, Wx::gettext("Editor Style"), 0 );
 	$self->{treebook}->AddPage( $m_panel11, Wx::gettext("Features"), 0 );
@@ -1972,10 +1950,6 @@ sub main_output_ansi {
 
 sub info_on_statusbar {
 	$_[0]->{info_on_statusbar};
-}
-
-sub locale_perldiag {
-	$_[0]->{locale_perldiag};
 }
 
 sub autocomplete_always {

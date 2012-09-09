@@ -359,27 +359,6 @@ sub splash {
 	return -f $original ? $original : Padre::Util::sharefile('padre-splash.png');
 }
 
-sub find_perldiag_translations {
-	my %languages;
-	foreach my $path (@INC) {
-		my $dir = File::Spec->catdir( $path, 'POD2' );
-		next if not -e $dir;
-		if ( opendir my $dh, $dir ) {
-			my @files = readdir $dh;
-			close $dh;
-			foreach my $lang (@files) {
-				next if $lang eq '.';
-				next if $lang eq '..';
-				if ( -e File::Spec->catfile( $dir, $lang, 'perldiag.pod' ) ) {
-					$languages{$lang} = 1;
-				}
-			}
-		}
-	}
-	my @tr = sort keys %languages;
-	return @tr;
-}
-
 
 
 

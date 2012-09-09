@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 63 );
+	plan( tests => 62 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -77,7 +77,6 @@ SCOPE: {
 	is( $config->run_save                 => 'same' );
 	is( $config->threads                  => 1 );
 	is( $config->locale                   => '' );
-	is( $config->locale_perldiag          => 'en-gb' );
 	is( $config->editor_style             => 'default' );
 	is( $config->main_maximized           => 0 );
 	is( $config->main_top                 => -1 );

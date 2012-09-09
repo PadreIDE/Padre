@@ -56,9 +56,8 @@ the even version for the release, even during development.
     - Fix ticket #1316 "Ctrl+click do not open Perl module if clicked on full method/sub name"
       mj41++ (BOWTIE)
     - Deal with multiple cvs module names in Perl Distribution... (BOWTIE)
-    - add default values locale_perldiag for #1382 (BOWTIE)
-    -
-    
+    - Add default values locale_perldiag for #1382 (BOWTIE)
+    - Removing unused locale_perldiag and related code (ADAMK)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)

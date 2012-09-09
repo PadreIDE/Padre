@@ -1202,15 +1202,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
-setting(
-	name    => 'locale_perldiag',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
-	default => 'en-gb',	
-	options => {
-		'en-gb' => 'English (United Kingdom)',
-	},
-);
 
 # Colour Data
 # Since it's in local files, it has to be a host-specific setting.
