@@ -19,6 +19,7 @@ use Class::XSAccessor {
 			type
 			store
 			startup
+			restart
 			default
 			project
 			options
@@ -74,7 +75,8 @@ sub new {
 
 	# Normalise
 	$self->{project} = !!$self->project;
-
+	$self->{restart} = !!$self->restart;
+	
 	return $self;
 }
 

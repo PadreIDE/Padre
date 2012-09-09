@@ -59,6 +59,7 @@ use constant {
 	HOST    => 0,
 	HUMAN   => 1,
 	PROJECT => 2,
+	RESTART => 3,
 };
 
 # Scintilla Margin Allocation

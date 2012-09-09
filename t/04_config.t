@@ -5,7 +5,7 @@ use warnings;
 use constant NUMBER_OF_CONFIG_OPTIONS => 161;
 
 # Move of Debug to Run Menu
-use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 24;
+use Test::More tests => NUMBER_OF_CONFIG_OPTIONS * 2 + 25;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -31,6 +31,7 @@ isa_ok( $config,        'Padre::Config' );
 isa_ok( $config->host,  'Padre::Config::Host' );
 isa_ok( $config->human, 'Padre::Config::Human' );
 is( $config->project, undef, '->project is undef' );
+is( $config->restart, 0, '->restart is false' );
 
 # Loading the config file should not result in Wx loading
 is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
