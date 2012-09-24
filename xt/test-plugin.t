@@ -26,7 +26,7 @@ plan tests => 5;
 
 my $devpl;
 
-# Search for dev.pl
+# Search for dev
 for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
 		next unless -e File::Spec->catfile( $_, 'dev' );
@@ -74,7 +74,7 @@ ok( 1, 'Using Perl: ' . $cmd );
 my $dir = File::Temp->newdir;
 $ENV{PADRE_HOME} = $dir->dirname;
 
-# Complete the dev.pl - command
+# Complete the dev - command
 $cmd .= $devpl . ' --invisible -- --with-plugin=Padre::Plugin::Test --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=edit.copy_filename,edit.paste,file.save,file.quit';

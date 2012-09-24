@@ -25,7 +25,7 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 
 my $devpl;
 
-# Search for dev.pl
+# Search for dev
 for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
 		next if !-e File::Spec->catfile( $_, 'dev' );
@@ -76,7 +76,7 @@ ok( 1, 'Using Perl: ' . $cmd );
 my $dir = File::Temp->newdir;
 $ENV{PADRE_HOME} = $dir->dirname;
 
-# Complete the dev.pl - command
+# Complete the dev - command
 $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=internal.dump_padre,file.quit';

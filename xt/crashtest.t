@@ -27,7 +27,7 @@ if ( $^O eq 'MSWin32' ) {
 
 my $devpl;
 
-# Search for dev.pl
+# Search for dev
 for ( '.', '..', '../..', 'blib/lib', 'lib' ) {
 	if ( $^O eq 'MSWin32' ) {
 		next if !-e File::Spec->catfile( $_, 'dev' );
@@ -55,7 +55,7 @@ if ( $^O eq 'MSWin32' ) {
 my $dir = File::Temp->newdir;
 $ENV{PADRE_HOME} = $dir->dirname;
 
-# Complete the dev.pl - command
+# Complete the dev - command
 $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
 $cmd .= ' --actionqueue=file.new,search.goto,edit.join_lines,edit.comment_toggle';
