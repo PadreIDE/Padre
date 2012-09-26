@@ -41,15 +41,8 @@ sub render {
 
 	# Hand off to Template::Tiny
 	require Template::Tiny;
-	require Padre::Util::Template;
 	my $output = '';
-	my $params = {
-		config => Padre::Current->config,
-		util   => Padre::Util::Template->new,
-		@_,
-	};
-	Template::Tiny->new->process( $input, $params, \$output );
-
+	Template::Tiny->new->process( $input, { @_ }, \$output );
 	return $output;
 }
 

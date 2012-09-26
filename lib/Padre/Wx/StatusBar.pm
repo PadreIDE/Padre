@@ -411,7 +411,6 @@ sub is_read_only {
 	return $document->is_readonly ? Wx::gettext('Read Only') : Wx::gettext('Read Write');
 }
 
-
 1;
 
 =pod

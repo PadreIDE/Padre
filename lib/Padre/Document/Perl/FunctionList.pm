@@ -16,8 +16,9 @@ our @ISA     = 'Padre::Task::FunctionList';
 ######################################################################
 # Padre::Task::FunctionList Methods
 
-my $newline =
-	qr{\cM?\cJ}; # recognize newline even if encoding is not the platform default (will not work for MacOS classic)
+# recognize newline even if encoding is not the platform default (will not work for MacOS classic)
+my $newline = qr{\cM?\cJ};
+
 our $sub_search_re = qr{
 		(?:
 			${newline}__(?:DATA|END)__\b.*

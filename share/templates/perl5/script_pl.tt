@@ -1,28 +1,15 @@
-#!/usr/bin/env perl
+#![% style.bin_perl %]
 
-use v5.14;
+[% IF style.use_perl %]
+[% style.use_perl %]
+[% END %]
+[% IF style.use_strict %]
 use strict;
+[% END %]
+[% IF style.use_warnings %]
 use warnings;
+[% END %]
+[% IF style.version_line %]
+[% style.version_line %]
+[% END %]
 
-our $VERSION = '0.101';
-use English qw( -no_match_vars ) ; # Avoids regex performance penalty
-local $OUTPUT_AUTOFLUSH = 1;
-use feature 'unicode_strings';
-
-use Carp;
-use autodie qw(:all);   # Recommended more: defaults and system/exec.
-
-use Data::Printer {caller_info => 1, colored => 1,};
-use FindBin qw($Bin);
-use lib ("$Bin/../lib");
-
-
-
-
-say 'Hello World!';
-
-
-
-1;
-
-__END__
