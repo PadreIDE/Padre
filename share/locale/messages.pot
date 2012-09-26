@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-09 20:10-0700\n"
+"POT-Creation-Date: 2012-09-26 16:10-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3280,16 +3280,12 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: lib/Padre/Wx/FBP/ModuleStarter.pm:38 lib/Padre/Document/Perl/Starter.pm:122
+#: lib/Padre/Wx/FBP/ModuleStarter.pm:38 lib/Padre/Document/Perl/Starter.pm:139
 msgid "Module Name:"
 msgstr ""
 
 #: lib/Padre/Wx/FBP/ModuleStarter.pm:29
 msgid "Module Starter"
-msgstr ""
-
-#: lib/Padre/Util/Template.pm:53
-msgid "Module name:"
 msgstr ""
 
 #: lib/Padre/Wx/Outline.pm:363
@@ -3355,7 +3351,7 @@ msgstr ""
 msgid "New Installation Survey"
 msgstr ""
 
-#: lib/Padre/Document/Perl/Starter.pm:123 lib/Padre/Util/Template.pm:53
+#: lib/Padre/Document/Perl/Starter.pm:140
 msgid "New Module"
 msgstr ""
 
