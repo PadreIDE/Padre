@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 8;
 use Test::NoWarnings;
 
 use Padre::Document::Perl::Starter ();
@@ -17,23 +17,29 @@ use constant {
 
 
 ######################################################################
-# Black Box Testing
+# Constructor
 
 SCOPE: {
-	my $starter = Starter->new;
-	isa_ok( $starter, Starter );
+	my $starter = new_ok(Starter);
 	isa_ok( $starter->style, Style );
 }
 
-# Default simple Perl files
+
+
+
+
+######################################################################
+# Simple Perl files with default settings
+
 SCOPE: {
-	my $starter = Starter->new;
+	my $starter = new_ok(Starter);
 
 	my $script = $starter->generate_script;
 	is( $script, <<'END_PERL', '->generate_script(default) ok' );
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
 END_PERL
 
@@ -42,6 +48,7 @@ END_PERL
 package Foo::Bar;
 
 use strict;
+use warnings;
 
 our $VERSION = '0.01';
 
@@ -63,7 +70,17 @@ use strict;
 use warnings;
 use Test::More tests => 1;
 
-use_ok( 'Foo::Bar' );
+require_ok('Foo::Bar');
+END_PERL
 
+	my $test = $starter->generate_test;
+	is( $test, <<'END_PERL', '=>generate_test ok' );
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Test::More tests => 1;
+
+ok( 0, 'Dummy Test' );
 END_PERL
 }

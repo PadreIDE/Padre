@@ -188,7 +188,14 @@ my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
 
 # What tests should we run?
-my @TESTS = 't/*.t';
+my @TESTS = (
+	't/*.t',
+	't/perl/*.t',
+	't/python/*.t',
+	't/ruby/*.t',
+	't/java/*.t',
+	't/csharp/*.t',
+);
 if ( win32 and $locale =~ /^English/ ) {
 	if ( author_context or $ENV{RELEASE_TESTING} ) {
 		push @TESTS, 't/win32/*.t';

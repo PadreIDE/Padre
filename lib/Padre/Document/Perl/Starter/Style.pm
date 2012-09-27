@@ -11,7 +11,7 @@ my %DEFAULT = (
 	bin_perl     => '/usr/bin/perl',
 	use_perl     => '',
 	use_strict   => 1,
-	use_warnings => 0,
+	use_warnings => 1,
 	version_line => '',
 );
 
@@ -28,11 +28,28 @@ sub new {
 	return $self;
 }
 
+sub from_file {
+	my $class = shift;
+	my $file  = shift;
+
+	require Padre::Util;
+	my $text = Padre::Util::slurp($file);
+
+	return $class->from_text( $text, @_ );
+}
+
 sub from_document {
 	my $class    = shift;
 	my $document = shift;
 	my $text     = $document->text_get;
-	my %style    = @_ ? ( default => shift ) : ();
+
+	return $class->from_text( $text, @_ );
+}
+
+sub from_text {
+	my $class = shift;
+	my $text  = shift;
+	my %style = @_ ? ( default => shift ) : ();
 
 	if ( $text =~ /^\#\!(\N+)/ ) {
 		$style{bin_perl} = $1;

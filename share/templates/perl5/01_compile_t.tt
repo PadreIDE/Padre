@@ -1,8 +1,14 @@
-#!/usr/bin/perl
+#![% style.bin_perl %]
 
-use 5.008;
+[% IF style.use_perl %]
+[% style.use_perl %]
+[% END %]
+[% IF style.use_strict %]
 use strict;
+[% END %]
+[% IF style.use_warnings %]
 use warnings;
+[% END %]
 use Test::More tests => 1;
 
-use_ok( '[% module %]' );
+require_ok('[% module %]');

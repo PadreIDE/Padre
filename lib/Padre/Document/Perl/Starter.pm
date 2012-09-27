@@ -157,7 +157,7 @@ sub generate_module {
 	}
 
 	$self->generate('perl5/module_pm.tt', %param);
-}	
+}
 
 =pod
 
@@ -175,7 +175,7 @@ sub create_test {
 }
 
 sub generate_test {
-	shift->create('perl5/test_t.tt', @_);
+	shift->generate('perl5/test_t.tt', @_);
 }
 
 =pod
@@ -191,11 +191,28 @@ load testing of their own.
 =cut
 
 sub create_text_compile {
-	shift->create_document('perl5/01_compile_t.tt', @_);
+	my $self = shift;
+	my $code = $self->generate_test_compile(@_) or return undef;
+
+	$self->new_document($code);
 }
 
 sub generate_test_compile {
-	shift->create_document('per5/01_compile_t.tt', @_);
+	my $self  = shift;
+	my %param = @_;
+
+	# Get the style and module name from the current project
+	if ( Params::Util::_INSTANCE($param{project}, 'Padre::Project::Perl') ) {
+		$param{style}  ||= $param{project};
+		$param{module} ||= $param{project}->module or return undef;	
+	}
+
+	# We must have a module name
+	unless ( Params::Util::_CLASS($param{module}) ) {
+		return undef;
+	}
+
+	$self->generate( 'perl5/01_compile_t.tt', %param );
 }
 
 
@@ -207,11 +224,9 @@ sub generate_test_compile {
 
 sub create {
 	my $self = shift;
-	my $code = $self->generate(@_);
+	my $code = $self->generate(@_) or return undef;
 
-	$self->main->new_document_from_string(
-		$code => 'application/x-perl',
-	);
+	$self->new_document($code);
 }
 
 sub generate {
@@ -219,12 +234,18 @@ sub generate {
 	my $name  = shift;
 	my %param = $self->params(@_);
 	my $code  = Padre::Template->render($name, %param);
-	return $self->tidy($code);
+
+	$self->tidy($code);
 }
 
 sub params {
 	my $self  = shift;
 	my %param = @_;
+
+	# Inheriting from a project means inheriting from the headline file
+	if ( Params::Util::_INSTANCE($param{style}, 'Padre::Project::Perl') ) {
+		$param{style} = $param{style}->headline_path;
+	}
 
 	# Inherit style from an existing document
 	if ( Params::Util::_INSTANCE($param{style}, 'Padre::Document::Perl') ) {
@@ -234,7 +255,15 @@ sub params {
 		);
 	}
 
-	# Apply default style unchanged otherwise
+	# Inherit style from a file on disk
+	if ( Params::Util::_STRING($param{style}) ) {
+		$param{style} = Padre::Document::Perl::Starter::Style->from_file(
+			$param{style},
+			$self->{style},
+		);
+	}
+
+	# Apply default style if we have nothing more specific
 	unless ( Params::Util::_INSTANCE($param{style}, 'Padre::Document::Perl::Starter::Style') ) {
 		$param{style} = $self->{style};
 	}
@@ -250,7 +279,7 @@ sub tidy {
 	$code =~ s/\n{3,}/\n\n/sg;
 
 	# Remove spaces between successive use statements to create use blocks
-	$code =~ s/(\nuse\s+\N+)\n+(?>use)/$1\n/g;
+	$code =~ s/(?<=\n)(use\b\N+)\n+(?=use\b)/$1\n/g;
 
 	return $code;
 }
