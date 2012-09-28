@@ -285,7 +285,7 @@ sub tidy {
 }
 
 sub new_document {
-	shift->main->new_document_from_string( shift => 'application/x-perl' );
+	$_[0]->main->new_document_from_string( $_[1] => 'application/x-perl' );
 }
 
 1;
