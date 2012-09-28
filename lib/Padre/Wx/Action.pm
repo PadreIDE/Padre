@@ -94,7 +94,7 @@ sub new {
 	# Validate the shortcut
 	if ($shortcut) {
 		my $shortcuts = $ide->shortcuts;
-		if ( exists $shortcuts->{$shortcut} ) {
+		if ( exists $shortcuts->{$shortcut} and $shortcuts->{$shortcut}->name ne $name ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
 		} else {
 			$shortcuts->{$shortcut} = $self;
