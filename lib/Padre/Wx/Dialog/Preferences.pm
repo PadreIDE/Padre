@@ -23,6 +23,11 @@ our @ISA     = qw{
 	Padre::Wx::FBP::Preferences
 };
 
+use constant {
+	LIST_COLUMN_SHORTCUT => 0,
+	LIST_COLUMN_NAME     => 1,
+};
+
 my @KEYS = (
 	_T('None'),
 	_T('Backspace'),
@@ -392,17 +397,15 @@ sub _on_list_col_click {
 
 # Private method to handle the selection of a key binding item
 sub _on_list_item_selected {
-	my $self   = shift;
-	my $event  = shift;
-	my $list   = $self->{list};
-	my $index  = $list->GetFirstSelected;
-	my $name   = $list->GetItemText($index);
-	my $action = $self->ide->actions->{$name};
+	my $self     = shift;
+	my $event    = shift;
+	my $name     = $self->_selected_list_name;
+	my $action   = $self->_action($name);
+	my $shortcut = $action->shortcut;
 
-	my $shortcut = $self->ide->actions->{$name}->shortcut;
-	$shortcut = '' if not defined $shortcut;
-
-	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
+	$self->{button_reset}->Enable(
+		$shortcut ne $self->config->default( $action->shortcut_setting )
+	);
 
 	$self->{button_delete}->Enable( $shortcut ne '' );
 
@@ -447,11 +450,10 @@ sub _update_shortcut_ui {
 # Private method to handle the pressing of the set value button
 sub _on_set_button {
 	my $self  = shift;
-	my $index = $self->{list}->GetFirstSelected;
-	my $name  = $self->{list}->GetItemText($index);
+	my $name  = $self->_selected_list_name;
 
 	my @key_list = ();
-	for my $regular_key ( 'Shift', 'Ctrl', 'Alt' ) {
+	for my $regular_key ( 'Ctrl', 'Shift', 'Alt' ) {
 		push @key_list, $regular_key if $self->{ lc $regular_key }->GetValue;
 	}
 	my $key_index   = $self->{key}->GetSelection;
@@ -492,7 +494,7 @@ sub _set_binding {
 	my ( $self, $name, $shortcut ) = @_;
 
 	my $shortcuts = $self->ide->shortcuts;
-	my $action    = $self->ide->actions->{$name};
+	my $action    = $self->_action($name);
 
 	# modify shortcut registry
 	my $old_shortcut = $action->shortcut;
@@ -508,6 +510,7 @@ sub _set_binding {
 
 	# Update the action's UI
 	my $non_default = $self->config->default( $action->shortcut_setting ) ne $shortcut;
+
 	$self->_update_action_ui( $name, $shortcut, $non_default );
 
 	return;
@@ -515,13 +518,16 @@ sub _set_binding {
 
 # Private method to update the UI from the provided preference
 sub _update_action_ui {
-	my ( $self, $name, $shortcut, $non_default ) = @_;
-
-	my $list = $self->{list};
-	my $index = $list->FindItem( -1, $name );
+	my $self        = shift;
+	my $name        = shift;
+	my $shortcut    = shift;
+	my $non_default = shift;
+	my $list        = $self->{list};
+	my $index       = $self->_named_action_index($name);
 
 	$self->{button_reset}->Enable($non_default);
-	$list->SetItem( $index, 2, _translate_shortcut($shortcut) );
+
+	$list->SetItem( $index, LIST_COLUMN_SHORTCUT, _translate_shortcut($shortcut) );
 	$list->set_item_bold( $index, $non_default );
 
 	$self->_update_shortcut_ui($shortcut);
@@ -532,10 +538,7 @@ sub _update_action_ui {
 # Private method to handle the pressing of the delete button
 sub _on_delete_button {
 	my $self = shift;
-
-	# Prepare the key binding
-	my $index = $self->{list}->GetFirstSelected;
-	my $name  = $self->{list}->GetItemText($index);
+	my $name = $self->_selected_action_name;
 
 	$self->_set_binding( $name, '' );
 
@@ -545,9 +548,8 @@ sub _on_delete_button {
 # Private method to handle the pressing of the reset button
 sub _on_reset_button {
 	my $self   = shift;
-	my $index  = $self->{list}->GetFirstSelected;
-	my $name   = $self->{list}->GetItemText($index);
-	my $action = $self->ide->actions->{$name};
+	my $name   = $self->_selected_action_name;
+	my $action = $self->_action($name);
 
 	$self->_try_to_set_binding(
 		$name,
@@ -567,6 +569,33 @@ sub _recreate_menubar {
 	$main->{menu} = Padre::Wx::Menubar->new($main);
 	$main->SetMenuBar( $main->menu->wx );
 	$main->refresh;
+}
+
+sub _selected_list_name {
+	my $self = shift;
+	my $index = $self->{list}->GetFirstSelected;
+	my $item  = $self->{list}->GetItem($index, LIST_COLUMN_NAME);
+	return $item->GetText;
+}
+
+sub _named_action_index {
+	my $self = shift;
+	my $name = shift;
+	my $list = $self->{list};
+	my $items = $list->GetItemCount;
+	for my $i ( 0 .. $items - 1 ) {
+		my $item = $list->GetItem($i, LIST_COLUMN_NAME);
+		if ( $item->GetText eq $name ) {
+			return $i;
+		}
+	}
+	return undef;
+}
+
+sub _action {
+	my $self = shift;
+	my $name = shift;
+	return $self->ide->actions->{$name};
 }
 
 1;
