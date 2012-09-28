@@ -1184,6 +1184,22 @@ Returns nothing.
 #####################################################################
 # Project Integration Methods
 
+=pod
+
+=head2 project
+
+  my $project = $document->project;
+
+The C<project> method is used to discover which project a document is part
+of. It uses a variety of methods to discover, scanning the file system if
+needed to "intuit" the location and type of project.
+
+Returns a L<Padre::Project> object for the project, or C<undef> if the
+document is unsaved, anonymous, or not part of any type of project for
+some other reason.
+
+=cut
+
 sub project {
 	my $self    = shift;
 	my $manager = $self->current->ide->project_manager;
@@ -1209,6 +1225,20 @@ sub project {
 
 	return $project;
 }
+
+=pod
+
+=head2 project_dir
+
+  my $path = $document->project_dir;
+
+The C<project_dir> method behaves similarly to C<project>, but instead it
+returns a path to the root directory of the project for this document.
+
+Returns a directory as a string, or C<''> if the document is unsaved,
+anonymous, or not part of any type of project for some other reason.
+
+=cut
 
 sub project_dir {
 	my $self = shift;
