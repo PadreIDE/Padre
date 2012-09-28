@@ -64,7 +64,12 @@ sub new {
 
 	$self->add_menu_action(
 		$self->{live},
-		'help.perl_help',
+		'help.perl_en',
+	);
+
+	$self->add_menu_action(
+		$self->{live},
+		'help.perl_jp',
 	);
 
 	if (Padre::Constant::WIN32) {
