@@ -58,6 +58,11 @@ the even version for the release, even during development.
     - Deal with multiple cvs module names in Perl Distribution... (BOWTIE)
     - Add default values locale_perldiag for #1382 (BOWTIE)
     - Removing unused locale_perldiag and related code (ADAMK)
+    - Fixed several serious bugs in the Key Bindings section of the Preferences
+      dialog (ADAMK)
+    - Added Perl Help (Japanese) for YAPC::Asia (ADAMK)
+    - Added documentation for more methods in Padre::Document (ADAMK)
+    - Padre::Task::Diff no longer crashes on documents without a project (ADAMK)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
