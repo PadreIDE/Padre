@@ -39,7 +39,9 @@ sub new {
 	$self->{filename} = $file ? $file->filename : undef;
 
 	# Obtain project's Version Control System (VCS)
-	$self->{vcs} = $document->project->vcs;
+	if ( $document->project ) {
+		$self->{vcs} = $document->project->vcs;
+	}
 
 	# Obtain document text
 	$self->{text} = $document->text_get;
