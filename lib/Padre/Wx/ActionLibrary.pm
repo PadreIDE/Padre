@@ -2536,14 +2536,26 @@ sub init {
 	);
 
 	Padre::Wx::Action->new(
-		name    => 'help.perl_help',
-		label   => _T('P&erl Help'),
+		name    => 'help.perl_en',
+		label   => _T('P&erl Help (English)'),
 		comment => _T(
 			      'Open the Perl live support chat in your web browser '
 				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('general');
+		},
+	);
+
+	Padre::Wx::Action->new(
+		name    => 'help.perl_jp',
+		label   => _T('Perl Help (Japanese)'),
+		comment => _T(
+			      'Open the Perl live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_irc('locale_jp');
 		},
 	);
 
