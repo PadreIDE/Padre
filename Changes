@@ -64,6 +64,7 @@ the even version for the release, even during development.
     - Added documentation for more methods in Padre::Document (ADAMK)
     - Padre::Task::Diff no longer crashes on documents without a project (ADAMK) 
     - Bump Module::Install -> 1.06 (BOWTIE)
+    - UpDate My Plug-in so that it reloads (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
