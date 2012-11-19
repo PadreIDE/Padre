@@ -18,8 +18,14 @@ sub padre_interfaces {
 	return (
 		'Padre::Plugin'   => 0.94,
 		'Padre::Constant' => 0.94,
+		'Padre::Unload'   => 0.94,
 	);
 }
+
+# Child modules we need to unload when disabled
+use constant CHILDREN => qw{
+	Padre::Plugin::My
+};
 
 #######
 # Called by padre to know the plugin name
@@ -100,6 +106,26 @@ sub other_method {
 	# $doc->text_set( $text );
 
 	return;
+}
+
+########
+# plugin_disable
+########
+sub plugin_disable {
+	my $self = shift;
+
+	# Close the dialog if it is hanging around
+	# $self->clean_dialog;
+
+	# Unload all our child classes
+	for my $package (CHILDREN) {
+		require Padre::Unload;
+		Padre::Unload->unload($package);
+	}
+
+	$self->SUPER::plugin_disable(@_);
+
+	return 1;
 }
 
 1;
