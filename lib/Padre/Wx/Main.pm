@@ -4254,6 +4254,17 @@ sub on_open_selection {
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
 			Wx::gettext("Open selection"), ''
 		);
+		#help the user by loading whats on the current line
+		my $pos    = $editor->GetCurrentPos;
+		my $line   = $editor->LineFromPosition($pos);
+		my $first  = $editor->PositionFromLine($line);
+		my $last  = $editor->PositionFromLine($line+1);
+		$text = $editor->GetTextRange( $first, $last );
+		if ($text) {
+			$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
+			$dialog->SetValue($text);
+		}
+
 		return if $dialog->ShowModal == Wx::ID_CANCEL;
 
 		$text = $dialog->GetValue;
@@ -4297,6 +4308,7 @@ sub on_open_selection {
 	}
 
 	unless (@files) {
+		#replace this with the original chooser dialog - so the user can refine it
 		$self->message(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
 			Wx::gettext("Open Selection")
