@@ -301,6 +301,21 @@ sub guess_subpath {
 	return;
 }
 
+sub guess_hashbang_params {
+	my $self = shift;
+
+	#Or should I use PPI to get the first comment?
+	my $text    = $self->text_get;
+	if ($text =~ /^#!(.*)\n/) {
+		my $hashbang = $1;
+		#presume that space dash ( -) comes after the perl exe.. (bad guess, hopefully someone will know better?)
+		if ($hashbang =~ /(.*?)(\s-.*)/) {
+			return ($1, $2);
+		}
+	}
+	return ();
+}
+
 my $keywords;
 
 sub get_calltip_keywords {
@@ -358,6 +373,10 @@ sub get_command {
 		interpreter => $config->run_interpreter_args_default,
 		script      => $config->run_script_args_default,
 	);
+	
+	#add params that are in the hash-bang line of the file itself
+	my ($hashbangperl, $hashbangparams) = $self->guess_hashbang_params();
+	$run_args{interpreter} = $hashbangparams if $hashbangparams;
 
 	# Overwrite default arguments with the ones preferred for given document
 	foreach my $arg ( keys %run_args ) {
