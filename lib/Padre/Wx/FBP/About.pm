@@ -314,6 +314,12 @@ sub new {
 		Wx::gettext("code4pay"),
 	);
 
+	$self->{m_staticText541} = Wx::StaticText->new(
+		$self->{development},
+		-1,
+		Wx::gettext("Sven Dowideit"),
+	);
+
 	$self->{translation} = Wx::Panel->new(
 		$self->{notebook},
 		-1,
@@ -725,6 +731,7 @@ sub new {
 	$gSizer3->Add( $self->{m_staticText56}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText7}, 0, Wx::ALL, 5 );
 	$gSizer3->Add( $self->{m_staticText54}, 0, Wx::ALL, 5 );
+	$gSizer3->Add( $self->{m_staticText541}, 0, Wx::ALL, 5 );
 
 	my $bSizer3 = Wx::BoxSizer->new(Wx::VERTICAL);
 	$bSizer3->Add( $gSizer3, 0, Wx::EXPAND, 5 );
