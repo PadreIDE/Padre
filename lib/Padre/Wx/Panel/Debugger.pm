@@ -246,7 +246,7 @@ sub debug_perl {
 	my $editor   = $current->editor;
 
 	# test for valid perl document
-	if ( $document->mimetype !~ m/perl/ ) {
+	if ( !$document || $document->mimetype !~ m/perl/ ) {
 		return;
 	}
 
@@ -992,11 +992,6 @@ sub _on_list_item_selected {
 sub on_debug_clicked {
 	my $self = shift;
 	my $main = $self->main;
-
-	# test for valid perl document
-	if ( $main->current->document->mimetype !~ m/perl/ ) {
-		return;
-	}
 
 	$self->debug_perl;
 	return unless $self->{client};
