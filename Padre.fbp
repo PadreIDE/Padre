@@ -35860,7 +35860,7 @@
             <property name="size"></property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
-            <property name="title">Debug Options</property>
+            <property name="title">Debug Launch Parameters</property>
             <property name="tooltip"></property>
             <property name="validator_data_type"></property>
             <property name="validator_style">wxFILTER_NONE</property>
@@ -35942,7 +35942,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">Perl:</property>
+                                        <property name="label">Perl interpreter:</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_staticText4</property>
@@ -36007,7 +36007,7 @@
                                         <property name="size"></property>
                                         <property name="style"></property>
                                         <property name="subclass"></property>
-                                        <property name="tooltip">You can now add multiple module names, ie: Foo::Bar, Foo::Bar::Two (csv) </property>
+                                        <property name="tooltip"></property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -36174,7 +36174,7 @@
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
                                         <property name="id">wxID_ANY</property>
-                                        <property name="label">PerlScript to run:</property>
+                                        <property name="label">Perl Script to run:</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">m_staticText5</property>
@@ -36316,7 +36316,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
-                                                <event name="OnButtonClick">directory</event>
+                                                <event name="OnButtonClick">browse_scripts</event>
                                                 <event name="OnChar"></event>
                                                 <event name="OnEnterWindow"></event>
                                                 <event name="OnEraseBackground"></event>
@@ -36538,8 +36538,8 @@
                                         <property name="fg"></property>
                                         <property name="font"></property>
                                         <property name="hidden">0</property>
-                                        <property name="id">wxID_ANY</property>
-                                        <property name="label">Debug</property>
+                                        <property name="id">wxID_OK</property>
+                                        <property name="label">Launch Debugger</property>
                                         <property name="maximum_size"></property>
                                         <property name="minimum_size"></property>
                                         <property name="name">debug</property>
@@ -36556,7 +36556,7 @@
                                         <property name="window_extra_style"></property>
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
-                                        <event name="OnButtonClick">ok_clicked</event>
+                                        <event name="OnButtonClick"></event>
                                         <event name="OnChar"></event>
                                         <event name="OnEnterWindow"></event>
                                         <event name="OnEraseBackground"></event>
