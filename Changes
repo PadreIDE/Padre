@@ -65,6 +65,7 @@ the even version for the release, even during development.
     - Padre::Task::Diff no longer crashes on documents without a project (ADAMK) 
     - Bump Module::Install -> 1.06 (BOWTIE)
     - UpDate My Plug-in so that it reloads (BOWTIE)
+    - Tweak Splash for type PNG (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)

@@ -177,7 +177,7 @@ sub startup {
 	$SPLASH = Wx::SplashScreen->new(
 		Wx::Bitmap->new(
 			$splash,
-			Wx::wxBITMAP_TYPE_BMP()
+			Wx::wxBITMAP_TYPE_PNG()
 		),
 		Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
 		3500, undef, -1
