@@ -131,8 +131,8 @@ sub from_array {
 
 	# Load the task class first so we can deserialize
 	TRACE("Loading $array->[1]") if DEBUG;
-	eval "require $array->[1];";
-	die $@ if $@;
+	(my $source = $array->[1].".pm") =~ s{::}{/}g;
+	require $source;
 
 	return bless {
 		hid  => $array->[0] + 0,

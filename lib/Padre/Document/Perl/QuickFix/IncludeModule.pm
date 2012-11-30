@@ -44,8 +44,8 @@ sub apply {
 				#makes this Padre::Plugin freindly
 				next if $module =~ /^Padre::/;
 
-				eval "require $module";
-				if ($@) {
+				(my $source = "$module.pm") =~ s{::}{/};
+				unless (eval { require $source }) {
 					push @items, {
 						text     => "Install $module",
 						listener => sub {

@@ -392,8 +392,9 @@ sub new_page {
 		{
 			my $class = $VIEW{$mime};
 			unless ( $class->VERSION ) {
-				eval "require $class;";
-				die "Failed to load $class: $@" if $@;
+				(my $source = "$class.pm") =~ s{::}{/}g;
+				eval { require $source }
+					or die "Failed to load $class: $@";
 			}
 			my $panel = $class->new($self);
 			Wx::Event::EVT_HTML_LINK_CLICKED(

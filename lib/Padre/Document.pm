@@ -308,8 +308,9 @@ sub rebless {
 	TRACE("Reblessing to mimetype class: '$class'") if DEBUG;
 	if ($class) {
 		unless ( $class->VERSION ) {
-			eval "require $class;";
-			die "Failed to load $class: $@" if $@;
+			(my $source = $class.".pm") =~ s{::}{/}g;
+			eval { require $source }
+				or die "Failed to load $class: $@";
 		}
 		bless $self, $class;
 	}

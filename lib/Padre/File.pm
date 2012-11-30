@@ -149,7 +149,8 @@ sub new {
 	for ( keys(%RegisteredModules) ) {
 		next if $URL !~ /$_/;
 		my $module = $RegisteredModules{$_}->[0];
-		if ( eval "require $module; 1;" ) {
+		(my $source = "$module.pm") =~ s{::}{/}g;
+		if ( eval { require $source } ) {
 			$self = $module->new($URL);
 			return $self;
 		}

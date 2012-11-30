@@ -157,12 +157,20 @@ sub new {
 	return $self;
 }
 
+# Load a class, safely and efficiently
+sub _load_class ($)
+{
+	my $class = shift;
+	(my $source = "$class.pm") =~ s{::}{/}g;
+	eval { require $source }
+}
+
 sub load_provider {
 	my ( $self, $class ) = @_;
 
 	unless ( $class->VERSION ) {
-		eval "require $class;";
-		die("Failed to load $class: $@") if $@;
+		_load_class($class)
+			or die "Failed to load $class: $@";
 	}
 	if ( $class->can('provider_for') ) {
 		$self->register_providers( $_ => $class ) for $class->provider_for;
@@ -182,8 +190,8 @@ sub load_provider {
 sub load_viewer {
 	my ( $self, $class ) = @_;
 	unless ( $class->VERSION ) {
-		eval "require $class;";
-		die("Failed to load $class: $@") if $@;
+		_load_class($class)
+			or die("Failed to load $class: $@");
 	}
 	if ( $class->can('viewer_for') ) {
 		$self->register_viewers( $_ => $class ) for $class->viewer_for;
@@ -209,8 +217,8 @@ sub register_viewers {
 	while ( my ( $type, $class ) = each %viewers ) {
 		$self->get_viewers->{$type} = $class;
 		unless ( $class->VERSION ) {
-			eval "require $class;";
-			die("Failed to load $class: $@") if $@;
+			_load_class($class)
+				or die("Failed to load $class: $@");
 		}
 	}
 	$self;
