@@ -66,6 +66,8 @@ the even version for the release, even during development.
     - Bump Module::Install -> 1.06 (BOWTIE)
     - UpDate My Plug-in so that it reloads (BOWTIE)
     - Tweak Splash for type PNG (BOWTIE)
+    - Replace <eval "require $class"> by a safer and faster code
+      (no eval string) (DOLMEN)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
