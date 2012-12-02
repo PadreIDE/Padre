@@ -32,7 +32,7 @@ use constant {
 	BLACK      => Wx::Colour->new('black'),
 };
 
-
+# use Data::Printer { caller_info => 1, colored => 1, };
 #######
 # new
 #######
@@ -865,6 +865,8 @@ sub _get_bp_db {
 
 		# if ( $tuples[$_][1] =~ m/^$self->{current_file}$/ ) {
 		if ( $tuples[$_][1] eq $self->{current_file} ) {
+			#Added a little time out to stop MARKER_NOT_BREAKABLE from wrongly happing
+			select(undef, undef, undef, 0.080);
 			if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
 				$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 			} else {
@@ -884,7 +886,7 @@ sub _get_bp_db {
 
 		if ( $tuples[$_][1] =~ m/^$self->{project_dir}/ ) {
 			if ( $tuples[$_][1] ne $self->{current_file} ) {
-
+				select(undef, undef, undef, 0.080);
 				if ( $self->{client}->__send("f $tuples[$_][1]") !~ m/^No file matching/ ) {
 
 					unless ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
