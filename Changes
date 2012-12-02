@@ -68,6 +68,7 @@ the even version for the release, even during development.
     - Tweak Splash for type PNG (BOWTIE)
     - Replace <eval "require $class"> by a safer and faster code
       (no eval string) (DOLMEN)
+    - Added a little time out to stop MARKER_NOT_BREAKABLE from wrongly happing (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
