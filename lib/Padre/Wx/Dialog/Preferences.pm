@@ -564,10 +564,12 @@ sub _on_reset_button {
 sub _recreate_menubar {
 	my $self = shift;
 	my $main = $self->main;
+	
+	#ToDo this is just a quick fix, to stop menu bar Fup's from happing (BOWTIE)
 
-	delete $main->{menu};
-	$main->{menu} = Padre::Wx::Menubar->new($main);
-	$main->SetMenuBar( $main->menu->wx );
+	# delete $main->{menu};
+	# $main->{menu} = Padre::Wx::Menubar->new($main);
+	# $main->SetMenuBar( $main->menu->wx );
 	$main->refresh;
 }
 
