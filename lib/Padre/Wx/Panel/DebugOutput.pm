@@ -131,6 +131,7 @@ sub debug_output_dark_gray {
 
 	return;
 }
+
 ########
 # debug_status
 ########
@@ -138,6 +139,16 @@ sub debug_status {
 	my $self   = shift;
 	my $status = shift;
 	$self->{status}->SetLabel($status);
+	return;
+}
+
+########
+# debug launch options
+########
+sub debug_launch_options {
+	my $self   = shift;
+	my $options = shift || 'none';
+	$self->{dl_options}->SetLabel($options);
 	return;
 }
 
