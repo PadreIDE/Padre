@@ -2146,7 +2146,7 @@ sub init {
 			comment    => _T('Launch debugger with options'),
 			menu_event => sub {
 
-				#TODO: need to hide the breakpoints and debugger panels if thats what the user started with - don't make a mess of my tiny screen
+				#TODO: need to hide the breakpoints and debugger panels if thats what the user started with - don't make a mess of my tiny screen - you have missed the point think eclipse
 				$_[0]->show_breakpoints(1);
 				if ( $_[0]->{breakpoints} ) {
 					$_[0]->{breakpoints}->on_refresh_click();
