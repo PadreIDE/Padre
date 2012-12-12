@@ -15,6 +15,10 @@ use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
 
+use Data::Printer {
+	caller_info => 1,
+	colored     => 1,
+};
 
 our $VERSION = '0.97';
 our @ISA     = qw{
@@ -1008,11 +1012,13 @@ sub on_debug_clicked {
 }
 
 #debugging _on_
-#TODO: redo the button enable/disable/show hide code as a state based refresh
-#and abstract so things like step_in are menu items too (and hotkeys???) (the 'n (exp)' is misleading, as that doesn't actually work)
+#TODO: redo the button enable/disable/show hide code as a state based refresh and abstract so things like step_in are menu items too (and hotkeys???) (the 'n (exp)' is misleading, as that doesn't actually work)
 sub update_debugger_buttons_on {
-	my $self = shift;
-	my $main = $self->main;
+	my $self    = shift;
+	my $arg_ref = shift;
+
+	p $arg_ref;
+	my $main    = $self->main;
 
 	return unless $self->{client};
 
@@ -1052,6 +1058,9 @@ sub update_debugger_buttons_on {
 	$main->aui->Update;
 	if ( $main->{debugoutput} ) {
 		$main->{debugoutput}->debug_output( $self->{client}->get_h_var('h') );
+		if ($arg_ref) {
+			$main->{debugoutput}->debug_launch_options('To see all Debug Launch Parameters see menu');
+		}
 	}
 
 	#let's reload our breakpoints
@@ -1523,7 +1532,8 @@ sub on_launch_options {
 
 	#now run the debugger with the new command
 	$self->debug_perl($arg_ref);
-	$self->update_debugger_buttons_on;
+	p $arg_ref;
+	$self->update_debugger_buttons_on($arg_ref);
 
 	return;
 }
