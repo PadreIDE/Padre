@@ -37,6 +37,18 @@ sub new {
 		Wx::gettext("Status"),
 	);
 
+	$self->{debug_launch_options} = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("Debug Launch Options:"),
+	);
+
+	$self->{dl_options} = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext("none"),
+	);
+
 	$self->{output} = Wx::TextCtrl->new(
 		$self,
 		-1,
@@ -47,7 +59,11 @@ sub new {
 	);
 
 	my $top_sizer = Wx::BoxSizer->new(Wx::HORIZONTAL);
-	$top_sizer->Add( $self->{status}, 1, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 5 );
+	$top_sizer->Add( $self->{status}, 0, Wx::ALIGN_CENTER_VERTICAL | Wx::ALL | Wx::EXPAND, 5 );
+	$top_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
+	$top_sizer->Add( $self->{debug_launch_options}, 0, Wx::ALL, 5 );
+	$top_sizer->Add( $self->{dl_options}, 0, Wx::ALL, 5 );
+	$top_sizer->Add( 0, 0, 1, Wx::EXPAND, 5 );
 
 	my $main_sizer = Wx::BoxSizer->new(Wx::VERTICAL);
 	$main_sizer->Add( $top_sizer, 0, Wx::ALIGN_RIGHT | Wx::ALL | Wx::EXPAND, 2 );
@@ -61,6 +77,10 @@ sub new {
 
 sub status {
 	$_[0]->{status};
+}
+
+sub dl_options {
+	$_[0]->{dl_options};
 }
 
 sub output {
