@@ -47,6 +47,10 @@ sub new {
 		'debug.launch',
 	);
 
+	$self->{launch_options} = $self->add_menu_action(
+		'debug.launch_options',
+	);
+
 	$self->{set_breakpoint} = $self->add_menu_action(
 		'debug.set_breakpoint',
 	);
@@ -81,6 +85,7 @@ sub refresh {
 	$self->{debugger}->Check( $config->main_debugger );
 
 	$self->{launch}->Enable(1);
+	$self->{launch_options}->Enable(1);
 	$self->{set_breakpoint}->Enable(1);
 	$self->{quit}->Enable(1);
 

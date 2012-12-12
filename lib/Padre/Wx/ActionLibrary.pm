@@ -2168,6 +2168,30 @@ sub init {
 		);
 
 		Padre::Wx::Action->new(
+			name => 'debug.launch_options',
+			need => sub {
+				$main->{debugger};
+			},
+
+			#toolbar    => 'actions/breakpoints',
+			label      => _T('Launch Options'),
+			comment    => _T('Launch debugger with options'),
+			menu_event => sub {
+
+				#TODO: need to hide the breakpoints and debugger panels if thats what the user started with - don't make a mess of my tiny screen
+				$_[0]->show_breakpoints(1);
+				if ( $_[0]->{breakpoints} ) {
+					$_[0]->{breakpoints}->on_refresh_click();
+				}
+
+				$_[0]->show_debugger(1);
+				if ( $_[0]->{debugger} ) {
+					$_[0]->{debugger}->on_launch_options();
+				}
+			},
+		);
+
+		Padre::Wx::Action->new(
 			name => 'debug.quit',
 			need => sub {
 				$main->{debugger};

@@ -239,7 +239,9 @@ sub update_variables {
 # sub debug_perl
 #######
 sub debug_perl {
-	my $self     = shift;
+	my $self = shift;
+	my $arg_ref = shift || { debug => 1 };
+
 	my $main     = $self->main;
 	my $current  = $self->current;
 	my $document = $current->document;
@@ -296,7 +298,13 @@ sub debug_perl {
 	my $port = 24642 + int rand(1000); # TODO make this configurable?
 	SCOPE: {
 		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
-		$main->run_command( $document->get_command( { debug => 1 } ) );
+		my ( $cmd, $ref ) = $document->get_command($arg_ref);
+
+		#TODO: consider pushing the chdir into run_command (as there is a hidden 'cd' in it)
+		my $dir = Cwd::cwd;
+		chdir $arg_ref->{run_directory} if ( exists( $arg_ref->{run_directory} ) );
+		$main->run_command($cmd);
+		chdir $dir;
 	}
 
 	# Bootstrap the debugger
@@ -865,8 +873,9 @@ sub _get_bp_db {
 
 		# if ( $tuples[$_][1] =~ m/^$self->{current_file}$/ ) {
 		if ( $tuples[$_][1] eq $self->{current_file} ) {
+
 			#Added a little time out to stop MARKER_NOT_BREAKABLE from wrongly happing
-			select(undef, undef, undef, 0.080);
+			select( undef, undef, undef, 0.080 );
 			if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
 				$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 			} else {
@@ -886,7 +895,7 @@ sub _get_bp_db {
 
 		if ( $tuples[$_][1] =~ m/^$self->{project_dir}/ ) {
 			if ( $tuples[$_][1] ne $self->{current_file} ) {
-				select(undef, undef, undef, 0.080);
+				select( undef, undef, undef, 0.080 );
 				if ( $self->{client}->__send("f $tuples[$_][1]") !~ m/^No file matching/ ) {
 
 					unless ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
@@ -993,9 +1002,18 @@ sub _on_list_item_selected {
 #######
 sub on_debug_clicked {
 	my $self = shift;
-	my $main = $self->main;
 
 	$self->debug_perl;
+	$self->update_debugger_buttons_on;
+}
+
+#debugging _on_
+#TODO: redo the button enable/disable/show hide code as a state based refresh
+#and abstract so things like step_in are menu items too (and hotkeys???) (the 'n (exp)' is misleading, as that doesn't actually work)
+sub update_debugger_buttons_on {
+	my $self = shift;
+	my $main = $self->main;
+
 	return unless $self->{client};
 
 	$self->{quit_debugger}->Enable;
@@ -1429,6 +1447,86 @@ sub on_raw_clicked {
 # $self->expression->SetValue(BLANK);
 # return;
 # }
+
+#######
+# Event handler on_launch_options - launch the debugger over-riding its auto-choices
+#######
+sub on_launch_options {
+	my $self     = shift;
+	my $main     = $self->main;
+	my $current  = $self->current;
+	my $document = $current->document;
+	my $editor   = $current->editor;
+
+	my $filename;
+	if ( defined $document->{file} ) {
+		$filename = $document->{file}->filename;
+	}
+
+	# TODO: improve the message displayed to the user
+	# If the document is not saved, simply return for now
+	return unless $filename;
+
+	my ( $cmd, $arg_ref ) = $document->get_command( { debug => 1 } );
+
+	require Padre::Wx::Dialog::DebugOptions;
+	my $dialog = Padre::Wx::Dialog::DebugOptions->new(
+		$main,
+	);
+
+	$dialog->perl_interpreter->SetValue( $arg_ref->{perl} );
+	$dialog->perl_args->SetValue( $arg_ref->{perl_args} );
+	$dialog->find_script->SetValue( $arg_ref->{script} );
+	$dialog->run_directory->SetValue( $arg_ref->{run_directory} );
+	$dialog->script_options->SetValue( $arg_ref->{script_args} );
+
+	$dialog->find_script->SetFocus;
+
+	if ( $dialog->ShowModal == Wx::ID_CANCEL ) {
+		return;
+	}
+	$arg_ref->{perl}          = $dialog->perl_interpreter->GetValue();
+	$arg_ref->{perl_args}     = $dialog->perl_args->GetValue();
+	$arg_ref->{script}        = $dialog->find_script->GetValue();
+	$arg_ref->{run_directory} = $dialog->run_directory->GetValue();
+	$arg_ref->{script_args}   = $dialog->script_options->GetValue();
+	$dialog->Destroy;
+
+	#save history for next time (when we might just hit run!
+	{
+		my $history = $main->lock( 'DB', 'refresh_recent' );
+
+		#save which script the user selected to run for this document
+		Padre::DB::History->create(
+			type => "run_script_" . File::Basename::fileparse($filename),
+			name => $arg_ref->{script},
+		);
+		my $script_base = File::Basename::fileparse( $arg_ref->{script} );
+
+		Padre::DB::History->create(
+			type => 'run_directory_' . $script_base,
+			name => $arg_ref->{run_directory},
+		);
+		Padre::DB::History->create(
+			type => "run_script_args_" . $script_base,
+			name => $arg_ref->{script_args},
+		);
+		Padre::DB::History->create(
+			type => "run_perl_" . $script_base,
+			name => $arg_ref->{perl},
+		);
+		Padre::DB::History->create(
+			type => "run_perl_args_" . $script_base,
+			name => $arg_ref->{perl_args},
+		);
+	}
+
+	#now run the debugger with the new command
+	$self->debug_perl($arg_ref);
+	$self->update_debugger_buttons_on;
+
+	return;
+}
 
 
 1;

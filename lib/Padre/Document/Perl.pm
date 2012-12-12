@@ -305,12 +305,13 @@ sub guess_hashbang_params {
 	my $self = shift;
 
 	#Or should I use PPI to get the first comment?
-	my $text    = $self->text_get;
-	if ($text =~ /^#!(.*)\n/) {
+	my $text = $self->text_get;
+	if ( $text =~ /^#!(.*)\n/ ) {
 		my $hashbang = $1;
+
 		#presume that space dash ( -) comes after the perl exe.. (bad guess, hopefully someone will know better?)
-		if ($hashbang =~ /(.*?)(\s-.*)/) {
-			return ($1, $2);
+		if ( $hashbang =~ /(.*?)(\s-.*)/ ) {
+			return ( $1, $2 );
 		}
 	}
 	return ();
@@ -344,64 +345,93 @@ sub get_function_regex {
 Returns the full command (interpreter, file name (maybe temporary) and arguments
 for both of them) for running the current document.
 
-Optionally accepts a hash reference with the following boolean arguments:
+Optionally accepts a hash reference with the following arguments:
   'debug' - return a command where the debugger is started
   'trace' - activates diagnostic output
+  'perl'  - path and exe name for the perl to be run
+  'perl_args' - arguments to perl to be used
+  'scipt' - path and name of script to be run
+  'script_args' - arguments to the script
 
 =cut
 
 sub get_command {
 	my $self    = shift;
 	my $arg_ref = shift || {};
-	my $debug   = exists $arg_ref->{debug} ? $arg_ref->{debug} : 0;
-	my $trace   = exists $arg_ref->{trace} ? $arg_ref->{trace} : 0;
 	my $config  = $self->config;
 
+	$arg_ref->{debug} = 0 if !exists $arg_ref->{debug};
+	$arg_ref->{trace} = 0 if !exists $arg_ref->{trace};
+
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename =
+	my $current_document =
 		  $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
+	#TODO: suspect using just the document filename is too simple - there coulf be lots of the same name in a project, or worse, when running more than one project
+	my $document_base = File::Basename::fileparse($current_document);
+
+	#see if we remember a scriptname for this document
+	if ( !exists $arg_ref->{script} ) {
+
+		#rather than just identifying the history by 'script' - we need to try to recal which script was set for a random document, and then use _that_
+		#AND if we can do that onchange of the script name in the options dialog, we win big.
+		$arg_ref->{script} = Padre::DB::History->previous( 'run_script_' . $document_base );
+		$arg_ref->{script} = $current_document if !exists $arg_ref->{script} || !$arg_ref->{script};
+	}
+
+	#TODO: suspect using just the document filename is too simple - there coulf be lots of the same name in a project, or worse, when running more than one project
+	my $script_base = File::Basename::fileparse( $arg_ref->{script} );
+
+	#place to run script
+	if ( !exists( $arg_ref->{run_directory} ) ) {
+		$arg_ref->{run_directory} = Padre::DB::History->previous( 'run_directory_' . $document_base );
+
+		if ( !exists $arg_ref->{run_directory} || !$arg_ref->{run_directory} ) {
+			my ( $volume, $directory, $file ) = File::Spec->splitpath( $arg_ref->{script} );
+			$arg_ref->{run_directory} = File::Spec->catpath( $volume, $directory );
+		}
+	}
+
+	$arg_ref->{script_args} = Padre::DB::History->previous( 'run_script_args_' . $script_base );
+	$arg_ref->{script_args} = $config->run_script_args_default
+		if !exists $arg_ref->{script_args} || !$arg_ref->{script_args};
+
 	# Run with console Perl to prevent unexpected results under wxperl
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
-	my $perl = $self->get_interpreter;
+	$arg_ref->{perl}      = Padre::DB::History->previous( 'run_perl_' . $script_base );
+	$arg_ref->{perl}      = $self->get_interpreter if !exists $arg_ref->{perl} || !$arg_ref->{perl};
+	$arg_ref->{perl_args} = Padre::DB::History->previous( 'run_perl_args_' . $script_base );
+	if ( !exists $arg_ref->{perl_args} || !$arg_ref->{perl_args} ) {
+		$arg_ref->{perl_args} = $config->run_interpreter_args_default;
 
-	# Set default arguments
-	my %run_args = (
-		interpreter => $config->run_interpreter_args_default,
-		script      => $config->run_script_args_default,
-	);
-	
-	#add params that are in the hash-bang line of the file itself
-	my ($hashbangperl, $hashbangparams) = $self->guess_hashbang_params();
-	$run_args{interpreter} = $hashbangparams if $hashbangparams;
-
-	# Overwrite default arguments with the ones preferred for given document
-	foreach my $arg ( keys %run_args ) {
-		my $type = "run_${arg}_args_" . File::Basename::fileparse($filename);
-		$run_args{$arg} = Padre::DB::History->previous($type) if Padre::DB::History->previous($type);
+		#add params that are in the hash-bang line of the file itself
+		my ( $hashbangperl, $hashbangparams ) = $self->guess_hashbang_params();
+		$arg_ref->{perl_args} = $hashbangparams if $hashbangparams;
 	}
 
 	# (Ticket #530) Pack args here, because adding the space later confuses the called Perls @ARGV
 	my $script_args = '';
-	$script_args = ' ' . $run_args{script} if defined( $run_args{script} ) and ( $run_args{script} ne '' );
+	$script_args = ' ' . $arg_ref->{script_args}
+		if defined( $arg_ref->{script_args} )
+		and ( $arg_ref->{script_args} ne '' );
 
-	my $dir = File::Basename::dirname($filename);
+	my $dir = File::Basename::dirname( $arg_ref->{script} );
 	chdir $dir;
 
 	# perl5db.pl needs to be given absolute filenames
 	my $shortname;
-	if ($debug) {
-		$shortname = $filename;
+	if ( $arg_ref->{debug} ) {
+		$shortname = $arg_ref->{script};
 	} else {
-		$shortname = File::Basename::basename($filename);
+		$shortname = File::Basename::basename( $arg_ref->{script} );
 	}
 
-	my @commands = (qq{"$perl"});
-	push @commands, '-d' if $debug;
-	push @commands, '-Mdiagnostics(-traceonly)' if $trace;
+	my @commands = (qq{"$arg_ref->{perl}"});
+	push @commands, '-d' if $arg_ref->{debug};
+	push @commands, '-Mdiagnostics(-traceonly)' if $arg_ref->{trace};
 	if (Padre::Feature::DEVEL_ENDSTATS) {
 		my $devel_endstats_options = $config->feature_devel_endstats_options;
 		push @commands, '-MDevel::EndStats' . ( $devel_endstats_options ne '' ? "=$devel_endstats_options" : '' );
@@ -410,7 +440,7 @@ sub get_command {
 		my $devel_traceuse_options = $config->feature_devel_traceuse_options;
 		push @commands, '-d:TraceUse' . ( $devel_traceuse_options ne '' ? "=$devel_traceuse_options" : '' );
 	}
-	push @commands, "$run_args{interpreter}";
+	push @commands, "$arg_ref->{perl_args}";
 	if (Padre::Constant::WIN32) {
 		push @commands, qq{"$shortname"$script_args};
 	} else {
@@ -418,7 +448,7 @@ sub get_command {
 		# Use single quote to allow spaces in the shortname of the file #1219
 		push @commands, qq{'$shortname'$script_args};
 	}
-	return join ' ', @commands;
+	return ( join( ' ', @commands ), $arg_ref );
 }
 
 =head2 get_inc
@@ -434,7 +464,7 @@ sub get_inc {
 	my $perl = $self->get_interpreter or return;
 
 	unless ( $inc{$perl} ) {
-		
+
 		#ToDo should we be using run_in_dir here? see Padre::Util
 		my $incs = qx{$perl -e "print join ';', \@INC"};
 		chomp $incs;
@@ -759,7 +789,7 @@ sub _find_method {
 				last if not defined $tag;
 				next
 					if not defined $tag->{extension}{class}
-						or not $tag->{extension}{class} eq $class;
+					or not $tag->{extension}{class} eq $class;
 				last;
 			} continue {
 				$tag = $parser->findNextTag;
