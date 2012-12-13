@@ -1,6 +1,7 @@
 package Padre::Document::Perl;
 
-use 5.008;
+use v5.10;
+# use 5.008;
 use strict;
 use warnings;
 use Carp              ();
@@ -24,7 +25,7 @@ our @ISA        = qw{
 	Padre::Document
 };
 
-
+use Carp::Always::Color;
 
 
 
@@ -346,18 +347,18 @@ Returns the full command (interpreter, file name (maybe temporary) and arguments
 for both of them) for running the current document.
 
 Optionally accepts a hash reference with the following arguments:
-  'debug' - return a command where the debugger is started
-  'trace' - activates diagnostic output
-  'perl'  - path and exe name for the perl to be run
-  'perl_args' - arguments to perl to be used
-  'scipt' - path and name of script to be run
+  'debug'       - return a command where the debugger is started
+  'trace'       - activates diagnostic output
+  'perl'        - path and exe name for the perl to be run
+  'perl_args'   - arguments to perl to be used
+  'scipt'       - path and name of script to be run
   'script_args' - arguments to the script
 
 =cut
 
 sub get_command {
 	my $self    = shift;
-	my $arg_ref = shift || {};
+	my $arg_ref = shift // {};
 	my $config  = $self->config;
 
 	$arg_ref->{debug} = 0 if !exists $arg_ref->{debug};
@@ -387,7 +388,8 @@ sub get_command {
 	#place to run script
 	if ( !exists( $arg_ref->{run_directory} ) ) {
 		$arg_ref->{run_directory} = Padre::DB::History->previous( 'run_directory_' . $document_base );
-
+		
+		#ToDo look below - Sven all yours
 		if ( !exists $arg_ref->{run_directory} || !$arg_ref->{run_directory} ) {
 			my ( $volume, $directory, $file ) = File::Spec->splitpath( $arg_ref->{script} );
 			$arg_ref->{run_directory} = File::Spec->catpath( $volume, $directory );
@@ -447,6 +449,12 @@ sub get_command {
 
 		# Use single quote to allow spaces in the shortname of the file #1219
 		push @commands, qq{'$shortname'$script_args};
+	}
+	say join( ' ', @commands ), $arg_ref;
+	if ( $arg_ref ) {
+		say join( ' ', @commands ), $arg_ref;
+	} else {
+		say join( ' ', @commands );
 	}
 	return ( join( ' ', @commands ), $arg_ref );
 }
