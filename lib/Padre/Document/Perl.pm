@@ -1,7 +1,6 @@
 package Padre::Document::Perl;
 
 use v5.10;
-# use 5.008;
 use strict;
 use warnings;
 use Carp              ();
@@ -24,8 +23,6 @@ our @ISA        = qw{
 	Padre::Role::Task
 	Padre::Document
 };
-
-use Carp::Always::Color;
 
 
 
@@ -450,12 +447,7 @@ sub get_command {
 		# Use single quote to allow spaces in the shortname of the file #1219
 		push @commands, qq{'$shortname'$script_args};
 	}
-	say join( ' ', @commands ), $arg_ref;
-	if ( $arg_ref ) {
-		say join( ' ', @commands ), $arg_ref;
-	} else {
-		say join( ' ', @commands );
-	}
+
 	my $cmd = join( ' ', @commands );
 	return $cmd if !wantarray;
 	return ( $cmd, $arg_ref );
