@@ -49,7 +49,7 @@ sub browse_scripts {
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext("Select Script to debug into"),
-		File::Spec->catpath( $volume, $directory )
+		File::Spec->catpath( $volume, $directory, '' )
 	);
 	my $result = $dialog->ShowModal;
 	$dialog->Destroy;
@@ -76,7 +76,7 @@ sub browse_run_directory {
 	my $dialog = Wx::DirDialog->new(
 		$self,
 		Wx::gettext("Select Directory to run script in"),
-		File::Spec->catpath( $volume, $directory )
+		File::Spec->catpath( $volume, $directory, '' )
 	);
 	my $result = $dialog->ShowModal;
 	$dialog->Destroy;

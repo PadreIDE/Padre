@@ -392,7 +392,7 @@ sub get_command {
 		#ToDo look below - Sven all yours
 		if ( !exists $arg_ref->{run_directory} || !$arg_ref->{run_directory} ) {
 			my ( $volume, $directory, $file ) = File::Spec->splitpath( $arg_ref->{script} );
-			$arg_ref->{run_directory} = File::Spec->catpath( $volume, $directory );
+			$arg_ref->{run_directory} = File::Spec->catpath( $volume, $directory, '' );
 		}
 	}
 
