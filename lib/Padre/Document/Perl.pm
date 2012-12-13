@@ -456,7 +456,9 @@ sub get_command {
 	} else {
 		say join( ' ', @commands );
 	}
-	return ( join( ' ', @commands ), $arg_ref );
+	my $cmd = join( ' ', @commands );
+	return $cmd if !wantarray;
+	return ( $cmd, $arg_ref );
 }
 
 =head2 get_inc
