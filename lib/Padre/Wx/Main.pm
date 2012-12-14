@@ -2971,6 +2971,7 @@ sub run_command {
 
 	# ticket #205, reset output style to neutral
 	$self->output->style_neutral;
+	$self->output->AppendText( "Running: $cmd\n" );
 
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
