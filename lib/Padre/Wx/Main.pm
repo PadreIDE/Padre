@@ -6096,6 +6096,8 @@ sub editor_of_file {
 		my $document = $editor->{Document}     or return;
 		defined( $document->{file} ) or next;
 		my $doc_filename = $document->{file}->{filename} or next;
+		#below fix for -> stop dumping the following on console 'Use of uninitialized value in string eq'
+		defined( $file->{filename} ) or next;
 		return $id if $doc_filename eq $file->{filename};
 	}
 	return;
