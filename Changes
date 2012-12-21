@@ -75,6 +75,7 @@ the even version for the release, even during development.
     - Add Debug-Launch-Options dialog (SDOWIDEIT)
     - fix for -> stop dumping the following on console 
       'Use of uninitialized value in string eq' (BOWTIE)
+    - Hack for svn 1.7 esp Padre trunk to reenable VCS feature (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
