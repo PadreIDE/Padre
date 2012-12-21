@@ -73,6 +73,8 @@ the even version for the release, even during development.
     - Added Debug-Launch-Options wxStatic text to Debugger-Output (BOWTIE)
     - Add method debug_launch_options to Debugget-Output (BOWTIE)
     - Add Debug-Launch-Options dialog (SDOWIDEIT)
+    - fix for -> stop dumping the following on console 
+      'Use of uninitialized value in string eq' (BOWTIE)
 
 0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
