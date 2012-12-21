@@ -163,6 +163,12 @@ sub _vcs {
 	my $root  = shift;
 	if ( -d File::Spec->catdir( $root, '.svn' ) ) {
 		return Padre::Constant::SUBVERSION;
+	} 
+	#Hack for svn 1.7 esp Padre trunk to reenable VCS feature.
+	else {
+		if ( -d File::Spec->catdir( $root, '..', '.svn' ) ) {
+			return Padre::Constant::SUBVERSION;
+		}
 	}
 	if ( -d File::Spec->catdir( $root, '.git' ) ) {
 		return Padre::Constant::GIT;
