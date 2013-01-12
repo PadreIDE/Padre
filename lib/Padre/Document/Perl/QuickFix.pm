@@ -26,7 +26,7 @@ sub quick_fix_list {
 
 	foreach my $fix (@fixes) {
 		(my $source = "$fix.pm") =~ s{::}{/}g;
-		if (eval { require $source })
+		if (eval { require $source }) {
 			push @items, $fix->new->apply( $doc, $document );
 		} else {
 			warn "failed to load $fix\n";
