@@ -635,7 +635,7 @@ See also L<http://padre.perlide.org/contact.html>
 
 =head1 COPYRIGHT
 
-Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+Copyright 2008-2013 The Padre development team as listed in Padre.pm.
 L<http://padre.perlide.org/>
 
 =head1 LICENSE
@@ -843,7 +843,7 @@ Tatsuhiko Miyagawa for consulting on our I18N and L10N support.
 
 =cut
 
-# Copyright 2008-2012 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2013 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

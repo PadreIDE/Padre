@@ -79,7 +79,7 @@ the even version for the release, even during development.
     - Fix error of missing { in QuickFix.pm from r19585 (BOWTIE)
     - Remove Subroutine prototypes Browser.pm (BOWTIE)
     - Fix PerlSub.pm eol and missing $VERSION (BOWTIE)
-    
+    - Set Copyright 2008-2013 (BOWTIE)
     
 
 0.97 Development version, not released
