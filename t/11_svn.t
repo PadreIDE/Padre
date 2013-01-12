@@ -7,7 +7,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
-	if ( -d '.svn' ) {
+	if ( -d '.svn' || -d '../.svn' ) {
 		plan tests => 4;
 	} else {
 		plan skip_all => 'Not in an SVN checkout';
