@@ -77,6 +77,8 @@ the even version for the release, even during development.
       'Use of uninitialized value in string eq' (BOWTIE)
     - Hack for svn 1.7 esp Padre trunk to reenable VCS feature (BOWTIE)
     - Fix error of missing { in QuickFix.pm from r19585 (BOWTIE)
+    - Remove Subroutine prototypes Browser.pm (BOWTIE)
+    -
     
 
 0.97 Development version, not released

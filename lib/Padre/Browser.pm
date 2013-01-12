@@ -158,11 +158,10 @@ sub new {
 }
 
 # Load a class, safely and efficiently
-sub _load_class ($)
-{
+sub _load_class {
 	my $class = shift;
-	(my $source = "$class.pm") =~ s{::}{/}g;
-	eval { require $source }
+	( my $source = "$class.pm" ) =~ s{::}{/}g;
+	eval { require $source };
 }
 
 sub load_provider {
@@ -236,8 +235,7 @@ sub provider_for {
 	my ( $self, $type ) = @_;
 	my $p;
 	eval {
-		if ( exists $self->get_providers->{$type} )
-		{
+		if ( exists $self->get_providers->{$type} ) {
 			$p = $self->get_providers->{$type}->new;
 		}
 	};
@@ -257,8 +255,7 @@ sub viewer_for {
 	my ( $self, $type ) = @_;
 	my $v;
 	eval {
-		if ( exists $self->get_viewers->{$type} )
-		{
+		if ( exists $self->get_viewers->{$type} ) {
 			$v = $self->get_viewers->{$type}->new;
 		}
 	};
