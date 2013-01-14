@@ -1,17 +1,18 @@
 package Padre::Task::Diff;
 
-use 5.008005;
+use v5.10;
 use strict;
 use warnings;
-use Padre::Task     ();
-use Padre::Util     ();
-use Algorithm::Diff ();
-use Encode          ();
-use File::Basename  ();
-use File::Spec      ();
-use File::Which     ();
-use File::Temp      ();
-use Params::Util    ();
+use Padre::Task      ();
+use Padre::Util      ();
+use Padre::Util::SVN ();
+use Algorithm::Diff  ();
+use Encode           ();
+use File::Basename   ();
+use File::Spec       ();
+use File::Which      ();
+use File::Temp       ();
+use Params::Util     ();
 use Padre::Logger qw(TRACE);
 
 our $VERSION = '0.97';
@@ -52,10 +53,15 @@ sub new {
 	# Obtain document project dir
 	$self->{project_dir} = $document->project_dir;
 
+	# If SVN is version 1.7.x then true
+	if ( Padre::Util::SVN::local_svn_ver() ) {
+		$self->{svn_version} = 1;
+	} else {
+		$self->{svn_version} = 0;
+	}
+
 	return $self;
 }
-
-
 
 
 
@@ -117,13 +123,31 @@ sub _find_vcs_diff {
 # Contributed by submersible_toaster
 sub _find_svn_diff {
 	my ( $self, $filename, $text, $encoding ) = @_;
+	TRACE("encoding: $encoding") if DEBUG;
+	my $local_cheat;
 
-	my $local_cheat = File::Spec->catfile(
-		File::Basename::dirname($filename),
-		'.svn', 'text-base',
-		File::Basename::basename($filename) . '.svn-base'
-	);
+	# ToDo we need to check for svn 1.7.x as the following dose not with svn 1.7.x
+	if ( $self->{svn_version} ) {
+		# my $dir = File::Basename::dirname($filename);
+		my($file, $dir, $suffix) = File::Basename::fileparse($filename);
+		TRACE("file: $file") if DEBUG;
+		TRACE("dir: $dir") if DEBUG;
+		my $svn_client_info_ref =
+				Padre::Util::run_in_directory_two( cmd => 'svn cat '.$filename, dir => $dir, option => '0' );
+		$local_cheat = $svn_client_info_ref->{output};
+		TRACE("file-base-name: $local_cheat") if DEBUG;
+		
+		
+	} else {
+		$local_cheat = File::Spec->catfile(
+			File::Basename::dirname($filename),
+			'.svn', 'text-base',
+			File::Basename::basename($filename) . '.svn-base'
+		);
+	}
+
 	my $origin = _slurp( $local_cheat, $encoding );
+	TRACE("origin: $origin") if DEBUG;
 	return $origin ? $self->_find_diffs( $$origin, $text ) : undef;
 }
 
@@ -172,6 +196,7 @@ sub _find_git_diff {
 		'1>' . $out->filename,
 		'2>' . $err->filename,
 	);
+	TRACE("git command: @cmd") if DEBUG;
 
 	# We need shell redirection (list context does not give that)
 	# Run command in directory
@@ -182,6 +207,7 @@ sub _find_git_diff {
 	my $stderr = _slurp( $err->filename, $encoding );
 
 	if ( defined($stderr) and ( $$stderr eq '' ) and defined($stdout) ) {
+		TRACE("git stdout: $$stdout") if DEBUG;
 		return $self->_find_diffs( $$stdout, $text );
 	}
 

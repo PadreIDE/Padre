@@ -60,7 +60,6 @@ use Padre::Wx::Role::Timer    ();
 use Padre::Wx::Role::Idle     ();
 use Padre::Locale::T;
 use Padre::Logger;
-
 our $VERSION    = '0.97';
 our $COMPATIBLE = '0.91';
 our @ISA        = qw{
@@ -1567,7 +1566,7 @@ sub refresh_title {
 	require Padre::Util::SVN;
 	my $revision = Padre::Util::SVN::padre_revision();
 	if ( defined $revision ) {
-		$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
+		$title .= "  svn: $revision (\$VERSION = $Padre::VERSION)";
 	}
 
 	unless ( $self->GetTitle eq $title ) {
@@ -2971,7 +2970,7 @@ sub run_command {
 
 	# ticket #205, reset output style to neutral
 	$self->output->style_neutral;
-	$self->output->AppendText( "Running: $cmd\n" );
+	$self->output->AppendText("Running: $cmd\n");
 
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
@@ -4255,11 +4254,12 @@ sub on_open_selection {
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
 			Wx::gettext("Open selection"), ''
 		);
+
 		#help the user by loading whats on the current line
-		my $pos    = $editor->GetCurrentPos;
-		my $line   = $editor->LineFromPosition($pos);
-		my $first  = $editor->PositionFromLine($line);
-		my $last  = $editor->PositionFromLine($line+1);
+		my $pos   = $editor->GetCurrentPos;
+		my $line  = $editor->LineFromPosition($pos);
+		my $first = $editor->PositionFromLine($line);
+		my $last  = $editor->PositionFromLine( $line + 1 );
 		$text = $editor->GetTextRange( $first, $last );
 		if ($text) {
 			$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
@@ -4309,6 +4309,7 @@ sub on_open_selection {
 	}
 
 	unless (@files) {
+
 		#replace this with the original chooser dialog - so the user can refine it
 		$self->message(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
@@ -6096,6 +6097,7 @@ sub editor_of_file {
 		my $document = $editor->{Document}     or return;
 		defined( $document->{file} ) or next;
 		my $doc_filename = $document->{file}->{filename} or next;
+
 		#below fix for -> stop dumping the following on console 'Use of uninitialized value in string eq'
 		defined( $file->{filename} ) or next;
 		return $id if $doc_filename eq $file->{filename};
