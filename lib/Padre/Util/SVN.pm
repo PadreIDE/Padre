@@ -9,10 +9,6 @@ use strict;
 use warnings;
 use File::Spec  ();
 use File::Which ();
-# use Data::Printer {
-	# caller_info => 1,
-	# colored     => 1,
-# };
 our $VERSION = '0.97';
 
 my $PADRE = undef;
@@ -27,15 +23,12 @@ sub padre_revision {
 
 			my $svn_client_info_ref =
 				Padre::Util::run_in_directory_two( cmd => 'svn info', dir => $dir, option => '0' );
-			# p $svn_client_info_ref;
 
 			$svn_client_info_ref->{output} =~ /(?:^Revision:\s)(?<svn_version>\d+)/m;
-			# say $+{svn_version};
 			$PADRE = $+{svn_version};
 		}
 
 	}
-	# p $PADRE;
 	return $PADRE;
 }
 

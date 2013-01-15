@@ -6,23 +6,17 @@ use v5.10;
 use strict;
 use warnings;
 use File::Spec ();
-use Data::Printer {
-	caller_info => 1,
-	colored     => 1,
-};
 our $VERSION = '0.97';
 
 # Find the mime type for a file
 sub file_mimetype {
 	my $hash = file_props(shift);
-	p $hash;
 	return $hash->{'svn:mime-type'};
 }
 
 # Find and parse the properties file
 sub file_props {
 	my $file = shift;
-	p $file;
 	my $base = find_props($file) or return undef;
 	return parse_props($base);
 }
@@ -30,7 +24,6 @@ sub file_props {
 # Find the props-base for a file
 sub find_props {
 	my $file = shift;
-	p $file;
 	my ( $v, $d, $f ) = File::Spec->splitpath($file);
 	my $path = File::Spec->catpath(
 		$v,
@@ -50,7 +43,6 @@ sub find_props {
 # Parse a property file
 sub parse_props {
 	my $file = shift;
-	p $file;
 	open( my $fh, '<', $file ) or die "Failed to open '$file'";
 
 	# Simple state parser
