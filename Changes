@@ -81,6 +81,7 @@ the even version for the release, even during development.
     - Fix PerlSub.pm eol and missing $VERSION (BOWTIE)
     - Set Copyright 2008-2013 (BOWTIE)
     - Add some more support for svn 1.7.x (BOWTIE)
+    - Remove some old cruff and comments from debug testing (BOWTIE)
     
 
 0.97 Development version, not released

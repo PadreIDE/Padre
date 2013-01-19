@@ -2,7 +2,7 @@ package Padre::Breakpoints;
 
 #ToDo Q is this package wrong in the wronge location
 
-use 5.008;
+use v5.10;
 use strict;
 use warnings;
 
@@ -61,7 +61,6 @@ sub show_breakpoints {
 	}
 
 	for ( 0 .. $#tuples ) {
-
 		if ( $tuples[$_][3] == 1 ) {
 			$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 		} else {

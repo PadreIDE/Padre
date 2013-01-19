@@ -14,11 +14,6 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
-use Time::HiRes;
-# use Data::Printer {
-	# caller_info => 1,
-	# colored     => 1,
-# };
 
 our $VERSION = '0.97';
 our @ISA     = qw{
@@ -36,7 +31,7 @@ use constant {
 	BLACK      => Wx::Colour->new('black'),
 };
 
-# use Data::Printer { caller_info => 1, colored => 1, };
+
 #######
 # new
 #######
@@ -316,8 +311,6 @@ sub debug_perl {
 	$self->{client} = Debug::Client->new(
 		host => $host,
 		port => $port,
-
-		# listen => 1,
 	);
 
 	#ToDo remove when Debug::Client 0.22 is released.
@@ -337,7 +330,7 @@ sub debug_perl {
 
 	if ( $self->{set_bp} == 0 ) {
 
-		# get bp's from db
+		# get bp's from db and set b|B (remember it's a toggle) hence we do this only once
 		$self->_get_bp_db;
 		$self->{set_bp} = 1;
 	}
@@ -370,8 +363,8 @@ sub _set_debugger {
 			$self->main->{breakpoints}->on_refresh_click;
 		}
 
-		# we only want to do this if we are loading other packages of ours
-		# $self->_bp_autoload();
+		# we only want to do this if we are loading other files in this packages of ours
+		$self->_bp_autoload();
 	}
 
 	$editor->goto_line_centerize( $row - 1 );
@@ -568,14 +561,8 @@ sub debug_run_till {
 	my $param = shift;
 	my $main  = $self->main;
 
-	# say 'debug run till';
-
 	my @list_request;
 	eval { @list_request = $self->{client}->run($param); };
-
-	# say 'list_request';
-	# p @list_request;
-	# eval { $self->{client}->run(); };
 
 	#ToDo remove when Debug::Client 0.22 is released.
 	my $temp_buffer;
@@ -585,9 +572,6 @@ sub debug_run_till {
 		$temp_buffer = $self->{client}->get_buffer;
 	}
 
-
-	# say 'temp_buffer';
-	# p $temp_buffer;
 	my $module = $self->{client}->module;
 	$self->{client}->get_lineinfo;
 	if ( $module eq '<TERMINATED>' ) {
@@ -741,7 +725,6 @@ sub _output_variables {
 		$self->get_local_variables;
 	}
 
-
 	# Only enable global variables if we are debuging in a project
 	# why dose $self->{project_dir} contain the root when no magic file present
 	#TODO trying to stop debug X & V from crashing
@@ -878,9 +861,7 @@ sub _get_bp_db {
 		# if ( $tuples[$_][1] =~ m/^$self->{current_file}$/ ) {
 		if ( $tuples[$_][1] eq $self->{current_file} ) {
 
-			#Added a little time out to stop MARKER_NOT_BREAKABLE from wrongly happing
-			sleep( 0.080 );
-			if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
+			if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) == 1 ) {
 				$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 			} else {
 				$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
@@ -899,9 +880,7 @@ sub _get_bp_db {
 
 		if ( $tuples[$_][1] =~ m/^$self->{project_dir}/ ) {
 			if ( $tuples[$_][1] ne $self->{current_file} ) {
-				sleep( 0.080 );
 				if ( $self->{client}->__send("f $tuples[$_][1]") !~ m/^No file matching/ ) {
-
 					unless ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
 						Padre::DB->do( 'update debug_breakpoints SET active = ? WHERE id = ?', {}, 0, $tuples[$_][0], );
 					}
@@ -932,11 +911,7 @@ sub _bp_autoload {
 
 	#TODO is there a better way
 	$self->{current_file} = $document->filename;
-
-	# my $sql_select = "WHERE filename = \"$self->{current_file}\"";
 	my $sql_select = "WHERE filename = ?";
-
-	# my @tuples = $self->{debug_breakpoints}->select($sql_select);
 	my @tuples = $self->{debug_breakpoints}->select( $sql_select, $self->{current_file} );
 
 	for ( 0 .. $#tuples ) {
@@ -944,7 +919,7 @@ sub _bp_autoload {
 		TRACE("show breakpoints autoload: self->{client}->set_breakpoint: $tuples[$_][1] => $tuples[$_][2]") if DEBUG;
 
 		# autoload of breakpoints and mark file
-		if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) ) {
+		if ( $self->{client}->set_breakpoint( $tuples[$_][1], $tuples[$_][2] ) == 1 ) {
 			$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_BREAKPOINT() );
 		} else {
 			$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
@@ -1011,15 +986,14 @@ sub on_debug_clicked {
 	$self->update_debugger_buttons_on;
 }
 
-#debugging _on_
-#TODO: redo the button enable/disable/show hide code as a state based refresh and abstract so things like step_in are menu items too (and hotkeys???) (the 'n (exp)' is misleading, as that doesn't actually work) 
-#ToDo again missed the point, it's perldebug description, think minimal, we don't need a menu system, but you could add Key-Bindings to buttons instead as there are none :)
+#######
+# sub update_debugger_buttons_on
+#######
 sub update_debugger_buttons_on {
 	my $self    = shift;
 	my $arg_ref = shift;
 
-	# p $arg_ref;
-	my $main    = $self->main;
+	my $main = $self->main;
 
 	return unless $self->{client};
 
@@ -1533,6 +1507,7 @@ sub on_launch_options {
 
 	#now run the debugger with the new command
 	$self->debug_perl($arg_ref);
+
 	# p $arg_ref;
 	$self->update_debugger_buttons_on($arg_ref);
 
