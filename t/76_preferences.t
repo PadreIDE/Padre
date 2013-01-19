@@ -46,7 +46,8 @@ ok( $dialog->config_load($config), '->load ok' );
 # SetSelectedFont() doesn't work on wxNullFont.
 my $diff = $dialog->config_diff($config);
 if ($diff) {
-	is scalar keys %$diff, 1, 'only one key defined in the diff';
+	is scalar keys %$diff, 1, 'only one key defined in the diff' or
+		diag explain $diff;
 	ok exists $diff->{editor_font}, 'only key defined is "editor_font"';
 } else {
 	ok !$diff, 'null font loaded, config_diff() returned nothing';
