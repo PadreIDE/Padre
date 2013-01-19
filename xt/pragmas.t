@@ -1,6 +1,6 @@
 #
 # Tests all *.pm files for
-# use 5.008;
+# use 5.008/5.010;
 # use strict;
 # use warnings;
 #
@@ -19,7 +19,7 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 my @files = File::Find::Rule->name('*.pm')->file->in('lib');
 plan tests => scalar @files;
 
-my $pragma = qr{use 5.008(005)?;\s*};
+my $pragma = qr{use (?:5.008(005)?|5.010);\s*}; #use v5.10 will trigger a warning on 5.10.0
 $pragma = qr{${pragma}use strict;\s*};
 $pragma = qr{${pragma}use warnings;\s*};
 
