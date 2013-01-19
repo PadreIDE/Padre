@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my @MODULES = (
-	'Perl::MinimumVersion 1.25',
+	'Perl::MinimumVersion 1.32', #detects \N
 	'Test::MinimumVersion 0.101080',
 );
 
