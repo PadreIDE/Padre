@@ -53,13 +53,6 @@ sub new {
 	# Obtain document project dir
 	$self->{project_dir} = $document->project_dir;
 
-	# If SVN is version 1.7.x then true
-	if ( Padre::Util::SVN::local_svn_ver() ) {
-		$self->{svn_version} = 1;
-	} else {
-		$self->{svn_version} = 0;
-	}
-
 	return $self;
 }
 
@@ -124,19 +117,21 @@ sub _find_vcs_diff {
 sub _find_svn_diff {
 	my ( $self, $filename, $text, $encoding ) = @_;
 
-	if ( $self->{svn_version} ) {
+	# Find the svn command line
+	my $svn = File::Which::which('svn') or return;
 
-		my ( $file, $dir, $suffix ) = File::Basename::fileparse($filename);
-		TRACE("dir: $dir")   if DEBUG;
-		my $svn_client_info_ref =
-			Padre::Util::run_in_directory_two( cmd => 'svn cat ' . $filename, dir => $dir, option => '0' );
-		my $svn_output = $svn_client_info_ref->{output};
+	# Handle spaces in svn executable path under win32
+	$svn = qq{"$svn"} if Padre::Constant::WIN32;
 
-		TRACE("svn output: $svn_output") if DEBUG;
-		return $self->_find_diffs( $svn_output, $text );
-	}
+	my ( $file, $dir, $suffix ) = File::Basename::fileparse($filename);
+	TRACE("dir: $dir") if DEBUG;
+	my $svn_client_info_ref =
+		Padre::Util::run_in_directory_two( cmd => $svn . ' cat ' . $filename, dir => $dir, option => '0' );
+	my $svn_output = $svn_client_info_ref->{output};
 
-	return;
+	TRACE("svn output: $svn_output") if DEBUG;
+	return $self->_find_diffs( $svn_output, $text );
+
 }
 
 # Reads the contents of a file, and decode it using document encoding scheme
