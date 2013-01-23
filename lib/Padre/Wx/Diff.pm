@@ -63,7 +63,9 @@ sub task_finish {
 		my $lines_added   = 0;
 		for my $diff (@$chunk) {
 			my ( $type, $line, $text ) = @$diff;
-
+			TRACE("type: $type") if DEBUG;
+			TRACE("line: $line") if DEBUG;
+			TRACE("text: $text") if DEBUG;
 			# TRACE("$type, $line, $text") if DEBUG;
 
 			unless ($marker_line) {

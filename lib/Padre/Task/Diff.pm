@@ -123,32 +123,20 @@ sub _find_vcs_diff {
 # Contributed by submersible_toaster
 sub _find_svn_diff {
 	my ( $self, $filename, $text, $encoding ) = @_;
-	TRACE("encoding: $encoding") if DEBUG;
-	my $local_cheat;
 
-	# ToDo we need to check for svn 1.7.x as the following dose not with svn 1.7.x
 	if ( $self->{svn_version} ) {
-		# my $dir = File::Basename::dirname($filename);
-		my($file, $dir, $suffix) = File::Basename::fileparse($filename);
-		TRACE("file: $file") if DEBUG;
-		TRACE("dir: $dir") if DEBUG;
+
+		my ( $file, $dir, $suffix ) = File::Basename::fileparse($filename);
+		TRACE("dir: $dir")   if DEBUG;
 		my $svn_client_info_ref =
-				Padre::Util::run_in_directory_two( cmd => 'svn cat '.$filename, dir => $dir, option => '0' );
-		$local_cheat = $svn_client_info_ref->{output};
-		TRACE("file-base-name: $local_cheat") if DEBUG;
-		
-		
-	} else {
-		$local_cheat = File::Spec->catfile(
-			File::Basename::dirname($filename),
-			'.svn', 'text-base',
-			File::Basename::basename($filename) . '.svn-base'
-		);
+			Padre::Util::run_in_directory_two( cmd => 'svn cat ' . $filename, dir => $dir, option => '0' );
+		my $svn_output = $svn_client_info_ref->{output};
+
+		TRACE("svn output: $svn_output") if DEBUG;
+		return $self->_find_diffs( $svn_output, $text );
 	}
 
-	my $origin = _slurp( $local_cheat, $encoding );
-	TRACE("origin: $origin") if DEBUG;
-	return $origin ? $self->_find_diffs( $$origin, $text ) : undef;
+	return;
 }
 
 # Reads the contents of a file, and decode it using document encoding scheme
