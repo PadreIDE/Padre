@@ -17,25 +17,27 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 use Padre::SVN;
-
-my $t = catfile( 't', '11_svn.t' );
-ok( -f $t, "Found file $t" );
-
+use File::Which;
+use Padre::Util::SVN;
 
 
+SKIP: {
+	skip( "svn version 1.7.x is not supported by Padre::SVN", 3 ) if Padre::Util::SVN::local_svn_ver();
 
+	my $t = catfile( 't', '11_svn.t' );
+	ok( -f $t, "Found file $t" );
 
-######################################################################
-# Basic checks
+	# Find the property file
+	my $file = Padre::SVN::find_props($t);
+	ok( -f $file, "Found property file $file" );
 
-# Find the property file
-my $file = Padre::SVN::find_props($t);
-ok( -f $file, "Found property file $file" );
+	# Parse the property file
+	my $hash = Padre::SVN::parse_props($file);
+	is_deeply(
+		$hash,
+		{ 'svn:eol-style' => 'LF' },
+		'Found expected properties',
+	);
 
-# Parse the property file
-my $hash = Padre::SVN::parse_props($file);
-is_deeply(
-	$hash,
-	{ 'svn:eol-style' => 'LF' },
-	'Found expected properties',
-);
+}
+
