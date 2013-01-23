@@ -17,7 +17,6 @@ use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use t::lib::Padre;
 use Padre::SVN;
-use File::Which;
 use Padre::Util::SVN;
 
 
