@@ -9,7 +9,7 @@ use Test::NoWarnings;
 use File::Spec::Functions;
 use t::lib::Padre;
 use Padre::MIME;
-
+use Padre::Util::SVN;
 
 
 
@@ -60,7 +60,7 @@ SCOPE: {
 
 # Detect the mime type using svn metadata
 SKIP: {
-	skip( "Not an SVN checkout", 3 ) unless -e '.svn';
+	skip( "Not an SVN checkout", 3 ) unless -e '.svn' || !Padre::Util::SVN::local_svn_ver();
 
 	my $file = catfile( 't', 'perl', 'zerolengthperl' );
 	ok( -f $file, "Found zero length perl file $file" );
