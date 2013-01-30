@@ -193,11 +193,12 @@ sub launch_file {
 # Wx::Event Convenience Functions
 
 # FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu
-if (Padre::Constant::UNIX) {
-	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_RIGHT_DOWN;
-} else {
+# commeted out as workas against Ubuntu 12.10, this is cool for lot's of Methods only
+# if (Padre::Constant::UNIX) {
+	# *Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_RIGHT_DOWN;
+# } else {
 	*Wx::Event::EVT_CONTEXT = *Wx::Event::EVT_CONTEXT_MENU;
-}
+# }
 
 1;
 
