@@ -83,6 +83,8 @@ the even version for the release, even during development.
     - Add some more support for svn 1.7.x (BOWTIE)
     - Remove some old cruff and comments from debug testing (BOWTIE)
     - Diff now working against svn 1.7.x and 1.6.x (BOWTIE)
+    - FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu - commeted out 
+      as workas against Ubuntu 12.10, this is cool for lot's of Methods only (BOWTIE)
     
 
 0.97 Development version, not released
