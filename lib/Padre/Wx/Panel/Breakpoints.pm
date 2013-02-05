@@ -4,6 +4,7 @@ use v5.10;
 use strict;
 use warnings;
 use Padre::Util                 ();
+use Padre::Breakpoints          ();
 use Padre::Wx                   ();
 use Padre::Wx::Util             ();
 use Padre::Wx::Icon             ();
@@ -195,49 +196,15 @@ sub on_set_breakpoints_clicked {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document;
-	my $editor   = $current->editor;
-	my %bp_action;
 
 	if ( $document->mimetype !~ m/perl/ ) {
 		return;
 	}
 
-	$self->_setup_db;
-	$self->{current_file} = $document->filename;
-	$self->{current_line} = $editor->GetCurrentLine + 1;
-	$bp_action{line}      = $self->{current_line};
-
-	if ($#{ $self->{debug_breakpoints}
-				->select( "WHERE filename = ? AND line_number = ?", $self->{current_file}, $self->{current_line} )
-		} >= 0
-		)
-	{
-
-		# say 'delete me';
-		$editor->MarkerDelete(
-			$self->{current_line} - 1,
-			Padre::Constant::MARKER_BREAKPOINT()
-		);
-		$editor->MarkerDelete(
-			$self->{current_line} - 1,
-			Padre::Constant::MARKER_NOT_BREAKABLE()
-		);
-		$self->_delete_bp_db;
-		$bp_action{action} = 'delete';
-
-	} else {
-
-		# say 'create me';
-		$self->{bp_active} = 1;
-		$editor->MarkerAdd(
-			$self->{current_line} - 1,
-			Padre::Constant::MARKER_BREAKPOINT()
-		);
-		$self->_add_bp_db;
-		$bp_action{action} = 'add';
-	}
-	$self->on_refresh_click;
-	return \%bp_action;
+	#add / remove the breakpoint on the current line
+	my $bp_action = Padre::Breakpoints->set_breakpoints_clicked;
+	
+	return $bp_action;
 }
 
 #######

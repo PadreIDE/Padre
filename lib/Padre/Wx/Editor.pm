@@ -27,6 +27,7 @@ use Padre::Config             ();
 use Padre::Feature            ();
 use Padre::Util               ();
 use Padre::DB                 ();
+use Padre::Breakpoints        ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Role::Main     ();
@@ -326,12 +327,7 @@ sub new {
 
 			#}
 		} elsif ( $event->GetMargin == 1 ) {
-			require Padre::Breakpoints;
 			Padre::Breakpoints->set_breakpoints_clicked($line_clicked);
-			Padre::Breakpoints->show_breakpoints();
-			if ( $main->{breakpoints} ) {
-				$main->{breakpoints}->on_refresh_click;
-			}						
 		}
 	}
 );

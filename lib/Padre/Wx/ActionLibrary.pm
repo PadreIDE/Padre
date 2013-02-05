@@ -7,15 +7,16 @@ package Padre::Wx::ActionLibrary;
 use 5.008005;
 use strict;
 use warnings;
-use File::Spec        ();
-use Params::Util      ();
-use Padre::Feature    ();
-use Padre::Current    ();
-use Padre::Constant   ();
-use Padre::MIME       ();
-use Padre::Wx         ();
-use Padre::Wx::Menu   ();
-use Padre::Wx::Action ();
+use File::Spec         ();
+use Params::Util       ();
+use Padre::Feature     ();
+use Padre::Current     ();
+use Padre::Constant    ();
+use Padre::MIME        ();
+use Padre::Breakpoints ();
+use Padre::Wx          ();
+use Padre::Wx::Menu    ();
+use Padre::Wx::Action  ();
 use Padre::Locale::T;
 use Padre::Logger;
 
@@ -2180,13 +2181,7 @@ sub init {
 			comment => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 			menu_event => sub {
-				if ( $_[0]->{breakpoints} ) {
-					$_[0]->{breakpoints}->on_set_breakpoints_clicked();
-				} else {
-					require Padre::Breakpoints;
-					Padre::Breakpoints->set_breakpoints_clicked();
-					Padre::Breakpoints->show_breakpoints();
-				}
+				Padre::Breakpoints->set_breakpoints_clicked();
 				return;
 			},
 		);

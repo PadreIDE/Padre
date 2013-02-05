@@ -43,6 +43,14 @@ sub set_breakpoints_clicked {
 		);
 		$bp_action{action} = 'add';
 	}
+	#update the breakpoint panel
+        if ( $editor->main->{breakpoints} ) {
+                $editor->main->{breakpoints}->on_refresh_click();
+        }
+	#update the debugger client - if we're currently debugging
+        if ( $editor->main->{debugger} ) {
+            $editor->main->{debugger}->update_debugger_breakpoint(\%bp_action);
+        }
 
 	return \%bp_action;
 }

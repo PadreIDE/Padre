@@ -12,6 +12,7 @@ use Padre::Wx::Util          ();
 use Padre::Wx::Icon          ();
 use Padre::Wx::Role::View    ();
 use Padre::Wx::FBP::Debugger ();
+use Padre::Breakpoints       ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
 
@@ -1204,44 +1205,42 @@ sub on_list_action_clicked {
 # Event handler on_running_bp_set_clicked b|B
 #######
 sub on_running_bp_clicked {
+	my $bp_action_ref = Padre::Breakpoints->set_breakpoints_clicked;
+
+	return;
+}
+sub update_debugger_breakpoint {
 	my $self     = shift;
+	my $bp_action_ref = shift;
 	my $main     = $self->main;
 	my $editor   = $self->current->editor;
 	my $document = $self->current->document;
 	$self->{current_file} = $document->filename;
+	
+	if ( $self->{client} ) {
+		if ( $bp_action_ref->{action} eq 'add' ) {
+			my $result = $self->{client}->set_breakpoint( $self->{current_file}, $bp_action_ref->{line} );
+			if ( $result == 0 ) {
 
-	my $bp_action_ref;
-	if ( $self->main->{breakpoints} ) {
-		$bp_action_ref = $self->main->{breakpoints}->on_set_breakpoints_clicked();
-	} else {
-		require Padre::Breakpoints;
-		$bp_action_ref = Padre::Breakpoints->set_breakpoints_clicked();
-	}
+				# print "not breakable\n";
+				$editor->MarkerAdd( $bp_action_ref->{line} - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
+				$self->_setup_db;
+				Padre::DB->do(
+					'update debug_breakpoints SET active = ? WHERE filename = ? AND line_number = ?', {}, 0,
+					$self->{current_file}, $bp_action_ref->{line},
+				);
+				if ( $self->main->{breakpoints} ) {
+					$self->main->{breakpoints}->on_refresh_click();
+				}
 
-	my %bp_action = %{$bp_action_ref};
-
-	if ( $bp_action{action} eq 'add' ) {
-		my $result = $self->{client}->set_breakpoint( $self->{current_file}, $bp_action{line} );
-		if ( $result == 0 ) {
-
-			# print "not breakable\n";
-			$editor->MarkerAdd( $bp_action{line} - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
-			$self->_setup_db;
-			Padre::DB->do(
-				'update debug_breakpoints SET active = ? WHERE filename = ? AND line_number = ?', {}, 0,
-				$self->{current_file}, $bp_action{line},
-			);
-			if ( $self->main->{breakpoints} ) {
-				$self->main->{breakpoints}->on_refresh_click();
 			}
-
 		}
-	}
-	if ( $bp_action{action} eq 'delete' ) {
-		$self->{client}->remove_breakpoint( $self->{current_file}, $bp_action{line} );
+		if ( $bp_action_ref->{action} eq 'delete' ) {
+			$self->{client}->remove_breakpoint( $self->{current_file}, $bp_action_ref->{line} );
+		}
+		$main->{debugoutput}->debug_output( $self->{client}->__send('L b') );
 	}
 
-	$main->{debugoutput}->debug_output( $self->{client}->__send('L b') );
 	return;
 }
 #######
