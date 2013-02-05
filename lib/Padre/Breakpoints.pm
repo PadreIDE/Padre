@@ -13,12 +13,14 @@ our $VERSION = '0.97';
 # this is a toggle function based on current status
 #######
 sub set_breakpoints_clicked {
+	my $bp_line = $_[1];
 
 	my $debug_breakpoints = ('Padre::DB::DebugBreakpoints');
 
 	my $editor       = Padre::Current->editor;
 	my $current_file = $editor->{Document}->filename;
-	my $bp_line      = $editor->GetCurrentLine + 1;
+	$bp_line      = $editor->GetCurrentLine unless defined $bp_line;
+	$bp_line++;
 	my %bp_action;
 	$bp_action{line} = $bp_line;
 

@@ -309,6 +309,32 @@ sub new {
 			shift->on_left_double(@_);
 		},
 	);
+	
+	Wx::Event::EVT_STC_MARGINCLICK(
+	$self, -1,
+	sub {
+		my ( $editor, $event ) = @_;
+		my $main    = $self->main;
+
+		my $line_clicked  = $editor->LineFromPosition( $event->GetPosition );
+		#my $level_clicked = $editor->GetFoldLevel($line_clicked);
+
+		if ( $event->GetMargin == 2 ) {
+			# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
+			#if ( $level_clicked && Wx::Scintilla::FOLDLEVELHEADERFLAG) > 0) {
+			$editor->ToggleFold($line_clicked);
+
+			#}
+		} elsif ( $event->GetMargin == 1 ) {
+			require Padre::Breakpoints;
+			Padre::Breakpoints->set_breakpoints_clicked($line_clicked);
+			Padre::Breakpoints->show_breakpoints();
+			if ( $main->{breakpoints} ) {
+				$main->{breakpoints}->on_refresh_click;
+			}						
+		}
+	}
+);
 
 	# Capture change events that result in an actual change to the text
 	# of the document, so we can refire content-dependent editor tools.
@@ -2173,22 +2199,6 @@ BEGIN {
 			# Activate
 			$self->SetProperty( 'fold' => 1 );
 
-			Wx::Event::EVT_STC_MARGINCLICK(
-				$self, -1,
-				sub {
-					my ( $editor, $event ) = @_;
-					if ( $event->GetMargin == 2 ) {
-						my $line_clicked  = $editor->LineFromPosition( $event->GetPosition );
-						my $level_clicked = $editor->GetFoldLevel($line_clicked);
-
-						# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
-						#if ( $level_clicked && Wx::Scintilla::FOLDLEVELHEADERFLAG) > 0) {
-						$editor->ToggleFold($line_clicked);
-
-						#}
-					}
-				}
-			);
 		} else {
 			$self->SetMarginSensitive(
 				Padre::Constant::MARGIN_FOLD,
