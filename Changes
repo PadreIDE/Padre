@@ -72,7 +72,9 @@ the even version for the release, even during development.
     - this is just a quick fix, to stop menu bar Fup's from happing (BOWTIE)
     - Added Debug-Launch-Options wxStatic text to Debugger-Output (BOWTIE)
     - Add method debug_launch_options to Debugget-Output (BOWTIE)
+    - F5 'Run Script' uses perl parameters from #! line if it finds them (SDOWIDEIT)
     - Add Debug-Launch-Options dialog (SDOWIDEIT)
+    - fix to toggling of breakpoints while debugger is running (SDOWIDEIT)
     - fix for -> stop dumping the following on console 
       'Use of uninitialized value in string eq' (BOWTIE)
     - Hack for svn 1.7 esp Padre trunk to reenable VCS feature (BOWTIE)
