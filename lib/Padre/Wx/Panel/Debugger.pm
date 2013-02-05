@@ -455,16 +455,11 @@ sub debug_quit {
 	return;
 }
 
-#######
-# Method debug_step_in
-#######
-sub debug_step_in {
+sub update_debug_user_interface {
 	my $self = shift;
+	my $output = shift;
 	my $main = $self->main;
 
-	#ToDo list request ouch
-	my @list_request;
-	eval { @list_request = $self->{client}->step_in(); };
 	my $module = $self->{client}->module;
 	$self->{client}->get_lineinfo;
 
@@ -476,13 +471,27 @@ sub debug_step_in {
 		return;
 	}
 
-	#ToDo remove when Debug::Client 0.22 is released.
-	if ( $self->{debug_client_version} eq '0.20' ) {
-		$main->{debugoutput}->debug_output( $self->{client}->buffer );
-	} else {
-		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
+	if ( ! $output ) {
+		#ToDo remove when Debug::Client 0.22 is released.
+		if ( $self->{debug_client_version} eq '0.20' ) {
+			$output = $self->{client}->buffer;
+		} else {
+			 $output = $self->{client}->get_buffer;
+		}
 	}
+	$main->{debugoutput}->debug_output( $output );
 	$self->_set_debugger;
+}
+
+#######
+# Method debug_step_in
+#######
+sub debug_step_in {
+	my $self = shift;
+
+	my @list_request;
+	eval { @list_request = $self->{client}->step_in(); };
+	$self->update_debug_user_interface;
 
 	return;
 }
@@ -494,28 +503,9 @@ sub debug_step_over {
 	my $self = shift;
 	my $main = $self->main;
 
-	#ToDo list request ouch
 	my @list_request;
 	eval { @list_request = $self->{client}->step_over(); };
-	my $module = $self->{client}->module;
-	$self->{client}->get_lineinfo;
-
-	if ( $module eq '<TERMINATED>' ) {
-		TRACE('TERMINATED') if DEBUG;
-		$self->{trace_status} = 'Trace = off';
-		$main->{debugoutput}->debug_status( $self->{trace_status} );
-
-		$self->debug_quit;
-		return;
-	}
-
-	#ToDo remove when Debug::Client 0.22 is released.
-	if ( $self->{debug_client_version} eq '0.20' ) {
-		$main->{debugoutput}->debug_output( $self->{client}->buffer );
-	} else {
-		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
-	}
-	$self->_set_debugger;
+	$self->update_debug_user_interface;
 
 	return;
 }
@@ -527,29 +517,9 @@ sub debug_step_out {
 	my $self = shift;
 	my $main = $self->main;
 
-	#ToDo list request ouch
 	my @list_request;
 	eval { @list_request = $self->{client}->step_out(); };
-	my $module = $self->{client}->module;
-	$self->{client}->get_lineinfo;
-
-	if ( $module eq '<TERMINATED>' ) {
-		TRACE('TERMINATED') if DEBUG;
-		$self->{trace_status} = 'Trace = off';
-		$main->{debugoutput}->debug_status( $self->{trace_status} );
-
-		$self->debug_quit;
-		return;
-	}
-
-	#ToDo remove when Debug::Client 0.22 is released.
-	if ( $self->{debug_client_version} eq '0.20' ) {
-		$main->{debugoutput}->debug_output( $self->{client}->buffer );
-	} else {
-		$main->{debugoutput}->debug_output( $self->{client}->get_buffer );
-	}
-
-	$self->_set_debugger;
+	$self->update_debug_user_interface;
 
 	return;
 }
@@ -564,27 +534,7 @@ sub debug_run_till {
 
 	my @list_request;
 	eval { @list_request = $self->{client}->run($param); };
-
-	#ToDo remove when Debug::Client 0.22 is released.
-	my $temp_buffer;
-	if ( $self->{debug_client_version} eq '0.20' ) {
-		$temp_buffer = $self->{client}->buffer;
-	} else {
-		$temp_buffer = $self->{client}->get_buffer;
-	}
-
-	my $module = $self->{client}->module;
-	$self->{client}->get_lineinfo;
-	if ( $module eq '<TERMINATED>' ) {
-		TRACE('TERMINATED') if DEBUG;
-		$self->{trace_status} = 'Trace = off';
-		$main->{debugoutput}->debug_status( $self->{trace_status} );
-		$self->debug_quit;
-		return;
-	}
-
-	$main->{debugoutput}->debug_output($temp_buffer);
-	$self->_set_debugger;
+	$self->update_debug_user_interface;
 
 	return;
 }
@@ -1369,12 +1319,14 @@ sub on_raw_clicked {
 	my $self = shift;
 	my $main = $self->main;
 
+	my $output;
 	if ( $self->{expression}->GetValue =~ m/^h.?(\w*)/s ) {
-		$main->{debugoutput}->debug_output( $self->{client}->get_h_var($1) );
+		$output = $self->{client}->get_h_var($1) ;
 	} else {
 
-		$main->{debugoutput}->debug_output( $self->{client}->__send_np( $self->{expression}->GetValue ) );
+		$output = $self->{client}->__send_np( $self->{expression}->GetValue );
 	}
+	$self->update_debug_user_interface($output);
 
 	return;
 }
