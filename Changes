@@ -89,7 +89,6 @@ the even version for the release, even during development.
       as workas against Ubuntu 12.10, this is cool for lot's of Methods only (BOWTIE)
     
 
-0.97 Development version, not released
     - add PPIx::EditorTools to About Info (BOWTIE)
     - add an icon to CPAN Explorer panel tab (BOWTIE)
     - attempt to fix paste-buffer-clear-bug #1312 (SEWI)
@@ -153,7 +152,6 @@ the even version for the release, even during development.
     - bumped Debug-Client requirement to 0.20 (BOWTIE)
     - 
 
-0.95 Development version, not released
     - Moved Padre::Wx::Role::Dwell to ::Timer as scope expanded (ADAMK)
     - Removed Padre::Wx::Role::Form which was intended as a replacement for
       Padre::Wx::Dialog but was never used by anyone for anything (ADAMK)
@@ -253,7 +251,6 @@ the even version for the release, even during development.
     - Function List sort order can be changed via right click menu (ADAMK)
     - Added support for the R statistics programming language (ADAMK)
 
-0.93 Development version, not released
     - The Padre::Wx::Main method ->pages was removed (ADAMK)
     - Padre::MimeTypes replaced by Padre::MIME and Padre::Wx::Scintilla (ADAMK)
     - Padre::Project::headline method now returns the relative path, with the
@@ -427,7 +424,6 @@ the even version for the release, even during development.
     - Fix AUTOMATED_TESTING=1 t/ errors automatically set by cpanm (AZAWAWI)
     - Fix bad assumption in 93_padre_filename_win.t (AZAWAWI)
 
-0.91 Development version, not released
     - Task 3.0 breaks almost all task code (ADAMK)
     - Style 2.0 breaks all existing styles (ADAMK)
     - Wx constants change from Wx::wxCONSTANT to Wx::CONSTANT (ADAMK)
@@ -439,7 +435,7 @@ the even version for the release, even during development.
     - Renaming of all methods involved in setting up an editor object (ADAMK)
     - Removed the experimental Padre wizard API (AZAWAWI)
 
-0.90 Tue 16 Aug 2011
+0.90 2011.08.16
     - Return task instance from Padre::Role::Task::tast_request (BRAMBLE)
     - Add 'Solarized Dark' theme contributed by Anton Ukolov ('sugar' on irc)
       (BRAMBLE)
@@ -494,7 +490,6 @@ the even version for the release, even during development.
       foreground and background colouring from the active editor style (ADAMK)
     - Update German translation (ZENOG)
 
-0.89 Development version, not released
     - Heavily refactored function search in Padre::Document, breaking compat.
       Moved function locating code to Padre::Editor as find_function,
       has_function and goto_function. Padre::Document now just has a single 
@@ -647,7 +642,6 @@ the even version for the release, even during development.
       several other editors (ADAMK)
     - Added feature_folding to allow the removal of code folding support (ADAMK)
 
-0.87 Development version, not released
     - The majority of the on_toggle_xxxx methods have now been changed to
       editor_xxxx names to more accurately reflect that they act on the set of
       open editors. As no plugins should be changing these anyway, the compat
@@ -736,7 +730,6 @@ the even version for the release, even during development.
       Find in files (SEWI)
     - ESC now closes the find dialog (1st ESC) and the output window (2nd) (SEWI)
 
-0.85 Development version, not released
     - wxVSCROLL flag in FindInFiles tree control was causing the nodes to be 
       editable if clicked after selection. Keyboard scrolling was broken as a
       result (AZAWAWI)
@@ -786,7 +779,6 @@ the even version for the release, even during development.
       automagically by File::Temp (ZENOG)
     - Update German translation (ZENOG)
 
-0.83 Development version, not released
     - No incompatible API changes during the 0.84 release cycle
 
 0.82 2011.02.15
@@ -827,7 +819,6 @@ the even version for the release, even during development.
     - Added version control system intuition via the ->vcs method in
       Padre::Project (ADAMK)
 
-0.81 Development version, not released
     - Padre::TaskManager now uses the term "worker" exclusively in API methods
       instead of "thread" (e.g. start_thread becomes start_worker). This
       future-proofs the API against potential alternative task manager backend
@@ -884,7 +875,6 @@ the even version for the release, even during development.
       way, hijack ctrl-scroll and reverse it to the right way (ADAMK)
     - Find in Files directory recursion now happens ordered (ADAMK)
 
-0.79 Development version, not released
     - Padre::Util::parse_version is now Padre::Util::parse_variable (ADAMK)
 
 0.78 2011.01.14
@@ -933,7 +923,6 @@ the even version for the release, even during development.
     - Added additional test to copyright.t to check all copyright notices
       have the current year. (PLAVEN)
 
-0.77 Development version, not released
     - No incompatible API changes during the 0.78 release cycle
 
 0.76 2010.12.08
@@ -1014,7 +1003,6 @@ the even version for the release, even during development.
       (e.g. v5.8.9 instead of v5.008009) (AZAWAWI)
     - Correctly start up maximized if we were closed maximized (ADAMK)
 
-0.75 Development version, not released
     - No incompatible API changes during the 0.76 release cycle
 
 0.74 2010.11.14
@@ -1052,7 +1040,6 @@ the even version for the release, even during development.
     - Directory tree: support deletion of directories (ZENOG)
     - Update German translation (ZENOG)
 
-0.73 Development version, not released
     - No incompatible API changes during the 0.74 release cycle
 
 0.72 2010.10.10
@@ -1117,7 +1104,6 @@ the even version for the release, even during development.
     - Add "Create directory" and "remove file" to the directory browser. (SZABGAB) 
     - Aff "Goto Last position" (SZABGAB)
 
-0.71 Development version, not released
     - No incompatible API changes during the 0.72 release cycle
 
 0.70 2010.09.09
