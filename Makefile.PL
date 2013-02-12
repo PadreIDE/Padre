@@ -47,7 +47,7 @@ configure_requires 'ExtUtils::Embed' => '1.250601';
 #}
 
 # This makes sure that we didn't compile Alien::wxWidgets with the wrong options.
-configure_requires 'Alien::wxWidgets' => '0.46';
+configure_requires 'Alien::wxWidgets' => '0.62';
 
 my $wxw = eval { use Alien::wxWidgets; 1; };
 if ( $@ or not $wxw ) {
@@ -125,8 +125,8 @@ requires 'LWP::UserAgent'           => '5.815';
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
-requires 'Module::Starter'          => '1.58';
-requires 'ORLite'                   => '1.96';
+requires 'Module::Starter'          => '1.60';
+requires 'ORLite'                   => '1.98';
 requires 'ORLite::Migrate'          => '1.10';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.14';
@@ -139,8 +139,8 @@ requires 'Pod::Abstract'            => '0.16';
 requires 'Pod::Perldoc'             => '3.15';
 requires 'POD2::Base'               => '0.043';
 requires 'POSIX'                    => 0;
-requires 'PPI'                      => '1.213';
-requires 'PPIx::EditorTools'        => '0.17';
+requires 'PPI'                      => '1.215';
+requires 'PPIx::EditorTools'        => '0.18';
 requires 'PPIx::Regexp'             => '0.011';
 requires 'Probe::Perl'              => '0.01';
 requires 'Storable'                 => '2.16';
@@ -159,11 +159,11 @@ requires 'version'                  => '0.80';
 requires 'Win32'              => '0.31' if win32;
 requires 'Win32::Shortcut'    => '0.07' if win32;
 requires 'Win32::TieRegistry' => '0.26' if win32;
-requires 'Wx'                 => '0.9901';
-requires 'Wx::Perl::ProcessStream' => '0.29';
-requires 'Wx::Scintilla'           => '0.34';
+requires 'Wx'                 => '0.9916';
+requires 'Wx::Perl::ProcessStream' => '0.32';
+requires 'Wx::Scintilla'           => '0.39';
 requires 'YAML::Tiny'              => '1.32';
-test_requires 'Test::More'         => '0.88';
+test_requires 'Test::More'         => '0.98';
 
 # Ticket #1419: Padre and the soon to be Perl 5.16
 test_requires 'Test::Warn'       => '0.24';
