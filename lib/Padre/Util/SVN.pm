@@ -4,7 +4,7 @@ package Padre::Util::SVN;
 # we need them early in the load process and we want to avoid loading
 # a whole ton of dependencies.
 
-use v5.010;
+use 5.010;
 use strict;
 use warnings;
 use File::Spec  ();

@@ -1,6 +1,6 @@
 package Padre::Plugin::My;
 
-use v5.010;
+use 5.010;
 use strict;
 use warnings;
 use utf8;

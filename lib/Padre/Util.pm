@@ -21,7 +21,7 @@ moved, removed or changed at any time without notice.
 
 =cut
 
-use v5.10;
+use 5.010;
 use strict;
 use warnings;
 use Carp            ();

@@ -1,6 +1,6 @@
 package Padre::Wx::Outline;
 
-use v5.010;
+use 5.010;
 use strict;
 use warnings;
 use Scalar::Util             ();

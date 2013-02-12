@@ -2,7 +2,7 @@ package Padre::Project;
 
 # Base project functionality for Padre
 
-use v5.010;
+use 5.010;
 use strict;
 use warnings;
 use File::Spec      ();
