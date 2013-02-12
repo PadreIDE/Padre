@@ -15,7 +15,7 @@ documents and projects of various types.
 
 =cut
 
-use 5.008;
+use 5.010001;
 use strict;
 use warnings;
 use Params::Util                          ();
@@ -203,8 +203,8 @@ sub generate_test_compile {
 
 	# Get the style and module name from the current project
 	if ( Params::Util::_INSTANCE($param{project}, 'Padre::Project::Perl') ) {
-		$param{style}  ||= $param{project};
-		$param{module} ||= $param{project}->module or return undef;	
+		$param{style}  // $param{project};
+		$param{module} // $param{project}->module or return undef;	
 	}
 
 	# We must have a module name
