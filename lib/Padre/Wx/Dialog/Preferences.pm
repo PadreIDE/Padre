@@ -1,6 +1,6 @@
 package Padre::Wx::Dialog::Preferences;
 
-use 5.008;
+use 5.010;
 use strict;
 use warnings;
 use Padre::Locale               ();
@@ -403,9 +403,7 @@ sub _on_list_item_selected {
 	my $action   = $self->_action($name);
 	my $shortcut = $action->shortcut;
 
-	$self->{button_reset}->Enable(
-		$shortcut ne $self->config->default( $action->shortcut_setting )
-	);
+	$self->{button_reset}->Enable( $shortcut ne $self->config->default( $action->shortcut_setting ) );
 
 	$self->{button_delete}->Enable( $shortcut ne '' );
 
@@ -432,8 +430,8 @@ sub _update_shortcut_ui {
 
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue( $shortcut  =~ /Ctrl/  ? 1 : 0 );
-	$self->{alt}->SetValue( $shortcut   =~ /Alt/   ? 1 : 0 );
+	$self->{ctrl}->SetValue( $shortcut =~ /Ctrl/   ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut =~ /Alt/     ? 1 : 0 );
 	$self->{shift}->SetValue( $shortcut =~ /Shift/ ? 1 : 0 );
 
 	# Make sure the value and info sizer are not hidden
@@ -449,8 +447,8 @@ sub _update_shortcut_ui {
 
 # Private method to handle the pressing of the set value button
 sub _on_set_button {
-	my $self  = shift;
-	my $name  = $self->_selected_list_name;
+	my $self = shift;
+	my $name = $self->_selected_list_name;
 
 	my @key_list = ();
 	for my $regular_key ( 'Ctrl', 'Shift', 'Alt' ) {
@@ -551,20 +549,32 @@ sub _on_reset_button {
 	my $name   = $self->_selected_action_name;
 	my $action = $self->_action($name);
 
-	$self->_try_to_set_binding(
-		$name,
-		$self->config->default( $action->shortcut_setting )
-	);
+	if ($name) {
+		$self->_try_to_set_binding(
+			$name,
+			$self->config->default( $action->shortcut_setting )
+		);
+	}
 
 	return;
 }
+
+#ToDo needs to be hacked - incompleate
+sub _selected_action_name {
+	my $self = shift;
+
+	# added to stop errors, see #1479
+	# See -> package Padre::Wx::Dialog::Advanced->_on_reset_button
+	return;
+}
+
 
 # re-create menu to activate shortcuts
 # TO DO Massive encapsulation violation
 sub _recreate_menubar {
 	my $self = shift;
 	my $main = $self->main;
-	
+
 	#ToDo this is just a quick fix, to stop menu bar Fup's from happing (BOWTIE)
 
 	# delete $main->{menu};
@@ -574,19 +584,19 @@ sub _recreate_menubar {
 }
 
 sub _selected_list_name {
-	my $self = shift;
+	my $self  = shift;
 	my $index = $self->{list}->GetFirstSelected;
-	my $item  = $self->{list}->GetItem($index, LIST_COLUMN_NAME);
+	my $item  = $self->{list}->GetItem( $index, LIST_COLUMN_NAME );
 	return $item->GetText;
 }
 
 sub _named_action_index {
-	my $self = shift;
-	my $name = shift;
-	my $list = $self->{list};
+	my $self  = shift;
+	my $name  = shift;
+	my $list  = $self->{list};
 	my $items = $list->GetItemCount;
 	for my $i ( 0 .. $items - 1 ) {
-		my $item = $list->GetItem($i, LIST_COLUMN_NAME);
+		my $item = $list->GetItem( $i, LIST_COLUMN_NAME );
 		if ( $item->GetText eq $name ) {
 			return $i;
 		}
