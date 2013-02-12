@@ -2,7 +2,7 @@ package Padre::SVN;
 
 # Utility functions needed for basic SVN introspection
 
-use v5.10;
+use v5.010;
 use strict;
 use warnings;
 use File::Spec ();

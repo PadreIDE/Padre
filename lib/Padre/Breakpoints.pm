@@ -2,7 +2,7 @@ package Padre::Breakpoints;
 
 #ToDo Q is this package wrong in the wronge location
 
-use v5.10;
+use v5.010;
 use strict;
 use warnings;
 

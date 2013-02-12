@@ -18,7 +18,7 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 # API NOTES:
 # - This class uses english-style verb_noun method naming
 
-use v5.10;
+use v5.010;
 use strict;
 use warnings;
 use Carp                   ();

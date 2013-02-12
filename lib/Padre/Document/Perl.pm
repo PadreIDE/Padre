@@ -1,6 +1,6 @@
 package Padre::Document::Perl;
 
-use v5.10;
+use v5.010;
 use strict;
 use warnings;
 use Carp              ();
