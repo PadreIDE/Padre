@@ -170,7 +170,7 @@ test_requires 'Test::Warn'       => '0.24';
 test_requires 'Test::MockObject' => '1.09';
 test_requires 'Test::Script'     => '1.07';
 test_requires 'Test::Exception'  => '0.27';
-test_requires 'Test::NoWarnings' => '0.084';
+test_requires 'Test::NoWarnings' => '1.04';
 
 # Special dependencies
 
