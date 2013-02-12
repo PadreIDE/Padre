@@ -2,7 +2,7 @@
 # that we force the Perl version check (and fail) early.
 # Unicode is also considered to finally be "stable" at 5.8.5, so we will
 # set our dependency on that.
-use 5.010001;
+use 5.010000;
 use strict;
 use lib 'privinc';
 use inc::Module::Install 1.06;
@@ -73,7 +73,7 @@ name 'Padre';
 license 'perl';
 author 'Gabor Szabo';
 all_from 'lib/Padre.pm';
-requires 'perl' => '5.010001';
+requires 'perl' => '5.010000';
 
 # General dependencies
 requires 'Algorithm::Diff'          => '1.19';
