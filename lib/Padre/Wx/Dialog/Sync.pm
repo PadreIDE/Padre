@@ -291,6 +291,18 @@ sub server_error {
 	return 1;
 }
 
+## Added by Peter Lavender as it was detected
+## in the missing methods test.
+## Given the above two methods don't appear to 
+## do too much I think it's safe to add in the missing
+## method.
+sub server_status {
+	TRACE("Got server_status callback") if DEBUG;
+	my $self = shift;
+	$self->{txt_remote}->SetBackgroundColour($self->good_colour);
+	$self->{txt_remote}->Refresh;
+	return 1;
+}
 
 
 
