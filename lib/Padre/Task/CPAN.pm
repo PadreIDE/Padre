@@ -132,10 +132,12 @@ sub metacpan_autocomplete {
 		fields => [qw(documentation release author distribution)],
 		size   => MAX_RESULTS,
 	);
-
+	
 	# Convert ElasticSearch Perl query to a JSON request
 	require JSON::XS;
 	my $json_request = JSON::XS::encode_json( \%payload );
+	
+	TRACE("Content => $json_request") if DEBUG;
 
 	# POST the json request to api.metacpan.org
 	require LWP::UserAgent;
