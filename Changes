@@ -89,13 +89,11 @@ the even version for the release, even during development.
     - Diff now working against svn 1.7.x and 1.6.x (BOWTIE)
     - FIXME Find out why EVT_CONTEXT_MENU doesn't work on Ubuntu - commeted out 
       as workas against Ubuntu 12.10, this is cool for lot's of Methods only (BOWTIE)
-    
-
     - add PPIx::EditorTools to About Info (BOWTIE)
     - add an icon to CPAN Explorer panel tab (BOWTIE)
     - attempt to fix paste-buffer-clear-bug #1312 (SEWI)
     - s/Update/update/ #1429 bennie++ (BOWTIE)
-
+    - Bumped Debug-Client dependancy to 0.24 waxhead++ (BOWTIE)
 
 0.96 2012.04.19
     - The "Todo" or "To Do" or "To-do" or "TODO" list has always been a
