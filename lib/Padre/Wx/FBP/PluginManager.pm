@@ -13,7 +13,7 @@ use warnings;
 use Padre::Wx::Role::Main ();
 use Padre::Wx 'Html';
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

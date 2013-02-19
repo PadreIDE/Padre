@@ -163,7 +163,7 @@ use Params::Util      ();
 use Padre::Current    ();
 use Padre::Role::Task ();
 
-our $VERSION    = '0.98';
+our $VERSION    = '0.99';
 our $COMPATIBLE = '0.91';
 
 =pod

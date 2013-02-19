@@ -6,7 +6,7 @@ use warnings;
 use Params::Util ();
 use Padre::Wx 'DND';
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = 'Wx::FileDropTarget';
 
 sub new {

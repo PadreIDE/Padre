@@ -14,7 +14,7 @@ use Padre::Wx        ();
 use Padre::Wx::Style ();
 use Wx::Scintilla    ();
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 
 # Locate the directories containing styles
 use constant {

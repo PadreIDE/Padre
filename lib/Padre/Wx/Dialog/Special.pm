@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx::FBP::Special ();
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = 'Padre::Wx::FBP::Special';
 
 

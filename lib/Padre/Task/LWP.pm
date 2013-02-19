@@ -30,7 +30,7 @@ use Padre::Constant ();
 use Params::Util    ();
 use Padre::Task     ();
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor {

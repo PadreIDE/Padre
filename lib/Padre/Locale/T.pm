@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Exporter ();
 
-our $VERSION   = '0.98';
+our $VERSION   = '0.99';
 our @ISA       = 'Exporter';
 our @EXPORT    = '_T';
 our @EXPORT_OK = '_T';

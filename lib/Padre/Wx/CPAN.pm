@@ -12,7 +12,7 @@ use Padre::Wx::Role::Timer ();
 use Padre::Wx::FBP::CPAN   ();
 use Padre::Logger;
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::View

@@ -12,7 +12,7 @@ use Padre::Util             ();
 use Padre::Locale::Format   ();
 use Padre::Wx::FBP::About   ();
 
-our $VERSION = '0.98';
+our $VERSION = '0.99';
 our @ISA     = qw{
 	Padre::Wx::FBP::About
 };
