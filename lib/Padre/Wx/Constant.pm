@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 use constant WANT => qw{
 	wxCLRP_SHOW_LABEL

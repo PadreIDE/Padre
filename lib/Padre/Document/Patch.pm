@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Document;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = qw{
 	Padre::Document
 };

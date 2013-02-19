@@ -13,7 +13,7 @@ use Padre::Constant     ();
 use Padre::Role::Task   ();
 use Padre::Role::PubSub ();
 
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.95';
 our @ISA        = qw{
 	Padre::Role::Task

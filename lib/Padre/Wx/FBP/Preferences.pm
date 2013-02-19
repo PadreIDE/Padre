@@ -16,7 +16,7 @@ use Padre::Wx::Choice::Theme ();
 use Padre::Wx::Editor ();
 use Padre::Wx::ListView ();
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

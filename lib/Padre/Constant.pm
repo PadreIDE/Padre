@@ -10,7 +10,7 @@ use File::Path ();
 use File::Spec ();
 use File::HomeDir 0.91 ();
 
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.57';
 
 # Convenience constants for the operating system

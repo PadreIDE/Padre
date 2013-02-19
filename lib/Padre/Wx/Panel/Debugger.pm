@@ -16,7 +16,7 @@ use Padre::Breakpoints       ();
 use Padre::Logger;
 use Debug::Client 0.20 ();
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = qw{
 	Padre::Wx::Role::View
 	Padre::Wx::FBP::Debugger

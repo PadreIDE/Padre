@@ -12,7 +12,7 @@ use File::Find ();
 use Config;
 use ExtUtils::Embed;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 use base qw{ Module::Install::Base };
 
 sub setup_padre {

@@ -60,7 +60,7 @@ use Padre::Wx::Role::Timer    ();
 use Padre::Wx::Role::Idle     ();
 use Padre::Locale::T;
 use Padre::Logger;
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.91';
 our @ISA        = qw{
 	Padre::Wx::Role::Conduit

@@ -31,7 +31,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.70';
 
 my %DATA = ();

@@ -9,7 +9,7 @@ use Padre::Util    ();
 use Padre::Current ();
 use Padre::Locale::T;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 use Class::XSAccessor {
 	getters => {

@@ -17,7 +17,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.95';
 
 

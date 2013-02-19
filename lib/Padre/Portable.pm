@@ -9,7 +9,7 @@ use File::Spec 3.21 (); # 3.21 needed for volume-safe abs2rel
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 sub freeze {
 	return shift unless defined Params::Util::_STRING( $_[0] );

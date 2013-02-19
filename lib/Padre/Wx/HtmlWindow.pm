@@ -28,7 +28,7 @@ use Padre::Wx    ();
 use Padre::Wx 'Html';
 use Padre::Role::Task ();
 
-our $VERSION    = '0.97';
+our $VERSION    = '0.98';
 our $COMPATIBLE = '0.93';
 our @ISA        = qw{
 	Padre::Role::Task

@@ -9,7 +9,7 @@ use Padre::Wx::FBP::PluginManager ();
 use Padre::Locale::T;
 use Try::Tiny;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
 

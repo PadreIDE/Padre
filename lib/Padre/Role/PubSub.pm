@@ -20,7 +20,7 @@ use strict;
 use warnings;
 use Scalar::Util ();
 use Params::Util ();
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 =pod
 
 =head2 subscribe

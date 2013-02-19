@@ -22,7 +22,7 @@ use Params::Util                          ();
 use Padre::Template                       ();
 use Padre::Document::Perl::Starter::Style ();
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 
 
 

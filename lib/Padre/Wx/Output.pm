@@ -18,7 +18,7 @@ use Padre::Wx::Role::Context ();
 use Padre::Wx 'RichText';
 use Padre::Logger;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Padre::Wx::Role::View

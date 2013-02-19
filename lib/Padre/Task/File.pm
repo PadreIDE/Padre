@@ -41,7 +41,7 @@ use warnings;
 use File::Spec  ();
 use Padre::Task ();
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA     = 'Padre::Task';
 
 

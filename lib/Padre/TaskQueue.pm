@@ -9,7 +9,7 @@ use warnings;
 use threads;
 use threads::shared 1.33;
 
-our $VERSION  = '0.97';
+our $VERSION  = '0.98';
 our @CARP_NOT = 'threads::shared';
 
 sub new {
