@@ -84,7 +84,7 @@ sub new {
 	$self->{m_staticText34} = Wx::StaticText->new(
 		$self->{padre},
 		-1,
-		Wx::gettext("Copyright 2008–2012 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
+		Wx::gettext("Copyright 2008–2013 The Padre Development Team Padre is free software; \nyou can redistribute it and/or modify it under the same terms as Perl 5."),
 	);
 
 	$self->{m_staticText67} = Wx::StaticText->new(

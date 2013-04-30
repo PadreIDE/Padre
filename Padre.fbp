@@ -19888,7 +19888,7 @@
                                                     <property name="font"></property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Copyright 2008–2012 The Padre Development Team Padre is free software; &#x0A;you can redistribute it and/or modify it under the same terms as Perl 5. </property>
+                                                    <property name="label">Copyright 2008–2013 The Padre Development Team Padre is free software; &#x0A;you can redistribute it and/or modify it under the same terms as Perl 5. </property>
                                                     <property name="maximum_size"></property>
                                                     <property name="minimum_size"></property>
                                                     <property name="name">m_staticText34</property>
