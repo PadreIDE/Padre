@@ -108,10 +108,12 @@ sub metacpan_autocomplete {
 		query => {
 			filtered => {
 				query => {
-					custom_score => {
-						query  => { bool => { should => $should } },
-						script => "_score - doc['documentation'].stringValue.length()/100"
-					},
+					bool => { should => $should }
+					# ToDo see #1488 comment:7 itcharlie++
+					# custom_score => {
+						# query  => { bool => { should => $should } },
+						# script => "_score - doc['documentation'].stringValue.length()/100"
+					# },
 				},
 				filter => {
 					and => [
