@@ -3,6 +3,7 @@ package Padre::Wx::Panel::Debugger;
 use 5.010;
 use strict;
 use warnings;
+no if $] > 5.017010, warnings => 'experimental::smartmatch';
 
 use utf8;
 use Padre::Util              ();
