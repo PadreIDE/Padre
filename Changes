@@ -15,6 +15,7 @@ the even version for the release, even during development.
 
 1.00 TBA
  - Applied Patch in #1488 comment:7 itcharlie++ (BOWTIE)
+ - Apply patch for #1504 dod++ (BOWTIE)
 
 0.98 2013.02.19
     - Changed to use current internal hashes instead of asking perl5db for 
