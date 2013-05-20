@@ -22,6 +22,7 @@ use Padre::Util::SVN;
 
 SKIP: {
 	skip( "svn version 1.7.x is not supported by Padre::SVN", 3 ) if Padre::Util::SVN::local_svn_ver();
+	skip( 'svn not in PATH', 3 ) unless File::Which::which('svn');
 
 	my $t = catfile( 't', '11_svn.t' );
 	ok( -f $t, "Found file $t" );
