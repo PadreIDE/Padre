@@ -268,6 +268,8 @@ sub _dump {
 
 =pod
 
+=encoding utf8
+
 =head1 NAME
 
 Padre::Plugin::Devel - tools used by the Padre developers
@@ -308,7 +310,7 @@ Connects to C<#wxperl> on C<irc.perl.org>, where people can answer queries on wx
 
 =head1 AUTHOR
 
-Gábor Szabó
+Gábor Szabó;
 
 =head1 LICENSE
 
