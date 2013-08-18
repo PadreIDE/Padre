@@ -295,7 +295,7 @@ sub debug_perl {
 	#TODO how do we add debug options at startup such as threaded mode
 
 	# Set up the debugger
-	my $host = 'localhost';
+	my $host = '127.0.0.1';
 	my $port = 24642 + int rand(1000); # TODO make this configurable?
 	SCOPE: {
 		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
