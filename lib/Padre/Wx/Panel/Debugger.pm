@@ -461,7 +461,7 @@ sub update_debug_user_interface {
 	my $output = shift;
 	my $main = $self->main;
 
-	my $module = $self->{client}->module;
+	my $module = $self->{client}->module || BLANK;
 	$self->{client}->get_lineinfo;
 
 	if ( $module eq '<TERMINATED>' ) {

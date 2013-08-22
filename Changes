@@ -20,6 +20,7 @@ the even version for the release, even during development.
  - Update Makefile.PL with new versions (BOWTIE)
  - Add Patch for cut n paste adam++ #1312 (BOWTIE)
  - Fix Debug ip hanging, use 127.0.0.1 instaed of localhost (BOWTIE)
+ - fix some unwanted background noise from debug raw (BOWTIE)
 
 0.98 2013.02.19
     - Changed to use current internal hashes instead of asking perl5db for 
