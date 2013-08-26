@@ -19,7 +19,7 @@ the even version for the release, even during development.
  - Apply patch2 from #1459 bojinlund++ (BOWTIE)
  - Update Makefile.PL with new versions (BOWTIE)
  - Add Patch for cut n paste adam++ #1312 (BOWTIE)
- - Fix Debug ip hanging, use 127.0.0.1 instaed of localhost (BOWTIE)
+ - Fix Debug ip hanging, use 127.0.0.1 instead of localhost (BOWTIE)
  - fix some unwanted background noise from debug raw (BOWTIE)
 
 0.98 2013.02.19
