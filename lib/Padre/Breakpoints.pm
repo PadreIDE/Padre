@@ -45,10 +45,12 @@ sub set_breakpoints_clicked {
 	}
 	#update the breakpoint panel
         if ( $editor->main->{breakpoints} ) {
-                $editor->main->{breakpoints}->on_refresh_click();
+			# say 'set_breakpoint_clicked -> on_refresh_clicked 1';
+			$editor->main->{breakpoints}->on_refresh_click();
         }
 	#update the debugger client - if we're currently debugging
         if ( $editor->main->{debugger} ) {
+			# say 'set_breakpoint_clicked -> on_refresh_clicked 2';
             $editor->main->{debugger}->update_debugger_breakpoint(\%bp_action);
         }
 
@@ -77,6 +79,12 @@ sub show_breakpoints {
 			$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
 		}
 	}
+		#update the breakpoint panel
+	if ( $editor->main->{breakpoints} ) {
+		# say 'show_breakpoints -> on_refresh_clicked';
+        $editor->main->{breakpoints}->on_refresh_click();
+	}
+
 	return;
 }
 

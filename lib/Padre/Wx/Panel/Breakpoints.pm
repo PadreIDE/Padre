@@ -180,7 +180,6 @@ sub on_delete_not_breakable_clicked {
 sub on_refresh_click {
 	my $self     = shift;
 	my $document = $self->current->document;
-
 	$self->{project_dir}  = $document->project_dir;
 	$self->{current_file} = $document->filename;
 
@@ -356,10 +355,18 @@ sub _update_list {
 
 	my $index = 0;
 	my $item  = Wx::ListItem->new;
+	my $project_dir = $self->{project_dir};
+	my $current_file = $self->{current_file};
+	
+	if ( $^O eq 'MSWin32') {
+		$project_dir =~ s/\\/\\\\/g;
+		$current_file =~ s/\\/\\\\/g;
+	}
+
 	for ( 0 .. $#tuples ) {
 
-		if ( $tuples[$_][1] =~ m/^ $self->{project_dir} /sxm ) {
-			if ( $tuples[$_][1] =~ m/ $self->{current_file} $/sxm ) {
+		if ( $tuples[$_][1] =~ m/^ $project_dir /sxm ) {
+			if ( $tuples[$_][1] =~ m/ $current_file $/sxm ) {
 				$item->SetId($index);
 				$self->{list}->InsertItem($item);
 				if ( $tuples[$_][3] == 1 ) {
@@ -376,7 +383,7 @@ sub _update_list {
 					);
 				}
 				$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
-				$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
+				$tuples[$_][1] =~ s/^ $project_dir //sxm;
 				$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 				$self->{line_numbers}[$index] = $tuples[$_][2];
 
@@ -389,7 +396,7 @@ sub _update_list {
 			if ( $self->{show_project} == 1 ) {
 
 				# we need to switch around due to previously stripping project_dir
-				if ( $self->{current_file} !~ m/ $tuples[$_][1] $/sxm ) {
+				if ( $current_file !~ m/ $tuples[$_][1] $/sxm ) {
 
 					$item->SetId($index);
 					$self->{list}->InsertItem($item);
@@ -399,7 +406,7 @@ sub _update_list {
 						$self->{list}->SetItemTextColour( $index, DARK_GRAY );
 					}
 					$self->{list}->SetItem( $index, 1, ( $tuples[$_][2] ) );
-					$tuples[$_][1] =~ s/^ $self->{project_dir} //sxm;
+					$tuples[$_][1] =~ s/^ $project_dir //sxm;
 					$self->{list}->SetItem( $index, 0, ( $tuples[$_][1] ) );
 					$self->{line_numbers}[$index] = $tuples[$_][2];
 
