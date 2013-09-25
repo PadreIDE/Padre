@@ -1512,6 +1512,7 @@ sub refresh {
 		# $self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
+	$self->refresh_breakpoint_panel($current);
 	return;
 }
 
@@ -1999,6 +2000,15 @@ sub refresh_diff {
 	return;
 }
 
+sub refresh_breakpoint_panel {
+	my $self = shift;
+	# say 'refresh_breakpoint_panel 1';	
+	return unless $self->current->main->{breakpoints};
+	# say 'refresh_breakpoint_panel 2';
+	return if $self->locked('REFRESH');
+	$self->current->main->{breakpoints}->on_refresh_click();
+	return;
+}
 =pod
 
 =head2 Interface Rebuilding Methods
@@ -5898,6 +5908,7 @@ sub editor_focus {
 	my $self   = shift;
 	my $editor = $self->current->editor;
 	$editor->SetFocus if $editor;
+	
 	return;
 }
 
