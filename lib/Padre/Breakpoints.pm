@@ -79,11 +79,6 @@ sub show_breakpoints {
 			$editor->MarkerAdd( $tuples[$_][2] - 1, Padre::Constant::MARKER_NOT_BREAKABLE() );
 		}
 	}
-		#update the breakpoint panel
-	if ( $editor->main->{breakpoints} ) {
-		# say 'show_breakpoints -> on_refresh_clicked';
-        $editor->main->{breakpoints}->on_refresh_click();
-	}
 
 	return;
 }

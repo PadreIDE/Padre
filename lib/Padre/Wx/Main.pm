@@ -2000,15 +2000,23 @@ sub refresh_diff {
 	return;
 }
 
+=pod
+
+=head3 C<refresh_breakpoint_panel>
+
+    $main->refresh_breakpoint_panel;
+
+Refresh of the Breakpoints panel if open, required as we load and switch tabs.
+
+=cut
 sub refresh_breakpoint_panel {
 	my $self = shift;
-	# say 'refresh_breakpoint_panel 1';	
 	return unless $self->current->main->{breakpoints};
-	# say 'refresh_breakpoint_panel 2';
 	return if $self->locked('REFRESH');
 	$self->current->main->{breakpoints}->on_refresh_click();
 	return;
 }
+
 =pod
 
 =head2 Interface Rebuilding Methods
