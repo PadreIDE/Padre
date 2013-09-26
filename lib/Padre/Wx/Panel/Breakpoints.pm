@@ -179,7 +179,8 @@ sub on_delete_not_breakable_clicked {
 #######
 sub on_refresh_click {
 	my $self     = shift;
-	my $document = $self->current->document;
+	my $document = $self->current->document || return;
+	return unless $document->mimetype !~ m/perl/;
 	$self->{project_dir}  = $document->project_dir;
 	$self->{current_file} = $document->filename;
 
