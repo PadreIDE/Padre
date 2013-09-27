@@ -11,7 +11,7 @@ our $VERSION = '0.99';
 our @ISA     = 'Padre::Task';
 
 # Maximum number of MetaCPAN results
-use constant MAX_RESULTS => 20;
+use constant MAX_RESULTS => 97;
 
 
 
@@ -99,27 +99,34 @@ sub metacpan_autocomplete {
 			$_
 			} @query
 	];
+	push @{$should}, map { ( { field => { 'author' => "$_" } }, ) } map { uc $_ } grep {$_} @query;
 
 	# The distribution we do not want in our search
 	my @ROGUE_DISTRIBUTIONS = qw(kurila perl_debug perl-5.005_02+apache1.3.3+modperl pod2texi perlbench spodcxx);
 
 	# The ElasticSearch query in Perl
 	my %payload = (
-		query => {
+		track_scores => 1,
+		query        => {
 			filtered => {
 				query => {
 					bool => { should => $should }
-					# ToDo see #1488 comment:7 itcharlie++
-					# custom_score => {
+
+						# ToDo see #1488 comment:7 itcharlie++
+						# custom_score => {
 						# query  => { bool => { should => $should } },
 						# script => "_score - doc['documentation'].stringValue.length()/100"
-					# },
+						# },
 				},
 				filter => {
 					and => [
 						{   not => {
 								filter => {
-									or => [ map { { term => { 'file.distribution' => $_ } } } @ROGUE_DISTRIBUTIONS ]
+									or => [
+										map {
+											{ term => { 'file.distribution' => $_ } }
+										} @ROGUE_DISTRIBUTIONS
+									]
 								}
 							}
 						},
@@ -131,14 +138,21 @@ sub metacpan_autocomplete {
 				}
 			}
 		},
+		sort => [
+			{   "_score"      => {},
+				author        => { order => "asc" },
+				distribution  => { order => "asc" },
+				documentation => { order => "asc" }
+			}
+		],
 		fields => [qw(documentation release author distribution)],
 		size   => MAX_RESULTS,
 	);
-	
+
 	# Convert ElasticSearch Perl query to a JSON request
 	require JSON::XS;
 	my $json_request = JSON::XS::encode_json( \%payload );
-	
+
 	TRACE("Content => $json_request") if DEBUG;
 
 	# POST the json request to api.metacpan.org
@@ -230,7 +244,7 @@ sub metacpan_recent {
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $url =
-		  "http://api.metacpan.org/v0/release/?sort=date:desc" 
+		  "http://api.metacpan.org/v0/release/?sort=date:desc"
 		. "&size="
 		. MAX_RESULTS
 		. "&fields=name,distribution,abstract,download_url";
