@@ -23,6 +23,7 @@ the even version for the release, even during development.
  - fix some unwanted background noise from debug raw (BOWTIE)
  - Apply patch from #1508 itcharlie++ (BOWTIE)
  - Add refresh_breakpoint_panel to Wx::Main (BOWTIE)
+ - Add correct comment for PerlXS (BOWTIE)
 
 0.98 2013.02.19
     - Changed to use current internal hashes instead of asking perl5db for 

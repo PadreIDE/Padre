@@ -290,6 +290,7 @@ Padre::Comment->register(
 	'application/x-pir'         => '#',
 	'text/x-perltt'             => '<!-- -->',
 	'application/x-php'         => '#',
+	'text/x-perlxs'             => '#',   # Define our own MIME type
 	'text/x-pod'                => '#',
 	'text/x-povray'             => '//',
 	'text/x-python'             => '#',
