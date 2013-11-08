@@ -726,6 +726,8 @@ Paweł Murias (PMURIAS)
 
 Petar Shangov (PSHANGOV)
 
+Peter Lavender (PLAVEN)
+
 Ryan Niebur (RSN) E<lt>rsn@cpan.orgE<gt>
 
 Sebastian Willing (SEWI)
