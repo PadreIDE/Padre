@@ -28,7 +28,7 @@ use strict;
 use warnings;
 use Padre::Locale::T;
 
-our $VERSION    = '1.00';
+our $VERSION    = '1.01';
 our $COMPATIBLE = '0.95';
 
 # The MIME object store

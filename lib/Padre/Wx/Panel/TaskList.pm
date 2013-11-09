@@ -9,7 +9,7 @@ use Padre::Wx::Role::View    ();
 use Padre::Wx::Role::Context ();
 use Padre::Wx::FBP::TaskList ();
 
-our $VERSION    = '1.00';
+our $VERSION    = '1.01';
 our $COMPATIBLE = '0.95';
 our @ISA        = qw{
 	Padre::Role::Task

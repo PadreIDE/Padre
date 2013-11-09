@@ -52,7 +52,7 @@ use strict;
 use warnings;
 use Padre::Feature ();
 
-our $VERSION    = '1.00';
+our $VERSION    = '1.01';
 our $COMPATIBLE = '0.93';
 
 

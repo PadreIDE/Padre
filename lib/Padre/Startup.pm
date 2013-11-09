@@ -33,7 +33,7 @@ use warnings;
 use File::Spec      ();
 use Padre::Constant ();
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 my $SPLASH = undef;
 

@@ -9,7 +9,7 @@ use Padre::Wx 'RichText';
 use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

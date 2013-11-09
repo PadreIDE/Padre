@@ -4,7 +4,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION    = '1.00';
+our $VERSION    = '1.01';
 our $COMPATIBLE = '0.93';
 
 1;

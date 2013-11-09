@@ -20,7 +20,7 @@ use Padre::Wx::Action  ();
 use Padre::Locale::T;
 use Padre::Logger;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 
 

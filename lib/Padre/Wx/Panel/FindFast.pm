@@ -7,7 +7,7 @@ use Padre::Search            ();
 use Padre::Wx::FBP::FindFast ();
 use Padre::Logger;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 our @ISA     = 'Padre::Wx::FBP::FindFast';
 
 

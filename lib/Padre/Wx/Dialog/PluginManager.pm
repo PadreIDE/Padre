@@ -11,7 +11,7 @@ use Padre::Wx::FBP::PluginManager ();
 use Padre::Locale::T;
 use Try::Tiny;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 our @ISA     = 'Padre::Wx::FBP::PluginManager';
 
 

@@ -16,7 +16,7 @@ use Carp            ();
 use Padre::Constant ();
 use Padre::Startup  ();
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 
 

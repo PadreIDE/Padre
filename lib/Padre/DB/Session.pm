@@ -12,7 +12,7 @@ use strict;
 use warnings;
 use Padre::Current ();
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 my $PADRE_SESSION = 'padre-last';
 

@@ -15,7 +15,7 @@ use Padre::TaskQueue ();
 # use Padre::Logger;
 use constant DEBUG => 0;
 
-our $VERSION    = '1.00';
+our $VERSION    = '1.01';
 our $COMPATIBLE = '0.91';
 
 # Worker id sequence, so identifiers will be available in objects

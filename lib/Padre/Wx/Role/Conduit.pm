@@ -53,7 +53,7 @@ use warnings;
 use Storable ();
 use Wx       ();
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 our $SIGNAL : shared;
 
