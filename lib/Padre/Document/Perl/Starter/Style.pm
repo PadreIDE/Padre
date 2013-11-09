@@ -1,6 +1,6 @@
 package Padre::Document::Perl::Starter::Style;
 
-use 5.010;
+use 5.011;
 use strict;
 use warnings;
 use Params::Util ();
