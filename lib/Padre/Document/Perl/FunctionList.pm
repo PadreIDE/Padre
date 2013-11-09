@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Task::FunctionList ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = 'Padre::Task::FunctionList';
 
 # TODO: the regex containing func|method should either reuse what

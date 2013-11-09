@@ -8,7 +8,7 @@ use File::Spec      ();
 use Padre::Constant ();
 use Padre::File     ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = 'Padre::File';
 
 sub _reformat_filename {

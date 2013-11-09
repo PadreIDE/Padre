@@ -41,7 +41,7 @@ use Carp            ();
 use Time::HiRes     ();
 use Padre::Constant ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 # Handle the PADRE_DEBUG environment variable
 BEGIN {

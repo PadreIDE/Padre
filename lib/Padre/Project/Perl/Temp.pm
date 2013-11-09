@@ -8,7 +8,7 @@ use File::Spec       ();
 use File::Spec::Unix ();
 use File::Temp       ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 sub new {
 	my $class = shift;

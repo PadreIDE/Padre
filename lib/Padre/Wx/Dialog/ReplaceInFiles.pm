@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx::FBP::ReplaceInFiles ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = qw{
 	Padre::Wx::FBP::ReplaceInFiles
 };

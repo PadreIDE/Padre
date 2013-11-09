@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use Padre::Wx;
 
-our $VERSION    = '0.99';
+our $VERSION    = '1.00';
 our $COMPATIBLE = '0.93';
 
 sub tidy_list {

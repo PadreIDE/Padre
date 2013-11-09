@@ -9,7 +9,7 @@ use Padre::Constant       ();
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::AuiNotebook

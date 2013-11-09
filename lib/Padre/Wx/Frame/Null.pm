@@ -9,7 +9,7 @@ use warnings;
 use Wx                       ();
 use Padre::Wx::Role::Conduit ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = qw{
 	Padre::Wx::Role::Conduit
 	Wx::Frame

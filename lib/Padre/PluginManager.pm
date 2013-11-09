@@ -37,7 +37,7 @@ use Padre::Wx              ();
 use Padre::Wx::Menu::Tools ();
 use Padre::Locale::T;
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 
 

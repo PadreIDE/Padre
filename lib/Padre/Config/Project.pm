@@ -10,7 +10,7 @@ use File::Basename ();
 use YAML::Tiny     ();
 use Params::Util   ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 
 

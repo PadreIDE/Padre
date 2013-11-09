@@ -28,7 +28,7 @@ use YAML::Tiny      ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 =pod
 

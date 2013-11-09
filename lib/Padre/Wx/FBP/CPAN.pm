@@ -14,7 +14,7 @@ use Padre::Wx ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx::HtmlWindow ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Panel

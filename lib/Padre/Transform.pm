@@ -23,7 +23,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION    = '0.99';
+our $VERSION    = '1.00';
 our $COMPATIBLE = '0.93';
 
 

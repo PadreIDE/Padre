@@ -6,7 +6,7 @@ use warnings;
 
 use List::Util ();
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 # Experimental package. The API needs a lot of refactoring
 # and the whole thing needs a lot of tests

@@ -6,7 +6,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '0.99';
+our $VERSION = '1.00';
 
 #######
 # function set_breakpoints_clicked

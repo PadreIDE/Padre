@@ -26,7 +26,7 @@ use List::Util   ();
 use Params::Util ();
 use Padre::MIME  ();
 
-our $VERSION    = '0.99';
+our $VERSION    = '1.00';
 our $COMPATIBLE = '0.95';
 
 my %MIME = ();
