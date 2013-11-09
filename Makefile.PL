@@ -73,7 +73,7 @@ name 'Padre';
 license 'perl';
 author 'Gabor Szabo';
 all_from 'lib/Padre.pm';
-requires 'perl' => '5.010000';
+requires 'perl' => '5.011000';
 
 # General dependencies
 requires 'Algorithm::Diff'          => '1.19';
@@ -250,6 +250,7 @@ Meta->add_metadata(
         'Patrick Donelan (PDONELAN) <pat@patspam.com>',
         'Paweł Murias (PMURIAS)',
         'Petar Shangov (PSHANGOV)',
+	'Peter Lavender (PLAVEN)',
         'Ryan Niebur (RSN) <rsn@cpan.org>',
         'Sebastian Willing (SEWI)',
         'Shlomi Fish  - שלומי פיש (SHLOMIF)',
