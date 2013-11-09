@@ -13,7 +13,7 @@ next production release, and synchronise their release to the Padre schedule.
 Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
-1.00 TBA
+1.00 2013.11.09
  - Applied Patch in #1488 comment:7 itcharlie++ (BOWTIE)
  - Apply patch for #1504 dod++ (BOWTIE)
  - Apply patch2 from #1459 bojinlund++ (BOWTIE)
