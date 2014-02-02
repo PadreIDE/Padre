@@ -11,13 +11,14 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 37 );
+#plan( tests => 37 );
 
 use Test::Script;
-use Test::NoWarnings;
+#use Test::NoWarnings;
 
 local $^W = 1;
 
+BEGIN {
 use_ok('Wx');
 diag( "Tests find Wx: $Wx::VERSION " . Wx::wxVERSION_STRING() );
 
@@ -48,6 +49,7 @@ use_ok('Padre::TaskWorker');
 use_ok('Padre::TaskHandle');
 use_ok('Padre::TaskManager');
 use_ok('Padre::Role::Task');
+}
 
 # Now load everything else
 my $loaded = Padre->import(':everything');
@@ -70,3 +72,5 @@ foreach (
 {
 	script_compiles("share/examples/wx/$_");
 }
+
+done_testing ();
