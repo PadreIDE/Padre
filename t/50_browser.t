@@ -27,11 +27,10 @@ use URI;
 
 BEGIN {
 	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
+	use_ok('Padre::Browser');
+	use_ok('Padre::Task::Browser');
+	use_ok('Padre::Browser::Document');
 }
-
-use_ok('Padre::Browser');
-use_ok('Padre::Task::Browser');
-use_ok('Padre::Browser::Document');
 
 my $db = Padre::Browser->new();
 

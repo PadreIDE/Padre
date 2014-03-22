@@ -5,7 +5,7 @@
 use 5.010000;
 use strict;
 use lib 'privinc';
-use inc::Module::Install 1.06;
+use inc::Module::Install 1.08;
 use POSIX qw(locale_h);
 
 # Workaround for the fact that Module::Install loads the modules
@@ -136,7 +136,7 @@ requires 'Pod::POM'                 => '0.17';
 requires 'Pod::Simple'              => '3.07';
 requires 'Pod::Simple::XHTML'       => '3.04';
 requires 'Pod::Abstract'            => '0.16';
-requires 'Pod::Perldoc'             => '3.15';
+requires 'Pod::Perldoc'             => '3.23';
 requires 'POD2::Base'               => '0.043';
 requires 'POSIX'                    => 0;
 requires 'PPI'                      => '1.215';

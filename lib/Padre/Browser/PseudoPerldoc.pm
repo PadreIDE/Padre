@@ -21,6 +21,9 @@ sub find_good_formatter_class {
 	return;
 }
 
+
+=begin  BlockComment  # Comment out to enable t/50-t/50_browser.t to pass on 5.19.9
+
 # Even worse than monkey patching , copy paste from Pod::Perldoc w/ edits
 # to avoid untrappable calls to 'exit'
 sub process {
@@ -77,6 +80,11 @@ sub process {
 
 	return $self->render_and_page( \@found );
 }
+
+=end    BlockComment  # BlockCommentNo_1
+
+=cut
+
 
 1;
 
