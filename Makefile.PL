@@ -17,11 +17,11 @@ eval {
 	$SIG{__WARN__} = 'DEFAULT';
 };
 
-BEGIN {
-	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
-		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
-	}
-}
+#BEGIN {
+#	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
+#		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
+#	}
+#}
 
 # Configure-time dependencies MUST be done first.
 # This version ensures that we have a new MakeMaker that
