@@ -17,25 +17,23 @@ eval {
 	$SIG{__WARN__} = 'DEFAULT';
 };
 
-#BEGIN {
-#	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
-#		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
-#	}
-#}
+BEGIN {
+	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
+		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
+	}
+}
 
 # Configure-time dependencies MUST be done first.
 # This version ensures that we have a new MakeMaker that
 # WON'T load modules to determine the version.
 # This _SHOULD_ theoretically make the "require Test::NoWarnings".
 # stuff above here no longer needed.
-##configure_requires 'ExtUtils::MakeMaker' => '6.52';
-requires 'ExtUtils::MakeMaker' => '6.52';
+configure_requires 'ExtUtils::MakeMaker' => '6.52';
 
 # Force an explicit configure_requires dependency on module that is
 # SUPPOSED to be in the Perl core but that some Perl vendors seem to
 # be splitting out into separate modules (spotted first on centos)
-##configure_requires 'ExtUtils::Embed' => '1.250601';
-requires 'ExtUtils::Embed' => '1.250601';
+configure_requires 'ExtUtils::Embed' => '1.250601';
 
 # the above line does not seem to force an upgrade
 # the below code might work but not tested
@@ -49,20 +47,18 @@ requires 'ExtUtils::Embed' => '1.250601';
 #}
 
 # This makes sure that we didn't compile Alien::wxWidgets with the wrong options.
-#configure_requires 'Alien::wxWidgets' => '0.62';
-#
-#my $wxw = eval { use Alien::wxWidgets; 1; };
-#if ( $@ or not $wxw ) {
-#	print STDERR "Warning: prerequisite Alien::wxWidgets not found.\n";
-#	exit 0;
-#}
-#if ( '2.009000' eq Alien::wxWidgets->version ) {
-#	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of\n";
-#	print STDERR "wxWidgets. This is known to cause Padre to crash.\n";
-#	exit 0;
-#}
-requires 'Alien::wxWidgets' => '0.62';
+configure_requires 'Alien::wxWidgets' => '0.62';
 
+my $wxw = eval { use Alien::wxWidgets; 1; };
+if ( $@ or not $wxw ) {
+	print STDERR "Warning: prerequisite Alien::wxWidgets not found.\n";
+	exit 0;
+}
+if ( '2.009000' eq Alien::wxWidgets->version ) {
+	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of\n";
+	print STDERR "wxWidgets. This is known to cause Padre to crash.\n";
+	exit 0;
+}
 
 
 
@@ -302,7 +298,7 @@ install_script 'script/padre';
 
 build_padre_exe if win32;
 
-#install_share_with_mofiles;
+install_share_with_mofiles;
 
 auto_provides if -f 'MANIFEST';
 
