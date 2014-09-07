@@ -298,7 +298,7 @@ install_script 'script/padre';
 
 build_padre_exe if win32;
 
-install_share_with_mofiles;
+# install_share_with_mofiles;
 
 auto_provides if -f 'MANIFEST';
 
