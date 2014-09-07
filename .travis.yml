@@ -1,5 +1,6 @@
 language: perl
 install:
+  - perl Makefile.PL
   - cpanm --notest --verbose --installdeps .
 perl:
   - '5.20'
