@@ -55,7 +55,7 @@ The main web site of Padre is actually its Trac L<http://padre.perlide.org/>
 
 =head2 Patching
 
-Check out the trunk (L<http://svn.perlide.org/padre/trunk/>) and use svn
+Check out the trunk (L<https://github.com/PadreIDE/>) and use svn
 diff to create your patch while your current working directory is the
 trunk directory.
 

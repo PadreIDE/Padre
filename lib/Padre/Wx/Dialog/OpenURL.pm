@@ -76,7 +76,7 @@ sub new {
 	my $openurl_label = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext('e.g.') . ' http://svn.perlide.org/padre/trunk/Padre/Makefile.PL',
+		Wx::gettext('e.g.') . ' https://github.com/PadreIDE/Padre/Makefile.PL',
 		Wx::DefaultPosition,
 		Wx::DefaultSize,
 	);
