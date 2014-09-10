@@ -9,7 +9,7 @@ before_install:
   - build-dist
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+  - cpan-install Locale::Msgfmt --deps       # installs prereqs, including recommends
 script:
   - prove -lv $(test-dirs)
 
