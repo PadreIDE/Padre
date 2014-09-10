@@ -210,6 +210,7 @@ homepage 'http://padre.perlide.org/';
 bugtracker 'http://padre.perlide.org/trac/';
 repository 'https://github.com/PadreIDE/Padre/';
 
+# NOTE: Disabled due to Unicode parsing problems on Win32
 #Meta->add_metadata(
 #	x_contributors => [
 #		'Aaron Trevena (TEEJAY)',
