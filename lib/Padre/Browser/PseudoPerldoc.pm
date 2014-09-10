@@ -22,8 +22,6 @@ sub find_good_formatter_class {
 }
 
 
-=begin  BlockComment  # Comment out to enable t/50-t/50_browser.t to pass on 5.19.9
-
 # Even worse than monkey patching , copy paste from Pod::Perldoc w/ edits
 # to avoid untrappable calls to 'exit'
 sub process {
@@ -62,7 +60,7 @@ sub process {
 	$self->find_good_formatter_class;
 	$self->formatter_sanity_check;
 
-	$self->maybe_diddle_INC;
+	$self->maybe_extend_searchpath;
 
 	# for when we're apparently in a module or extension directory
 
@@ -80,11 +78,6 @@ sub process {
 
 	return $self->render_and_page( \@found );
 }
-
-=end    BlockComment  # BlockCommentNo_1
-
-=cut
-
 
 1;
 
