@@ -9,7 +9,7 @@ before_install:
 install:
    - cpanm ExtUtils::MakeMaker
    - cpanm Locale::Msgfmt
-   - cpanm --verbose  Module::Install
+   - cpanm Module::Install
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --verbose --notest --installdeps .
 script:
