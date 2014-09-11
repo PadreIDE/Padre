@@ -206,11 +206,19 @@ sub new {
 
 	# Setup the editor indicators which we will use in smart, warning and error highlighting
 	# Indicator #0: Green round box indicator for smart highlighting
+	# $self->IndicatorSetStyle(
+		# Padre::Constant::INDICATOR_SMART_HIGHLIGHT,
+		# Wx::Scintilla::INDIC_ROUNDBOX,
+	# );
+	$self->IndicatorSetForeground(
+		Padre::Constant::INDICATOR_SMART_HIGHLIGHT,
+		GREEN,
+	);
 	$self->IndicatorSetStyle(
 		Padre::Constant::INDICATOR_SMART_HIGHLIGHT,
-		Wx::Scintilla::INDIC_ROUNDBOX,
+		Wx::Scintilla::INDIC_SQUIGGLE,
 	);
-
+	
 	# Indicator #1, Orange squiggle for warning highlighting
 	$self->IndicatorSetForeground(
 		Padre::Constant::INDICATOR_WARNING,
