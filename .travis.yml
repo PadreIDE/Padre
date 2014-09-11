@@ -6,10 +6,13 @@ before_install:
   - source ~/perl-travis-helper/init
   - build-perl
   - perl -V
-  - build-dist
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+   - cpanm ExtUtils::MakeMaker
+   - cpanm ExtUtils::Embed
+   - cpanm Locale::Msgfmt
+   - cpanm Module::Install
+   - cpanm --verbose Alien::wxWidgets # Build verbose to keep Travis stimulated
+   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
+   - cpanm --notest --installdeps .
 script:
   - prove -lv $(test-dirs)
-

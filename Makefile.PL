@@ -17,11 +17,11 @@ eval {
 	$SIG{__WARN__} = 'DEFAULT';
 };
 
-#BEGIN {
-#	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
-#		die("Install Locale::Msgfmt version 0.15 or higher to build from SVN");
-#	}
-#}
+BEGIN {
+	if ( author_context and not eval("use Locale::Msgfmt 0.15; 1;") ) {
+		die("Install Locale::Msgfmt version 0.15 or higher to build from Git");
+	}
+}
 
 # Configure-time dependencies MUST be done first.
 # This version ensures that we have a new MakeMaker that
@@ -299,7 +299,11 @@ install_script 'script/padre';
 
 build_padre_exe if win32;
 
-# install_share_with_mofiles;
+# This enhanced version of install_share is provided by Locale::Msgfmt
+# Without Locale::Msgfmt you will get a bareword error for this line.
+# Without running install_share_with_mofiles Padre won't have a share
+# directory and now you have bigger problems.
+install_share_with_mofiles;
 
 auto_provides if -f 'MANIFEST';
 
