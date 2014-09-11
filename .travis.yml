@@ -11,7 +11,7 @@ install:
    - cpanm ExtUtils::Embed
    - cpanm Locale::Msgfmt
    - cpanm Module::Install
-   - cpanm --verbose Alien::wxWidgets # Build verbose to keep Travis stimulated
+   - cpanm --notest Alien::wxWidgets # Build verbose to keep Travis stimulated
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
