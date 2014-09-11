@@ -4,39 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
+use List::Functions::Perl ();
 
 our $VERSION = '1.01';
-our @ISA     = 'Padre::Task::FunctionList';
-
-# TODO: the regex containing func|method should either reuse what
-# we have in PPIx::EditorTools::Outline or copy the list from there
-# for now let's leave it as it is and focus on improving the Outline
-# code and then we'll see if we reuse or copy paste.
-
-######################################################################
-# Padre::Task::FunctionList Methods
-
-# recognize newline even if encoding is not the platform default (will not work for MacOS classic)
-my $newline = qr{\cM?\cJ};
-
-our $sub_search_re = qr{
-		(?:
-			${newline}__(?:DATA|END)__\b.*
-			|
-			$newline$newline=\w+.*?$newline\s*?$newline=cut\b(?=.*?(?:$newline){1,2})
-			|
-			(?:^|$newline)\s*
-			(?:
-				(?:sub|func|method|before|after|around|override|augment)\s+(\w+(?:::\w+)*)
-				|
-				\* (\w+(?:::\w+)*) \s*=\s* (?: sub\b | \\\& )
-			)
-		)
-	}sx;
-
-sub find {
-	return grep { defined $_ } $_[1] =~ /$sub_search_re/g;
-}
+our @ISA     = ('Padre::Task::FunctionList', 'List::Functions::Perl');
 
 1;
 

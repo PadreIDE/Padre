@@ -118,6 +118,7 @@ requires 'IPC::Open2'               => 0;
 requires 'IPC::Open3'               => 0;
 requires 'JSON::XS'                 => '2.29';
 requires 'List::Util'               => '1.18';
+requires 'List::Functions'          => '0.01';
 requires 'List::MoreUtils'          => '0.22';
 requires 'LWP'                      => '5.815';
 requires 'LWP::UserAgent'           => '5.815';
