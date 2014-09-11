@@ -1,10 +1,10 @@
-#!/usr/bin/perl
+#!perl
 
 # Tests for the Padre::MIME module and the mime types in it
 
 use strict;
 use warnings;
-use Test::More tests => 758;
+use Test::More tests => 759;
 use Test::NoWarnings;
 use File::Spec::Functions;
 use t::lib::Padre;
@@ -59,21 +59,21 @@ SCOPE: {
 }
 
 # Detect the mime type using svn metadata
-SKIP: {
-	skip( "Not an SVN checkout", 3 ) unless -e '.svn' and Padre::Util::SVN::local_svn_ver();
-	skip( 'svn not in PATH', 3 ) unless File::Which::which('svn');
-
-	my $file = catfile( 't', 'perl', 'zerolengthperl' );
-	ok( -f $file, "Found zero length perl file $file" );
-
-	my $type1 = Padre::MIME->detect(
-		file => $file,
-	);
-	is( $type1, 'text/plain', '->detect(zerolengthsvn)' );
-
-	my $type2 = Padre::MIME->detect(
-		file => $file,
-		svn  => 1,
-	);
-	is( $type2, 'application/x-perl', '->detect(zerolengthsvn)' );
-}
+#SKIP: {
+#	skip( "Not an SVN checkout", 3 ) unless -e '.svn' and Padre::Util::SVN::local_svn_ver();
+#	skip( 'svn not in PATH', 3 ) unless File::Which::which('svn');
+#
+#	my $file = catfile( 't', 'perl', 'zerolengthperl' );
+#	ok( -f $file, "Found zero length perl file $file" );
+#
+#	my $type1 = Padre::MIME->detect(
+#		file => $file,
+#	);
+#	is( $type1, 'text/plain', '->detect(zerolengthsvn)' );
+#
+#	my $type2 = Padre::MIME->detect(
+#		file => $file,
+#		svn  => 1,
+#	);
+#	is( $type2, 'application/x-perl', '->detect(zerolengthsvn)' );
+#}
