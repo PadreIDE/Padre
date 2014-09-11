@@ -8,8 +8,10 @@ before_install:
   - perl -V
 install:
    - cpanm ExtUtils::MakeMaker
+   - cpanm ExtUtils::Embed
    - cpanm Locale::Msgfmt
    - cpanm Module::Install
+   - cpanm Alien::wxWidgets
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --verbose --notest --installdeps .
 script:
