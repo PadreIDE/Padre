@@ -7,10 +7,10 @@ before_install:
   - build-perl
   - perl -V
 install:
-   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm ExtUtils::MakeMaker
    - cpanm Locale::Msgfmt
    - cpanm --verbose  Module::Install
+   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
   - prove -lv $(test-dirs)
