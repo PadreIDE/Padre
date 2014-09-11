@@ -251,7 +251,7 @@ sub new {
 				my $ret = Wx::MessageBox(
 					sprintf(
 						Wx::gettext(
-							"The file %s you are trying to open is %s bytes large. It is over the arbitrary file size limit of Padre which is currently %s. Opening this file may reduce performance. Do you still want to open the file?"
+							"The file %s you are trying to open is %s bytes large. Opening files larger than %s may reduce performance. Continue?"
 						),
 						$self->{file}->{filename},
 						_commafy( -s $self->{file}->{filename} ),

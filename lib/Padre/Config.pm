@@ -1138,7 +1138,7 @@ setting(
 	name    => 'editor_file_size_limit',
 	type    => Padre::Constant::POSINT,
 	store   => Padre::Constant::HUMAN,
-	default => 500_000,
+	default => 5_000_000,
 );
 setting(
 	name    => 'editor_right_margin_enable',
