@@ -81,6 +81,7 @@ my %EXT = (
 	lsp   => 'application/x-lisp',
 	lua   => 'text/x-lua',
 	m     => 'text/x-matlab',
+	mk    => 'text/x-makefile',
 	mak   => 'text/x-makefile',
 	pdf   => 'application/pdf',
 	pod   => 'text/x-pod',
