@@ -1,6 +1,7 @@
 language: perl
 perl:
   - '5.20.0-thr'              # installs perl 5.20.0 with threading
+  - '5.14.4-thr'              # installs perl 5.14.4 with threading
 before_install:
   - git clone git://github.com/haarg/perl-travis-helper ~/perl-travis-helper
   - source ~/perl-travis-helper/init
@@ -11,7 +12,7 @@ install:
    - cpanm ExtUtils::Embed
    - cpanm Locale::Msgfmt
    - cpanm Module::Install
-   - cpanm --notest Alien::wxWidgets # Build verbose to keep Travis stimulated
+   - cpanm --notest --verbose Alien::wxWidgets # Build verbose to keep Travis stimulated
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
