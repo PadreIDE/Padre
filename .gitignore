@@ -8,3 +8,9 @@ inc/
 pm_to_blib
 share/locale/*.mo
 MYMETA.*
+winxs/dll.base
+winxs/dll.exp
+winxs/Win32.bs
+winxs/Win32.c
+winxs/Win32.o
+winxs/Win32.def
