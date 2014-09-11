@@ -60,6 +60,8 @@ my %PARAM = (
 	SetFoldMarginHiColour   => [ 2, 'boolean,color' ],
 	MarkerSetForeground     => [ 2, 'style,color' ],
 	MarkerSetBackground     => [ 2, 'style,color' ],
+	IndicatorSetStyle       => [ 2, 'style,style' ],
+	IndicatorSetForeground  => [ 2, 'style,color' ]
 );
 
 # Fallback path of next best styles if no style exists.
