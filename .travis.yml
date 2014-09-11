@@ -11,6 +11,6 @@ install:
    - cpanm Locale::Msgfmt
    - cpanm --verbose  Module::Install
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
-   - cpanm --notest --installdeps .
+   - cpanm --verbose --notest --installdeps .
 script:
   - prove -lv $(test-dirs)
