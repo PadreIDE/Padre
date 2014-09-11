@@ -8,7 +8,7 @@ before_install:
   - perl -V
 install:
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
-   - cpanm Locale::Msgfmt
+   - cpanm Locale::Msgfmt Module::Install ExtUtils::MakeMaker
    - cpanm --notest --installdeps .
 script:
   - prove -lv $(test-dirs)
