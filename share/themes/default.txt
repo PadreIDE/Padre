@@ -51,8 +51,8 @@ MarkerSetBackground     SC_MARKNUM_FOLDEROPEN     586e75
 
 style text/plain
 include padre
-SetCaretForeground                                000000
-SetCaretLineBackground                            ffff04
+SetCaretForeground                          000000
+SetCaretLineBackground                      ffff04
 StyleSetBackground STYLE_DEFAULT            ffffff
 StyleSetForeground STYLE_DEFAULT            000000
 StyleSetBackground STYLE_LINENUMBER         eeeeee
