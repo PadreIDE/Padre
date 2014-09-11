@@ -6,11 +6,9 @@ before_install:
   - source ~/perl-travis-helper/init
   - build-perl
   - perl -V
-  - cpan-install Locale::Msgfmt~0.15
-  - build-dist
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
+   - cpanm Locale::Msgfmt
+   - cpanm --quiet --notest --installdeps .
 script:
   - prove -lv $(test-dirs)
-
