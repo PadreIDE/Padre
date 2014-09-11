@@ -48,14 +48,23 @@ foreach my $ext ( sort Padre::MIME->exts ) {
 	ok( $mime->type, "$ext: Resolved $type to " . $mime->type );
 }
 
-# Detect the mime type of a sample file
+# Detect the mime type of some specific sample files
 SCOPE: {
 	my $file = catfile( 't', '12_mime.t' );
 	ok( -f $file, "Found test file $file" );
 	my $type = Padre::MIME->detect(
 		file => $file,
 	);
-	is( $type, 'application/x-perl', '->detect(file=>perl)' );
+	is( $type, 'application/x-perl', '->detect(file => perl)' );
+}
+
+SCOPE: {
+	my $file = catfile( 'Makefile' );
+	ok( -f $file, "Found test file $file" );
+	my $type = Padre::MIME->detect(
+		file => $file,
+	);
+	is( $type, 'text/x-makefile', '->detect(file => makefile)' );
 }
 
 # Detect the mime type using svn metadata
