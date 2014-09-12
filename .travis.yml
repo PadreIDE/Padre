@@ -12,9 +12,9 @@ install:
    - cpanm ExtUtils::Embed
    - cpanm Locale::Msgfmt
    - cpanm Module::Install
-   - cpanm --notest --verbose Alien::wxWidgets # Build verbose to keep Travis stimulated
-   - cpanm Test::CPAN::Meta # required by xt/meta.t
-   - cpanm Test::MinimumVersion # required by xt/pmv.t
+   - cpanm --verbose Alien::wxWidgets # Build verbose to keep Travis stimulated
+   - cpanm --notest Test::CPAN::Meta # required by xt/meta.t
+   - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
