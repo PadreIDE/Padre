@@ -15,8 +15,9 @@ install:
    - cpanm --notest Test::CPAN::Meta     # required by xt/meta.t
    - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
    - cpanm --notest Test::Pod            # required by xt/pod.t
+   - cpanm --verbose Wx::Perl::ProcessStream # hacking 5.14.4
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
-   - cpanm --verbose --installdeps .
+   - cpanm --notest --installdeps .
 script:
   - perl Makefile.PL
   - make
