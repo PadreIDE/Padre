@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
-use List::Functions::Java ();
+use Parse::Functions::Java ();
 
 our $VERSION = '1.01';
-our @ISA     = ('Padre::Task::FunctionList', 'List::Functions::Java');
+our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::Java');
 
 1;
 

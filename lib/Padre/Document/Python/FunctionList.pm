@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
-use List::Functions::Python ();
+use Parse::Functions::Python ();
 
 our $VERSION = '1.01';
-our @ISA     = ('Padre::Task::FunctionList', 'List::Functions::Python');
+our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::Python');
 
 1;
 

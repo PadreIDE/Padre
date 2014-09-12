@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
-use List::Functions::Perl ();
+use Parse::Functions::Perl ();
 
 our $VERSION = '1.01';
-our @ISA     = ('Padre::Task::FunctionList', 'List::Functions::Perl');
+our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::Perl');
 
 1;
 

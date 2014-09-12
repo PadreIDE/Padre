@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
-use List::Functions::CSharp ();
+use Parse::Functions::CSharp ();
 
 our $VERSION = '1.01';
-our @ISA     = ('Padre::Task::FunctionList', 'List::Functions::CSharp');
+our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::CSharp');
 
 1;
 
