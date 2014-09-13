@@ -5,6 +5,7 @@ perl:
   - '5.16.3-thr'              # installs perl 5.16.3 with threading
   - '5.14.4-thr'              # installs perl 5.14.4 with threading
   - '5.12.5-thr'              # installs perl 5.12.5 with threading
+  - '5.10.1-thr'              # installs perl 5.10.1 with threading
 before_install:
   - git clone git://github.com/haarg/perl-travis-helper ~/perl-travis-helper
   - source ~/perl-travis-helper/init
@@ -19,7 +20,7 @@ install:
    - cpanm --notest Test::CPAN::Meta     # required by xt/meta.t
    - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
    - cpanm --notest Test::Pod            # required by xt/pod.t
-   - cpanm --notest ExtUtils::ParseXS    # v3.16 hacking 5.14.4
+   - cpanm --notest ExtUtils::ParseXS    # v3.16 hacking 5.14.4 & below for Wx
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
