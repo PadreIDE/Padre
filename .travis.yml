@@ -15,7 +15,7 @@ install:
    - cpanm --notest Test::CPAN::Meta     # required by xt/meta.t
    - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
    - cpanm --notest Test::Pod            # required by xt/pod.t
-   - cpanm --verbose Wx # hacking 5.14.4
+   - cpanm --verbose ExtUtils::ParseXS # hacking 5.14.4
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm --notest --installdeps .
 script:
