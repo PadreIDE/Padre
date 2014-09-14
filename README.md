@@ -30,9 +30,7 @@ http://padre.perlide.org/wiki/Download
 
 ##IRC channel
 
-The primary communication channel is the IRC channel of the Padre developers. It is located on the **irc.perl.org** server and it is called **#padre**.
-
-The **#padre** channel is being logged. You can see the history here. Specifically visit the log of [today](http://irclog.perlgeek.de/padre/today). 
+The primary communication channel is the [IRC channel](https://github.com/PadreIDE/Padre/wiki/IRC-Channel) of the Padre developers. It is located on the **irc.perl.org** server and it is called **#padre**.
 
 
 ##License
