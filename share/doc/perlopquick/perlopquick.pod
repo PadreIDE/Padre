@@ -2518,7 +2518,7 @@ the same as the ASCII order).
 
 =head3 See also
 
-L</X E<gt> Y>, L</X >= Y>, and L</X ge Y>
+L</X E<gt> Y>, L</X E<gt>= Y>, and L</X ge Y>
 
 =head2 X le Y
 

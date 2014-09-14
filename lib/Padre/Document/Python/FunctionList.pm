@@ -4,30 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Task::FunctionList ();
+use Parse::Functions::Python ();
 
 our $VERSION = '1.01';
-our @ISA     = 'Padre::Task::FunctionList';
-
-######################################################################
-# Padre::Task::FunctionList Methods
-
-my $n = "\\cM?\\cJ";
-our $function_search_re = qr/
-		(?:
-			\"\"\".*?\"\"\"
-			|
-			(?:^|$n)\s*
-			(?:
-				(?:def)\s+(\w+)
-				|
-				(?:(\w+)\s*\=\s*lambda)
-			)
-		)
-	/sx;
-
-sub find {
-	return grep { defined $_ } $_[1] =~ /$function_search_re/g;
-}
+our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::Python');
 
 1;
 

@@ -8,6 +8,11 @@ use lib 'privinc';
 use inc::Module::Install 1.08;
 use POSIX qw(locale_h);
 
+BEGIN {
+	die "Need to install Module::Install 1.08 before we can continue"
+		if not defined $Module::Install::VERSION or $Module::Install::VERSION < 1.08;
+}
+
 # Workaround for the fact that Module::Install loads the modules
 # into memory and when Test::NoWarnings is loaded it will hide
 # the warnings generated from that point.
@@ -118,6 +123,7 @@ requires 'IPC::Open2'               => 0;
 requires 'IPC::Open3'               => 0;
 requires 'JSON::XS'                 => '2.29';
 requires 'List::Util'               => '1.18';
+requires 'Parse::Functions'         => '0.01';
 requires 'List::MoreUtils'          => '0.22';
 requires 'LWP'                      => '5.815';
 requires 'LWP::UserAgent'           => '5.815';
