@@ -23,9 +23,16 @@ http://padre.perlide.org/wiki/Download
   - [ ] use of [skip ci](http://docs.travis-ci.com/user/how-to-skip-a-build/) for \*.mb and pod files
 - [ ] conversion of trac features szabgab++
 - [ ] conversion of RT to issues karre++
+- [x] add irc info bowtie++
 - [ ] #padre notifications
 - [ ] padre developers wiki
 - [ ] use of gists
+
+##IRC channel
+
+The primary communication channel is the IRC channel of the Padre developers. It is located on the **irc.perl.org** server and it is called **#padre**.
+
+The **#padre** channel is being logged. You can see the history here. Specifically visit the log of [today](http://irclog.perlgeek.de/padre/today). 
 
 
 ##License
