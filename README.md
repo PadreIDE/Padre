@@ -20,6 +20,7 @@ http://padre.perlide.org/wiki/Download
 - [ ] contributors guide
   - [ ] use of tools perltidyrc
   - [ ] spell checking
+  - [ ] use of [skip ci] for \*.mb and pod files
 - [ ] conversion of trac features szabgab++
 - [ ] conversion of RT to issues karre++
 - [ ] #padre notifications
