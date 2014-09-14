@@ -3,7 +3,7 @@
 
 A Perl IDE and general-purpose editor using WxWidgets.
 
-##Installation:
+##Installation
 
 * Alien::WxWidgets
 * Wx
@@ -13,7 +13,18 @@ For detailed installation instructions look at
 
 http://padre.perlide.org/wiki/Download
 
---------------------------------------------------------
+##ToDo
+
+-[x] convert from svn to github kaare++
+-[x] travis intergration alias++ bowtie++
+-[ ] contributors guide
+-[ ] conversion of trac features szabgab++
+-[ ] conversion of RT to issues karre++
+-[ ] #padre notifications
+-[ ] padre developers wiki
+-[ ] use of gists
+
+##License
 
 The Padre source code is distributed under the same terms as Perl itself. 
 Namely:
