@@ -67,8 +67,8 @@ sub apply {
 		# insert 'use strict; use warnings;' at the top
 		my $first = $doc->find_first(
 			sub {
-				return $_[1]->isa('PPI::Statement')
-					or $_[1]->isa('PPI::Structure');
+				return ($_[1]->isa('PPI::Statement')
+					or $_[1]->isa('PPI::Structure'));
 			}
 		);
 		$replace = "use strict;\nuse warnings;\n";
