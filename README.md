@@ -18,6 +18,8 @@ http://padre.perlide.org/wiki/Download
 - [x] convert from svn to github kaare++
 - [x] travis intergration alias++ bowtie++
 - [ ] contributors guide
+  - [ ] use of tools perltidyrc
+  - [ ] spell checking
 - [ ] conversion of trac features szabgab++
 - [ ] conversion of RT to issues karre++
 - [ ] #padre notifications
