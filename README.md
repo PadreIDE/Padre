@@ -20,12 +20,13 @@ http://padre.perlide.org/wiki/Download
 - [ ] contributors guide
   - [ ] use of tools perltidyrc
   - [ ] spell checking
-  - [ ] use of [skip ci] for \*.mb and pod files
+  - [ ] use of [skip ci](http://docs.travis-ci.com/user/how-to-skip-a-build/) for \*.mb and pod files
 - [ ] conversion of trac features szabgab++
 - [ ] conversion of RT to issues karre++
 - [ ] #padre notifications
 - [ ] padre developers wiki
 - [ ] use of gists
+
 
 ##License
 
