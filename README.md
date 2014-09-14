@@ -15,14 +15,14 @@ http://padre.perlide.org/wiki/Download
 
 ##ToDo
 
--[x] convert from svn to github kaare++
--[x] travis intergration alias++ bowtie++
--[ ] contributors guide
--[ ] conversion of trac features szabgab++
--[ ] conversion of RT to issues karre++
--[ ] #padre notifications
--[ ] padre developers wiki
--[ ] use of gists
+- [x] convert from svn to github kaare++
+- [x] travis intergration alias++ bowtie++
+- [ ] contributors guide
+- [ ] conversion of trac features szabgab++
+- [ ] conversion of RT to issues karre++
+- [ ] #padre notifications
+- [ ] padre developers wiki
+- [ ] use of gists
 
 ##License
 
