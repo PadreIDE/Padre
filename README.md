@@ -5,7 +5,7 @@ A Perl IDE and general-purpose editor using WxWidgets.
 
 ##Installation
 
-* Alien::WxWidgets
+* Alien::wxWidgets
 * Wx
 * Padre
 
