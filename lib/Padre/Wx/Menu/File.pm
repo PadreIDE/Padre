@@ -17,7 +17,7 @@ our $VERSION = '1.01';
 our @ISA     = 'Padre::Wx::Menu';
 
 # We only check for the existance of Module::Starter once at startup
-our $HAS_MODULE_STARTER = Padre::Util::module_available('Module::Starter');
+our $MODULE_STARTER = Padre::Util::module_available('Module::Starter');
 
 
 
@@ -80,7 +80,7 @@ sub new {
 	$file_new->AppendSeparator;
 
 	# TODO: Not yet finished
-	if ($HAS_MODULE_STARTER) {
+	if ($MODULE_STARTER and $MODULE_STARTER->{VERSION} >= 1.60) {
 		$self->add_menu_action(
 			$file_new,
 			'file.p5_modulestarter',
