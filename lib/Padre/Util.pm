@@ -175,6 +175,65 @@ sub newline_type {
 
 =pod
 
+=head2 C<module_available>
+
+    my $module = Padre::Util::module_available('Module::Name');
+    
+    if ($module) {
+        print "$module->{name} $module->{VERSION} installed\n";
+        if ($module->{COMPATIBLE}) {
+            print "Back-compatible with $module->{name} $module->{COMPATIBLE}\n";
+        }
+    }
+
+Determines whether a module is available at run-time via C<require> and finds the
+version information (including back-compatibility information) for the module.
+
+Provides information on the loaded version of a module if already loaded, or parses
+the information out of the equivalent unloaded module on disk.
+
+If the module is loaded or installed, returns a C<HASH> reference with three elements
+as described above (the VERSION and COMPATIBLE values can be C<undef> if the module
+does not define them). If the module is not loaded or installed, returns C<undef>.
+
+=cut
+
+sub module_available {
+	my $module = shift;
+
+	# We take two different approaches to the capture of the
+	# version and compatibility values depending on whether
+	# the module has been loaded or not.
+	my $version;
+	my $compatible;
+	require Class::Inspector;
+	if ( Class::Inspector->loaded($module) ) {
+		no strict 'refs';
+		$version    = ${"${module}::VERSION"}    || 0;
+		$compatible = ${"${module}::COMPATIBLE"} || 0;
+
+	} else {
+		# Find the unloaded file
+		my $file = Class::Inspector->resolved_filename($module);
+		unless ( defined $file and length $file ) {
+			return undef;
+		}
+
+		# Scan the unloaded file ala EU:MakeMaker
+		$version    = Padre::Util::parse_variable( $file, 'VERSION' );
+		$compatible = Padre::Util::parse_variable( $file, 'COMPATIBLE' );
+	}
+
+	# Clean and return
+	return {
+		name       => $module,
+		VERSION    => $version    ne 'undef' ? $version    : 0,
+		COMPATIBLE => $compatible ne 'undef' ? $compatible : 0,
+	};
+}
+
+=pod
+
 =head2 C<parse_variable>
 
     my $version = Padre::Util::parse_variable($file, 'VERSION');
@@ -316,13 +375,17 @@ sub share {
 
 	if ( $ENV{PADRE_DEV} ) {
 		require FindBin;
+		no warnings;
+		my $bin = $FindBin::Bin;
+		use warnings;
 		my $root = File::Spec->rel2abs(
 			File::Spec->catdir(
-				$FindBin::Bin,
+				$bin,
 				File::Spec->updir,
 				File::Spec->updir
 			)
 		);
+		use warnings;
 		unless ($plugin) {
 			return File::Spec->catdir( $root, 'Padre', 'share' );
 		}
