@@ -9,8 +9,8 @@ use inc::Module::Install 1.12;
 use POSIX qw(locale_h);
 
 BEGIN {
-	if (! defined $Module::Install::VERSION or $Module::Install::VERSION < 1.12) {
-		die "Need to install Module::Install 1.12 before we can continue";
+	if (! defined $Module::Install::VERSION or $Module::Install::VERSION < 1.08) {
+		die "Need to install Module::Install 1.08 before we can continue";
 	}
 }
 
@@ -34,6 +34,8 @@ BEGIN {
 # WON'T load modules to determine the version.
 # This _SHOULD_ theoretically make the "require Test::NoWarnings".
 # stuff above here no longer needed.
+# NOTE: IF YOU GET A BAREWORD ERROR HERE IT MAY BE DUE TO A PARTIALL BROKEN COMPILE.
+# NOTE: DELETE THE blib AND inc DIRECTORIES AND TRY AGAIN.
 configure_requires 'ExtUtils::MakeMaker' => '6.52';
 
 # Force an explicit configure_requires dependency on module that is
