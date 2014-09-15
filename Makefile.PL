@@ -5,7 +5,7 @@
 use 5.010000;
 use strict;
 use lib 'privinc';
-use inc::Module::Install 1.08;
+use inc::Module::Install 1.12;
 use POSIX qw(locale_h);
 
 BEGIN {
@@ -130,7 +130,7 @@ requires 'LWP::UserAgent'           => '5.815';
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
-requires 'Module::Starter'          => '1.60';
+requires 'Module::Starter'          => '1.60' if ! win32;
 requires 'ORLite'                   => '1.98';
 requires 'ORLite::Migrate'          => '1.10';
 requires 'Params::Util'             => '0.33';
