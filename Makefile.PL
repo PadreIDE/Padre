@@ -9,8 +9,9 @@ use inc::Module::Install 1.12;
 use POSIX qw(locale_h);
 
 BEGIN {
-	die "Need to install Module::Install 1.08 before we can continue"
-		if not defined $Module::Install::VERSION or $Module::Install::VERSION < 1.08;
+	if (! defined $Module::Install::VERSION or $Module::Install::VERSION < 1.12) {
+		die "Need to install Module::Install 1.12 before we can continue";
+	}
 }
 
 # Workaround for the fact that Module::Install loads the modules
@@ -130,7 +131,7 @@ requires 'LWP::UserAgent'           => '5.815';
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';
-requires 'Module::Starter'          => '1.60' if ! win32;
+requires 'Module::Starter'          => '1.60' if not win32;
 requires 'ORLite'                   => '1.98';
 requires 'ORLite::Migrate'          => '1.10';
 requires 'Params::Util'             => '0.33';
