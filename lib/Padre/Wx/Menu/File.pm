@@ -10,10 +10,14 @@ use Padre::Wx::Menu ();
 use Padre::Constant ();
 use Padre::Current  ();
 use Padre::Feature  ();
+use Padre::Util     ();
 use Padre::Logger;
 
 our $VERSION = '1.01';
 our @ISA     = 'Padre::Wx::Menu';
+
+# We only check for the existance of Module::Starter once at startup
+our $HAS_MODULE_STARTER = Padre::Util::module_available('Module::Starter');
 
 
 
@@ -75,12 +79,13 @@ sub new {
 	# Split projects from files
 	$file_new->AppendSeparator;
 
-
-	#ToDo Not yet finished
-	$self->add_menu_action(
-		$file_new,
-		'file.p5_modulestarter',
-	);
+	# TODO: Not yet finished
+	if ($HAS_MODULE_STARTER) {
+		$self->add_menu_action(
+			$file_new,
+			'file.p5_modulestarter',
+		);
+	}
 
 	# Open things
 
