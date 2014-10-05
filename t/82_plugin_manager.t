@@ -102,7 +102,7 @@ SCOPE: {
 	is $manager->plugins->{'Padre::Plugin::A'}->{status}, 'error', 'error in loading A';
 	my $msg1 = $english ? qr/Padre::Plugin::A - Crashed while loading\:/ : qr/.*/;
 	like $manager->plugins->{'Padre::Plugin::A'}->errstr,
-		qr/^$msg1 Global symbol "\$syntax_error" requires explicit package name at/,
+		qr/^$msg1 Global symbol "\$syntax_error" requires explicit package name/,
 		'text of error message';
 
 	$manager->load_plugin('Padre::Plugin::B');
