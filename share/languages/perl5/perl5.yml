@@ -36,7 +36,7 @@ chmod:
 chomp:
  cmd: (STRING)   or (ARRAY)
  exp: Remove the newline from the end of the STRING or from the end of every string in the ARRAY.
-chomp:
+chop:
  cmd: (STRING)
  exp: Remove last character from STRING. (Usually better to use chomp than chop.)
 chown:
