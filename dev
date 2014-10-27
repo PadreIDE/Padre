@@ -84,7 +84,7 @@ my @cmd = (
 
 push @cmd, '-d:TraceUse'.($USE ? "=$USE" : '') if defined $USE;
 push @cmd, '-MPadre::Test' if $INVISIBLE;
-push @cmd, '-d'            if $DEBUG;
+push @cmd, '-dt'           if $DEBUG;
 push @cmd, '-dt:NYTProf'   if $PROFILE;
 push @cmd, map {qq[-I$_]} @INCLUDE;
 
