@@ -1,6 +1,6 @@
 package Padre::SLOC;
 
-# A basic Source Lines of Code counter/accumulator
+# A basic "Source Lines of Code" counter/accumulator
 
 use 5.008;
 use strict;
@@ -24,6 +24,7 @@ my %CONTENT = (
 	'text/x-adasrc'          => 'code',
 	'text/x-cobol'           => 'code',
 	'text/x-csrc'            => 'code',
+	'text/x-fsharp'          => 'code',
 	'text/x-haskell'         => 'code',
 	'text/x-java'            => 'code',
 	'text/x-pascal'          => 'code',

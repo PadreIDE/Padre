@@ -277,6 +277,7 @@ Padre::Comment->register(
 	'text/x-eiffel'             => '--',
 	'text/x-forth'              => '\\',
 	'text/x-fortran'            => '!',
+	'text/x-fsharp'             => '//',
 	'text/x-haskell'            => '--',
 	'application/x-latex'       => '%',
 	'application/x-lisp'        => ';',

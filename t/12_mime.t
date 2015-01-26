@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 759;
+use Test::More tests => 773;
 use Test::NoWarnings;
 use File::Spec::Functions;
 use t::lib::Padre;
