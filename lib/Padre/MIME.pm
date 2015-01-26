@@ -968,7 +968,7 @@ Padre::MIME->create(
 	supertype => 'text/plain',
 );
 
-Padre:MIME->create(
+Padre::MIME->create(
 	type      => 'text/x-fsharp',
 	name      => "F#",
 	supertype => 'text/plain',
