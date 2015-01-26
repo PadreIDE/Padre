@@ -70,6 +70,8 @@ my %EXT = (
 	e     => 'text/x-eiffel',
 	exe   => 'application/octet-stream',
 	f     => 'text/x-fortran',
+	fs    => 'text/x-fsharp',
+	fsx   => 'text/x-fsharp',
 	htm   => 'text/html',
 	html  => 'text/html',
 	hs    => 'text/x-haskell',
@@ -963,6 +965,12 @@ Padre::MIME->create(
 Padre::MIME->create(
 	type      => 'text/x-eiffel',
 	name      => 'Eiffel',
+	supertype => 'text/plain',
+);
+
+Padre:MIME->create(
+	type      => 'text/x-fsharp',
+	name      => "F#",
 	supertype => 'text/plain',
 );
 
