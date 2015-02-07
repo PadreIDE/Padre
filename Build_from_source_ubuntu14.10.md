@@ -1,0 +1,19 @@
+This instructions reflect and installation using perlbrew (http://perlbrew.pl/).
+
+# Get the OS dependencies
+$ sudo apt-get install libgtk-3-dev libwxgtk3.0-dev
+$ cpanm Module::Install Locale::Msgfmt
+# Alien::wxWidgets and wxWidgets 3.0.0, does build. We need version 3.0.1
+$ mkdir -p ~/tmp/ && cd ~/tmp && cpan -g Alien::wxWidgets && tar xvzf Alien-wxWidgets-*.tar.gz && cd Alien-wxWidgets-*
+$ cp patches/data-3.0.0 patches/data-3.0.1
+$ perl -pi -e 's/3\.0\.0/3.0.1/g' Build.PL patches/data-3.0.1
+$ export CXXFLAGS="-std=gnu++11"
+# Accept all the defaults
+$ perl Build.PL
+$ perl Build
+$ perl Build test
+$ perl Build install
+$ cpanm Wx # work in progress
+
+
+
