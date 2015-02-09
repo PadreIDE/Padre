@@ -1,3 +1,5 @@
+Work in progress...
+
 This instructions reflect and installation using perlbrew (http://perlbrew.pl/).
 
 # Get the OS dependencies
@@ -13,7 +15,11 @@ $ perl Build.PL
 $ perl Build
 $ perl Build test
 $ perl Build install
-$ cpanm Wx # work in progress
-
+$ cd ~/tmp
+$ cpan -q Wx && tar xvzf Wx-*.tar.gz && cd Wx*
+$ perl Makefile.PL
+# This is UGLY:
+$ find . -name Makefile -exec perl -pi -e 's/(g\+\+ -pthread)/$1 -std=gnu++11/g' {} \;
+$ make
 
 
