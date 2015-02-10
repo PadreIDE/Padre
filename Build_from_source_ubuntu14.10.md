@@ -21,9 +21,9 @@ $ perl Build test
 $ perl Build install
 $ cd ~/tmp
 $ cpan -q Wx && tar xvzf Wx-*.tar.gz && cd Wx*
-$ perl Makefile.PL
-# This is UGLY:
-$ find . -name Makefile -exec perl -pi -e 's/(g\+\+ -pthread)/$1 -std=gnu++11/g' {} \;
+$ perl Makefile.PL --extra-cflags='-std=gnu++11'
+# This does not work yet
 $ make
+$ make install
 
 
