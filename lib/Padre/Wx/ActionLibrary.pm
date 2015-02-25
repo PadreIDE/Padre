@@ -2278,7 +2278,7 @@ sub init {
 		label      => _T('Plug-in &List (CPAN)'),
 		comment    => _T('Open browser to a CPAN search showing the Padre::Plugin packages'),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
+			Padre::Wx::launch_browser('https://metacpan.org/search?q=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
 	);
 
