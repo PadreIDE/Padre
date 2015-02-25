@@ -2608,7 +2608,7 @@ sub init {
 		label      => _T('Report a New &Bug'),
 		comment    => _T('Send a bug report to the Padre developer team'),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
+			Padre::Wx::launch_browser('https://github.com/PadreIDE/Padre/issues');
 		},
 	);
 	Padre::Wx::Action->new(
@@ -2616,7 +2616,7 @@ sub init {
 		label      => _T('View All &Open Bugs'),
 		comment    => _T('View all known and currently unsolved bugs in Padre'),
 		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
+			Padre::Wx::launch_browser('https://github.com/PadreIDE/Padre/issues?q=is%3Aopen+is%3Aissue');
 		},
 	);
 
