@@ -2597,7 +2597,7 @@ sub init {
 		label      => _T('Visit Perl Websites...'),
 		comment    => _T('Open interesting and helpful Perl websites in your default web browser'),
 		menu_event => sub {
-			Padre::Wx::launch_browser( 'http://padre.perlide.org/perl.html?padre=' . $VERSION );
+			Padre::Wx::launch_browser( 'https://github.com/PadreIDE/Padre/wiki/Perl-help-sites-and-tutorials' );
 		},
 	);
 
