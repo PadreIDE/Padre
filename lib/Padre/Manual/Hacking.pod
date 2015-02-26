@@ -333,7 +333,7 @@ If you have all F<Wx.pm> dependencies in place, build C<Wx> like this:
 
 =back
 
-=head2 Installing Padre from SVN
+=head2 Installing Padre
 
 =over 2
 
