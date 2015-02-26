@@ -19,9 +19,13 @@ that you checkout the entire repository trunk, which will provide you
 with Padre itself, miscellaneous tool scripts, and most of the plugin
 distributions as well.
 
-The specific path you want to check out is...
+The specific github page with the Padre related repositories...
 
-  http://svn.perlide.org/padre/trunk
+  https://github.com/PadreIDE
+
+The Padre IDE main repository to be cloned can be found at...
+
+  https://github.com/PadreIDE/Padre.git
 
 
 =head2 Extra Files
@@ -49,23 +53,20 @@ Similar to the B<ppi_version> tool from CPAN, this updates the version number.
 
 =head2 Bug Tracking
 
-Padre uses Trac for bug tracking.
-
-The main web site of Padre is actually its Trac L<http://padre.perlide.org/>
+Padre uses github for bug tracking:
+  
+  https://github.com/PadreIDE/Padre/issues
 
 =head2 Patching
 
-Check out the trunk (L<https://github.com/PadreIDE/>) and use svn
-diff to create your patch while your current working directory is the
-trunk directory.
-
-Please send patches either to the padre-dev mailing list or add them to
-trac to the appropriate ticket.
+Check out the trunk (L<https://github.com/PadreIDE/>). Create and "issue"
+about your patch and eventually a Pull Request. You can also discuss 
+the path at the padre-dev mailing list.
 
 =head2 Branching
 
-Usually we use the trunk for all the development work so we can see issues
-and fix them quickly. At least some of us already use Padre for the
+Usually we use the master branch for all the development work so we can see
+issues and fix them quickly. At least some of us already use Padre for the
 development work running it from the workspace so if someone breaks trunk
 that will immediately affect some of the developers.
 
@@ -79,23 +80,11 @@ working on a branch, do it.
 We try to work with small changes. There are no exact rules what is small
 and what is already too big but we try not to mix unrelated issues in one
 change. If you need a styling change or white space change, do it it in a
-separate commit.
-
-Commit messages are important. If a commit relates to a ticket please try
-to remember adding the ticket number with a # sign ( #23 ). The GUI of
-Trac will turn it into a link to the relevant ticket making it easier to
-find related information.
+separate commit.  Commit messages are important.
 
 Most of the current major committers monitor the commit messages to see
 what everyone else is doing, so please write them as if they are going to
 actually be read within a few hours of you making the commit.
-
-=head2 Tickets/Issues/Bugs
-
-We are using Trac as the issue and bug tracker.
-
-When adding a note that relates to one of the commit in SVN please use the
-r780 format. That allows Trac to create links to the diff of that revision.
 
 =head2 Code review
 
@@ -398,4 +387,4 @@ channel on L<irc://irc.perl.org/>.
 
 =head1 COPYRIGHT
 
-Copyright 2008-2010 The Padre Team.
+Copyright 2008-2015 The Padre Team.
