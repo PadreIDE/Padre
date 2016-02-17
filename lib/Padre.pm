@@ -627,7 +627,7 @@ Before submitting a bug please talk to the Padre developers
 on IRC: #padre on irc.perl.org. You can use this web based
 IRC client: L<http://padre.perlide.org/irc.html?channel=padre>
 
-Please submit your bugs at L<http://padre.perlide.org/trac/>
+Please submit your bugs at L<http://github.com/PadreIDE/Padre/issues>
 
 =head1 SUPPORT
 
