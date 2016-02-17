@@ -14,10 +14,12 @@ before_install:
   - build-perl
   - perl -V
 install:
-   - cpanm ExtUtils::MakeMaker
-   - cpanm ExtUtils::Embed
-   - cpanm Locale::Msgfmt
-   - cpanm Module::Install
+   - cpanm --verbose ExtUtils::MakeMaker
+   - cpanm --verbose ExtUtils::Embed
+   - cpanm --verbose Locale::Msgfmt
+   - cpanm --verbose Test::Pod
+   - cpanm --verbose Test::Pod::Coverage
+   - cpanm --verbose Module::Install
    - cpanm --verbose Alien::wxWidgets    # Build verbose to keep Travis stimulated
    - cpanm --notest Test::CPAN::Meta     # required by xt/meta.t
    - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
