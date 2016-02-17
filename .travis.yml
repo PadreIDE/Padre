@@ -1,8 +1,14 @@
 language: perl
 perl:
+<<<<<<< HEAD
   - '5.22.1-thr'              # current  perl 5.22.1 with threading
   - '5.21.4-thr'              # Installs perl 5.21.4 with threading
   - '5.20.0-thr'              # installs perl 5.20.0 with threading
+=======
+  - '5.23.6-thr'              # installs the current dev. release with threading
+  - '5.22.1-thr'              # installs perl 5.22.1 with threading
+  - '5.20.2-thr'              # installs perl 5.20.0 with threading
+>>>>>>> refs/remotes/PadreIDE/master
   - '5.18.2-thr'              # installs perl 5.18.2 with threading
   - '5.16.3-thr'              # installs perl 5.16.3 with threading
   - '5.14.4-thr'              # installs perl 5.14.4 with threading
@@ -14,6 +20,7 @@ before_install:
   - build-perl
   - perl -V
 install:
+<<<<<<< HEAD
    - cpanm --verbose ExtUtils::MakeMaker
    - cpanm --verbose ExtUtils::Embed
    - cpanm --verbose Locale::Msgfmt
@@ -25,8 +32,19 @@ install:
    - cpanm --notest Test::MinimumVersion # required by xt/pmv.t
    - cpanm --notest Test::Pod            # required by xt/pod.t
    - cpanm --notest ExtUtils::ParseXS    # >= 3.16, hacking 5.14.4 & below for Wx
+=======
+   - cpanm -v ExtUtils::MakeMaker
+   - cpanm -v ExtUtils::Embed
+   - cpanm -v Locale::Msgfmt
+   - cpanm -v Module::Install
+   - cpanm -v --verbose Alien::wxWidgets    # Build verbose to keep Travis stimulated
+   - cpanm -v --notest Test::CPAN::Meta     # required by xt/meta.t
+   - cpanm -v --notest Test::MinimumVersion # required by xt/pmv.t
+   - cpanm -v --notest Test::Pod            # required by xt/pod.t
+   - cpanm -v --notest ExtUtils::ParseXS    # >= 3.16, hacking 5.14.4 & below for Wx
+>>>>>>> refs/remotes/PadreIDE/master
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
-   - cpanm --notest --installdeps .
+   - cpanm -v --notest --installdeps .
 script:
   - perl Makefile.PL
   - make
