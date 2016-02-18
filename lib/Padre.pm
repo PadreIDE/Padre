@@ -627,7 +627,7 @@ Before submitting a bug please talk to the Padre developers
 on IRC: #padre on irc.perl.org. You can use this web based
 IRC client: L<http://padre.perlide.org/irc.html?channel=padre>
 
-Please submit your bugs at L<http://padre.perlide.org/trac/>
+Please submit your bugs at L<http://github.com/PadreIDE/Padre/issues>
 
 =head1 SUPPORT
 
@@ -845,7 +845,7 @@ Tatsuhiko Miyagawa for consulting on our I18N and L10N support.
 
 =cut
 
-# Copyright 2008-2014 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2016 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

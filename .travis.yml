@@ -14,17 +14,18 @@ before_install:
   - build-perl
   - perl -V
 install:
+   - cpanm -v --notest Test::CPAN::Meta     # required by xt/meta.t
+   - cpanm -v --notest Test::MinimumVersion # required by xt/pmv.t
+   - cpanm -v --notest Test::Pod            # required by xt/pod.t
+   - cpanm -v --notest Test::Pod::Coverage  # required by test script during Module::Install
    - cpanm -v ExtUtils::MakeMaker
    - cpanm -v ExtUtils::Embed
    - cpanm -v Locale::Msgfmt
    - cpanm -v Module::Install
    - cpanm -v --verbose Alien::wxWidgets    # Build verbose to keep Travis stimulated
-   - cpanm -v --notest Test::CPAN::Meta     # required by xt/meta.t
-   - cpanm -v --notest Test::MinimumVersion # required by xt/pmv.t
-   - cpanm -v --notest Test::Pod            # required by xt/pod.t
    - cpanm -v --notest ExtUtils::ParseXS    # >= 3.16, hacking 5.14.4 & below for Wx
-   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
    - cpanm -v --notest --installdeps .
+   - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
 script:
   - perl Makefile.PL
   - make

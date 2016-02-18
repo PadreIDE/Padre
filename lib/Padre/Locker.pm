@@ -102,7 +102,7 @@ sub shutdown {
 sub db_increment {
 	my $self = shift;
 	unless ( $self->{db_depth}++ ) {
-		Padre::DB->begin;
+		
 
 		# Database operations we lock on are the most likely to
 		# involve writes. So opportunistically prevent blocking
@@ -111,6 +111,7 @@ sub db_increment {
 		# corruption if (and only if) there is a power outage,
 		# operating system crash, or catastrophic hardware failure.
 		Padre::DB->pragma( synchronous => 0 );
+		Padre::DB->begin;
 	}
 	return;
 }
@@ -300,7 +301,7 @@ sub method_trim {
 
 1;
 
-# Copyright 2008-2014 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2016 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

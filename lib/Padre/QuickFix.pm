@@ -62,7 +62,7 @@ Please see the following sample implementation:
 The B<Padre::QuickFix> class provides a base class, default implementation
 and API documentation for quick fix provision support in L<Padre>.
 
-# Copyright 2008-2014 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2016 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
