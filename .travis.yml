@@ -18,6 +18,7 @@ install:
    - cpanm -v --notest Test::MinimumVersion # required by xt/pmv.t
    - cpanm -v --notest Test::Pod            # required by xt/pod.t
    - cpanm -v --notest Test::Pod::Coverage  # required by test script during Module::Install
+   - cpanm -v Devel::Cover 
    - cpanm -v ExtUtils::MakeMaker
    - cpanm -v ExtUtils::Embed
    - cpanm -v Locale::Msgfmt
@@ -30,3 +31,5 @@ script:
   - perl Makefile.PL
   - make
   - prove -bv $(test-dirs)
+after_success:
+  - coverage-report
