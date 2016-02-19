@@ -19,6 +19,7 @@ install:
    - cpanm -v --notest Test::Pod            # required by xt/pod.t
    - cpanm -v --notest Test::Pod::Coverage  # required by test script during Module::Install
    - cpanm -v Devel::Cover 
+   - cpanm -v Devel::Cover::Report::Coveralls 
    - cpanm -v ExtUtils::MakeMaker
    - cpanm -v ExtUtils::Embed
    - cpanm -v Locale::Msgfmt
@@ -27,6 +28,9 @@ install:
    - cpanm -v --notest ExtUtils::ParseXS    # >= 3.16, hacking 5.14.4 & below for Wx
    - cpanm -v --notest --installdeps .
    - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1
+env: COVERAGE=1
+before_script:
+  - coverage-setup
 script:
   - perl Makefile.PL
   - make
