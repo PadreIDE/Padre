@@ -1,4 +1,5 @@
-#Padre [![Build Status](https://travis-ci.org/PadreIDE/Padre.png?branch=master)](https://travis-ci.org/PadreIDE/Padre)
+#Padre [![Build Status](https://travis-ci.org/PadreIDE/Padre.png?branch=master)](https://travis-ci.org/PadreIDE/Padre)[![Coverage Status](https://coveralls.io/repos/github/PadreIDE/Padre/badge.svg?branch=master)](https://coveralls.io/github/PadreIDE/Padre?branch=master)
+
 ###Perl Application Development and Refactoring Environment
 
 A Perl IDE and general-purpose editor using WxWidgets.
