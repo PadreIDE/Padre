@@ -1,6 +1,6 @@
 language: perl
 perl:
-  - '5.26-thr'
+  - '5.26.1-thr'
   - '5.23.6-thr'              # installs the current dev. release with threading
   - '5.22.1-thr'              # installs perl 5.22.1 with threading
   - '5.20.2-thr'              # installs perl 5.20.0 with threading
