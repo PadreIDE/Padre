@@ -1,10 +1,10 @@
-#Padre [![Build Status](https://travis-ci.org/PadreIDE/Padre.png?branch=master)](https://travis-ci.org/PadreIDE/Padre)[![Coverage Status](https://coveralls.io/repos/github/PadreIDE/Padre/badge.svg?branch=master)](https://coveralls.io/github/PadreIDE/Padre?branch=master)
+# Padre [![Build Status](https://travis-ci.org/PadreIDE/Padre.png?branch=master)](https://travis-ci.org/PadreIDE/Padre)[![Coverage Status](https://coveralls.io/repos/github/PadreIDE/Padre/badge.svg?branch=master)](https://coveralls.io/github/PadreIDE/Padre?branch=master)
 
-###Perl Application Development and Refactoring Environment
+### Perl Application Development and Refactoring Environment
 
 A Perl IDE and general-purpose editor using WxWidgets.
 
-##Installation
+## Installation
 
 * Alien::wxWidgets
 * Wx
@@ -14,7 +14,7 @@ For detailed installation instructions look at
 
 http://padre.perlide.org/wiki/Download
 
-##ToDo
+## ToDo
 
 - [x] convert from svn to github kaare++
 - [x] travis intergration alias++ bowtie++
@@ -29,12 +29,12 @@ http://padre.perlide.org/wiki/Download
 - [ ] #padre notifications
 - [ ] padre developers wiki
 
-##IRC channel
+## IRC channel
 
 The primary communication channel is the [IRC channel](https://github.com/PadreIDE/Padre/wiki/IRC-Channel) of the Padre developers. It is located on the **irc.perl.org** server and it is called **#padre**.
 
 
-##License
+## License
 
 The Padre source code is distributed under the same terms as Perl itself. 
 Namely:
