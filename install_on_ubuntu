@@ -1,0 +1,29 @@
+sudo apt-get install -y           \
+   libalien-wxwidgets-perl        \
+   libclass-adapter-perl          \
+   libdevel-dumpvar-perl          \
+   libdevel-refactor-perl         \
+   libwx-scintilla-perl           \
+   libwx-perl-processstream-perl  \
+   libtext-patch-perl             \
+   libtext-findindent-perl        \
+   liborlite-migrate-perl         \
+   libmodule-starter-perl         \
+   libparse-errorstring-perl-perl \
+   libpod-abstract-perl           \
+   libpod2-base-perl              \
+   liblocale-msgfmt-perl          \
+   libmodule-build-perl           \
+   libmodule-manifest-perl        \
+   libppix-editortools-perl       \
+   libppix-regexp-perl            \
+   libparse-exuberantctags-perl   \
+   libtest-mockobject-perl        \
+   libsort-versions-perl
+
+# For Debug::Client:
+sudo apt-get install -y           \
+   libtest-class-perl             \
+   libtest-requires-perl          \
+   libtest-checkdeps-perl         \
+   libcpan-meta-check-perl

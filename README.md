@@ -46,3 +46,44 @@ For other Copyrights and Licenses see also
 share/icons/padre/README.txt
 share/icons/gnome218/README.txt
 
+## Development
+
+In order to develop Padre on Ubuntu we will use the system-perl.
+Install the available packages using
+
+```
+./install_on_ubuntu
+```
+
+Then install the remaining missing packages that are not distributed by Ubuntu:
+
+```
+curl -L https://cpanmin.us | perl - App::cpanminus
+~/perl5/bin/cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+```
+
+Add the following line to ~/.bashrc (or similar file that is loaded when you open a terminal)
+
+```
+eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+```
+
+Then open a new terminal and type in
+
+```
+perl Makefile.PL
+```
+
+Install the missing modules:
+
+```
+cpanm Parse::Functions Debug::Client
+```
+
+```
+perl Makefile.PL
+make
+./dev
+```
+
+
