@@ -29,11 +29,6 @@ http://padre.perlide.org/wiki/Download
 - [ ] #padre notifications
 - [ ] padre developers wiki
 
-## IRC channel
-
-The primary communication channel is the [IRC channel](https://github.com/PadreIDE/Padre/wiki/IRC-Channel) of the Padre developers. It is located on the **irc.perl.org** server and it is called **#padre**.
-
-
 ## License
 
 The Padre source code is distributed under the same terms as Perl itself. 
