@@ -189,6 +189,7 @@ SCOPE: {
 }
 
 # Build the application
+Padre->import(':everything');
 my $ide = Padre->new(
 	files          => \@ARGV,
 	session        => $SESSION,
