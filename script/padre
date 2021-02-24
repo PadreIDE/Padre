@@ -189,6 +189,8 @@ SCOPE: {
 }
 
 # Build the application
+# Workaround for crashing dialog windows in Windows 10
+# https://github.com/PadreIDE/Padre/pull/44
 Padre->import(':everything');
 my $ide = Padre->new(
 	files          => \@ARGV,
