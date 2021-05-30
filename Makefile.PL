@@ -130,6 +130,7 @@ requires 'Parse::Functions'         => '0.01';
 requires 'List::MoreUtils'          => '0.22';
 requires 'LWP'                      => '5.815';
 requires 'LWP::UserAgent'           => '5.815';
+requires 'MetaCPAN::Client'            => 0;
 requires 'Module::Build'            => '0.3603';
 requires 'Module::CoreList'         => '2.22';
 requires 'Module::Manifest'         => '0.07';

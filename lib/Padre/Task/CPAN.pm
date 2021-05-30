@@ -77,106 +77,18 @@ sub run {
 }
 
 #
-# Adopted from https://github.com/CPAN-API/metacpan-web
+# Use MetaCPAN::Client for autocomplete!
 #
 sub metacpan_autocomplete {
 	my ( $self, $query ) = @_;
 
-	# Convert :: to spaces so we dont crash request :)
-	$query =~ s/::/ /g;
-
-	# Create an array of query keywords that are separated by spaces
-	my @query = split( /\s+/, $query );
-
-	# The documentation Module-Name that should be analyzed
-	my $should = [
-		map {
-			(   { field => { 'documentation.analyzed'  => "$_*" } },
-				{ field => { 'documentation.camelcase' => "$_*" } }
-				)
-			}
-			grep {
-			$_
-			} @query
-	];
-	push @{$should}, map { ( { field => { 'author' => "$_" } }, ) } map { uc $_ } grep {$_} @query;
-
-	# The distribution we do not want in our search
-	my @ROGUE_DISTRIBUTIONS = qw(kurila perl_debug perl-5.005_02+apache1.3.3+modperl pod2texi perlbench spodcxx);
-
-	# The ElasticSearch query in Perl
-	my %payload = (
-		track_scores => 1,
-		query        => {
-			filtered => {
-				query => {
-					bool => { should => $should }
-
-						# ToDo see #1488 comment:7 itcharlie++
-						# custom_score => {
-						# query  => { bool => { should => $should } },
-						# script => "_score - doc['documentation'].stringValue.length()/100"
-						# },
-				},
-				filter => {
-					and => [
-						{   not => {
-								filter => {
-									or => [
-										map {
-											{ term => { 'file.distribution' => $_ } }
-										} @ROGUE_DISTRIBUTIONS
-									]
-								}
-							}
-						},
-						{ exists => { field          => 'documentation' } },
-						{ term   => { 'file.indexed' => \1 } },
-						{ term   => { 'file.status'  => 'latest' } },
-						{ not    => { filter         => { term => { 'file.authorized' => \0 } } } }
-					]
-				}
-			}
-		},
-		sort => [
-			{   "_score"      => {},
-				author        => { order => "asc" },
-				distribution  => { order => "asc" },
-				documentation => { order => "asc" }
-			}
-		],
-		fields => [qw(documentation release author distribution)],
-		size   => MAX_RESULTS,
-	);
-
-	# Convert ElasticSearch Perl query to a JSON request
-	require JSON::XS;
-	my $json_request = JSON::XS::encode_json( \%payload );
-
-	TRACE("Content => $json_request") if DEBUG;
-
-	# POST the json request to api.metacpan.org
-	require LWP::UserAgent;
-	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
-	$ua->timeout(10);
-	$ua->env_proxy unless Padre::Constant::WIN32;
-
-	my $response = $ua->post(
-		'http://api.metacpan.org/v0/file/_search',
-		Content => $json_request,
-	);
-
-	unless ( $response->is_success ) {
-		TRACE( sprintf( "Got '%s' from metacpan.org", $response->status_line ) )
-			if DEBUG;
-		return [];
+    use MetaCPAN::Client;
+    my $mcpan  = MetaCPAN::Client->new();
+	my $dist = $mcpan->autocomplete_suggest("$query");
+	my @results = @$dist;
+	if ($#results+1 > MAX_RESULTS) {
+        my @results = @results[0 ... MAX_RESULTS-1];
 	}
-
-	# Decode json response then cleverly map it for the average joe :)
-	my $data = JSON::XS::decode_json( $response->decoded_content );
-	my @results = map { $_->{fields} } @{ $data->{hits}->{hits} || [] };
-
-	# And return its reference
 	return \@results;
 }
 
@@ -192,7 +104,7 @@ sub metacpan_pod {
 	my $ua = LWP::UserAgent->new( agent => "Padre/$VERSION" );
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
-	my $url      = "http://api.metacpan.org/v0/pod/$module?content-type=text/x-pod";
+	my $url      = "https://fastapi.metacpan.org/v1/pod/$module?content-type=text/x-pod";
 	my $response = $ua->get($url);
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s for %s", $response->status_line, $url ) )
@@ -244,7 +156,7 @@ sub metacpan_recent {
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $url =
-		  "http://api.metacpan.org/v0/release/?sort=date:desc"
+		  "https://fastapi.metacpan.org/v1/release/?sort=date:desc"
 		. "&size="
 		. MAX_RESULTS
 		. "&fields=name,distribution,abstract,download_url";
@@ -272,10 +184,10 @@ sub metacpan_recent {
 sub metacpan_favorite {
 	my $self = shift;
 
-	my %payload = (
+    my %payload = (
 		"query"  => { "match_all" => {} },
-		"facets" => {
-			"leaderboard" => {
+		"aggs" => {
+			"dist" => {
 				"terms" => {
 					"field" => "distribution",
 					"size"  => MAX_RESULTS,
@@ -283,7 +195,6 @@ sub metacpan_favorite {
 			},
 		},
 		size => 0,
-
 	);
 
 	# Convert ElasticSearch Perl query to a JSON request
@@ -296,10 +207,11 @@ sub metacpan_favorite {
 	$ua->timeout(10);
 	$ua->env_proxy unless Padre::Constant::WIN32;
 	my $response = $ua->post(
-		'http://api.metacpan.org/v0/favorite/_search',
+		'https://fastapi.metacpan.org/v1/favorite/_search',
 		Content => $json_request,
 	);
-
+     
+	
 	unless ( $response->is_success ) {
 		TRACE( sprintf( "Got '%s' from metacpan.org", $response->status_line ) ) if DEBUG;
 		return [];
@@ -307,7 +219,8 @@ sub metacpan_favorite {
 
 	# Decode json response then cleverly map it for the average joe :)
 	my $data = JSON::XS::decode_json( $response->decoded_content );
-	my @results = map {$_} @{ $data->{facets}->{leaderboard}->{terms} || [] };
+	my @results = map {{ term => $_->{key}, count => $_->{doc_count} }} 
+		@{$data->{aggregations}->{dist}->{buckets} || [] };
 
 	return \@results;
 }
