@@ -86,4 +86,23 @@ make
 ./dev
 ```
 
+## Release
 
+We used to have some really detailed instruction on the [release process](https://padre.perlide.org/release.html)
+as part of our [wiki](https://padre.perlide.org/wiki). That needs some update.
+
+* Update the Changes file
+* Update version numbers:
+
+```
+cd lib
+ppi_version change 1.01 1.02
+```
+
+```
+perl Makefile.PL
+make
+make test
+make dist
+git tag -a v1.02 -m 1.02
+```

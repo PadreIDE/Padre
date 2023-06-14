@@ -1,5 +1,4 @@
 Changes for Perl Application Development and Refactoring Environment
-NOTE: Do NOT "tidy" or change the indenting here, or we break svn annotate
 
 Padre version numbers follow an odd/even pattern, where the even numbers are
 used for the production releases of the distribution. The even versions below
@@ -13,24 +12,27 @@ next production release, and synchronise their release to the Padre schedule.
 Changes which do not break API compatibility for plugins should be listed in
 the even version for the release, even during development.
 
-Moved to GitHub by kaare++ 2014-09-07
+1.02 2023.06.14
+    - link to GitHub
+    - GetLabelText instead of GetLabel, the former stopped functioning
 
-1.02 TBA
- - tweak 01_compile.t so that it passes on 5.19.7 (BOWTIE)
- - comment out Padre::Browser::PseudoPerldoc->process to enable
-   t/50-browser.t to pass on perl 5.19.9 (BOWTIE)
+    - Moved to GitHub by kaare++ 2014-09-07
+
+    - tweak 01_compile.t so that it passes on 5.19.7 (BOWTIE)
+    - comment out Padre::Browser::PseudoPerldoc->process to enable
+      t/50-browser.t to pass on perl 5.19.9 (BOWTIE)
 
 1.00 2013.11.09
- - Applied Patch in #1488 comment:7 itcharlie++ (BOWTIE)
- - Apply patch for #1504 dod++ (BOWTIE)
- - Apply patch2 from #1459 bojinlund++ (BOWTIE)
- - Update Makefile.PL with new versions (BOWTIE)
- - Add Patch for cut n paste adam++ #1312 (BOWTIE)
- - Fix Debug ip hanging, use 127.0.0.1 instead of localhost (BOWTIE)
- - fix some unwanted background noise from debug raw (BOWTIE)
- - Apply patch from #1508 itcharlie++ (BOWTIE)
- - Add refresh_breakpoint_panel to Wx::Main (BOWTIE)
- - Add correct comment for PerlXS (BOWTIE)
+    - Applied Patch in #1488 comment:7 itcharlie++ (BOWTIE)
+    - Apply patch for #1504 dod++ (BOWTIE)
+    - Apply patch2 from #1459 bojinlund++ (BOWTIE)
+    - Update Makefile.PL with new versions (BOWTIE)
+    - Add Patch for cut n paste adam++ #1312 (BOWTIE)
+    - Fix Debug ip hanging, use 127.0.0.1 instead of localhost (BOWTIE)
+    - fix some unwanted background noise from debug raw (BOWTIE)
+    - Apply patch from #1508 itcharlie++ (BOWTIE)
+    - Add refresh_breakpoint_panel to Wx::Main (BOWTIE)
+    - Add correct comment for PerlXS (BOWTIE)
 
 0.98 2013.02.19
     - Changed to use current internal hashes instead of asking perl5db for 
