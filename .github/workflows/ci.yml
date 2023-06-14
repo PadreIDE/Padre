@@ -32,10 +32,12 @@ jobs:
           perl-version: ${{ matrix.perl }}
           #distribution: ${{ ( matrix.runner == 'windows-latest' && 'strawberry' ) || 'default' }}
           distribution: 'default'
+          multi-thread: true
 
     - name: Show Perl Version
       run: |
         perl -v
+        perl -V
 
     - name: Install for Ubuntu
       if:  ${{ matrix.runner == 'ubuntu-latest' }}
