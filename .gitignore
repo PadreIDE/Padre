@@ -16,3 +16,6 @@ winxs/Win32.o
 winxs/Win32.def
 *.swp
 compilet*
+MANIFEST
+/Padre-*
+*.bak
