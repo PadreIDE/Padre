@@ -14,9 +14,11 @@ jobs:
       matrix:
         runner: [ubuntu-latest, macos-latest, windows-latest]
         perl: [ '5.36' ]
-        #exclude:
-        #  - runner: windows-latest
-        #    perl: '5.36'
+        exclude:
+          - runner: windows-latest
+            perl: '5.36'
+          - runner: macos-latest
+            perl: '5.36'
 
     runs-on: ${{matrix.runner}}
     name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
@@ -34,6 +36,11 @@ jobs:
     - name: Show Perl Version
       run: |
         perl -v
+
+    - name: Install for Ubuntu
+      if:  ${{ matrix.runner == 'ubuntu-latest' }}
+      run: |
+        apt-get install -y libgtk2.0-dev
 
     - name: Install Modules
       run: |
