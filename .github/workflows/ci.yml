@@ -40,7 +40,7 @@ jobs:
     - name: Install for Ubuntu
       if:  ${{ matrix.runner == 'ubuntu-latest' }}
       run: |
-        apt-get install -y libgtk2.0-dev
+        sudo apt-get install -y libgtk2.0-dev
 
     - name: Install Modules
       run: |
