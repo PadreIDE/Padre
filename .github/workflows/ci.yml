@@ -38,6 +38,7 @@ jobs:
     - name: Install Modules
       run: |
         cpanm -v
+        cpanm --notest Module::Install
         cpanm --installdeps --with-develop --notest .
         # --with-configure
         # --with-recommends, --with-suggests
