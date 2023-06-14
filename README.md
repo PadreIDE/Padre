@@ -104,5 +104,5 @@ perl Makefile.PL
 make
 make test
 make dist
-git tag -a v1.02 -m 1.02
+git tag -a v1.02 -m "release of v1.02"
 ```
