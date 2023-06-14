@@ -42,6 +42,24 @@ jobs:
         # --with-configure
         # --with-recommends, --with-suggests
 
+    - name: Show Errors on Windows
+      if:  ${{ failure() && matrix.runner == 'windows-latest' }}
+      run: |
+         ls -l C:/Users/
+         #ls -l C:/Users/RUNNER~1/
+         cat C:/Users/runneradmin/.cpanm/work/*/build.log
+
+    - name: Show Errors on Ubuntu
+      if:  ${{ failure() && matrix.runner == 'ubuntu-latest' }}
+      run: |
+         cat /home/runner/.cpanm/work/*/build.log
+
+    - name: Show Errors on OSX
+      if:  ${{ failure() && matrix.runner == 'macos-latest' }}
+      run: |
+         cat  /Users/runner/.cpanm/work/*/build.log
+
+
     - name: Run tests
       #env:
       #  AUTHOR_TESTING: 1
