@@ -13,7 +13,7 @@ use Padre::Feature  ();
 use Padre::Util     ();
 use Padre::Logger;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Wx::Menu';
 
 # We only check for the existance of Module::Starter once at startup

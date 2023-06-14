@@ -99,7 +99,7 @@ use Scalar::Util   ();
 use Padre::Current ();
 use Padre::Logger;
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.91';
 
 # Use a shared sequence for object revisioning greatly

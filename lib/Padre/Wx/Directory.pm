@@ -16,7 +16,7 @@ use Padre::Wx::Role::Context       ();
 use Padre::Wx::Directory::TreeCtrl ();
 use Padre::Logger;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Timer

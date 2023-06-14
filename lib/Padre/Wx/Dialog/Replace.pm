@@ -6,7 +6,7 @@ use warnings;
 use Padre::Search           ();
 use Padre::Wx::FBP::Replace ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Wx::FBP::Replace';
 
 

@@ -15,7 +15,7 @@ use Padre::Wx::Role::Main ();
 use Padre::Wx::ComboBox::FindTerm ();
 use Padre::Wx::ComboBox::History ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

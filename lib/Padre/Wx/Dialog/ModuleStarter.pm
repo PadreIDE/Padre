@@ -7,7 +7,7 @@ use Padre::Wx::Role::Config       ();
 use Padre::Wx::FBP::ModuleStarter ();
 use Try::Tiny;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Wx::Role::Config
 	Padre::Wx::FBP::ModuleStarter

@@ -13,7 +13,7 @@ use Padre::Wx::ActionLibrary ();
 use Padre::Wx::Menu          ();
 use Padre::Locale            ();
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.87';
 our @ISA        = 'Padre::Wx::Menu';
 

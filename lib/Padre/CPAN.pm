@@ -7,7 +7,7 @@ use File::Spec    ();
 use File::HomeDir ();
 use Padre::Wx     ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 
 

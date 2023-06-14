@@ -9,7 +9,7 @@ use Padre::Wx::FBP::Patch ();
 use Padre::Logger;
 use Try::Tiny;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Wx::FBP::Patch
 };

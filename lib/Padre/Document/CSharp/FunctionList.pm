@@ -6,7 +6,7 @@ use warnings;
 use Padre::Task::FunctionList ();
 use Parse::Functions::CSharp ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = ('Padre::Task::FunctionList', 'Parse::Functions::CSharp');
 
 1;

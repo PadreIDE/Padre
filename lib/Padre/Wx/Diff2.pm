@@ -10,7 +10,7 @@ use Wx::Scintilla::Constant ();
 use Padre::Logger qw(TRACE);
 
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Wx
 	Padre::Wx::FBP::Diff

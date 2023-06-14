@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx                    ();
 use Padre::Wx::ComboBox::History ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Wx::ComboBox::History';
 
 

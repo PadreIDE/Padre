@@ -8,7 +8,7 @@ use Padre::Util              ();
 use Padre::Task::Syntax      ();
 use Parse::ErrorString::Perl ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Task::Syntax';
 
 sub new {

@@ -6,7 +6,7 @@ use warnings;
 use utf8;
 use Padre::Plugin   ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 use parent qw(Padre::Plugin);
 
 

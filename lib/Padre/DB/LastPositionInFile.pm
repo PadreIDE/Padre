@@ -39,7 +39,7 @@ BEGIN {
 	require Padre::Portable if Padre::Constant::PORTABLE;
 }
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 =pod
 

@@ -7,7 +7,7 @@ use Padre::DB                      ();
 use Padre::Wx::Icon                ();
 use Padre::Wx::FBP::SessionManager ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = qw{
 	Padre::Wx::FBP::SessionManager
 };

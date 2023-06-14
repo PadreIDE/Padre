@@ -6,7 +6,7 @@ use warnings;
 use Padre::Constant ();
 use Padre::Wx       ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = (
 	'Padre::Wx::Role::Main',
 	'Wx::PopupWindow',

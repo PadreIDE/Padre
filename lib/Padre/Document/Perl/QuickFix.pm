@@ -6,7 +6,7 @@ use warnings;
 use PPI             ();
 use Padre::QuickFix ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::QuickFix';
 
 # Returns the quick fix list

@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Scalar::Util ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # -- constructors
 

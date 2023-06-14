@@ -97,7 +97,7 @@ use Padre::Config::Host    ();
 use Padre::Locale::T;
 use Padre::Logger;
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.93';
 
 our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );

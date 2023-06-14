@@ -8,7 +8,7 @@ use warnings;
 use Params::Util ();
 use Padre::MIME  ();
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.95';
 
 # Differentiate content between different types

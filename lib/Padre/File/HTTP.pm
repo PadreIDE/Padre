@@ -8,7 +8,7 @@ use Padre::Constant ();
 use Padre::File     ();
 use Padre::Logger;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::File';
 
 my $WRITE_WARNING_DONE = 0;

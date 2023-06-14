@@ -12,7 +12,7 @@ use strict;
 use warnings;
 use Padre::Current ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 sub read {
 	my %config = map { $_->name => $_->value } $_[0]->select;

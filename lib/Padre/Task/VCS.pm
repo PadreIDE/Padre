@@ -10,7 +10,7 @@ use File::Spec  ();
 use Padre::Logger;
 use Try::Tiny;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Task';
 
 use constant {

@@ -17,7 +17,7 @@ use Padre::Role::Task ();
 use Padre::Feature    ();
 use Padre::Logger;
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.93';
 our @ISA        = qw{
 	Padre::Role::Task

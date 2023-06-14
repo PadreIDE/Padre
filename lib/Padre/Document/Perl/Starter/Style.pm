@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.97';
 
 my %DEFAULT = (

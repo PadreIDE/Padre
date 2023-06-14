@@ -7,7 +7,7 @@ use File::Spec     ();
 use Padre::Util    ();
 use Padre::Project ();
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.88';
 our @ISA        = 'Padre::Project';
 

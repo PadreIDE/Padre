@@ -12,7 +12,7 @@ use Padre::MIME             ();
 use Wx::Scintilla::Constant ();
 use Padre::Locale::T;
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.93';
 
 

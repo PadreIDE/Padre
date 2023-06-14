@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Project::Perl::EUMM ();
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Project::Perl::EUMM';
 
 1;

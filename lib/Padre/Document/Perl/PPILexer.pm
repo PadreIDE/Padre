@@ -7,7 +7,7 @@ use Padre::Document ();
 use Padre::Util     ();
 use Padre::Logger;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 sub colorize {
 	TRACE("PPILexer colorize called") if DEBUG;

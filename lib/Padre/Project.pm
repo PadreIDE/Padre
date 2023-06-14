@@ -9,7 +9,7 @@ use File::Spec      ();
 use Padre::Constant ();
 use Padre::Current  ();
 
-our $VERSION    = '1.01';
+our $VERSION    = '1.02';
 our $COMPATIBLE = '0.93';
 
 

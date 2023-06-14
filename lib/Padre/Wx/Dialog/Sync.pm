@@ -7,7 +7,7 @@ use Padre::ServerManager ();
 use Padre::Wx::FBP::Sync ();
 use Padre::Logger;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 our @ISA     = 'Padre::Wx::FBP::Sync';
 
 sub new {
