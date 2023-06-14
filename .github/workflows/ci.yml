@@ -38,7 +38,14 @@ jobs:
     - name: Install Modules
       run: |
         cpanm -v
+        cpanm --notest Locale::Msgfmt
+
+    - name: Install Module::Install
+      run: |
         cpanm --notest Module::Install
+
+    - name: Install Dependencies
+      run: |
         cpanm --installdeps --with-develop --notest .
         # --with-configure
         # --with-recommends, --with-suggests
