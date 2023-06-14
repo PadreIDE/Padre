@@ -39,6 +39,11 @@ jobs:
       run: |
         cpanm -v
         cpanm --notest Locale::Msgfmt
+        cpanm --notest File::Remove
+
+    - name: Install Wx
+      run: |
+        cpanm --notest --verbose Alien::wxWidgets
 
     - name: Install Module::Install
       run: |
