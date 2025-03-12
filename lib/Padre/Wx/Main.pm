@@ -2964,7 +2964,7 @@ sub run_command {
 				if ( @terminals ) {
 					#Gnome-Terminal line format:
 					#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
-					system $terminals[0], qq(-e "bash -c \\\"$cmd; exec bash\\\"" & );
+					system $terminals[0] . " " . qq(-e "bash -c \\\"$cmd; exec bash\\\"" & );
 				} else {
 					system qq(xterm -sb -e "$cmd; sleep 1000" &);
 				}
