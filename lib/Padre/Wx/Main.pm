@@ -2958,15 +2958,15 @@ sub run_command {
 
 			if ( defined $ENV{COLORTERM} ) {
    				my @terminals = ();
-       				push @terminals, which('gnome-terminal');
-			 	push @terminals, which('x-terminal-emulator');
-     				push @terminals, which('konsole');
+				push @terminals, which('gnome-terminal');
+				push @terminals, which('x-terminal-emulator');
+				push @terminals, which('konsole');
+				push @terminals, which('xterm');
 				if ( @terminals ) {
 					#Gnome-Terminal line format:
 					#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
-					system $terminals[0] . " " . qq(-e "bash -c \\\"$cmd; exec bash\\\"" & );
-				} else {
-					system qq(xterm -sb -e "$cmd; sleep 1000" &);
+					my $term = $terminals[0];
+					system qq($term -e "bash -c \\\"$cmd; echo; echo Press any key to exit....; read -n 1; exit 0;\\\"" & );
 				}
 			}
 		} elsif (Padre::Constant::MAC) {
