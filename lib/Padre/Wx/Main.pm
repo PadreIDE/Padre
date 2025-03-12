@@ -60,6 +60,8 @@ use Padre::Wx::Role::Timer    ();
 use Padre::Wx::Role::Idle     ();
 use Padre::Locale::T;
 use Padre::Logger;
+use File::Which 'which';
+
 our $VERSION    = '1.02';
 our $COMPATIBLE = '0.91';
 our @ISA        = qw{
@@ -2955,11 +2957,11 @@ sub run_command {
 		} elsif (Padre::Constant::UNIX) {
 
 			if ( defined $ENV{COLORTERM} ) {
-				if ( $ENV{COLORTERM} eq 'gnome-terminal' ) {
+				if ( ($ENV{COLORTERM} eq 'gnome-terminal') || (!which('xterm')) ) {
 
 					#Gnome-Terminal line format:
 					#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
-					system qq($ENV{COLORTERM} -e "bash -c \\\"$cmd; exec bash\\\"" & );
+					system qq(gnome-terminal -e "bash -c \\\"$cmd; exec bash\\\"" & );
 				} else {
 					system qq(xterm -sb -e "$cmd; sleep 1000" &);
 				}
