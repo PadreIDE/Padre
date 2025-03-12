@@ -2957,11 +2957,14 @@ sub run_command {
 		} elsif (Padre::Constant::UNIX) {
 
 			if ( defined $ENV{COLORTERM} ) {
-				if ( ($ENV{COLORTERM} eq 'gnome-terminal') || (which('gnome-terminal')) ) {
-
+   				my @terminals = ();
+       				push @terminals, which('gnome-terminal');
+			 	push @terminals, which('x-terminal-emulator');
+     				push @terminals, which('konsole');
+				if ( @terminals ) {
 					#Gnome-Terminal line format:
 					#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
-					system qq(gnome-terminal -e "bash -c \\\"$cmd; exec bash\\\"" & );
+					system $terminals[0], qq(-e "bash -c \\\"$cmd; exec bash\\\"" & );
 				} else {
 					system qq(xterm -sb -e "$cmd; sleep 1000" &);
 				}
