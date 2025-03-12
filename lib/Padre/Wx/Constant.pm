@@ -270,7 +270,6 @@ use constant WANT => qw{
 	:listctrl
 	:locale
 	:menu
-	:miniframe
 	:misc
 	:notebook
 	:ownerdrawncombobox
