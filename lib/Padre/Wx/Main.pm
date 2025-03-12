@@ -2957,7 +2957,7 @@ sub run_command {
 		} elsif (Padre::Constant::UNIX) {
 
 			if ( defined $ENV{COLORTERM} ) {
-				if ( ($ENV{COLORTERM} eq 'gnome-terminal') || (!which('xterm')) ) {
+				if ( ($ENV{COLORTERM} eq 'gnome-terminal') || (which('gnome-terminal')) ) {
 
 					#Gnome-Terminal line format:
 					#gnome-terminal -e "bash -c \"prove -lv t/96_edit_patch.t; exec bash\""
