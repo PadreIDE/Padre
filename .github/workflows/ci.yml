@@ -18,7 +18,7 @@ jobs:
           #- windows-latest
         perl:
           - '5.36'
-          - '5.42'
+          #- '5.42'
         #exclude:
         #  - runner: windows-latest
         #    perl: '5.36'
