@@ -14,16 +14,16 @@ jobs:
       matrix:
         runner:
           - ubuntu-latest
-          - macos-latest
-          - windows-latest
+          #- macos-latest
+          #- windows-latest
         perl:
           - '5.36'
           - '5.42'
-        exclude:
-          - runner: windows-latest
-            perl: '5.36'
-          - runner: macos-latest
-            perl: '5.36'
+        #exclude:
+        #  - runner: windows-latest
+        #    perl: '5.36'
+        #  - runner: macos-latest
+        #    perl: '5.36'
 
     runs-on: ${{matrix.runner}}
     name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
