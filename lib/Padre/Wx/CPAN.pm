@@ -331,7 +331,7 @@ sub render_search {
 	for my $rec (@$model) {
 
 		# Add a CPAN distribution and author as a row to the list
-		$list->InsertImageStringItem( $index, $rec->{documentation}, $self->{images}{file} );
+		$list->InsertImageStringItem( $index, $rec->{name}, $self->{images}{file} );
 		$list->SetItemData( $index, $index );
 		$list->SetItem( $index, 1, $rec->{author} );
 		$list->SetItemBackgroundColour( $index, $alternate_color ) unless $index % 2;
@@ -396,7 +396,7 @@ sub _sort_model {
 		@model = sort {
 			if ( $command eq 'search' )
 			{
-				$a->{documentation} cmp $b->{documentation};
+                $a->{name} cmp $b->{name};
 			} elsif ( $command eq 'recent' ) {
 				$a->{name} cmp $b->{name};
 			} elsif ( $command eq 'favorite' ) {
